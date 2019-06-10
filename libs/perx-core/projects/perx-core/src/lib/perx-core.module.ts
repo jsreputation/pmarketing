@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { PerxCoreComponent } from './perx-core.component';
 
 @NgModule({
-  declarations: [PerxCoreComponent],
+  declarations: [
+  ],
   imports: [
   ],
-  exports: [PerxCoreComponent]
+  exports: [
+  ]
 })
 export class PerxCoreModule { }
