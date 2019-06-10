@@ -1,5 +1,5 @@
 {
-  "name": "shake-the-tree",
+  "name": "@perx/shake-the-tree",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
