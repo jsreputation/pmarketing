@@ -3,18 +3,20 @@ jobs:
   build:
     working_directory: ~/my-project
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10-browsers
     steps:
       - checkout
-      - restore_cache:
-          key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - save_cache:
-          key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
-      - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-      - run: npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+      # - restore_cache:
+      #     key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: yarn install
+      # - save_cache:
+      #     key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      #     paths:
+      #       - "node_modules"
+      - run: yarn run build
+      - run: yarn run lint-ci
+      - run: yarn run test-ci
+      - run: yarn run e2e-ci
 workflows:
   ci:
     jobs:
