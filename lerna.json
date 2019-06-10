@@ -1,7 +1,8 @@
 {
   "packages": [
     "libs/*",
-    "apps/*"
+    "apps/*",
+    "backend/*"
   ],
   "version": "independent",
   "npmClient": "yarn",
