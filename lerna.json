@@ -1,8 +1,10 @@
 {
-  "npmClient": "yarn",
   "packages": [
     "libs/*",
     "apps/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "npmClient": "yarn",
+  "stream": true,
+  "useWorkspaces": true
 }

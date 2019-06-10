@@ -1,6 +1,14 @@
 {
-  "name": "root",
+  "name": "perx-microsites",
+  "scripts": {
+    "build": "lerna run build",
+    "build:prod": "lerna run build:prod"
+  },
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "devDependencies": {
     "lerna": "^3.14.1"
   }
