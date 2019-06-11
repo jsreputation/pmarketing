@@ -8,13 +8,13 @@ import { FormControl } from '@angular/forms';
 })
 export class PinInputComponent implements OnInit {
   @Input()
-  length: number = 4;
+  length = 4;
 
   @Output()
-  complete: EventEmitter<string> = new EventEmitter<string>();
+  full: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
-  change: EventEmitter<string> = new EventEmitter<string>();
+  update: EventEmitter<string> = new EventEmitter<string>();
 
   controlls: FormControl[] = [];
 
@@ -22,32 +22,34 @@ export class PinInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    //length might not be a number
+    // length might not be a number
     if (typeof this.length === 'string') {
-      this.length = Number.parseInt(this.length);
+      this.length = Number.parseInt(this.length, 10);
     }
+
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.length; i++) {
-      const ctrl = new FormControl()
+      const ctrl = new FormControl();
       this.controlls.push(ctrl);
     }
+    // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
-
   }
 
   onUpdate() {
     const v = this.value;
     if (v.length === this.length) {
-      //if full length reached, emit on complete
-      this.complete.emit(v);
+      // if full length reached, emit on complete
+      this.full.emit(v);
     } else {
-      //move to next input box
+      // move to next input box
       const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${v.length}`);
       if (elem !== null) {
         elem.focus();
       }
     }
 
-    this.change.emit(v);
+    this.update.emit(v);
   }
 
   get value(): string {
@@ -57,8 +59,8 @@ export class PinInputComponent implements OnInit {
   }
 
   onKey(event: KeyboardEvent): void {
-    //remove last letter
-    if (event.key === "Backspace") {
+    // remove last letter
+    if (event.key === 'Backspace') {
       const v = this.value;
       if (v.length > 0 && v.length < this.length) {
         this.controlls[v.length - 1].setValue('');

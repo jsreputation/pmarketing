@@ -14,7 +14,6 @@ export class ActivationCodeComponent implements OnInit {
   }
 
   pinInput(event: string): void {
-    console.log('go to redemption');
     this.router.navigate(['/redemption']);
   }
 }
