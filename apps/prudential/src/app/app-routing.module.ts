@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
-import { RewardsComponent } from './rewards/rewards.component';
-import { RewardComponent } from './reward/reward.component';
+import { VouchersComponent } from '@perx/core/dist/perx-core';
+import { VoucherComponent } from '@perx/core/dist/perx-core';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/game', pathMatch: 'full' },
   { path: 'game', component: GameComponent },
   { path: 'congrats', component: CongratsComponent },
-  { path: 'rewards', component: RewardsComponent },
-  { path: 'reward/:rewardId', component: RewardComponent },
+  { path: 'vouchers', component: VouchersComponent },
+  { path: 'vouchers/:id', component: VoucherComponent },
   { path: 'activation', component: ActivationCodeComponent },
   { path: 'redemption', component: RedemptionComponent },
   { path: 'tnc', component: TncComponent },

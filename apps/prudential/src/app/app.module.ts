@@ -3,11 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { VouchersModule } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
-import { RewardsComponent } from './rewards/rewards.component';
-import { RewardComponent } from './reward/reward.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
@@ -18,8 +16,6 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     AppComponent,
     GameComponent,
     CongratsComponent,
-    RewardsComponent,
-    RewardComponent,
     ActivationCodeComponent,
     RedemptionComponent,
     TncComponent,
@@ -28,7 +24,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PerxCoreModule
+    VouchersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
