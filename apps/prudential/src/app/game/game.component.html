@@ -1,4 +1,2 @@
-<p>
-  game works!
-</p>
-<button routerLink="/congrats">Play Game</button>
+<perx-core-shake-tree (completed)="done()" [enabled]="playing"></perx-core-shake-tree>
+<button (click)="playing=true" [hidden]="playing">Play Game</button>
