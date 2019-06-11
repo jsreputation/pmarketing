@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { VouchersModule } from './vouchers/vouchers.module';
 import { PinInputComponent } from './pin-input/pin-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+const modules = [
+  VouchersModule
+];
 
 @NgModule({
   declarations: [
     PinInputComponent
   ],
   imports: [
-    CommonModule, ReactiveFormsModule
+    ...modules,
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
+    ...modules,
     PinInputComponent
   ]
 })
