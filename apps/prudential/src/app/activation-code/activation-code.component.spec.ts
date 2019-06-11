@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
+import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { RouterModule } from '@angular/router';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -8,9 +10,13 @@ describe('ActivationCodeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActivationCodeComponent ]
+      declarations: [ActivationCodeComponent],
+      imports: [
+        RouterModule.forRoot([]),
+        PerxCoreModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
