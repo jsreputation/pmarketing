@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { VouchersModule } from './vouchers/vouchers.module';
+
+import { MatCardModule } from '@angular/material/card';
 
 const modules = [
-  VouchersModule
+  MatCardModule
 ];
 
 @NgModule({
@@ -13,4 +14,4 @@ const modules = [
     ...modules
   ]
 })
-export class PerxCoreModule { }
+export class MaterialModule { }
