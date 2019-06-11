@@ -10,6 +10,8 @@ import { ActivationCodeComponent } from './activation-code/activation-code.compo
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { MatToolbarModule, MatSidenavModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    VouchersModule
+    VouchersModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
