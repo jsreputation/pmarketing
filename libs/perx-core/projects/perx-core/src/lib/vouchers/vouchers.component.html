@@ -3,6 +3,17 @@
     mat-ripple
     (click)="onClick(voucher.id)"
   >
-    {{voucher.name}}
+    <img class="voucher-img" src="{{voucher.img}}">
+    <div>
+      <div class="voucher-details">
+        {{voucher.name}}
+      </div>
+      <div class="voucher-details">
+        {{voucher.description}}
+      </div>
+      <div class="voucher-details">
+        {{voucher.expiresAt}}
+      </div>
+    </div>
   </mat-card>
 </ng-container>

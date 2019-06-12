@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class VouchersComponent implements OnInit {
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
-  vouchers$: Observable<{ id: number, name: string }[]>;
+  vouchers$: Observable<{ id: number, name: string, img: string, description: string, expiresAt: string }[]>;
 
   constructor(
     private vouchersService: VouchersService
