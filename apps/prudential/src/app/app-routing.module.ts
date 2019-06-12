@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
-import { VouchersComponent, VoucherComponent } from '@perx/core/dist/perx-core';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { VouchersComponent } from './vouchers/vouchers.component';
+import { VoucherComponent } from './vouchers/voucher/voucher.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/game', pathMatch: 'full' },

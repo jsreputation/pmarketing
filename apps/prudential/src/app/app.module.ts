@@ -12,6 +12,8 @@ import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VouchersComponent } from './vouchers/vouchers.component';
+import { VoucherComponent } from './vouchers/voucher/voucher.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ActivationCodeComponent,
     RedemptionComponent,
     TncComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    VouchersComponent,
+    VoucherComponent
   ],
   imports: [
     BrowserModule,
