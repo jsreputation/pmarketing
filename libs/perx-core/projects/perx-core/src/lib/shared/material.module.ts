@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule, MatRippleModule } from '@angular/material';
 
 const modules = [
-  MatCardModule
+  MatCardModule,
+  MatRippleModule
 ];
 
 @NgModule({
