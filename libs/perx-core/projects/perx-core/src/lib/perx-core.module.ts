@@ -3,6 +3,7 @@ import { VouchersModule } from './vouchers/vouchers.module';
 import { PinInputComponent } from './pin-input/pin-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 
 const modules = [
   VouchersModule
@@ -10,7 +11,8 @@ const modules = [
 
 @NgModule({
   declarations: [
-    PinInputComponent
+    PinInputComponent,
+    ShakeTreeComponent
   ],
   imports: [
     ...modules,
@@ -19,7 +21,8 @@ const modules = [
   ],
   exports: [
     ...modules,
-    PinInputComponent
+    PinInputComponent,
+    ShakeTreeComponent
   ]
 })
 export class PerxCoreModule { }
