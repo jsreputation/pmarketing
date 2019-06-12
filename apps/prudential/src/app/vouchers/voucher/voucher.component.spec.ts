@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
 
 import { VoucherComponent } from './voucher.component';
+import { VouchersModule } from '@perx/core/dist/perx-core';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -8,7 +10,11 @@ describe('VoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VoucherComponent ]
+      declarations: [ VoucherComponent ],
+      imports: [
+        VouchersModule,
+        RouterModule.forRoot([])
+      ]
     })
     .compileComponents();
   }));
