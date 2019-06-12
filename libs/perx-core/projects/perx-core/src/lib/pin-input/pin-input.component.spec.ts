@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PinInputComponent } from './pin-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('PinInputComponent', () => {
   let component: PinInputComponent;
@@ -8,9 +9,10 @@ describe('PinInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PinInputComponent ]
+      declarations: [PinInputComponent],
+      imports: [ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
