@@ -25,26 +25,20 @@ export class VouchersComponent implements OnInit {
   }
 
   completedPopup() {
-    const conf: IPopupConfig = {
+    const data: IPopupConfig = {
       text: 'See the treats you\'ve earned and don\'t forget to redeem them before they\'re gone!',
       title: 'You\'ve already completed the game',
       buttonTxt: 'See my treats'
     };
-    this.dialog.open(PopupComponent, {
-      data: conf
-    });
+    this.dialog.open(PopupComponent, { data });
   }
 
   expiredPopup(date: Date = null) {
-    if (date === null) {
-      date = new Date();
-    }
-    const conf: IPopupConfig = {
-      text: `This campaign has ended on ${this.datePipe.transform(date, 'mediumDate')}`,
+    const text = date === null ? 'This campaign has ended' : `This campaign has ended on ${this.datePipe.transform(date, 'mediumDate')}`;
+    const data: IPopupConfig = {
+      text,
       title: 'We\'re sorry, the treats have expired'
     };
-    this.dialog.open(PopupComponent, {
-      data: conf
-    });
+    this.dialog.open(PopupComponent, { data });
   }
 }
