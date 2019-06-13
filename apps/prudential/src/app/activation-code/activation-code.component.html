@@ -1,5 +1,9 @@
-<h1>
-  Enter your merchant code
-</h1>
-<perx-core-pin-input length="4" (full)="pinInput($event)"></perx-core-pin-input>
-<button routerLink="/vouchers/1">Cancel</button>
+<mat-card>
+  <h1>
+    Merchant to enter the code
+  </h1>
+  <div>
+    <perx-core-pin-input length="4" (full)="pinInput($event)"></perx-core-pin-input>
+  </div>
+  <button mat-stroked-button color="primary" routerLink="/vouchers/1">Cancel</button>
+</mat-card>
