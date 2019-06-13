@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivationCodeComponent } from './activation-code.component';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -13,7 +14,8 @@ describe('ActivationCodeComponent', () => {
       declarations: [ActivationCodeComponent],
       imports: [
         RouterModule.forRoot([]),
-        PerxCoreModule
+        PerxCoreModule,
+        MatCardModule
       ]
     })
       .compileComponents();
