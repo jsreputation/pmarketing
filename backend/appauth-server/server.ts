@@ -51,6 +51,21 @@ app.get('/preauth', async (req, res, next) => {
   }
 });
 
+app.get('/v4/preauth', async (req, res, next) => {
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Expose-Headers': 'Authorization',
+    // Authorization: endpointRequest.headers.authorization
+
+  });
+  res.json({
+    "access_token": "",
+    "token_type": "bearer",
+    "expires_in": 2629746,
+    "created_at": 1560408357
+  });
+});
 // app.get('*', (req, res, next) => {
 //   if (req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] === 'http') {
 //     res.redirect('https://' + req.headers.host + req.url);
