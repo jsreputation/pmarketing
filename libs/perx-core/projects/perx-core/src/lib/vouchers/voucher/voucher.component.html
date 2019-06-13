@@ -25,7 +25,14 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur neque purus, elementum id est sit amet, vestibulum viverra lectus. Curabitur in pretium quam. Nunc eget viverra quam. Cras urna augue, pretium vitae feugiat id, semper in ligula. Aliquam ornare, erat quis dapibus mollis, ex lorem scelerisque dolor, nec maximus augue nulla non ex. Proin non volutpat nulla, et semper turpis. Sed tincidunt orci
     </div>
   </div>
-  <div class="action-container">
-    <button mat-raised-button color="primary" class="redeem-btn">REDEEM NOW</button>
-  </div>
 </div>
+<div class="action-container">
+  <button 
+    mat-raised-button
+    color="primary" 
+    class="redeem-btn"
+    (click)="onClick()"
+  >
+    REDEEM NOW
+  </button>
+  </div>
