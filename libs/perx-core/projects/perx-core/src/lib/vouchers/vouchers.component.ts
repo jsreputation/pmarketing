@@ -20,7 +20,11 @@ export class VouchersComponent implements OnInit {
     this.vouchers$ = this.vouchersService.getAll();
   }
 
-  onClick(id: number | string) {
-    this.route.emit(id);
+  onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }) {
+    if (voucher.state === 'redeemed') {
+      return;
+    }
+
+    this.route.emit(voucher.id);
   }
 }
