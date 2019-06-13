@@ -1,0 +1,87 @@
+$max-width: 60.0rem;
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: $max-width;
+}
+
+.reward-image-container {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.reward-image {
+  position: absolute;  
+  left: 0; top: 0;  
+  width: 100%; 
+  height: auto;
+}
+
+.merchant-image-container {
+  position: relative;
+  padding-top: 25%;
+  margin-top: -12.5%;
+}
+
+.merchant-image {
+  border-radius: 50%;
+  border: 0.2rem solid white;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  position: absolute;  
+  left: 37.5%; top: 0; 
+  width: 25%; 
+  height: auto;
+}
+
+.details {
+  padding: 0 1.2rem 6.4rem;
+}
+
+.reward-name {
+  margin-top: 1.5rem;
+  font-size: 2.0rem;
+  text-align: center;
+}
+
+.merchant-name {
+  margin-top: 1.5rem;
+  font-size: 2.0rem;
+  text-align: center;
+  color: darkgray;
+}
+
+.section-heading {
+  margin-top: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.section-content {
+  font-size: 1.6rem;
+}
+
+.action-container {
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: $max-width;
+  height: 4.0rem;
+  padding: 1.2rem 0rem;
+  border-top: 0.1rem solid darkgray;
+}
+
+.redeem-btn-container {
+  position: relative;
+  width: 100%;
+  max-width: $max-width;
+}
+
+.redeem-btn {
+  width: calc(100% - 2.4rem);
+  height: 100%;
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+}
