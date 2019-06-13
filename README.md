@@ -1,5 +1,5 @@
 # Philosophy
-* Reusable components sit under libs.
+* Reusable components seat under libs.
 * Deployable apps sit under apps.
 * Currently it is on the base one app per microsite.
 * Apps should mostly be basic wrappers which style and aggregate the components in a coherent routable app.
