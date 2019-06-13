@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 import { Observable, of } from 'rxjs';
@@ -21,8 +20,6 @@ export class AuthenticationService implements AuthService {
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private cognitoService: CognitoService,
-    private route: ActivatedRoute,
-    private router: Router,
   ) {
   }
 
