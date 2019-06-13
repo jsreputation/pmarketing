@@ -67,16 +67,9 @@ $max-width: 60.0rem;
   position: fixed;
   bottom: 0;
   width: 100%;
-  max-width: $max-width;
   height: 4.0rem;
   padding: 1.2rem 0rem;
   border-top: 0.1rem solid darkgray;
-}
-
-.redeem-btn-container {
-  position: relative;
-  width: 100%;
-  max-width: $max-width;
 }
 
 .redeem-btn {
