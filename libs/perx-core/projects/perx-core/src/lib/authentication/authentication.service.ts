@@ -61,7 +61,7 @@ export class AuthenticationService implements AuthService {
               // @ts-ignore
               const userBearer = resp.headers.get('Authorization');
               if (userBearer) {
-                this.tokenStorage.setAccessToken(userBearer.split(' ')[1]);
+                this.saveAccessData(userBearer.split(' ')[1]);
               }
             },
             (err) => {
@@ -91,7 +91,7 @@ export class AuthenticationService implements AuthService {
   }
 
   /**
-   * EXTRA AUTH METHODS
+   * EXTRA AUTH FUNCTIONS
    */
 
   public async autoLogin() {
@@ -107,7 +107,7 @@ export class AuthenticationService implements AuthService {
     // @ts-ignore
     const userBearer = userAuthData.body.data[0].attributes.jwt;
     if (userBearer) {
-      this.tokenStorage.setAccessToken(userBearer);
+      this.saveAccessData(userBearer);
 
       success = true;
     }
@@ -143,8 +143,9 @@ export class AuthenticationService implements AuthService {
   }
 
   /**
-   * Save access data in the storage
+   * PRIVATE HELPER FUNCTIONS
    */
+
   private saveAccessData(accessToken: string) {
     this.tokenStorage.setAccessToken(accessToken);
   }
