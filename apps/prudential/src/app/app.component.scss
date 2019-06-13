@@ -1,12 +1,24 @@
+.toolbar {
+  position: fixed;
+  z-index: 4;
+}
+
 .sidenav {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
-       Every toolbar row uses a flexbox row layout. */
-    flex: 1 1 auto;
+  /* This fills the remaining space, by using flexbox. 
+      Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.container {
+  padding-top: 64px;
+}
+
+@media (max-width: 599px) {
+  .container {
+    padding-top: 56px;
   }
+}
