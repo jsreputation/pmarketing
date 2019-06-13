@@ -8,3 +8,6 @@ export * from './lib/vouchers/vouchers.component';
 export * from './lib/vouchers/voucher/voucher.component';
 export * from './lib/authentication/authentication.service';
 export * from './lib/authentication/authentication.module';
+export * from './lib/whistler/cognito/cognito.service';
+export * from './lib/whistler/cognito/cognito.component';
+export * from './lib/whistler/cognito/cognito.module';

@@ -5,6 +5,7 @@ import { AuthService } from 'ngx-auth';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
+import { CognitoService } from '../whistler/cognito/cognito.service';
 
 @Injectable({
   providedIn: 'root'
