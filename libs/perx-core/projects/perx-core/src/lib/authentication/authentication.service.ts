@@ -9,7 +9,7 @@ import { TokenStorage } from './token-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PerxAuthenticationService implements AuthService {
+export class AuthenticationService implements AuthService {
 
   lastURL: string;
   authing: boolean;
@@ -78,7 +78,7 @@ export class PerxAuthenticationService implements AuthService {
   /**
    * Function, checks response of failed request to determine,
    * whether token be refreshed or not.
-   * @description Essentialy checks status
+   * @description Essentially checks status
    */
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
     return this.retries < 3 && response.status === 401;
@@ -106,6 +106,7 @@ export class PerxAuthenticationService implements AuthService {
         this.authing = false;
       }
     );
+    // @ts-ignore
     const userBearer = userAuthData.body.data[0].attributes.jwt;
     if (userBearer) {
       this.tokenStorage.setAccessToken(userBearer);
@@ -145,9 +146,6 @@ export class PerxAuthenticationService implements AuthService {
 
   /**
    * Save access data in the storage
-   *
-   * @private
-   * @param {AccessData} data
    */
   private saveAccessData(accessToken: string) {
     this.tokenStorage.setAccessToken(accessToken);

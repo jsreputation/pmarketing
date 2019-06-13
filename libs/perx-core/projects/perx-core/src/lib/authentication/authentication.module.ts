@@ -6,9 +6,9 @@ import {
   PUBLIC_FALLBACK_PAGE_URI
 } from 'ngx-auth';
 import { TokenStorage } from './token-storage.service';
-import { PerxAuthenticationService } from './perx-authentication.service';
+import { AuthenticationService } from './authentication.service';
 
-export function factory(authenticationService: PerxAuthenticationService) {
+export function factory(authenticationService: AuthenticationService) {
   return authenticationService;
 }
 
@@ -16,17 +16,17 @@ export function factory(authenticationService: PerxAuthenticationService) {
   imports: [AuthModule],
   providers: [
     TokenStorage,
-    PerxAuthenticationService,
+    AuthenticationService,
     { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
     { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
     {
       provide: AUTH_SERVICE,
-      deps: [PerxAuthenticationService],
+      deps: [AuthenticationService],
       useFactory: factory
     }
   ],
   declarations: [],
   exports: []
 })
-export class PerxAuthenticationModule {
+export class AuthenticationModule {
 }

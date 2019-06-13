@@ -9,7 +9,6 @@ export class TokenStorage {
 
   /**
    * Get access token
-   * @returns {Observable<string>}
    */
   public getAccessToken(): Observable<string> {
     // const token: string = this.accessToken;
@@ -19,7 +18,6 @@ export class TokenStorage {
 
   /**
    * Get refresh token
-   * @returns {Observable<string>}
    */
   public getRefreshToken(): Observable<string> {
     // const token: string = this.refreshToken;
@@ -29,7 +27,6 @@ export class TokenStorage {
 
   /**
    * Set access token
-   * @returns {TokenStorage}
    */
   public setAccessToken(token: string): TokenStorage {
     // this.accessToken = token;
@@ -40,7 +37,6 @@ export class TokenStorage {
 
   /**
    * Set refresh token
-   * @returns {TokenStorage}
    */
   public setRefreshToken(token: string): TokenStorage {
     // this.refreshToken = token;
