@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 const vouchers = [
-  { 
+  {
     id: 1,
     state: 'issued',
     name: 'Venti Caffe Latte',
