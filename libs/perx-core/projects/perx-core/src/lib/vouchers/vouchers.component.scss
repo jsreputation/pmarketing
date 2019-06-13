@@ -13,7 +13,6 @@ mat-card {
 }
 
 .voucher-details {
-  margin-top: 3px;
   margin-left: 10px;
 }
 
@@ -21,3 +20,17 @@ mat-card {
   margin-top: 0px;
 }
 
+.ribbon {
+  background: #ef241c;
+  box-shadow: 0 0 3px rgba(0,0,0,.3);
+  color: #f0f0f0;
+  font-size: 12px;
+  top: 22px;
+  right: -48px;
+  width: 150px;
+  text-align: center;
+  line-height: 16px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  position: absolute;
+}

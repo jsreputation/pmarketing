@@ -4,16 +4,17 @@
     (click)="onClick(voucher.id)"
   >
     <img class="voucher-img" src="{{voucher.img}}">
-    <div>
-      <div class="voucher-details">
+    <div class="voucher-details">
+      <div>
         {{voucher.name}}
       </div>
-      <div class="voucher-details">
+      <div>
         {{voucher.description}}
       </div>
-      <div class="voucher-details">
+      <div>
         {{voucher.expiresAt}}
       </div>
+      <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>
     </div>
   </mat-card>
 </ng-container>
