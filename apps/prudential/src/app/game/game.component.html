@@ -11,4 +11,4 @@
     [enabled]="playing"
     >
 </perx-core-shake-tree>
-<button (click)="playing=true" [hidden]="playing">Start playing</button>
+<button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>

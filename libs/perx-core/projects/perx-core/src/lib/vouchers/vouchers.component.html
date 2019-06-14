@@ -1,7 +1,8 @@
 <ng-container *ngFor="let voucher of vouchers$ | async">
   <mat-card
     mat-ripple
-    (click)="onClick(voucher.id)"
+    [matRippleDisabled]="voucher.state === 'redeemed'"
+    (click)="onClick(voucher)"
   >
     <img class="voucher-img" src="{{voucher.img}}">
     <div class="voucher-details">
