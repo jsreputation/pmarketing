@@ -3,12 +3,16 @@
 </h1>
 <p>Collect your treats by tapping the tree until they fall</p>
 <perx-core-shake-tree 
-    treeImg="../../assets/img/tree.png"
-    giftImg="../../assets/img/gift.png"
-    waitingManImg="../../assets/img/person.png"
-    waitingManCelebrateImg="../../assets/img/person-celebrate.png"
-    (completed)="done()" 
-    [enabled]="playing"
-    >
+[treeImg]="'../../assets/img/tree.png'"
+[giftImg]="'../../assets/img/gift.png'"
+[waitingManImg]="'../../assets/img/person.png'"
+[waitingManCelebrateImg]="'../../assets/img/person-celebrate.png'"
+[nbHangedGifts]="10"
+[nbFallingGifts]="5"
+(completed)="done()"
+[enabled]="playing"
+>
 </perx-core-shake-tree>
-<button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
+<div class="action-container">
+    <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
+</div>

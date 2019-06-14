@@ -1,20 +1,14 @@
 <div (click)="tapped()">
   <div class="tree">
     <div [className]="shakeAnitionClass">
-      <img [src]="treeImg" class="tree__img"/>
+      <img [src]="treeImg" class="tree__img" />
       <div *ngFor="let gift of gifts" class="gift">
         <img *ngIf="gift.display" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id + ' ' + gift.status" />
       </div>
     </div>
     <div class="man">
-        <img *ngIf="!celebrate" [src]="waitingManImg" class="man__img" />
-        <img *ngIf="celebrate" [src]="waitingManCelebrateImg" class="man__img" />
-      </div>
-  </div>
-  <div>
-    Tap Here!!!
-  </div>
-  <div>
-    Tapped {{n}} time(s)!!!!
+      <img *ngIf="!celebrate" [src]="waitingManImg" class="man__img" />
+      <img *ngIf="celebrate" [src]="waitingManCelebrateImg" class="man__img" />
+    </div>
   </div>
 </div>

@@ -18,7 +18,10 @@ export class ShakeTreeComponent implements OnInit {
   waitingManCelebrateImg: string;
 
   @Input()
-  nbFallingGifts = 3;
+  nbHangedGifts = 10;
+
+  @Input()
+  nbFallingGifts = 10;
 
   @Input()
   enabled = false;
@@ -27,16 +30,16 @@ export class ShakeTreeComponent implements OnInit {
   completed: EventEmitter<void> = new EventEmitter<void>();
 
   gifts = [
-    { id: 1, status: 'hang', display: true},
-    { id: 2, status: 'hang', display: true},
-    { id: 3, status: 'hang', display: true},
-    { id: 4, status: 'hang', display: true},
-    { id: 5, status: 'hang', display: true},
-    { id: 6, status: 'hang', display: true},
-    { id: 7, status: 'hang', display: false},
-    { id: 8, status: 'hang', display: false},
-    { id: 9, status: 'hang', display: false},
-    { id: 10, status: 'hang', display: false}
+    { id: 1, status: 'hang', display: true },
+    { id: 2, status: 'hang', display: true },
+    { id: 3, status: 'hang', display: true },
+    { id: 4, status: 'hang', display: true },
+    { id: 5, status: 'hang', display: true },
+    { id: 6, status: 'hang', display: true },
+    { id: 7, status: 'hang', display: true },
+    { id: 8, status: 'hang', display: true },
+    { id: 9, status: 'hang', display: true },
+    { id: 10, status: 'hang', display: true }
   ];
 
   celebrate = false;
@@ -45,6 +48,12 @@ export class ShakeTreeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.gifts.map(gift => {
+      if (gift.id > this.nbHangedGifts) {
+        gift.display = false;
+      }
+      return gift;
+    });
   }
 
   tapped() {
@@ -59,13 +68,16 @@ export class ShakeTreeComponent implements OnInit {
       } else if (this.n === this.requiredTaps) {
         this.shakeAnitionClass = '';
         this.gifts.map(gift => {
+          console.log(gift.id + ' | ' + this.nbFallingGifts);
           if (gift.id <= this.nbFallingGifts) {
             gift.status = 'drop';
           }
           return gift;
         });
-        // this.completed.emit();
-        setTimeout(() => { this.celebrate = true; }, 500);
+        setTimeout(() => {
+          this.celebrate = true;
+          this.completed.emit();
+        }, 300);
       }
     }
   }
