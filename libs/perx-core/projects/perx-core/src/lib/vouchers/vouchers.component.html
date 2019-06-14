@@ -1,6 +1,7 @@
 <div class="container">
   <ng-container *ngFor="let voucher of vouchers$ | async">
     <mat-card
+      *ngIf="filter === undefined || voucher.state === filter"
       mat-ripple
       [matRippleDisabled]="voucher.state === 'redeemed'"
       (click)="onClick(voucher)"
