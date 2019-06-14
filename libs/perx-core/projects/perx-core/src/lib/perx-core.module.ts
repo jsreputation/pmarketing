@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PopupComponent } from './popup/popup.component';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { PuzzleDrawComponent } from './puzzle-draw/puzzle-draw.component';
 
 const modules = [
   VouchersModule
@@ -15,7 +16,8 @@ const modules = [
   declarations: [
     PinInputComponent,
     ShakeTreeComponent,
-    PopupComponent
+    PopupComponent,
+    PuzzleDrawComponent
   ],
   imports: [
     ...modules,
@@ -28,7 +30,8 @@ const modules = [
     ...modules,
     PinInputComponent,
     ShakeTreeComponent,
-    PopupComponent
+    PopupComponent,
+    PuzzleDrawComponent
   ]
 })
 export class PerxCoreModule { }
