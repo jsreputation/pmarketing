@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 
 import { VouchersComponent } from './vouchers.component';
 import { VouchersModule } from '@perx/core/dist/perx-core';
+import { MatDialogModule } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -13,7 +15,11 @@ describe('VouchersComponent', () => {
       declarations: [ VouchersComponent ],
       imports: [
         VouchersModule,
+        MatDialogModule,
         RouterModule.forRoot([])
+      ],
+      providers: [
+        DatePipe
       ]
     })
     .compileComponents();

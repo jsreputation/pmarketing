@@ -1,0 +1,13 @@
+button {
+    margin-top: 16px;
+    width: 100%;
+}
+h1 {
+    text-align: center;
+}
+mat-dialog-content {
+    text-align: center;
+}
+button {
+    text-transform: uppercase;
+}
