@@ -1,12 +1,31 @@
-.sidenav {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+.toolbar {
+  display: flex;
+  position: fixed;
+  z-index: 4;
+  padding: 0 0.8rem;
 }
 
-.fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
-       Every toolbar row uses a flexbox row layout. */
-    flex: 1 1 auto;
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 20rem;
+}
+
+.logo {
+  flex-grow: 1;
+  height: 40%;
+  object-fit: contain;
+}
+
+.container, .sidenav {
+  padding-top: 64px;
+}
+
+@media (max-width: 599px) {
+  .container, .sidenav {
+    padding-top: 56px;
   }
+
+}

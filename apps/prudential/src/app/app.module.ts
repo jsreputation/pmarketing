@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VouchersModule, PerxCoreModule, CognitoModule, AuthenticationModule } from '@perx/core/dist/perx-core';
+import { VouchersModule, PerxCoreModule, PopupComponent, CognitoModule, AuthenticationModule } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -16,11 +16,14 @@ import {
   MatListModule,
   MatButtonModule,
   MatCardModule,
-  MatProgressSpinnerModule
+  MatDialogModule,
+  MatIconModule,
+MatProgressSpinnerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
+import { DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 
@@ -47,13 +50,20 @@ import { environment } from '../environments/environment';
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatIconModule,
     BrowserAnimationsModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
     AuthenticationModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    DatePipe
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    PopupComponent
+  ]
 })
 export class AppModule {
 }

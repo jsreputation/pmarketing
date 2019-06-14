@@ -1,35 +1,36 @@
 mat-card {
-  margin: 8px;
+  margin: 1.6rem 0;
   display: flex;
   align-items: center;
   padding: 0;
-  height: 100px;
+  height: 10.5rem;
 }
 
 .voucher-img {
   margin: 0;
   height: 100%;
-  width: 100px;
+  width: 10.5rem;
 }
 
 .voucher-details {
-  margin-left: 10px;
+  margin-left: 1rem;
+  font-size: 1.4rem;
 }
 
 .voucher-details:nth-child(1) {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .ribbon {
   background: #ef241c;
-  box-shadow: 0 0 3px rgba(0,0,0,.3);
+  box-shadow: 0 0 .3rem rgba(0, 0, 0, .3);
   color: #f0f0f0;
-  font-size: 12px;
-  top: 22px;
-  right: -48px;
-  width: 150px;
+  font-size: 1rem;
+  top: 2.2rem;
+  right: -4.8rem;
+  width: 15rem;
   text-align: center;
-  line-height: 16px;
+  line-height: 1.6rem;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   position: absolute;
