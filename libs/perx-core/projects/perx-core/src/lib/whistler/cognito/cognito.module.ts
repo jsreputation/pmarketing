@@ -1,14 +1,13 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {CognitoComponent} from './cognito.component';
 import {HttpClientModule} from '@angular/common/http';
 import {CognitoService, EnvConfig} from './cognito.service';
 
 @NgModule({
-  declarations: [CognitoComponent],
+  declarations: [],
   imports: [
     HttpClientModule
   ],
-  exports: [CognitoComponent]
+  exports: []
 })
 
 export class CognitoModule {
