@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,48 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shake-the-tree';
-  showSideNav = true;
+  showBack = false;
+  defaultBackLocation = '/vouchers';
+
+  constructor(
+    private location: Location
+  ) { }
+
+  goBack() {
+    this.location.back();
+  }
+
+  onActivate(ref: any) {
+    if (!ref.constructor) {
+      return;
+    }
+
+    switch (ref.constructor.name) {
+      case 'TncComponent': {
+        this.showBack = true;
+        break;
+      }
+      case 'ContactUsComponent': {
+        this.showBack = true;
+        break;
+      }
+      case 'VoucherComponent': {
+        this.showBack = true;
+        break;
+      }
+      default: {
+        this.showBack = false;
+        break;
+      }
+    }
+  }
+
+  replaceUrl(): boolean {
+    const path = this.location.path();
+    if (path === '/tnc' || path === '/contact-us') {
+      return true;
+    }
+
+    return false;
+  }
 }

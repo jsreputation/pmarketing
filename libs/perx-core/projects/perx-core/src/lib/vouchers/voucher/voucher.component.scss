@@ -2,6 +2,7 @@ $max-width: 60.0rem;
 
 .container {
   margin: 0 auto;
+  background: white;
   display: flex;
   flex-direction: column;
   max-width: $max-width;
@@ -9,20 +10,20 @@ $max-width: 60.0rem;
 
 .reward-image-container {
   position: relative;
-  padding-top: 56.25%;
+  padding-top: 53.33%;
 }
 
 .reward-image {
   position: absolute;  
   left: 0; top: 0;  
   width: 100%; 
-  height: auto;
+  height: 100%;
 }
 
 .merchant-image-container {
   position: relative;
-  padding-top: 25%;
-  margin-top: -12.5%;
+  padding-top: 26.67%;
+  margin-top: -13.33%;
 }
 
 .merchant-image {
@@ -32,7 +33,6 @@ $max-width: 60.0rem;
   position: absolute;  
   left: 37.5%; top: 0; 
   width: 25%; 
-  height: auto;
 }
 
 .details {

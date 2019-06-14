@@ -1,21 +1,23 @@
-<ng-container *ngFor="let voucher of vouchers$ | async">
-  <mat-card
-    mat-ripple
-    [matRippleDisabled]="voucher.state === 'redeemed'"
-    (click)="onClick(voucher)"
-  >
-    <img class="voucher-img" src="{{voucher.img}}">
-    <div class="voucher-details">
-      <div>
-        {{voucher.name}}
+<div class="container">
+  <ng-container *ngFor="let voucher of vouchers$ | async">
+    <mat-card
+      mat-ripple
+      [matRippleDisabled]="voucher.state === 'redeemed'"
+      (click)="onClick(voucher)"
+    >
+      <img class="voucher-img" src="{{voucher.img}}">
+      <div class="voucher-details">
+        <div>
+          {{voucher.name}}
+        </div>
+        <div>
+          {{voucher.description}}
+        </div>
+        <div>
+          {{voucher.expiresAt}}
+        </div>
+        <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>
       </div>
-      <div>
-        {{voucher.description}}
-      </div>
-      <div>
-        {{voucher.expiresAt}}
-      </div>
-      <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>
-    </div>
-  </mat-card>
-</ng-container>
+    </mat-card>
+  </ng-container>  
+</div>
