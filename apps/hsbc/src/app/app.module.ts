@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatListModule } from '@angular/material';
+import { PerxCoreModule } from '@perx/core/dist/perx-core';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatButtonModule, MatListModule } from '@angular/material';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    PerxCoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
