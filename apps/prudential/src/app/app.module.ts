@@ -10,7 +10,15 @@ import { ActivationCodeComponent } from './activation-code/activation-code.compo
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatCardModule, MatDialogModule } from '@angular/material';
+import {
+  MatToolbarModule,
+  MatSidenavModule,
+  MatListModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatIconModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
@@ -38,6 +46,7 @@ import { DatePipe } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatIconModule,
     BrowserAnimationsModule,
     PerxCoreModule
   ],
