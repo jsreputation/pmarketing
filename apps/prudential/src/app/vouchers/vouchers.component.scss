@@ -1,0 +1,13 @@
+$max-width: 60.0rem;
+
+.container {
+  margin: 0 auto;
+  max-width: $max-width;
+  padding: 0 1.6rem;
+}
+
+.section-heading {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-top: 1.6rem;
+}

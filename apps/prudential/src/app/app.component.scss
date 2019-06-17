@@ -1,25 +1,31 @@
 .toolbar {
+  display: flex;
   position: fixed;
   z-index: 4;
+  padding: 0 0.8rem;
+}
+
+.sidenav-container {
+  height: 100%;
 }
 
 .sidenav {
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0);
+  width: 20rem;
 }
 
-.fill-remaining-space {
-  /* This fills the remaining space, by using flexbox. 
-      Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
+.logo {
+  flex-grow: 1;
+  height: 40%;
+  object-fit: contain;
 }
 
-.container {
+.container, .sidenav {
   padding-top: 64px;
 }
 
 @media (max-width: 599px) {
-  .container {
+  .container, .sidenav {
     padding-top: 56px;
   }
+
 }

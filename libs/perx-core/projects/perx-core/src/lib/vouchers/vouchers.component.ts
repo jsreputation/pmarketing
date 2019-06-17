@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from './vouchers.service';
 import { Observable } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
+  @Input() filter: string;
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
   vouchers$: Observable<{ id: number, state: string, name: string, img: string, description: string, expiresAt: string }[]>;

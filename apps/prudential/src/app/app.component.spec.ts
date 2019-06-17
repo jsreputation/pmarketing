@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule, MatListModule, MatSidenavModule } from '@angular/material';
+import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
@@ -12,6 +12,7 @@ describe('AppComponent', () => {
         MatToolbarModule,
         MatListModule,
         MatSidenavModule,
+        MatIconModule,
         NoopAnimationsModule
       ],
       declarations: [
