@@ -14,6 +14,8 @@ export class GameComponent implements OnInit {
   }
 
   done(): void {
-    this.router.navigate(['/congrats']);
+    setTimeout(() => {
+      this.router.navigate(['/congrats']);
+    }, 3000);
   }
 }
