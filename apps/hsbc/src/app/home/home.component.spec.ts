@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { RouterModule } from '@angular/router';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatCardModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HomeComponent', () => {
@@ -17,7 +17,8 @@ describe('HomeComponent', () => {
         PerxCoreModule,
         RouterModule.forRoot([]),
         MatTabsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        MatCardModule
       ]
     })
       .compileComponents();
