@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IPuzzle } from '../puzzle.model';
 
 @Component({
   selector: 'perx-core-puzzle-draw',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./puzzle-draw.component.css']
 })
 export class PuzzleDrawComponent implements OnInit {
-
+  puzzle: IPuzzle;
   constructor() { }
 
   ngOnInit() {
