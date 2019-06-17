@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleComponent } from './puzzle.component';
+import { PerxCoreModule } from '@perx/core/dist/perx-core';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
@@ -8,7 +9,10 @@ describe('PuzzleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuzzleComponent ]
+      declarations: [ PuzzleComponent ],
+      imports: [
+        PerxCoreModule
+      ]
     })
     .compileComponents();
   }));
