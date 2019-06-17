@@ -1,5 +1,12 @@
-<!-- Template stuff aimed at being replaced by real components -->
-<h1>My puzzles</h1>
-<button routerLink="/puzzles">Puzzle Game(6)</button>
-<h1>My rewards</h1>
-<perx-core-vouchers (route)="onRoute($event)"></perx-core-vouchers>
+<mat-tab-group mat-stretch-tabs>
+    <mat-tab label="My Wallet">
+        <!-- Template stuff aimed at being replaced by real components -->
+        <h1>My puzzles</h1>
+        <button routerLink="/puzzles">Puzzle Game(6)</button>
+        <h1>My rewards</h1>
+        <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
+    </mat-tab>
+    <mat-tab label="History">
+        <perx-core-vouchers (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
+    </mat-tab>
+</mat-tab-group>
