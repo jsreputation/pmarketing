@@ -13,3 +13,7 @@ input {
     /* identical to box height */
     text-align: center;
 }
+.activation-code {
+    display: flex;
+    justify-content: center;
+}

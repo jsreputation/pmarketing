@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
+  reward = {
+    owner: 'Szechuan Court'
+  };
 
   constructor() { }
 
