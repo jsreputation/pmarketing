@@ -1,9 +1,12 @@
-<mat-card>
+<div class="full-page-container-white">
+  <p>
+    The merchant will enter the redemption code when you are ready to redeem at the venue.
+  </p>
   <h1>
     Merchant to enter the code
   </h1>
-  <div>
-    <perx-core-pin-input length="4" (full)="pinInput($event)"></perx-core-pin-input>
+  <perx-core-pin-input length="4" (full)="pinInput($event)"></perx-core-pin-input>
+  <div class="action-container">
+    <button mat-stroked-button color="primary" (click)="onCancel()">Cancel</button>
   </div>
-  <button mat-stroked-button color="primary" routerLink="/vouchers/1">Cancel</button>
-</mat-card>
+</div>

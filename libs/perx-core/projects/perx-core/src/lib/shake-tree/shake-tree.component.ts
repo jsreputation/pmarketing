@@ -7,8 +7,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ShakeTreeComponent implements OnInit {
   @Input()
-  requiredTaps = 5;
-  @Input()
   treeImg: string;
   @Input()
   giftImg: string;
@@ -16,6 +14,8 @@ export class ShakeTreeComponent implements OnInit {
   waitingManImg: string;
   @Input()
   waitingManCelebrateImg: string;
+  @Input()
+  nbShakes = 1;
 
   @Input()
   nbHangedGifts = 10;
@@ -59,13 +59,13 @@ export class ShakeTreeComponent implements OnInit {
   tapped() {
     console.log(this.enabled);
     if (this.enabled) {
-      if (this.n < this.requiredTaps) {
+      if (this.n < this.nbShakes) {
         this.shakeAnitionClass = '';
         setTimeout(() => {
           this.shakeAnitionClass = 'shake';
         }, 0);
         this.n++;
-      } else if (this.n === this.requiredTaps) {
+      } else if (this.n === this.nbShakes) {
         this.shakeAnitionClass = '';
         this.gifts.map(gift => {
           console.log(gift.id + ' | ' + this.nbFallingGifts);

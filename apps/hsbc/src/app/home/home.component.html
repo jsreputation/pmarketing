@@ -1,12 +1,14 @@
 <mat-tab-group mat-stretch-tabs class="tab-group">
     <mat-tab label="My Wallet">
         <!-- Template stuff aimed at being replaced by real components -->
-        <div class="tab-group__content">
-            <h1>My puzzles</h1>
-            <button routerLink="/puzzles">Puzzle Game(6)</button>
-            <h1>My rewards</h1>
-            <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
-        </div>
+        <h1>My puzzles</h1>
+        <mat-card routerLink="/puzzles" matRipple>
+            <mat-card-header>
+                <mat-card-title>Puzzle Game(6)</mat-card-title>
+            </mat-card-header>
+        </mat-card>
+        <h1>My rewards</h1>
+        <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
     </mat-tab>
     <mat-tab label="History">
         <div class="tab-group__content">
