@@ -33,3 +33,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
     background-color: #DB0011;
 }
+.mat-form-field-label-wrapper {
+    font-size: 14px;
+    line-height: 16px;
+    top: -1em;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 1em 0;
+}
+.mat-form-field {
+    font-size: 14px;
+    line-height: 16px;
+}
