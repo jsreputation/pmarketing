@@ -11,8 +11,19 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatListModule, MatTabsModule, MatCardModule, MatRippleModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatListModule,
+  MatTabsModule,
+  MatCardModule,
+  MatRippleModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule
+  } from '@angular/material';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +43,13 @@ import { PerxCoreModule } from '@perx/core/dist/perx-core';
     MatButtonModule,
     MatListModule,
     MatTabsModule,
+    MatToolbarModule,
+    MatIconModule,
+    PerxCoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatCardModule,
     MatRippleModule,
     PerxCoreModule
