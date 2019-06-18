@@ -8,6 +8,7 @@ import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/game', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'activation', component: ActivationCodeComponent },
   { path: 'redemption', component: RedemptionComponent },
   { path: 'tnc', component: TncComponent },
-  { path: 'contact-us', component: ContactUsComponent }
+  { path: 'contact-us', component: ContactUsComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
