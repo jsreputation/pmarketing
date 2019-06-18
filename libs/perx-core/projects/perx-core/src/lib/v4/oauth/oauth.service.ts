@@ -8,8 +8,6 @@ export class EnvConfig {
     production: false,
     preAuth: false,
     preAuthPath: '/preauth',
-    clientId: '',
-    clientSecret: ''
   };
 }
 
@@ -19,25 +17,22 @@ export class EnvConfig {
 export class OauthService {
 
   apiHost: string;
-  clientId: string;
-  clientSecret: string;
+  authHost: string;
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
     this.apiHost = config.env.apiHost;
-    this.clientId = config.env.clientId;
-    this.clientSecret = config.env.clientSecret;
+    this.authHost = 'https://localhost:4000';
   }
 
 
   authenticateV4Oauth(user: string, pass: string, mechId: string) {
     const httpParams = new HttpParams()
+      .append('url', location.host)
       .append('username', user)
       .append('password', pass)
-      .append('mech_id', mechId)
-      .append('client_id', this.clientId)
-      .append('client_secret', this.clientSecret);
+      .append('mech_id', mechId);
 
-    return this.http.post(this.apiHost + '/v4/oauth/token', null, {
+    return this.http.post(this.authHost + '/v4/oauth/token', null, {
       params: httpParams
     });
   }

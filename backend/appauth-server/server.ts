@@ -69,26 +69,28 @@ app.get('/v4/preauth', async (req, res, next) => {
 
 app.post('/v4/oauth/token', async (req, res, next) => {
   try {
-    const tenant = req.query.tenant;
-    if (tenant === undefined) {
-      throw new Error('No query parameter "tenant" specified');
+    const url = req.query.url;
+    if (url === undefined) {
+      throw new Error('No query parameter "url" specified');
     }
 
-    const endpoint = apiConfig.endpoints[tenant];
+    const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No tenant found: ${ tenant }`);
+      throw new Error(`No endpoints found: ${ url }`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
 
     const username = req.query.username;
     const password = req.query.password;
+    const mechId = req.query.mech_id;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
       {
         'username': username,
-        'password': password
+        'password': password,
+        'mech_id': mechId
       },
       {
         params: {
