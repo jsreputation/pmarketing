@@ -2,14 +2,14 @@
   <div class="reward-image-container">
     <img class="reward-image" src="https://picsum.photos/1600/900">
   </div>
-  <div class="merchant-image-container">
+  <div class="merchant-image-container" *ngIf="!hideMerchantImg">
     <img class="merchant-image" src="https://picsum.photos/200">
   </div>
   <div class="details">
     <div class="reward-name">
       50% Off Starbuck Venti
     </div> 
-    <div class="merchant-name">
+    <div class="merchant-name" *ngIf="!hideMerchantName">
       Starbucks
     </div>
     <div class="section-heading">
@@ -26,8 +26,8 @@
     </div>
   </div>
 </div>
-<div class="action-container">
-  <button 
+<div class="action-container" *ngIf="!hideActions">
+  <button
     mat-raised-button
     color="primary" 
     class="redeem-btn"

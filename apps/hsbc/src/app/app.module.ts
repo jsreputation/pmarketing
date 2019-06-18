@@ -17,10 +17,13 @@ import {
   MatTabsModule,
   MatCardModule,
   MatRippleModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
+  MatIconModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule
+  } from '@angular/material';
 import { AuthenticationModule, CognitoModule, OauthModule, PerxCoreModule } from '@perx/core/dist/perx-core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -41,9 +44,14 @@ import { environment } from '../environments/environment';
     MatButtonModule,
     MatListModule,
     MatTabsModule,
+    MatToolbarModule,
+    MatIconModule,
+    PerxCoreModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatCardModule,
     MatRippleModule,
-    MatProgressSpinnerModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),

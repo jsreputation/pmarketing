@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
-import { NgForm } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
 
   authed: boolean;
   preAuth: boolean;
@@ -18,10 +19,18 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+              @Inject(PLATFORM_ID) private platformId: object,
+              private fb: FormBuilder) {
     this.preAuth = environment.preAuth;
     this.failedAuth = false;
+    this.initForm();
+  }
 
+  initForm() {
+    this.loginForm = this.fb.group({
+      playerCode: ['', Validators.required],
+      hsbcCardLastFourDigits: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -52,10 +61,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // TODO: error states
-  onSubmit(loginForm: NgForm) {
-    const username = loginForm.value.username;
-    const password = loginForm.value.password;
+  onSubmit() {
+    const username = this.loginForm.get('playerCode').value;
+    const password = this.loginForm.get('hsbcCardLastFourDigits').value;
     const mechId = '2';
 
     this.authService.v4GameOauth(username, password, mechId).then(
