@@ -12,7 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatListModule, MatTabsModule, MatCardModule, MatRippleModule } from '@angular/material';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, CognitoModule, OauthModule, AuthenticationModule } from '@perx/core/dist/perx-core';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,10 @@ import { PerxCoreModule } from '@perx/core/dist/perx-core';
     MatTabsModule,
     MatCardModule,
     MatRippleModule,
-    PerxCoreModule
+    PerxCoreModule,
+    CognitoModule.forRoot({ env: environment }),
+    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
