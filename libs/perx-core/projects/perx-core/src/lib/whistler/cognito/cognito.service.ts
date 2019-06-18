@@ -46,7 +46,7 @@ export class CognitoService {
     });
   }
 
-  authenticateUser(bearer: string, user: string) {
+  authenticateUserIdWithAppBearer(bearer: string, user: string) {
     const payload = {
       data: {
         type: 'login',

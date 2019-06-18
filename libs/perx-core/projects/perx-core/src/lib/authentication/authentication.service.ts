@@ -117,7 +117,7 @@ export class AuthenticationService implements AuthService {
 
   public userAuth(bearer: string) {
     const userId = this.getUrlParameter('pi');
-    return this.cognitoService.authenticateUser(bearer, userId);
+    return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
   public preAuth() {
