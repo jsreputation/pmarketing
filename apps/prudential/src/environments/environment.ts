@@ -3,10 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiHost: 'localhost:3000',
+  apiHost: 'https://api.perxtech.io',
   production: false,
   preAuthPath: '/preauth',
-  preAuth: true
+  preAuth: false,
+  clientId: '',
+  clientSecret: ''
 };
 
 /*

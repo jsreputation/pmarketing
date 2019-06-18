@@ -7,10 +7,16 @@ import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PopupComponent } from './popup/popup.component';
 import { MatDialogModule, MatButtonModule, MatListModule } from '@angular/material';
 import { PuzzlesModule } from './puzzles/puzzles.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { CognitoModule } from './whistler/cognito/cognito.module';
+import { OauthModule } from './v4/oauth/oauth.module';
 
 const modules = [
   VouchersModule,
-  PuzzlesModule
+  PuzzlesModule,
+  AuthenticationModule,
+  CognitoModule,
+  OauthModule
 ];
 
 @NgModule({
