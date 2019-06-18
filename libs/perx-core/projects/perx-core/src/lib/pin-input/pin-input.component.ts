@@ -17,6 +17,7 @@ export class PinInputComponent implements OnInit {
   update: EventEmitter<string> = new EventEmitter<string>();
 
   controlls: FormControl[] = [];
+  hasError = '';
 
   constructor(private element: ElementRef) {
   }
@@ -40,7 +41,9 @@ export class PinInputComponent implements OnInit {
     const v = this.value;
     if (v.length === this.length) {
       // if full length reached, emit on complete
-      this.full.emit(v);
+      if (this.validateCode(v)) {
+        this.full.emit(v);
+      }
     } else {
       // move to next input box
       const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${v.length}`);
@@ -52,6 +55,12 @@ export class PinInputComponent implements OnInit {
     this.update.emit(v);
   }
 
+  validateCode(code: string) {
+    const isValid = !!(code === '1234');
+    this.hasError = isValid ? '' : 'error';
+
+    return isValid;
+  }
   get value(): string {
     return this.controlls.reduce((p: string, v: FormControl): string => {
       return v.value === null ? p : `${p}${v.value}`;

@@ -11,7 +11,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatListModule } from '@angular/material';
+import { MatButtonModule, MatListModule, MatTabsModule, MatCardModule, MatRippleModule } from '@angular/material';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 
 @NgModule({
@@ -31,6 +31,9 @@ import { PerxCoreModule } from '@perx/core/dist/perx-core';
     BrowserAnimationsModule,
     MatButtonModule,
     MatListModule,
+    MatTabsModule,
+    MatCardModule,
+    MatRippleModule,
     PerxCoreModule
   ],
   providers: [],

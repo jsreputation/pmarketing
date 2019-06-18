@@ -1,7 +1,41 @@
-button {
-  text-transform: uppercase;
-  width: 100%;
-}
 mat-card {
   margin: 16px;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  text-align: center;
+  margin-top: 3.2rem;
+  margin-bottom: 0;
+}
+p {
+  text-align: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  margin-top: 0;
+  margin-bottom: 1.6rem;
+}
+.congrats img {
+  max-width: 80vw;
+
+}
+.reward-vendor {
+  opacity: 0.5;
+}
+
+.reward-comment {
+  display: block;
+  text-align: center;
+  position: fixed;
+  bottom: 65px;
+  margin-bottom: 0;
+  width: 100%;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  opacity: 0.6;
 }

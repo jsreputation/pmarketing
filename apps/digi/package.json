@@ -1,5 +1,5 @@
 {
-  "name": "digi",
+  "name": "@perx/digi",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

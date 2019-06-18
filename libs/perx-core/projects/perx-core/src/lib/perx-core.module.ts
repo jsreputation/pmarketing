@@ -5,10 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PopupComponent } from './popup/popup.component';
-import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatListModule } from '@angular/material';
+import { PuzzlesModule } from './puzzles/puzzles.module';
 
 const modules = [
-  VouchersModule
+  VouchersModule,
+  PuzzlesModule
 ];
 
 @NgModule({
