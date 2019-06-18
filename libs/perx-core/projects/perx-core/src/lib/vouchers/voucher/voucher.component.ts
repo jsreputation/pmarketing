@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'perx-core-voucher',
@@ -7,6 +7,15 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class VoucherComponent implements OnInit {
   @Output() redeem: EventEmitter<VoucherComponent> = new EventEmitter<VoucherComponent>();
+
+  @Input()
+  hideMerchantImg = false;
+
+  @Input()
+  hideMerchantName = false;
+
+  @Input()
+  hideActions = false;
 
   constructor() { }
 
