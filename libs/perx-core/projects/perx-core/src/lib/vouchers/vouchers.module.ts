@@ -4,15 +4,18 @@ import { VouchersComponent } from './vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { MaterialModule } from '../shared/material.module';
 import { VouchersService } from './vouchers.service';
+import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
 
 const components = [
   VouchersComponent,
-  VoucherComponent
+  VoucherComponent,
+  BcodeRedemptionComponent
 ];
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
+    BcodeRedemptionComponent
   ],
   imports: [
     CommonModule,
