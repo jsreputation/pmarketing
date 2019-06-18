@@ -66,6 +66,44 @@ app.get('/v4/preauth', async (req, res, next) => {
     "created_at": 1560408357
   });
 });
+
+app.post('/v4/oauth/token', async (req, res, next) => {
+  try {
+    const tenant = req.query.tenant;
+    if (tenant === undefined) {
+      throw new Error('No query parameter "tenant" specified');
+    }
+
+    const endpoint = apiConfig.endpoints[tenant];
+    if (endpoint === undefined) {
+      throw new Error(`No tenant found: ${ tenant }`);
+    }
+
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+
+    const username = req.query.username;
+    const password = req.query.password;
+
+    const endpointRequest = await axios.post(
+      endpoint.target_url + '/v4/oauth/token',
+      {
+        'username': username,
+        'password': password
+      },
+      {
+        params: {
+          'client_id': endpointCredential.perx_access_key_id,
+          'client_secret': endpointCredential.perx_secret_access_key
+        }
+      }
+    );
+
+    res.json(endpointRequest.data);
+  } catch (e) {
+    next(e);
+  }
+});
+
 // app.get('*', (req, res, next) => {
 //   if (req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] === 'http') {
 //     res.redirect('https://' + req.headers.host + req.url);
