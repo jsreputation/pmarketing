@@ -21,7 +21,7 @@ export class OauthService {
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
     this.apiHost = config.env.apiHost;
-    this.authHost = 'https://localhost:4000';
+    this.authHost = 'http://localhost:4000';
   }
 
 
