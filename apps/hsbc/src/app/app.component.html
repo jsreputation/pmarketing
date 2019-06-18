@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<mat-toolbar *ngIf="showHeader" class="toolbar">
+    <button mat-icon-button (click)="goHome()">
+        <mat-icon>
+            home
+        </mat-icon>
+    </button>
+    <div>{{currentPage}}</div>
+    <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>
+            account_circle
+        </mat-icon>
+    </button>
+</mat-toolbar>
+<div class="container">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>

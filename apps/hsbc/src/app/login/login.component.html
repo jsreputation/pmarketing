@@ -1,4 +1,15 @@
-<!-- To be replaced by proper components-->
-<input placeholder="Enter your player code" type="text">
-<input placeholder="Enter your HSBC card last 4 digit" type="text">
+<form class="example-form" [formGroup]="loginForm">
+    <mat-form-field class="full-width-input">
+        <input matInput placeholder="Enter your player code" [formControl]="playerCode">
+        <mat-error *ngIf="playerCode.hasError('required')">
+            Player code is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+        <input matInput placeholder="Enter your HSBC card last 4 digit" [formControl]="hsbcCardLastFourDigits">
+        <mat-error *ngIf="hsbcCardLastFourDigits.hasError('required')">
+            HSBC card last 4 digit code is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
 <button mat-flat-button routerLink="/draw" color="primary">Sign In</button>
