@@ -7,6 +7,6 @@
   </h1>
   <perx-core-pin-input length="4" (full)="pinInput($event)"></perx-core-pin-input>
   <div class="action-container">
-    <button mat-stroked-button color="primary" routerLink="/vouchers/1">Cancel</button>
+    <button mat-stroked-button color="primary" (click)="onCancel()">Cancel</button>
   </div>
 </div>
