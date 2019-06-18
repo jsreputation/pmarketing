@@ -70,7 +70,11 @@ export class LoginComponent implements OnInit {
       (isAuthed: boolean) => {
         this.authed = isAuthed;
         if (this.authed) {
-          this.router.navigateByUrl(this.authService.getInterruptedUrl());
+          if (this.authService.getInterruptedUrl()) {
+            this.router.navigateByUrl(this.authService.getInterruptedUrl());
+          } else {
+            this.router.navigateByUrl('draw');
+          }
         }
       },
       (err) => {
