@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VouchersModule, PerxCoreModule, PopupComponent, CognitoModule, AuthenticationModule } from '@perx/core/dist/perx-core';
+import {
+  VouchersModule,
+  PerxCoreModule,
+  PopupComponent,
+  CognitoModule,
+  AuthenticationModule,
+  OauthModule
+} from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -18,7 +25,7 @@ import {
   MatCardModule,
   MatDialogModule,
   MatIconModule,
-MatProgressSpinnerModule
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
@@ -26,6 +33,7 @@ import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -55,7 +63,9 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
-    AuthenticationModule
+    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule,
+    FormsModule
   ],
   providers: [
     DatePipe

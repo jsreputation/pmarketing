@@ -15,7 +15,7 @@
       </ng-template>
       <ng-template #failAuthBlock>
         <div class="failBlock">
-          <span class="title"><mat-card-title >Login failed :(</mat-card-title></span>
+          <span class="title"><mat-card-title>Login failed :(</mat-card-title></span>
           <mat-card-subtitle class="subtitle">Please try again</mat-card-subtitle>
         </div>
       </ng-template>
@@ -24,5 +24,11 @@
   </mat-card>
 </ng-template>
 <ng-template #elseBlock>
-  <!--make user/pass page here-->
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+
+    <!-- To be replaced by proper components-->
+    <input placeholder="Enter your username" type="text" name="username" ngModel required #username="ngModel">
+    <input placeholder="Enter your password" type="text" name="password" ngModel required #password="ngModel">
+    <button mat-flat-button type="submit" color="primary">Sign In</button>
+  </form>
 </ng-template>

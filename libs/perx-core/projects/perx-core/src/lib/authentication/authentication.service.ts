@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
+import { OauthService } from '../v4/oauth/oauth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthenticationService implements AuthService {
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private cognitoService: CognitoService,
+    private v4OauthService: OauthService,
   ) {
   }
 
@@ -118,6 +120,27 @@ export class AuthenticationService implements AuthService {
   public userAuth(bearer: string) {
     const userId = this.getUrlParameter('pi');
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
+  }
+
+  public async v4GameOauth(user: string, pass: string, mechId: string) {
+    this.authing = true;
+    let success = false;
+
+    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId).toPromise().catch(
+      () => {
+        console.log('login failed!');
+        this.authing = false;
+      }
+    );
+    // @ts-ignore
+    const userBearer = v4AuthData.bearer_token;
+    if (userBearer) {
+      this.saveAccessData(userBearer);
+
+      success = true;
+    }
+    this.authing = false;
+    return success;
   }
 
   public preAuth() {

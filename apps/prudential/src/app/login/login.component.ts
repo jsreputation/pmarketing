@@ -1,8 +1,9 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Router} from '@angular/router';
-import {environment} from '../../environments/environment';
-import {isPlatformBrowser} from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -51,4 +52,23 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // TODO: error states
+  onSubmit(loginForm: NgForm) {
+    const username = loginForm.value.username;
+    const password = loginForm.value.password;
+    const mechId = '2';
+
+    this.authService.v4GameOauth(username, password, mechId).then(
+      (isAuthed: boolean) => {
+        this.authed = isAuthed;
+        if (this.authed) {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl());
+        }
+      },
+      (err) => {
+        this.failedAuth = true;
+        this.authed = false;
+      }
+    );
+  }
 }
