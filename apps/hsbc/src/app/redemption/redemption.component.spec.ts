@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
+import { PerxCoreModule } from '@perx/core/dist/perx-core';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -8,9 +9,10 @@ describe('RedemptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedemptionComponent ]
+      declarations: [RedemptionComponent],
+      imports: [PerxCoreModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
