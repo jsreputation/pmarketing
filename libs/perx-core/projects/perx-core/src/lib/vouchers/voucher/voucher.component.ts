@@ -9,13 +9,13 @@ export class VoucherComponent implements OnInit {
   @Output() redeem: EventEmitter<VoucherComponent> = new EventEmitter<VoucherComponent>();
 
   @Input()
-  hideMerchantImg: boolean = false;
+  hideMerchantImg = false;
 
   @Input()
-  hideMerchantName: boolean = false;
+  hideMerchantName = false;
 
   @Input()
-  hideActions: boolean = false;
+  hideActions = false;
 
   constructor() { }
 
