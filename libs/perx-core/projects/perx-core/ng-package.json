@@ -3,5 +3,6 @@
   "dest": "../../dist/perx-core",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": ["ngx-auth"]
 }

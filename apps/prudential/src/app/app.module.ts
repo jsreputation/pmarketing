@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VouchersModule, PerxCoreModule, PopupComponent } from '@perx/core/dist/perx-core';
+import {
+  VouchersModule,
+  PerxCoreModule,
+  PopupComponent,
+  CognitoModule,
+  AuthenticationModule,
+  OauthModule
+} from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -17,12 +24,16 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
-  MatIconModule
+  MatIconModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { DatePipe } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +45,8 @@ import { DatePipe } from '@angular/common';
     TncComponent,
     ContactUsComponent,
     VouchersComponent,
-    VoucherComponent
+    VoucherComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -45,10 +57,15 @@ import { DatePipe } from '@angular/common';
     MatListModule,
     MatButtonModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     MatIconModule,
     BrowserAnimationsModule,
-    PerxCoreModule
+    PerxCoreModule,
+    CognitoModule.forRoot({ env: environment }),
+    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule,
+    FormsModule
   ],
   providers: [
     DatePipe
@@ -58,4 +75,5 @@ import { DatePipe } from '@angular/common';
     PopupComponent
   ]
 })
-export class AppModule { }
+export class AppModule {
+}
