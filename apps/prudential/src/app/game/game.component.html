@@ -1,19 +1,25 @@
-<h1>
-    Here's some birthday treats from us!
-</h1>
-<p>Collect your treats by tapping the tree until they fall</p>
-<perx-core-shake-tree 
-[treeImg]="'../../assets/img/tree.png'"
-[giftImg]="'../../assets/img/gift.png'"
-[waitingManImg]="'../../assets/img/person.png'"
-[waitingManCelebrateImg]="'../../assets/img/person-celebrate.png'"
-[nbHangedGifts]="6"
-[nbFallingGifts]="6"
-(completed)="done()"
-[enabled]="playing"
-[nbShakes]="5"
->
-</perx-core-shake-tree>
+<div class="game-wrapper">
+    <div class="game-wrapper__left">
+        <h1>
+            Here's some birthday treats from us!
+        </h1>
+        <p>Collect your treats by tapping the tree until they fall</p>
+    </div>
+    <div class="game-wrapper__right">
+        <perx-core-shake-tree 
+        [treeImg]="'../../assets/img/tree.png'"
+        [giftImg]="'../../assets/img/gift.png'"
+        [waitingManImg]="'../../assets/img/person.png'"
+        [waitingManCelebrateImg]="'../../assets/img/person-celebrate.png'"
+        [nbHangedGifts]="6"
+        [nbFallingGifts]="6"
+        (completed)="done()"
+        [enabled]="playing"
+        [nbShakes]="5"
+        >
+        </perx-core-shake-tree>
+    </div>
+</div>
 <div class="action-container">
     <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
 </div>

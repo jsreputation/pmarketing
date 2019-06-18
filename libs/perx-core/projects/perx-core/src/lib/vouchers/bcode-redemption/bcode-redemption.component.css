@@ -4,7 +4,7 @@
 }
 h1 {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 2.4rem;
   text-align: center;
 }
 .bcode {
@@ -17,14 +17,14 @@ h1 {
 }
 .instruction {
   font-weight: normal;
-  font-size: 14px;
+  font-size: 1.4rem;
   text-align: center;
   color: #8f8f8f;
   margin-top: 32px;
 }
 .tnc {
   font-weight: normal;
-  font-size: 10px;
+  font-size: 1rem;
   text-align: center;
 
   color: #8f8f8f;
