@@ -8,11 +8,15 @@ import axios from 'axios';
 
 // Express server
 const app = express();
+const cors = require('cors');
+app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
+
+app.options('*', cors());
 
 app.get('/preauth', async (req, res, next) => {
   try {
@@ -60,10 +64,10 @@ app.get('/v4/preauth', async (req, res, next) => {
 
   });
   res.json({
-    "access_token": "",
-    "token_type": "bearer",
-    "expires_in": 2629746,
-    "created_at": 1560408357
+    'access_token': '',
+    'token_type': 'bearer',
+    'expires_in': 2629746,
+    'created_at': 1560408357
   });
 });
 
