@@ -7,8 +7,6 @@ export const environment = {
   production: false,
   preAuthPath: '/preauth',
   preAuth: false,
-  clientId: '',
-  clientSecret: ''
 };
 
 /*
