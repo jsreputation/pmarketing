@@ -6,8 +6,9 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthenticationModule, CognitoModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
 import { environment } from '../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,7 +22,8 @@ describe('LoginComponent', () => {
         HttpClientModule,
         AuthenticationModule,
         CognitoModule.forRoot({ env: environment }),
-
+        OauthModule.forRoot({ env: environment }),
+        FormsModule,
       ],
       declarations: [LoginComponent],
     })
