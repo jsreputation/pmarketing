@@ -23,7 +23,7 @@ import {
   MatInputModule
   } from '@angular/material';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -46,6 +46,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     MatIconModule,
     PerxCoreModule,
+    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
