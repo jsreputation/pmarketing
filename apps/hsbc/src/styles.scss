@@ -28,5 +28,62 @@ $hsbc-theme: mat-light-theme($hsbc-primary, $hsbc-accent, $hsbc-warn);
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+html {
+  font-size: 62.5%;
+  font-family: Lato, Helvetica, sans-serif;
+  font-style: normal;
+}
+.container {
+  padding: 8rem 1.2rem 0;
+  height: calc(100vh - 8rem);
+}
+
+.content-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 60rem;
+  height: 100%;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #db0011;
+}
+.mat-form-field-label-wrapper {
+  font-size: 14px;
+  line-height: 16px;
+  top: -1.1em;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 1em 0;
+}
+.mat-form-field {
+  font-size: 14px;
+  line-height: 16px;
+}
+.mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+  background-color: #eb202f;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+}
+.mat-button.mat-primary,
+.mat-icon-button.mat-primary,
+.mat-stroked-button.mat-primary {
+  background: #ffffff;
+  border: 1px solid #db0011;
+  box-sizing: border-box;
+  border-radius: 2px;
+  color: #e43225;
+}

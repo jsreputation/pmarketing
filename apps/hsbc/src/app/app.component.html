@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<mat-toolbar *ngIf="showHeader" class="toolbar">
+    <button mat-icon-button (click)="goHome()">
+        <mat-icon>
+            home
+        </mat-icon>
+    </button>
+    <div class="toolbar__label">{{currentPage}}</div>
+</mat-toolbar>
+<div class="container">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
