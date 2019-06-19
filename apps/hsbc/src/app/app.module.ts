@@ -11,7 +11,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PerxCoreModule, CognitoModule, OauthModule, AuthenticationModule } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, CognitoModule, OauthModule, AuthenticationModule, PopupComponent } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
   MatButtonModule,
@@ -24,8 +24,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule
-  } from '@angular/material';
+} from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    DatePipe
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    PopupComponent
+  ]
 })
 export class AppModule { }

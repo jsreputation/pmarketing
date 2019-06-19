@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'voucher/:id', component: VoucherComponent },
   { path: 'redemption', component: RedemptionComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'home/:popup', component: HomeComponent },
   { path: 'puzzles/:campaignId', component: PuzzlesComponent }
 ];
 

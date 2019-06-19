@@ -128,7 +128,7 @@ export interface ICampaignResponse {
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
   baseUrl = 'https://api.perxtech.io';
-  token = 'Bearer 67136e1d21014d86bc6bdd882d173744bcf0103455b7790cfcdc79c441c8bae9';
+  token = 'Bearer 76d36f41d41b029992104b1314a373fbd671178d6bed4abf6f2b8b0119933156';
 
   constructor(private http: HttpClient) { }
 
