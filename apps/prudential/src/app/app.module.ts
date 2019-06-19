@@ -51,7 +51,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    VouchersModule,
+    VouchersModule.forRoot({ env: environment }),
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,

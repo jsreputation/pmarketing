@@ -1,12 +1,15 @@
-<div class="container">
-  <ng-container *ngFor="let voucher of vouchers$ | async">
+<div class="container" *ngIf="vouchers$ | async as vouchers">
+  <div class="heading" *ngIf="heading && vouchers && vouchers.length > 0">
+    {{heading}}
+  </div>
+  <ng-container *ngFor="let voucher of vouchers">
     <mat-card
       *ngIf="filter === undefined || voucher.state === filter"
       mat-ripple
       [matRippleDisabled]="voucher.state === 'redeemed'"
       (click)="onClick(voucher)"
     >
-      <img class="voucher-img" src="{{voucher.img}}">
+      <img class="voucher-merchant-logo" src="{{voucher.merchantLogoUrl}}">
       <div class="voucher-details">
         <div>
           {{voucher.name}}
@@ -14,8 +17,8 @@
         <div>
           {{voucher.description}}
         </div>
-        <div>
-          {{voucher.expiresAt}}
+        <div >
+          Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </div>
         <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>
       </div>
