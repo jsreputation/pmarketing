@@ -1,13 +1,14 @@
 h1 {
   font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 2rem;
+  line-height: 2.4rem;
   text-align: center;
+  margin-top: 32px;
 }
 p {
   font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
   text-align: center;
 
   color: #000000;
@@ -15,4 +16,19 @@ p {
 button {
   text-transform: uppercase;
 }
-
+@media (orientation: landscape) {
+  .game-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    padding: 1.6rem;
+  }
+  .game-wrapper__left {
+    display: block;
+    width: 40%;
+  }
+  .game-wrapper__right {
+    display: block;
+    width: 60%;
+  }
+}
