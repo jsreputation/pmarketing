@@ -22,7 +22,8 @@ import {
   MatIconModule,
   MatToolbarModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatProgressSpinnerModule
   } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -53,6 +54,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatInputModule,
     MatCardModule,
     MatRippleModule,
+    MatProgressSpinnerModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),

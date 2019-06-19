@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export enum TransactionState {
-  redeemed = 'redeemed'
+export enum TRANSACTION_STATE {
+  redeemed = 'redeemed',
+  issued = 'issued',
 }
 
 export interface IReward {
@@ -25,7 +26,7 @@ export interface IReward {
   hidden: any | null;
 }
 
-export enum IStampCardStatus {
+export enum STAMP_CARD_STATUS {
   active = 'active'
 }
 
@@ -33,7 +34,7 @@ export interface IStampTransaction {
   id: number;
   user_account_id: number;
   stamp_card_id: number;
-  state: TransactionState;
+  state: TRANSACTION_STATE;
   transactions: {
     ids: any[],
     records: any
@@ -46,14 +47,23 @@ export interface IStampTransaction {
 export interface IStampCard {
   id: number;
   user_account_id: number;
-  state: IStampCardStatus;
+  state: STAMP_CARD_STATUS;
   campaign_id: number;
   campaign_config: {
     total_slots: number;
     rewards: IReward[];
   };
-  stamps: IStampTransaction[];
+  stamps?: IStampTransaction[];
 }
+
+export interface IStampCardResponse {
+  data: IStampCard;
+}
+
+export interface IStampCardsResponse {
+  data: IStampCard[];
+}
+
 export interface IVoucher {
   id: string;
   name: string;
@@ -62,7 +72,7 @@ export interface IVoucher {
 export interface IPutStampTransactionResponse {
   stamp_transaction: {
     id: string;
-    state: TransactionState;
+    state: TRANSACTION_STATE;
     vouchers: IVoucher[];
   };
 }
@@ -115,10 +125,10 @@ export interface ICampaignResponse {
   };
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CampaignService {
   baseUrl = 'https://api.perxtech.io';
-  token = 'Bearer b95479cb2108b70333cfb25d4d4b3a0735d1cd0551a2032c87383e26d7c034f3';
+  token = 'Bearer 67136e1d21014d86bc6bdd882d173744bcf0103455b7790cfcdc79c441c8bae9';
 
   constructor(private http: HttpClient) { }
 
@@ -129,18 +139,28 @@ export class CampaignService {
     );
   }
 
-  getCampaign(id: string): Observable<ICampaignResponse> {
+  getCampaign(id: number): Observable<ICampaignResponse> {
     return this.http.get<ICampaignResponse>(
       `${this.baseUrl}/v4/campaigns`,
       { headers: this.headers }
     );
   }
 
-  getCards(campaignId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`);
+  getCards(campaignId: number): Observable<IStampCard[]> {
+    return this.http.get<IStampCard[]>(
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`,
+      { headers: this.headers }
+    );
   }
 
-  getTransactions(campaignId: string): Observable<any> {
+  getCurrentCard(campaignId: number): Observable<IStampCardResponse> {
+    return this.http.get<IStampCardResponse>(
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`,
+      { headers: this.headers }
+    );
+  }
+
+  getTransactions(campaignId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`);
   }
 
