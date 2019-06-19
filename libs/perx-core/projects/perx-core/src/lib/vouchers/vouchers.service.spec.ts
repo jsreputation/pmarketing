@@ -8,7 +8,7 @@ describe('VouchersService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientModule,
-      VouchersModule.forRoot({}),
+      VouchersModule.forRoot({ env: { apiHost: '' } }),
     ]
   }));
 

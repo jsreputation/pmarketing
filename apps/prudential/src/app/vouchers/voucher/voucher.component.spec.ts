@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { VoucherComponent } from './voucher.component';
 import { VouchersModule } from '@perx/core/dist/perx-core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -12,7 +13,8 @@ describe('VoucherComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ VoucherComponent ],
       imports: [
-        VouchersModule,
+        HttpClientModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
         RouterModule.forRoot([])
       ]
     })

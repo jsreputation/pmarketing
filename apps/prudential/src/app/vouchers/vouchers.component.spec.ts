@@ -5,6 +5,7 @@ import { VouchersComponent } from './vouchers.component';
 import { VouchersModule } from '@perx/core/dist/perx-core';
 import { MatDialogModule } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -14,7 +15,8 @@ describe('VouchersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ VouchersComponent ],
       imports: [
-        VouchersModule,
+        HttpClientModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
         MatDialogModule,
         RouterModule.forRoot([])
       ],
