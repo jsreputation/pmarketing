@@ -1,7 +1,33 @@
 .tab-group {
-    margin: 0 -1.2rem;    
+  margin: 0 -1.2rem;
 }
 
 .tab-group__content {
-    margin: 0 1.2rem;
+  padding: 0 1.2rem;
+  background-color: #e5e5e5;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+mat-card {
+  margin: 1.6rem 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  height: 10.5rem;
+}
+
+.puzzle-img {
+  margin: 0;
+  height: 100%;
+  width: 10.5rem;
+}
+
+.puzzle-details {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+}
+
+.puzzle-details:nth-child(1) {
+  margin-top: 0;
 }

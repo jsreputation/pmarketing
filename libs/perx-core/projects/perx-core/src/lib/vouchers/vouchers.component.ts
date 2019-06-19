@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class VouchersComponent implements OnInit {
   @Input() filter: string;
+  @Input() imageSize: string;
+  @Input() iconDisplay: string;
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
   vouchers$: Observable<{ id: number, state: string, name: string, img: string, description: string, expiresAt: string }[]>;

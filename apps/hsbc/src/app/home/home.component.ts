@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  puzzleCount = 6;
+  
   constructor(private router: Router) { }
 
   ngOnInit() {
