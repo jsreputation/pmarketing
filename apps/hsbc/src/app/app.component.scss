@@ -2,7 +2,6 @@
   position: fixed;
   display: flex;
   justify-content: space-between;
-  width: 375px;
   height: 80px;
   left: 0px;
   top: 0px;
@@ -13,7 +12,8 @@
   font-size: 1.6rem;
   line-height: 1.9rem;
 }
-.container {
-    padding: 80px 1.2rem 0;
-    height: calc(100vh - 80px);
+.toolbar__label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
