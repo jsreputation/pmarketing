@@ -7,15 +7,18 @@
           <img class="voucher-img" src="{{voucher.img}}">
         </div>
         <div class="voucher-details">
-          <div>
+          <h1 *ngIf="showTitle">
             {{voucher.name}}
-          </div>
-          <div>
+          </h1>
+          <p *ngIf="showMerchant">
             {{voucher.description}}
-          </div>
-          <div>
+          </p>
+          <p *ngIf="showExpireDate">
             {{voucher.expiresAt}}
-          </div>
+          </p>
+          <p *ngIf="showRedeemedDate">
+            redeemed date
+          </p>
           <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>
         </div>
       </div>

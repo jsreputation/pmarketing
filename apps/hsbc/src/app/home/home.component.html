@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs class="tab-group">
+<mat-tab-group mat-stretch-tabs class="tab-group wallet-tabs">
     <mat-tab label="My Wallet">
         <div class="tab-group__content">
             <h1>My Puzzles</h1>
@@ -8,7 +8,9 @@
                         <img class="puzzle-img" src="../../assets/logo-small.png">
                     </div>
                     <div class="puzzle-details">
-                        Puzzle Game ({{puzzleCount}})
+                        <h1>
+                            Puzzle Game ({{puzzleCount}})
+                        </h1>
                     </div>
                 </div>
                 <mat-icon>
@@ -16,15 +18,31 @@
                 </mat-icon>
             </mat-card>
             <h1>My Rewards</h1>
-            <perx-core-vouchers (route)="onRoute($event)" [filter]="'issued'" [imageSize]="'small'"
-                [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
+            <perx-core-vouchers 
+                (route)="onRoute($event)" 
+                [filter]="'issued'" 
+                [imageSize]="'small'"
+                [iconDisplay]="'arrow_forward_ios'"
+                [showTitle]="true"
+                [showMerchant]="false"
+                [showExpireDate]="false"
+                [showRedeemedDate]="false"
+            ></perx-core-vouchers>
         </div>
     </mat-tab>
     <mat-tab label="History">
         <div class="tab-group__content">
             <h1>Redeemed Rewards</h1>
-            <perx-core-vouchers (route)="onRoute($event)" [filter]="'redeemed'" [imageSize]="'small'"
-                [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
+            <perx-core-vouchers 
+                (route)="onRoute($event)" 
+                [filter]="'redeemed'" 
+                [imageSize]="'small'"
+                [iconDisplay]="'arrow_forward_ios'"
+                [showTitle]="true"
+                [showMerchant]="false"
+                [showExpireDate]="false"
+                [showRedeemedDate]="true"
+            ></perx-core-vouchers>
         </div>
     </mat-tab>
 </mat-tab-group>

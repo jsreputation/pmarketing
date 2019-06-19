@@ -11,6 +11,11 @@ export class VouchersComponent implements OnInit {
   @Input() filter: string;
   @Input() imageSize: string;
   @Input() iconDisplay: string;
+  @Input() showTitle = true;
+  @Input() showMerchant = true;
+  @Input() showExpireDate = true;
+  @Input() showRedeemedDate = false;
+
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
   vouchers$: Observable<{ id: number, state: string, name: string, img: string, description: string, expiresAt: string }[]>;
