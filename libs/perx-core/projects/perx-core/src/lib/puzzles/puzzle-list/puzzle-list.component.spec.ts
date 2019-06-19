@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleListComponent } from './puzzle-list.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatRippleModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
@@ -10,7 +11,11 @@ describe('PuzzleListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleListComponent],
-      imports: [MatCardModule]
+      imports: [
+        MatCardModule,
+        MatRippleModule,
+        HttpClientModule
+      ]
     })
       .compileComponents();
   }));
