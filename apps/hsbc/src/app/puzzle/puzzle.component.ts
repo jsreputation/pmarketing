@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CampaignService, IStampCard } from '@perx/core/dist/perx-core';
+import { CampaignService, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,6 +11,8 @@ export class PuzzleComponent implements OnInit {
   campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
+  availablePieces = 0;
+  playedPieces = 0;
 
   constructor(private campaignService: CampaignService, private route: ActivatedRoute) { }
 
@@ -45,14 +47,8 @@ export class PuzzleComponent implements OnInit {
         // this.n = card.data.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.cardId = card.data.id;
         this.card = card.data;
+        this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
+        this.availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
       });
-  }
-
-  availablePieces(): number {
-    return 0;
-  }
-
-  playedPieces(): number {
-    return 0;
   }
 }
