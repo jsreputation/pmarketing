@@ -4,49 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map } from 'rxjs/operators';
 
-const vs = [
-  {
-    id: 1,
-    state: 'issued',
-    name: 'Venti Caffe Latte',
-    img: 'https://picsum.photos/200',
-    description: 'Starbucks',
-    expiresAt: '04 Feb 2019'
-  },
-  {
-    id: 2,
-    state: 'issued',
-    name: '100g Cookies',
-    img: 'https://picsum.photos/200',
-    description: 'Famous Amos',
-    expiresAt: '04 Feb 2019'
-  },
-  {
-    id: 3,
-    state: 'issued',
-    name: '100g Cookies',
-    img: 'https://picsum.photos/200',
-    description: 'Famous Amos',
-    expiresAt: '04 Feb 2019'
-  },
-  {
-    id: 4,
-    state: 'redeemed',
-    name: '100g Cookies',
-    img: 'https://picsum.photos/200',
-    description: 'Famous Amos',
-    expiresAt: '04 Feb 2019'
-  },
-  {
-    id: 5,
-    state: 'redeemed',
-    name: '100g Cookies',
-    img: 'https://picsum.photos/200',
-    description: 'Famous Amos',
-    expiresAt: '04 Feb 2019'
-  }
-];
-
 @Injectable({
   providedIn: 'root'
 })

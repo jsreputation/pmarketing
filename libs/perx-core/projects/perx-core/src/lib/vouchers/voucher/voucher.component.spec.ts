@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { VouchersModule } from '../vouchers.module';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -9,8 +12,12 @@ describe('VoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [VoucherComponent],
-      imports: [MatCardModule]
+      imports: [
+        MatCardModule,
+        HttpClientModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        RouterModule.forRoot([])
+      ]
     })
       .compileComponents();
   }));
