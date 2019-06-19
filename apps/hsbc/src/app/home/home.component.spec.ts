@@ -5,6 +5,7 @@ import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { RouterModule } from '@angular/router';
 import { MatTabsModule, MatCardModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -19,6 +20,9 @@ describe('HomeComponent', () => {
         MatTabsModule,
         NoopAnimationsModule,
         MatCardModule
+      ],
+      providers: [
+        DatePipe
       ]
     })
       .compileComponents();
