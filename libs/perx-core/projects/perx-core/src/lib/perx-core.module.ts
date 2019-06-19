@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PopupComponent } from './popup/popup.component';
-import { MatDialogModule, MatButtonModule, MatListModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CognitoModule } from './whistler/cognito/cognito.module';

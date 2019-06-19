@@ -5,6 +5,8 @@ import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import { environment } from '../../environments/environment';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -12,13 +14,17 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [],
       imports: [
         MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule,
         HttpClientModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
       ],
       declarations: [LoginComponent],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
