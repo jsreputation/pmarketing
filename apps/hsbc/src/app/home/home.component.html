@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs>
+<mat-tab-group mat-stretch-tabs class="tab-group">
     <mat-tab label="My Wallet">
         <!-- Template stuff aimed at being replaced by real components -->
         <h1>My puzzles</h1>
@@ -11,6 +11,8 @@
         <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
     </mat-tab>
     <mat-tab label="History">
-        <perx-core-vouchers (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
+        <div class="tab-group__content">
+            <perx-core-vouchers (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
+        </div>
     </mat-tab>
 </mat-tab-group>
