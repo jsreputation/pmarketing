@@ -22,8 +22,9 @@ import {
   MatFormFieldModule,
   MatInputModule
   } from '@angular/material';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule, PerxCoreModule } from '@perx/core/dist/perx-core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -46,13 +47,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatToolbarModule,
     MatIconModule,
     PerxCoreModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
     MatRippleModule,
-    PerxCoreModule
+    PerxCoreModule,
+    CognitoModule.forRoot({ env: environment }),
+    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
