@@ -1,32 +1,30 @@
-<div class="content-container">
-    <mat-tab-group mat-stretch-tabs class="tab-group">
-        <mat-tab label="My Wallet">
-            <div class="tab-group__content">
-                <h1>My Puzzles</h1>
-                <mat-card mat-ripple routerLink="/puzzles">
-                    <div class="puzzle-content">
-                        <div class="puzzle-img__wrapper">
-                            <img class="puzzle-img" src="../../assets/logo-small.png">
-                        </div>
-                        <div class="puzzle-details">
-                            Puzzle Game ({{puzzleCount}})
-                        </div>
+<mat-tab-group mat-stretch-tabs class="tab-group">
+    <mat-tab label="My Wallet">
+        <div class="tab-group__content">
+            <h1>My Puzzles</h1>
+            <mat-card mat-ripple routerLink="/puzzles">
+                <div class="puzzle-content">
+                    <div class="puzzle-img__wrapper">
+                        <img class="puzzle-img" src="../../assets/logo-small.png">
                     </div>
-                    <mat-icon>
-                        arrow_forward_ios
-                    </mat-icon>
-                </mat-card>
-                <h1>My Rewards</h1>
-                <perx-core-vouchers (route)="onRoute($event)" [filter]="'issued'" [imageSize]="'small'"
-                    [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
-            </div>
-        </mat-tab>
-        <mat-tab label="History">
-            <div class="tab-group__content">
-                <h1>Redeemed Rewards</h1>
-                <perx-core-vouchers (route)="onRoute($event)" [filter]="'redeemed'" [imageSize]="'small'"
-                    [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
-</div>
+                    <div class="puzzle-details">
+                        Puzzle Game ({{puzzleCount}})
+                    </div>
+                </div>
+                <mat-icon>
+                    arrow_forward_ios
+                </mat-icon>
+            </mat-card>
+            <h1>My Rewards</h1>
+            <perx-core-vouchers (route)="onRoute($event)" [filter]="'issued'" [imageSize]="'small'"
+                [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
+        </div>
+    </mat-tab>
+    <mat-tab label="History">
+        <div class="tab-group__content">
+            <h1>Redeemed Rewards</h1>
+            <perx-core-vouchers (route)="onRoute($event)" [filter]="'redeemed'" [imageSize]="'small'"
+                [iconDisplay]="'arrow_forward_ios'"></perx-core-vouchers>
+        </div>
+    </mat-tab>
+</mat-tab-group>
