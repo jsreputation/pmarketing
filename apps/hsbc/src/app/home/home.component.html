@@ -2,9 +2,9 @@
     <mat-tab label="My Wallet">
         <!-- Template stuff aimed at being replaced by real components -->
         <h1>My puzzles</h1>
-        <mat-card routerLink="/puzzles/41" matRipple>
+        <mat-card *ngFor="let campaign of campaigns" routerLink="/puzzles/{{campaign.id}}" matRipple>
             <mat-card-header>
-                <mat-card-title>Puzzle Game(6)</mat-card-title>
+                <mat-card-title>{{campaign.name}}</mat-card-title>
             </mat-card-header>
         </mat-card>
         <h1>My rewards</h1>

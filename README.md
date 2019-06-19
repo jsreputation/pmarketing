@@ -1,3 +1,19 @@
+# Instructions
+Download dependencies
+```bash
+yarn
+```
+
+Global build
+```bash
+yarn build
+```
+
+Global test
+```
+yarn test-ci
+```
+
 # Philosophy
 * Reusable components seat under libs.
 * Deployable apps seat under apps.

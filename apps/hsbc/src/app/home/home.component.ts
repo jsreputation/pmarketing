@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { IPopupConfig, PopupComponent } from '@perx/core/dist/perx-core';
+import { IPopupConfig, PopupComponent, CampaignService, ICampaign, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
 import { DatePipe } from '@angular/common';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,48 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  campaigns: ICampaign[];
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private datePipe: DatePipe,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private campaignService: CampaignService
   ) { }
 
   ngOnInit() {
+    this.campaignService.getCampaigns()
+      .pipe(
+        map(data => data.data),
+        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp))
+      )
+      .subscribe(campaigns => {
+        this.campaigns = campaigns;
+      });
+    this.campaigns = [
+      {
+        id: 41,
+        name: 'Puzzle Game (10)',
+        description: '',
+        begins_at: '',
+        ends_at: '',
+        enrolled: true,
+        campaign_type: CAMPAIGN_TYPE.stamp,
+        campaign_referral_type: null,
+        campaign_config: {
+          campaign_results: {
+            count: 0,
+            first_result_id: {}
+          }
+        },
+        images: [],
+        favourite: null,
+        custom_fields: null,
+        category_tags: [],
+        tags: []
+      }
+    ]
     this.activeRoute.paramMap.subscribe(params => {
       const popup = params.get('popup');
       if (popup === 'expired') {

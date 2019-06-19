@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { DrawComponent } from './draw/draw.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
@@ -32,7 +31,6 @@ import { DatePipe } from '@angular/common';
   declarations: [
     AppComponent,
     LoginComponent,
-    DrawComponent,
     PuzzleComponent,
     VoucherComponent,
     RedemptionComponent,

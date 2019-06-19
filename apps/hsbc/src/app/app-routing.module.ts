@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { DrawComponent } from './draw/draw.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
@@ -11,7 +10,8 @@ import { PuzzlesComponent } from './puzzles/puzzles.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'draw', component: DrawComponent },
+  { path: 'puzzle', component: PuzzleComponent },
+  { path: 'puzzle/:campaignId', component: PuzzleComponent },
   { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent },
   { path: 'voucher/:id', component: VoucherComponent },
   { path: 'redemption', component: RedemptionComponent },
