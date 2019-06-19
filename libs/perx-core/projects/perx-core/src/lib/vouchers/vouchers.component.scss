@@ -4,26 +4,60 @@ mat-card {
   align-items: center;
   padding: 0;
   height: 10.5rem;
+  justify-content: space-between;
+}
+
+mat-icon {
+  color: #b2b2b2;
+  font-size: 3.6rem;
+  height: 3.6rem;
+  width: 5rem;
+}
+
+.voucher-content {
+  display: flex;
+  flex: 0 0 80%;
+  justify-content: flex-start;
+}
+
+.voucher-img__wrapper {
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .voucher-img {
-  margin: 0;
-  height: 100%;
-  width: 10.5rem;
+  margin: auto;
+  max-width: 10.5rem;
+  max-height: 10.5rem;
 }
 
 .voucher-details {
-  margin-left: 1rem;
+  padding-left: 1rem;
   font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  flex: 1;
 }
 
 .voucher-details:nth-child(1) {
   margin-top: 0;
 }
+.small {
+  .voucher-img {
+    max-height: 6rem;
+    max-width: 6rem;
+  }
+  .voucher-details {
+    padding-left: 0;
+  }
+}
 
 .ribbon {
   background: #ef241c;
-  box-shadow: 0 0 .3rem rgba(0, 0, 0, .3);
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.3);
   color: #f0f0f0;
   font-size: 1rem;
   top: 2.2rem;
