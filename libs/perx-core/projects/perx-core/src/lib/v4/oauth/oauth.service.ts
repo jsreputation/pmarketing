@@ -41,4 +41,14 @@ export class OauthService {
       params: httpParams
     });
   }
+
+  authenticateUserIdWithAppBearer(user: string) {
+    const httpParams = new HttpParams()
+      .append('url', location.host)
+      .append('username', user);
+
+    return this.http.post(this.authHost + '/v4/oauth/token', null, {
+      params: httpParams
+    });
+  }
 }
