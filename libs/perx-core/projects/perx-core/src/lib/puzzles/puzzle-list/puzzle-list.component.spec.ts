@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PuzzleListComponent } from './puzzle-list.component';
 import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { EnvConfig } from '../../campaign/env-config';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
@@ -15,6 +16,9 @@ describe('PuzzleListComponent', () => {
         MatCardModule,
         MatRippleModule,
         HttpClientModule
+      ],
+      providers: [
+        EnvConfig
       ]
     })
       .compileComponents();

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { EnvConfig } from './env-config';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
@@ -127,10 +128,12 @@ export interface ICampaignResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
-  baseUrl = 'https://api.perxtech.io';
+  baseUrl: string;
   token = 'Bearer ab74283df78b4170e1826d93efd4a8258afbbc3a800c443c8cb4b9227e3603bc';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, config: EnvConfig) {
+    this.baseUrl = config.env.apiHost;
+  }
 
   getCampaigns(): Observable<ICampaignsResponse> {
     return this.http.get<ICampaignsResponse>(
