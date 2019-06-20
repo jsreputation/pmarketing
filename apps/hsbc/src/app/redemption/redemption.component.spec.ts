@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
-import { PerxCoreModule, VouchersModule } from '@perx/core/dist/perx-core';
+import { VouchersModule } from '@perx/core/dist/perx-core';
+import { environment } from '../../environments/environment';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -11,7 +12,7 @@ describe('RedemptionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],
       imports: [
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule.forRoot({ env: environment })
       ]
     })
       .compileComponents();

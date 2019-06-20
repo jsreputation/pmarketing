@@ -122,11 +122,11 @@ export class AuthenticationService implements AuthService {
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
-  public async v4GameOauth(user: string, pass: string, mechId: string) {
+  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string) {
     this.authing = true;
     let success = false;
 
-    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId).toPromise().catch(
+    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId).toPromise().catch(
       () => {
         console.log('login failed!');
         this.authing = false;

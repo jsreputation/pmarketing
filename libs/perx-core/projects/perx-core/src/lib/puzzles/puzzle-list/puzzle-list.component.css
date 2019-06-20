@@ -1,3 +1,7 @@
 mat-card {
   margin-bottom: 8px;
 }
+.disabled {
+  background-color: #EBEBEB;
+  opacity: 0.5;
+}

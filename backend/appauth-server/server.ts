@@ -88,13 +88,15 @@ app.post('/v4/oauth/token', async (req, res, next) => {
     const username = req.query.username;
     const password = req.query.password;
     const mechId = req.query.mech_id;
+    const campaignId = req.query.campaign_id;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
       {
         'username': username,
         'password': password,
-        'mech_id': mechId
+        'mech_id': mechId,
+        'campaign_id': campaignId
       },
       {
         params: {

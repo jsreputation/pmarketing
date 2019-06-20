@@ -4,13 +4,20 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { DrawComponent } from './draw/draw.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  PerxCoreModule,
+  CognitoModule, OauthModule,
+  AuthenticationModule,
+  PopupComponent,
+  CampaignModule
+} from '@perx/core/dist/perx-core';
+import { environment } from '../environments/environment';
 import {
   MatButtonModule,
   MatListModule,
@@ -20,17 +27,16 @@ import {
   MatIconModule,
   MatToolbarModule,
   MatFormFieldModule,
-  MatInputModule
-  } from '@angular/material';
-import { AuthenticationModule, CognitoModule, OauthModule, PerxCoreModule } from '@perx/core/dist/perx-core';
+  MatInputModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { environment } from '../environments/environment';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DrawComponent,
     PuzzleComponent,
     VoucherComponent,
     RedemptionComponent,
@@ -52,13 +58,20 @@ import { environment } from '../environments/environment';
     MatInputModule,
     MatCardModule,
     MatRippleModule,
+    MatProgressSpinnerModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
+    CampaignModule.forRoot({ env: environment }),
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    DatePipe
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    PopupComponent
+  ]
 })
 export class AppModule { }

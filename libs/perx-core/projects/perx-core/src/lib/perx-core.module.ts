@@ -10,6 +10,8 @@ import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CognitoModule } from './whistler/cognito/cognito.module';
 import { OauthModule } from './v4/oauth/oauth.module';
+import { HttpClientModule } from '@angular/common/http';
+import { CampaignModule } from './campaign/campaign.module';
 
 const modules = [
   VouchersModule,
@@ -28,6 +30,7 @@ const modules = [
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
+    HttpClientModule,
     CommonModule
   ],
   exports: [
