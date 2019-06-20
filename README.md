@@ -23,3 +23,55 @@ yarn test-ci
 # Rules
 * Components in libs should not use any router feature.
 * Components in libs should instead trigger events, that should be caught by the parent app to update the routing if necessary.
+
+
+# Enabling login functionality
+
+ * Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
+     ```json
+     {
+      "endpoints": {
+        "microsite.perxtech.org": {
+          "target_url": "https://whistler-api-dev.perxtech.org/cognito/users",
+          "account_id": "2"
+        },
+        "localhost:4200": {
+          "target_url": "https://api.perxtech.io",
+          "account_id": "3"
+        }
+      },
+      "credentials": {
+        "2": {
+          "perx_access_key_id": "",
+          "perx_secret_access_key": ""
+        },
+        "3": {
+          "perx_access_key_id": "",
+          "perx_secret_access_key": ""
+        }
+      }
+    }
+     ```
+ * Run the node server for login api capability
+ * `apps/{app}/src/environments` should have at minimum
+   ```js
+   export const environment = {
+      apiHost: 'https://api.perxtech.io',
+      production: false,
+      preAuthPath: '/preauth',
+      preAuth: false,
+    };
+   ```
+ * In `apps/{app}/src/app/app.module.ts` add these 3 modules
+   ```js
+    @NgModule({
+    imports: [
+        ...
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
+        AuthenticationModule,
+        ],
+    ...
+    })
+
+   ```

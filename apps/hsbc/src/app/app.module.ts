@@ -23,7 +23,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule
-} from '@angular/material';
+  } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -47,7 +47,6 @@ import { DatePipe } from '@angular/common';
     MatToolbarModule,
     MatIconModule,
     PerxCoreModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -58,6 +57,7 @@ import { DatePipe } from '@angular/common';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
+    FormsModule
   ],
   providers: [
     DatePipe
