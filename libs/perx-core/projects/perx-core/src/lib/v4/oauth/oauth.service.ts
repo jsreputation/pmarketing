@@ -25,12 +25,17 @@ export class OauthService {
   }
 
 
-  authenticateV4Oauth(user: string, pass: string, mechId: string) {
-    const httpParams = new HttpParams()
+  authenticateV4Oauth(user: string, pass: string, mechId: string, campaignId: string) {
+    let httpParams = new HttpParams()
       .append('url', location.host)
       .append('username', user)
-      .append('password', pass)
-      .append('mech_id', mechId);
+      .append('password', pass);
+    if (mechId) {
+      httpParams = httpParams.append('mech_id', mechId);
+    }
+    if (campaignId) {
+      httpParams = httpParams.append('campaign_id', campaignId);
+    }
 
     return this.http.post(this.authHost + '/v4/oauth/token', null, {
       params: httpParams

@@ -10,7 +10,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PerxCoreModule, CognitoModule, OauthModule, AuthenticationModule, PopupComponent } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, CognitoModule, OauthModule, AuthenticationModule, PopupComponent, CampaignModule } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
   MatButtonModule,
@@ -57,6 +57,7 @@ import { DatePipe } from '@angular/common';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
+    CampaignModule.forRoot({env: environment}),
     FormsModule
   ],
   providers: [

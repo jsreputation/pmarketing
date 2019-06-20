@@ -15,3 +15,4 @@ export {OauthService} from './lib/v4/oauth/oauth.service';
 export {OauthModule} from './lib/v4/oauth/oauth.module';
 export {TokenStorage} from './lib/authentication/token-storage.service';
 export * from './lib/campaign/campaign.service';
+export * from './lib/campaign/campaign.module';

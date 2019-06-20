@@ -129,37 +129,32 @@ export interface ICampaignResponse {
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
   baseUrl: string;
-  token = 'Bearer ab74283df78b4170e1826d93efd4a8258afbbc3a800c443c8cb4b9227e3603bc';
 
-  constructor(private http: HttpClient, config: EnvConfig) {
+  constructor(private http: HttpClient, @Optional() config: EnvConfig) {
     this.baseUrl = config.env.apiHost;
   }
 
   getCampaigns(): Observable<ICampaignsResponse> {
     return this.http.get<ICampaignsResponse>(
-      `${this.baseUrl}/v4/campaigns`,
-      { headers: this.headers }
+      `${this.baseUrl}/v4/campaigns`
     );
   }
 
   getCampaign(id: number): Observable<ICampaignResponse> {
     return this.http.get<ICampaignResponse>(
-      `${this.baseUrl}/v4/campaigns`,
-      { headers: this.headers }
+      `${this.baseUrl}/v4/campaigns`
     );
   }
 
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCard[]>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`,
-      { headers: this.headers }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`
     );
   }
 
   getCurrentCard(campaignId: number): Observable<IStampCardResponse> {
     return this.http.get<IStampCardResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`,
-      { headers: this.headers }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`
     );
   }
 
@@ -170,14 +165,7 @@ export class CampaignService {
   putStampTransaction(stampTransactionId: string): Observable<IPutStampTransactionResponse> {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
-      {},
-      { headers: this.headers }
+      {}
     );
-  }
-
-  get headers(): { [header: string]: string | string[]; } {
-    return {
-      Authorization: this.token
-    };
   }
 }
