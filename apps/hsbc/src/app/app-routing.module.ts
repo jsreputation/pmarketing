@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'puzzle', component: PuzzleComponent },
   { path: 'puzzle/:campaignId', component: PuzzleComponent },
