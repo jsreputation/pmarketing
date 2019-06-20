@@ -6,18 +6,19 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
+import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'puzzle', component: PuzzleComponent },
-  { path: 'puzzle/:campaignId', component: PuzzleComponent },
-  { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent },
-  { path: 'voucher/:id', component: VoucherComponent },
-  { path: 'redemption', component: RedemptionComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'home/:popup', component: HomeComponent },
-  { path: 'puzzles/:campaignId', component: PuzzlesComponent },
+  { path: 'puzzle', component: PuzzleComponent, canActivate: [ProtectedGuard] },
+  { path: 'puzzle/:campaignId', component: PuzzleComponent, canActivate: [ProtectedGuard] },
+  { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent, canActivate: [ProtectedGuard] },
+  { path: 'voucher/:id', component: VoucherComponent, canActivate: [ProtectedGuard] },
+  { path: 'redemption', component: RedemptionComponent, canActivate: [ProtectedGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [ProtectedGuard] },
+  { path: 'home/:popup', component: HomeComponent, canActivate: [ProtectedGuard] },
+  { path: 'puzzles/:campaignId', component: PuzzlesComponent, canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/home' }
 ];
 
