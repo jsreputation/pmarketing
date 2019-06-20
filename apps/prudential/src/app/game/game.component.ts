@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval } from 'rxjs';
-import { bufferCount, tap, first, map } from 'rxjs/operators';
+import { interval, of } from 'rxjs';
+import { bufferCount, tap, first, map, catchError } from 'rxjs/operators';
 import { CampaignService, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-game',
@@ -18,7 +19,15 @@ export class GameComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         map(res => res.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game))
+        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 401) {
+            this.router.navigate(['/login']);
+          } else {
+            this.router.navigate(['/vouchers', { popup: 'expired' }]);
+          }
+          return of('auth error');
+        })
       )
       .subscribe(campaigns => {
         if (campaigns.length === 0) {
