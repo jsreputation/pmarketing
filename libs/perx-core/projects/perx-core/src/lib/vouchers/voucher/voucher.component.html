@@ -17,16 +17,16 @@
         {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </div>
       <div class="section-heading">
-        How to use?
+        Description
       </div>
       <div class="section-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur neque purus, elementum id est sit amet, vestibulum viverra lectus. Curabitur in pretium quam. Nunc eget viverra quam. Cras urna augue, pretium vitae feugiat id, semper in ligula. Aliquam ornare, erat quis dapibus mollis, ex lorem scelerisque dolor, nec maximus augue nulla non ex. Proin non volutpat nulla, et semper turpis. Sed tincidunt orci
+        <div [innerHtml]="voucher.description"></div>
       </div>
       <div class="section-heading">
-        Location
+        Terms and Conditions
       </div>
       <div class="section-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur neque purus, elementum id est sit amet, vestibulum viverra lectus. Curabitur in pretium quam. Nunc eget viverra quam. Cras urna augue, pretium vitae feugiat id, semper in ligula. Aliquam ornare, erat quis dapibus mollis, ex lorem scelerisque dolor, nec maximus augue nulla non ex. Proin non volutpat nulla, et semper turpis. Sed tincidunt orci
+        <div [innerHtml]="voucher.termsAndConditions"></div>
       </div>
     </div>
   </div>

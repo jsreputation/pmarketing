@@ -63,6 +63,8 @@ export class LoginComponent implements OnInit {
         this.authed = isAuthed;
         if (this.authed) {
           this.router.navigateByUrl(this.authService.getInterruptedUrl());
+        } else {
+          this.router.navigateByUrl('game');
         }
       },
       (err) => {

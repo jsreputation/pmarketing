@@ -4,8 +4,10 @@ export interface IVoucher {
   name: string;
   code: string;
   description: string;
+  thumbnailUrl: string;
   bannerUrl: string;
   expiresAt: Date;
   merchantName: string;
   merchantLogoUrl: string;
+  termsAndConditions: string;
 }
