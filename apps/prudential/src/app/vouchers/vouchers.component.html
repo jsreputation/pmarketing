@@ -1,8 +1,4 @@
 <div class="container">
-  <div class="section-heading">My Treats</div>
-  <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
-  <div class="section-heading">History</div>
-  <perx-core-vouchers (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
-  <button (click)="completedPopup()">Completed</button>
-  <button (click)="expiredPopup()">Expired</button>
+  <perx-core-vouchers heading="My Treats" (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
+  <perx-core-vouchers heading="History" (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
 </div>

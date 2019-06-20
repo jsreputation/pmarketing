@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VouchersComponent } from './vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
@@ -23,9 +23,27 @@ const components = [
   ],
   exports: [
     ...components
-  ],
-  providers: [
-    VouchersService
   ]
 })
-export class VouchersModule { }
+export class VouchersModule {
+
+  constructor(@Optional() @SkipSelf() parentModule: VouchersModule) {
+    if (parentModule) {
+      throw new Error(
+        'VouchersModule is already loaded. Import it in the AppModule only');
+    }
+  }
+
+  public static forRoot(config: any): ModuleWithProviders {
+    return {
+      ngModule: VouchersModule,
+      providers: [
+        VouchersService,
+        {
+          provide: 'config',
+          useValue: config
+        }
+      ],
+    };
+  }
+}

@@ -2,14 +2,14 @@
     <mat-tab label="My Wallet">
         <div class="tab-group__content">
             <h1>My Puzzles</h1>
-            <mat-card mat-ripple routerLink="/puzzles">
+            <mat-card *ngFor="let campaign of campaigns" routerLink="/puzzles/{{campaign.id}}" matRipple>
                 <div class="puzzle-content">
                     <div class="puzzle-img__wrapper">
                         <img class="puzzle-img" src="../../assets/logo-small.png">
                     </div>
                     <div class="puzzle-details">
                         <h1>
-                            Puzzle Game ({{puzzleCount}})
+                            Puzzle Game ({{campaigns.length}})
                         </h1>
                     </div>
                 </div>

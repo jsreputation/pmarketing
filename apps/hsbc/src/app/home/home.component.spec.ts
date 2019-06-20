@@ -1,10 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
-import { RouterModule } from '@angular/router';
-import { MatTabsModule, MatCardModule } from '@angular/material';
+import { CampaignModule, VouchersModule } from '@perx/core/dist/perx-core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatTabsModule, MatCardModule, MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { environment } from '../../environments/environment';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,11 +17,17 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
       imports: [
-        PerxCoreModule,
-        RouterModule.forRoot([]),
-        MatTabsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
         NoopAnimationsModule,
-        MatCardModule
+        MatTabsModule,
+        MatDialogModule,
+        MatCardModule,
+        VouchersModule.forRoot({ env: environment }),
+        CampaignModule.forRoot({ env: environment }),
+      ],
+      providers: [
+        DatePipe
       ]
     })
       .compileComponents();

@@ -84,3 +84,7 @@ mat-icon {
   font-size: 1.2rem;
   border-radius: 8px;
 }
+.disabled {
+  background-color: #EBEBEB;
+  opacity: 0.5;
+}
