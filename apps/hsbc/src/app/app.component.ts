@@ -26,7 +26,6 @@ export class AppComponent {
     if (!ref.constructor) {
       return;
     }
-    console.log(ref.constructor.name);
     this.currentPage = ref.constructor.name;
     switch (ref.constructor.name) {
       case 'LoginComponent':

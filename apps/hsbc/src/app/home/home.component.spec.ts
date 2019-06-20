@@ -7,6 +7,7 @@ import { MatTabsModule, MatCardModule, MatDialogModule } from '@angular/material
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 describe('HomeComponent', () => {
@@ -28,7 +29,8 @@ describe('HomeComponent', () => {
       ],
       providers: [
         DatePipe
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
   }));
