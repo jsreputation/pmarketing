@@ -8,7 +8,7 @@ describe('CognitoService', () => {
   const environment = {
     apiHost: 'localhost:4000',
     production: false,
-    preAuthPath: '/preauth',
+    isWhistler: false,
     preAuth: false,
   };
 
