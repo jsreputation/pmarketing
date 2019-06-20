@@ -9,18 +9,26 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { LoginComponent } from './login/login.component';
+import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/game', pathMatch: 'full' },
-  { path: 'game', component: GameComponent },
-  { path: 'congrats', component: CongratsComponent },
-  { path: 'vouchers', component: VouchersComponent },
-  { path: 'vouchers/:id', component: VoucherComponent },
-  { path: 'activation', component: ActivationCodeComponent },
-  { path: 'redemption', component: RedemptionComponent },
-  { path: 'tnc', component: TncComponent },
+  { path: '',
+    children: [
+      { path: '', redirectTo: 'game', pathMatch: 'full' },
+      { path: 'activation', component: ActivationCodeComponent },
+      { path: 'congrats', component: CongratsComponent },
+      { path: 'game', component: GameComponent},
+      { path: 'redemption', component: RedemptionComponent },
+      { path: 'vouchers', component: VouchersComponent },
+      { path: 'vouchers/:id', component: VoucherComponent },
+    ],
+    canActivate: [ProtectedGuard]
+  },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'tnc', component: TncComponent },
+  { path: '**', redirectTo: '' }
+
 ];
 
 @NgModule({
