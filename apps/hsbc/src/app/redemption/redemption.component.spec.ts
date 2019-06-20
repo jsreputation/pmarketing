@@ -11,7 +11,6 @@ describe('RedemptionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],
       imports: [
-        PerxCoreModule,
         VouchersModule.forRoot({ env: { apiHost: '' } })
       ]
     })
