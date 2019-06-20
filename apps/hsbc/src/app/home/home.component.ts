@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
         category_tags: [],
         tags: []
       }
-    ]
+    ];
     this.activeRoute.paramMap.subscribe(params => {
       const popup = params.get('popup');
       if (popup === 'expired') {
