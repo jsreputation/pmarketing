@@ -7,9 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BcodeRedemptionComponent implements OnInit {
 
-  bCode = `=TYHGV=WPLKN=
-=XCNET=9Y32<=
-=5YUFK=4UWKX=`;
+  bCode = `=TYHGV=WPLKN=XCNET=9Y32<=5YUFK=4UWKX=`;
 
   constructor() { }
 
