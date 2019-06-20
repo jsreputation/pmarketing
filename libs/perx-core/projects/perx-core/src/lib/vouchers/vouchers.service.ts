@@ -23,10 +23,8 @@ export class VouchersService {
 
     const url = `${this.config.env.apiHost}/v4/vouchers`;
     return this.http.get(url).pipe(
-      map(resp => {
-        const data = resp[`data`];
-        const vouchers = Array.isArray(data) ? data : [data];
-
+      map(resp => resp[`data`]),
+      map(vouchers => {
         this.vouchers = vouchers.map((v: any) => {
           const reward = v[`reward`];
           const images = reward[`images`] || [];
@@ -63,8 +61,8 @@ export class VouchersService {
 
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get(url).pipe(
-      map(resp => {
-        const v = resp[`data`];
+      map(resp => resp[`data`]),
+      map(v => {
         const reward = v[`reward`];
         const images = reward[`images`] || [];
         const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
