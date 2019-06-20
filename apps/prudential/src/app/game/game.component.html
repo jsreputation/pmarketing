@@ -20,6 +20,7 @@
         </perx-core-shake-tree>
     </div>
 </div>
-<div class="actions-container">
+<mat-progress-bar *ngIf="progressValue!==null" [value]="progressValue"></mat-progress-bar>
+<div class="action-container">
     <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
 </div>

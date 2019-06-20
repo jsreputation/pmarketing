@@ -142,6 +142,28 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
+  public async v4AutoLogin() {
+    this.authing = true;
+    let success = false;
+
+    const userId = this.getUrlParameter('pi');
+    const v4AuthData = await this.v4OauthService.authenticateUserIdWithAppBearer(userId).toPromise().catch(
+      () => {
+        console.log('login failed!');
+        this.authing = false;
+      }
+    );
+    // @ts-ignore
+    const userBearer = v4AuthData.bearer_token;
+    if (userBearer) {
+      this.saveAccessData(userBearer);
+
+      success = true;
+    }
+    this.authing = false;
+    return success;
+  }
+
   public preAuth() {
     return this.cognitoService.authenticateAppWithPreAuth(location.host).pipe(
       tap((resp) => {

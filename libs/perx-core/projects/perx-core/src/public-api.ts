@@ -17,3 +17,4 @@ export {TokenStorage} from './lib/authentication/token-storage.service';
 export * from './lib/campaign/campaign.service';
 export * from './lib/campaign/campaign.module';
 export * from './lib/puzzles/puzzles.module';
+export * from './lib/shake-tree/shake-tree.component';

@@ -79,7 +79,8 @@ export interface IPutStampTransactionResponse {
 }
 export enum CAMPAIGN_TYPE {
   give_reward = 'give_reward',
-  stamp = 'stamp'
+  stamp = 'stamp',
+  game = 'game'
 }
 export interface ICampaign {
   id: number;
@@ -90,6 +91,7 @@ export interface ICampaign {
   enrolled: boolean;
   campaign_type: CAMPAIGN_TYPE;
   campaign_referral_type: any | null;
+  game_config?: any;
   campaign_config: {
     campaign_results: {
       count: number;
@@ -165,7 +167,7 @@ export class CampaignService {
   putStampTransaction(stampTransactionId: string): Observable<IPutStampTransactionResponse> {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
-      {}
+      null
     );
   }
 }

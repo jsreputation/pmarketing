@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PopupComponent, IPopupConfig } from '@perx/core/dist/perx-core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -13,32 +13,57 @@ export class VouchersComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public dialog: MatDialog,
-    public datePipe: DatePipe
+    private dialog: MatDialog,
+    private datePipe: DatePipe,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(ps => {
+      const popup = ps.get('popup');
+      switch (popup) {
+        case 'completed':
+          this.completedPopup();
+          break;
+        case 'expired':
+          this.expiredPopup();
+          break;
+        case '404':
+          this._404Popup();
+          break;
+      }
+    });
   }
 
-  onRoute(id: string) {
+  onRoute(id: string): void {
     this.router.navigate([`/vouchers/${id}`]);
   }
 
-  completedPopup() {
-    const data: IPopupConfig = {
+  completedPopup(): void {
+    this.popup({
       text: 'See the treats you\'ve earned and don\'t forget to redeem them before they\'re gone!',
       title: 'You\'ve already completed the game',
       buttonTxt: 'See my treats'
-    };
-    this.dialog.open(PopupComponent, { data });
+    });
   }
 
-  expiredPopup(date: Date = null) {
+  expiredPopup(date: Date = null): void {
     const text = date === null ? 'This campaign has ended' : `This campaign has ended on ${this.datePipe.transform(date, 'mediumDate')}`;
-    const data: IPopupConfig = {
+    this.popup({
       text,
       title: 'We\'re sorry, the treats have expired'
-    };
-    this.dialog.open(PopupComponent, { data });
+    });
+  }
+  _404Popup(): void {
+    this.popup({
+      title: 'What you are looking for does not exist'
+    });
+  }
+
+  popup(data: IPopupConfig): void {
+    this.dialog
+      .open(PopupComponent, { data })
+      .afterClosed()
+      .subscribe(() => this.router.navigate(['/vouchers']));
   }
 }
