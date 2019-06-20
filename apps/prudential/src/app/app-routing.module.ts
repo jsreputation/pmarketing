@@ -12,12 +12,13 @@ import { LoginComponent } from './login/login.component';
 import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
-  { path: '',
+  {
+    path: '',
     children: [
       { path: '', redirectTo: 'game', pathMatch: 'full' },
       { path: 'activation', component: ActivationCodeComponent },
       { path: 'congrats', component: CongratsComponent },
-      { path: 'game', component: GameComponent},
+      { path: 'game', component: GameComponent },
       { path: 'redemption', component: RedemptionComponent },
       { path: 'vouchers', component: VouchersComponent },
       { path: 'vouchers/:id', component: VoucherComponent },
@@ -27,8 +28,7 @@ const routes: Routes = [
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'tnc', component: TncComponent },
-  { path: '**', redirectTo: '' }
-
+  { path: '**', redirectTo: '/vouchers;popup=404' }
 ];
 
 @NgModule({
