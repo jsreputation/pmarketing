@@ -3,7 +3,7 @@
   "scripts": {
     "build": "lerna run build",
     "build:prod": "lerna run build:prod",
-    "clean": "rm -rf ./dist ./node_modules && lerna run clean",
+    "clean": "lerna run clean && rm -rf ./dist ./node_modules",
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "e2e-ci": "lerna run e2e -- --protractor-config=e2e/protractor-ci.conf.js"
