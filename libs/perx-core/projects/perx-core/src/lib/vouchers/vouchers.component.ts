@@ -12,6 +12,14 @@ import { map } from 'rxjs/operators';
 export class VouchersComponent implements OnInit {
   @Input() heading: string;
   @Input() filter: string;
+  @Input() imageSize: string;
+  @Input() iconDisplay: string;
+  @Input() showTitle = true;
+  @Input() showMerchant = true;
+  @Input() showExpireDate = true;
+  @Input() showRedeemedDate = false;
+  @Input() showRedeemedIcon = true;
+
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
   vouchers$: Observable<IVoucher[]>;

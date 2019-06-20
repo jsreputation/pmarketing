@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-voucher',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
+  @Input() firstTime = false;
 
   constructor() { }
 
