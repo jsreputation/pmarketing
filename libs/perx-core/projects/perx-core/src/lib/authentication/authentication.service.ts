@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
@@ -18,7 +18,6 @@ export class AuthenticationService implements AuthService {
   preAuthJWT: string;
 
   constructor(
-    private http: HttpClient,
     private tokenStorage: TokenStorage,
     private cognitoService: CognitoService,
     private v4OauthService: OauthService,
