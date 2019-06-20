@@ -6,8 +6,8 @@ export class EnvConfig {
   env = {
     apiHost: 'localhost:3000',
     production: false,
+    isWhistler: false,
     preAuth: false,
-    preAuthPath: '/preauth',
   };
 }
 
@@ -16,12 +16,14 @@ export class EnvConfig {
 })
 export class OauthService {
 
-  apiHost: string;
-  authHost: string;
+  authEndpoint: string;
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
-    this.apiHost = config.env.apiHost;
-    this.authHost = 'http://localhost:4000';
+    if (!config.env.production) {
+      this.authEndpoint = 'http://localhost:4000/v4/oauth';
+    } else {
+      this.authEndpoint = '/v4/oauth';
+    }
   }
 
 
@@ -37,7 +39,7 @@ export class OauthService {
       httpParams = httpParams.append('campaign_id', campaignId);
     }
 
-    return this.http.post(this.authHost + '/v4/oauth/token', null, {
+    return this.http.post(this.authEndpoint + '/token', null, {
       params: httpParams
     });
   }
@@ -47,7 +49,7 @@ export class OauthService {
       .append('url', location.host)
       .append('username', user);
 
-    return this.http.post(this.authHost + '/v4/oauth/token', null, {
+    return this.http.post(this.authEndpoint + '/token', null, {
       params: httpParams
     });
   }
