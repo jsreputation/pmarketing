@@ -130,7 +130,7 @@ export interface ICampaignResponse {
 export class CampaignService {
   baseUrl: string;
 
-  constructor(private http: HttpClient, @Optional() config: EnvConfig) {
+  constructor(private http: HttpClient, config: EnvConfig) {
     this.baseUrl = config.env.apiHost;
   }
 
