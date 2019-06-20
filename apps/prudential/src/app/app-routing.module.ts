@@ -12,16 +12,23 @@ import { LoginComponent } from './login/login.component';
 import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'game', component: GameComponent, canActivate: [ProtectedGuard] },
-  { path: 'congrats', component: CongratsComponent, canActivate: [ProtectedGuard] },
-  { path: 'vouchers', component: VouchersComponent, canActivate: [ProtectedGuard] },
-  { path: 'vouchers/:id', component: VoucherComponent, canActivate: [ProtectedGuard] },
-  { path: 'activation', component: ActivationCodeComponent, canActivate: [ProtectedGuard] },
-  { path: 'redemption', component: RedemptionComponent, canActivate: [ProtectedGuard] },
-  { path: 'tnc', component: TncComponent },
+  { path: '',
+    children: [
+      { path: '', redirectTo: 'game', pathMatch: 'full' },
+      { path: 'activation', component: ActivationCodeComponent },
+      { path: 'congrats', component: CongratsComponent },
+      { path: 'game', component: GameComponent},
+      { path: 'redemption', component: RedemptionComponent },
+      { path: 'vouchers', component: VouchersComponent },
+      { path: 'vouchers/:id', component: VoucherComponent },
+    ],
+    canActivate: [ProtectedGuard]
+  },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'tnc', component: TncComponent },
+  { path: '**', redirectTo: '' }
+
 ];
 
 @NgModule({
