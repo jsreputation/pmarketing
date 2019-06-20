@@ -1,3 +1,86 @@
 mat-card {
-  margin-bottom: 8px;
+  margin: 1.2rem 0;
+  display: flex;
+  padding: 0;
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
+}
+
+mat-icon {
+  color: #b2b2b2;
+  font-size: 3.6rem;
+  height: 3.6rem;
+  flex: 0 0 3.6rem;
+}
+
+.hasDraw,
+.noDraw {
+  display: flex;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.noDraw {
+  background-color: #ebebeb;
+}
+
+.puzzle-content {
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.puzzle-img__wrapper {
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.puzzle-img {
+  margin: auto;
+  max-height: 6rem;
+  max-width: 6rem;
+}
+
+.puzzle-details {
+  font-size: 1.4rem;
+  display: flex;
+  margin: auto 0;
+  padding-left: 0;
+  flex-direction: column;
+}
+
+.puzzle-details h1 {
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  margin: 4px 0;
+  padding: 0;
+}
+
+.puzzle-details p {
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: #e42713;
+  margin: 4px 0;
+  padding: 0;
+}
+
+.puzzle-details:nth-child(1) {
+  margin-top: 0;
+}
+
+.badge-warn {
+  background-color: rgba(228, 39, 19, 0.1);
+  color: #e42713;
+  padding: 2px 4px;
+  font-size: 1.2rem;
+  border-radius: 8px;
 }

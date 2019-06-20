@@ -1,9 +1,10 @@
 mat-card {
-  margin: 1.6rem 0;
+  margin: 1.2rem 0;
   display: flex;
   align-items: center;
   padding: 0;
   flex: 0 0 10.5rem;
+  height: 10.5rem;
   justify-content: space-between;
 }
 
@@ -11,7 +12,7 @@ mat-icon {
   color: #b2b2b2;
   font-size: 3.6rem;
   height: 3.6rem;
-  width: 5rem;
+  flex: 0 0 3.6rem;
 }
 
 .voucher-content {

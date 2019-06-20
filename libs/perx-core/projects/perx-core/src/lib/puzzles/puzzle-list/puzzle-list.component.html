@@ -1,6 +1,20 @@
-  <mat-card matRipple *ngFor="let puzzle of puzzles; let i=index" (click)="puzzleSelected(i);">
-    <mat-card-header>
-        <mat-card-title>{{puzzle.name}}</mat-card-title>
-        <mat-card-subtitle *ngIf="puzzle.draws">{{puzzle.draws.length}} new pieces</mat-card-subtitle>
-    </mat-card-header>
-  </mat-card>
+<mat-card matRipple *ngFor="let puzzle of puzzles; let i=index" (click)="puzzleSelected(i);">
+  <div className="{{puzzle.draws ? 'hasDraw' : 'noDraw'}}">
+    <div class="puzzle-content">
+      <div class="puzzle-img__wrapper">
+        <img class="puzzle-img" src="{{puzzle.image}}">
+      </div>
+      <div class="puzzle-details">
+        <h1>{{puzzle.name}}
+          <span class="badge-warn">
+              {{ puzzle.draws ? puzzle.draws.length : 0 }}/{{total}}
+          </span>
+        </h1>
+        <p *ngIf="puzzle.draws">{{puzzle.draws.length}} new pieces</p>
+      </div>
+    </div>
+    <mat-icon *ngIf="iconDisplay">
+      {{iconDisplay}}
+    </mat-icon>
+  </div>
+</mat-card>

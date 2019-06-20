@@ -15,6 +15,7 @@ export class VouchersComponent implements OnInit {
   @Input() showMerchant = true;
   @Input() showExpireDate = true;
   @Input() showRedeemedDate = false;
+  @Input() showRedeemedIcon = true;
 
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 

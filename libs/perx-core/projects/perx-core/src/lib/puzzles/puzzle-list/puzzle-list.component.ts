@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { IPuzzle } from '../puzzle.model';
 
 @Component({
@@ -8,6 +8,8 @@ import { IPuzzle } from '../puzzle.model';
 })
 export class PuzzleListComponent implements OnInit {
   puzzles: IPuzzle[];
+  @Input() iconDisplay = 'arrow_forward_ios';
+  @Input() total = 6;
 
   @Output()
   selected: EventEmitter<IPuzzle> = new EventEmitter<IPuzzle>();
@@ -16,10 +18,10 @@ export class PuzzleListComponent implements OnInit {
 
   ngOnInit() {
     this.puzzles = [
-      { name: 'Puzzle A', draws: [{}, {}] },
-      { name: 'Puzzle B' },
-      { name: 'Puzzle C' },
-      { name: 'Puzzle D' }
+      { name: 'Puzzle A', draws: [{}, {}], image: 'https://picsum.photos/200' },
+      { name: 'Puzzle B', image: 'https://picsum.photos/200' },
+      { name: 'Puzzle C', image: 'https://picsum.photos/200' },
+      { name: 'Puzzle D', image: 'https://picsum.photos/200' }
     ];
   }
 
