@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
 
 import { VoucherComponent } from './voucher.component';
 import { VouchersModule } from '@perx/core/dist/perx-core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -13,9 +13,9 @@ describe('VoucherComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ VoucherComponent ],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         VouchersModule.forRoot({ env: { apiHost: '' } }),
-        RouterModule.forRoot([])
+        RouterTestingModule
       ]
     })
     .compileComponents();
