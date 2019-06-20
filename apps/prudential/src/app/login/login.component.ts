@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
         this.authService.isAuthorized().subscribe(
           authed => {
             if (!authed) {
+              // todo: when prudential on v4 gets seeded, switch over to this autoLogin function
+              // this.authService.v4AutoLogin.then(
               this.authService.autoLogin().then(
                 (isAuthed: boolean) => {
                   this.authed = isAuthed;
