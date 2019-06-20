@@ -9,7 +9,7 @@
       [matRippleDisabled]="voucher.state === 'redeemed'"
       (click)="onClick(voucher)"
     >
-      <img class="voucher-merchant-logo" src="{{voucher.merchantLogoUrl}}">
+      <img class="voucher-merchant-logo" src="{{voucher.thumbnailUrl}}">
       <div class="voucher-details">
         <div>
           {{voucher.name}}
@@ -17,7 +17,7 @@
         <div>
           {{voucher.description}}
         </div>
-        <div >
+        <div class="voucher-expiry">
           Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </div>
         <div class="ribbon" *ngIf="voucher.state === 'redeemed'">REDEEMED</div>

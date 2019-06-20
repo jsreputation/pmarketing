@@ -20,11 +20,13 @@
 }
 
 .container, .sidenav {
+  height: calc(100% - 64px);
   padding-top: 64px;
 }
 
 @media (max-width: 599px) {
   .container, .sidenav {
+    height: calc(100% - 56px);
     padding-top: 56px;
   }
 

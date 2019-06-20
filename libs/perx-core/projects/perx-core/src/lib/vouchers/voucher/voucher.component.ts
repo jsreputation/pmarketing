@@ -32,8 +32,9 @@ export class VoucherComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const id: number = this.route.snapshot.params.id;
-    this.voucher$ = this.vouchersService.get(id);
+    this.route.params.subscribe(params => {
+      this.voucher$ = this.vouchersService.get(params[`id`]);
+    });
   }
 
   onClick() {
