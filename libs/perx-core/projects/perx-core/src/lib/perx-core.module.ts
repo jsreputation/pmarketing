@@ -14,9 +14,7 @@ import { OauthModule } from './v4/oauth/oauth.module';
 const modules = [
   VouchersModule,
   PuzzlesModule,
-  AuthenticationModule,
-  CognitoModule,
-  OauthModule
+  AuthenticationModule
 ];
 
 @NgModule({
