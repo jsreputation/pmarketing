@@ -16,10 +16,7 @@ import { CampaignModule } from './campaign/campaign.module';
 const modules = [
   VouchersModule,
   PuzzlesModule,
-  AuthenticationModule,
-  CognitoModule,
-  OauthModule,
-  CampaignModule
+  AuthenticationModule
 ];
 
 @NgModule({

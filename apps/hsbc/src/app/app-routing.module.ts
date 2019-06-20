@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'redemption', component: RedemptionComponent },
   { path: 'home', component: HomeComponent },
   { path: 'home/:popup', component: HomeComponent },
-  { path: 'puzzles/:campaignId', component: PuzzlesComponent }
+  { path: 'puzzles/:campaignId', component: PuzzlesComponent },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
