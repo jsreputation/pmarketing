@@ -1,7 +1,12 @@
 <mat-toolbar *ngIf="showHeader" class="toolbar">
-    <button mat-icon-button (click)="goHome()">
+    <button *ngIf="iconToShow === 'home'" mat-icon-button (click)="goHome()">
         <mat-icon>
             home
+        </mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="iconToShow === 'back'" (click)="goBack()">
+        <mat-icon>
+            arrow_back_ios
         </mat-icon>
     </button>
     <div class="toolbar__label">{{currentPage}}</div>

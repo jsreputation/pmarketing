@@ -12,10 +12,12 @@ import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
-  CognitoModule, OauthModule,
+  CognitoModule,
+  OauthModule,
   AuthenticationModule,
   PopupComponent,
-  CampaignModule
+  CampaignModule,
+  VouchersModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
@@ -59,7 +61,7 @@ import { DatePipe } from '@angular/common';
     MatCardModule,
     MatRippleModule,
     MatProgressSpinnerModule,
-    PerxCoreModule,
+    VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,

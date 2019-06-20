@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PuzzleDrawComponent } from './puzzle-draw/puzzle-draw.component';
 import { PuzzleListComponent } from './puzzle-list/puzzle-list.component';
 import { PuzzlePlayComponent } from './puzzle-play/puzzle-play.component';
-import { MatCardModule, MatRippleModule } from '@angular/material';
+import { MaterialModule } from '../shared/material.module';
 
 @NgModule({
   declarations: [
@@ -13,8 +13,7 @@ import { MatCardModule, MatRippleModule } from '@angular/material';
   ],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatRippleModule
+    MaterialModule
   ],
   exports: [
     PuzzleDrawComponent,

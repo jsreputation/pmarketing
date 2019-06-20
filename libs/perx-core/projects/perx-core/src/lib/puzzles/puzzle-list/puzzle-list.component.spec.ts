@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PuzzleListComponent } from './puzzle-list.component';
 import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EnvConfig } from '../../campaign/env-config';
 
 describe('PuzzleListComponent', () => {
@@ -19,7 +20,8 @@ describe('PuzzleListComponent', () => {
       ],
       providers: [
         EnvConfig
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
   }));
