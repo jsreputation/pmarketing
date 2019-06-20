@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PuzzlesComponent } from './puzzles.component';
 import { MatListModule } from '@angular/material';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
-import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
@@ -15,7 +15,7 @@ describe('PuzzlesComponent', () => {
       imports: [
         MatListModule,
         PerxCoreModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule,
       ]
     })
       .compileComponents();

@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatRippleModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { VouchersModule } from './vouchers.module';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -9,10 +11,11 @@ describe('VouchersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [VouchersComponent],
       imports: [
         MatCardModule,
-        MatRippleModule
+        MatRippleModule,
+        HttpClientModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } })
       ]
     })
       .compileComponents();
