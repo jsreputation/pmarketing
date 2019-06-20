@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'redemption', component: RedemptionComponent },
   { path: 'tnc', component: TncComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '/vouchers;popup=404'}
 ];
 
 @NgModule({
