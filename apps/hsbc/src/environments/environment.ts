@@ -5,10 +5,8 @@
 export const environment = {
   apiHost: 'https://api.perxtech.io',
   production: false,
-  preAuthPath: '/preauth',
+  isWhistler: false,
   preAuth: false,
-  clientId: '4d8209f7c5eb847422a76e693a2de1d4a4cb17156c8ce3f37d54b811a11e921c',
-  clientSecret: '4316be1cd3acf806fba56559191a8c1b5801666f35e2b30199f2421f62fa2aed'
 };
 
 /*

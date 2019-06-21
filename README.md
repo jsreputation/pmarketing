@@ -75,3 +75,20 @@ yarn test-ci
     })
 
    ```
+
+## Local Deployment
+
+Doing this allows you to emulate your build on the server. It does not live reload because it is set up for server side rendering.
+
+to build the prudential shake the tree app:
+```
+docker build -t microsite-apps-ng . --build-arg app=prudential
+```
+
+
+we expose port 8000 in the dockerfile 
+```
+docker run -p 8000:8000 --name microsite-apps-ng microsite-apps-ng 
+```
+
+you should have the server now listening on `http://localhost:8000

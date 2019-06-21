@@ -11,10 +11,8 @@ describe('AuthenticationService', () => {
   const environment = {
     apiHost: 'localhost:4000',
     production: false,
-    preAuthPath: '/preauth',
+    isWhistler: false,
     preAuth: false,
-    clientId: '',
-    clientSecret: ''
   };
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
