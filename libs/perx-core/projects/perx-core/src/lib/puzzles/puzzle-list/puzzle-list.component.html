@@ -1,7 +1,7 @@
 <mat-card matRipple [matRippleDisabled]="!isActive(puzzle)" [class.disabled]="!isActive(puzzle)"
   [tabindex]="isActive(puzzle) ? 0 : -1" (click)="isActive(puzzle) && puzzleSelected(puzzle)"
   *ngFor="let puzzle of puzzles; let i=index">
-  <div className="{{puzzle.draws ? 'hasDraw' : 'noDraw'}}">
+  <div className="{{isActive(puzzle) ? 'hasDraw' : 'noDraw'}}">
     <div class="puzzle-content">
       <div class="puzzle-img__wrapper">
         <img class="puzzle-img" src="{{puzzle.image}}">

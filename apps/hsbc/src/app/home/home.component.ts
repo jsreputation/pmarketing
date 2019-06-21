@@ -30,29 +30,7 @@ export class HomeComponent implements OnInit {
       .subscribe(campaigns => {
         this.campaigns = campaigns;
       });
-    this.campaigns = [
-      {
-        id: 41,
-        name: 'Puzzle Game (10)',
-        description: '',
-        begins_at: '',
-        ends_at: '',
-        enrolled: true,
-        campaign_type: CAMPAIGN_TYPE.stamp,
-        campaign_referral_type: null,
-        campaign_config: {
-          campaign_results: {
-            count: 0,
-            first_result_id: {}
-          }
-        },
-        images: [],
-        favourite: null,
-        custom_fields: null,
-        category_tags: [],
-        tags: []
-      }
-    ];
+  
     this.activeRoute.paramMap.subscribe(params => {
       const popup = params.get('popup');
       if (popup === 'expired') {
