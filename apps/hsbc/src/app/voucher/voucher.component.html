@@ -6,5 +6,5 @@
 </div>
 <div class="actions-container" *ngIf="!hideActions">
     <button *ngIf="firstTime" routerLink="/home" mat-stroked-button color="primary">Save to wallet</button>
-    <button routerLink="/redemption" mat-flat-button color="primary">Redeem now</button>
+    <button mat-flat-button color="primary" (click)="onRedeem()">Redeem now</button>
 </div>
