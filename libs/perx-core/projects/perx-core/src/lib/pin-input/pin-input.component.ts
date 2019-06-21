@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PinService } from './pin.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'perx-core-pin-input',
@@ -16,11 +18,12 @@ export class PinInputComponent implements OnInit {
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
 
+  pin$: Observable<string>;
+
   controlls: FormControl[] = [];
   hasError = '';
 
-  constructor(private element: ElementRef) {
-  }
+  constructor(private element: ElementRef, private pin: PinService) {}
 
   ngOnInit() {
     // length might not be a number
@@ -35,8 +38,12 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
+    this.getPin();
+    this.pin$ = this.pin.getPin();
   }
-
+  async getPin() {
+    this.pin$ = await this.pin.getPin();
+  }
   onUpdate() {
     const v = this.value;
     if (v.length === this.length) {
@@ -56,7 +63,8 @@ export class PinInputComponent implements OnInit {
   }
 
   validateCode(code: string) {
-    const isValid = !!(code === '1234');
+    const isValid = false;
+    // const isValid = !!(code === this.pin$);
     this.hasError = isValid ? '' : 'error';
 
     return isValid;
