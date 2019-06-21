@@ -1,10 +1,10 @@
-<div class="reward-container">
+<div class="reward-container" *ngIf="voucher$ | async as voucher">
   <div class="reward-detail-container">
     <div class="reward-image-container">
-      <img class="reward-image" src="https://picsum.photos/1600/900">
+      <img class="reward-image" src="{{voucher.bannerUrl}}">
     </div>
-    <h1>Php 100 BonChon eGift Voucher</h1>
-    <pre class="bcode">{{bCode}}</pre>
+    <h1>{{voucher.name}}</h1>
+    <pre class="bcode">{{voucher.code}}</pre>
     <p class="instruction">Present this code to the cashier to redeem your reward.</p>
   </div>
   <p class="tnc">Terms & Conditions applies.</p>

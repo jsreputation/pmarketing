@@ -19,7 +19,7 @@ const routes: Routes = [
       { path: 'puzzle/:campaignId', component: PuzzleComponent },
       { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent },
       { path: 'puzzles/:campaignId', component: PuzzlesComponent },
-      { path: 'redemption', component: RedemptionComponent },
+      { path: 'redemption/:id', component: RedemptionComponent },
       { path: 'voucher/:id', component: VoucherComponent },
     ],
     canActivate: [ProtectedGuard]
