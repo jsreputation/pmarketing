@@ -70,7 +70,7 @@ export class PuzzleComponent implements OnInit {
           this.fetchCard();
           if (stamp.stamp_transaction.vouchers && stamp.stamp_transaction.vouchers.length > 0) {
             const voucherId = stamp.stamp_transaction.vouchers[0].id;
-            this.router.navigate([`/vouchers/${voucherId}`]);
+            this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
           }
         }
       });

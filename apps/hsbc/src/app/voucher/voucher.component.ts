@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-voucher',
@@ -6,11 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  @Input() firstTime = false;
+  firstTime = false;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
   }
-
 }
