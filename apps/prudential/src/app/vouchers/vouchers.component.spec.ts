@@ -12,17 +12,10 @@ describe('VouchersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VouchersComponent ],
-      imports: [
-        VouchersModule,
-        MatDialogModule,
-        RouterModule.forRoot([])
-      ],
-      providers: [
-        DatePipe
-      ]
-    })
-    .compileComponents();
+      declarations: [VouchersComponent],
+      imports: [VouchersModule, MatDialogModule, RouterModule.forRoot([])],
+      providers: [DatePipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,0 +1,24 @@
+<app-header [title]="title" [subTitle]="subTitle"> </app-header>
+
+<div class="game-wrapper">
+  <div class="game-wrapper__right">
+    <perx-core-pinata
+      [stillImg]="'../../assets/still-img.png'"
+      [openedImg]="'../../assets/opened-img.png'"
+      (tap)="onTap($event)"
+      [npTaps]="numberOfTaps"
+      [enabled]="isEnabled"
+    >
+    </perx-core-pinata>
+  </div>
+</div>
+<div class="action-container">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="isEnabled = true"
+    *ngIf="!isEnabled"
+  >
+    Start playing
+  </button>
+</div>
