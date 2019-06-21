@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
       .subscribe(campaigns => {
         this.campaigns = campaigns;
       });
-  
+
     this.activeRoute.paramMap.subscribe(params => {
       const popup = params.get('popup');
       if (popup === 'expired') {
