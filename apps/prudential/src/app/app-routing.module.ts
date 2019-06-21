@@ -16,10 +16,10 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', redirectTo: 'game', pathMatch: 'full' },
-      { path: 'activation', component: ActivationCodeComponent },
+      { path: 'activation/:id', component: ActivationCodeComponent },
       { path: 'congrats', component: CongratsComponent },
       { path: 'game', component: GameComponent },
-      { path: 'redemption', component: RedemptionComponent },
+      { path: 'redemption/:id', component: RedemptionComponent },
       { path: 'vouchers', component: VouchersComponent },
       { path: 'vouchers/:id', component: VoucherComponent },
     ],
