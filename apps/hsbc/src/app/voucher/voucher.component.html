@@ -1,10 +1,10 @@
 <!-- Template stuff aimed at being replaced by real components -->
-<h1>Congratulations!</h1>
-<h2>You just won an instant reward.</h2>
+<h1 *ngIf="firstTime">Congratulations!</h1>
+<h2 *ngIf="firstTime">You just won an instant reward.</h2>
 <div>
     <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true"></perx-core-voucher>
 </div>
 <div class="actions-container" *ngIf="!hideActions">
-    <button routerLink="/redemption" mat-stroked-button color="primary">Redeem now</button>
-    <button routerLink="/home" mat-flat-button color="primary">Save to wallet</button>
+    <button *ngIf="firstTime" routerLink="/home" mat-stroked-button color="primary">Save to wallet</button>
+    <button routerLink="/redemption" mat-flat-button color="primary">Redeem now</button>
 </div>

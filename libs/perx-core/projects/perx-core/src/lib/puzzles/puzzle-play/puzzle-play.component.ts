@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { IPuzzle } from '../puzzle.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'perx-core-puzzle-play',
@@ -7,7 +6,26 @@ import { IPuzzle } from '../puzzle.model';
   styleUrls: ['./puzzle-play.component.css']
 })
 export class PuzzlePlayComponent implements OnInit {
-  puzzle: IPuzzle;
+  @Input()
+  img: string;
+
+  @Input()
+  rows = 2;
+
+  @Input()
+  cols = 3;
+
+  @Input()
+  nbPlayedPieces = 0;
+
+  @Input()
+  nbAvailablePieces = 0;
+
+  @Output()
+  moved = new EventEmitter<void>();
+
+  @Output()
+  completed = new EventEmitter<void>();
 
   constructor() { }
 

@@ -1,3 +1,7 @@
 <!-- Template stuff aimed at being replaced by real components -->
-<h1>My Puzzles</h1>
-<perx-core-puzzle-list (selected)="selected($event)"></perx-core-puzzle-list>
+<div class="background-padding-offset">
+    <div class="puzzles-list-container">
+        <h1>My Puzzles</h1>
+        <perx-core-puzzle-list (selected)="selected($event)" [campaignId]="campaignId"></perx-core-puzzle-list>
+    </div>
+</div>

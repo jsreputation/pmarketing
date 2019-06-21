@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
@@ -18,7 +18,6 @@ export class AuthenticationService implements AuthService {
   preAuthJWT: string;
 
   constructor(
-    private http: HttpClient,
     private tokenStorage: TokenStorage,
     private cognitoService: CognitoService,
     private v4OauthService: OauthService,
@@ -122,11 +121,33 @@ export class AuthenticationService implements AuthService {
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
-  public async v4GameOauth(user: string, pass: string, mechId: string) {
+  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string) {
     this.authing = true;
     let success = false;
 
-    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId).toPromise().catch(
+    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId).toPromise().catch(
+      () => {
+        console.log('login failed!');
+        this.authing = false;
+      }
+    );
+    // @ts-ignore
+    const userBearer = v4AuthData.bearer_token;
+    if (userBearer) {
+      this.saveAccessData(userBearer);
+
+      success = true;
+    }
+    this.authing = false;
+    return success;
+  }
+
+  public async v4AutoLogin() {
+    this.authing = true;
+    let success = false;
+
+    const userId = this.getUrlParameter('pi');
+    const v4AuthData = await this.v4OauthService.authenticateUserIdWithAppBearer(userId).toPromise().catch(
       () => {
         console.log('login failed!');
         this.authing = false;

@@ -9,7 +9,8 @@ import {
   PopupComponent,
   CognitoModule,
   AuthenticationModule,
-  OauthModule
+  OauthModule,
+  CampaignModule
 } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
@@ -25,7 +26,8 @@ import {
   MatCardModule,
   MatDialogModule,
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
@@ -51,7 +53,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    VouchersModule,
+    VouchersModule.forRoot({ env: environment }),
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -60,10 +62,12 @@ import { FormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatIconModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
     PerxCoreModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
+    CampaignModule.forRoot({ env: environment }),
     AuthenticationModule,
     FormsModule
   ],

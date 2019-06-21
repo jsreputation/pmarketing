@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule } from '@angular/router';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { CampaignModule, ShakeTreeComponent } from '@perx/core/dist/perx-core';
+import { MatProgressBarModule } from '@angular/material';
+import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -10,10 +12,11 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent],
+      declarations: [GameComponent, ShakeTreeComponent],
       imports: [
         RouterModule.forRoot([]),
-        PerxCoreModule
+        CampaignModule.forRoot({ env: environment }),
+        MatProgressBarModule
       ]
     })
       .compileComponents();

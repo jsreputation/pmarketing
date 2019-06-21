@@ -57,7 +57,6 @@ export class ShakeTreeComponent implements OnInit {
   }
 
   tapped() {
-    console.log(this.enabled);
     if (this.enabled) {
       if (this.n < this.nbShakes) {
         this.shakeAnitionClass = '';
@@ -68,7 +67,6 @@ export class ShakeTreeComponent implements OnInit {
       } else if (this.n === this.nbShakes) {
         this.shakeAnitionClass = '';
         this.gifts.map(gift => {
-          console.log(gift.id + ' | ' + this.nbFallingGifts);
           if (gift.id <= this.nbFallingGifts) {
             gift.status = 'drop';
           }

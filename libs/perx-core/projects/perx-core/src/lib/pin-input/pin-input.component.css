@@ -14,13 +14,16 @@ input {
   border-radius: 4px;
   box-sizing: border-box;
   margin: 8px;
-  font-family: Lato, Helvetica, sans-serif;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 80px;
   line-height: 96px;
   /* identical to box height */
   text-align: center;
+}
+input:focus {
+  outline-color: #106cc8;
 }
 .error input {
   border-color: #eb202f;
