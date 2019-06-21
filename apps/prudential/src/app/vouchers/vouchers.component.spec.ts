@@ -13,18 +13,15 @@ describe('VouchersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VouchersComponent ],
+      declarations: [VouchersComponent],
       imports: [
         HttpClientTestingModule,
         VouchersModule.forRoot({ env: { apiHost: '' } }),
         MatDialogModule,
         RouterTestingModule
       ],
-      providers: [
-        DatePipe
-      ]
-    })
-    .compileComponents();
+      providers: [DatePipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

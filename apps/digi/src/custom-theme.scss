@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$custom-yellow: map-merge(
+  $mat-yellow,
+  (
+    500: #fbe74d
+  )
+);
+
+$custom-app-primary: mat-palette($custom-yellow);
+$custom-app-accent: mat-palette($mat-pink, A200, A100, A400);
+$custom-app-warn: mat-palette($mat-yellow);
+
+$custom-app-theme: mat-light-theme(
+  $custom-app-primary,
+  $custom-app-accent,
+  $custom-app-warn
+);
+
+@include angular-material-theme($custom-app-theme);
