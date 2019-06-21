@@ -4,6 +4,14 @@ mat-card {
   padding: 0;
   flex: 0 0 10.5rem;
   height: 10.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+}
+mat-card.disabled {
+  background-color: #ebebeb;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 mat-icon {
@@ -11,20 +19,6 @@ mat-icon {
   font-size: 3.6rem;
   height: 3.6rem;
   flex: 0 0 3.6rem;
-}
-
-.hasDraw,
-.noDraw {
-  display: flex;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.noDraw {
-  background-color: #ebebeb;
 }
 
 .puzzle-content {
@@ -83,8 +77,4 @@ mat-icon {
   padding: 2px 4px;
   font-size: 1.2rem;
   border-radius: 8px;
-}
-.disabled {
-  background-color: #EBEBEB;
-  opacity: 0.5;
 }

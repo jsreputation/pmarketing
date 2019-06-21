@@ -10,7 +10,7 @@ import { IVoucher } from '../models/voucher.model';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  @Output() redeem: EventEmitter<VoucherComponent> = new EventEmitter<VoucherComponent>();
+  @Output() redeem: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
   hideMerchantImg = false;
@@ -25,6 +25,7 @@ export class VoucherComponent implements OnInit {
   hideActions = false;
 
   voucher$: Observable<IVoucher>;
+  voucherId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,10 +35,11 @@ export class VoucherComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.voucher$ = this.vouchersService.get(params[`id`]);
+      this.voucherId = params[`id`];
     });
   }
 
   onClick() {
-    this.redeem.emit(this);
+    this.redeem.emit(this.voucherId);
   }
 }
