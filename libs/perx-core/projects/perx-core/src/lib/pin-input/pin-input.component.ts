@@ -3,6 +3,9 @@ import { FormControl } from '@angular/forms';
 import { PinService } from './pin.service';
 import { ActivatedRoute } from '@angular/router';
 import { VouchersService } from '../vouchers/vouchers.service';
+import { map, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'perx-core-pin-input',
@@ -15,6 +18,9 @@ export class PinInputComponent implements OnInit {
 
   @Output()
   full: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output()
+  hasErrorEmit: EventEmitter<number> = new EventEmitter<number>();
 
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
@@ -72,9 +78,18 @@ export class PinInputComponent implements OnInit {
   }
 
   redeemVoucher() {
-    this.vouchersService.redeemVoucher(this.voucherId).subscribe(res => {
-      this.full.emit(this.voucherId);
-    });
+    this.vouchersService.redeemVoucher(this.voucherId)
+      .pipe(
+        map(res => res.data),
+        catchError((err: HttpErrorResponse) => {
+          this.hasErrorEmit.emit(err.status);
+          return of('Redeem failed.');
+        })
+      ).subscribe(res => {
+        if (res.status === 200) {
+          this.full.emit(this.voucherId);
+        }
+      });
   }
 
   validateCode(code: string) {
