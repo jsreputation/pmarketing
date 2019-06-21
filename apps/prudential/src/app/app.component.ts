@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'shake-the-tree';
+  title = 'prudential';
   showBack = false;
   defaultBackLocation = '/vouchers';
 

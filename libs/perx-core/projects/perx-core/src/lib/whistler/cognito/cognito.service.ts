@@ -7,8 +7,8 @@ export class EnvConfig {
   env = {
     apiHost: 'localhost:3000',
     production: false,
+    isWhistler: true,
     preAuth: false,
-    preAuthPath: '/preauth',
   };
 }
 
@@ -30,9 +30,9 @@ export class CognitoService {
     this.apiHost = config.env.apiHost;
     this.isAuthenticated = false;
     if (!config.env.production) {
-      this.preAuthEndpoint = 'http://localhost:4000' + config.env.preAuthPath;
+      this.preAuthEndpoint = 'http://localhost:4000/preauth';
     } else {
-      this.preAuthEndpoint = config.env.preAuthPath;
+      this.preAuthEndpoint = '/preauth';
     }
   }
 

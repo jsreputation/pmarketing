@@ -17,6 +17,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@perx/core": ["/libs/perx-core/dist/"],
+      "@perx/core/*": ["/libs/perx-core/dist/*"]
+    }
   }
 }

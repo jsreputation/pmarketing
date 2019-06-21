@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleComponent } from './puzzle.component';
-import { PerxCoreModule, CampaignModule } from '@perx/core/dist/perx-core';
-import { RouterModule } from '@angular/router';
+import { CampaignModule, VouchersModule, PuzzlesModule } from '@perx/core/dist/perx-core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../environments/environment';
 
 describe('PuzzleComponent', () => {
@@ -13,9 +13,10 @@ describe('PuzzleComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PuzzleComponent ],
       imports: [
-        PerxCoreModule,
-        RouterModule.forRoot([]),
-        CampaignModule.forRoot({ env: environment })
+        PuzzlesModule,
+        RouterTestingModule,
+        VouchersModule.forRoot({ env: environment }),
+        CampaignModule.forRoot({ env: environment }),
       ]
     })
     .compileComponents();

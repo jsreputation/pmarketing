@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IVoucher } from '../models/voucher.model';
+import { ActivatedRoute } from '@angular/router';
+import { VouchersService } from '../vouchers.service';
 
 @Component({
   selector: 'perx-core-bcode-redemption',
@@ -7,11 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BcodeRedemptionComponent implements OnInit {
 
-  bCode = `=TYHGV=WPLKN=XCNET=9Y32<=5YUFK=4UWKX=`;
+  bCode = `=TYHGV=WPLKN==XCNET=9Y32<==5YUFK=4UWKX=`;
 
-  constructor() { }
+  voucher$: Observable<IVoucher>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private vouchersService: VouchersService
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.voucher$ = this.vouchersService.get(params[`id`]);
+    });
   }
 
 }
