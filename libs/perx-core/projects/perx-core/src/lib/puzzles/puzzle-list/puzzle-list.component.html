@@ -1,21 +1,19 @@
 <mat-card matRipple [matRippleDisabled]="!isActive(puzzle)" [class.disabled]="!isActive(puzzle)"
   [tabindex]="isActive(puzzle) ? 0 : -1" (click)="isActive(puzzle) && puzzleSelected(puzzle)"
   *ngFor="let puzzle of puzzles; let i=index">
-  <div className="{{puzzle.draws ? 'hasDraw' : 'noDraw'}}">
-    <div class="puzzle-content">
-      <div class="puzzle-img__wrapper">
-        <img class="puzzle-img" src="{{puzzle.image}}">
-      </div>
-      <div class="puzzle-details">
-        <h1>Puzzle #{{indexToLetter(i)}}
-          <span class="badge-warn">
-            {{ puzzle.stamps ? puzzle.stamps.length : 0 }}/{{total}}
-          </span>
-        </h1>
-        <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{puzzle.stamps.length}} new pieces</p>
-      </div>
+  <div class="puzzle-content">
+    <div class="puzzle-img__wrapper">
+      <img class="puzzle-img" src="{{puzzle.image}}">
     </div>
-    <mat-icon *ngIf="iconDisplay">
-      {{iconDisplay}}
-    </mat-icon>
+    <div class="puzzle-details">
+      <h1>Puzzle #{{indexToLetter(i)}}
+        <span class="badge-warn">
+          {{ puzzle.stamps ? puzzle.stamps.length : 0 }}/{{total}}
+        </span>
+      </h1>
+      <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{puzzle.stamps.length}} new pieces</p>
+    </div>
   </div>
+  <mat-icon *ngIf="iconDisplay">
+    {{iconDisplay}}
+  </mat-icon>

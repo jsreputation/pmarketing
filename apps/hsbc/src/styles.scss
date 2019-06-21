@@ -15,8 +15,8 @@ html {
   font-style: normal;
 }
 .container {
-  padding: 8rem 1.2rem 0;
-  height: calc(100vh - 8rem);
+  padding: 6rem 1.2rem 0;
+  height: calc(100vh - 6rem);
 }
 
 .content-container {
@@ -84,7 +84,7 @@ html {
 .wallet-tabs .mat-tab-header {
   position: fixed;
   left: 0;
-  top: 80px;
+  top: 60px;
   background-color: #fff;
   z-index: 111;
   width: 100%;

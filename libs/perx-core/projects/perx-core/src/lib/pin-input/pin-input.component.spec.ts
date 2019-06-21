@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PinInputComponent } from './pin-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { VouchersModule } from '../vouchers/vouchers.module';
+import { PinService } from './pin.service';
 
 describe('PinInputComponent', () => {
   let component: PinInputComponent;
@@ -10,7 +13,13 @@ describe('PinInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PinInputComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers: [PinService]
     })
       .compileComponents();
   }));

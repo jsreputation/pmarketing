@@ -4,6 +4,7 @@ import { ActivationCodeComponent } from './activation-code.component';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material';
+import { VouchersModule } from '@perx/core/dist/perx-core';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -14,6 +15,7 @@ describe('ActivationCodeComponent', () => {
       declarations: [ActivationCodeComponent],
       imports: [
         RouterModule.forRoot([]),
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
         PerxCoreModule,
         MatCardModule
       ]
