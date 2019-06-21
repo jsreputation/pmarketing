@@ -8,6 +8,7 @@ WORKDIR /service/express
 ENV PORT=8000
 ENV APIHOST='https://api.perxtech.io'
 ENV FORCE_PATH_STYLE='true'
+ENV PRODUCTION='true'
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
