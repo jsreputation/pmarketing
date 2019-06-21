@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PinService } from './pin.service';
+import { ActivatedRoute } from '@angular/router';
+import { VouchersService } from '../vouchers/vouchers.service';
+import { map, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'perx-core-pin-input',
@@ -14,13 +20,23 @@ export class PinInputComponent implements OnInit {
   full: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
+  hasErrorEmit: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
+
+  pinCode: string;
+  voucherId: string;
 
   controlls: FormControl[] = [];
   hasError = '';
 
-  constructor(private element: ElementRef) {
-  }
+  constructor(
+    private element: ElementRef,
+    private pin: PinService,
+    private route: ActivatedRoute,
+    private vouchersService: VouchersService
+  ) { }
 
   ngOnInit() {
     // length might not be a number
@@ -35,6 +51,12 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
+    this.pin.getPin().subscribe(code => {
+      this.pinCode = code;
+    });
+    this.route.params.subscribe(params => {
+      this.voucherId = params[`id`];
+    });
   }
 
   onUpdate() {
@@ -42,7 +64,7 @@ export class PinInputComponent implements OnInit {
     if (v.length === this.length) {
       // if full length reached, emit on complete
       if (this.validateCode(v)) {
-        this.full.emit(v);
+        this.redeemVoucher();
       }
     } else {
       // move to next input box
@@ -55,12 +77,28 @@ export class PinInputComponent implements OnInit {
     this.update.emit(v);
   }
 
+  redeemVoucher() {
+    this.vouchersService.redeemVoucher(this.voucherId)
+      .pipe(
+        map(res => res.data),
+        catchError((err: HttpErrorResponse) => {
+          this.hasErrorEmit.emit(err.status);
+          return of('Redeem failed.');
+        })
+      ).subscribe(res => {
+        if (res.status === 200) {
+          this.full.emit(this.voucherId);
+        }
+      });
+  }
+
   validateCode(code: string) {
-    const isValid = !!(code === '1234');
+    const isValid = !!(code === this.pinCode);
     this.hasError = isValid ? '' : 'error';
 
     return isValid;
   }
+
   get value(): string {
     return this.controlls.reduce((p: string, v: FormControl): string => {
       return v.value === null ? p : `${p}${v.value}`;

@@ -15,7 +15,7 @@ export class VoucherComponent implements OnInit {
   ngOnInit() {
   }
 
-  onRedeem() {
-    this.router.navigate(['/activation']);
+  onRedeem(id: string): void {
+    this.router.navigate([`/activation/${id}`]);
   }
 }

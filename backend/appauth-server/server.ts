@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import express from 'express';
 import { readFileSync } from 'fs';
 import axios from 'axios';
+import { join } from 'path';
 
 // Express server
 const app = express();
@@ -12,6 +13,7 @@ const cors = require('cors');
 app.use(cors());
 
 const PORT = process.env.PORT || 4000;
+const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
@@ -112,13 +114,18 @@ app.post('/v4/oauth/token', async (req, res, next) => {
   }
 });
 
-// app.get('*', (req, res, next) => {
-//   if (req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] === 'http') {
-//     res.redirect('https://' + req.headers.host + req.url);
-//   } else {
-//     next();
-//   }
-// });
+if (process.env.PRODUCTION) {
+  app.set('view engine', 'html');
+  app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
+
+// Serve static files from /../../perx-microsite
+  app.use(express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+
+// All regular routes use the index.html
+  app.get('*', (req, res) => {
+    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
+  });
+}
 
 // Start up the Node server
 const server = app.listen(PORT, () => {

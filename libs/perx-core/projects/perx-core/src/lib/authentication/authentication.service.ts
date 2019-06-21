@@ -88,7 +88,7 @@ export class AuthenticationService implements AuthService {
    * so interceptor won't intercept this request
    */
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token');
   }
 
   /**
