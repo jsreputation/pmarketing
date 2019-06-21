@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PinService } from './pin.service';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { VouchersService } from '../vouchers/vouchers.service';
 
 @Component({
   selector: 'perx-core-pin-input',
@@ -18,12 +19,18 @@ export class PinInputComponent implements OnInit {
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
 
-  pin$: Observable<string>;
+  pinCode: string;
+  voucherId: string;
 
   controlls: FormControl[] = [];
   hasError = '';
 
-  constructor(private element: ElementRef, private pin: PinService) {}
+  constructor(
+    private element: ElementRef,
+    private pin: PinService,
+    private route: ActivatedRoute,
+    private vouchersService: VouchersService
+  ) { }
 
   ngOnInit() {
     // length might not be a number
@@ -38,18 +45,20 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
-    this.getPin();
-    this.pin$ = this.pin.getPin();
+    this.pin.getPin().subscribe(code => {
+      this.pinCode = code;
+    });
+    this.route.params.subscribe(params => {
+      this.voucherId = params[`id`];
+    });
   }
-  async getPin() {
-    this.pin$ = await this.pin.getPin();
-  }
+
   onUpdate() {
     const v = this.value;
     if (v.length === this.length) {
       // if full length reached, emit on complete
       if (this.validateCode(v)) {
-        this.full.emit(v);
+        this.redeemVoucher();
       }
     } else {
       // move to next input box
@@ -62,13 +71,19 @@ export class PinInputComponent implements OnInit {
     this.update.emit(v);
   }
 
+  redeemVoucher() {
+    this.vouchersService.redeemVoucher(this.voucherId).subscribe(res => {
+      this.full.emit(this.voucherId);
+    });
+  }
+
   validateCode(code: string) {
-    const isValid = false;
-    // const isValid = !!(code === this.pin$);
+    const isValid = !!(code === this.pinCode);
     this.hasError = isValid ? '' : 'error';
 
     return isValid;
   }
+
   get value(): string {
     return this.controlls.reduce((p: string, v: FormControl): string => {
       return v.value === null ? p : `${p}${v.value}`;

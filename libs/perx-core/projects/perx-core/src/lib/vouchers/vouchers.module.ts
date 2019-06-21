@@ -4,7 +4,6 @@ import { VouchersComponent } from './vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { MaterialModule } from '../shared/material.module';
 import { VouchersService } from './vouchers.service';
-import { RedemptionService } from './redemption/redemption.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
 
 const components = [
@@ -40,7 +39,6 @@ export class VouchersModule {
       ngModule: VouchersModule,
       providers: [
         VouchersService,
-        RedemptionService,
         {
           provide: 'config',
           useValue: config

@@ -18,8 +18,8 @@ export class ActivationCodeComponent implements OnInit {
   ngOnInit() {
   }
 
-  pinInput(event: string): void {
-    this.router.navigate(['/redemption']);
+  pinInput(id: string): void {
+    this.router.navigate([`/redemption/${id}`]);
   }
 
   onCancel() {
