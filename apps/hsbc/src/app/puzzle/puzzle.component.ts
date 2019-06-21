@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CampaignService, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
-import { ActivatedRoute } from '@angular/router';
+import { CampaignService, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE, CAMPAIGN_TYPE, ICampaign } from '@perx/core/dist/perx-core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-puzzle',
@@ -14,7 +15,7 @@ export class PuzzleComponent implements OnInit {
   availablePieces = 0;
   playedPieces = 0;
 
-  constructor(private campaignService: CampaignService, private route: ActivatedRoute) { }
+  constructor(private campaignService: CampaignService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
@@ -36,7 +37,17 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  private fetchCampaign() { }
+  private fetchCampaign() {
+    this.campaignService.getCampaigns()
+      .pipe(
+        map(data => data.data),
+        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp))
+      )
+      .subscribe((campaigns: ICampaign[]) => {
+        this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
+        this.fetchCard();
+      });
+  }
 
   private fetchCard() {
     this.campaignService.getCurrentCard(this.campaignId)
@@ -49,6 +60,19 @@ export class PuzzleComponent implements OnInit {
         this.card = card.data;
         this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
         this.availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+      });
+  }
+
+  onMoved(id: string) {
+    this.campaignService.putStampTransaction(id)
+      .subscribe(stamp => {
+        if (stamp.stamp_transaction.state === TRANSACTION_STATE.redeemed) {
+          this.fetchCard();
+          if (stamp.stamp_transaction.vouchers && stamp.stamp_transaction.vouchers.length > 0) {
+            const voucherId = stamp.stamp_transaction.vouchers[0].id;
+            this.router.navigate([`/vouchers/${voucherId}`]);
+          }
+        }
       });
   }
 }
