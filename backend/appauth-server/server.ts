@@ -6,6 +6,7 @@ import express from 'express';
 import { readFileSync } from 'fs';
 import axios from 'axios';
 import { join } from 'path';
+import { colors } from '@angular-devkit/core/src/terminal';
 
 // Express server
 const app = express();
@@ -91,6 +92,7 @@ app.post('/v4/oauth/token', async (req, res, next) => {
     const password = req.query.password;
     const mechId = req.query.mech_id;
     const campaignId = req.query.campaign_id;
+    const userId = req.query.identifier;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
@@ -103,7 +105,8 @@ app.post('/v4/oauth/token', async (req, res, next) => {
       {
         params: {
           'client_id': endpointCredential.perx_access_key_id,
-          'client_secret': endpointCredential.perx_secret_access_key
+          'client_secret': endpointCredential.perx_secret_access_key,
+          'identifier': userId
         }
       }
     );
