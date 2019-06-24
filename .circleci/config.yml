@@ -111,6 +111,7 @@ workflows:
               only: /.*/
       - deploy:
           name: deploy_to_staging
+          docker_tag: "prudential-${CIRCLE_SHA1:0:7}"
           kube_host: STAGING_KUBE_HOST
           kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
           kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
@@ -123,7 +124,7 @@ workflows:
                 - staging
       - deploy:
           name: deploy_to_production
-          docker_tag: "${CIRCLE_TAG}"
+          docker_tag: "prudential-${CIRCLE_TAG}"
           kube_host: PRODUCTION_KUBE_HOST
           kube_bearer_token: PRODUCTION_KUBE_BEARER_TOKEN
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
