@@ -87,8 +87,6 @@ jobs:
   test:
     machine:
       image: ubuntu-1604:201903-01
-    environment:
-      BASH_ENV: ~/.nvm/nvm.sh
     steps:
       - run:
           name: Install yarn
@@ -99,6 +97,8 @@ jobs:
       - run:
           name: Switch to latest node version
           command: |
+            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
             nvm install 10
       - checkout
       - run: yarn install
