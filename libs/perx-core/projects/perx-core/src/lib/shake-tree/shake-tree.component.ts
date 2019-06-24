@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.css']
 })
-export class ShakeTreeComponent implements OnInit {
+export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
   treeImg: string;
   @Input()
@@ -16,18 +16,16 @@ export class ShakeTreeComponent implements OnInit {
   waitingManCelebrateImg: string;
   @Input()
   nbShakes = 1;
-
   @Input()
-  nbHangedGifts = 10;
-
+  nbHangedGifts = 1;
   @Input()
   nbFallingGifts = 10;
-
   @Input()
   enabled = false;
-
   @Output()
   completed: EventEmitter<void> = new EventEmitter<void>();
+  @Output()
+  tap: EventEmitter<number> = new EventEmitter<number>();
 
   gifts = [
     { id: 1, status: 'hang', display: true },
@@ -45,9 +43,18 @@ export class ShakeTreeComponent implements OnInit {
   celebrate = false;
   shakeAnitionClass = '';
   n = 0;
-  constructor() { }
 
   ngOnInit() {
+    this.updateGifts();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.nbHangedGifts) {
+      this.updateGifts();
+    }
+  }
+
+  private updateGifts() {
     this.gifts.map(gift => {
       if (gift.id > this.nbHangedGifts) {
         gift.display = false;
@@ -58,6 +65,7 @@ export class ShakeTreeComponent implements OnInit {
 
   tapped() {
     if (this.enabled) {
+      this.tap.emit(this.n);
       if (this.n < this.nbShakes) {
         this.shakeAnitionClass = '';
         setTimeout(() => {
