@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, of } from 'rxjs';
-import { bufferCount, tap, first, map, catchError } from 'rxjs/operators';
-import { CampaignService, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { interval, forkJoin, Observable } from 'rxjs';
+import { bufferCount, tap, first, map, switchMap, catchError } from 'rxjs/operators';
+import { CampaignService, CAMPAIGN_TYPE, GameService, IGame, defaultTree, GAME_TYPE, ICampaign } from '@perx/core/dist/perx-core';
+import { POPUP_TYPE } from '../vouchers/vouchers.component';
 
 @Component({
   selector: 'app-game',
@@ -13,38 +13,47 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class GameComponent implements OnInit {
   playing = false;
   progressValue: number = null;
-  constructor(private router: Router, private campaignService: CampaignService) { }
+  loading = true;
+  game: IGame = {
+    id: -1,
+    campaignId: -1,
+    type: GAME_TYPE.shakeTheTree,
+    remainingNumberOfTries: 20,
+    config: { ...defaultTree(), treeImg: '', giftImg: '' },
+  };
+
+  constructor(private router: Router, private campaignService: CampaignService, private gameService: GameService) { }
 
   ngOnInit() {
     this.campaignService.getCampaigns()
       .pipe(
         map(res => res.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 401) {
-            this.router.navigate(['/login']);
-          } else {
-            this.router.navigate(['/vouchers', { popup: 'expired' }]);
-          }
-          return of('auth error');
-        })
+        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
+        map(campaigns => campaigns[0]),
+        switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id))
       )
-      .subscribe(campaigns => {
-        if (campaigns.length === 0) {
-          this.router.navigate(['/vouchers', { popup: 'expired' }]);
+      .subscribe(games => {
+        this.game = games[0];
+        if (this.game.remainingNumberOfTries <= 0) {
+          this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
+        } else {
+          this.loading = false;
         }
       });
   }
 
   done(): void {
+    const r1 = this.gameService.play(this.game.id);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
-    interval(delay / nbSteps)
+    const r2: Observable<number[]> = interval(delay / nbSteps)
       .pipe(
         tap(v => this.progressValue = v * 100 / nbSteps),
         bufferCount(nbSteps),
         first()
-      ).subscribe(() => { this.router.navigate(['/congrats']); });
+      );
+    forkJoin(r1, r2)
+      .subscribe(() => { this.router.navigate(['/congrats']); });
   }
 }

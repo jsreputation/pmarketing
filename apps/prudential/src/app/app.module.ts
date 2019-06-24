@@ -10,7 +10,8 @@ import {
   CognitoModule,
   AuthenticationModule,
   OauthModule,
-  CampaignModule
+  CampaignModule,
+  GameModule
 } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
@@ -68,6 +69,7 @@ import { FormsModule } from '@angular/forms';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
+    GameModule.forRoot({ env: environment }),
     AuthenticationModule,
     FormsModule
   ],
