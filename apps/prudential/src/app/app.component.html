@@ -12,24 +12,17 @@
   </button>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    position="end"
-    fixedInViewport="true"
-    autofocus="true"
-    disableClose="false"
-    mode="over"
-  >
+  <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" autofocus="true" disableClose="false"
+    mode="over">
     <mat-nav-list>
-      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']" [replaceUrl]="replaceUrl()" (click)="drawer.toggle()">Terms and Conditions</a>
-      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/contact-us']" [replaceUrl]="replaceUrl()" (click)="drawer.toggle()">Contact Us</a>
+      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']" [replaceUrl]="replaceUrl()"
+        (click)="drawer.toggle()">Terms and Conditions</a>
+      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/contact-us']" [replaceUrl]="replaceUrl()"
+        (click)="drawer.toggle()">Contact Us</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="container">
-      <router-outlet (activate)="onActivate($event)"></router-outlet>
-    </div>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

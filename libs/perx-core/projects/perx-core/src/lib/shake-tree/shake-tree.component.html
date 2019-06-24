@@ -1,14 +1,14 @@
 <div (click)="tapped()">
   <div class="tree">
     <div [ngClass]="shakeAnitionClass">
-      <img [src]="treeImg" class="tree__img" />
+      <img [src]="treeImg" class="tree__img" *ngIf="treeImg"/>
       <div *ngFor="let gift of gifts" class="gift">
-        <img *ngIf="gift.display" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id + ' ' + gift.status" />
+        <img *ngIf="gift.display && giftImg" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id + ' ' + gift.status" />
       </div>
     </div>
     <div class="man">
-      <img *ngIf="!celebrate" [src]="waitingManImg" class="man__img" />
-      <img *ngIf="celebrate" [src]="waitingManCelebrateImg" class="man__img" />
+      <img *ngIf="!celebrate && waitingManImg" [src]="waitingManImg" class="man__img"/>
+      <img *ngIf="celebrate && waitingManCelebrateImg" [src]="waitingManCelebrateImg" class="man__img"/>
     </div>
   </div>
 </div>

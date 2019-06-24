@@ -92,8 +92,6 @@ export class VouchersService {
   redeemVoucher(id: string): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
-    return this.http.post(url, null, {}).pipe(
-      map(resp => resp[`data`])
-    );
+    return this.http.post(url, null, {});
   }
 }
