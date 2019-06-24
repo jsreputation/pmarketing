@@ -90,11 +90,15 @@ jobs:
     resource_class: xlarge
     steps:
       - run:
-          name: install yarn
+          name: Install yarn
           command: |
             curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
             echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
             sudo apt-get update && sudo apt-get install yarn
+      - run:
+          name: Switch to latest node version
+          command: |
+            nvm install 10
       - checkout
       - run: yarn install
       - run: yarn run build
