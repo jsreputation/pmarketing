@@ -3,4 +3,5 @@ export const environment = {
   production: true,
   isWhistler: false,
   preAuth: false,
+  preAuthPath: '/preauth',
 };
