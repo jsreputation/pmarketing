@@ -97,7 +97,7 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - test
+      - test:
           filters:
             tags:
               # this enables circleci to trigger on tags
