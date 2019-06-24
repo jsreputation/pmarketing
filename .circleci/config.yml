@@ -85,7 +85,8 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   test:
-    executor: ubuntu
+    docker:
+      - image: circleci/node:10-browsers
     steps:
       - checkout
       - run: yarn install
