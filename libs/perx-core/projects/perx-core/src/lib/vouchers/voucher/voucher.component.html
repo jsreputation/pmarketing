@@ -1,6 +1,6 @@
 <ng-container *ngIf="voucher$ | async as voucher">
   <div class="voucher-container">
-    <div class="reward-image-container">
+    <div class="reward-image-container" *ngIf="voucher.bannerUrl">
       <img class="reward-image" src="{{voucher.bannerUrl}}">
     </div>
     <div class="merchant-image-container" *ngIf="!hideMerchantImg">
