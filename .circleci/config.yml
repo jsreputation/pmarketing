@@ -97,8 +97,9 @@ jobs:
       - run:
           name: Switch to latest node version
           command: |
-            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
-            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+            export NVM_DIR=$HOME/.nvm
+            touch $HOME/.nvmrc
+            source $NVM_DIR/nvm.sh
             nvm install 10
       - checkout
       - run: yarn install
