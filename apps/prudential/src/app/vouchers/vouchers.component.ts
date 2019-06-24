@@ -4,6 +4,11 @@ import { PopupComponent, IPopupConfig } from '@perx/core/dist/perx-core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
+export enum POPUP_TYPE {
+  completed = 'completed',
+  expired = 'expired',
+  four0four = '404'
+}
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
@@ -22,13 +27,13 @@ export class VouchersComponent implements OnInit {
     this.route.paramMap.subscribe(ps => {
       const popup = ps.get('popup');
       switch (popup) {
-        case 'completed':
+        case POPUP_TYPE.completed:
           this.completedPopup();
           break;
-        case 'expired':
+        case POPUP_TYPE.expired:
           this.expiredPopup();
           break;
-        case '404':
+        case POPUP_TYPE.four0four:
           this._404Popup();
           break;
       }
