@@ -6,7 +6,6 @@ import express from 'express';
 import { readFileSync } from 'fs';
 import axios from 'axios';
 import { join } from 'path';
-import { colors } from '@angular-devkit/core/src/terminal';
 
 // Express server
 const app = express();
