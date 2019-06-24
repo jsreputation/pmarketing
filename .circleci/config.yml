@@ -85,10 +85,15 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   test:
-    docker:
-      - image: circleci/node:10-browsers
+    machine:
+      image: ubuntu-1604:201903-01
     resource_class: xlarge
     steps:
+      - run:
+          name: install yarn
+          command: |
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
       - checkout
       - run: yarn install
       - run: yarn run build
