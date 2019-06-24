@@ -1,7 +1,16 @@
 FROM node:lts-alpine as builder
+
+COPY . /service
+WORKDIR /service
+
+RUN yarn
+RUN yarn build:prod
+
+FROM node:lts-alpine
+
 ARG app
-COPY apps/$app/dist/$app /service/perx-microsite/
-COPY backend/appauth-server /service/express/
+COPY --from=builder /service/apps/$app/dist/$app /service/perx-microsite/
+COPY --from=builder /service/backend/appauth-server /service/express/
 
 WORKDIR /service/express
 

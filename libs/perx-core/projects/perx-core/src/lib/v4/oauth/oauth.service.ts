@@ -47,7 +47,7 @@ export class OauthService {
   authenticateUserIdWithAppBearer(user: string) {
     const httpParams = new HttpParams()
       .append('url', location.host)
-      .append('username', user);
+      .append('identifier', user);
 
     return this.http.post(this.authEndpoint + '/token', null, {
       params: httpParams
