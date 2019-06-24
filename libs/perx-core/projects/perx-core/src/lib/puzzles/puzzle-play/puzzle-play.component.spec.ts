@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatGridListModule } from '@angular/material';
 import { PuzzlePlayComponent } from './puzzle-play.component';
 
 describe('PuzzlePlayComponent', () => {
@@ -8,7 +8,10 @@ describe('PuzzlePlayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuzzlePlayComponent ]
+      declarations: [ PuzzlePlayComponent ],
+      imports: [
+        MatGridListModule
+      ]
     })
     .compileComponents();
   }));
