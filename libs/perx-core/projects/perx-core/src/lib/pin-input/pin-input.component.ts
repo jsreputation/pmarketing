@@ -80,13 +80,12 @@ export class PinInputComponent implements OnInit {
   redeemVoucher() {
     this.vouchersService.redeemVoucher(this.voucherId)
       .pipe(
-        map(res => res.data),
         catchError((err: HttpErrorResponse) => {
           this.hasErrorEmit.emit(err.status);
-          return of('Redeem failed.');
+          return of('Redeem failed');
         })
       ).subscribe(res => {
-        if (res.status === 200) {
+        if (res !== 'Redeem failed') {
           this.full.emit(this.voucherId);
         }
       });
