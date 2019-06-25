@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
-  styleUrls: ['./shake-tree.component.css']
+  styleUrls: ['./shake-tree.component.scss']
 })
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
