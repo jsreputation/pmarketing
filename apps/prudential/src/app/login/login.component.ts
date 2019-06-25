@@ -28,11 +28,6 @@ export class LoginComponent implements OnInit {
     if (this.preAuth) {
       if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
 
-        // save current url's params
-        const param = location.search;
-        const primaryIdentifier = new URLSearchParams(param).get('pi');
-        (window as any).primaryIdentifier = primaryIdentifier;
-
         this.authService.isAuthorized().subscribe(
           authed => {
             if (!authed) {
@@ -53,7 +48,6 @@ export class LoginComponent implements OnInit {
             } else {
               this.authed = authed;
             }
-
           },
         );
       }
