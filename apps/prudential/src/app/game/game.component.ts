@@ -12,6 +12,7 @@ import {
   ICampaign
 } from '@perx/core/dist/perx-core';
 import { POPUP_TYPE } from '../vouchers/vouchers.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-game',
@@ -29,10 +30,12 @@ export class GameComponent implements OnInit {
     remainingNumberOfTries: 20,
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
+  isWhistler: boolean;
 
   constructor(private router: Router,
               private campaignService: CampaignService,
               private gameService: GameService) {
+    this.isWhistler = environment.isWhistler;
   }
 
   ngOnInit() {
@@ -71,12 +74,17 @@ export class GameComponent implements OnInit {
     forkJoin(r1, r2)
       .subscribe(
         ([resr1, resr2]) => {
-          if (resr1.status === 400) {
-            // and if v4
-            if (resr1.error.code === 4103) {
-              // no rewards available for specified user
+          if (!this.isWhistler) {
+            if (resr1.status === 200) {
+              // get number of rewards
+              // const numRewards = resr1.numRewards
+            } else {
+              if (resr1.error.code === 4103) {
+                // no rewards available for specified user
+              }
             }
           }
+
           this.router.navigate(['/congrats']);
         });
   }
