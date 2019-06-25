@@ -4,10 +4,10 @@
   <div class="game-wrapper__right">
     <perx-core-shake-tree
       *ngIf="game && game.type === 0"
-      [treeImg]="'../../assets/img/tree.png'" [giftImg]="'../../assets/img/gift.png'"
-      [waitingManImg]="'../../assets/img/man-waiting.png'"
-      [waitingManCelebrateImg]="'../../assets/img/man-celebrating.png'" [nbHangedGifts]="3" [nbFallingGifts]="1"
-      (completed)="done()" [enabled]="isEnabled" [nbShakes]="3" [distanceFromTree]=26 [bottomDistance]=1>
+      [treeImg]="game.config.treeImg" [giftImg]="game.config.giftImg"
+      [waitingManImg]="game.config.waitingAccessoryImg"
+      [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" [nbHangedGifts]="game.config.nbHangedGift" [nbFallingGifts]="game.config.nbGiftsToDrop"
+      (completed)="done()" [enabled]="isEnabled" [nbShakes]="game.config.nbTaps" [distanceFromTree]=26 [bottomDistance]=1>
     </perx-core-shake-tree>
     <perx-core-pinata
       *ngIf="game && game.type === 1"

@@ -66,8 +66,8 @@ export class GameService implements IGameService {
     return this.httpClient.put(`${this.hostName}/v4/games/${gameId}/play`, null);
   }
 
-  get(id: number): Observable<IGame> {
-    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${id}`)
+  get(gameId: number): Observable<IGame> {
+    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
       .pipe(
         map(res => res.data),
         map(game => {
