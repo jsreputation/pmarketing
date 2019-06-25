@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
-import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material';
 import { VouchersModule } from '@perx/core/dist/perx-core';
 
@@ -14,7 +14,7 @@ describe('ActivationCodeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ActivationCodeComponent],
       imports: [
-        RouterModule.forRoot([]),
+        RouterTestingModule,
         VouchersModule.forRoot({ env: { apiHost: '' } }),
         PerxCoreModule,
         MatCardModule
