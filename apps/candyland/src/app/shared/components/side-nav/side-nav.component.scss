@@ -1,0 +1,15 @@
+@import "../../../../styles/helper";
+
+.container-sidenav {
+  height: 100vh;
+}
+
+.sidenav {
+  width: rem(170px);
+}
+
+.mat-toolbar-log {
+  background-color: #172238;
+  display: flex;
+  justify-content: center;
+}
