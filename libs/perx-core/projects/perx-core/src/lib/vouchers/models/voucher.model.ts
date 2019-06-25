@@ -1,5 +1,6 @@
 export interface IVoucher {
   id: string|number;
+  rewardId: string|number;
   state: string;
   name: string;
   code: string;
@@ -10,4 +11,9 @@ export interface IVoucher {
   merchantName: string;
   merchantLogoUrl: string;
   termsAndConditions: string;
+}
+
+export interface IVoucherIdPair {
+  voucherId: number;
+  rewardId: number;
 }
