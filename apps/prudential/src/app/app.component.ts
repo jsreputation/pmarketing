@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.preAuth) {
       if (isPlatformBrowser(this.platformId)) {
-        // save current url's params
+        // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
           const param = location.search;
           (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
