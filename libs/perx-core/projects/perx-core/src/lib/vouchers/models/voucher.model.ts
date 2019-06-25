@@ -12,8 +12,3 @@ export interface IVoucher {
   merchantLogoUrl: string;
   termsAndConditions: string;
 }
-
-export interface IVoucherIdPair {
-  voucherId: number;
-  rewardId: number;
-}

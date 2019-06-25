@@ -35,18 +35,6 @@ export class VouchersComponent implements OnInit {
         return vouchers.filter(v => v.state === this.filter);
       })
     );
-    if (this.filter === 'issued') {
-      this.vouchers$.subscribe(vouchers => {
-
-        const vouchersIdPair = vouchers.map(voucher => ({
-          // tslint:disable-next-line: radix
-          voucherId: typeof voucher.id === 'string' ? parseInt(voucher.id) : voucher.id,
-          // tslint:disable-next-line: radix
-          rewardId: typeof voucher.rewardId === 'string' ? parseInt(voucher.rewardId) : voucher.rewardId,
-        }));
-        this.pinService.setPins(vouchersIdPair);
-      });
-    }
   }
 
   onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }) {
