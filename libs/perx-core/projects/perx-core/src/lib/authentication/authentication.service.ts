@@ -196,9 +196,10 @@ export class AuthenticationService implements AuthService {
 
 
   private getUrlParameter(name) {
+    const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    const results = regex.exec(this.getInterruptedUrl());
+    const results = regex.exec(url);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   }
 }
