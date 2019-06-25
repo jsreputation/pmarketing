@@ -74,6 +74,7 @@ export class AuthenticationService implements AuthService {
                 this.authing = false;
                 this.didFailAuth = true;
                 this.failedAuthObservable.next(this.didFailAuth);
+                this.failedAuthObservable.complete();
                 return of(this.logout());
               }
 
