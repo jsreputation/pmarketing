@@ -74,18 +74,21 @@ export class GameComponent implements OnInit {
     forkJoin(r1, r2)
       .subscribe(
         ([resr1, resr2]) => {
+          let numRewards;
           if (!this.isWhistler) {
             if (resr1.status === 200) {
+
+            } else {
               // get number of rewards
               // const numRewards = resr1.numRewards
-            } else {
               if (resr1.error.code === 4103) {
                 // no rewards available for specified user
+                numRewards = 0;
               }
             }
           }
 
-          this.router.navigate(['/congrats']);
+          this.router.navigate(['/congrats'], { queryParams: { numRewards } });
         });
   }
 }
