@@ -10,13 +10,15 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CongratsComponent } from './congrats/congrats.component';
 import { HeaderComponent } from './header/header.component';
+import { ShakeGameComponent } from './shake-game/shake-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
     CongratsComponent,
-    HeaderComponent
+    HeaderComponent,
+    ShakeGameComponent
   ],
   imports: [
     BrowserModule,
