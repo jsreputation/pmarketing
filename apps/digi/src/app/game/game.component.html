@@ -2,14 +2,16 @@
 
 <div class="game-wrapper">
   <div class="game-wrapper__right">
-    <perx-core-pinata
-      [stillImg]="'../../assets/still-img.png'"
-      [openedImg]="'../../assets/opened-img.png'"
-      (tap)="onTap($event)"
-      [npTaps]="numberOfTaps"
-      [enabled]="isEnabled"
-    >
-    </perx-core-pinata>
+    <ng-container *ngIf="game">
+      <perx-core-pinata
+        [stillImg]="'../../assets/still-img.png'"
+        [openedImg]="'../../assets/opened-img.png'"
+        (tap)="onTap($event)"
+        [npTaps]="numberOfTaps"
+        [enabled]="isEnabled"
+      >
+      </perx-core-pinata>
+    </ng-container>
   </div>
 </div>
 <div class="actions-container">

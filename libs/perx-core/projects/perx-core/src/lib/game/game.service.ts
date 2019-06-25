@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 
 enum GAME_TYPE {
   shakeTheTree = 'shake_the_tree',
+  pinata = 'pinata'
 }
 interface Asset {
   type: string;
@@ -38,6 +39,10 @@ interface GamesResponse {
   data: Game[];
 }
 
+interface GameResponse {
+  data: Game;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,6 +55,37 @@ export class GameService implements IGameService {
 
   play(gameId: number): Observable<any> {
     return this.httpClient.put(`${this.hostName}/v4/games/${gameId}/play`, null);
+  }
+
+  get(id: number): Observable<IGame> {
+    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${id}`)
+      .pipe(
+        map(res => res.data),
+        map(game => {
+          let config: ITree;
+          switch (game.game_type) {
+            case GAME_TYPE.shakeTheTree:
+              config = {
+                ...defaultTree(),
+                treeImg: game.display_properties.tree_image.value.image_url,
+                giftImg: game.display_properties.gift_image.value.image_url,
+                nbHangedGift: game.display_properties.number_of_gifts_shown,
+                nbGiftsToDrop: game.display_properties.number_of_gifts_to_drop,
+                nbTaps: 5,
+                waitingAccessoryImg: game.display_properties.waiting_image.value.image_url,
+                celebratingAccessoryImg: game.display_properties.celebrating_image.value.image_url
+              };
+              break;
+          }
+          return {
+            id: game.id,
+            campaignId: game.campaign_id,
+            type: TYPE.shakeTheTree,
+            remainingNumberOfTries: game.number_of_tries,
+            config
+          };
+        })
+      );
   }
 
   getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
