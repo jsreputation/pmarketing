@@ -168,7 +168,7 @@ export class PuzzlePlayComponent implements OnChanges {
 
   getImageSizeRatioFromURL(url: string) {
 
-   return Observable.create((observer: Observer<number>) => {
+   return new Observable((observer: Observer<number>) => {
      const img = new Image();
      img.src = url;
      if (!img.complete) {
