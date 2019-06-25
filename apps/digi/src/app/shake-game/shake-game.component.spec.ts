@@ -5,7 +5,6 @@ import { HeaderComponent } from '../header/header.component';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
 
 describe('ShakeGameComponent', () => {
   let component: ShakeGameComponent;
