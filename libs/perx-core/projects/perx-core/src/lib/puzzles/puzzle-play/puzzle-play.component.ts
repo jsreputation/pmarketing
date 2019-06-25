@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 interface DrawTile {
@@ -11,7 +11,7 @@ interface DrawTile {
   templateUrl: './puzzle-play.component.html',
   styleUrls: ['./puzzle-play.component.css']
 })
-export class PuzzlePlayComponent implements OnInit {
+export class PuzzlePlayComponent implements OnChanges {
   @Input()
   img: string;
 
@@ -46,7 +46,7 @@ export class PuzzlePlayComponent implements OnInit {
 
   staticPizzleDummyTiles = [];
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
 
     this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
 
@@ -166,7 +166,7 @@ export class PuzzlePlayComponent implements OnInit {
     return true;
   }
 
-  getImageSizeRatioFromURL(url: string): Observable<Observer<number>> {
+  getImageSizeRatioFromURL(url: string) {
 
    return Observable.create((observer: Observer<number>) => {
      const img = new Image();
