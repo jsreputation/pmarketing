@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@perx/core/dist/perx-core';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +14,11 @@ export class AppComponent implements OnInit {
   title = 'digi';
 
   preAuth: boolean;
+  failedAuthSubscriber: Subscription;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+  constructor(private router: Router,
+              private authService: AuthenticationService,
+              @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
   }
 
@@ -26,5 +32,12 @@ export class AppComponent implements OnInit {
         }
       }
     }
+    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+      (didFailAuth) => {
+        if (didFailAuth) {
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
   }
 }
