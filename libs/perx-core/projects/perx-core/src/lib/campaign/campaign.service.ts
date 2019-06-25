@@ -54,6 +54,15 @@ export interface IStampCard {
     total_slots: number;
     rewards: IReward[];
   };
+  display_properties: {
+    number_of_cols: number;
+    number_of_rows: number;
+    card_image: {
+      value: {
+        image_url: string;
+      }
+    }
+  };
   stamps?: IStampTransaction[];
 }
 
