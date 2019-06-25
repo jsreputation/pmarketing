@@ -22,6 +22,12 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   nbFallingGifts = 10;
   @Input()
   enabled = false;
+
+  @Input()
+  distanceFromTree = 16;
+  @Input()
+  bottomDistance = 5;
+
   @Output()
   completed: EventEmitter<void> = new EventEmitter<void>();
   @Output()
@@ -86,5 +92,12 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
         }, 300);
       }
     }
+  }
+
+  getManStyle() {
+    return {
+          left: this.distanceFromTree + '%',
+          bottom: this.bottomDistance + '%',
+        };
   }
 }
