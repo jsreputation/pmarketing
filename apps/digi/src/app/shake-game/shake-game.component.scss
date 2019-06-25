@@ -1,0 +1,21 @@
+.game-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+  flex-direction: row;
+  align-items: center;
+  background: url(../../assets/flags.png) center no-repeat;
+}
+
+.game-wrapper__right {
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bottom-shadow {
+    position: absolute;
+    bottom:-5px;
+    width: 100%;
+    padding-top: 20px;
+}

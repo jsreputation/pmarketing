@@ -11,8 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CongratsComponent } from './congrats/congrats.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
-
+import { ShakeGameComponent } from './shake-game/shake-game.component';
 import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { environment } from '../environments/environment';
     GameComponent,
     CongratsComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    ShakeGameComponent
   ],
   imports: [
     BrowserModule,
