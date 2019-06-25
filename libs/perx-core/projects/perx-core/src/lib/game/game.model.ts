@@ -1,5 +1,7 @@
 export enum GAME_TYPE {
+    unknown = -1,
     shakeTheTree,
+    pinata
 }
 
 export interface IGame {
@@ -7,7 +9,7 @@ export interface IGame {
     campaignId: number;
     type: GAME_TYPE;
     remainingNumberOfTries: number;
-    config: ITree;
+    config: ITree|IPinata;
     backgroundImg?: string;
 }
 
@@ -20,6 +22,14 @@ export function defaultTree(): ITree {
         giftImg: ''
     };
 }
+
+export function defaultPinata(): IPinata {
+    return {
+        stillImg: '',
+        brokenImg: '',
+        nbTaps: 5
+    };
+}
 export interface ITree {
     treeImg: string;
     giftImg: string;
@@ -27,5 +37,12 @@ export interface ITree {
     celebratingAccessoryImg?: string;
     nbHangedGift: number;
     nbGiftsToDrop: number;
+    nbTaps: number;
+}
+
+export interface IPinata {
+    stillImg: string;
+    breakingImg?: string;
+    brokenImg: string;
     nbTaps: number;
 }
