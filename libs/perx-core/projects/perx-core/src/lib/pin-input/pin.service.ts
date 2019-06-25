@@ -1,4 +1,3 @@
-import { IVoucher } from './../../../../../dist/perx-core/lib/campaign/campaign.service.d';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { VouchersService } from './../vouchers/vouchers.service';
