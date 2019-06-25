@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-congrats',
-  templateUrl: './congrats.component.html',
-  styleUrls: ['./congrats.component.scss']
+  selector: 'app-result',
+  templateUrl: './result.component.html',
+  styleUrls: ['./result.component.scss']
 })
-export class CongratsComponent implements OnInit {
+export class ResultComponent implements OnInit {
 
   numRewards: number;
 

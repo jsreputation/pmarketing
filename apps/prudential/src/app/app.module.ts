@@ -14,7 +14,6 @@ import {
   GameModule
 } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
-import { CongratsComponent } from './congrats/congrats.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { TncComponent } from './tnc/tnc.component';
@@ -37,12 +36,13 @@ import { DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
-    CongratsComponent,
+    ResultComponent,
     ActivationCodeComponent,
     RedemptionComponent,
     TncComponent,
