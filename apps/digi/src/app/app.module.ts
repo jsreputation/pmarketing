@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, AuthenticationModule, OauthModule, CognitoModule, CampaignModule, GameModule } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CongratsComponent } from './congrats/congrats.component';
 import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
 import { ShakeGameComponent } from './shake-game/shake-game.component';
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +21,7 @@ import { ShakeGameComponent } from './shake-game/shake-game.component';
     GameComponent,
     CongratsComponent,
     HeaderComponent,
+    LoginComponent,
     ShakeGameComponent
   ],
   imports: [
@@ -26,7 +30,12 @@ import { ShakeGameComponent } from './shake-game/shake-game.component';
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CognitoModule.forRoot({ env: environment }),
+    OauthModule.forRoot({ env: environment }),
+    CampaignModule.forRoot({ env: environment }),
+    GameModule.forRoot({ env: environment }),
+    AuthenticationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

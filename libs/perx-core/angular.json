@@ -21,7 +21,8 @@
           "options": {
             "main": "projects/perx-core/src/test.ts",
             "tsConfig": "projects/perx-core/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-core/karma.conf.js"
+            "karmaConfig": "projects/perx-core/karma.conf.js",
+            "codeCoverage": true
           }
         },
         "lint": {
