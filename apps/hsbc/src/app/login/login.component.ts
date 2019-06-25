@@ -70,6 +70,12 @@ export class LoginComponent implements OnInit {
       (isAuthed: boolean) => {
         this.authed = isAuthed;
         if (this.authed) {
+
+          // set global userID var for GA tracking
+          if (!((window as any).primaryIdentifier)) {
+            (window as any).primaryIdentifier = username;
+          }
+
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
