@@ -1,11 +1,11 @@
 <div class="game-wrapper">
-    <div class="game-wrapper__left" *ngIf="!loading">
+    <div class="game-wrapper__top" *ngIf="!loading">
         <h1>
             Here's some birthday treats from us!
         </h1>
         <p>Collect your treats by tapping the tree until they fall</p>
     </div>
-    <div class="game-wrapper__right" *ngIf="!loading">
+    <div class="game-wrapper__bottom" *ngIf="!loading">
         <perx-core-shake-tree [treeImg]="game.config.treeImg" [giftImg]="game.config.giftImg"
             [waitingManImg]="game.config.waitingAccessoryImg"
             [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" [nbHangedGifts]="game.config.nbHangedGift"
