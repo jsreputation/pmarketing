@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +92,10 @@ export class VouchersService {
   redeemVoucher(id: string): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
-    return this.http.post(url, null, {});
+    return this.http.post(url, null, {}).pipe(
+      tap(_ => {
+        this.vouchers = [];
+      })
+    );
   }
 }
