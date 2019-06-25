@@ -44,7 +44,7 @@ export class VouchersComponent implements OnInit {
     this.router.navigate([`/vouchers/${id}`]);
   }
 
-  completedPopup(): void {
+  private completedPopup(): void {
     this.popup({
       text: 'See the treats you\'ve earned and don\'t forget to redeem them before they\'re gone!',
       title: 'You\'ve already completed the game',
@@ -52,20 +52,21 @@ export class VouchersComponent implements OnInit {
     });
   }
 
-  expiredPopup(date: Date = null): void {
+  private expiredPopup(date: Date = null): void {
     const text = date === null ? 'This campaign has ended' : `This campaign has ended on ${this.datePipe.transform(date, 'mediumDate')}`;
     this.popup({
       text,
       title: 'We\'re sorry, the treats have expired'
     });
   }
-  _404Popup(): void {
+
+  private _404Popup(): void {
     this.popup({
       title: 'What you are looking for does not exist'
     });
   }
 
-  popup(data: IPopupConfig): void {
+  private popup(data: IPopupConfig): void {
     this.dialog
       .open(PopupComponent, { data })
       .afterClosed()

@@ -7,8 +7,8 @@
       </div>
     </div>
     <div class="man">
-      <img *ngIf="!celebrate && waitingManImg" [src]="waitingManImg" class="man__img"/>
-      <img *ngIf="celebrate && waitingManCelebrateImg" [src]="waitingManCelebrateImg" class="man__img"/>
+      <img *ngIf="!celebrate && waitingManImg" [src]="waitingManImg" class="man__img" [ngStyle]="getManStyle()"/>
+      <img *ngIf="celebrate && waitingManCelebrateImg" [src]="waitingManCelebrateImg" class="man__img" [ngStyle]="getManStyle()"/>
     </div>
   </div>
 </div>

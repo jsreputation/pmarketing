@@ -1,0 +1,17 @@
+<app-header [subTitle]="subTitle"></app-header>
+<div class="game-container">
+  <perx-core-puzzle-stamp
+    [img]="'../../assets/netflix-bg.jpg'"
+    [lockImg]="'../../assets/lock-icon.png'"
+    [unlockImg]="'../../assets/unlock-icon.png'"
+    [highlightColor]="'#FAE4A4'"
+    [borderColor]="'#BC9B3A'"
+    [rows]="2"
+    [cols]="5"
+    [nbPlayedPieces]="0"
+    [nbAvailablePieces]="10"
+    (moved)="onMoved($event)"
+    (completed)="onCompleted()"
+  >
+  </perx-core-puzzle-stamp>
+</div>
