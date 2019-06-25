@@ -18,19 +18,18 @@ html {
   font-style: normal;
 }
 
-.mat-toolbar {
+.logo-area {
   background-color: transparent;
   justify-content: center;
   background-image: url(assets/flags.png);
   background-position: center;
   background-repeat: repeat-x;
-  img {
-    margin-top: 30px;
-  }
-}
-
-.mat-toolbar-single-row {
   height: 80px !important;
+  img {
+    padding-top: 30px;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .actions-container {
