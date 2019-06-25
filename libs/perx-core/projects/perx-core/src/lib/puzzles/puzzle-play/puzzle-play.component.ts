@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 
 interface DrawTile {
   puzzleLocation: number;
@@ -38,7 +39,7 @@ export class PuzzlePlayComponent implements OnInit {
   boardPuzzleTiles: DrawTile[] = [];
   remainingPuzzleTiles: DrawTile[] = [];
 
-  totalPieces;
+  totalPieces: number;
 
   imageWidth = 300;
   imageHeight = 200;
@@ -47,36 +48,42 @@ export class PuzzlePlayComponent implements OnInit {
 
   ngOnInit() {
 
-    this.tileWidth = this.imageWidth / this.cols;
-    this.tileHeight = this.imageHeight / this.rows;
-    this.totalPieces = this.rows * this.cols;
+    this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
 
-    for (let x = 0; x < this.totalPieces; x++)  {
-        const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-        this.boardPuzzleTiles[x] = puzzleTile;
-    }
+      this.imageHeight = this.imageWidth * ratio;
 
-    for (let i = 0; i < this.nbAvailablePieces; i++) {
+      this.tileWidth = this.imageWidth / this.cols;
+      this.tileHeight = this.imageHeight / this.rows;
+      this.totalPieces = this.rows * this.cols;
 
-      const location = this.nbPlayedPieces + i;
-      const puzzleTile = { puzzleLocation: location, isSelected: false };
-      this.remainingPuzzleTiles[i] = puzzleTile;
-    }
+      for (let x = 0; x < this.totalPieces; x++)  {
+          const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+          this.boardPuzzleTiles[x] = puzzleTile;
+      }
 
-    for (let i = 0; i < this.totalPieces; i++) {
-      this.staticPizzleDummyTiles[i] = [i];
-    }
+      for (let i = 0; i < this.nbAvailablePieces; i++) {
+
+        const location = this.nbPlayedPieces + i;
+        const puzzleTile = { puzzleLocation: location, isSelected: false };
+        this.remainingPuzzleTiles[i] = puzzleTile;
+      }
+
+      for (let i = 0; i < this.totalPieces; i++) {
+        this.staticPizzleDummyTiles[i] = [i];
+      }
+
+    });
 
   }
 
-  tileClicked(index) {
+  bottomPannelClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
   } else {
 
-      if ((this.remainingPuzzleTiles.length) > index) {
-        const puzzleLocation = this.remainingPuzzleTiles[index].puzzleLocation;
+      if ((this.remainingPuzzleTiles.length) > 0) {
+        const puzzleLocation = this.remainingPuzzleTiles[0].puzzleLocation;
         this.moved.emit();
         this.boardPuzzleTiles[puzzleLocation].isSelected = true;
         this.remainingPuzzleTiles = this.remainingPuzzleTiles.filter((currentValue) => {
@@ -86,7 +93,7 @@ export class PuzzlePlayComponent implements OnInit {
     }
   }
 
-  getPuzzleTileStyle(tile: DrawTile) {
+  getPuzzleTileStyle(tile: DrawTile): any {
 
     const leftPosition = (tile.puzzleLocation % this.cols) *  this.tileWidth;
     const topPositionIndex = Math.floor((tile.puzzleLocation  / this.cols ));
@@ -106,7 +113,7 @@ export class PuzzlePlayComponent implements OnInit {
     }
   }
 
-  getBottomTilesStyle(index) {
+  getBottomTilesStyle(index: number): any {
 
      if ((this.remainingPuzzleTiles.length) > index) {
 
@@ -126,7 +133,7 @@ export class PuzzlePlayComponent implements OnInit {
       };
   }
 
-  getImageSize() {
+  getImageSize(): any {
 
     return {
       width: (this.imageWidth) + 'px',
@@ -134,7 +141,7 @@ export class PuzzlePlayComponent implements OnInit {
     };
   }
 
-  getTileSize() {
+  getTileSize(): any {
 
     return {
       width: (this.tileWidth) + 'px',
@@ -142,14 +149,14 @@ export class PuzzlePlayComponent implements OnInit {
     };
   }
 
-  getWidthHeightRatio() {
+  getWidthHeightRatio(): string {
 
     const ratioValue = (this.tileWidth / this.tileHeight);
     const ratio = ratioValue.toString() + ':1';
     return ratio;
   }
 
-  isAllPuzzleCompleted() {
+  isAllPuzzleCompleted(): boolean {
 
     for (let i = 0; i < this.totalPieces; i++) {
         if (!this.boardPuzzleTiles[i].isSelected) {
@@ -157,5 +164,31 @@ export class PuzzlePlayComponent implements OnInit {
         }
     }
     return true;
+  }
+
+  getImageSizeRatioFromURL(url: string): Observable<Observer<number>> {
+
+   return Observable.create((observer: Observer<number>) => {
+     const img = new Image();
+     img.src = url;
+     if (!img.complete) {
+         img.onload = () => {
+          observer.next(this.calculateRatio(img));
+          observer.complete();
+       };
+         img.onerror = (err) => {
+          observer.error(err);
+       };
+     } else {
+        observer.next(this.calculateRatio(img));
+        this.calculateRatio(img);
+        observer.complete();
+     }
+   });
+  }
+
+  calculateRatio(img: HTMLImageElement): number {
+    this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
+    return  img.height / img.width;
   }
 }
