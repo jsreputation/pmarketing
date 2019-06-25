@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, forkJoin, Observable } from 'rxjs';
+import { interval, forkJoin, Observable, of } from 'rxjs';
 import { bufferCount, tap, first, map, switchMap, catchError } from 'rxjs/operators';
-import { CampaignService, CAMPAIGN_TYPE, GameService, IGame, defaultTree, GAME_TYPE, ICampaign } from '@perx/core/dist/perx-core';
+import {
+  CampaignService,
+  CAMPAIGN_TYPE,
+  GameService,
+  IGame,
+  defaultTree,
+  GAME_TYPE,
+  ICampaign
+} from '@perx/core/dist/perx-core';
 import { POPUP_TYPE } from '../vouchers/vouchers.component';
 
 @Component({
@@ -22,7 +30,10 @@ export class GameComponent implements OnInit {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  constructor(private router: Router, private campaignService: CampaignService, private gameService: GameService) { }
+  constructor(private router: Router,
+              private campaignService: CampaignService,
+              private gameService: GameService) {
+  }
 
   ngOnInit() {
     this.campaignService.getCampaigns()
@@ -43,7 +54,11 @@ export class GameComponent implements OnInit {
   }
 
   done(): void {
-    const r1 = this.gameService.play(this.game.id);
+    const r1 = this.gameService.play(this.game.id)
+      .pipe(
+        map(res => res.data),
+        catchError(err => of(err))
+      );
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
@@ -54,6 +69,15 @@ export class GameComponent implements OnInit {
         first()
       );
     forkJoin(r1, r2)
-      .subscribe(() => { this.router.navigate(['/congrats']); });
+      .subscribe(
+        ([resr1, resr2]) => {
+          if (resr1.status === 400) {
+            // and if v4
+            if (resr1.error.code === 4103) {
+              // no rewards available for specified user
+            }
+          }
+          this.router.navigate(['/congrats']);
+        });
   }
 }
