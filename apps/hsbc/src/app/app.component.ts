@@ -15,7 +15,7 @@ export class AppComponent {
   constructor(private router: Router, private location: Location) { }
 
   goHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   goBack() {
@@ -59,8 +59,9 @@ export class AppComponent {
         this.iconToShow = 'back';
         break;
       case 'HomeComponent':
+        this.currentPage = 'Home';
         this.showHeader = true;
-        this.iconToShow = 'home';
+        this.iconToShow = '';
         break;
       default: {
         this.showHeader = false;
