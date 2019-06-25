@@ -18,7 +18,7 @@
 <div class="actions-container" *ngIf="!loading">
     <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
 </div>
-<div class="spinner-container">
+<div *ngIf="loading" class="spinner-container">
     <mat-progress-spinner *ngIf="loading" [diameter]="30" [color]="'primary'" [mode]="'indeterminate'">
     </mat-progress-spinner>
     <div *ngIf="loading" class="login-spinner-label">One moment while we are loading the game...</div>
