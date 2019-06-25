@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from './env-config';
 import { IGameService } from './iGameService';
-import { IGame, GAME_TYPE as TYPE, defaultTree, ITree } from './game.model';
+import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata } from './game.model';
 import { map } from 'rxjs/operators';
 
 enum GAME_TYPE {
@@ -18,16 +18,25 @@ interface Asset {
     image_url: string;
   };
 }
+
+interface TreeDisplayProperties {
+  number_of_gifts_shown?: number;
+  number_of_gifts_to_drop: number;
+  gift_image: Asset;
+  tree_image: Asset;
+  waiting_image: Asset;
+  celebrating_image: Asset;
+}
+
+interface PinataDisplayProperties {
+  still_image: Asset;
+  breaking_image?: Asset;
+  broken_image: Asset;
+}
+
 interface Game {
   campaign_id: number;
-  display_properties: {
-    number_of_gifts_shown?: number;
-    number_of_gifts_to_drop: number;
-    gift_image: Asset,
-    tree_image: Asset,
-    waiting_image: Asset,
-    celebrating_image: Asset
-  };
+  display_properties: TreeDisplayProperties|PinataDisplayProperties;
   game_type: GAME_TYPE;
   id: number;
   number_of_tries: number;
@@ -67,13 +76,13 @@ export class GameService implements IGameService {
             case GAME_TYPE.shakeTheTree:
               config = {
                 ...defaultTree(),
-                treeImg: game.display_properties.tree_image.value.image_url,
-                giftImg: game.display_properties.gift_image.value.image_url,
-                nbHangedGift: game.display_properties.number_of_gifts_shown,
-                nbGiftsToDrop: game.display_properties.number_of_gifts_to_drop,
+                treeImg: (game.display_properties as TreeDisplayProperties).tree_image.value.image_url,
+                giftImg: (game.display_properties as TreeDisplayProperties).gift_image.value.image_url,
+                nbHangedGift: (game.display_properties as TreeDisplayProperties).number_of_gifts_shown,
+                nbGiftsToDrop: (game.display_properties as TreeDisplayProperties).number_of_gifts_to_drop,
                 nbTaps: 5,
-                waitingAccessoryImg: game.display_properties.waiting_image.value.image_url,
-                celebratingAccessoryImg: game.display_properties.celebrating_image.value.image_url
+                waitingAccessoryImg: (game.display_properties as TreeDisplayProperties).waiting_image.value.image_url,
+                celebratingAccessoryImg: (game.display_properties as TreeDisplayProperties).celebrating_image.value.image_url
               };
               break;
           }
@@ -94,26 +103,37 @@ export class GameService implements IGameService {
         map(res => res.data),
         map((games: Game[]) => {
           return games.map((game: Game): IGame => {
-            let config: ITree;
+            let type = TYPE.unknown;
+            let config: ITree | IPinata;
             switch (game.game_type) {
               case GAME_TYPE.shakeTheTree:
+                type = TYPE.shakeTheTree;
                 config = {
                   ...defaultTree(),
-                  treeImg: game.display_properties.tree_image.value.image_url,
-                  giftImg: game.display_properties.gift_image.value.image_url,
-                  nbHangedGift: game.display_properties.number_of_gifts_shown,
-                  nbGiftsToDrop: game.display_properties.number_of_gifts_to_drop,
+                  treeImg: (game.display_properties as TreeDisplayProperties).tree_image.value.image_url,
+                  giftImg: (game.display_properties as TreeDisplayProperties).gift_image.value.image_url,
+                  nbHangedGift: (game.display_properties as TreeDisplayProperties).number_of_gifts_shown,
+                  nbGiftsToDrop: (game.display_properties as TreeDisplayProperties).number_of_gifts_to_drop,
                   nbTaps: 5,
-                  waitingAccessoryImg: game.display_properties.waiting_image.value.image_url,
-                  celebratingAccessoryImg: game.display_properties.celebrating_image.value.image_url
+                  waitingAccessoryImg: (game.display_properties as TreeDisplayProperties).waiting_image.value.image_url,
+                  celebratingAccessoryImg: (game.display_properties as TreeDisplayProperties).celebrating_image.value.image_url
                 };
                 break;
+              case GAME_TYPE.pinata:
+                  type = TYPE.pinata;
+                  config = {
+                    ...defaultPinata(),
+                    stillImg: (game.display_properties as PinataDisplayProperties).still_image.value.image_url,
+                    brokenImg: (game.display_properties as PinataDisplayProperties).broken_image.value.image_url,
+                    nbTaps: 5
+                  };
+                  break;
             }
 
             return {
               id: game.id,
               campaignId: game.campaign_id,
-              type: TYPE.shakeTheTree,
+              type,
               remainingNumberOfTries: game.number_of_tries,
               config
             };

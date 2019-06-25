@@ -2,16 +2,22 @@
 
 <div class="game-wrapper">
   <div class="game-wrapper__right">
-    <ng-container *ngIf="game">
-      <perx-core-pinata
-        [stillImg]="'../../assets/still-img.png'"
-        [openedImg]="'../../assets/opened-img.png'"
-        (tap)="onTap($event)"
-        [npTaps]="numberOfTaps"
-        [enabled]="isEnabled"
-      >
-      </perx-core-pinata>
-    </ng-container>
+    <perx-core-shake-tree
+      *ngIf="game && game.type === 0"
+      [treeImg]="'../../assets/img/tree.png'" [giftImg]="'../../assets/img/gift.png'"
+      [waitingManImg]="'../../assets/img/man-waiting.png'"
+      [waitingManCelebrateImg]="'../../assets/img/man-celebrating.png'" [nbHangedGifts]="3" [nbFallingGifts]="1"
+      (completed)="done()" [enabled]="isEnabled" [nbShakes]="3" [distanceFromTree]=26 [bottomDistance]=1>
+    </perx-core-shake-tree>
+    <perx-core-pinata
+      *ngIf="game && game.type === 1"
+      [stillImg]="'../../assets/still-img.png'"
+      [openedImg]="'../../assets/opened-img.png'"
+      (tap)="onTap($event)"
+      [npTaps]="numberOfTaps"
+      [enabled]="isEnabled"
+    >
+    </perx-core-pinata>
   </div>
 </div>
 <div class="actions-container">
