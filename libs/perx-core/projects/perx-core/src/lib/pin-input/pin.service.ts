@@ -12,14 +12,10 @@ export class PinService {
 
   getPin(voucherId: number): Observable<string> {
     let rewardId = '0000';
-    this.vouchersService.getAll().pipe(
-      map(vouchers => {
-        return vouchers.filter(v => v.state === 'issued' && v.id === voucherId);
-      })
-    ).subscribe(vouchers => {
-      if (vouchers[0]) {
+    this.vouchersService.get(voucherId).subscribe(voucher => {
+      if (voucher) {
         // tslint:disable-next-line: radix
-        rewardId = typeof vouchers[0].rewardId === 'string' ? vouchers[0].rewardId : vouchers[0].rewardId.toString();
+        rewardId = typeof voucher.rewardId === 'string' ? voucher.rewardId : voucher.rewardId.toString();
       }
     });
     const pinCode = this.generatePinCode(rewardId);
