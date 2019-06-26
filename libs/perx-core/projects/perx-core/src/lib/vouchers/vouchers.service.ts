@@ -33,6 +33,7 @@ export class VouchersService {
           const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
           const voucher = {
             id: v[`id`],
+            rewardId: reward[`id`],
             state: v[`state`],
             name: v[`name`],
             code: v[`voucher_code`],
@@ -70,6 +71,7 @@ export class VouchersService {
         const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
         const voucher = {
           id: v[`id`],
+          rewardId: reward[`id`],
           state: v[`state`],
           name: v[`name`],
           code: v[`voucher_code`],
