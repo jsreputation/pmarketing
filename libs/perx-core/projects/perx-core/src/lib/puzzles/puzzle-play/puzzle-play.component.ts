@@ -72,7 +72,8 @@ export class PuzzlePlayComponent implements OnChanges {
         this.staticPizzleDummyTiles[i] = [i];
       }
 
-    });
+    },
+    err => console.error('Observer got an error: ' + err));
 
   }
 
