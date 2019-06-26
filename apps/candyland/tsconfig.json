@@ -17,6 +17,12 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@cl-core/*": ["src/app/core/*"],
+      "@cl-helpers/*": ["src/app/helpers/*"],
+      "@cl-shared/*": ["src/app/shared/*"],
+      "@cl-environments/*": ["src/environments/*"]
+    }
   }
 }
