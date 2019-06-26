@@ -5,7 +5,7 @@ import { delay } from 'rxjs/operators';
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
-  styleUrls: ['./shake-tree.component.css']
+  styleUrls: ['./shake-tree.component.scss']
 })
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
