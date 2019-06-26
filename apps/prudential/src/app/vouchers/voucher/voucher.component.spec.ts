@@ -36,7 +36,7 @@ describe('VoucherComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should redirect', () => {
+  it('should redirect to activation page', () => {
     spyOn(router, 'navigate').and.stub();
     const id = '1';
     component.onRedeem(id);
