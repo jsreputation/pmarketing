@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CampaignService, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE, CAMPAIGN_TYPE, ICampaign } from '@perx/core/dist/perx-core';
+import {
+  CampaignService,
+  IStampCard,
+  TRANSACTION_STATE,
+  CAMPAIGN_TYPE,
+  ICampaign,
+  IStampCardResponse
+} from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
@@ -14,6 +21,9 @@ export class PuzzleComponent implements OnInit {
   private card: IStampCard = null;
   availablePieces = 0;
   playedPieces = 0;
+  rows = 2;
+  cols = 3;
+  image = '';
 
   constructor(private campaignService: CampaignService, private route: ActivatedRoute, private router: Router) { }
 
@@ -51,15 +61,15 @@ export class PuzzleComponent implements OnInit {
 
   private fetchCard() {
     this.campaignService.getCurrentCard(this.campaignId)
-      // .pipe(
-      //   tap(card => console.log(card))
-      // )
-      .subscribe(card => {
-        // this.n = card.data.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
-        this.cardId = card.data.id;
-        this.card = card.data;
+      .subscribe((res: IStampCardResponse) => {
+        this.cardId = res.data.id;
+        this.card = res.data;
         this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
-        this.availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+        const availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+        this.availablePieces = Math.min(this.rows * this.cols, availablePieces);
+        this.image = this.card.display_properties.card_image.value.image_url;
+        this.cols = this.card.display_properties.number_of_cols;
+        this.rows = this.card.display_properties.number_of_rows;
       });
   }
 
