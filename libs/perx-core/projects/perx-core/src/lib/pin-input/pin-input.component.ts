@@ -51,12 +51,14 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
-    this.pin.getPin().subscribe(code => {
-      this.pinCode = code;
-    });
     this.route.params.subscribe(params => {
       this.voucherId = params[`id`];
     });
+    // tslint:disable-next-line: radix
+    this.pin.getPin(parseInt(this.voucherId)).subscribe(code => {
+      this.pinCode = code;
+    });
+
   }
 
   onUpdate() {
