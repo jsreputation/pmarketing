@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
@@ -15,7 +15,10 @@ export class AuthenticationService implements AuthService {
   lastURL: string;
   authing: boolean;
   retries = 0;
+  maxRetries = 2;
   preAuthJWT: string;
+  didFailAuth = false;
+  failedAuthObservable = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,
@@ -57,6 +60,7 @@ export class AuthenticationService implements AuthService {
         /* check if valid auth  */
         this.retries++;
         if (resp) {
+          this.authing = true;
           this.userAuth(this.preAuthJWT).toPromise().then(
             (res) => {
               // @ts-ignore
@@ -66,7 +70,15 @@ export class AuthenticationService implements AuthService {
               }
             },
             (err) => {
-              return of(this.logout());
+              if (this.retries === this.maxRetries) {
+                this.authing = false;
+                this.didFailAuth = true;
+                this.failedAuthObservable.next(this.didFailAuth);
+                this.failedAuthObservable.complete();
+                return of(this.logout());
+              }
+
+              return of();
             }
           );
         }
@@ -80,7 +92,7 @@ export class AuthenticationService implements AuthService {
    * @description Essentially checks status
    */
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
-    return this.retries < 3 && response.status === 401;
+    return this.retries < this.maxRetries && response.status === 401;
   }
 
   /**
@@ -117,7 +129,7 @@ export class AuthenticationService implements AuthService {
   }
 
   public userAuth(bearer: string) {
-    const userId = this.getUrlParameter('pi');
+    const userId = (window as any).primaryIdentifier;
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
@@ -146,7 +158,7 @@ export class AuthenticationService implements AuthService {
     this.authing = true;
     let success = false;
 
-    const userId = this.getUrlParameter('pi');
+    const userId = (window as any).primaryIdentifier;
     const v4AuthData = await this.v4OauthService.authenticateUserIdWithAppBearer(userId).toPromise().catch(
       () => {
         console.log('login failed!');
@@ -196,9 +208,10 @@ export class AuthenticationService implements AuthService {
 
 
   private getUrlParameter(name) {
+    const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    const results = regex.exec(this.getInterruptedUrl());
+    const results = regex.exec(url);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   }
 }

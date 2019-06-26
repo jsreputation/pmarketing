@@ -1,12 +1,22 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
+      ],
+      declarations: [AppComponent],
+      providers: [TokenStorage]
     }).compileComponents();
   }));
 
