@@ -1,0 +1,19 @@
+<div class="full-page-container-white">
+  <div *ngIf="numRewards > 0; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <h1>
+      Congratulations!
+    </h1>
+    <p>You've got {{numRewards}} treats from us</p>
+    <div class="congrats">
+      <img src="../../assets/img/congrats.png" alt="Confetti exploding out of a present"/>
+    </div>
+  </ng-template>
+  <ng-template #elseBlock>
+    <h1>Sorry!</h1>
+    <p>You didn't win any treats this time</p>
+  </ng-template>
+  <div class="actions-container">
+    <button mat-flat-button color="primary" routerLink="/vouchers">View My Treats</button>
+  </div>
+</div>

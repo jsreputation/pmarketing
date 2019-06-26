@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { environment } from '../environments/environment';
+import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +16,11 @@ export class AppComponent implements OnInit {
   defaultBackLocation = '/vouchers';
 
   preAuth: boolean;
+  failedAuthSubscriber: Subscription;
 
   constructor(private location: Location,
+              private router: Router,
+              private authService: AuthenticationService,
               @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
   }
@@ -29,6 +35,13 @@ export class AppComponent implements OnInit {
         }
       }
     }
+    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+      (didFailAuth) => {
+        if (didFailAuth) {
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
   }
 
   goBack() {

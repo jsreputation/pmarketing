@@ -3,17 +3,25 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
       ],
       declarations: [
         AppComponent
       ],
+      providers: [TokenStorage],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
   }));

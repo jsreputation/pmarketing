@@ -1,18 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'hsbc';
   showHeader: boolean;
   iconToShow = 'home';
   currentPage: string;
-  constructor(private router: Router, private location: Location) { }
+  failedAuthSubscriber: Subscription;
+
+  constructor(private router: Router,
+              private authService: AuthenticationService,
+              private location: Location) {
+  }
+
+  ngOnInit(): void {
+    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+      (didFailAuth) => {
+        if (didFailAuth) {
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
+  }
 
   goHome() {
     this.router.navigate(['/home']);
