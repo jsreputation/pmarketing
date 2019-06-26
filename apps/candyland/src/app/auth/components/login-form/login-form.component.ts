@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cl-login-form',
@@ -9,7 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
   public hide = true;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -18,6 +20,7 @@ export class LoginFormComponent implements OnInit {
   public onSubmit(): void {
     if (this.formLogin.valid) {
       console.log(this.formLogin);
+      this.router.navigateByUrl('/dashboard');
     }
   }
 
