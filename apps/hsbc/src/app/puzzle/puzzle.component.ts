@@ -86,12 +86,12 @@ export class PuzzleComponent implements OnInit {
       return;
     }
     const stamp = stamps[0];
+    stamp.state = TRANSACTION_STATE.redeemed;
     this.campaignService.putStampTransaction(stamp.id)
       .subscribe(
         (res) => {
           if (res.data.state === TRANSACTION_STATE.redeemed) {
-            stamp.state = TRANSACTION_STATE.redeemed;
-            this.fetchCard();
+            // this.fetchCard();
             if (res.data.vouchers && res.data.vouchers.length > 0) {
               const voucherId = res.data.vouchers[0].id;
               this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
