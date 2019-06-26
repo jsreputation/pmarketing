@@ -9,6 +9,7 @@ import {
 } from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -25,7 +26,12 @@ export class PuzzleComponent implements OnInit {
   cols = 3;
   image = '';
 
-  constructor(private campaignService: CampaignService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private campaignService: CampaignService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
@@ -66,7 +72,7 @@ export class PuzzleComponent implements OnInit {
         this.card = res.data;
         this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
         const availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
-        this.availablePieces = Math.min(this.rows * this.cols, availablePieces);
+        this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = this.card.display_properties.card_image.value.image_url;
         this.cols = this.card.display_properties.number_of_cols;
         this.rows = this.card.display_properties.number_of_rows;
@@ -74,22 +80,30 @@ export class PuzzleComponent implements OnInit {
   }
 
   onMoved() {
-    const stamps = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued);
+    const stamps = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
     if (stamps.length === 0) {
       // don't do anything
       return;
     }
     const stamp = stamps[0];
     this.campaignService.putStampTransaction(stamp.id)
-      .subscribe(st => {
-        if (st.stamp_transaction.state === TRANSACTION_STATE.redeemed) {
-          stamp.state = TRANSACTION_STATE.redeemed;
-          this.fetchCard();
-          if (st.stamp_transaction.vouchers && st.stamp_transaction.vouchers.length > 0) {
-            const voucherId = st.stamp_transaction.vouchers[0].id;
-            this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
+      .subscribe(
+        (res) => {
+          if (res.data.state === TRANSACTION_STATE.redeemed) {
+            stamp.state = TRANSACTION_STATE.redeemed;
+            this.fetchCard();
+            if (res.data.vouchers && res.data.vouchers.length > 0) {
+              const voucherId = res.data.vouchers[0].id;
+              this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
+            }
           }
+        },
+        () => {
+          this.notificationService.addPopup({
+            title: 'Something went wrong, with our server',
+            text: 'We notified our team. Sorry about the inconvenience.'
+          });
         }
-      });
+      );
   }
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService, PopupComponent } from '@perx/core/dist/perx-core';
 import { Subscription } from 'rxjs';
+import { NotificationService } from './notification.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +18,13 @@ export class AppComponent implements OnInit {
   currentPage: string;
   failedAuthSubscriber: Subscription;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              private location: Location) {
-  }
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    private location: Location,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
@@ -29,6 +34,9 @@ export class AppComponent implements OnInit {
         }
       }
     );
+    this.notificationService.$popup.subscribe(data => {
+      this.dialog.open(PopupComponent, { data });
+    });
   }
 
   goHome() {

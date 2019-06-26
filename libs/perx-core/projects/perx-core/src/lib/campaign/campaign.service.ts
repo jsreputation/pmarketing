@@ -80,7 +80,7 @@ export interface IVoucher {
 }
 
 export interface IPutStampTransactionResponse {
-  stamp_transaction: {
+  data: {
     id: string;
     state: TRANSACTION_STATE;
     vouchers: IVoucher[];
