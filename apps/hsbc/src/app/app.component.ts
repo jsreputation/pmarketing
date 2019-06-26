@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
       case 'PuzzleComponent':
         this.currentPage = 'Puzzle';
         this.showHeader = true;
-        this.iconToShow = 'back';
+        this.iconToShow = 'home';
         break;
       case 'PuzzlesComponent':
         this.currentPage = 'My Puzzles';

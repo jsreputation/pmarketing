@@ -73,13 +73,20 @@ export class PuzzleComponent implements OnInit {
       });
   }
 
-  onMoved(id: string) {
-    this.campaignService.putStampTransaction(id)
-      .subscribe(stamp => {
-        if (stamp.stamp_transaction.state === TRANSACTION_STATE.redeemed) {
+  onMoved() {
+    const stamps = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued);
+    if (stamps.length === 0) {
+      // don't do anything
+      return;
+    }
+    const stamp = stamps[0];
+    this.campaignService.putStampTransaction(stamp.id)
+      .subscribe(st => {
+        if (st.stamp_transaction.state === TRANSACTION_STATE.redeemed) {
+          stamp.state = TRANSACTION_STATE.redeemed;
           this.fetchCard();
-          if (stamp.stamp_transaction.vouchers && stamp.stamp_transaction.vouchers.length > 0) {
-            const voucherId = stamp.stamp_transaction.vouchers[0].id;
+          if (st.stamp_transaction.vouchers && st.stamp_transaction.vouchers.length > 0) {
+            const voucherId = st.stamp_transaction.vouchers[0].id;
             this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
           }
         }

@@ -173,7 +173,7 @@ export class CampaignService {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`);
   }
 
-  putStampTransaction(stampTransactionId: string): Observable<IPutStampTransactionResponse> {
+  putStampTransaction(stampTransactionId: number): Observable<IPutStampTransactionResponse> {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
       null
