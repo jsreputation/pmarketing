@@ -1,39 +1,27 @@
-<mat-sidenav-container class="container-sidenav" ><!--fullscreen-->
-  <mat-sidenav [mode]="sideNavMode" class="sidenav" #sidenav [opened]="sideNavOpened" style="overflow: hidden;">
-    <mat-toolbar class="mat-toolbar-log">
-      <cl-logo sizeClass="medium"></cl-logo>
+<mat-sidenav-container class="container-sidenav">
+  <mat-sidenav [@openClose]="isOpen ? 'open' : 'closed'" [mode]="sideNavMode" class="sidenav" #sidenav [opened]="sideNavOpened">
+    <mat-toolbar class="mat-toolbar-log"
+                 [class.center]="!isOpen"
+    >
+      <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
     </mat-toolbar>
-    <!--<cdk-sidemenu></cdk-sidemenu>-->
-    menu
-    <button (click)="toggleSideNav()">toggle</button>
+    <div class="sidenav-data-container">
+      <cl-user class="cl-user"
+               [isOpen]="isOpen"
+      ></cl-user>
+    </div>
+    <div class="sidenav-menu-wrap">
+      <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
+    </div>
+    <button class="sidenav-action"
+            [class.center]="!isOpen"
+            (click)="toggle()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
+    </button>
   </mat-sidenav>
   <mat-sidenav-content style="z-index: unset;overflow: hidden;">
-    <mat-drawer-container class="container-sidenav"><!--fullscreen-->
-      <mat-drawer mode="side" #drawer class="drawer" [opened]="matDrawerOpened" style="overflow: hidden;">
-        <mat-toolbar class="mat-toolbar-log">
-          <!--<img src="./assets/logo.codetok.png" width="36px">-->
-          <cl-logo sizeClass="small"></cl-logo>
-        </mat-toolbar>
-        <!--<cdk-sidemenu [iconOnly]="true"></cdk-sidemenu>-->
-        <button (click)="toggleSideNav()">toggle</button>
-      </mat-drawer>
-      <mat-drawer-content style="overflow: hidden;">
 
-        <!--<cdk-toolbar [sidenav]="sidenav" [drawer]="drawer" [sidebar]="sidenav2" [matDrawerShow]="matDrawerShow" style="z-index: 500"></cdk-toolbar>-->
-
-        <!--<perfect-scrollbar  style="height: calc(100% - 33px);" >
-          <router-outlet></router-outlet>
-        </perfect-scrollbar>-->
-        router-outlet-router-outlet
-
-
-      </mat-drawer-content>
-    </mat-drawer-container>
+    <router-outlet></router-outlet>
+    router-outlet-router-outlet
   </mat-sidenav-content>
-
-  <mat-sidenav #sidenav2 position="end" mode="over">
-    <!--<cdk-sidebar></cdk-sidebar>-->
-    sidebar
-  </mat-sidenav>
-
 </mat-sidenav-container>

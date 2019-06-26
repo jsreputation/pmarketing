@@ -4,6 +4,8 @@ import { SideNavComponent } from './side-nav.component';
 import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { LogoModule } from '../logo/logo.module';
 import { RouterModule } from '@angular/router';
+import { UserModule } from '../user/user.module';
+import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     LogoModule,
+    UserModule,
+    SidenavMenuModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,

@@ -12,7 +12,8 @@ import { SideNavModule } from './shared/components/side-nav/side-nav.module';
 @NgModule({
   declarations: [
     AppComponent,
-    MainContainerComponent
+    MainContainerComponent,
+    AppComponent,
   ],
   imports: [
     BrowserModule,

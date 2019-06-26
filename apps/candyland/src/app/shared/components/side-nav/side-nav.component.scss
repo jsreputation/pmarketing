@@ -6,10 +6,47 @@
 
 .sidenav {
   width: rem(170px);
+  background-color: #202c46;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  &-data-container {
+    padding: 0 rem(12px);
+    position: relative;
+  }
+
+  &-action {
+    display: flex;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    position: absolute;
+    bottom: rem(16px);
+    right: rem(0px);
+    outline: none;
+    transition: .5s;
+
+    &.center {
+      right: rem(16px);
+    }
+  }
+
+  &-menu-wrap {
+    max-height: 60vh;
+    overflow: auto;
+    padding: 16px 0 0 0;
+  }
 }
 
 .mat-toolbar-log {
+  padding: 0 rem(10px);
   background-color: #172238;
   display: flex;
-  justify-content: center;
+}
+
+.cl-user {
+  display: block;
+  padding-top: rem(16px);
 }

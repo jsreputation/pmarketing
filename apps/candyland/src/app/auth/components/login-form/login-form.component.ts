@@ -12,7 +12,7 @@ export class LoginFormComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.createForm()
+    this.createForm();
   }
 
   public onSubmit(): void {
