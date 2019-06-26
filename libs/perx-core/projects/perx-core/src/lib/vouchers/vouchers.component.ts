@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from './vouchers.service';
+import { PinService } from './../pin-input/pin.service';
 import { Observable } from 'rxjs';
 import { IVoucher } from './models/voucher.model';
 import { map } from 'rxjs/operators';
@@ -10,7 +11,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  @Input() heading: string;
   @Input() filter: string;
   @Input() imageSize: string;
   @Input() iconDisplay: string;
@@ -25,7 +25,8 @@ export class VouchersComponent implements OnInit {
   vouchers$: Observable<IVoucher[]>;
 
   constructor(
-    private vouchersService: VouchersService
+    private vouchersService: VouchersService,
+    private pinService: PinService
   ) { }
 
   ngOnInit() {
