@@ -1,3 +1,7 @@
+:host {
+  max-height: 100vh;
+}
+
 h1 {
   font-weight: bold;
   font-size: 2rem;
@@ -5,6 +9,7 @@ h1 {
   text-align: center;
   margin-top: 32px;
 }
+
 p {
   font-weight: normal;
   font-size: 1.4rem;
@@ -13,25 +18,31 @@ p {
 
   color: #000000;
 }
+
 button {
   text-transform: uppercase;
 }
-@media (orientation: landscape) {
-  .game-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
+
+.game-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 560px;
+  max-height: 80%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+
+  .game-wrapper__top {
+    flex: 1 1;
+  }
+
+  .game-wrapper__bottom {
+    flex: 1 1;
     padding: 1.6rem;
   }
-  .game-wrapper__left {
-    display: block;
-    width: 40%;
-  }
-  .game-wrapper__right {
-    display: block;
-    width: 60%;
-  }
 }
+
 .spinner-container {
   display: flex;
   height: 100vh;
