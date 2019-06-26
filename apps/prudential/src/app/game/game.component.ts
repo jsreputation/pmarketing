@@ -88,7 +88,7 @@ export class GameComponent implements OnInit {
             }
           }
 
-          this.router.navigate(['/congrats'], { queryParams: { numRewards } });
+          this.router.navigate(['/result'], { queryParams: { numRewards } });
         });
   }
 }
