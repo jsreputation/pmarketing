@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
-import { RouterModule } from '@angular/router';
+import { PerxCoreModule, AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material';
 import { VouchersModule } from '@perx/core/dist/perx-core';
+import { environment } from 'src/environments/environment';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -14,9 +15,12 @@ describe('ActivationCodeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ActivationCodeComponent],
       imports: [
-        RouterModule.forRoot([]),
-        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        RouterTestingModule,
         PerxCoreModule,
+        VouchersModule.forRoot({ env: environment }),
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
         MatCardModule
       ]
     })
