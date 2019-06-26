@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardPageComponent } from './dashboard-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent;
@@ -8,6 +9,9 @@ describe('DashboardPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [ DashboardPageComponent ]
     })
     .compileComponents();

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewShakePageComponent } from './new-shake-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -8,6 +9,9 @@ describe('NewShakePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [ NewShakePageComponent ]
     })
     .compileComponents();

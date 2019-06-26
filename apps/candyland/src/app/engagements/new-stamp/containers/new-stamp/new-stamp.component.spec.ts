@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewStampComponent } from './new-stamp.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
@@ -8,6 +9,9 @@ describe('NewStampPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [ NewStampComponent ]
     })
     .compileComponents();

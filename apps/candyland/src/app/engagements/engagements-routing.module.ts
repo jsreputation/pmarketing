@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {EngagementsListPageComponent} from './containers/engagements-list-page/engagements-list-page.component';
-import {EngagementsComponent} from './containers/engagements/engagements.component';
+import { EngagementsListPageComponent } from './containers/engagements-list-page/engagements-list-page.component';
+import { EngagementsComponent } from './containers/engagements/engagements.component';
 
 const routes: Routes = [
-  { path: '',
+  {
+    path: '',
     component: EngagementsComponent,
     children: [
       {
@@ -35,4 +36,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EngagementsRoutingModule { }
+export class EngagementsRoutingModule {
+}
