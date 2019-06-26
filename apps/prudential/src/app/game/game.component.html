@@ -16,7 +16,7 @@
 </div>
 <mat-progress-bar *ngIf="progressValue!==null" [value]="progressValue"></mat-progress-bar>
 <div class="actions-container" *ngIf="!loading">
-    <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
+    <button mat-flat-button color="primary" class="start-game-btn" (click)="playing=true" *ngIf="!playing">Start playing</button>
 </div>
 <div *ngIf="loading" class="spinner-container">
     <mat-progress-spinner *ngIf="loading" [diameter]="30" [color]="'primary'" [mode]="'indeterminate'">
