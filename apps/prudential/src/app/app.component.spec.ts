@@ -3,6 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,11 +16,16 @@ describe('AppComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatIconModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        HttpClientModule,
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
       ],
       declarations: [
         AppComponent
       ],
+      providers: [TokenStorage]
     }).compileComponents();
   }));
 

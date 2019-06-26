@@ -1,6 +1,26 @@
-<p>
-  Nb Played pieces: {{nbPlayedPieces}}
-</p>
-<p>
-  Nb Available pieces: {{nbAvailablePieces}}
-</p>
+<div class="center-board" [ngStyle]="getImageSize()">
+  <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
+    <mat-grid-tile *ngFor="let tile of boardPuzzleTiles">
+      <img class="custom-puzzle-image" [ngStyle]="getPuzzleTileStyle(tile)" (click)="tileClicked(tile)" />
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div class="bottom-container">
+  <div class="staic-content">
+    <div class="red-color-font">
+      <div class="vertically-aligned-row">
+        PUZZLE PIECES
+        <span class="help-logo">?</span>      
+      </div>
+      <div class="static-collect-pieces">Collect pieces and complete the puzzle</div>
+    </div>
+    <div class="badge-warn">
+      {{ nbAvailablePieces }}/{{totalPieces}}
+    </div>
+  </div>
+  <div class="scrolling-wrapper-flexbox">
+    <div class="remaining-puzzle-piece-container" *ngFor="let staicIndex of staticPizzleDummyTiles" [ngStyle]="getTileSize()">
+      <img class="custom-puzzle-image" [ngStyle]="getBottomTilesStyle(staicIndex)" (click)="tileClicked(staicIndex)" />
+    </div>
+  </div>
+</div>

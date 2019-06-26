@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./congrats.component.scss']
 })
 export class CongratsComponent implements OnInit {
+  title = 'CONGRATULATIONS!';
+  subTitle = 'You have unlocked your Netflix Rebate!';
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

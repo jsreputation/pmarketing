@@ -1,23 +1,154 @@
 version: 2.1
+orbs:
+  helm-deploy: perxtech/helm-deploy@0.0.4
+executors:
+  ubuntu:
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: << parameters.docker_layer_caching >>
+    working_directory: ~/project
+    parameters:
+      docker_layer_caching:
+        default: true
+        type: boolean
+commands:
+  setup_buildkitd:
+    description: Enable docker experimental feature and setup buildkit environment
+    steps:
+      - run:
+          name: Setup buildkit environment variable
+          command: |
+            echo 'export DOCKER_BUILDKIT=1' >> $BASH_ENV
+  docker_login:
+    description: Login to Dockerhub
+    steps:
+      - run:
+          name: Login to dockerhub
+          command: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
+
 jobs:
-  build:
-    working_directory: ~/my-project
-    docker:
-      - image: circleci/node:10-browsers
+  build_docker_image:
+    working_directory: ~/project
+    executor: ubuntu
     steps:
       - checkout
-      # - restore_cache:
-      #     key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - setup_buildkitd
+      - docker_login
+      - run:
+          name: Build docker image
+          command: |
+            echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            docker build -t ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7} --build-arg app=prudential .
+      - run:
+          name: Push docker
+          command: |
+            docker push ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7}
+            # if the commit is tagged, also push with the tag
+            if [ ! -z "${CIRCLE_TAG}" ]; then
+              docker tag ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7} ${DOCKER_REPO}:prudential-${CIRCLE_TAG}
+              docker push ${DOCKER_REPO}:prudential-${CIRCLE_TAG}
+            fi
+  deploy:
+    executor: helm-deploy/default
+    parameters:
+      docker_tag:
+        type: string
+        description: The docker tag to deploy
+        default: "${CIRCLE_SHA1:0:7}"
+      kube_host:
+        type: env_var_name
+        description: host for kubeconfig
+      kube_bearer_token:
+        type: env_var_name
+        description: breaker token for kubeconfig
+      kube_cluster_ca_cert_data:
+        type: env_var_name
+        description: certificate data for kubeconfig
+    steps:
+      - run:
+          name: Set environments
+          command: |
+            echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
+            echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
+
+      # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
+      - helm-deploy/add-helm-repo:
+          helm_repo_name: perx
+      # requires env set: KUBE_HOST KUBE_CLUSTER_CA_CERT_DATA KUBE_BEARER_TOKEN
+      - helm-deploy/configure-kubectl:
+          kube_host: "<< parameters.kube_host >>"
+          kube_bearer_token: "<< parameters.kube_bearer_token >>"
+          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+      - helm-deploy/deploy:
+          helm_release: microsite-apps-prudential
+          helm_chart: perx/perx-general-app
+          helm_values: image.tag="${DOCKER_TAG}"
+          helm_extra_args: --reuse-values --timeout 600
+  test:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - run:
+          name: Install yarn
+          command: |
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get update && sudo apt-get install yarn
+      - run: |
+          echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+          echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: Switch to latest node version
+          command: |
+            nvm install v10
+            nvm alias default v10
+      - checkout
       - run: yarn install
-      # - save_cache:
-      #     key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      #     paths:
-      #       - "node_modules"
       - run: yarn run build
       - run: yarn run lint-ci
       - run: yarn run test-ci
-#      - run: yarn run e2e-ci
+    #      - run: yarn run e2e-ci
+
 workflows:
-  ci:
+  build_and_deploy:
     jobs:
-      - build
+      - test:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - build_docker_image:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - deploy:
+          name: deploy_to_staging
+          docker_tag: "prudential-${CIRCLE_SHA1:0:7}"
+          kube_host: STAGING_KUBE_HOST
+          kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
+          kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
+          requires:
+            - build_docker_image
+            - test
+          filters:
+            branches:
+              only:
+                - staging
+      - deploy:
+          name: deploy_to_production
+          docker_tag: "prudential-${CIRCLE_TAG}"
+          kube_host: PRODUCTION_KUBE_HOST
+          kube_bearer_token: PRODUCTION_KUBE_BEARER_TOKEN
+          kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
+          requires:
+            - build_docker_image
+            - test
+          filters:
+            # need to sepcify this otherwise the job will run even if there's no tag
+            branches:
+              ignore: /.*/
+            tags:
+              # semver v2
+              only: /^\d+\.\d+\.\d+.*/
+
