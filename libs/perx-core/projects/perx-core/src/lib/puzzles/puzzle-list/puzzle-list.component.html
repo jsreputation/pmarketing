@@ -3,15 +3,15 @@
   *ngFor="let puzzle of puzzles; let i=index">
   <div class="puzzle-content">
     <div class="puzzle-img__wrapper">
-      <img class="puzzle-img" src="{{puzzle.image}}">
+      <img class="puzzle-img" src="{{puzzle.display_properties.card_image.value.image_url}}">
     </div>
     <div class="puzzle-details">
       <h1>Puzzle #{{indexToLetter(i)}}
         <span class="badge-warn">
-          {{ puzzle.stamps ? puzzle.stamps.length : 0 }}/{{total}}
+          {{nbPlacedStamps(puzzle)}}/{{puzzle.stamps.length}}
         </span>
       </h1>
-      <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{puzzle.stamps.length}} new pieces</p>
+      <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{nbAvailableStamps(puzzle)}} new pieces</p>
     </div>
   </div>
   <mat-icon *ngIf="iconDisplay">

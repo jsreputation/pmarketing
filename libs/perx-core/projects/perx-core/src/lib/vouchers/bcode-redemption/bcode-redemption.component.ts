@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IVoucher } from '../models/voucher.model';
-import { ActivatedRoute } from '@angular/router';
 import { VouchersService } from '../vouchers.service';
 
 @Component({
@@ -9,21 +8,21 @@ import { VouchersService } from '../vouchers.service';
   templateUrl: './bcode-redemption.component.html',
   styleUrls: ['./bcode-redemption.component.css']
 })
-export class BcodeRedemptionComponent implements OnInit {
+export class BcodeRedemptionComponent implements OnChanges {
+  @Input()
+  voucherId: number = null;
 
-  bCode = `=TYHGV=WPLKN==XCNET=9Y32<==5YUFK=4UWKX=`;
+  bCode = ``;
 
   voucher$: Observable<IVoucher>;
 
   constructor(
-    private route: ActivatedRoute,
     private vouchersService: VouchersService
   ) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.voucher$ = this.vouchersService.get(params[`id`]);
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.voucherId) {
+      this.voucher$ = this.vouchersService.get(this.voucherId);
+    }
   }
-
 }
