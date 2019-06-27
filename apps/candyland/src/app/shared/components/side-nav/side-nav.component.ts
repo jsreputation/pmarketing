@@ -6,6 +6,12 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+
+export function fnTransition(stateChangeExpr, time) {
+  return transition(stateChangeExpr, [
+    animate(time)
+  ]);
+}
 @Component({
   selector: 'cl-side-nav',
   templateUrl: './side-nav.component.html',
@@ -18,9 +24,18 @@ import {
       state('closed', style({
         width: '70px',
       })),
-      transition('open <=> closed', [
-        animate('.4s')
-      ])
+      fnTransition('open => closed', '.4s'),
+      fnTransition('closed => open', '.3s'),
+    ]),
+    trigger('position', [
+      state('open', style({
+        'margin-left': '170px',
+      })),
+      state('closed', style({
+        'margin-left': '70px',
+      })),
+      fnTransition('open => closed', '.4s'),
+      fnTransition('closed => open', '.3s'),
     ]),
   ]
 })
@@ -34,7 +49,6 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit() {
   }
-
 
   public toggle(): void {
     this.isOpen = !this.isOpen;
