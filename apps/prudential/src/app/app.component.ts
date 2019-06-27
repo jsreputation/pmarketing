@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
   failedAuthSubscriber: Subscription;
 
   constructor(private location: Location,
-              private router: Router,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+    private router: Router,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
   }
 
@@ -73,12 +73,12 @@ export class AppComponent implements OnInit {
     }
   }
 
-  replaceUrl(): boolean {
-    const path = this.location.path();
-    if (path === '/tnc' || path === '/contact-us') {
-      return true;
-    }
-
-    return false;
+  redirectTo(url: string) {
+    this.router.navigateByUrl(
+      url,
+      {
+        replaceUrl: true
+      }
+    );
   }
 }
