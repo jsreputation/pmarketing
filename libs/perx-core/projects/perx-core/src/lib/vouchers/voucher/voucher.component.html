@@ -3,7 +3,7 @@
     <div class="reward-image-container" *ngIf="voucher.bannerUrl">
       <img class="reward-image" src="{{voucher.bannerUrl}}">
     </div>
-    <div class="merchant-image-container" *ngIf="!hideMerchantImg">
+    <div class="merchant-image-container" *ngIf="!hideMerchantImg && voucher.merchantLogoUrl">
       <img class="merchant-image" src="{{voucher.merchantLogoUrl}}">
     </div>
     <div class="details">
