@@ -1,10 +1,10 @@
 <div class="full-page-container-white">
   <div *ngIf="numRewards > 0; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
-    <h1>
+    <h1 id="congratulations-header">
       Congratulations!
     </h1>
-    <p>You've got {{numRewards}} treats from us</p>
+    <p id="treat-counter" [attr.data-num-rewards]="numRewards">You've got {{numRewards}} treats from us</p>
     <div class="congrats">
       <img src="../../assets/img/congrats.png" alt="Confetti exploding out of a present"/>
     </div>

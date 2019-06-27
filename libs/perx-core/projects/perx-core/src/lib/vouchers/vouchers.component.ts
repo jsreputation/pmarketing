@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from './vouchers.service';
-import { PinService } from './../pin-input/pin.service';
 import { Observable } from 'rxjs';
 import { IVoucher } from './models/voucher.model';
 import { map } from 'rxjs/operators';
@@ -24,10 +23,7 @@ export class VouchersComponent implements OnInit {
 
   vouchers$: Observable<IVoucher[]>;
 
-  constructor(
-    private vouchersService: VouchersService,
-    private pinService: PinService
-  ) { }
+  constructor(private vouchersService: VouchersService) { }
 
   ngOnInit() {
     this.vouchers$ = this.vouchersService.getAll().pipe(

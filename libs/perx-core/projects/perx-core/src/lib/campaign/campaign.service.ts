@@ -2,6 +2,7 @@ import { Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from './env-config';
+import { map } from 'rxjs/operators';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
@@ -158,8 +159,10 @@ export class CampaignService {
   }
 
   getCards(campaignId: number): Observable<IStampCard[]> {
-    return this.http.get<IStampCard[]>(
+    return this.http.get<IStampCardsResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`
+    ).pipe(
+      map(res => res.data)
     );
   }
 
@@ -167,10 +170,6 @@ export class CampaignService {
     return this.http.get<IStampCardResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`
     );
-  }
-
-  getTransactions(campaignId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`);
   }
 
   putStampTransaction(stampTransactionId: number): Observable<IPutStampTransactionResponse> {

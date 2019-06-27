@@ -54,7 +54,7 @@ export class VouchersService {
     );
   }
 
-  get(id: string|number): Observable<IVoucher> {
+  get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
     });
