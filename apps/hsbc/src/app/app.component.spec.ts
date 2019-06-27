@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { MatDialog, MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
