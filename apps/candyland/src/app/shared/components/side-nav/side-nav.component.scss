@@ -1,15 +1,16 @@
 @import "../../../../styles/helper";
 
 .container-sidenav {
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .sidenav {
   width: rem(170px);
   background-color: #202c46;
-  position: relative;
-  height: 100%;
-  overflow: hidden;
 
   &-data-container {
     padding: 0 rem(12px);
