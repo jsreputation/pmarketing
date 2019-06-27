@@ -1,6 +1,6 @@
 <div class="container">
   <h1>My Treats</h1>
-  <perx-core-vouchers (route)="onRoute($event)" filter="issued"></perx-core-vouchers>
+  <perx-core-vouchers (route)="onRoute($event)" filter="issued" [showExpireDate]="true" [showRedeemedDate]="false"></perx-core-vouchers>
   <h1>History</h1>
-  <perx-core-vouchers (route)="onRoute($event)" filter="redeemed"></perx-core-vouchers>
+  <perx-core-vouchers (route)="onRoute($event)" filter="redeemed" [showExpireDate]="false" [showRedeemedDate]="true"></perx-core-vouchers>
 </div>

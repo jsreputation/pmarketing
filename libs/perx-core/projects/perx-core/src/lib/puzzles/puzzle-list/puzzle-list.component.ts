@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IStampCard, CampaignService, STAMP_CARD_STATUS } from '../../campaign/campaign.service';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IStampCard, CampaignService, STAMP_CARD_STATUS, TRANSACTION_STATE } from '../../campaign/campaign.service';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -41,8 +41,23 @@ export class PuzzleListComponent implements OnChanges {
     if (!Array.isArray(this.puzzles)) {
       return false;
     }
+    // if we have no information on stamps then it should not be active
+    if (!puzzle.stamps) {
+      return false;
+    }
+
+    // if there is no more available stamp return false
+    if (puzzle.stamps.find(st => st.state === TRANSACTION_STATE.issued) === undefined) {
+      return false;
+    }
+
     // get list of active puzzles
-    const activePuzzles = this.puzzles.filter(p => p.state === STAMP_CARD_STATUS.active);
+    const activePuzzles = this.puzzles.filter(p => {
+      return p.state === STAMP_CARD_STATUS.active &&
+        p.stamps &&
+        p.stamps.find(st => st.state === TRANSACTION_STATE.issued) !== undefined;
+    });
+
     // if there is no active puzzle, this one should not be active
     if (activePuzzles.length === 0) {
       return false;
@@ -60,5 +75,19 @@ export class PuzzleListComponent implements OnChanges {
       return '';
     }
     return base[index % base.length];
+  }
+
+  nbAvailableStamps(puzzle: IStampCard): number {
+    if (puzzle.stamps === undefined) {
+      return 0;
+    }
+    return puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
+  }
+
+  nbPlacedStamps(puzzle: IStampCard): number {
+    if (puzzle.stamps === undefined) {
+      return 0;
+    }
+    return puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length;
   }
 }

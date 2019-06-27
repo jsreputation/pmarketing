@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
-import { bufferCount, tap, first, map, catchError } from 'rxjs/operators';
+import { bufferCount, tap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shake-game',

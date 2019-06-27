@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  // SimpleChanges
+} from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 
 interface DrawTile {
   puzzleLocation: number;
@@ -10,7 +18,7 @@ interface DrawTile {
   templateUrl: './puzzle-play.component.html',
   styleUrls: ['./puzzle-play.component.css']
 })
-export class PuzzlePlayComponent implements OnInit {
+export class PuzzlePlayComponent implements OnChanges {
   @Input()
   img: string;
 
@@ -38,59 +46,68 @@ export class PuzzlePlayComponent implements OnInit {
   boardPuzzleTiles: DrawTile[] = [];
   remainingPuzzleTiles: DrawTile[] = [];
 
-  totalPieces;
+  totalPieces: number;
 
   imageWidth = 300;
   imageHeight = 200;
 
   staticPizzleDummyTiles = [];
 
-  ngOnInit() {
+  ngOnChanges(
+    // changes: SimpleChanges
+  ) {
 
-    this.tileWidth = this.imageWidth / this.cols;
-    this.tileHeight = this.imageHeight / this.rows;
-    this.totalPieces = this.rows * this.cols;
+    this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
 
-    for (let x = 0; x < this.totalPieces; x++)  {
+      this.imageHeight = this.imageWidth * ratio;
+
+      this.tileWidth = this.imageWidth / this.cols;
+      this.tileHeight = this.imageHeight / this.rows;
+      this.totalPieces = this.rows * this.cols;
+
+      for (let x = 0; x < this.totalPieces; x++) {
         const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
         this.boardPuzzleTiles[x] = puzzleTile;
-    }
+      }
 
-    for (let i = 0; i < this.nbAvailablePieces; i++) {
+      for (let i = 0; i < this.nbAvailablePieces; i++) {
 
-      const location = this.nbPlayedPieces + i;
-      const puzzleTile = { puzzleLocation: location, isSelected: false };
-      this.remainingPuzzleTiles[i] = puzzleTile;
-    }
+        const location = this.nbPlayedPieces + i;
+        const puzzleTile = { puzzleLocation: location, isSelected: false };
+        this.remainingPuzzleTiles[i] = puzzleTile;
+      }
 
-    for (let i = 0; i < this.totalPieces; i++) {
-      this.staticPizzleDummyTiles[i] = [i];
-    }
+      for (let i = 0; i < this.totalPieces; i++) {
+        this.staticPizzleDummyTiles[i] = [i];
+      }
+
+    },
+      err => console.error('Observer got an error: ' + err));
 
   }
 
-  tileClicked(index) {
+  bottomPannelClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
-  } else {
+    } else {
 
-      if ((this.remainingPuzzleTiles.length) > index) {
-        const puzzleLocation = this.remainingPuzzleTiles[index].puzzleLocation;
+      if ((this.remainingPuzzleTiles.length) > 0) {
+        const puzzleLocation = this.remainingPuzzleTiles[0].puzzleLocation;
         this.moved.emit();
         this.boardPuzzleTiles[puzzleLocation].isSelected = true;
         this.remainingPuzzleTiles = this.remainingPuzzleTiles.filter((currentValue) => {
-            return currentValue.puzzleLocation !== puzzleLocation;
+          return currentValue.puzzleLocation !== puzzleLocation;
         });
       }
     }
   }
 
-  getPuzzleTileStyle(tile: DrawTile) {
+  getPuzzleTileStyle(tile: DrawTile): any {
 
-    const leftPosition = (tile.puzzleLocation % this.cols) *  this.tileWidth;
-    const topPositionIndex = Math.floor((tile.puzzleLocation  / this.cols ));
-    const topPosition = topPositionIndex *  this.tileHeight;
+    const leftPosition = (tile.puzzleLocation % this.cols) * this.tileWidth;
+    const topPositionIndex = Math.floor((tile.puzzleLocation / this.cols));
+    const topPosition = topPositionIndex * this.tileHeight;
     const imagePathFinal = tile.isSelected ? this.img : '';
 
     if (tile.isSelected) {
@@ -106,27 +123,27 @@ export class PuzzlePlayComponent implements OnInit {
     }
   }
 
-  getBottomTilesStyle(index) {
+  getBottomTilesStyle(index: number): any {
 
-     if ((this.remainingPuzzleTiles.length) > index) {
+    if ((this.remainingPuzzleTiles.length) > index) {
 
-       const puzzlePosition = this.remainingPuzzleTiles[index].puzzleLocation;
-       const leftPosition = (puzzlePosition % this.cols) *  this.tileWidth;
-       const topPositionIndex = Math.floor((puzzlePosition  / this.cols ));
-       const topPosition = topPositionIndex *  this.tileHeight;
+      const puzzlePosition = this.remainingPuzzleTiles[index].puzzleLocation;
+      const leftPosition = (puzzlePosition % this.cols) * this.tileWidth;
+      const topPositionIndex = Math.floor((puzzlePosition / this.cols));
+      const topPosition = topPositionIndex * this.tileHeight;
 
-       return {
-          backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
-          backgroundImage: 'url(' + this.img + ')',
-          backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
-        };
-     }
-     return {
-        background: '#ebebeb'
+      return {
+        backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
+        backgroundImage: 'url(' + this.img + ')',
+        backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
       };
+    }
+    return {
+      background: '#ebebeb'
+    };
   }
 
-  getImageSize() {
+  getImageSize(): any {
 
     return {
       width: (this.imageWidth) + 'px',
@@ -134,7 +151,7 @@ export class PuzzlePlayComponent implements OnInit {
     };
   }
 
-  getTileSize() {
+  getTileSize(): any {
 
     return {
       width: (this.tileWidth) + 'px',
@@ -142,20 +159,46 @@ export class PuzzlePlayComponent implements OnInit {
     };
   }
 
-  getWidthHeightRatio() {
+  getWidthHeightRatio(): string {
 
     const ratioValue = (this.tileWidth / this.tileHeight);
     const ratio = ratioValue.toString() + ':1';
     return ratio;
   }
 
-  isAllPuzzleCompleted() {
+  isAllPuzzleCompleted(): boolean {
 
     for (let i = 0; i < this.totalPieces; i++) {
-        if (!this.boardPuzzleTiles[i].isSelected) {
-          return false;
-        }
+      if (!this.boardPuzzleTiles[i].isSelected) {
+        return false;
+      }
     }
     return true;
+  }
+
+  getImageSizeRatioFromURL(url: string) {
+
+    return new Observable((observer: Observer<number>) => {
+      const img = new Image();
+      img.src = url;
+      if (!img.complete) {
+        img.onload = () => {
+          observer.next(this.calculateRatio(img));
+          observer.complete();
+        };
+        img.onerror = (err) => {
+          observer.error(err);
+        };
+      } else {
+        observer.next(this.calculateRatio(img));
+        this.calculateRatio(img);
+        observer.complete();
+      }
+    });
+  }
+
+  calculateRatio(img: HTMLImageElement): number {
+    this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
+    return img.height / img.width;
   }
 }
