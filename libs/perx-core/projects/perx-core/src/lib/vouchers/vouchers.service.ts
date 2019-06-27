@@ -16,6 +16,39 @@ export class VouchersService {
   ) {
   }
 
+  private static voucherToVoucher(v: any): IVoucher {
+    const reward = v[`reward`];
+    const images = reward[`images`] || [];
+    let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: any) => image[`type`] === 'reward_logo');
+    }
+    const thumbnailUrl = thumbnail && thumbnail.url;
+    const banner = images.find((image: any) => image[`type`] === 'reward_banner');
+    const bannerUrl = banner && banner.url;
+    const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
+    const merchantLogoUrl = merchantLogo && merchantLogo.url;
+    const redeemedOn = v[`redemption_date`];
+    const howToRedeem = reward.custom_fields && reward.custom_fields.how_to_redeem ? reward.custom_fields.how_to_redeem : null;
+
+    return {
+      id: v[`id`],
+      rewardId: reward[`id`],
+      state: v[`state`],
+      name: v[`name`],
+      code: v[`voucher_code`],
+      description: reward[`description`],
+      thumbnailUrl,
+      bannerUrl,
+      expiresAt: new Date(reward[`valid_to`]),
+      redeemedOn,
+      merchantName: reward[`merchant_name`],
+      merchantLogoUrl,
+      termsAndConditions: reward[`terms_and_conditions`],
+      howToRedeem
+    };
+  }
+
   getAll(): Observable<IVoucher[]> {
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
@@ -25,33 +58,8 @@ export class VouchersService {
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
       map(vouchers => {
-        this.vouchers = vouchers.map((v: any) => {
-          const reward = v[`reward`];
-          const images = reward[`images`] || [];
-          const thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-          const thumbnailUrl = thumbnail && thumbnail.url;
-          const banner = images.find((image: any) => image[`type`] === 'reward_banner');
-          const bannerUrl = banner && banner.url;
-          const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
-          const merchantLogoUrl = merchantLogo && merchantLogo.url;
-          const redeemedOn = v[`redemption_date`];
-          const voucher = {
-            id: v[`id`],
-            rewardId: reward[`id`],
-            state: v[`state`],
-            name: v[`name`],
-            code: v[`voucher_code`],
-            description: reward[`description`],
-            thumbnailUrl,
-            bannerUrl,
-            expiresAt: new Date(reward[`valid_to`]),
-            redeemedOn,
-            merchantName: reward[`merchant_name`],
-            merchantLogoUrl,
-            termsAndConditions: reward[`terms_and_conditions`]
-          };
-          return voucher;
-        });
+        this.vouchers = vouchers.map((v: any) => VouchersService.voucherToVoucher(v));
+        console.log(vouchers);
         return this.vouchers;
       })
     );
@@ -69,33 +77,8 @@ export class VouchersService {
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
       map(v => {
-        const reward = v[`reward`];
-        const images = reward[`images`] || [];
-        const thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-        const thumbnailUrl = thumbnail && thumbnail.url;
-        const banner = images.find((image: any) => image[`type`] === 'reward_banner');
-        const bannerUrl = banner && banner.url;
-        const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
-        const merchantLogoUrl = merchantLogo && merchantLogo.url;
-        const redeemedOn = v[`redemption_date`];
-        const voucher = {
-          id: v[`id`],
-          rewardId: reward[`id`],
-          state: v[`state`],
-          name: v[`name`],
-          code: v[`voucher_code`],
-          description: reward[`description`],
-          thumbnailUrl,
-          bannerUrl,
-          expiresAt: new Date(reward[`valid_to`]),
-          redeemedOn,
-          merchantName: reward[`merchant_name`],
-          merchantLogoUrl,
-          termsAndConditions: reward[`terms_and_conditions`]
-        };
-
-        this.vouchers.push(voucher);
-
+        const voucher = VouchersService.voucherToVoucher(v);
+        // this.vouchers.push(voucher);
         return voucher;
       })
     );
