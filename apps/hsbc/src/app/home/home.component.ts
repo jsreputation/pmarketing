@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { IPopupConfig, PopupComponent, CampaignService, ICampaign, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
 import { DatePipe } from '@angular/common';
-import { map, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
