@@ -2,7 +2,21 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
+
+interface IVouchersResponse {
+  data: IV4Voucher[];
+  meta: {
+    count: number
+    page: number
+    size: number
+    total_pages: number
+  };
+}
+
+interface IV4Voucher {
+  reward?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -55,14 +69,27 @@ export class VouchersService {
     }
 
     const url = `${this.config.env.apiHost}/v4/vouchers`;
-    return this.http.get(url).pipe(
-      map(resp => resp[`data`]),
-      map(vouchers => {
-        this.vouchers = vouchers.map((v: any) => VouchersService.voucherToVoucher(v));
-        console.log(vouchers);
-        return this.vouchers;
-      })
-    );
+    return this.http.get<IVouchersResponse>(url)
+      .pipe(
+        flatMap((resp: IVouchersResponse) => {
+          const streams = [
+            of(resp.data)
+          ];
+          for (let i = 2; i <= resp.meta.total_pages; i++) {
+            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}?page=${i}`)
+              .pipe(
+                map(res => res.data)
+              );
+            streams.push(stream);
+          }
+          return streams;
+        }),
+        mergeAll(),
+        map((resp: IV4Voucher[]) => resp.map(v => VouchersService.voucherToVoucher(v))),
+        scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.id - v2.id)),
+        tap(vouchers => this.vouchers = vouchers)
+      );
   }
 
   get(id: number): Observable<IVoucher> {

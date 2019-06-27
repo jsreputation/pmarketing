@@ -1,5 +1,5 @@
 export interface IVoucher {
-  id: string | number;
+  id: number;
   rewardId: string | number;
   state: string;
   name: string;
