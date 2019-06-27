@@ -5,7 +5,7 @@
   <h1>
     Merchant to enter the code
   </h1>
-  <perx-core-pin-input length="2" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)" (pinFocused)="isPinFocused($event)"></perx-core-pin-input>
+  <perx-core-pin-input [length]="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)" (pinFocused)="isPinFocused($event)"></perx-core-pin-input>
   <div class="actions-container" *ngIf="!hideActionContainer" [@hideAnim]>
     <button mat-stroked-button color="primary" (click)="onCancel()">Cancel</button>
   </div>
