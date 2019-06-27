@@ -14,10 +14,10 @@
           {{voucher.name}}
         </h1>
         <p *ngIf="showMerchant">
-          {{voucher.description}}
+          {{voucher.merchantName}}
         </p>
         <p *ngIf="showExpireDate">
-            Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
+          Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </p>
         <p *ngIf="showRedeemedDate">
           redeemed date
