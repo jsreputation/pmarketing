@@ -7,17 +7,17 @@
   >
     <div [ngClass]="'voucher-content ' + imageSize">
       <div class="voucher-img__wrapper">
-        <img class="voucher-merchant-logo" src="{{voucher.merchantLogoUrl}}">
+        <img class="voucher-thumbnail" src="{{voucher.thumbnailUrl}}">
       </div>
       <div class="voucher-details">
         <h1 *ngIf="showTitle">
           {{voucher.name}}
         </h1>
         <p *ngIf="showMerchant">
-          {{voucher.description}}
+          {{voucher.merchantName}}
         </p>
         <p *ngIf="showExpireDate">
-            Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
+          Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </p>
         <p *ngIf="showRedeemedDate">
           Redeemed on {{voucher.redeemedOn | date: 'dd/MM/yyyy'}}

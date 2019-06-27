@@ -28,9 +28,12 @@ export class VouchersService {
         this.vouchers = vouchers.map((v: any) => {
           const reward = v[`reward`];
           const images = reward[`images`] || [];
-          const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-          const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
-          const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
+          const thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
+          const thumbnailUrl = thumbnail && thumbnail.url;
+          const banner = images.find((image: any) => image[`type`] === 'reward_banner');
+          const bannerUrl = banner && banner.url;
+          const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
+          const merchantLogoUrl = merchantLogo && merchantLogo.url;
           const redeemedOn = v[`redemption_date`];
           const voucher = {
             id: v[`id`],
@@ -68,9 +71,12 @@ export class VouchersService {
       map(v => {
         const reward = v[`reward`];
         const images = reward[`images`] || [];
-        const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-        const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
-        const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
+        const thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
+        const thumbnailUrl = thumbnail && thumbnail.url;
+        const banner = images.find((image: any) => image[`type`] === 'reward_banner');
+        const bannerUrl = banner && banner.url;
+        const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
+        const merchantLogoUrl = merchantLogo && merchantLogo.url;
         const redeemedOn = v[`redemption_date`];
         const voucher = {
           id: v[`id`],
