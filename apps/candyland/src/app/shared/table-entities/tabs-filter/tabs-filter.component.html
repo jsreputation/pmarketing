@@ -1,0 +1,10 @@
+<div class="tabs">
+  <a *ngFor="let tab of config"
+     id="tab1-tab"
+     [class.active]="tab.active"
+     (click)="changeTab(tab)">
+    {{tab.type}} ({{tab.count}})
+  </a>
+<!--  <span class="yellow-bar" mat-ink-bar></span>-->
+<!--  <mat-ink-bar></mat-ink-bar>-->
+</div>
