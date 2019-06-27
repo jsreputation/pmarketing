@@ -20,7 +20,7 @@
           Expiry: {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </p>
         <p *ngIf="showRedeemedDate">
-          redeemed date
+          Redeemed on {{voucher.redeemedOn | date: 'dd/MM/yyyy'}}
         </p>
         <div class="ribbon" *ngIf="showRedeemedIcon && voucher.state === 'redeemed'">REDEEMED</div>
       </div>

@@ -31,6 +31,7 @@ export class VouchersService {
           const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
           const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
           const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
+          const redeemedOn = v[`redemption_date`];
           const voucher = {
             id: v[`id`],
             rewardId: reward[`id`],
@@ -41,6 +42,7 @@ export class VouchersService {
             thumbnailUrl,
             bannerUrl,
             expiresAt: new Date(reward[`valid_to`]),
+            redeemedOn,
             merchantName: reward[`merchant_name`],
             merchantLogoUrl,
             termsAndConditions: reward[`terms_and_conditions`]
@@ -52,7 +54,7 @@ export class VouchersService {
     );
   }
 
-  get(id: string|number): Observable<IVoucher> {
+  get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
     });
@@ -69,6 +71,7 @@ export class VouchersService {
         const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
         const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
         const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
+        const redeemedOn = v[`redemption_date`];
         const voucher = {
           id: v[`id`],
           rewardId: reward[`id`],
@@ -79,6 +82,7 @@ export class VouchersService {
           thumbnailUrl,
           bannerUrl,
           expiresAt: new Date(reward[`valid_to`]),
+          redeemedOn,
           merchantName: reward[`merchant_name`],
           merchantLogoUrl,
           termsAndConditions: reward[`terms_and_conditions`]

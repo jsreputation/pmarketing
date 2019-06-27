@@ -8,6 +8,7 @@ export interface IVoucher {
   thumbnailUrl: string;
   bannerUrl: string;
   expiresAt: Date;
+  redeemedOn: Date;
   merchantName: string;
   merchantLogoUrl: string;
   termsAndConditions: string;
