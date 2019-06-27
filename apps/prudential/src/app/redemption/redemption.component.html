@@ -1,6 +1,6 @@
 <div class="redemption-container full-page-container-white text-center">
     <h1>Successfully Redeemed!</h1>
-    <p class="reward-vendor">by {{reward.owner}}</p>
+    <p class="reward-vendor" *ngIf="voucher$ | async as voucher">{{voucher.merchantName}}</p>
     <p>Thank you for choosing Prudential as your preferred insurer. Hope you enjoy the treat from us.</p>
     <div class="congrats">
         <img src="../../assets/img/fireworks.png" />
