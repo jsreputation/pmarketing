@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,6 @@ export class AppComponent implements OnInit {
   showHeader: boolean;
   iconToShow = 'home';
   currentPage: string;
-  failedAuthSubscriber: Subscription;
 
   constructor(private router: Router,
               private authService: AuthenticationService,
@@ -22,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+    this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');

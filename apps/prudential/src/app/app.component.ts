@@ -3,7 +3,6 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +15,9 @@ export class AppComponent implements OnInit {
   defaultBackLocation = '/vouchers';
 
   preAuth: boolean;
-  failedAuthSubscriber: Subscription;
 
-  constructor(private location: Location,
+  constructor(
+    private location: Location,
     private router: Router,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object) {
@@ -26,16 +25,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId)) {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          const param = location.search;
-          (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-        }
-      }
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
+      const param = location.search;
+      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+    this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
@@ -52,16 +46,13 @@ export class AppComponent implements OnInit {
     if (!ref.constructor) {
       return;
     }
+    this.setHeaderBackArrowStatus(ref.constructor.name);
+  }
 
-    switch (ref.constructor.name) {
-      case 'TncComponent': {
-        this.showBack = true;
-        break;
-      }
-      case 'ContactUsComponent': {
-        this.showBack = true;
-        break;
-      }
+  setHeaderBackArrowStatus(pageName: string) {
+    switch (pageName) {
+      case 'TncComponent':
+      case 'ContactUsComponent':
       case 'VoucherComponent': {
         this.showBack = true;
         break;
@@ -74,6 +65,10 @@ export class AppComponent implements OnInit {
   }
 
   redirectTo(url: string) {
+    if (url !== 'tnc' && url !== 'contact-us') {
+      return null;
+    }
+
     this.router.navigateByUrl(
       url,
       {
