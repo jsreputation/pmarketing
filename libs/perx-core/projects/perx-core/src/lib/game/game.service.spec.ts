@@ -5,6 +5,7 @@ import { EnvConfig } from './env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 // import { HttpClient } from '@angular/common/http';
 import { IGame, GAME_TYPE } from './game.model';
+import { Type } from '@angular/core';
 
 describe('GameService', () => {
   // let httpClient: HttpClient;
@@ -18,7 +19,7 @@ describe('GameService', () => {
     });
 
     // httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
   });
 
   afterEach(() => {

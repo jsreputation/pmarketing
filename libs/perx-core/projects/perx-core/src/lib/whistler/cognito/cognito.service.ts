@@ -1,7 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import {
   HttpClient,
-  // HttpErrorResponse, 
+  // HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
 // import {throwError} from 'rxjs';

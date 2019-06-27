@@ -4,7 +4,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  // SimpleChanges 
+  // SimpleChanges
 } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
