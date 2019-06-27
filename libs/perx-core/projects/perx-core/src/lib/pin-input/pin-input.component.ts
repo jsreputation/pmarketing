@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { PinService } from './pin.service';
 import { ActivatedRoute } from '@angular/router';
 import { VouchersService } from '../vouchers/vouchers.service';
-import { map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 

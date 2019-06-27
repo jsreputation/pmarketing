@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { GameService } from './game.service';
 import { EnvConfig } from './env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { IGame, GAME_TYPE } from './game.model';
 
 describe('GameService', () => {
-  let httpClient: HttpClient;
+  // let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('GameService', () => {
       ]
     });
 
-    httpClient = TestBed.get(HttpClient);
+    // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
   });
 
@@ -34,7 +34,7 @@ describe('GameService', () => {
   it('should play one game', (done: DoneFn) => {
     const service: GameService = TestBed.get(GameService);
     service.play(1)
-      .subscribe((data) => {
+      .subscribe(() => {
         expect(true).toBeTruthy();
         done();
       });

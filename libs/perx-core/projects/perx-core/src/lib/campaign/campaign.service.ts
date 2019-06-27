@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from './env-config';
@@ -152,11 +152,11 @@ export class CampaignService {
     );
   }
 
-  getCampaign(id: number): Observable<ICampaignResponse> {
-    return this.http.get<ICampaignResponse>(
-      `${this.baseUrl}/v4/campaigns`
-    );
-  }
+  // getCampaign(id: number): Observable<ICampaignResponse> {
+  //   return this.http.get<ICampaignResponse>(
+  //     `${this.baseUrl}/v4/campaigns`
+  //   );
+  // }
 
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(

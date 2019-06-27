@@ -62,14 +62,14 @@ export class AuthenticationService implements AuthService {
         if (resp) {
           this.authing = true;
           this.userAuth(this.preAuthJWT).toPromise().then(
-            (res) => {
+            () => {
               // @ts-ignore
               const userBearer = resp.headers.get('Authorization');
               if (userBearer) {
                 this.saveAccessData(userBearer.split(' ')[1]);
               }
             },
-            (err) => {
+            () => {
               if (this.retries === this.maxRetries) {
                 this.authing = false;
                 this.didFailAuth = true;
@@ -206,12 +206,11 @@ export class AuthenticationService implements AuthService {
     this.tokenStorage.setAccessToken(accessToken);
   }
 
-
-  private getUrlParameter(name) {
-    const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    const results = regex.exec(url);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
+  // private getUrlParameter(name) {
+  //   const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
+  //   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  //   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  //   const results = regex.exec(url);
+  //   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  // }
 }

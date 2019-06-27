@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { VouchersService } from './../vouchers/vouchers.service';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
