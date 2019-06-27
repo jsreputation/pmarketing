@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl('games');
                   }
                 },
-                (err) => {
+                () => {
                   this.failedAuth = true;
                   this.authed = false;
                 }

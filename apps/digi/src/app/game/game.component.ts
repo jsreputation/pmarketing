@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, IGame, GameService } from '@perx/core/dist/perx-core';
-import { map, take, toArray, first } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -23,7 +23,7 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private campaignService: CampaignService,
     private gameService: GameService
-  ) {}
+  ) { }
 
   onTap($event) {
     if ($event.tap >= this.numberOfTaps) {
