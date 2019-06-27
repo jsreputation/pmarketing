@@ -25,6 +25,9 @@ export class PinInputComponent implements OnInit {
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   pinCode: string;
   voucherId: string;
 
@@ -36,7 +39,8 @@ export class PinInputComponent implements OnInit {
     private pin: PinService,
     private route: ActivatedRoute,
     private vouchersService: VouchersService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     // length might not be a number
@@ -70,7 +74,7 @@ export class PinInputComponent implements OnInit {
       }
     } else {
       // move to next input box
-      const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${v.length}`);
+      const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${ v.length }`);
       if (elem !== null) {
         elem.focus();
       }
@@ -87,10 +91,10 @@ export class PinInputComponent implements OnInit {
           return of('Redeem failed');
         })
       ).subscribe(res => {
-        if (res !== 'Redeem failed') {
-          this.full.emit(this.voucherId);
-        }
-      });
+      if (res !== 'Redeem failed') {
+        this.full.emit(this.voucherId);
+      }
+    });
   }
 
   validateCode(code: string) {
@@ -102,7 +106,7 @@ export class PinInputComponent implements OnInit {
 
   get value(): string {
     return this.controlls.reduce((p: string, v: FormControl): string => {
-      return v.value === null ? p : `${p}${v.value}`;
+      return v.value === null ? p : `${ p }${ v.value }`;
     }, '');
   }
 
@@ -115,5 +119,13 @@ export class PinInputComponent implements OnInit {
       }
       event.stopPropagation();
     }
+  }
+
+  onBlur() {
+    this.pinFocused.emit(false);
+  }
+
+  onFocus() {
+    this.pinFocused.emit(true);
   }
 }

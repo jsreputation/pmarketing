@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material';
 import { VouchersModule } from '@perx/core/dist/perx-core';
 import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -21,7 +22,8 @@ describe('ActivationCodeComponent', () => {
         AuthenticationModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
-        MatCardModule
+        MatCardModule,
+        BrowserAnimationsModule
       ]
     })
       .compileComponents();

@@ -1,9 +1,10 @@
 <div [ngClass]="'activation-code ' + hasError">
-    <div class="activation-code__inputs">
-        <div *ngFor="let ctrl of controlls; let i = index">
-            <input type="tel" maxlength="1" [formControl]="ctrl" id="{{'input_'+i}}" (keyup)="onKey($event)"
-                [attr.autofocus]="i === 0" autocomplete="off">
-        </div>
+  <div class="activation-code__inputs">
+    <div *ngFor="let ctrl of controlls; let i = index">
+      <input type="tel" maxlength="1" [formControl]="ctrl" id="{{'input_'+i}}" (keyup)="onKey($event)"
+             (blur)="onBlur()" (focus)="onFocus()"
+             [attr.autofocus]="i === 0" autocomplete="off">
     </div>
-    <div class="error-label">Incorrect Code</div>
+  </div>
+  <div class="error-label">Incorrect Code</div>
 </div>
