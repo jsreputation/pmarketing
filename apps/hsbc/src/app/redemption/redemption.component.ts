@@ -11,12 +11,10 @@ export class RedemptionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.voucherId = params[`id`];
-    });
+    this.voucherId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
   }
 }
