@@ -1,6 +1,9 @@
 <mat-card class="example-card">
   <div class="inner">
-    <mat-card-content [ngStyle]="{ 'background-image': 'url(' + img + ')' }">
+    <mat-card-content
+      (click)="cardClick()"
+      [ngStyle]="{ 'background-image': 'url(' + img + ')' }"
+    >
       <img [src]="img" class="bg-img" />
       <div class="stamp-container">
         <div
@@ -17,11 +20,9 @@
                 isLessThanAvailblePieces(r, c) ? 'content available' : 'content'
               "
               [ngStyle]="styleObject(r, c)"
-              (click)="onMoved($event, r, c)"
             >
               <img
                 [src]="isLessThanAvailblePieces(r, c) ? unlockImg : lockImg"
-                (click)="onMoved($event, r, c)"
                 alt=""
               />
             </div>
@@ -30,12 +31,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        mat-button
-        *ngIf="isUnlockable()"
-        [disabled]="!isUnlockable()"
-        (click)="unlockAll()"
-      >
+      <button mat-button *ngIf="nbAvailablePieces" (click)="unlockAvailable()">
         Unlock All
       </button>
     </mat-card-actions>
