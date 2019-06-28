@@ -5,6 +5,12 @@ import { AuthenticationService, PopupComponent } from '@perx/core/dist/perx-core
 import { Subscription } from 'rxjs';
 import { NotificationService } from './notification.service';
 import { MatDialog } from '@angular/material';
+import { PuzzleComponent } from './puzzle/puzzle.component';
+import { PuzzlesComponent } from './puzzles/puzzles.component';
+import { RedemptionComponent } from './redemption/redemption.component';
+import { VoucherComponent } from './voucher/voucher.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +30,8 @@ export class AppComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private dialog: MatDialog,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
@@ -48,51 +55,25 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(ref: any) {
-    if (!ref.constructor) {
-      return;
-    }
-    this.currentPage = ref.constructor.name;
-    switch (ref.constructor.name) {
-      case 'LoginComponent':
-        this.currentPage = 'Login';
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
-      case 'CongratsComponent':
-        this.currentPage = '';
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
-      case 'PuzzleComponent':
-        this.currentPage = 'Puzzle';
-        this.showHeader = true;
-        this.iconToShow = 'home';
-        break;
-      case 'PuzzlesComponent':
-        this.currentPage = 'My Puzzles';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'RedemptionComponent':
-        this.currentPage = 'eGift Redeem';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'VoucherComponent':
-        this.currentPage = 'eGift Code';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'HomeComponent':
-        this.currentPage = 'Home';
-        this.showHeader = true;
-        this.iconToShow = '';
-        break;
-      default: {
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
-      }
-    }
+    this.showHeader =
+      ref instanceof PuzzleComponent ||
+      ref instanceof PuzzlesComponent ||
+      ref instanceof RedemptionComponent ||
+      ref instanceof VoucherComponent ||
+      ref instanceof HomeComponent;
+
+    this.currentPage =
+      ref instanceof LoginComponent ? 'Login' :
+        ref instanceof PuzzleComponent ? 'Puzzle' :
+          ref instanceof PuzzlesComponent ? 'My Puzzles' :
+            ref instanceof RedemptionComponent ? 'eGift Redeem' :
+              ref instanceof VoucherComponent ? 'eGiftCode' :
+                ref instanceof HomeComponent ? 'Home' : '';
+
+    this.iconToShow =
+      ref instanceof PuzzlesComponent ? 'home' :
+        ref instanceof PuzzlesComponent ? 'back' :
+          ref instanceof RedemptionComponent ? 'back' :
+            ref instanceof VoucherComponent ? 'back' : '';
   }
 }
