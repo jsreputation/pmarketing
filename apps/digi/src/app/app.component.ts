@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
 
   preAuth: boolean;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
