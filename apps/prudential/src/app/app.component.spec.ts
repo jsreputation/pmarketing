@@ -73,7 +73,7 @@ describe('AppComponent', () => {
     expect(router.navigateByUrl).not.toHaveBeenCalledWith('test');
   });
 
-  it("show goBack to have been called once", () => {
+  it('show goBack to have been called once', () => {
     spyOn(location, 'back');
     appComponent.goBack();
     expect(location.back).toHaveBeenCalledTimes(1);

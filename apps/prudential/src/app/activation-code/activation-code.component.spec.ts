@@ -69,7 +69,7 @@ describe('ActivationCodeComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith([`/redemption/${id}`]);
   });
 
-  it("show goBack to previous page once cancelled", () => {
+  it('show goBack to previous page once cancelled', () => {
     spyOn(location, 'back');
     component.onCancel();
     expect(location.back).toHaveBeenCalledTimes(1);
