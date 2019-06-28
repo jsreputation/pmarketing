@@ -49,7 +49,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   ];
 
   celebrate = false;
-  shakeAnitionClass = '';
+  shakeAnimationClass = '';
   n = 0;
 
   ngOnInit() {
@@ -74,8 +74,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     if (this.enabled) {
       this.tap.emit(this.n);
       this.n++;
-      this.shakeAnitionClass = '';
-      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe( className => this.shakeAnitionClass = className);
+      this.shakeAnimationClass = '';
+      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe( className => this.shakeAnimationClass = className);
       if (this.n === this.nbShakes) {
         this.gifts.map(gift => {
           if (gift.id <= this.nbFallingGifts) {
