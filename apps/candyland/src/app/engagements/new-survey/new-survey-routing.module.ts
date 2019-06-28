@@ -6,7 +6,7 @@ import {NewSurveyAppearancePageComponent} from './containers/new-survey-appearan
 import {NewSurveyRewardsPageComponent} from './containers/new-survey-rewards-page/new-survey-rewards-page.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'questions'},
+  { path: '', pathMatch: 'full', redirectTo: '/questions'},
   { path: '',
     component: NewSurveyComponent,
     children: [

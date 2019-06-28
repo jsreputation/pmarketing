@@ -9,7 +9,7 @@ import {
 } from './containers/new-instant-reward-rewards-page/new-instant-reward-rewards-page.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'appearance'},
+  {path: '', pathMatch: 'full', redirectTo: '/appearance'},
   {
     path: '',
     component: NewInstantRewardComponent,

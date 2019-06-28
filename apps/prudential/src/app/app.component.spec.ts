@@ -73,30 +73,6 @@ describe('AppComponent', () => {
     expect(router.navigateByUrl).not.toHaveBeenCalledWith('test');
   });
 
-  it('should show back arrow in TncComponent page', () => {
-    appComponent.showBack = false;
-    appComponent.setHeaderBackArrowStatus('TncComponent');
-    expect(appComponent.showBack).toBeTruthy();
-  });
-
-  it('should show back arrow in ContactUsComponent page', () => {
-    appComponent.showBack = false;
-    appComponent.setHeaderBackArrowStatus('ContactUsComponent');
-    expect(appComponent.showBack).toBeTruthy();
-  });
-
-  it('should show back arrow in VoucherComponent page', () => {
-    appComponent.showBack = false;
-    appComponent.setHeaderBackArrowStatus('VoucherComponent');
-    expect(appComponent.showBack).toBeTruthy();
-  });
-
-  it('should hide back arrow in CongratsComponent page', () => {
-    appComponent.showBack = true;
-    appComponent.setHeaderBackArrowStatus('CongratsComponent');
-    expect(appComponent.showBack).not.toBeTruthy();
-  });
-
   it("show goBack to have been called once", () => {
     spyOn(location, 'back');
     appComponent.goBack();

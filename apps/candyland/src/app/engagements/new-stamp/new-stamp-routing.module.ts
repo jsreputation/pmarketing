@@ -10,7 +10,7 @@ import {NewStampRulesPageComponent} from './containers/new-stamp-rules-page/new-
 import {NewStampDisplayPageComponent} from './containers/new-stamp-display-page/new-stamp-display-page.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'settings'},
+  { path: '', pathMatch: 'full', redirectTo: '/settings'},
   {
     path: '',
     component: NewStampComponent,

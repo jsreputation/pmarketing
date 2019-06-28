@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: '',
     component: MainContainerComponent,
     canActivate: [AuthGuard],
-    // redirectTo: 'dashboard',
     children: [
       {
         path: 'dashboard',

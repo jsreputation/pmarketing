@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'new-shake'
+    redirectTo: '/new-shake'
   },
   {
     path: '',

@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: 'games', pathMatch: 'full' },
+      { path: '', redirectTo: '/games', pathMatch: 'full' },
       { path: 'congrats', component: CongratsComponent },
       { path: 'games', component: GameComponent },
       { path: 'games/:id', component: GameComponent }
