@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IPopupConfig, PopupComponent } from '@perx/core/dist/perx-core';
 
 
@@ -10,7 +10,7 @@ import { IPopupConfig, PopupComponent } from '@perx/core/dist/perx-core';
   templateUrl: './activation-code.component.html',
   styleUrls: ['./activation-code.component.scss']
 })
-export class ActivationCodeComponent implements OnInit {
+export class ActivationCodeComponent {
 
   constructor(
     private dialog: MatDialog,
@@ -19,10 +19,7 @@ export class ActivationCodeComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-  }
-
-  pinInput(id: string): void {
+  pinInputSuccess(id: string): void {
     this.router.navigate([`/redemption/${id}`]);
   }
 
@@ -38,10 +35,11 @@ export class ActivationCodeComponent implements OnInit {
     }
   }
   needLoginPopup(): void {
-    this.popup({
+    const goToLoginDialog = this.popup({
       title: 'You need to login to reddem the voucher',
       buttonTxt: 'Go to login'
-    }).afterClosed().subscribe(() => { this.router.navigate(['/login']); });
+    });
+    // goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
   }
 
   errorPopup(): void {
