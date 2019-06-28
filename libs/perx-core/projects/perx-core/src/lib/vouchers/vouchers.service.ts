@@ -2,7 +2,21 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
+
+interface IVouchersResponse {
+  data: IV4Voucher[];
+  meta: {
+    count: number
+    page: number
+    size: number
+    total_pages: number
+  };
+}
+
+interface IV4Voucher {
+  reward?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,42 +30,69 @@ export class VouchersService {
   ) {
   }
 
+  private static voucherToVoucher(v: any): IVoucher {
+    const reward = v[`reward`];
+    const images = reward[`images`] || [];
+    let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: any) => image[`type`] === 'reward_logo');
+    }
+    const thumbnailUrl = thumbnail && thumbnail.url;
+    const banner = images.find((image: any) => image[`type`] === 'reward_banner');
+    const bannerUrl = banner && banner.url;
+    const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
+    const merchantLogoUrl = merchantLogo && merchantLogo.url;
+    const redeemedOn = v[`redemption_date`];
+    const howToRedeem = reward.custom_fields && reward.custom_fields.how_to_redeem ? reward.custom_fields.how_to_redeem : null;
+
+    return {
+      id: v[`id`],
+      rewardId: reward[`id`],
+      state: v[`state`],
+      name: v[`name`],
+      code: v[`voucher_code`],
+      description: reward[`description`],
+      thumbnailUrl,
+      bannerUrl,
+      expiresAt: new Date(reward[`valid_to`]),
+      redeemedOn,
+      merchantName: reward[`merchant_name`],
+      merchantLogoUrl,
+      termsAndConditions: reward[`terms_and_conditions`],
+      howToRedeem
+    };
+  }
+
   getAll(): Observable<IVoucher[]> {
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
 
     const url = `${this.config.env.apiHost}/v4/vouchers`;
-    return this.http.get(url).pipe(
-      map(resp => resp[`data`]),
-      map(vouchers => {
-        this.vouchers = vouchers.map((v: any) => {
-          const reward = v[`reward`];
-          const images = reward[`images`] || [];
-          const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-          const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
-          const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
-          const voucher = {
-            id: v[`id`],
-            state: v[`state`],
-            name: v[`name`],
-            code: v[`voucher_code`],
-            description: reward[`description`],
-            thumbnailUrl,
-            bannerUrl,
-            expiresAt: new Date(reward[`valid_to`]),
-            merchantName: reward[`merchant_name`],
-            merchantLogoUrl,
-            termsAndConditions: reward[`terms_and_conditions`]
-          };
-          return voucher;
-        });
-        return this.vouchers;
-      })
-    );
+    return this.http.get<IVouchersResponse>(url)
+      .pipe(
+        flatMap((resp: IVouchersResponse) => {
+          const streams = [
+            of(resp.data)
+          ];
+          for (let i = 2; i <= resp.meta.total_pages; i++) {
+            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}?page=${i}`)
+              .pipe(
+                map(res => res.data)
+              );
+            streams.push(stream);
+          }
+          return streams;
+        }),
+        mergeAll(),
+        map((resp: IV4Voucher[]) => resp.map(v => VouchersService.voucherToVoucher(v))),
+        scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.id - v2.id)),
+        tap(vouchers => this.vouchers = vouchers)
+      );
   }
 
-  get(id: string|number): Observable<IVoucher> {
+  get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
     });
@@ -63,27 +104,8 @@ export class VouchersService {
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
       map(v => {
-        const reward = v[`reward`];
-        const images = reward[`images`] || [];
-        const thumbnailUrl = images.find((image: any) => image[`type`] === 'reward_thumbnail');
-        const bannerUrl = images.find((image: any) => image[`type`] === 'reward_banner');
-        const merchantLogoUrl = images.find((image: any) => image[`type`] === 'merchant_logo');
-        const voucher = {
-          id: v[`id`],
-          state: v[`state`],
-          name: v[`name`],
-          code: v[`voucher_code`],
-          description: reward[`description`],
-          thumbnailUrl,
-          bannerUrl,
-          expiresAt: new Date(reward[`valid_to`]),
-          merchantName: reward[`merchant_name`],
-          merchantLogoUrl,
-          termsAndConditions: reward[`terms_and_conditions`]
-        };
-
-        this.vouchers.push(voucher);
-
+        const voucher = VouchersService.voucherToVoucher(v);
+        // this.vouchers.push(voucher);
         return voucher;
       })
     );

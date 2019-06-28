@@ -3,6 +3,9 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { Router } from '@angular/router';
+import { VoucherComponent } from './vouchers/voucher/voucher.component';
+import { TncComponent } from './tnc/tnc.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @Component({
   selector: 'app-root',
@@ -43,25 +46,9 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(ref: any) {
-    if (!ref.constructor) {
-      return;
-    }
-    this.setHeaderBackArrowStatus(ref.constructor.name);
-  }
-
-  setHeaderBackArrowStatus(pageName: string) {
-    switch (pageName) {
-      case 'TncComponent':
-      case 'ContactUsComponent':
-      case 'VoucherComponent': {
-        this.showBack = true;
-        break;
-      }
-      default: {
-        this.showBack = false;
-        break;
-      }
-    }
+    this.showBack = ref instanceof VoucherComponent ||
+                    ref instanceof TncComponent ||
+                    ref instanceof ContactUsComponent;
   }
 
   redirectTo(url: string) {

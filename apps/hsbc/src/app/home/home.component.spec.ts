@@ -3,9 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { CampaignModule, VouchersModule } from '@perx/core/dist/perx-core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatCardModule, MatDialogModule } from '@angular/material';
+import { MatTabsModule, MatCardModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -22,13 +21,11 @@ describe('HomeComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule,
         MatTabsModule,
-        MatDialogModule,
         MatCardModule,
         VouchersModule.forRoot({ env: environment }),
         CampaignModule.forRoot({ env: environment }),
       ],
       providers: [
-        DatePipe
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })

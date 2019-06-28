@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
-  styleUrls: ['./shake-tree.component.css']
+  styleUrls: ['./shake-tree.component.scss']
 })
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
@@ -68,18 +70,13 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
       return gift;
     });
   }
-
   tapped() {
     if (this.enabled) {
       this.tap.emit(this.n);
-      if (this.n < this.nbShakes) {
-        this.shakeAnitionClass = '';
-        setTimeout(() => {
-          this.shakeAnitionClass = 'shake';
-        }, 0);
-        this.n++;
-      } else if (this.n === this.nbShakes) {
-        this.shakeAnitionClass = '';
+      this.n++;
+      this.shakeAnitionClass = '';
+      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe( className => this.shakeAnitionClass = className);
+      if (this.n === this.nbShakes) {
         this.gifts.map(gift => {
           if (gift.id <= this.nbFallingGifts) {
             gift.status = 'drop';
@@ -91,7 +88,15 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
           this.completed.emit();
         }, 300);
       }
+
     }
+  }
+
+  getCurrentShakeAction(ngTap: number): Observable<string> {
+    if (ngTap < this.nbShakes) {
+      return of('shake');
+    }
+    return of('');
   }
 
   getManStyle() {

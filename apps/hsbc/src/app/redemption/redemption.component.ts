@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-redemption',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
+  voucherId: number;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private route: ActivatedRoute,
+  ) {
   }
 
+  ngOnInit() {
+    this.voucherId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+  }
 }

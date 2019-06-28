@@ -3,14 +3,33 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { IPopupConfig, PopupComponent } from '@perx/core/dist/perx-core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
   selector: 'app-activation-code',
   templateUrl: './activation-code.component.html',
-  styleUrls: ['./activation-code.component.scss']
+  styleUrls: ['./activation-code.component.scss'],
+  animations: [
+    trigger('hideAnim', [
+      transition(':enter', [style({
+        bottom: '-100%',
+      }),
+        animate('500ms ease-in-out', style({
+          bottom: '0',
+        })),
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in-out', style({
+          bottom: '-100%',
+        }))
+      ])
+    ]),
+  ],
 })
 export class ActivationCodeComponent {
+
+  hideActionContainer = false;
 
   constructor(
     private dialog: MatDialog,
@@ -34,6 +53,7 @@ export class ActivationCodeComponent {
       this.errorPopup();
     }
   }
+
   needLoginPopup(): void {
     const goToLoginDialog = this.popup({
       title: 'You need to login to reddem the voucher',
@@ -53,4 +73,7 @@ export class ActivationCodeComponent {
       .open(PopupComponent, { data });
   }
 
+  isPinFocused(pinFocused: boolean) {
+    this.hideActionContainer = pinFocused;
+  }
 }

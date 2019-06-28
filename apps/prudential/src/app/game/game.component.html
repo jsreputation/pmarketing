@@ -1,11 +1,11 @@
 <div class="game-wrapper">
-    <div class="game-wrapper__top" *ngIf="!loading">
+    <div class="game-wrapper__left" *ngIf="!loading">
         <h1>
             Here's some birthday treats from us!
         </h1>
         <p>Collect your treats by tapping the tree until they fall</p>
     </div>
-    <div class="game-wrapper__bottom" *ngIf="!loading">
+    <div class="game-wrapper__right" *ngIf="!loading">
         <perx-core-shake-tree [treeImg]="game.config.treeImg" [giftImg]="game.config.giftImg"
             [waitingManImg]="game.config.waitingAccessoryImg"
             [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" [nbHangedGifts]="game.config.nbHangedGift"
@@ -16,9 +16,10 @@
 </div>
 <mat-progress-bar *ngIf="progressValue!==null" [value]="progressValue"></mat-progress-bar>
 <div class="actions-container" *ngIf="!loading">
-    <button mat-flat-button color="primary" (click)="playing=true" *ngIf="!playing">Start playing</button>
+    <button mat-flat-button color="primary" class="start-game-btn" (click)="playing=true" *ngIf="!playing">Start playing</button>
 </div>
-<div class="spinner-container">
-    <mat-progress-spinner *ngIf="loading" [mode]="'indeterminate'" [value]="null" class="spinner">
+<div *ngIf="loading" class="spinner-container">
+    <mat-progress-spinner *ngIf="loading" [diameter]="30" [color]="'primary'" [mode]="'indeterminate'">
     </mat-progress-spinner>
+    <div *ngIf="loading" class="login-spinner-label">One moment while we are loading the game...</div>
 </div>

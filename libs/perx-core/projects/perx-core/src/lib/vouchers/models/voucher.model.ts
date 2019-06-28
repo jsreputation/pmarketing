@@ -1,5 +1,6 @@
 export interface IVoucher {
-  id: string|number;
+  id: number;
+  rewardId: string | number;
   state: string;
   name: string;
   code: string;
@@ -7,7 +8,9 @@ export interface IVoucher {
   thumbnailUrl: string;
   bannerUrl: string;
   expiresAt: Date;
+  redeemedOn: Date;
   merchantName: string;
   merchantLogoUrl: string;
   termsAndConditions: string;
+  howToRedeem: string | null;
 }

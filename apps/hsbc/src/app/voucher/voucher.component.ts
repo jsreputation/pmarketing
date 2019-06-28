@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  private firstTime = false;
+  public firstTime = false;
   private id: string;
 
   constructor(

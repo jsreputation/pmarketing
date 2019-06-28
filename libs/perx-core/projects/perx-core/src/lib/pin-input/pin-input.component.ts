@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { PinService } from './pin.service';
 import { ActivatedRoute } from '@angular/router';
 import { VouchersService } from '../vouchers/vouchers.service';
-import { map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
@@ -25,6 +25,9 @@ export class PinInputComponent implements OnInit {
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   pinCode: string;
   voucherId: string;
 
@@ -36,7 +39,8 @@ export class PinInputComponent implements OnInit {
     private pin: PinService,
     private route: ActivatedRoute,
     private vouchersService: VouchersService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     // length might not be a number
@@ -51,12 +55,14 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
-    this.pin.getPin().subscribe(code => {
-      this.pinCode = code;
-    });
     this.route.params.subscribe(params => {
       this.voucherId = params[`id`];
     });
+    // tslint:disable-next-line: radix
+    this.pin.getPin(parseInt(this.voucherId)).subscribe(code => {
+      this.pinCode = code;
+    });
+
   }
 
   onUpdate() {
@@ -68,7 +74,7 @@ export class PinInputComponent implements OnInit {
       }
     } else {
       // move to next input box
-      const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${v.length}`);
+      const elem: HTMLInputElement = this.element.nativeElement.querySelector(`#input_${ v.length }`);
       if (elem !== null) {
         elem.focus();
       }
@@ -85,10 +91,10 @@ export class PinInputComponent implements OnInit {
           return of('Redeem failed');
         })
       ).subscribe(res => {
-        if (res !== 'Redeem failed') {
-          this.full.emit(this.voucherId);
-        }
-      });
+      if (res !== 'Redeem failed') {
+        this.full.emit(this.voucherId);
+      }
+    });
   }
 
   validateCode(code: string) {
@@ -100,7 +106,7 @@ export class PinInputComponent implements OnInit {
 
   get value(): string {
     return this.controlls.reduce((p: string, v: FormControl): string => {
-      return v.value === null ? p : `${p}${v.value}`;
+      return v.value === null ? p : `${ p }${ v.value }`;
     }, '');
   }
 
@@ -113,5 +119,13 @@ export class PinInputComponent implements OnInit {
       }
       event.stopPropagation();
     }
+  }
+
+  onBlur() {
+    this.pinFocused.emit(false);
+  }
+
+  onFocus() {
+    this.pinFocused.emit(true);
   }
 }

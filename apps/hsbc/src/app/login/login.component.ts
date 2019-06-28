@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl(this.authService.getInterruptedUrl());
                   }
                 },
-                (err) => {
+                () => {
                   this.failedAuth = true;
                   this.authed = false;
                 }
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const username = this.loginForm.get('playerCode').value;
     const password = this.loginForm.get('hsbcCardLastFourDigits').value;
-    const campaignId = '41';
+    const campaignId = '38';
 
     this.authService.v4GameOauth(username, password, undefined, campaignId).then(
       (isAuthed: boolean) => {
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           }
         }
       },
-      (err) => {
+      () => {
         this.failedAuth = true;
         this.authed = false;
       }

@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  @Input() heading: string;
   @Input() filter: string;
   @Input() imageSize: string;
   @Input() iconDisplay: string;
@@ -24,9 +23,7 @@ export class VouchersComponent implements OnInit {
 
   vouchers$: Observable<IVoucher[]>;
 
-  constructor(
-    private vouchersService: VouchersService
-  ) { }
+  constructor(private vouchersService: VouchersService) { }
 
   ngOnInit() {
     this.vouchers$ = this.vouchersService.getAll().pipe(
