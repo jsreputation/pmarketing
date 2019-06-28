@@ -1,6 +1,6 @@
 <div (click)="tapped()">
   <div class="tree">
-    <div [ngClass]="shakeAnitionClass">
+    <div [ngClass]="shakeAnimationClass">
       <img [src]="treeImg" class="tree__img" *ngIf="treeImg"/>
       <div *ngFor="let gift of gifts" class="gift">
         <img *ngIf="gift.display && giftImg" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id + ' ' + gift.status" />
