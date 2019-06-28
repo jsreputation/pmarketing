@@ -62,4 +62,6 @@ mat-card-content {
 button {
   background-color: transparent;
   border: 0px;
+  padding: 15px;
+  width: 100%;
 }

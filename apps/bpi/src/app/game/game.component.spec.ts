@@ -3,7 +3,6 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick,
   inject
 } from '@angular/core/testing';
 
@@ -38,13 +37,12 @@ describe('GameComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should call setTimeout', inject(
+  it('should execute onComplete function', inject(
     [Router],
     fakeAsync((router: Router) => {
       spy = spyOn(component, 'onCompleted').and.callThrough();
       spyOn(router, 'navigate').and.stub();
       component.onCompleted();
-      tick(3500);
       fixture.detectChanges();
 
       expect(spy).toHaveBeenCalled();
