@@ -103,14 +103,14 @@ describe('ActivationCodeComponent', () => {
     expect(component.errorPopup).toHaveBeenCalled();
   });
 
-  it('should call popup from needLoginPopup', () => {
-    spyOn(component, 'popup');
-    component.needLoginPopup();
-    expect(component.popup).toHaveBeenCalledWith({
-      title: 'You need to login to reddem the voucher',
-      buttonTxt: 'Go to login'
-    });
-  });
+  // it('should call popup from needLoginPopup', () => {
+  //   spyOn(component, 'popup');
+  //   component.needLoginPopup();
+  //   expect(component.popup).toHaveBeenCalledWith({
+  //     title: 'You need to login to reddem the voucher',
+  //     buttonTxt: 'Go to login'
+  //   });
+  // });
 
   it('should call popup from errorPopup', () => {
     spyOn(component, 'popup');

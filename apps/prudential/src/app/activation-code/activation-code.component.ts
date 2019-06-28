@@ -59,7 +59,7 @@ export class ActivationCodeComponent {
       title: 'You need to login to reddem the voucher',
       buttonTxt: 'Go to login'
     });
-    // goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
+    goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
   }
 
   errorPopup(): void {
