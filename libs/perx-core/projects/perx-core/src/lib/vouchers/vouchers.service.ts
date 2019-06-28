@@ -68,7 +68,7 @@ export class VouchersService {
       return of(this.vouchers);
     }
 
-    const url = `${this.config.env.apiHost}/v4/vouchers`;
+    const url = `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
     return this.http.get<IVouchersResponse>(url)
       .pipe(
         flatMap((resp: IVouchersResponse) => {
@@ -76,7 +76,7 @@ export class VouchersService {
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}?page=${i}`)
+            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}&page=${i}`)
               .pipe(
                 map(res => res.data)
               );
