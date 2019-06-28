@@ -1,6 +1,6 @@
 export interface IVoucher {
   id: number;
-  rewardId: string | number;
+  rewardId: number;
   state: string;
   name: string;
   code: string;
