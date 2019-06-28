@@ -58,6 +58,7 @@ export class PinInputComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.voucherId = params[`id`];
     });
+
     // tslint:disable-next-line: radix
     this.pin.getPin(parseInt(this.voucherId)).subscribe(code => {
       this.pinCode = code;

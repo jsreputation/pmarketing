@@ -5,6 +5,6 @@
     <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true"></perx-core-voucher>
 </div>
 <div class="actions-container">
-    <button *ngIf="firstTime" routerLink="/home" mat-stroked-button color="primary">Save to wallet</button>
+    <button *ngIf="firstTime" id="save-to-wallet-btn" routerLink="/home" mat-stroked-button color="primary">Save to wallet</button>
     <button mat-flat-button color="primary" (click)="onRedeem()">Redeem now</button>
 </div>
