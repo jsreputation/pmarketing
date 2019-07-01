@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatusLabelComponent } from './status-label/status-label.component';
+import { StatusLabelComponent } from './status-label.component';
 
 @NgModule({
   declarations: [
@@ -13,5 +13,5 @@ import { StatusLabelComponent } from './status-label/status-label.component';
     StatusLabelComponent
   ]
 })
-export class ShareComponentsModule {
+export class StatusLabelModule {
 }

@@ -1,6 +1,10 @@
 @import "variables";
 @import "helper";
 
+.content{
+  padding: rem(30px) rem(40px);
+}
+
 table {
   width: 100%;
   overflow-x: auto;

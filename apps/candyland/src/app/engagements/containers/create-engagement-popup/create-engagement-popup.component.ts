@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 @Component({
   selector: 'cl-create-engagement-popup',
   templateUrl: './create-engagement-popup.component.html',

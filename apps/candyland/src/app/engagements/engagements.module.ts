@@ -1,26 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { EngagementsRoutingModule } from './engagements-routing.module';
 import { EngagementsListPageComponent } from './containers/engagements-list-page/engagements-list-page.component';
 import { CreateEngagementPopupComponent } from './containers/create-engagement-popup/create-engagement-popup.component';
 import { EngagementsComponent } from './containers/engagements/engagements.component';
-import { ShareComponentsModule } from '@cl-shared/components/share-components.module';
-import { MaterialModule } from './material.module';
-import { TableEntitiesModule } from '@cl-shared/table-entities/table-entities.module';
-import { FormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TableFiltersModule} from "@cl-shared/table/table-filters/table-filters.module";
+import {StatusLabelModule} from "@cl-shared/components/status-label/status-label.module";
+import {SearchFilterModule} from "@cl-shared/table/search-filter/search-filter.module";
+import {TabsFilterModule} from "@cl-shared/table/tabs-filter/tabs-filter.module";
+import {MatPaginatorModule, MatSortModule, MatTableModule} from "@angular/material";
 
 @NgModule({
   declarations: [EngagementsListPageComponent, CreateEngagementPopupComponent, EngagementsComponent],
   imports: [
     CommonModule,
     EngagementsRoutingModule,
-    ShareComponentsModule,
-    MaterialModule,
-    TableEntitiesModule,
-    FormsModule
+    ReactiveFormsModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    StatusLabelModule,
+    TableFiltersModule,
+    SearchFilterModule,
+    TabsFilterModule
   ],
   entryComponents: [
+    EngagementsListPageComponent,
     CreateEngagementPopupComponent
   ]
 })

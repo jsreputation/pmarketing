@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { map, tap } from 'rxjs/operators';
-import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
-import { TabsFilterComponent } from '@cl-shared/table-entities/tabs-filter/tabs-filter.component';
-import { SearchFilterComponent } from '@cl-shared/table-entities/search-filter/search-filter.component';
-import { combineLatest } from 'rxjs';
+import {Component, ChangeDetectionStrategy, AfterViewInit, ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort, MatPaginator, MatDialog} from '@angular/material';
+import {map, tap} from 'rxjs/operators';
+import {EngagementsService} from '@cl-core/http-services/engagements-https.service';
+import {PrepareTableFilers} from "@cl-helpers/prepare-table-filers";
+import {CreateEngagementPopupComponent} from "../create-engagement-popup/create-engagement-popup.component";
+
 
 export interface Engagements {
   id: number;
@@ -23,60 +23,43 @@ export class EngagementsListPageComponent implements AfterViewInit {
 
   public displayedColumns = ['name', 'status', 'type', 'actions'];
   public dataSource = new MatTableDataSource<any>();
+  public tabsFilterConfig;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild('tabsFilter', {static: false}) tabsFilter: TabsFilterComponent;
-  @ViewChild('searchFilter', {static: false}) searchFilter: SearchFilterComponent;
+  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) private paginator: MatPaginator;
 
-  constructor(private engagementsService: EngagementsService) {
+  constructor(private engagementsService: EngagementsService,
+              public dialog: MatDialog) {
   }
 
   ngAfterViewInit() {
     this.getBooks();
+    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    console.log(this.tabsFilter.filterChanges(), this.searchFilter.filterChanges());
-    combineLatest([this.searchFilter.filterChanges(), this.tabsFilter.filterChanges()])
-      .subscribe(([name, type]) => {
-        console.log('filter');
-        this.dataSource.filterPredicate = (data) => {
-          return data.name.toLowerCase().includes(name) && data.type.includes(type);
-        };
-        if (this.dataSource.paginator) {
-          this.dataSource.paginator.firstPage();
-        }
-      });
   }
 
   public getBooks() {
     this.engagementsService.getEngagements()
       .pipe(
-        tap(data => console.log(data)),
-        map((response: any) => response.results)
-        // map(response => {
-        //   return response.data.map(item => {
-        //       return {
-        //         content: item.attributes.content,
-        //         cover: item.attributes.display_properties.image,
-        //         link: item.links.self,
-        //         created: item.attributes.created_at,
-        //         updated: item.attributes.updated_at
-        //       } as BookItemInterface;
-        //     }
-        //   );
-        // })
+        map((response: any) => response.results),
+        tap(data => {
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
+          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(data, counterObject);
+        }),
       )
       .subscribe((res: Engagements[]) => {
         this.dataSource.data = res;
       });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
 
-  public doFilter = (value: string) => {
-    this.dataSource.filter = value.trim().toLocaleLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
+
+
 }

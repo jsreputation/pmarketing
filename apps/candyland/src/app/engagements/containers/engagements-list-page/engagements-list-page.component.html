@@ -1,29 +1,27 @@
-<p>
-  engagements-list-page works!
-</p>
-
 <section class="content">
 
-<!--  <div fxLayout fxLayoutAlign="center center">-->
-<!--    <mat-form-field fxFlex="20%">-->
-<!--      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
+  <button (click)="openDialog()">Pick one</button>
 
-<!--  <mat-form-field appearance="outline">-->
-<!--    &lt;!&ndash; <mat-label>Search for engagements</mat-label> &ndash;&gt;-->
-<!--    <mat-icon matPrefix>search</mat-icon>-->
-<!--    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Search for engagements">-->
-<!--  </mat-form-field>-->
+  <cl-table-filters [dataSource]="dataSource">
+    <ng-container *clTableFilter="'name'; let filter">
+      <cl-search-filter [formControl]="filter"></cl-search-filter>
+    </ng-container>
 
-<!--  <mat-tab-group animationDuration="0ms">-->
-<!--    <mat-tab label="First">Content 1</mat-tab>-->
-<!--    <mat-tab label="Second">Content 2</mat-tab>-->
-<!--    <mat-tab label="Third">Content 3</mat-tab>-->
-<!--  </mat-tab-group>-->
+    <ng-container *clTableFilter="'type'; let filter">
+      <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
+    </ng-container>
 
-  <cl-search-filter #searchFilter></cl-search-filter>
-  <cl-tabs-filter #tabsFilter></cl-tabs-filter>
+    <!--<ng-container *clTableFilter="'status'; let filter">-->
+      <!--<mat-form-field appearance="outline">-->
+        <!--<mat-select [formControl]="filter">-->
+          <!--<mat-option [value]="null">ALL</mat-option>-->
+          <!--<mat-option value="active">Active</mat-option>-->
+          <!--<mat-option value="pending">pending</mat-option>-->
+          <!--<mat-option value="draft">draft</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+    <!--</ng-container>-->
+  </cl-table-filters>
 
 
   <table mat-table [dataSource]="dataSource" matSort>
@@ -47,13 +45,13 @@
 
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>Engagement Type</th>
-      <td mat-cell *matCellDef="let element"> {{element?.type}} </td>
+      <td mat-cell *matCellDef="let element"> {{element?.type}}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon>more_vert</mat-icon>
+        <!--<mat-icon>more_vert</mat-icon>-->
       </td>
     </ng-container>
 

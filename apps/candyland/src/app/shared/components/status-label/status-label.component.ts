@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnChanges} from '@angular/core';
-import { StatusLabel } from '@cl-helpers/status-label.enum';
+import {StatusLabel} from "@cl-helpers/status-label.enum";
 
 export interface StatusLabelConfig {
   title: string;
