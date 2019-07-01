@@ -59,7 +59,6 @@ export class PuzzlePlayComponent implements OnChanges {
     if (this.img) {
       this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
           this.imageHeight = this.imageWidth * ratio;
-
           this.tileWidth = this.imageWidth / this.cols;
           this.tileHeight = this.imageHeight / this.rows;
           this.totalPieces = this.rows * this.cols;
@@ -67,13 +66,10 @@ export class PuzzlePlayComponent implements OnChanges {
           for (let x = 0; x < this.totalPieces; x++) {
             this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
           }
-
           for (let i = 0; i < this.nbAvailablePieces; i++) {
-
             const location = this.nbPlayedPieces + i;
             this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };;
           }
-
           for (let i = 0; i < this.totalPieces; i++) {
             this.staticPizzleDummyTiles[i] = [i];
           }
@@ -140,7 +136,6 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getImageSize(): any {
-
     return {
       width: (this.imageWidth) + 'px',
       height: (this.imageHeight) + 'px'
@@ -148,7 +143,6 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getTileSize(): any {
-
     return {
       width: (this.tileWidth) + 'px',
       height: (this.tileHeight) + 'px'
@@ -156,7 +150,6 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getWidthHeightRatio(): string {
-
     const ratioValue = (this.tileWidth / this.tileHeight);
     return ratioValue.toString() + ':1';
   }
