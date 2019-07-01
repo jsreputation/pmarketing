@@ -56,34 +56,32 @@ export class PuzzlePlayComponent implements OnChanges {
   ngOnChanges(
     // changes: SimpleChanges
   ) {
+    if (this.img) {
+      this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+          this.imageHeight = this.imageWidth * ratio;
 
-    this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+          this.tileWidth = this.imageWidth / this.cols;
+          this.tileHeight = this.imageHeight / this.rows;
+          this.totalPieces = this.rows * this.cols;
 
-      this.imageHeight = this.imageWidth * ratio;
+          for (let x = 0; x < this.totalPieces; x++) {
+            const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+            this.boardPuzzleTiles[x] = puzzleTile;
+          }
 
-      this.tileWidth = this.imageWidth / this.cols;
-      this.tileHeight = this.imageHeight / this.rows;
-      this.totalPieces = this.rows * this.cols;
+          for (let i = 0; i < this.nbAvailablePieces; i++) {
 
-      for (let x = 0; x < this.totalPieces; x++) {
-        const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-        this.boardPuzzleTiles[x] = puzzleTile;
-      }
+            const location = this.nbPlayedPieces + i;
+            const puzzleTile = { puzzleLocation: location, isSelected: false };
+            this.remainingPuzzleTiles[i] = puzzleTile;
+          }
 
-      for (let i = 0; i < this.nbAvailablePieces; i++) {
-
-        const location = this.nbPlayedPieces + i;
-        const puzzleTile = { puzzleLocation: location, isSelected: false };
-        this.remainingPuzzleTiles[i] = puzzleTile;
-      }
-
-      for (let i = 0; i < this.totalPieces; i++) {
-        this.staticPizzleDummyTiles[i] = [i];
-      }
-
-    },
-      err => console.error('Observer got an error: ' + err));
-
+          for (let i = 0; i < this.totalPieces; i++) {
+            this.staticPizzleDummyTiles[i] = [i];
+          }
+        },
+        err => console.error('Observer got an error: ' + err));
+    }
   }
 
   bottomPannelClicked(): void {
