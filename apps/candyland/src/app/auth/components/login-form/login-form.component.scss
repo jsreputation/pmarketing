@@ -1,0 +1,35 @@
+@import "../../../../styles/helper";
+@import "../../../../styles/variables";
+
+:host {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.login-form {
+
+  &-wrap {
+    width: 100%;
+    background-color: $white-color;
+  }
+
+  &-title {
+    font-size: rem(30px);
+    font-weight: bold;
+    line-height: 0.9;
+    color: #333333;
+    margin-bottom: rem(54px);
+  }
+
+  &-control {
+    padding-bottom: rem(35px);
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}

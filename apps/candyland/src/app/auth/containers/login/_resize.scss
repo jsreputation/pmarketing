@@ -1,0 +1,18 @@
+
+@media (max-width: $desktop-large) {
+  /* Selectors and styles affecting screens UP TO 979px (Desktop) */
+}
+
+@media (max-width: $tablet-medium) {
+  /* Selectors and styles affecting screens UP TO 767px (Tablet) */
+}
+
+@media (max-width: $mobile-small) {
+  /* Selectors and styles affecting screens UP TO 480px (Phone) */
+  .col-customer-info {
+    display: none;
+  }
+  .col-login-form {
+    width: 100%;
+  }
+}

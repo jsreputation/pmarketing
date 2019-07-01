@@ -1,0 +1,95 @@
+@import "../../../../styles/helper";
+@import "../../../../styles/variables";
+
+
+.login-wrap {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.col {
+
+  &-login-form {
+    width: rem(431px);
+    height: 100%;
+    padding-left: rem(32px);
+    padding-right: rem(43px);
+    position: relative;
+  }
+
+  &-customer-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: $background-color;
+  }
+}
+
+.router-actions {
+  padding-top: rem(14px);
+}
+
+.copy-right {
+  position: absolute;
+  left: rem(32px);
+  bottom: rem(42px);
+
+  &-text {
+    height: rem(17px);
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+
+    line-height: 1.21;
+    color: #979797;
+  }
+}
+
+.customer-info {
+
+  &-text {
+    padding-top: rem(68px);
+    font-family: $base-font-family;
+    font-size: rem(30px);
+    font-weight: bold;
+    line-height: 1.23;
+    color: #3e4e73;
+    margin: 0;
+  }
+
+  &-description {
+    width: rem(582px);
+    padding-top: rem(10px);
+    margin: 0 auto;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    line-height: 1.21;
+    color: #3e4e73;
+  }
+
+  &-picture {
+    width: rem(581px);
+    height: rem(476px);
+    margin: rem(54px) auto 0;
+
+    img {
+      width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+cl-logo {
+  padding-top: rem(31px);
+}
+
+cl-login-form {
+  padding-top: rem(76px);
+}
+
+cl-button {
+  display: block;
+}
+
+@import "resize";
