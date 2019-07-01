@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { GIFT_STATUS } from './shake-tree.model'
 
 @Component({
   selector: 'perx-core-shake-tree',
@@ -36,16 +37,16 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   tap: EventEmitter<number> = new EventEmitter<number>();
 
   gifts = [
-    { id: 1, status: 'hang', display: true },
-    { id: 2, status: 'hang', display: true },
-    { id: 3, status: 'hang', display: true },
-    { id: 4, status: 'hang', display: true },
-    { id: 5, status: 'hang', display: true },
-    { id: 6, status: 'hang', display: true },
-    { id: 7, status: 'hang', display: true },
-    { id: 8, status: 'hang', display: true },
-    { id: 9, status: 'hang', display: true },
-    { id: 10, status: 'hang', display: true }
+    { id: 1, status: GIFT_STATUS.hang, display: true },
+    { id: 2, status:  GIFT_STATUS.hang, display: true },
+    { id: 3, status:  GIFT_STATUS.hang, display: true },
+    { id: 4, status:  GIFT_STATUS.hang, display: true },
+    { id: 5, status:  GIFT_STATUS.hang, display: true },
+    { id: 6, status:  GIFT_STATUS.hang, display: true },
+    { id: 7, status:  GIFT_STATUS.hang, display: true },
+    { id: 8, status:  GIFT_STATUS.hang, display: true },
+    { id: 9, status:  GIFT_STATUS.hang, display: true },
+    { id: 10, status:  GIFT_STATUS.hang, display: true }
   ];
 
   celebrate = false;
@@ -79,7 +80,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
       if (this.n === this.nbShakes) {
         this.gifts.map(gift => {
           if (gift.id <= this.nbFallingGifts) {
-            gift.status = 'drop';
+            gift.status = GIFT_STATUS.drop;
           }
           return gift;
         });
