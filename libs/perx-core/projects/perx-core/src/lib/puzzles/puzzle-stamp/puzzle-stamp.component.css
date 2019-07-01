@@ -46,6 +46,7 @@
 mat-card-content {
   background-size: cover;
   background-repeat: no-repeat;
+  margin-bottom: 0;
 }
 .bg-img {
   visibility: hidden;
@@ -57,11 +58,12 @@ mat-card-content {
 
 .mat-card-actions {
   text-align: center;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 button {
   background-color: transparent;
   border: 0px;
-  padding: 15px;
   width: 100%;
 }

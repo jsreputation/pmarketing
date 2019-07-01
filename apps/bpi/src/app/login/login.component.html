@@ -1,0 +1,18 @@
+<div class="content-container">
+  <div class="login-image">
+    <img src="../../assets/logo.png"/>
+  </div>
+  <div class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width__input">
+        <mat-label>Last 6 digits of your customer number</mat-label>
+        <input matInput placeholder="Enter last 6 digits of your customer number"
+               formControlName="custNumLastSixDigits">
+        <mat-error *ngIf="loginForm.hasError('custNumLastSixDigits')">
+          The last 6 digits of your customer number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign In</button>
+    </form>
+  </div>
+</div>
