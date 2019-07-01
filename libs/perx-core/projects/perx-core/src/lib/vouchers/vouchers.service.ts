@@ -87,7 +87,7 @@ export class VouchersService {
         mergeAll(),
         map((resp: IV4Voucher[]) => resp.map(v => VouchersService.voucherToVoucher(v))),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
-        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.id - v2.id)),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.rewardId - v2.rewardId)),
         tap(vouchers => this.vouchers = vouchers)
       );
   }
