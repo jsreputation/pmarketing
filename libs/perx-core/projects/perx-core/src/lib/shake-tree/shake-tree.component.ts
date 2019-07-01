@@ -2,11 +2,17 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
+enum GIFT_STATUS {
+  hang = 'hang',
+  drop = 'drop'
+}
+
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
+
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
   treeImg: string;
@@ -36,16 +42,16 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   tap: EventEmitter<number> = new EventEmitter<number>();
 
   gifts = [
-    { id: 1, status: 'hang', display: true },
-    { id: 2, status: 'hang', display: true },
-    { id: 3, status: 'hang', display: true },
-    { id: 4, status: 'hang', display: true },
-    { id: 5, status: 'hang', display: true },
-    { id: 6, status: 'hang', display: true },
-    { id: 7, status: 'hang', display: true },
-    { id: 8, status: 'hang', display: true },
-    { id: 9, status: 'hang', display: true },
-    { id: 10, status: 'hang', display: true }
+    { id: 1, status: GIFT_STATUS.hang, display: true },
+    { id: 2, status:  GIFT_STATUS.hang, display: true },
+    { id: 3, status:  GIFT_STATUS.hang, display: true },
+    { id: 4, status:  GIFT_STATUS.hang, display: true },
+    { id: 5, status:  GIFT_STATUS.hang, display: true },
+    { id: 6, status:  GIFT_STATUS.hang, display: true },
+    { id: 7, status:  GIFT_STATUS.hang, display: true },
+    { id: 8, status:  GIFT_STATUS.hang, display: true },
+    { id: 9, status:  GIFT_STATUS.hang, display: true },
+    { id: 10, status:  GIFT_STATUS.hang, display: true }
   ];
 
   celebrate = false;
@@ -79,7 +85,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
       if (this.n === this.nbShakes) {
         this.gifts.map(gift => {
           if (gift.id <= this.nbFallingGifts) {
-            gift.status = 'drop';
+            gift.status = GIFT_STATUS.drop;
           }
           return gift;
         });
