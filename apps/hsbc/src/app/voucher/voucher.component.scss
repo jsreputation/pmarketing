@@ -20,10 +20,12 @@ h2 {
   flex-direction: column;
   background-color: white;
   border-top: 0.1rem solid darkgray;
+  button#save-to-wallet-btn {
+    margin-bottom: 1.6rem;
+  }
 }
 button {
-    text-transform: uppercase;
-    margin-bottom: 1.6rem;
+  text-transform: uppercase;
 }
 .voucher-container {
   padding-bottom: 12rem;
