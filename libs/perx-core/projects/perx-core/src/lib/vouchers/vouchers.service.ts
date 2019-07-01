@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
 
-interface IVouchersResponse {
+interface IV4VouchersResponse {
   data: IV4Voucher[];
   meta: {
     count: number
@@ -69,14 +69,14 @@ export class VouchersService {
     }
 
     const url = `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
-    return this.http.get<IVouchersResponse>(url)
+    return this.http.get<IV4VouchersResponse>(url)
       .pipe(
-        flatMap((resp: IVouchersResponse) => {
+        flatMap((resp: IV4VouchersResponse) => {
           const streams = [
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}&page=${i}`)
+            const stream: Observable<IV4Voucher[]> = this.http.get<IV4VouchersResponse>(`${url}&page=${i}`)
               .pipe(
                 map(res => res.data)
               );
@@ -105,13 +105,12 @@ export class VouchersService {
       map(resp => resp[`data`]),
       map(v => {
         const voucher = VouchersService.voucherToVoucher(v);
-        // this.vouchers.push(voucher);
         return voucher;
       })
     );
   }
 
-  redeemVoucher(id: string): Observable<any> {
+  redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
