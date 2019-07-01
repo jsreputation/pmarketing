@@ -4,7 +4,6 @@ export const menus = [
     icon: 'dashboard',
     link: '/dashboard',
     open: false,
-    active : true
   }, {
     name: 'Rewards',
     icon: 'rewards',
