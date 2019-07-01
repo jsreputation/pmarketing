@@ -101,7 +101,7 @@ export class GameComponent implements OnInit {
     nbPlayedPieces: number,
     nbAvailablePieces: number
   }) => {
-    const stamps = card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
+    const stamps = card.stamps && card.stamps.filter(s => s.state === TRANSACTION_STATE.issued) || [];
     if (stamps.length === 0) {
       return;
     }
@@ -133,5 +133,8 @@ export class GameComponent implements OnInit {
       index++;
       numOfStampsToRedeem--;
     }
+  }
+
+  onCompleted() {
   }
 }

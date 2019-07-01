@@ -10,8 +10,9 @@ import { GameComponent } from './game.component';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from '../header/header.component';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, IStampCard, VouchersModule, CampaignModule, AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
+import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -21,7 +22,16 @@ describe('GameComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GameComponent, HeaderComponent],
-      imports: [RouterTestingModule, PerxCoreModule, MatToolbarModule]
+      imports: [
+        RouterTestingModule,
+        PerxCoreModule,
+        MatToolbarModule,
+        VouchersModule.forRoot({ env: environment }),
+        CampaignModule.forRoot({ env: environment }),
+        AuthenticationModule,
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
+      ]
     }).compileComponents();
   }));
 
@@ -33,7 +43,7 @@ describe('GameComponent', () => {
 
   it('should execute onMoved function', () => {
     spy = spyOn(component, 'onMoved').and.callThrough();
-    component.onMoved({ nbPlayedPieces: 1 });
+    (component.onMoved({} as IStampCard))({ nbPlayedPieces: 1, nbAvailablePieces: 1 });
     expect(spy).toHaveBeenCalled();
   });
 
