@@ -1,13 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { GIFT_STATUS } from './shake-tree.model';
+
+enum GIFT_STATUS {
+  hang = 'hang',
+  drop = 'drop'
+}
 
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
+
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
   treeImg: string;
