@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { GIFT_STATUS } from './shake-tree.model'
+import { GIFT_STATUS } from './shake-tree.model';
 
 @Component({
   selector: 'perx-core-shake-tree',
