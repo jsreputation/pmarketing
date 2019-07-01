@@ -51,7 +51,7 @@ export class PuzzlePlayComponent implements OnChanges {
   imageWidth = 300;
   imageHeight = 200;
 
-  staticPizzleDummyTiles = [];
+  staticPuzzleDummyTiles = [];
 
   ngOnChanges(
     // changes: SimpleChanges
@@ -68,10 +68,10 @@ export class PuzzlePlayComponent implements OnChanges {
           }
           for (let i = 0; i < this.nbAvailablePieces; i++) {
             const location = this.nbPlayedPieces + i;
-            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };;
+            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
           }
           for (let i = 0; i < this.totalPieces; i++) {
-            this.staticPizzleDummyTiles[i] = [i];
+            this.staticPuzzleDummyTiles[i] = [i];
           }
         },
         err => console.error('Observer got an error: ' + err));
