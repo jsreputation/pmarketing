@@ -40,5 +40,4 @@ export {
 export { GameModule } from './lib/game/game.module';
 export { GameService } from './lib/game/game.service';
 export { IGame, GAME_TYPE } from './lib/game/game.model';
-export { GIFT_STATUS } from './lib/shake-tree/shake-tree.model';
 export { defaultTree } from './lib/game/game.model';
