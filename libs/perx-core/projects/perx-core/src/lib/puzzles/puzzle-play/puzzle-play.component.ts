@@ -65,15 +65,13 @@ export class PuzzlePlayComponent implements OnChanges {
           this.totalPieces = this.rows * this.cols;
 
           for (let x = 0; x < this.totalPieces; x++) {
-            const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-            this.boardPuzzleTiles[x] = puzzleTile;
+            this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
           }
 
           for (let i = 0; i < this.nbAvailablePieces; i++) {
 
             const location = this.nbPlayedPieces + i;
-            const puzzleTile = { puzzleLocation: location, isSelected: false };
-            this.remainingPuzzleTiles[i] = puzzleTile;
+            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };;
           }
 
           for (let i = 0; i < this.totalPieces; i++) {
@@ -160,8 +158,7 @@ export class PuzzlePlayComponent implements OnChanges {
   getWidthHeightRatio(): string {
 
     const ratioValue = (this.tileWidth / this.tileHeight);
-    const ratio = ratioValue.toString() + ':1';
-    return ratio;
+    return ratioValue.toString() + ':1';
   }
 
   isAllPuzzleCompleted(): boolean {
