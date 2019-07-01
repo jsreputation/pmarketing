@@ -113,6 +113,7 @@ export class PuzzleComponent implements OnInit {
             title: 'Something went wrong, with our server',
             text: 'We notified our team. Sorry about the inconvenience.'
           });
+          this.router.navigateByUrl('/home');
         }
       );
   }
