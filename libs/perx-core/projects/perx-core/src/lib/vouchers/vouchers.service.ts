@@ -76,10 +76,7 @@ export class VouchersService {
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IV4VouchersResponse>(`${url}&page=${i}`)
-              .pipe(
-                map(res => res.data)
-              );
+            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i, url);
             streams.push(stream);
           }
           return streams;
@@ -89,6 +86,13 @@ export class VouchersService {
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
         map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.rewardId - v2.rewardId)),
         tap(vouchers => this.vouchers = vouchers)
+      );
+  }
+
+  getAllFromPage(page: number, url: string): Observable<IV4Voucher[]> {
+    return this.http.get<IV4VouchersResponse>(`${url}&page=${page}`)
+      .pipe(
+        map(res => res.data)
       );
   }
 
