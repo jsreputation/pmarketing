@@ -42,7 +42,7 @@ export class GameComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         map(res => res.data),
-        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.test)),
+        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
         map(campaigns => campaigns[0]),
         switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
         catchError(err => {
