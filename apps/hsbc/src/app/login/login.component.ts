@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +19,15 @@ export class LoginComponent implements OnInit {
   preAuth: boolean;
   failedAuth: boolean;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object,
-              private fb: FormBuilder) {
+  errorMessage: string;
+
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object,
+    private fb: FormBuilder,
+    private notificationService: NotificationService
+  ) {
     this.preAuth = environment.preAuth;
     this.failedAuth = false;
     this.initForm();
@@ -64,10 +71,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const username = this.loginForm.get('playerCode').value;
     const password = this.loginForm.get('hsbcCardLastFourDigits').value;
-    // const campaignId = '41';
+    this.errorMessage = null;
 
-    this.authService.v4GameOauth(username, password, undefined, undefined).then(
-      (isAuthed: boolean) => {
+    this.authService.v4GameOauth(username, password)
+      .then((isAuthed: boolean) => {
         this.authed = isAuthed;
         if (this.authed) {
 
@@ -82,11 +89,25 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('puzzle');
           }
         }
-      },
-      () => {
+      })
+      .catch((err) => {
         this.failedAuth = true;
         this.authed = false;
-      }
-    );
+
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 0) {
+            this.notificationService.addPopup({
+              title: 'We could not reach the server',
+              text: 'Please try again soon'
+            });
+          } else if (err.status === 401) {
+            [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
+              .forEach(c => c.setErrors({
+                invalid: true
+              }));
+            this.errorMessage = 'Invalid credentials';
+          }
+        }
+      });
   }
 }

@@ -133,17 +133,21 @@ export class AuthenticationService implements AuthService {
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
-  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string) {
+  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string): Promise<boolean> {
     this.authing = true;
     let success = false;
 
-    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
-    );
-    // @ts-ignore
+    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId)
+      .toPromise();
+      // .catch(() => {
+      //   console.log('login failed!');
+      //   this.authing = false;
+      // });
+
+    if (v4AuthData === undefined) {
+      return false;
+    }
+
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
       this.saveAccessData(userBearer);
