@@ -30,7 +30,7 @@ export class VouchersService {
   ) {
   }
 
-  private static voucherToVoucher(v: any): IVoucher {
+  public static voucherToVoucher(v: any): IVoucher {
     const reward = v[`reward`];
     const images = reward[`images`] || [];
     let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
@@ -111,7 +111,7 @@ export class VouchersService {
     );
   }
 
-  redeemVoucher(id: string): Observable<any> {
+  redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
