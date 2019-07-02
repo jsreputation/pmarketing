@@ -10,7 +10,7 @@
       Select Engagement Type
     </p>
     <cl-ink [border]="true" [triangle]="true">
-      <cl-engagement-type #engagementHost [clInkHost]="engagementHost">
+      <cl-engagement-type #engagementHost [clInkHost]="engagementHost" (onSelectedType)="setType($event)">
       </cl-engagement-type>
     </cl-ink>
   </div>
