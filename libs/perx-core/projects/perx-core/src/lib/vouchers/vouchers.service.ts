@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
 
-interface IVouchersResponse {
+interface IV4VouchersResponse {
   data: IV4Voucher[];
   meta: {
     count: number
@@ -69,14 +69,14 @@ export class VouchersService {
     }
 
     const url = `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
-    return this.http.get<IVouchersResponse>(url)
+    return this.http.get<IV4VouchersResponse>(url)
       .pipe(
-        flatMap((resp: IVouchersResponse) => {
+        flatMap((resp: IV4VouchersResponse) => {
           const streams = [
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}&page=${i}`)
+            const stream: Observable<IV4Voucher[]> = this.http.get<IV4VouchersResponse>(`${url}&page=${i}`)
               .pipe(
                 map(res => res.data)
               );
@@ -87,7 +87,7 @@ export class VouchersService {
         mergeAll(),
         map((resp: IV4Voucher[]) => resp.map(v => VouchersService.voucherToVoucher(v))),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
-        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.id - v2.id)),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.rewardId - v2.rewardId)),
         tap(vouchers => this.vouchers = vouchers)
       );
   }
@@ -105,13 +105,12 @@ export class VouchersService {
       map(resp => resp[`data`]),
       map(v => {
         const voucher = VouchersService.voucherToVoucher(v);
-        // this.vouchers.push(voucher);
         return voucher;
       })
     );
   }
 
-  redeemVoucher(id: string): Observable<any> {
+  redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
