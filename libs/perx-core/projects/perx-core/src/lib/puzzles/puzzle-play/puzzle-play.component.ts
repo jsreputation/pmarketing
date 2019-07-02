@@ -192,4 +192,8 @@ export class PuzzlePlayComponent implements OnChanges {
     this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
     return img.height / img.width;
   }
+
+  dismissOverlayHint() {
+    this.showHint = false;
+  }
 }
