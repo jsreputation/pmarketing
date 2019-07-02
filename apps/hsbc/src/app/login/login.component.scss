@@ -1,7 +1,10 @@
 .content-container {
   justify-content: space-around;
   text-align: center;
+  padding: 6rem 1.2rem 0;
+  top: unset;
 }
+
 .full-width__input,
 .full-width__button {
   width: 100%;
