@@ -96,6 +96,16 @@ export class PuzzleComponent implements OnInit {
               const voucherId = res.data.vouchers[0].id;
               this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
             }
+          } else {
+            const issuedLeft = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
+            if (issuedLeft.length === 0) {
+              // all redeemed but no voucher
+              this.notificationService.addPopup({
+                title: 'Something went wrong, with our server',
+                text: 'We notified our team. Sorry about the inconvenience.'
+              });
+              this.router.navigateByUrl('/home');
+            }
           }
         },
         () => {
@@ -103,6 +113,7 @@ export class PuzzleComponent implements OnInit {
             title: 'Something went wrong, with our server',
             text: 'We notified our team. Sorry about the inconvenience.'
           });
+          this.router.navigateByUrl('/home');
         }
       );
   }
