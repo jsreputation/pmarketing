@@ -7,6 +7,8 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { ProtectedGuard } from 'ngx-auth';
+import { TncComponent } from './tnc/tnc.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   {
@@ -19,10 +21,12 @@ const routes: Routes = [
       { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent },
       { path: 'puzzles/:campaignId', component: PuzzlesComponent },
       { path: 'redemption/:id', component: RedemptionComponent },
-      { path: 'voucher/:id', component: VoucherComponent },
+      { path: 'voucher/:id', component: VoucherComponent }
     ],
     canActivate: [ProtectedGuard]
   },
+  { path: 'tnc', component: TncComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/home' }
 ];
