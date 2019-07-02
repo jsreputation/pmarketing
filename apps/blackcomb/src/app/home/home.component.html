@@ -1,0 +1,31 @@
+<mat-tab-group color="primary" mat-stretch-tabs class="tab-group wallet-tabs">
+    <mat-tab label="My Wallet">
+        <div class="tab-group__content">
+            <h1>My Puzzles</h1>
+            <mat-card *ngFor="let campaign of campaigns" routerLink="" matRipple>
+                <div class="puzzle-content">
+                    <div class="puzzle-img__wrapper">
+                        <img class="puzzle-img" src="../../assets/static_image.png">
+                    </div>
+                    <div class="puzzle-details">
+                      <h1>
+                          $3 voucher
+                      </h1>
+                      <p>details goes here</p>
+                    </div>
+                </div>
+                <mat-icon>
+                    arrow_forward_ios
+                </mat-icon>
+            </mat-card>
+            <h1>My Rewards</h1>
+            <p>My rewards goes here</p>
+        </div>
+    </mat-tab>
+    <mat-tab label="History">
+        <div class="tab-group__content">
+            <h1>Redeemed Rewards</h1>
+            <p>My rewards goes here</p>
+        </div>
+    </mat-tab>
+</mat-tab-group>
