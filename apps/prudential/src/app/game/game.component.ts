@@ -32,9 +32,11 @@ export class GameComponent implements OnInit {
   };
   isWhistler: boolean;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private campaignService: CampaignService,
-    private gameService: GameService) {
+    private gameService: GameService
+  ) {
     this.isWhistler = environment.isWhistler;
   }
 
