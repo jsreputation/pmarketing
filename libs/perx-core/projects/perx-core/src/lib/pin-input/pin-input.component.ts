@@ -85,7 +85,7 @@ export class PinInputComponent implements OnInit, OnChanges {
 
   redeemVoucher() {
 // tslint:disable-next-line: radix
-    this.vouchersService.redeemVoucher(parseInt(this.voucherId))
+    this.vouchersService.redeemVoucher(this.voucherId)
       .pipe(
         catchError((err: HttpErrorResponse) => {
           this.hasErrorEmit.emit(err.status);

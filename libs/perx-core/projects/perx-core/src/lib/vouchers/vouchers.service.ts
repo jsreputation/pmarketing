@@ -99,7 +99,6 @@ export class VouchersService {
     if (found) {
       return of(found);
     }
-
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
