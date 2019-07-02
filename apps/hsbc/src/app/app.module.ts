@@ -31,11 +31,14 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSidenavModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
+import { TncComponent } from './tnc/tnc.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { SoundModule } from './sound/sound.module';
     VoucherComponent,
     RedemptionComponent,
     HomeComponent,
-    PuzzlesComponent
+    PuzzlesComponent,
+    TncComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +70,7 @@ import { SoundModule } from './sound/sound.module';
     MatProgressBarModule,
     SoundModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
