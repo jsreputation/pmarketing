@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'cl-create-engagement-popup',
@@ -7,9 +8,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateEngagementPopupComponent implements OnInit {
+  constructor(
+    public dialogRef: MatDialogRef<CreateEngagementPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  constructor() { }
-
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
   ngOnInit() {
   }
 

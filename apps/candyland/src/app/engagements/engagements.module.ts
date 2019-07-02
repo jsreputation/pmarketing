@@ -5,12 +5,14 @@ import { EngagementsRoutingModule } from './engagements-routing.module';
 import { EngagementsListPageComponent } from './containers/engagements-list-page/engagements-list-page.component';
 import { CreateEngagementPopupComponent } from './containers/create-engagement-popup/create-engagement-popup.component';
 import { EngagementsComponent } from './containers/engagements/engagements.component';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [EngagementsListPageComponent, CreateEngagementPopupComponent, EngagementsComponent],
   imports: [
     CommonModule,
-    EngagementsRoutingModule
+    EngagementsRoutingModule,
+    MatDialogModule,
   ],
   entryComponents: [
     CreateEngagementPopupComponent
