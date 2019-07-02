@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.wrap {
+  width: 100%;
+  display: flex;
+  padding: 0 20px 17px 20px;
+  justify-content: space-between;
+  position: relative;
+}

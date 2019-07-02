@@ -17,7 +17,6 @@ export class EngagementsListPageComponent implements OnInit {
 
   public openDialogCreate(): void {
     const dialogRef = this.dialog.open(CreateEngagementPopupComponent, {
-      width: '250px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -2,7 +2,11 @@ html, body {
   min-height: 100%;
   font-size: $base-font-size;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 p {
   margin: 0;
@@ -21,6 +25,7 @@ p {
   position: relative;
   background: transparent;
   border: none;
+  outline: none;
   color: #ffffff;
   cursor: pointer;
 }
@@ -30,4 +35,18 @@ p {
   .mat-list-text {
     padding-left: 8px !important;
   }
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+
+.mat-dialog-content {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow: visible !important;
 }
