@@ -23,6 +23,9 @@ export class PuzzlePlayComponent implements OnChanges {
   img: string;
 
   @Input()
+  showHint = false;
+
+  @Input()
   rows = 2;
 
   @Input()
