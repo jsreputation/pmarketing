@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
 import { IVoucher } from '../models/voucher.model';
@@ -9,8 +8,8 @@ import { IVoucher } from '../models/voucher.model';
   templateUrl: './voucher.component.html',
   styleUrls: ['./voucher.component.scss']
 })
-export class VoucherComponent implements OnInit {
-  @Output() redeem: EventEmitter<string> = new EventEmitter<string>();
+export class VoucherComponent implements OnChanges {
+  @Output() redeem: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
   hideMerchantImg = false;
@@ -24,19 +23,17 @@ export class VoucherComponent implements OnInit {
   @Input()
   hideActions = false;
 
+  @Input()
+  voucherId: number;
+
   voucher$: Observable<IVoucher>;
-  voucherId: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private vouchersService: VouchersService
-  ) { }
+  constructor(private vouchersService: VouchersService) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.voucher$ = this.vouchersService.get(params[`id`]);
-      this.voucherId = params[`id`];
-    });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.voucherId) {
+      this.voucher$ = this.vouchersService.get(this.voucherId);
+    }
   }
 
   onClick() {

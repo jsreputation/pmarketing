@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-voucher',
@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
+  public voucherId: number;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      this.voucherId = parseInt(params.get('id'), 10);
+    });
   }
 
   onRedeem(id: string): void {
