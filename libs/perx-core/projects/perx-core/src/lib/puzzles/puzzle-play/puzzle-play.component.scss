@@ -3,10 +3,20 @@
   height: 100%;
 }
 
+.red-color-font {
+  color: #e42713;
+  font-weight: bold;
+}
+
 .center-board {
   float: none;
   margin: 0 auto;
   display: block;
+}
+
+.vertically-aligned-row {
+  display: flex;
+  align-items: center;
 }
 
 .scrolling-wrapper-flexbox {
@@ -15,37 +25,12 @@
   overflow-x: auto;
   margin-top: 2em;
   justify-content: flex-start;
-}
 
-.remaining-puzzle-piece-container {
-  flex: 0 0 auto;
-  margin-right: 1em;
-  border: 2px solid #e42713;
-  border-style: dotted;
-}
-
-.badge-warn {
-  background-color: rgba(228, 39, 19, 0.1);
-  color: #e42713;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border-radius: 20px;
-}
-
-.static-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.red-color-font {
-  color: #e42713;
-  font-weight: bold;
-}
-
-.static-collect-pieces {
-  color: #959595;
+  .remaining-puzzle-piece-container {
+    flex: 0 0 auto;
+    margin-right: 1em;
+    border: 2px dotted #e42713;
+  }
 }
 
 .bottom-container {
@@ -53,21 +38,36 @@
   border-radius: 16px 16px 0 0;
   padding: 2rem;
   margin-top: 6rem;
+
+  .static-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .help-logo {
+      /* display: inline-block; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #E3DFDF;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .static-collect-pieces {
+      color: #959595;
+    }
+
+    .badge-warn {
+      background-color: rgba(228, 39, 19, 0.1);
+      color: #e42713;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border-radius: 20px;
+    }
+  }
 }
 
-.help-logo {
-  /* display: inline-block; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background: #E3DFDF;
-  border-radius: 50%;
-  margin-left: 10px;
-}
-
-.vertically-aligned-row {
-  display: flex;
-  align-items: center;
-}
