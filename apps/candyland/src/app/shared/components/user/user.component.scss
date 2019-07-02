@@ -1,0 +1,86 @@
+@import "../../../../styles/helper";
+@import "../../../../styles/variables";
+.user {
+
+  &-info {
+    transition: .5s;
+  }
+
+  &-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: rem(17px);
+    border-bottom: rem(2px) solid rgba(255, 255, 255, 0.2)
+  }
+
+  &-preview {
+    height: rem(46px);
+    width: rem(46px);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &-img {
+    max-height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &-name {
+    padding-top: rem(4px);
+    font-family: $secondary-font;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.69;
+    text-align: center;
+    color: $white-color;
+  }
+
+  &-company {
+    font-family: $secondary-font;
+    font-size: 14px;
+    line-height: 1.93;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &-notifications {
+    display: flex;
+
+    &.vertical {
+      .none {
+        margin-top: rem(20px);
+      }
+    }
+  }
+}
+
+.notification {
+  width: rem(4px);
+  height: rem(4px);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+
+  &-none {
+    background-color: #f85400;
+  }
+
+  &-email {
+    right: 0;
+    background-color: #35c6ff;
+  }
+}
+
+.hide {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.vertical {
+  flex-direction: column;
+  padding-top: rem(20px);
+}
