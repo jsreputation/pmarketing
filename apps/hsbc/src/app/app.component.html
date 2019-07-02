@@ -11,6 +11,18 @@
     </mat-icon>
   </button>
 </mat-toolbar>
-<div class="container">
-  <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" autofocus="true" disableClose="false"
+    mode="over">
+    <mat-nav-list>
+      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']"
+        (click)="drawer.toggle()">Terms and Conditions</a>
+      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/faq']"
+        (click)="drawer.toggle()">FAQ</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
