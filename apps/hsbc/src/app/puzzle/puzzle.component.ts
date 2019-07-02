@@ -8,7 +8,7 @@ import {
   IStampCardResponse
 } from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 
 @Component({
@@ -57,7 +57,8 @@ export class PuzzleComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         map(data => data.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp))
+        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp)),
+        take(1)
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, forkJoin, Observable, of } from 'rxjs';
-import { bufferCount, tap, first, map, switchMap, catchError } from 'rxjs/operators';
+import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
 import {
   CampaignService,
   CAMPAIGN_TYPE,
@@ -46,20 +46,19 @@ export class GameComponent implements OnInit {
         map(campaigns => campaigns[0]),
         switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
         catchError(err => {
-          return of({ error: true, errMsg: err });
-        }),
+          return of({ hasError: true, errorMsg: err });
+        })
       )
       .subscribe(games => {
-        if (games[`error`]) {
+        if (games[`hasError`]) {
           this.router.navigate(['/vouchers']);
         } else {
           this.game = games[0];
           if (this.game.remainingNumberOfTries <= 0) {
             this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
-          } else {
-            this.loading = false;
           }
         }
+        this.loading = false;
       });
   }
 
@@ -76,7 +75,7 @@ export class GameComponent implements OnInit {
       .pipe(
         tap(v => this.progressValue = v * 100 / nbSteps),
         bufferCount(nbSteps),
-        first()
+        take(1)
       );
     forkJoin(r1, r2)
       .subscribe(

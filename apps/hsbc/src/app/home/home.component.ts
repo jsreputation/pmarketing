@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CampaignService, ICampaign, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         map(res => res.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp).slice(0, 1))
+        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp)),
+        take(1)
       )
       .subscribe(campaigns => {
         this.campaigns = campaigns;
