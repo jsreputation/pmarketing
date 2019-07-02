@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-//import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PerxCoreModule } from '@perx/core/dist/perx-core';
 import { RedeemComponent } from './redeem.component';
