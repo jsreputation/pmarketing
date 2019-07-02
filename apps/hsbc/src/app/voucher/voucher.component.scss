@@ -35,5 +35,7 @@ button {
   padding-bottom: 6rem;
   position: relative;
   top: 6rem;
-  height: calc(100% - 6rem);
+  height: calc(100% - 12rem);
+  display: flex;
+  flex-direction: column;
 }
