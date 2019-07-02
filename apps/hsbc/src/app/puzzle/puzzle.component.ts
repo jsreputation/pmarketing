@@ -82,14 +82,22 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private fetchCard() {
     this.campaignService.getCurrentCard(this.campaignId)
       .subscribe((res: IStampCardResponse) => {
-        this.cardId = res.data.id;
-        this.card = res.data;
-        this.cols = this.card.display_properties.number_of_cols;
-        this.rows = this.card.display_properties.number_of_rows;
-        this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
-        const availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+        const card = res.data;
+        this.cardId = card.id;
+        this.card = card;
+        this.cols = card.display_properties.number_of_cols;
+        this.rows = card.display_properties.number_of_rows;
+        this.playedPieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
+        const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
-        this.image = this.card.display_properties.card_image.value.image_url;
+        this.image = card.display_properties.card_image.value.image_url;
+        if (this.availablePieces === 0) {
+          this.notificationService.addPopup({
+            title: 'You do not have any piece',
+            text: 'You cannot play puzzle now.'
+          });
+          this.router.navigate(['/home']);
+        }
       });
   }
 
