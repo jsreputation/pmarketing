@@ -10,6 +10,25 @@ import { IVoucher } from './models/voucher.model';
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: VouchersService;
+  let mockIVoucherDetail = {
+    bannerUrl: undefined,
+    code: '51313742376d4348616679456646714b3234463853413d3d',
+    description: 'Vidyut',
+    howToRedeem: null,
+    id: 21,
+    merchantLogoUrl: undefined,
+    merchantName: 'Kluang Station',
+    name: 'Vidyut what are you doing',
+    expiresAt: null,
+    redeemedOn: null,
+    rewardId: 300,
+    state: 'expired',
+    termsAndConditions: null,
+    thumbnailUrl: undefined,
+  };
+  let mockIVouchers = [
+    mockIVoucherDetail
+  ];
   let mockVoucherDetail = {
     id: 21,
     name: 'General Indoor Studio package @ $99',
@@ -175,6 +194,19 @@ describe('VouchersService', () => {
     httpTestingController.verify();
   });
 
+  it('should get the voucher detail by voucher id from existing cache', (done: DoneFn) => {
+    service.vouchers = mockIVouchers;
+    service.get(21)
+      .subscribe(() => {
+        expect(true).toBeTruthy();
+        done();
+      });
+
+    httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers/21');
+
+    httpTestingController.verify();
+  });
+
   it('should get the all vouchers detail', (done: DoneFn) => {
     service.getAll()
       .subscribe((vouchers: IVoucher[]) => {
@@ -187,6 +219,19 @@ describe('VouchersService', () => {
     expect(req.request.method).toEqual('GET');
 
     req.flush(mockVouchers);
+
+    httpTestingController.verify();
+  });
+
+  it('should get the all vouchers detail from existing cache', (done: DoneFn) => {
+    service.vouchers = mockIVouchers;
+    service.getAll()
+      .subscribe(() => {
+        expect(true).toBeTruthy();
+        done();
+      });
+
+    httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1');
 
     httpTestingController.verify();
   });
