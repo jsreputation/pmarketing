@@ -11,6 +11,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SoundService } from './sound/sound.service';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,14 @@ import { LoginComponent } from './login/login.component';
 export class AppComponent implements OnInit {
   title = 'hsbc';
   showHeader: boolean;
-  iconToShow = 'home';
+  leftIconToShow = '';
+  rightIconToShow = '';
   currentPage: string;
   failedAuthSubscriber: Subscription;
+  private soundToggleSubscription: Subscription;
+
+  onLeftActionClick: () => void = () => {};
+  onRightActionClick: () => void = () => {};
 
   constructor(
     private router: Router,
@@ -30,6 +36,7 @@ export class AppComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private dialog: MatDialog,
+    private soundService: SoundService
   ) {
   }
 
@@ -70,10 +77,36 @@ export class AppComponent implements OnInit {
               ref instanceof VoucherComponent ? 'eGiftCode' :
                 ref instanceof HomeComponent ? 'Home' : '';
 
-    this.iconToShow =
+    this.leftIconToShow =
       ref instanceof PuzzlesComponent ? 'home' :
-        ref instanceof PuzzlesComponent ? 'back' :
-          ref instanceof RedemptionComponent ? 'back' :
-            ref instanceof VoucherComponent ? 'back' : '';
+        ref instanceof PuzzleComponent ? 'arrow_back_ios' :
+          ref instanceof RedemptionComponent ? 'arrow_back_ios' :
+            ref instanceof VoucherComponent ? 'arrow_back_ios' : '';
+
+    this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
+      ref instanceof PuzzleComponent ? this.goBack :
+      ref instanceof RedemptionComponent ? this.goBack :
+      ref instanceof VoucherComponent ? this.goBack : () => {};
+
+    if (ref instanceof PuzzleComponent) {
+      this.soundToggleSubscription = this.soundService.onToggle.subscribe(() => {
+        this.rightIconToShow = this.soundService.icon;
+      });
+    }
+
+    this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon : '';
+    this.onRightActionClick = ref instanceof PuzzleComponent ? () => {
+      this.soundService.toggle();
+      this.rightIconToShow = this.soundService.icon;
+    } : () => {};
+  }
+
+  onDeactivate(ref: any) {
+    if (ref instanceof PuzzleComponent) {
+      if (this.soundToggleSubscription) {
+        this.soundToggleSubscription.unsubscribe();
+        this.soundToggleSubscription = undefined;
+      }
+    }
   }
 }
