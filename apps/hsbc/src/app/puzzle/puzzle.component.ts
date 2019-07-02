@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   CampaignService,
   IStampCard,
@@ -10,13 +10,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
+import { SoundService } from '../sound/sound.service';
 
 @Component({
   selector: 'app-puzzle',
   templateUrl: './puzzle.component.html',
   styleUrls: ['./puzzle.component.scss']
 })
-export class PuzzleComponent implements OnInit {
+export class PuzzleComponent implements OnInit, OnDestroy {
+
   campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
@@ -30,8 +32,10 @@ export class PuzzleComponent implements OnInit {
     private campaignService: CampaignService,
     private route: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private soundService: SoundService
+  ) {
+  }
 
   ngOnInit() {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
@@ -51,6 +55,16 @@ export class PuzzleComponent implements OnInit {
         this.fetchCard();
       }
     }
+
+    if (!localStorage.getItem('enableSound')) {
+      setTimeout(() => {
+        this.soundService.showPopup();
+      }, 50);
+    }
+  }
+
+  ngOnDestroy() {
+    this.soundService.pause();
   }
 
   private fetchCampaign() {
