@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
-  let mockRedeemedVoucherDetail = {
+  const mockRedeemedVoucherDetail = {
     description: 'Vidyut',
     id: 21,
     name: 'Vidyut what are you doing',
@@ -18,7 +18,7 @@ describe('VouchersComponent', () => {
     img: undefined,
   };
 
-  let mockIssuedVoucherDetail = {
+  const mockIssuedVoucherDetail = {
     description: 'Vidyut',
     id: 21,
     name: 'Vidyut what are you doing',

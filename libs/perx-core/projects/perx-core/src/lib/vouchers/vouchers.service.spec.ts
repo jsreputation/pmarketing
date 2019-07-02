@@ -10,7 +10,7 @@ import { IVoucher } from './models/voucher.model';
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: VouchersService;
-  let mockIVoucherDetail = {
+  const mockIVoucherDetail = {
     bannerUrl: undefined,
     code: '51313742376d4348616679456646714b3234463853413d3d',
     description: 'Vidyut',
@@ -26,10 +26,10 @@ describe('VouchersService', () => {
     termsAndConditions: null,
     thumbnailUrl: undefined,
   };
-  let mockIVouchers = [
+  const mockIVouchers = [
     mockIVoucherDetail
   ];
-  let mockVoucherDetail = {
+  const mockVoucherDetail = {
     id: 21,
     name: 'General Indoor Studio package @ $99',
     valid_to: '2020-01-31T15:59:00.000Z',
@@ -114,10 +114,10 @@ describe('VouchersService', () => {
     },
     custom_fields: {}
   };
-  let mockVoucher = {
+  const mockVoucher = {
     data: mockVoucherDetail
   };
-  let mockVouchers = {
+  const mockVouchers = {
     data: [
       mockVoucherDetail
     ],
