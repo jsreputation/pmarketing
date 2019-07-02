@@ -15,8 +15,12 @@ html {
   font-style: normal;
 }
 .container {
-  padding: 6rem 1.2rem 0;
+  position: fixed;
   height: calc(100vh - 6rem);
+  width: calc(100% - 2.4rem);
+  padding: 0 1.2rem;
+  top: 6rem;
+  overflow-y: scroll;
 }
 
 .content-container {
@@ -86,7 +90,7 @@ html {
   left: 0;
   top: 60px;
   background-color: #fff;
-  z-index: 3;
+  z-index: 111;
   width: 100%;
 }
 .wallet-tabs .mat-tab-body-wrapper {
