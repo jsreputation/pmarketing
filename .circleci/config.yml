@@ -12,6 +12,14 @@ executors:
         default: true
         type: boolean
 commands:
+  get_app_name:
+    description: cuts app name out of git tag
+    steps:
+      - run:
+          name: Setup env vars
+          command: |
+            APP=$(echo ${CIRCLE_TAG} | cut -d'-' -f 1)
+            echo "export APP=$APP" >> $BASH_ENV
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -34,20 +42,16 @@ jobs:
       - checkout
       - setup_buildkitd
       - docker_login
+      - get_app_name
       - run:
           name: Build docker image
           command: |
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build -t ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7} --build-arg app=prudential .
+            docker build -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP .
       - run:
           name: Push docker
           command: |
-            docker push ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7}
-            # if the commit is tagged, also push with the tag
-            if [ ! -z "${CIRCLE_TAG}" ]; then
-              docker tag ${DOCKER_REPO}:prudential-${CIRCLE_SHA1:0:7} ${DOCKER_REPO}:prudential-${CIRCLE_TAG}
-              docker push ${DOCKER_REPO}:prudential-${CIRCLE_TAG}
-            fi
+            docker push ${DOCKER_REPO}:${CIRCLE_TAG}
   deploy:
     executor: helm-deploy/default
     parameters:
@@ -65,12 +69,18 @@ jobs:
         type: env_var_name
         description: certificate data for kubeconfig
     steps:
+      - get_app_name
       - run:
           name: Set environments
           command: |
             echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
-
+            if [ $APP == 'prudential' ]
+            then
+              echo 'export HELM_APP="$APP-birthday"' >> $BASH_ENV
+            else
+              echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
@@ -80,7 +90,7 @@ jobs:
           kube_bearer_token: "<< parameters.kube_bearer_token >>"
           kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
       - helm-deploy/deploy:
-          helm_release: microsite-apps-prudential
+          helm_release: microsite-apps-$HELM_APP
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
@@ -121,10 +131,12 @@ workflows:
           filters:
             tags:
               # this enables circleci to trigger on tags
-              only: /.*/
+              only: /^\w+-.*/
+            branches:
+              ignore: /.*/
       - deploy:
           name: deploy_to_staging
-          docker_tag: "prudential-${CIRCLE_SHA1:0:7}"
+          docker_tag: "${CIRCLE_TAG}"
           kube_host: STAGING_KUBE_HOST
           kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
           kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
@@ -133,11 +145,12 @@ workflows:
             - test
           filters:
             branches:
-              only:
-                - staging
+              ignore: /.*/
+            tags:
+              only: /^\w+-staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
-          docker_tag: "prudential-${CIRCLE_TAG}"
+          docker_tag: "${CIRCLE_TAG}"
           kube_host: PRODUCTION_KUBE_HOST
           kube_bearer_token: PRODUCTION_KUBE_BEARER_TOKEN
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
@@ -150,5 +163,5 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^\d+\.\d+\.\d+.*/
+              only: /^\w+-production-\d+\.\d+\.\d+.*/
 

@@ -62,14 +62,14 @@ export class AuthenticationService implements AuthService {
         if (resp) {
           this.authing = true;
           this.userAuth(this.preAuthJWT).toPromise().then(
-            (res) => {
+            () => {
               // @ts-ignore
               const userBearer = resp.headers.get('Authorization');
               if (userBearer) {
                 this.saveAccessData(userBearer.split(' ')[1]);
               }
             },
-            (err) => {
+            () => {
               if (this.retries === this.maxRetries) {
                 this.authing = false;
                 this.didFailAuth = true;
@@ -133,17 +133,21 @@ export class AuthenticationService implements AuthService {
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
 
-  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string) {
+  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string): Promise<boolean> {
     this.authing = true;
     let success = false;
 
-    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
-    );
-    // @ts-ignore
+    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId)
+      .toPromise();
+      // .catch(() => {
+      //   console.log('login failed!');
+      //   this.authing = false;
+      // });
+
+    if (v4AuthData === undefined) {
+      return false;
+    }
+
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
       this.saveAccessData(userBearer);
@@ -206,12 +210,11 @@ export class AuthenticationService implements AuthService {
     this.tokenStorage.setAccessToken(accessToken);
   }
 
-
-  private getUrlParameter(name) {
-    const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    const results = regex.exec(url);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
+  // private getUrlParameter(name) {
+  //   const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
+  //   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  //   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  //   const results = regex.exec(url);
+  //   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  // }
 }

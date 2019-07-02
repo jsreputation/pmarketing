@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { VouchersService, Voucher } from '@perx/core/dist/perx-core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-redemption',
@@ -6,13 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
-  reward = {
-    owner: 'Szechuan Court'
-  };
+  voucher$: Observable<Voucher>;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private vouchersService: VouchersService
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.voucher$ = this.vouchersService.get(params[`id`]);
+    });
   }
 
 }

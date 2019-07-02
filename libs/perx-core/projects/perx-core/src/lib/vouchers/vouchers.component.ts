@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from './vouchers.service';
-import { PinService } from './../pin-input/pin.service';
 import { Observable } from 'rxjs';
 import { IVoucher } from './models/voucher.model';
 import { map } from 'rxjs/operators';
@@ -19,15 +18,13 @@ export class VouchersComponent implements OnInit {
   @Input() showExpireDate = true;
   @Input() showRedeemedDate = false;
   @Input() showRedeemedIcon = true;
+  @Input() canSelectRedeemed = false;
 
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
   vouchers$: Observable<IVoucher[]>;
 
-  constructor(
-    private vouchersService: VouchersService,
-    private pinService: PinService
-  ) { }
+  constructor(private vouchersService: VouchersService) { }
 
   ngOnInit() {
     this.vouchers$ = this.vouchersService.getAll().pipe(
@@ -38,7 +35,7 @@ export class VouchersComponent implements OnInit {
   }
 
   onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }) {
-    if (voucher.state === 'redeemed') {
+    if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
       return;
     }
 

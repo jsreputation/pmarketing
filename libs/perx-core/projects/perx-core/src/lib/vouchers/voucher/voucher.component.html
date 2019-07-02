@@ -3,7 +3,7 @@
     <div class="reward-image-container" *ngIf="voucher.bannerUrl">
       <img class="reward-image" src="{{voucher.bannerUrl}}">
     </div>
-    <div class="merchant-image-container" *ngIf="!hideMerchantImg">
+    <div class="merchant-image-container" *ngIf="!hideMerchantImg && voucher.merchantLogoUrl">
       <img class="merchant-image" src="{{voucher.merchantLogoUrl}}">
     </div>
     <div class="details">
@@ -13,20 +13,26 @@
       <div class="merchant-name" *ngIf="!hideMerchantName">
         {{voucher.merchantName}}
       </div>
-      <div class="voucher-expiry" *ngIf="!hideExpiry">
+      <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiresAt!==null">
         {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </div>
-      <div class="section-heading">
+      <div class="section-heading" *ngIf="voucher.description">
         Description
       </div>
-      <div class="section-content">
+      <div class="section-content" *ngIf="voucher.description">
         <div [innerHtml]="voucher.description"></div>
       </div>
-      <div class="section-heading">
+      <div class="section-heading" *ngIf="voucher.termsAndConditions">
         Terms and Conditions
       </div>
-      <div class="section-content">
+      <div class="section-content" *ngIf="voucher.termsAndConditions">
         <div [innerHtml]="voucher.termsAndConditions"></div>
+      </div>
+      <div class="section-heading" *ngIf="voucher.howToRedeem">
+        How to redeem
+      </div>
+      <div class="section-content" *ngIf="voucher.howToRedeem">
+        <div [innerHtml]="voucher.howToRedeem"></div>
       </div>
     </div>
   </div>
@@ -40,4 +46,4 @@
       REDEEM NOW
     </button>
   </div>
-<ng-container>
+</ng-container>

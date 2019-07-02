@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService, PopupComponent } from '@perx/core/dist/perx-core';
 import { Subscription } from 'rxjs';
+import { NotificationService } from './notification.service';
+import { MatDialog } from '@angular/material';
+import { PuzzleComponent } from './puzzle/puzzle.component';
+import { PuzzlesComponent } from './puzzles/puzzles.component';
+import { RedemptionComponent } from './redemption/redemption.component';
+import { VoucherComponent } from './voucher/voucher.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { SoundService } from './sound/sound.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +21,23 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'hsbc';
   showHeader: boolean;
-  iconToShow = 'home';
+  leftIconToShow = '';
+  rightIconToShow = '';
   currentPage: string;
   failedAuthSubscriber: Subscription;
+  private soundToggleSubscription: Subscription;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              private location: Location) {
+  onLeftActionClick: () => void = () => {};
+  onRightActionClick: () => void = () => {};
+
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    private location: Location,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+    private soundService: SoundService
+  ) {
   }
 
   ngOnInit(): void {
@@ -29,6 +48,9 @@ export class AppComponent implements OnInit {
         }
       }
     );
+    this.notificationService.$popup.subscribe(data => {
+      this.dialog.open(PopupComponent, { data });
+    });
   }
 
   goHome() {
@@ -40,50 +62,50 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(ref: any) {
-    if (!ref.constructor) {
-      return;
+    this.showHeader =
+      ref instanceof PuzzleComponent ||
+      ref instanceof PuzzlesComponent ||
+      ref instanceof RedemptionComponent ||
+      ref instanceof VoucherComponent ||
+      ref instanceof HomeComponent;
+
+    this.currentPage =
+      ref instanceof LoginComponent ? 'Login' :
+        ref instanceof PuzzleComponent ? 'Puzzle' :
+          ref instanceof PuzzlesComponent ? 'My Puzzles' :
+            ref instanceof RedemptionComponent ? 'eGift Redeem' :
+              ref instanceof VoucherComponent ? 'eGiftCode' :
+                ref instanceof HomeComponent ? 'Home' : '';
+
+    this.leftIconToShow =
+      ref instanceof PuzzlesComponent ? 'home' :
+        ref instanceof PuzzleComponent ? 'arrow_back_ios' :
+          ref instanceof RedemptionComponent ? 'arrow_back_ios' :
+            ref instanceof VoucherComponent ? 'arrow_back_ios' : '';
+
+    this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
+      ref instanceof PuzzleComponent ? this.goBack :
+      ref instanceof RedemptionComponent ? this.goBack :
+      ref instanceof VoucherComponent ? this.goBack : () => {};
+
+    if (ref instanceof PuzzleComponent) {
+      this.soundToggleSubscription = this.soundService.onToggle.subscribe(() => {
+        this.rightIconToShow = this.soundService.icon;
+      });
     }
-    this.currentPage = ref.constructor.name;
-    switch (ref.constructor.name) {
-      case 'LoginComponent':
-        this.currentPage = 'Login';
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
-      case 'CongratsComponent':
-        this.currentPage = '';
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
-      case 'PuzzleComponent':
-        this.currentPage = 'Puzzle';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'PuzzlesComponent':
-        this.currentPage = 'My Puzzles';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'RedemptionComponent':
-        this.currentPage = 'eGift Redeem';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'VoucherComponent':
-        this.currentPage = 'eGift Code';
-        this.showHeader = true;
-        this.iconToShow = 'back';
-        break;
-      case 'HomeComponent':
-        this.currentPage = 'Home';
-        this.showHeader = true;
-        this.iconToShow = '';
-        break;
-      default: {
-        this.showHeader = false;
-        this.iconToShow = '';
-        break;
+
+    this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon : '';
+    this.onRightActionClick = ref instanceof PuzzleComponent ? () => {
+      this.soundService.toggle();
+      this.rightIconToShow = this.soundService.icon;
+    } : () => {};
+  }
+
+  onDeactivate(ref: any) {
+    if (ref instanceof PuzzleComponent) {
+      if (this.soundToggleSubscription) {
+        this.soundToggleSubscription.unsubscribe();
+        this.soundToggleSubscription = undefined;
       }
     }
   }

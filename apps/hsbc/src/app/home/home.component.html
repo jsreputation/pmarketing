@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs class="tab-group wallet-tabs">
+<mat-tab-group mat-stretch-tabs class="tab-group wallet-tabs" [selectedIndex]="selectedTab">
     <mat-tab label="My Wallet">
         <div class="tab-group__content">
             <h1>My Puzzles</h1>
@@ -34,8 +34,9 @@
     <mat-tab label="History">
         <div class="tab-group__content">
             <h1>Redeemed Rewards</h1>
-            <perx-core-vouchers 
+            <perx-core-vouchers
                 (route)="onRoute($event)" 
+                [canSelectRedeemed]="true"
                 [filter]="'redeemed'" 
                 [imageSize]="'small'"
                 [iconDisplay]="'arrow_forward_ios'"

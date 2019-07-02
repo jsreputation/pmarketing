@@ -14,7 +14,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'home/:popup', component: HomeComponent },
       { path: 'puzzle', component: PuzzleComponent },
       { path: 'puzzle/:campaignId', component: PuzzleComponent },
       { path: 'puzzle/:campaignId/:cardId', component: PuzzleComponent },

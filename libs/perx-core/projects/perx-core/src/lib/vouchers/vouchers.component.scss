@@ -29,7 +29,7 @@ mat-icon {
   justify-content: center;
 }
 
-.voucher-merchant-logo {
+.voucher-thumbnail {
   margin: auto;
   max-width: 10.5rem;
   max-height: 10.5rem;
@@ -63,7 +63,7 @@ mat-icon {
   margin-top: 0;
 }
 .small {
-  .voucher-img {
+  .voucher-img, .voucher-thumbnail {
     max-height: 6rem;
     max-width: 6rem;
   }

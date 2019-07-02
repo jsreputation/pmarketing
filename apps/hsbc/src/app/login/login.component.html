@@ -5,15 +5,15 @@
   <div class="login-form">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width__input">
-        <mat-label>Play Code</mat-label>
+        <mat-label>Player Code</mat-label>
         <input matInput placeholder="Enter your player code" formControlName="playerCode">
         <mat-error *ngIf="loginForm.hasError('playerCode')">
           Player code is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width__input">
-        <mat-label>HSBC Card Digit Code</mat-label>
-        <input matInput placeholder="Enter your HSBC card last 4 digit"
+        <mat-label>Last 4 digits of your HSBC Credit Card</mat-label>
+        <input matInput placeholder="Enter your HSBC card last 4 digits"
                formControlName="hsbcCardLastFourDigits">
         <mat-error *ngIf="loginForm.hasError('hsbcCardLastFourDigits')">
           HSBC card last 4 digit code is <strong>required</strong>
@@ -22,4 +22,5 @@
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign In</button>
     </form>
   </div>
+  <span class="error_msg">{{errorMessage}}</span>
 </div>

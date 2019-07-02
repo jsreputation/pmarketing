@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PinService } from './pin.service';
-import { ActivatedRoute } from '@angular/router';
 import { VouchersService } from '../vouchers/vouchers.service';
-import { map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
@@ -12,7 +11,7 @@ import { of } from 'rxjs';
   templateUrl: './pin-input.component.html',
   styleUrls: ['./pin-input.component.css']
 })
-export class PinInputComponent implements OnInit {
+export class PinInputComponent implements OnInit, OnChanges {
   @Input()
   length = 4;
 
@@ -25,8 +24,13 @@ export class PinInputComponent implements OnInit {
   @Output()
   update: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input()
+  voucherId: number;
+
   pinCode: string;
-  voucherId: string;
 
   controlls: FormControl[] = [];
   hasError = '';
@@ -34,9 +38,9 @@ export class PinInputComponent implements OnInit {
   constructor(
     private element: ElementRef,
     private pin: PinService,
-    private route: ActivatedRoute,
     private vouchersService: VouchersService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     // length might not be a number
@@ -51,14 +55,14 @@ export class PinInputComponent implements OnInit {
     }
     // listen to each FormControl
     this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
-    this.route.params.subscribe(params => {
-      this.voucherId = params[`id`];
-    });
-    // tslint:disable-next-line: radix
-    this.pin.getPin(parseInt(this.voucherId)).subscribe(code => {
-      this.pinCode = code;
-    });
+  }
 
+  ngOnChanges(simpleChanges: SimpleChanges): void {
+    if (simpleChanges.voucherId) {
+      this.pin.getPin(this.voucherId).subscribe(code => {
+        this.pinCode = code;
+      });
+    }
   }
 
   onUpdate() {
@@ -88,7 +92,7 @@ export class PinInputComponent implements OnInit {
         })
       ).subscribe(res => {
         if (res !== 'Redeem failed') {
-          this.full.emit(this.voucherId);
+          this.full.emit(this.value);
         }
       });
   }
@@ -115,5 +119,13 @@ export class PinInputComponent implements OnInit {
       }
       event.stopPropagation();
     }
+  }
+
+  onBlur() {
+    this.pinFocused.emit(false);
+  }
+
+  onFocus() {
+    this.pinFocused.emit(true);
   }
 }
