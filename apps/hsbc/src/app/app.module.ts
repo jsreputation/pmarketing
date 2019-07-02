@@ -30,7 +30,8 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -61,6 +62,7 @@ import { SoundModule } from './sound/sound.module';
     MatInputModule,
     MatCardModule,
     MatRippleModule,
+    MatProgressBarModule,
     SoundModule,
     MatProgressSpinnerModule,
     VouchersModule.forRoot({ env: environment }),

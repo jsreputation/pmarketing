@@ -69,8 +69,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const username = this.loginForm.get('playerCode').value;
-    const password = this.loginForm.get('hsbcCardLastFourDigits').value;
+    const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
+    const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
 
     this.authService.v4GameOauth(username, password)
