@@ -32,7 +32,7 @@
   border-radius: 20px;
 }
 
-.staic-content {
+.static-content {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
