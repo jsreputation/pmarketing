@@ -33,25 +33,11 @@
   align-items: center;
 }
 
-.scrolling-wrapper-flexbox {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  margin-top: 2em;
-  justify-content: flex-start;
-
-  .remaining-puzzle-piece-container {
-    flex: 0 0 auto;
-    margin-right: 1em;
-    border: 2px dotted #e42713;
-  }
-}
-
 .bottom-container {
   background: white;
   border-radius: 16px 16px 0 0;
   padding: 2rem;
-  margin-top: 6rem;
+  margin-top: 2rem;
 
   .static-content {
     display: flex;
@@ -81,6 +67,18 @@
       padding: 10px 20px;
       font-size: 1.2rem;
       border-radius: 20px;
+    }
+  }
+  .scrolling-wrapper-flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    .remaining-puzzle-piece-container {
+      flex: 0 0 auto;
+      margin-right: 1em;
+      border: 2px dotted #e42713;
+      transform: scale(0.65);
     }
   }
 }
