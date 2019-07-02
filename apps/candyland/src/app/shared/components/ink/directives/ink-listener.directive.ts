@@ -10,9 +10,6 @@ export class InkListenerDirective {
   constructor(public el: ElementRef) {
   }
 
-  ngOnInit(): void {
-  }
-
   @HostListener('click') onMouseOver() {
     this.setPosition();
   }

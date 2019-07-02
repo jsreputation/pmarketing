@@ -24,9 +24,9 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   @Input() public triangle = false;
   @Input() public border = false;
 
-  @ContentChild(InkHostDirective, {static: false}) public _inkHost: InkHostDirective;
-  @ContentChildren(InkListenerDirective, {descendants: true}) public _inkListener: QueryList<InkListenerDirective>;
-  @ViewChild(InkBarDirective, {static: false}) public _inkBar: InkBarDirective;
+  @ContentChild(InkHostDirective, {static: false}) public inkHost: InkHostDirective;
+  @ContentChildren(InkListenerDirective, {descendants: true}) public inkListener: QueryList<InkListenerDirective>;
+  @ViewChild(InkBarDirective, {static: false}) public inkBar: InkBarDirective;
 
   private destroy$ = new Subject();
   constructor() { }
@@ -45,7 +45,7 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   // first strategy get data from nested component
 
   getHost() {
-    const host =  this._inkHost ? this._inkHost.getHost() : null;
+    const host =  this.inkHost ? this.inkHost.getHost() : null;
     let inkListeners: QueryList<InkListenerDirective>;
     if (host) {
       inkListeners = host.getInkListeners();
@@ -67,20 +67,20 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   // second strategy get data from ContentView
 
   private runHandlerSecond(): void {
-    if (this._inkListener.length) {
-      this._inkListener.changes
+    if (this.inkListener.length) {
+      this.inkListener.changes
         .pipe(
           takeUntil(this.destroy$)
         )
         .subscribe((res) => {
-          this.setInkBarToInkListener(this._inkListener);
+          this.setInkBarToInkListener(this.inkListener);
         });
-      this.setInkBarToInkListener(this._inkListener);
+      this.setInkBarToInkListener(this.inkListener);
     }
   }
 
   private setInkBarToInkListener(inkListeners): void {
-    inkListeners.toArray().forEach(ink => ink.inkBar = this._inkBar);
+    inkListeners.toArray().forEach(ink => ink.inkBar = this.inkBar);
   }
 
   ngOnDestroy(): void {

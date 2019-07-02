@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeItemComponent } from './type-item.component';
-import { EngagementType } from '../engagement-types';
+import { GameComponent } from './game.component';
 import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GamesType } from '../shared/games-type';
 
-describe('TypeItemComponent', () => {
-  let component: TypeItemComponent;
-  let fixture: ComponentFixture<TypeItemComponent>;
+describe('GameComponent', () => {
+  let component: GameComponent;
+  let fixture: ComponentFixture<GameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,15 +20,15 @@ describe('TypeItemComponent', () => {
         MatRadioModule,
         ReactiveFormsModule,
       ],
-      declarations: [ TypeItemComponent ]
+      declarations: [ GameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TypeItemComponent);
+    fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
-    component.typeItem = EngagementType[0];
+    component.game = GamesType[0];
     fixture.detectChanges();
   });
 

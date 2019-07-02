@@ -1,0 +1,21 @@
+@import "helper";
+@import "variables";
+
+.survey {
+
+  &-wrap {
+    padding: rem(25px) rem(40px) 0 rem(40px);
+  }
+
+  &-title {
+    font-family: Roboto;
+    font-weight: bold;
+    line-height: 1.21;
+    color: $secondary-color;
+    padding-bottom: 9px;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}

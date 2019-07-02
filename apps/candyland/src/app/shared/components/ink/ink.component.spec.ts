@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InkComponent } from './ink.component';
+import { InkBarDirective } from '@cl-shared/components/ink/directives/ink-bar.directive';
+import { InkHostDirective } from '@cl-shared/components/ink/directives/ink-host.directive';
+import { InkListenerDirective } from '@cl-shared/components/ink/directives/ink-listener.directive';
 
 describe('InkComponent', () => {
   let component: InkComponent;
@@ -8,7 +11,12 @@ describe('InkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InkComponent ]
+      declarations: [
+        InkComponent,
+        InkBarDirective,
+        InkHostDirective,
+        InkListenerDirective
+      ]
     })
     .compileComponents();
   }));

@@ -1,34 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeItemComponent } from './type-item.component';
-import { EngagementType } from '../engagement-types';
-import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { SurveyComponent } from './survey.component';
+import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('TypeItemComponent', () => {
-  let component: TypeItemComponent;
-  let fixture: ComponentFixture<TypeItemComponent>;
+describe('SurveyComponent', () => {
+  let component: SurveyComponent;
+  let fixture: ComponentFixture<SurveyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatIconModule,
+        BrowserAnimationsModule,
         MatFormFieldModule,
         MatSelectModule,
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
       ],
-      declarations: [ TypeItemComponent ]
+      declarations: [ SurveyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TypeItemComponent);
+    fixture = TestBed.createComponent(SurveyComponent);
     component = fixture.componentInstance;
-    component.typeItem = EngagementType[0];
     fixture.detectChanges();
   });
 

@@ -1,4 +1,4 @@
-
+// tslint:disable
 import { Directive, ElementRef, Inject, InjectionToken, Input, NgZone, Optional } from '@angular/core';
 import {ANIMATION_MODULE_TYPE} from '@angular/platform-browser/animations';
 

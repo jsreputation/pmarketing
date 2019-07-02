@@ -6,7 +6,12 @@ import { InkHostDirective } from './directives/ink-host.directive';
 import { InkListenerDirective } from './directives/ink-listener.directive';
 
 @NgModule({
-  declarations: [InkComponent, InkBarDirective, InkHostDirective, InkListenerDirective],
+  declarations: [
+    InkComponent,
+    InkBarDirective,
+    InkHostDirective,
+    InkListenerDirective
+  ],
   exports: [
     InkComponent,
     InkHostDirective,

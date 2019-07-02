@@ -10,9 +10,9 @@ import { IInkBarHost } from '@cl-shared/components/ink/models/ink-bar-host';
   styleUrls: ['./engagement-type.component.scss']
 })
 export class EngagementTypeComponent implements OnInit, IInkBarHost {
-  @Output() onSelectedType = new EventEmitter<IEngagementType>();
+  @Output() selectType = new EventEmitter<IEngagementType>();
 
-  @ViewChildren(InkListenerDirective) public _inkListener: QueryList<InkListenerDirective>;
+  @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
   public selectedType: IEngagementType;
   public engagementType: IEngagementType[] = EngagementType;
   constructor() { }
@@ -22,11 +22,11 @@ export class EngagementTypeComponent implements OnInit, IInkBarHost {
 
   public setTypeEngagement(type: IEngagementType): void {
      this.selectedType = type;
-     this.onSelectedType.emit(type);
+     this.selectType.emit(type);
   }
 
   public getInkListeners(): any {
-    return this._inkListener;
+    return this.inkListener;
   }
 
 }

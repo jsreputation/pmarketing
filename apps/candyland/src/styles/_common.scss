@@ -50,3 +50,9 @@ p {
   max-height: 65vh;
   overflow: visible !important;
 }
+
+.game-checkbox {
+  .mat-radio-label-content {
+    display: none;
+  }
+}

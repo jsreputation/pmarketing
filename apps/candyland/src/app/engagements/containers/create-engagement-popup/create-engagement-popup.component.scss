@@ -37,4 +37,26 @@
     padding: rem(31px) rem(40px);
     box-sizing: border-box;
   }
+
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: rem(34px) rem(40px);
+
+    &.type-survey {
+      padding: 0 rem(40px) rem(34px) rem(40px);
+    }
+  }
+}
+
+.nested-type {
+  transition: .5s cubic-bezier(.35,0,.25,1);
+}
+
+.actions {
+
+  &-close {
+    display: block;
+    margin-right: rem(12px);
+  }
 }
