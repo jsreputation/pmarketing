@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>This game contains sounds. Please turn the sound on.</h1>
+<div mat-dialog-content>
+  <button class="toggle--btn" 
+    [ngClass]="{'toggle--btn__off': !enabled}" 
+    mat-flat-button
+    (click)="onEnableSound(true)"
+  >
+    <mat-icon class="btn-icon">
+      volume_up
+    </mat-icon>
+  </button>
+  <button class="toggle--btn"
+    [ngClass]="{'toggle--btn__off': enabled}"
+    mat-flat-button
+    (click)="onEnableSound(false)"
+  >
+    <mat-icon class="btn-icon">
+      volume_off
+    </mat-icon>
+  </button>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" class="close-btn" [mat-dialog-close] cdkFocusInitial>CLOSE</button>
+</div>
