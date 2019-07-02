@@ -2,14 +2,14 @@ export class PrepareTableFilers {
 
   public static prepareTabsFilterConfig(data, counterObject: { [key: string]: number }): OptionConfig[] {
     const config: OptionConfig[] = [{
-      title: 'All(' + data.length + ')',
+      title: 'All (' + data.length + ')',
       value: null
     }];
     for (const key in counterObject) {
       config.push({
-        title: key + '(' + counterObject[key] + ')',
+        title: key + ' (' + counterObject[key] + ')',
         value: key
-      })
+      });
     }
     return config;
   }
@@ -22,7 +22,7 @@ export class PrepareTableFilers {
       }
       const value = item[fieldName];
       if (value in counterObject) {
-        counterObject[value]++
+        counterObject[value]++;
       } else {
         counterObject[value] = 1;
       }
@@ -31,18 +31,23 @@ export class PrepareTableFilers {
   }
 
   public static getClientSideFilterFunction(): (data: any, filter: string) => boolean {
-    return (data, filter): boolean => {
-      const searchTerms = JSON.parse(filter);
-      for (const key in searchTerms) {
-        if (key in searchTerms &&
-          searchTerms[key] !== null &&
-          key in data &&
-          !data[key].toLowerCase().includes(searchTerms[key].toLowerCase())
-        ) {
-          return false;
-        }
-      }
-      return true;
+    return (item, filterString): boolean => {
+      const filters = JSON.parse(filterString);
+      return Object.keys(filters)
+        .filter((key) => !!filters[key])
+        .every((key) => {
+          if (item[key] as string) {
+            return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
+          }
+          if ('begin' in filters[key] && 'end' in filters[key]) {
+            const beginCurrent = item.begin.getTime() || 0;
+            const beginFilter = new Date(filters[key].begin).getTime() || 0;
+            const endCurrent = item.end.getTime() || 0;
+            const endFilter = new Date(filters[key].end).getTime() || 0;
+            return beginCurrent >= beginFilter && endCurrent <= endFilter;
+          }
+          return true;
+        });
     };
   }
 

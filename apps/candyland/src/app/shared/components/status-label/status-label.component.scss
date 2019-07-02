@@ -1,4 +1,4 @@
-@import 'variables';
+//@import 'variables';
 @import 'helper';
 
 .status-label {
@@ -28,17 +28,34 @@
   //}
 }
 
-.active{
-  background-color: $success-color;
-  color: #fff;
+.active {
+  background-color: #10d994;
+  color: #cff7ea;
 }
 
-.pending{
-  background-color: $pending-color;
-  color: #fff;
+.draft {
+  background-color: #8576ed;
+  color: #edebfd;
 }
 
-.draft{
-  background-color: $draft-color;
-  color: #7B7B7B;
+.scheduled {
+  background-color: #3d83f9;
+  color: #e2edfe;
 }
+
+.pending {
+  background-color: #ffa641;
+  color: #fdedd9;
+}
+
+.paused {
+  background-color: #a0a2a7;
+  color: #ececed;
+}
+
+.ended {
+  background-color: #a0a2a7;
+  color: #ececed;
+}
+
+

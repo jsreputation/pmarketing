@@ -1,25 +1,27 @@
 <section class="content">
 
-  <button (click)="openDialog()">Pick one</button>
+  <div class="row">
+    <h1>Engagements</h1>
+     <button mat-button (click)="openDialog()">Pick one</button>
+  </div>
 
   <cl-table-filters [dataSource]="dataSource">
-    <ng-container *clTableFilter="'name'; let filter">
+    <div class="row" *clTableFilter="'name'; let filter">
       <cl-search-filter [formControl]="filter"></cl-search-filter>
-    </ng-container>
-
-    <ng-container *clTableFilter="'type'; let filter">
+    </div>
+    <div class="row" *clTableFilter="'type'; let filter">
       <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
-    </ng-container>
+    </div>
 
     <!--<ng-container *clTableFilter="'status'; let filter">-->
-      <!--<mat-form-field appearance="outline">-->
-        <!--<mat-select [formControl]="filter">-->
-          <!--<mat-option [value]="null">ALL</mat-option>-->
-          <!--<mat-option value="active">Active</mat-option>-->
-          <!--<mat-option value="pending">pending</mat-option>-->
-          <!--<mat-option value="draft">draft</mat-option>-->
-        <!--</mat-select>-->
-      <!--</mat-form-field>-->
+    <!--<mat-form-field appearance="outline">-->
+    <!--<mat-select [formControl]="filter">-->
+    <!--<mat-option [value]="null">ALL</mat-option>-->
+    <!--<mat-option value="active">Active</mat-option>-->
+    <!--<mat-option value="pending">pending</mat-option>-->
+    <!--<mat-option value="draft">draft</mat-option>-->
+    <!--</mat-select>-->
+    <!--</mat-form-field>-->
     <!--</ng-container>-->
   </cl-table-filters>
 
@@ -49,9 +51,17 @@
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <!--<mat-icon>more_vert</mat-icon>-->
+      <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
+      <td mat-cell *matCellDef="let element" class="menu-column">
+        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #itemMenu="matMenu">
+          <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
+          <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
+          <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
+          <button mat-menu-item (click)="useAsCaptionItem(element?.id)">Use as campaign</button>
+        </mat-menu>
       </td>
     </ng-container>
 

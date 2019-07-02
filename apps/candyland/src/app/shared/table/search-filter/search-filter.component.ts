@@ -5,31 +5,31 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'cl-search-filter',
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SearchFilterComponent),
-      multi: true,
-    }
-  ],
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: forwardRef(() => SearchFilterComponent),
+  //     multi: true,
+  //   }
+  // ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchFilterComponent implements ControlValueAccessor   {
-  @Input() formControl: FormControl;
+export class SearchFilterComponent  {
+  @Input() control: FormControl;
 
   constructor() {
   }
 
-  registerOnChange(fn: any): void {
-  }
-
-  registerOnTouched(fn: any): void {
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-  }
-
-  writeValue(obj: any): void {
-  }
+  // registerOnChange(fn: any): void {
+  // }
+  //
+  // registerOnTouched(fn: any): void {
+  // }
+  //
+  // setDisabledState(isDisabled: boolean): void {
+  // }
+  //
+  // writeValue(obj: any): void {
+  // }
 
 }

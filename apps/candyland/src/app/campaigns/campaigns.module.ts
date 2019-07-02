@@ -9,6 +9,20 @@ import {NewChannelPageComponent} from './containers/new-channel-page/new-channel
 import {NewReviewPageComponent} from './containers/new-review-page/new-review-page.component';
 import {NewCampaignDonePopupComponent} from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import {CampaignsComponent} from './containers/campaigns/campaigns.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule, MatIconModule, MatMenuModule, MatButtonModule, MatDatepickerModule, MatFormFieldModule,
+  MatNativeDateModule,
+  MatInputModule,
+  MatSortModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSelectModule} from '@angular/material';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
+import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
+import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
+import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
+import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
 
 @NgModule({
   declarations: [
@@ -18,10 +32,32 @@ import {CampaignsComponent} from './containers/campaigns/campaigns.component';
     NewChannelPageComponent,
     NewReviewPageComponent,
     NewCampaignDonePopupComponent,
-    CampaignsComponent],
+    CampaignsComponent
+  ],
   imports: [
     CommonModule,
-    CampaignsRoutingModule
+    CampaignsRoutingModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    StatusLabelModule,
+    TableFiltersModule,
+    SearchFilterModule,
+    TabsFilterModule,
+    RangeDatePickerFilterModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

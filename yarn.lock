@@ -8147,6 +8147,13 @@ sass@^1.17.3:
   dependencies:
     chokidar "^2.0.0"
 
+saturn-datepicker@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/saturn-datepicker/-/saturn-datepicker-7.4.0.tgz#4b6f9b5ed3a9d684f62bdd5f8cfc2cc2665f62e0"
+  integrity sha512-9I6Sk9DGlgP3+wghs/hNCm6aib9KJwfr4Ta1kIiejs0vXaITVybfANNHMABOjBeIpEKyEKSj9tEqpZMiZxolpg==
+  dependencies:
+    tslib "^1.9.0"
+
 saucelabs@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/saucelabs/-/saucelabs-1.5.0.tgz#9405a73c360d449b232839919a86c396d379fd9d"

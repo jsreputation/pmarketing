@@ -1,3 +1,16 @@
-.paginator .mat-paginator-container{
+.paginator .mat-paginator-container {
   justify-content: space-between;
 }
+
+  td.mat-cell.menu-column, th.mat-header-cell.menu-column {
+    max-width: 6px;
+    padding-right: 0 !important;
+  }
+
+td.mat-cell.date-column, th.mat-header-cell.date-column, .date-column  th.mat-header-cell{
+  width: 80px!important;
+  padding: 0 20px;
+  text-align: right;
+  //padding-right: 0 !important;
+}
+

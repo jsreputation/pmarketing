@@ -1,9 +1,10 @@
-import {Component, ChangeDetectionStrategy, AfterViewInit, ViewChild} from '@angular/core';
-import {MatTableDataSource, MatSort, MatPaginator, MatDialog} from '@angular/material';
-import {map, tap} from 'rxjs/operators';
-import {EngagementsService} from '@cl-core/http-services/engagements-https.service';
-import {PrepareTableFilers} from "@cl-helpers/prepare-table-filers";
-import {CreateEngagementPopupComponent} from "../create-engagement-popup/create-engagement-popup.component";
+import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { map, tap } from 'rxjs/operators';
+import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
+
 
 
 export interface Engagements {
@@ -33,13 +34,33 @@ export class EngagementsListPageComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getBooks();
+    this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
-  public getBooks() {
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  public editItem(id: number) {
+  }
+
+  public duplicateItem(id: number) {
+  }
+
+  public deleteItem(id: number) {
+  }
+
+  public useAsCaptionItem(id: number) {
+  }
+
+  private getData() {
     this.engagementsService.getEngagements()
       .pipe(
         map((response: any) => response.results),
@@ -52,14 +73,4 @@ export class EngagementsListPageComponent implements AfterViewInit {
         this.dataSource.data = res;
       });
   }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-
 }
