@@ -1,11 +1,6 @@
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MatTabsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatRippleModule,
-    MatIconModule
- } from '@angular/material';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -16,7 +11,8 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
-      imports: [BrowserAnimationsModule, MatTabsModule, MatCardModule, MatButtonModule, MatRippleModule, MatIconModule]
+      imports: [BrowserAnimationsModule],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
