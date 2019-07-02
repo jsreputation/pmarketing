@@ -93,8 +93,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         this.image = card.display_properties.card_image.value.image_url;
         if (this.availablePieces === 0) {
           this.notificationService.addPopup({
-            title: 'You do not have any piece',
-            text: 'You cannot play puzzle now.'
+            title: 'Thank you!',
+            text: 'Unfortunately, you have no pieces available.'
           });
           this.router.navigate(['/home']);
         }

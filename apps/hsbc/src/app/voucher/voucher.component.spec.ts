@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment';
 import { MatProgressBarModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -19,7 +20,8 @@ describe('VoucherComponent', () => {
         CampaignModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
         RouterTestingModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        NoopAnimationsModule
       ]
     })
       .compileComponents();
