@@ -1,0 +1,25 @@
+<mat-sidenav-container class="container-sidenav">
+  <mat-sidenav [@openClose]="isOpen ? 'open' : 'closed'" [mode]="sideNavMode" class="sidenav" #sidenav [opened]="sideNavOpened">
+    <mat-toolbar class="mat-toolbar-log"
+                 [class.center]="!isOpen"
+    >
+      <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
+    </mat-toolbar>
+    <div class="sidenav-data-container">
+      <cl-user class="cl-user"
+               [isOpen]="isOpen"
+      ></cl-user>
+    </div>
+    <div class="sidenav-menu-wrap">
+      <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
+    </div>
+    <button class="sidenav-action"
+            [class.center]="!isOpen"
+            (click)="toggle()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content [@position]="isOpen ? 'open' : 'closed'">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

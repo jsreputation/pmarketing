@@ -51,39 +51,31 @@ export class PuzzlePlayComponent implements OnChanges {
   imageWidth = 300;
   imageHeight = 200;
 
-  staticPizzleDummyTiles = [];
+  staticPuzzleDummyTiles = [];
 
   ngOnChanges(
     // changes: SimpleChanges
   ) {
+    if (this.img) {
+      this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+          this.imageHeight = this.imageWidth * ratio;
+          this.tileWidth = this.imageWidth / this.cols;
+          this.tileHeight = this.imageHeight / this.rows;
+          this.totalPieces = this.rows * this.cols;
 
-    this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
-
-      this.imageHeight = this.imageWidth * ratio;
-
-      this.tileWidth = this.imageWidth / this.cols;
-      this.tileHeight = this.imageHeight / this.rows;
-      this.totalPieces = this.rows * this.cols;
-
-      for (let x = 0; x < this.totalPieces; x++) {
-        const puzzleTile = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-        this.boardPuzzleTiles[x] = puzzleTile;
-      }
-
-      for (let i = 0; i < this.nbAvailablePieces; i++) {
-
-        const location = this.nbPlayedPieces + i;
-        const puzzleTile = { puzzleLocation: location, isSelected: false };
-        this.remainingPuzzleTiles[i] = puzzleTile;
-      }
-
-      for (let i = 0; i < this.totalPieces; i++) {
-        this.staticPizzleDummyTiles[i] = [i];
-      }
-
-    },
-      err => console.error('Observer got an error: ' + err));
-
+          for (let x = 0; x < this.totalPieces; x++) {
+            this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+          }
+          for (let i = 0; i < this.nbAvailablePieces; i++) {
+            const location = this.nbPlayedPieces + i;
+            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
+          }
+          for (let i = 0; i < this.totalPieces; i++) {
+            this.staticPuzzleDummyTiles[i] = [i];
+          }
+        },
+        err => console.error('Observer got an error: ' + err));
+    }
   }
 
   bottomPannelClicked(): void {
@@ -144,7 +136,6 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getImageSize(): any {
-
     return {
       width: (this.imageWidth) + 'px',
       height: (this.imageHeight) + 'px'
@@ -152,7 +143,6 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getTileSize(): any {
-
     return {
       width: (this.tileWidth) + 'px',
       height: (this.tileHeight) + 'px'
@@ -160,10 +150,8 @@ export class PuzzlePlayComponent implements OnChanges {
   }
 
   getWidthHeightRatio(): string {
-
     const ratioValue = (this.tileWidth / this.tileHeight);
-    const ratio = ratioValue.toString() + ':1';
-    return ratio;
+    return ratioValue.toString() + ':1';
   }
 
   isAllPuzzleCompleted(): boolean {

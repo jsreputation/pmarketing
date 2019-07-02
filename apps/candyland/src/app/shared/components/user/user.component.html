@@ -1,0 +1,28 @@
+<div class="user-wrap">
+  <div class="user-preview">
+    <img src="/assets/images/user-profile.png" alt="user-img" class="user-img">
+  </div>
+  <div class="user-info"
+       *ngIf="isOpen"
+  >
+    <p class="user-name">
+      Stephan Ryan
+    </p>
+    <p class="user-company">
+      Perx
+    </p>
+  </div>
+  <div class="user-notifications"
+
+       [ngClass]="{'vertical': !isOpen}"
+  >
+    <button class="btn-transparent">
+      <span class="notification notification-email"></span>
+      <mat-icon aria-hidden="false">mail_outline</mat-icon>
+    </button>
+    <button class="btn-transparent none">
+      <span class="notification notification-none"></span>
+      <mat-icon aria-hidden="false">notifications_none</mat-icon>
+    </button>
+  </div>
+</div>
