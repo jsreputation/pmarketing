@@ -1,14 +1,17 @@
 .background-padding-offset {
-    //margin: 0 -1.2rem;
+  //margin: 0 -1.2rem;
 }
 
 .puzzles-list-container {
-    padding: 0 1.2rem;
-    display: flex;
-    flex-direction: column;
-    background-color: #e5e5e5;
-    min-height: calc(100vh - 80px);;
+  padding: 0 1.2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #e5e5e5;
+  min-height: calc(100% - 6rem);
+  position: relative;
+  top: 6rem;
 }
+
 h1 {
   padding: 1.6rem 0 0;
   margin: 0;
