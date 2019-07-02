@@ -45,7 +45,7 @@ export class ActivationCodeComponent implements OnInit {
     });
   }
 
-  pinInput(): void {
+  pinInputSuccess(): void {
     this.router.navigate([`/redemption/${this.voucherId}`]);
   }
 
