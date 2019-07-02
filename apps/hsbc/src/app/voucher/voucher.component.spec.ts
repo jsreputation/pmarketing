@@ -5,6 +5,7 @@ import { VouchersModule, CampaignModule } from '@perx/core/dist/perx-core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment';
+import { MatProgressBarModule } from '@angular/material';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -17,7 +18,8 @@ describe('VoucherComponent', () => {
         HttpClientTestingModule,
         CampaignModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
-        RouterTestingModule
+        RouterTestingModule,
+        MatProgressBarModule
       ]
     })
       .compileComponents();
