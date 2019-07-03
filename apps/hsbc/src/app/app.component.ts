@@ -67,6 +67,8 @@ export class AppComponent implements OnInit {
   onActivate(ref: any) {
     const dummy = () => { };
 
+    this.drawer.close();
+
     this.showHeader =
       ref instanceof PuzzleComponent ||
       ref instanceof PuzzlesComponent ||
