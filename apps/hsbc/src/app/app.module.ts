@@ -34,6 +34,7 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { SoundModule } from './sound/sound.module';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { DatePipe } from '@angular/common';
     MatInputModule,
     MatCardModule,
     MatRippleModule,
+    SoundModule,
     MatProgressSpinnerModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
