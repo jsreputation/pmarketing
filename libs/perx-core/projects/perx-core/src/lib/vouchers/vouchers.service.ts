@@ -30,7 +30,7 @@ export class VouchersService {
   ) {
   }
 
-  private static voucherToVoucher(v: any): IVoucher {
+  public static voucherToVoucher(v: any): IVoucher {
     const reward = v[`reward`];
     const images = reward[`images`] || [];
     let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
@@ -68,18 +68,14 @@ export class VouchersService {
       return of(this.vouchers);
     }
 
-    const url = `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
-    return this.http.get<IV4VouchersResponse>(url)
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl)
       .pipe(
         flatMap((resp: IV4VouchersResponse) => {
           const streams = [
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IV4VouchersResponse>(`${url}&page=${i}`)
-              .pipe(
-                map(res => res.data)
-              );
+            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i);
             streams.push(stream);
           }
           return streams;
@@ -92,6 +88,17 @@ export class VouchersService {
       );
   }
 
+  getAllFromPage(page: number): Observable<IV4Voucher[]> {
+    return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}`)
+      .pipe(
+        map(res => res.data)
+      );
+  }
+
+  get vouchersUrl(): string {
+    return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
+  }
+
   get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
@@ -99,7 +106,6 @@ export class VouchersService {
     if (found) {
       return of(found);
     }
-
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
