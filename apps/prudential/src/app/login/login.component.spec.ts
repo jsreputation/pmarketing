@@ -5,6 +5,7 @@ import {
   MatCardModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
 import { environment } from '../../environments/environment';
@@ -21,6 +22,7 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         AuthenticationModule,
+        NoopAnimationsModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
         FormsModule,
