@@ -120,7 +120,7 @@ describe('CampaignService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/stamp_cards');
+    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/stamp_cards?size=100');
 
     expect(req.request.method).toEqual('GET');
 

@@ -155,7 +155,11 @@ export class CampaignService {
 
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
+        params: {
+          size: '100'
+        }
+      }
     ).pipe(
       map(res => res.data)
     );
