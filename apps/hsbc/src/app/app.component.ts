@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthenticationService, PopupComponent } from '@perx/core/dist/perx-core';
+import { Subscription } from 'rxjs';
 import { NotificationService } from './notification.service';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
