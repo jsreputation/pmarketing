@@ -3,9 +3,13 @@
   width: 100%;
 }
 
-.error_msg span{
-  color: red;
-  font-size: 1.5rem;
+.error_msg {
+  padding-bottom: 1rem;
+
+  span {
+    color: red;
+    font-size: 1.5rem;
+  }
 }
 
 .content-container {
@@ -15,14 +19,17 @@
   top: unset;
   display: flex;
   flex-direction: column;
+
   .error_msg {
     flex: 1;
     display: flex;
     justify-content: center;
+
     span {
       align-self: flex-end;
     }
   }
+
   .login-form {
     flex: 0;
     margin-bottom: 5rem;
