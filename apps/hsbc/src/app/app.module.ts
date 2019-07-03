@@ -17,7 +17,8 @@ import {
   AuthenticationModule,
   PopupComponent,
   CampaignModule,
-  VouchersModule
+  VouchersModule,
+  ProfileModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
@@ -39,6 +40,7 @@ import { DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
 import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { FaqComponent } from './faq/faq.component';
     HomeComponent,
     PuzzlesComponent,
     TncComponent,
-    FaqComponent
+    FaqComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +79,7 @@ import { FaqComponent } from './faq/faq.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     CampaignModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
     FormsModule
   ],
   providers: [
