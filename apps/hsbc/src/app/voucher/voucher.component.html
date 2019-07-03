@@ -1,10 +1,13 @@
 <!-- Template stuff aimed at being replaced by real components -->
-<h1 *ngIf="firstTime">Congratulations!</h1>
-<h2 *ngIf="firstTime">You just won an instant reward.</h2>
 <div class="voucher-container">
-    <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true" [voucherId]="id"></perx-core-voucher>
+    <h1 *ngIf="firstTime">Congratulations!</h1>
+    <h2 *ngIf="firstTime">You just won an instant reward.</h2>
+    <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true" [voucherId]="id">
+    </perx-core-voucher>
 </div>
 <div class="actions-container">
-    <button *ngIf="firstTime" id="save-to-wallet-btn" routerLink="/home" mat-stroked-button color="primary">Save to wallet</button>
-    <button mat-flat-button color="primary" (click)="onRedeem()">Redeem now</button>
+    <button *ngIf="firstTime" id="save-to-wallet-btn" routerLink="/home" mat-stroked-button color="primary">Save to
+        wallet</button>
+    <button mat-flat-button color="primary" (click)="onRedeem()" [disabled]="redeeming">{{btnTxt}}</button>
+    <mat-progress-bar *ngIf="redeeming" color="primary" mode="indeterminate"></mat-progress-bar>
 </div>
