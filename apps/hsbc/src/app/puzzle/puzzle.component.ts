@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   CampaignService,
   IStampCard,
@@ -10,13 +10,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
+import { SoundService } from '../sound/sound.service';
 
 @Component({
   selector: 'app-puzzle',
   templateUrl: './puzzle.component.html',
   styleUrls: ['./puzzle.component.scss']
 })
-export class PuzzleComponent implements OnInit {
+export class PuzzleComponent implements OnInit, OnDestroy {
+
   campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
@@ -30,8 +32,10 @@ export class PuzzleComponent implements OnInit {
     private campaignService: CampaignService,
     private route: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private soundService: SoundService
+  ) {
+  }
 
   ngOnInit() {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
@@ -51,6 +55,16 @@ export class PuzzleComponent implements OnInit {
         this.fetchCard();
       }
     }
+
+    if (!localStorage.getItem('enableSound')) {
+      setTimeout(() => {
+        this.soundService.showPopup();
+      }, 50);
+    }
+  }
+
+  ngOnDestroy() {
+    this.soundService.pause();
   }
 
   private fetchCampaign() {
@@ -69,14 +83,22 @@ export class PuzzleComponent implements OnInit {
   private fetchCard() {
     this.campaignService.getCurrentCard(this.campaignId)
       .subscribe((res: IStampCardResponse) => {
-        this.cardId = res.data.id;
-        this.card = res.data;
-        this.cols = this.card.display_properties.number_of_cols;
-        this.rows = this.card.display_properties.number_of_rows;
-        this.playedPieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
-        const availablePieces = this.card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+        const card = res.data;
+        this.cardId = card.id;
+        this.card = card;
+        this.cols = card.display_properties.number_of_cols;
+        this.rows = card.display_properties.number_of_rows;
+        this.playedPieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
+        const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
-        this.image = this.card.display_properties.card_image.value.image_url;
+        this.image = card.display_properties.card_image.value.image_url;
+        if (this.availablePieces === 0) {
+          this.notificationService.addPopup({
+            title: 'Thank you!',
+            text: 'Unfortunately, you have no pieces available.'
+          });
+          this.router.navigate(['/home']);
+        }
       });
   }
 

@@ -54,7 +54,7 @@ export class VouchersService {
       description: reward[`description`],
       thumbnailUrl,
       bannerUrl,
-      expiresAt: new Date(reward[`valid_to`]),
+      expiresAt: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
       redeemedOn,
       merchantName: reward[`merchant_name`],
       merchantLogoUrl,
