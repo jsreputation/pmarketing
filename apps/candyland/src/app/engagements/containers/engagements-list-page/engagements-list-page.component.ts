@@ -5,8 +5,6 @@ import { EngagementsService } from '@cl-core/http-services/engagements-https.ser
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
 
-
-
 export interface Engagements {
   id: number;
   name: string;

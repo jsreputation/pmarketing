@@ -23,6 +23,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
+import {ButtonModule} from "@cl-shared/components/button/button.module";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-
     SearchFilterModule,
     TabsFilterModule,
     RangeDatePickerFilterModule,
+    ButtonModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

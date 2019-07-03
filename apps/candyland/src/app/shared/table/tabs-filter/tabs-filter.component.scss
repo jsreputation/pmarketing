@@ -7,19 +7,26 @@
 
 .tabs {
   position: relative;
+  width: 100%;
   display: block;
-  padding:0;
+  padding: 0;
   border-bottom: 1px solid #e0e0e0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+  }
 }
 
-.tabs>a {
+.tabs > a {
   font-family: $base-font-family;
   font-style: normal;
   font-weight: 500;
   font-size: rem(14px);
   line-height: rem(16px);
   position: relative;
-  display:inline-block;
+  display: inline-block;
   text-decoration: none;
   padding: rem(22px);
   color: $secondary-font-color;
@@ -28,12 +35,12 @@
   cursor: pointer;
 }
 
-.tabs>a.active {
+.tabs > a.active {
   color: $base-font-color;
   border-bottom-color: #458CFF;
 }
 
-.tabs>a:not(.active):hover {
+.tabs > a:not(.active):hover {
   background-color: inherit;
   color: #7c848a;
 }

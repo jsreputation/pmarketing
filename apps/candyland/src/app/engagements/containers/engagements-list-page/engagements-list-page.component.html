@@ -1,73 +1,59 @@
-<!--<section class="content">-->
+<div class="page-header">
+  <h1>Engagements</h1>
+  <cl-button classList="primary" (click)="openDialog()">Create new</cl-button>
+</div>
 
-  <div class="page-header">
-    <h1>Engagements</h1>
-     <cl-button classList="primary" (click)="openDialog()">Create new</cl-button>
-  </div>
+<cl-table-filters [dataSource]="dataSource">
+  <ng-container *clTableFilter="'name'; let filter">
+    <cl-search-filter class="row" [control]="filter"></cl-search-filter>
+  </ng-container>
+  <ng-container *clTableFilter="'type'; let filter">
+    <cl-tabs-filter class="row" [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
+  </ng-container>
+</cl-table-filters>
 
-  <cl-table-filters [dataSource]="dataSource">
-    <div class="row" *clTableFilter="'name'; let filter">
-      <cl-search-filter [control]="filter"></cl-search-filter>
-    </div>
-    <div class="row" *clTableFilter="'type'; let filter">
-      <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
-    </div>
+<table mat-table [dataSource]="dataSource" matSort>
 
-    <!--<ng-container *clTableFilter="'status'; let filter">-->
-    <!--<mat-form-field appearance="outline">-->
-    <!--<mat-select [formControl]="filter">-->
-    <!--<mat-option [value]="null">ALL</mat-option>-->
-    <!--<mat-option value="active">Active</mat-option>-->
-    <!--<mat-option value="pending">pending</mat-option>-->
-    <!--<mat-option value="draft">draft</mat-option>-->
-    <!--</mat-select>-->
-    <!--</mat-form-field>-->
-    <!--</ng-container>-->
-  </cl-table-filters>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
+    <td mat-cell *matCellDef="let element">
+      <p class="name-cell">
+        <a class="name-cell__link" routerLink="/">{{element?.name}}</a>
+        <span class="name-cell__id">ID: {{element?.id}}</span>
+      </p>
+    </td>
+  </ng-container>
 
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="status">Status</th>
+    <td mat-cell *matCellDef="let element">
+      <cl-status-label [status]="element?.status"></cl-status-label>
+    </td>
+  </ng-container>
 
-  <table mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Engagement Type</th>
+    <td mat-cell *matCellDef="let element"> {{element?.type}}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
-      <td mat-cell *matCellDef="let element">
-        <p class="name-cell">
-          <a class="name-cell__link" routerLink="/">{{element?.name}}</a>
-          <span class="name-cell__id">ID: {{element?.id}}</span>
-        </p>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
+    <td mat-cell *matCellDef="let element" class="menu-column">
+      <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #itemMenu="matMenu">
+        <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
+        <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
+        <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
+        <button mat-menu-item (click)="useAsCaptionItem(element?.id)">Use as campaign</button>
+      </mat-menu>
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="status">Status</th>
-      <td mat-cell *matCellDef="let element">
-        <cl-status-label [status]="element?.status"></cl-status-label>
-      </td>
-    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>Engagement Type</th>
-      <td mat-cell *matCellDef="let element"> {{element?.type}}</td>
-    </ng-container>
+<mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
-      <td mat-cell *matCellDef="let element" class="menu-column">
-        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
-          <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
-          <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
-          <button mat-menu-item (click)="useAsCaptionItem(element?.id)">Use as campaign</button>
-        </mat-menu>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-<!--</section>-->
