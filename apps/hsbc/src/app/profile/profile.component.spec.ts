@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material';
 import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core/dist/perx-core';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -19,7 +20,8 @@ describe('ProfileComponent', () => {
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
         ProfileModule.forRoot({ env: environment }),
-        RouterTestingModule
+        RouterTestingModule,
+        NoopAnimationsModule
       ]
     })
     .compileComponents();
