@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material';
 import { VouchersModule } from '@perx/core/dist/perx-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -17,6 +19,7 @@ describe('RedemptionComponent', () => {
         MatCardModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        NoopAnimationsModule,
         VouchersModule.forRoot({ env: { apiHost: '' } }),
       ]
     })

@@ -8,6 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { MatDialogStub } from 'src/testing/mat-dialog-stub';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -23,6 +24,7 @@ describe('VouchersComponent', () => {
       declarations: [VouchersComponent],
       imports: [
         HttpClientTestingModule,
+        NoopAnimationsModule,
         VouchersModule.forRoot({ env: { apiHost: '' } })
       ],
       providers: [

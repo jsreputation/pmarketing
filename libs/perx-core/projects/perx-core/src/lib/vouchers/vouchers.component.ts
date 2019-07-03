@@ -38,7 +38,6 @@ export class VouchersComponent implements OnInit {
     if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
       return;
     }
-
     this.route.emit(voucher.id);
   }
 }
