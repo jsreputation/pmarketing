@@ -152,12 +152,6 @@ export class CampaignService {
     );
   }
 
-  // getCampaign(id: number): Observable<ICampaignResponse> {
-  //   return this.http.get<ICampaignResponse>(
-  //     `${this.baseUrl}/v4/campaigns`
-  //   );
-  // }
-
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`
