@@ -1,7 +1,10 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardDetailComponent } from './reward-detail.component';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { VouchersModule, CampaignModule } from '@perx/core/dist/perx-core';
+import { environment } from '../../environments/environment';
+
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
@@ -10,7 +13,11 @@ describe('RewardDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RewardDetailComponent ],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        CampaignModule.forRoot({ env: environment }),
+        VouchersModule.forRoot({ env: environment }),
+       ]
     })
     .compileComponents();
   }));
@@ -21,8 +28,7 @@ describe('RewardDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', inject(
-    [Router], () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  }));
+  });
 });

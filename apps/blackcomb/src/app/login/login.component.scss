@@ -1,0 +1,21 @@
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+}
+.full-width__input,
+.full-width__button {
+  width: 100%;
+}
+
+button {
+	background: #2665EE !important;
+	height: 44px;
+}
+
+.login-form {
+	margin-top: 4rem;}

@@ -9,11 +9,14 @@ import { Router } from '@angular/router';
 export class RewardDetailComponent implements OnInit {
 
   constructor(private router: Router) {}
+  id = 140380;
+  firstTime = true;
 
   ngOnInit() {
   }
 
-  redeemClicked() {
+  onRedeem() {
     this.router.navigate(['redeem/pin/1']);
   }
+
 }
