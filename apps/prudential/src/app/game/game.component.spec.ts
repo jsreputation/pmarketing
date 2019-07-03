@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  let vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
