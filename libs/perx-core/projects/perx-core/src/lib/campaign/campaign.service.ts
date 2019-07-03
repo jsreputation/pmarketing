@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from './env-config';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { VouchersService } from '../vouchers/vouchers.service';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
@@ -142,7 +143,7 @@ export interface ICampaignResponse {
 export class CampaignService {
   baseUrl: string;
 
-  constructor(private http: HttpClient, config: EnvConfig) {
+  constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
   }
 
@@ -174,6 +175,12 @@ export class CampaignService {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
       null
+    ).pipe(
+      tap((res: IPutStampTransactionResponse) => {
+        if (res.data.vouchers && res.data.vouchers.length > 0) {
+          this.vouchersService.reset();
+        }
+      })
     );
   }
 }
