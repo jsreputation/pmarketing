@@ -237,9 +237,8 @@ describe('VouchersService', () => {
   });
 
   it('should get the all vouchers detail for page with certain page number', (done: DoneFn) => {
-    const url = 'https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1';
     const page = 2;
-    service.getAllFromPage(page, url)
+    service.getAllFromPage(page)
       .subscribe(() => {
         expect(true).toBeTruthy();
         done();
