@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
 import { CampaignsService } from '@cl-core/http-services/campaigns-https.service';
 
@@ -26,6 +26,7 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   DATE_FORMAT = 'dd MMM yyyy';
   TIME_FORMAT = 'hh:ssa';
   form: FormGroup;
+  defaulTypeFilterValue = null;
 
   inlineRange;
   public displayedColumns = ['name', 'status', 'begin', 'end', 'audience', 'goal', 'actions'];
@@ -78,19 +79,23 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   }
 
   public editItem(id: number) {
+    console.log(id);
   }
 
   public duplicateItem(id: number) {
+    console.log(id);
   }
 
   public deleteItem(id: number) {
+    console.log(id);
   }
 
   public pauseItem(id: number) {
+    console.log(id);
   }
 
   private getData() {
-    this.campaignsService.getСampaigns()
+    this.campaignsService.getCampaigns()
       .pipe(
         map((response: any) => response.results)
       )

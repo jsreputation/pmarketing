@@ -40,11 +40,20 @@ export class PrepareTableFilers {
             return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
           }
           if ('begin' in filters[key] && 'end' in filters[key]) {
-            const beginCurrent = item.begin.getTime() || 0;
-            const beginFilter = new Date(filters[key].begin).getTime() || 0;
-            const endCurrent = item.end.getTime() || 0;
-            const endFilter = new Date(filters[key].end).getTime() || 0;
-            return beginCurrent >= beginFilter && endCurrent <= endFilter;
+            if (filters[key].begin) {
+              const beginCurrent = item.begin.getTime();
+              const beginFilter = new Date(filters[key].begin).getTime();
+              if (beginCurrent < beginFilter) {
+                return false;
+              }
+            }
+            if (filters[key].end) {
+              const endCurrent = item.end.getTime();
+              const endFilter = new Date(filters[key].end).getTime();
+              if (endCurrent > endFilter) {
+                return false;
+              }
+            }
           }
           return true;
         });

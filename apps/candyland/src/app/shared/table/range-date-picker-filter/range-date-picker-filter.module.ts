@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RangeDatePickerFilterComponent } from './range-date-picker-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule, MatInputModule, MatFormFieldModule, MatIconModule } from '@angular/material';
-import {
-  DateAdapter, SatDatepickerModule, SatNativeDateModule
-} from 'saturn-datepicker';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 @NgModule({
   declarations: [RangeDatePickerFilterComponent],
@@ -22,7 +20,4 @@ import {
   ]
 })
 export class RangeDatePickerFilterModule {
-  constructor(private dateAdapter: DateAdapter<Date>) {
-    dateAdapter.setLocale('en');
-  }
 }

@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'cl-tabs-filter',
@@ -34,10 +34,10 @@ export class TabsFilterComponent implements ControlValueAccessor {
   }
 
   public onChange: any = () => {
-  }
+  };
 
   public onTouched: any = () => {
-  }
+  };
 
   public registerOnChange(fn) {
     this.onChange = fn;

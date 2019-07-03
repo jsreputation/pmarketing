@@ -3,21 +3,27 @@
   <cl-button classList="primary" (click)="openDialog()">Create new</cl-button>
 </div>
 
+<!--<cl-separate-range-date-picker-filter></cl-separate-range-date-picker-filter>-->
+
 <cl-table-filters [dataSource]="dataSource">
   <ng-container *clTableFilter="'name'; let filter">
-    <cl-search-filter style="flex: 1" [control]="filter"></cl-search-filter>
+    <cl-search-filter [control]="filter"></cl-search-filter>
   </ng-container>
   <div>
     <ng-container *clTableFilter="'rangeDate'; let filter">
-      <cl-range-date-picker-filter [control]="filter"></cl-range-date-picker-filter>
+<!--      <cl-range-date-picker-filter [control]="filter"></cl-range-date-picker-filter>-->
+      <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
     </ng-container>
-    <ng-container *clTableFilter="'status'; let filter">
+    <ng-container *clTableFilter="'status'; value: ''; let filter">
       <mat-form-field appearance="outline">
-        <mat-select [formControl]="filter">
-          <mat-option [value]="null">ALL</mat-option>
+        <mat-select [formControl]="filter" placeholder="All">
+          <mat-option value="">All</mat-option>
           <mat-option value="active">Active</mat-option>
-          <mat-option value="pending">pending</mat-option>
-          <mat-option value="draft">draft</mat-option>
+          <!--          <mat-option value="pending">pending</mat-option>-->
+          <mat-option value="draft">Draft</mat-option>
+          <mat-option value="sheduled">Sheduled</mat-option>
+          <mat-option value="paused">Paused</mat-option>
+          <mat-option value="ended">Ended</mat-option>
         </mat-select>
       </mat-form-field>
     </ng-container>

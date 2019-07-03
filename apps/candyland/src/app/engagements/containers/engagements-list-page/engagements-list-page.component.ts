@@ -42,20 +42,24 @@ export class EngagementsListPageComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
     });
   }
 
   public editItem(id: number) {
+    console.log(id);
   }
 
   public duplicateItem(id: number) {
+    console.log(id);
   }
 
   public deleteItem(id: number) {
+    console.log(id);
   }
 
   public useAsCaptionItem(id: number) {
+    console.log(id);
   }
 
   private getData() {

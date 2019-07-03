@@ -3,7 +3,7 @@
   <cl-button classList="primary" (click)="openDialog()">Create new</cl-button>
 </div>
 
-<cl-table-filters [dataSource]="dataSource">
+<cl-table-filters [dataSource]="dataSource" classList="block">
   <ng-container *clTableFilter="'name'; let filter">
     <cl-search-filter class="row" [control]="filter"></cl-search-filter>
   </ng-container>
