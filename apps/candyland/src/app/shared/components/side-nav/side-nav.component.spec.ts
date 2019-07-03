@@ -6,7 +6,7 @@ import { LogoModule } from '../logo/logo.module';
 import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -22,7 +22,7 @@ describe('SideNavComponent', () => {
         MatToolbarModule,
         MatSidenavModule,
         MatIconModule,
-        NoopAnimationsModule,
+        BrowserAnimationsModule,
       ],
       declarations: [ SideNavComponent ]
     })

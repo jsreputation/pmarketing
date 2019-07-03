@@ -6,7 +6,7 @@ import { LogoModule } from '../../../shared/components/logo/logo.module';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,7 +17,7 @@ describe('LoginComponent', () => {
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        NoopAnimationsModule,
+        BrowserAnimationsModule,
         ButtonModule,
         LogoModule,
         MatFormFieldModule,

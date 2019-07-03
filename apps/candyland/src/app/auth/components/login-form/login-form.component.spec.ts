@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '../../../shared/components/button/button.module';
 import { LogoModule } from '../../../shared/components/logo/logo.module';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginFormComponent', () => {
@@ -16,7 +16,7 @@ describe('LoginFormComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        NoopAnimationsModule,
+        BrowserAnimationsModule,
         ButtonModule,
         LogoModule,
         MatFormFieldModule,
