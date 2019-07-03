@@ -22,7 +22,7 @@ interface IV4Voucher {
   providedIn: 'root'
 })
 export class VouchersService {
-  vouchers: IVoucher[] = [];
+  private vouchers: IVoucher[] = [];
 
   constructor(
     private http: HttpClient,
@@ -118,5 +118,9 @@ export class VouchersService {
         this.vouchers = [];
       })
     );
+  }
+
+  reset(): void {
+    this.vouchers = [];
   }
 }
