@@ -1,0 +1,95 @@
+@import "helper";
+@import "variables";
+
+.title {
+  font-weight: 500;
+  font-size: rem(26px);
+  line-height: 1.04;
+  color: $there-color;
+}
+
+.sub-title {
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.06;
+  color: $secondary-color;
+}
+
+.tree {
+
+  &-wrap {
+    min-height: 100vh;
+    background-color: $simple-light-gray;
+  }
+
+  &-page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 rem(30px) 0 rem(43px);
+    background: $white-color;
+    align-items: center;
+  }
+
+  &-page-header {
+    height: rem(66px);
+  }
+
+  &-btn-cancel {
+    padding-right: rem(8px);
+  }
+
+  &-main-block {
+    padding: rem(30px) rem(33px);
+    display: flex;
+  }
+
+  &-wrap-fields {
+    min-width: rem(747px);
+    margin-right: rem(40px);
+  }
+}
+
+.messages {
+
+  &-input {
+    width: 100%;
+  }
+}
+
+.game {
+
+  &-title {
+    font-size: 16px;
+    line-height: 1.06;
+    color: $secondary-color;
+    margin: rem(24px) 0 rem(16px) 0;
+  }
+
+  &-graphic {
+    display: block;
+    margin-top: rem(16px);
+  }
+
+  &-tree-wrap {
+    display: flex;
+  }
+
+  &-image-preview {
+    display: block;
+    margin-right: rem(10px);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &-number-gifts {
+    padding-top: rem(40px);
+  }
+
+  &-gift-select {
+    width: rem(344px);
+  }
+
+
+}

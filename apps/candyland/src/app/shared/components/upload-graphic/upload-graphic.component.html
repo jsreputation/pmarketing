@@ -1,0 +1,19 @@
+<div class="upload-wrap">
+  <input #fileInput type="file"
+         *ngIf="!imgURL"
+         class="upload-input"
+         accept='image/*'
+         (change)="preview(fileInput.files)"
+  />
+  <div class="image-wrap active" *ngIf="imgURL">
+    <img [src]="imgURL" class="image" alt="upload">
+    <button class="image-clear">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="fileInput.click()">+ Add New</button>
+  </div>
+  <span style="color:red;" *ngIf="message">{{message}}</span>
+</div>

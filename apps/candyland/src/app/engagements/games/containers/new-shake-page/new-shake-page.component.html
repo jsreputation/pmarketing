@@ -8,3 +8,113 @@
 </ul>
 
 <router-outlet></router-outlet>
+<div class="tree-wrap">
+  <div class="tree-page-header">
+    <div class="tree-title-wrap">
+      <p class="title">
+        Create Shake the Tree Template
+      </p>
+    </div>
+    <div class="tree-actions">
+      <cl-button [classList]="'third'"
+                 class="tree-btn-cancel"
+
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <div class="tree-main-block">
+    <div class="tree-wrap-fields">
+      <mat-card>
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Messages
+          </p>
+        </div>
+        <div class="messages-form" [formGroup]="messagesForm">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="game-title-wrap">
+          <p class="sub-title">
+            Game graphic
+          </p>
+        </div>
+        <div class="game-form">
+          <p class="game-title">
+            Tree
+          </p>
+          <div class="game-tree-wrap">
+            <cl-images-preview *ngFor="let gameTree of gamesTree"
+                               [img]="gameTree"
+                               [basePath]="'/assets/images/tree/'"
+                               class="game-image-preview"
+                               (selectPreview)="setSelectedGameTree($event)"
+                               [selected]="selectGameTree"
+            ></cl-images-preview>
+          </div>
+
+          <div class="game-number-gifts">
+            <div class="control-input">
+              <mat-form-field class="game-gift-select">
+                <mat-label>Total number of gifts in tree</mat-label>
+                <mat-select [formControl]="gameGift">
+                  <mat-option *ngFor="let gift of gameGifts" [value]="gift.value">
+                    {{gift.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="game-gift-box">
+            <p class="game-title">
+              Gift box
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic
+                [graphicList]="giftBox"
+                [basePath]="'/assets/images/gifts/'"
+                (selectGraphic)="setSelectGiftBox($event)"
+              >
+              </cl-select-graphic>
+            </div>
+
+          </div>
+        </div>
+
+      </mat-card>
+    </div>
+    <div class="tree-preview">
+      mobile
+    </div>
+  </div>
+</div>

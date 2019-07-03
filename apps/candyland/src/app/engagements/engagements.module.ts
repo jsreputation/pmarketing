@@ -5,7 +5,13 @@ import { EngagementsRoutingModule } from './engagements-routing.module';
 import { EngagementsListPageComponent } from './containers/engagements-list-page/engagements-list-page.component';
 import { CreateEngagementPopupComponent } from './containers/create-engagement-popup/create-engagement-popup.component';
 import { EngagementsComponent } from './containers/engagements/engagements.component';
-import { MatDialogModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import {
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatRadioModule,
+  MatSelectModule
+} from '@angular/material';
 import { EngagementTypeComponent } from './containers/create-engagement-popup/engagement-type/engagement-type.component';
 import { TypeItemComponent } from './containers/create-engagement-popup/engagement-type/type-item/type-item.component';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
@@ -28,7 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     GamesComponent,
     StampComponent,
     InstantRewardComponent,
-    GameComponent
+    GameComponent,
+
   ],
   imports: [
     CommonModule,
