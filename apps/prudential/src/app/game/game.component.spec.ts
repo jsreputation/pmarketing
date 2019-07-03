@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { CampaignModule, ShakeTreeComponent, GameModule } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
@@ -19,7 +21,8 @@ describe('GameComponent', () => {
         CampaignModule.forRoot({ env: environment }),
         GameModule.forRoot({ env: environment }),
         MatProgressBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' }

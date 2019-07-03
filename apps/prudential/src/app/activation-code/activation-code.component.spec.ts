@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatCardModule, MatDialogModule } from '@angular/material';
 import { VouchersModule } from '@perx/core/dist/perx-core';
 import { Location } from '@angular/common';
@@ -11,7 +11,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { PerxCoreModule, AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -32,7 +31,7 @@ describe('ActivationCodeComponent', () => {
         MatCardModule,
         AuthenticationModule,
         MatCardModule,
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         VouchersModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment })
