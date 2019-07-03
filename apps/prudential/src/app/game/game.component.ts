@@ -47,21 +47,19 @@ export class GameComponent implements OnInit {
         map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
         map(campaigns => campaigns[0]),
         switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
-        catchError(err => {
-          return of({ hasError: true, errorMsg: err });
-        })
+        map(game => game[0])
       )
-      .subscribe(games => {
-        if (games[`hasError`]) {
-          this.router.navigate(['/vouchers']);
-        } else {
-          this.game = games[0];
-          if (this.game.remainingNumberOfTries <= 0) {
-            this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
-          }
+      .subscribe(game => {
+        this.game = game;
+        if (this.game.remainingNumberOfTries <= 0) {
+          this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
         }
         this.loading = false;
-      });
+      },
+        () => {
+          this.router.navigate(['/vouchers']);
+        }
+      );
   }
 
   done(): void {
