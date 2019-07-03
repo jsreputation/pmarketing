@@ -2,10 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
-import { CampaignModule, ShakeTreeComponent, GameModule } from '@perx/core/dist/perx-core';
+import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
+import { ExpectedConditions } from 'protractor';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -57,7 +58,7 @@ describe('GameComponent', () => {
       providers: [
         {
           provide: CampaignService,
-          use: FakeCampaignService
+          useValue: FakeCampaignService
         }
       ]
     })
@@ -77,6 +78,7 @@ describe('GameComponent', () => {
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
     spyOn(router, 'navigate').and.stub();
-
+    component.ngOnInit();
+    expect(router.navigate).toHaveBeenCalled();
   });
 });
