@@ -29,7 +29,7 @@ app.get('/preauth', async (req, res, next) => {
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found for ${ url }`);
+      throw new Error(`No endpoints found for ${url}`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -38,7 +38,7 @@ app.get('/preauth', async (req, res, next) => {
       endpoint.target_url,
       {
         headers: {
-          Authorization: `Basic ${ endpointCredential.perx_access_key_id }:${ endpointCredential.perx_secret_access_key }`
+          Authorization: `Basic ${endpointCredential.perx_access_key_id}:${endpointCredential.perx_secret_access_key}`
         },
         timeout: 10000
       }
@@ -66,7 +66,7 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found: ${ url }`);
+      throw new Error(`No endpoints found: ${url}`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -96,7 +96,11 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 
     res.json(endpointRequest.data);
   } catch (e) {
-    next(e);
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
   }
 });
 
@@ -104,10 +108,10 @@ if (process.env.PRODUCTION) {
   app.set('view engine', 'html');
   app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
 
-// Serve static files from /../../perx-microsite
+  // Serve static files from /../../perx-microsite
   app.use(express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
 
-// All regular routes use the index.html
+  // All regular routes use the index.html
   app.get('*', (req, res) => {
     res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
   });
@@ -115,7 +119,7 @@ if (process.env.PRODUCTION) {
 
 // Start up the Node server
 const server = app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${ PORT }`);
+  console.log(`Node server listening on http://localhost:${PORT}`);
 });
 
 process.on('SIGTERM', () => {

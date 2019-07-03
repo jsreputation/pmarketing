@@ -13,7 +13,7 @@
       <div class="merchant-name" *ngIf="!hideMerchantName">
         {{voucher.merchantName}}
       </div>
-      <div class="voucher-expiry" *ngIf="!hideExpiry">
+      <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiresAt!==null">
         {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
         </div>
       <div class="section-heading" *ngIf="voucher.description">
