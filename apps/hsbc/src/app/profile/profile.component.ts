@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile } from '@perx/core/dist/perx-core';
-import { Observable } from 'rxjs';
+import { ProfileService, IProfile, AuthenticationService } from '@perx/core/dist/perx-core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -9,18 +9,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  profile$: Observable<IProfile>;
+  profile: IProfile;
 
   constructor(
     private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-    this.profile$ = this.profileService.whoAmI();
+    this.profileService.whoAmI()
+      .pipe(
+        take(1)
+      )
+      .subscribe(profile => {
+        this.profile = profile;
+      });
   }
 
   onClick(url: string) {
     this.router.navigate([url]);
+  }
+
+  onSignout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
