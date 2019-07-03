@@ -16,11 +16,14 @@ interface DrawTile {
 @Component({
   selector: 'perx-core-puzzle-play',
   templateUrl: './puzzle-play.component.html',
-  styleUrls: ['./puzzle-play.component.css']
+  styleUrls: ['./puzzle-play.component.scss']
 })
 export class PuzzlePlayComponent implements OnChanges {
   @Input()
   img: string;
+
+  @Input()
+  showHint = false;
 
   @Input()
   rows = 2;
@@ -188,5 +191,9 @@ export class PuzzlePlayComponent implements OnChanges {
   calculateRatio(img: HTMLImageElement): number {
     this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
     return img.height / img.width;
+  }
+
+  dismissOverlayHint() {
+    this.showHint = false;
   }
 }

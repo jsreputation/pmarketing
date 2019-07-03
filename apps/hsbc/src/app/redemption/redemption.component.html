@@ -2,6 +2,6 @@
 <div class="content-container">
     <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
     <div class="actions-container">
-        <button routerLink="/home" mat-flat-button color="primary">Back to wallet</button>
+        <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button color="primary">Redeem later</button>
     </div>
 </div>
