@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SoundComponent } from './sound.component';
 import { MatIconModule, MatDialogModule, MatButtonModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -13,7 +13,8 @@ describe('SoundComponent', () => {
       imports: [
         MatIconModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

@@ -4,6 +4,8 @@ import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
 import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 import { ExpectedConditions } from 'protractor';
@@ -53,7 +55,8 @@ describe('GameComponent', () => {
         CampaignModule.forRoot({ env: environment }),
         GameModule.forRoot({ env: environment }),
         MatProgressBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        NoopAnimationsModule
       ],
       providers: [
         {
