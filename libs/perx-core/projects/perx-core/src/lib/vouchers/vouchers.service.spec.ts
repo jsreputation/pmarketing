@@ -195,7 +195,7 @@ describe('VouchersService', () => {
   });
 
   it('should get the voucher detail by voucher id from existing cache', (done: DoneFn) => {
-    service.vouchers = mockIVouchers;
+    service.reset(mockIVouchers);
     service.get(21)
       .subscribe(() => {
         expect(true).toBeTruthy();
@@ -224,7 +224,7 @@ describe('VouchersService', () => {
   });
 
   it('should get the all vouchers detail from existing cache', (done: DoneFn) => {
-    service.vouchers = mockIVouchers;
+    service.reset(mockIVouchers);
     service.getAll()
       .subscribe(() => {
         expect(true).toBeTruthy();

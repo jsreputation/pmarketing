@@ -126,7 +126,8 @@ export class VouchersService {
     );
   }
 
-  reset(): void {
-    this.vouchers = [];
+  // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
+  reset(vouchers: IVoucher[] = []): void {
+    this.vouchers = vouchers;
   }
 }

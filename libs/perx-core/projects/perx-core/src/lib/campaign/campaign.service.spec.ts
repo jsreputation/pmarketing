@@ -6,15 +6,20 @@ import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from './env-config';
 import { ICampaignsResponse } from './campaign.service';
+import { VouchersService } from '../vouchers/vouchers.service';
 
 describe('CampaignService', () => {
   let httpTestingController: HttpTestingController;
   let service: CampaignService;
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, HttpClientTestingModule],
-      providers: [EnvConfig]
+      providers: [
+        EnvConfig,
+        { provide: VouchersService, useValue: vouchersServiceMock }
+      ]
     });
     // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
@@ -151,7 +156,11 @@ describe('CampaignService', () => {
 
     expect(req.request.method).toEqual('PUT');
 
-    req.flush(null);
+    req.flush({
+      data: {
+        vouchers: []
+      }
+    });
 
     httpTestingController.verify();
   });
