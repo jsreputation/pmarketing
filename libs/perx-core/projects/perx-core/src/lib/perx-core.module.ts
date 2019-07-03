@@ -11,6 +11,7 @@ import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PinataComponent } from './pinata/pinata.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NumericCharacterDirective } from './utils/numeric-character.directive';
 
 const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
@@ -19,7 +20,8 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
     PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
-    PinataComponent
+    PinataComponent,
+    NumericCharacterDirective
   ],
   imports: [
     ...modules,
@@ -34,7 +36,8 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
     PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
-    PinataComponent
+    PinataComponent,
+    NumericCharacterDirective
   ]
 })
 export class PerxCoreModule {}
