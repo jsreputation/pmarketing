@@ -30,10 +30,15 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatSidenavModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { SoundModule } from './sound/sound.module';
+import { TncComponent } from './tnc/tnc.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,9 @@ import { DatePipe } from '@angular/common';
     VoucherComponent,
     RedemptionComponent,
     HomeComponent,
-    PuzzlesComponent
+    PuzzlesComponent,
+    TncComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +67,10 @@ import { DatePipe } from '@angular/common';
     MatInputModule,
     MatCardModule,
     MatRippleModule,
+    MatProgressBarModule,
+    SoundModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
