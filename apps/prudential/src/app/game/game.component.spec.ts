@@ -4,6 +4,8 @@ import { GameComponent } from './game.component';
 import { RouterModule } from '@angular/router';
 import { CampaignModule, ShakeTreeComponent, GameModule } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
@@ -18,7 +20,8 @@ describe('GameComponent', () => {
         CampaignModule.forRoot({ env: environment }),
         GameModule.forRoot({env: environment}),
         MatProgressBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        NoopAnimationsModule
       ]
     })
       .compileComponents();
