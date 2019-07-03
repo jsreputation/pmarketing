@@ -3,7 +3,7 @@
   <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" [fixedTopGap]="0" [fixedBottomGap]="0" autofocus="true" disableClose="false"
     mode="over">
     <mat-nav-list>
-      <app-profile></app-profile>
+      <app-profile *ngIf="currentPage && currentPage !== 'Login'"></app-profile>
       <!-- <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']"
         (click)="drawer.toggle()">Terms and Conditions</a>
       <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/faq']"
