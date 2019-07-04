@@ -8,7 +8,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
-import { ExpectedConditions } from 'protractor';
 
 describe('GameComponent', () => {
   let component: GameComponent;
