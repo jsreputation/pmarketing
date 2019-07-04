@@ -53,6 +53,7 @@ export class PuzzlePlayComponent implements OnChanges {
 
   imageWidth = 300;
   imageHeight = 200;
+  imageReady = false;
 
   staticPuzzleDummyTiles = [];
 
@@ -60,8 +61,8 @@ export class PuzzlePlayComponent implements OnChanges {
     // changes: SimpleChanges
   ) {
     if (this.img) {
-      if (this.nbAvailablePieces === 0) {
-        this.showHint = false;
+      if (this.nbAvailablePieces !== 0 && this.showHint) {
+        this.imageReady = true;
       }
       this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
           this.imageHeight = this.imageWidth * ratio;
