@@ -3,12 +3,13 @@
   flex-direction: column;
   height: 100%;
 
-  //let center-board resize based on height and keep bottom same size
+  //let center-board resize based on height
   .center-board {
-    flex: 1 0;
+    flex: 1;
   }
+  // shrink bottom to half of center-board
   .bottom-container {
-    flex: 0 1;
+    flex: 2;
   }
 }
 

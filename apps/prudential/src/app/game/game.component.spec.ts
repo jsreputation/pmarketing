@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
 import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService, VouchersService } from '@perx/core/dist/perx-core';
+import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -63,6 +64,7 @@ describe('GameComponent', () => {
           provide: CampaignService,
           useValue: FakeCampaignService
         },
+        { provide: APP_BASE_HREF, useValue: '/' },
         { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     })
