@@ -1,7 +1,9 @@
 
 .main-puzzle-container {
   background: #EF241C;
-  height: 100%;
+  height: calc(100% - 6rem);
+  position: relative;
+  top: 6rem;
 
   display: flex;
   flex-direction: column;
