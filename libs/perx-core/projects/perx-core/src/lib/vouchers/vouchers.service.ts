@@ -22,7 +22,7 @@ interface IV4Voucher {
   providedIn: 'root'
 })
 export class VouchersService {
-  vouchers: IVoucher[] = [];
+  private vouchers: IVoucher[] = [];
 
   constructor(
     private http: HttpClient,
@@ -124,5 +124,10 @@ export class VouchersService {
         this.vouchers = [];
       })
     );
+  }
+
+  // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
+  reset(vouchers: IVoucher[] = []): void {
+    this.vouchers = vouchers;
   }
 }

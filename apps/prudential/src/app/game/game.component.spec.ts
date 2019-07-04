@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
-import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService } from '@perx/core/dist/perx-core';
+import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService, VouchersService } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -46,6 +46,7 @@ describe('GameComponent', () => {
       return of(this.fakeCampaignsResult);
     }
   }
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -62,7 +63,8 @@ describe('GameComponent', () => {
         {
           provide: CampaignService,
           useValue: FakeCampaignService
-        }
+        },
+        { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     })
       .compileComponents();

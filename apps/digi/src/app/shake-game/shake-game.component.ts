@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
-import { bufferCount, tap, first } from 'rxjs/operators';
+import { bufferCount, tap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shake-game',
@@ -34,7 +34,7 @@ export class ShakeGameComponent implements OnInit {
       .pipe(
         tap(),
         bufferCount(nbSteps),
-        first()
+        take(1)
       ).subscribe(() => { this.router.navigate(['/congrats']); });
   }
 
