@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+    this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
