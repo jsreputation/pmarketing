@@ -4,6 +4,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  ElementRef,
+  ViewChild,
   // SimpleChanges
 } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
@@ -51,17 +53,19 @@ export class PuzzlePlayComponent implements OnChanges {
 
   totalPieces: number;
 
-  imageWidth = 300;
-  imageHeight = 200;
+  imageWidth = 200;
+  imageHeight = 300;
 
   staticPuzzleDummyTiles = [];
+
+  @ViewChild('puzzleBoard', {static: false}) puzzleView: ElementRef;
 
   ngOnChanges(
     // changes: SimpleChanges
   ) {
     if (this.img) {
-      this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
-          this.imageHeight = this.imageWidth * ratio;
+      // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+          // this.imageHeight = this.imageWidth * ratio;
           this.tileWidth = this.imageWidth / this.cols;
           this.tileHeight = this.imageHeight / this.rows;
           this.totalPieces = this.rows * this.cols;
@@ -76,9 +80,9 @@ export class PuzzlePlayComponent implements OnChanges {
           for (let i = 0; i < this.totalPieces; i++) {
             this.staticPuzzleDummyTiles[i] = [i];
           }
-        },
-        err => console.error('Observer got an error: ' + err));
-    }
+        }//,
+        // err => console.error('Observer got an error: ' + err));
+    // }
   }
 
   bottomPannelClicked(): void {
@@ -195,5 +199,31 @@ export class PuzzlePlayComponent implements OnChanges {
 
   dismissOverlayHint() {
     this.showHint = false;
+  }
+
+  onImageLoad() {
+
+    console.log(`Width: ${this.puzzleView.nativeElement.width}`);
+    console.log(`Height: ${this.puzzleView.nativeElement.height}`);
+
+    this.imageWidth = this.puzzleView.nativeElement.width;
+    this.imageHeight = this.puzzleView.nativeElement.height;
+
+    // this.imageHeight = this.imageWidth * ratio;
+
+    this.tileWidth = this.imageWidth / this.cols;
+    this.tileHeight = this.imageHeight / this.rows;
+    this.totalPieces = this.rows * this.cols;
+
+    for (let x = 0; x < this.totalPieces; x++) {
+        this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+    }
+    for (let i = 0; i < this.nbAvailablePieces; i++) {
+      const location = this.nbPlayedPieces + i;
+      this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
+    }
+    for (let i = 0; i < this.totalPieces; i++) {
+      this.staticPuzzleDummyTiles[i] = [i];
+    }
   }
 }
