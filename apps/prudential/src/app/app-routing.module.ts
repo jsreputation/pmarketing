@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: 'game', pathMatch: 'full' },
+      { path: '', redirectTo: '/game', pathMatch: 'full' },
       { path: 'activation/:id', component: ActivationCodeComponent },
       { path: 'result', component: ResultComponent },
       { path: 'game', component: GameComponent },
