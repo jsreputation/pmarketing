@@ -60,6 +60,9 @@ export class PuzzlePlayComponent implements OnChanges {
     // changes: SimpleChanges
   ) {
     if (this.img) {
+      if (this.nbAvailablePieces === 0) {
+        this.showHint = false;
+      }
       this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
           this.imageHeight = this.imageWidth * ratio;
           this.tileWidth = this.imageWidth / this.cols;
