@@ -16,12 +16,12 @@ export class NumericCharacterDirective {
     // debugger;
     return (e.ctrlKey ||
       e.metaKey ||
-      e.code === 'Backspace' || // backspace
-      e.code === 'Tab' || // tab
-      e.code === 'ArrowLeft' || // left
-      e.code === 'ArrowRight' || // right
-      e.code === 'Delete' || // delete
-      e.metaKey) ? // meta
+      e.code === 'Backspace' ||
+      e.code === 'Tab' ||
+      e.code === 'ArrowLeft' ||
+      e.code === 'ArrowRight' ||
+      e.code === 'Delete' ||
+      e.code === 'Enter') ?
       true : this.onlyNumbersRegExp.test(e.key);
   }
 }
