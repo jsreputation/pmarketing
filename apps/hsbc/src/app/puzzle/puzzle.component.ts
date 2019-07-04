@@ -91,13 +91,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = card.display_properties.card_image.value.image_url;
-        if (this.availablePieces === 0) {
-          this.notificationService.addPopup({
-            title: 'Thank you!',
-            text: 'Unfortunately, you have no pieces available.'
-          });
-          this.router.navigate(['/home']);
-        }
+        // if (this.availablePieces === 0) {
+        //   this.notificationService.addPopup({
+        //     title: 'Thank you!',
+        //     text: 'Unfortunately, you have no pieces available.'
+        //   });
+        //   this.router.navigate(['/home']);
+        // }
       });
   }
 
