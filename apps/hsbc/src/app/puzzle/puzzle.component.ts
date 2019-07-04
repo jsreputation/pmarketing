@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  CampaignService,
-  IStampCard,
-  TRANSACTION_STATE,
   CAMPAIGN_TYPE,
+  CampaignService,
   ICampaign,
-  IStampCardResponse
+  IStampCard,
+  IStampCardResponse,
+  STAMP_CARD_STATUS,
+  TRANSACTION_STATE
 } from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -91,13 +92,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = card.display_properties.card_image.value.image_url;
-        // if (this.availablePieces === 0) {
-        //   this.notificationService.addPopup({
-        //     title: 'Thank you!',
-        //     text: 'Unfortunately, you have no pieces available.'
-        //   });
-        //   this.router.navigate(['/home']);
-        // }
+        if (this.availablePieces === 0 && card.state === STAMP_CARD_STATUS.inactive) {
+          this.notificationService.addPopup({
+            title: 'Thank you!',
+            text: 'Unfortunately, you have no pieces available.'
+          });
+          this.router.navigate(['/home']);
+        }
       });
   }
 
@@ -116,7 +117,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
             // this.fetchCard();
             if (res.data.vouchers && res.data.vouchers.length > 0) {
               const voucherId = res.data.vouchers[0].id;
-              this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
+              this.router.navigate([`/voucher/${ voucherId }`, { win: true }]);
             }
           } else {
             const issuedLeft = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
