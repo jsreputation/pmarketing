@@ -32,7 +32,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
-import { DatePipe } from '@angular/common';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
@@ -74,7 +74,8 @@ import { ResultComponent } from './result/result.component';
     FormsModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
