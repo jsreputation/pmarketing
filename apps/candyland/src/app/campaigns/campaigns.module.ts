@@ -31,7 +31,9 @@ import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { SeparateRangeDatePickerFilterModule } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
+import {
+  SeparateRangeDatePickerFilterModule
+} from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 
 @NgModule({

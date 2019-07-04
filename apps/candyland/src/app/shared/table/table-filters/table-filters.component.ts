@@ -11,11 +11,11 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {TableFilterDirective} from './table-filter.directive';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map, startWith, takeUntil} from 'rxjs/operators';
-import {MatTableDataSource} from "@angular/material";
+import { TableFilterDirective } from './table-filter.directive';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'cl-table-filters',
@@ -35,7 +35,6 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   constructor(private changeDetectorRef: ChangeDetectorRef) {
   }
 
-
   public ngAfterContentInit(): void {
     this.filtersContainer.clear();
     this.updateFilters();
@@ -45,7 +44,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
     this.fg.valueChanges
       .pipe(
         startWith(this.fg.value),
-        map( values => JSON.stringify(values)),
+        map(values => JSON.stringify(values)),
         distinctUntilChanged(),
         debounceTime(500),
         takeUntil(this.destroy$)

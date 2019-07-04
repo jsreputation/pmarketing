@@ -5,16 +5,16 @@ export class PrepareTableFilers {
       title: 'All (' + data.length + ')',
       value: null
     }];
-    for (const key in counterObject) {
+    Object.values(counterObject).forEach((key) => {
       config.push({
         title: key + ' (' + counterObject[key] + ')',
-        value: key
+        value: key.toString()
       });
-    }
+    });
     return config;
   }
 
-  public static countFieldValue(array: Object[], fieldName: string): { [key: string]: number } {
+  public static countFieldValue(array: object[], fieldName: string): { [key: string]: number } {
     const counterObject = {};
     array.forEach(item => {
       if (!(fieldName in item)) {

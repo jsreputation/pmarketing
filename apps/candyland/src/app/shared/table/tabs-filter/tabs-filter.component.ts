@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'cl-tabs-filter',
@@ -15,8 +16,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsFilterComponent implements ControlValueAccessor {
-  public currentValue;
   @Input() tabs;
+  public currentValue;
+  public onChange: any = noop;
+  public onTouched: any = noop();
 
   constructor(private cd: ChangeDetectorRef) {
   }
@@ -33,12 +36,6 @@ export class TabsFilterComponent implements ControlValueAccessor {
     this.onChange(this.currentValue);
   }
 
-  public onChange: any = () => {
-  };
-
-  public onTouched: any = () => {
-  };
-
   public registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -46,5 +43,4 @@ export class TabsFilterComponent implements ControlValueAccessor {
   public registerOnTouched(fn) {
     this.onTouched = fn;
   }
-
 }
