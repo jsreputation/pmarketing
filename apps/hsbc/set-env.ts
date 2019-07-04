@@ -23,7 +23,7 @@ export const environment = {
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseUrl: '${process.env.BASE_URL ? process.env.BASE_URL : '/'}'
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
 };
 `;
 
