@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IGraphic } from '@cl-shared/models/graphick.model';
 
 @Component({
   selector: 'cl-images-preview',
@@ -6,10 +7,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./images-preview.component.scss']
 })
 export class ImagesPreviewComponent implements OnInit {
-  @Input() img: any;
-  @Input() basePath: string;
+  @Input() img: IGraphic;
   @Input() selected: any;
-  @Output() selectPreview = new EventEmitter<any>();
+  @Output() selectPreview = new EventEmitter<IGraphic>();
   constructor() { }
 
   ngOnInit() {

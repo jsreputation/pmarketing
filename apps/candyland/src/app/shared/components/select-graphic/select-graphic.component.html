@@ -1,10 +1,6 @@
 <div class="graphic-wrap" *ngIf="graphicList">
-  <div class="upload graphic-image-preview">
-    <cl-upload-graphic></cl-upload-graphic>
-  </div>
   <cl-images-preview *ngFor="let graphic of graphicList"
                      [img]="graphic"
-                     [basePath]="basePath"
                      class="graphic-image-preview"
                      (selectPreview)="setSelectedGraphic($event)"
                      [selected]="selectedGraphic"

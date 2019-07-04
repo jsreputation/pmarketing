@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UploadGraphicComponent } from './upload-graphic.component';
+import { MatIconModule } from '@angular/material';
 
 describe('UploadGraphicComponent', () => {
   let component: UploadGraphicComponent;
@@ -8,6 +9,9 @@ describe('UploadGraphicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatIconModule,
+      ],
       declarations: [ UploadGraphicComponent ]
     })
     .compileComponents();

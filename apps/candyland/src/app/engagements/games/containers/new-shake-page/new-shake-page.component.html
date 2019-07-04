@@ -1,11 +1,11 @@
-<p>
-  new-shake-page works!
-</p>
+<!--<p>-->
+  <!--new-shake-page works!-->
+<!--</p>-->
 
-<ul>
-  <li><a routerLink="settings">settings</a></li>
-  <li><a routerLink="rewards">rewards</a></li>
-</ul>
+<!--<ul>-->
+  <!--<li><a routerLink="settings">settings</a></li>-->
+  <!--<li><a routerLink="rewards">rewards</a></li>-->
+<!--</ul>-->
 
 <router-outlet></router-outlet>
 <div class="tree-wrap">
@@ -33,14 +33,14 @@
     </div>
   </div>
   <div class="tree-main-block">
-    <div class="tree-wrap-fields">
+    <div class="tree-wrap-fields" [formGroup]="shakeTree">
       <mat-card>
         <div class="messages-wrap">
           <p class="sub-title">
             Messages
           </p>
         </div>
-        <div class="messages-form" [formGroup]="messagesForm">
+        <div class="messages-form" >
           <div class="control-input">
             <mat-form-field class="messages-input">
               <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
@@ -72,21 +72,24 @@
           <p class="game-title">
             Tree
           </p>
+
           <div class="game-tree-wrap">
-            <cl-images-preview *ngFor="let gameTree of gamesTree"
-                               [img]="gameTree"
-                               [basePath]="'/assets/images/tree/'"
-                               class="game-image-preview"
-                               (selectPreview)="setSelectedGameTree($event)"
-                               [selected]="selectGameTree"
-            ></cl-images-preview>
+            <cl-select-graphic
+              *ngIf="gamesTree$ | async as gamesTree"
+              formControlName="treeType"
+              class="game-selected-graphic"
+              [graphicList]="gamesTree"
+            >
+            </cl-select-graphic>
           </div>
 
           <div class="game-number-gifts">
-            <div class="control-input">
+            <div class="control-input"
+                 *ngIf="gameGifts$ | async as gameGifts"
+            >
               <mat-form-field class="game-gift-select">
                 <mat-label>Total number of gifts in tree</mat-label>
-                <mat-select [formControl]="gameGift">
+                <mat-select formControlName="gameGift">
                   <mat-option *ngFor="let gift of gameGifts" [value]="gift.value">
                     {{gift.viewValue}}
                   </mat-option>
@@ -100,21 +103,59 @@
               Gift box
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic
+              <cl-select-graphic-wrap
+                *ngIf="giftBox$ | async as giftBox"
+                class="game-selected-graphic"
+                formControlName="giftBox"
                 [graphicList]="giftBox"
-                [basePath]="'/assets/images/gifts/'"
                 (selectGraphic)="setSelectGiftBox($event)"
               >
-              </cl-select-graphic>
+              </cl-select-graphic-wrap>
             </div>
+          </div>
 
+          <div class="game-background-box">
+            <p class="game-title">
+              Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="backgrounds$ | async as backgrounds"
+                formControlName="background"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+                (selectGraphic)="setSelectGiftBox($event)"
+              >
+              </cl-select-graphic-wrap>
+            </div>
           </div>
         </div>
 
       </mat-card>
+
+      <mat-card class="game-button">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
     </div>
     <div class="tree-preview">
-      mobile
+      <div class="tree-preview-mobile">
+
+      </div>
     </div>
   </div>
 </div>

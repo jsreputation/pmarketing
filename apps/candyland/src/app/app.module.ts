@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { SideNavModule } from './shared/components/side-nav/side-nav.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SideNavModule } from './shared/components/side-nav/side-nav.module';
     MatButtonModule,
     BrowserAnimationsModule,
     SideNavModule,
+    HttpClientModule,
 
   ],
   providers: [],

@@ -17,6 +17,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
+import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select
     ImagesPreviewModule,
     ButtonModule,
     SelectGraphicModule,
+    SelectGraphicWrapModule,
 
     MatTabsModule,
     MatCardModule,

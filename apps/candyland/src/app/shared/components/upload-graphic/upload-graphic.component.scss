@@ -39,6 +39,29 @@
       transition: .5s cubic-bezier(.35,0,.25,1);
     }
   }
+
+  &-error {
+    color: $warning-color;
+  }
+
+  &-error-wrap {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    right: -150%;
+  }
+
+  &-type {
+    font-size: 14px;
+    color: rgba(51, 51, 51, 0.5);
+  }
+
+  &-type-wrap {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    right: -150%;
+  }
 }
 
 .image {
@@ -54,6 +77,8 @@
     align-items: center;
     background: $simple-light-gray;
     position: relative;
+    cursor: pointer;
+    border: 1px solid transparent;
 
     &:hover {
       .image-clear {
