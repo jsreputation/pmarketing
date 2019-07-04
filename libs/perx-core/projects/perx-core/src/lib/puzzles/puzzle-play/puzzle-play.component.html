@@ -24,7 +24,7 @@
     </div>
   </div>
 </div>
-<div class="overlay" *ngIf="showHint" (click)="dismissOverlayHint()">
+<div class="overlay" *ngIf="showHint && imageReady" (click)="dismissOverlayHint()">
   <div class="hint-group">
     <div class="hand-pointer-hint">
       <img src="assets/pointer-touch-hint.png">
