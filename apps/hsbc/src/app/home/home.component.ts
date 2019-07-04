@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignService, ICampaign, CAMPAIGN_TYPE } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private campaignService: CampaignService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -24,9 +26,18 @@ export class HomeComponent implements OnInit {
         map(res => res.data),
         map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp).slice(0, 1))
       )
-      .subscribe(campaigns => {
-        this.campaigns = campaigns;
-      });
+      .subscribe(
+        campaigns => {
+          this.campaigns = campaigns;
+        },
+        () => {
+          this.notificationService.addPopup(
+            {
+              title: 'Sorry, something went wrong'
+            }
+          );
+        }
+      );
 
     this.activeRoute.queryParamMap.subscribe(ps => {
       const tab: string = ps.get('tab');

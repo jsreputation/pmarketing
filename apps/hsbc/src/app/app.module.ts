@@ -17,7 +17,8 @@ import {
   AuthenticationModule,
   PopupComponent,
   CampaignModule,
-  VouchersModule
+  VouchersModule,
+  ProfileModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
@@ -31,11 +32,15 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSidenavModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
+import { TncComponent } from './tnc/tnc.component';
+import { FaqComponent } from './faq/faq.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,10 @@ import { SoundModule } from './sound/sound.module';
     VoucherComponent,
     RedemptionComponent,
     HomeComponent,
-    PuzzlesComponent
+    PuzzlesComponent,
+    TncComponent,
+    FaqComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -65,11 +73,13 @@ import { SoundModule } from './sound/sound.module';
     MatProgressBarModule,
     SoundModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     CampaignModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
     FormsModule
   ],
   providers: [

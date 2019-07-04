@@ -6,8 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatSidenavModule } from '@angular/material';
 import { SoundModule } from './sound/sound.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -18,6 +19,8 @@ describe('AppComponent', () => {
         HttpClientModule,
         AuthenticationModule,
         MatDialogModule,
+        MatSidenavModule,
+        NoopAnimationsModule,
         SoundModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
