@@ -25,6 +25,7 @@ import {MatTableDataSource} from "@angular/material";
 })
 export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: MatTableDataSource<any>;
+  @Input() classList = '';
   @ContentChildren(TableFilterDirective) filters: QueryList<TableFilterDirective>;
   @ViewChild('filtersContainer', {read: ViewContainerRef, static: true}) filtersContainer: ViewContainerRef;
   private fg = new FormGroup({});

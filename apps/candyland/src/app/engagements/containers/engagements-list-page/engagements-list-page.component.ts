@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
@@ -23,11 +23,13 @@ export class EngagementsListPageComponent implements AfterViewInit {
   public displayedColumns = ['name', 'status', 'type', 'actions'];
   public dataSource = new MatTableDataSource<any>();
   public tabsFilterConfig;
+  public hasData = true;
 
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) private paginator: MatPaginator;
 
   constructor(private engagementsService: EngagementsService,
+              public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
   }
 
@@ -73,6 +75,8 @@ export class EngagementsListPageComponent implements AfterViewInit {
       )
       .subscribe((res: Engagements[]) => {
         this.dataSource.data = res;
+        this.hasData = !!res && res.length > 0;
+        this.cd.detectChanges();
       });
   }
 }

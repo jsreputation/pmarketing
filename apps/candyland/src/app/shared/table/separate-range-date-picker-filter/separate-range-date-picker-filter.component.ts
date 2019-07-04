@@ -22,6 +22,9 @@ export class SepareteRangeDatePickerFilterComponent implements OnInit, OnDestroy
   public timeForm: FormGroup;
   public disabledState: boolean;
   private destroy$ = new Subject();
+  private onChange: any = noop;
+  // @ts-ignore
+  private onTouched: any = noop;
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.timeForm = new FormGroup({
@@ -53,37 +56,41 @@ export class SepareteRangeDatePickerFilterComponent implements OnInit, OnDestroy
     return this.timeForm.get('end');
   }
 
-  public getNextDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), 1);
+  public get maxDate(): Date | null {
+    return this.end.value ? this.getPreviousDay(this.end.value) : null;
   }
 
-  public getPreviousDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), -1);
+  public get minDate(): Date | null {
+    return this.begin.value ? this.getNextDay(this.begin.value) : null;
   }
 
-  onChange: any = noop;
-
-  onTouched: any = noop;
-
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
     this.timeForm.markAsTouched();
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.disabledState = isDisabled;
   }
 
-  writeValue(obj: DatepickerRangeValue<Date> | null): void {
+  public writeValue(obj: DatepickerRangeValue<Date> | null): void {
     if (obj) {
       this.timeForm.patchValue(obj);
     } else {
       this.timeForm.reset();
     }
     this.onChange(obj);
+  }
+
+  private getNextDay(date: Date): Date {
+    return this.dateAdapter.addCalendarDays(new Date(date), 1);
+  }
+
+  private getPreviousDay(date: Date): Date {
+    return this.dateAdapter.addCalendarDays(new Date(date), -1);
   }
 }

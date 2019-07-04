@@ -11,12 +11,12 @@
       },
       {
         "id": 2,
-        "type": "Spin the wheel",
+        "type": "Stamp",
         "count": 23
       },
       {
         "id": 3,
-        "type": "Shake the tree",
+        "type": "Game",
         "count": 23
       },
       {
@@ -37,13 +37,13 @@
       "id": 324,
       "name": "caffrghe",
       "status": "pending",
-      "type": "Spin the wheel"
+      "type": "Stamp"
     },
     {
       "id": 456,
       "name": "cafghfe",
       "status": "draft",
-      "type": "Shake the tree"
+      "type": "Game"
     },
     {
       "id": 456,
@@ -67,7 +67,7 @@
       "id": 197,
       "name": "tycafe",
       "status": "active",
-      "type": "Spin the wheel"
+      "type": "Stamp"
     },
     {
       "id": 168,
@@ -85,7 +85,7 @@
       "id": 561,
       "name": "aasdfgcafe",
       "status": "active",
-      "type": "Shake the tree"
+      "type": "Game"
     },
     {
       "id": 108,

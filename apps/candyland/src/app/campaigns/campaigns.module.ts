@@ -32,6 +32,7 @@ import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.modul
 import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SeparateRangeDatePickerFilterModule } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
+import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { SeparateRangeDatePickerFilterModule } from '@cl-shared/table/separate-r
     TabsFilterModule,
     RangeDatePickerFilterModule,
     ButtonModule,
-    SeparateRangeDatePickerFilterModule
+    SeparateRangeDatePickerFilterModule,
+    NoDataModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

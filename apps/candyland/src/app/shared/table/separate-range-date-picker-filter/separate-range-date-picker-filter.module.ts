@@ -8,7 +8,9 @@ import {
   MatIconModule,
   MatOptionModule, MatSelectModule
 } from '@angular/material';
-import { SepareteRangeDatePickerFilterComponent } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.component';
+import {
+  SepareteRangeDatePickerFilterComponent
+} from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.component';
 
 @NgModule({
   declarations: [

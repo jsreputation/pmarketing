@@ -19,6 +19,7 @@ import {
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 
 @NgModule({
   declarations: [EngagementsListPageComponent, CreateEngagementPopupComponent, EngagementsComponent],
@@ -37,7 +38,8 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    ButtonModule
+    ButtonModule,
+    NoDataModule
   ],
   entryComponents: [
     EngagementsListPageComponent,
