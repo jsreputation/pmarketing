@@ -67,6 +67,8 @@ export class AppComponent implements OnInit {
   onActivate(ref: any) {
     const dummy = () => { };
 
+    this.drawer.close();
+
     this.showHeader =
       ref instanceof PuzzleComponent ||
       ref instanceof PuzzlesComponent ||
@@ -95,7 +97,7 @@ export class AppComponent implements OnInit {
                 ref instanceof TncComponent ? 'arrow_back_ios' : '';
 
     this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
-      ref instanceof PuzzleComponent ? this.goBack :
+      ref instanceof PuzzleComponent ? this.goHome :
         ref instanceof RedemptionComponent ? this.goBack :
           ref instanceof VoucherComponent ? this.goBack :
             ref instanceof FaqComponent ? this.goBack :
