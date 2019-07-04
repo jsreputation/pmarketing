@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 import { CampaignModule, ShakeTreeComponent, GameModule, VouchersService } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ describe('GameComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
         { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     })

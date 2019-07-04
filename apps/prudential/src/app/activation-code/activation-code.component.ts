@@ -45,7 +45,7 @@ export class ActivationCodeComponent implements OnInit {
     });
   }
 
-  pinInput(): void {
+  pinInputSuccess(): void {
     this.router.navigate([`/redemption/${this.voucherId}`]);
   }
 
@@ -62,12 +62,11 @@ export class ActivationCodeComponent implements OnInit {
   }
 
   needLoginPopup(): void {
-    this.popup({
-      title: 'You need to login to reddem the voucher',
+    const goToLoginDialog = this.popup({
+      title: 'You need to login to redeem the voucher',
       buttonTxt: 'Go to login'
-    }).afterClosed().subscribe(() => {
-      this.router.navigate(['/login']);
     });
+    goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
   }
 
   errorPopup(): void {
