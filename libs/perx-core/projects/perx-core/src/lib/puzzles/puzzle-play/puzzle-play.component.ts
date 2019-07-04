@@ -16,11 +16,14 @@ interface DrawTile {
 @Component({
   selector: 'perx-core-puzzle-play',
   templateUrl: './puzzle-play.component.html',
-  styleUrls: ['./puzzle-play.component.css']
+  styleUrls: ['./puzzle-play.component.scss']
 })
 export class PuzzlePlayComponent implements OnChanges {
   @Input()
   img: string;
+
+  @Input()
+  showHint = false;
 
   @Input()
   rows = 2;
@@ -50,6 +53,7 @@ export class PuzzlePlayComponent implements OnChanges {
 
   imageWidth = 300;
   imageHeight = 200;
+  imageReady = false;
 
   staticPuzzleDummyTiles = [];
 
@@ -57,6 +61,9 @@ export class PuzzlePlayComponent implements OnChanges {
     // changes: SimpleChanges
   ) {
     if (this.img) {
+      if (this.nbAvailablePieces !== 0 && this.showHint) {
+        this.imageReady = true;
+      }
       this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
           this.imageHeight = this.imageWidth * ratio;
           this.tileWidth = this.imageWidth / this.cols;
@@ -188,5 +195,9 @@ export class PuzzlePlayComponent implements OnChanges {
   calculateRatio(img: HTMLImageElement): number {
     this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
     return img.height / img.width;
+  }
+
+  dismissOverlayHint() {
+    this.showHint = false;
   }
 }

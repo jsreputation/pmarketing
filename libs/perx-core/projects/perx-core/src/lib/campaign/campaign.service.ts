@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from './env-config';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { VouchersService } from '../vouchers/vouchers.service';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
@@ -62,7 +63,8 @@ export interface IStampCard {
       value: {
         image_url: string;
       }
-    }
+    };
+    total_slots: number;
   };
   stamps?: IStampTransaction[];
 }
@@ -142,7 +144,7 @@ export interface ICampaignResponse {
 export class CampaignService {
   baseUrl: string;
 
-  constructor(private http: HttpClient, config: EnvConfig) {
+  constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
   }
 
@@ -152,15 +154,13 @@ export class CampaignService {
     );
   }
 
-  // getCampaign(id: number): Observable<ICampaignResponse> {
-  //   return this.http.get<ICampaignResponse>(
-  //     `${this.baseUrl}/v4/campaigns`
-  //   );
-  // }
-
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
+        params: {
+          size: '100'
+        }
+      }
     ).pipe(
       map(res => res.data)
     );
@@ -176,6 +176,12 @@ export class CampaignService {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
       null
+    ).pipe(
+      tap((res: IPutStampTransactionResponse) => {
+        if (res.data.vouchers && res.data.vouchers.length > 0) {
+          this.vouchersService.reset();
+        }
+      })
     );
   }
 }

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PuzzlesComponent } from './puzzles.component';
 import { MatListModule } from '@angular/material';
 import { CampaignModule, VouchersModule, PuzzlesModule } from '@perx/core/dist/perx-core';
@@ -16,6 +16,7 @@ describe('PuzzlesComponent', () => {
       imports: [
         MatListModule,
         PuzzlesModule,
+        NoopAnimationsModule,
         CampaignModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
         RouterTestingModule,

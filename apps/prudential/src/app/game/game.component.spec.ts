@@ -2,13 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule } from '@angular/router';
-import { CampaignModule, ShakeTreeComponent, GameModule } from '@perx/core/dist/perx-core';
+import { APP_BASE_HREF } from '@angular/common';
+import { CampaignModule, ShakeTreeComponent, GameModule, VouchersService } from '@perx/core/dist/perx-core';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -16,9 +20,14 @@ describe('GameComponent', () => {
       imports: [
         RouterModule.forRoot([]),
         CampaignModule.forRoot({ env: environment }),
-        GameModule.forRoot({env: environment}),
+        GameModule.forRoot({ env: environment }),
         MatProgressBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        NoopAnimationsModule
+      ],
+      providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     })
       .compileComponents();
