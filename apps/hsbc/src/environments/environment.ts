@@ -7,7 +7,6 @@ export const environment = {
   production: false,
   isWhistler: false,
   preAuth: false,
-  baseHref: '/'
 };
 
 /*

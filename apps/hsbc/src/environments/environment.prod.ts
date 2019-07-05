@@ -3,5 +3,4 @@ export const environment = {
   production: true,
   isWhistler: false,
   preAuth: false,
-  baseHref: '/site/hsbc/winatreat'
 };

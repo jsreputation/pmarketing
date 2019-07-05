@@ -22,8 +22,7 @@ export const environment = {
   apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
-  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
+  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false}
 };
 `;
 
