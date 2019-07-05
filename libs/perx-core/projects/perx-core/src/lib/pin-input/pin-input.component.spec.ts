@@ -92,7 +92,7 @@ describe('PinInputComponent', () => {
     });
     tick();
     const keyEvent = new KeyboardEvent('keyUp', { key: 'Backspace' });
-    const spy = spyOn(keyEvent, 'stopPropagation');  
+    const spy = spyOn(keyEvent, 'stopPropagation');
     component.onKey(keyEvent);
     fixture.whenStable().then(() => {
       expect(component.value).toBe('');
@@ -110,7 +110,7 @@ describe('PinInputComponent', () => {
     });
     tick();
     const keyEvent = new KeyboardEvent('keyUp', { key: 'Enter' });
-    const spy = spyOn(keyEvent, 'stopPropagation');  
+    const spy = spyOn(keyEvent, 'stopPropagation');
     component.onKey(keyEvent);
     fixture.whenStable().then(() => {
       expect(component.value).toBe('2');
@@ -118,5 +118,16 @@ describe('PinInputComponent', () => {
     });
   }));
 
+  it('should emit false when inputs onblur', () => {
+    const spy = spyOn(component.pinFocused, 'emit');
+    component.onBlur();
+    expect(spy).toHaveBeenCalledWith(false);
+  });
+
+  it('should emit true when inputs onFocus', () => {
+    const spy = spyOn(component.pinFocused, 'emit');
+    component.onFocus();
+    expect(spy).toHaveBeenCalledWith(true);
+  });
 
 });
