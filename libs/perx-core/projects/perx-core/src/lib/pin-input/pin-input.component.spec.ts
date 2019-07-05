@@ -82,4 +82,41 @@ describe('PinInputComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('should remove last digit of the value when user key backspace when the value length is greater than 0', fakeAsync(() => {
+    const firstInput = fixture.debugElement.query(By.css('input#input_0')).nativeElement;
+    firstInput.value = '2';
+    firstInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.value).toBe('2');
+    });
+    tick();
+    const keyEvent = new KeyboardEvent('keyUp', { key: 'Backspace' });
+    const spy = spyOn(keyEvent, 'stopPropagation');  
+    component.onKey(keyEvent);
+    fixture.whenStable().then(() => {
+      expect(component.value).toBe('');
+      expect(spy).toHaveBeenCalled();
+    });
+  }));
+
+  it('should not remove last digit of the value when user key is not backspace when the value length is greater than 0', fakeAsync(() => {
+    const firstInput = fixture.debugElement.query(By.css('input#input_0')).nativeElement;
+    firstInput.value = '2';
+    firstInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.value).toBe('2');
+    });
+    tick();
+    const keyEvent = new KeyboardEvent('keyUp', { key: 'Enter' });
+    const spy = spyOn(keyEvent, 'stopPropagation');  
+    component.onKey(keyEvent);
+    fixture.whenStable().then(() => {
+      expect(component.value).toBe('2');
+      expect(spy).not.toHaveBeenCalled();
+    });
+  }));
+
+
 });
