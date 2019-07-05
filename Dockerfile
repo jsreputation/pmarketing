@@ -3,14 +3,14 @@ FROM node:lts-alpine as builder
 COPY . /service
 WORKDIR /service
 
-ARG APIHOST='https://api.perxtech.io'
-ARG BASE_HREF='/'
+ARG apihost='https://api.perxtech.io'
+ARG basehref='/'
 
-RUN echo "apihost: ${APIHOST}"
-RUN echo "basehref: ${BASE_HREF}"
+RUN echo "apihost: ${apihost}"
+RUN echo "basehref: ${basehref}"
 
 RUN yarn
-RUN APIHOST=${APIHOST} BASE_HREF=${BASE_HREF} yarn build:prod --base-href ${BASE_HREF} --rebase-root-relative-css-urls=true
+RUN APIHOST=${apihost} BASE_HREF=${basehref} yarn build:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
 
 FROM node:lts-alpine
 
