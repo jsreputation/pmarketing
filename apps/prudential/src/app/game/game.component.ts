@@ -57,6 +57,7 @@ export class GameComponent implements OnInit {
   actionOnGameStatus(): void {
     this.$game.subscribe(game => {
       this.game = game;
+      console.log(this.game.remainingNumberOfTries);
       if (this.game.remainingNumberOfTries <= 0) {
         this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
       }
@@ -91,7 +92,7 @@ export class GameComponent implements OnInit {
         }
         this.router.navigate(['/result'], { queryParams: { numRewards } });
       },
-      (err1) => {
+      () => {
         this.router.navigate(['/result'], { queryParams: { numRewards } });
       }
     );

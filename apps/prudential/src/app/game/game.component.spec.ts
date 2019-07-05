@@ -67,28 +67,28 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should stay in game page if game remaining number of tries greater than 0', () => {
+  it('should set loading to false if game is set', () => {
     component.$game = of(fakeGame);
     component.actionOnGameStatus();
     expect(component.loading).toBeFalsy();
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    const routerSpy = spyOn(router, 'navigate');
+    spyOn(router, 'navigate');
     component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
     component.actionOnGameStatus();
-    expect(routerSpy).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
+    expect(router.navigate).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    const routerSpy = spyOn(router, 'navigate');
-    component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
+    spyOn(router, 'navigate');
+    component.$game = of(fakeGame);
     component.actionOnGameStatus();
-    expect(routerSpy).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 
   // it('should call router navigate with numRewards more than 0 when r1 status code is 200', () => {
-  //   const routerSpy = spyOn(router, 'navigate');
+  //   spyOn(router, 'navigate');
   //   spyOn(gameService, 'play').and.returnValue(of({
   //     status: 200,
   //     data: {
@@ -97,6 +97,6 @@ describe('GameComponent', () => {
   //   }));
   //   component.isWhistler = false;
   //   component.done();
-  //   expect(routerSpy).toHaveBeenCalledWith(['/result'], { queryParams: { numRewards: 2 } });
+  //   expect(router.navigate).toHaveBeenCalledWith(['/result'], { queryParams: { numRewards: 2 } });
   // });
 });
