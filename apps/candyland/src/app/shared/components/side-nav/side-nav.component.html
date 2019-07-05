@@ -19,7 +19,7 @@
       <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
     </button>
   </mat-sidenav>
-  <mat-sidenav-content [@position]="isOpen ? 'open' : 'closed'">
-    <router-outlet></router-outlet>
+  <mat-sidenav-content class="sidenav-content" [@position]="isOpen ? 'open' : 'closed'">
+    <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

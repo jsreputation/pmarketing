@@ -49,6 +49,7 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
+    console.log(isDisabled);
   }
 
   writeValue(obj: any): void {
