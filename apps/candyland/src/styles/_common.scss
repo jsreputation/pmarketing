@@ -55,7 +55,7 @@ h1 {
   }
 }
 
-.page-header{
+.page-header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -90,5 +90,15 @@ h1 {
 .game-checkbox {
   .mat-radio-label-content {
     display: none;
+  }
+}
+
+.btn-group {
+  cl-button, button, a {
+    margin-right: 8px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 }

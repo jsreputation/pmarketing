@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewReviewPageComponent } from './new-review-page.component';
+import { EngagementItemComponent } from './engagement-item.component';
 
-describe('NewReviewPageComponent', () => {
-  let component: NewReviewPageComponent;
-  let fixture: ComponentFixture<NewReviewPageComponent>;
+describe('EngagementItemComponent', () => {
+  let component: EngagementItemComponent;
+  let fixture: ComponentFixture<EngagementItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewReviewPageComponent ]
+      declarations: [ EngagementItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewReviewPageComponent);
+    fixture = TestBed.createComponent(EngagementItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
