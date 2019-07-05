@@ -4,7 +4,7 @@ COPY . /service
 WORKDIR /service
 
 ARG APIHOST='https://api.perxtech.io'
-ARG BASE_HREF='/site/hsbc/winatreat'
+ARG BASE_HREF='/site/hsbc/winatreat/'
 
 RUN yarn
 RUN APIHOST=${APIHOST} yarn build:prod --base-href ${BASE_HREF}
