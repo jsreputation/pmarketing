@@ -1,11 +1,12 @@
-@import "../../../../styles/helper";
+@import "helper";
 
 .container-sidenav {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  min-height: 100vh;
+  //top: 0;
+  //bottom: 0;
+  //left: 0;
+  //right: 0;
 }
 
 .sidenav {
@@ -50,4 +51,8 @@
 .cl-user {
   display: block;
   padding-top: rem(16px);
+}
+
+.sidenav-content{
+  position: relative;
 }

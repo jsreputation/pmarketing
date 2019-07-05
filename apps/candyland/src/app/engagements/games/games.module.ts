@@ -11,6 +11,13 @@ import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-
 import { NewPinataDisplayPageComponent } from './containers/new-pinata-display-page/new-pinata-display-page.component';
 import { NewPinataRewardsPageComponent } from './containers/new-pinata-rewards-page/new-pinata-rewards-page.component';
 import { GameComponent } from './containers/game/game.component';
+import { CreateShakeTreeComponent } from './components/create-shake-tree/create-shake-tree.component';
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
+import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
+import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 
 @NgModule({
   declarations: [
@@ -23,11 +30,24 @@ import { GameComponent } from './containers/game/game.component';
     NewPinataPageComponent,
     NewPinataDisplayPageComponent,
     NewPinataRewardsPageComponent,
-    GameComponent
+    GameComponent,
+    CreateShakeTreeComponent,
   ],
   imports: [
     CommonModule,
-    GamesRoutingModule
+    ReactiveFormsModule,
+    GamesRoutingModule,
+    ImagesPreviewModule,
+    ButtonModule,
+    SelectGraphicModule,
+    SelectGraphicWrapModule,
+
+    MatTabsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+
   ]
 })
 export class GamesModule {

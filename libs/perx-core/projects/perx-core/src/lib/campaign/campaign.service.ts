@@ -63,7 +63,8 @@ export interface IStampCard {
       value: {
         image_url: string;
       }
-    }
+    };
+    total_slots: number;
   };
   stamps?: IStampTransaction[];
 }
