@@ -2,15 +2,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateEngagementPopupComponent } from './create-engagement-popup.component';
 import {
-  MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule
+  MAT_DIALOG_DATA, MatButtonModule,
+  MatDialogModule,
+  MatDialogRef,
+  MatFormFieldModule,
+  MatIconModule, MatMenuModule, MatPaginatorModule,
+  MatRadioModule,
+  MatSelectModule, MatSortModule,
+  MatTableModule
 } from '@angular/material';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InkComponent } from '@cl-shared/components/ink/ink.component';
-import { InkBarDirective } from '@cl-shared/components/ink/directives/ink-bar.directive';
-import { InkHostDirective } from '@cl-shared/components/ink/directives/ink-host.directive';
-import { InkListenerDirective } from '@cl-shared/components/ink/directives/ink-listener.directive';
 import { EngagementTypeComponent } from './engagement-type/engagement-type.component';
 import { EngagementsListPageComponent } from '../engagements-list-page/engagements-list-page.component';
 import { EngagementsComponent } from '../engagements/engagements.component';
@@ -21,6 +24,11 @@ import { StampComponent } from './stamp/stamp.component';
 import { InstantRewardComponent } from './instant-reward/instant-reward.component';
 import { GameComponent } from './games/game/game.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
+import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
+import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
+import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
+import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -43,14 +51,23 @@ describe('CreateEngagementPopupComponent', () => {
       imports: [
         RouterTestingModule,
         MatDialogModule,
-        MatDialogModule,
         MatIconModule,
+        MatTableModule,
         InkModule,
         MatFormFieldModule,
         MatSelectModule,
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
+        TableFiltersModule,
+        SearchFilterModule,
+        TabsFilterModule,
+        StatusLabelModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        MatButtonModule,
+        NoDataModule,
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

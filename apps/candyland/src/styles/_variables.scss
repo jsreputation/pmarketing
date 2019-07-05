@@ -2,6 +2,8 @@ $base-font-size: 14px;
 $base-font-family: Roboto;
 
 $primary-color: #2665ee;
+$base-font-color: #333333;
+$secondary-font-color: #7B7B7B;
 $background-color: rgba(212, 225, 244, 0.3);
 $white-color: #ffffff;
 $secondary-color: #3e4e73;
@@ -10,6 +12,10 @@ $light-gray:  #f7fafc;
 $simple-light-gray:  #fafafa;
 $dark-color: #3B4E77;
 $warning-color: #ff1c1c;
+
+$success-color: #10D994;
+$draft-color: #D8D8D8;
+$pending-color: #FFA641;
 
 /* ----- SCREEN DIMENSIONS ----- */
 $mobile-width: 576px;
