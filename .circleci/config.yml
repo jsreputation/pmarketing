@@ -50,9 +50,9 @@ commands:
           command: |
             if [ $APP == 'hsbc' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/winatreat"' >> $BASH_ENV
+              echo 'export BASE_HREF="/site/hsbc/winatreat/"' >> $BASH_ENV
             else
-              echo 'export BASE_HREF="/site/hsbc/winatreat"' >> $BASH_ENV
+              echo 'export BASE_HREF="/"' >> $BASH_ENV
             fi
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
