@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-congrats',
-  templateUrl: './congrats.component.html',
+  template: '',
   styleUrls: ['./congrats.component.scss']
 })
 export class CongratsComponent implements OnInit {

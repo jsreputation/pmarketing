@@ -26,15 +26,6 @@ export class GameComponent implements OnInit {
     private gameService: GameService
   ) { }
 
-  onTap($event) {
-    return;
-    if ($event.tap >= this.numberOfTaps) {
-      setTimeout(() => {
-        this.router.navigate(['/congrats']);
-      }, 3000);
-    }
-  }
-
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.gameId = Number.parseInt(params.get('gameId'), 10);
@@ -92,22 +83,11 @@ export class GameComponent implements OnInit {
   onBroken() {
     if (this.game) {
       this.gameService.play(this.game.id)
-        .pipe(
-          map(res => res.data),
-          take(1)
-        )
-        .subscribe(game => {
-          if (game && game.outcomes && game.outcomes.length > 0) {
-            const outcome = game.outcomes[0];
-            if (outcome.outcome_type === 'reward') {
-              const reward = outcome.reward;
-              if (reward) {
-                const rewardId = reward.id;
-                const rewardName = reward.name;
-                const rewardImg = reward.images.length > 0 ? reward.images[0].url : null;
-                this.router.navigate([`/games/${game.game_id}/congrats`, { rewardId, rewardName, rewardImg }]);
-              }
-            }
+        .pipe(take(1))
+        .subscribe(res => {
+          if (res) {
+            const payload = btoa(JSON.stringify(res));
+            this.router.navigate([`/outcome`], { queryParams: { payload }});
           }
         });
     }
