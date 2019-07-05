@@ -52,7 +52,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     const reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
-    reader.onload = (event) => {
+    reader.onload = () => {
       this.imgURL = this.sanitizeUrl(reader.result);
       this.loadedImg = true;
       this.setSelectedGraphic(this.imgURL);
@@ -88,6 +88,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
+    console.log(isDisabled);
   }
 
   writeValue(obj: any): void {

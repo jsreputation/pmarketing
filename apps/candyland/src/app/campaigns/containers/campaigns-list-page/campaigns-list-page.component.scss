@@ -1,0 +1,67 @@
+@import "variables";
+@import "helper";
+
+.content {
+  padding: rem(30px) rem(40px);
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px !important;
+}
+
+.name-cell {
+  margin: rem(11px) 0;
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: $base-font-family;
+  font-style: normal;
+  font-weight: normal;
+  font-size: rem(16px);
+  line-height: rem(24px);
+
+  &__link {
+    width: fit-content;
+    color: $base-font-color;
+    text-decoration: none;
+
+    &:hover {
+      color: $secondary-font-color;
+    }
+  }
+
+  &__id {
+    color: $secondary-font-color;
+    text-transform: uppercase;
+  }
+}
+
+//.text-center{
+//  text-align: center;
+//}
+
+.center {
+  //.mat-sort-header-container  {
+  //  display: flex;
+  //justify-content: center !important;
+  //text-align: center !important;
+  //}
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.search-block {
+  flex: 1;
+}
+

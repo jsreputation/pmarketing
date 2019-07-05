@@ -2,7 +2,7 @@ import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output }
 import { IGraphic } from '@cl-shared/models/graphick.model';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, takeWhile } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-select-graphic-wrap',
@@ -60,6 +60,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   setDisabledState(isDisabled: boolean): void {
+    console.log(isDisabled);
   }
 
   writeValue(obj: any): void {

@@ -1,4 +1,8 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
+import {
+  // ActivatedRouteSnapshot,
+  CanActivate,
+  // Router,
+  UrlTree } from '@angular/router';
 import {Observable, of} from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -7,11 +11,13 @@ import { Injectable } from '@angular/core';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {
+  constructor(
+    // private router: Router
+  ) {
   }
 
   canActivate(
-    route: ActivatedRouteSnapshot,
+    // route: ActivatedRouteSnapshot,
   ): Observable<boolean | UrlTree> {
       return of(true);
   }
