@@ -60,7 +60,7 @@ commands:
       - run:
           name: Setup buildkit environment variable
           command: |
-            echo 'export DOCKER_BUILDKIT=0' >> $BASH_ENV
+            echo 'export DOCKER_BUILDKIT=1' >> $BASH_ENV
   docker_login:
     description: Login to Dockerhub
     steps:
@@ -74,7 +74,6 @@ jobs:
     executor: ubuntu
     steps:
       - checkout
-      - setup_buildkitd
       - docker_login
       - get_app_name
       - get_env_from_tag
