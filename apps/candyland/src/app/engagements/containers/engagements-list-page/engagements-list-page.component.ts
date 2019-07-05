@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -8,9 +10,19 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class EngagementsListPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  public openDialogCreate(): void {
+    const dialogRef = this.dialog.open(CreateEngagementPopupComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
   }
 
 }

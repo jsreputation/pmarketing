@@ -1,0 +1,17 @@
+@import "helper";
+
+.graphic {
+
+  &-wrap {
+    display: flex;
+  }
+
+  &-image-preview {
+    display: block;
+    margin-right: rem(10px);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

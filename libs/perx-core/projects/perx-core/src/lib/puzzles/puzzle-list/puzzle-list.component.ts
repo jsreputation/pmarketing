@@ -46,10 +46,18 @@ export class PuzzleListComponent implements OnChanges {
       return false;
     }
 
+    const totalSlots = puzzle.display_properties.total_slots;
+
+    // if there is no more available stamp return false
+    if (puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length >= totalSlots) {
+      return false;
+    }
+
     // get list of active puzzles
     const activePuzzles = this.puzzles.filter(p => {
       return p.state === STAMP_CARD_STATUS.active &&
-        p.stamps;
+        p.stamps &&
+        p.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length < totalSlots;
     });
 
     // if there is no active puzzle, this one should not be active
