@@ -2,50 +2,38 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
-import { CampaignModule, ShakeTreeComponent, GameModule, CampaignService, VouchersService } from '@perx/core/dist/perx-core';
+import {
+  CampaignModule,
+  ShakeTreeComponent,
+  GameModule,
+  GameService,
+  VouchersService,
+  GAME_TYPE,
+  defaultTree
+} from '@perx/core/dist/perx-core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../../environments/environment';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
+import { POPUP_TYPE } from '../vouchers/vouchers.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let router: Router;
+  let gameService: GameService;
 
-  class FakeCampaignService {
-    fakeCampaignsResult = {
-      data: [
-        {
-          id: 1,
-          name: 'UAT GAME',
-          description: 'UAT description',
-          begins_at: '2019-06-26T08:46:06.000Z',
-          ends_at: null,
-          enrolled: true,
-          campaign_type: 'game',
-          campaign_referral_type: 'user',
-          campaign_config: {
-            campaign_results: {
-              count: 6,
-              first_result_id: 1
-            }
-          },
-          images: [],
-          favourite: false,
-          custom_fields: {},
-          category_tags: [],
-          tags: []
-        }
-      ],
-      meta: {}
-    };
-    getCampaigns() {
-      return of(this.fakeCampaignsResult);
-    }
-  }
+  const fakeGame = {
+    id: 1,
+    campaignId: 1,
+    type: GAME_TYPE.shakeTheTree,
+    remainingNumberOfTries: 10,
+    name: 'UAT GAME',
+    config: { ...defaultTree(), treeImg: '', giftImg: '' },
+  };
+
   const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
@@ -60,10 +48,6 @@ describe('GameComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        {
-          provide: CampaignService,
-          useValue: FakeCampaignService
-        },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: VouchersService, useValue: vouchersServiceMock }
       ]
@@ -75,6 +59,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
+    gameService = TestBed.get(GameService);
     fixture.detectChanges();
   });
 
@@ -83,8 +68,35 @@ describe('GameComponent', () => {
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    spyOn(router, 'navigate').and.stub();
-    component.ngOnInit();
-    expect(router.navigate).toHaveBeenCalled();
+    component.$game = of(fakeGame);
+    component.actionOnGameStatus();
+    expect(component.loading).toBeFalsy();
   });
+
+  it('should stay in game page if game remaining number of tries greater than 0', () => {
+    const routerSpy = spyOn(router, 'navigate');
+    component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
+    component.actionOnGameStatus();
+    expect(routerSpy).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
+  });
+
+  it('should stay in game page if game remaining number of tries greater than 0', () => {
+    const routerSpy = spyOn(router, 'navigate');
+    component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
+    component.actionOnGameStatus();
+    expect(routerSpy).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
+  });
+
+  // it('should call router navigate with numRewards more than 0 when r1 status code is 200', () => {
+  //   const routerSpy = spyOn(router, 'navigate');
+  //   spyOn(gameService, 'play').and.returnValue(of({
+  //     status: 200,
+  //     data: {
+  //       outcomes: [{}, {}]
+  //     }
+  //   }));
+  //   component.isWhistler = false;
+  //   component.done();
+  //   expect(routerSpy).toHaveBeenCalledWith(['/result'], { queryParams: { numRewards: 2 } });
+  // });
 });
