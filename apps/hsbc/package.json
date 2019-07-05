@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
-    "build": "ng build",
+    "start": "npm run config && ng serve --host 0.0.0.0",
+    "build": "npm run config && ng build",
     "build:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@perx/core": "^0.0.0",
+    "dotenv": "^8.0.0",
     "hammerjs": "^2.0.8",
     "ngx-auth": "^5.0.0",
     "rxjs": "~6.4.0",
