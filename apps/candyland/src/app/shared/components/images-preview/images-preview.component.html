@@ -1,0 +1,6 @@
+<div class="image-wrap"
+     [ngClass]="{active: img?.id === selected?.id}"
+     (click)="handlerClick()"
+>
+  <img class="image" [src]="img?.img" [alt]="img?.title">
+</div>
