@@ -6,8 +6,8 @@ WORKDIR /service
 ARG APIHOST='https://api.perxtech.io'
 ARG BASE_HREF='/'
 
-RUN echo 'apihost: ${APIHOST}'
-RUN echo 'basehref: ${BASE_HREF}'
+RUN echo "apihost: ${APIHOST}"
+RUN echo "basehref: ${BASE_HREF}"
 
 RUN yarn
 RUN APIHOST=${APIHOST} BASE_HREF=${BASE_HREF} yarn build:prod --base-href ${BASE_HREF} --rebase-root-relative-css-urls=true
