@@ -4,6 +4,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  ElementRef,
+  ViewChild,
   // SimpleChanges
 } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
@@ -57,31 +59,35 @@ export class PuzzlePlayComponent implements OnChanges {
 
   staticPuzzleDummyTiles = [];
 
+  @ViewChild('puzzleBoard', {static: false}) puzzleView: ElementRef;
+
   ngOnChanges(
     // changes: SimpleChanges
   ) {
     if (this.img) {
+
       if (this.nbAvailablePieces !== 0 && this.showHint) {
         this.imageReady = true;
       }
-      this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
-          this.imageHeight = this.imageWidth * ratio;
-          this.tileWidth = this.imageWidth / this.cols;
-          this.tileHeight = this.imageHeight / this.rows;
-          this.totalPieces = this.rows * this.cols;
+      // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+      //     this.imageHeight = this.imageWidth * ratio;
 
-          for (let x = 0; x < this.totalPieces; x++) {
-            this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-          }
-          for (let i = 0; i < this.nbAvailablePieces; i++) {
-            const location = this.nbPlayedPieces + i;
-            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
-          }
-          for (let i = 0; i < this.totalPieces; i++) {
-            this.staticPuzzleDummyTiles[i] = [i];
-          }
-        },
-        err => console.error('Observer got an error: ' + err));
+      this.tileWidth = this.imageWidth / this.cols;
+      this.tileHeight = this.imageHeight / this.rows;
+      this.totalPieces = this.rows * this.cols;
+
+      for (let x = 0; x < this.totalPieces; x++) {
+        this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+      }
+      for (let i = 0; i < this.nbAvailablePieces; i++) {
+        const location = this.nbPlayedPieces + i;
+        this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
+      }
+      for (let i = 0; i < this.totalPieces; i++) {
+        this.staticPuzzleDummyTiles[i] = [i];
+      }
+        // },
+        // err => console.error('Observer got an error: ' + err));
     }
   }
 
@@ -199,5 +205,34 @@ export class PuzzlePlayComponent implements OnChanges {
 
   dismissOverlayHint() {
     this.showHint = false;
+  }
+
+  onImageLoad() {
+
+    // console.log(`Width: ${this.puzzleView.nativeElement.width}`);
+
+    this.imageWidth = this.puzzleView.nativeElement.width;
+    if (this.puzzleView.nativeElement.naturalHeight > this.puzzleView.nativeElement.clientHeight) {
+      // console.log(`Height: ${this.puzzleView.nativeElement.height}`);
+      this.imageHeight = this.puzzleView.nativeElement.height;
+    } else {
+      // console.log(`Height: ${this.puzzleView.nativeElement.naturalHeight}`);
+      this.imageHeight = this.puzzleView.nativeElement.naturalHeight;
+    }
+
+    this.tileWidth = this.imageWidth / this.cols;
+    this.tileHeight = this.imageHeight / this.rows;
+    this.totalPieces = this.rows * this.cols;
+
+    for (let x = 0; x < this.totalPieces; x++) {
+        this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+    }
+    for (let i = 0; i < this.nbAvailablePieces; i++) {
+      const location = this.nbPlayedPieces + i;
+      this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
+    }
+    for (let i = 0; i < this.totalPieces; i++) {
+      this.staticPuzzleDummyTiles[i] = [i];
+    }
   }
 }
