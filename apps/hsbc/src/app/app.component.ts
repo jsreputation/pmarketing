@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let bases = this.document.getElementsByTagName('base');
+    const bases = this.document.getElementsByTagName('base');
 
     if (bases.length > 0) {
       bases[0].setAttribute('href', environment.baseHref);
