@@ -46,12 +46,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let bases = this.document.getElementsByTagName('base');
+    // let bases = this.document.getElementsByTagName('base');
 
-    if (bases.length > 0) {
-      bases[0].setAttribute('href', environment.baseHref);
-
-    }
+    // if (bases.length > 0) {
+    //   bases[0].setAttribute('href', environment.baseHref);
+    //
+    // }
 
     this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
