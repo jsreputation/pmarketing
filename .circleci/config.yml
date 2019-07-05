@@ -42,6 +42,18 @@ commands:
             then
               echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
             fi
+  set_basehref:
+    description: based on client deploy endpoint
+    steps:
+      - run:
+          name: Setup env vars
+          command: |
+            if [ $APP == 'hsbc' ]
+            then
+              echo 'export BASE_HREF="/site/hsbc/winatreat"' >> $BASH_ENV
+            else
+              echo 'export BASE_HREF="/site/hsbc/winatreat"' >> $BASH_ENV
+            fi
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -67,13 +79,15 @@ jobs:
       - get_app_name
       - get_env_from_tag
       - set_apihost_from_env
+      - set_basehref
       - run:
           name: Build docker image
           command: |
+            echo "APP: ${APP}"
+            echo "APIHOST: ${APIHOST}"
+            echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
-             --build-arg app=$APP \
-             --build-arg APIHOST=$APIHOST
+            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP --build-arg apihost=$APIHOST --build-arg basehref=$BASE_HREF
       - run:
           name: Push docker
           command: |
