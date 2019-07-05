@@ -16,10 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
     MatButtonModule,
-    BrowserAnimationsModule,
     SideNavModule,
     HttpClientModule,
 
