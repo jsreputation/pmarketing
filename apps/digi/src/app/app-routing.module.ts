@@ -10,9 +10,9 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', redirectTo: '/games', pathMatch: 'full' },
-      { path: 'congrats', component: CongratsComponent },
+      { path: 'games/:gameId/congrats', component: CongratsComponent },
       { path: 'games', component: GameComponent },
-      { path: 'games/:id', component: GameComponent }
+      { path: 'games/:gameId', component: GameComponent }
     ],
     canActivate: [ProtectedGuard]
   },
