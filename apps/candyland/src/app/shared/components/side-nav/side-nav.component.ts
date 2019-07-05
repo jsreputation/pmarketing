@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  trigger, state, style, animate, transition, query, stagger,
+  trigger, state, style, animate, transition
 } from '@angular/animations';
 
 export function fnTransition(stateChangeExpr, time) {
