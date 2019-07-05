@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { SoundService } from './sound/sound.service';
 import { FaqComponent } from './faq/faq.component';
 import { TncComponent } from './tnc/tnc.component';
+// import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -39,11 +40,19 @@ export class AppComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    private soundService: SoundService
+    private soundService: SoundService,
+    // @Inject(DOCUMENT) private document
   ) {
   }
 
   ngOnInit(): void {
+    // let bases = this.document.getElementsByTagName('base');
+
+    // if (bases.length > 0) {
+    //   bases[0].setAttribute('href', environment.baseHref);
+    //
+    // }
+
     this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {

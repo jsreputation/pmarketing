@@ -20,6 +20,28 @@ commands:
           command: |
             APP=$(echo ${CIRCLE_TAG} | cut -d'-' -f 1)
             echo "export APP=$APP" >> $BASH_ENV
+  get_env_from_tag:
+    description: cuts destination environment out of git tag
+    steps:
+      - run:
+          name: Setup env vars
+          command: |
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
+            echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
+  set_apihost_from_env:
+    description: based on environment set the APIHOST
+    steps:
+      - run:
+          name: Setup env vars
+          command: |
+            if [ $TARGET_ENV == 'staging' ]
+            then
+              echo 'export APIHOST="https://api.perxtech.io"' >> $BASH_ENV
+            fi
+            if [ $TARGET_ENV == 'production' ]
+            then
+              echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+            fi
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -43,11 +65,15 @@ jobs:
       - setup_buildkitd
       - docker_login
       - get_app_name
+      - get_env_from_tag
+      - set_apihost_from_env
       - run:
           name: Build docker image
           command: |
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP .
+            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
+             --build-arg app=$APP \
+             --build-arg APIHOST=$APIHOST
       - run:
           name: Push docker
           command: |
