@@ -11,7 +11,6 @@ import {
   MatSortModule,
   MatTableModule,
   MAT_DIALOG_DATA,
-  MatDialogModule,
   MatDialogRef
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -63,6 +62,7 @@ describe('EngagementsListPageComponent', () => {
   });
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
   });
 });

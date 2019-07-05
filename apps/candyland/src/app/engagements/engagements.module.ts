@@ -15,14 +15,33 @@ import {
   MatTableModule,
   MatDialogModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule, MatFormFieldModule, MatRadioModule, MatSelectModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { InkModule } from '@cl-shared/components/ink/ink.module';
+import { EngagementTypeComponent } from './containers/create-engagement-popup/engagement-type/engagement-type.component';
+import { SurveyComponent } from './containers/create-engagement-popup/survey/survey.component';
+import { TypeItemComponent } from './containers/create-engagement-popup/engagement-type/type-item/type-item.component';
+import { GamesComponent } from './containers/create-engagement-popup/games/games.component';
+import { GameComponent } from './containers/create-engagement-popup/games/game/game.component';
+import { InstantRewardComponent } from './containers/create-engagement-popup/instant-reward/instant-reward.component';
+import { StampComponent } from './containers/create-engagement-popup/stamp/stamp.component';
 
 @NgModule({
-  declarations: [EngagementsListPageComponent, CreateEngagementPopupComponent, EngagementsComponent],
+  declarations: [
+    EngagementsListPageComponent,
+    CreateEngagementPopupComponent,
+    EngagementsComponent,
+    EngagementTypeComponent,
+    TypeItemComponent,
+    SurveyComponent,
+    GamesComponent,
+    StampComponent,
+    InstantRewardComponent,
+    GameComponent,
+  ],
   imports: [
     CommonModule,
     EngagementsRoutingModule,
@@ -39,7 +58,11 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatIconModule,
     MatButtonModule,
     ButtonModule,
-    NoDataModule
+    NoDataModule,
+    InkModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   entryComponents: [
     EngagementsListPageComponent,
