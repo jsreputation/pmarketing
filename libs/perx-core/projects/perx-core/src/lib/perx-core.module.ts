@@ -9,11 +9,9 @@ import { PopupComponent } from './popup/popup.component';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-// import { CognitoModule } from './whistler/cognito/cognito.module';
-// import { OauthModule } from './v4/oauth/oauth.module';
 import { PinataComponent } from './pinata/pinata.component';
 import { HttpClientModule } from '@angular/common/http';
-// import { CampaignModule } from './campaign/campaign.module';
+import { NumericCharacterDirective } from './utils/numeric-character.directive';
 
 const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
@@ -22,7 +20,8 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
     PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
-    PinataComponent
+    PinataComponent,
+    NumericCharacterDirective
   ],
   imports: [
     ...modules,
@@ -37,7 +36,8 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
     PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
-    PinataComponent
+    PinataComponent,
+    NumericCharacterDirective
   ]
 })
 export class PerxCoreModule {}

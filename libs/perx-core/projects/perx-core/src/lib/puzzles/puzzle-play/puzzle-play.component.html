@@ -1,26 +1,42 @@
 <div class="center-board" [ngStyle]="getImageSize()">
-  <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
+    <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
     <mat-grid-tile *ngFor="let tile of boardPuzzleTiles">
-      <img class="custom-puzzle-image" [ngStyle]="getPuzzleTileStyle(tile)" />
+      <img class="custom-puzzle-image" [ngStyle]="getPuzzleTileStyle(tile)"/>
     </mat-grid-tile>
   </mat-grid-list>
+  <div class="dummy-container">
+      <img class="dummy-image" [src]="img" (load)="onImageLoad()" #puzzleBoard/>
+  </div>
 </div>
-<div class="bottom-container" (click)="bottomPannelClicked()">
-  <div class="staic-content">
+<div class="bottom-container">
+  <div class="static-content">
     <div class="red-color-font">
       <div class="vertically-aligned-row">
         PUZZLE PIECES
-        <span class="help-logo">?</span>      
       </div>
       <div class="static-collect-pieces">Collect pieces and complete the puzzle</div>
     </div>
     <div class="badge-warn">
-      {{ nbAvailablePieces }}/{{totalPieces}}
+      {{ remainingPuzzleTiles.length }}/{{totalPieces}}
     </div>
   </div>
   <div class="scrolling-wrapper-flexbox">
-    <div class="remaining-puzzle-piece-container" *ngFor="let staicIndex of staticPizzleDummyTiles" [ngStyle]="getTileSize()">
-      <img class="custom-puzzle-image" [ngStyle]="getBottomTilesStyle(staicIndex)" />
+    <div class="remaining-puzzle-piece-container" *ngFor="let staticIndex of staticPuzzleDummyTiles"
+         [ngStyle]="getTileSize()">
+      <img class="custom-puzzle-image" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="bottomPannelClicked()"/>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="showHint && imageReady" (click)="dismissOverlayHint()">
+  <div class="hint-group">
+    <div class="hand-pointer-hint">
+      <img src="assets/pointer-touch-hint.png">
+    </div>
+    <div class="speech-bubble">
+      <div class="triangle-tip"></div>
+      <div class="rounded-rect">
+        <p>Click on the piece to place it on the puzzle</p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,21 @@
+<div class="graphic-wrap" *ngIf="graphicList">
+  <div class="upload graphic-image-preview" *ngIf="showUpload">
+    <cl-upload-graphic
+      [formControl]="controlUpload"
+      [selectedGraphic]="selectedGraphic"
+    ></cl-upload-graphic>
+  </div>
+  <cl-select-graphic [formControl]="controlDefault"
+                     [graphicList]="graphicList"
+                     [selectedGraphic]="selectedGraphic"
+  >
+
+  </cl-select-graphic>
+  <!--<cl-images-preview *ngFor="let graphic of graphicList"-->
+                     <!--formControlName=""-->
+                     <!--[img]="graphic"-->
+                     <!--class="graphic-image-preview"-->
+                     <!--(selectPreview)="setSelectedGraphic($event)"-->
+                     <!--[selected]="selectedGraphic"-->
+  <!--&gt;</cl-images-preview>-->
+</div>

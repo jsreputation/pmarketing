@@ -75,7 +75,18 @@ jobs:
           command: |
             echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
-
+            if [ $APP == 'prudential' ]
+            then
+              echo 'export HELM_APP="$APP-birthday"' >> $BASH_ENV
+            else
+              echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            fi
+            if [ $APP == 'hsbc' ]
+            then
+              echo 'export HELM_APP="$APP-winatreat"' >> $BASH_ENV
+            else
+              echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
@@ -85,7 +96,7 @@ jobs:
           kube_bearer_token: "<< parameters.kube_bearer_token >>"
           kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
       - helm-deploy/deploy:
-          helm_release: microsite-apps-$APP
+          helm_release: microsite-apps-$HELM_APP
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
 
-interface IVouchersResponse {
+interface IV4VouchersResponse {
   data: IV4Voucher[];
   meta: {
     count: number
@@ -22,7 +22,7 @@ interface IV4Voucher {
   providedIn: 'root'
 })
 export class VouchersService {
-  vouchers: IVoucher[] = [];
+  private vouchers: IVoucher[] = [];
 
   constructor(
     private http: HttpClient,
@@ -30,7 +30,7 @@ export class VouchersService {
   ) {
   }
 
-  private static voucherToVoucher(v: any): IVoucher {
+  public static voucherToVoucher(v: any): IVoucher {
     const reward = v[`reward`];
     const images = reward[`images`] || [];
     let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
@@ -54,7 +54,7 @@ export class VouchersService {
       description: reward[`description`],
       thumbnailUrl,
       bannerUrl,
-      expiresAt: new Date(reward[`valid_to`]),
+      expiresAt: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
       redeemedOn,
       merchantName: reward[`merchant_name`],
       merchantLogoUrl,
@@ -68,18 +68,14 @@ export class VouchersService {
       return of(this.vouchers);
     }
 
-    const url = `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
-    return this.http.get<IVouchersResponse>(url)
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl)
       .pipe(
-        flatMap((resp: IVouchersResponse) => {
+        flatMap((resp: IV4VouchersResponse) => {
           const streams = [
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.http.get<IVouchersResponse>(`${url}&page=${i}`)
-              .pipe(
-                map(res => res.data)
-              );
+            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i);
             streams.push(stream);
           }
           return streams;
@@ -92,6 +88,17 @@ export class VouchersService {
       );
   }
 
+  getAllFromPage(page: number): Observable<IV4Voucher[]> {
+    return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}`)
+      .pipe(
+        map(res => res.data)
+      );
+  }
+
+  get vouchersUrl(): string {
+    return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
+  }
+
   get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
@@ -99,19 +106,17 @@ export class VouchersService {
     if (found) {
       return of(found);
     }
-
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get(url).pipe(
       map(resp => resp[`data`]),
       map(v => {
         const voucher = VouchersService.voucherToVoucher(v);
-        // this.vouchers.push(voucher);
         return voucher;
       })
     );
   }
 
-  redeemVoucher(id: string): Observable<any> {
+  redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
@@ -119,5 +124,10 @@ export class VouchersService {
         this.vouchers = [];
       })
     );
+  }
+
+  // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
+  reset(vouchers: IVoucher[] = []): void {
+    this.vouchers = vouchers;
   }
 }

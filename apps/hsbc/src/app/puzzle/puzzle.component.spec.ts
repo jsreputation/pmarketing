@@ -1,9 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PuzzleComponent } from './puzzle.component';
 import { CampaignModule, VouchersModule, PuzzlesModule } from '@perx/core/dist/perx-core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../environments/environment';
+import { SoundModule } from '../sound/sound.module';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
@@ -14,7 +16,9 @@ describe('PuzzleComponent', () => {
       declarations: [ PuzzleComponent ],
       imports: [
         PuzzlesModule,
+        SoundModule,
         RouterTestingModule,
+        NoopAnimationsModule,
         VouchersModule.forRoot({ env: environment }),
         CampaignModule.forRoot({ env: environment }),
       ]

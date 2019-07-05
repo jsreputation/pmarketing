@@ -18,6 +18,7 @@ export class VouchersComponent implements OnInit {
   @Input() showExpireDate = true;
   @Input() showRedeemedDate = false;
   @Input() showRedeemedIcon = true;
+  @Input() canSelectRedeemed = false;
 
   @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
@@ -34,10 +35,9 @@ export class VouchersComponent implements OnInit {
   }
 
   onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }) {
-    if (voucher.state === 'redeemed') {
+    if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
       return;
     }
-
     this.route.emit(voucher.id);
   }
 }

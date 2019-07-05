@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EngagementsListPageComponent } from './engagements-list-page.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material';
 
 describe('EngagementsListPageComponent', () => {
   let component: EngagementsListPageComponent;
@@ -8,7 +9,14 @@ describe('EngagementsListPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EngagementsListPageComponent ]
+      declarations: [ EngagementsListPageComponent ],
+      imports: [
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
     })
     .compileComponents();
   }));

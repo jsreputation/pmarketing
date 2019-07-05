@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainContainerComponent } from './main-container.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SideNavModule } from '@cl-shared/components/side-nav/side-nav.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginPageComponent', () => {
   let component: MainContainerComponent;
@@ -10,7 +12,9 @@ describe('LoginPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        SideNavModule
       ],
       declarations: [MainContainerComponent]
     })
