@@ -8,8 +8,17 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 p {
   margin: 0;
+}
+
+button {
+  outline: none;
 }
 
 h1 {
@@ -34,6 +43,7 @@ h1 {
   position: relative;
   background: transparent;
   border: none;
+  outline: none;
   color: #ffffff;
   cursor: pointer;
 }
@@ -61,4 +71,24 @@ h1 {
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 100%;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+
+.mat-dialog-content {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow: visible !important;
+}
+
+.game-checkbox {
+  .mat-radio-label-content {
+    display: none;
+  }
 }

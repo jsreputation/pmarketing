@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     SideNavModule,
     HttpClientModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,7 +9,10 @@ import {
   MatMenuModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -43,6 +46,10 @@ describe('EngagementsListPageComponent', () => {
         ButtonModule,
         NoDataModule,
         HttpClientTestingModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
       ],
       declarations: [ EngagementsListPageComponent ]
     })

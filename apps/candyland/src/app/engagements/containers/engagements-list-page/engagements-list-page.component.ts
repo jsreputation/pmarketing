@@ -40,7 +40,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public openDialog(): void {
+  public openDialogCreate(): void {
     const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
 
     dialogRef.afterClosed().subscribe(result => {
