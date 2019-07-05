@@ -31,7 +31,7 @@ commands:
   set_apihost_from_env:
     description: based on environment set the APIHOST
     steps:
-      -run:
+      - run:
           name: Setup env vars
           command: |
             if [ $TARGET_ENV == 'staging' ]
