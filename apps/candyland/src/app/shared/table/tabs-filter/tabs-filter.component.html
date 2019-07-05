@@ -1,0 +1,9 @@
+<div class="tabs">
+  <a *ngFor="let tab of tabs"
+     [class.active]="tab.value === currentValue"
+     (click)="changeTab(tab.value)">
+    {{tab.title}}
+  </a>
+<!--  <span class="yellow-bar" mat-ink-bar></span>-->
+<!--  <mat-ink-bar></mat-ink-bar>-->
+</div>

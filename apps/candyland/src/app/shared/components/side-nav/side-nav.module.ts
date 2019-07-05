@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SideNavComponent } from './side-nav.component';
 import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { LogoModule } from '../logo/logo.module';
-import { RouterModule } from '@angular/router';
 import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 
@@ -16,7 +15,6 @@ import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
   ],
   imports: [
     CommonModule,
-    RouterModule,
     LogoModule,
     UserModule,
     SidenavMenuModule,

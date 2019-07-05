@@ -30,7 +30,8 @@ export interface IReward {
 }
 
 export enum STAMP_CARD_STATUS {
-  active = 'active'
+  active = 'active',
+  inactive = 'inactive'
 }
 
 export interface IStampTransaction {

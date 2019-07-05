@@ -1,11 +1,14 @@
 <div class="center-board" [ngStyle]="getImageSize()">
-  <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
+    <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
     <mat-grid-tile *ngFor="let tile of boardPuzzleTiles">
       <img class="custom-puzzle-image" [ngStyle]="getPuzzleTileStyle(tile)"/>
     </mat-grid-tile>
   </mat-grid-list>
+  <div class="dummy-container">
+      <img class="dummy-image" [src]="img" (load)="onImageLoad()" #puzzleBoard/>
+  </div>
 </div>
-<div class="bottom-container" (click)="bottomPannelClicked()">
+<div class="bottom-container">
   <div class="static-content">
     <div class="red-color-font">
       <div class="vertically-aligned-row">
@@ -20,7 +23,7 @@
   <div class="scrolling-wrapper-flexbox">
     <div class="remaining-puzzle-piece-container" *ngFor="let staticIndex of staticPuzzleDummyTiles"
          [ngStyle]="getTileSize()">
-      <img class="custom-puzzle-image" [ngStyle]="getBottomTilesStyle(staticIndex)"/>
+      <img class="custom-puzzle-image" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="bottomPannelClicked()"/>
     </div>
   </div>
 </div>

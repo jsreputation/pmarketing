@@ -58,7 +58,7 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
       .pipe(
         takeUntil(this.destroy$)
       )
-      .subscribe((res) => {
+      .subscribe(() => {
         this.setInkBarToInkListener(inkListeners);
       });
     this.setInkBarToInkListener(inkListeners);
@@ -72,7 +72,7 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
         .pipe(
           takeUntil(this.destroy$)
         )
-        .subscribe((res) => {
+        .subscribe(() => {
           this.setInkBarToInkListener(this.inkListener);
         });
       this.setInkBarToInkListener(this.inkListener);
