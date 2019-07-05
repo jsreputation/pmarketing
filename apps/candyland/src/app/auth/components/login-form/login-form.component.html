@@ -10,6 +10,14 @@
   >
     <div class="login-form-control">
       <mat-form-field>
+        <input matInput formControlName="accountId" placeholder="Account ID">
+        <mat-error *ngIf="accountId.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="accountId.hasError('minlength')">Min length 15</mat-error>
+        <mat-error *ngIf="accountId.hasError('maxlength')">Max length 50</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="login-form-control">
+      <mat-form-field>
         <input matInput formControlName="email" placeholder="Email Address">
         <mat-error *ngIf="email.hasError('required')">Required field</mat-error>
         <mat-error *ngIf="email.hasError('minlength')">Min length 15</mat-error>

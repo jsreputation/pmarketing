@@ -51,3 +51,32 @@
   display: block;
   padding-top: rem(16px);
 }
+
+.btn-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.user-logout {
+  position: absolute;
+  display: flex;
+  bottom: rem(16px);
+  left: rem(10px);
+
+}
+
+.appear {
+  animation: changeWidth .4s cubic-bezier(.35,0,.25,1);
+}
+
+@keyframes changeWidth {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: auto;
+    opacity: 1;
+  }
+}
