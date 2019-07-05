@@ -4,9 +4,10 @@ COPY . /service
 WORKDIR /service
 
 ARG APIHOST='https://api.perxtech.io'
+ARG BASE_HREF='/site/hsbc/winatreat'
 
 RUN yarn
-RUN APIHOST=${APIHOST} yarn build:prod
+RUN APIHOST=${APIHOST} BASE_HREF=${BASE_HREF} yarn build:prod
 
 FROM node:lts-alpine
 
