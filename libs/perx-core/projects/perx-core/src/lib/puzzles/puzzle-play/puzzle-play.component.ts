@@ -209,13 +209,16 @@ export class PuzzlePlayComponent implements OnChanges {
 
   onImageLoad() {
 
-    console.log(`Width: ${this.puzzleView.nativeElement.width}`);
-    console.log(`Height: ${this.puzzleView.nativeElement.height}`);
+    // console.log(`Width: ${this.puzzleView.nativeElement.width}`);
 
     this.imageWidth = this.puzzleView.nativeElement.width;
-    this.imageHeight = this.puzzleView.nativeElement.height;
-
-    // this.imageHeight = this.imageWidth * ratio;
+    if (this.puzzleView.nativeElement.naturalHeight > this.puzzleView.nativeElement.clientHeight) {
+      // console.log(`Height: ${this.puzzleView.nativeElement.height}`);
+      this.imageHeight = this.puzzleView.nativeElement.height;
+    } else {
+      // console.log(`Height: ${this.puzzleView.nativeElement.naturalHeight}`);
+      this.imageHeight = this.puzzleView.nativeElement.naturalHeight;
+    }
 
     this.tileWidth = this.imageWidth / this.cols;
     this.tileHeight = this.imageHeight / this.rows;
