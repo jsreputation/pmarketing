@@ -3,8 +3,10 @@ FROM node:lts-alpine as builder
 COPY . /service
 WORKDIR /service
 
+ARG APIHOST='https://api.perxtech.io'
+
 RUN yarn
-RUN yarn build:prod
+RUN APIHOST=${APIHOST} yarn build:prod
 
 FROM node:lts-alpine
 
@@ -15,9 +17,6 @@ COPY --from=builder /service/backend/appauth-server /service/express/
 WORKDIR /service/express
 
 ENV PORT=8000
-ENV APIHOST='https://api.perxtech.io'
-ENV FORCE_PATH_STYLE='true'
-ENV PRODUCTION='true'
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
