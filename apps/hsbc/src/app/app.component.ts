@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DOCUMENT, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { AuthenticationService, PopupComponent } from '@perx/core/dist/perx-core';
 import { Subscription } from 'rxjs';
 import { NotificationService } from './notification.service';
@@ -14,7 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { SoundService } from './sound/sound.service';
 import { FaqComponent } from './faq/faq.component';
 import { TncComponent } from './tnc/tnc.component';
-import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private soundService: SoundService,
-    @Inject(DOCUMENT) private document
+    // @Inject(DOCUMENT) private document
   ) {
   }
 
