@@ -19,6 +19,8 @@ ARG app
 COPY --from=builder /service/apps/$app/dist/$app /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
 
+RUN cat /service/perx-microsite/index.html
+
 WORKDIR /service/express
 
 ENV PORT=8000
