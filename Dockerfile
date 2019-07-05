@@ -11,7 +11,6 @@ RUN echo "basehref: ${basehref}"
 
 RUN yarn
 RUN APIHOST=${apihost} BASE_HREF=${basehref} yarn build:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
-RUN yarn build:backend
 
 FROM node:lts-alpine
 
