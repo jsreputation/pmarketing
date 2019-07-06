@@ -22,7 +22,7 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'hsbc';
+  title = 'HSBC Win A Treat';
   showHeader: boolean;
   leftIconToShow = '';
   rightIconToShow = '';
