@@ -5,17 +5,20 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { MaterialModule } from '../shared/material.module';
 import { VouchersService } from './vouchers.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
+import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
 
 const components = [
   VouchersComponent,
   VoucherComponent,
-  BcodeRedemptionComponent
+  BcodeRedemptionComponent,
+  QrcodeRedemptionComponent
 ];
 
 @NgModule({
   declarations: [
     ...components,
-    BcodeRedemptionComponent
+    BcodeRedemptionComponent,
+    QrcodeRedemptionComponent
   ],
   imports: [
     CommonModule,
