@@ -15,10 +15,10 @@
   <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" autofocus="true" disableClose="false"
     mode="over">
     <mat-nav-list>
-      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']" [replaceUrl]="replaceUrl()"
-        (click)="drawer.toggle()">Terms and Conditions</a>
-      <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/contact-us']" [replaceUrl]="replaceUrl()"
-        (click)="drawer.toggle()">Contact Us</a>
+      <a mat-list-item routerLinkActive="router-link-active"
+        (click)="drawer.toggle(); redirectTo('tnc')">Terms and Conditions</a>
+      <a mat-list-item routerLinkActive="router-link-active"
+        (click)="drawer.toggle(); redirectTo('contact-us')">Contact Us</a>
     </mat-nav-list>
   </mat-sidenav>
 

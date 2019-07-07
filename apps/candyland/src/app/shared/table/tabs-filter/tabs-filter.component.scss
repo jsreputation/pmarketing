@@ -1,0 +1,78 @@
+@import "variables";
+@import "helper";
+
+.hide {
+  display: none;
+}
+
+.tabs {
+  position: relative;
+  width: 100%;
+  display: block;
+  padding: 0;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.tabs > a {
+  font-family: $base-font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: rem(14px);
+  line-height: rem(16px);
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  padding: rem(22px);
+  color: $secondary-font-color;
+  text-align: center;
+  border-bottom: 4px solid transparent;
+  cursor: pointer;
+}
+
+.tabs > a.active {
+  color: $base-font-color;
+  border-bottom-color: #458CFF;
+}
+
+.tabs > a:not(.active):hover {
+  background-color: inherit;
+  color: #7c848a;
+}
+
+//.yellow-bar {
+//  position: absolute;
+//  z-index: 10;
+//  bottom: 0;
+//  height: 3px;
+//  background: #458CFF;
+//  display: block;
+//  left: 0;
+//  transition: left .2s ease;
+//  -webkit-transition: left .2s ease;
+//}
+
+//#tab1-tab.active ~ span.yellow-bar {
+//  left: 0;
+//  width: 160px;
+//}
+//
+//#tab2-tab.active ~ span.yellow-bar {
+//  left:165px;
+//  width: 82px;
+//}
+//
+//#tab3-tab.active ~ span.yellow-bar {
+//  left: 253px;
+//  width: 135px;
+//}
+//
+//#tab4-tab.active ~ span.yellow-bar {
+//  left:392px;
+//  width: 163px;
+//}

@@ -2,10 +2,32 @@ html, body {
   min-height: 100%;
   font-size: $base-font-size;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 p {
   margin: 0;
+}
+
+button {
+  outline: none;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.04;
+  letter-spacing: normal;
 }
 
 .w-100 {
@@ -13,7 +35,7 @@ p {
 }
 
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .btn-transparent {
@@ -21,6 +43,7 @@ p {
   position: relative;
   background: transparent;
   border: none;
+  outline: none;
   color: #ffffff;
   cursor: pointer;
 }
@@ -29,5 +52,43 @@ p {
 
   .mat-list-text {
     padding-left: 8px !important;
+  }
+}
+
+.page-header{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0 0 rem(24px);
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+
+.mat-dialog-content {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow: visible !important;
+}
+
+.game-checkbox {
+  .mat-radio-label-content {
+    display: none;
   }
 }

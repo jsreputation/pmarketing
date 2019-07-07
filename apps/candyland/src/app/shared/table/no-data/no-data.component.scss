@@ -1,0 +1,37 @@
+@import "variables";
+@import "helper";
+
+.no-data {
+  padding: rem(55px);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+
+  &-info {
+    z-index: 10;
+    position: relative;
+    max-width: 570px;
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: normal;
+    font-size: rem(16px);
+    line-height: rem(19px);
+    color: rgba(0, 0, 0, 0.6);
+
+    h2 {
+      font-family: $base-font-family;
+      font-style: normal;
+      font-weight: 500;
+      font-size: rem(22px);
+      line-height: rem(27px);
+      text-align: center;
+      color: $base-font-color;
+    }
+  }
+
+  img {
+    margin-top: rem(-50px);
+  }
+}

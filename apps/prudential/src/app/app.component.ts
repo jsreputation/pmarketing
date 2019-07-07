@@ -3,7 +3,6 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { TncComponent } from './tnc/tnc.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
@@ -19,26 +18,21 @@ export class AppComponent implements OnInit {
   defaultBackLocation = '/vouchers';
 
   preAuth: boolean;
-  failedAuthSubscriber: Subscription;
 
-  constructor(private location: Location,
-              private router: Router,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+  constructor(
+    private location: Location,
+    private router: Router,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
   }
 
   ngOnInit(): void {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId)) {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          const param = location.search;
-          (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-        }
-      }
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
+      const param = location.search;
+      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    this.failedAuthSubscriber = this.authService.failedAuthObservable.subscribe(
+    this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
@@ -57,12 +51,16 @@ export class AppComponent implements OnInit {
                     ref instanceof ContactUsComponent;
   }
 
-  replaceUrl(): boolean {
-    const path = this.location.path();
-    if (path === '/tnc' || path === '/contact-us') {
-      return true;
+  redirectTo(url: string) {
+    if (url !== 'tnc' && url !== 'contact-us') {
+      return null;
     }
 
-    return false;
+    this.router.navigateByUrl(
+      url,
+      {
+        replaceUrl: true
+      }
+    );
   }
 }

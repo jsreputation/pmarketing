@@ -9,7 +9,7 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { PerxCoreModule, CampaignModule, CognitoModule, OauthModule, GameModule } from '@perx/core/dist/perx-core';
+import { PerxCoreModule, CampaignModule, CognitoModule, OauthModule, GameModule, VouchersService } from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -20,6 +20,7 @@ describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let spy: any;
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,6 +34,9 @@ describe('GameComponent', () => {
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
         GameModule.forRoot({ env: environment }),
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     }).compileComponents();
   }));

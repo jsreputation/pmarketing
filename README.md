@@ -92,3 +92,15 @@ docker run -p 8000:8000 --name microsite-apps-ng microsite-apps-ng
 ```
 
 you should have the server now listening on `http://localhost:8000
+
+to find the process list
+```
+docker ps -a
+```
+
+to kill the process
+
+```
+docker rm processname
+
+```
