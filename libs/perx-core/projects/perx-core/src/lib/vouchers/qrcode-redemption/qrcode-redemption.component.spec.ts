@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -8,7 +9,8 @@ describe('QrcodeRedemptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QrcodeRedemptionComponent ]
+      declarations: [ QrcodeRedemptionComponent ],
+      imports: [ QRCodeModule ]
     })
     .compileComponents();
   }));

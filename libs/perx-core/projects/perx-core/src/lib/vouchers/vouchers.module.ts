@@ -6,6 +6,7 @@ import { MaterialModule } from '../shared/material.module';
 import { VouchersService } from './vouchers.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
 import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const components = [
   VouchersComponent,
@@ -22,7 +23,8 @@ const components = [
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    QRCodeModule
   ],
   exports: [
     ...components
