@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 export class RewardDetailComponent implements OnInit {
 
   constructor(private router: Router) {}
+
+  // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
   id = 140380;
+
   firstTime = true;
 
   ngOnInit() {

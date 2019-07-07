@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
 
   initForm() {
      this.loginForm = this.fb.group({
-      playerCode: ['', Validators.required],
-      hsbcCardLastFourDigits: ['', Validators.required]
+      customerID: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
