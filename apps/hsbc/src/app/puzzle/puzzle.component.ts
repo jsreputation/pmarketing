@@ -55,6 +55,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     } else {
       if (this.cardId === null || this.card === null) {
         this.fetchCard();
+        this.fetchStampTransactionCount();
       }
     }
 
