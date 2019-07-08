@@ -198,6 +198,7 @@ export class CampaignService {
   }
 
   getAllStampTransaction(campaignId: number) {
+    // todo: flush this param when logging out
     if (this.stampTransactions.length > 0) {
       return of(this.stampTransactions);
     }
