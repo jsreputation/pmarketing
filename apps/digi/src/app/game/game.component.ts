@@ -80,7 +80,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  onBroken() {
+  onComplete() {
     if (this.game) {
       this.gameService.play(this.game.id)
         .pipe(take(1))

@@ -1,10 +1,7 @@
 import {
   async,
   ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  inject
+  TestBed
 } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
@@ -13,7 +10,6 @@ import { PerxCoreModule, CampaignModule, CognitoModule, OauthModule, GameModule,
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
@@ -47,46 +43,10 @@ describe('GameComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should execute onTap function', () => {
-    spy = spyOn(component, 'onTap').and.callThrough();
-    component.onTap({ tap: 5 });
+  it('should execute done function', () => {
+    spy = spyOn(component, 'onComplete').and.callThrough();
+    component.onComplete();
     expect(spy).toHaveBeenCalled();
-  });
-
-  // it('should execute done function', () => {
-  //   spy = spyOn(component, 'done').and.callThrough();
-  //   component.done();
-  //   expect(spy).toHaveBeenCalled();
-  // });
-
-  it('should call setTimeout', inject(
-    [Router],
-    fakeAsync((router: Router) => {
-      spy = spyOn(component, 'onTap').and.callThrough();
-      spyOn(router, 'navigate').and.stub();
-      component.onTap({ tap: 5 });
-      tick(3500);
-      fixture.detectChanges();
-
-      expect(spy).toHaveBeenCalled();
-    })
-  ));
-
-  // it('should call setTimeout', inject(
-  //   [Router],
-  //   fakeAsync((router: Router) => {
-  //     spy = spyOn(component, 'onTap').and.returnValue();
-  //     spyOn(router, 'navigate').and.stub();
-  //     component.onTap({ tap: 5 });
-  //     tick(3500);
-  //     fixture.detectChanges();
-
-  //     expect(component.onTap({ tap: 5 })).toBeFalsy();
-  //   })
-  // ));
-
-  it('should onTap function to be undefined', () => {
-    expect(component.onTap({ tap: 0 })).toBe(undefined);
   });
 
   it('should create', () => {
