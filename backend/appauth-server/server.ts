@@ -14,6 +14,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
@@ -29,7 +30,7 @@ app.get('/preauth', async (req, res, next) => {
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found for ${url}`);
+      throw new Error(`No endpoints found for ${ url }`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -38,7 +39,7 @@ app.get('/preauth', async (req, res, next) => {
       endpoint.target_url,
       {
         headers: {
-          Authorization: `Basic ${endpointCredential.perx_access_key_id}:${endpointCredential.perx_secret_access_key}`
+          Authorization: `Basic ${ endpointCredential.perx_access_key_id }:${ endpointCredential.perx_secret_access_key }`
         },
         timeout: 10000
       }
@@ -57,7 +58,7 @@ app.get('/preauth', async (req, res, next) => {
   }
 });
 
-app.post('/v4/oauth/token', async (req, res, next) => {
+app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
     const url = req.query.url;
     if (url === undefined) {
@@ -66,7 +67,7 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found: ${url}`);
+      throw new Error(`No endpoints found: ${ url }`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -105,11 +106,13 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 });
 
 if (process.env.PRODUCTION) {
+  console.log('production mode ON');
   app.set('view engine', 'html');
   app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
 
   // Serve static files from /../../perx-microsite
-  app.use(express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+  app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), { maxAge: '1y' }));
 
   // All regular routes use the index.html
   app.get('*', (req, res) => {
@@ -119,7 +122,7 @@ if (process.env.PRODUCTION) {
 
 // Start up the Node server
 const server = app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node server listening on http://localhost:${ PORT }`);
 });
 
 process.on('SIGTERM', () => {

@@ -10,6 +10,7 @@ describe('CognitoService', () => {
     production: false,
     isWhistler: false,
     preAuth: false,
+    baseHref: '/'
   };
 
   beforeEach(() => TestBed.configureTestingModule({
