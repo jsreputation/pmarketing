@@ -3,7 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { PerxCoreModule, AuthenticationModule, OauthModule, CognitoModule, CampaignModule, GameModule } from '@perx/core/dist/perx-core';
+import {
+  PerxCoreModule,
+  AuthenticationModule,
+  OauthModule, CognitoModule,
+  CampaignModule, GameModule,
+  VouchersModule
+} from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
@@ -31,6 +37,7 @@ import { environment } from '../environments/environment';
     MatToolbarModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),

@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 enum GAME_TYPE {
   shakeTheTree = 'shake_the_tree',
-  pinata = 'pinata'
+  pinata = 'hit_the_pinata'
 }
 interface Asset {
   type: string;
@@ -30,8 +30,8 @@ interface TreeDisplayProperties {
 
 interface PinataDisplayProperties {
   still_image: Asset;
-  breaking_image?: Asset;
-  broken_image: Asset;
+  cracking_image?: Asset;
+  opened_image: Asset;
 }
 
 interface Game {
@@ -71,9 +71,11 @@ export class GameService implements IGameService {
       .pipe(
         map(res => res.data),
         map(game => {
-          let config: ITree;
+          let type = TYPE.unknown;
+          let config: ITree | IPinata;
           switch (game.game_type) {
             case GAME_TYPE.shakeTheTree:
+              type = TYPE.shakeTheTree;
               config = {
                 ...defaultTree(),
                 treeImg: (game.display_properties as TreeDisplayProperties).tree_image.value.image_url,
@@ -85,11 +87,20 @@ export class GameService implements IGameService {
                 celebratingAccessoryImg: (game.display_properties as TreeDisplayProperties).celebrating_image.value.image_url
               };
               break;
+            case GAME_TYPE.pinata:
+                type = TYPE.pinata;
+                config = {
+                  ...defaultPinata(),
+                  stillImg: (game.display_properties as PinataDisplayProperties).still_image.value.image_url,
+                  brokenImg: (game.display_properties as PinataDisplayProperties).opened_image.value.image_url,
+                  nbTaps: 5
+                };
+                break;
           }
           return {
             id: game.id,
             campaignId: game.campaign_id,
-            type: TYPE.shakeTheTree,
+            type,
             remainingNumberOfTries: game.number_of_tries,
             config
           };
@@ -124,7 +135,7 @@ export class GameService implements IGameService {
                   config = {
                     ...defaultPinata(),
                     stillImg: (game.display_properties as PinataDisplayProperties).still_image.value.image_url,
-                    brokenImg: (game.display_properties as PinataDisplayProperties).broken_image.value.image_url,
+                    brokenImg: (game.display_properties as PinataDisplayProperties).opened_image.value.image_url,
                     nbTaps: 5
                   };
                   break;
