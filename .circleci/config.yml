@@ -50,7 +50,7 @@ commands:
           command: |
             if [ $APP == 'hsbc' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/winatreat/"' >> $BASH_ENV
+              echo 'export BASE_HREF="/site/hsbc/collect2/"' >> $BASH_ENV
             else
               echo 'export BASE_HREF="/"' >> $BASH_ENV
             fi
@@ -122,7 +122,7 @@ jobs:
             fi
             if [ $APP == 'hsbc' ]
             then
-              echo 'export HELM_APP="$APP-winatreat"' >> $BASH_ENV
+              echo 'export HELM_APP="$APP-collect2"' >> $BASH_ENV
             else
               echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
