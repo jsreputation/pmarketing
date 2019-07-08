@@ -25,7 +25,7 @@
          [ngStyle]="getTileSize()">
       <div *ngIf="i === 0;then firstImage else moreImages"></div>
       <ng-template #firstImage>
-        <img class="custom-puzzle-image mat-elevation-z8" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="bottomPannelClicked()"/>
+        <img class="custom-puzzle-image mat-elevation-z8" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="bottomPanelClicked()"/>
       </ng-template>
       <ng-template #moreImages>
         <img class="custom-puzzle-image greyscale" [ngStyle]="getBottomTilesStyle(staticIndex)"/>
