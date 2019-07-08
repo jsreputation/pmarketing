@@ -14,7 +14,7 @@ import { GameComponent } from './game/game.component';
 
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CongratsComponent } from './congrats/congrats.component';
+import { ResultComponent } from './result/result.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { ShakeGameComponent } from './shake-game/shake-game.component';
@@ -25,7 +25,7 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     GameComponent,
-    CongratsComponent,
+    ResultComponent,
     HeaderComponent,
     LoginComponent,
     ShakeGameComponent
