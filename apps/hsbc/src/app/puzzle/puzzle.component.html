@@ -3,7 +3,7 @@
 <div class="main-puzzle-container">
     <h1 [ngPlural]="availablePieces">
         <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
-        <ng-template ngPluralCase="other">You have {{availablePieces}} puzzle pieces</ng-template>
+        <ng-template ngPluralCase="other">You have {{totalAvailablePieces}} puzzle pieces</ng-template>
     </h1>
     <perx-core-puzzle-play [img]="image" [rows]="rows" [cols]="cols" [showHint]="true" [nbPlayedPieces]="playedPieces"
         [nbAvailablePieces]="availablePieces" (moved)="onMoved()">

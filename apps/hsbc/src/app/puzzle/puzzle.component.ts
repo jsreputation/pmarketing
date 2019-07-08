@@ -25,6 +25,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private card: IStampCard = null;
   availablePieces = 0;
   playedPieces = 0;
+  totalAvailablePieces = 0;
   rows = 2;
   cols = 3;
   image = '';
@@ -76,6 +77,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
+        this.fetchStampTransactionCount();
         this.fetchCard();
       });
   }
@@ -100,6 +102,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.router.navigate(['/home']);
         }
       });
+  }
+
+  private fetchStampTransactionCount() {
+    this.campaignService.getAllStampTransaction(this.campaignId)
+      .subscribe((stampTransactions => {
+        this.totalAvailablePieces = stampTransactions.filter(v => v.state === TRANSACTION_STATE.issued).length;
+      }));
   }
 
   onMoved() {
