@@ -17,7 +17,7 @@ export interface IReward {
   modularizable_id: number;
   created_at: string;
   updated_at: string;
-  ordering: any | null;
+  ordering: any|null;
   referee_required_for_reward: number;
   total_reward_limit: number;
   total_user_limit: number;
@@ -25,8 +25,8 @@ export interface IReward {
   award_to_referee: boolean;
   total_referree_limit: number;
   stamp_number: number;
-  total_referree_reward_limit: any | null;
-  hidden: any | null;
+  total_referree_reward_limit: any|null;
+  hidden: any|null;
 }
 
 export enum STAMP_CARD_STATUS {
@@ -100,25 +100,27 @@ export interface IGetStampTransactionResponse {
     page: number,
   };
 }
+
 export enum CAMPAIGN_TYPE {
   give_reward = 'give_reward',
   stamp = 'stamp',
   game = 'game'
 }
+
 export interface ICampaign {
   id: number;
   name: string;
   description: string;
   begins_at: string;
-  ends_at: any | null;
+  ends_at: any|null;
   enrolled: boolean;
   campaign_type: CAMPAIGN_TYPE;
-  campaign_referral_type: any | null;
+  campaign_referral_type: any|null;
   game_config?: any;
   campaign_config: {
     campaign_results: {
       count: number;
-      first_result_id: any | null;
+      first_result_id: any|null;
     };
     auto_issue_voucher?: boolean;
     burn_stamps_when_redeeming_for_voucher?: false,
@@ -134,12 +136,14 @@ export interface ICampaign {
   category_tags: any[];
   tags: any[];
 }
+
 export interface ICampaignsResponse {
   data: ICampaign[];
   meta: {
     count: number;
   };
 }
+
 export interface ICampaignResponse {
   data: ICampaign;
   meta: {
@@ -162,13 +166,13 @@ export class CampaignService {
 
   getCampaigns(): Observable<ICampaignsResponse> {
     return this.http.get<ICampaignsResponse>(
-      `${this.baseUrl}/v4/campaigns`
+      `${ this.baseUrl }/v4/campaigns`
     );
   }
 
   getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
         params: {
           size: '100'
         }
@@ -180,13 +184,13 @@ export class CampaignService {
 
   getCurrentCard(campaignId: number): Observable<IStampCardResponse> {
     return this.http.get<IStampCardResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards/current`
     );
   }
 
   putStampTransaction(stampTransactionId: number): Observable<IPutStampTransactionResponse> {
     return this.http.put<IPutStampTransactionResponse>(
-      `${this.baseUrl}/v4/stamp_transactions/${stampTransactionId}`,
+      `${ this.baseUrl }/v4/stamp_transactions/${ stampTransactionId }`,
       null
     ).pipe(
       tap((res: IPutStampTransactionResponse) => {
