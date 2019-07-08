@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
-import { CampaignsService } from '@cl-core/http-services/campaigns-https.service';
+import { CampaignsService } from '@cl-core/services/campaigns.service';
 
 export interface Campaign {
   id: number;

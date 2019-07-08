@@ -1,0 +1,54 @@
+@import "helper";
+
+.active-item {
+  border-radius: 8px !important;
+  border: solid 1px $dark-color !important;
+
+  &:after {
+    content: '';
+    display: block;
+    height: rem(42px);
+    width: rem(42px);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    background: url("/assets/images/engagement-type/active.svg") no-repeat;
+  }
+}
+
+
+.item {
+  border: 1px solid transparent;
+
+  &.active   {
+    @extend .active-item
+  }
+}
+
+
+.item-list{
+  .mat-radio-button{
+    @extend .item;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: rem(20px);
+    margin-right: rem(20px);
+    &:last-of-type{
+      margin-right: 0;
+    }
+  }
+
+  .mat-radio-container {
+    display: none;
+  }
+
+  .mat-radio-checked {
+    @extend .active-item;
+  }
+
+  &.shadow{
+    .mat-radio-button {
+      box-shadow: 0 4px 4px 0 #d2d8e2;
+    }
+  }
+}

@@ -1,5 +1,5 @@
-@import "../../../../../../styles/variables";
-@import "../../../../../../styles/helper";
+@import "variables";
+@import "helper";
 
 .type {
 
@@ -19,7 +19,7 @@
   }
 
   &-title {
-    font-family: Roboto;
+    font-family: $base-font-family;
     font-size: 14px;
     font-weight: 500;
     color: $secondary-color;

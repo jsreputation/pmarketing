@@ -1,34 +1,38 @@
 <div class="content select-template">
-<div class="">
-<!--  filters-->
-  <div class="row">
-    <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter [control]="filter"></cl-search-filter>
-      </ng-container>
-      <ng-container *clTableFilter="'type'; let filter">
-        <!--    <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>-->
-        <mat-form-field appearance="outline">
-          <mat-select [formControl]="filter" placeholder="All">
-            <mat-option value="">All</mat-option>
-            <mat-option value="active">Active</mat-option>
-            <!--          <mat-option value="pending">pending</mat-option>-->
-            <mat-option value="draft">Draft</mat-option>
-            <mat-option value="sheduled">Sheduled</mat-option>
-            <mat-option value="paused">Paused</mat-option>
-            <mat-option value="ended">Ended</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
-    </cl-table-filters>
-    <cl-button classList="invert">+ Create New Template</cl-button>
-  </div>
-<!--  list-->
-  <cl-engagement-item></cl-engagement-item>
-</div>
+  <div class="">
+    <!--  filters-->
+    <div class="row">
+      <cl-table-filters [dataSource]="dataSource" classList="block">
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter [control]="filter"></cl-search-filter>
+        </ng-container>
+        <ng-container *clTableFilter="'type'; let filter">
+          <!--    <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>-->
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="filter" placeholder="Filter by">
+              <ng-container *ngFor="let option of typeFilterConfig">
+                <mat-option [value]="option.value">{{option.title}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </cl-table-filters>
+      <cl-button classList="invert">+ Create New Template</cl-button>
+    </div>
 
-<div class="preview">
-  <div class="preview-mobile">
+    <mat-radio-group class="item-list shadow">
+      <ng-container *ngIf="(dataSource.connect() | async) as items">
+        <ng-container *ngFor="let item of items">
+          <mat-radio-button [value]="item.id">
+            <cl-engagement-item [data]="item"></cl-engagement-item>
+          </mat-radio-button>
+        </ng-container>
+      </ng-container>
+    </mat-radio-group>
   </div>
-</div>
+
+  <div class="preview">
+    <div class="preview-mobile">
+    </div>
+  </div>
 </div>

@@ -1,16 +1,9 @@
 import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
-import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
-
-export interface Engagements {
-  id: number;
-  name: string;
-  status: string;
-  type: string;
-}
+import { EngagementsService } from '@cl-core/services/engagements.service';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -21,7 +14,7 @@ export interface Engagements {
 export class EngagementsListPageComponent implements AfterViewInit {
 
   public displayedColumns = ['name', 'status', 'type', 'actions'];
-  public dataSource = new MatTableDataSource<any>();
+  public dataSource = new MatTableDataSource<Engagement>();
   public tabsFilterConfig;
   public hasData = true;
 
@@ -73,7 +66,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(data, counterObject);
         }),
       )
-      .subscribe((res: Engagements[]) => {
+      .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();

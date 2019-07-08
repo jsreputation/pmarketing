@@ -23,7 +23,7 @@ import {
   MatSelectModule,
   MatSortModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule, MatRadioModule
 } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -40,6 +40,7 @@ import { NewCampaignComponent } from './containers/new-campaign/new-campaign.com
 import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewards-page/new-campaign-rewards-page.component';
 import { NewCampaignSelectTemplatePageComponent } from './containers/new-campaign-select-template-page/new-campaign-select-template-page.component';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
+import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,9 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
     ButtonModule,
     SeparateRangeDatePickerFilterModule,
     NoDataModule,
-    EngagementItemModule
+    EngagementItemModule,
+    ItemListModule,
+    MatRadioModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

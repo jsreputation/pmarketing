@@ -1,0 +1,22 @@
+@import "variables";
+@import "helper";
+
+.item {
+  border: 2px solid transparent;
+
+  &.active {
+    border: solid 2px #116fff;
+
+    &:after {
+      content: '';
+      display: block;
+      height: rem(42px);
+      width: rem(42px);
+      position: absolute;
+      top: 0;
+      right: -1px;
+      background: url("/assets/images/engagement-type/active.svg") no-repeat;
+    }
+
+  }
+}

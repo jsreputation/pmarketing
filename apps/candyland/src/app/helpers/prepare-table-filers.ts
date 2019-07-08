@@ -14,6 +14,20 @@ export class PrepareTableFilers {
     return config;
   }
 
+  public static prepareOptionsConfig(counterObject: { [key: string]: number }): OptionConfig[] {
+    const config: OptionConfig[] = [{
+      title: 'All',
+      value: null
+    }];
+    Object.keys(counterObject).forEach((key) => {
+      config.push({
+        title: key,
+        value: key
+      });
+    });
+    return config;
+  }
+
   public static countFieldValue(array: object[], fieldName: string): { [key: string]: number } {
     const counterObject = {};
     array.forEach(item => {

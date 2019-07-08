@@ -1,0 +1,13 @@
+<div class="action-list">
+<!--  <div class="action-list-title-wrapper">-->
+<!--    <ng-content select=".action-list-title"></ng-content>-->
+<!--    <div class="action-list-tabs">-->
+<!--      <a class="action-list-tab-link" [class.active]="!filterState" (click)="setFilter(false)">All</a>-->
+<!--      <span class="divider"></span>-->
+<!--      <a class="action-list-tab-link" [class.active]="filterState" (click)="setFilter(true)">Missing</a>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="action-list-wrapper">
+    <ng-content select=".item" [class.active]="true"></ng-content>
+  </div>
+</div>

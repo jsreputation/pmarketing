@@ -17,7 +17,7 @@ export const menus = [
     open: false,
   },
   {
-    name: 'Engagements',
+    name: 'Engagement',
     link: '/engagements',
     icon: 'engagement',
     open: false,

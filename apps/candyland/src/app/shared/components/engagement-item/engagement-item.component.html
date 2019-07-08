@@ -1,10 +1,10 @@
 <div class="engagement-item">
   <div class="engagement-item-img-container">
-    <img class="engagement-item-img" src="/assets/images/mask-group.png">
+    <img class="engagement-item-img" [src]="data?.image">
   </div>
   <div class="engagement-item-info">
-    <p class="engagement-item-type">Games</p>
-    <p class="engagement-item-name">Shake the tree Template 1</p>
-    <p class="engagement-item-date">16 May 2019</p>
+    <p class="engagement-item-type">{{data?.type}}</p>
+    <p class="engagement-item-name">{{data?.name}}</p>
+    <p class="engagement-item-date">{{data?.begin}}</p>
   </div>
 </div>
