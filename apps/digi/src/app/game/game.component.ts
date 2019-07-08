@@ -12,6 +12,7 @@ export class GameComponent implements OnInit {
   game: IGame;
 
   gameId: number;
+  campaignId: number;
 
   isEnabled = false;
   title = 'Hit the Pinata and Win!';
@@ -25,27 +26,34 @@ export class GameComponent implements OnInit {
     private gameService: GameService
   ) { }
 
-  onTap($event) {
-    if ($event.tap >= this.numberOfTaps) {
-      setTimeout(() => {
-        this.router.navigate(['/congrats']);
-      }, 3000);
-    }
-  }
-
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.gameId = Number.parseInt(params.get('id'), 10);
-      if (!this.gameId) {
-        this.campaignService.getCampaigns()
-          .pipe(
-            map(data => data.data),
-            map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
-            take(1)
-          )
-          .subscribe(campaigns => {
-            if (campaigns && campaigns.length > 0) {
-              this.gameService.getGamesFromCampaign(campaigns[0].id)
+      this.gameId = Number.parseInt(params.get('gameId'), 10);
+      if (this.gameId) {
+        this.gameService.get(this.gameId)
+          .pipe(take(1))
+          .subscribe((game: IGame) => {
+            this.game = game;
+          });
+        return;
+      }
+
+      this.route.queryParamMap.subscribe(queryParams => {
+        this.campaignId = Number.parseInt(queryParams.get('campaignId'), 10);
+        if (!this.campaignId) {
+          this.campaignService.getCampaigns()
+            .pipe(
+              map(data => data.data),
+              map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
+              take(1)
+            )
+            .subscribe(campaigns => {
+              if (!campaigns || campaigns.length <= 0) {
+                return;
+              }
+
+              this.campaignId = campaigns[0].id;
+              this.gameService.getGamesFromCampaign(this.campaignId)
                 .pipe(
                   take(1)
                 )
@@ -54,17 +62,34 @@ export class GameComponent implements OnInit {
                     this.game = games[0];
                   }
                 });
+            });
+
+          return;
+        }
+
+        this.gameService.getGamesFromCampaign(this.campaignId)
+          .pipe(
+            take(1)
+          )
+          .subscribe((games: IGame[]) => {
+            if (games && games.length > 0) {
+              this.game = games[0];
             }
           });
-
-        return;
-      }
-
-      this.gameService.get(this.gameId)
-        .pipe(take(1))
-        .subscribe((game: IGame) => {
-          this.game = game;
-        });
+      });
     });
+  }
+
+  onComplete() {
+    if (this.game) {
+      this.gameService.play(this.game.id)
+        .pipe(take(1))
+        .subscribe(res => {
+          if (res) {
+            const payload = btoa(JSON.stringify(res));
+            this.router.navigate([`/outcome`], { queryParams: { payload }});
+          }
+        });
+    }
   }
 }

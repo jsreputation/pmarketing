@@ -18,6 +18,7 @@ export class PinataComponent implements OnInit {
   enabled = false;
 
   @Output() tap = new EventEmitter();
+  @Output() broken = new EventEmitter();
 
   shakeAnimationClass = '';
   n = 0;
@@ -32,13 +33,14 @@ export class PinataComponent implements OnInit {
 
   shake() {
     if (this.enabled) {
+      this.n++;
       if (this.n < this.npTaps) {
         this.shakeAnimationClass = '';
         setTimeout(() => {
           this.shakeAnimationClass = 'shake';
         }, 0);
-        this.n++;
-      } else if (this.n === this.npTaps) {
+      } else {
+        this.broken.emit();
         this.currentImg = this.openedImg;
       }
       this.tap.emit({ tap: this.n });
