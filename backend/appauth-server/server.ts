@@ -58,7 +58,7 @@ app.get('/preauth', async (req, res, next) => {
   }
 });
 
-app.post('/v4/oauth/token', async (req, res, next) => {
+app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
     const url = req.query.url;
     if (url === undefined) {
