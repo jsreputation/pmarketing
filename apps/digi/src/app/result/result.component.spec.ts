@@ -1,22 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CongratsComponent } from './congrats.component';
+import { ResultComponent } from './result.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('CongratsComponent', () => {
-  let component: CongratsComponent;
-  let fixture: ComponentFixture<CongratsComponent>;
+describe('ResultComponent', () => {
+  let component: ResultComponent;
+  let fixture: ComponentFixture<ResultComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CongratsComponent, HeaderComponent],
-      imports: [MatToolbarModule]
+      declarations: [ResultComponent, HeaderComponent],
+      imports: [
+        MatToolbarModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CongratsComponent);
+    fixture = TestBed.createComponent(ResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
