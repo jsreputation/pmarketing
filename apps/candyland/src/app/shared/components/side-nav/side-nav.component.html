@@ -13,11 +13,23 @@
     <div class="sidenav-menu-wrap">
       <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
     </div>
-    <button class="sidenav-action"
-            [class.center]="!isOpen"
-            (click)="toggle()">
-      <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
-    </button>
+    <div class="sidenav-actions">
+      <button class="user-logout btn-transparent appear"
+              *ngIf="isOpen"
+              routerLink="/login"
+      >
+        <i class="icon logout" matListIcon></i>
+        <span class="btn-text">
+          Log out
+        </span>
+      </button>
+      <button class="sidenav-action"
+              [class.center]="!isOpen"
+              (click)="toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
+      </button>
+    </div>
+
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content" [@position]="isOpen ? 'open' : 'closed'">
     <ng-content></ng-content>

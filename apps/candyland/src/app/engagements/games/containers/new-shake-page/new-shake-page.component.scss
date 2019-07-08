@@ -8,6 +8,13 @@
   color: $there-color;
 }
 
+.sub-title {
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.06;
+  color: $secondary-color;
+}
+
 .tree {
 
   &-wrap {

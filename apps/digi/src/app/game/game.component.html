@@ -7,15 +7,15 @@
       [treeImg]="game.config.treeImg" [giftImg]="game.config.giftImg"
       [waitingManImg]="game.config.waitingAccessoryImg"
       [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" [nbHangedGifts]="game.config.nbHangedGift" [nbFallingGifts]="game.config.nbGiftsToDrop"
-      (completed)="done()" [enabled]="isEnabled" [nbShakes]="game.config.nbTaps" [distanceFromTree]=26 [bottomDistance]=1>
+      (completed)="onComplete()" [enabled]="isEnabled" [nbShakes]="game.config.nbTaps" [distanceFromTree]=26 [bottomDistance]=1>
     </perx-core-shake-tree>
     <perx-core-pinata
       *ngIf="game && game.type === 1"
       [stillImg]="'../../assets/still-img.png'"
       [openedImg]="'../../assets/opened-img.png'"
-      (tap)="onTap($event)"
       [npTaps]="numberOfTaps"
       [enabled]="isEnabled"
+      (broken)="onComplete()"
     >
     </perx-core-pinata>
   </div>
