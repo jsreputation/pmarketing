@@ -19,7 +19,6 @@ ARG app
 COPY --from=builder /service/apps/$app/dist/$app /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
 
-RUN sed -i "s/<script src=\"/<script src=\"\/site\/hsbc\/winatreat\//g" /service/perx-microsite/index.html
 RUN cat /service/perx-microsite/index.html
 
 WORKDIR /service/express
