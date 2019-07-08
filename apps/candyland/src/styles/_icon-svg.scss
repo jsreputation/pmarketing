@@ -31,6 +31,31 @@
   background-color: rgba(255, 255, 255, 0.51);
 }
 
+.users {
+  mask: url("/assets/images/users.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.merchant {
+  mask: url("/assets/images/merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.settings {
+  mask: url("/assets/images/settings.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.logout {
+  height: 18px;
+  mask: url("/assets/images/icon-logout.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
 .active {
 
   .icon {
