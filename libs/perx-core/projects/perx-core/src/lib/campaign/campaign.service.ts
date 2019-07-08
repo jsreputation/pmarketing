@@ -208,7 +208,11 @@ export class CampaignService {
     }
 
     return this.http.get<IGetStampTransactionResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
+        params: {
+          size: '100'
+        }
+      }
     ).pipe(
       flatMap((resp: IGetStampTransactionResponse) => {
         const streams = [
@@ -228,7 +232,14 @@ export class CampaignService {
   }
 
   getAllFromPage(campaignId: number, page: number): Observable<IStampTransaction[]> {
-    return this.http.get<IGetStampTransactionResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions?page=${page}`)
+    return this.http.get<IGetStampTransactionResponse>(
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`,
+      {
+        params: {
+          page: `${ page }`,
+          size: '100'
+        }
+      })
       .pipe(
         map(res => res.data)
       );
