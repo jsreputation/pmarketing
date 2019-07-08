@@ -25,7 +25,7 @@
          [ngStyle]="getTileSize()">
       <div *ngIf="i === 0;then firstImage else moreImages"></div>
       <ng-template #firstImage>
-        <img class="custom-puzzle-image" [class.mat-elevation-z8]="!pulsehint" [class.mat-elevation-z24]="pulsehint" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="bottomPanelClicked()"/>
+        <img class="custom-puzzle-image" [class.mat-elevation-z8]="!pulsehint" [class.mat-elevation-z24]="pulsehint" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="nextStampClicked()"/>
       </ng-template>
       <ng-template #moreImages>
         <img class="custom-puzzle-image greyscale" [ngStyle]="getBottomTilesStyle(staticIndex)" (click)="togglePulseHint()"/>

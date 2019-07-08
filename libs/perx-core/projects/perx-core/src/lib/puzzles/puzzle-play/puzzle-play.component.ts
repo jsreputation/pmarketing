@@ -92,7 +92,7 @@ export class PuzzlePlayComponent implements OnChanges {
     }
   }
 
-  bottomPanelClicked(): void {
+  nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
