@@ -25,7 +25,7 @@
       <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
     </div>
     <div class="qrcode-container" *ngIf="redeemType == 'qrcode' && !hasResultFetched">
-      <perx-core-qrcode-redemption [voucherId]="encodedValue"></perx-core-qrcode-redemption>
+      <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
     </div>
     <button class="redeem-btn" *ngIf="!hasResultFetched" mat-stroked-button (click)="onCancel()">Redeem</button>
   </div>

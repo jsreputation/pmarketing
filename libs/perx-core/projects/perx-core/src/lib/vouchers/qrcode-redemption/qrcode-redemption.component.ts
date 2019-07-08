@@ -1,20 +1,26 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { IVoucher } from '../models/voucher.model';
+import { Observable } from 'rxjs';
+import { VouchersService } from '../vouchers.service';
 
 @Component({
   selector: 'perx-core-qrcode-redemption',
   templateUrl: './qrcode-redemption.component.html',
   styleUrls: ['./qrcode-redemption.component.css']
 })
-export class QrcodeRedemptionComponent implements OnInit {
+
+export class QrcodeRedemptionComponent implements OnChanges {
 
   @Input()
-  voucherId: string;
+  voucherId: number;
 
-  voucherName  = '$3 voucher';
+  voucher$: Observable<IVoucher>;
 
-  constructor() { }
+  constructor(private vouchersService: VouchersService) {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.voucherId) {
+      this.voucher$ = this.vouchersService.get(this.voucherId);
+    }
   }
-
 }
