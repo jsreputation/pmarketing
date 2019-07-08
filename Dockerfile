@@ -22,6 +22,7 @@ COPY --from=builder /service/backend/appauth-server /service/express/
 RUN cat /service/perx-microsite/index.html
 
 WORKDIR /service/express
+ARG basehref='/'
 
 ENV PORT=8000
 ENV PRODUCTION='true'
