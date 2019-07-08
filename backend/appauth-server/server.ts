@@ -105,6 +105,7 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 });
 
 if (process.env.PRODUCTION) {
+  console.log('production mode ON');
   app.set('view engine', 'html');
   app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
 

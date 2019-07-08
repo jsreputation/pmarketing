@@ -25,6 +25,7 @@ RUN cat /service/perx-microsite/index.html
 WORKDIR /service/express
 
 ENV PORT=8000
+ENV PRODUCTION='true'
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
