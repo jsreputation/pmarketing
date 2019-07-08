@@ -158,7 +158,6 @@ export interface ICampaignResponse {
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
   baseUrl: string;
-  private stampTransactions: IStampTransaction[] = [];
 
   constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
@@ -202,11 +201,6 @@ export class CampaignService {
   }
 
   getAllStampTransaction(campaignId: number) {
-    // todo: flush this param when logging out
-    if (this.stampTransactions.length > 0) {
-      return of(this.stampTransactions);
-    }
-
     return this.http.get<IGetStampTransactionResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
         params: {
@@ -226,8 +220,7 @@ export class CampaignService {
       }),
       mergeAll(),
       scan((acc: IStampTransaction[], curr: IStampTransaction[]) => acc.concat(curr), []),
-      map((stamps: IStampTransaction[]) => stamps.sort((v1, v2) => v1.id - v2.id)),
-      tap(stamps => this.stampTransactions = stamps)
+      map((stamps: IStampTransaction[]) => stamps.sort((v1, v2) => v1.id - v2.id))
     );
   }
 
