@@ -64,7 +64,7 @@ export class NewShakePageComponent implements OnInit {
   private createMessagesForm(): void {
     this.shakeTree = this.fb.group({
       name: ['Create Shake the Tree Template', [Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(1),
         Validators.maxLength(60)]
       ],
       headlineMessage: [null, [Validators.required,

@@ -14,9 +14,8 @@
       <div class="control-input name-control name-control-title">
         <mat-form-field class="messages-input">
           <input type="text"  matInput formControlName="name">
-          <!--<mat-hint align="end">{{name.value?.length || 0}}/60</mat-hint>-->
           <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="name.hasError('minlength')">Min length 5</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
           <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
         </mat-form-field>
       </div>
