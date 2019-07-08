@@ -1,6 +1,6 @@
 <div class="game-wrap"
      (click)="onSelect()"
-     [ngClass]="{active: game?.id === selectedGame?.id}"
+     [ngClass]="{'active-item': game?.id === selectedGame?.id}"
 >
   <div class="game-wrap-img">
     <img [src]="basePath + game.type + '.png'" alt="game-icon">
@@ -9,10 +9,5 @@
     <p class="game-title">
       {{game.title}}
     </p>
-    <div class="game-checkbox">
-      <mat-radio-group [formControl]="control">
-        <mat-radio-button color="primary" [value]="game?.id"></mat-radio-button>
-      </mat-radio-group>
-    </div>
   </div>
 </div>

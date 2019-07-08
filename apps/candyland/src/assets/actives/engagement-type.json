@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "type": "survey",
+    "title": "Survey",
+    "img": "/assets/images/engagement-type/survey.svg",
+    "active": "false"
+  },
+  {
+    "id": 2,
+    "type": "games",
+    "title": "Games",
+    "img": "/assets/images/engagement-type/games.svg",
+    "active": "false"
+  },
+  {
+    "id": 3,
+    "type": "stamp",
+    "title": "Stamp",
+    "img": "/assets/images/engagement-type/stamp.svg",
+    "active": "false"
+  },
+  {
+    "id": 4,
+    "type": "instantReward",
+    "title": "Instant Reward",
+    "img": "/assets/images/engagement-type/instantReward.svg",
+    "active": "false"
+  }
+]

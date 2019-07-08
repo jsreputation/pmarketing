@@ -10,7 +10,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding-left: rem(40px);
+    padding-left: rem(30px);
     box-sizing: border-box;
   }
 
@@ -29,12 +29,16 @@
     color: $secondary-color;
   }
 
+  &-content {
+    padding-top: rem(30px);
+  }
+
   &-content-title {
     font-size: 22px;
     line-height: 1.23;
     font-weight: bold;
     color: $secondary-color;
-    padding: rem(31px) rem(40px);
+   // padding: rem(31px) rem(40px);
     box-sizing: border-box;
   }
 
