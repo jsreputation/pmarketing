@@ -28,6 +28,10 @@ export class NewShakePageComponent implements OnInit {
   ) {
   }
 
+  public get name(): AbstractControl {
+    return this.shakeTree.get('name');
+  }
+
   public get headlineMessage(): AbstractControl {
     return this.shakeTree.get('headlineMessage');
   }
@@ -59,7 +63,14 @@ export class NewShakePageComponent implements OnInit {
 
   private createMessagesForm(): void {
     this.shakeTree = this.fb.group({
-      headlineMessage: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
+      name: ['Create Shake the Tree Template', [Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(60)]
+      ],
+      headlineMessage: [null, [Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(60)]
+      ],
       subHeadlineMessage: [null, [
         Validators.required,
         Validators.minLength(5),

@@ -116,3 +116,14 @@ button {
     display: none;
   }
 }
+
+.name-control-title {
+
+  input {
+    font-size: 22px;
+    color: $there-color;
+  }
+  .mat-form-field-infix {
+    border: 0;
+  }
+}
