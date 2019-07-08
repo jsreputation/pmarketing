@@ -87,7 +87,7 @@ export class GameComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             const payload = btoa(JSON.stringify(res));
-            this.router.navigate([`/outcome`], { queryParams: { payload }});
+            this.router.navigate([`/result`], { queryParams: { payload }});
           }
         });
     }

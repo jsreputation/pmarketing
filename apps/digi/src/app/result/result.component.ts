@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-congrats',
   template: '',
-  styleUrls: ['./congrats.component.scss']
+  styleUrls: ['./result.component.scss']
 })
-export class CongratsComponent implements OnInit {
+export class ResultComponent implements OnInit {
   title = 'Congratulations!';
   subTitle = 'You just won a reward from us.';
 
