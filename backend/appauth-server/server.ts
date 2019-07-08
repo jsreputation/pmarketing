@@ -14,6 +14,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
@@ -110,7 +111,7 @@ if (process.env.PRODUCTION) {
   app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
 
   // Serve static files from /../../perx-microsite
-  app.use(express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+  app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
 
   // All regular routes use the index.html
   app.get('*', (req, res) => {

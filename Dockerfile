@@ -11,7 +11,7 @@ RUN echo "basehref: ${basehref}"
 
 RUN yarn
 RUN APIHOST=${apihost} BASE_HREF=${basehref} yarn build:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
-RUN yarn build:backend
+RUN BASE_HREF=${basehref} yarn build:backend
 
 FROM node:lts-alpine
 
@@ -25,6 +25,7 @@ WORKDIR /service/express
 
 ENV PORT=8000
 ENV PRODUCTION='true'
+ENV BASE_HREF=${basehref}
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
