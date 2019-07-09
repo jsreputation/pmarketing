@@ -13,6 +13,7 @@ describe('AuthenticationService', () => {
     production: false,
     isWhistler: false,
     preAuth: false,
+    baseHref: '/'
   };
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
