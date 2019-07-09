@@ -9,7 +9,7 @@ export class CampaignsService {
   }
 
   public getCampaigns() {
-    return this.http.get('/assets/mocks/campaigns.json').pipe(
+    return this.http.get('assets/mocks/campaigns.json').pipe(
     );
   }
 }

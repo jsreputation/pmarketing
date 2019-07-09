@@ -2,30 +2,16 @@
 @import 'helper';
 
 .status-label {
-  //position: relative;
-  //left: 54.1%;
-  //right: 41.73%;
-  //top: 30.06%;
-  //bottom: 67.24%;
   display: flex;
   align-items: center;
   justify-content: center;
-  //padding: 0 rem(10px);
   font-size: rem(12px);
   height: rem(25px);
   width: rem(57px);
   font-family: $base-font-family;
   font-style: normal;
   font-weight: normal;
-
-  //letter-spacing: -0.0916666px;
-
-  //border-radius: 6px !important;
   border-radius: rem(13.5px);
-
-  //&:hover {
-  //  opacity: 0.8;
-  //}
 }
 
 .active {

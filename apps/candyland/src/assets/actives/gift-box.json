@@ -3,7 +3,7 @@
     "id": 1,
     "type": "state1",
     "title": "icon",
-    "img": "/assets/images/gifts/state1.png",
+    "img": "assets/images/gifts/state1.png",
     "format": ".png",
     "active": "false"
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "type": "state2",
     "title": "icon",
-    "img": "/assets/images/gifts/state2.png",
+    "img": "assets/images/gifts/state2.png",
     "format": ".png",
     "active": "false"
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "type": "state3",
     "title": "icon",
-    "img": "/assets/images/gifts/state3.png",
+    "img": "assets/images/gifts/state3.png",
     "format": ".png",
     "active": "false"
   }

@@ -29,6 +29,9 @@ import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { ShakeDataService } from '../../games/containers/new-shake-page/shared/services/shake-data.service';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -68,10 +71,19 @@ describe('CreateEngagementPopupComponent', () => {
         MatMenuModule,
         MatButtonModule,
         NoDataModule,
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: [] }
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+      {
+        provide: ShakeDataService, useValue: {
+          getBackground: () => of([]),
+          getGiftBox: () => of([]),
+          getGamesTree: () => of([]),
+          getGameNumberGifts: () => of([]),
+        }
+      }
       ]
     })
     .compileComponents();
