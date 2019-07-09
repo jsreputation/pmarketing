@@ -6,18 +6,18 @@
   <div class="game-wrapper">
       <perx-core-pinata
         *ngIf="gameType == 'pinata'" 
-        [stillImg]="'../../assets/pinata/still-img.png'"
-        [openedImg]="'../../assets/pinata/opened-img.png'" 
+        [stillImg]="'/assets/pinata/still-img.png'"
+        [openedImg]="'/assets/pinata/opened-img.png'" 
         (tap)="onPinataTap($event)"
         [npTaps]="pinataTotalTaps"
         [enabled]="isEnabled">
       </perx-core-pinata>
       <perx-core-shake-tree
         *ngIf="gameType == 'shake-tree'"
-        [treeImg]="'../../assets/shake-tree/tree.png'"
-        [giftImg]="'../../assets/shake-tree/gift.png'"
-        [waitingManImg]="'../../assets/shake-tree/person.png'"
-        [waitingManCelebrateImg]="'../../assets/shake-tree/person-celebrate.png'"
+        [treeImg]="'/assets/shake-tree/tree.png'"
+        [giftImg]="'/assets/shake-tree/gift.png'"
+        [waitingManImg]="'/assets/shake-tree/person.png'"
+        [waitingManCelebrateImg]="'/assets/shake-tree/person-celebrate.png'"
         [nbHangedGifts]="3"
         [nbFallingGifts]="1"
         (completed)="gameCompleted()"
@@ -28,9 +28,9 @@
       </perx-core-shake-tree>
       <perx-core-puzzle-stamp
         *ngIf="gameType == 'puzzle-stamp'"
-        [img]="'../../assets/puzzle-stamp/netflix-bg.jpg'"
-        [lockImg]="'../../assets/puzzle-stamp/lock-icon.png'"
-        [unlockImg]="'../../assets/puzzle-stamp/unlock-icon.png'"
+        [img]="'/assets/puzzle-stamp/netflix-bg.jpg'"
+        [lockImg]="'/assets/puzzle-stamp/lock-icon.png'"
+        [unlockImg]="'/assets/puzzle-stamp/unlock-icon.png'"
         [highlightColor]="'#FAE4A4'"
         [borderColor]="'#BC9B3A'"
         [rows]="2"

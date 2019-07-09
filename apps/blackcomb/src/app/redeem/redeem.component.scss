@@ -7,17 +7,15 @@
 	height: 100%;
 
 	.result-text {
-		font-size: 18px;
-		font-family: 'Lato' , sans-serif;;
+		font-size: 1.8rem;
 		color: #212B36;
 		margin-top: 1rem;
 		
 	}
 
 	.result-reward-text {
-		font-size: 12px;
-		line-height: 14px;
-		font-family: 'Lato' , sans-serif;;
+		font-size: 1.2rem;
+		line-height: 1.4rem;
 		color: #6B6B6B;
 		margin-top: 1rem;
 	}
@@ -48,7 +46,7 @@ h1 {
 
 p {
   	text-align: center;
-  	margin: 6rem 3.2rem 0 3.2rem;
+  	margin: 8rem 3.2rem 0 3.2rem;
   	font-style: normal;
   	font-weight: normal;
   	font-size: 1.4rem;
@@ -56,7 +54,11 @@ p {
 }
 
 perx-core-bcode-redemption {
-	margin-top: 5rem;
+	margin-top: 7rem;
+}
+
+perx-core-pin-input {
+	margin-top: 7rem;
 }
 
 .qrcode-container {

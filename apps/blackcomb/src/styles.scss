@@ -2,6 +2,12 @@
 // @import '~@angular/material/theming';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+html {
+  font-size: 62.5%;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+}
+
 .actions-container {
   background-color: transparent;
   position: fixed;
