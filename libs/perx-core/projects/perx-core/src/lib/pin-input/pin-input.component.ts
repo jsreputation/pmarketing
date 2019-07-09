@@ -32,7 +32,7 @@ export class PinInputComponent implements OnInit, OnChanges {
 
   pinCode: string;
 
-  controlls: FormControl[] = [];
+  controls: FormControl[] = [];
   hasError = '';
 
   constructor(
@@ -51,10 +51,10 @@ export class PinInputComponent implements OnInit, OnChanges {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.length; i++) {
       const ctrl = new FormControl();
-      this.controlls.push(ctrl);
+      this.controls.push(ctrl);
     }
     // listen to each FormControl
-    this.controlls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
+    this.controls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -105,7 +105,7 @@ export class PinInputComponent implements OnInit, OnChanges {
   }
 
   get value(): string {
-    return this.controlls.reduce((p: string, v: FormControl): string => {
+    return this.controls.reduce((p: string, v: FormControl): string => {
       return v.value === null ? p : `${p}${v.value}`;
     }, '');
   }
@@ -115,7 +115,7 @@ export class PinInputComponent implements OnInit, OnChanges {
     if (event.key === 'Backspace') {
       const v = this.value;
       if (v.length > 0 && v.length < this.length) {
-        this.controlls[v.length - 1].setValue('');
+        this.controls[v.length - 1].setValue('');
       }
       event.stopPropagation();
     }
