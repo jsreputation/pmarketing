@@ -4,9 +4,17 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
-  //padding: 0 10px;
+
+  & > * {
+    margin: 0 10px 0 0;
+
+    &:last-child {
+      margin: 0
+    }
+  }
 }
 
-.block{
+
+.block {
   display: block;
 }

@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CampaignsHttpsService } from '@cl-core/http-services/campaigns-https.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignsService {
-  private _currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private http: CampaignsHttpsService) {
   }

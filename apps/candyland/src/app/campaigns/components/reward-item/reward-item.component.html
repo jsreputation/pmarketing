@@ -1,0 +1,30 @@
+<div class="reward-item">
+  <div class="reward-item-img-block">
+    <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
+  </div>
+  <div class="reward-item-info">
+    <p class="reward-item-name">{{data?.name}}</p>
+    <p class="reward-item-type">{{data?.type}}</p>
+  </div>
+  <cl-progress-bar class="reward-item-progress"
+                    *ngIf="data?.current && data?.total"
+                   [current]="data?.current"
+                   [total]="data?.total">
+
+  </cl-progress-bar>
+  <div class="reward-item-probability" *ngIf="enableProbability">
+    <span class="reward-item-probability-label">Probability</span>
+    <mat-form-field class="reward-item-probability-input">
+      <input type="number" min="0" max="100" step="1" matInput formControl="control">
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <div class="reward-item-actions">
+<!--    <button mat-icon-button (click)="delete()">-->
+<!--      <i class="icon delete-action"></i>-->
+<!--    </button>-->
+    <button mat-icon-button (click)="delete()">
+      <i class="icon delete-action"></i>
+    </button>
+  </div>
+</div>

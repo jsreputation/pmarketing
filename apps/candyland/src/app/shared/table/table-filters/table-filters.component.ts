@@ -9,7 +9,8 @@ import {
   OnDestroy,
   QueryList,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  ViewEncapsulation
 } from '@angular/core';
 import { TableFilterDirective } from './table-filter.directive';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -21,7 +22,8 @@ import { MatTableDataSource } from '@angular/material';
   selector: 'cl-table-filters',
   templateUrl: './table-filters.component.html',
   styleUrls: ['./table-filters.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: MatTableDataSource<any>;

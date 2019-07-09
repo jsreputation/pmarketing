@@ -23,7 +23,8 @@ import {
   MatSelectModule,
   MatSortModule,
   MatTableModule,
-  MatStepperModule, MatRadioModule
+  MatStepperModule,
+  MatRadioModule, MatCardModule, MatCheckboxModule
 } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -41,6 +42,9 @@ import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewar
 import { NewCampaignSelectTemplatePageComponent } from './containers/new-campaign-select-template-page/new-campaign-select-template-page.component';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
+import { RewardItemComponent } from './components/reward-item/reward-item.component';
+import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +57,8 @@ import { ItemListModule } from '@cl-shared/components/item-list/item-list.module
     CampaignsComponent,
     NewCampaignComponent,
     NewCampaignRewardsPageComponent,
-    NewCampaignSelectTemplatePageComponent
+    NewCampaignSelectTemplatePageComponent,
+    RewardItemComponent
   ],
   imports: [
     CommonModule,
@@ -85,7 +90,10 @@ import { ItemListModule } from '@cl-shared/components/item-list/item-list.module
     NoDataModule,
     EngagementItemModule,
     ItemListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCardModule,
+    MatCheckboxModule,
+    ProgressBarModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

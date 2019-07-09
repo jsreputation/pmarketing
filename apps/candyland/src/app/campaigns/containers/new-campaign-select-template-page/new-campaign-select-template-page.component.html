@@ -2,7 +2,7 @@
   <div class="">
     <!--  filters-->
     <div class="row">
-      <cl-table-filters [dataSource]="dataSource" classList="block">
+      <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'name'; let filter">
           <cl-search-filter [control]="filter"></cl-search-filter>
         </ng-container>
@@ -17,7 +17,7 @@
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button classList="invert">+ Create New Template</cl-button>
+      <cl-button class="create-button" classList="invert">+ Create New Template</cl-button>
     </div>
 
     <mat-radio-group class="item-list shadow">

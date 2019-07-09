@@ -1,22 +1,5 @@
+@import "helper";
+
 .select-template {
   display: flex;
-  //flex-flow: row nowrap;
-  //justify-content: stretch;
-}
-
-
-.preview {
-  flex-shrink: 0;
-  width: rem(344px);
-  height: rem(638px);
-  background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
-
-  &-mobile {
-    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
-    width: rem(344px);
-    height: rem(638px);
-    background-position: 123% 100%;
-  }
 }

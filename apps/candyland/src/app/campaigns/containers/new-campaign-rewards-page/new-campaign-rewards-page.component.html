@@ -1,3 +1,50 @@
-<p>
-  new-campaign-rewards-page works!
-</p>
+<div class="row">
+  <div>
+    <mat-card>
+      <div class="row">
+        <h4 class="sub-title">Rewards</h4>
+        <cl-button class="create-button" classList="invert">+ Create New Template</cl-button>
+      </div>
+      <div>
+        <mat-checkbox>Include Probability</mat-checkbox>
+      </div>
+      <ul>
+        <li>
+          <cl-reward-item></cl-reward-item>
+        </li>
+      </ul>
+    </mat-card>
+
+    <mat-card>
+      <div class="row">
+        <h3 class="sub-title">Play Limits</h3>
+      </div>
+      <div class="row">
+        <div>
+          <h4>Limit per user</h4>
+          <mat-form-field appearance="outline">
+            <mat-select placeholder="Filter by">
+              <mat-option value="1">1 time</mat-option>
+              <mat-option value="2">2 time</mat-option>
+              <mat-option value="3">3 time</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <h4>Limit per duration</h4>
+          <mat-form-field appearance="outline">
+            <mat-select placeholder="Filter by">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="preview">
+    <div class="preview-mobile">
+    </div>
+  </div>
+</div>

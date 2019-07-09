@@ -2,6 +2,8 @@ import _isEqual from 'lodash.isequal';
 import _transform from 'lodash.transform';
 import _isEmpty from 'lodash.isempty';
 
+// tslint:disable
+
 export default class Utils {
 
   static convertObjToArr(obj: any): any[] {
@@ -30,6 +32,7 @@ export default class Utils {
           }
           // target[key] = target[key].concat(source[key]);
           target[key] = source[key].map((item, index) => {
+            console.log(item);
             if (!target[key][index]) {
               target[key][index] = {};
             }
@@ -47,7 +50,6 @@ export default class Utils {
   }
 
   static dcopy(target) {
-    // tslint:disable
     if (/number|string|boolean/.test(typeof target)) {
       return target;
     }
@@ -82,7 +84,6 @@ export default class Utils {
         }
       }
     }
-    // tslint:enable
   }
 
   static add(copy, key, value) {

@@ -1,0 +1,93 @@
+@import "variables";
+@import "helper";
+
+.reward-item {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: rem(10px) rem(15px);
+
+  &-img-block {
+    background-color: $dark-color;
+    position: relative;
+    height: rem(63px);
+    width: rem(63px);
+  }
+
+  &-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &-info {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    margin: 0 0 0 rem(14px);
+    font-family: $primary-font;
+  }
+
+  &-name {
+    margin-bottom: 5px;
+    font-size: rem(14px);
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    color: $base-font-color;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  &-type {
+    font-size: rem(14px);
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    color: $secondary-color;
+  }
+
+  &-progress {
+    flex: 1;
+  }
+
+  &-probability {
+    margin-right: 40px;
+  }
+
+  &-probability-label {
+    font-size: rem(14px);
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    color: $secondary-color;
+    margin: 0 rem(14px) 0 0;
+  }
+
+  &-probability-input {
+    width: rem(100px);
+    font-size: rem(16px);
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $base-font-color;
+    text-align: right;
+  }
+
+  &-action {
+    min-width: 80px;
+  }
+}
