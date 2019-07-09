@@ -25,7 +25,6 @@
   }
 
   &-main-block {
-    padding: rem(30px) rem(33px);
     display: flex;
   }
 
@@ -72,4 +71,8 @@
     display: flex;
   }
 
+}
+
+.name-control {
+  min-width: rem(747px);
 }

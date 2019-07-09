@@ -3,10 +3,6 @@
 
 .pinata {
 
-  &-content {
-    display: flex;
-  }
-
   &-btn-cancel {
     padding-right: rem(8px);
   }
@@ -24,4 +20,9 @@
     margin-bottom: rem(40px);
     display: flex;
   }
+}
+
+.name-control {
+  min-width: rem(747px);
+
 }
