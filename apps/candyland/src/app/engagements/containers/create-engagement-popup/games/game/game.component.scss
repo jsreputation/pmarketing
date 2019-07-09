@@ -10,11 +10,7 @@
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid transparent;
-
-    &.active {
-      border: solid 2px #116fff;
-    }
+    border: 1px solid transparent;
   }
 
   &-content {
