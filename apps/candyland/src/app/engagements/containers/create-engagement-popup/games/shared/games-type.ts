@@ -25,4 +25,4 @@ export const GamesType: IGame[] = [
     title: 'Tap tap challenge',
     active: false
   }
-  ];
+];
