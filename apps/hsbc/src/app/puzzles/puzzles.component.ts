@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IStampCard } from '@perx/core/dist/perx-core';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-puzzles',
@@ -12,6 +13,7 @@ export class PuzzlesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -22,5 +24,12 @@ export class PuzzlesComponent implements OnInit {
 
   selected(puzzle: IStampCard) {
     this.router.navigate([`/puzzle/${this.campaignId}/${puzzle.id}`]);
+  }
+
+  completed() {
+    this.notificationService.addPopup({
+      // tslint:disable-next-line: max-line-length
+      text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
+    });
   }
 }
