@@ -3,8 +3,15 @@ FROM node:lts-alpine as builder
 COPY . /service
 WORKDIR /service
 
+ARG apihost='https://api.perxtech.io'
+ARG basehref='/'
+
+RUN echo "apihost: ${apihost}"
+RUN echo "basehref: ${basehref}"
+
 RUN yarn
-RUN yarn build:prod
+RUN APIHOST=${apihost} BASE_HREF=${basehref} yarn build:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
+RUN BASE_HREF=${basehref} yarn build:backend
 
 FROM node:lts-alpine
 
@@ -12,12 +19,14 @@ ARG app
 COPY --from=builder /service/apps/$app/dist/$app /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
 
+RUN cat /service/perx-microsite/index.html
+
 WORKDIR /service/express
+ARG basehref='/'
 
 ENV PORT=8000
-ENV APIHOST='https://api.perxtech.io'
-ENV FORCE_PATH_STYLE='true'
 ENV PRODUCTION='true'
+ENV BASE_HREF=${basehref}
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
