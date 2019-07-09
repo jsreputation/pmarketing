@@ -64,11 +64,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.soundService.showPopup();
       }, 50);
+    } else if (localStorage.getItem('enableSound') === 'true') {
+      setTimeout(() => {
+        this.soundService.play();
+      }, 50);
     }
   }
 
   ngOnDestroy() {
-    this.soundService.pause();
+    this.soundService.pause(false);
   }
 
   private fetchCampaign() {
