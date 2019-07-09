@@ -26,9 +26,15 @@ export class LoginFormComponent implements OnInit {
 
   get email() { return this.formLogin.get('email'); }
   get password() { return this.formLogin.get('password'); }
+  get accountId() { return this.formLogin.get('accountId'); }
 
   private createForm(): void {
     this.formLogin = this.fb.group({
+      accountId: [null, [
+        Validators.required,
+        Validators.minLength(15),
+        Validators.maxLength(50)
+      ]],
       email: [null, [
         Validators.required,
         Validators.minLength(15),

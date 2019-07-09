@@ -1,3 +1,6 @@
+@import "variables";
+@import "helper";
+
 html, body {
   min-height: 100%;
   font-size: $base-font-size;
@@ -21,14 +24,7 @@ button {
   outline: none;
 }
 
-h1 {
-  font-size: 26px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.04;
-  letter-spacing: normal;
-}
+
 
 .w-100 {
   width: 100%;
@@ -55,16 +51,52 @@ h1 {
   }
 }
 
-.page-header{
+.page-header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  box-sizing: content-box;
-  padding: 0;
-  margin: 0 0 rem(24px);
+  box-sizing: border-box;
+  padding: 0 rem($horizontal-content-padding);
+
+  &.full-with {
+    background: $white-color;
+    min-height: rem(66px);
+  }
+
 }
+
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.04;
+  letter-spacing: normal;
+  color: $there-color;
+}
+
+.sub-title {
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 1.06;
+  color: $secondary-color;
+}
+
+.content {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 150vh;
+  width: 100%;
+  padding: rem($vertical-content-padding) rem($horizontal-content-padding);
+  background: $simple-light-gray;
+
+  &.no-padding-top {
+    padding-top: 0;
+  }
+}
+
 
 .row {
   display: flex;
@@ -90,5 +122,42 @@ h1 {
 .game-checkbox {
   .mat-radio-label-content {
     display: none;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mobile {
+  &-preview {
+    flex-shrink: 0;
+    width: rem(344px);
+    height: rem(638px);
+    background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+  }
+
+  &-preview-mobile {
+    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
+    width: rem(344px);
+    height: rem(638px);
+    background-position: 123% 100%;
+  }
+}
+
+.game {
+
+  &-title {
+    font-size: 16px;
+    line-height: 1.06;
+    color: $secondary-color;
+    margin: rem(24px) 0 rem(16px) 0;
+  }
+
+  &-graphic, &-button {
+    display: block;
+    margin-top: rem(16px);
   }
 }

@@ -1,20 +1,6 @@
 @import "helper";
 @import "variables";
 
-.title {
-  font-weight: 500;
-  font-size: rem(26px);
-  line-height: 1.04;
-  color: $there-color;
-}
-
-.sub-title {
-  font-size: rem(16px);
-  font-weight: 500;
-  line-height: 1.06;
-  color: $secondary-color;
-}
-
 .tree {
 
   &-wrap {
@@ -49,21 +35,6 @@
     margin-right: rem(40px);
   }
 
-  &-preview {
-    flex-shrink: 0;
-    width: rem(344px);
-    height: rem(638px);
-    background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-  }
-
-  &-preview-mobile {
-    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
-    width: rem(344px);
-    height: rem(638px);
-    background-position: 123% 100%;
-  }
 }
 
 .messages {
@@ -74,18 +45,6 @@
 }
 
 .game {
-
-  &-title {
-    font-size: 16px;
-    line-height: 1.06;
-    color: $secondary-color;
-    margin: rem(24px) 0 rem(16px) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: rem(16px);
-  }
 
   &-tree-wrap {
     display: flex;
