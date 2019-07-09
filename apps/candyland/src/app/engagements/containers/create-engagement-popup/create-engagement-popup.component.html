@@ -1,16 +1,21 @@
 <div class="dialog-header-wrap">
-  <h2 mat-dialog-title class="dialog-title">Create Engagement</h2>
+  <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
+  <p class="dialog-content-title">
+    Select Engagement Type
+  </p>
   <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 <mat-dialog-content>
   <div class="dialog-content">
-    <p class="dialog-content-title">
-      Select Engagement Type
-    </p>
+
     <cl-ink [border]="true" [triangle]="true">
-      <cl-engagement-type #engagementHost [clInkHost]="engagementHost" (selectType)="setType($event)">
+      <cl-engagement-type #engagementHost
+                          [clInkHost]="engagementHost"
+                          (selectType)="setType($event)"
+                          [graphicList]="engagementType$ | async"
+      >
       </cl-engagement-type>
     </cl-ink>
   </div>
@@ -20,6 +25,7 @@
     <cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>
     <cl-games *ngSwitchCase="engagementType.games"
               (selectGame)="setGame($event)"
+              [graphicList]="gamesType$ | async"
               [selectedGame]="selectedGame"
     ></cl-games>
     <cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>

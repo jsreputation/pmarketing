@@ -53,6 +53,7 @@ export interface IStampCard {
   user_account_id: number;
   state: STAMP_CARD_STATUS;
   campaign_id: number;
+  card_number: number;
   campaign_config: {
     total_slots: number;
     rewards: IReward[];

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGame } from './shared/models/game-model';
-import { GamesType } from './shared/games-type';
+import { IGraphic } from '@cl-shared/models/graphick.model';
 
 @Component({
   selector: 'cl-games',
@@ -8,16 +7,16 @@ import { GamesType } from './shared/games-type';
   styleUrls: ['./games.component.scss']
 })
 export class GamesComponent implements OnInit {
-  @Input() public selectedGame: IGame;
-  @Output() public selectGame = new EventEmitter<IGame>();
+  @Input() public selectedGame: IGraphic;
+  @Input() public graphicList: IGraphic[];
+  @Output() public selectGame = new EventEmitter<IGraphic>();
 
-  public gamesType: IGame[] = GamesType;
   constructor() { }
 
   ngOnInit() {
   }
 
-  public setGame(game: IGame): void {
+  public setGame(game: IGraphic): void {
     this.selectedGame = game;
     this.selectGame.emit(game);
   }
