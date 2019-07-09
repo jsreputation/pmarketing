@@ -58,7 +58,6 @@ export class PuzzlePlayComponent implements OnChanges {
   imageReady = false;
 
   staticPuzzleDummyTiles = [];
-  pulsehint = false;
 
   @ViewChild('puzzleBoard', { static: false }) puzzleView: ElementRef;
 
@@ -106,16 +105,6 @@ export class PuzzlePlayComponent implements OnChanges {
           return currentValue.puzzleLocation !== puzzleLocation;
         });
       }
-    }
-  }
-
-  togglePulseHint(): void {
-    // debounce it
-    if (this.pulsehint === false) {
-      this.pulsehint = true;
-      setInterval(() => {
-        this.pulsehint = false;
-      }, 1000);
     }
   }
 
