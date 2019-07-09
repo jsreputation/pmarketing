@@ -2,6 +2,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardPageComponent } from './dashboard-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { Component, Input } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+@Component({
+  selector: 'cl-dashboard-game-card',
+  template: ''
+})
+class MockDashboardGameCardComponent {
+  @Input() public gameCard;
+}
+@Component({
+  selector: 'cl-business-insight',
+  template: ''
+})
+class MockBusinessInsightComponent {
+}
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent;
@@ -10,9 +27,15 @@ describe('DashboardPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        ButtonModule,
+        HttpClientTestingModule,
       ],
-      declarations: [ DashboardPageComponent ]
+      declarations: [
+        DashboardPageComponent,
+        MockDashboardGameCardComponent,
+        MockBusinessInsightComponent
+      ]
     })
     .compileComponents();
   }));

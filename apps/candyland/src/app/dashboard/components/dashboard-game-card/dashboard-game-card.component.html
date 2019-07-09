@@ -1,3 +1,19 @@
-<p>
-  dashboard-game-card works!
-</p>
+<div class="card-content">
+  <p class="card-title sub-title">
+    {{gameCard.title}}
+  </p>
+  <p class="card-description">
+    {{gameCard.description}}
+  </p>
+  <p class="card-actions">
+    <cl-button [classList]="'tertiary'"
+    >
+        <span>
+          {{gameCard.link}}
+        </span>
+    </cl-button>
+  </p>
+  <div class="card-img-wrap">
+    <img [src]="gameCard.img" alt="icon">
+  </div>
+</div>

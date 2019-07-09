@@ -3,7 +3,7 @@
 
 html, body {
   min-height: 100%;
-  font-size: $base-font-size;
+  font-size: 62.5%;
 }
 
 body {
@@ -75,6 +75,13 @@ button {
   line-height: 1.04;
   letter-spacing: normal;
   color: $there-color;
+}
+
+.sub-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.06;
+  color: $secondary-color;
 }
 
 .content {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-game-card.component.scss']
 })
 export class DashboardGameCardComponent implements OnInit {
-
+  @Input() gameCard: DashboardGameCard;
   constructor() { }
 
   ngOnInit() {

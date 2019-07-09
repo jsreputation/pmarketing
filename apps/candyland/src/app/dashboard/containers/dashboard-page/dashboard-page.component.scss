@@ -2,21 +2,41 @@
 @import "helper";
 
 .link-overview {
-  font-size: rem(16px);
+  font-size: 1.6rem;
   color: $base-font-color;
   text-decoration: none;
-  margin-top: rem(8px);
+  margin-top: .8rem;
   display: flex;
 }
 
 .dashboard {
 
   &-header {
-    height: rem(138px);
+    height: 13.8rem;
   }
 
   &-title {
-    font-size: rem(20px);
+    font-size: 2rem;
     color: $base-font-color;
+
+
+    &__indent {
+      margin: 2.4rem 0 1.6rem 0;
+    }
+  }
+}
+
+.game-card {
+
+  margin-right: 2rem;
+  width: 100%;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &-wrap {
+    display: flex;
+    margin-top: 2.4rem;
   }
 }
