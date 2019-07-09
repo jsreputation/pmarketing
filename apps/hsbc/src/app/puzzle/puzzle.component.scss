@@ -1,20 +1,21 @@
 
 .main-puzzle-container {
-  background: #EF241C;
+  background: #ef241c;
   height: calc(100% - 6rem);
   position: relative;
   top: 6rem;
-
   display: flex;
   flex-direction: column;
+
   h1 {
     color: white;
     text-align: center;
     font-family: Roboto, sans-serif;
     padding: 2rem 0 1rem 0;
   }
+
   > * {
-    &:nth-child(2){
+    &:nth-child(2) {
       flex: 1 1;
     }
   }

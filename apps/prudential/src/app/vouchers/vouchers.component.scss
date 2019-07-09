@@ -1,4 +1,4 @@
-$max-width: 60.0rem;
+$max-width: 60rem;
 
 .container {
   margin: 0 auto;
@@ -22,6 +22,7 @@ h1 {
   margin: 0;
   display: flex;
   font-size: 1.6rem;
+
   &:first-child {
     padding-top: 2.4rem;
   }
