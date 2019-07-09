@@ -8,14 +8,19 @@
 <!--</ul>-->
 
 <router-outlet></router-outlet>
-<div class="tree-wrap">
+<div class="tree-wrap" [formGroup]="shakeTree">
   <div class="full-with page-header">
-    <div class="tree-title-wrap">
-      <p class="title">
-        Create Shake the Tree Template
-      </p>
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text"  matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="tree-actions">
+    <div class="game-actions">
       <cl-button [classList]="'third'"
                  class="tree-btn-cancel"
 
@@ -33,8 +38,8 @@
       </cl-button>
     </div>
   </div>
-  <div class="tree-main-block">
-    <div class="tree-wrap-fields" [formGroup]="shakeTree">
+  <div class="content flex">
+    <div class="tree-wrap-fields">
       <mat-card>
         <div class="messages-wrap">
           <p class="sub-title">
