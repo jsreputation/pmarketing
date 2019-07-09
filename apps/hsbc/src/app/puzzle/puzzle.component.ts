@@ -143,7 +143,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           if (res.data.state === TRANSACTION_STATE.redeemed) {
             if (this.card.card_number === this.cardsCount) { // we are on the last card
               const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.redeemed).length;
-              if (redeemedTransactionsCount === this.rows * this.cols && this.card) { // we also were on the last stamp
+              if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
                 this.notificationService.addPopup({
                   // tslint:disable-next-line: max-line-length
                   text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
