@@ -32,9 +32,9 @@ th.mat-header-cell {
     }
   }
 
-  &__id {
+  &__goal {
     color: $secondary-font-color;
-    text-transform: uppercase;
+    font-size: rem(14px);
   }
 }
 

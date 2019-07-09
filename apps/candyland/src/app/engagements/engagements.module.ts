@@ -62,7 +62,7 @@ import { StampComponent } from './containers/create-engagement-popup/stamp/stamp
     InkModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
   ],
   entryComponents: [
     EngagementsListPageComponent,

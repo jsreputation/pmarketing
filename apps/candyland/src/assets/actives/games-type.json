@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "type": "spinTheWheel",
+    "title": "Spin the wheel",
+    "img": "assets/images/games-type/spinTheWheel.png",
+    "active": "false"
+  },
+  {
+    "id": 2,
+    "type": "shakeTheTree",
+    "title": "Shake the tree",
+    "img": "assets/images/games-type/shakeTheTree.png",
+    "active": "false"
+  },
+  {
+    "id": 3,
+    "type": "hitThePinata",
+    "title": "Hit the pinata",
+    "img": "assets/images/games-type/hitThePinata.png",
+    "active": "false"
+  },
+  {
+    "id": 4,
+    "type": "tapTapChallenge",
+    "title": "Tap tap challenge",
+    "img": "assets/images/games-type/tapTapChallenge.png",
+    "active": "false"
+  }
+]
