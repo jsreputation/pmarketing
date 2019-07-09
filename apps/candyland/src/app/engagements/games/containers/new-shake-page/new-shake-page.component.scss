@@ -11,17 +11,17 @@
   &-page-header {
     display: flex;
     justify-content: space-between;
-    padding: 0 rem(30px) 0 rem(43px);
+    padding: 0 3rem 0 4.3rem;
     background: $white-color;
     align-items: center;
   }
 
   &-page-header {
-    height: rem(66px);
+    height: 6.6rem;
   }
 
   &-btn-cancel {
-    padding-right: rem(8px);
+    padding-right: .8rem;
   }
 
   &-main-block {
@@ -29,9 +29,9 @@
   }
 
   &-wrap-fields {
-    min-width: rem(747px);
+    min-width: 74.7rem;
     width: 100%;
-    margin-right: rem(40px);
+    margin-right: 4rem;
   }
 
 }
@@ -51,7 +51,7 @@
 
   &-image-preview {
     display: block;
-    margin-right: rem(10px);
+    margin-right: 1rem;
 
     &:last-child {
       margin-right: 0;
@@ -59,20 +59,20 @@
   }
 
   &-number-gifts {
-    padding-top: rem(40px);
+    padding-top: 4rem;
   }
 
   &-gift-select {
-    width: rem(344px);
+    width: 34.4rem;
   }
 
   &-selected-graphic {
-    margin-bottom: rem(40px);
+    margin-bottom: 4rem;
     display: flex;
   }
 
 }
 
 .name-control {
-  min-width: rem(747px);
+  min-width: 74.7rem;
 }

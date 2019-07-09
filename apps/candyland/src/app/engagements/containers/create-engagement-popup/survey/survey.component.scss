@@ -4,13 +4,14 @@
 .survey {
 
   &-wrap {
-    padding: rem(25px) rem(40px) 0 rem(40px);
+    padding: 2.5rem 4rem 0 4rem;
   }
 
   &-title {
     font-family: Roboto;
     font-weight: bold;
     line-height: 1.21;
+    font-size: 1.4rem;
     color: $secondary-color;
     padding-bottom: 9px;
   }
@@ -18,4 +19,5 @@
 
 .mat-form-field {
   width: 100%;
+  font-size: 1.4rem;
 }

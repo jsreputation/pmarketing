@@ -2,12 +2,12 @@
 @import "../../../../styles/helper";
 
 .btn {
-  min-width: rem(100px);
-  height: rem(46px);
-  border-radius: rem(2px);
+  min-width: 10rem;
+  height: 4.6rem;
+  border-radius: .2rem;
   color: $white-color;
-  font-size: rem(14px);
-  padding: 0 rem(20px);
+  font-size: 1.4rem;
+  padding: 0 2rem;
   box-shadow: none;
 }
 
@@ -44,7 +44,7 @@
   background-color: transparent;
   color: $primary-color;
   padding-left: 0;
-  height: rem(19px);
+  height: 1.9rem;
 
   &:hover {
     color: #124cc8;
