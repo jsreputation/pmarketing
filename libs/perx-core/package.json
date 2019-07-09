@@ -8,7 +8,7 @@
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && npx stylelint src/**/*.scss",
+    "lint": "ng lint && npx stylelint projects/**/*.css",
     "e2e~": "ng e2e"
   },
   "private": true,
