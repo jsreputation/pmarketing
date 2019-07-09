@@ -45,12 +45,16 @@ export class NewShakePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createMessagesForm();
+    this.createShakeTreeForm();
     this.createGameGiftField();
     this.getBackgroundData();
     this.getGiftBox();
     this.getGamesTree();
     this.getGameNumberGifts();
+  }
+
+  public save(): void {
+    console.log(this.shakeTree.value);
   }
 
   public setSelectGiftBox(giftBox: IGraphic): void {
@@ -61,7 +65,7 @@ export class NewShakePageComponent implements OnInit {
     this.gameGift = this.fb.control(null, [Validators.required]);
   }
 
-  private createMessagesForm(): void {
+  private createShakeTreeForm(): void {
     this.shakeTree = this.fb.group({
       name: ['Create Shake the Tree Template', [Validators.required,
         Validators.minLength(1),

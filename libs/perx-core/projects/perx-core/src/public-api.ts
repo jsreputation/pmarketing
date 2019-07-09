@@ -28,6 +28,7 @@ export {
   IStampCardsResponse,
   IVoucher,
   IPutStampTransactionResponse,
+  IGetStampTransactionResponse,
   CAMPAIGN_TYPE,
   ICampaign,
   ICampaignsResponse,

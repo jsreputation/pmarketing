@@ -15,7 +15,7 @@ export class SoundService {
   constructor(
     private dialog: MatDialog
   ) {
-    this.audio = new Audio('../../assets/background.mov');
+    this.audio = new Audio('assets/background.mov');
     if (typeof this.audio.loop === 'boolean') {
       this.audio.loop = true;
     } else {
@@ -33,11 +33,15 @@ export class SoundService {
     localStorage.setItem('enableSound', 'true');
   }
 
-  pause() {
+
+
+  pause(persist = true) {
     if (this.audio) { this.audio.pause(); }
     this.icon = 'volume_off';
     this.onToggle.emit(false);
-    localStorage.setItem('enableSound', 'false');
+    if (persist) {
+      localStorage.setItem('enableSound', 'false');
+    }
   }
 
   isPlaying() {
