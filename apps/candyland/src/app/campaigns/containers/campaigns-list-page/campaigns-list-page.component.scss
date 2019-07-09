@@ -32,22 +32,10 @@ th.mat-header-cell {
     }
   }
 
-  &__id {
+  &__goal {
     color: $secondary-font-color;
-    text-transform: uppercase;
+    font-size: rem(14px);
   }
-}
-
-//.text-center{
-//  text-align: center;
-//}
-
-.center {
-  //.mat-sort-header-container  {
-  //  display: flex;
-  //justify-content: center !important;
-  //text-align: center !important;
-  //}
 }
 
 .row {

@@ -1,9 +1,9 @@
 <div class="type-item"
      (click)="onSelectType()"
-     [ngClass]="{active: typeItem.id === checkedType?.id}"
+     [ngClass]="{'active-item': typeItem.id === checkedType?.id}"
 >
   <div class="type-wrap-img">
-    <img [src]="basePath + typeItem.type + '.svg'" alt="type-icon">
+    <img [src]="typeItem.img" [alt]="typeItem.title">
   </div>
   <p class="type-title">
     {{typeItem.title}}
