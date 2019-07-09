@@ -30,7 +30,7 @@ describe('TypeItemComponent', () => {
       id: 1,
       type: 'survey',
       title: 'Survey',
-      img: '/assets/images/engagement-type/survey.svg',
+      img: 'assets/images/engagement-type/survey.svg',
       active: false
     };
     fixture.detectChanges();

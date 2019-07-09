@@ -11,11 +11,11 @@ export class EngagementsService {
   }
 
   public getEngagements() {
-    return this.http.get('/assets/mocks/engagements.json');
+    return this.http.get('assets/mocks/engagements.json');
   }
 
   public getEngagementType() {
-    return this.http.get('/assets/actives/engagement-type.json')
+    return this.http.get('assets/actives/engagement-type.json')
       .pipe(
         map(res => (res as IGraphic[]))
       );
@@ -23,7 +23,7 @@ export class EngagementsService {
 
 
   public getGamesType() {
-    return this.http.get('/assets/actives/games-type.json')
+    return this.http.get('assets/actives/games-type.json')
       .pipe(
         map(res => (res as IGraphic[]))
       );
