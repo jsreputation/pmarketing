@@ -14,6 +14,7 @@ export class EnvConfig {
     production: false,
     isWhistler: true,
     preAuth: false,
+    baseHref: '/'
   };
 }
 
@@ -37,7 +38,7 @@ export class CognitoService {
     if (!config.env.production) {
       this.preAuthEndpoint = 'http://localhost:4000/preauth';
     } else {
-      this.preAuthEndpoint = '/preauth';
+      this.preAuthEndpoint = config.env.baseHref + 'preauth';
     }
   }
 

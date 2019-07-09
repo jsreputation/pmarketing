@@ -36,7 +36,7 @@ import {
   MatSidenavModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
 import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
@@ -83,7 +83,8 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

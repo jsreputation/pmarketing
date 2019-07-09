@@ -2,7 +2,8 @@
   "name": "perx-microsites",
   "scripts": {
     "build": "lerna run build",
-    "build:prod": "lerna run build:prod",
+    "build:prod": "lerna run build:lib && lerna run build:prod --",
+    "build:backend": "lerna run build:backend",
     "clean": "lerna run clean && rm -rf ./dist ./node_modules",
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
