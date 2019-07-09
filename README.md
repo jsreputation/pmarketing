@@ -1,3 +1,6 @@
+# Essential reading
+Please read the [Coding Guidelines](coding-guidelines.md) before starting
+
 # Instructions
 Download dependencies
 ```bash
