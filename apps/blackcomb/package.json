@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint && npx stylelint src/**/*.scss",
+    "lint": "ng lint && stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
   },
   "private": true,
