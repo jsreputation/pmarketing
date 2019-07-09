@@ -59,7 +59,7 @@ export class PuzzlePlayComponent implements OnChanges {
 
   staticPuzzleDummyTiles = [];
 
-  @ViewChild('puzzleBoard', {static: false}) puzzleView: ElementRef;
+  @ViewChild('puzzleBoard', { static: false }) puzzleView: ElementRef;
 
   ngOnChanges(
     // changes: SimpleChanges
@@ -86,12 +86,12 @@ export class PuzzlePlayComponent implements OnChanges {
       for (let i = 0; i < this.totalPieces; i++) {
         this.staticPuzzleDummyTiles[i] = [i];
       }
-        // },
-        // err => console.error('Observer got an error: ' + err));
+      // },
+      // err => console.error('Observer got an error: ' + err));
     }
   }
 
-  bottomPannelClicked(): void {
+  nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
@@ -225,7 +225,7 @@ export class PuzzlePlayComponent implements OnChanges {
     this.totalPieces = this.rows * this.cols;
 
     for (let x = 0; x < this.totalPieces; x++) {
-        this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+      this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
     }
     for (let i = 0; i < this.nbAvailablePieces; i++) {
       const location = this.nbPlayedPieces + i;
