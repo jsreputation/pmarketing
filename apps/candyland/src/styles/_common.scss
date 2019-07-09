@@ -44,6 +44,10 @@ button {
   cursor: pointer;
 }
 
+.flex {
+  display: flex;
+}
+
 .menu-item {
 
   .mat-list-text {
@@ -149,6 +153,11 @@ button {
 
 .game {
 
+  &-title-wrap {
+    width: 100%;
+    margin-right: rem(40px);
+  }
+
   &-title {
     font-size: 16px;
     line-height: 1.06;
@@ -159,6 +168,13 @@ button {
   &-graphic, &-button {
     display: block;
     margin-top: rem(16px);
+  }
+
+  &-actions {
+    flex-shrink: 0;
+    width: rem(344px);
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
