@@ -43,9 +43,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'hsbc'`, () => {
+  it(`should have as title 'HSBC Win A Treat'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('hsbc');
+    expect(app.title).toEqual('HSBC Win A Treat');
   });
 });

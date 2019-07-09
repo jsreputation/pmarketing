@@ -9,6 +9,7 @@ export class EnvConfig {
     production: false,
     isWhistler: false,
     preAuth: false,
+    baseHref: '/'
   };
 }
 
@@ -22,7 +23,7 @@ export class OauthService {
     if (!config.env.production) {
       this.authEndpoint = 'http://localhost:4000/v4/oauth';
     } else {
-      this.authEndpoint = '/v4/oauth';
+      this.authEndpoint = config.env.baseHref + 'v4/oauth';
     }
   }
 

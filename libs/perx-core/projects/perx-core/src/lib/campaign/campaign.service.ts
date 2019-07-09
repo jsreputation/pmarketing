@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { EnvConfig } from './env-config';
-import { map, tap } from 'rxjs/operators';
+import { flatMap, map, mergeAll, scan, tap } from 'rxjs/operators';
 import { VouchersService } from '../vouchers/vouchers.service';
 
 export enum TRANSACTION_STATE {
@@ -90,6 +90,16 @@ export interface IPutStampTransactionResponse {
     vouchers: IVoucher[];
   };
 }
+
+export interface IGetStampTransactionResponse {
+  data: IStampTransaction[];
+  meta: {
+    count: number,
+    size: number,
+    total_pages: number,
+    page: number,
+  };
+}
 export enum CAMPAIGN_TYPE {
   give_reward = 'give_reward',
   stamp = 'stamp',
@@ -144,6 +154,7 @@ export interface ICampaignResponse {
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
   baseUrl: string;
+  private stampTransactions: IStampTransaction[] = [];
 
   constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
@@ -184,5 +195,38 @@ export class CampaignService {
         }
       })
     );
+  }
+
+  getAllStampTransaction(campaignId: number) {
+    // todo: flush this param when logging out
+    if (this.stampTransactions.length > 0) {
+      return of(this.stampTransactions);
+    }
+
+    return this.http.get<IGetStampTransactionResponse>(
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`
+    ).pipe(
+      flatMap((resp: IGetStampTransactionResponse) => {
+        const streams = [
+          of(resp.data)
+        ];
+        for (let i = 2; i <= resp.meta.total_pages; i++) {
+          const stream: Observable<IStampTransaction[]> = this.getAllFromPage(campaignId, i);
+          streams.push(stream);
+        }
+        return streams;
+      }),
+      mergeAll(),
+      scan((acc: IStampTransaction[], curr: IStampTransaction[]) => acc.concat(curr), []),
+      map((stamps: IStampTransaction[]) => stamps.sort((v1, v2) => v1.id - v2.id)),
+      tap(stamps => this.stampTransactions = stamps)
+    );
+  }
+
+  getAllFromPage(campaignId: number, page: number): Observable<IStampTransaction[]> {
+    return this.http.get<IGetStampTransactionResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions?page=${page}`)
+      .pipe(
+        map(res => res.data)
+      );
   }
 }
