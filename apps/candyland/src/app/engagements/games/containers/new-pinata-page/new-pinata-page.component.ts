@@ -28,6 +28,10 @@ export class NewPinataPageComponent implements OnInit {
     console.log(this.formPinata.value);
   }
 
+  public get name(): AbstractControl {
+    return this.formPinata.get('name');
+  }
+
   public get headlineMessage(): AbstractControl {
     return this.formPinata.get('headlineMessage');
   }
@@ -42,6 +46,10 @@ export class NewPinataPageComponent implements OnInit {
 
   private createPinataForm(): void {
     this.formPinata = this.fb.group({
+      name: ['Create Hit the Pinata Template A', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]
+      ],
       headlineMessage: [null, [
         Validators.required,
         Validators.minLength(5),
