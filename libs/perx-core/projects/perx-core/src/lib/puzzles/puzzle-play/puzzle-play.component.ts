@@ -113,17 +113,18 @@ export class PuzzlePlayComponent implements OnChanges {
     const leftPosition = (tile.puzzleLocation % this.cols) * this.tileWidth;
     const topPositionIndex = Math.floor((tile.puzzleLocation / this.cols));
     const topPosition = topPositionIndex * this.tileHeight;
-    const imagePathFinal = tile.isSelected ? this.img : '';
-
     if (tile.isSelected) {
       return {
         backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        backgroundImage: 'url(' + imagePathFinal + ')',
+        backgroundImage: 'url(' + this.img + ')',
         backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
       };
     } else {
       return {
-        background: 'white',
+        backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
+        backgroundImage: 'url(' + this.img + ')',
+        backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
+        filter: 'grayscale(100%)'
       };
     }
   }
