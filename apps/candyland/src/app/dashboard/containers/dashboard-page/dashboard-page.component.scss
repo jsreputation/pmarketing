@@ -1,0 +1,22 @@
+@import "variables";
+@import "helper";
+
+.link-overview {
+  font-size: rem(16px);
+  color: $base-font-color;
+  text-decoration: none;
+  margin-top: rem(8px);
+  display: flex;
+}
+
+.dashboard {
+
+  &-header {
+    height: rem(138px);
+  }
+
+  &-title {
+    font-size: rem(20px);
+    color: $base-font-color;
+  }
+}
