@@ -1,35 +1,37 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { PinInputComponent } from './pin-input.component';
+import { PinRedemptionComponent } from './pin-redemption.component';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { VouchersModule } from '../vouchers/vouchers.module';
-import { PinService } from './pin.service';
+import { PinService } from '../pin.service';
 import { By } from '@angular/platform-browser';
-import { SimpleChange, Type } from '@angular/core';
+import { SimpleChange } from '@angular/core';
+import { VouchersService } from '../vouchers.service';
+import { of } from 'rxjs';
 
-describe('PinInputComponent', () => {
-  let component: PinInputComponent;
-  let fixture: ComponentFixture<PinInputComponent>;
-  let pinService: PinService;
+describe('PinRedemptionComponent', () => {
+  let component: PinRedemptionComponent;
+  let fixture: ComponentFixture<PinRedemptionComponent>;
+  const pinServiceMock = jasmine.createSpyObj('PinService', ['getPin']);
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PinInputComponent],
+      declarations: [PinRedemptionComponent],
       imports: [
-        VouchersModule.forRoot({ env: { apiHost: '' } }),
-        ReactiveFormsModule,
-        HttpClientTestingModule,
+        ReactiveFormsModule
       ],
-      providers: [PinService]
+      providers: [
+        { useValue: pinServiceMock, provide: PinService },
+        { useValue: vouchersServiceMock, provide: VouchersService }
+      ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PinInputComponent);
+    fixture = TestBed.createComponent(PinRedemptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    pinService = TestBed.get<PinService>(PinService as Type<PinService>);
+    // pinService = TestBed.get<PinService>(PinService as Type<PinService>);
   });
 
   it('should create', () => {
@@ -75,7 +77,7 @@ describe('PinInputComponent', () => {
   }));
 
   it('should get new pin once voucherId from parent changed', () => {
-    const spy = spyOn(pinService, 'getPin').and.callThrough();
+    const spy = pinServiceMock.getPin.and.returnValue( of('1234') );
     component.ngOnChanges({
       voucherId: new SimpleChange(null, 1, true)
     });
