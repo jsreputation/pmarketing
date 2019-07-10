@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EngagementTypeComponent } from './engagement-type.component';
 import { TypeItemComponent } from './type-item/type-item.component';
 import { MatDialogModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { InkModule } from '@cl-shared/components/ink/ink.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { InkModule } from '../../../components/ink/ink.module';
+import { ButtonModule } from '../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EngagementTypeComponent', () => {
