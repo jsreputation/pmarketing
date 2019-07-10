@@ -8,6 +8,7 @@ import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.co
 import { PinRedemptionComponent } from './pin-redemption/pin-redemption.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const components = [
   VouchersComponent,
@@ -25,6 +26,7 @@ const components = [
   ],
   imports: [
     CommonModule,
+    QRCodeModule,
     ReactiveFormsModule,
     MaterialModule
   ],
