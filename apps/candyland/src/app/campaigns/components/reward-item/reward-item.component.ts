@@ -11,13 +11,13 @@ export class RewardItemComponent implements OnInit {
   @Input() public enableProbability = false;
   @Input() public data = {
     id: 1,
-    image: '',
+    image: '/assets/images/mask-group.png',
     name: 'Free Coffee',
     type: 'Starbucks',
     current: 500,
     total: 1000,
   };
-  @Input() public control = new FormControl();
+  @Input() public control: FormControl = new FormControl('probability', []);
 
   @Output() clickDelete: EventEmitter<any> = new EventEmitter<any>();
 

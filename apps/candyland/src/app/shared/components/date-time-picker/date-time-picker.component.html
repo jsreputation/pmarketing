@@ -1,0 +1,36 @@
+<form class="range-date-picker" [formGroup]="timeForm">
+
+  <mat-form-field class="date">
+    <input
+      matInput
+      [matDatepicker]="startDatePicker"
+      [disabled]="disabledState"
+      placeholder="Choose start date"
+      formControlName="begin"
+      [max]="maxDate">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+<!--      <mat-icon matDatepickerToggleIcon>-->
+<!--        <i class="icon delete-action"></i>-->
+<!--      </mat-icon>-->
+    </mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="time">
+    <input
+      matInput
+      [ngxTimepicker]="toggleTimepicker"
+      formControlName="end"
+      placeholder="Choose start date"
+      [disabled]="true"
+      readonly>
+<!--        <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>-->
+    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker">
+      <mat-icon ngxMaterialTimepickerToggleIcon>
+<!--        <i class="icon delete-action"></i>-->
+        access_time
+      </mat-icon>
+    </ngx-material-timepicker-toggle>
+    <ngx-material-timepicker #toggleTimepicker [minutesGap]="5" [ngxMaterialTimepickerTheme]="customTheme"></ngx-material-timepicker>
+  </mat-form-field>
+</form>

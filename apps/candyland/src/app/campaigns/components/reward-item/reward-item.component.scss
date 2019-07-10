@@ -10,16 +10,24 @@
   padding: rem(10px) rem(15px);
 
   &-img-block {
-    background-color: $dark-color;
     position: relative;
     height: rem(63px);
     width: rem(63px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &-img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+
+  &-no-img {
+    height: 30px;
+    width: 30px;
+    //object-fit: ce;
   }
 
   &-info {
@@ -33,7 +41,6 @@
   }
 
   &-name {
-    margin-bottom: 5px;
     font-size: rem(14px);
     font-weight: normal;
     font-style: normal;
@@ -47,6 +54,7 @@
   }
 
   &-type {
+    margin-top: 5px;
     font-size: rem(14px);
     font-weight: normal;
     font-style: normal;
@@ -85,9 +93,14 @@
     letter-spacing: normal;
     color: $base-font-color;
     text-align: right;
+
   }
 
-  &-action {
+  &-actions {
     min-width: 80px;
   }
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
 }

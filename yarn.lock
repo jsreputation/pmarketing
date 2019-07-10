@@ -6062,6 +6062,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+luxon@^1.11.3:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.16.1.tgz#62568d483989fa108f5c87178a05bcc707f7698b"
+  integrity sha512-3aYYMFpIRdEQJl00ki+NDr2zx/Ulf7ZgohBUb6ifZQuVkP8/KCYJluISl0YNbvZXBdzCbVhpQnS4M6Svjpn7EA==
+
 macos-release@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/macos-release/-/macos-release-2.3.0.tgz#eb1930b036c0800adebccd5f17bc4c12de8bb71f"
@@ -6542,6 +6547,14 @@ ngx-auth@^5.0.0:
   resolved "https://registry.yarnpkg.com/ngx-auth/-/ngx-auth-5.0.0.tgz#557dd9baac79972e93a5262ef318889ea60552c6"
   integrity sha512-bwCA2S3AELsOucmpcO+ZiLrf0MnOQrO7sC1Shizil4NAZpN8huleYx+hqBvbdkQOc9EZ5OvwCV1FoCJS6s4iPQ==
   dependencies:
+    tslib "^1.9.0"
+
+ngx-material-timepicker@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-material-timepicker/-/ngx-material-timepicker-4.0.0.tgz#804182dac05c489c617d36041298924727e42d97"
+  integrity sha512-FdRd98qUrjeaTlI+MFXIoreNK/9wF8+Tu5gzt8erwGX00f1+VpFxQP2X2m6+1qqwr+SDSaiUIGmGYf6UbNP1jw==
+  dependencies:
+    luxon "^1.11.3"
     tslib "^1.9.0"
 
 nice-try@^1.0.4:

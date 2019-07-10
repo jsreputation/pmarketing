@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -7,10 +7,17 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsPageComponent implements OnInit {
+  public enablePropability = false;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
+  }
+
+  changePropability(value: boolean) {
+    this.enablePropability = value;
+    this.cd.detectChanges();
   }
 
 }

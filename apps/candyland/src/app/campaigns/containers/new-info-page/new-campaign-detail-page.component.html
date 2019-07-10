@@ -1,3 +1,51 @@
-<p>
-  new-info-page works!
-</p>
+<mat-form-field>
+  <input matInput [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+  <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+  <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+</mat-form-field>
+
+
+<cl-date-time-picker></cl-date-time-picker>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Campaign Info
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <mat-form-field class="row">
+    <mat-select placeholder="Campagin goal">
+      <mat-option value="day">Day</mat-option>
+      <mat-option value="week">Week</mat-option>
+      <mat-option value="month">Month</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-chip-list row">
+    <mat-chip-list #chipList aria-label="label selection">
+      <mat-chip *ngFor="let label of labels" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(label)">
+        {{label.name}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Label"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             [matChipInputAddOnBlur]="addOnBlur"
+             (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+</mat-expansion-panel>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Select channel
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-radio-group aria-label="Select an option">
+    <mat-radio-button value="weblink">Weblink only</mat-radio-button>
+    <mat-radio-button value="sms">SMS</mat-radio-button>
+  </mat-radio-group>
+</mat-expansion-panel>

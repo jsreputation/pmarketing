@@ -9,7 +9,7 @@ import { NewChannelPageComponent } from './containers/new-channel-page/new-chann
 import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
 import { NewCampaignDonePopupComponent } from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import { CampaignsComponent } from './containers/campaigns/campaigns.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatDatepickerModule,
@@ -24,7 +24,7 @@ import {
   MatSortModule,
   MatTableModule,
   MatStepperModule,
-  MatRadioModule, MatCardModule, MatCheckboxModule
+  MatRadioModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatChipsModule
 } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -44,6 +44,8 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { RewardItemComponent } from './components/reward-item/reward-item.component';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-b
     CommonModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDialogModule,
     MatMenuModule,
     MatIconModule,
@@ -93,7 +96,11 @@ import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-b
     MatRadioModule,
     MatCardModule,
     MatCheckboxModule,
-    ProgressBarModule
+    MatExpansionModule,
+    MatChipsModule,
+    ProgressBarModule,
+    NgxMaterialTimepickerModule,
+    DateTimePickerModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

@@ -102,3 +102,33 @@ h1 {
     }
   }
 }
+
+.error {
+  display: flex !important;
+  align-items: baseline;
+  background-color: rgba($warning-color, 0.1);
+  padding: 14px 20px;
+  color: $base-font-color;
+  font-family: $secondary-font;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  border-radius: 5px;
+
+  &:before {
+    content: '!';
+    margin-right: 10px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: $warning-color;
+    color: $white-color;
+  }
+}

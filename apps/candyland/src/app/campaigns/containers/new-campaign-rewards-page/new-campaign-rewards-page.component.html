@@ -1,39 +1,42 @@
-<div class="row">
-  <div>
-    <mat-card>
+<div class="content row">
+  <div class="forms-container">
+    <mat-card class="rewards-form">
       <div class="row">
         <h4 class="sub-title">Rewards</h4>
         <cl-button class="create-button" classList="invert">+ Create New Template</cl-button>
       </div>
       <div>
-        <mat-checkbox>Include Probability</mat-checkbox>
+        <mat-checkbox (change)="changePropability($event.checked)">Include Probability</mat-checkbox>
       </div>
-      <ul>
-        <li>
-          <cl-reward-item></cl-reward-item>
-        </li>
-      </ul>
+      <div>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <mat-error class="error">
+          The total probabilty is 150%. Please make it 100%.
+        </mat-error>
+      </div>
     </mat-card>
 
-    <mat-card>
+    <mat-card class="limits-form">
       <div class="row">
-        <h3 class="sub-title">Play Limits</h3>
+        <h4 class="sub-title">Play Limits</h4>
       </div>
       <div class="row">
         <div>
-          <h4>Limit per user</h4>
-          <mat-form-field appearance="outline">
-            <mat-select placeholder="Filter by">
-              <mat-option value="1">1 time</mat-option>
-              <mat-option value="2">2 time</mat-option>
-              <mat-option value="3">3 time</mat-option>
-            </mat-select>
+          <h5>Limit per user</h5>
+          <mat-form-field>
+            <input matInput type="number" [min]="0">
+            <span matSuffix>Play</span>
           </mat-form-field>
         </div>
         <div>
-          <h4>Limit per duration</h4>
-          <mat-form-field appearance="outline">
-            <mat-select placeholder="Filter by">
+          <h5>Limit per duration</h5>
+          <mat-form-field>
+            <mat-select>
               <mat-option value="day">Day</mat-option>
               <mat-option value="week">Week</mat-option>
               <mat-option value="month">Month</mat-option>
