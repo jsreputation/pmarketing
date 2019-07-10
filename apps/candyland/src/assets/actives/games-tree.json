@@ -3,21 +3,21 @@
     "id": 1,
     "type": "simple-tree",
     "active": "false",
-    "img": "/assets/images/tree/simple-tree.png",
+    "img": "assets/images/tree/simple-tree.png",
     "title": "tree"
   },
   {
     "id": 2,
     "type": "fir-tree",
     "active": "false",
-    "img": "/assets/images/tree/fir-tree.png",
+    "img": "assets/images/tree/fir-tree.png",
     "title": "fir tree"
   },
   {
     "id": 3,
     "type": "tree-pot",
     "active": "false",
-    "img": "/assets/images/tree/tree-pot.png",
+    "img": "assets/images/tree/tree-pot.png",
     "title": "tree in a pot"
   }
 ]

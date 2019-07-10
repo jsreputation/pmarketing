@@ -12,7 +12,7 @@ export class GameComponent implements OnInit, OnChanges {
   @Input() public selectedGame: IGame;
   @Output() public selectGame = new EventEmitter<IGame>();
 
-  public basePath = '/assets/images/games/';
+  public basePath = 'assets/images/games/';
   public control: FormControl;
   constructor(private fb: FormBuilder) { }
 
