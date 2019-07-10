@@ -22,22 +22,6 @@ h1 {
   font-size: 1.6rem;
 }
 
-.tab-group {
-  margin: 5rem -1.2rem;
-}
-
-.tab-group__content {
-  padding: 0 1.6rem;
-  flex-direction: column;
-  background-color: #e5e5e5;
-  box-sizing: border-box;
-  display: flex;
-  min-height: calc(100vh - 108px);
-  > h1:first-child {
-    padding-top: 2.4rem;
-  }
-}
-
 .puzzle-content {
   display: flex;
   flex-basis: auto;
@@ -63,15 +47,15 @@ h1 {
   margin: auto 0;
   margin-left: 1rem;
   flex-direction: column;
+
   h1 {
     font-size: 1.4rem;
     line-height: 1.6rem;
     padding: 0;
-    margin: 0;
     font-weight: 500;
     margin: 4px 0;
-    padding: 0;
   }
+
   p {
     font-size: 1.1rem;
     line-height: 1.3rem;
@@ -83,4 +67,21 @@ h1 {
 
 .puzzle-details:nth-child(1) {
   margin-top: 0;
+}
+
+.tab-group {
+  margin: 5rem -1.2rem;
+}
+
+.tab-group__content {
+  padding: 0 1.6rem;
+  flex-direction: column;
+  background-color: #e5e5e5;
+  box-sizing: border-box;
+  display: flex;
+  min-height: calc(100vh - 108px);
+
+  > h1:first-child {
+    padding-top: 2.4rem;
+  }
 }

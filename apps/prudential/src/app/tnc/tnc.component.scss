@@ -27,7 +27,6 @@ ol {
 ol.list-level-1 {
   list-style-type: decimal;
   padding-left: 0;
-
 }
 
 ol.list-level-2 {
@@ -38,7 +37,7 @@ ol.list-level-2 {
     padding-left: 0.9rem;
 
     // just for the ')'
-    &:before {
+    &::before {
       display: inline-block;
       width: 1rem;
       position: absolute;
