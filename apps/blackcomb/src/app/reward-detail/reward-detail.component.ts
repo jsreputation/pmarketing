@@ -10,10 +10,15 @@ export class RewardDetailComponent implements OnInit {
 
   constructor(private router: Router) {}
 
+  id = 140380; // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
+
+  firstTime = true;
+
   ngOnInit() {
   }
 
-  redeemClicked() {
+  onRedeem() {
     this.router.navigate(['redeem/pin/1']);
   }
+
 }
