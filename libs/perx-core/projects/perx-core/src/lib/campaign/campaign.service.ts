@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { EnvConfig } from './env-config';
 import { flatMap, map, mergeAll, scan, tap } from 'rxjs/operators';
 import { VouchersService } from '../vouchers/vouchers.service';
+import { ICampaign } from './models/campaign.model';
+import { ICampaignService } from './icampaign.service';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
@@ -102,71 +104,53 @@ export interface IGetStampTransactionResponse {
   };
 }
 
-export enum CAMPAIGN_TYPE {
-  give_reward = 'give_reward',
-  stamp = 'stamp',
-  game = 'game'
-}
-
-export interface ICampaign {
-  id: number;
-  name: string;
-  description: string;
-  begins_at: string;
-  ends_at: any|null;
-  enrolled: boolean;
-  campaign_type: CAMPAIGN_TYPE;
-  campaign_referral_type: any|null;
-  game_config?: any;
-  campaign_config: {
-    campaign_results: {
-      count: number;
-      first_result_id: any|null;
-    };
-    auto_issue_voucher?: boolean;
-    burn_stamps_when_redeeming_for_voucher?: false,
-    use_once_only?: false,
-    used_message_title?: string;
-    used_message_description?: string;
-    stamps_slots?: 10,
-    stamp_slots?: any[]
-  };
-  images: any[];
-  favourite: boolean;
-  custom_fields: any;
-  category_tags: any[];
-  tags: any[];
-}
-
-export interface ICampaignsResponse {
+interface ICampaignsResponse {
   data: ICampaign[];
   meta: {
     count: number;
   };
 }
 
-export interface ICampaignResponse {
-  data: ICampaign;
-  meta: {
-    size: null;
-    page: null;
-    sort_by: null;
-    order: null;
-    count: number;
-  };
-}
+// interface ICampaignResponse {
+//   data: ICampaign;
+//   meta: {
+//     size: null;
+//     page: null;
+//     sort_by: null;
+//     order: null;
+//     count: number;
+//   };
+// }
+
+
 
 @Injectable({ providedIn: 'root' })
-export class CampaignService {
+export class CampaignService implements ICampaignService {
   baseUrl: string;
 
   constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
   }
 
-  getCampaigns(): Observable<ICampaignsResponse> {
+  public static v4CampaignToCampaign(campaign: any): ICampaign {
+    return {
+      id: campaign.id,
+      name: campaign.name,
+      description: campaign.description,
+      type: campaign.campaign_type,
+      state: campaign.state ? campaign.state : null,
+      games: campaign.games ? campaign.games : null,
+      stampCards: campaign.stampCards ? campaign.stampCards : null,
+      icon: campaign.icon ? campaign.icon : null
+    };
+  }
+
+  getCampaigns(): Observable<ICampaign[]> {
     return this.http.get<ICampaignsResponse>(
       `${ this.baseUrl }/v4/campaigns`
+    )
+    .pipe(
+      map( campaigns => campaigns[`data`].map(campaign => CampaignService.v4CampaignToCampaign(campaign)))
     );
   }
 

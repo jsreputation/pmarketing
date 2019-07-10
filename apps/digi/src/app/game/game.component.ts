@@ -43,8 +43,7 @@ export class GameComponent implements OnInit {
         if (!this.campaignId) {
           this.campaignService.getCampaigns()
             .pipe(
-              map(data => data.data),
-              map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
+              map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.game)),
               take(1)
             )
             .subscribe(campaigns => {
