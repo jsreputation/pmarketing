@@ -92,7 +92,7 @@ export class AppComponent implements OnInit {
         ref instanceof PuzzleComponent ? 'Puzzle' :
           ref instanceof PuzzlesComponent ? 'My Puzzles' :
             ref instanceof RedemptionComponent ? 'eGift Redeem' :
-              ref instanceof VoucherComponent ? 'eGiftCode' :
+              ref instanceof VoucherComponent ? 'Reward' :
                 ref instanceof HomeComponent ? 'Home' :
                   ref instanceof TncComponent ? 'Terms and Conditions' :
                     ref instanceof FaqComponent ? 'FAQ' : '';

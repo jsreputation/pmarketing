@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginForm: FormGroup;
+
+  authed: boolean;
+  preAuth: boolean;
+  failedAuth: boolean;
+
+  constructor(private router: Router,
+              private fb: FormBuilder) {
+                this.initForm();
+  }
+
+  initForm() {
+     this.loginForm = this.fb.group({
+      customerID: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    this.router.navigate([`game-play/1`]);
   }
 
 }

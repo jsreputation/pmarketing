@@ -1,8 +1,8 @@
 import { TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { PinService } from './pin.service';
-import { VouchersModule } from './../vouchers/vouchers.module';
-import { VouchersService } from './../vouchers/vouchers.service';
+import { VouchersModule } from './vouchers.module';
+import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
 
 describe('PinService', () => {
