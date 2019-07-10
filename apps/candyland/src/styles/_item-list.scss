@@ -1,11 +1,9 @@
-
-
 .active-item {
   border-radius: 8px !important;
   position: relative;
   border: solid 1px $dark-color !important;
 
-  &:after {
+  &::after {
     content: '';
     opacity: 1;
     display: block;
@@ -18,23 +16,23 @@
   }
 }
 
-
 .item {
   border: 1px solid transparent;
 
-  &.active   {
-    @extend .active-item
+  &.active {
+    @extend .active-item;
   }
 }
 
-
-.item-list{
-  .mat-radio-button{
+.item-list {
+  .mat-radio-button {
     @extend .item;
+
     justify-content: space-between;
     position: relative;
     margin-right: 20px;
-    &:last-of-type{
+
+    &:last-of-type {
       margin-right: 0;
     }
   }
@@ -47,7 +45,7 @@
     @extend .active-item;
   }
 
-  &.shadow{
+  &.shadow {
     .mat-radio-button {
       box-shadow: 0 4px 4px 0 #d2d8e2;
     }

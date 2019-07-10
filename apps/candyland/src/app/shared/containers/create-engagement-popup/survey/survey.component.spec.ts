@@ -1,34 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameComponent } from './game.component';
-import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { SurveyComponent } from './survey.component';
+import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { ButtonModule } from '../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GamesType } from '../shared/games-type';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('GameComponent', () => {
-  let component: GameComponent;
-  let fixture: ComponentFixture<GameComponent>;
+describe('SurveyComponent', () => {
+  let component: SurveyComponent;
+  let fixture: ComponentFixture<SurveyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatIconModule,
+        BrowserAnimationsModule,
         MatFormFieldModule,
         MatSelectModule,
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
       ],
-      declarations: [ GameComponent ]
+      declarations: [ SurveyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameComponent);
+    fixture = TestBed.createComponent(SurveyComponent);
     component = fixture.componentInstance;
-    component.game = GamesType[0];
     fixture.detectChanges();
   });
 

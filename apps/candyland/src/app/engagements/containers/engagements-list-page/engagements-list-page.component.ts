@@ -3,7 +3,8 @@ import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/m
 import { map, tap } from 'rxjs/operators';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
+import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
+
 
 export interface Engagements {
   id: number;
