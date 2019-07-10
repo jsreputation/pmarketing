@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { VouchersModule } from '../vouchers.module';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -8,7 +10,10 @@ describe('QrcodeRedemptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QrcodeRedemptionComponent ]
+      imports: [
+        HttpClientTestingModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } })
+        ]
     })
     .compileComponents();
   }));
