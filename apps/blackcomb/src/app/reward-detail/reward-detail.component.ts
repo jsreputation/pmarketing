@@ -10,8 +10,7 @@ export class RewardDetailComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
-  id = 140380;
+  id = 140380; // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
 
   firstTime = true;
 
