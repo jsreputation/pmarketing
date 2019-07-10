@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-redeem',
@@ -16,8 +16,7 @@ export class RedeemComponent implements OnInit {
   hasResultFetched = false;
   isRedeemSuccessful = false;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -31,7 +30,8 @@ export class RedeemComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['home/']);
+    this.hasResultFetched = true;
+    this.isRedeemSuccessful = true;
   }
 
   errorHandler(status: number) {

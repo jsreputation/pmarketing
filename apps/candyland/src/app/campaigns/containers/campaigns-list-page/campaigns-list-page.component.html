@@ -14,7 +14,7 @@
           <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
         </ng-container>
         <ng-container *clTableFilter="'status'; value: ''; let filter">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="control-input">
             <mat-select [formControl]="filter" placeholder="All">
               <mat-option value="">All</mat-option>
               <mat-option value="active">Active</mat-option>

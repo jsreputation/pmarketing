@@ -13,7 +13,9 @@ import {
   MatTabsModule,
   MatCardModule,
   MatRippleModule,
-  MatIconModule } from '@angular/material';
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +25,7 @@ import { GamePlayComponent } from './game-play/game-play.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,11 @@ import { environment } from '../environments/environment';
     MatTabsModule,
     MatCardModule,
     MatRippleModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

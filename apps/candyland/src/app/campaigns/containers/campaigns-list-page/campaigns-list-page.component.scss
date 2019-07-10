@@ -1,5 +1,5 @@
 @import "variables";
-@import "helper";
+
 
 table {
   width: 100%;
@@ -9,18 +9,18 @@ table {
 
 th.mat-header-cell {
   text-align: left;
-  max-width: 300px !important;
+  max-width: 30rem !important;
 }
 
 .name-cell {
-  margin: rem(11px) 0;
+  margin: 1.1rem 0;
   display: flex;
   flex-flow: column nowrap;
   font-family: $base-font-family;
   font-style: normal;
   font-weight: normal;
-  font-size: rem(16px);
-  line-height: rem(24px);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
 
   &__link {
     width: fit-content;
@@ -34,7 +34,7 @@ th.mat-header-cell {
 
   &__goal {
     color: $secondary-font-color;
-    font-size: rem(14px);
+    font-size: 1.4rem;
   }
 }
 
