@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
 }
+
 .activation-code__inputs {
   display: flex;
   justify-content: center;
   flex-direction: row;
 }
+
 input {
   width: 63px;
   height: 114px;
@@ -19,18 +21,23 @@ input {
   font-weight: normal;
   font-size: 80px;
   line-height: 96px;
+
   /* identical to box height */
   text-align: center;
 }
+
 input:focus {
   outline-color: #106cc8;
 }
+
 .error input {
   border-color: #eb202f;
 }
+
 .error input:focus {
   outline-color: #eb202f;
 }
+
 .error-label {
   color: #eb202f;
   display: none;
@@ -39,6 +46,7 @@ input:focus {
   line-height: 1.7rem;
   margin-top: 2rem;
 }
+
 .error .error-label {
   display: block;
 }
