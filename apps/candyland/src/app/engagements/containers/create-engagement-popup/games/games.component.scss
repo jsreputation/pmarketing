@@ -1,9 +1,9 @@
-@import "helper";
+
 .games {
 
   &-wrap {
     display: flex;
-    padding: rem(34px) rem(20px) rem(17px) rem(20px);
+    padding: 3.4rem 2rem 1.7rem 2rem;
     justify-content: space-between;
     position: relative;
   }

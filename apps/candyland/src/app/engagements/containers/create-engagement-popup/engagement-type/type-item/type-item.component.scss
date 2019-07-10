@@ -1,15 +1,15 @@
 @import "../../../../../../styles/variables";
-@import "../../../../../../styles/helper";
+
 
 .type {
 
   &-item {
     cursor: pointer;
     position: relative;
-    width: rem(137px);
-    height: rem(127px);
+    width: 13.7rem;
+    height: 12.7rem;
     background-color: $light-gray;
-    padding: rem(16px);
+    padding: 1.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +23,7 @@
     font-weight: 500;
     color: $secondary-color;
     position: absolute;
-    bottom: rem(20px);
+    bottom: 2rem;
     text-align: center;
   }
 }
