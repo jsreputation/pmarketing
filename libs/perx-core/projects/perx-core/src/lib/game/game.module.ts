@@ -3,9 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { GameService } from './game.service';
 import { EnvConfig } from './env-config';
+import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
+import { PinataComponent } from './pinata/pinata.component';
 
 @NgModule({
   declarations: [
+    ShakeTreeComponent,
+    PinataComponent
   ],
   imports: [
     CommonModule,
@@ -13,6 +17,10 @@ import { EnvConfig } from './env-config';
   ],
   providers: [
     GameService
+  ],
+  exports: [
+    ShakeTreeComponent,
+    PinataComponent
   ]
 })
 export class GameModule {
