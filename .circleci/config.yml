@@ -28,11 +28,11 @@ commands:
           command: |
             TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
-  set_apihost_from_env:
+  set_apihost:
     description: based on environment set the APIHOST
     steps:
       - run:
-          name: Setup env vars
+          name: Setup APIHOST vars
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
@@ -55,10 +55,10 @@ commands:
               echo 'export PREAUTH="false"' >> $BASH_ENV
             fi
   set_basehref:
-    description: based on client deploy endpoint
+    description: based on client deploy endpoint base href
     steps:
       - run:
-          name: Setup env vars
+          name: Setup BASE_HREF vars
           command: |
             if [ $APP == 'hsbc' ]
             then
@@ -89,7 +89,7 @@ jobs:
       - docker_login
       - get_app_name
       - get_env_from_tag
-      - set_apihost_from_env
+      - set_apihost
       - set_preauth
       - set_basehref
       - run:
