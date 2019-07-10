@@ -8,7 +8,7 @@
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint && stylelint \"projects/**/*.css\"",
     "e2e~": "ng e2e"
   },
   "private": true,
@@ -49,6 +49,8 @@
     "protractor": "~5.4.0",
     "rxjs-tslint": "0.1.5",
     "rxjs-tslint-rules": "^4.24.3",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
     "ts-node": "~7.0.0",
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",

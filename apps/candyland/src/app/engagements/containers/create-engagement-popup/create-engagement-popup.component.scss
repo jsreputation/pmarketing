@@ -1,16 +1,15 @@
-@import "../../../../styles/helper";
 @import "../../../../styles/variables";
 
 .dialog {
 
   &-header-wrap {
-    width: rem(662px);
-    height: rem(62px);
+    width: 66.2rem;
+    height: 6.2rem;
     background-color: rgba(217, 223, 228, 0.2);
     position: relative;
     display: flex;
     align-items: center;
-    padding-left: rem(30px);
+    padding-left: 3rem;
     box-sizing: border-box;
   }
 
@@ -30,7 +29,7 @@
   }
 
   &-content {
-    padding-top: rem(30px);
+    padding-top: 3rem;
   }
 
   &-content-title {
@@ -44,10 +43,10 @@
   &-actions {
     display: flex;
     justify-content: flex-end;
-    padding: rem(34px) rem(40px);
+    padding: 3.4rem 4rem;
 
     &.type-survey {
-      padding: 0 rem(40px) rem(34px) rem(40px);
+      padding: 0 4rem 3rem 4rem;
     }
   }
 }
@@ -60,6 +59,6 @@
 
   &-close {
     display: block;
-    margin-right: rem(12px);
+    margin-right: 1.2rem;
   }
 }

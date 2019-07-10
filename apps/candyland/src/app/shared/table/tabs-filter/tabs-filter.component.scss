@@ -1,5 +1,5 @@
 @import "variables";
-@import "helper";
+
 
 .hide {
   display: none;
@@ -23,12 +23,12 @@
   font-family: $base-font-family;
   font-style: normal;
   font-weight: 500;
-  font-size: rem(14px);
-  line-height: rem(16px);
+  font-size: 1.4rem;
+  line-height: 1.6rem;
   position: relative;
   display: inline-block;
   text-decoration: none;
-  padding: rem(22px);
+  padding: 2.2rem;
   color: $secondary-font-color;
   text-align: center;
   border-bottom: 4px solid transparent;
@@ -44,4 +44,3 @@
   background-color: inherit;
   color: #7c848a;
 }
-

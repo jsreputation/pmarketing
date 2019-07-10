@@ -1,9 +1,9 @@
 @import "variables";
-@import "helper";
+
 
 html, body {
   min-height: 100%;
-  font-size: $base-font-size;
+  font-size: 62.5%;
 }
 
 body {
@@ -44,10 +44,14 @@ button {
   cursor: pointer;
 }
 
+.flex {
+  display: flex;
+}
+
 .menu-item {
 
   .mat-list-text {
-    padding-left: 8px !important;
+    padding-left: .8rem !important;
   }
 }
 
@@ -58,17 +62,17 @@ button {
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 rem($horizontal-content-padding);
+  padding: 0 $horizontal-content-padding;
 
   &.full-with {
     background: $white-color;
-    min-height: rem(66px);
+    min-height: 6.6rem;
   }
 
 }
 
 .title {
-  font-size: 26px;
+  font-size: 2.6rem;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -78,7 +82,7 @@ button {
 }
 
 .sub-title {
-  font-size: rem(16px);
+  font-size: 1.6rem;
   font-weight: 500;
   line-height: 1.06;
   color: $secondary-color;
@@ -89,7 +93,7 @@ button {
   box-sizing: border-box;
   min-height: 150vh;
   width: 100%;
-  padding: rem($vertical-content-padding) rem($horizontal-content-padding);
+  padding: $vertical-content-padding $horizontal-content-padding;
   background: $simple-light-gray;
 
   &.no-padding-top {
@@ -132,32 +136,60 @@ button {
 .mobile {
   &-preview {
     flex-shrink: 0;
-    width: rem(344px);
-    height: rem(638px);
+    width: 34.4rem;
+    height: 63.8rem;
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    border-radius: .8rem;
   }
 
   &-preview-mobile {
     background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
-    width: rem(344px);
-    height: rem(638px);
+    width: 34.4rem;
+    height: 63.8rem;
     background-position: 123% 100%;
   }
 }
 
 .game {
 
+  &-title-wrap {
+    width: 100%;
+    margin-right: 4rem;
+  }
+
   &-title {
-    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.06;
     color: $secondary-color;
-    margin: rem(24px) 0 rem(16px) 0;
+    margin: 2.4rem 0 1.6rem 0;
   }
 
   &-graphic, &-button {
     display: block;
-    margin-top: rem(16px);
+    margin-top: 1.6rem;
   }
+
+  &-actions {
+    flex-shrink: 0;
+    width: 34.4rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+
+.name-control-title {
+
+  input {
+    font-size: 2.2rem;
+    color: $there-color;
+  }
+  .mat-form-field-infix {
+    border: 0;
+  }
+}
+
+.control-input {
+  font-size: 1.4rem !important;
 }

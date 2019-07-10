@@ -1,4 +1,4 @@
-@import "helper";
+
 @import "variables";
 
 .upload {
@@ -10,15 +10,15 @@
   &-input {
     opacity: 0;
     position: absolute;
-    width: rem(108px);
-    height: rem(127px);
+    width: 10.8rem;
+    height: 12.7rem;
     z-index: 55;
     cursor: pointer;
   }
 
   &-btn {
-    width: rem(108px);
-    height: rem(127px);
+    width: 10.8rem;
+    height: 12.7rem;
     background: $white-color;
     border: dashed 1px rgba(62, 78, 115, 0.7);
     border-radius: 4px;
@@ -70,8 +70,8 @@
   background: $simple-light-gray;
 
   &-wrap {
-    width: rem(108px);
-    height: rem(127px);
+    width: 10.8rem;
+    height: 12.7rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,8 +91,8 @@
     opacity: 0;
     transition: .5s cubic-bezier(.35,0,.25,1);
     position: absolute;
-    bottom: rem(6px);
-    right: rem(6px);
+    bottom: .6rem;
+    right: .6rem;
     background: $white-color;
     border: none;
     border-radius: 50%;
@@ -128,8 +128,8 @@
     position: absolute;
     top: -1px;
     right: -1px;
-    height: rem(42px);
-    width: rem(42px);
+    height: 4.2rem;
+    width: 4.2rem;
     background: url("/assets/images/preview/triangle.png") no-repeat;
   }
 }
