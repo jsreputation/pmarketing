@@ -1,4 +1,3 @@
-@import "../../../../styles/helper";
 @import "../../../../styles/variables";
 
 
@@ -11,10 +10,10 @@
 .col {
 
   &-login-form {
-    width: rem(431px);
+    width: 43.1rem;
     height: 100%;
-    padding-left: rem(32px);
-    padding-right: rem(43px);
+    padding-left: 3.2rem;
+    padding-right: 4.3rem;
     position: relative;
   }
 
@@ -27,16 +26,16 @@
 }
 
 .router-actions {
-  padding-top: rem(14px);
+  padding-top: 1.4rem;
 }
 
 .copy-right {
   position: absolute;
-  left: rem(32px);
-  bottom: rem(42px);
+  left: 3.2rem;
+  bottom: 4.2rem;
 
   &-text {
-    height: rem(17px);
+    height: 1.7rem;
     font-family: $base-font-family;
     font-size: $base-font-size;
 
@@ -48,9 +47,9 @@
 .customer-info {
 
   &-text {
-    padding-top: rem(68px);
+    padding-top: 6.8rem;
     font-family: $base-font-family;
-    font-size: rem(30px);
+    font-size: 3rem;
     font-weight: bold;
     line-height: 1.23;
     color: #3e4e73;
@@ -58,8 +57,8 @@
   }
 
   &-description {
-    width: rem(582px);
-    padding-top: rem(10px);
+    width: 58.2rem;
+    padding-top: 1rem;
     margin: 0 auto;
     font-family: $base-font-family;
     font-size: $base-font-size;
@@ -68,9 +67,9 @@
   }
 
   &-picture {
-    width: rem(581px);
-    height: rem(476px);
-    margin: rem(54px) auto 0;
+    width: 58.1rem;
+    height: 47.6rem;
+    margin: 5.4rem auto 0;
 
     img {
       width: 100%;
@@ -81,11 +80,11 @@
 }
 
 cl-logo {
-  padding-top: rem(31px);
+  padding-top: 3.1rem;
 }
 
 cl-login-form {
-  padding-top: rem(76px);
+  padding-top: 7.6rem;
 }
 
 cl-button {
