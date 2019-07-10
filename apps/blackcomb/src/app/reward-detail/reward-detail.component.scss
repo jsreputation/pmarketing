@@ -1,8 +1,45 @@
+
 .prize-wrapper {
-  height: 90vh;
+  margin-top: 5rem;
+}
+
+h1 {
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 5rem;
+}
+
+h2 {
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.4rem;
+}
+
+.actions-container {
+  padding: 1rem 1.2rem;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
+  background-color: white;
+  border-top: 0.1rem solid darkgray;
+
+  button#save-to-wallet-btn {
+    margin-bottom: 1.6rem;
+  }
+}
+
+button {
+  text-transform: uppercase;
+  width: 70%;
+}
+
+.voucher-container {
+  padding-bottom: 12rem;
   align-items: center;
 
   p {
@@ -20,8 +57,4 @@
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
   }
-}
-
-button {
-  width: 70%;
 }

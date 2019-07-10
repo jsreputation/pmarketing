@@ -1,7 +1,8 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RewardDetailComponent } from './reward-detail.component';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
@@ -10,7 +11,11 @@ describe('RewardDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RewardDetailComponent ],
-      imports: [RouterTestingModule]
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
@@ -21,8 +26,7 @@ describe('RewardDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', inject(
-    [Router], () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  }));
+  });
 });
