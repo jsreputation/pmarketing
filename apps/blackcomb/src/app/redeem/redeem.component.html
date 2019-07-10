@@ -2,9 +2,9 @@
   <div class="full-page-container-white">
     <div class="redemption-result" *ngIf="hasResultFetched">      
       <div class="result-top-container">
-        <img *ngIf="isRedeemSuccessful; else error_image" src="../../assets/redeem_success.png" />
+        <img *ngIf="isRedeemSuccessful; else error_image" src="assets/redeem_success.png" />
         <ng-template #error_image>
-          <img src="../../assets/redeem_failure.png" #error_image/>
+          <img src="assets/redeem_failure.png" #error_image/>
         </ng-template>
         <span class="result-text">{{getTitleText()}}</span>
         <span class="result-reward-text">{{getSubTitleText()}}</span>      
