@@ -18,8 +18,8 @@
       <h1>
         Merchant to enter the code
       </h1>
-      <perx-core-pin-input length="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)">
-      </perx-core-pin-input>
+      <perx-core-pin-redemption length="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)">
+      </perx-core-pin-redemption>
     </div>
     <div *ngIf="redeemType == 'bcode' && !hasResultFetched">
       <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
