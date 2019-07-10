@@ -18,7 +18,8 @@ import {
   PopupComponent,
   CampaignModule,
   VouchersModule,
-  ProfileModule
+  ProfileModule,
+  UtilsModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
@@ -74,6 +75,7 @@ import { ProfileComponent } from './profile/profile.component';
     SoundModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    UtilsModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
