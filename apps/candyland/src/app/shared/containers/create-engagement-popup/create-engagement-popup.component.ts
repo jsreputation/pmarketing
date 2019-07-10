@@ -4,7 +4,13 @@ import { IEngagementType } from './engagement-type/models/engagement-type.model'
 import { EngagementType } from './shared/models/EngagementType';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+import { IGraphic } from '../../models/graphick.model';
+import { Router } from '@angular/router';
+
+export enum gamesRouterLink {
+  shakeTheTree = 'engagements/games/new-shake',
+  hitThePinata = 'engagements/games/new-pinata'
+}
 
 @Component({
   selector: 'cl-create-engagement-popup',
@@ -21,10 +27,18 @@ export class CreateEngagementPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CreateEngagementPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private engagementsService: EngagementsService) {}
+    private engagementsService: EngagementsService,
+    private router: Router) {}
 
-  close(): void {
+  public close(): void {
     this.dialogRef.close();
+  }
+
+  public next(): void {
+    if (this.selectedGame) {
+      this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
+      this.close();
+    }
   }
 
   public setType(type: IEngagementType): void {
@@ -34,6 +48,7 @@ export class CreateEngagementPopupComponent implements OnInit {
   public setGame(game: IGraphic): void {
     this.selectedGame = game;
   }
+
   ngOnInit() {
     this.getEngagementType();
     this.getGamesType();

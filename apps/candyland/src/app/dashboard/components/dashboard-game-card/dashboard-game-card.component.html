@@ -7,6 +7,8 @@
   </p>
   <p class="card-actions">
     <cl-button [classList]="'tertiary'"
+               [disableRipple]="true"
+               (click)="clickToLink(gameCard.link)"
     >
         <span>
           {{gameCard.link}}

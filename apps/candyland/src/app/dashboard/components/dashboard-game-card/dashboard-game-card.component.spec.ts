@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardGameCardComponent } from './dashboard-game-card.component';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 describe('DashboardGameCardComponent', () => {
   let component: DashboardGameCardComponent;
@@ -16,6 +17,7 @@ describe('DashboardGameCardComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ButtonModule,
+        CreateEngagementPopupModule,
       ],
       declarations: [ DashboardGameCardComponent ]
     })

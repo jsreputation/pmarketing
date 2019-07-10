@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -7,9 +9,23 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DashboardGameCardComponent implements OnInit {
   @Input() gameCard: DashboardGameCard;
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  public clickToLink(link: string): void {
+    if (link.toLocaleLowerCase().includes('engagement')) {
+      this.openDialogCreate();
+    }
+  }
+
+  public openDialogCreate(): void {
+    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }

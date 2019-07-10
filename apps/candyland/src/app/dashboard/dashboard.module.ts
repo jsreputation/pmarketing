@@ -6,6 +6,7 @@ import { DashboardPageComponent } from './containers/dashboard-page/dashboard-pa
 import { DashboardGameCardComponent } from './components/dashboard-game-card/dashboard-game-card.component';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { BusinessInsightComponent } from './components/business-insight/business
     CommonModule,
     DashboardRoutingModule,
     ButtonModule,
+    CreateEngagementPopupModule,
   ]
 })
 export class DashboardModule { }

@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { Component, Input } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -30,6 +31,7 @@ describe('DashboardPageComponent', () => {
         RouterTestingModule,
         ButtonModule,
         HttpClientTestingModule,
+        CreateEngagementPopupModule,
       ],
       declarations: [
         DashboardPageComponent,
