@@ -9,9 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 export class RedeemComponent implements OnInit {
 
   gameId: number;
-  redeemType: string; // 'pin' Or 'bcode'
+  redeemType: string; // 'pin' || 'bcode' || 'qrcode'
 
-  voucherId = 140374;
+  voucherId = 2646396;
+
+  encodedValue = 'Encoded voucher Id';  // TODO: To be replaced with Value to be encoded
 
   hasResultFetched = false;
   isRedeemSuccessful = false;

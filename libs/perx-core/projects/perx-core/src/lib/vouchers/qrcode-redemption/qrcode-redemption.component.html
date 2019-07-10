@@ -1,3 +1,5 @@
-<p class="main-container">
-  qrcode-redemption works!
-</p>
+<div class="main-container" *ngIf="voucher$ | async as voucher">
+ <qrcode [qrdata]="voucher.code" [size]="150" [level]="'M'"></qrcode>
+ <div class="title">Present this QR code to the cashier to complete your redemption</div>
+ <div class="voucher-name">{{voucher.name}}</div>
+</div>

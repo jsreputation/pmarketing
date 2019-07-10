@@ -5,12 +5,16 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { MaterialModule } from '../shared/material.module';
 import { VouchersService } from './vouchers.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
+import { PinRedemptionComponent } from './pin-redemption/pin-redemption.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const components = [
   VouchersComponent,
   VoucherComponent,
   BcodeRedemptionComponent,
+  PinRedemptionComponent,
   QrcodeRedemptionComponent
 ];
 
@@ -22,6 +26,8 @@ const components = [
   ],
   imports: [
     CommonModule,
+    QRCodeModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   exports: [

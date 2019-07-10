@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { VouchersService } from './../vouchers/vouchers.service';
+import { VouchersService } from './vouchers.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

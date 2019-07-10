@@ -1,32 +1,34 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SurveyComponent } from './survey.component';
+import { GamesComponent } from './games.component';
+import { GameComponent } from './game/game.component';
 import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('SurveyComponent', () => {
-  let component: SurveyComponent;
-  let fixture: ComponentFixture<SurveyComponent>;
+describe('GamesComponent', () => {
+  let component: GamesComponent;
+  let fixture: ComponentFixture<GamesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         MatFormFieldModule,
         MatSelectModule,
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
       ],
-      declarations: [ SurveyComponent ]
+      declarations: [
+        GamesComponent,
+        GameComponent
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SurveyComponent);
+    fixture = TestBed.createComponent(GamesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
