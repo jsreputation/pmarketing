@@ -55,7 +55,7 @@ commands:
               echo 'export PREAUTH="false"' >> $BASH_ENV
             fi
   set_basehref:
-    description: based on client deploy endpoint base href
+    description: based on client set deploy endpoint base href
     steps:
       - run:
           name: Setup BASE_HREF vars
@@ -66,6 +66,13 @@ commands:
             else
               echo 'export BASE_HREF="/"' >> $BASH_ENV
             fi
+  set_iswhistler:
+    description: based on client deploy endpoint base href
+    steps:
+      - run:
+          name: Setup BASE_HREF vars
+          command: |
+            echo 'export ISWHISTLER="false"' >> $BASH_ENV
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -92,6 +99,7 @@ jobs:
       - set_apihost
       - set_preauth
       - set_basehref
+      - set_iswhistler
       - run:
           name: Build docker image
           command: |
@@ -99,7 +107,12 @@ jobs:
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP --build-arg apihost=$APIHOST --build-arg basehref=$BASE_HREF --build-arg preauth=$PREAUTH
+            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
+            --build-arg app=$APP \
+            --build-arg apihost=$APIHOST \
+            --build-arg basehref=$BASE_HREF \
+            --build-arg preauth=$PREAUTH \
+            --build-arg iswhistler=$ISWHISTLER
       - run:
           name: Push docker
           command: |
