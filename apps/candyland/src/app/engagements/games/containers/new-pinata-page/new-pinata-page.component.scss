@@ -1,28 +1,28 @@
-@import "helper";
+
 @import "variables";
 
 .pinata {
 
   &-btn-cancel {
-    padding-right: rem(8px);
+    padding-right: .8rem;
   }
 
   &-form {
-    min-width: rem(747px);
+    min-width: 74.7rem;
     width: 100%;
-    margin-right: rem(40px);
+    margin-right: 4rem;
   }
 }
 
 .game {
 
   &-selected-graphic {
-    margin-bottom: rem(40px);
+    margin-bottom: 4rem;
     display: flex;
   }
 }
 
 .name-control {
-  min-width: rem(747px);
+  min-width: 74.7rem;
 
 }

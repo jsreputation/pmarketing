@@ -1,11 +1,11 @@
-@import "helper";
+
 @import "variables";
 
 .game {
 
   &-wrap {
-    width: rem(124px);
-    height: rem(127px);
+    width: 12.4rem;
+    height: 12.7rem;
     background-color: $light-gray;
     border-radius: 8px;
     overflow: hidden;
@@ -14,7 +14,7 @@
   }
 
   &-content {
-    padding-top: rem(8px);
+    padding-top: 1.4rem;
   }
 
   &-title {
@@ -22,11 +22,12 @@
     font-weight: 500;
     color: $secondary-color;
     text-align: center;
+    margin: 0;
   }
 
   &-checkbox {
     display: flex;
     justify-content: center;
-    padding: rem(9px);
+    padding: .9rem;
   }
 }

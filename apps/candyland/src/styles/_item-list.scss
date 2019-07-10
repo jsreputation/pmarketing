@@ -1,4 +1,4 @@
-@import "helper";
+
 
 .active-item {
   border-radius: 8px !important;
@@ -12,8 +12,8 @@
     position: absolute;
     top: -1px;
     right: -1px;
-    height: rem(42px);
-    width: rem(42px);
+    height: 4.2rem;
+    width: 4.2rem;
     background: url("/assets/images/preview/triangle.png") no-repeat;
   }
 }
