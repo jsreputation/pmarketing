@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/game-play/1', pathMatch: 'full' },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'game-play/:id', component: GamePlayComponent },
       { path: 'redeem/:mode/:id', component: RedeemComponent },
