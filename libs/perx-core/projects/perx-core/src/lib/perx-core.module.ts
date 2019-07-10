@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { VouchersModule } from './vouchers/vouchers.module';
-import { PinInputComponent } from './pin-input/pin-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
@@ -16,7 +15,6 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
 @NgModule({
   declarations: [
-    PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
     PinataComponent
@@ -31,7 +29,6 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
   ],
   exports: [
     ...modules,
-    PinInputComponent,
     ShakeTreeComponent,
     PopupComponent,
     PinataComponent

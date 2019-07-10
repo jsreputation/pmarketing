@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, ElementRef, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PinService } from './pin.service';
-import { VouchersService } from '../vouchers/vouchers.service';
+import { PinService } from '../pin.service';
+import { VouchersService } from '../vouchers.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'perx-core-pin-input',
-  templateUrl: './pin-input.component.html',
-  styleUrls: ['./pin-input.component.css']
+  selector: 'perx-core-pin-redemption',
+  templateUrl: './pin-redemption.component.html',
+  styleUrls: ['./pin-redemption.component.css']
 })
-export class PinInputComponent implements OnInit, OnChanges {
+export class PinRedemptionComponent implements OnInit, OnChanges {
   @Input()
   length = 4;
 
