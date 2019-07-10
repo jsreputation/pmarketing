@@ -48,3 +48,4 @@ export {
   IProfile,
   IProfileResponse
  } from './lib/profile/profile.model';
+export { UtilsModule } from './lib/utils/utils.module';

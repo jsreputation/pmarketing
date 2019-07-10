@@ -34,7 +34,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Survey"
     },
     {
       "id": 65,
@@ -43,7 +44,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Stamp"
     },
     {
       "id": 87,
@@ -52,7 +54,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 567,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Game"
     },
     {
       "id": 45,
@@ -61,7 +64,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Instant Reward"
     },
     {
       "id": 76,
@@ -70,7 +74,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Game"
     },
     {
       "id": 78,
@@ -79,7 +84,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 567,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Game"
     },
     {
       "id": 45,
@@ -88,7 +94,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Game"
     },
     {
       "id": 98,
@@ -97,7 +104,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Game"
     },
     {
       "id": 324,
@@ -114,7 +122,8 @@
       "begin": "2015-12-28 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Survey"
     },
     {
       "id": 56,
@@ -123,7 +132,8 @@
       "begin": "2018-12-6 03:24:00",
       "end": "2019-5-17 03:24:00",
       "audience": 56867,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Survey"
     },
     {
       "id": 88,
@@ -132,7 +142,8 @@
       "begin": "2018-12-17 03:24:00",
       "end": "2020-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Survey"
     },
     {
       "id": 44,
@@ -141,7 +152,8 @@
       "begin": "2015-12-17 03:24:00",
       "end": "2019-12-17 03:24:00",
       "audience": 34200,
-      "goal": "Create Awareness"
+      "goal": "Create Awareness",
+      "engagementType": "Survey"
     }
   ]
 }

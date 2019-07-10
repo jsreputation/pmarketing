@@ -1,4 +1,13 @@
-import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import { IGraphic } from '@cl-shared/models/graphick.model';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -25,7 +34,8 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     }
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private cd: ChangeDetectorRef) { }
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload = true;
   @Output() private selectGraphic = new EventEmitter<IGraphic>();
@@ -49,6 +59,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.selectedGraphic = graphic;
     this.selectGraphic.emit(graphic);
     this.onChange(graphic);
+    this.cd.markForCheck();
   }
 
   registerOnChange(fn: any): void {

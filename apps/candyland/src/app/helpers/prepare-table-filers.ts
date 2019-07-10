@@ -5,7 +5,7 @@ export class PrepareTableFilers {
       title: 'All (' + data.length + ')',
       value: null
     }];
-    Object.values(counterObject).forEach((key) => {
+    Object.keys(counterObject).forEach((key) => {
       config.push({
         title: key + ' (' + counterObject[key] + ')',
         value: key.toString()
