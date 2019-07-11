@@ -16,7 +16,6 @@ export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 export { PuzzlesModule } from './lib/puzzles/puzzles.module';
-export { ShakeTreeComponent } from './lib/shake-tree/shake-tree.component';
 export { CampaignModule } from './lib/campaign/campaign.module';
 export {
   CampaignService,

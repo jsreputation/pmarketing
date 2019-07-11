@@ -5,8 +5,9 @@ import {
   PerxCoreModule,
   VouchersModule,
   CognitoModule,
-  OauthModule
-   } from '@perx/core/dist/perx-core';
+  OauthModule,
+  GameModule
+} from '@perx/core/dist/perx-core';
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -15,7 +16,8 @@ import {
   MatRippleModule,
   MatIconModule,
   MatFormFieldModule,
-  MatInputModule } from '@angular/material';
+  MatInputModule
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +45,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
+    GameModule.forRoot({ env: environment }),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
