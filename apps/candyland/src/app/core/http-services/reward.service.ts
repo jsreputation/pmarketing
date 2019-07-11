@@ -7,19 +7,19 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class PinataHttpService {
+export class RewardService {
 
   constructor(private http: HttpClient) { }
 
-  public getPinata(): Observable<IGraphic> {
-    return this.http.get('assets/actives/pinata.json')
+  public getRewardCardBackground(): Observable<IGraphic> {
+    return this.http.get('assets/actives/reward-card-background.json')
       .pipe(
         map(res => (res as IGraphic))
       );
   }
 
-  public getBackground(): Observable<IGraphic> {
-    return this.http.get('assets/actives/pinata_bg.json')
+  public getRewardBackground(): Observable<IGraphic> {
+    return this.http.get('assets/actives/reward-background.json')
       .pipe(
         map(res => (res as IGraphic))
       );

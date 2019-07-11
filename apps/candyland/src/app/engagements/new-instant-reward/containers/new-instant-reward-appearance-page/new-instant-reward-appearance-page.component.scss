@@ -1,0 +1,40 @@
+@import "variables";
+.reward {
+
+  &-btn-cancel {
+    padding-right: .8rem;
+  }
+
+  &-form {
+    min-width: 74.7rem;
+    width: 100%;
+    margin-right: 4rem;
+  }
+}
+
+.game {
+  &-selected-graphic {
+    margin-bottom: 4rem;
+    display: flex;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.name-control {
+  min-width: 74.7rem;
+}
+
+.info-text {
+  font-size: 1.2rem;
+  color: $white-color;
+  display: block;
+  min-width: 21.1rem;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

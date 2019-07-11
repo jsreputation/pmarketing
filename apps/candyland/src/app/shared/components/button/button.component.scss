@@ -1,4 +1,9 @@
-@import "../../../../styles/variables";
+@import "variables";
+
+:host {
+  display: inline-flex;
+  height: fit-content;
+}
 
 .btn {
   min-width: 10rem;
@@ -44,6 +49,7 @@
   color: $primary-color;
   padding-left: 0;
   height: 1.9rem;
+  line-height: 1.4rem;
 
   &:hover {
     color: #124cc8;
@@ -56,4 +62,3 @@
   border-radius: 2px;
   border: solid 1px #9ca4b7;
 }
-
