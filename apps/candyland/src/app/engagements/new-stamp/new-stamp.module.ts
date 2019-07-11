@@ -12,6 +12,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
+import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, Mat
     ButtonModule,
     SelectGraphicModule,
     SelectGraphicWrapModule,
+    InfoHintModule,
 
     MatTabsModule,
     MatCardModule,

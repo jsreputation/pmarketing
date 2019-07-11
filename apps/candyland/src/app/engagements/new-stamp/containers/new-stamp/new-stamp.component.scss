@@ -1,3 +1,4 @@
+@import "variables";
 .stamp {
   &-btn-cancel {
     padding-right: .8rem;
@@ -16,6 +17,11 @@
     display: flex;
   }
 
+  &-title {
+    display: flex;
+    align-items: center;
+  }
+
   &-number {
     margin-top: 3.4rem;
 
@@ -27,4 +33,9 @@
 
 .name-control {
   min-width: 74.7rem;
+}
+
+.info-text {
+  font-size: 1.2rem;
+  color: $white-color;
 }

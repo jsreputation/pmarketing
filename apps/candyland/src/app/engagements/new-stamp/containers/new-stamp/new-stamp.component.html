@@ -10,7 +10,7 @@
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
         <mat-form-field class="messages-input">
-          <input type="text"  matInput formControlName="name">
+          <input type="text" matInput formControlName="name">
           <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
           <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
           <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
@@ -42,7 +42,7 @@
             Messages
           </p>
         </div>
-        <div class="stamp-form" >
+        <div class="stamp-form">
           <div class="control-input">
             <mat-form-field class="mat-form-field">
               <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
@@ -117,6 +117,10 @@
           <div class="game-background-box">
             <p class="game-title">
               Reward Pre-stamp
+              <cl-info-hint>
+                <span class="info-text">You can set the rewards when&nbsp;</span>
+                <span class="info-text">you create a campaign</span>
+              </cl-info-hint>
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
@@ -145,6 +149,10 @@
           <div class="game-background-box">
             <p class="game-title">
               Reward Post-stamp
+              <cl-info-hint>
+                <span class="info-text">You can set the rewards when&nbsp;</span>
+                <span class="info-text">you create a campaign</span>
+              </cl-info-hint>
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
