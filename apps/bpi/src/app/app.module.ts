@@ -9,15 +9,16 @@ import {
   OauthModule,
   AuthenticationModule,
   CampaignModule,
-  PopupComponent
+  PopupComponent,
+  VouchersModule
 } from '@perx/core/dist/perx-core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { 
-  MatFormFieldModule, MatInputModule, MatButtonModule
+import {
+  MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule
 } from '@angular/material';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     GameComponent,
     CongratsComponent,
-    LoginComponent
+    LoginComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
@@ -37,8 +39,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatInputModule,
     MatButtonModule,
+    VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),

@@ -61,7 +61,6 @@ export interface IStampCard {
   display_properties: {
     number_of_cols: number;
     number_of_rows: number;
-    total_slots: number;
     card_image: {
       value: {
         image_url: string;
