@@ -45,8 +45,8 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.timeForm = new FormGroup({
-      begin: new FormControl(null, []),
-      end: new FormControl(null, [])
+      date: new FormControl(null, []),
+      time: new FormControl(null, [])
     });
   }
 
@@ -66,20 +66,20 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
     this.destroy$.complete();
   }
 
-  public get begin(): AbstractControl {
-    return this.timeForm.get('begin');
+  public get date(): AbstractControl {
+    return this.timeForm.get('date');
   }
 
-  public get end(): AbstractControl {
-    return this.timeForm.get('end');
+  public get time(): AbstractControl {
+    return this.timeForm.get('time');
   }
 
   public get maxDate(): Date | null {
-    return this.end.value ? this.getPreviousDay(this.end.value) : null;
+    return this.time.value ? this.getPreviousDay(this.time.value) : null;
   }
 
   public get minDate(): Date | null {
-    return this.begin.value ? this.getNextDay(this.begin.value) : null;
+    return this.date.value ? this.getNextDay(this.date.value) : null;
   }
 
   public registerOnChange(fn: any): void {

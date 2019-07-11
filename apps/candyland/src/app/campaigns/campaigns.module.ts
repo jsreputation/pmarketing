@@ -46,6 +46,8 @@ import { RewardItemComponent } from './components/reward-item/reward-item.compon
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
+import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
+import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 
 
 @NgModule({
@@ -100,7 +102,9 @@ import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/dat
     MatChipsModule,
     ProgressBarModule,
     NgxMaterialTimepickerModule,
-    DateTimePickerModule
+    DateTimePickerModule,
+    TimePickerModule,
+    DatePickerModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

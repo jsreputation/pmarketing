@@ -37,6 +37,18 @@
   background-color: #3e4e73;
 }
 
+.date-icon {
+  mask: url("/assets/images/date.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.time-icon {
+  mask: url("/assets/images/time.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
 .active {
 
   .icon {

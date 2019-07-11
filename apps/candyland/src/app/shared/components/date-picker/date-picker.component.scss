@@ -1,0 +1,10 @@
+.date {
+  width: 100%;
+  min-width: 100px;
+  max-width: 170px;
+
+  &-button {
+    height: 21px !important;
+    width: 21px !important;
+  }
+}
