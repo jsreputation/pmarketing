@@ -1,39 +1,38 @@
-@import "helper";
-
 .active-item {
   border-radius: 8px !important;
+  position: relative;
   border: solid 1px $dark-color !important;
 
-  &:after {
+  &::after {
     content: '';
+    opacity: 1;
     display: block;
-    height: rem(42px);
-    width: rem(42px);
     position: absolute;
-    top: 0;
+    top: -1px;
     right: -1px;
-    background: url("/assets/images/engagement-type/active.svg") no-repeat;
+    height: 4.2rem;
+    width: 4.2rem;
+    background: url("/assets/images/preview/triangle.png") no-repeat;
   }
 }
-
 
 .item {
   border: 1px solid transparent;
 
-  &.active   {
-    @extend .active-item
+  &.active {
+    @extend .active-item;
   }
 }
 
-
-.item-list{
-  .mat-radio-button{
+.item-list {
+  .mat-radio-button {
     @extend .item;
+
     justify-content: space-between;
     position: relative;
-    margin-bottom: rem(20px);
-    margin-right: rem(20px);
-    &:last-of-type{
+    margin-right: 20px;
+
+    &:last-of-type {
       margin-right: 0;
     }
   }

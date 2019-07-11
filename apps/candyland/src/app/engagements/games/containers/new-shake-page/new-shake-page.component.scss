@@ -1,19 +1,5 @@
-@import "helper";
+
 @import "variables";
-
-.title {
-  font-weight: 500;
-  font-size: rem(26px);
-  line-height: 1.04;
-  color: $there-color;
-}
-
-.sub-title {
-  font-size: rem(16px);
-  font-weight: 500;
-  line-height: 1.06;
-  color: $secondary-color;
-}
 
 .tree {
 
@@ -25,45 +11,29 @@
   &-page-header {
     display: flex;
     justify-content: space-between;
-    padding: 0 rem(30px) 0 rem(43px);
+    padding: 0 3rem 0 4.3rem;
     background: $white-color;
     align-items: center;
   }
 
   &-page-header {
-    height: rem(66px);
+    height: 6.6rem;
   }
 
   &-btn-cancel {
-    padding-right: rem(8px);
+    padding-right: .8rem;
   }
 
   &-main-block {
-    padding: rem(30px) rem(33px);
     display: flex;
   }
 
   &-wrap-fields {
-    min-width: rem(747px);
+    min-width: 74.7rem;
     width: 100%;
-    margin-right: rem(40px);
+    margin-right: 4rem;
   }
 
-  &-preview {
-    flex-shrink: 0;
-    width: rem(344px);
-    height: rem(638px);
-    background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-  }
-
-  &-preview-mobile {
-    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
-    width: rem(344px);
-    height: rem(638px);
-    background-position: 123% 100%;
-  }
 }
 
 .messages {
@@ -75,25 +45,13 @@
 
 .game {
 
-  &-title {
-    font-size: 16px;
-    line-height: 1.06;
-    color: $secondary-color;
-    margin: rem(24px) 0 rem(16px) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: rem(16px);
-  }
-
   &-tree-wrap {
     display: flex;
   }
 
   &-image-preview {
     display: block;
-    margin-right: rem(10px);
+    margin-right: 1rem;
 
     &:last-child {
       margin-right: 0;
@@ -101,16 +59,20 @@
   }
 
   &-number-gifts {
-    padding-top: rem(40px);
+    padding-top: 4rem;
   }
 
   &-gift-select {
-    width: rem(344px);
+    width: 34.4rem;
   }
 
   &-selected-graphic {
-    margin-bottom: rem(40px);
+    margin-bottom: 4rem;
     display: flex;
   }
 
+}
+
+.name-control {
+  min-width: 74.7rem;
 }

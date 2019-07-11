@@ -2,33 +2,58 @@
 .icon {
   display: block;
   background-color: rgba(255, 255, 255, 0.51);
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  width: 18px !important;
+  padding: 0 0 0 16px !important;
+  box-sizing: content-box;
 }
 
 .dashboard {
-  mask: url("/assets/images/dashboard.svg") no-repeat 50% 50%;
+  mask: url("assets/images/dashboard.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.51);
 }
 
 .rewards {
-  mask: url("/assets/images/rewards.svg") no-repeat 50% 50%;
+  mask: url("assets/images/rewards.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.51);
 }
 
 .campaign {
-  mask: url("/assets/images/campaign.svg") no-repeat 50% 50%;
+  mask: url("assets/images/campaign.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.51);
 }
 
 .engagement {
-  mask: url("/assets/images/engagement.svg") no-repeat 50% 50%;
+  mask: url("assets/images/engagement.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.51);
+}
+
+.users {
+  mask: url("assets/images/users.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.merchant {
+  mask: url("assets/images/merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.settings {
+  mask: url("assets/images/settings.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.51);
+}
+
+.logout {
+  height: 18px;
+  mask: url("assets/images/icon-logout.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .delete-action {
@@ -50,9 +75,7 @@
 }
 
 .active {
-
   .icon {
     background-color: #ffffff;
   }
-
 }

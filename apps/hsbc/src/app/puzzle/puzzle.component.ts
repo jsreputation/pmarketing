@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  CampaignService,
-  IStampCard,
-  TRANSACTION_STATE,
   CAMPAIGN_TYPE,
+  CampaignService,
   ICampaign,
-  IStampCardResponse
+  IStampCard,
+  IStampCardResponse,
+  STAMP_CARD_STATUS,
+  TRANSACTION_STATE
 } from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -18,15 +19,16 @@ import { SoundService } from '../sound/sound.service';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-
   campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
   availablePieces = 0;
   playedPieces = 0;
+  totalAvailablePieces = 0;
   rows = 2;
   cols = 3;
   image = '';
+  private cardsCount = 0;
 
   constructor(
     private campaignService: CampaignService,
@@ -53,6 +55,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     } else {
       if (this.cardId === null || this.card === null) {
         this.fetchCard();
+        this.fetchStampTransactionCount();
+        this.fetchCardsCount();
       }
     }
 
@@ -60,11 +64,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.soundService.showPopup();
       }, 50);
+    } else if (localStorage.getItem('enableSound') === 'true') {
+      setTimeout(() => {
+        this.soundService.play();
+      }, 50);
     }
   }
 
   ngOnDestroy() {
-    this.soundService.pause();
+    this.soundService.pause(false);
   }
 
   private fetchCampaign() {
@@ -75,7 +83,9 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
+        this.fetchStampTransactionCount();
         this.fetchCard();
+        this.fetchCardsCount();
       });
   }
 
@@ -91,14 +101,32 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = card.display_properties.card_image.value.image_url;
-        // if (this.availablePieces === 0) {
-        //   this.notificationService.addPopup({
-        //     title: 'Thank you!',
-        //     text: 'Unfortunately, you have no pieces available.'
-        //   });
-        //   this.router.navigate(['/home']);
-        // }
+        if (this.availablePieces === 0 && card.state === STAMP_CARD_STATUS.inactive) {
+          this.notificationService.addPopup({
+            title: 'Thank you!',
+            text: 'Unfortunately, you have no pieces available.'
+          });
+          this.router.navigate(['/home']);
+        }
       });
+  }
+
+  private fetchCardsCount() {
+    if (this.campaignId === null) {
+      return;
+    }
+    this.campaignService.getCards(this.campaignId)
+      .subscribe(
+        (cards: IStampCard[]) => { this.cardsCount = cards.length; },
+        () => { }
+      );
+  }
+
+  private fetchStampTransactionCount() {
+    this.campaignService.getAllStampTransaction(this.campaignId)
+      .subscribe((stampTransactions => {
+        this.totalAvailablePieces = stampTransactions.filter(v => v.state === TRANSACTION_STATE.issued).length;
+      }));
   }
 
   onMoved() {
@@ -113,7 +141,16 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           if (res.data.state === TRANSACTION_STATE.redeemed) {
-            // this.fetchCard();
+            if (this.card.card_number === this.cardsCount) { // we are on the last card
+              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.redeemed).length;
+              if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
+                this.notificationService.addPopup({
+                  // tslint:disable-next-line: max-line-length
+                  text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
+                });
+              }
+            }
+
             if (res.data.vouchers && res.data.vouchers.length > 0) {
               const voucherId = res.data.vouchers[0].id;
               this.router.navigate([`/voucher/${voucherId}`, { win: true }]);

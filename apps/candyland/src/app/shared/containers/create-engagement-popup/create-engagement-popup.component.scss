@@ -1,0 +1,64 @@
+@import "../../../../styles/variables";
+
+.dialog {
+
+  &-header-wrap {
+    width: 66.2rem;
+    height: 6.2rem;
+    background-color: rgba(217, 223, 228, 0.2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 3rem;
+    box-sizing: border-box;
+  }
+
+  &-title {
+    font-size: 16px;
+    line-height: 1.23;
+    font-weight: bold;
+    color: $secondary-color;
+    margin: 0;
+  }
+
+  &-closed {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: $secondary-color;
+  }
+
+  &-content {
+    padding-top: 3rem;
+  }
+
+  &-content-title {
+    font-size: 22px;
+    line-height: 1.23;
+    font-weight: bold;
+    color: $secondary-color;
+    box-sizing: border-box;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 3.4rem 4rem;
+
+    &.type-survey {
+      padding: 0 4rem 3rem 4rem;
+    }
+  }
+}
+
+.nested-type {
+  transition: .5s cubic-bezier(.35,0,.25,1);
+}
+
+.actions {
+
+  &-close {
+    display: block;
+    margin-right: 1.2rem;
+  }
+}

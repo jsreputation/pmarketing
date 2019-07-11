@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { DashboardHttpService } from '@cl-core/http-services/dashboard-http.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-dashboard-page',
@@ -7,10 +9,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit {
-
-  constructor() { }
+  public gameCard$: Observable<DashboardGameCard[]>;
+  constructor(private dashboardHttpService: DashboardHttpService) { }
 
   ngOnInit() {
+    this.getGameCard();
+  }
+
+  private getGameCard(): void {
+    this.gameCard$ = this.dashboardHttpService.getDashboardGameCard();
   }
 
 }

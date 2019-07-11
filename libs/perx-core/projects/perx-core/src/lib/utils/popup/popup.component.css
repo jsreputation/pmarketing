@@ -1,0 +1,17 @@
+button {
+  margin-top: 16px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+}
+
+mat-dialog-content {
+  text-align: center;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}

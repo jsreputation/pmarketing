@@ -1,0 +1,30 @@
+@import "../../../../../../styles/variables";
+
+
+.type {
+
+  &-item {
+    cursor: pointer;
+    position: relative;
+    width: 13.7rem;
+    height: 12.7rem;
+    background-color: $light-gray;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+  }
+
+  &-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $secondary-color;
+    position: absolute;
+    bottom: 2rem;
+    text-align: center;
+  }
+}
+

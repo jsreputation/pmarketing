@@ -5,15 +5,6 @@ import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
 import { CampaignsService } from '@cl-core/services/campaigns.service';
 
-export interface Campaign {
-  id: number;
-  name: string;
-  status: string;
-  begin: Date;
-  end: Date;
-  audience: number;
-  goal: string;
-}
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -29,7 +20,7 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   public hasData = true;
 
   inlineRange;
-  public displayedColumns = ['name', 'status', 'begin', 'end', 'audience', 'goal', 'actions'];
+  public displayedColumns = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
   public dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

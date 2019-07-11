@@ -1,4 +1,4 @@
-@import "helper";
+
 @import "variables";
 
 .image {
@@ -6,8 +6,8 @@
   max-width: 100%;
 
   &-wrap {
-    width: rem(108px);
-    height: rem(127px);
+    width: 10.8rem;
+    height: 12.7rem;
     background: $simple-light-gray;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -38,8 +38,8 @@
     position: absolute;
     top: -1px;
     right: -1px;
-    height: rem(42px);
-    width: rem(42px);
+    height: 4.2rem;
+    width: 4.2rem;
     background: url("/assets/images/preview/triangle.png") no-repeat;
   }
 }

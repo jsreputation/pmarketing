@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "server": "ts-node server.ts",
-    "build:prod": "webpack --config webpack.config.js"
+    "build:backend": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "@types/express": "^4.17.0",

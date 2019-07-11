@@ -18,7 +18,8 @@ import {
   PopupComponent,
   CampaignModule,
   VouchersModule,
-  ProfileModule
+  ProfileModule,
+  UtilsModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
 import {
@@ -36,7 +37,7 @@ import {
   MatSidenavModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
 import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
@@ -74,6 +75,7 @@ import { ProfileComponent } from './profile/profile.component';
     SoundModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    UtilsModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
@@ -83,7 +85,8 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
