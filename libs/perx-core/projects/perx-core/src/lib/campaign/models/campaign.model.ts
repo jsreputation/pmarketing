@@ -7,7 +7,7 @@ export enum CAMPAIGN_TYPE {
   game = 'game'
 }
 
-enum CAMPAIGN_STATE {
+export enum CAMPAIGN_STATE {
   active = 'active',
   inactive = 'inactive'
 }

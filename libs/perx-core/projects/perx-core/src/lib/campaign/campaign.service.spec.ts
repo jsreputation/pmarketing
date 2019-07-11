@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from './env-config';
-import { ICampaign } from './models/campaign.model';
+import { ICampaign, CAMPAIGN_TYPE } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 
 describe('CampaignService', () => {
@@ -102,7 +102,7 @@ describe('CampaignService', () => {
       begins_at: '2019-06-26T08:46:06.000Z',
       ends_at: null,
       enrolled: true,
-      campaign_type: 'game',
+      campaign_type: CAMPAIGN_TYPE.game,
       campaign_referral_type: 'user',
       campaign_config: {
         campaign_results: {
@@ -114,7 +114,9 @@ describe('CampaignService', () => {
       favourite: false,
       custom_fields: {},
       category_tags: [],
-      tags: []
+      tags: [],
+      state: null,
+      icon: null
     });
     expect(mapCampaign.id).toBe(1);
     expect(mapCampaign.name).toBe('UAT GAME');
