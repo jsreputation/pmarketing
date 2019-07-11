@@ -4,7 +4,6 @@ import { GameComponent } from './game.component';
 import { RouterModule, Router } from '@angular/router';
 import {
   CampaignModule,
-  ShakeTreeComponent,
   GameModule,
   GameService,
   VouchersService,
@@ -38,7 +37,7 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent, ShakeTreeComponent],
+      declarations: [GameComponent],
       imports: [
         RouterModule.forRoot([]),
         CampaignModule.forRoot({ env: environment }),
