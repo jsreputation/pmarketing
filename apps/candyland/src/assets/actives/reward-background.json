@@ -3,7 +3,7 @@
     "id": 1,
     "type": "bg1",
     "title": "icon",
-    "img": "assets/images/pinata/bg1.png",
+    "img": "assets/images/reward/background/bg-1.png",
     "format": ".png",
     "active": "false"
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "type": "bg2",
     "title": "icon",
-    "img": "assets/images/pinata/bg2.png",
+    "img": "assets/images/reward/background/bg-2.png",
     "format": ".png",
     "active": "false"
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "type": "bg3",
     "title": "icon",
-    "img": "assets/images/pinata/bg3.png",
+    "img": "assets/images/reward/background/bg-3.png",
     "format": ".png",
     "active": "false"
   }

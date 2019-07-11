@@ -9,12 +9,44 @@ import {
 import {
   NewInstantRewardRewardsPageComponent
 } from './containers/new-instant-reward-rewards-page/new-instant-reward-rewards-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule, MatRadioModule,
+  MatSelectModule,
+  MatTabsModule
+} from '@angular/material';
+import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
+import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
+import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
+import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.module';
 
 @NgModule({
-  declarations: [NewInstantRewardComponent, NewInstantRewardAppearancePageComponent, NewInstantRewardRewardsPageComponent],
+  declarations: [
+    NewInstantRewardComponent,
+    NewInstantRewardAppearancePageComponent,
+    NewInstantRewardRewardsPageComponent
+  ],
   imports: [
     CommonModule,
-    NewInstantRewardRoutingModule
+    NewInstantRewardRoutingModule,
+    ReactiveFormsModule,
+    ImagesPreviewModule,
+    ButtonModule,
+    SelectGraphicModule,
+    SelectGraphicWrapModule,
+    InfoHintModule,
+    GameMobilePreviewModule,
+
+    MatTabsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
   ]
 })
 export class NewInstantRewardModule {
