@@ -20,6 +20,59 @@ commands:
           command: |
             APP=$(echo ${CIRCLE_TAG} | cut -d'-' -f 1)
             echo "export APP=$APP" >> $BASH_ENV
+  get_env_from_tag:
+    description: cuts destination environment out of git tag
+    steps:
+      - run:
+          name: Setup env vars
+          command: |
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
+            echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
+  set_apihost:
+    description: based on environment set the APIHOST
+    steps:
+      - run:
+          name: Setup APIHOST vars
+          command: |
+            if [ $TARGET_ENV == 'staging' ]
+            then
+              echo 'export APIHOST="https://api.perxtech.io"' >> $BASH_ENV
+            fi
+            if [ $TARGET_ENV == 'production' ]
+            then
+              echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+            fi
+  set_preauth:
+    description: based on client set the PREAUTH
+    steps:
+      - run:
+          name: Setup PREAUTH vars
+          command: |
+            if [ $APP == 'prudential' ]
+            then
+              echo 'export PREAUTH="true"' >> $BASH_ENV
+            else
+              echo 'export PREAUTH="false"' >> $BASH_ENV
+            fi
+  set_basehref:
+    description: based on client set deploy endpoint base href
+    steps:
+      - run:
+          name: Setup BASE_HREF vars
+          command: |
+            if [ $APP == 'hsbc' ]
+            then
+              echo 'export BASE_HREF="/site/hsbc/collect2/"' >> $BASH_ENV
+            else
+              echo 'export BASE_HREF="/"' >> $BASH_ENV
+            fi
+  set_iswhistler:
+    description: based on client deploy endpoint base href
+    steps:
+      - run:
+          name: Setup BASE_HREF vars
+          command: |
+            echo 'export ISWHISTLER="false"' >> $BASH_ENV
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -40,14 +93,26 @@ jobs:
     executor: ubuntu
     steps:
       - checkout
-      - setup_buildkitd
       - docker_login
       - get_app_name
+      - get_env_from_tag
+      - set_apihost
+      - set_preauth
+      - set_basehref
+      - set_iswhistler
       - run:
           name: Build docker image
           command: |
+            echo "APP: ${APP}"
+            echo "APIHOST: ${APIHOST}"
+            echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP .
+            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
+            --build-arg app=$APP \
+            --build-arg apihost=$APIHOST \
+            --build-arg basehref=$BASE_HREF \
+            --build-arg preauth=$PREAUTH \
+            --build-arg iswhistler=$ISWHISTLER
       - run:
           name: Push docker
           command: |
@@ -75,7 +140,18 @@ jobs:
           command: |
             echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
-
+            if [ $APP == 'prudential' ]
+            then
+              echo 'export HELM_APP="$APP-birthday"' >> $BASH_ENV
+            else
+              echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            fi
+            if [ $APP == 'hsbc' ]
+            then
+              echo 'export HELM_APP="$APP-collect2"' >> $BASH_ENV
+            else
+              echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
@@ -85,7 +161,7 @@ jobs:
           kube_bearer_token: "<< parameters.kube_bearer_token >>"
           kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
       - helm-deploy/deploy:
-          helm_release: microsite-apps-$APP
+          helm_release: microsite-apps-$HELM_APP
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
@@ -137,7 +213,6 @@ workflows:
           kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
           requires:
             - build_docker_image
-            - test
           filters:
             branches:
               ignore: /.*/

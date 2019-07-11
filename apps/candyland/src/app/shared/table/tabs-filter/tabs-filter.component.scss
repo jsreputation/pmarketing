@@ -1,0 +1,46 @@
+@import "variables";
+
+
+.hide {
+  display: none;
+}
+
+.tabs {
+  position: relative;
+  width: 100%;
+  display: block;
+  padding: 0;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.tabs > a {
+  font-family: $base-font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  padding: 2.2rem;
+  color: $secondary-font-color;
+  text-align: center;
+  border-bottom: 4px solid transparent;
+  cursor: pointer;
+}
+
+.tabs > a.active {
+  color: $base-font-color;
+  border-bottom-color: #458CFF;
+}
+
+.tabs > a:not(.active):hover {
+  background-color: inherit;
+  color: #7c848a;
+}

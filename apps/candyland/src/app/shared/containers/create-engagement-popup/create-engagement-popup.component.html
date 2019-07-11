@@ -1,0 +1,57 @@
+<div class="dialog-header-wrap">
+  <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
+  <p class="dialog-content-title">
+    Select Engagement Type
+  </p>
+  <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <div class="dialog-content">
+
+    <cl-ink [border]="true" [triangle]="true">
+      <cl-engagement-type #engagementHost
+                          [clInkHost]="engagementHost"
+                          (selectType)="setType($event)"
+                          [graphicList]="engagementType$ | async"
+      >
+      </cl-engagement-type>
+    </cl-ink>
+  </div>
+
+  <div class="nested-type" [ngSwitch]="selectedType?.type">
+    <!-- the same view can be shown in more than one case -->
+    <cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>
+    <cl-games *ngSwitchCase="engagementType.games"
+              (selectGame)="setGame($event)"
+              [graphicList]="gamesType$ | async"
+              [selectedGame]="selectedGame"
+    ></cl-games>
+    <cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>
+    <cl-instant-reward *ngSwitchCase="engagementType.instantReward"></cl-instant-reward>
+  </div>
+
+</mat-dialog-content>
+<div class="dialog-actions"
+     [ngClass]="{'type-survey': selectedType?.type === engagementType.survey}"
+>
+  <cl-button [classList]="'third'"
+             class="actions-close"
+             (click)="close()"
+             [disableRipple]="true"
+  >
+        <span>
+          Cancel
+        </span>
+  </cl-button>
+
+  <cl-button [classList]="'primary'"
+             (click)="next()"
+             [disableRipple]="true"
+  >
+        <span>
+          Next
+        </span>
+  </cl-button>
+</div>

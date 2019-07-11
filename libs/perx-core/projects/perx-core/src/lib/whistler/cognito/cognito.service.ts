@@ -4,6 +4,7 @@ import {
   // HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
+import { Observable } from 'rxjs';
 // import {throwError} from 'rxjs';
 
 export class EnvConfig {
@@ -13,6 +14,7 @@ export class EnvConfig {
     production: false,
     isWhistler: true,
     preAuth: false,
+    baseHref: '/'
   };
 }
 
@@ -36,11 +38,11 @@ export class CognitoService {
     if (!config.env.production) {
       this.preAuthEndpoint = 'http://localhost:4000/preauth';
     } else {
-      this.preAuthEndpoint = '/preauth';
+      this.preAuthEndpoint = config.env.baseHref + 'preauth';
     }
   }
 
-  authenticateAppWithPreAuth(referrer: string) {
+  authenticateAppWithPreAuth(referrer: string): Observable<any> {
 
     return this.http.get(this.preAuthEndpoint, {
       params: {
@@ -50,7 +52,7 @@ export class CognitoService {
     });
   }
 
-  authenticateUserIdWithAppBearer(bearer: string, user: string) {
+  authenticateUserIdWithAppBearer(bearer: string, user: string): Observable<any> {
     const payload = {
       data: {
         type: 'login',

@@ -5,10 +5,12 @@ import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EnvConfig } from '../../campaign/env-config';
+import { VouchersService } from '../../vouchers/vouchers.service';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
   let fixture: ComponentFixture<PuzzleListComponent>;
+  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,9 +21,10 @@ describe('PuzzleListComponent', () => {
         HttpClientModule
       ],
       providers: [
-        EnvConfig
+        EnvConfig,
+        { provide: VouchersService, useValue: vouchersServiceMock }
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));

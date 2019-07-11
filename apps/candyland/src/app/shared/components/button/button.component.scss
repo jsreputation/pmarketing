@@ -1,0 +1,59 @@
+@import "../../../../styles/variables";
+
+.btn {
+  min-width: 10rem;
+  height: 4.6rem;
+  border-radius: .2rem;
+  color: $white-color;
+  font-size: 1.4rem;
+  padding: 0 2rem;
+  box-shadow: none;
+}
+
+.primary {
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: #124cc8;
+  }
+}
+
+.second {
+  background-color: #3e4e73;
+
+  &:hover {
+    background-color: #29385e;
+  }
+}
+
+.disable-btn {
+  color: #a4b0c3 !important;
+  background-color: #e7e9ed !important;
+}
+
+.disable {
+  @extend .disable-btn;
+
+  &:hover {
+    @extend .disable-btn;
+  }
+}
+
+.tertiary {
+  background-color: transparent;
+  color: $primary-color;
+  padding-left: 0;
+  height: 1.9rem;
+
+  &:hover {
+    color: #124cc8;
+  }
+}
+
+.third {
+  background-color: transparent;
+  color: $primary-color;
+  border-radius: 2px;
+  border: solid 1px #9ca4b7;
+}
+

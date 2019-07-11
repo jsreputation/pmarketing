@@ -1,0 +1,83 @@
+
+
+.container-sidenav {
+  position: relative;
+  min-height: 100vh;
+}
+
+.sidenav {
+  width: 17rem;
+  background-color: #202c46;
+
+  &-data-container {
+    padding: 0 1.2rem;
+    position: relative;
+  }
+
+  &-action {
+    display: flex;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    position: absolute;
+    top: 93vh;
+    right: 0;
+    outline: none;
+    transition: .5s;
+
+    &.center {
+      right: 1.6rem;
+    }
+  }
+
+  &-menu-wrap {
+    max-height: 60vh;
+    overflow: auto;
+    padding: 16px 0 0 0;
+  }
+}
+
+.mat-toolbar-log {
+  padding: 0 1rem;
+  background-color: #172238;
+  display: flex;
+}
+
+.cl-user {
+  display: block;
+  padding-top: 1.6rem;
+}
+
+.sidenav-content{
+  position: relative;
+}
+
+.btn-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.user-logout {
+  position: absolute;
+  display: flex;
+  top: 93vh;
+  left: 1rem;
+
+}
+
+.appear {
+  animation: changeWidth .4s cubic-bezier(.35,0,.25,1);
+}
+
+@keyframes changeWidth {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: auto;
+    opacity: 1;
+  }
+}

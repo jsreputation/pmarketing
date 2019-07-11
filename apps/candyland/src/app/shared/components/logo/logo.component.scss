@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+}
+
+.logo {
+
+  &-link {
+    display: flex;
+    width: 9.7rem;
+    height: 4.6rem;
+    transition: .5s;
+  }
+
+  &-img {
+    width: 100%;
+    max-height: 100%;
+  }
+
+}
+
+.medium {
+  width: 6.1rem;
+  height: 2.9rem;
+}
+
+.small {
+  width: 5rem;
+  height: 2.4rem;
+}

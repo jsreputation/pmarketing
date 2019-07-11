@@ -1,10 +1,165 @@
-<p>
-  new-shake-page works!
-</p>
+<!--<p>-->
+  <!--new-shake-page works!-->
+<!--</p>-->
 
-<ul>
-  <li><a routerLink="settings">settings</a></li>
-  <li><a routerLink="rewards">rewards</a></li>
-</ul>
+<!--<ul>-->
+  <!--<li><a routerLink="settings">settings</a></li>-->
+  <!--<li><a routerLink="rewards">rewards</a></li>-->
+<!--</ul>-->
 
 <router-outlet></router-outlet>
+<div class="tree-wrap" [formGroup]="shakeTree">
+  <div class="full-with page-header">
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text"  matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="game-actions">
+      <cl-button [classList]="'third'"
+                 class="tree-btn-cancel"
+
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+                 (click)="save()"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <div class="content flex">
+    <div class="tree-wrap-fields">
+      <mat-card>
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Messages
+          </p>
+        </div>
+        <div class="messages-form" >
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="game-title-wrap">
+          <p class="sub-title">
+            Game graphic
+          </p>
+        </div>
+        <div class="game-form">
+          <p class="game-title">
+            Tree
+          </p>
+
+          <div class="game-tree-wrap">
+            <cl-select-graphic
+              *ngIf="gamesTree$ | async as gamesTree"
+              formControlName="treeType"
+              [graphicList]="gamesTree"
+            >
+            </cl-select-graphic>
+          </div>
+
+          <div class="game-number-gifts">
+            <div class="control-input"
+                 *ngIf="gameGifts$ | async as gameGifts"
+            >
+              <mat-form-field class="game-gift-select">
+                <mat-label>Total number of gifts in tree</mat-label>
+                <mat-select formControlName="gameGift">
+                  <mat-option *ngFor="let gift of gameGifts" [value]="gift.value">
+                    {{gift.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="game-gift-box">
+            <p class="game-title">
+              Gift box
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="giftBox$ | async as giftBox"
+                class="game-selected-graphic"
+                formControlName="giftBox"
+                [graphicList]="giftBox"
+                (selectGraphic)="setSelectGiftBox($event)"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+
+          <div class="game-background-box">
+            <p class="game-title">
+              Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="backgrounds$ | async as backgrounds"
+                formControlName="background"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+                (selectGraphic)="setSelectGiftBox($event)"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+        </div>
+
+      </mat-card>
+
+      <mat-card class="game-button">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="mobile-preview">
+      <div class="mobile-preview-mobile">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+@import "../../../../styles/variables";
+
+
+.login-wrap {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.col {
+
+  &-login-form {
+    width: 43.1rem;
+    height: 100%;
+    padding-left: 3.2rem;
+    padding-right: 4.3rem;
+    position: relative;
+  }
+
+  &-customer-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: $background-color;
+  }
+}
+
+.router-actions {
+  padding-top: 1.4rem;
+}
+
+.copy-right {
+  position: absolute;
+  left: 3.2rem;
+  bottom: 4.2rem;
+
+  &-text {
+    height: 1.7rem;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+
+    line-height: 1.21;
+    color: #979797;
+  }
+}
+
+.customer-info {
+
+  &-text {
+    padding-top: 6.8rem;
+    font-family: $base-font-family;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.23;
+    color: #3e4e73;
+    margin: 0;
+  }
+
+  &-description {
+    width: 58.2rem;
+    padding-top: 1rem;
+    margin: 0 auto;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    line-height: 1.21;
+    color: #3e4e73;
+  }
+
+  &-picture {
+    width: 58.1rem;
+    height: 47.6rem;
+    margin: 5.4rem auto 0;
+
+    img {
+      width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+cl-logo {
+  padding-top: 3.1rem;
+}
+
+cl-login-form {
+  padding-top: 7.6rem;
+}
+
+cl-button {
+  display: block;
+}
+
+@import "resize";

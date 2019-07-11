@@ -19,6 +19,9 @@ export class PuzzleListComponent implements OnChanges {
   @Output()
   selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
 
+  @Output()
+  completed: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private campaignService: CampaignService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -26,7 +29,24 @@ export class PuzzleListComponent implements OnChanges {
       this.puzzles = null;
       if (this.campaignId !== null) {
         this.campaignService.getCards(this.campaignId)
-          .subscribe((res: IStampCard[]) => { this.puzzles = res; });
+          .subscribe((res: IStampCard[]) => {
+            this.puzzles = res;
+            // assume all is completed
+            let completed = true;
+            // loop over all puzzles
+            for (const puzzle of this.puzzles) {
+              // if any transction is issued, then it is not all completed
+              completed = !puzzle.stamps.some(stamp => stamp.state === TRANSACTION_STATE.issued);
+              // if one is not completed, we do not need to loop any further
+              if (!completed) {
+                break;
+              }
+            }
+            // if completed emit an event.
+            if (completed) {
+              this.completed.emit();
+            }
+          });
       }
     }
   }
@@ -46,8 +66,10 @@ export class PuzzleListComponent implements OnChanges {
       return false;
     }
 
+    const totalSlots = puzzle.display_properties.total_slots;
+
     // if there is no more available stamp return false
-    if (puzzle.stamps.find(st => st.state === TRANSACTION_STATE.issued) === undefined) {
+    if (puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length >= totalSlots) {
       return false;
     }
 
@@ -55,7 +77,7 @@ export class PuzzleListComponent implements OnChanges {
     const activePuzzles = this.puzzles.filter(p => {
       return p.state === STAMP_CARD_STATUS.active &&
         p.stamps &&
-        p.stamps.find(st => st.state === TRANSACTION_STATE.issued) !== undefined;
+        p.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length < totalSlots;
     });
 
     // if there is no active puzzle, this one should not be active

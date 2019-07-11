@@ -1,0 +1,181 @@
+@import "variables";
+
+html, body {
+  min-height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  outline: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.btn-transparent {
+  display: flex;
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.menu-item {
+  .mat-list-text {
+    padding-left: 0.8rem !important;
+  }
+}
+
+.page-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 $horizontal-content-padding;
+
+  &.full-with {
+    background: $white-color;
+    min-height: 6.6rem;
+  }
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.04;
+  letter-spacing: normal;
+  color: $there-color;
+}
+
+.sub-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.06;
+  color: $secondary-color;
+}
+
+.content {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 150vh;
+  width: 100%;
+  padding: $vertical-content-padding $horizontal-content-padding;
+  background: $simple-light-gray;
+
+  &.no-padding-top {
+    padding-top: 0;
+  }
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.mat-dialog-content {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow: visible !important;
+}
+
+.game-checkbox {
+  .mat-radio-label-content {
+    display: none;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mobile {
+  &-preview {
+    flex-shrink: 0;
+    width: 34.4rem;
+    height: 63.8rem;
+    background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 0.8rem;
+  }
+
+  &-preview-mobile {
+    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
+    width: 34.4rem;
+    height: 63.8rem;
+    background-position: 123% 100%;
+  }
+}
+
+.game {
+  &-title-wrap {
+    width: 100%;
+    margin-right: 4rem;
+  }
+
+  &-title {
+    font-size: 1.6rem;
+    line-height: 1.06;
+    color: $secondary-color;
+    margin: 2.4rem 0 1.6rem 0;
+  }
+
+  &-graphic, &-button {
+    display: block;
+    margin-top: 1.6rem;
+  }
+
+  &-actions {
+    flex-shrink: 0;
+    width: 34.4rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.name-control-title {
+  input {
+    font-size: 2.2rem;
+    color: $there-color;
+  }
+
+  .mat-form-field-infix {
+    border: 0;
+  }
+}
+
+.control-input {
+  font-size: 1.4rem !important;
+}

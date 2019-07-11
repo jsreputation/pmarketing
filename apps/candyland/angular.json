@@ -28,18 +28,18 @@
               "src/assets"
             ],
             "styles": [
+              "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -88,8 +88,14 @@
               "src/assets"
             ],
             "styles": [
+              "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": [],
             "codeCoverage": true
           }
@@ -120,6 +126,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "candyland"
 }

@@ -1,0 +1,32 @@
+<div class="upload-wrap">
+  <input #fileInput type="file"
+         *ngIf="!imgURL"
+         class="upload-input"
+         accept='image/*'
+         (change)="preview(fileInput.files)"
+  />
+  <div class="image-wrap"
+       (click)="setActive()"
+       [ngClass]="{active: imgURL === selectedGraphic}"
+       *ngIf="imgURL"
+  >
+    <img [src]="imgURL" class="image" alt="upload">
+    <button class="image-clear" (click)="clear()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="fileInput.click()">+ Add New</button>
+  </div>
+  <div class="upload-error-wrap" *ngIf="message">
+    <span class="upload-error">
+      {{message}}
+    </span>
+  </div>
+  <div class="upload-type-wrap" *ngIf="!message">
+    <span class="upload-type">
+      Recommended format: .JPG or .PNG
+    </span>
+  </div>
+</div>

@@ -1,12 +1,22 @@
 
 .main-puzzle-container {
-	margin: -1.3rem -1.2rem;
-	background: #EF241C;
-	
-	h1 {
-		color: white;
-		text-align: center;
-		font-family: Roboto, sans-serif;
-		padding: 4rem 0 4rem 0;
-	}	
+  background: #ef241c;
+  height: calc(100% - 6rem);
+  position: relative;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    color: white;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    padding: 2rem 0 1rem 0;
+  }
+
+  > * {
+    &:nth-child(2) {
+      flex: 1 1;
+    }
+  }
 }

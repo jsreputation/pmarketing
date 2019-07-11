@@ -5,6 +5,7 @@ import { VouchersModule } from '@perx/core/dist/perx-core';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -15,6 +16,7 @@ describe('RedemptionComponent', () => {
       declarations: [RedemptionComponent],
       imports: [
         RouterTestingModule,
+        NoopAnimationsModule,
         HttpClientTestingModule,
         VouchersModule.forRoot({ env: environment })
       ]

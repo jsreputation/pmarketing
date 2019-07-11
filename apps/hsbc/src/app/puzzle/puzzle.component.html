@@ -1,8 +1,11 @@
 <!-- Template stuff aimed at being replaced by real components -->
 
 <div class="main-puzzle-container">
-    <h1>Complete the puzzle to win an instant reward!</h1>
-    <perx-core-puzzle-play [img]="image" [rows]="rows" [cols]="cols" [nbPlayedPieces]="playedPieces"
+    <h1 [ngPlural]="availablePieces">
+        <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
+        <ng-template ngPluralCase="other">You have a total of {{totalAvailablePieces}} puzzle pieces</ng-template>
+    </h1>
+    <perx-core-puzzle-play [img]="image" [rows]="rows" [cols]="cols" [showHint]="true" [nbPlayedPieces]="playedPieces"
         [nbAvailablePieces]="availablePieces" (moved)="onMoved()">
     </perx-core-puzzle-play>
 </div>

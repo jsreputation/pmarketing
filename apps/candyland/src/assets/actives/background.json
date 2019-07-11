@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "type": "background1",
+    "title": "icon",
+    "img": "assets/images/background/background1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  {
+    "id": 2,
+    "type": "background2",
+    "title": "icon",
+    "img": "assets/images/background/background2.png",
+    "format": ".png",
+    "active": "false"
+  },
+  {
+    "id": 3,
+    "type": "background3",
+    "title": "icon",
+    "img": "assets/images/background/background3.png",
+    "format": ".png",
+    "active": "false"
+  }
+]

@@ -1,0 +1,51 @@
+@import "variables";
+
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 30rem !important;
+}
+
+.name-cell {
+  margin: 1.1rem 0;
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: $base-font-family;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+
+  &__link {
+    width: fit-content;
+    color: $base-font-color;
+    text-decoration: none;
+
+    &:hover {
+      color: $secondary-font-color;
+    }
+  }
+
+  &__goal {
+    color: $secondary-font-color;
+    font-size: 1.4rem;
+  }
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.search-block {
+  flex: 1;
+}
+

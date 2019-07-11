@@ -1,0 +1,33 @@
+
+@import "variables";
+
+.game {
+
+  &-wrap {
+    width: 12.4rem;
+    height: 12.7rem;
+    background-color: $light-gray;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  &-content {
+    padding-top: 1.4rem;
+  }
+
+  &-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $secondary-color;
+    text-align: center;
+    margin: 0;
+  }
+
+  &-checkbox {
+    display: flex;
+    justify-content: center;
+    padding: .9rem;
+  }
+}

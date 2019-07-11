@@ -1,0 +1,78 @@
+
+@import "variables";
+
+.tree {
+
+  &-wrap {
+    min-height: 100vh;
+    background-color: $simple-light-gray;
+  }
+
+  &-page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3rem 0 4.3rem;
+    background: $white-color;
+    align-items: center;
+  }
+
+  &-page-header {
+    height: 6.6rem;
+  }
+
+  &-btn-cancel {
+    padding-right: .8rem;
+  }
+
+  &-main-block {
+    display: flex;
+  }
+
+  &-wrap-fields {
+    min-width: 74.7rem;
+    width: 100%;
+    margin-right: 4rem;
+  }
+
+}
+
+.messages {
+
+  &-input {
+    width: 100%;
+  }
+}
+
+.game {
+
+  &-tree-wrap {
+    display: flex;
+  }
+
+  &-image-preview {
+    display: block;
+    margin-right: 1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &-number-gifts {
+    padding-top: 4rem;
+  }
+
+  &-gift-select {
+    width: 34.4rem;
+  }
+
+  &-selected-graphic {
+    margin-bottom: 4rem;
+    display: flex;
+  }
+
+}
+
+.name-control {
+  min-width: 74.7rem;
+}

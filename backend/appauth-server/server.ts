@@ -14,6 +14,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
@@ -57,7 +58,7 @@ app.get('/preauth', async (req, res, next) => {
   }
 });
 
-app.post('/v4/oauth/token', async (req, res, next) => {
+app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
     const url = req.query.url;
     if (url === undefined) {
@@ -96,18 +97,24 @@ app.post('/v4/oauth/token', async (req, res, next) => {
 
     res.json(endpointRequest.data);
   } catch (e) {
-    next(e);
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
   }
 });
 
 if (process.env.PRODUCTION) {
+  console.log('production mode ON');
   app.set('view engine', 'html');
   app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
 
-// Serve static files from /../../perx-microsite
-  app.use(express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+  // Serve static files from /../../perx-microsite
+  app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
+  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), { maxAge: '1y' }));
 
-// All regular routes use the index.html
+  // All regular routes use the index.html
   app.get('*', (req, res) => {
     res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
   });

@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {LoginPageComponent} from './auth/containers/login-page/login-page.component';
 import {AuthGuard} from '@cl-core/guards/auth.guard';
 import {MainContainerComponent} from './main-container/main-container.component';
+import { LoginComponent } from './auth/containers/login/login.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard'},
   { path: '',
     component: MainContainerComponent,
     canActivate: [AuthGuard],
-    // redirectTo: 'dashboard',
     children: [
       {
         path: 'dashboard',
@@ -29,7 +28,7 @@ const routes: Routes = [
       },
     ]
   },
-  { path: 'login', component: LoginPageComponent },
+  { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/dashboard'}
 ];
 
