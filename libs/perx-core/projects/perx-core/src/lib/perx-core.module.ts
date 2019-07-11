@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { VouchersModule } from './vouchers/vouchers.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { HttpClientModule } from '@angular/common/http';
 
 const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
@@ -13,10 +10,7 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
   declarations: [
   ],
   imports: [
-    ...modules,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule
+    ...modules
   ],
   exports: [
     ...modules
