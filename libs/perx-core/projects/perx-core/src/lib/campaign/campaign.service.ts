@@ -105,6 +105,9 @@ export interface IGetStampTransactionResponse {
   };
 }
 
+/*
+ * Not in use, the build is failing if its not commented
+ */
 // interface IV4CampaignsResponse {
 //   data: ICampaign[];
 //   meta: {
@@ -146,6 +149,9 @@ interface IV4Campaign {
   icon: string;
 }
 
+/*
+ * Not in use, the build is failing if its not commented
+ */
 // interface IV4CampaignResponse {
 //   data: ICampaign;
 //   meta: {
