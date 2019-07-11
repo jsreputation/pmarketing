@@ -1,5 +1,4 @@
 @import "variables";
-@import "helper";
 
 .reward-item {
   width: 100%;
@@ -7,12 +6,12 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  padding: rem(10px) rem(15px);
+  padding: 1rem 1.5rem;
 
   &-img-block {
     position: relative;
-    height: rem(63px);
-    width: rem(63px);
+    height: 6.3rem;
+    width: 6.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,8 +24,8 @@
   }
 
   &-no-img {
-    height: 30px;
-    width: 30px;
+    height: 3rem;
+    width: 3rem;
     //object-fit: ce;
   }
 
@@ -36,12 +35,12 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-    margin: 0 0 0 rem(14px);
+    margin: 0 0 0 1.4rem;
     font-family: $primary-font;
   }
 
   &-name {
-    font-size: rem(14px);
+    font-size: 1.4rem;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -54,8 +53,8 @@
   }
 
   &-type {
-    margin-top: 5px;
-    font-size: rem(14px);
+    margin-top: .5rem;
+    font-size: 1.4rem;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -69,23 +68,23 @@
   }
 
   &-probability {
-    margin-right: 40px;
+    margin-right: 4rem;
   }
 
   &-probability-label {
-    font-size: rem(14px);
+    font-size: 1.4rem;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     line-height: 1.21;
     letter-spacing: normal;
     color: $secondary-color;
-    margin: 0 rem(14px) 0 0;
+    margin: 0 1.4rem 0 0;
   }
 
   &-probability-input {
-    width: rem(100px);
-    font-size: rem(16px);
+    width: 10rem;
+    font-size: 1.6rem;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -97,7 +96,7 @@
   }
 
   &-actions {
-    min-width: 80px;
+    min-width: 8rem;
   }
 }
 

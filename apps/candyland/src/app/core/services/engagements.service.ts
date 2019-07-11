@@ -11,4 +11,12 @@ export class EngagementsService {
   public getEngagements() {
     return this.http.getEngagements();
   }
+
+  public getEngagementType() {
+    return this.http.getEngagementType();
+  }
+
+  public getGamesType() {
+    return this.http.getGamesType();
+  }
 }

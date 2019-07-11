@@ -30,7 +30,7 @@
 
     justify-content: space-between;
     position: relative;
-    margin-right: 20px;
+    margin-right: 2rem;
 
     &:last-of-type {
       margin-right: 0;
@@ -47,7 +47,7 @@
 
   &.shadow{
     .mat-radio-button {
-      box-shadow: 0 4px 4px 0 #d2d8e2;
+      box-shadow: 0 .4rem .4rem 0 #d2d8e2;
     }
   }
 }

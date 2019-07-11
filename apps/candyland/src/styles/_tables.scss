@@ -3,12 +3,12 @@
 }
 
 td.mat-cell.menu-column, th.mat-header-cell.menu-column {
-  max-width: 6px;
+  max-width: 0.6rem;
   padding-right: 0 !important;
 }
 
 td.mat-cell.date-column, th.mat-header-cell.date-column, .date-column th.mat-header-cell {
-  width: 90px !important;
-  padding: 0 20px;
+  width: 9rem !important;
+  padding: 0 2rem;
   text-align: right;
 }

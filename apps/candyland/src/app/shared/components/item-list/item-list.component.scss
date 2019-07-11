@@ -1,5 +1,4 @@
 @import "variables";
-@import "helper";
 
 .item {
   border: 2px solid transparent;
@@ -10,8 +9,8 @@
     &:after {
       content: '';
       display: block;
-      height: rem(42px);
-      width: rem(42px);
+      height: 4.2rem;
+      width: 4.2rem;
       position: absolute;
       top: 0;
       right: -1px;

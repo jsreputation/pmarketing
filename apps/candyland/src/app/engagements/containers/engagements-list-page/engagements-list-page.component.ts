@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild, ChangeDet
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { CreateEngagementPopupComponent } from '../create-engagement-popup/create-engagement-popup.component';
 import { EngagementsService } from '@cl-core/services/engagements.service';
+import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 
 @Component({
   selector: 'cl-engagements-list-page',

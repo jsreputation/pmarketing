@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/cor
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IEngagementType } from './engagement-type/models/engagement-type.model';
 import { EngagementType } from './shared/models/EngagementType';
-import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
 import { IGraphic } from '../../models/graphick.model';
 import { Router } from '@angular/router';
+import { EngagementsService } from '@cl-core/services/engagements.service';
 
 export enum gamesRouterLink {
   shakeTheTree = 'engagements/games/new-shake',
