@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IGraphic } from '@cl-shared/models/graphick.model';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IGameGifts } from '../models/game-gifts.model';
 
 @Injectable()
@@ -27,7 +27,6 @@ export class ShakeDataService {
 
   public getGameNumberGifts(): Observable<IGameGifts[]> {
     return this.http.get('/assets/actives/game-number-gift.json')
-      .pipe(map((response) => (response as IGameGifts[])),
-        tap(dat => console.log(dat)));
+      .pipe(map((response) => (response as IGameGifts[])));
   }
 }

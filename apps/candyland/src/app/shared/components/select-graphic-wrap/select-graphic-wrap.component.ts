@@ -50,6 +50,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public onTouch: any = () => {};
 
   ngOnInit() {
+    console.log('te', this.graphicList);
     this.createControls();
     this.subscribeControlDefaultValueChanges();
     this.subscribeControlUploadValueChanges();

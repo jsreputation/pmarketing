@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -10,14 +10,16 @@ import { FormGroup } from '@angular/forms';
 export class NewCampaignComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  name: FormControl;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    // this.firstFormGroup = this._formBuilder.group({
-    //   firstCtrl: ['', Validators.required]
-    // });
-    // this.secondFormGroup = new FormGroup(''    );
+    this.name = new FormControl('Campaign Name', [Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(60)]
+    );
   }
 
 }

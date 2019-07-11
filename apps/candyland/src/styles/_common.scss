@@ -141,7 +141,7 @@ button {
 
 .game {
   &-title-wrap {
-    width: 100%;
+    flex: 1;
     margin-right: 4rem;
   }
 
@@ -218,4 +218,8 @@ button {
     background-color: $warning-color;
     color: $white-color;
   }
+}
+
+.form-group-card {
+
 }

@@ -1,11 +1,29 @@
-<div class="page-header">
-  <h1>Campaign Name</h1>
+<div class="page-header full-with">
+  <div class="game-title-wrap">
+    <div class="control-input name-control name-control-title">
+      <mat-form-field class="messages-input">
+        <input type="text"  matInput formControlName="name">
+        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
   <div class="btn-group">
     <cl-button classList="invert">Cancel</cl-button>
     <cl-button classList="third">Save as a draft</cl-button>
     <cl-button classList="primary">Next</cl-button>
   </div>
 </div>
+
+<!--<div class="page-header">-->
+<!--  <h1>Campaign Name</h1>-->
+<!--  <div class="btn-group">-->
+<!--    <cl-button classList="invert">Cancel</cl-button>-->
+<!--    <cl-button classList="third">Save as a draft</cl-button>-->
+<!--    <cl-button classList="primary">Next</cl-button>-->
+<!--  </div>-->
+<!--</div>-->
 
 <mat-horizontal-stepper labelPosition="bottom" #stepper>
   <mat-step>

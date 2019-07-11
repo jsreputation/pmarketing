@@ -16,7 +16,7 @@
   <div class="reward-item-probability" *ngIf="enableProbability">
     <span class="reward-item-probability-label">Probability</span>
     <mat-form-field class="reward-item-probability-input">
-      <input type="number" min="0" max="100" step="1" matInput formControl="control">
+      <input type="number" min="0" max="100" step="1" matInput [formControl]="control">
       <span matSuffix>%</span>
     </mat-form-field>
   </div>
@@ -25,7 +25,7 @@
 <!--      <i class="icon delete-action"></i>-->
 <!--    </button>-->
     <button mat-icon-button (click)="delete()">
-      <i class="icon delete-action"></i>
+      <i class="icon full-with delete-action"></i>
     </button>
   </div>
 </div>

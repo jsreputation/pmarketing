@@ -5,7 +5,13 @@
   width: 18px !important;
   padding: 0 0 0 16px !important;
   box-sizing: content-box;
+
+  &.full-with {
+    height: 100% !important;
+    width: auto !important;
+  }
 }
+
 
 .dashboard {
   mask: url("assets/images/dashboard.svg") no-repeat 50% 50%;

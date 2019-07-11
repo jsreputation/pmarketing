@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IGraphic } from '@cl-shared/models/graphick.model';
 
 @Injectable({
@@ -17,8 +17,7 @@ export class EngagementsHttpsService {
   public getEngagementType() {
     return this.http.get('assets/actives/engagement-type.json')
       .pipe(
-        map(res => (res as IGraphic[])),
-        tap( data => console.log('tset', data))
+        map(res => (res as IGraphic[]))
       );
   }
 

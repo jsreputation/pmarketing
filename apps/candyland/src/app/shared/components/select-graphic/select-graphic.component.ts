@@ -32,6 +32,7 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
   constructor() { }
 
   ngOnInit() {
+    console.log('nested component', this.graphicList);
   }
 
   public setSelectedGraphic(graphic: IGraphic): void {
