@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run config && ng serve --host 0.0.0.0",
+    "build": "npm run config && ng build",
+    "config": "ts-node set-env.ts",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint && stylelint src/**/*.scss",
+    "styleLint": "stylelint src/**/*.scss",
     "e2e~": "ng e2e"
   },
   "private": true,
@@ -45,6 +47,8 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"

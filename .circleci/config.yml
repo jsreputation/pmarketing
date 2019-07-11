@@ -28,11 +28,11 @@ commands:
           command: |
             TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
-  set_apihost_from_env:
+  set_apihost:
     description: based on environment set the APIHOST
     steps:
       - run:
-          name: Setup env vars
+          name: Setup APIHOST vars
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
@@ -40,13 +40,30 @@ commands:
             fi
             if [ $TARGET_ENV == 'production' ]
             then
-              echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+              if [ APP == 'hsbc' ]
+              then
+                echo 'export APIHOST="https://api-hsbc.perxtech.net"' >> $BASH_ENV
+              else
+                echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+              fi
             fi
-  set_basehref:
-    description: based on client deploy endpoint
+  set_preauth:
+    description: based on client set the PREAUTH
     steps:
       - run:
-          name: Setup env vars
+          name: Setup PREAUTH vars
+          command: |
+            if [ $APP == 'prudential' ]
+            then
+              echo 'export PREAUTH="true"' >> $BASH_ENV
+            else
+              echo 'export PREAUTH="false"' >> $BASH_ENV
+            fi
+  set_basehref:
+    description: based on client set deploy endpoint base href
+    steps:
+      - run:
+          name: Setup BASE_HREF vars
           command: |
             if [ $APP == 'hsbc' ]
             then
@@ -54,6 +71,13 @@ commands:
             else
               echo 'export BASE_HREF="/"' >> $BASH_ENV
             fi
+  set_iswhistler:
+    description: based on client deploy endpoint base href
+    steps:
+      - run:
+          name: Setup BASE_HREF vars
+          command: |
+            echo 'export ISWHISTLER="false"' >> $BASH_ENV
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -77,8 +101,10 @@ jobs:
       - docker_login
       - get_app_name
       - get_env_from_tag
-      - set_apihost_from_env
+      - set_apihost
+      - set_preauth
       - set_basehref
+      - set_iswhistler
       - run:
           name: Build docker image
           command: |
@@ -86,7 +112,12 @@ jobs:
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
-            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} --build-arg app=$APP --build-arg apihost=$APIHOST --build-arg basehref=$BASE_HREF
+            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
+            --build-arg app=$APP \
+            --build-arg apihost=$APIHOST \
+            --build-arg basehref=$BASE_HREF \
+            --build-arg preauth=$PREAUTH \
+            --build-arg iswhistler=$ISWHISTLER
       - run:
           name: Push docker
           command: |

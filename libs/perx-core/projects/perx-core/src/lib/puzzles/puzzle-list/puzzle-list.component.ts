@@ -19,6 +19,9 @@ export class PuzzleListComponent implements OnChanges {
   @Output()
   selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
 
+  @Output()
+  completed: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private campaignService: CampaignService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -26,7 +29,24 @@ export class PuzzleListComponent implements OnChanges {
       this.puzzles = null;
       if (this.campaignId !== null) {
         this.campaignService.getCards(this.campaignId)
-          .subscribe((res: IStampCard[]) => { this.puzzles = res; });
+          .subscribe((res: IStampCard[]) => {
+            this.puzzles = res;
+            // assume all is completed
+            let completed = true;
+            // loop over all puzzles
+            for (const puzzle of this.puzzles) {
+              // if any transction is issued, then it is not all completed
+              completed = !puzzle.stamps.some(stamp => stamp.state === TRANSACTION_STATE.issued);
+              // if one is not completed, we do not need to loop any further
+              if (!completed) {
+                break;
+              }
+            }
+            // if completed emit an event.
+            if (completed) {
+              this.completed.emit();
+            }
+          });
       }
     }
   }

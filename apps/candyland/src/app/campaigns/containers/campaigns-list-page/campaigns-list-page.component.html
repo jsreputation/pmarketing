@@ -14,7 +14,7 @@
           <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
         </ng-container>
         <ng-container *clTableFilter="'status'; value: ''; let filter">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="control-input">
             <mat-select [formControl]="filter" placeholder="All">
               <mat-option value="">All</mat-option>
               <mat-option value="active">Active</mat-option>
@@ -37,7 +37,7 @@
         <td mat-cell *matCellDef="let element">
           <p class="name-cell">
             <a class="name-cell__link" routerLink="/">{{element?.name}}</a>
-            <span class="name-cell__id">ID: {{element?.id}}</span>
+            <span class="name-cell__goal">{{element?.goal}}</span>
           </p>
         </td>
       </ng-container>
@@ -72,9 +72,9 @@
         <td mat-cell *matCellDef="let element"> {{element?.audience}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="goal">
-        <th mat-header-cell *matHeaderCellDef>Goal</th>
-        <td mat-cell *matCellDef="let element"> {{element?.goal}}</td>
+      <ng-container matColumnDef="engagementType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="engagementType">Engagement Type </th>
+        <td mat-cell *matCellDef="let element"> {{element?.engagementType}}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

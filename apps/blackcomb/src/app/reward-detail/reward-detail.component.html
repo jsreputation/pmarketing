@@ -1,12 +1,15 @@
 <div class="prize-wrapper">
-  <div class="prize-wrapper__right">
-    <img src="../../assets/prize.png" alt="" />
-    <p class="title">Free Frappuccino</p>
-    <p class="sub-title">from Starbucks</p>
+  <h1 *ngIf="firstTime">Congratulations!</h1>
+  <h2 *ngIf="firstTime">You just won an instant reward.</h2>
+  <div class="voucher-container">
+    <perx-core-voucher 
+    [hideMerchantImg]="false" 
+    [hideMerchantName]="false" 
+    [hideActions]="true" 
+    [voucherId]="id">
+    </perx-core-voucher>
   </div>
-  <button 
-  mat-flat-button color="primary"
-  (click)="redeemClicked()">
-    Redeem
-  </button>
+  <div class="actions-container">
+    <button mat-flat-button color="primary" (click)="onRedeem()">Redeem</button>
+  </div>
 </div>

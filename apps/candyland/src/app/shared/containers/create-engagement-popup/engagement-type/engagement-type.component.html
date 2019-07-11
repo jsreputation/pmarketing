@@ -1,0 +1,10 @@
+<div class="wrap">
+  <cl-type-item *ngFor="let typeItem of graphicList"
+                [typeItem]="typeItem"
+                [checkedType]="selectedType"
+                (selectType)="setTypeEngagement($event)"
+                clInkListener
+  >
+  </cl-type-item>
+</div>
+

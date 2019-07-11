@@ -28,6 +28,7 @@ export {
   IStampCardsResponse,
   IVoucher,
   IPutStampTransactionResponse,
+  IGetStampTransactionResponse,
   CAMPAIGN_TYPE,
   ICampaign,
   ICampaignsResponse,
@@ -36,7 +37,7 @@ export {
 export {
   PopupComponent,
   IPopupConfig,
-} from './lib/popup/popup.component';
+} from './lib/utils/popup/popup.component';
 export { GameModule } from './lib/game/game.module';
 export { GameService } from './lib/game/game.service';
 export { IGame, GAME_TYPE } from './lib/game/game.model';
@@ -47,3 +48,4 @@ export {
   IProfile,
   IProfileResponse
  } from './lib/profile/profile.model';
+export { UtilsModule } from './lib/utils/utils.module';
