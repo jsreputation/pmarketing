@@ -22,7 +22,7 @@ enum REDEMPTION_TYPE {
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: VouchersService;
-  
+
   const mockIVouchers = [
     {
       id: 21,
