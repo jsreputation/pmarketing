@@ -40,7 +40,12 @@ commands:
             fi
             if [ $TARGET_ENV == 'production' ]
             then
-              echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+              if [ APP == 'hsbc' ]
+              then
+                echo 'export APIHOST="https://api-hsbc.perxtech.net"' >> $BASH_ENV
+              else
+                echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+              fi
             fi
   set_preauth:
     description: based on client set the PREAUTH
