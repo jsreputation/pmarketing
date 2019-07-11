@@ -22,6 +22,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
+import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module
     SelectGraphicModule,
     SelectGraphicWrapModule,
     InfoHintModule,
+    GameMobilePreviewModule,
 
     MatTabsModule,
     MatCardModule,

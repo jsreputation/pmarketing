@@ -11,12 +11,21 @@
       </div>
     </div>
     <div class="game-actions">
-      <cl-button [classList]="'third'"
+      <cl-button [classList]="'tertiary'"
+                 [disableRipple]="true"
                  class="reward-btn-cancel"
 
       >
         <span>
           Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'third'"
+                 class="reward-btn-cancel"
+
+      >
+        <span>
+          Save as a draft
         </span>
       </cl-button>
       <cl-button [classList]="'primary'"
@@ -30,7 +39,7 @@
   </div>
   <section class="content flex">
     <div class="reward-form">
-      <mat-card>
+      <mat-card class="game-graphic">
         <div class="reward-wrap">
           <p class="sub-title">
             Messages
@@ -115,11 +124,32 @@
           </div>
         </div>
       </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
     </div>
 
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
-      </div>
-    </div>
+    <!--<div class="mobile-preview">-->
+      <!--<div class="mobile-preview-mobile">-->
+      <!--</div>-->
+    <!--</div>-->
+    <cl-game-mobile-preview>
+    </cl-game-mobile-preview>
   </section>
 </section>

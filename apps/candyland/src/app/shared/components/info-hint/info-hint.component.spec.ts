@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InfoHintComponent } from './info-hint.component';
+import { MatIconModule } from '@angular/material';
 
 describe('InfoHintComponent', () => {
   let component: InfoHintComponent;
@@ -8,6 +9,9 @@ describe('InfoHintComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatIconModule
+      ],
       declarations: [ InfoHintComponent ]
     })
     .compileComponents();
