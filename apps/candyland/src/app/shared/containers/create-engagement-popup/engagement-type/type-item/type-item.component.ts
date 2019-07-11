@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+import { IGraphic } from '../../../../models/graphick.model';
 
 @Component({
   selector: 'cl-type-item',
