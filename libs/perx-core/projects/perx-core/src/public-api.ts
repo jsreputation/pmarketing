@@ -36,6 +36,7 @@ export {
 export {
   PopupComponent,
   IPopupConfig,
+  PopUpClosedCallBack
 } from './lib/utils/popup/popup.component';
 export { GameModule } from './lib/game/game.module';
 export { GameService } from './lib/game/game.service';
