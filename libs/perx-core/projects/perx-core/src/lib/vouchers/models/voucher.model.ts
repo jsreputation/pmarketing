@@ -1,8 +1,7 @@
 /*
- * Model from Master
- * TODO: remove after checking
+ * Not in use, build is failing if not commented out
  */
-// export interface IVoucher {
+// interface IV4Voucher {
 //   id: number;
 //   rewardId: number;
 //   state: string;
@@ -34,7 +33,7 @@ enum REDEMPTION_TYPE {
 interface IVoucherDescription {
   title: string;
   content: string;
-  tag: string[]
+  tag: string[];
 }
 
 /*

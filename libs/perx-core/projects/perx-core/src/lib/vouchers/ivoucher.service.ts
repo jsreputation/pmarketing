@@ -8,7 +8,6 @@ interface IV4Voucher {
 export interface IVoucherService {
   getAll(): Observable<IVoucher[]>;
   getAllFromPage(page: number): Observable<IV4Voucher[]>;
-  vouchersUrl(): string;
   get(id: number): Observable<IVoucher>;
   redeemVoucher(id: number): Observable<any>;
   reset(): void;
