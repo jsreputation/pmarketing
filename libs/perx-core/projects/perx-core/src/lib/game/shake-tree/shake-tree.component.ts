@@ -12,7 +12,6 @@ enum GIFT_STATUS {
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
-
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
   treeImg: string;
