@@ -6,7 +6,7 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { PerxCoreModule, CampaignModule, CognitoModule, OauthModule, GameModule, VouchersService } from '@perx/core/dist/perx-core';
+import { CampaignModule, CognitoModule, OauthModule, GameModule, VouchersService } from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -22,7 +22,6 @@ describe('GameComponent', () => {
     TestBed.configureTestingModule({
       declarations: [GameComponent, HeaderComponent],
       imports: [
-        PerxCoreModule,
         MatToolbarModule,
         RouterTestingModule,
         HttpClientTestingModule,

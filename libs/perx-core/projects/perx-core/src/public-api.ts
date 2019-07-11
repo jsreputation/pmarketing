@@ -16,7 +16,6 @@ export { OauthService } from './lib/v4/oauth/oauth.service';
 export { OauthModule } from './lib/v4/oauth/oauth.module';
 export { TokenStorage } from './lib/authentication/token-storage.service';
 export { PuzzlesModule } from './lib/puzzles/puzzles.module';
-export { ShakeTreeComponent } from './lib/shake-tree/shake-tree.component';
 export { CampaignModule } from './lib/campaign/campaign.module';
 export {
   CampaignService,
@@ -37,7 +36,7 @@ export {
 export {
   PopupComponent,
   IPopupConfig,
-} from './lib/popup/popup.component';
+} from './lib/utils/popup/popup.component';
 export { GameModule } from './lib/game/game.module';
 export { GameService } from './lib/game/game.service';
 export { IGame, GAME_TYPE } from './lib/game/game.model';

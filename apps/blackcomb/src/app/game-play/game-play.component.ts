@@ -67,7 +67,6 @@ export class GamePlayComponent implements OnInit {
   }
 
   onPinataTap($event) {
-    console.log('reward-detail/$this.gameid');
     if ($event.tap >= this.pinataTotalTaps) {
       this.gameCompleted();
     }
@@ -75,7 +74,7 @@ export class GamePlayComponent implements OnInit {
 
   gameCompleted() {
       setTimeout(() => {
-        this.router.navigate(['reward-detail/' + this.gameId]);
+        this.router.navigate(['home/']);
         this.gameCompleted();
       }, 3000);
   }
