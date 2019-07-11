@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 
 import { PuzzlesModule } from './puzzles/puzzles.module';
-import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationModule } from './auth/authentication/authentication.module';
 import { PinataComponent } from './pinata/pinata.component';
 import { HttpClientModule } from '@angular/common/http';
 
