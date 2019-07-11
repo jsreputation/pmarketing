@@ -12,14 +12,14 @@ export class RewardService {
   constructor(private http: HttpClient) { }
 
   public getRewardCardBackground(): Observable<IGraphic> {
-    return this.http.get('/assets/actives/reward-card-background.json')
+    return this.http.get('assets/actives/reward-card-background.json')
       .pipe(
         map(res => (res as IGraphic))
       );
   }
 
   public getRewardBackground(): Observable<IGraphic> {
-    return this.http.get('/assets/actives/reward-background.json')
+    return this.http.get('assets/actives/reward-background.json')
       .pipe(
         map(res => (res as IGraphic))
       );
