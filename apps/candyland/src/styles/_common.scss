@@ -1,14 +1,8 @@
 @import "variables";
 
-
 html, body {
   min-height: 100%;
   font-size: 62.5%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -23,8 +17,6 @@ p {
 button {
   outline: none;
 }
-
-
 
 .w-100 {
   width: 100%;
@@ -49,9 +41,8 @@ button {
 }
 
 .menu-item {
-
   .mat-list-text {
-    padding-left: .8rem !important;
+    padding-left: 0.8rem !important;
   }
 }
 
@@ -68,7 +59,6 @@ button {
     background: $white-color;
     min-height: 6.6rem;
   }
-
 }
 
 .title {
@@ -101,7 +91,6 @@ button {
   }
 }
 
-
 .row {
   display: flex;
   flex-flow: row nowrap;
@@ -113,7 +102,6 @@ button {
   padding: 0 !important;
   overflow: visible !important;
 }
-
 
 .mat-dialog-content {
   display: block;
@@ -140,7 +128,7 @@ button {
     height: 63.8rem;
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: .8rem;
+    border-radius: 0.8rem;
   }
 
   &-preview-mobile {
@@ -152,7 +140,6 @@ button {
 }
 
 .game {
-
   &-title-wrap {
     width: 100%;
     margin-right: 4rem;
@@ -178,13 +165,12 @@ button {
   }
 }
 
-
 .name-control-title {
-
   input {
     font-size: 2.2rem;
     color: $there-color;
   }
+
   .mat-form-field-infix {
     border: 0;
   }
