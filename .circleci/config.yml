@@ -53,11 +53,14 @@ commands:
       - run:
           name: Setup PREAUTH vars
           command: |
+            echo 'export PREAUTH="false"' >> $BASH_ENV
             if [ $APP == 'prudential' ]
             then
               echo 'export PREAUTH="true"' >> $BASH_ENV
-            else
-              echo 'export PREAUTH="false"' >> $BASH_ENV
+            fi
+            if [ $APP == 'digi' ]
+            then
+              echo 'export PREAUTH="true"' >> $BASH_ENV
             fi
   set_basehref:
     description: based on client set deploy endpoint base href
