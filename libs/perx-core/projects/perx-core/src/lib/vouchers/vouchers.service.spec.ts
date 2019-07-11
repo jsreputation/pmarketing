@@ -7,27 +7,44 @@ import { HttpClientModule } from '@angular/common/http';
 import { VouchersModule } from './vouchers.module';
 import { IVoucher } from './models/voucher.model';
 
+enum VOUCHER_STATE {
+  issued = 'issued',
+  redeemed = 'redeemed',
+  expired = 'expired'
+}
+
+enum REDEMPTION_TYPE {
+  pin = 'pin',
+  txtCode = 'txtCode',
+  none = 'none'
+}
+
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: VouchersService;
-  const mockIVoucherDetail = {
-    bannerUrl: undefined,
-    code: '51313742376d4348616679456646714b3234463853413d3d',
-    description: 'Vidyut',
-    howToRedeem: null,
-    id: 21,
-    merchantLogoUrl: undefined,
-    merchantName: 'Kluang Station',
-    name: 'Vidyut what are you doing',
-    expiresAt: null,
-    redeemedOn: null,
-    rewardId: 300,
-    state: 'expired',
-    termsAndConditions: null,
-    thumbnailUrl: undefined,
-  };
+  
   const mockIVouchers = [
-    mockIVoucherDetail
+    {
+      id: 21,
+      rewardId: 5,
+      state: VOUCHER_STATE.issued,
+      name: 'General Indoor Studio package @ $99',
+      code: null,
+      redemptionType: REDEMPTION_TYPE.pin,
+      thumbnailImg: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png',
+      rewardBanner: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png',
+      merchantImg: null,
+      merchantName: 'Lumiere Photography',
+      expiry: new Date('Fri Jan 31 2020 23:59:00 GMT+0800 (Philippine Standard Time)'),
+      redemptionDate: null,
+      description: {
+        title: 'Please visit',
+        content: '',
+        tag: []
+      },
+      redemptionSuccessTxt: null,
+      redemptionSuccessImg: null
+    }
   ];
   const mockVoucherDetail = {
     id: 21,
@@ -47,12 +64,16 @@ describe('VouchersService', () => {
     redemption_type: {
       call_to_action: null,
       timer: 0,
-      type: 'offline'
+      type: 'pin'
     },
     reward: {
       id: 5,
       name: 'General Indoor Studio package @ $99',
-      description: 'Please visit',
+      description: {
+        title: 'Please visit',
+        content: '',
+        tag: [],
+      },
       favourite: false,
       merchant_id: 5,
       merchant_name: 'Lumiere Photography',
@@ -172,16 +193,14 @@ describe('VouchersService', () => {
         expect(updateVoucher.state).toEqual('issued');
         expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
         expect(updateVoucher.code).toEqual(null);
-        expect(updateVoucher.description).toEqual('Please visit');
-        expect(updateVoucher.thumbnailUrl).toEqual(
+        expect(updateVoucher.description.title).toEqual('Please visit');
+        expect(updateVoucher.thumbnailImg).toEqual(
           'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
-        expect(updateVoucher.bannerUrl).toEqual(
+        expect(updateVoucher.rewardBanner).toEqual(
           'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png');
-        expect(updateVoucher.redeemedOn).toEqual(null);
+        expect(updateVoucher.redemptionDate).toEqual(null);
         expect(updateVoucher.merchantName).toEqual('Lumiere Photography');
-        expect(updateVoucher.merchantLogoUrl).toEqual(undefined);
-        expect(updateVoucher.termsAndConditions).toEqual('Up to 5 pax');
-        expect(updateVoucher.howToRedeem).toEqual(null);
+        expect(updateVoucher.merchantImg).toEqual(null);
         done();
       });
 
@@ -253,7 +272,6 @@ describe('VouchersService', () => {
     httpTestingController.verify();
   });
 
-
   it('should convert to IVoucher format', () => {
     const voucher = mockVouchers.data[0];
     const updateVoucher = VouchersService.voucherToVoucher(voucher);
@@ -262,17 +280,14 @@ describe('VouchersService', () => {
     expect(updateVoucher.state).toEqual('issued');
     expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
     expect(updateVoucher.code).toEqual(null);
-    expect(updateVoucher.description).toEqual('Please visit');
-    expect(updateVoucher.thumbnailUrl).toEqual(
+    expect(updateVoucher.description.title).toEqual('Please visit');
+    expect(updateVoucher.thumbnailImg).toEqual(
       'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
-    expect(updateVoucher.bannerUrl).toEqual(
+    expect(updateVoucher.rewardBanner).toEqual(
       'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png');
-    expect(updateVoucher.redeemedOn).toEqual(null);
+    expect(updateVoucher.redemptionDate).toEqual(null);
     expect(updateVoucher.merchantName).toEqual('Lumiere Photography');
-    expect(updateVoucher.merchantLogoUrl).toEqual(undefined);
-    expect(updateVoucher.termsAndConditions).toEqual('Up to 5 pax');
-    expect(updateVoucher.howToRedeem).toEqual(null);
+    expect(updateVoucher.merchantImg).toEqual(null);
   });
-
 
 });
