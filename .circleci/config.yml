@@ -145,23 +145,19 @@ jobs:
           command: |
             echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
+            echo 'export HELM_APP="$APP"' >> $BASH_ENV
+
             if [ $APP == 'prudential' ]
             then
               echo 'export HELM_APP="$APP-birthday"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
             if [ $APP == 'hsbc' ]
             then
               echo 'export HELM_APP="$APP-collect2"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
             if [ $APP == 'digi' ]
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
