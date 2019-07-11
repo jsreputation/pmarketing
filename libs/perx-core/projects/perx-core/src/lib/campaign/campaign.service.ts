@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { EnvConfig } from './env-config';
 import { flatMap, map, mergeAll, scan, tap } from 'rxjs/operators';
 import { VouchersService } from '../vouchers/vouchers.service';
-import { ICampaign } from './models/campaign.model';
+import { ICampaign, CAMPAIGN_TYPE } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
 
 export enum TRANSACTION_STATE {
@@ -104,23 +104,53 @@ export interface IGetStampTransactionResponse {
   };
 }
 
-interface ICampaignsResponse {
+interface IV4CampaignsResponse {
   data: ICampaign[];
   meta: {
     count: number;
   };
 }
 
-// interface ICampaignResponse {
-//   data: ICampaign;
-//   meta: {
-//     size: null;
-//     page: null;
-//     sort_by: null;
-//     order: null;
-//     count: number;
-//   };
-// }
+interface IV4Campaign {
+  id: number;
+  name: string;
+  description: string;
+  begins_at: string;
+  ends_at: any|null;
+  enrolled: boolean;
+  campaign_type: CAMPAIGN_TYPE;
+  campaign_referral_type: any|null;
+  game_config?: any;
+  campaign_config: {
+    campaign_results: {
+      count: number;
+      first_result_id: any|null;
+    };
+    auto_issue_voucher?: boolean;
+    burn_stamps_when_redeeming_for_voucher?: false,
+    use_once_only?: false,
+    used_message_title?: string;
+    used_message_description?: string;
+    stamps_slots?: 10,
+    stamp_slots?: any[]
+  };
+  images: any[];
+  favourite: boolean;
+  custom_fields: any;
+  category_tags: any[];
+  tags: any[];
+}
+
+interface IV4CampaignResponse {
+  data: ICampaign;
+  meta: {
+    size: null;
+    page: null;
+    sort_by: null;
+    order: null;
+    count: number;
+  };
+}
 
 
 
@@ -138,15 +168,15 @@ export class CampaignService implements ICampaignService {
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
-      state: campaign.state ? campaign.state : null,
-      games: campaign.games ? campaign.games : null,
-      stampCards: campaign.stampCards ? campaign.stampCards : null,
-      icon: campaign.icon ? campaign.icon : null
+      state: null,
+      games: null,
+      stampCards:  null,
+      icon: null,
     };
   }
 
   getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<ICampaignsResponse>(
+    return this.http.get<IV4CampaignsResponse>(
       `${ this.baseUrl }/v4/campaigns`
     )
     .pipe(
