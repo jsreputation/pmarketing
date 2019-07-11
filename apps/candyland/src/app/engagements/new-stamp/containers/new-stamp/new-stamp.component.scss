@@ -1,0 +1,30 @@
+.stamp {
+  &-btn-cancel {
+    padding-right: .8rem;
+  }
+
+  &-form {
+    min-width: 74.7rem;
+    width: 100%;
+    margin-right: 4rem;
+  }
+}
+
+.game {
+  &-selected-graphic {
+    margin-bottom: 4rem;
+    display: flex;
+  }
+
+  &-number {
+    margin-top: 3.4rem;
+
+    &-slot {
+      margin-top: 2.2rem;
+    }
+  }
+}
+
+.name-control {
+  min-width: 74.7rem;
+}

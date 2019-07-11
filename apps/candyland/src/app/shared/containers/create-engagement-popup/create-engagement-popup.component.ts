@@ -4,7 +4,6 @@ import { IEngagementType } from './engagement-type/models/engagement-type.model'
 import { EngagementType } from './shared/models/EngagementType';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
-import { IGraphic } from '../../models/graphick.model';
 import { Router } from '@angular/router';
 
 export enum gamesRouterLink {

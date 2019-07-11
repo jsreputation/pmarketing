@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IGameTree } from './shared/models/game-tree.model';
 import { IGameGifts } from './shared/models/game-gifts.model';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { ShakeDataService } from './shared/services/shake-data.service';
 import { Observable } from 'rxjs';
 

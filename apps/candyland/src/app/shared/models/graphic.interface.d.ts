@@ -1,4 +1,4 @@
-export interface IGraphic {
+declare interface IGraphic {
   id: number;
   type: string;
   active: boolean;

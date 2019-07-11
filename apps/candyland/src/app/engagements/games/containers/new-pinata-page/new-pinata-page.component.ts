@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 
 @Component({
