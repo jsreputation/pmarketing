@@ -1,40 +1,37 @@
 <div class="row">
   <div class="forms-container">
-    <mat-card class="rewards-form">
-      <div class="row">
+    <mat-card class="form-group-card">
+      <div class="header">
         <p class="sub-title">Rewards</p>
-        <cl-button class="create-button" classList="invert">+ Create New Template</cl-button>
+        <cl-button classList="invert no-padding">+ Create New Template</cl-button>
       </div>
       <div>
         <mat-checkbox (change)="changePropability($event.checked)">Include Probability</mat-checkbox>
       </div>
       <div>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
-        <cl-reward-item [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
+        <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
         <mat-error class="error">
           The total probabilty is 150%. Please make it 100%.
         </mat-error>
       </div>
     </mat-card>
-
-    <mat-card class="limits-form">
-      <div class="row">
-        <h4 class="sub-title">Play Limits</h4>
+    <mat-card class="form-group-card">
+      <div class="header">
+        <p class="sub-title">Play Limits</p>
       </div>
       <div class="row">
         <div>
-          <h5>Limit per user</h5>
+          <label class="label">Limit per user</label>
           <mat-form-field>
             <input matInput type="number" [min]="0">
             <span matSuffix>Play</span>
           </mat-form-field>
         </div>
         <div>
-          <h5>Limit per duration</h5>
+          <label class="label">Limit per duration</label>
           <mat-form-field>
             <mat-select>
               <mat-option value="day">Day</mat-option>

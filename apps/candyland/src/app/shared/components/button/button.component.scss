@@ -8,6 +8,10 @@
   font-size: 1.4rem;
   padding: 0 2rem;
   box-shadow: none;
+
+  &.no-padding {
+    padding: 0;
+  }
 }
 
 .primary {

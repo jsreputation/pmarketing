@@ -2,11 +2,14 @@
 
 .reward-item {
   width: 100%;
+  height: 8rem;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
   padding: 1rem 1.5rem;
+  background-color: $simple-light-gray;
 
   &-img-block {
     position: relative;
@@ -98,6 +101,7 @@
 
   &-actions {
     min-width: 8rem;
+    text-align: right;
   }
 }
 
