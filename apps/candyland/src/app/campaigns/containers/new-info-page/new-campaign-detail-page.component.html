@@ -1,51 +1,137 @@
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Campaign Info
-    </mat-panel-title>
-  </mat-expansion-panel-header>
+<div class="campaign-detail-content">
+  <mat-expansion-panel class="card">
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Campaign Info
+      </p>
+    </mat-expansion-panel-header>
 
-  <mat-form-field class="row">
-    <mat-select placeholder="Campagin goal">
-      <mat-option value="day">Day</mat-option>
-      <mat-option value="week">Week</mat-option>
-      <mat-option value="month">Month</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="card-content">
+      <mat-form-field class="card-row">
+        <mat-select placeholder="Campagin goal">
+          <mat-option value="day">Day</mat-option>
+          <mat-option value="week">Week</mat-option>
+          <mat-option value="month">Month</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <div class="row">
-    <cl-time-picker></cl-time-picker>
-    <cl-date-picker></cl-date-picker>
-    to
-    <cl-time-picker></cl-time-picker>
-    <cl-date-picker></cl-date-picker>
-    <mat-checkbox>Does not end</mat-checkbox>
-  </div>
 
-  <mat-form-field class="example-chip-list row">
-    <mat-chip-list #chipList aria-label="label selection">
-      <mat-chip *ngFor="let label of labels" [selectable]="selectable"
-                [removable]="removable" (removed)="remove(label)">
-        {{label.name}}
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-      </mat-chip>
-      <input placeholder="Label"
-             [matChipInputFor]="chipList"
-             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             [matChipInputAddOnBlur]="addOnBlur"
-             (matChipInputTokenEnd)="add($event)">
-    </mat-chip-list>
-  </mat-form-field>
+      <div class="card-row">
+        <div class="input-group">
+          <cl-date-picker></cl-date-picker>
+          <cl-time-picker></cl-time-picker>
+        </div>
+        to
+        <div class="input-group" [formGroup]="rewardsForm">
+          <cl-date-picker formControlName="endDate" [disabled]="disableEnd"></cl-date-picker>
+          <cl-time-picker formControlName="endTime" [disabled]="disableEnd"></cl-time-picker>
+        </div>
+        <mat-checkbox [(ngModel)]="disableEnd">Does not end</mat-checkbox>
+      </div>
 
-</mat-expansion-panel>
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Select channel
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="weblink">Weblink only</mat-radio-button>
-    <mat-radio-button value="sms">SMS</mat-radio-button>
-  </mat-radio-group>
-</mat-expansion-panel>
+      <mat-form-field class="card-row">
+        <mat-chip-list #chipList aria-label="card-label">
+          <mat-chip *ngFor="let label of labels" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(label)">
+            {{label.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Label"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="card">
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Select channel
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <div class="card-row">
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button value="weblink">Weblink only</mat-radio-button>
+          <mat-radio-button value="sms">SMS</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="card-section">
+        <div class="card-header">
+          <p class="card-title">
+            Message
+          </p>
+        </div>
+        <div class="card-content">
+          <mat-form-field class="card-row">
+            <mat-select placeholder="Campagin goal">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="card-section">
+
+        <div class="card-header">
+          <p class="card-title">
+            Select Message template
+          </p>
+        </div>
+
+        <div class="card-content">
+
+          <div class="input-group">
+            <cl-date-picker></cl-date-picker>
+            <cl-time-picker></cl-time-picker>
+          </div>
+
+          <div class="card-row">
+            <mat-checkbox>Recurrence Settings</mat-checkbox>
+          </div>
+
+          <div class="card-row">
+            <div>
+              <label class="card-label">Limit per user</label>
+              <mat-form-field>
+                <input matInput type="number" [min]="0">
+                <span matSuffix>Play</span>
+              </mat-form-field>
+            </div>
+            <div>
+              <label class="card-label">Limit per duration</label>
+              <mat-form-field>
+                <mat-select>
+                  <mat-option value="day">Day</mat-option>
+                  <mat-option value="week">Week</mat-option>
+                  <mat-option value="month">Month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="card">
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Select audience
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <div class="card-row">
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button [value]="false">No audience</mat-radio-button>
+          <mat-radio-button [value]="true">Upload an audience list</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</div>

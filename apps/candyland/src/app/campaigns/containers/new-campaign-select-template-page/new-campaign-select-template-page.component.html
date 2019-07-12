@@ -1,10 +1,10 @@
-<div class="content select-template">
-  <div class="">
+<div class="tab-content">
+  <div>
     <!--  filters-->
-    <div class="row">
+    <div class="template-filters">
       <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'name'; let filter">
-          <cl-search-filter [control]="filter"></cl-search-filter>
+          <cl-search-filter class="name-filter" [control]="filter"></cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'type'; let filter">
           <!--    <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>-->
@@ -17,7 +17,7 @@
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button class="create-button" classList="invert">+ Create New Template</cl-button>
+      <cl-button classList="invert">+ Create New Template</cl-button>
     </div>
 
     <mat-radio-group class="item-list shadow">

@@ -190,6 +190,19 @@ button {
   }
 }
 
+.input-group {
+  display: flex;
+  flex-flow: row nowrap;
+
+  & > * {
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 .error {
   display: flex !important;
   align-items: baseline;
@@ -220,40 +233,35 @@ button {
   }
 }
 
-.form-group-card {
-  border-radius: 8px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-  background-color: $white-color;
-  margin-bottom: 16px;
-  padding: 10px 24px 30px !important;
-
-  .header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    height: 4.6rem;
-  }
-
-  .item {
-    margin-bottom: 16px;
-  }
-
-  .label{
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
-    color: $secondary-color;
-  }
-}
-
 .forms-container {
   position: relative;
   width: 100%;
-  padding-right: 2.7rem;
+  //padding-right: 2.7rem;
+}
+
+.name-filter {
+  //max-width: 36.5rem;
+  //margin-right: 1.6rem;
+}
+
+.content {
+  .mat-stepper-horizontal {
+    background-color: inherit;
+  }
+
+  .tab-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: flex-start;
+
+    & > * {
+      margin-right: 2.4rem;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
 }
 

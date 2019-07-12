@@ -27,8 +27,13 @@ import { customTimepickerTheme } from '@cl-shared/components/time-picker/custom-
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() control: FormControl = new FormControl(null, []);
   @Input() placeholder = 'Time';
+
+  @Input() set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
+
   public theme = customTimepickerTheme;
-  public disabledState: boolean;
+  public disabledState: boolean = false;
   private destroy$ = new Subject();
   private onChange: any = noop;
   // @ts-ignore
@@ -63,6 +68,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   public setDisabledState(isDisabled: boolean): void {
+    console.log('isDisabled', isDisabled);
     this.disabledState = isDisabled;
   }
 

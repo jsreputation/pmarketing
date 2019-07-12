@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -9,7 +10,8 @@ import { MatChipInputEvent } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignDetailPageComponent {
-
+  rewardsForm: FormGroup;
+  disableEnd = false;
   visible = true;
   selectable = true;
   removable = true;
@@ -20,6 +22,13 @@ export class NewCampaignDetailPageComponent {
     {name: 'Label B'},
     {name: 'Label C'},
   ];
+
+  constructor() {
+    this.rewardsForm = new FormGroup({
+      endDate: new FormControl(null, []),
+      endTime: new FormControl(null, [])
+    });
+  }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;

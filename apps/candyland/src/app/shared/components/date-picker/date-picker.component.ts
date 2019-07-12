@@ -22,6 +22,11 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   @Input() placeholder = 'Choose date';
   @Input() max: Date | null = null;
   @Input() min: Date | null = null;
+
+  @Input() set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
+
   public disabledState: boolean;
   private destroy$ = new Subject();
   private onChange: any = noop;
