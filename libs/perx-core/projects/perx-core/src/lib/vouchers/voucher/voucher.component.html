@@ -1,10 +1,10 @@
 <ng-container *ngIf="voucher$ | async as voucher">
   <div class="voucher-container">
-    <div class="reward-image-container" *ngIf="voucher.bannerUrl">
-      <img class="reward-image" src="{{voucher.bannerUrl}}">
+    <div class="reward-image-container" *ngIf="voucher.rewardBanner">
+      <img class="reward-image" src="{{voucher.rewardBanner}}">
     </div>
-    <div class="merchant-image-container" *ngIf="!hideMerchantImg && voucher.merchantLogoUrl">
-      <img class="merchant-image" src="{{voucher.merchantLogoUrl}}">
+    <div class="merchant-image-container" *ngIf="!hideMerchantImg && voucher.merchantImg">
+      <img class="merchant-image" src="{{voucher.merchantImg}}">
     </div>
     <div class="details">
       <div class="reward-name">
@@ -13,8 +13,8 @@
       <div class="merchant-name" *ngIf="!hideMerchantName">
         {{voucher.merchantName}}
       </div>
-      <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiresAt!==null">
-        {{voucher.expiresAt | date: 'dd/MM/yyyy'}}
+      <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
+        {{voucher.expiry | date: 'dd/MM/yyyy'}}
         </div>
       <div class="section-heading" *ngIf="voucher.description">
         Description

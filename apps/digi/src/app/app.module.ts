@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
-  PerxCoreModule,
   AuthenticationModule,
   OauthModule, CognitoModule,
   CampaignModule, GameModule,
@@ -32,7 +31,6 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
-    PerxCoreModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShakeGameComponent } from './shake-game.component';
 import { HeaderComponent } from '../header/header.component';
-import { PerxCoreModule } from '@perx/core/dist/perx-core';
+import { GameModule } from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -13,7 +13,7 @@ describe('ShakeGameComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ShakeGameComponent, HeaderComponent ],
-      imports: [PerxCoreModule, MatToolbarModule, RouterTestingModule]
+      imports: [GameModule, MatToolbarModule, RouterTestingModule]
     })
     .compileComponents();
   }));

@@ -8,15 +8,14 @@ export { VouchersService } from './lib/vouchers/vouchers.service';
 export { VouchersComponent } from './lib/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
 export { IVoucher as Voucher } from './lib/vouchers/models/voucher.model';
-export { AuthenticationService } from './lib/authentication/authentication.service';
-export { AuthenticationModule } from './lib/authentication/authentication.module';
-export { CognitoService } from './lib/whistler/cognito/cognito.service';
-export { CognitoModule } from './lib/whistler/cognito/cognito.module';
-export { OauthService } from './lib/v4/oauth/oauth.service';
-export { OauthModule } from './lib/v4/oauth/oauth.module';
-export { TokenStorage } from './lib/authentication/token-storage.service';
+export { AuthenticationService } from './lib/auth/authentication/authentication.service';
+export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
+export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
+export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
+export { OauthService } from './lib/auth/v4/oauth/oauth.service';
+export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
+export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 export { PuzzlesModule } from './lib/puzzles/puzzles.module';
-export { ShakeTreeComponent } from './lib/shake-tree/shake-tree.component';
 export { CampaignModule } from './lib/campaign/campaign.module';
 export {
   CampaignService,
@@ -29,11 +28,10 @@ export {
   IVoucher,
   IPutStampTransactionResponse,
   IGetStampTransactionResponse,
-  CAMPAIGN_TYPE,
-  ICampaign,
-  ICampaignsResponse,
-  ICampaignResponse
 } from './lib/campaign/campaign.service';
+
+export { CAMPAIGN_TYPE, ICampaign } from './lib/campaign/models/campaign.model';
+
 export {
   PopupComponent,
   IPopupConfig,
