@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable } from 'rxjs';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -15,12 +16,13 @@ export class NewStampComponent implements OnInit {
   public stampSlotNumbers$: Observable<CommonSelect[]>;
   public preStamps$: Observable<IGraphic[]>;
   public rewardPreStamps$: Observable<IGraphic[]>;
-  private postStamps$: Observable<IGraphic[]>;
-  private rewardPostStamps$: Observable<IGraphic[]>;
-  private cardBackground$: Observable<IGraphic[]>;
-  private backgrounds$: Observable<IGraphic[]>;
+  public postStamps$: Observable<IGraphic[]>;
+  public rewardPostStamps$: Observable<IGraphic[]>;
+  public cardBackground$: Observable<IGraphic[]>;
+  public backgrounds$: Observable<IGraphic[]>;
   constructor(private fb: FormBuilder,
-              private stampService: StampHttpService) { }
+              private stampService: StampHttpService,
+              private routingState: RoutingStateService) { }
 
   ngOnInit() {
     this.createStampForm();
@@ -51,6 +53,10 @@ export class NewStampComponent implements OnInit {
 
   public save(): void {
     console.log(this.formStamp.value);
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   private createStampForm(): void {

@@ -13,6 +13,7 @@ import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
+import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-preview-stamp/game-mobile-preview-stamp.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module
     SelectGraphicModule,
     SelectGraphicWrapModule,
     InfoHintModule,
+    GameMobilePreviewStampModule,
 
     MatTabsModule,
     MatCardModule,

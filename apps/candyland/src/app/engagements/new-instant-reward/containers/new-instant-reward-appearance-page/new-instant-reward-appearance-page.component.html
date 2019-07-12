@@ -14,6 +14,7 @@
       <cl-button [classList]="'tertiary'"
                  [disableRipple]="true"
                  class="reward-btn-cancel"
+                 (click)="comeBack()"
 
       >
         <span>
@@ -144,11 +145,6 @@
         </div>
       </mat-card>
     </div>
-
-    <!--<div class="mobile-preview">-->
-      <!--<div class="mobile-preview-mobile">-->
-      <!--</div>-->
-    <!--</div>-->
     <cl-game-mobile-preview>
     </cl-game-mobile-preview>
   </section>

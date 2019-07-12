@@ -20,6 +20,7 @@
     <div class="game-actions">
       <cl-button [classList]="'third'"
                  class="stamp-btn-cancel"
+                 (click)="comeBack()"
       >
         <span>
           Cancel
@@ -215,10 +216,7 @@
       </mat-card>
     </div>
 
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
-      </div>
-    </div>
+    <cl-game-mobile-preview-stamp></cl-game-mobile-preview-stamp>
   </section>
 
 </section>

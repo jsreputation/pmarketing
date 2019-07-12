@@ -5,6 +5,7 @@ import { IGameGifts } from './shared/models/game-gifts.model';
 
 import { ShakeDataService } from './shared/services/shake-data.service';
 import { Observable } from 'rxjs';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -24,7 +25,8 @@ export class NewShakePageComponent implements OnInit {
   public gameGift: AbstractControl;
 
   constructor(private fb: FormBuilder,
-              private shakeDataService: ShakeDataService
+              private shakeDataService: ShakeDataService,
+              private routingState: RoutingStateService
   ) {
   }
 
@@ -55,6 +57,10 @@ export class NewShakePageComponent implements OnInit {
 
   public save(): void {
     console.log(this.shakeTree.value);
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public setSelectGiftBox(giftBox: IGraphic): void {
