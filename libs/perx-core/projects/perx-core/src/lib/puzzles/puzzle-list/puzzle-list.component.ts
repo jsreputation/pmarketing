@@ -35,8 +35,14 @@ export class PuzzleListComponent implements OnChanges {
             let completed = true;
             // loop over all puzzles
             for (const puzzle of this.puzzles) {
-              // if any transction is issued, then it is not all completed
-              completed = !puzzle.stamps.some(stamp => stamp.state === TRANSACTION_STATE.issued);
+              if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
+                // if there is no stamps objet at all then, it is not completed
+                completed = false;
+              } else if (puzzle.stamps.some(stamp => stamp.state === TRANSACTION_STATE.issued)) {
+                // if any transction is issued, then it is not all completed
+                completed = false;
+              }
+
               // if one is not completed, we do not need to loop any further
               if (!completed) {
                 break;
