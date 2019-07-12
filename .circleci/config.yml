@@ -53,11 +53,14 @@ commands:
       - run:
           name: Setup PREAUTH vars
           command: |
+            echo 'export PREAUTH="false"' >> $BASH_ENV
             if [ $APP == 'prudential' ]
             then
               echo 'export PREAUTH="true"' >> $BASH_ENV
-            else
-              echo 'export PREAUTH="false"' >> $BASH_ENV
+            fi
+            if [ $APP == 'digi' ]
+            then
+              echo 'export PREAUTH="true"' >> $BASH_ENV
             fi
   set_basehref:
     description: based on client set deploy endpoint base href
@@ -113,6 +116,7 @@ jobs:
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
+            --no-cache \
             --build-arg app=$APP \
             --build-arg apihost=$APIHOST \
             --build-arg basehref=$BASE_HREF \
@@ -145,23 +149,19 @@ jobs:
           command: |
             echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://chartmuseum.perxtech.io' >> $BASH_ENV
+            echo 'export HELM_APP="$APP"' >> $BASH_ENV
+
             if [ $APP == 'prudential' ]
             then
               echo 'export HELM_APP="$APP-birthday"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
             if [ $APP == 'hsbc' ]
             then
               echo 'export HELM_APP="$APP-collect2"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
             if [ $APP == 'digi' ]
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
-            else
-              echo 'export HELM_APP="$APP"' >> $BASH_ENV
             fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:

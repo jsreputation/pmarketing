@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from './env-config';
-import { ICampaignsResponse } from './campaign.service';
+import { ICampaign, CAMPAIGN_TYPE } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 
 describe('CampaignService', () => {
@@ -33,8 +33,8 @@ describe('CampaignService', () => {
 
   it('should get campaigns', (done: DoneFn) => {
     service.getCampaigns()
-      .subscribe((campaigns: ICampaignsResponse) => {
-        expect(campaigns.data.length).toBe(2);
+      .subscribe((campaigns: ICampaign[]) => {
+        expect(campaigns.length).toBe(2);
         done();
       });
 
@@ -49,32 +49,14 @@ describe('CampaignService', () => {
 
   it('should get campaigns with details', (done: DoneFn) => {
     service.getCampaigns()
-      .subscribe((campaigns: ICampaignsResponse) => {
-        expect(campaigns.data.length).toBe(1);
-        const campaign = campaigns.data[0];
+      .subscribe((campaigns: ICampaign[]) => {
+        expect(campaigns.length).toBe(1);
+        const campaign = campaigns[0];
         expect(campaign.id).toBe(1);
         expect(campaign.name).toBe('UAT GAME');
         expect(campaign.description).toBe('UAT description');
-        expect(campaign.begins_at).toBe('2019-06-26T08:46:06.000Z');
-        expect(campaign.ends_at).toBe(null);
-        expect(campaign.enrolled).toBe(true);
-        expect(campaign.campaign_type).toBe('game');
-        expect(campaign.campaign_referral_type).toBe('user');
-        expect(campaign.game_config).toBe(undefined);
-        expect(campaign.campaign_config.campaign_results.count).toBe(6);
-        expect(campaign.campaign_config.campaign_results.first_result_id).toBe(1);
-        expect(campaign.campaign_config.auto_issue_voucher).toBe(undefined);
-        expect(campaign.campaign_config.burn_stamps_when_redeeming_for_voucher).toBe(undefined);
-        expect(campaign.campaign_config.use_once_only).toBe(undefined);
-        expect(campaign.campaign_config.used_message_title).toBe(undefined);
-        expect(campaign.campaign_config.used_message_description).toBe(undefined);
-        expect(campaign.campaign_config.stamps_slots).toBe(undefined);
-        expect(campaign.campaign_config.stamp_slots).toEqual(undefined);
-        expect(campaign.images).toEqual([]);
-        expect(campaign.favourite).toBe(false);
-        expect(campaign.custom_fields).toEqual({});
-        expect(campaign.category_tags).toEqual([]);
-        expect(campaign.tags).toEqual([]);
+        expect(campaign.type).toBe('game');
+        expect(campaign.state).toBe(null);
         done();
       });
 
@@ -110,6 +92,38 @@ describe('CampaignService', () => {
     });
 
     httpTestingController.verify();
+  });
+
+  it('should map campaigns with new property name', () => {
+    const mapCampaign = CampaignService.v4CampaignToCampaign({
+      id: 1,
+      name: 'UAT GAME',
+      description: 'UAT description',
+      begins_at: '2019-06-26T08:46:06.000Z',
+      ends_at: null,
+      enrolled: true,
+      campaign_type: CAMPAIGN_TYPE.game,
+      campaign_referral_type: 'user',
+      campaign_config: {
+        campaign_results: {
+          count: 6,
+          first_result_id: 1
+        }
+      },
+      images: [],
+      favourite: false,
+      custom_fields: {},
+      category_tags: [],
+      tags: [],
+      state: null,
+      icon: null
+    });
+    expect(mapCampaign.id).toBe(1);
+    expect(mapCampaign.name).toBe('UAT GAME');
+    expect(mapCampaign.description).toBe('UAT description');
+    expect(mapCampaign.type).toBe('game');
+    expect(mapCampaign.state).toBe(null);
+
   });
 
 

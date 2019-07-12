@@ -28,11 +28,10 @@ export {
   IVoucher,
   IPutStampTransactionResponse,
   IGetStampTransactionResponse,
-  CAMPAIGN_TYPE,
-  ICampaign,
-  ICampaignsResponse,
-  ICampaignResponse
 } from './lib/campaign/campaign.service';
+
+export { CAMPAIGN_TYPE, ICampaign } from './lib/campaign/models/campaign.model';
+
 export {
   PopupComponent,
   IPopupConfig,

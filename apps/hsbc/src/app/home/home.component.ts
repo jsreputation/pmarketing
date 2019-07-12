@@ -23,8 +23,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.campaignService.getCampaigns()
       .pipe(
-        map(res => res.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp).slice(0, 1))
+        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp).slice(0, 1))
       )
       .subscribe(
         campaigns => {
