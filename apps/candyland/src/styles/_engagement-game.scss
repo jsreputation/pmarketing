@@ -1,0 +1,13 @@
+@import "variables";
+
+mat-card.game-graphic {
+  padding: 2.4rem 2.4rem 4.7rem;
+}
+
+.mobile-preview-tabs {
+  mat-tab-header {
+    background: $white-color;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+  }
+}
