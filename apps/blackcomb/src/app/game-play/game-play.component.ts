@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NotificationService } from '../notification.service';
-import { PopUpClosedCallBack } from '@perx/core/dist/perx-core';
+import { PopUpClosedCallBack, NotificationService } from '@perx/core/dist/perx-core';
 
 const gamesInfo = [{
       title: 'Complete the survey to win an instant reward!',
@@ -44,6 +43,8 @@ export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
   numberOfTaps = 0;
   //
 
+  congratsDetailText = 'You just won 2 rewards';
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService
@@ -84,9 +85,8 @@ export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
   gameCompleted() {
     setTimeout(() => {
       this.notificationService.addPopup({
-        // tslint:disable-next-line: max-line-length
         title: 'Congratulations!',
-        text: 'You just won 2 rewards',
+        text: this.congratsDetailText,
         buttonTxt: 'View Rewards',
         imageUrl: 'assets/congrats_image.png' ,
         afterClosedCallBack: this

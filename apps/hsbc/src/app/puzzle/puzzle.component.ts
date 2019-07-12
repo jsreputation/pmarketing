@@ -6,11 +6,11 @@ import {
   IStampCard,
   IStampCardResponse,
   STAMP_CARD_STATUS,
-  TRANSACTION_STATE
+  TRANSACTION_STATE,
+  NotificationService
 } from '@perx/core/dist/perx-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { NotificationService } from '../notification.service';
 import { SoundService } from '../sound/sound.service';
 
 @Component({

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from './notification.service';
 import { MatDialog } from '@angular/material';
-import { PopupComponent } from '@perx/core/dist/perx-core';
+import { PopupComponent, NotificationService } from '@perx/core/dist/perx-core';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +13,7 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog
-    ) {
-    }
+    ) {}
 
     ngOnInit(): void {
     this.notificationService.$popup.subscribe(data => {
