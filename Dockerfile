@@ -7,6 +7,7 @@ ARG apihost='https://api.perxtech.io'
 ARG basehref='/'
 ARG preauth='false'
 ARG iswhistler='false'
+ARG app
 
 RUN echo "apihost: ${apihost}"
 RUN echo "basehref: ${basehref}"
@@ -14,7 +15,7 @@ RUN echo "preauth: ${preauth}"
 RUN echo "iswhistler: ${iswhistler}"
 
 RUN yarn
-RUN APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${isWhistler} yarn build:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
+RUN APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${isWhistler} yarn build:${app}:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
 RUN BASE_HREF=${basehref} yarn build:backend
 
 FROM node:lts-alpine

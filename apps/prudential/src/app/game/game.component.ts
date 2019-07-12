@@ -44,8 +44,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.$game = this.campaignService.getCampaigns()
       .pipe(
-        map(res => res.data),
-        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.game)),
+        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.game)),
         map(campaigns => campaigns[0]),
         switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
         map(game => game[0])
