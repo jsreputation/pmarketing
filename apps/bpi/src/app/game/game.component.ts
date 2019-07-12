@@ -43,8 +43,7 @@ export class GameComponent implements OnInit {
   private fetchCampaign() {
     this.campaignService.getCampaigns()
       .pipe(
-        map(data => data.data),
-        map(campaigns => campaigns.filter(camp => camp.campaign_type === CAMPAIGN_TYPE.stamp))
+        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp))
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
