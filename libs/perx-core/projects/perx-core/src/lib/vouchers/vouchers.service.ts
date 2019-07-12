@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
+import { IVoucherService } from './ivoucher.service';
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -21,7 +22,7 @@ interface IV4Voucher {
 @Injectable({
   providedIn: 'root'
 })
-export class VouchersService {
+export class VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
 
   constructor(
@@ -37,13 +38,12 @@ export class VouchersService {
     if (thumbnail === undefined) {
       thumbnail = images.find((image: any) => image[`type`] === 'reward_logo');
     }
-    const thumbnailUrl = thumbnail && thumbnail.url;
+    const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: any) => image[`type`] === 'reward_banner');
-    const bannerUrl = banner && banner.url;
-    const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
-    const merchantLogoUrl = merchantLogo && merchantLogo.url;
-    const redeemedOn = v[`redemption_date`];
-    const howToRedeem = reward.custom_fields && reward.custom_fields.how_to_redeem ? reward.custom_fields.how_to_redeem : null;
+    const rewardBanner = banner && banner.url;
+    const merchantImg = v[`merchantImg`] ? v[`merchantImg`] : null;
+    const redemptionSuccessTxt = v[`redemption_text`] ? v[`redemption_text`] : null;
+    const redemptionSuccessImg = v[`redemption_image`] ? v[`redemption_image`] : null;
 
     return {
       id: v[`id`],
@@ -51,15 +51,16 @@ export class VouchersService {
       state: v[`state`],
       name: v[`name`],
       code: v[`voucher_code`],
-      description: reward[`description`],
-      thumbnailUrl,
-      bannerUrl,
-      expiresAt: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
-      redeemedOn,
+      redemptionType: v[`redemption_type`][`type`],
+      thumbnailImg,
+      rewardBanner,
+      merchantImg,
       merchantName: reward[`merchant_name`],
-      merchantLogoUrl,
-      termsAndConditions: reward[`terms_and_conditions`],
-      howToRedeem
+      expiry: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
+      redemptionDate: v[`redemption_date`],
+      description: reward[`description`],
+      redemptionSuccessTxt,
+      redemptionSuccessImg
     };
   }
 
