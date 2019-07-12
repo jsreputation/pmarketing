@@ -1,7 +1,7 @@
 <!-- Template stuff aimed at being replaced by real components -->
 
 <div class="main-puzzle-container">
-    <h1 [ngPlural]="availablePieces">
+    <h1 [ngPlural]="totalAvailablePieces">
         <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
         <ng-template ngPluralCase="other">You have a total of {{totalAvailablePieces}} puzzle pieces</ng-template>
     </h1>
