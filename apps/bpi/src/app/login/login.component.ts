@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    let primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
+    const primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
     if (!!primaryIdentifier) {
       (window as any).primaryIdentifier = primaryIdentifier;
     }

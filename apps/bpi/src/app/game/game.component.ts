@@ -18,6 +18,7 @@ export class GameComponent implements OnInit {
 
   rows = 1;
   cols = 6;
+  keys = 0;
 
   constructor(
     private router: Router,
@@ -58,6 +59,7 @@ export class GameComponent implements OnInit {
       )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
+          this.keys += card.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
           const totalSlots = card.display_properties.total_slots || 0;
           return card.state === STAMP_CARD_STATUS.active &&
             card.stamps &&
@@ -75,6 +77,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+        this.checkKeys();
       });
   }
 
@@ -135,5 +138,16 @@ export class GameComponent implements OnInit {
   }
 
   onCompleted() {
+  }
+
+  checkKeys() {
+    if (this.keys > 0) {
+      this.notificationService.addPopup({
+        title: `You have a total of ${this.keys} keys!`,
+        image: 'assets/key.png',
+        text: 'Tap the highlighted locks using your earned keys.',
+        buttonTxt: 'Start Unlocking!'
+      });
+    }
   }
 }

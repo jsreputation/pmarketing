@@ -5,6 +5,7 @@ export interface IPopupConfig {
   title?: string;
   text?: string;
   buttonTxt?: string;
+  image?: string;
 }
 
 /**
@@ -19,6 +20,7 @@ export class PopupComponent {
   title: string = null;
   text: string = null;
   buttonTxt = 'close';
+  image: string = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -32,6 +34,9 @@ export class PopupComponent {
     }
     if (data.buttonTxt) {
       this.buttonTxt = data.buttonTxt;
+    }
+    if (data.image) {
+      this.image = data.image;
     }
   }
 }
