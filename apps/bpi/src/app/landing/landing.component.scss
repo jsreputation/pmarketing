@@ -1,0 +1,40 @@
+.landing-screen {
+  text-align: center;
+  height: 100vh;
+
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8rem;
+    max-width: 255px;
+    margin: 0 auto;
+    margin-top: 1.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  button {
+    border-radius: 0.3rem;
+    text-transform: uppercase;
+    max-width: 30rem;
+    width: 100%;
+    margin-top: 9rem;
+    background-color: #b20000;
+  }
+
+  .footer {
+    max-width: 30rem;
+    width: 100%;
+    text-align: left;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 2rem;
+
+    small {
+      font-size: 1.2rem;
+    }
+  }
+}

@@ -22,6 +22,7 @@ import {
 } from '@angular/material';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GameComponent,
     CongratsComponent,
     LoginComponent,
-    PopupComponent
+    PopupComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

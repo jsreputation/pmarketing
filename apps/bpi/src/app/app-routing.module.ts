@@ -4,15 +4,17 @@ import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { LoginComponent } from './login/login.component';
 import { ProtectedGuard } from 'ngx-auth';
+import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/game', pathMatch: 'full' },
+      { path: '', redirectTo: '/landing', pathMatch: 'full' },
       { path: 'game', component: GameComponent },
       { path: 'game/:campaignId', component: GameComponent },
-      { path: 'congrats', component: CongratsComponent }
+      { path: 'congrats', component: CongratsComponent },
+      { path: 'landing', component: LandingComponent }
     ],
     canActivate: [ProtectedGuard]
   },
