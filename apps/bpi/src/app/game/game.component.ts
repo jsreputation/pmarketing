@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { /*Router*/ ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
-import { NotificationService } from '../notification.service';
+// import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-game',
@@ -18,12 +18,13 @@ export class GameComponent implements OnInit {
 
   rows = 1;
   cols = 6;
+  keys = 0;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
-    private notificationService: NotificationService
+    // private notificationService: NotificationService
   ) {
   }
 
@@ -58,6 +59,7 @@ export class GameComponent implements OnInit {
       )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
+          this.keys += card.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
           const totalSlots = card.display_properties.total_slots || 0;
           return card.state === STAMP_CARD_STATUS.active &&
             card.stamps &&
@@ -112,22 +114,23 @@ export class GameComponent implements OnInit {
       const stamp = stamps[index];
       console.log(stamp);
       stamp.state = TRANSACTION_STATE.redeemed;
-      this.campaignService.putStampTransaction(stamp.id)
-        .subscribe(
-          (res) => {
-            if (res.data.state === TRANSACTION_STATE.redeemed) {
-              if (res.data.vouchers && res.data.vouchers.length > 0) {
-                this.router.navigate(['/congrats']);
-              }
-            }
-          },
-          () => {
-            this.notificationService.addPopup({
-              title: 'Something went wrong, with our server',
-              text: 'We notified our team. Sorry about the inconvenience.'
-            });
-          }
-        );
+      this.keys--;
+      // this.campaignService.putStampTransaction(stamp.id)
+      //   .subscribe(
+      //     (res) => {
+      //       if (res.data.state === TRANSACTION_STATE.redeemed) {
+      //         if (res.data.vouchers && res.data.vouchers.length > 0) {
+      //           this.router.navigate(['/congrats']);
+      //         }
+      //       }
+      //     },
+      //     () => {
+      //       this.notificationService.addPopup({
+      //         title: 'Something went wrong, with our server',
+      //         text: 'We notified our team. Sorry about the inconvenience.'
+      //       });
+      //     }
+      //   );
 
       index++;
       numOfStampsToRedeem--;
