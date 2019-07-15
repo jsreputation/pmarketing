@@ -10,7 +10,8 @@ import {
   AuthenticationModule,
   CampaignModule,
   PopupComponent,
-  VouchersModule
+  VouchersModule,
+  StampModule
 } from '@perx/core/dist/perx-core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -48,6 +49,7 @@ import { LandingComponent } from './landing/landing.component';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
+    StampModule.forRoot({ env: environment }),
     AuthenticationModule,
     BrowserAnimationsModule
   ],
