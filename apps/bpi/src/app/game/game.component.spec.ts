@@ -15,6 +15,7 @@ import {
   IStampCard,
   VouchersModule,
   CampaignModule,
+  StampModule,
   AuthenticationModule,
   CognitoModule,
   OauthModule
@@ -36,6 +37,7 @@ describe('GameComponent', () => {
         MatToolbarModule,
         VouchersModule.forRoot({ env: environment }),
         CampaignModule.forRoot({ env: environment }),
+        StampModule.forRoot({ env: environment }),
         AuthenticationModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
