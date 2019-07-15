@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { map } from 'rxjs/operators';
 
 @Injectable({

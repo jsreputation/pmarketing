@@ -4,7 +4,6 @@ import { IEngagementType } from './engagement-type/models/engagement-type.model'
 import { EngagementType } from './shared/models/EngagementType';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
-import { IGraphic } from '../../models/graphick.model';
 import { Router } from '@angular/router';
 
 export enum gamesRouterLink {
@@ -35,10 +34,22 @@ export class CreateEngagementPopupComponent implements OnInit {
   }
 
   public next(): void {
-    if (this.selectedGame) {
-      this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
-      this.close();
+    if (!this.selectedType) {
+      return;
     }
+
+    switch (this.selectedType.type) {
+      case EngagementType.stamp:
+        this.router.navigateByUrl('/engagements/new-stamp/settings');
+        break;
+      case EngagementType.instantReward:
+        this.router.navigateByUrl('/engagements/new-instant-reward/appearance');
+        break;
+      case EngagementType.games:
+        this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
+        break;
+    }
+    this.close();
   }
 
   public setType(type: IEngagementType): void {
