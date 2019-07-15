@@ -7,6 +7,7 @@ import { ShakeDataService } from './shared/services/shake-data.service';
 import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -27,8 +28,8 @@ export class NewShakePageComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private shakeDataService: ShakeDataService,
-              private routingState: RoutingStateService
-  ) {
+              private routingState: RoutingStateService,
+              private router: Router) {
   }
 
   public get name(): AbstractControl {
@@ -58,6 +59,7 @@ export class NewShakePageComponent implements OnInit {
 
   public save(): void {
     console.log(this.shakeTree.value);
+    this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {

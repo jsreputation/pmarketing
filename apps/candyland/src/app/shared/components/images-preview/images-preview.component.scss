@@ -1,9 +1,9 @@
-
 @import "variables";
 
 .image {
   max-height: 100%;
   max-width: 100%;
+  border-radius: 5px;
 
   &-wrap {
     width: 10.8rem;
@@ -23,7 +23,6 @@
       transition: .5s cubic-bezier(.35,0,.25,1);
     }
   }
-
 }
 
 .active {
