@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
 
 @Component({
   selector: 'cl-new-campaign',
@@ -8,18 +9,31 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit {
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  name: FormControl;
+  form: FormGroup;
 
-  constructor() {
+  constructor(private store: CampaignCreationStoreService,
+              private fb: FormBuilder
+  ) {
   }
 
   ngOnInit() {
-    this.name = new FormControl('Campaign Name', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
-    );
+    this.initForm();
+    this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
   }
 
+  private initForm() {
+      this.form = this.fb.group({
+        name: ['Campaign Name', [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(60)
+        ]
+        ]
+      });
+  }
+
+  public get name(): AbstractControl {
+    return this.form.get('name');
+  }
 }
+

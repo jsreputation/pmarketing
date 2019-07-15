@@ -1,5 +1,5 @@
-<div class="campaign-detail-content">
-  <mat-expansion-panel class="card">
+<div class="campaign-detail-content" [formGroup]="form">
+  <mat-expansion-panel class="card" formGroupName="campaignInfo">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">
         Campaign Info
@@ -8,7 +8,7 @@
 
     <div class="card-content">
       <mat-form-field class="card-row">
-        <mat-select placeholder="Campagin goal">
+        <mat-select formControlName="goal" placeholder="Campagin goal">
           <mat-option value="day">Day</mat-option>
           <mat-option value="week">Week</mat-option>
           <mat-option value="month">Month</mat-option>
@@ -18,13 +18,13 @@
 
       <div class="card-row">
         <div class="input-group">
-          <cl-date-picker></cl-date-picker>
-          <cl-time-picker></cl-time-picker>
+          <cl-date-picker formControlName="startDate" [max]="endDate.value"></cl-date-picker>
+          <cl-time-picker formControlName="startTime"></cl-time-picker>
         </div>
         to
         <div class="input-group" [formGroup]="rewardsForm">
-          <cl-date-picker formControlName="endDate" [disabled]="disableEnd"></cl-date-picker>
-          <cl-time-picker formControlName="endTime" [disabled]="disableEnd"></cl-time-picker>
+          <cl-date-picker formControlName="endDate" [min]="startDate.value"></cl-date-picker>
+          <cl-time-picker formControlName="endTime"></cl-time-picker>
         </div>
         <mat-checkbox [(ngModel)]="disableEnd">Does not end</mat-checkbox>
       </div>
@@ -37,6 +37,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input placeholder="Label"
+                 formControlName="labels"
                  [matChipInputFor]="chipList"
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                  [matChipInputAddOnBlur]="addOnBlur"
@@ -54,7 +55,7 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group aria-label="Select an option">
+        <mat-radio-group>
           <mat-radio-button value="weblink">Weblink only</mat-radio-button>
           <mat-radio-button value="sms">SMS</mat-radio-button>
         </mat-radio-group>
@@ -67,7 +68,7 @@
         </div>
         <div class="card-content">
           <mat-form-field class="card-row">
-            <mat-select placeholder="Campagin goal">
+            <mat-select placeholder="Select Message template">
               <mat-option value="day">Day</mat-option>
               <mat-option value="week">Week</mat-option>
               <mat-option value="month">Month</mat-option>
@@ -80,38 +81,50 @@
 
         <div class="card-header">
           <p class="card-title">
-            Select Message template
+            Schedule the sending date
           </p>
         </div>
 
         <div class="card-content">
 
-          <div class="input-group">
-            <cl-date-picker></cl-date-picker>
-            <cl-time-picker></cl-time-picker>
+          <div class="card-row">
+            <div class="input-group">
+              <cl-date-picker placeholder="Send date"></cl-date-picker>
+              <cl-time-picker></cl-time-picker>
+            </div>
           </div>
 
-          <div class="card-row">
+          <div class="card-row form-field">
             <mat-checkbox>Recurrence Settings</mat-checkbox>
           </div>
 
-          <div class="card-row">
-            <div>
-              <label class="card-label">Limit per user</label>
-              <mat-form-field>
-                <input matInput type="number" [min]="0">
-                <span matSuffix>Play</span>
-              </mat-form-field>
-            </div>
-            <div>
-              <label class="card-label">Limit per duration</label>
-              <mat-form-field>
-                <mat-select>
-                  <mat-option value="day">Day</mat-option>
-                  <mat-option value="week">Week</mat-option>
-                  <mat-option value="month">Month</mat-option>
-                </mat-select>
-              </mat-form-field>
+          <div class="card-row stretch">
+            <div class="row">
+              <div>
+                <label class="card-label">Repeat every</label>
+                <div class="input-group">
+                  <mat-form-field>
+                    <input matInput type="number" [min]="0">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-select>
+                      <mat-option value="day">Day</mat-option>
+                      <mat-option value="week">Week</mat-option>
+                      <mat-option value="month">Month</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <label class="card-label">Repeat on</label>
+                <mat-radio-group class="btn-list">
+                    <ng-container *ngFor="let day of days">
+                      <mat-radio-button [value]="day.value">
+                        <div>{{day.title}}</div>
+                      </mat-radio-button>
+                  </ng-container>
+                </mat-radio-group>
+              </div>
             </div>
           </div>
         </div>

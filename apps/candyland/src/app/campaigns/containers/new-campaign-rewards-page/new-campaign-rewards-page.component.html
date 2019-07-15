@@ -1,5 +1,5 @@
 <div class="tab-content">
-  <div class="forms-container">
+  <div class="forms-container" [formGroup]="form">
     <mat-card class="card">
       <div class="card-header">
         <p class="card-title">Rewards</p>
@@ -7,37 +7,36 @@
       </div>
       <div class="card-content">
         <div>
-          <mat-checkbox (change)="changePropability($event.checked)">Include Probability</mat-checkbox>
+          <mat-checkbox formControlName="enablePropability">Include Probability</mat-checkbox>
         </div>
         <div>
-          <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
-          <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
-          <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
-          <cl-reward-item class="item" [enableProbability]="enablePropability"></cl-reward-item>
-          <mat-error class="error">
-            The total probabilty is 150%. Please make it 100%.
-          </mat-error>
+        <!--<div formArrayName="rewards">-->
+          <!--<cl-reward-item ngForm="let reward of rewards" class="item" [data]="rewardsData" [enableProbability]="enablePropability"></cl-reward-item>-->
+          <!--<cl-reward-item ngForm="let reward of rewards.controls; let i = index" class="item" [data]="reward.value" [control]="reward.propability" [enableProbability]="enablePropability"></cl-reward-item>-->
+          <!--<mat-error class="error">-->
+            <!--The total probabilty is 150%. Please make it 100%.-->
+          <!--</mat-error>-->
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="card">
+    <mat-card class="card" formGroupName="limits">
       <div class="card-header">
         <p class="card-title">Play Limits</p>
       </div>
       <div class="card-content">
-        <div class="card-row">
+        <div class="card-row stretch">
           <div>
             <label class="card-label">Limit per user</label>
             <mat-form-field>
-              <input matInput type="number" [min]="0">
+              <input matInput type="number" [min]="0" formControlName="times">
               <span matSuffix>Play</span>
             </mat-form-field>
           </div>
           <div>
             <label class="card-label">Limit per duration</label>
             <mat-form-field>
-              <mat-select>
+              <mat-select formControlName="duration">
                 <mat-option value="day">Day</mat-option>
                 <mat-option value="week">Week</mat-option>
                 <mat-option value="month">Month</mat-option>

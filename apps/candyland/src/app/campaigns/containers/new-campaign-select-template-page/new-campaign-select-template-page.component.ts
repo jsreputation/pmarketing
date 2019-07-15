@@ -3,6 +3,8 @@ import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatTableDataSource } from '@angular/material';
 import { EngagementsService } from '@cl-core/services/engagements.service';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
 
 @Component({
   selector: 'cl-new-campaign-select-template-page',
@@ -11,16 +13,32 @@ import { EngagementsService } from '@cl-core/services/engagements.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignSelectTemplatePageComponent implements OnInit {
+  public form: FormGroup;
   public dataSource = new MatTableDataSource<Engagement>();
   public typeFilterConfig: OptionConfig[];
 
   constructor(private engagementsService: EngagementsService,
-              public cd: ChangeDetectorRef) { }
+              private store: CampaignCreationStoreService,
+              private fb: FormBuilder,
+              public cd: ChangeDetectorRef) {
+}
 
   ngOnInit() {
+    this.initForm();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.filteredData
+    this.dataSource.filteredData;
+    this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
+  }
+
+  private initForm() {
+    this.form = this.fb.group({
+      template: [null, [
+        Validators.required,
+      ]
+      ]
+    });
+    this.form.patchValue(this.store.currentCampaign)
   }
 
   private initData() {
@@ -37,6 +55,10 @@ export class NewCampaignSelectTemplatePageComponent implements OnInit {
         // this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
       });
+  }
+
+  public get template(): AbstractControl {
+    return this.form.get('template');
   }
 
 }

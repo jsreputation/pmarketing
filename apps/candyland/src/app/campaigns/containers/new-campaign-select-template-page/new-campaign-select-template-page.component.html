@@ -17,10 +17,10 @@
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button classList="invert">+ Create New Template</cl-button>
+      <cl-button classList="invert">+ Select a template</cl-button>
     </div>
 
-    <mat-radio-group class="item-list shadow">
+    <mat-radio-group class="item-list shadow" [formControl]="template">
       <ng-container *ngIf="(dataSource.connect() | async) as items">
         <ng-container *ngFor="let item of items">
           <mat-radio-button [value]="item.id">

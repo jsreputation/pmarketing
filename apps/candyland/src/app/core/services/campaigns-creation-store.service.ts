@@ -16,11 +16,12 @@ export class CampaignCreationStoreService {
   }
 
   public get currentCampaign(): any {
-    return this.currentCampaign$.value;
+    return this.currentCampaign$.value ? this.currentCampaign$.value : {};
   }
 
   public updateCampaign(value: any) {
     this.currentCampaign = Utils.nestedObjectAssign(this.currentCampaign, value);
+    console.log(this.currentCampaign);
   }
 
 }
