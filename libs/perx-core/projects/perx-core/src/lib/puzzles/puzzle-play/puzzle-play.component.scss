@@ -6,6 +6,7 @@
 .greyscale {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+  -webkit-transform: translateZ(0);
 }
 
 .red-color-font {

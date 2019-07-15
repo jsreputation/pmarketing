@@ -122,7 +122,8 @@ export class PuzzlePlayComponent implements OnChanges {
         'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
         'background-repeat': 'no-repeat',
         '-webkit-filter': 'none',
-        filter: 'none'
+        filter: 'none',
+        '-webkit-transform': 'translateZ(0)'
       };
 
     } else {
@@ -134,7 +135,8 @@ export class PuzzlePlayComponent implements OnChanges {
         'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
         'background-repeat': 'no-repeat',
         '-webkit-filter': 'grayscale(100%)',
-        filter: 'grayscale(100%)'
+        filter: 'grayscale(100%)',
+        '-webkit-transform': 'translateZ(0)'  // Hacky way to make filter work on iOS
       };
     }
   }
