@@ -6,12 +6,11 @@ import { flatMap, map, mergeAll, scan, tap } from 'rxjs/operators';
 import { VouchersService } from '../vouchers/vouchers.service';
 import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
-import { IGame } from '../game/game.model';
 
 export enum TRANSACTION_STATE {
   redeemed = 'redeemed',
   issued = 'issued',
-}
+ }
 
 export interface IReward {
   id: number;
@@ -105,63 +104,35 @@ export interface IGetStampTransactionResponse {
   };
 }
 
-/*
- * Not in use, the build is failing if its not commented
- */
-// interface IV4CampaignsResponse {
-//   data: ICampaign[];
-//   meta: {
-//     count: number;
-//   };
-// }
-
 interface IV4Campaign {
   id: number;
   name: string;
   description: string;
   begins_at: string;
-  ends_at: any|null;
+  ends_at?: string;
   enrolled: boolean;
   campaign_type: CAMPAIGN_TYPE;
-  campaign_referral_type: any|null;
-  game_config?: any;
-  campaign_config: {
-    campaign_results: {
-      count: number;
-      first_result_id: any|null;
-    };
-    auto_issue_voucher?: boolean;
-    burn_stamps_when_redeeming_for_voucher?: false,
-    use_once_only?: false,
-    used_message_title?: string;
-    used_message_description?: string;
-    stamps_slots?: 10,
-    stamp_slots?: any[]
-  };
   images: any[];
   favourite: boolean;
   custom_fields: any;
   category_tags: any[];
   tags: any[];
   state: CAMPAIGN_STATE;
-  games?: IGame[];
-  stampCards?: IStampCard[];
-  icon: string;
 }
 
-/*
- * Not in use, the build is failing if its not commented
- */
-// interface IV4CampaignResponse {
-//   data: ICampaign;
-//   meta: {
-//     size: null;
-//     page: null;
-//     sort_by: null;
-//     order: null;
-//     count: number;
-//   };
-// }
+interface IV4CampaignResponse {
+  data: IV4Campaign;
+  meta: {
+    count: number;
+  };
+}
+
+interface IV4CampaignsResponse {
+  data: IV4Campaign[];
+  meta: {
+    count: number;
+  };
+}
 
 @Injectable({ providedIn: 'root' })
 export class CampaignService implements ICampaignService {
@@ -177,19 +148,27 @@ export class CampaignService implements ICampaignService {
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
-      state: campaign.state ? campaign.state : null,
-      games: campaign.games ? campaign.games : null,
-      stampCards: campaign.stampCards ? campaign.stampCards : null,
-      icon: campaign.icon ? campaign.icon : null,
+      state: campaign.state,
     };
   }
 
   getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<ICampaign[]>(
+    return this.http.get<IV4CampaignsResponse>(
       `${ this.baseUrl }/v4/campaigns`
     )
     .pipe(
-      map( campaigns => campaigns[`data`].map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign)))
+      map(resp => resp.data),
+      map((campaigns: IV4Campaign[]) => campaigns.map(campaign => CampaignService.v4CampaignToCampaign(campaign)))
+    );
+  }
+
+  getCampaign(id: number): Observable<ICampaign> {
+    return this.http.get<IV4CampaignResponse>(
+      `${this.baseUrl}/v4/campaign/${id}`
+    )
+    .pipe(
+      map(resp => resp.data),
+      map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign))
     );
   }
 
