@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RewardService } from '@cl-core/http-services/reward.service';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -15,7 +15,8 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public rewardsCardBackground$: Observable<IGraphic>;
   public rewardsBackground$: Observable<IGraphic>;
   constructor(private fb: FormBuilder,
-              private rewardService: RewardService) { }
+              private rewardService: RewardService,
+              private routingState: RoutingStateService) { }
 
   ngOnInit() {
     this.createRewardForm();
@@ -25,6 +26,10 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
 
   public save(): void {
     console.log(this.formReward.value);
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public get name(): AbstractControl {

@@ -21,20 +21,21 @@
   </div>
 
   <div class="nested-type" [ngSwitch]="selectedType?.type">
-    <!-- the same view can be shown in more than one case -->
-    <cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>
+    <!-- hide this component connected with task PW-364 Hide bottom
+    part of the engagement creation popup when not in game case
+    -->
+    <!--<cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>-->
     <cl-games *ngSwitchCase="engagementType.games"
               (selectGame)="setGame($event)"
               [graphicList]="gamesType$ | async"
               [selectedGame]="selectedGame"
     ></cl-games>
-    <cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>
-    <cl-instant-reward *ngSwitchCase="engagementType.instantReward"></cl-instant-reward>
+    <!--<cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>-->
+    <!--<cl-instant-reward *ngSwitchCase="engagementType.instantReward"></cl-instant-reward>-->
   </div>
 
 </mat-dialog-content>
 <div class="dialog-actions"
-     [ngClass]="{'type-survey': selectedType?.type === engagementType.survey}"
 >
   <cl-button [classList]="'third'"
              class="actions-close"
