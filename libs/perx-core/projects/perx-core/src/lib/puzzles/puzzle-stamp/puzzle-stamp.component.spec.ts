@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { PuzzleStampComponent } from './puzzle-stamp.component';
 import { MatCardModule } from '@angular/material';
 
@@ -9,6 +9,7 @@ describe('PuzzleStampComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       declarations: [PuzzleStampComponent],
       imports: [MatCardModule]
     }).compileComponents();

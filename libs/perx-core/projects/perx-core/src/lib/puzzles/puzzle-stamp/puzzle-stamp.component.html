@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <div class="inner">
     <mat-card-content
-      appDebounceClick
+      perxCoreAppDebounceClick
       [debounceTime]="1000"
       (debounceClick)="cardClick()"
       [ngStyle]="{ 'background-image': 'url(' + img + ')' }"
@@ -36,7 +36,7 @@
       <button 
         mat-button
         *ngIf="nbAvailablePieces"
-        appDebounceClick
+        perxCoreAppDebounceClick
         [debounceTime]="1000"
         (debounceClick)="unlockAvailable()">
         Unlock All
