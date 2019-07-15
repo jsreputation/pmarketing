@@ -9,7 +9,7 @@
     "config": "ts-node set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && stylelint src/**/*.scss",
+    "lint": "ng lint && stylelint src/**/*.*css",
     "e2e": "ng e2e"
   },
   "private": true,
