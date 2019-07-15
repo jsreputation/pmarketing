@@ -4,7 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export interface IPopupConfig {
   title?: string;
   text?: string;
+  imageUrl?: string;
   buttonTxt?: string;
+  afterClosedCallBack?: PopUpClosedCallBack;
+}
+
+export interface PopUpClosedCallBack {
+  dialogClosed(): void;
 }
 
 /**
@@ -16,8 +22,10 @@ export interface IPopupConfig {
   styleUrls: ['./popup.component.css']
 })
 export class PopupComponent {
+
   title: string = null;
   text: string = null;
+  imageUrl: string = null;
   buttonTxt = 'close';
 
   constructor(
@@ -33,5 +41,12 @@ export class PopupComponent {
     if (data.buttonTxt) {
       this.buttonTxt = data.buttonTxt;
     }
+    if (data.imageUrl) {
+      this.imageUrl = data.imageUrl;
+    }
+  }
+
+  popUpClosed() {
+    this.data.afterClosedCallBack.dialogClosed();
   }
 }
