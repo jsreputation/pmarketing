@@ -81,7 +81,7 @@ button {
 .content {
   position: relative;
   box-sizing: border-box;
-  min-height: 150vh;
+  height: 100%;
   width: 100%;
   padding: $vertical-content-padding $horizontal-content-padding;
   background: $simple-light-gray;
