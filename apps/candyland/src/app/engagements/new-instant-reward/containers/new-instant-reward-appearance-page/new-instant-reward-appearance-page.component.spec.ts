@@ -17,6 +17,7 @@ import {
 } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewInstantRewardAppearancePageComponent', () => {
   let component: NewInstantRewardAppearancePageComponent;
@@ -34,6 +35,7 @@ describe('NewInstantRewardAppearancePageComponent', () => {
         InfoHintModule,
         GameMobilePreviewModule,
         HttpClientTestingModule,
+        RouterTestingModule,
 
         MatTabsModule,
         MatCardModule,

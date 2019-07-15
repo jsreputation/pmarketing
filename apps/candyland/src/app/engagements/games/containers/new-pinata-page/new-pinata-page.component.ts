@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -15,7 +16,8 @@ export class NewPinataPageComponent implements OnInit {
   public backgrounds$: Observable<IGraphic>;
   public pinata$: Observable<IGraphic>;
   constructor(private fb: FormBuilder,
-              private pinataHttpService: PinataHttpService) { }
+              private pinataHttpService: PinataHttpService,
+              private routingState: RoutingStateService) { }
 
   ngOnInit() {
     this.createPinataForm();
@@ -26,6 +28,10 @@ export class NewPinataPageComponent implements OnInit {
 
   public save(): void {
     console.log(this.formPinata.value);
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public get name(): AbstractControl {
