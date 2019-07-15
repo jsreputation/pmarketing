@@ -1,6 +1,12 @@
+.app-container {
+  background-color: #b20000;
+  height: 100%;
+}
+
 .game-container {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+
   .contents {
     max-width: 50rem;
     margin: 0 auto;
@@ -14,9 +20,11 @@
     display: block;
     margin: 0 auto;
   }
+
   p {
     font-size: 1.4rem;
     line-height: 1.6rem;
+
     a {
       color: #00a6f9;
     }

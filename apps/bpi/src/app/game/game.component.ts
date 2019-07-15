@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
+import {
+  CampaignService,
+  CAMPAIGN_TYPE,
+  ICampaign,
+  IStampCard,
+  STAMP_CARD_STATUS,
+  TRANSACTION_STATE
+} from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 
