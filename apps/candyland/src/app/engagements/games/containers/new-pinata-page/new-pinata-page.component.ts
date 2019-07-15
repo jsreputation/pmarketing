@@ -27,7 +27,6 @@ export class NewPinataPageComponent implements OnInit {
 
 
   public save(): void {
-    console.log(this.formPinata.value);
   }
 
   public comeBack(): void {

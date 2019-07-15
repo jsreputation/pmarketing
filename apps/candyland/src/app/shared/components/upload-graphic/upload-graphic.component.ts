@@ -19,6 +19,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() selectedGraphic: any;
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
+  public lock: boolean;
   public imagePath;
   public imgURL: any;
   public message: string;
@@ -88,7 +89,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {
