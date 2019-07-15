@@ -5,6 +5,7 @@
 
 .greyscale {
   filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }
 
 .red-color-font {
@@ -19,14 +20,21 @@
 
   .mat-grid-list {
     width: 100%;
+    display: inline-block;
+    z-index: 1;
   }
 
   .dummy-container {
-    float: none;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
+    position: relative;
+    top: -100%;
+    left: 0px;
+    z-index: 0;
+    filter: grayscale(100%);
+    overflow: hidden;
     visibility: hidden;
 
     .dummy-image {
@@ -174,11 +182,11 @@
 
   //let center-board resize based on height
   .center-board {
-    flex: 1 1 auto;
-    overflow: hidden;
+    flex: 1;
+    // overflow: hidden;
   }
 
   .bottom-container {
-    flex: 0 1 auto;
+    flex: 1;
   }
 }
