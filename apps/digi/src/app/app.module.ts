@@ -18,6 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { ShakeGameComponent } from './shake-game/shake-game.component';
 import { environment } from '../environments/environment';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { environment } from '../environments/environment';
     ResultComponent,
     HeaderComponent,
     LoginComponent,
-    ShakeGameComponent
+    ShakeGameComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
