@@ -8,6 +8,7 @@
     flex: 1 1 auto;
     overflow: hidden;
   }
+
   .bottom-container {
     flex: 0 1 auto;
   }
@@ -18,8 +19,8 @@
   height: 100%;
 }
 
-.greyscale{
-    filter: grayscale(100%);
+.greyscale {
+  filter: grayscale(100%);
 }
 
 .red-color-font {
