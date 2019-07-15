@@ -6,7 +6,9 @@ import {
   VouchersModule,
   CognitoModule,
   OauthModule,
-  GameModule
+  GameModule,
+  PopupComponent,
+  UtilsModule
 } from '@perx/core/dist/perx-core';
 import {
   MatToolbarModule,
@@ -16,7 +18,8 @@ import {
   MatRippleModule,
   MatIconModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,10 +58,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    UtilsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    PopupComponent
+  ]
 })
 export class AppModule { }
