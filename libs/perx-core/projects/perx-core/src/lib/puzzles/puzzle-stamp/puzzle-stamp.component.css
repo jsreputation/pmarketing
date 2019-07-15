@@ -1,11 +1,17 @@
-
 .mat-card .inner {
-  border: 1px solid #cac6c6;
-  border-radius: 3px;
+  border: 0.1rem solid #cac6c6;
+  border-radius: 0.3rem;
 }
 
 .mat-card-content {
   position: relative;
+}
+
+.mat-card-actions {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .stamp-container {
@@ -25,26 +31,23 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  padding: 5px 5px;
+  padding: 0.5rem 0.5rem;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .stamp .content {
-  border-radius: 3px;
-  border: 2px solid;
-  display: flex;
-  flex-grow: 1;
-  flex-basis: 0;
-  align-items: center;
-  justify-content: center;
+  border-radius: 0.3rem;
+  border: 0.2rem solid;
   height: 100%;
-  color: #fff;
-  background-color: rgba(24, 22, 22, 0.8);
+  width: 100%;
+  background-color: #000;
 }
 
 mat-card-content {
   background-size: cover;
   background-repeat: no-repeat;
-  margin-bottom: 0;
 }
 
 .bg-img {
@@ -61,13 +64,22 @@ mat-card-content {
 
 .mat-card-actions {
   text-align: center;
-  padding: 0;
-  margin-bottom: 0;
 }
 
 button {
-  background-color: transparent;
+  background-color: #b20000;
+  color: #fff;
   border: 0;
-  padding: 15px;
+  padding: 1.5rem;
   width: 100%;
+}
+
+perx-core-stamp {
+  height: 100%;
+  width: 100%;
+}
+
+.btnRedeemed {
+  background-color: transparent;
+  color: #A8A8A8 !important;
 }

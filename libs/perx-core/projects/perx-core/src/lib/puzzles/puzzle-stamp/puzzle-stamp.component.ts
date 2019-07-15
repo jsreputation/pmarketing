@@ -15,12 +15,17 @@ export class PuzzleStampComponent implements OnInit {
   @Input() cols: number;
   @Input() nbPlayedPieces: number;
   @Input() nbAvailablePieces: number;
+  @Input() bgImage: string;
+  @Input() isCompleted: boolean;
 
   @Output() moved = new EventEmitter();
   @Output() completed = new EventEmitter();
 
   movedItems = [];
   currentClick;
+  isUnlockedAll = false;
+  count = 0;
+  btnTxt = 'Tap here to use all earned keys';
 
   constructor() {}
 
@@ -54,6 +59,7 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   isWon() {
+    console.log('lib moved');
     this.moved.emit({
       nbPlayedPieces: this.nbPlayedPieces,
       nbAvailablePieces: this.nbAvailablePieces
@@ -64,18 +70,19 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   cardClick() {
-    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
-      setTimeout(() => {
+    setTimeout( () => {
+      if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
         this.movedItems.push(this.currentClick++);
         this.nbPlayedPieces++;
         this.nbAvailablePieces--;
         this.isWon();
-      }, 1000);
-    }
+      }
+    }, 1000 );
   }
 
   unlockAvailable() {
     let i = 0;
+    this.isUnlockedAll = true;
     setTimeout( () => {
       while (i < this.nbAvailablePieces) {
         if (i === this.cols * this.rows - this.nbPlayedPieces) {
@@ -89,5 +96,15 @@ export class PuzzleStampComponent implements OnInit {
       this.nbAvailablePieces = this.nbAvailablePieces - i;
       this.isWon();
     }, 1000);
+  }
+
+  stampStyle() {
+    return this.bgImage && !this.isCompleted ? 
+    {'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000'} : {'background-image': 'none', 'background-color': 'transparent'};
+  }
+
+  availablePieces() {
+    this.btnTxt = this.nbAvailablePieces <= 0 ? 'Redeemed' : this.btnTxt;
+    return this.nbAvailablePieces > 0;
   }
 }

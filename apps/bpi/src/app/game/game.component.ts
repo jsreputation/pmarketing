@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { /*Router*/ ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
 // import { NotificationService } from '../notification.service';
@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
   keys = 0;
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
     // private notificationService: NotificationService
@@ -39,6 +39,14 @@ export class GameComponent implements OnInit {
     } else {
       this.fetchCards();
     }
+  }
+
+  private sortCards() {
+    this.cards.sort((_a, b) => {
+      if(b.stamps.filter(stamp => stamp.state === 'redeemed').length === b.stamps.length) {
+        return -1
+      }
+    });
   }
 
   private fetchCampaign() {
@@ -77,6 +85,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+        this.sortCards();
       });
   }
 
@@ -103,6 +112,7 @@ export class GameComponent implements OnInit {
     nbAvailablePieces: number
   }) => {
     const stamps = card.stamps && card.stamps.filter(s => s.state === TRANSACTION_STATE.issued) || [];
+    console.log(stamps.length);
     if (stamps.length === 0) {
       return;
     }
@@ -134,9 +144,19 @@ export class GameComponent implements OnInit {
 
       index++;
       numOfStampsToRedeem--;
+      if(numOfStampsToRedeem == 0) {
+        this.sortCards();
+      }
+      if(card.stamps.filter(s => s.state === TRANSACTION_STATE.redeemed).length === this.cols * this.rows) {
+        this.router.navigate(['/congrats']);
+      }
     }
   }
 
   onCompleted() {
+  }
+
+  isCompleted(card) {
+    return card.stamps.filter(stamp => stamp.state === 'redeemed').length == this.rows * this.cols;
   }
 }

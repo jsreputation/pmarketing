@@ -1,7 +1,6 @@
 <mat-card class="example-card">
   <div class="inner">
     <mat-card-content
-      (click)="cardClick()"
       [ngStyle]="{ 'background-image': 'url(' + img + ')' }"
     >
       <img [src]="img" class="bg-img" />
@@ -11,28 +10,31 @@
           *ngFor="let row of [].constructor(rows); index as r"
           [ngStyle]="{ height: 100 / rows + '%' }"
         >
-          <div
+          <div 
+            class="stamp" 
             *ngFor="let col of [].constructor(cols); index as c"
-            [ngClass]="isMoved(r, c) ? 'stamp hidden' : 'stamp'"
+            [ngStyle]="stampStyle()"
           >
-            <div
-              [ngClass]="
-                isLessThanAvailblePieces(r, c) ? 'content available' : 'content'
-              "
+            <div 
+              [ngClass]="isMoved(r, c) ? 'hidden content' : 'content'"
               [ngStyle]="styleObject(r, c)"
             >
-              <img
-                [src]="isLessThanAvailblePieces(r, c) ? unlockImg : lockImg"
-                alt=""
-              />
+              <perx-core-stamp
+                [lockImg]="lockImg"
+                [unlockImg]="unlockImg"
+                [ngClass]="isLessThanAvailblePieces(r, c) ? 'available' : ''"
+                [available]="isLessThanAvailblePieces(r, c)"
+                (moveCard)="cardClick()"
+                [isUnlockedAll]="isLessThanAvailblePieces(r, c) && isUnlockedAll">
+              </perx-core-stamp>
             </div>
           </div>
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button *ngIf="nbAvailablePieces" (click)="unlockAvailable()">
-        Unlock All
+      <button mat-button [ngClass]="!availablePieces() ? 'btnRedeemed': ''" [disabled]="!availablePieces()" (click)="unlockAvailable()">
+        {{btnTxt}}
       </button>
     </mat-card-actions>
   </div>

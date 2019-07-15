@@ -8,6 +8,7 @@
     [img]="'assets/netflix-bg.jpg'"
     [lockImg]="'assets/lock-icon.png'"
     [unlockImg]="'assets/unlock-icon.png'"
+    [bgImage]="'assets/netflix-symbol.png'"
     [highlightColor]="'#FAE4A4'"
     [borderColor]="'#BC9B3A'"
     [rows]="rows"
@@ -15,6 +16,8 @@
     [nbPlayedPieces]="getPlayedPieces(card)"
     [nbAvailablePieces]="getAvailablePieces(card)"
     (moved)="onMoved(card)($event)"
+    (completed)="onCompleted()"
+    [isCompleted]="isCompleted(card)"
   >
   </perx-core-puzzle-stamp>
 </div>
