@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { /*Router,*/ ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
 // import { NotificationService } from '../notification.service';
@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
   keys = 0;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
     // private notificationService: NotificationService
@@ -85,6 +85,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+        console.log(this.cards);
         this.sortCards();
       });
   }
@@ -147,9 +148,6 @@ export class GameComponent implements OnInit {
       if(numOfStampsToRedeem == 0) {
         this.sortCards();
       }
-      if(card.stamps.filter(s => s.state === TRANSACTION_STATE.redeemed).length === this.cols * this.rows) {
-        this.router.navigate(['/congrats']);
-      }
     }
   }
 
@@ -158,5 +156,9 @@ export class GameComponent implements OnInit {
 
   isCompleted(card) {
     return card.stamps.filter(stamp => stamp.state === 'redeemed').length == this.rows * this.cols;
+  }
+
+  isCurrent(card) {
+    return this.cards[0].id == card.id;
   }
 }
