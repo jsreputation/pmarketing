@@ -8,3 +8,70 @@
   <li><a routerLink="rewards">rewards</a></li>
 </ul>
 <router-outlet></router-outlet>
+<div class="survey-wrap" [formGroup]="formSurvey">
+  <div class="full-with page-header">
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text"  matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="game-actions">
+      <cl-button [classList]="'third'"
+                 class="btn-cancel btn-right_padding"
+
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+                 (click)="save()"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <section class="content flex">
+    <div class="survey-form">
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Messages
+          </p>
+        </div>
+        <div class="messages-form" >
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card class="game-graphic">
+        <cl-question-type></cl-question-type>
+      </mat-card>
+    </div>
+
+  </section>
+</div>
+
