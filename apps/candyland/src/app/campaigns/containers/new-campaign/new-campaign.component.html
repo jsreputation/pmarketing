@@ -12,12 +12,13 @@
   <div class="btn-group">
     <cl-button classList="invert">Cancel</cl-button>
     <cl-button classList="third">Save as a draft</cl-button>
-    <cl-button classList="primary">Next</cl-button>
+    <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary">Launch</cl-button>
   </div>
 </div>
 
 <section class="content">
-  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+  <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step>
       <ng-template matStepLabel>Select template</ng-template>
       <cl-new-campaign-select-template-page></cl-new-campaign-select-template-page>

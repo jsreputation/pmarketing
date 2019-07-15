@@ -13,39 +13,31 @@ export default class Utils {
   }
 
   static nestedObjectAssign(target, ...sources) {
-    if (!sources.length) {
+    if (!sources.length)
       return target;
-    }
+
     const source = sources.shift();
-    if (this.isObject(target) && this.isObject(source)) {
+
+    if (this.isObject(target) && this.isObject(source)){
       for (const key in source) {
-        if (this.isObject(source[key])) {
-
+        if (this.isObject(source[key])){
           if (!target[key]) {
-            Object.assign(target, { [key]: {} });
+            Object.assign(target, {[key]: {}});
           }
-          this.nestedObjectAssign(target[key], source[key]);
 
+          this.nestedObjectAssign(target[key], source[key]);
         } else if (this.isArray(source[key])) {
           if (!target[key]) {
-            Object.assign(target, { [key]: [] });
+            Object.assign(target, {[key]: []});
           }
-          // target[key] = target[key].concat(source[key]);
-          target[key] = source[key].map((item, index) => {
-            console.log(item);
-            if (!target[key][index]) {
-              target[key][index] = {};
-            }
-            return this.nestedObjectAssign(
-              target[key][index],
-              ...source[key][index]
-            );
-          });
+
+          target[key] = target[key].concat(source[key]);
         } else {
-          Object.assign(target, { [key]: source[key] });
+          Object.assign(target, {[key]: source[key]});
         }
       }
     }
+
     return this.nestedObjectAssign(target, ...sources);
   }
 

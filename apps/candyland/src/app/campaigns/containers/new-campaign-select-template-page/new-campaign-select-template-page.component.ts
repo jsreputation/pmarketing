@@ -38,7 +38,7 @@ export class NewCampaignSelectTemplatePageComponent implements OnInit {
       ]
       ]
     });
-    this.form.patchValue(this.store.currentCampaign)
+    this.form.patchValue(this.store.currentCampaign);
   }
 
   private initData() {

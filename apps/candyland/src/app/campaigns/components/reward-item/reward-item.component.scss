@@ -97,14 +97,24 @@
     color: $base-font-color;
     text-align: right;
 
+    .invalid {
+      color: $warning-color;
+    }
+  }
+
+  &-probability-preview {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
   }
 
   &-actions {
     min-width: 8rem;
     text-align: right;
   }
-}
 
-.mat-form-field-wrapper {
-  padding-bottom: 0 !important;
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
 }

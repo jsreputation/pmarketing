@@ -48,6 +48,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
+import { RewardItemPreviewComponent } from './components/reward-item-preview/reward-item-preview.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
     NewCampaignComponent,
     NewCampaignRewardsPageComponent,
     NewCampaignSelectTemplatePageComponent,
-    RewardItemComponent
+    RewardItemComponent,
+    RewardItemPreviewComponent
   ],
   imports: [
     CommonModule,

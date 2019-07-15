@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-item',
@@ -8,18 +8,20 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardItemComponent implements OnInit {
-  @Input() public enableProbability = false;
-  @Input() public data = {
-    id: 1,
-    image: '/assets/images/mask-group.png',
-    name: 'Free Coffee',
-    type: 'Starbucks',
-    current: 500,
-    total: 1000,
-  };
-  @Input() public control: FormControl = new FormControl('probability', []);
-
+  @Input() public group: FormGroup = new FormGroup({value: new FormControl(null), propability: new FormControl(0)});
   @Output() clickDelete: EventEmitter<any> = new EventEmitter<any>();
+
+  get data() {
+    return this.group.value.value;
+  }
+
+  get propability() {
+    return this.group.get('propability') || null;
+  }
+
+  get isInvalid() {
+    return this.group.parent.invalid;
+  }
 
   constructor() {
   }

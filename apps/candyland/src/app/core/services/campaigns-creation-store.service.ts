@@ -6,7 +6,7 @@ import Utils from '@cl-helpers/utils';
   providedIn: 'root'
 })
 export class CampaignCreationStoreService {
-  private currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor() {
   }
@@ -20,6 +20,9 @@ export class CampaignCreationStoreService {
   }
 
   public updateCampaign(value: any) {
+    if ('rewards' in value) {
+      this.currentCampaign.rewards = value.rewards;
+    }
     this.currentCampaign = Utils.nestedObjectAssign(this.currentCampaign, value);
     console.log(this.currentCampaign);
   }

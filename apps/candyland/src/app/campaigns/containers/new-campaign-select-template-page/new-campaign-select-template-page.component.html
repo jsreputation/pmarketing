@@ -23,7 +23,7 @@
     <mat-radio-group class="item-list shadow" [formControl]="template">
       <ng-container *ngIf="(dataSource.connect() | async) as items">
         <ng-container *ngFor="let item of items">
-          <mat-radio-button [value]="item.id">
+          <mat-radio-button [value]="item">
             <cl-engagement-item [data]="item"></cl-engagement-item>
           </mat-radio-button>
         </ng-container>

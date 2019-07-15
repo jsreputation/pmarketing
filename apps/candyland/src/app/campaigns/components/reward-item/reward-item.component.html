@@ -1,4 +1,4 @@
-<div class="reward-item">
+<div class="reward-item" [formGroup]="group">
   <div class="reward-item-img-block">
     <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
     <img class="reward-item-no-img" *ngIf="!data?.image" src="/assets/images/deactivate.svg">
@@ -13,10 +13,17 @@
                    [total]="data?.total">
 
   </cl-progress-bar>
-  <div class="reward-item-probability" *ngIf="enableProbability">
+  <div class="reward-item-probability" *ngIf="propability">
     <span class="reward-item-probability-label">Probability</span>
     <mat-form-field class="reward-item-probability-input">
-      <input type="number" min="0" max="100" step="1" matInput [formControl]="control">
+      <input
+        type="number"
+        min="0"
+        max="100"
+        step="1"
+        matInput
+        [class.invalid]="isInvalid"
+        formControlName="propability">
       <span matSuffix>%</span>
     </mat-form-field>
   </div>
@@ -24,7 +31,7 @@
 <!--    <button mat-icon-button (click)="delete()">-->
 <!--      <i class="icon delete-action"></i>-->
 <!--    </button>-->
-    <button mat-icon-button (click)="delete()">
+    <button mat-icon-button *ngIf="data" (click)="delete()">
       <i class="icon full-with delete-action"></i>
     </button>
   </div>

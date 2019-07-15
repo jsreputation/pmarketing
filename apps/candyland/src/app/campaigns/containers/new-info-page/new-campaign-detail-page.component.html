@@ -1,4 +1,5 @@
 <div class="campaign-detail-content" [formGroup]="form">
+  <pre>{{form.value | json}}</pre>
   <mat-expansion-panel class="card" formGroupName="campaignInfo">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">
@@ -22,7 +23,7 @@
           <cl-time-picker formControlName="startTime"></cl-time-picker>
         </div>
         to
-        <div class="input-group" [formGroup]="rewardsForm">
+        <div class="input-group">
           <cl-date-picker formControlName="endDate" [min]="startDate.value"></cl-date-picker>
           <cl-time-picker formControlName="endTime"></cl-time-picker>
         </div>
@@ -118,10 +119,10 @@
               <div>
                 <label class="card-label">Repeat on</label>
                 <mat-radio-group class="btn-list">
-                    <ng-container *ngFor="let day of days">
-                      <mat-radio-button [value]="day.value">
-                        <div>{{day.title}}</div>
-                      </mat-radio-button>
+                  <ng-container *ngFor="let day of days">
+                    <mat-radio-button [value]="day.value">
+                      <div>{{day.title}}</div>
+                    </mat-radio-button>
                   </ng-container>
                 </mat-radio-group>
               </div>

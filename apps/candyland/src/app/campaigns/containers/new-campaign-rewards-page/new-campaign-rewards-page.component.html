@@ -1,21 +1,27 @@
 <div class="tab-content">
   <div class="forms-container" [formGroup]="form">
+    <pre>{{form.errors | json}}</pre>
     <mat-card class="card">
       <div class="card-header">
         <p class="card-title">Rewards</p>
-        <cl-button classList="invert no-padding">+ Create New Template</cl-button>
+        <cl-button classList="invert no-padding" (click)="addReward()">+ Create New Template</cl-button>
       </div>
       <div class="card-content">
         <div>
           <mat-checkbox formControlName="enablePropability">Include Probability</mat-checkbox>
         </div>
         <div>
-        <!--<div formArrayName="rewards">-->
-          <!--<cl-reward-item ngForm="let reward of rewards" class="item" [data]="rewardsData" [enableProbability]="enablePropability"></cl-reward-item>-->
-          <!--<cl-reward-item ngForm="let reward of rewards.controls; let i = index" class="item" [data]="reward.value" [control]="reward.propability" [enableProbability]="enablePropability"></cl-reward-item>-->
-          <!--<mat-error class="error">-->
-            <!--The total probabilty is 150%. Please make it 100%.-->
-          <!--</mat-error>-->
+          <div formArrayName="rewards">
+            <!--          <cl-reward-item ngForm="let reward of rewards" class="item" [data]="rewardsData" [enableProbability]="enablePropability"></cl-reward-item>-->
+            <cl-reward-item *ngFor="let reward of rewards.controls; let i = index"
+                            class="item"
+                            [group]="reward"
+                            (clickDelete)="removeReward(i)">
+            </cl-reward-item>
+            <mat-error class="error" *ngIf="sumMoreThanError">
+              The total probabilty is {{sumMoreThanError}}%. Please make it 100%.
+            </mat-error>
+          </div>
         </div>
       </div>
     </mat-card>
