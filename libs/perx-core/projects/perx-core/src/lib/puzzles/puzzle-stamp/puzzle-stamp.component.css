@@ -79,7 +79,12 @@ perx-core-stamp {
   width: 100%;
 }
 
-.btnRedeemed {
+.btn-redeemed {
   background-color: transparent;
-  color: #A8A8A8 !important;
+  color: #b20000 !important;
+}
+
+.btn-unavailable {
+  background-color: #D6D6D6;
+  color: #A8A8A8; 
 }

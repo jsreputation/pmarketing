@@ -5,13 +5,15 @@ import { PuzzlePlayComponent } from './puzzle-play/puzzle-play.component';
 import { MaterialModule } from '../shared/material.module';
 import { PuzzleStampComponent } from './puzzle-stamp/puzzle-stamp.component';
 import { StampComponent } from './puzzle-stamp/stamp/stamp.component';
+import { DebounceClickDirective } from '../utils/debounce-click.directive';
 
 @NgModule({
   declarations: [
     PuzzleListComponent,
     PuzzlePlayComponent,
     PuzzleStampComponent,
-    StampComponent
+    StampComponent,
+    DebounceClickDirective
   ],
   imports: [CommonModule, MaterialModule],
   exports: [

@@ -17,6 +17,7 @@ export class PuzzleStampComponent implements OnInit {
   @Input() nbAvailablePieces: number;
   @Input() bgImage: string;
   @Input() isCompleted: boolean;
+  @Input() isCurrent: boolean;
 
   @Output() moved = new EventEmitter();
   @Output() completed = new EventEmitter();
@@ -59,7 +60,6 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   isWon() {
-    console.log('lib moved');
     this.moved.emit({
       nbPlayedPieces: this.nbPlayedPieces,
       nbAvailablePieces: this.nbAvailablePieces
@@ -70,32 +70,30 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   cardClick() {
-    setTimeout( () => {
-      if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
-        this.movedItems.push(this.currentClick++);
-        this.nbPlayedPieces++;
-        this.nbAvailablePieces--;
-        this.isWon();
-      }
-    }, 1000 );
+    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
+      this.movedItems.push(this.currentClick++);
+      this.nbPlayedPieces++;
+      this.nbAvailablePieces--;
+      this.isWon();
+    }
+  }
+
+  unlockAllAvailable() {
+    this.isUnlockedAll = true;
   }
 
   unlockAvailable() {
     let i = 0;
-    this.isUnlockedAll = true;
-    setTimeout( () => {
-      while (i < this.nbAvailablePieces) {
-        if (i === this.cols * this.rows - this.nbPlayedPieces) {
-          console.log('should break');
-          break;
-        }
-        this.movedItems.push(this.currentClick++);
-        i++;
+    while (i < this.nbAvailablePieces) {
+      if (i === this.cols * this.rows - this.nbPlayedPieces) {
+        break;
       }
-      this.nbPlayedPieces = this.nbPlayedPieces + i;
-      this.nbAvailablePieces = this.nbAvailablePieces - i;
-      this.isWon();
-    }, 1000);
+      this.movedItems.push(this.currentClick++);
+      i++;
+    }
+    this.nbPlayedPieces = this.nbPlayedPieces + i;
+    this.nbAvailablePieces = this.nbAvailablePieces - i;
+    this.isWon();
   }
 
   stampStyle() {
@@ -104,7 +102,12 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   availablePieces() {
-    this.btnTxt = this.nbAvailablePieces <= 0 ? 'Redeemed' : this.btnTxt;
-    return this.nbAvailablePieces > 0;
+    this.btnTxt = this.nbAvailablePieces <= 0 ? 'Netflix rebate earned' : this.btnTxt;
+    if(this.nbAvailablePieces <= 0) {
+      return 'btn-redeemed';
+    }
+    if(!this.isCurrent) {
+      return 'btn-unavailable';
+    }
   }
 }

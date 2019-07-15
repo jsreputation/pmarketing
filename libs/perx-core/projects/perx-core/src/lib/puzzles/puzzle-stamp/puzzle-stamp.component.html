@@ -24,8 +24,9 @@
                 [unlockImg]="unlockImg"
                 [ngClass]="isLessThanAvailblePieces(r, c) ? 'available' : ''"
                 [available]="isLessThanAvailblePieces(r, c)"
+                [isUnlockedAll]="isLessThanAvailblePieces(r, c) && isUnlockedAll"
                 (moveCard)="cardClick()"
-                [isUnlockedAll]="isLessThanAvailblePieces(r, c) && isUnlockedAll">
+                >
               </perx-core-stamp>
             </div>
           </div>
@@ -33,7 +34,15 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button [ngClass]="!availablePieces() ? 'btnRedeemed': ''" [disabled]="!availablePieces()" (click)="unlockAvailable()">
+      <button 
+        mat-button
+        appDebounceClick
+        [debounceTime]="1000"
+        [ngClass]="availablePieces()"
+        [disabled]="!isCurrent"
+        (debounceClick)="unlockAvailable()"
+        (click)="unlockAllAvailable()"
+      >
         {{btnTxt}}
       </button>
     </mat-card-actions>

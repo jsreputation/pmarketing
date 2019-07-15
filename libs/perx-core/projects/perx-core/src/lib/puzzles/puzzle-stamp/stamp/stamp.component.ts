@@ -19,20 +19,23 @@ export class StampComponent implements OnInit, DoCheck {
   constructor() { }
 
   ngOnInit() {
-    this.imageLock = this.unlockImg;
+    this.imageLock = this.lockImg;
   }
 
   ngDoCheck() {
     // lock to unlock animation on unlock all button click
-    // if(this.isUnlockedAll) {
-    //   this.imageLock = this.unlockImg;
-    // }
+    if(this.isUnlockedAll) {
+      this.imageLock = this.unlockImg;
+    }
+  }
+
+  changeLockImage() {
+    // lock to unlock animation on card click
+    this.imageLock = this.unlockImg; 
   }
 
   onCardUnlock(){
     if(this.available) {
-      // lock to unlock animation on card click
-      // this.imageLock = this.unlockImg; 
       this.moveCard.emit();
     }
   }
