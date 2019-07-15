@@ -65,29 +65,24 @@ export class PuzzleStampComponent implements OnInit {
 
   cardClick() {
     if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
-      setTimeout(() => {
-        this.movedItems.push(this.currentClick++);
-        this.nbPlayedPieces++;
-        this.nbAvailablePieces--;
-        this.isWon();
-      }, 1000);
+      this.movedItems.push(this.currentClick++);
+      this.nbPlayedPieces++;
+      this.nbAvailablePieces--;
+      this.isWon();
     }
   }
 
   unlockAvailable() {
     let i = 0;
-    setTimeout( () => {
-      while (i < this.nbAvailablePieces) {
-        if (i === this.cols * this.rows - this.nbPlayedPieces) {
-          console.log('should break');
-          break;
-        }
-        this.movedItems.push(this.currentClick++);
-        i++;
+    while (i < this.nbAvailablePieces) {
+      if (i === this.cols * this.rows - this.nbPlayedPieces) {
+        break;
       }
-      this.nbPlayedPieces = this.nbPlayedPieces + i;
-      this.nbAvailablePieces = this.nbAvailablePieces - i;
-      this.isWon();
-    }, 1000);
+      this.movedItems.push(this.currentClick++);
+      i++;
+    }
+    this.nbPlayedPieces = this.nbPlayedPieces + i;
+    this.nbAvailablePieces = this.nbAvailablePieces - i;
+    this.isWon();
   }
 }
