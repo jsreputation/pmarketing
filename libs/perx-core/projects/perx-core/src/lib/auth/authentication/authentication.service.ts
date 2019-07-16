@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
@@ -14,11 +14,11 @@ export class AuthenticationService implements AuthService {
 
   public lastURL: string;
   public authing: boolean;
-  public retries = 0;
-  public maxRetries = 2;
+  public retries: number = 0;
+  public maxRetries: number = 2;
   public preAuthJWT: string;
-  public didFailAuth = false;
-  public failedAuthObservable = new BehaviorSubject(this.didFailAuth);
+  public didFailAuth: boolean = false;
+  public failedAuthObservable: Subject = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,

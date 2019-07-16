@@ -13,9 +13,9 @@ export class PuzzleListComponent implements OnChanges {
   @Input()
   public campaignId: number = null;
   @Input()
-  public iconDisplay = 'arrow_forward_ios';
+  public iconDisplay: string = 'arrow_forward_ios';
 
-  public total = 6;
+  public total: number = 6;
 
   @Output()
   public selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();

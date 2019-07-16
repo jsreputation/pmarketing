@@ -12,7 +12,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   @Input()
   public voucherId: number = null;
 
-  public bCode = ``;
+  public bCode: string = ``;
 
   public voucher$: Observable<IVoucher>;
 

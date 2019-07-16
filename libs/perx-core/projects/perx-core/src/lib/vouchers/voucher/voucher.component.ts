@@ -12,16 +12,16 @@ export class VoucherComponent implements OnChanges {
   @Output() public redeem: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
-  public hideMerchantImg = false;
+  public hideMerchantImg: boolean = false;
 
   @Input()
-  public hideMerchantName = false;
+  public hideMerchantName: boolean = false;
 
   @Input()
-  public hideExpiry = false;
+  public hideExpiry: boolean = false;
 
   @Input()
-  public hideActions = false;
+  public hideActions: boolean = false;
 
   @Input()
   public voucherId: number;
