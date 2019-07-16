@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { MatStepper } from '@angular/material';
+import {MatDialog, MatStepper} from '@angular/material';
+import {NewCampaignDonePopupComponent} from "../new-campaign-done-popup/new-campaign-done-popup.component";
 
 @Component({
   selector: 'cl-new-campaign',
@@ -14,8 +15,8 @@ export class NewCampaignComponent implements OnInit {
   form: FormGroup;
 
   constructor(private store: CampaignCreationStoreService,
-              private fb: FormBuilder
-  ) {
+              public dialog: MatDialog,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -48,6 +49,14 @@ export class NewCampaignComponent implements OnInit {
 
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(NewCampaignDonePopupComponent);
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
   }
 }
 

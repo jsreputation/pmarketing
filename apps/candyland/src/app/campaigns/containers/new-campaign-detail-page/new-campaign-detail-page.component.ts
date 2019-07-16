@@ -1,7 +1,7 @@
 import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
 
 @Component({
@@ -11,39 +11,9 @@ import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignDetailPageComponent implements OnInit {
-  days: OptionConfig[] = [
-    {
-      title: 'S',
-      value: 'sunday'
-    },
-    {
-      title: 'M',
-      value: 'monday'
-    },
-    {
-      title: 'T',
-      value: 'tuesday'
-    },
-    {
-      title: 'W',
-      value: 'wednesday'
-    },
-    {
-      title: 'T',
-      value: 'thursday'
-    },
-    {
-      title: 'F',
-      value: 'friday'
-    },
-    {
-      title: 'S',
-      value: 'Saturday'
-    },
-  ];
-
   form: FormGroup;
-  disableEnd = false;
+  disableEnd: FormControl;
+  config: any;
   visible = true;
   selectable = true;
   removable = true;
@@ -55,15 +25,41 @@ export class NewCampaignDetailPageComponent implements OnInit {
     {name: 'Label C'},
   ];
 
+  get endDate() {
+    return this.form.get('campaignInfo').get('endDate');
+  }
+
+  get endTime() {
+    return this.form.get('campaignInfo').get('endTime');
+  }
+
+  get startDate() {
+    return this.form.get('campaignInfo').get('startDate');
+  }
+
   constructor(
     private store: CampaignCreationStoreService,
     private fb: FormBuilder
   ) {
     this.initForm();
+    this.disableEnd = this.fb.control([]);
+    this.config = store.config;
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
+    this.disableEnd.valueChanges.subscribe((value: boolean) => {
+        if (value) {
+          this.endDate.reset();
+          this.endTime.reset();
+          this.endDate.disable();
+          this.endTime.disable();
+        } else {
+          this.endDate.enable();
+          this.endTime.enable();
+        }
+      }
+    )
   }
 
   add(event: MatChipInputEvent): void {
@@ -90,48 +86,18 @@ export class NewCampaignDetailPageComponent implements OnInit {
   }
 
   private initForm() {
-    // this.rewardsForm = new FormGroup({
-    //   endDate: new FormControl(null, []),
-    //   endTime: new FormControl(null, [])
-    // });
-
     this.form = this.fb.group({
       campaignInfo: this.fb.group({
         goal: [],
         startDate: [],
         startTime: [],
-        endDate: [{value: null, disabled: this.disableEnd}],
-        endTime: [{value: null, disabled: this.disableEnd}],
+        endDate: [],
+        endTime: [],
         labels: []
       }),
-      // rewards: this.fb.array([{
-      //   value: null,
-      //   propability: 0
-      // }]),
-      // limits: this.fb.group({
-      //   times: [null, [
-      //     Validators.required,
-      //     Validators.minLength(1),
-      //     Validators.maxLength(60)
-      //   ]],
-      //   duration: [null, [
-      //     Validators.required,
-      //     Validators.minLength(1),
-      //     Validators.maxLength(60)
-      //   ]]
-      // })
     });
     this.form.patchValue(this.store.currentCampaign);
   }
-
-  get endDate(){
-    return this.form.get('campaignInfo').get('endDate');
-  }
-
-  get startDate(){
-    return this.form.get('campaignInfo').get('startDate');
-  }
-
 
 
 }

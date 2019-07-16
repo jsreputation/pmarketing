@@ -1,6 +1,6 @@
 <div class="tab-content">
   <div class="forms-container" [formGroup]="form">
-    <pre>{{form.errors | json}}</pre>
+    <!--Rewards-->
     <mat-card class="card">
       <div class="card-header">
         <p class="card-title">Rewards</p>
@@ -8,24 +8,23 @@
       </div>
       <div class="card-content">
         <div>
-          <mat-checkbox formControlName="enablePropability">Include Probability</mat-checkbox>
+          <mat-checkbox formControlName="enableProbability">Include Probability</mat-checkbox>
         </div>
         <div>
           <div formArrayName="rewards">
-            <!--          <cl-reward-item ngForm="let reward of rewards" class="item" [data]="rewardsData" [enableProbability]="enablePropability"></cl-reward-item>-->
-            <cl-reward-item *ngFor="let reward of rewards.controls; let i = index"
-                            class="item"
+            <cl-reward-item class="item"
+                            *ngFor="let reward of rewards.controls; let i = index"
                             [group]="reward"
                             (clickDelete)="removeReward(i)">
             </cl-reward-item>
             <mat-error class="error" *ngIf="sumMoreThanError">
-              The total probabilty is {{sumMoreThanError}}%. Please make it 100%.
+              The total probability is {{sumMoreThanError}}%. Please make it 100%.
             </mat-error>
           </div>
         </div>
       </div>
     </mat-card>
-
+    <!--limits-->
     <mat-card class="card" formGroupName="limits">
       <div class="card-header">
         <p class="card-title">Play Limits</p>
@@ -35,7 +34,7 @@
           <div>
             <label class="card-label">Limit per user</label>
             <mat-form-field>
-              <input matInput type="number" [min]="0" formControlName="times">
+              <input matInput type="number" [min]="1" formControlName="times">
               <span matSuffix>Play</span>
             </mat-form-field>
           </div>
@@ -43,9 +42,10 @@
             <label class="card-label">Limit per duration</label>
             <mat-form-field>
               <mat-select formControlName="duration">
-                <mat-option value="day">Day</mat-option>
-                <mat-option value="week">Week</mat-option>
-                <mat-option value="month">Month</mat-option>
+                <mat-option *ngFor="let option of config?.durationLimits"
+                            [value]="option?.value">
+                  {{option?.title}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>

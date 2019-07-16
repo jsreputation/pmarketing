@@ -1,5 +1,5 @@
 <div class="campaign-detail-content" [formGroup]="form">
-  <pre>{{form.value | json}}</pre>
+  <!--Campaign Info-->
   <mat-expansion-panel class="card" formGroupName="campaignInfo">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">
@@ -8,6 +8,7 @@
     </mat-expansion-panel-header>
 
     <div class="card-content">
+      <!--goal-->
       <mat-form-field class="card-row">
         <mat-select formControlName="goal" placeholder="Campagin goal">
           <mat-option value="day">Day</mat-option>
@@ -15,8 +16,7 @@
           <mat-option value="month">Month</mat-option>
         </mat-select>
       </mat-form-field>
-
-
+      <!--duration-->
       <div class="card-row">
         <div class="input-group">
           <cl-date-picker formControlName="startDate" [max]="endDate.value"></cl-date-picker>
@@ -27,9 +27,9 @@
           <cl-date-picker formControlName="endDate" [min]="startDate.value"></cl-date-picker>
           <cl-time-picker formControlName="endTime"></cl-time-picker>
         </div>
-        <mat-checkbox [(ngModel)]="disableEnd">Does not end</mat-checkbox>
+        <mat-checkbox [formControl]="disableEnd">Does not end</mat-checkbox>
       </div>
-
+      <!--labels-->
       <mat-form-field class="card-row">
         <mat-chip-list #chipList aria-label="card-label">
           <mat-chip *ngFor="let label of labels" [selectable]="selectable"
@@ -47,7 +47,7 @@
       </mat-form-field>
     </div>
   </mat-expansion-panel>
-
+  <!--Select channel-->
   <mat-expansion-panel class="card">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">
@@ -68,13 +68,14 @@
           </p>
         </div>
         <div class="card-content">
-          <mat-form-field class="card-row">
-            <mat-select placeholder="Select Message template">
-              <mat-option value="day">Day</mat-option>
-              <mat-option value="week">Week</mat-option>
-              <mat-option value="month">Month</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <!--<mat-form-field class="card-row">-->
+            <!--<mat-select placeholder="Select Message template">-->
+              <!--<mat-option value="day">Day</mat-option>-->
+              <!--<mat-option value="week">Week</mat-option>-->
+              <!--<mat-option value="month">Month</mat-option>-->
+            <!--</mat-select>-->
+          <!--</mat-form-field>-->
+          <cl-sms-editor [options]="config?.shortcodes"></cl-sms-editor>
         </div>
       </div>
 
@@ -119,7 +120,7 @@
               <div>
                 <label class="card-label">Repeat on</label>
                 <mat-radio-group class="btn-list">
-                  <ng-container *ngFor="let day of days">
+                  <ng-container *ngFor="let day of config?.days">
                     <mat-radio-button [value]="day.value">
                       <div>{{day.title}}</div>
                     </mat-radio-button>
@@ -132,7 +133,7 @@
       </div>
     </div>
   </mat-expansion-panel>
-
+  <!--Select audience-->
   <mat-expansion-panel class="card">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">

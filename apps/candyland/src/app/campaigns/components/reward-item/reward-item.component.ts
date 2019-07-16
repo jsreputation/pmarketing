@@ -16,7 +16,7 @@ export class RewardItemComponent implements OnInit {
   }
 
   get propability() {
-    return this.group.get('propability') || null;
+    return this.group.get('probability') || null;
   }
 
   get isInvalid() {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
-import { NewCampaignDetailPageComponent } from './containers/new-info-page/new-campaign-detail-page.component';
+import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
 import { NewAudiencePageComponent } from './containers/new-audience-page/new-audience-page.component';
 import { NewChannelPageComponent } from './containers/new-channel-page/new-channel-page.component';
 import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
@@ -49,6 +49,7 @@ import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/dat
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { RewardItemPreviewComponent } from './components/reward-item-preview/reward-item-preview.component';
+import {SmsEditorModule} from "@cl-shared/components/sms-editor/sms-editor.module";
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { RewardItemPreviewComponent } from './components/reward-item-preview/rew
     NgxMaterialTimepickerModule,
     DateTimePickerModule,
     TimePickerModule,
-    DatePickerModule
+    DatePickerModule,
+    SmsEditorModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

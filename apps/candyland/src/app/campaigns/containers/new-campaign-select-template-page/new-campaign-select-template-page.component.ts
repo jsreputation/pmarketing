@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { MatTableDataSource } from '@angular/material';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {map, tap} from 'rxjs/operators';
+import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
+import {MatTableDataSource} from '@angular/material';
+import {EngagementsService} from '@cl-core/services/engagements.service';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
 
@@ -17,26 +17,26 @@ export class NewCampaignSelectTemplatePageComponent implements OnInit {
   public dataSource = new MatTableDataSource<Engagement>();
   public typeFilterConfig: OptionConfig[];
 
+  public get template(): AbstractControl {
+    return this.form.get('template');
+  }
+
   constructor(private engagementsService: EngagementsService,
               private store: CampaignCreationStoreService,
               private fb: FormBuilder,
               public cd: ChangeDetectorRef) {
-}
+    this.initForm();
+  }
 
   ngOnInit() {
-    this.initForm();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.filteredData;
     this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
   }
 
   private initForm() {
     this.form = this.fb.group({
-      template: [null, [
-        Validators.required,
-      ]
-      ]
+      template: [null, [Validators.required]]
     });
     this.form.patchValue(this.store.currentCampaign);
   }
@@ -52,13 +52,8 @@ export class NewCampaignSelectTemplatePageComponent implements OnInit {
       )
       .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
-        // this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
       });
-  }
-
-  public get template(): AbstractControl {
-    return this.form.get('template');
   }
 
 }

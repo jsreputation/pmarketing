@@ -1,7 +1,7 @@
 <div class="reward-item" [formGroup]="group">
   <div class="reward-item-img-block">
     <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
-    <img class="reward-item-no-img" *ngIf="!data?.image" src="/assets/images/deactivate.svg">
+    <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/deactivate.svg">
   </div>
   <div class="reward-item-info">
     <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
@@ -23,7 +23,7 @@
         step="1"
         matInput
         [class.invalid]="isInvalid"
-        formControlName="propability">
+        formControlName="probability">
       <span matSuffix>%</span>
     </mat-form-field>
   </div>

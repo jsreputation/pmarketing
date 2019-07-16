@@ -7,7 +7,6 @@
           <cl-search-filter class="name-filter" [control]="filter"></cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'type'; let filter">
-          <!--    <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>-->
           <mat-form-field appearance="outline">
             <mat-select [formControl]="filter" placeholder="Filter by">
               <ng-container *ngFor="let option of typeFilterConfig">
@@ -19,7 +18,7 @@
       </cl-table-filters>
       <cl-button classList="invert">+ Select a template</cl-button>
     </div>
-
+    <!--items-->
     <mat-radio-group class="item-list shadow" [formControl]="template">
       <ng-container *ngIf="(dataSource.connect() | async) as items">
         <ng-container *ngFor="let item of items">

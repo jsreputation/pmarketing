@@ -8,11 +8,11 @@ declare interface EngagementCreate {
   channel: string;
 }
 
-interface Reward {
-  id: number;
-  image: string;
-  probability: number;
-}
+// interface Reward {
+//   id: number;
+//   image: string;
+//   probability: number;
+// }
 
 interface Limits {
   user: string;

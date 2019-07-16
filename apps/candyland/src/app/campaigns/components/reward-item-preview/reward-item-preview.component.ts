@@ -9,7 +9,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 })
 export class RewardItemPreviewComponent implements OnInit {
   @Input() public data;
-  @Input() public propability;
+  @Input() public probability;
 
   constructor() {
   }

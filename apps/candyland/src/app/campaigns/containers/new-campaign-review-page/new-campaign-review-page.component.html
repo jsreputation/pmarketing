@@ -1,27 +1,26 @@
 <div class="tab-content">
   <div class="forms-container">
+    <!--template-->
     <mat-card class="card" *ngIf="campaign?.template">
       <div class="card-header">
         <p class="card-title">Template</p>
       </div>
-      <!--      <div class="card-content">-->
       <cl-engagement-item [data]="campaign?.template"></cl-engagement-item>
-      <!--      </div>-->
     </mat-card>
-
+    <!--rewards-->
     <mat-card class="card" *ngIf="campaign?.rewards?.length">
       <div class="card-header">
         <p class="card-title">Rewards</p>
       </div>
       <div class="card-content">
-        <cl-reward-item-preview *ngFor="let reward of campaign?.rewards; let i = index"
+        <cl-reward-item-preview *ngFor="let reward of campaign?.rewards"
                                 class="item"
-                                [propability]="reward?.propability"
+                                [probability]="reward?.probability"
                                 [data]="reward?.value">
         </cl-reward-item-preview>
       </div>
     </mat-card>
-
+    <!--limits-->
     <mat-card class="card" *ngIf="campaign?.limits?.times && campaign?.limits?.duration">
       <div class="card-header">
         <p class="card-title">Play Limits</p>
@@ -39,7 +38,7 @@
         </div>
       </div>
     </mat-card>
-
+    <!--campaign info-->
     <mat-card class="card" *ngIf="campaign?.campaignInfo">
       <div class="card-header">
         <p class="card-title">
@@ -49,7 +48,7 @@
 
       <div class="card-content">
         <div *ngIf="campaign?.campaignInfo?.goal">
-          <label class="card-label">Campagin goal</label>
+          <label class="card-label">Campaign goal</label>
           <p class="card-value">{{campaign?.campaignInfo?.goal}}</p>
         </div>
 
@@ -79,7 +78,6 @@
         </div>
       </div>
     </mat-card>
-
 
   </div>
   <div class="preview">

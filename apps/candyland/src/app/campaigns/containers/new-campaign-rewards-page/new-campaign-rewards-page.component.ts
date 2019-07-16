@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { ClValidators } from '@cl-helpers/cl-validators';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
+import {ClValidators} from '@cl-helpers/cl-validators';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -11,7 +11,8 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 })
 export class NewCampaignRewardsPageComponent implements OnInit {
   public form: FormGroup;
-  public rewardsList = [
+  public config;
+  public rewardsList: Reward[] = [
     {
       id: 1,
       image: '/assets/images/mask-group.png',
@@ -30,7 +31,7 @@ export class NewCampaignRewardsPageComponent implements OnInit {
     }
   ];
 
-  public rewardsTemplate = {
+  public rewardsTemplate: Reward = {
     id: 1,
     image: '/assets/images/mask-group.png',
     name: 'Free Coffee',
@@ -39,24 +40,63 @@ export class NewCampaignRewardsPageComponent implements OnInit {
     total: 1000,
   };
 
-  constructor(
-    // private cd: ChangeDetectorRef,
-    private store: CampaignCreationStoreService,
-    private fb: FormBuilder) {
+  public get enableProbability(): AbstractControl {
+    return this.form.get('enableProbability');
+  }
+
+  public get rewards(): FormArray {
+    return this.form.get('rewards') as FormArray;
+  }
+
+  public get sumMoreThanError(): number {
+    return this.rewards.getError('sumMoreThan');
+  }
+
+  constructor(private store: CampaignCreationStoreService,
+              private fb: FormBuilder) {
     this.initForm();
   }
 
-  ngOnInit() {
-    // this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
+  public ngOnInit() {
+    this.config = this.store.config;
     this.updateRewards();
     this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
-    // this.form.valueChanges.subscribe(value => console.log(value));
-    this.enablePropability.valueChanges.subscribe(() => this.updateRewards());
+    this.enableProbability.valueChanges.subscribe(() => this.updateRewards());
   }
 
-  private updateRewards() {
+
+  public addReward(value: any = this.rewardsTemplate): void {
+    this.rewardsList.push(value);
+    this.rewards.push(this.createRewardForm(value));
+  }
+
+  public removeReward(index: number): void {
+    this.rewards.removeAt(index);
+  }
+
+  private initForm(): void {
+    this.form = this.fb.group({
+      enableProbability: ([false]),
+      rewards: this.fb.array([],
+        [ClValidators.sumMoreThan({fieldName: 'probability'})]
+      ),
+      limits: this.fb.group({
+        times: [null, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(60)
+        ]],
+        duration: [null, [
+          Validators.required
+        ]]
+      })
+    });
+    this.form.patchValue(this.store.currentCampaign);
+  }
+
+  private updateRewards(): void {
     this.rewards.clear();
-    if (this.enablePropability.value) {
+    if (this.enableProbability.value) {
       this.rewards.push(this.createRewardForm(null));
     }
     this.rewardsList.forEach(reward => {
@@ -64,59 +104,16 @@ export class NewCampaignRewardsPageComponent implements OnInit {
     });
   }
 
-  private initForm() {
-    this.form = this.fb.group({
-      enablePropability: ([false]),
-      rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'propability'})]),
-      limits: this.fb.group({
-        times: [null, [
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(60)
-        ]],
-        duration: [null, [
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(60)
-        ]]
-      })
-    });
-    this.form.patchValue(this.store.currentCampaign);
-  }
-
-  get enablePropability() {
-    return this.form.get('enablePropability');
-  }
-
-  get rewards(): FormArray {
-    return this.form.get('rewards') as FormArray;
-  }
-
-  get sumMoreThanError(): number {
-    return this.rewards.getError('sumMoreThan');
-  }
-
-
-
-  public createRewardForm(value): FormGroup {
-    if (this.enablePropability.value) {
+  private createRewardForm(value): FormGroup {
+    if (this.enableProbability.value) {
       return this.fb.group({
         value: [value],
-        propability: [0]
+        probability: [0]
+      });
+    } else {
+      return this.fb.group({
+        value: [value]
       });
     }
-
-    return this.fb.group({
-      value: [value]
-    });
-  }
-
-  public addReward(value: any = this.rewardsTemplate): void {
-    this.rewardsList.push(value);
-    this.rewards.push(this.createRewardForm(value));
-  }
-
-  public removeReward(index: number) {
-    this.rewards.removeAt(index);
   }
 }
