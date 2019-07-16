@@ -11,6 +11,13 @@ export interface IManStyle {
   left: string;
   bottom: string;
 }
+
+export interface IGift {
+  id: number;
+  status: GIFT_STATUS;
+  display: boolean;
+}
+
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
@@ -44,7 +51,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   @Output()
   public tap: EventEmitter<number> = new EventEmitter<number>();
 
-  public gifts: any[] = [
+  public gifts: IGift[] = [
     { id: 1, status: GIFT_STATUS.hang, display: true },
     { id: 2, status: GIFT_STATUS.hang, display: true },
     { id: 3, status: GIFT_STATUS.hang, display: true },

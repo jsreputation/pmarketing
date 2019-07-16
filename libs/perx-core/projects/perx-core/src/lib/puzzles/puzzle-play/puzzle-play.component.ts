@@ -57,7 +57,7 @@ export class PuzzlePlayComponent implements OnChanges {
   public imageHeight: number = 200;
   public imageReady: boolean = false;
 
-  public staticPuzzleDummyTiles: any[] = [];
+  public staticPuzzleDummyTiles: number[][] = [];
 
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
