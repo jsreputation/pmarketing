@@ -1,10 +1,10 @@
-import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
-import {map, tap} from 'rxjs/operators';
-import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
-import {MatTableDataSource} from '@angular/material';
-import {EngagementsService} from '@cl-core/services/engagements.service';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { MatTableDataSource } from '@angular/material';
+import { EngagementsService } from '@cl-core/services/engagements.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 
 @Component({
   selector: 'cl-new-campaign-select-template-page',
