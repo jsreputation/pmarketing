@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:digi:prod": "PRODUCTION=true npm run config && ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "config": "ts-node set-env.ts",
     "test": "ng test",
-    "lint": "ng lint && stylelint \"src/**/*.scss\"",
+    "lint": "ng lint && stylelint \"src/**/*.*css\"",
     "e2e~": "ng e2e"
   },
   "private": true,
