@@ -48,7 +48,7 @@
     </div>
   </mat-expansion-panel>
   <!--Select channel-->
-  <mat-expansion-panel class="card">
+  <mat-expansion-panel class="card" formGroupName="channel">
     <mat-expansion-panel-header class="card-header">
       <p class="card-title">
         Select channel
@@ -56,7 +56,7 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group>
+        <mat-radio-group formControlName="type">
           <mat-radio-button value="weblink">Weblink only</mat-radio-button>
           <mat-radio-button value="sms">SMS</mat-radio-button>
         </mat-radio-group>

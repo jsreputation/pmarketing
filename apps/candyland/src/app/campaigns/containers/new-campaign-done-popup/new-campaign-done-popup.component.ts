@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'cl-new-campaign-done-popup',
@@ -8,30 +9,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class NewCampaignDonePopupComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<NewCampaignDonePopupComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit() {
+    // console.log(this.data);
   }
 
-  /* To copy Text from Textbox */
-  copyInputMessage(inputElement){
-    inputElement.select();
-    document.execCommand('copy');
-    inputElement.setSelectionRange(0, 0);
-  }
-
-  /* To copy any Text */
-  copyText(val: string){
-    let selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+  public closeDialog() {
+    this.dialogRef.close();
   }
 }

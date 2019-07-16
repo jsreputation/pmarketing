@@ -1,8 +1,8 @@
-import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {CampaignCreationStoreService} from "@cl-core/services/campaigns-creation-store.service";
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -59,7 +59,7 @@ export class NewCampaignDetailPageComponent implements OnInit {
           this.endTime.enable();
         }
       }
-    )
+    );
   }
 
   add(event: MatChipInputEvent): void {
@@ -95,6 +95,9 @@ export class NewCampaignDetailPageComponent implements OnInit {
         endTime: [],
         labels: []
       }),
+      channel: this.fb.group({
+        type: []
+      })
     });
     this.form.patchValue(this.store.currentCampaign);
   }

@@ -44,12 +44,13 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { RewardItemComponent } from './components/reward-item/reward-item.component';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { RewardItemPreviewComponent } from './components/reward-item-preview/reward-item-preview.component';
 import {SmsEditorModule} from "@cl-shared/components/sms-editor/sms-editor.module";
+import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
+import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
 
 
 @NgModule({
@@ -104,11 +105,12 @@ import {SmsEditorModule} from "@cl-shared/components/sms-editor/sms-editor.modul
     MatExpansionModule,
     MatChipsModule,
     ProgressBarModule,
-    NgxMaterialTimepickerModule,
     DateTimePickerModule,
     TimePickerModule,
     DatePickerModule,
-    SmsEditorModule
+    SmsEditorModule,
+    CopyLinkModule,
+    DownloadLinkModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

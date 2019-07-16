@@ -24,7 +24,7 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private campaignsService: CampaignsService,
               public cd: ChangeDetectorRef,
