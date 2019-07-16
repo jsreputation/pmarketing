@@ -15,7 +15,7 @@ export class ProfileService {
     @Inject('config') private config: any
   ) { }
 
-  whoAmI(): Observable<IProfile> {
+  public whoAmI(): Observable<IProfile> {
     const url = `${this.config.env.apiHost}/v4/me`;
     return this.http.get<IProfileResponse>(url)
       .pipe(

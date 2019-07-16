@@ -38,7 +38,7 @@ interface IV4CampaignsResponse {
 
 @Injectable({ providedIn: 'root' })
 export class CampaignService implements ICampaignService {
-  baseUrl: string;
+  public baseUrl: string;
 
   constructor(private http: HttpClient, config: EnvConfig) {
     this.baseUrl = config.env.apiHost;
@@ -54,23 +54,19 @@ export class CampaignService implements ICampaignService {
     };
   }
 
-  getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<IV4CampaignsResponse>(
-      `${ this.baseUrl }/v4/campaigns`
-    )
-    .pipe(
-      map(resp => resp.data),
-      map((campaigns: IV4Campaign[]) => campaigns.map(campaign => CampaignService.v4CampaignToCampaign(campaign)))
-    );
+  public getCampaigns(): Observable<ICampaign[]> {
+    return this.http.get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`)
+      .pipe(
+        map(resp => resp.data),
+        map((campaigns: IV4Campaign[]) => campaigns.map(campaign => CampaignService.v4CampaignToCampaign(campaign)))
+      );
   }
 
-  getCampaign(id: number): Observable<ICampaign> {
-    return this.http.get<IV4CampaignResponse>(
-      `${this.baseUrl}/v4/campaign/${id}`
-    )
-    .pipe(
-      map(resp => resp.data),
-      map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign))
-    );
+  public getCampaign(id: number): Observable <ICampaign> {
+    return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaign/${id}`)
+      .pipe(
+        map(resp => resp.data),
+        map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign))
+      );
   }
 }

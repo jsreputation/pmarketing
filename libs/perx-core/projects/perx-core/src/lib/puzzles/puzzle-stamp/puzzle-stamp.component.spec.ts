@@ -15,7 +15,6 @@ describe('PuzzleStampComponent', () => {
     .compileComponents();
   }));
 
-
   beforeEach(() => {
     fixture = TestBed.createComponent(PuzzleStampComponent);
     component = fixture.componentInstance;
