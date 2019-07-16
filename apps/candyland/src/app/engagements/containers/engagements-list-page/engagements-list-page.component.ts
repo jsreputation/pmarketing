@@ -3,7 +3,10 @@ import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/m
 import { map, tap } from 'rxjs/operators';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
+import {
+  CreateEngagementPopupComponent
+} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+
 
 
 export interface Engagements {
@@ -42,27 +45,19 @@ export class EngagementsListPageComponent implements AfterViewInit {
   }
 
   public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
+    this.dialog.open(CreateEngagementPopupComponent);
   }
 
-  public editItem(id: number) {
-    console.log(id);
+  public editItem() {
   }
 
-  public duplicateItem(id: number) {
-    console.log(id);
+  public duplicateItem() {
   }
 
-  public deleteItem(id: number) {
-    console.log(id);
+  public deleteItem() {
   }
 
-  public useAsCaptionItem(id: number) {
-    console.log(id);
+  public useAsCaptionItem() {
   }
 
   private getData() {

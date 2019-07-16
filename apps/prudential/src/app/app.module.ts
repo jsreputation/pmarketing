@@ -11,7 +11,8 @@ import {
   AuthenticationModule,
   OauthModule,
   CampaignModule,
-  GameModule
+  GameModule,
+  UtilsModule
 } from '@perx/core/dist/perx-core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -71,7 +72,8 @@ import { ResultComponent } from './result/result.component';
     CampaignModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
     AuthenticationModule,
-    FormsModule
+    FormsModule,
+    UtilsModule
   ],
   providers: [
     DatePipe

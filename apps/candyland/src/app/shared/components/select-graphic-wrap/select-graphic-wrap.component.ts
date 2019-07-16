@@ -8,7 +8,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -45,6 +45,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   public destroy$ = new Subject();
+  public lock: boolean;
 
   public onChange: any = () => {};
   public onTouch: any = () => {};
@@ -71,7 +72,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {
@@ -90,7 +91,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
         takeUntil(this.destroy$)
       )
       .subscribe((value) => {
-        console.log('subscribeControlDefaultValueChanges', value);
         this.setSelectedGraphic(value);
       });
   }
@@ -106,7 +106,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
         takeUntil(this.destroy$)
       )
       .subscribe((value) => {
-        console.log('subscribeControlUploadValueChanges', value);
         this.setSelectedGraphic(value);
       });
   }
