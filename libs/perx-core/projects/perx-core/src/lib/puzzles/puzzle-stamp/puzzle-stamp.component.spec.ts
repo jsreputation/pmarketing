@@ -1,18 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { PuzzleStampComponent } from './puzzle-stamp.component';
+import { UtilsModule } from '../../utils/utils.module';
+import { StampComponent } from './stamp/stamp.component';
+import { MaterialModule } from '../../shared/material.module';
 
 describe('PuzzleStampComponent', () => {
   let component: PuzzleStampComponent;
   let fixture: ComponentFixture<PuzzleStampComponent>;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
-      declarations: [PuzzleStampComponent]
-    });
+      declarations: [PuzzleStampComponent, StampComponent],
+      imports: [UtilsModule, MaterialModule]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(PuzzleStampComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('can load instance', () => {
