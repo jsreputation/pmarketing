@@ -18,7 +18,7 @@ export class AuthenticationService implements AuthService {
   public maxRetries: number = 2;
   public preAuthJWT: string;
   public didFailAuth: boolean = false;
-  public failedAuthObservable: Subject = new BehaviorSubject(this.didFailAuth);
+  public failedAuthObservable: Subject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,
