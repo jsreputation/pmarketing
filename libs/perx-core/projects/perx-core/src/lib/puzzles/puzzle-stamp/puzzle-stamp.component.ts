@@ -79,7 +79,6 @@ export class PuzzleStampComponent implements OnInit {
     let i = 0;
     while (i < this.nbAvailablePieces) {
       if (i === this.cols * this.rows - this.nbPlayedPieces) {
-        console.log('should break');
         break;
       }
       this.movedItems.push(this.currentClick++);
