@@ -1,4 +1,6 @@
-<div class="graphic-wrap" *ngIf="graphicList">
+<div class="graphic-wrap" *ngIf="graphicList"
+     [class.field-lock]="lock"
+>
   <cl-images-preview *ngFor="let graphic of graphicList"
                      [img]="graphic"
                      class="graphic-image-preview"
