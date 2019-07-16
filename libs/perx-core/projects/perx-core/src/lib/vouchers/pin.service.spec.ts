@@ -17,7 +17,6 @@ enum REDEMPTION_TYPE {
   none = 'none'
 }
 
-
 describe('PinService', () => {
   let service: PinService;
   let vouchersService: VouchersService;

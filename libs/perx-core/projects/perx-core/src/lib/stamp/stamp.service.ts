@@ -27,7 +27,7 @@ import { IStampService } from './istamp.service';
   providedIn: 'root'
 })
 export class StampService implements IStampService {
-  baseUrl: string;
+  public baseUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -37,7 +37,7 @@ export class StampService implements IStampService {
     this.baseUrl = config.env.apiHost;
   }
 
-  getCards(campaignId: number): Observable<IStampCard[]> {
+  public getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IGetStampCardsResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
         params: {
@@ -49,7 +49,7 @@ export class StampService implements IStampService {
     );
   }
 
-  getCurrentCard(campaignId: number): Observable<IStampCard> {
+  public getCurrentCard(campaignId: number): Observable<IStampCard> {
     return this.http.get<IGetStampCardResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`
     ).pipe(
@@ -57,7 +57,7 @@ export class StampService implements IStampService {
     );
   }
 
-  getStamps(campaignId: number): Observable<IStamp[]> {
+  public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IGetStampTransactionsResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
         params: {
@@ -95,7 +95,7 @@ export class StampService implements IStampService {
       );
   }
 
-  putStamp(stampId: number): Observable<IStamp> {
+  public putStamp(stampId: number): Observable<IStamp> {
     return this.http.put<IPutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampId}`,
       null
