@@ -57,4 +57,8 @@ export {
   IProfile,
   IProfileResponse
  } from './lib/profile/profile.model';
+
+export { LoyaltyModule } from './lib/loyalty/loyalty.module';
+export { LoyaltyService } from './lib/loyalty/loyalty.service';
+
 export { UtilsModule } from './lib/utils/utils.module';
