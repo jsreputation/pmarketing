@@ -10,9 +10,10 @@ import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
 export class EngagementTypeComponent implements OnInit, IInkBarHost {
   @Output() selectType = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
+  @Input() public selectedType: IGraphic;
 
   @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
-  public selectedType: IGraphic;
+
   constructor() { }
 
   ngOnInit() {

@@ -14,45 +14,46 @@
       <cl-engagement-type #engagementHost
                           [clInkHost]="engagementHost"
                           (selectType)="setType($event)"
+                          [selectedType]="selectedType"
                           [graphicList]="engagementType$ | async"
       >
       </cl-engagement-type>
     </cl-ink>
   </div>
 
-  <div class="nested-type" [ngSwitch]="selectedType?.type">
-    <!-- hide this component connected with task PW-364 Hide bottom
-    part of the engagement creation popup when not in game case
-    -->
-    <!--<cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>-->
-    <cl-games *ngSwitchCase="engagementType.games"
-              (selectGame)="setGame($event)"
-              [graphicList]="gamesType$ | async"
-              [selectedGame]="selectedGame"
-    ></cl-games>
-    <!--<cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>-->
-    <!--<cl-instant-reward *ngSwitchCase="engagementType.instantReward"></cl-instant-reward>-->
-  </div>
+<div class="nested-type" [ngSwitch]="selectedType?.type">
+  <!-- hide this component connected with task PW-364 Hide bottom
+  part of the engagement creation popup when not in game case
+  -->
+  <!--<cl-survey *ngSwitchCase="engagementType.survey"></cl-survey>-->
+  <cl-games *ngSwitchCase="engagementType.games"
+            (selectGame)="setGame($event)"
+            [graphicList]="gamesType$ | async"
+            [selectedGame]="selectedGame"
+  ></cl-games>
+  <!--<cl-stamp *ngSwitchCase="engagementType.stamp"></cl-stamp>-->
+  <!--<cl-instant-reward *ngSwitchCase="engagementType.instantReward"></cl-instant-reward>-->
+</div>
 
 </mat-dialog-content>
 <div class="dialog-actions"
 >
-  <cl-button [classList]="'third'"
-             class="actions-close"
-             (click)="close()"
-             [disableRipple]="true"
-  >
-        <span>
-          Cancel
-        </span>
-  </cl-button>
+<cl-button [classList]="'third'"
+           class="actions-close"
+           (click)="close()"
+           [disableRipple]="true"
+>
+      <span>
+        Cancel
+      </span>
+</cl-button>
 
-  <cl-button [classList]="'primary'"
-             (click)="next()"
-             [disableRipple]="true"
-  >
-        <span>
-          Next
-        </span>
-  </cl-button>
+<cl-button [classList]="'primary'"
+           (click)="next()"
+           [disableRipple]="true"
+>
+      <span>
+        Next
+      </span>
+</cl-button>
 </div>
