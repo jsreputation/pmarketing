@@ -1,4 +1,6 @@
-<div class="upload-wrap">
+<div class="upload-wrap"
+     [class.field-lock]="lock"
+>
   <input #fileInput type="file"
          *ngIf="!imgURL"
          class="upload-input"

@@ -28,7 +28,6 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formReward.value);
     this.router.navigateByUrl('/engagements');
   }
 

@@ -30,7 +30,6 @@ export class NewPinataPageComponent implements OnInit {
 
 
   public save(): void {
-    console.log(this.formPinata.value);
     this.router.navigateByUrl('/engagements');
   }
 

@@ -58,7 +58,6 @@ export class NewShakePageComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.shakeTree.value);
     this.router.navigateByUrl('/engagements');
   }
 

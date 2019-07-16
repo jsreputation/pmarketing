@@ -55,7 +55,6 @@ export class NewStampComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formStamp.value);
     this.router.navigateByUrl('/engagements');
   }
 

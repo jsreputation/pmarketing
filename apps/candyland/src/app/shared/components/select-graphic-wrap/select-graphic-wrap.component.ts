@@ -47,6 +47,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   public destroy$ = new Subject();
+  public lock: boolean;
 
   public onChange: any = () => {};
   public onTouch: any = () => {};
@@ -74,7 +75,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {
