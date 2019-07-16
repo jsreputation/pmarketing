@@ -10,7 +10,8 @@ import {
   AuthenticationModule,
   CampaignModule,
   PopupComponent,
-  VouchersModule
+  VouchersModule,
+  StampModule
 } from '@perx/core/dist/perx-core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -22,6 +23,7 @@ import {
 } from '@angular/material';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GameComponent,
     CongratsComponent,
     LoginComponent,
-    PopupComponent
+    PopupComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
+    StampModule.forRoot({ env: environment }),
     AuthenticationModule,
     BrowserAnimationsModule
   ],

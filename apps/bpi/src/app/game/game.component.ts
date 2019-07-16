@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
+import { /*Router,*/ ActivatedRoute } from '@angular/router';
+import {
+  StampService,
+  CampaignService,
+  CAMPAIGN_TYPE,
+  ICampaign,
+  IStampCard,
+  STAMP_CARD_STATE,
+  STAMP_STATE
+} from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
-import { NotificationService } from '../notification.service';
+// import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-game',
@@ -21,10 +29,11 @@ export class GameComponent implements OnInit {
   keys = 0;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
-    private notificationService: NotificationService
+    private stampService: StampService,
+    // private notificationService: NotificationService
   ) {
   }
 
@@ -61,38 +70,37 @@ export class GameComponent implements OnInit {
   }
 
   private fetchCards() {
-    this.campaignService.getCards(this.campaignId)
+    this.stampService.getCards(this.campaignId)
       .pipe(
-        map(cards => cards.filter(card => card.state === STAMP_CARD_STATUS.active))
+        map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
       )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
-          this.keys += card.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
+          this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
           const totalSlots = card.display_properties.total_slots || 0;
-          return card.state === STAMP_CARD_STATUS.active &&
+          return card.state === STAMP_CARD_STATE.active &&
             card.stamps &&
-            card.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length < totalSlots;
+            card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
         });
 
         const unlockedCards = cards.filter(card => {
           const totalSlots = card.display_properties.total_slots || 0;
-          return card.state === STAMP_CARD_STATUS.active &&
+          return card.state === STAMP_CARD_STATE.active &&
             card.stamps &&
-            card.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length >= totalSlots;
+            card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots;
         });
 
         this.cards = [
           ...lockedCards,
           ...unlockedCards
         ];
-        console.log(this.cards);
         this.sortCards();
       });
   }
 
   getPlayedPieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
-      const redeemedStamps = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed);
+      const redeemedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.redeemed);
       return redeemedStamps.length;
     }
 
@@ -101,7 +109,7 @@ export class GameComponent implements OnInit {
 
   getAvailablePieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
-      const issuedStamps = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued);
+      const issuedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.issued);
       return issuedStamps.length;
     }
 
@@ -112,8 +120,7 @@ export class GameComponent implements OnInit {
     nbPlayedPieces: number,
     nbAvailablePieces: number
   }) => {
-    const stamps = card.stamps && card.stamps.filter(s => s.state === TRANSACTION_STATE.issued) || [];
-    console.log(stamps.length);
+    const stamps = card.stamps && card.stamps.filter(s => s.state === STAMP_STATE.issued) || [];
     if (stamps.length === 0) {
       return;
     }
@@ -121,27 +128,24 @@ export class GameComponent implements OnInit {
     let numOfStampsToRedeem = stamps.length - move.nbAvailablePieces;
     let index = 0;
     while (numOfStampsToRedeem > 0) {
-      console.log(index);
-      const stamp = stamps[index];
-      console.log(stamp);
-      stamp.state = TRANSACTION_STATE.redeemed;
-      this.keys--;
-      this.campaignService.putStampTransaction(stamp.id)
-        .subscribe(
-          (res) => {
-            if (res.data.state === TRANSACTION_STATE.redeemed) {
-              if (res.data.vouchers && res.data.vouchers.length > 0) {
-                this.router.navigate(['/congrats']);
-              }
-            }
-          },
-          () => {
-            this.notificationService.addPopup({
-              title: 'Something went wrong, with our server',
-              text: 'We notified our team. Sorry about the inconvenience.'
-            });
-          }
-        );
+      const s = stamps[index];
+      s.state = STAMP_STATE.redeemed;
+      // this.stampService.putStamp(s.id)
+      //   .subscribe(
+      //     (stamp) => {
+      //       if (stamp.state === STAMP_STATE.redeemed) {
+      //         if (stamp.vouchers && stamp.vouchers.length > 0) {
+      //           this.router.navigate(['/congrats']);
+      //         }
+      //       }
+      //     },
+      //     () => {
+      //       this.notificationService.addPopup({
+      //         title: 'Something went wrong, with our server',
+      //         text: 'We notified our team. Sorry about the inconvenience.'
+      //       });
+      //     }
+      //   );
 
       index++;
       numOfStampsToRedeem--;

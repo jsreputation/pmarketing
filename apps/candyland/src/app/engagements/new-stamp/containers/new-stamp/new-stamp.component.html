@@ -1,7 +1,3 @@
-<p>
-  new-stamp-page works!
-</p>
-
 <ul>
   <li><a routerLink="settings">settings</a></li>
   <li><a routerLink="rules">rules</a></li>
@@ -9,3 +5,218 @@
 </ul>
 
 <router-outlet></router-outlet>
+<section class="stamp-wrap" [formGroup]="formStamp">
+  <div class="page-header full-with">
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text" matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="game-actions">
+      <cl-button [classList]="'third'"
+                 class="stamp-btn-cancel"
+                 (click)="comeBack()"
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+                 (click)="save()"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <section class="content flex">
+    <div class="stamp-form">
+      <mat-card class="game-graphic">
+        <div class="stamp-wrap">
+          <p class="sub-title">
+            Messages
+          </p>
+        </div>
+        <div class="stamp-form">
+          <div class="control-input">
+            <mat-form-field class="mat-form-field">
+              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="control-input">
+            <mat-form-field class="mat-form-field">
+              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="game-title-wrap">
+          <p class="sub-title">
+            Game graphic
+          </p>
+        </div>
+        <div class="game-form">
+          <div class="game-number">
+            <div class="control-input"
+                 *ngIf="stampNumbers$ | async as stampNumbers"
+            >
+              <mat-form-field class="game-stamp-select">
+                <mat-label>Total number of stamps on a card</mat-label>
+                <mat-select formControlName="stampsNumber">
+                  <mat-option *ngFor="let stamp of stampNumbers" [value]="stamp.value">
+                    {{stamp.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="game-number game-number-slot">
+            <div class="control-input"
+                 *ngIf="stampSlotNumbers$ | async as stampSlotNumbers"
+            >
+              <mat-form-field class="game-stamp-select">
+                <mat-label>Reward slot</mat-label>
+                <mat-select formControlName="stampsSlotNumber" [multiple]="true">
+                  <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot.value">
+                    {{stampSlot.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="game-background-box">
+            <p class="game-title">
+              Pre-stamp
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="preStamps$ | async as preStamps"
+                formControlName="preStamp"
+                class="game-selected-graphic"
+                [graphicList]="preStamps"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+          <div class="game-background-box">
+            <p class="game-title">
+              Reward Pre-stamp
+              <cl-info-hint>
+                <span class="info-text">You can set the rewards when&nbsp;</span>
+                <span class="info-text">you create a campaign</span>
+              </cl-info-hint>
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="rewardPreStamps$ | async as rewardPreStamps"
+                formControlName="rewardPreStamps"
+                class="game-selected-graphic"
+                [graphicList]="rewardPreStamps"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+          <div class="game-background-box">
+            <p class="game-title">
+              Post-stamp
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="postStamps$ | async as postStamps"
+                formControlName="postStamps"
+                class="game-selected-graphic"
+                [graphicList]="postStamps"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+          <div class="game-background-box">
+            <p class="game-title">
+              Reward Post-stamp
+              <cl-info-hint>
+                <span class="info-text">You can set the rewards when&nbsp;</span>
+                <span class="info-text">you create a campaign</span>
+              </cl-info-hint>
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="rewardPostStamps$ | async as rewardPostStamps"
+                formControlName="rewardPostStamps"
+                class="game-selected-graphic"
+                [graphicList]="rewardPostStamps"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+          <div class="game-background-box">
+            <p class="game-title">
+              Card Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="cardBackground$ | async as cardBackground"
+                formControlName="cardBackground"
+                class="game-selected-graphic"
+                [graphicList]="cardBackground"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+
+          <div class="game-background-box">
+            <p class="game-title">
+              Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="backgrounds$ | async as backgrounds"
+                formControlName="background"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <cl-game-mobile-preview-stamp></cl-game-mobile-preview-stamp>
+  </section>
+
+</section>

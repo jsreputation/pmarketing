@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    let primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
+    const primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
     if (!!primaryIdentifier) {
       (window as any).primaryIdentifier = primaryIdentifier;
     }
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           if (this.authed) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
-            this.router.navigateByUrl('game');
+            this.router.navigateByUrl('landing');
           }
         },
         (_) => {

@@ -10,7 +10,16 @@ import { GameComponent } from './game.component';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from '../header/header.component';
-import { PerxCoreModule, IStampCard, VouchersModule, CampaignModule, AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import {
+  PerxCoreModule,
+  IStampCard,
+  VouchersModule,
+  CampaignModule,
+  StampModule,
+  AuthenticationModule,
+  CognitoModule,
+  OauthModule
+} from '@perx/core/dist/perx-core';
 import { MatToolbarModule } from '@angular/material';
 import { environment } from '../../environments/environment';
 
@@ -28,6 +37,7 @@ describe('GameComponent', () => {
         MatToolbarModule,
         VouchersModule.forRoot({ env: environment }),
         CampaignModule.forRoot({ env: environment }),
+        StampModule.forRoot({ env: environment }),
         AuthenticationModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),

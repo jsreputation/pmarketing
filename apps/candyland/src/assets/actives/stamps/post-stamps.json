@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "type": "post-stamp-1",
+    "title": "icon",
+    "img": "assets/images/stamps/post-stamps/post-stamp-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  {
+    "id": 2,
+    "type": "post-stamp-2",
+    "title": "icon",
+    "img": "assets/images/stamps/post-stamps/post-stamp-2.png",
+    "format": ".png",
+    "active": "false"
+  },
+  {
+    "id": 3,
+    "type": "post-stamp-3",
+    "title": "icon",
+    "img": "assets/images/stamps/post-stamps/post-stamp-3.png",
+    "format": ".png",
+    "active": "false"
+  }
+]
