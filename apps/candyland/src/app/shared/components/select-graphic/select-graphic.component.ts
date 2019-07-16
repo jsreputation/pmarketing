@@ -17,7 +17,7 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
   @Input() public selectedGraphic: IGraphic;
   @Input() public graphicList: IGraphic[];
   @Output() private selectGraphic = new EventEmitter<IGraphic>();
-
+  public lock: boolean;
   public onChange: any = () => {};
   public onTouch: any = () => {};
 
@@ -49,7 +49,7 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {

@@ -50,9 +50,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(value => {
-        console.log('value', value);
         this.dataSource.filter = value;
-        // console.log(value);
         // let date = value['date'];
         // ({date, ...value} = {...value, ...date}); //tslint:disable-line
         // this.dataSource.setFilters(value);

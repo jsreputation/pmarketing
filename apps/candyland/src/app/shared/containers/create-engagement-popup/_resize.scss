@@ -1,0 +1,23 @@
+@import "variables";
+@media (max-width: $desktop-width) {
+
+}
+
+@media (max-width: $tablet-width) {
+
+}
+
+@media (max-width: $mobile-width) {
+  .dialog-actions {
+    justify-content: center;
+    padding: 3.4rem .2rem;
+  }
+
+  .dialog-content-title {
+    font-size: 15px;
+  }
+
+  .dialog-header-wrap {
+    width: auto;
+  }
+}

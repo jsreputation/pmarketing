@@ -1,5 +1,5 @@
 <div class="center-board" [ngStyle]="getImageSize()">
-  <mat-grid-list [cols]="cols" [rowHeight]="getWidthHeightRatio()">
+  <mat-grid-list *ngIf="imageReady" [cols]="cols" [rowHeight]="getWidthHeightRatio()" gutterSize="1px">
     <mat-grid-tile *ngFor="let tile of boardPuzzleTiles">
       <img class="custom-puzzle-image" [ngStyle]="getPuzzleTileStyle(tile)"/>
     </mat-grid-tile>

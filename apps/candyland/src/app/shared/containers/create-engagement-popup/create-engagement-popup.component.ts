@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { IEngagementType } from './engagement-type/models/engagement-type.model';
 import { EngagementType } from './shared/models/EngagementType';
 import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 export enum gamesRouterLink {
   shakeTheTree = 'engagements/games/new-shake',
@@ -18,7 +18,7 @@ export enum gamesRouterLink {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateEngagementPopupComponent implements OnInit {
-  public selectedType: IEngagementType;
+  public selectedType: IGraphic;
   public engagementType = EngagementType;
   public engagementType$: Observable<IGraphic[]>;
   public gamesType$: Observable<IGraphic[]>;
@@ -52,7 +52,7 @@ export class CreateEngagementPopupComponent implements OnInit {
     this.close();
   }
 
-  public setType(type: IEngagementType): void {
+  public setType(type: IGraphic): void {
     this.selectedType = type;
   }
 
@@ -66,9 +66,19 @@ export class CreateEngagementPopupComponent implements OnInit {
   }
 
   private getEngagementType(): void {
-    this.engagementType$ = this.engagementsService.getEngagementType();
+    this.engagementType$ = this.engagementsService.getEngagementType()
+      .pipe(
+        tap((data) => {
+          this.selectedType = data[0];
+        })
+      );
   }
   private getGamesType(): void {
-    this.gamesType$ = this.engagementsService.getGamesType();
+    this.gamesType$ = this.engagementsService.getGamesType()
+      .pipe(
+        tap((data) => {
+          this.selectedGame = data[0];
+        })
+      );
   }
 }
