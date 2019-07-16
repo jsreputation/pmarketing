@@ -165,7 +165,7 @@ interface IV4Campaign {
 
 @Injectable({ providedIn: 'root' })
 export class CampaignService implements ICampaignService {
-  baseUrl: string;
+  public baseUrl: string;
 
   constructor(private http: HttpClient, config: EnvConfig, private vouchersService: VouchersService) {
     this.baseUrl = config.env.apiHost;
@@ -184,7 +184,7 @@ export class CampaignService implements ICampaignService {
     };
   }
 
-  getCampaigns(): Observable<ICampaign[]> {
+  public getCampaigns(): Observable<ICampaign[]> {
     return this.http.get<ICampaign[]>(
       `${ this.baseUrl }/v4/campaigns`
     )
@@ -193,7 +193,7 @@ export class CampaignService implements ICampaignService {
     );
   }
 
-  getCards(campaignId: number): Observable<IStampCard[]> {
+  public getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IStampCardsResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
         params: {
@@ -205,13 +205,13 @@ export class CampaignService implements ICampaignService {
     );
   }
 
-  getCurrentCard(campaignId: number): Observable<IStampCardResponse> {
+  public getCurrentCard(campaignId: number): Observable<IStampCardResponse> {
     return this.http.get<IStampCardResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards/current`
     );
   }
 
-  putStampTransaction(stampTransactionId: number): Observable<IPutStampTransactionResponse> {
+  public putStampTransaction(stampTransactionId: number): Observable<IPutStampTransactionResponse> {
     return this.http.put<IPutStampTransactionResponse>(
       `${ this.baseUrl }/v4/stamp_transactions/${ stampTransactionId }`,
       null
@@ -224,7 +224,7 @@ export class CampaignService implements ICampaignService {
     );
   }
 
-  getAllStampTransaction(campaignId: number) {
+  public getAllStampTransaction(campaignId: number): Observable<any> {
     return this.http.get<IGetStampTransactionResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
         params: {
@@ -248,7 +248,7 @@ export class CampaignService implements ICampaignService {
     );
   }
 
-  getAllFromPage(campaignId: number, page: number): Observable<IStampTransaction[]> {
+  public getAllFromPage(campaignId: number, page: number): Observable<IStampTransaction[]> {
     return this.http.get<IGetStampTransactionResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`,
       {

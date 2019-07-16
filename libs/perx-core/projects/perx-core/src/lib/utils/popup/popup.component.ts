@@ -22,11 +22,10 @@ export interface PopUpClosedCallBack {
   styleUrls: ['./popup.component.css']
 })
 export class PopupComponent {
-
-  title: string = null;
-  text: string = null;
-  imageUrl: string = null;
-  buttonTxt = 'close';
+  public title: string = null;
+  public text: string = null;
+  public imageUrl: string = null;
+  public buttonTxt = 'close';
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -46,7 +45,7 @@ export class PopupComponent {
     }
   }
 
-  popUpClosed() {
+  public popUpClosed(): void {
     this.data.afterClosedCallBack.dialogClosed();
   }
 }

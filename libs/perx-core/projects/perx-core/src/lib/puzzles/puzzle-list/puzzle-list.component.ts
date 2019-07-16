@@ -7,24 +7,24 @@ import { IStampCard, CampaignService, STAMP_CARD_STATUS, TRANSACTION_STATE } fro
   styleUrls: ['./puzzle-list.component.css']
 })
 export class PuzzleListComponent implements OnChanges {
-  puzzles: IStampCard[];
+  public puzzles: IStampCard[];
 
   @Input()
-  campaignId: number = null;
+  public campaignId: number = null;
   @Input()
-  iconDisplay = 'arrow_forward_ios';
+  public iconDisplay = 'arrow_forward_ios';
 
-  total = 6;
-
-  @Output()
-  selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
+  public total = 6;
 
   @Output()
-  completed: EventEmitter<void> = new EventEmitter<void>();
+  public selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
+
+  @Output()
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private campaignService: CampaignService) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
       this.puzzles = null;
       if (this.campaignId !== null) {
@@ -57,12 +57,12 @@ export class PuzzleListComponent implements OnChanges {
     }
   }
 
-  puzzleSelected(puzzle: IStampCard) {
+  public puzzleSelected(puzzle: IStampCard): void {
     this.selected.emit(puzzle);
   }
 
   // in the UX only mark the 1st active puzzle as active
-  isActive(puzzle: IStampCard): boolean {
+  public isActive(puzzle: IStampCard): boolean {
     // if there is no puzzle in list, it should never happen but return false
     if (!Array.isArray(this.puzzles)) {
       return false;
@@ -97,7 +97,7 @@ export class PuzzleListComponent implements OnChanges {
     }
   }
 
-  indexToLetter(index: number): string {
+  public indexToLetter(index: number): string {
     const base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (index < 0) {
       return '';
@@ -105,14 +105,14 @@ export class PuzzleListComponent implements OnChanges {
     return base[index % base.length];
   }
 
-  nbAvailableStamps(puzzle: IStampCard): number {
+  public nbAvailableStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
     }
     return puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
   }
 
-  nbPlacedStamps(puzzle: IStampCard): number {
+  public nbPlacedStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
     }

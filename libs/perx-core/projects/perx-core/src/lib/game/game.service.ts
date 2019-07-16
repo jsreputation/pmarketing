@@ -62,11 +62,11 @@ export class GameService implements IGameService {
     this.hostName = config.env.apiHost;
   }
 
-  play(gameId: number): Observable<any> {
+  public play(gameId: number): Observable<any> {
     return this.httpClient.put(`${this.hostName}/v4/games/${gameId}/play`, null);
   }
 
-  get(gameId: number): Observable<IGame> {
+  public get(gameId: number): Observable<IGame> {
     return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
       .pipe(
         map(res => res.data),
@@ -108,7 +108,7 @@ export class GameService implements IGameService {
       );
   }
 
-  getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
+  public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
     return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),

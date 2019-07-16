@@ -126,7 +126,6 @@ describe('CampaignService', () => {
 
   });
 
-
   it('should get stamp cards', (done: DoneFn) => {
     service.getCards(1)
       .subscribe(() => {

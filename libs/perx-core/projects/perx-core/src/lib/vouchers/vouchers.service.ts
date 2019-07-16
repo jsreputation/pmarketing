@@ -64,7 +64,7 @@ export class VouchersService implements IVoucherService {
     };
   }
 
-  getAll(): Observable<IVoucher[]> {
+  public getAll(): Observable<IVoucher[]> {
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
@@ -89,7 +89,7 @@ export class VouchersService implements IVoucherService {
       );
   }
 
-  getAllFromPage(page: number): Observable<IV4Voucher[]> {
+  public getAllFromPage(page: number): Observable<IV4Voucher[]> {
     return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}`)
       .pipe(
         map(res => res.data)
@@ -100,7 +100,7 @@ export class VouchersService implements IVoucherService {
     return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  get(id: number): Observable<IVoucher> {
+  public get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
     });
@@ -117,7 +117,7 @@ export class VouchersService implements IVoucherService {
     );
   }
 
-  redeemVoucher(id: number): Observable<any> {
+  public redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
@@ -128,7 +128,7 @@ export class VouchersService implements IVoucherService {
   }
 
   // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
-  reset(vouchers: IVoucher[] = []): void {
+  public reset(vouchers: IVoucher[] = []): void {
     this.vouchers = vouchers;
   }
 }
