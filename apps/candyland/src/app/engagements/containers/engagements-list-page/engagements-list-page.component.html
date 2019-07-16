@@ -45,10 +45,10 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #itemMenu="matMenu">
-            <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
-            <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
-            <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
-            <button mat-menu-item (click)="useAsCaptionItem(element?.id)">Use as campaign</button>
+            <button mat-menu-item (click)="editItem()">Edit</button>
+            <button mat-menu-item (click)="duplicateItem()">Duplicate</button>
+            <button mat-menu-item (click)="deleteItem()">Delete</button>
+            <button mat-menu-item (click)="useAsCaptionItem()">Use as campaign</button>
           </mat-menu>
         </td>
       </ng-container>

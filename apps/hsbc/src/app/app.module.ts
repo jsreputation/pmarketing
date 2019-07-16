@@ -19,6 +19,7 @@ import {
   CampaignModule,
   VouchersModule,
   ProfileModule,
+  StampModule,
   UtilsModule
 } from '@perx/core/dist/perx-core';
 import { environment } from '../environments/environment';
@@ -82,6 +83,7 @@ import { ProfileComponent } from './profile/profile.component';
     AuthenticationModule,
     CampaignModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
+    StampModule.forRoot({ env: environment }),
     FormsModule
   ],
   providers: [

@@ -25,7 +25,6 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formReward.value);
   }
 
   public comeBack(): void {
