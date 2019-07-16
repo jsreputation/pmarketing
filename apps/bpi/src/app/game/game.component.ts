@@ -50,14 +50,6 @@ export class GameComponent implements OnInit {
     }
   }
 
-  private sortCards() {
-    this.cards.sort((_A, b) => {
-      if (b.stamps.filter(stamp => stamp.state === 'redeemed').length === b.stamps.length) {
-        return -1;
-      }
-    });
-  }
-
   private fetchCampaign() {
     this.campaignService.getCampaigns()
       .pipe(
@@ -94,7 +86,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
-        this.sortCards();
+        this.checkKeys();
       });
   }
 
@@ -149,9 +141,6 @@ export class GameComponent implements OnInit {
 
       index++;
       numOfStampsToRedeem--;
-      if (numOfStampsToRedeem === 0) {
-        this.sortCards();
-      }
     }
   }
 
@@ -164,5 +153,16 @@ export class GameComponent implements OnInit {
 
   isCurrent(card) {
     return this.cards[0].id === card.id;
+  }
+
+  checkKeys() {
+    if (this.keys > 0) {
+      this.notificationService.addPopup({
+        title: `You have a total of ${this.keys} keys!`,
+        imageUrl: 'assets/key.png',
+        text: 'Tap the highlighted locks using your earned keys.',
+        buttonTxt: 'Start Unlocking!'
+      });
+    }
   }
 }
