@@ -25,8 +25,6 @@ export class PuzzleStampComponent implements OnInit {
   public movedItems = [];
   public currentClick;
 
-  constructor() {}
-
   public ngOnInit(): void {
     if (this.nbPlayedPieces > 0) {
       this.movedItems = Array.from(Array(this.nbPlayedPieces).keys());

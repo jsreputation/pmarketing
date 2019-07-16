@@ -25,8 +25,6 @@ export class PinataComponent implements OnInit, OnDestroy {
 
   public currentImg: string;
 
-  constructor() { }
-
   public ngOnInit(): void {
     this.currentImg = this.stillImg;
   }

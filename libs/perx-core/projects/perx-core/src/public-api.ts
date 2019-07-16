@@ -25,7 +25,6 @@ export {
   ICampaignService,
 } from './lib/campaign/icampaign.service';
 
-
 export {
   CAMPAIGN_TYPE,
   CAMPAIGN_STATE,
