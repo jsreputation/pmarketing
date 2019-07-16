@@ -3,7 +3,7 @@
      [ngClass]="{'active-item': game?.id === selectedGame?.id}"
 >
   <div class="game-wrap-img">
-    <img [src]="basePath + game.type + '.png'" alt="game-icon">
+    <img class="game-icon" [src]="basePath + game.type + '.png'" alt="game-icon">
   </div>
   <div class="game-content">
     <p class="game-title">
