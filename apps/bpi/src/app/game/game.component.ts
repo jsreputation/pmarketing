@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { /*Router,*/ ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, ICampaign, IStampCard, STAMP_CARD_STATUS, TRANSACTION_STATE } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
-// import { NotificationService } from '../notification.service';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-game',
@@ -21,10 +21,10 @@ export class GameComponent implements OnInit {
   keys = 0;
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
-    // private notificationService: NotificationService
+    private notificationService: NotificationService
   ) {
   }
 
@@ -126,22 +126,22 @@ export class GameComponent implements OnInit {
       console.log(stamp);
       stamp.state = TRANSACTION_STATE.redeemed;
       this.keys--;
-      // this.campaignService.putStampTransaction(stamp.id)
-      //   .subscribe(
-      //     (res) => {
-      //       if (res.data.state === TRANSACTION_STATE.redeemed) {
-      //         if (res.data.vouchers && res.data.vouchers.length > 0) {
-      //           this.router.navigate(['/congrats']);
-      //         }
-      //       }
-      //     },
-      //     () => {
-      //       this.notificationService.addPopup({
-      //         title: 'Something went wrong, with our server',
-      //         text: 'We notified our team. Sorry about the inconvenience.'
-      //       });
-      //     }
-      //   );
+      this.campaignService.putStampTransaction(stamp.id)
+        .subscribe(
+          (res) => {
+            if (res.data.state === TRANSACTION_STATE.redeemed) {
+              if (res.data.vouchers && res.data.vouchers.length > 0) {
+                this.router.navigate(['/congrats']);
+              }
+            }
+          },
+          () => {
+            this.notificationService.addPopup({
+              title: 'Something went wrong, with our server',
+              text: 'We notified our team. Sorry about the inconvenience.'
+            });
+          }
+        );
 
       index++;
       numOfStampsToRedeem--;

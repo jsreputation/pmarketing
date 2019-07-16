@@ -25,6 +25,7 @@
                 [ngClass]="isLessThanAvailblePieces(r, c) ? 'available' : ''"
                 [available]="isLessThanAvailblePieces(r, c)"
                 [isUnlockedAll]="isLessThanAvailblePieces(r, c) && isUnlockedAll"
+                [isCurrent]="isCurrent"
                 (moveCard)="cardClick()"
                 >
               </perx-core-stamp>

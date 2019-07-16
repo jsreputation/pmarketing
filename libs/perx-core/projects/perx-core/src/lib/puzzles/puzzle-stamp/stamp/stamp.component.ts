@@ -10,6 +10,7 @@ export class StampComponent implements OnInit, DoCheck {
   @Input() unlockImg: string;
   @Input() available: boolean;
   @Input() isUnlockedAll: boolean;
+  @Input() isCurrent: boolean;
 
   @Output() moveCard = new EventEmitter();
 
@@ -31,7 +32,9 @@ export class StampComponent implements OnInit, DoCheck {
 
   changeLockImage() {
     // lock to unlock animation on card click
-    this.imageLock = this.unlockImg; 
+    if(this.isCurrent) {
+      this.imageLock = this.unlockImg;
+    }
   }
 
   onCardUnlock(){
