@@ -32,7 +32,6 @@ import { LandingComponent } from './landing/landing.component';
     GameComponent,
     CongratsComponent,
     LoginComponent,
-    PopupComponent,
     LandingComponent
   ],
   imports: [
