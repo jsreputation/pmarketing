@@ -26,7 +26,7 @@ export class PopupComponent {
   public text: string = null;
   public imageUrl: string = null;
   public buttonTxt = 'close';
-  // public image: string = null;
+  public image: string = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
