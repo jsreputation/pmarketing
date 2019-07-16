@@ -8,6 +8,7 @@
 .sidenav {
   width: 17rem;
   background-color: #202c46;
+  position: fixed;
 
   &-data-container {
     padding: 0 1.2rem;
@@ -51,6 +52,7 @@
 
 .sidenav-content{
   position: relative;
+  min-height: 100vh;
 }
 
 .btn-text {

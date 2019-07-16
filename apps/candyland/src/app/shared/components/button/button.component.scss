@@ -1,5 +1,10 @@
 @import "variables";
 
+:host {
+  display: inline-flex;
+  height: fit-content;
+}
+
 .btn {
   min-width: 10rem;
   height: 4.6rem;
@@ -58,6 +63,7 @@
   color: $primary-color;
   padding-left: 0;
   height: 1.9rem;
+  line-height: 1.4rem;
 
   &:hover {
     color: #124cc8;

@@ -153,13 +153,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/animations@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-8.0.2.tgz#40eead82eee787d8c39767de28d0fb3fd98e560d"
-  integrity sha512-6buaGp6sgyLWbjioGU0Wp/O9nFEQqD2L18uX5g5P5hdpq0bgopAbBee7AefJ8Kc/Kf79FlaKu9fKP5AEkeC8tA==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/cdk@^8.0.1", "@angular/cdk@~8.0.1":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-8.0.1.tgz#106872aa7fac0c55144ed5dd60df9af7e24b436a"
@@ -222,13 +215,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/common@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-8.0.2.tgz#826ff5942a52a26b865a236afcab572d753e21c2"
-  integrity sha512-9lwrKso0XjyS7wu+8dEWa5yN1kCTdbelP6JElFhh0kAt0TbPVHJ/dXEwvIFk9/2MjYv2PbooQo1zsc5kAB2Rlg==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/compiler-cli@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-8.0.1.tgz#fdbf01b56f5b66092cf7b131f2bd7e63e23f9320"
@@ -270,13 +256,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/compiler@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-8.0.2.tgz#bb978479502ab9e17229dce10f096a21376f185c"
-  integrity sha512-ktobrxpWX1eCwbDKOIUm5GRj8WGlHW/8MAQvDDFUnsGqXBHfOGiaySiEYX/XjeN8qu34IfXs736QkdzpMM4+iw==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/core@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-8.0.1.tgz#29dd1236fba716d1b16e9df3e62b32b1fa22dc37"
@@ -284,24 +263,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/core@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-8.0.2.tgz#378204bcad9be3c9edd27db5bbc3f8346cfef083"
-  integrity sha512-g8BRvGZxTXb5GZ/xoC5Z94DGK3wMiD2jbmEQEbXGNM+c8E/Mo/W8GF44P7EU2d+V1oJoUh75SRK6U/StC+rLqA==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/forms@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.1.tgz#de8106d64ae69617b8bbf1ba1dd3d247a8385adc"
   integrity sha512-Hv0EK29ihe5zGu2TJVnQ5gNpRrT0Xu5RZMjbtjHKuVohGnhZfZJDqGvw9RfIOYdpuUs6ofQZuMNO/8NWSX8qvQ==
-  dependencies:
-    tslib "^1.9.0"
-
-"@angular/forms@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.2.tgz#2410c2ff85f67a20ce7a0190f947214d4f08e705"
-  integrity sha512-LGu3b/wjNMCki5PnMUsfQlyaVZVOedNO+XccfluP4ZBQ5G/E2cz2tJ0UIHg3RhLbbpWntmqokpYLyd7leUPpIQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -329,13 +294,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser-dynamic@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.0.2.tgz#2a5c0e5646aefd97437d74368db0074cf6ddbf42"
-  integrity sha512-i9hBmcXauiQpvzRRNbBpMbQSsRh9YMv9phw9Ih54w2LdTUB64Vtrm3scQEWZ0sIONY3QbwEtu57k8euQPASErQ==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/platform-browser@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-8.0.1.tgz#c58d09fd019a13928852a76d5bfda6c895c6d79b"
@@ -343,24 +301,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-8.0.2.tgz#8fb00b8e3e272f3fa81a6cd8082d316e8e33fe1f"
-  integrity sha512-iUoyhJ81jqvpmQI6Lu5NzRZR8azmnb2kX2FQ+LbwCvWQLfkLbTaa/Jl09/qN6KWpTsMogNQXVnjjgwoeaObvBw==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/router@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-8.0.1.tgz#54dbd116c8bb61ddd5bbe9957d24f16f34575707"
   integrity sha512-OfmPi0pa/C3l7cYjQEo6uWp7CCDH/4bDbvU6Bt7FnnVHqUI80Qu7sQq31pjipkZc71Ln5xr1NbKpE60Qn1Xveg==
-  dependencies:
-    tslib "^1.9.0"
-
-"@angular/router@~8.0.1":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@angular/router/-/router-8.0.2.tgz#0c20a462e52dd9519f40b735cc756408a440c52c"
-  integrity sha512-kgSqkvx3cgY0+ZTzkBVLa0sf0y0Fl7q3N+KX746pbCNjRRGa5gBkN7z+oyPDoG1l0fEiM6NLbFfcmuFwsdBO5w==
   dependencies:
     tslib "^1.9.0"
 

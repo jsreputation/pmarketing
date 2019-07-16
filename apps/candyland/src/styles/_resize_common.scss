@@ -1,0 +1,8 @@
+@import "variables";
+
+@media (max-width: $mobile-width) {
+  .mat-dialog-content {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}

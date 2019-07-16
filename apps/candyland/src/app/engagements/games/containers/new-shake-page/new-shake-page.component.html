@@ -23,6 +23,7 @@
     <div class="game-actions">
       <cl-button [classList]="'third'"
                  class="tree-btn-cancel"
+                 (click)="comeBack()"
 
       >
         <span>
@@ -40,7 +41,7 @@
   </div>
   <div class="content flex">
     <div class="tree-wrap-fields">
-      <mat-card>
+      <mat-card class="game-graphic">
         <div class="messages-wrap">
           <p class="sub-title">
             Messages
@@ -138,7 +139,7 @@
 
       </mat-card>
 
-      <mat-card class="game-button">
+      <mat-card class="game-button game-graphic">
         <div class="messages-wrap">
           <p class="sub-title">
             Button

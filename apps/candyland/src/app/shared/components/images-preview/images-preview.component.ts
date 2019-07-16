@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 
 @Component({
   selector: 'cl-images-preview',

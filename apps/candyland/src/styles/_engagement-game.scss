@@ -1,0 +1,36 @@
+@import "variables";
+
+mat-card.game-graphic {
+  padding: 2.4rem 2.4rem 4.7rem;
+}
+
+.mobile-preview-tabs {
+  mat-tab-header {
+    background: $white-color;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+  }
+}
+
+/* this style for mobile preview with tabs */
+
+.base-format {
+  width: 34.4rem;
+  height: 63.8rem;
+  background-position: 80% 100%;
+  background-repeat: no-repeat;
+}
+
+.mobile-preview {
+  &-single {
+    @extend .base-format;
+
+    background-image: url("/assets/images/mobile-phone/mobile_single.png");
+  }
+
+  &-multiple {
+    @extend .base-format;
+
+    background-image: url("/assets/images/mobile-phone/mobile_multiple.png");
+  }
+}

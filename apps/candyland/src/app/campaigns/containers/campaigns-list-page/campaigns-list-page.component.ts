@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
 import { CampaignsService } from '@cl-core/services/campaigns.service';
 
-
 @Component({
   selector: 'cl-campaigns-list-page',
   templateUrl: './campaigns-list-page.component.html',
@@ -45,27 +44,18 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   }
 
   public openDialog(): void {
-    // const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
   }
 
-  public editItem(id: number) {
-    console.log(id);
+  public editItem() {
   }
 
-  public duplicateItem(id: number) {
-    console.log(id);
+  public duplicateItem() {
   }
 
-  public deleteItem(id: number) {
-    console.log(id);
+  public deleteItem() {
   }
 
-  public pauseItem(id: number) {
-    console.log(id);
+  public pauseItem() {
   }
 
   private getData() {

@@ -19,7 +19,6 @@ export class LoginFormComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.formLogin.valid) {
-      console.log(this.formLogin);
       this.router.navigateByUrl('/dashboard');
     }
   }

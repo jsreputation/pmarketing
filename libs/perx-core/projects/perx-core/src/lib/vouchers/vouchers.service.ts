@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
+import { IVoucherService } from './ivoucher.service';
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -21,7 +22,7 @@ interface IV4Voucher {
 @Injectable({
   providedIn: 'root'
 })
-export class VouchersService {
+export class VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
 
   constructor(
@@ -37,13 +38,12 @@ export class VouchersService {
     if (thumbnail === undefined) {
       thumbnail = images.find((image: any) => image[`type`] === 'reward_logo');
     }
-    const thumbnailUrl = thumbnail && thumbnail.url;
+    const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: any) => image[`type`] === 'reward_banner');
-    const bannerUrl = banner && banner.url;
-    const merchantLogo = images.find((image: any) => image[`type`] === 'merchant_logo');
-    const merchantLogoUrl = merchantLogo && merchantLogo.url;
-    const redeemedOn = v[`redemption_date`];
-    const howToRedeem = reward.custom_fields && reward.custom_fields.how_to_redeem ? reward.custom_fields.how_to_redeem : null;
+    const rewardBanner = banner && banner.url;
+    const merchantImg = v[`merchantImg`] ? v[`merchantImg`] : null;
+    const redemptionSuccessTxt = v[`redemption_text`] ? v[`redemption_text`] : null;
+    const redemptionSuccessImg = v[`redemption_image`] ? v[`redemption_image`] : null;
 
     return {
       id: v[`id`],
@@ -51,19 +51,20 @@ export class VouchersService {
       state: v[`state`],
       name: v[`name`],
       code: v[`voucher_code`],
-      description: reward[`description`],
-      thumbnailUrl,
-      bannerUrl,
-      expiresAt: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
-      redeemedOn,
+      redemptionType: v[`redemption_type`][`type`],
+      thumbnailImg,
+      rewardBanner,
+      merchantImg,
       merchantName: reward[`merchant_name`],
-      merchantLogoUrl,
-      termsAndConditions: reward[`terms_and_conditions`],
-      howToRedeem
+      expiry: reward[`valid_to`] !== null ? new Date(reward[`valid_to`]) : null,
+      redemptionDate: v[`redemption_date`],
+      description: reward[`description`],
+      redemptionSuccessTxt,
+      redemptionSuccessImg
     };
   }
 
-  getAll(): Observable<IVoucher[]> {
+  public getAll(): Observable<IVoucher[]> {
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
@@ -88,7 +89,7 @@ export class VouchersService {
       );
   }
 
-  getAllFromPage(page: number): Observable<IV4Voucher[]> {
+  public getAllFromPage(page: number): Observable<IV4Voucher[]> {
     return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}`)
       .pipe(
         map(res => res.data)
@@ -99,7 +100,7 @@ export class VouchersService {
     return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  get(id: number): Observable<IVoucher> {
+  public get(id: number): Observable<IVoucher> {
     const found = this.vouchers.find(v => {
       return `${v.id}` === `${id}`;
     });
@@ -116,7 +117,7 @@ export class VouchersService {
     );
   }
 
-  redeemVoucher(id: number): Observable<any> {
+  public redeemVoucher(id: number): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
 
     return this.http.post(url, null, {}).pipe(
@@ -127,7 +128,7 @@ export class VouchersService {
   }
 
   // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
-  reset(vouchers: IVoucher[] = []): void {
+  public reset(vouchers: IVoucher[] = []): void {
     this.vouchers = vouchers;
   }
 }

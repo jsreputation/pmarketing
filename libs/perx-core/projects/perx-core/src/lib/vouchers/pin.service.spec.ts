@@ -5,6 +5,18 @@ import { VouchersModule } from './vouchers.module';
 import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
 
+enum VOUCHER_STATE {
+  issued = 'issued',
+  redeemed = 'redeemed',
+  expired = 'expired'
+}
+
+enum REDEMPTION_TYPE {
+  pin = 'pin',
+  txtCode = 'txtCode',
+  none = 'none'
+}
+
 describe('PinService', () => {
   let service: PinService;
   let vouchersService: VouchersService;
@@ -28,19 +40,25 @@ describe('PinService', () => {
     const mockReturn = {
       id: 1,
       rewardId: 52,
-      state: 'expired',
+      state: VOUCHER_STATE.expired,
       name: 'Vidyut what are you doing',
       code: '697974626635625878704f6750536e4b5231673762773d3d',
-      description: '',
-      thumbnailUrl: '',
-      bannerUrl: '',
-      expiresAt: new Date('2019-04-30T15:59:59.999Z'),
-      redeemedOn: new Date(),
+      redemptionType: REDEMPTION_TYPE.pin,
+      thumbnailImg: '',
+      rewardBanner: '',
+      merchantImg: '',
       merchantName: 'Kluang Station',
-      merchantLogoUrl: '',
-      termsAndConditions: '',
-      howToRedeem: ''
+      expiry: new Date('2019-04-30T15:59:59.999Z'),
+      redemptionDate: new Date(),
+      description: {
+        title: '',
+        content: '',
+        tag: []
+      },
+      redemptionSuccessTxt: '',
+      redemptionSuccessImg: ''
     };
+
     spyOn(vouchersService, 'get').and.returnValue(of(mockReturn));
     service.getPin(1)
       .subscribe(pinCode => {

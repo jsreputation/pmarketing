@@ -1,3 +1,151 @@
-<p>
-  new-instant-reward-appearance-page works!
-</p>
+<section class="reward-wrap" [formGroup]="formReward">
+  <div class="page-header full-with">
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text"  matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="game-actions">
+      <cl-button [classList]="'tertiary'"
+                 [disableRipple]="true"
+                 class="reward-btn-cancel"
+                 (click)="comeBack()"
+
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'third'"
+                 class="reward-btn-cancel"
+
+      >
+        <span>
+          Save as a draft
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+                 (click)="save()"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <section class="content flex">
+    <div class="reward-form">
+      <mat-card class="game-graphic">
+        <div class="reward-wrap">
+          <p class="sub-title">
+            Messages
+          </p>
+        </div>
+        <div class="reward-form" >
+          <div class="control-input">
+            <mat-form-field class="mat-form-field">
+              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="control-input">
+            <mat-form-field class="mat-form-field">
+              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="game-title-wrap">
+          <p class="sub-title">
+            Game graphic
+          </p>
+        </div>
+        <div class="game-form">
+          <p class="game-title">
+            <span>Banner Image</span>
+            <cl-info-hint>
+              <span class="info-text">
+                Image will be based on the
+              </span>
+              <span class="info-text">
+                reward/merchant in campaign creation.
+              </span>
+            </cl-info-hint>
+          </p>
+
+          <div class="game">
+            <mat-radio-group class="control-input" color="primary" formControlName="typeImage">
+              <mat-radio-button value="1">Merchant Image</mat-radio-button>
+              <mat-radio-button value="2">Reward Image</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="game-background-box">
+            <p class="game-title">
+              Card Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="rewardsCardBackground$ | async as backgrounds"
+                formControlName="cardBackground"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+
+          <div class="game-background-box">
+            <p class="game-title">
+              Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="rewardsBackground$ | async as backgrounds"
+                formControlName="background"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <cl-game-mobile-preview>
+    </cl-game-mobile-preview>
+  </section>
+</section>

@@ -23,7 +23,7 @@
     <div class="game-actions">
       <cl-button [classList]="'third'"
                  class="pinata-btn-cancel"
-
+                 (click)="comeBack()"
       >
         <span>
           Cancel
@@ -40,7 +40,7 @@
   </div>
   <section class="content flex">
     <div class="pinata-form">
-      <mat-card>
+      <mat-card class="game-graphic">
         <div class="pinata-wrap">
           <p class="sub-title">
             Messages
@@ -124,8 +124,6 @@
           </div>
         </div>
       </mat-card>
-
-      <!--next-->
     </div>
 
     <div class="mobile-preview">
