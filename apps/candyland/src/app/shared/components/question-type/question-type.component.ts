@@ -1,27 +1,84 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
+import { Component, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SurveyService } from '@cl-core/services/survey.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => QuestionTypeComponent),
+  multi: true,
+};
 @Component({
   selector: 'cl-question-type',
   templateUrl: './question-type.component.html',
-  styleUrls: ['./question-type.component.scss']
+  styleUrls: ['./question-type.component.scss'],
+  providers: [
+    EPANDED_TEXTAREA_VALUE_ACCESSOR
+  ]
 })
-export class QuestionTypeComponent implements OnInit, AfterViewInit {
+export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDestroy {
+  @Input() typeList: IEngagementType[];
+
   @ViewChild('matSelect', {static: true}) public matSelect: any;
-  toppings = new FormControl();
-  open = true;
-  toppingList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-  constructor() { }
+  public type = new FormControl();
+
+  private destroy$ = new Subject();
+
+  public onChange: any = () => {};
+  public onTouch: any = () => {};
+  constructor(private surveyService: SurveyService) { }
 
   toggle() {
     this.matSelect.open();
   }
 
   ngOnInit() {
+    this.getSurveyQuestionType();
+    this.subscribeControlValueChanges();
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.matSelect.trigger.nativeElement);
+  private subscribeControlValueChanges(): void {
+    this.type.valueChanges
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe((val) => {
+        this.onChange(val);
+        this.onTouch(val);
+      });
+  }
+
+  private getSurveyQuestionType(): void {
+    this.surveyService.getSurveyQuestionType()
+      .subscribe(res => {
+        this.type.patchValue(res[0].value);
+        this.typeList = res;
+      });
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.type.disable() : this.type.enable();
+  }
+
+  writeValue(obj: any): void {
+    if (obj !== undefined && this.type.value !== obj) {
+      this.type.patchValue(obj);
+      this.onChange(obj);
+      this.onTouch(obj);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

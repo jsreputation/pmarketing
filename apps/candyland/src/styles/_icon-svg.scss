@@ -2,8 +2,8 @@
 .icon {
   display: block;
   background-color: rgba(255, 255, 255, 0.51);
-  width: 18px !important;
-  padding: 0 0 0 16px !important;
+  width: 18px;
+  padding: 0 0 0 16px;
   box-sizing: content-box;
 }
 
@@ -50,10 +50,52 @@
 }
 
 .logout {
-  height: 18px;
+  height: 24px;
   mask: url("assets/images/icon-logout.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.rating {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-star.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.pictureChoice {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-image.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.longText {
+  mask: url("assets/images/engagement-question/question-type-icon/long-text-min.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.multipleChoice {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-spreadsheet.svg") no-repeat 50% 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.questionGroup {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-folder-open.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.date {
+  mask: url("assets/images/engagement-question/question-type-icon/calendar.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.phone {
+  mask: url("assets/images/engagement-question/question-type-icon/phone-min.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
 }
 
 .active {

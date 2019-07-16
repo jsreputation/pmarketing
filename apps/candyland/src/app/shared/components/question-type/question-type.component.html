@@ -1,6 +1,18 @@
 <div class="question-type-wrap">
-  <button (click)="toggle($event)">toggle</button>
-  <mat-select #matSelect [formControl]="toppings" (toggle)="toggle($event)" class="question-select-type">
-    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+  <button class="btn-in-group" (click)="toggle($event)">
+    <i class="icon" [ngClass]="type.value"></i>
+    <span class="btn-in-group_text">1</span>
+  </button>
+  <mat-select #matSelect [formControl]="type" (toggle)="toggle($event)" class="question-select-type">
+    <mat-optgroup class="view-group-label" label="Select question type">
+      <mat-option *ngFor="let type of typeList" [value]="type.value">
+        <div class="view-wrap">
+          <mat-icon class="view-mat-icon">
+            <img [src]="type?.img" alt="icon">
+          </mat-icon>
+          <div class="view-text">{{type.viewValue}}</div>
+        </div>
+      </mat-option>
+    </mat-optgroup>
   </mat-select>
 </div>

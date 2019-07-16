@@ -1,0 +1,11 @@
+@import "variables";
+
+.view {
+  &-group-label {
+
+    .mat-optgroup-label {
+      color: $dark-color;
+      padding-left: 3.2rem;
+    }
+  }
+}

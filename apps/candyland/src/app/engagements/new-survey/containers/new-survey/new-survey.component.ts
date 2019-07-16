@@ -9,6 +9,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 export class NewSurveyComponent implements OnInit {
   public formSurvey: FormGroup;
+  public surveyQuestionType: IEngagementType[];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -31,7 +32,6 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formSurvey.value);
   }
 
   private createSurveyForm(): void {
@@ -57,5 +57,6 @@ export class NewSurveyComponent implements OnInit {
       ]]
     });
   }
+
 
 }
