@@ -21,11 +21,8 @@ export class DashboardGameCardComponent implements OnInit {
   }
 
   public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
+    this.dialog.open(CreateEngagementPopupComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
   }
 
 }
