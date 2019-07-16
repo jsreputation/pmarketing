@@ -122,6 +122,7 @@ export class GameComponent implements OnInit {
     while (numOfStampsToRedeem > 0) {
       const s = stamps[index];
       s.state = STAMP_STATE.redeemed;
+      this.keys--;
       this.stampService.putStamp(s.id)
         .subscribe(
           (stamp) => {

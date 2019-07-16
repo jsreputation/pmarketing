@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { PuzzleStampComponent } from './puzzle-stamp.component';
-import { UtilsModule } from '../../utils/utils.module';
 import { StampComponent } from './stamp/stamp.component';
 import { MaterialModule } from '../../shared/material.module';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('PuzzleStampComponent', () => {
   let component: PuzzleStampComponent;
@@ -15,6 +15,7 @@ describe('PuzzleStampComponent', () => {
     })
     .compileComponents();
   }));
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PuzzleStampComponent);
