@@ -14,9 +14,8 @@ export class StampComponent implements OnInit, DoCheck {
 
   @Output() moveCard = new EventEmitter();
 
-
   imageLock: string;
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -25,26 +24,26 @@ export class StampComponent implements OnInit, DoCheck {
 
   ngDoCheck() {
     // lock to unlock animation on unlock all button click
-    if(this.isUnlockedAll) {
+    if (this.isUnlockedAll) {
       this.imageLock = this.unlockImg;
     }
   }
 
   changeLockImage() {
     // lock to unlock animation on card click
-    if(this.isCurrent) {
+    if (this.isCurrent) {
       this.imageLock = this.unlockImg;
     }
   }
 
-  onCardUnlock(){
-    if(this.available) {
+  onCardUnlock() {
+    if (this.available) {
       this.moveCard.emit();
     }
   }
 
   unlockAllAvailableCards() {
-    if(this.available) {
+    if (this.available) {
       this.imageLock = this.unlockImg;
     }
   }

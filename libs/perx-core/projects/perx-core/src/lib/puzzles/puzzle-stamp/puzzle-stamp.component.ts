@@ -97,16 +97,17 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   stampStyle() {
-    return this.bgImage && !this.isCompleted ? 
-    {'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000'} : {'background-image': 'none', 'background-color': 'transparent'};
+    return this.bgImage && !this.isCompleted ?
+    {'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000'} :
+    {'background-image': 'none', 'background-color': 'transparent'};
   }
 
   availablePieces() {
     this.btnTxt = this.nbAvailablePieces <= 0 ? 'Netflix rebate earned' : this.btnTxt;
-    if(this.nbAvailablePieces <= 0) {
+    if (this.nbAvailablePieces <= 0) {
       return 'btn-redeemed';
     }
-    if(!this.isCurrent) {
+    if (!this.isCurrent) {
       return 'btn-unavailable';
     }
   }

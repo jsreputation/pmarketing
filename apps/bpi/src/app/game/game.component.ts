@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { /*Router,*/ ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   StampService,
   CampaignService,
@@ -10,7 +10,7 @@ import {
   STAMP_STATE
 } from '@perx/core/dist/perx-core';
 import { map } from 'rxjs/operators';
-// import { NotificationService } from '../notification.service';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-game',
@@ -29,11 +29,11 @@ export class GameComponent implements OnInit {
   keys = 0;
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
     private stampService: StampService,
-    // private notificationService: NotificationService
+    private notificationService: NotificationService
   ) {
   }
 
@@ -51,9 +51,9 @@ export class GameComponent implements OnInit {
   }
 
   private sortCards() {
-    this.cards.sort((_a, b) => {
-      if(b.stamps.filter(stamp => stamp.state === 'redeemed').length === b.stamps.length) {
-        return -1
+    this.cards.sort((_A, b) => {
+      if (b.stamps.filter(stamp => stamp.state === 'redeemed').length === b.stamps.length) {
+        return -1;
       }
     });
   }
@@ -130,26 +130,26 @@ export class GameComponent implements OnInit {
     while (numOfStampsToRedeem > 0) {
       const s = stamps[index];
       s.state = STAMP_STATE.redeemed;
-      // this.stampService.putStamp(s.id)
-      //   .subscribe(
-      //     (stamp) => {
-      //       if (stamp.state === STAMP_STATE.redeemed) {
-      //         if (stamp.vouchers && stamp.vouchers.length > 0) {
-      //           this.router.navigate(['/congrats']);
-      //         }
-      //       }
-      //     },
-      //     () => {
-      //       this.notificationService.addPopup({
-      //         title: 'Something went wrong, with our server',
-      //         text: 'We notified our team. Sorry about the inconvenience.'
-      //       });
-      //     }
-      //   );
+      this.stampService.putStamp(s.id)
+        .subscribe(
+          (stamp) => {
+            if (stamp.state === STAMP_STATE.redeemed) {
+              if (stamp.vouchers && stamp.vouchers.length > 0) {
+                this.router.navigate(['/congrats']);
+              }
+            }
+          },
+          () => {
+            this.notificationService.addPopup({
+              title: 'Something went wrong, with our server',
+              text: 'We notified our team. Sorry about the inconvenience.'
+            });
+          }
+        );
 
       index++;
       numOfStampsToRedeem--;
-      if(numOfStampsToRedeem == 0) {
+      if (numOfStampsToRedeem === 0) {
         this.sortCards();
       }
     }
@@ -159,10 +159,10 @@ export class GameComponent implements OnInit {
   }
 
   isCompleted(card) {
-    return card.stamps.filter(stamp => stamp.state === 'redeemed').length == this.rows * this.cols;
+    return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * this.cols;
   }
 
   isCurrent(card) {
-    return this.cards[0].id == card.id;
+    return this.cards[0].id === card.id;
   }
 }
