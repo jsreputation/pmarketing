@@ -18,6 +18,11 @@ interface IV4Tag {
   name: string;
 }
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
 interface IV4Reward {
   id: number;
   name: string;
@@ -26,6 +31,7 @@ interface IV4Reward {
   valid_from: Date;
   valid_to: Date;
   favourite: boolean;
+  images?: IV4Image[];
   merchant_id?: number;
   merchant_name?: string;
   merchant_website?: string;
@@ -61,6 +67,7 @@ export class V4RewardsService extends RewardsService {
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
+      images: reward.images,
       validFrom: reward.valid_from,
       validTo: reward.valid_to,
       merchantId: reward.merchant_id,
