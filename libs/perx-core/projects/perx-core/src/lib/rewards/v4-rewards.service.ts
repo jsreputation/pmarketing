@@ -48,6 +48,7 @@ interface IV4GetRewardResponse {
 export class V4RewardsService extends RewardsService {
 
   private apiHost: string;
+  private rewardMeta: IV4Meta = {};
 
   constructor(private http: HttpClient, config: EnvConfig) {
     super();
@@ -82,7 +83,15 @@ export class V4RewardsService extends RewardsService {
         }
       }
     ).pipe(
-      map((res: IV4GetRewardsResponse) => res.data),
+      map((res: IV4GetRewardsResponse) => {
+        if (res.meta) {
+          this.rewardMeta = {
+            ...this.rewardMeta,
+            ...res.meta
+          };
+        }
+        return res.data;
+      }),
       map((rewards: IV4Reward[]) => rewards.map(
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
       ))
