@@ -25,39 +25,39 @@ export class PuzzlePlayComponent implements OnChanges {
   public img: string;
 
   @Input()
-  public showHint = false;
+  public showHint: false = false;
 
   @Input()
-  public rows = 2;
+  public rows: number = 2;
 
   @Input()
-  public cols = 3;
+  public cols: number = 3;
 
   @Input()
-  public nbPlayedPieces = 0;
+  public nbPlayedPieces: number = 0;
 
   @Input()
-  public nbAvailablePieces = 0;
+  public nbAvailablePieces: number = 0;
 
   @Output()
-  public moved = new EventEmitter<void>();
+  public moved: EventEmitter<void> = new EventEmitter<void>();
 
   @Output()
-  public completed = new EventEmitter<void>();
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
-  public tileWidth = 0;
-  public tileHeight = 0;
+  public tileWidth: number = 0;
+  public tileHeight: number = 0;
 
   public boardPuzzleTiles: DrawTile[] = [];
   public remainingPuzzleTiles: DrawTile[] = [];
 
   public totalPieces: number;
 
-  public imageWidth = 300;
-  public imageHeight = 200;
-  public imageReady = false;
+  public imageWidth: number = 300;
+  public imageHeight: number = 200;
+  public imageReady: boolean = false;
 
-  public staticPuzzleDummyTiles = [];
+  public staticPuzzleDummyTiles: number[][] = [];
 
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 

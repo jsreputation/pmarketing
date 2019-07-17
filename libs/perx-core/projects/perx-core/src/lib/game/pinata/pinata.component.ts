@@ -13,15 +13,15 @@ export class PinataComponent implements OnInit, OnDestroy {
   @Input()
   public openedImg: string;
   @Input()
-  public nbTaps = 5;
+  public nbTaps: number = 5;
   @Input()
-  public enabled = false;
+  public enabled: boolean = false;
 
   @Output() public tap: EventEmitter<number> = new EventEmitter();
   @Output() public broken: EventEmitter<void> = new EventEmitter();
 
-  public shakeAnimationClass = '';
-  private n = 0;
+  public shakeAnimationClass: string = '';
+  private n: number = 0;
 
   public currentImg: string;
 

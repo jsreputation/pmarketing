@@ -6,9 +6,9 @@ import { debounceTime } from 'rxjs/operators';
   selector: '[perxCoreAppDebounceClick]'
 })
 export class DebounceClickDirective implements OnInit, OnDestroy {
-  @Input() public debounceTime = 500;
-  @Output() public debounceClick = new EventEmitter();
-  private clicks = new Subject();
+  @Input() public debounceTime: number = 500;
+  @Output() public debounceClick: EventEmitter<Event> = new EventEmitter<Event>();
+  private clicks: Subject<Event> = new Subject<Event>();
   private subscription: Subscription;
 
   public ngOnInit(): void {
@@ -22,7 +22,7 @@ export class DebounceClickDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('click', ['$event'])
-  public clickEvent(event): void {
+  public clickEvent(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
     this.clicks.next(event);
