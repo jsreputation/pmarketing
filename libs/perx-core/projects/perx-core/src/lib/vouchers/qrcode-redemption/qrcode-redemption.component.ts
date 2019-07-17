@@ -12,13 +12,13 @@ import { VouchersService } from '../vouchers.service';
 export class QrcodeRedemptionComponent implements OnChanges {
 
   @Input()
-  voucherId: number;
+  public voucherId: number;
 
-  voucher$: Observable<IVoucher>;
+  public voucher$: Observable<IVoucher>;
 
   constructor(private vouchersService: VouchersService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
       this.voucher$ = this.vouchersService.get(this.voucherId);
     }

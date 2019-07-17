@@ -1,6 +1,6 @@
 export class EnvConfig {
     // defaults
-    env = {
+    public env: any = {
         apiHost: 'https://api.perxtech.io'
     };
 }

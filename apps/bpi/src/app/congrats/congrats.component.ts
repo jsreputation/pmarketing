@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CongratsComponent implements OnInit {
   title = 'CONGRATULATIONS!';
-  subTitle = 'You have unlocked your Netflix Rebate!';
+  subTitle = 'You have unlocked 1 out of 6 months of Netflix rebate!';
   constructor() {}
 
   ngOnInit() {}

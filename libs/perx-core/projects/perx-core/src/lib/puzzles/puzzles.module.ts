@@ -4,14 +4,17 @@ import { PuzzleListComponent } from './puzzle-list/puzzle-list.component';
 import { PuzzlePlayComponent } from './puzzle-play/puzzle-play.component';
 import { MaterialModule } from '../shared/material.module';
 import { PuzzleStampComponent } from './puzzle-stamp/puzzle-stamp.component';
+import { StampComponent } from './puzzle-stamp/stamp/stamp.component';
+import { UtilsModule } from '../utils/utils.module';
 
 @NgModule({
   declarations: [
     PuzzleListComponent,
     PuzzlePlayComponent,
-    PuzzleStampComponent
+    PuzzleStampComponent,
+    StampComponent
   ],
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, UtilsModule],
   exports: [
     PuzzleListComponent,
     PuzzlePlayComponent,

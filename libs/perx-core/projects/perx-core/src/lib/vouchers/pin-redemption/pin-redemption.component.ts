@@ -13,27 +13,27 @@ import { of } from 'rxjs';
 })
 export class PinRedemptionComponent implements OnInit, OnChanges {
   @Input()
-  length = 4;
+  public length: number = 4;
 
   @Output()
-  full: EventEmitter<string> = new EventEmitter<string>();
+  public full: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
-  hasErrorEmit: EventEmitter<number> = new EventEmitter<number>();
+  public hasErrorEmit: EventEmitter<number> = new EventEmitter<number>();
 
   @Output()
-  update: EventEmitter<string> = new EventEmitter<string>();
+  public update: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
-  pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
-  voucherId: number;
+  public voucherId: number;
 
-  pinCode: string;
+  public pinCode: string;
 
-  controls: FormControl[] = [];
-  hasError = '';
+  public controls: FormControl[] = [];
+  public hasError: string = '';
 
   constructor(
     private element: ElementRef,
@@ -42,7 +42,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     // length might not be a number
     if (typeof this.length === 'string') {
       this.length = Number.parseInt(this.length, 10);
@@ -57,7 +57,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
     this.controls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
   }
 
-  ngOnChanges(simpleChanges: SimpleChanges): void {
+  public ngOnChanges(simpleChanges: SimpleChanges): void {
     if (simpleChanges.voucherId) {
       this.pin.getPin(this.voucherId).subscribe(code => {
         this.pinCode = code;
@@ -65,7 +65,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
     }
   }
 
-  onUpdate() {
+  public onUpdate(): void {
     const v = this.value;
     if (v.length === this.length) {
       // if full length reached, emit on complete
@@ -83,7 +83,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
     this.update.emit(v);
   }
 
-  redeemVoucher() {
+  public redeemVoucher(): void {
     this.vouchersService.redeemVoucher(this.voucherId)
       .pipe(
         catchError((err: HttpErrorResponse) => {
@@ -97,7 +97,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
       });
   }
 
-  validateCode(code: string) {
+  public validateCode(code: string): boolean {
     const isValid = !!(code === this.pinCode);
     this.hasError = isValid ? '' : 'error';
 
@@ -110,7 +110,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
     }, '');
   }
 
-  onKey(event: KeyboardEvent): void {
+  public onKey(event: KeyboardEvent): void {
     // remove last letter
     if (event.key === 'Backspace') {
       const v = this.value;
@@ -121,11 +121,11 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
     }
   }
 
-  onBlur() {
+  public onBlur(): void {
     this.pinFocused.emit(false);
   }
 
-  onFocus() {
+  public onFocus(): void {
     this.pinFocused.emit(true);
   }
 }

@@ -12,13 +12,13 @@ import { OauthService } from '../v4/oauth/oauth.service';
 })
 export class AuthenticationService implements AuthService {
 
-  lastURL: string;
-  authing: boolean;
-  retries = 0;
-  maxRetries = 2;
-  preAuthJWT: string;
-  didFailAuth = false;
-  failedAuthObservable = new BehaviorSubject(this.didFailAuth);
+  public lastURL: string;
+  public authing: boolean;
+  public retries: number = 0;
+  public maxRetries: number = 2;
+  public preAuthJWT: string;
+  public didFailAuth: boolean = false;
+  public failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,
@@ -107,7 +107,7 @@ export class AuthenticationService implements AuthService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public async autoLogin() {
+  public async autoLogin(): Promise<boolean> {
     this.authing = true;
     let success = false;
 
@@ -128,7 +128,7 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public userAuth(bearer: string) {
+  public userAuth(bearer: string): Observable<any> {
     const userId = (window as any).primaryIdentifier;
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
@@ -158,7 +158,7 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public async v4AutoLogin() {
+  public async v4AutoLogin(): Promise<boolean> {
     this.authing = true;
     let success = false;
 
@@ -180,7 +180,7 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public preAuth() {
+  public preAuth(): Observable<any> {
     return this.cognitoService.authenticateAppWithPreAuth(location.host).pipe(
       tap((resp) => {
         // @ts-ignore
@@ -206,7 +206,7 @@ export class AuthenticationService implements AuthService {
    * PRIVATE HELPER FUNCTIONS
    */
 
-  private saveAccessData(accessToken: string) {
+  private saveAccessData(accessToken: string): void {
     this.tokenStorage.setAccessToken(accessToken);
   }
 

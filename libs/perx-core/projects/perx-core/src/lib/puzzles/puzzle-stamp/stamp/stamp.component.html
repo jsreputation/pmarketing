@@ -1,0 +1,11 @@
+<div 
+  perxCoreAppDebounceClick
+  [debounceTime]="1000"
+  (debounceClick)="onCardUnlock()"
+  (click)="changeLockImage()"
+>
+  <img
+    [src]="imageLock"
+    alt=""
+  />
+</div>

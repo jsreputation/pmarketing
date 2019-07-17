@@ -8,7 +8,7 @@ import {
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 
-export function factory(authenticationService: AuthenticationService) {
+export function factory(authenticationService: AuthenticationService): AuthenticationService {
   return authenticationService;
 }
 
