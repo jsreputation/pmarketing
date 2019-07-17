@@ -163,6 +163,10 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
+            if [ $APP == 'bpi' ]
+            then
+              echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
