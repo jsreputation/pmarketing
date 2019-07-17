@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from './env-config';
-import { ICampaign, CAMPAIGN_TYPE } from './models/campaign.model';
+import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 
 describe('CampaignService', () => {
@@ -56,7 +56,7 @@ describe('CampaignService', () => {
         expect(campaign.name).toBe('UAT GAME');
         expect(campaign.description).toBe('UAT description');
         expect(campaign.type).toBe('game');
-        expect(campaign.state).toBe(null);
+        expect(campaign.state).toBe(CAMPAIGN_STATE.active);
         done();
       });
 
@@ -69,18 +69,12 @@ describe('CampaignService', () => {
         {
           id: 1,
           name: 'UAT GAME',
+          state: CAMPAIGN_STATE.active,
           description: 'UAT description',
           begins_at: '2019-06-26T08:46:06.000Z',
           ends_at: null,
           enrolled: true,
           campaign_type: 'game',
-          campaign_referral_type: 'user',
-          campaign_config: {
-            campaign_results: {
-              count: 6,
-              first_result_id: 1
-            }
-          },
           images: [],
           favourite: false,
           custom_fields: {},
@@ -103,80 +97,18 @@ describe('CampaignService', () => {
       ends_at: null,
       enrolled: true,
       campaign_type: CAMPAIGN_TYPE.game,
-      campaign_referral_type: 'user',
-      campaign_config: {
-        campaign_results: {
-          count: 6,
-          first_result_id: 1
-        }
-      },
       images: [],
       favourite: false,
       custom_fields: {},
       category_tags: [],
       tags: [],
-      state: null,
-      icon: null
+      state: CAMPAIGN_STATE.active
     });
     expect(mapCampaign.id).toBe(1);
     expect(mapCampaign.name).toBe('UAT GAME');
     expect(mapCampaign.description).toBe('UAT description');
     expect(mapCampaign.type).toBe('game');
-    expect(mapCampaign.state).toBe(null);
+    expect(mapCampaign.state).toBe('active');
 
   });
-
-
-  it('should get stamp cards', (done: DoneFn) => {
-    service.getCards(1)
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
-
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/stamp_cards?size=100');
-
-    expect(req.request.method).toEqual('GET');
-
-    req.flush({ data: [] });
-
-    httpTestingController.verify();
-  });
-
-  it('should get current stamp card', (done: DoneFn) => {
-    service.getCurrentCard(1)
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
-
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/stamp_cards/current');
-
-    expect(req.request.method).toEqual('GET');
-
-    req.flush({ data: [] });
-
-    httpTestingController.verify();
-  });
-
-  it('should update stamp transaction', (done: DoneFn) => {
-    service.putStampTransaction(1)
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
-
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/stamp_transactions/1');
-
-    expect(req.request.method).toEqual('PUT');
-
-    req.flush({
-      data: {
-        vouchers: []
-      }
-    });
-
-    httpTestingController.verify();
-  });
-
 });
