@@ -148,6 +148,14 @@ export class GameComponent implements OnInit {
   public onCompleted(): void {
   }
 
+  public isCompleted(card: IStampCard): boolean {
+    return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * this.cols;
+  }
+
+  public isCurrent(card: IStampCard): boolean {
+    return this.cards[0].id === card.id;
+  }
+
   public checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
