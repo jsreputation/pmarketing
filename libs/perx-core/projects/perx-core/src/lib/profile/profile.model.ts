@@ -8,3 +8,7 @@ export interface IProfile {
 export interface IProfileResponse {
   data: IProfile;
 }
+
+export interface ICustomProperties {
+  [key: string]: string;
+}
