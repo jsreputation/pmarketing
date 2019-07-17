@@ -11,6 +11,13 @@ export interface IManStyle {
   left: string;
   bottom: string;
 }
+
+export interface IGift {
+  id: number;
+  status: GIFT_STATUS;
+  display: boolean;
+}
+
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
@@ -26,25 +33,25 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
   public waitingManCelebrateImg: string;
   @Input()
-  public nbShakes = 1;
+  public nbShakes: number = 1;
   @Input()
-  public nbHangedGifts = 1;
+  public nbHangedGifts: number = 1;
   @Input()
-  public nbFallingGifts = 10;
+  public nbFallingGifts: number = 10;
   @Input()
-  public enabled = false;
+  public enabled: boolean = false;
 
   @Input()
-  public distanceFromTree = 16;
+  public distanceFromTree: number = 16;
   @Input()
-  public bottomDistance = 5;
+  public bottomDistance: number = 5;
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
   @Output()
   public tap: EventEmitter<number> = new EventEmitter<number>();
 
-  public gifts = [
+  public gifts: IGift[] = [
     { id: 1, status: GIFT_STATUS.hang, display: true },
     { id: 2, status: GIFT_STATUS.hang, display: true },
     { id: 3, status: GIFT_STATUS.hang, display: true },
@@ -57,9 +64,9 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     { id: 10, status: GIFT_STATUS.hang, display: true }
   ];
 
-  public celebrate = false;
-  public shakeAnimationClass = '';
-  public n = 0;
+  public celebrate: boolean = false;
+  public shakeAnimationClass: string = '';
+  public n: number = 0;
 
   public ngOnInit(): void {
     this.updateGifts();

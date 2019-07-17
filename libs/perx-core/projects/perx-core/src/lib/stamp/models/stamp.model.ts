@@ -5,7 +5,7 @@ export interface IReward {
   modularizable_id: number;
   created_at: string;
   updated_at: string;
-  ordering: any|null;
+  // ordering: any|null;
   referee_required_for_reward: number;
   total_reward_limit: number;
   total_user_limit: number;
@@ -13,8 +13,8 @@ export interface IReward {
   award_to_referee: boolean;
   total_referree_limit: number;
   stamp_number: number;
-  total_referree_reward_limit: any|null;
-  hidden: any|null;
+  // total_referree_reward_limit: any|null;
+  // hidden: any|null;
 }
 
 export enum STAMP_STATE {

@@ -25,7 +25,7 @@ export class PopupComponent {
   public title: string = null;
   public text: string = null;
   public imageUrl: string = null;
-  public buttonTxt = 'close';
+  public buttonTxt: string = 'close';
   public image: string = null;
 
   constructor(

@@ -13,7 +13,7 @@ import { of } from 'rxjs';
 })
 export class PinRedemptionComponent implements OnInit, OnChanges {
   @Input()
-  public length = 4;
+  public length: number = 4;
 
   @Output()
   public full: EventEmitter<string> = new EventEmitter<string>();
@@ -33,7 +33,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   public pinCode: string;
 
   public controls: FormControl[] = [];
-  public hasError = '';
+  public hasError: string = '';
 
   constructor(
     private element: ElementRef,

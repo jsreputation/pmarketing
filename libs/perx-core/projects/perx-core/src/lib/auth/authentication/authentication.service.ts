@@ -14,11 +14,11 @@ export class AuthenticationService implements AuthService {
 
   public lastURL: string;
   public authing: boolean;
-  public retries = 0;
-  public maxRetries = 2;
+  public retries: number = 0;
+  public maxRetries: number = 2;
   public preAuthJWT: string;
-  public didFailAuth = false;
-  public failedAuthObservable = new BehaviorSubject(this.didFailAuth);
+  public didFailAuth: boolean = false;
+  public failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,
