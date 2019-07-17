@@ -25,9 +25,9 @@ export class PuzzleStampComponent implements OnInit {
   @Output() public moved = new EventEmitter();
   @Output() public completed = new EventEmitter();
 
-  protected isUnlockedAll = false;
+  public isUnlockedAll = false;
   protected count = 0;
-  protected btnTxt = 'Tap here to use all earned keys';
+  public btnTxt = 'Tap here to use all earned keys';
 
   public movedItems = [];
   public currentClick;

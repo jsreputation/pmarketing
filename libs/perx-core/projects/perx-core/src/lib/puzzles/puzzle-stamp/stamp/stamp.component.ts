@@ -14,7 +14,7 @@ export class StampComponent implements OnInit, DoCheck {
 
   @Output() public moveCard = new EventEmitter();
 
-  protected imageLock: string;
+  public imageLock: string;
 
   public ngOnInit(): void {
     this.imageLock = this.lockImg;
