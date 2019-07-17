@@ -22,48 +22,48 @@ interface DrawTile {
 })
 export class PuzzlePlayComponent implements OnChanges {
   @Input()
-  img: string;
+  public img: string;
 
   @Input()
-  showHint = false;
+  public showHint: false = false;
 
   @Input()
-  rows = 2;
+  public rows: number = 2;
 
   @Input()
-  cols = 3;
+  public cols: number = 3;
 
   @Input()
-  nbPlayedPieces = 0;
+  public nbPlayedPieces: number = 0;
 
   @Input()
-  nbAvailablePieces = 0;
+  public nbAvailablePieces: number = 0;
 
   @Output()
-  moved = new EventEmitter<void>();
+  public moved: EventEmitter<void> = new EventEmitter<void>();
 
   @Output()
-  completed = new EventEmitter<void>();
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
-  tileWidth = 0;
-  tileHeight = 0;
+  public tileWidth: number = 0;
+  public tileHeight: number = 0;
 
-  boardPuzzleTiles: DrawTile[] = [];
-  remainingPuzzleTiles: DrawTile[] = [];
+  public boardPuzzleTiles: DrawTile[] = [];
+  public remainingPuzzleTiles: DrawTile[] = [];
 
-  totalPieces: number;
+  public totalPieces: number;
 
-  imageWidth = 300;
-  imageHeight = 200;
-  imageReady = false;
+  public imageWidth: number = 300;
+  public imageHeight: number = 200;
+  public imageReady: boolean = false;
 
-  staticPuzzleDummyTiles = [];
+  public staticPuzzleDummyTiles: number[][] = [];
 
-  @ViewChild('puzzleBoard', { static: false }) puzzleView: ElementRef;
+  @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
-  ngOnChanges(
+  public ngOnChanges(
     // changes: SimpleChanges
-  ) {
+  ): void {
     if (this.img) {
 
       if (this.nbAvailablePieces !== 0 && this.showHint) {
@@ -92,7 +92,7 @@ export class PuzzlePlayComponent implements OnChanges {
     }
   }
 
-  nextStampClicked(): void {
+  public nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
@@ -109,7 +109,7 @@ export class PuzzlePlayComponent implements OnChanges {
     }
   }
 
-  getPuzzleTileStyle(tile: DrawTile): any {
+  public getPuzzleTileStyle(tile: DrawTile): any {
 
     const leftPosition = (tile.puzzleLocation % this.cols) * this.tileWidth;
     const topPosition = Math.floor((tile.puzzleLocation / this.cols)) * this.tileHeight;
@@ -141,7 +141,7 @@ export class PuzzlePlayComponent implements OnChanges {
     }
   }
 
-  getBottomTilesStyle(index: number): any {
+  public getBottomTilesStyle(index: number): any {
 
     if ((this.remainingPuzzleTiles.length) > index) {
 
@@ -164,26 +164,26 @@ export class PuzzlePlayComponent implements OnChanges {
     };
   }
 
-  getImageSize(): any {
+  public getImageSize(): any {
     return {
       width: (this.imageWidth) + 'px',
       height: (this.imageHeight) + 'px'
     };
   }
 
-  getTileSize(): any {
+  public getTileSize(): any {
     return {
       width: (this.tileWidth) + 'px',
       height: (this.tileHeight) + 'px'
     };
   }
 
-  getWidthHeightRatio(): string {
+  public getWidthHeightRatio(): string {
     const ratioValue = (this.tileWidth / this.tileHeight);
     return ratioValue.toString() + ':1';
   }
 
-  isAllPuzzleCompleted(): boolean {
+  public isAllPuzzleCompleted(): boolean {
 
     for (let i = 0; i < this.totalPieces; i++) {
       if (!this.boardPuzzleTiles[i].isSelected) {
@@ -193,11 +193,11 @@ export class PuzzlePlayComponent implements OnChanges {
     return true;
   }
 
-  dismissOverlayHint() {
+  public dismissOverlayHint(): void {
     this.showHint = false;
   }
 
-  onImageLoad() {
+  public onImageLoad(): void {
 
     this.imageReady = true;
 

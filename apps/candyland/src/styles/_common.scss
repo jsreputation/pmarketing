@@ -111,12 +111,6 @@ button {
   overflow: visible !important;
 }
 
-.game-checkbox {
-  .mat-radio-label-content {
-    display: none;
-  }
-}
-
 .mat-form-field {
   width: 100%;
 }
@@ -159,10 +153,16 @@ button {
 
   &-actions {
     flex-shrink: 0;
-    width: 34.4rem;
+    width: 36.3rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
+
+  &-checkbox {
+    .mat-radio-label-content {
+      display: none;
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/mate
 import { LogoModule } from '../logo/logo.module';
 import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     LogoModule,
     UserModule,
     SidenavMenuModule,

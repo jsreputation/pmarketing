@@ -19,18 +19,26 @@ export { PuzzlesModule } from './lib/puzzles/puzzles.module';
 export { CampaignModule } from './lib/campaign/campaign.module';
 export {
   CampaignService,
-  TRANSACTION_STATE,
-  STAMP_CARD_STATUS,
-  IStampTransaction,
-  IStampCard,
-  IStampCardResponse,
-  IStampCardsResponse,
-  IVoucher,
-  IPutStampTransactionResponse,
-  IGetStampTransactionResponse,
 } from './lib/campaign/campaign.service';
 
-export { CAMPAIGN_TYPE, ICampaign } from './lib/campaign/models/campaign.model';
+export {
+  ICampaignService,
+} from './lib/campaign/icampaign.service';
+
+export {
+  CAMPAIGN_TYPE,
+  CAMPAIGN_STATE,
+  ICampaign
+} from './lib/campaign/models/campaign.model';
+
+export { StampModule } from './lib/stamp/stamp.module';
+export { StampService } from './lib/stamp/stamp.service';
+export {
+  IStampCard,
+  IStamp,
+  STAMP_CARD_STATE,
+  STAMP_STATE
+} from './lib/stamp/models/stamp.model';
 
 export {
   PopupComponent,

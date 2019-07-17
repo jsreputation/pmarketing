@@ -13,7 +13,7 @@ export class NotificationService {
     this.$popupSubject = new Subject();
   }
 
-  addPopup(config: IPopupConfig): void {
+  public addPopup(config: IPopupConfig): void {
     this.$popupSubject.next(config);
   }
 
