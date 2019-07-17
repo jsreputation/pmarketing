@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,14 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent {
 
   constructor(private router: Router) { }
 
-  ngOnInit() {
-  }
-
-  onProceed() {
+  public onProceed(): void {
     this.router.navigate(['/game']);
   }
 }

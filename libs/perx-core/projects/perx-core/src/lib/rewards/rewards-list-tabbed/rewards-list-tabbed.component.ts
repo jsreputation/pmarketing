@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-
-interface IReward {
-  id: number;
-}
+import { IReward } from '../models/reward.model';
 
 @Component({
   selector: 'perx-core-rewards-list-tabbed',
