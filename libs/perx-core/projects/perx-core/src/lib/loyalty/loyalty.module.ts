@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { EnvConfig } from './env-config';
 import { V4LoyaltyService } from './v4-loyalty.service';
-import { ILoyaltyService } from './iloyalty.service';
+import { LoyaltyService } from './loyalty.service';
 
 @NgModule({
   declarations: [],
@@ -21,7 +21,7 @@ export class LoyaltyModule {
           useValue: config
         },
         {
-          provide: ILoyaltyService,
+          provide: LoyaltyService,
           useClass: V4LoyaltyService
         }
       ],

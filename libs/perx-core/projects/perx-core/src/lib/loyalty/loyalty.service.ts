@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ILoyalty, IPointHistory } from './models/loyalty.model';
 
-export abstract class ILoyaltyService {
+export abstract class LoyaltyService {
   public abstract getLoyalties(page: number, pageSize: number): Observable<ILoyalty[]>;
 
   public abstract getLoyalty(id: number): Observable<ILoyalty>;

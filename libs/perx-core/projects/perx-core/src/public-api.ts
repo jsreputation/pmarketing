@@ -58,7 +58,7 @@ export {
  } from './lib/profile/profile.model';
 
 export { LoyaltyModule } from './lib/loyalty/loyalty.module';
-export { ILoyaltyService } from './lib/loyalty/iloyalty.service';
+export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
   IPointHistory

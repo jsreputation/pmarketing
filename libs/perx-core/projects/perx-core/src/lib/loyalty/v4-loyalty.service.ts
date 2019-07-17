@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from './env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
-import { ILoyaltyService } from './iloyalty.service';
+import { LoyaltyService } from './loyalty.service';
 import { ILoyalty, IPointHistory } from './models/loyalty.model';
 
 interface IV4Meta {
@@ -54,7 +54,7 @@ interface IV4PointHistory {
 @Injectable({
   providedIn: 'root'
 })
-export class V4LoyaltyService implements ILoyaltyService {
+export class V4LoyaltyService extends LoyaltyService {
   private apiHost: string;
   private historyMeta: IV4Meta = {};
 
@@ -62,6 +62,7 @@ export class V4LoyaltyService implements ILoyaltyService {
     private http: HttpClient,
     config: EnvConfig
   ) {
+    super();
     this.apiHost = config.env.apiHost;
   }
 
