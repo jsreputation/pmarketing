@@ -4,15 +4,15 @@ import { Directive, HostListener } from '@angular/core';
   selector: '[perxCoreNumericCharacter]'
 })
 export class NumericCharacterDirective {
-  onlyNumbersRegExp: RegExp = new RegExp('^\\d+$');
+  public onlyNumbersRegExp: RegExp = new RegExp('^\\d+$');
 
-  @HostListener('paste', ['$event']) pasteClipboard(e: ClipboardEvent): boolean {
+  @HostListener('paste', ['$event']) public pasteClipboard(e: ClipboardEvent): boolean {
     // debugger;
     const data = e.clipboardData.getData('text');
     return this.onlyNumbersRegExp.test(data) ? true : false;
   }
 
-  @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent): boolean {
+  @HostListener('keydown', ['$event']) public onKeyDown(e: KeyboardEvent): boolean {
     // debugger;
     return (e.ctrlKey ||
       e.metaKey ||
