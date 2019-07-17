@@ -3,13 +3,13 @@ export interface IReward {
   name: string;
   description: string;
   subtitle: string;
-  valid_from: Date;
-  valid_to: Date;
-  reward_price?: {
-    reward_currency: string,
-    reward_amount: string
+  validFrom: Date;
+  validTo: Date;
+  rewardPrice?: {
+    rewardCurrency: string,
+    rewardAmount: string
   };
-  merchant_id?: number;
-  merchant_name?: string;
-  merchant_website?: string;
+  merchantId?: number;
+  merchantName?: string;
+  merchantWebsite?: string;
 }

@@ -61,11 +61,11 @@ export class V4RewardsService extends RewardsService {
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
-      valid_from: reward.valid_from,
-      valid_to: reward.valid_to,
-      merchant_id: reward.merchant_id,
-      merchant_name: reward.merchant_name,
-      merchant_website: reward.merchant_website,
+      validFrom: reward.valid_from,
+      validTo: reward.valid_to,
+      merchantId: reward.merchant_id,
+      merchantName: reward.merchant_name,
+      merchantWebsite: reward.merchant_website,
     };
   }
 
