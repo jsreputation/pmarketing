@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from './env-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { RewardsService } from './rewards.service';
 
 interface IV4Meta {
   count?: number;
@@ -30,19 +31,20 @@ interface IV4GetRewardResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class V4RewardsService {
+export class V4RewardsService extends RewardsService {
 
   private apiHost: string;
 
   constructor(private http: HttpClient, config: EnvConfig) {
+    super();
     this.apiHost = config.env.apiHost;
   }
 
-  getTags() {
+  public getTags(): void {
     // todo: api not implemented yet
   }
 
-  getRewards(page = 1, pageSize = 25): Observable<IV4Reward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25): Observable<IV4Reward[]> {
     return this.http.get<IV4GetRewardsResponse>(
       `${ this.apiHost }/v4/rewards`,
       {
@@ -56,7 +58,7 @@ export class V4RewardsService {
     );
   }
 
-  getReward(id: number): Observable<IV4Reward[]> {
+  public getReward(id: number): Observable<IV4Reward[]> {
     return this.http.get<IV4GetRewardResponse>(
       `${ this.apiHost }/v4/reward/${ id }`
     ).pipe(
