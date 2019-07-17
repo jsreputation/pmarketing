@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
+import { StampDataService } from '../../shared/stamp-data.service';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -12,20 +13,23 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./new-stamp.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewStampComponent implements OnInit {
+export class NewStampComponent implements OnInit, OnDestroy {
   public formStamp: FormGroup;
   public stampNumbers$: Observable<CommonSelect[]>;
-  public stampSlotNumbers$: Observable<CommonSelect[]>;
+  public stampSlotNumbers: CommonSelect[];
+  public allStampSlotNumbers: CommonSelect[];
   public preStamps$: Observable<IGraphic[]>;
   public rewardPreStamps$: Observable<IGraphic[]>;
   public postStamps$: Observable<IGraphic[]>;
   public rewardPostStamps$: Observable<IGraphic[]>;
   public cardBackground$: Observable<IGraphic[]>;
   public backgrounds$: Observable<IGraphic[]>;
+  private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
               private stampService: StampHttpService,
               private routingState: RoutingStateService,
-              private router: Router) { }
+              private router: Router,
+              private stampDataService: StampDataService) { }
 
   ngOnInit() {
     this.createStampForm();
@@ -37,6 +41,7 @@ export class NewStampComponent implements OnInit {
     this.getRewardPostStamps();
     this.getCardBackground();
     this.getBackground();
+    this.subscribeStampsNumberChanges();
   }
   public get name(): AbstractControl {
     return this.formStamp.get('name');
@@ -104,12 +109,15 @@ export class NewStampComponent implements OnInit {
   }
 
   private getSlotStamps(): void {
-    this.stampSlotNumbers$ = this.stampService.getStampsSlotNumber()
+    this.stampService.getStampsSlotNumber()
       .pipe(
         tap((res) => {
           this.patchForm('stampsSlotNumber', [res[res.length - 1].value]);
         })
-      );
+      )
+      .subscribe(res => {
+        this.stampSlotNumbers = this.allStampSlotNumbers = res;
+      });
   }
 
   private getPreStamps(): void {
@@ -170,5 +178,24 @@ export class NewStampComponent implements OnInit {
     this.formStamp.patchValue({
       [fieldName]: value
     });
+  }
+
+  private subscribeStampsNumberChanges(): void {
+    this.formStamp.get('stampsNumber')
+      .valueChanges
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        value => {
+          this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
+          this.patchForm('stampsSlotNumber', [this.stampSlotNumbers[this.stampSlotNumbers.length - 1].value]);
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

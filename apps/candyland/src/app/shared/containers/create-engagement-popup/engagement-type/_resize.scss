@@ -4,12 +4,17 @@
 }
 
 @media (max-width: $tablet-width) {
-
-}
-
-@media (max-width: $mobile-width) {
   .wrap {
     flex-flow: row wrap;
     justify-content: space-around;
+  }
+  cl-type-item {
+    margin-right: 0.4rem;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  cl-type-item {
+    margin-right: 0;
   }
 }
