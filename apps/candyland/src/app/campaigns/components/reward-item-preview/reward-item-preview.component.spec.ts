@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardItemPreviewComponent } from './reward-item-preview.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RewardItemPreviewComponent', () => {
   let component: RewardItemPreviewComponent;
@@ -8,7 +9,8 @@ describe('RewardItemPreviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardItemPreviewComponent ]
+      declarations: [ RewardItemPreviewComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

@@ -19,15 +19,17 @@
       <cl-button classList="invert">+ Select a template</cl-button>
     </div>
     <!--items-->
-    <mat-radio-group class="item-list shadow" [formControl]="template">
-      <ng-container *ngIf="(dataSource.connect() | async) as items">
-        <ng-container *ngFor="let item of items">
-          <mat-radio-button [value]="item">
-            <cl-engagement-item [data]="item"></cl-engagement-item>
-          </mat-radio-button>
+    <ng-container [formGroup]="form">
+      <mat-radio-group class="item-list shadow" formControlName="template">
+        <ng-container *ngIf="(dataSource.connect() | async) as items">
+          <ng-container *ngFor="let item of items">
+            <mat-radio-button [value]="item">
+              <cl-engagement-item [data]="item"></cl-engagement-item>
+            </mat-radio-button>
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </mat-radio-group>
+      </mat-radio-group>
+    </ng-container>
   </div>
 
   <div class="preview">

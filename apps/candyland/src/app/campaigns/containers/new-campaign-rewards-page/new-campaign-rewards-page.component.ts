@@ -1,7 +1,8 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
-import {ClValidators} from '@cl-helpers/cl-validators';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { ClValidators } from '@cl-helpers/cl-validators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -9,7 +10,7 @@ import {ClValidators} from '@cl-helpers/cl-validators';
   styleUrls: ['./new-campaign-rewards-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsPageComponent implements OnInit {
+export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public config;
   public rewardsList: Reward[] = [
@@ -60,8 +61,13 @@ export class NewCampaignRewardsPageComponent implements OnInit {
   public ngOnInit() {
     this.config = this.store.config;
     this.updateRewards();
-    this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
-    this.enableProbability.valueChanges.subscribe(() => this.updateRewards());
+    this.form.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.store.updateCampaign(value));
+    this.enableProbability.valueChanges.pipe(untilDestroyed(this)).subscribe(() => this.updateRewards());
+  }
+
+  ngOnDestroy(): void {
   }
 
 

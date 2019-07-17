@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewCampaignReviewPageComponent } from './new-campaign-review-page.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -8,7 +9,8 @@ describe('NewCampaignReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewCampaignReviewPageComponent ]
+      declarations: [ NewCampaignReviewPageComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

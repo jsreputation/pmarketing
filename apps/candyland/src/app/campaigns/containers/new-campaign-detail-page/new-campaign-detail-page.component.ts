@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+// import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -13,7 +13,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  public disableEnd: FormControl;
   config: any;
   public visible = true;
   public selectable = true;
@@ -42,15 +41,14 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     private store: CampaignCreationStoreService,
     private fb: FormBuilder
   ) {
-    this.initForm();
-    this.disableEnd = this.fb.control([true]);
-    this.config = store.config;
   }
 
   ngOnInit() {
-    this.form.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe(value => this.store.updateCampaign(value));
+    this.config = this.store.config;
+    this.initForm();
+    // this.form.valueChanges
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(value => this.store.updateCampaign(value));
   }
 
   ngOnDestroy(): void {

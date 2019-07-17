@@ -1,6 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EngagementsListComponent } from './engagements-list.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatIconModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatSortModule, MatTableDataSource,
+  MatTableModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
+import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
+import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
+import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EngagementsListComponent', () => {
   let component: EngagementsListComponent;
@@ -8,14 +27,34 @@ describe('EngagementsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EngagementsListComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatSortModule,
+        MatTableModule,
+        MatPaginatorModule,
+        StatusLabelModule,
+        TableFiltersModule,
+        SearchFilterModule,
+        TabsFilterModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        ButtonModule,
+        NoDataModule,
+        HttpClientTestingModule
+      ],
+      declarations: [EngagementsListComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EngagementsListComponent);
     component = fixture.componentInstance;
+    component.dataSource = new MatTableDataSource<Engagement>();
     fixture.detectChanges();
   });
 

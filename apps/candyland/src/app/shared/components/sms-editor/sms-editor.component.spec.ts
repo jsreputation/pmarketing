@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SmsEditorComponent } from './sms-editor.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('SmsEditorComponent', () => {
   let component: SmsEditorComponent;
@@ -8,7 +9,8 @@ describe('SmsEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SmsEditorComponent ]
+      declarations: [ SmsEditorComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));
