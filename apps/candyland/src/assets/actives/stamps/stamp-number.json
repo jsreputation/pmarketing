@@ -1,5 +1,13 @@
 [
   {
+    "value": "1",
+    "viewValue": "1 stamps"
+  },
+  {
+    "value": "2",
+    "viewValue": "2 stamps"
+  },
+  {
     "value": "3",
     "viewValue": "3 stamps"
   },
@@ -26,5 +34,9 @@
   {
     "value": "9",
     "viewValue": "9 stamps"
+  },
+  {
+    "value": "10",
+    "viewValue": "10 stamps"
   }
 ]
