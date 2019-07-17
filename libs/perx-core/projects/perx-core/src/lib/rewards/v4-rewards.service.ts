@@ -13,11 +13,24 @@ interface IV4Meta {
   page?: number;
 }
 
+interface IV4Tag {
+  id: number;
+  name: string;
+}
+
 interface IV4Reward {
   id: number;
   name: string;
   description: string;
-  valid_from: string;
+  subtitle: string;
+  valid_from: Date;
+  valid_to: Date;
+  favourite: boolean;
+  merchant_id?: number;
+  merchant_name?: string;
+  merchant_website?: string;
+  terms_and_conditions?: string;
+  tags?: IV4Tag[];
 }
 
 interface IV4GetRewardsResponse {
@@ -41,11 +54,25 @@ export class V4RewardsService extends RewardsService {
     this.apiHost = config.env.apiHost;
   }
 
+  public static v4RewardToReward(reward: IV4Reward): IReward {
+    return {
+      id: reward.id,
+      name: reward.name,
+      subtitle: reward.subtitle,
+      description: reward.description,
+      valid_from: reward.valid_from,
+      valid_to: reward.valid_to,
+      merchant_id: reward.merchant_id,
+      merchant_name: reward.merchant_name,
+      merchant_website: reward.merchant_website,
+    };
+  }
+
   public getTags(): void {
     // todo: api not implemented yet
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25): Observable<IV4Reward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
       `${ this.apiHost }/v4/rewards`,
       {
@@ -55,7 +82,10 @@ export class V4RewardsService extends RewardsService {
         }
       }
     ).pipe(
-      map(res => res.data)
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
     );
   }
 
@@ -63,7 +93,8 @@ export class V4RewardsService extends RewardsService {
     return this.http.get<IV4GetRewardResponse>(
       `${ this.apiHost }/v4/reward/${ id }`
     ).pipe(
-      map(res => res.data)
+      map(res => res.data),
+      map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
     );
   }
 
