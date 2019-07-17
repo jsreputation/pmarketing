@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnvConfig } from './env-config';
-import { RewardsService } from './rewards.service';
+import { V4RewardsService } from './v4-rewards.service';
 
 @NgModule({
   declarations: [],
@@ -9,7 +9,7 @@ import { RewardsService } from './rewards.service';
     CommonModule
   ],
   providers: [
-    RewardsService
+    V4RewardsService
   ],
 })
 export class RewardsModule {
@@ -17,7 +17,7 @@ export class RewardsModule {
     return {
       ngModule: RewardsModule,
       providers: [
-        RewardsService,
+        V4RewardsService,
         {
           provide: EnvConfig,
           useValue: config

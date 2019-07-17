@@ -30,7 +30,7 @@ interface IV4GetRewardResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class RewardsService {
+export class V4RewardsService {
 
   private apiHost: string;
 
