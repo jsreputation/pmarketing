@@ -30,26 +30,26 @@ describe('PuzzleStampComponent', () => {
     expect(component.movedItems).toEqual([]);
   });
 
-  describe('isLessThanAvailblePieces', () => {
+  describe('isStampAvailable', () => {
     it('makes expected calls', () => {
       spyOn(component, 'getCurrentColumn').and.callThrough();
-      component.isLessThanAvailblePieces(1, 2);
+      component.isStampAvailable(1, 2);
       expect(component.getCurrentColumn).toHaveBeenCalled();
     });
   });
 
   describe('styleObject', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'isLessThanAvailblePieces').and.callThrough();
+      spyOn(component, 'isStampAvailable').and.callThrough();
       component.styleObject(1, 2);
-      expect(component.isLessThanAvailblePieces).toHaveBeenCalled();
+      expect(component.isStampAvailable).toHaveBeenCalled();
     });
   });
 
-  describe('isMoved', () => {
+  describe('isStampClicked', () => {
     it('makes expected calls', () => {
       spyOn(component, 'getCurrentColumn').and.callThrough();
-      component.isMoved(1, 2);
+      component.isStampClicked(1, 2);
       expect(component.getCurrentColumn).toHaveBeenCalled();
     });
   });

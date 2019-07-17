@@ -3,6 +3,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export interface IStyleObject {
   [key: string]: string;
 }
+
+export interface IMove {
+    nbPlayedPieces: number;
+    nbAvailablePieces: number;
+}
+
 @Component({
   selector: 'perx-core-puzzle-stamp',
   templateUrl: './puzzle-stamp.component.html',
@@ -22,15 +28,15 @@ export class PuzzleStampComponent implements OnInit {
   @Input() public isCompleted: boolean;
   @Input() public isCurrent: boolean;
 
-  @Output() public moved = new EventEmitter();
-  @Output() public completed = new EventEmitter();
+  @Output() public moved: EventEmitter<IMove> = new EventEmitter();
+  @Output() public completed: EventEmitter<void> = new EventEmitter();
 
-  public isUnlockedAll = false;
-  protected count = 0;
-  public btnTxt = 'Tap here to use all earned keys';
+  public isUnlockedAll: boolean = false;
+  protected count: number = 0;
+  public btnTxt: string = 'Tap here to use all earned keys';
 
-  public movedItems = [];
-  public currentClick;
+  public movedItems: any[] = [];
+  public currentClick: any;
 
   public ngOnInit(): void {
     if (this.nbPlayedPieces > 0) {
@@ -39,25 +45,25 @@ export class PuzzleStampComponent implements OnInit {
     this.currentClick = this.nbPlayedPieces;
   }
 
-  public isLessThanAvailblePieces(r, c): boolean {
+  public isStampAvailable(r: number, c: number): boolean {
     return (
       this.getCurrentColumn(r, c) < this.nbAvailablePieces + this.nbPlayedPieces
     );
   }
 
-  public styleObject(r, c): IStyleObject {
+  public styleObject(r: number, c: number): IStyleObject {
     const style = { 'border-color': this.borderColor };
-    if (this.isLessThanAvailblePieces(r, c)) {
+    if (this.isStampAvailable(r, c)) {
       style['background-color'] = this.highlightColor;
     }
     return style;
   }
 
-  public getCurrentColumn(r, c): number {
+  public getCurrentColumn(r: number, c: number): number {
     return (r + 1 - 1) * this.cols + c + 1 - 1;
   }
 
-  public isMoved(r, c): boolean {
+  public isStampClicked(r: number, c: number): boolean {
     return this.movedItems.includes(this.getCurrentColumn(r, c));
   }
 

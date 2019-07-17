@@ -15,8 +15,17 @@ interface IV4VouchersResponse {
   };
 }
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
+interface IV4Reward {
+  images?: IV4Image[];
+}
+
 interface IV4Voucher {
-  reward?: any;
+  reward?: IV4Reward;
 }
 
 @Injectable({
@@ -31,15 +40,15 @@ export class VouchersService implements IVoucherService {
   ) {
   }
 
-  public static voucherToVoucher(v: any): IVoucher {
-    const reward = v[`reward`];
-    const images = reward[`images`] || [];
-    let thumbnail = images.find((image: any) => image[`type`] === 'reward_thumbnail');
+  public static voucherToVoucher(v: IV4Voucher): IVoucher {
+    const reward = v.reward;
+    const images = reward.images || [];
+    let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
-      thumbnail = images.find((image: any) => image[`type`] === 'reward_logo');
+      thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
     }
     const thumbnailImg = thumbnail && thumbnail.url;
-    const banner = images.find((image: any) => image[`type`] === 'reward_banner');
+    const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
     const merchantImg = v[`merchantImg`] ? v[`merchantImg`] : null;
     const redemptionSuccessTxt = v[`redemption_text`] ? v[`redemption_text`] : null;

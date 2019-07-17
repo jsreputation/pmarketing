@@ -7,24 +7,24 @@
       <div class="stamp-container">
         <div
           class="stamps"
-          *ngFor="let row of [].constructor(rows); index as r"
+          *ngFor="let row of [].constructor(rows); index as stampRow"
           [ngStyle]="{ height: 100 / rows + '%' }"
         >
           <div 
             class="stamp" 
-            *ngFor="let col of [].constructor(cols); index as c"
+            *ngFor="let col of [].constructor(cols); index as stampCol"
             [ngStyle]="stampStyle()"
           >
             <div 
-              [ngClass]="isMoved(r, c) ? 'hidden content' : 'content'"
-              [ngStyle]="styleObject(r, c)"
+              [ngClass]="isStampClicked(stampRow, stampCol) ? 'hidden content' : 'content'"
+              [ngStyle]="styleObject(stampRow, stampCol)"
             >
               <perx-core-stamp
                 [lockImg]="lockImg"
                 [unlockImg]="unlockImg"
-                [ngClass]="isLessThanAvailblePieces(r, c) ? 'available' : ''"
-                [available]="isLessThanAvailblePieces(r, c)"
-                [isUnlockedAll]="isLessThanAvailblePieces(r, c) && isUnlockedAll"
+                [ngClass]="isStampAvailable(stampRow, stampCol) ? 'available' : ''"
+                [available]="isStampAvailable(stampRow, stampCol)"
+                [isUnlockedAll]="isStampAvailable(stampRow, stampCol) && isUnlockedAll"
                 [isCurrent]="isCurrent"
                 (moveCard)="cardClick()"
                 >

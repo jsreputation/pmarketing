@@ -12,7 +12,7 @@ export class StampComponent implements OnInit, DoCheck {
   @Input() public isUnlockedAll: boolean;
   @Input() public isCurrent: boolean;
 
-  @Output() public moveCard = new EventEmitter();
+  @Output() public moveCard: EventEmitter<void> = new EventEmitter();
 
   public imageLock: string;
 

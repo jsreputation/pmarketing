@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 export class EnvConfig {
   // defaults
-  public env = {
+  public env: any = {
     apiHost: 'localhost:3000',
     production: false,
     isWhistler: true,
