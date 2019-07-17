@@ -61,7 +61,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private getDialogData(campaign) {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
-    console.log('type', type);
     switch (type) {
       case 'sms':
         return {

@@ -3,7 +3,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-// import { untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -46,9 +46,9 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.config = this.store.config;
     this.initForm();
-    // this.form.valueChanges
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(value => this.store.updateCampaign(value));
+    this.form.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(value => this.store.updateCampaign(value));
   }
 
   ngOnDestroy(): void {

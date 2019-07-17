@@ -15,8 +15,4 @@ export class ItemListComponent implements OnInit {
   ngOnInit() {
   }
 
-  setValue(value) {
-    console.log(value);
-  }
-
 }

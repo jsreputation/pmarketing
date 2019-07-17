@@ -14,7 +14,6 @@ export class NewCampaignDonePopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.data);
   }
 
   public closeDialog() {

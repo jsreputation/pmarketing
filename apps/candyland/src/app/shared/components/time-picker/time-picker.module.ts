@@ -26,7 +26,4 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
   ]
 })
 export class TimePickerModule {
-  // constructor(private dateAdapter: DateAdapter<Date>) {
-  //   dateAdapter.setLocale('en');
-  // }
 }

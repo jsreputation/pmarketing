@@ -48,21 +48,18 @@ import { Component } from '@angular/core';
     }
   ]
 })
+// tslint:disable
 class DatePickerComponent implements ControlValueAccessor{
-  registerOnChange(fn: any): void {
-    console.log(fn);
+  registerOnChange(): void {
   }
 
-  registerOnTouched(fn: any): void {
-    console.log(fn);
+  registerOnTouched(): void {
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+  setDisabledState(): void {
   }
 
-  writeValue(obj: any): void {
-    console.log(obj);
+  writeValue(): void {
   }
 
 }
@@ -109,13 +106,7 @@ describe('NewCampaignDetailPageComponent', () => {
         ProgressBarModule,
         DateTimePickerModule,
         TimePickerModule,
-        // DatePickerModule,
         SmsEditorModule
-      ],
-      providers: [
-        // {provide: DateAdapter, useValue: {}},
-        // {provide: MAT_DATE_FORMATS, useValue: {}},
-        // {provide: MatDatepickerInput, useValue: {}}
       ],
       declarations: [NewCampaignDetailPageComponent,
         DatePickerComponent],

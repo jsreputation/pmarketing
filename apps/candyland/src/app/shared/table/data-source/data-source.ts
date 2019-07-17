@@ -1,5 +1,4 @@
 import { MatTableDataSource } from '@angular/material';
-// import { TableFilter } from '../models/table-filter.interface';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
 export class ClientSideDataSource<T> extends MatTableDataSource<T> {
@@ -52,16 +51,6 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
 
   disconnect() {
   }
-
-  // public applyFilter(filters: TableFilter[]) {
-  //   const tmp = filters[0] as any;
-  //   const filter = {};
-  //   filter[tmp.column] = tmp.value;
-  //   const filtersStateVal = this.filtersState$.getValue();
-  //   this.filtersState$.next({
-  //     filters: { ...filtersStateVal.filters, ...filter }
-  //   });
-  // }
 
   public applySort(sortInfo) {
     this.sortState$.next({ sort: sortInfo });
