@@ -55,5 +55,17 @@ export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
   IProfileResponse
- } from './lib/profile/profile.model';
+} from './lib/profile/profile.model';
+
+export { LoyaltyModule } from './lib/loyalty/loyalty.module';
+export { LoyaltyService } from './lib/loyalty/loyalty.service';
+export {
+  ILoyalty,
+  IPointHistory
+} from './lib/loyalty/models/loyalty.model';
+
+export { RewardsModule } from './lib/rewards/rewards.module';
+export { RewardsService } from './lib/rewards/rewards.service';
+export { IReward } from './lib/rewards/models/reward.model';
+
 export { UtilsModule } from './lib/utils/utils.module';

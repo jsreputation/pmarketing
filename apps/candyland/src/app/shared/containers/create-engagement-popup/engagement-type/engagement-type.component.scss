@@ -13,4 +13,13 @@
   position: relative;
 }
 
+cl-type-item {
+  display: flex;
+  margin-right: 1.4rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
 @import "resize";
