@@ -18,7 +18,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  subTitle = 'Unlock your Netflix Rebate with your BPI Credit Card';
+  subTitle = 'Unlock your Netflix rebate.';
 
   campaignId: number;
 
@@ -148,12 +148,20 @@ export class GameComponent implements OnInit {
   onCompleted() {
   }
 
+  isCompleted(card) {
+    return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * this.cols;
+  }
+
+  isCurrent(card) {
+    return this.cards[0].id === card.id;
+  }
+
   checkKeys() {
     if (this.keys > 0) {
       this.notificationService.addPopup({
         title: `You have a total of ${this.keys} keys!`,
         imageUrl: 'assets/key.png',
-        text: 'Tap the highlighted locks using your earned keys.',
+        text: 'Tap the highlighted locks to unlock.',
         buttonTxt: 'Start Unlocking!'
       });
     }
