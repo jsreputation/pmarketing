@@ -66,7 +66,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      typeImage: [null, [Validators.required]],
+      typeImage: ['2', [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
       buttonText: ['See my rewards', [
