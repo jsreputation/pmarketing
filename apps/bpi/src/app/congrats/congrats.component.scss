@@ -4,8 +4,7 @@
 }
 
 .game-container {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding: 0 1.5rem 0 1.5rem;
 
   .contents {
     max-width: 50rem;
@@ -27,6 +26,20 @@
 
     a {
       color: #00a6f9;
+    }
+  }
+
+  strong {
+    font-size: 1.4rem;
+  }
+
+  ul {
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 1.5rem;
+
+    li {
+      margin-bottom: 1rem;
     }
   }
 
