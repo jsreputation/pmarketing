@@ -6,43 +6,41 @@ import { Component, OnInit, DoCheck, Input, Output, EventEmitter } from '@angula
   styleUrls: ['./stamp.component.css']
 })
 export class StampComponent implements OnInit, DoCheck {
-  @Input() lockImg: string;
-  @Input() unlockImg: string;
-  @Input() available: boolean;
-  @Input() isUnlockedAll: boolean;
-  @Input() isCurrent: boolean;
+  @Input() public lockImg: string;
+  @Input() public unlockImg: string;
+  @Input() public available: boolean;
+  @Input() public isUnlockedAll: boolean;
+  @Input() public isCurrent: boolean;
 
-  @Output() moveCard = new EventEmitter();
+  @Output() public moveCard = new EventEmitter();
 
-  imageLock: string;
+  protected imageLock: string;
 
-  constructor() { }
-
-  ngOnInit() {
+  public ngOnInit(): void {
     this.imageLock = this.lockImg;
   }
 
-  ngDoCheck() {
+  public ngDoCheck(): void {
     // lock to unlock animation on unlock all button click
     if (this.isUnlockedAll) {
       this.imageLock = this.unlockImg;
     }
   }
 
-  changeLockImage() {
+  public changeLockImage(): void {
     // lock to unlock animation on card click
     if (this.isCurrent) {
       this.imageLock = this.unlockImg;
     }
   }
 
-  onCardUnlock() {
+  public onCardUnlock(): void {
     if (this.available) {
       this.moveCard.emit();
     }
   }
 
-  unlockAllAvailableCards() {
+  public unlockAllAvailableCards(): void {
     if (this.available) {
       this.imageLock = this.unlockImg;
     }

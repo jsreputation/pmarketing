@@ -10,23 +10,23 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  @Input() filter: string;
-  @Input() imageSize: string;
-  @Input() iconDisplay: string;
-  @Input() showTitle = true;
-  @Input() showMerchant = true;
-  @Input() showExpireDate = true;
-  @Input() showRedeemedDate = false;
-  @Input() showRedeemedIcon = true;
-  @Input() canSelectRedeemed = false;
+  @Input() public filter: string;
+  @Input() public imageSize: string;
+  @Input() public iconDisplay: string;
+  @Input() public showTitle = true;
+  @Input() public showMerchant = true;
+  @Input() public showExpireDate = true;
+  @Input() public showRedeemedDate = false;
+  @Input() public showRedeemedIcon = true;
+  @Input() public canSelectRedeemed = false;
 
-  @Output() route: EventEmitter<number | string> = new EventEmitter<number | string>();
+  @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
-  vouchers$: Observable<IVoucher[]>;
+  public vouchers$: Observable<IVoucher[]>;
 
   constructor(private vouchersService: VouchersService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.vouchers$ = this.vouchersService.getAll().pipe(
       map(vouchers => {
         return vouchers.filter(v => v.state === this.filter);
@@ -34,7 +34,7 @@ export class VouchersComponent implements OnInit {
     );
   }
 
-  onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }) {
+  public onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }): void {
     if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
       return;
     }

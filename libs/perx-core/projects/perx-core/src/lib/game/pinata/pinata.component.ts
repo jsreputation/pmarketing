@@ -7,35 +7,33 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 })
 export class PinataComponent implements OnInit, OnDestroy {
   @Input()
-  stillImg: string;
+  public stillImg: string;
   @Input()
-  movingImg: string;
+  public movingImg: string;
   @Input()
-  openedImg: string;
+  public openedImg: string;
   @Input()
-  nbTaps = 5;
+  public nbTaps = 5;
   @Input()
-  enabled = false;
+  public enabled = false;
 
-  @Output() tap: EventEmitter<number> = new EventEmitter();
-  @Output() broken: EventEmitter<void> = new EventEmitter();
+  @Output() public tap: EventEmitter<number> = new EventEmitter();
+  @Output() public broken: EventEmitter<void> = new EventEmitter();
 
-  shakeAnimationClass = '';
+  public shakeAnimationClass = '';
   private n = 0;
 
-  currentImg: string;
+  public currentImg: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.currentImg = this.stillImg;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     [this.tap, this.broken].forEach(emitter => emitter.complete());
   }
 
-  shake(): void {
+  public shake(): void {
     if (this.enabled) {
       this.n++;
       if (this.n < this.nbTaps) {

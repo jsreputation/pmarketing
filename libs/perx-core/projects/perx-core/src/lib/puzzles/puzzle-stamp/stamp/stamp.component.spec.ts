@@ -25,30 +25,30 @@ describe('StampComponent', () => {
   });
 
   it('should show locked image on ngOnInit', () => {
-    component.lockImg = 'locked.png';
+    component['lockImg'] = 'locked.png';
     component.ngOnInit();
-    expect(component.imageLock).toBe('locked.png');
+    expect(component['lockImg']).toBe('locked.png');
   });
 
   it('should show unlocked image on ngDoCheck', () => {
-    component.isUnlockedAll = true;
-    component.unlockImg = 'unlocked.png';
+    component['isUnlockedAll'] = true;
+    component['unlockImg'] = 'unlocked.png';
     component.ngDoCheck();
-    expect(component.imageLock).toBe('unlocked.png');
+    expect(component['imageLock']).toBe('unlocked.png');
   });
 
   it('should show unlocked image on changeLockImage Call', () => {
-    component.isCurrent = true;
-    component.unlockImg = 'unlocked.png';
+    component['isCurrent'] = true;
+    component['unlockImg'] = 'unlocked.png';
     component.changeLockImage();
-    expect(component.imageLock).toBe('unlocked.png');
+    expect(component['imageLock']).toBe('unlocked.png');
   });
 
   it('should image be undefined on changeLockImage Call', () => {
-    component.isCurrent = false;
-    component.unlockImg = 'unlocked.png';
+    component['isCurrent'] = false;
+    component['unlockImg'] = 'unlocked.png';
     component.changeLockImage();
-    expect(component.imageLock).toBe(undefined);
+    expect(component['imageLock']).toBe(undefined);
   });
 
   it('should moveCard have been Call', () => {
@@ -59,10 +59,10 @@ describe('StampComponent', () => {
   });
 
   it('should unlock image if avilable is true', () => {
-    component.available = true;
-    component.unlockImg = 'unlocked.png';
+    component['available'] = true;
+    component['unlockImg'] = 'unlocked.png';
     component.unlockAllAvailableCards();
-    expect(component.imageLock).toBe('unlocked.png');
+    expect(component['imageLock']).toBe('unlocked.png');
   });
 
 });
