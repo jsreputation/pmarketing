@@ -4,6 +4,7 @@ import { EnvConfig } from './env-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { RewardsService } from './rewards.service';
+import { IReward } from './models/reward.model';
 
 interface IV4Meta {
   count?: number;
@@ -25,7 +26,7 @@ interface IV4GetRewardsResponse {
 }
 
 interface IV4GetRewardResponse {
-  data: IV4Reward[];
+  data: IV4Reward;
 }
 
 @Injectable({
@@ -58,7 +59,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getReward(id: number): Observable<IV4Reward[]> {
+  public getReward(id: number): Observable<IReward> {
     return this.http.get<IV4GetRewardResponse>(
       `${ this.apiHost }/v4/reward/${ id }`
     ).pipe(
