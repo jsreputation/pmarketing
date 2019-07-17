@@ -18,15 +18,15 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  subTitle = 'Unlock your Netflix rebate.';
+  public subTitle: string = 'Unlock your Netflix rebate.';
 
-  campaignId: number;
+  private campaignId: number;
 
-  cards: IStampCard[] = [];
+  public cards: IStampCard[] = [];
 
-  rows = 1;
-  cols = 6;
-  keys = 0;
+  public rows: number = 1;
+  public cols: number = 6;
+  public keys: number = 0;
 
   constructor(
     private router: Router,
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
     if (campaignIdStr && campaignIdStr !== '') {
       this.campaignId = Number.parseInt(campaignIdStr, 10);
@@ -50,7 +50,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  private fetchCampaign() {
+  private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp))
@@ -61,7 +61,7 @@ export class GameComponent implements OnInit {
       });
   }
 
-  private fetchCards() {
+  private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
       .pipe(
         map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
@@ -90,7 +90,7 @@ export class GameComponent implements OnInit {
       });
   }
 
-  getPlayedPieces(card: IStampCard): number {
+  public getPlayedPieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
       const redeemedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.redeemed);
       return redeemedStamps.length;
@@ -99,7 +99,7 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  getAvailablePieces(card: IStampCard): number {
+  public getAvailablePieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
       const issuedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.issued);
       return issuedStamps.length;
@@ -108,7 +108,7 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  onMoved = (card: IStampCard) => (move: {
+  public onMoved = (card: IStampCard) => (move: {
     nbPlayedPieces: number,
     nbAvailablePieces: number
   }) => {
@@ -145,10 +145,10 @@ export class GameComponent implements OnInit {
     }
   }
 
-  onCompleted() {
+  public onCompleted(): void {
   }
 
-  checkKeys() {
+  public checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
         title: `You have a total of ${this.keys} keys!`,

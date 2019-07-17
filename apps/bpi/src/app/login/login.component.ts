@@ -11,11 +11,11 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
 
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  private authed: boolean;
+  protected preAuth: boolean;
+  protected failedAuth: boolean;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -25,14 +25,14 @@ export class LoginComponent implements OnInit {
     this.failedAuth = false;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
     if (!!primaryIdentifier) {
       (window as any).primaryIdentifier = primaryIdentifier;
     }
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
       this.authService.v4AutoLogin().then(
         (isAuthed: boolean) => {
