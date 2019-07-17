@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -10,18 +12,24 @@ import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-ca
   styleUrls: ['./new-campaign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignComponent implements OnInit {
+export class NewCampaignComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
   form: FormGroup;
 
   constructor(private store: CampaignCreationStoreService,
+              private router: Router,
               public dialog: MatDialog,
               private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.initForm();
-    this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
+    this.form.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(value => this.store.updateCampaign(value));
+  }
+
+  ngOnDestroy(): void {
   }
 
   private initForm() {
@@ -80,7 +88,7 @@ export class NewCampaignComponent implements OnInit {
     const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, {data: config});
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+      this.router.navigate(['/campaigns']);
     });
   }
 }

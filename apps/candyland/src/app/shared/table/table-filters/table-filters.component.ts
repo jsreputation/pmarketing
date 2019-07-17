@@ -40,7 +40,9 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   public ngAfterContentInit(): void {
     this.filtersContainer.clear();
     this.updateFilters();
-    this.filters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.filters.changes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
       this.updateFilters();
     });
     this.fg.valueChanges
@@ -53,21 +55,6 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
       )
       .subscribe(value => {
         this.dataSource.filter = value;
-        // let date = value['date'];
-        // ({date, ...value} = {...value, ...date}); //tslint:disable-line
-        // this.dataSource.setFilters(value);
-        // if(value.name) {
-        //   this.dataSource.filter = value.name.toLocaleLowerCase();
-        // }
-
-        // this.dataSource.filterPredicate =
-        //   (item: any, filter: string) => {
-        //     Object.keys(value).forEach(key => {
-        //       if(value[key] && !item[key].includes(value[key]))
-        //       return false
-        //     });
-        //     return true;
-        //   };
       });
   }
 

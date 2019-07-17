@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -7,18 +8,23 @@ import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creati
   styleUrls: ['./new-campaign-review-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignReviewPageComponent implements OnInit {
+export class NewCampaignReviewPageComponent implements OnInit, OnDestroy {
   public campaign;
 
-  constructor( private store: CampaignCreationStoreService,
-               private cd: ChangeDetectorRef
-  ) { }
+  constructor(private store: CampaignCreationStoreService,
+              private cd: ChangeDetectorRef
+  ) {
+  }
 
   ngOnInit() {
-    this.store.currentCampaign$.asObservable().subscribe( data => {
+    this.store.currentCampaign$.asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
       this.campaign = data;
       this.cd.detectChanges();
     });
   }
 
+  ngOnDestroy(): void {
+  }
 }

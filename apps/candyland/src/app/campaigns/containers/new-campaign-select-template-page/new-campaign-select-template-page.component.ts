@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatTableDataSource } from '@angular/material';
 import { EngagementsService } from '@cl-core/services/engagements.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-select-template-page',
@@ -12,7 +13,7 @@ import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creati
   styleUrls: ['./new-campaign-select-template-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignSelectTemplatePageComponent implements OnInit {
+export class NewCampaignSelectTemplatePageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public dataSource = new MatTableDataSource<Engagement>();
   public typeFilterConfig: OptionConfig[];
@@ -31,7 +32,10 @@ export class NewCampaignSelectTemplatePageComponent implements OnInit {
   ngOnInit() {
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.form.valueChanges.subscribe(value => this.store.updateCampaign(value));
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(value => this.store.updateCampaign(value));
+  }
+
+  ngOnDestroy(): void {
   }
 
   private initForm() {

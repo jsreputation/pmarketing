@@ -27,7 +27,7 @@
           <cl-date-picker formControlName="endDate" [min]="startDate.value"></cl-date-picker>
           <cl-time-picker formControlName="endTime"></cl-time-picker>
         </div>
-        <mat-checkbox [formControl]="disableEnd">Does not end</mat-checkbox>
+        <mat-checkbox (change)="toggleEndDate($event.checked)">Does not end</mat-checkbox>
       </div>
       <!--labels-->
       <mat-form-field class="card-row">

@@ -89,6 +89,10 @@ button {
   &.no-padding-top {
     padding-top: 0;
   }
+
+  .mat-stepper-horizontal {
+    background-color: inherit;
+  }
 }
 
 .row {
@@ -96,6 +100,21 @@ button {
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 100%;
+}
+
+.tab-content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: flex-start;
+
+  & > div {
+    margin-right: 2.4rem;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
 }
 
 .mat-dialog-container {
@@ -132,10 +151,9 @@ button {
   }
 
   &-preview-mobile {
-    background: url("/assets/images/mobile-game/mobile_.png") no-repeat;
     width: 34.4rem;
     height: 63.8rem;
-    background-position: 123% 100%;
+    background: url("assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
   }
 }
 
@@ -219,7 +237,7 @@ button {
   letter-spacing: normal;
   border-radius: 5px;
 
-  &:before {
+  &::before {
     content: '!';
     margin-right: 10px;
     min-width: 18px;
@@ -237,32 +255,8 @@ button {
 .forms-container {
   position: relative;
   width: 100%;
-  //padding-right: 2.7rem;
 }
 
 .name-filter {
-  //max-width: 36.5rem;
-  //margin-right: 1.6rem;
+  position: relative;
 }
-
-.content {
-  .mat-stepper-horizontal {
-    background-color: inherit;
-  }
-
-  .tab-content {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: stretch;
-    align-items: flex-start;
-
-    & > * {
-      margin-right: 2.4rem;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-  }
-}
-

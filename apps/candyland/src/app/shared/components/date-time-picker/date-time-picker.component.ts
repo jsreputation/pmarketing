@@ -56,7 +56,6 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
         takeUntil(this.destroy$)
       )
       .subscribe((value: DatepickerRangeValue<Date>) => {
-        console.log('date', value);
         this.onChange(value);
       });
   }

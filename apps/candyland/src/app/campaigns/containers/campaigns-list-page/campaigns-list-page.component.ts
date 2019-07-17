@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, C
 import { FormControl, FormGroup } from '@angular/forms';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
-import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { CampaignsService } from '@cl-core/services/campaigns.service';
 
 @Component({
@@ -26,8 +26,7 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private campaignsService: CampaignsService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+              public cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -41,9 +40,6 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-  }
-
-  public openDialog(): void {
   }
 
   public editItem() {

@@ -48,7 +48,6 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
         takeUntil(this.destroy$)
       )
       .subscribe((value: any) => {
-        console.log('time', value);
         this.onChange(value);
       });
   }

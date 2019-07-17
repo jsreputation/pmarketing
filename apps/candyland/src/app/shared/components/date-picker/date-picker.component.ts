@@ -41,7 +41,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
         takeUntil(this.destroy$)
       )
       .subscribe((value: Date) => {
-        console.log('date', value);
         this.onChange(value);
       });
   }

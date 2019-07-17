@@ -32,7 +32,7 @@
       "name": "cafe",
       "status": "active",
       "type": "Survey",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/spin-the-wheel-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -41,7 +41,7 @@
       "name": "caffrghe",
       "status": "pending",
       "type": "Stamp",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/pinata-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -50,7 +50,7 @@
       "name": "cafghfe",
       "status": "draft",
       "type": "Game",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/shake-tree-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -59,7 +59,7 @@
       "name": "cafe",
       "status": "active",
       "type": "Instant Reward",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/spin-the-wheel-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -68,7 +68,7 @@
       "name": "cajjfe",
       "status": "active",
       "type": "Instant Reward",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/pinata-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -77,7 +77,7 @@
       "name": "cafe",
       "status": "active",
       "type": "Survey",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/shake-tree-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -86,7 +86,7 @@
       "name": "tycafe",
       "status": "active",
       "type": "Stamp",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/spin-the-wheel-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -95,7 +95,7 @@
       "name": "rtycafe",
       "status": "active",
       "type": "Survey",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/pinata-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -104,7 +104,7 @@
       "name": "cafe",
       "status": "active",
       "type": "Instant Reward",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/pinata-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -113,7 +113,7 @@
       "name": "aasdfgcafe",
       "status": "active",
       "type": "Game",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/spin-the-wheel-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     },
@@ -122,7 +122,7 @@
       "name": "thyfrcafe",
       "status": "active",
       "type": "Instant Reward",
-      "image": "/assets/images/mask-group.png",
+      "image": "/assets/images/pinata-preview.png",
       "begin": "2018-12-17 03:24:00",
       "end": "2019-12-17 03:24:00"
     }
