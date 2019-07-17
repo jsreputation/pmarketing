@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+
+interface ITransaction {
+  id: number;
+}
 
 @Component({
   selector: 'perx-core-loyalty-transaction-history',
@@ -6,8 +11,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loyalty-transaction-history.component.scss']
 })
 export class LoyaltyTransactionHistoryComponent implements OnInit {
+  @Input()
+  transactions: Observable<ITransaction[]>;
 
-  constructor() { }
+  @Output()
+  tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
