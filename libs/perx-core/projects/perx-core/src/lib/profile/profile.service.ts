@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IProfileResponse } from './profile.model';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { IProfile } from './profile.model';
 
 @Injectable({
@@ -21,5 +21,10 @@ export class ProfileService {
       .pipe(
         map(resp => resp.data)
       );
+  }
+
+  // @ts-ignorets-ignore
+  public resetPassword(password: string): Observable<void> {
+    return throwError('Not implemented yet');
   }
 }
