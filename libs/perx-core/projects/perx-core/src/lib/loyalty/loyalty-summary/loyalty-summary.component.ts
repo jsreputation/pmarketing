@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoyaltySummaryComponent implements OnInit {
 
-  constructor() { }
+  // constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

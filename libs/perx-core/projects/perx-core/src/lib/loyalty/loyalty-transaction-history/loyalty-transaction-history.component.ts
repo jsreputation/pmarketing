@@ -12,15 +12,15 @@ interface ITransaction {
 })
 export class LoyaltyTransactionHistoryComponent implements OnInit {
   @Input()
-  transactions: Observable<ITransaction[]>;
+  public transactions: Observable<ITransaction[]>;
 
   @Output()
-  tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
+  public tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
 
-  constructor() {
-  }
+  // constructor() {
+  // }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

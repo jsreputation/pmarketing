@@ -12,15 +12,15 @@ interface IReward {
 })
 export class RewardsListTabbedComponent implements OnInit {
   @Input()
-  rewards: Observable<IReward[]>;
+  public rewards: Observable<IReward[]>;
 
   @Output()
-  tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
+  public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
-  constructor() {
-  }
+  // constructor() {
+  // }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }
