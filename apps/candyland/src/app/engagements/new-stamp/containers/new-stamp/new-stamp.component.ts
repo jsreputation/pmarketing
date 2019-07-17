@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -22,7 +24,8 @@ export class NewStampComponent implements OnInit {
   public backgrounds$: Observable<IGraphic[]>;
   constructor(private fb: FormBuilder,
               private stampService: StampHttpService,
-              private routingState: RoutingStateService) { }
+              private routingState: RoutingStateService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createStampForm();
@@ -52,6 +55,7 @@ export class NewStampComponent implements OnInit {
   }
 
   public save(): void {
+    this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {
@@ -64,12 +68,12 @@ export class NewStampComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: [null, [
+      headlineMessage: ['Collect stamps', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      subHeadlineMessage: [null, [
+      subHeadlineMessage: ['Earn rewards!', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
@@ -82,7 +86,7 @@ export class NewStampComponent implements OnInit {
       rewardPostStamps: [null, [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: [null, [
+      buttonText: ['see my rewards', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -91,35 +95,80 @@ export class NewStampComponent implements OnInit {
   }
 
   private getNumberStamps(): void {
-    this.stampNumbers$ = this.stampService.getStampsNumber();
+    this.stampNumbers$ = this.stampService.getStampsNumber()
+      .pipe(
+        tap((res) => {
+          this.patchForm('stampsNumber', res[res.length - 1].value);
+        })
+      );
   }
 
   private getSlotStamps(): void {
-    this.stampSlotNumbers$ = this.stampService.getStampsSlotNumber();
+    this.stampSlotNumbers$ = this.stampService.getStampsSlotNumber()
+      .pipe(
+        tap((res) => {
+          this.patchForm('stampsSlotNumber', [res[res.length - 1].value]);
+        })
+      );
   }
 
   private getPreStamps(): void {
-    this.preStamps$ = this.stampService.getPreStamps();
+    this.preStamps$ = this.stampService.getPreStamps()
+      .pipe(
+        tap((res) => {
+          this.patchForm('preStamp', res[0]);
+        })
+      );
   }
 
   private getRewardPreStamps(): void {
-    this.rewardPreStamps$ = this.stampService.getRewardPreStamps();
+    this.rewardPreStamps$ = this.stampService.getRewardPreStamps()
+      .pipe(
+        tap((res) => {
+          this.patchForm('rewardPreStamps', res[0]);
+        })
+      );
   }
 
   private getPostStamps(): void {
-    this.postStamps$ = this.stampService.getPostStamps();
+    this.postStamps$ = this.stampService.getPostStamps()
+      .pipe(
+        tap((res) => {
+          this.patchForm('postStamps', res[0]);
+        })
+      );
   }
 
   private getRewardPostStamps(): void {
-    this.rewardPostStamps$ = this.stampService.getRewardPostStamps();
+    this.rewardPostStamps$ = this.stampService.getRewardPostStamps()
+      .pipe(
+        tap((res) => {
+          this.patchForm('rewardPostStamps', res[0]);
+        })
+      );
   }
 
   private getCardBackground(): void {
-    this.cardBackground$ = this.stampService.getCardBackground();
+    this.cardBackground$ = this.stampService.getCardBackground()
+      .pipe(
+        tap((res) => {
+          this.patchForm('cardBackground', res[0]);
+        })
+      );
   }
 
   private getBackground(): void {
-    this.backgrounds$ = this.stampService.getBackground();
+    this.backgrounds$ = this.stampService.getBackground()
+      .pipe(
+        tap((res) => {
+          this.patchForm('background', res[0]);
+        })
+      );
   }
 
+  private patchForm(fieldName: string, value: any): void {
+    this.formStamp.patchValue({
+      [fieldName]: value
+    });
+  }
 }
