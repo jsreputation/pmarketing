@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+
+interface IReward {
+  id: number;
+}
 
 @Component({
   selector: 'perx-core-rewards-carousel',
@@ -7,7 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RewardsCarouselComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  rewards: Observable<IReward[]>;
+
+  @Output()
+  tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
