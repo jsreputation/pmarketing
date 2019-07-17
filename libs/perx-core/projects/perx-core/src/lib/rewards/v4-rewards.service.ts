@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from './env-config';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
 import { IReward } from './models/reward.model';
 
@@ -71,6 +71,24 @@ export class V4RewardsService extends RewardsService {
 
   public getTags(): void {
     // todo: api not implemented yet
+  }
+
+  public getAllRewards(): Observable<IReward[]> {
+    const pageSize = 100;
+    return this.getRewards(1, pageSize).pipe(
+      mergeMap(reward => {
+        const streams = [
+          of(reward)
+        ];
+        for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
+          const stream = this.getRewards(i, pageSize);
+          streams.push(stream);
+        }
+        return streams;
+      }),
+      concatAll(),
+      reduce((acc: IReward[], curr: IReward[]) => acc.concat(curr), [])
+    );
   }
 
   public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
