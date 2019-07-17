@@ -82,7 +82,10 @@
     "use-pipe-transform-interface": true,
     "typedef": [
       true,
-      "call-signature"
+      "call-signature",
+      "parameter",
+      "member-variable-declaration",
+      "property-declaration"
     ],
     "unnecessary-constructor": true,
     "rxjs-collapse-imports": true,

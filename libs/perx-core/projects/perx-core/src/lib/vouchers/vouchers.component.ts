@@ -13,12 +13,12 @@ export class VouchersComponent implements OnInit {
   @Input() public filter: string;
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
-  @Input() public showTitle = true;
-  @Input() public showMerchant = true;
-  @Input() public showExpireDate = true;
-  @Input() public showRedeemedDate = false;
-  @Input() public showRedeemedIcon = true;
-  @Input() public canSelectRedeemed = false;
+  @Input() public showTitle: boolean = true;
+  @Input() public showMerchant: boolean = true;
+  @Input() public showExpireDate: boolean = true;
+  @Input() public showRedeemedDate: boolean = false;
+  @Input() public showRedeemedIcon: boolean = true;
+  @Input() public canSelectRedeemed: boolean = false;
 
   @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
 
