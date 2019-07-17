@@ -6,6 +6,8 @@ import { AuthenticationModule } from './auth/authentication/authentication.modul
 import { RewardsCarouselComponent } from './rewards/rewards-carousel/rewards-carousel.component';
 import { RewardsListComponent } from './rewards/rewards-list/rewards-list.component';
 import { RewardsListCategorizedComponent } from './rewards/rewards-list-categorized/rewards-list-categorized.component';
+import { LoyaltySummaryComponent } from './loyalty/loyalty-summary/loyalty-summary.component';
+import { LoyaltyTransactionHistoryComponent } from './loyalty/loyalty-transaction-history/loyalty-transaction-history.component';
 
 const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
@@ -13,7 +15,9 @@ const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
   declarations: [
   RewardsCarouselComponent,
   RewardsListComponent,
-  RewardsListCategorizedComponent],
+  RewardsListCategorizedComponent,
+  LoyaltySummaryComponent,
+  LoyaltyTransactionHistoryComponent],
   imports: [
     ...modules
   ],
