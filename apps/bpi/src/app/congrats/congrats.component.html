@@ -1,21 +1,28 @@
-<app-header [title]="title" [subTitle]="subTitle"></app-header>
-<div class="game-container">
-  <img src="../../assets/netflix-logo.png" alt="" />
-  <img src="../../assets/image.jpg" alt="" />
-  <p>
-    To receive your Netflix Rebate, your BPI Credit Card must be the card used
-    in payment for your existing Netflix account subscription plan. Terms and
-    conditions apply.
-  </p>
-  <p>Terms and conditions apply. Visit bit.ly/bpi-netflix19 to learn more!</p>
-  <div>
-    <strong>
-      Not yet a Netflix subscriber?
-    </strong>
-  </div>
-  <div>
-    <strong>
-      Sign-up now!
-    </strong>
+<div class="app-container">
+  <app-header [title]="title" [subTitle]="subTitle"></app-header>
+  <div class="game-container">
+    <div class="contents">
+      <img src="assets/netflix-logo.png" alt="" />
+      
+      <strong>Here's how to receive your Netflix rebate</strong>
+      <ul>
+        <li>Make sure that your BPI Credit Card must be the card used as payment method in your Netflix account</li>
+
+        <li>The Netflix subscription fee must be reflected in your statement of account</li>
+
+        <li>You will receive a notification from BPI once the Netlix rebate has been credited to your account.</li>
+
+        <li>You will see the Netflix rebate credited to your account in your next statement of account.</li>
+
+        <li>Only one Netflix rebate will be credited each month.</li>
+      </ul>
+  
+      <p>For complete terms and conditions, visit <a href="http://bit.ly/BPI-NETFLIX" target="_blank">bit.ly/BPI-NETFLIX.</a></p>
+  
+      <p>Not yet a Netflix subscriber? Sign up now. Visit
+        <a href="http://www.netflix.com.ph/bpi" target="_blank">www.netflix.com.ph/bpi</a></p>
+  
+      <button mat-flat-button type="submit" color="primary">Unlock more</button>
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectReward, STAMP_STATE } from '../models/puzzle-stamp.model';
+import { PuzzleCollectStamp, PuzzleCollectReward, PUZZLE_COLLECT_STAMP_STATE } from '../models/puzzle-stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-collect-stamps',
@@ -10,7 +10,7 @@ import { PuzzleCollectStamp, PuzzleCollectReward, STAMP_STATE } from '../models/
 export class PuzzleCollectStampsComponent implements OnInit {
 
   // This dummy array is describing the slots templates
-  stampsOrientations = [[1, 2],
+  private stampsOrientations: number[][] = [[1, 2],
                         [2, 2],
                         [2, 1, 2],
                         [3, 3],
@@ -20,42 +20,40 @@ export class PuzzleCollectStampsComponent implements OnInit {
                         [3, 3, 3, 1]];
 
   @Input()
-  stamps: PuzzleCollectStamp[] = null;
+  private stamps: PuzzleCollectStamp[] = null;
 
   @Input()
-  rewards: PuzzleCollectReward[] = null;
+  private rewards: PuzzleCollectReward[] = null;
 
   @Input()
-  nbSlots: number = null;
+  private nbSlots: number = null;
 
   @Input()
-  preStampImg: string = null;
+  private preStampImg: string = null;
 
   @Input()
-  postStampImg: string = null;
+  private postStampImg: string = null;
 
   @Input()
-  rewardPreStamp: string = null;
+  private rewardPreStamp: string = null;
 
   @Input()
-  rewardPostStamp: string = null;
+  private rewardPostStamp: string = null;
 
   @Output()
-  availableStampClicked = new EventEmitter<PuzzleCollectStamp>();
+  private availableStampClicked: EventEmitter<PuzzleCollectStamp> = new EventEmitter<PuzzleCollectStamp>();
 
-  currentActiveOrientation: number[] = null;
+  public currentActiveOrientation: number[] = null;
 
-  constructor() { }
-
-  ngOnInit() {
+  public ngOnInit(): void {
     this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
   }
 
-  counter(i: number) {
+  public counter(i: number): number[] {
     return new Array(i);
   }
 
-  isIndexPresentInRewards(index: number): boolean {
+  private isIndexPresentInRewards(index: number): boolean {
     let isPresent = false;
     this.rewards.forEach(element => {
       if (element.rewardPosition === index) {
@@ -65,12 +63,12 @@ export class PuzzleCollectStampsComponent implements OnInit {
     return isPresent;
   }
 
-  getStampImage(index: number, rowNum: number): string {
+  public getStampImage(index: number, rowNum: number): string {
 
     const itemIndex = this.getItemIndex(index, rowNum);
 
     if (itemIndex < (this.stamps.length)) {
-      if (this.stamps[itemIndex].state === STAMP_STATE.redeemed) {
+      if (this.stamps[itemIndex].state === PUZZLE_COLLECT_STAMP_STATE.redeemed) {
         if (this.isIndexPresentInRewards(itemIndex)) {
           return this.rewardPostStamp;
         } else {
@@ -87,23 +85,23 @@ export class PuzzleCollectStampsComponent implements OnInit {
     return this.preStampImg;
   }
 
-  isIssued(index: number, rowNum: number): boolean {
+  public isIssued(index: number, rowNum: number): boolean {
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
-      return this.stamps[itemIndex].state === STAMP_STATE.issued;
+      return this.stamps[itemIndex].state === PUZZLE_COLLECT_STAMP_STATE.issued;
     }
     return false;
   }
 
-  onAvailableStampClicked(index: number, rowNum: number) {
+  public onAvailableStampClicked(index: number, rowNum: number): void {
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
-      this.stamps[itemIndex].state = STAMP_STATE.redeemed;
+      this.stamps[itemIndex].state = PUZZLE_COLLECT_STAMP_STATE.redeemed;
       this.availableStampClicked.emit(this.stamps[itemIndex]);
     }
   }
 
-  getItemIndex(index: number, rowNum: number): number {
+  private getItemIndex(index: number, rowNum: number): number {
     let itemIndex = index;
     for (let i = 0; i < this.currentActiveOrientation.length; i++) {
       if (rowNum > i) {

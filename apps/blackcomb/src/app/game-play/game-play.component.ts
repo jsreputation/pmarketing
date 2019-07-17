@@ -5,7 +5,7 @@ import {
   NotificationService,
   PuzzleCollectStamp,
   PuzzleCollectReward,
-  STAMP_STATE
+  PUZZLE_COLLECT_STAMP_STATE
 } from '@perx/core/dist/perx-core';
 
 const gamesInfo = [{
@@ -56,10 +56,10 @@ export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
   //
 
   // For static stamp card input values
-  stamps: PuzzleCollectStamp[] = [{id: 1, state: STAMP_STATE.redeemed},
-                                  {id: 2, state: STAMP_STATE.redeemed},
-                                  {id: 3, state: STAMP_STATE.redeemed},
-                                  {id: 3, state: STAMP_STATE.issued}];
+  stamps: PuzzleCollectStamp[] = [{id: 1, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 2, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 3, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 3, state: PUZZLE_COLLECT_STAMP_STATE.issued}];
 
   rewards: PuzzleCollectReward[] = [{rewardPosition: 0},
                                     {rewardPosition: 2}];

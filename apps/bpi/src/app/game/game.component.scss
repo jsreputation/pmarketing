@@ -1,6 +1,24 @@
+.app-container {
+  background-color: #b20000;
+}
+
 .game-container {
-  max-width: 500px;
+  max-width: 50rem;
   margin: 0 auto;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 0.5rem;
+}
+
+.key-display {
+  max-width: 50rem;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1rem 1.5rem;
+
+  span {
+    color: #fff;
+    font-size: 1.6rem;
+    padding-left: 1rem;
+  }
 }
