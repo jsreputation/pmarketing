@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PopUpClosedCallBack, NotificationService } from '@perx/core/dist/perx-core';
+import {
+  PopUpClosedCallBack,
+  NotificationService,
+  PuzzleCollectStamp,
+  PuzzleCollectReward,
+  STAMP_STATE
+} from '@perx/core/dist/perx-core';
 
 const gamesInfo = [{
       title: 'Complete the survey to win an instant reward!',
@@ -21,7 +27,13 @@ const gamesInfo = [{
       title: 'Complete the Puzzle!',
       subTitle: 'Complete the puzzle win rewards',
       gameType: 'puzzle-stamp'
+    },
+    {
+      title: 'Scratch & Win!',
+      subTitle: 'Collect all 10 stickers and win a reward!',
+      gameType: 'puzzle-collect-stamp'
     }
+
 ];
 
 @Component({
@@ -42,6 +54,15 @@ export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
   pinataTotalTaps = 2;
   numberOfTaps = 0;
   //
+
+  // For static stamp card input values
+  stamps: PuzzleCollectStamp[] = [{id: 1, state: STAMP_STATE.redeemed},
+                                  {id: 2, state: STAMP_STATE.redeemed},
+                                  {id: 3, state: STAMP_STATE.redeemed},
+                                  {id: 3, state: STAMP_STATE.issued}];
+
+  rewards: PuzzleCollectReward[] = [{rewardPosition: 0},
+                                    {rewardPosition: 2}];
 
   congratsDetailText = 'You just won 2 rewards';
 
@@ -92,5 +113,9 @@ export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
         afterClosedCallBack: this
       });
     }, 2000);
+  }
+
+  onStampClicked(stamp: PuzzleCollectStamp) {
+    console.log(`Stamp: ${stamp.state}`);
   }
 }

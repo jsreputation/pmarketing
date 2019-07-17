@@ -49,3 +49,9 @@ export {
   IProfileResponse
  } from './lib/profile/profile.model';
 export { UtilsModule } from './lib/utils/utils.module';
+
+export {
+  PuzzleCollectStamp,
+  PuzzleCollectReward,
+  STAMP_STATE
+} from './lib/puzzles/models/puzzle-stamp.model';
