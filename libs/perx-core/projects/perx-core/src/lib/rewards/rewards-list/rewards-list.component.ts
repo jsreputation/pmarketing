@@ -20,7 +20,7 @@ export class RewardsListComponent implements OnInit {
   // constructor() {
   // }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

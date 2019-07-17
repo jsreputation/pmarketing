@@ -9,7 +9,7 @@ export class LoyaltySummaryComponent implements OnInit {
 
   // constructor() { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }

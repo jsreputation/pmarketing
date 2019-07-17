@@ -20,7 +20,7 @@ export class LoyaltyTransactionHistoryComponent implements OnInit {
   // constructor() {
   // }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
