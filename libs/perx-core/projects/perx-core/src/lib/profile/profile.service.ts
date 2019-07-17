@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IProfileResponse } from './profile.model';
+import { IProfileResponse, ICustomProperties } from './profile.model';
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { IProfile } from './profile.model';
@@ -23,8 +23,17 @@ export class ProfileService {
       );
   }
 
-  // @ts-ignorets-ignore
+  // @ts-ignore
   public resetPassword(password: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public setCustomProperties(data: ICustomProperties): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  public getCustomProperties(): Observable<ICustomProperties> {
     return throwError('Not implemented yet');
   }
 }
