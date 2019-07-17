@@ -42,19 +42,19 @@ interface IV4PointHistory {
   providedIn: 'root'
 })
 export class LoyaltyService {
-  private baseUrl: string;
+  private apiHost: string;
   private historyMeta: IV4Meta = {};
 
   constructor(
     private http: HttpClient,
     config: EnvConfig
   ) {
-    this.baseUrl = config.env.apiHost;
+    this.apiHost = config.env.apiHost;
   }
 
-  getLoyalties(page = 1, pageSize = 25): Observable<IV4Loyalty[]> {
+  getLoyalties(page: number = 1, pageSize: number = 25): Observable<IV4Loyalty[]> {
     return this.http.get<IV4GetLoyaltiesResponse>(
-      `${this.baseUrl}/v4/loyalty`,
+      `${this.apiHost}/v4/loyalty`,
       {
         params: {
           page: `${page}`,
@@ -68,7 +68,7 @@ export class LoyaltyService {
 
   getLoyalty(id: number): Observable<IV4Loyalty> {
     return this.http.get<IV4GetLoyaltyResponse>(
-      `${this.baseUrl}/v4/loyalty/${id}`
+      `${this.apiHost}/v4/loyalty/${id}`
     ).pipe(
       map(res => res.data)
     );
@@ -94,7 +94,7 @@ export class LoyaltyService {
 
   getHistory(loyaltyId: number, page = 1, pageSize = 25): Observable<IV4PointHistory[]> {
     return this.http.get<IV4GetLoyaltyResponse>(
-      `${this.baseUrl}/v4/loyalty/${loyaltyId}/transactions`,
+      `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
         params: {
           page: `${page}`,
