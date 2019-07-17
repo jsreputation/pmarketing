@@ -16,7 +16,7 @@
     <div class="sidenav-actions">
       <button class="user-logout btn-transparent appear"
               *ngIf="isOpen"
-              routerLink="/login"
+              [routerLink]="['/login']"
       >
         <i class="icon logout" matListIcon></i>
         <span class="btn-text">
