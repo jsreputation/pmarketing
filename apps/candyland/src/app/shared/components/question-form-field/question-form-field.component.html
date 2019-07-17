@@ -1,3 +1,26 @@
-<p>
+<div class="question-form-field" [ngClass]="'nested-' + currentIndex">
   question-form-field works!
-</p>
+  <div class="question-form-header">
+    <cl-question-type class="question-btn-type"
+                      (selectTypeQuestion)="choseTypeQuestion($event)"
+    ></cl-question-type>
+
+    <div class="control-input">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput [placeholder]="'Sub-headline message'">
+        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+      </mat-form-field>
+    </div>
+  </div>
+
+  <ng-container *ngIf="currentIndex >= 0">
+    <cl-question-form-field *ngFor="let item of test; let i = index;"
+                            [clOpenClose]=" 'current' + currentIndex + '-' + i"
+                            [level]="currentLevel"
+    ></cl-question-form-field>
+  </ng-container>
+
+</div>

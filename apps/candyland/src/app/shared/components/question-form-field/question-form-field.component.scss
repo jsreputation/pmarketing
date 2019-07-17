@@ -1,0 +1,32 @@
+@import "variables";
+
+.question {
+  &-form-field {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: solid 1px #d9dfe4;
+    background-color: #f4f4f5;
+    font-size: 1.4rem;
+  }
+
+  &-form-header {
+    display: flex;
+    align-items: center;
+  }
+
+  &-btn-type {
+    margin-right: 1.4rem;
+  }
+}
+
+cl-question-form-field {
+  display: block;
+  margin-bottom: 1.6rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

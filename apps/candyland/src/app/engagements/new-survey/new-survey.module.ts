@@ -9,6 +9,7 @@ import { QuestionTypeModule } from '@cl-shared/components/question-type/question
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { QuestionFormFieldModule } from '@cl-shared/components/question-form-field/question-form-field.module';
 
 @NgModule({
   declarations: [NewSurveyQuestionsPageComponent, NewSurveyAppearancePageComponent, NewSurveyRewardsPageComponent, NewSurveyComponent],
@@ -18,6 +19,7 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } fr
     QuestionTypeModule,
     ReactiveFormsModule,
     ButtonModule,
+    QuestionFormFieldModule,
 
     MatCardModule,
     MatFormFieldModule,

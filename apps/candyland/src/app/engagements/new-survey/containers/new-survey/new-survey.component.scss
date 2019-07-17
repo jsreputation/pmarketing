@@ -5,3 +5,17 @@
     margin-right: 4rem;
   }
 }
+
+.btn-add-question {
+  display: block;
+  margin-top: 1.6rem;
+}
+
+cl-question-form-field {
+  display: block;
+  margin-bottom: 1.6rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

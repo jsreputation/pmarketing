@@ -68,7 +68,31 @@
         </div>
       </mat-card>
       <mat-card class="game-graphic">
-        <cl-question-type [typeList]="surveyQuestionType"
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Questions
+          </p>
+        </div>
+
+        <!--questions form array-->
+        <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
+                                [control]="item"
+                                [currentIndex]="i"
+                                [clOpenClose]="i"
+                                [level]="level"
+        >
+        </cl-question-form-field>
+        <!--<div *ngFor="let item of surveyQuestion.controls; let i = index;" style="background: red; width: 100px; height: 100px;">-->
+          <!--&lt;!&ndash;<dynamic-form [fields]="field.fields" [group]="item" >&ndash;&gt;-->
+          <!--&lt;!&ndash;</dynamic-form>&ndash;&gt;-->
+          <!--<button type="button" (click)="deleteQuestion(i)">remove control</button>-->
+        <!--</div>-->
+        <!--end questions form array-->
+
+
+        <cl-question-type class="btn-add-question"
+                          [addQuestionType]="true"
+                          (selectTypeQuestion)="choseTypeQuestion($event)"
         ></cl-question-type>
       </mat-card>
     </div>

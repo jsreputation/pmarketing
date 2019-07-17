@@ -1,4 +1,13 @@
-import { Component, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SurveyService } from '@cl-core/services/survey.service';
 import { Subject } from 'rxjs';
@@ -8,6 +17,7 @@ export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   useExisting: forwardRef(() => QuestionTypeComponent),
   multi: true,
 };
+
 @Component({
   selector: 'cl-question-type',
   templateUrl: './question-type.component.html',
@@ -17,7 +27,10 @@ export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   ]
 })
 export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDestroy {
+  @Input() public addQuestionType = false;
   @Input() typeList: IEngagementType[];
+
+  @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
 
   @ViewChild('matSelect', {static: true}) public matSelect: any;
   public type = new FormControl();
@@ -28,7 +41,11 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   public onTouch: any = () => {};
   constructor(private surveyService: SurveyService) { }
 
-  toggle() {
+  public closed(): void {
+    this.selectTypeQuestion.emit(this.type.value);
+  }
+
+  public openSelect(): void {
     this.matSelect.open();
   }
 
@@ -69,7 +86,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   }
 
   writeValue(obj: any): void {
-    if (obj !== undefined && this.type.value !== obj) {
+    if (obj !== undefined) {
       this.type.patchValue(obj);
       this.onChange(obj);
       this.onTouch(obj);
