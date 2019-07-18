@@ -13,6 +13,11 @@ interface IV4Meta {
   page?: number;
 }
 
+interface IV4AgingPoints {
+  expiring_on_date?: string;
+  points_expiring?: number;
+}
+
 interface IV4Loyalty {
   id: number;
   name: string;
@@ -26,6 +31,7 @@ interface IV4Loyalty {
   points_balance_converted_to_currency: number;
   points_currency: string;
   points_to_currency_rate: number;
+  aging_points?: IV4AgingPoints[];
 
   points_history?: IV4PointHistory[];
 }
@@ -77,7 +83,11 @@ export class V4LoyaltyService extends LoyaltyService {
       membershipIdentifier: loyalty.membership_number,
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
-      currency: loyalty.points_currency
+      currency: loyalty.points_currency,
+      expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
+        expireDate: aging.expiring_on_date,
+        points: aging.points_expiring
+      }))
     };
   }
 
