@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 
 @NgModule({
   declarations: [

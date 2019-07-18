@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { V4LoyaltyService } from './v4-loyalty.service';
 import { LoyaltyService } from './loyalty.service';
 import { LoyaltySummaryComponent } from './loyalty-summary/loyalty-summary.component';
