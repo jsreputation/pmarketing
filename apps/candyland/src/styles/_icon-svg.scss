@@ -5,6 +5,11 @@
   width: 18px !important;
   padding: 0 0 0 16px !important;
   box-sizing: content-box;
+
+  &.full-with {
+    height: 100% !important;
+    width: auto !important;
+  }
 }
 
 .dashboard {
@@ -54,6 +59,24 @@
   mask: url("assets/images/icon-logout.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.delete-action {
+  mask: url("/assets/images/delete-action.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.date-icon {
+  mask: url("/assets/images/date.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.time-icon {
+  mask: url("/assets/images/time.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
 }
 
 .active {

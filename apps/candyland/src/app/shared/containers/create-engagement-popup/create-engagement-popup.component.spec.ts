@@ -32,6 +32,7 @@ import { NoDataModule } from '../../table/no-data/no-data.module';
 import { ShakeDataService } from '../../../engagements/games/containers/new-shake-page/shared/services/shake-data.service';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -84,7 +85,8 @@ describe('CreateEngagementPopupComponent', () => {
           getGameNumberGifts: () => of([]),
         }
       }
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

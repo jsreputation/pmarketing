@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class EngagementsService {
+export class EngagementsHttpsService {
   constructor(private http: HttpClient) {
   }
 
