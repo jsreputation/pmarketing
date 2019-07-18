@@ -8,7 +8,7 @@ import {
   ViewChild,
   // SimpleChanges
 } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+//  import { Observable, Observer } from 'rxjs';
 
 interface DrawTile {
   puzzleLocation: number;
@@ -22,56 +22,56 @@ interface DrawTile {
 })
 export class PuzzlePlayComponent implements OnChanges {
   @Input()
-  img: string;
+  public img: string;
 
   @Input()
-  showHint = false;
+  public showHint: false = false;
 
   @Input()
-  rows = 2;
+  public rows: number = 2;
 
   @Input()
-  cols = 3;
+  public cols: number = 3;
 
   @Input()
-  nbPlayedPieces = 0;
+  public nbPlayedPieces: number = 0;
 
   @Input()
-  nbAvailablePieces = 0;
+  public nbAvailablePieces: number = 0;
 
   @Output()
-  moved = new EventEmitter<void>();
+  public moved: EventEmitter<void> = new EventEmitter<void>();
 
   @Output()
-  completed = new EventEmitter<void>();
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
-  tileWidth = 0;
-  tileHeight = 0;
+  public tileWidth: number = 0;
+  public tileHeight: number = 0;
 
-  boardPuzzleTiles: DrawTile[] = [];
-  remainingPuzzleTiles: DrawTile[] = [];
+  public boardPuzzleTiles: DrawTile[] = [];
+  public remainingPuzzleTiles: DrawTile[] = [];
 
-  totalPieces: number;
+  public totalPieces: number;
 
-  imageWidth = 300;
-  imageHeight = 200;
-  imageReady = false;
+  public imageWidth: number = 300;
+  public imageHeight: number = 200;
+  public imageReady: boolean = false;
 
-  staticPuzzleDummyTiles = [];
+  public staticPuzzleDummyTiles: number[][] = [];
 
-  @ViewChild('puzzleBoard', { static: false }) puzzleView: ElementRef;
+  @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
-  ngOnChanges(
+  public ngOnChanges(
     // changes: SimpleChanges
-  ) {
+  ): void {
     if (this.img) {
 
       if (this.nbAvailablePieces !== 0 && this.showHint) {
-        this.imageReady = true;
+        // this.imageReady = true;
       }
       // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
       //     this.imageHeight = this.imageWidth * ratio;
-
+/*
       this.tileWidth = this.imageWidth / this.cols;
       this.tileHeight = this.imageHeight / this.rows;
       this.totalPieces = this.rows * this.cols;
@@ -85,13 +85,14 @@ export class PuzzlePlayComponent implements OnChanges {
       }
       for (let i = 0; i < this.totalPieces; i++) {
         this.staticPuzzleDummyTiles[i] = [i];
-      }
+      }*/
+
       // },
       // err => console.error('Observer got an error: ' + err));
     }
   }
 
-  nextStampClicked(): void {
+  public nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
@@ -108,28 +109,39 @@ export class PuzzlePlayComponent implements OnChanges {
     }
   }
 
-  getPuzzleTileStyle(tile: DrawTile): any {
+  public getPuzzleTileStyle(tile: DrawTile): any {
 
     const leftPosition = (tile.puzzleLocation % this.cols) * this.tileWidth;
-    const topPositionIndex = Math.floor((tile.puzzleLocation / this.cols));
-    const topPosition = topPositionIndex * this.tileHeight;
+    const topPosition = Math.floor((tile.puzzleLocation / this.cols)) * this.tileHeight;
     if (tile.isSelected) {
       return {
-        backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        backgroundImage: 'url(' + this.img + ')',
-        backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: this.tileWidth + 'px',
+        height: this.tileHeight + 'px',
+        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
+        'background-image': 'url(' + this.img + ')',
+        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        'background-repeat': 'no-repeat',
+        '-webkit-filter': 'none',
+        filter: 'none',
+        '-webkit-transform': 'translateZ(0)'
       };
+
     } else {
       return {
-        backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        backgroundImage: 'url(' + this.img + ')',
-        backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
-        filter: 'grayscale(100%)'
+        width: this.tileWidth + 'px',
+        height: this.tileHeight + 'px',
+        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
+        'background-image': 'url(' + this.img + ')',
+        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        'background-repeat': 'no-repeat',
+        '-webkit-filter': 'grayscale(100%)',
+        filter: 'grayscale(100%)',
+        '-webkit-transform': 'translateZ(0)'  // Hacky way to make filter work on iOS
       };
     }
   }
 
-  getBottomTilesStyle(index: number): any {
+  public getBottomTilesStyle(index: number): any {
 
     if ((this.remainingPuzzleTiles.length) > index) {
 
@@ -139,9 +151,12 @@ export class PuzzlePlayComponent implements OnChanges {
       const topPosition = topPositionIndex * this.tileHeight;
 
       return {
-        backgroundPosition: (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        backgroundImage: 'url(' + this.img + ')',
-        backgroundSize: this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: this.tileWidth + 'px',
+        height: this.tileHeight + 'px',
+        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
+        'background-image': 'url(' + this.img + ')',
+        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        'background-repeat': 'no-repeat'
       };
     }
     return {
@@ -149,26 +164,26 @@ export class PuzzlePlayComponent implements OnChanges {
     };
   }
 
-  getImageSize(): any {
+  public getImageSize(): any {
     return {
       width: (this.imageWidth) + 'px',
       height: (this.imageHeight) + 'px'
     };
   }
 
-  getTileSize(): any {
+  public getTileSize(): any {
     return {
       width: (this.tileWidth) + 'px',
       height: (this.tileHeight) + 'px'
     };
   }
 
-  getWidthHeightRatio(): string {
+  public getWidthHeightRatio(): string {
     const ratioValue = (this.tileWidth / this.tileHeight);
     return ratioValue.toString() + ':1';
   }
 
-  isAllPuzzleCompleted(): boolean {
+  public isAllPuzzleCompleted(): boolean {
 
     for (let i = 0; i < this.totalPieces; i++) {
       if (!this.boardPuzzleTiles[i].isSelected) {
@@ -178,39 +193,13 @@ export class PuzzlePlayComponent implements OnChanges {
     return true;
   }
 
-  getImageSizeRatioFromURL(url: string) {
-
-    return new Observable((observer: Observer<number>) => {
-      const img = new Image();
-      img.src = url;
-      if (!img.complete) {
-        img.onload = () => {
-          observer.next(this.calculateRatio(img));
-          observer.complete();
-        };
-        img.onerror = (err) => {
-          observer.error(err);
-        };
-      } else {
-        observer.next(this.calculateRatio(img));
-        this.calculateRatio(img);
-        observer.complete();
-      }
-    });
-  }
-
-  calculateRatio(img: HTMLImageElement): number {
-    this.imageWidth = img.width < this.imageWidth ? img.width : this.imageWidth;
-    return img.height / img.width;
-  }
-
-  dismissOverlayHint() {
+  public dismissOverlayHint(): void {
     this.showHint = false;
   }
 
-  onImageLoad() {
+  public onImageLoad(): void {
 
-    // console.log(`Width: ${this.puzzleView.nativeElement.width}`);
+    this.imageReady = true;
 
     this.imageWidth = this.puzzleView.nativeElement.width;
     if (this.puzzleView.nativeElement.naturalHeight > this.puzzleView.nativeElement.clientHeight) {

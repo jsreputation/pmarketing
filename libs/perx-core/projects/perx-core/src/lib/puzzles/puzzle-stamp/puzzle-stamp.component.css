@@ -1,11 +1,16 @@
-
 .mat-card .inner {
-  border: 1px solid #cac6c6;
-  border-radius: 3px;
+  border: 0.1rem solid #cac6c6;
+  border-radius: 0.3rem;
 }
 
 .mat-card-content {
   position: relative;
+}
+
+.mat-card-actions {
+  margin: 0 0 1rem 0;
+  padding: 0 1.5rem 0 1.5rem;
+  text-align: center;
 }
 
 .stamp-container {
@@ -25,20 +30,18 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  padding: 5px 5px;
+  padding: 0.5rem 0.5rem;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .stamp .content {
-  border-radius: 3px;
-  border: 2px solid;
-  display: flex;
-  flex-grow: 1;
-  flex-basis: 0;
-  align-items: center;
-  justify-content: center;
+  border-radius: 0.3rem;
+  border: 0.2rem solid;
   height: 100%;
-  color: #fff;
-  background-color: rgba(24, 22, 22, 0.8);
+  width: 100%;
+  background-color: #000;
 }
 
 mat-card-content {
@@ -58,13 +61,25 @@ mat-card-content {
   visibility: hidden;
 }
 
-.mat-card-actions {
-  text-align: center;
+button {
+  background-color: #b20000;
+  color: #fff;
+  border: 0;
+  padding: 1.5rem;
+  width: 100%;
 }
 
-button {
-  background-color: transparent;
-  border: 0;
-  padding: 15px;
+perx-core-stamp {
+  height: 100%;
   width: 100%;
+}
+
+.btn-redeemed {
+  background-color: transparent;
+  color: #b20000 !important;
+}
+
+.btn-unavailable {
+  background-color: #D6D6D6;
+  color: #A8A8A8;
 }

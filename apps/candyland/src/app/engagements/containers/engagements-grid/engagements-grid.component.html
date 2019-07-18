@@ -1,0 +1,7 @@
+<div class="item-list list">
+  <ng-container *ngIf="(dataSource.connect() | async) as items">
+    <div class="item shadow" *ngFor="let item of items">
+      <cl-engagement-item [data]="item"></cl-engagement-item>
+    </div>
+  </ng-container>
+</div>

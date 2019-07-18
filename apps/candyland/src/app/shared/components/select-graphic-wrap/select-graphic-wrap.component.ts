@@ -8,7 +8,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -28,6 +28,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   public set setGraphic(val: IGraphic) {
     if (val !== undefined && this.selectedGraphic !== val) {
+      this.patchDefaultControl(val);
       this.selectedGraphic = val;
       this.onChange(val);
       this.onTouch(val);
@@ -36,6 +37,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   constructor(private fb: FormBuilder,
               private cd: ChangeDetectorRef) { }
+
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload = true;
   @Output() private selectGraphic = new EventEmitter<IGraphic>();
@@ -45,12 +47,14 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   public destroy$ = new Subject();
+  public lock: boolean;
 
   public onChange: any = () => {};
   public onTouch: any = () => {};
 
   ngOnInit() {
-    this.createControls();
+    this.createDefaultControl();
+    this.createControl();
     this.subscribeControlDefaultValueChanges();
     this.subscribeControlUploadValueChanges();
   }
@@ -71,16 +75,26 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {
     this.setGraphic = obj;
   }
 
-  private createControls(): void {
-    this.controlDefault = this.fb.control(null);
+  private createControl(): void {
     this.controlUpload = this.showUpload ? this.fb.control(null) : null;
+  }
+
+  private createDefaultControl() {
+    if (!this.controlDefault) {
+      this.controlDefault = this.fb.control(null);
+    }
+  }
+
+  private patchDefaultControl(value: any): void {
+    this.createDefaultControl();
+    this.controlDefault.patchValue(value);
   }
 
   private subscribeControlDefaultValueChanges(): void {
@@ -90,7 +104,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
         takeUntil(this.destroy$)
       )
       .subscribe((value) => {
-        console.log('subscribeControlDefaultValueChanges', value);
         this.setSelectedGraphic(value);
       });
   }
@@ -106,7 +119,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
         takeUntil(this.destroy$)
       )
       .subscribe((value) => {
-        console.log('subscribeControlUploadValueChanges', value);
         this.setSelectedGraphic(value);
       });
   }

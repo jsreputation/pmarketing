@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -19,6 +19,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() selectedGraphic: any;
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
+  public lock: boolean;
   public imagePath;
   public imgURL: any;
   public message: string;
@@ -88,7 +89,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log(isDisabled);
+    this.lock = isDisabled;
   }
 
   writeValue(obj: any): void {

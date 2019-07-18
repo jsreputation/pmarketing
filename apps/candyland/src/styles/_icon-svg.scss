@@ -6,6 +6,11 @@
   height: 18px;
   padding: 0 0 0 16px;
   box-sizing: content-box;
+
+  &.full-with {
+    height: 100% !important;
+    width: auto !important;
+  }
 }
 
 .dashboard {
@@ -103,6 +108,24 @@
   mask: url("assets/images/delete.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: $dark-color;
+}
+
+.delete-action {
+  mask: url("/assets/images/delete-action.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.date-icon {
+  mask: url("/assets/images/date.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.time-icon {
+  mask: url("/assets/images/time.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
 }
 
 .active {

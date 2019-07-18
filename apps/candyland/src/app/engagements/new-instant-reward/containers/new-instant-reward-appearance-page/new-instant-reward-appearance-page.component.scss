@@ -1,7 +1,6 @@
 @import "variables";
 .reward {
   &-form {
-    min-width: 74.7rem;
     width: 100%;
     margin-right: 4rem;
   }
@@ -17,10 +16,6 @@
     display: flex;
     align-items: center;
   }
-}
-
-.name-control {
-  min-width: 74.7rem;
 }
 
 .info-text {

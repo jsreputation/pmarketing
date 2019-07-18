@@ -38,6 +38,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "perx-core"
+    }
+  },
+  "defaultProject": "perx-core",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

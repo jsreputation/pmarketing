@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1 class="title">Campaigns</h1>
-  <cl-button (click)="openDialog()" classList="primary">Create new</cl-button>
+  <cl-button routerLink="/campaigns/new-campaign" classList="primary">Create new</cl-button>
 </div>
 
 <section class="content">
@@ -84,10 +84,10 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #itemMenu="matMenu">
-            <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
-            <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
-            <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
-            <button mat-menu-item (click)="pauseItem(element?.id)">Pause</button>
+            <button mat-menu-item (click)="editItem()">Edit</button>
+            <button mat-menu-item (click)="duplicateItem()">Duplicate</button>
+            <button mat-menu-item (click)="deleteItem()">Delete</button>
+            <button mat-menu-item (click)="pauseItem()">Pause</button>
           </mat-menu>
         </td>
       </ng-container>

@@ -16,7 +16,7 @@
   }
 
   &-title {
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 500;
     color: $secondary-color;
     text-align: center;
@@ -29,3 +29,5 @@
     padding: .9rem;
   }
 }
+
+@import "resize";

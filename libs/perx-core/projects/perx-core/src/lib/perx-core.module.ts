@@ -7,8 +7,6 @@ import { AuthenticationModule } from './auth/authentication/authentication.modul
 const modules = [VouchersModule, PuzzlesModule, AuthenticationModule];
 
 @NgModule({
-  declarations: [
-  ],
   imports: [
     ...modules
   ],

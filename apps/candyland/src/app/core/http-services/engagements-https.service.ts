@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class EngagementsService {
+export class EngagementsHttpsService {
   constructor(private http: HttpClient) {
   }
 

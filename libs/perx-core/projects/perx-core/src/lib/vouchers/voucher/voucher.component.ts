@@ -9,34 +9,34 @@ import { IVoucher } from '../models/voucher.model';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnChanges {
-  @Output() redeem: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public redeem: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
-  hideMerchantImg = false;
+  public hideMerchantImg: boolean = false;
 
   @Input()
-  hideMerchantName = false;
+  public hideMerchantName: boolean = false;
 
   @Input()
-  hideExpiry = false;
+  public hideExpiry: boolean = false;
 
   @Input()
-  hideActions = false;
+  public hideActions: boolean = false;
 
   @Input()
-  voucherId: number;
+  public voucherId: number;
 
-  voucher$: Observable<IVoucher>;
+  public voucher$: Observable<IVoucher>;
 
   constructor(private vouchersService: VouchersService) { }
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
       this.voucher$ = this.vouchersService.get(this.voucherId);
     }
   }
 
-  onClick() {
+  public onClick(): void {
     this.redeem.emit(this.voucherId);
   }
 }

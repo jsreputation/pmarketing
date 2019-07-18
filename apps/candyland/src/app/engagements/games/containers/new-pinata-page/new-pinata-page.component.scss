@@ -1,13 +1,11 @@
 @import "variables";
 
 .pinata {
-
   &-btn-cancel {
     padding-right: .8rem;
   }
 
   &-form {
-    min-width: 74.7rem;
     width: 100%;
     margin-right: 4rem;
   }
@@ -21,7 +19,3 @@
   }
 }
 
-.name-control {
-  min-width: 74.7rem;
-
-}

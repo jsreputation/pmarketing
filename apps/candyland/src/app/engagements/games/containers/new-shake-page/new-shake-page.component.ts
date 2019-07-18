@@ -2,9 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IGameTree } from './shared/models/game-tree.model';
 import { IGameGifts } from './shared/models/game-gifts.model';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { ShakeDataService } from './shared/services/shake-data.service';
 import { Observable } from 'rxjs';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -24,8 +27,9 @@ export class NewShakePageComponent implements OnInit {
   public gameGift: AbstractControl;
 
   constructor(private fb: FormBuilder,
-              private shakeDataService: ShakeDataService
-  ) {
+              private shakeDataService: ShakeDataService,
+              private routingState: RoutingStateService,
+              private router: Router) {
   }
 
   public get name(): AbstractControl {
@@ -54,7 +58,11 @@ export class NewShakePageComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.shakeTree.value);
+    this.router.navigateByUrl('/engagements');
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public setSelectGiftBox(giftBox: IGraphic): void {
@@ -71,11 +79,11 @@ export class NewShakePageComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: [null, [Validators.required,
+      headlineMessage: ['Tap the tree and Win!', [Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)]
       ],
-      subHeadlineMessage: [null, [
+      subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
@@ -84,7 +92,7 @@ export class NewShakePageComponent implements OnInit {
       treeType: [null, [Validators.required]],
       giftBox: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: [null, [
+      buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -93,19 +101,45 @@ export class NewShakePageComponent implements OnInit {
   }
 
   private getBackgroundData(): void {
-    this.backgrounds$ = this.shakeDataService.getBackground();
+    this.backgrounds$ = this.shakeDataService.getBackground()
+      .pipe(
+        tap((res) => {
+          this.patchForm('background', res[0]);
+        })
+      );
   }
 
   private getGiftBox(): void {
-    this.giftBox$ = this.shakeDataService.getGiftBox();
+    this.giftBox$ = this.shakeDataService.getGiftBox()
+      .pipe(
+        tap((res) => {
+          this.patchForm('giftBox', res[0]);
+        })
+      );
   }
 
   private getGamesTree(): void {
-    this.gamesTree$ = this.shakeDataService.getGamesTree();
+    this.gamesTree$ = this.shakeDataService.getGamesTree()
+      .pipe(
+        tap((res) => {
+          this.patchForm('treeType', res[0]);
+        })
+      );
   }
 
   private getGameNumberGifts(): void {
-    this.gameGifts$ = this.shakeDataService.getGameNumberGifts();
+    this.gameGifts$ = this.shakeDataService.getGameNumberGifts()
+      .pipe(
+        tap((res) => {
+          this.patchForm('gameGift', res[0].value);
+        })
+      );
+  }
+
+  private patchForm(fieldName: string, value: any): void {
+    this.shakeTree.patchValue({
+      [fieldName]: value
+    });
   }
 
 }

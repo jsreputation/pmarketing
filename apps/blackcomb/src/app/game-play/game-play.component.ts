@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+  PopUpClosedCallBack,
+  NotificationService,
+  PuzzleCollectStamp,
+  PuzzleCollectReward,
+  PUZZLE_COLLECT_STAMP_STATE
+} from '@perx/core/dist/perx-core';
 
 const gamesInfo = [{
       title: 'Complete the survey to win an instant reward!',
@@ -20,7 +27,13 @@ const gamesInfo = [{
       title: 'Complete the Puzzle!',
       subTitle: 'Complete the puzzle win rewards',
       gameType: 'puzzle-stamp'
+    },
+    {
+      title: 'Scratch & Win!',
+      subTitle: 'Collect all 10 stickers and win a reward!',
+      gameType: 'puzzle-collect-stamp'
     }
+
 ];
 
 @Component({
@@ -29,7 +42,7 @@ const gamesInfo = [{
   styleUrls: ['./game-play.component.scss']
 })
 
-export class GamePlayComponent implements OnInit {
+export class GamePlayComponent implements OnInit , PopUpClosedCallBack {
 
   gameId: number;
   title: string;
@@ -42,8 +55,21 @@ export class GamePlayComponent implements OnInit {
   numberOfTaps = 0;
   //
 
+  // For static stamp card input values
+  stamps: PuzzleCollectStamp[] = [{id: 1, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 2, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 3, state: PUZZLE_COLLECT_STAMP_STATE.redeemed},
+                                  {id: 3, state: PUZZLE_COLLECT_STAMP_STATE.issued}];
+
+  rewards: PuzzleCollectReward[] = [{rewardPosition: 0},
+                                    {rewardPosition: 2}];
+
+  congratsDetailText = 'You just won 2 rewards';
+
   constructor(private router: Router,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private notificationService: NotificationService
+              ) {}
 
   ngOnInit() {
 
@@ -72,10 +98,24 @@ export class GamePlayComponent implements OnInit {
     }
   }
 
+  dialogClosed(): void {
+    this.router.navigate(['home/']);
+  }
+
+
   gameCompleted() {
-      setTimeout(() => {
-        this.router.navigate(['home/']);
-        this.gameCompleted();
-      }, 3000);
+    setTimeout(() => {
+      this.notificationService.addPopup({
+        title: 'Congratulations!',
+        text: this.congratsDetailText,
+        buttonTxt: 'View Rewards',
+        imageUrl: 'assets/congrats_image.png' ,
+        afterClosedCallBack: this
+      });
+    }, 2000);
+  }
+
+  onStampClicked(stamp: PuzzleCollectStamp) {
+    console.log(`Stamp: ${stamp.state}`);
   }
 }

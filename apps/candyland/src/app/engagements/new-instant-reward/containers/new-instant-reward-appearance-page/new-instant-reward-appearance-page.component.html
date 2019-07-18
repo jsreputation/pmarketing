@@ -11,21 +11,14 @@
       </div>
     </div>
     <div class="game-actions">
-      <cl-button [classList]="'tertiary'"
+      <cl-button [classList]="'third'"
                  [disableRipple]="true"
                  class="reward-btn-cancel"
+                 (click)="comeBack()"
 
       >
         <span>
           Cancel
-        </span>
-      </cl-button>
-      <cl-button [classList]="'third'"
-                 class="btn-right_padding"
-
-      >
-        <span>
-          Save as a draft
         </span>
       </cl-button>
       <cl-button [classList]="'primary'"
@@ -144,11 +137,6 @@
         </div>
       </mat-card>
     </div>
-
-    <!--<div class="mobile-preview">-->
-      <!--<div class="mobile-preview-mobile">-->
-      <!--</div>-->
-    <!--</div>-->
     <cl-game-mobile-preview>
     </cl-game-mobile-preview>
   </section>

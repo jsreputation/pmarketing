@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { IGraphic } from '@cl-shared/models/graphick.model';
+
 import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
+import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -15,7 +18,9 @@ export class NewPinataPageComponent implements OnInit {
   public backgrounds$: Observable<IGraphic>;
   public pinata$: Observable<IGraphic>;
   constructor(private fb: FormBuilder,
-              private pinataHttpService: PinataHttpService) { }
+              private pinataHttpService: PinataHttpService,
+              private routingState: RoutingStateService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createPinataForm();
@@ -25,7 +30,11 @@ export class NewPinataPageComponent implements OnInit {
 
 
   public save(): void {
-    console.log(this.formPinata.value);
+    this.router.navigateByUrl('/engagements');
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public get name(): AbstractControl {
@@ -50,19 +59,19 @@ export class NewPinataPageComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: [null, [
+      headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      subHeadlineMessage: [null, [
+      subHeadlineMessage: ['Tap the piñata until you get a reward!', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
       pinata: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: [null, [
+      buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -71,10 +80,26 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   private getPinata(): void {
-    this.pinata$ = this.pinataHttpService.getPinata();
+    this.pinata$ = this.pinataHttpService.getPinata()
+      .pipe(
+        tap((res) => {
+          this.patchForm('pinata', res[0]);
+        })
+      );
   }
 
   private getBackgroundData(): void {
-     this.backgrounds$ = this.pinataHttpService.getBackground();
+     this.backgrounds$ = this.pinataHttpService.getBackground()
+       .pipe(
+         tap((res) => {
+           this.patchForm('background', res[0]);
+         })
+       );
+  }
+
+  private patchForm(fieldName: string, value: any): void {
+    this.formPinata.patchValue({
+      [fieldName]: value
+    });
   }
 }

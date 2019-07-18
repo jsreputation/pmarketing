@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { InkListenerDirective } from '../../../components/ink/directives/ink-listener.directive';
 import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
-import { IGraphic } from '../../../models/graphick.model';
 
 @Component({
   selector: 'cl-engagement-type',
@@ -11,9 +10,10 @@ import { IGraphic } from '../../../models/graphick.model';
 export class EngagementTypeComponent implements OnInit, IInkBarHost {
   @Output() selectType = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
+  @Input() public selectedType: IGraphic;
 
   @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
-  public selectedType: IGraphic;
+
   constructor() { }
 
   ngOnInit() {
