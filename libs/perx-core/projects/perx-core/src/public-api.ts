@@ -68,3 +68,9 @@ export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward } from './lib/rewards/models/reward.model';
 
 export { UtilsModule } from './lib/utils/utils.module';
+
+export {
+  PuzzleCollectStamp,
+  PuzzleCollectReward,
+  PUZZLE_COLLECT_STAMP_STATE
+} from './lib/puzzles/models/puzzle-stamp.model';
