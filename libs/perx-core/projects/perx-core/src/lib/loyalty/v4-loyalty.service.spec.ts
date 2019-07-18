@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 
 describe('LoyaltyService', () => {
   beforeEach(() => TestBed.configureTestingModule({

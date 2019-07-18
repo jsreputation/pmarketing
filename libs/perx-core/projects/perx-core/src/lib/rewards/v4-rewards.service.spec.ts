@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { V4RewardsService } from './v4-rewards.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EnvConfig } from '../rewards/env-config';
+import { EnvConfig } from '../shared/env-config';
 
 describe('V4RewardsService', () => {
   beforeEach(() => TestBed.configureTestingModule({

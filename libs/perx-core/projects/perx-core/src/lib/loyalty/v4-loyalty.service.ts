@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
 import { LoyaltyService } from './loyalty.service';
@@ -63,7 +63,7 @@ export class V4LoyaltyService extends LoyaltyService {
     config: EnvConfig
   ) {
     super();
-    this.apiHost = config.env.apiHost;
+    this.apiHost = config.env.apiHost as string;
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {

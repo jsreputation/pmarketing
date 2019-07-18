@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from './profile.service';
 import { V4ProfileService } from './v4-profile.service';
+import { EnvConfig } from '../shared/env-config';
 
 @NgModule({
   imports: [
@@ -9,7 +10,7 @@ import { V4ProfileService } from './v4-profile.service';
   ]
 })
 export class ProfileModule {
-  public static forRoot(config: any): ModuleWithProviders {
+  public static forRoot(config: EnvConfig): ModuleWithProviders {
     return {
       ngModule: ProfileModule,
       providers: [
@@ -18,7 +19,7 @@ export class ProfileModule {
           useClass: V4ProfileService
         },
         {
-          provide: 'config',
+          provide: EnvConfig,
           useValue: config
         }
       ],

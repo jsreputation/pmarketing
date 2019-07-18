@@ -1,9 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IProfile } from './profile.model';
 import { ProfileService } from './profile.service';
+import { EnvConfig } from '../shared/env-config';
 
 interface IV4Profile {
   id: number;
@@ -28,12 +29,14 @@ interface IV4ProfileResponse {
   providedIn: 'root'
 })
 export class V4ProfileService extends ProfileService {
+  private apiHost: string;
 
   constructor(
     private http: HttpClient,
-    @Inject('config') private config: any
+    config: EnvConfig
   ) {
     super();
+    this.apiHost = config.env.apiHost as string;
   }
 
   public static v4ProfileToProfile(profile: IV4Profile): IProfile {
@@ -49,12 +52,12 @@ export class V4ProfileService extends ProfileService {
       gender: profile.gender,
       joinedDate: profile.joined_at,
       passwordExpiryDate: profile.password_expires_at,
-      personalProperties: profile.personal_properties
+      customProperties: profile.personal_properties
     };
   }
 
   public whoAmI(): Observable<IProfile> {
-    const url = `${this.config.env.apiHost}/v4/customers/me`;
+    const url = `${this.apiHost}/v4/customers/me`;
     return this.http.get<IV4ProfileResponse>(url)
       .pipe(
         map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
