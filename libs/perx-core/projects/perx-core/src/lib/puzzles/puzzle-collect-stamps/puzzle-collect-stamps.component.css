@@ -1,0 +1,29 @@
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.dummy-container {
+  position: relative;
+}
+
+.add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 10%;
+  font-size: 3rem;
+  text-align: center;
+  color: #2665EE;
+}
