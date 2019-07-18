@@ -5,9 +5,9 @@
       <p class="name">{{profile.lastName}}</p>
     </div>
     <p>Player Code</p>
-    <p class="text-field">{{profile.personalProperties['code']}}</p>
+    <p class="text-field">{{profile.customProperties['code']}}</p>
     <p>Card Last 4 Digit</p>
-    <p class="text-field">{{profile.personalProperties['last_4']}}</p>
+    <p class="text-field">{{profile.customProperties['last_4']}}</p>
   </ng-container>
   <a mat-list-item (click)="onClick('/tnc')"><mat-icon>description</mat-icon>TERMS AND CONDITIONS</a>
   <a mat-list-item (click)="onClick('/faq')"><mat-icon>help</mat-icon>FAQ</a>
