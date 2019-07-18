@@ -8,9 +8,18 @@
 .wrap {
   width: 100%;
   display: flex;
-  padding: 0 20px 17px 20px;
+  padding: 0 2rem 1.7rem 2rem;
   justify-content: space-between;
   position: relative;
+}
+
+cl-type-item {
+  display: flex;
+  margin-right: 1.4rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 @import "resize";

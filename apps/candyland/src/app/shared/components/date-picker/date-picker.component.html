@@ -1,0 +1,16 @@
+<mat-form-field class="date">
+  <input
+    matInput
+    [matDatepicker]="startDatePicker"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    [min]="minDate"
+    [max]="maxDate"
+    readonly>
+  <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+          <mat-icon class="date-button" matDatepickerToggleIcon>
+            <i class="icon full-with date-icon"></i>
+          </mat-icon>
+  </mat-datepicker-toggle>
+  <mat-datepicker #startDatePicker></mat-datepicker>
+</mat-form-field>

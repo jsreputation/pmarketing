@@ -1,0 +1,20 @@
+<div class="reward-item">
+  <div class="reward-item-img-block">
+    <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
+    <img class="reward-item-no-img" *ngIf="!data?.image" src="/assets/images/deactivate.svg">
+  </div>
+  <div class="reward-item-info">
+    <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
+    <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
+  </div>
+  <cl-progress-bar class="reward-item-progress"
+                   *ngIf="data?.current && data?.total"
+                   [current]="data?.current"
+                   [total]="data?.total">
+
+  </cl-progress-bar>
+  <div *ngIf="probability !== null">
+    <span class="reward-item-probability-label probability-preview">Probability {{probability}}%</span>
+  </div>
+</div>
+

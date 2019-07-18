@@ -1,3 +1,15 @@
-<p>
-  new-campaign-done-popup works!
-</p>
+<div class="dialog">
+  <button class="dialog-closed btn-transparent" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="dialog-content">
+    <img [src]="data?.img || 'assets/images/rocket.png'">
+  </div>
+  <h3 class="dialog-title">{{data?.title || 'Yay! you just created a campaign'}}</h3>
+  <p class="dialog-sub-title">{{data?.subTitle || 'Copy the link and share your campaign.'}}</p>
+  <div class="dialog-action" [ngSwitch]="data?.type">
+    <cl-copy-link *ngSwitchCase="'weblink'" link="https://www.perxtech.com/r/YDSZY3W"></cl-copy-link>
+    <cl-download-link *ngSwitchCase="'download'" file="Weblink with audience (100).csv"></cl-download-link>
+    <cl-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cl-button>
+  </div>
+</div>

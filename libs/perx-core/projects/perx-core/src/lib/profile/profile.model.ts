@@ -1,10 +1,18 @@
 export interface IProfile {
-  first_name: string;
-  last_name: string;
-  code: string;
-  last4: string;
+  id: number;
+  state: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  phone?: string;
+  email?: string;
+  birthDate?: string;
+  gender?: string;
+  joinedDate?: string;
+  passwordExpiryDate?: string;
+  customProperties?: ICustomProperties;
 }
 
-export interface IProfileResponse {
-  data: IProfile;
+export interface ICustomProperties {
+  [key: string]: string | number;
 }

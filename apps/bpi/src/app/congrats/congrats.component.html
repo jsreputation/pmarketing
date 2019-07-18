@@ -22,7 +22,14 @@
       <p>Not yet a Netflix subscriber? Sign up now. Visit
         <a href="http://www.netflix.com.ph/bpi" target="_blank">www.netflix.com.ph/bpi</a></p>
   
-      <button mat-flat-button type="submit" color="primary">Unlock more</button>
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        (click)="onBackToGame()"
+      >
+        Unlock more
+      </button>
     </div>
   </div>
 </div>

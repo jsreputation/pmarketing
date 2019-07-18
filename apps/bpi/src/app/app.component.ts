@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'bpi';
+  public title: string = 'bpi';
 
   constructor(
     private authService: AuthenticationService,
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {

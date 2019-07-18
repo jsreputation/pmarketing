@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 

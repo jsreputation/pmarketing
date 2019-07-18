@@ -35,8 +35,8 @@ export class PuzzleStampComponent implements OnInit {
   protected count: number = 0;
   public btnTxt: string = 'Tap here to use all earned keys';
 
-  public movedItems: any[] = [];
-  public currentClick: any;
+  public movedItems: number[] = [];
+  public currentClick: number;
 
   public ngOnInit(): void {
     if (this.nbPlayedPieces > 0) {

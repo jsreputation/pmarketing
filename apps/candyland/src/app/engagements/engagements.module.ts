@@ -20,12 +20,17 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { CreateEngagementPopupModule } from '../shared/containers/create-engagement-popup/create-engagement-popup.module';
+import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
+import { EngagementsListComponent } from './containers/engagements-list/engagements-list.component';
+import { EngagementsGridComponent } from './containers/engagements-grid/engagements-grid.component';
 
 
 @NgModule({
   declarations: [
     EngagementsListPageComponent,
     EngagementsComponent,
+    EngagementsListComponent,
+    EngagementsGridComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +53,7 @@ import { CreateEngagementPopupModule } from '../shared/containers/create-engagem
     MatSelectModule,
     MatRadioModule,
     CreateEngagementPopupModule,
+    EngagementItemModule
   ],
   entryComponents: [
     EngagementsListPageComponent,

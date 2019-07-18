@@ -10,7 +10,7 @@ import {
   tap
 } from 'rxjs/operators';
 
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import {
   IStampCard,
   IGetStampCardResponse,
@@ -34,7 +34,7 @@ export class StampService implements IStampService {
     config: EnvConfig,
     private vouchersService: VouchersService
   ) {
-    this.baseUrl = config.env.apiHost;
+    this.baseUrl = config.env.apiHost as string;
   }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
