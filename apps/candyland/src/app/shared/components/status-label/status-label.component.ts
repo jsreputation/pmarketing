@@ -19,6 +19,7 @@ export class StatusLabelComponent implements OnChanges {
   private config: { [key: string]: StatusLabelConfig } = {
     [StatusLabel.DRAFT]: {title: 'Draft', class: 'draft'},
     [StatusLabel.ACTIVE]: {title: 'Active', class: 'active'},
+    [StatusLabel.INACTIVE]: {title: 'Inactive', class: 'inactive'},
     [StatusLabel.PENDING]: {title: 'Pending', class: 'pending'},
     [StatusLabel.SCHEDULED]: {title: 'Scheduled', class: 'scheduled'},
     [StatusLabel.PAUSED]: {title: 'Paused', class: 'paused'},

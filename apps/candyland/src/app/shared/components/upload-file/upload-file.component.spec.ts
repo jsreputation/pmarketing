@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UploadGraphicComponent } from './upload-graphic.component';
+import { UploadFileComponent } from './upload-file.component';
 import { MatIconModule } from '@angular/material';
 
 describe('UploadFileComponent', () => {
-  let component: UploadGraphicComponent;
-  let fixture: ComponentFixture<UploadGraphicComponent>;
+  let component: UploadFileComponent;
+  let fixture: ComponentFixture<UploadFileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
       ],
-      declarations: [ UploadGraphicComponent ]
+      declarations: [ UploadFileComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadGraphicComponent);
+    fixture = TestBed.createComponent(UploadFileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

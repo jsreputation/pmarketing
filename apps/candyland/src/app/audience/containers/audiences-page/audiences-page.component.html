@@ -1,0 +1,34 @@
+<section class="page-header">
+  <h1 class="title">Engagements</h1>
+  <cl-button (click)="openDialogCreate()" classList="primary">Create new</cl-button>
+</section>
+
+<section class="content">
+  <ng-container *ngIf="hasData">
+    <!--filters-->
+    <cl-table-filters [dataSource]="dataSource" classList="block">
+      <ng-container *clTableFilter="'name'; let filter">
+        <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
+      </ng-container>
+    </cl-table-filters>
+    <cl-tabs-filter [formControl]="tabs" [tabs]="tabsFilterConfig"></cl-tabs-filter>
+
+    <!--table-->
+    <cl-audiences-users-list [dataSource]="dataSource"></cl-audiences-users-list>
+    <!--   <cl-audiences-list [dataSource]="dataSource"></cl-audiences-list>-->
+    <!--grid-->
+    <!--    <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource"></cl-engagements-grid>-->
+    <!--paginator-->
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </ng-container>
+
+  <cl-no-data *ngIf="!hasData">
+    <h2>
+      Nothing to use yet
+    </h2>
+    <p>
+      See your engagement list here once you created your first engagement
+    </p>
+  </cl-no-data>
+</section>
+
