@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { StampService } from './stamp.service';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 
 import { VouchersService } from '../vouchers/vouchers.service';
 

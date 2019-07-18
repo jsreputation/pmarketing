@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
 import { LoyaltyService } from './loyalty.service';
@@ -63,7 +63,7 @@ export class V4LoyaltyService extends LoyaltyService {
     config: EnvConfig
   ) {
     super();
-    this.apiHost = config.env.apiHost;
+    this.apiHost = config.env.apiHost as string;
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
@@ -114,17 +114,16 @@ export class V4LoyaltyService extends LoyaltyService {
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${id}`
     ).pipe(
-      map(res => res.data),
-      map((loyalty: IV4Loyalty) => V4LoyaltyService.v4LoyaltyToLoyalty(loyalty))
+      map((res: IV4GetLoyaltyResponse) => V4LoyaltyService.v4LoyaltyToLoyalty(res.data))
     );
   }
 
   public getAllHistory(loyaltyId: number): Observable<IPointHistory[]> {
     const pageSize = 100;
     return this.getHistory(loyaltyId, 1, pageSize).pipe(
-      mergeMap(history => {
+      mergeMap((histories: IPointHistory[]) => {
         const streams = [
-          of(history)
+          of(histories)
         ];
         for (let i = 2; i <= this.historyMeta.total_pages; i++) {
           const stream = this.getHistory(loyaltyId, i, pageSize);
@@ -147,7 +146,7 @@ export class V4LoyaltyService extends LoyaltyService {
         }
       }
     ).pipe(
-      map(res => {
+      map((res: IV4GetLoyaltyResponse) => {
         if (res.meta) {
           this.historyMeta = {
             ...this.historyMeta,
@@ -157,7 +156,7 @@ export class V4LoyaltyService extends LoyaltyService {
 
         return res.data;
       }),
-      map(loyalty => loyalty.points_history.map(
+      map((loyalty: IV4Loyalty) => loyalty.points_history.map(
        (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
       ))
     );
