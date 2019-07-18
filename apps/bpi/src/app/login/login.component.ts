@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     const primaryIdentifier = this.route.snapshot.queryParamMap.get('pi') || '';
     if (!!primaryIdentifier) {
       (window as any).primaryIdentifier = primaryIdentifier;
+      this.onSubmit();
     }
   }
 
