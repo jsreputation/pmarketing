@@ -166,4 +166,8 @@ export class GameComponent implements OnInit {
       });
     }
   }
+
+  public getCols(card: IStampCard): number {
+    return card.display_properties.total_slots;
+  }
 }
