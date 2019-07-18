@@ -18,6 +18,7 @@
       [nbAvailablePieces]="getAvailablePieces(card)"
       [isCurrent]="isCurrent(card)"
       [isCompleted]="isCompleted(card)"
+      [stamps]="card.stamps"
       (moved)="onMoved(card)($event)"
     >
     </perx-core-puzzle-stamp>
