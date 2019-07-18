@@ -10,11 +10,7 @@ export interface IProfile {
   gender?: string;
   joinedDate?: string;
   passwordExpiryDate?: string;
-  personalProperties?: IPersonalProperties;
-}
-
-export interface IPersonalProperties {
-  [key: string]: string | number;
+  customProperties?: ICustomProperties;
 }
 
 export interface ICustomProperties {
