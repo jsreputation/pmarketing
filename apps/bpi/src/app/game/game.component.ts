@@ -127,10 +127,6 @@ export class GameComponent implements OnInit {
       .subscribe(
         (stamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
-            // The vouchers is always zero
-            // if (stamp.vouchers && stamp.vouchers.length > 0) {
-            //   this.router.navigate(['/congrats']);
-            // }
             this.keys--;
             if (totalRedeemed === totalSlots) {
               this.cards.sort( (_A, b) => {
@@ -149,31 +145,6 @@ export class GameComponent implements OnInit {
           });
         }
       );
-
-    // while (numOfStampsToRedeem > 0) {
-    //   const s = stamps[index];
-    //   s.state = STAMP_STATE.redeemed;
-    //   this.keys--;
-    //   this.stampService.putStamp(s.id)
-    //     .subscribe(
-    //       (stamp) => {
-    //         if (stamp.state === STAMP_STATE.redeemed) {
-    //           if (stamp.vouchers && stamp.vouchers.length > 0) {
-    //             this.router.navigate(['/congrats']);
-    //           }
-    //         }
-    //       },
-    //       () => {
-    //         this.notificationService.addPopup({
-    //           title: 'Something went wrong, with our server',
-    //           text: 'We notified our team. Sorry about the inconvenience.'
-    //         });
-    //       }
-    //     );
-
-    //   index++;
-    //   numOfStampsToRedeem--;
-    // }
   }
 
   public onCompleted(): void {
@@ -196,5 +167,26 @@ export class GameComponent implements OnInit {
         buttonTxt: 'Start Unlocking!'
       });
     }
+  }
+
+  public stampAll(card: IStampCard): void {
+    const id = card.id;
+    const totalSlots = card.display_properties.total_slots;
+
+    this.stampService.stampAll(id).subscribe(
+      (stamps) => {
+        this.keys -= totalSlots;
+        if (stamps) {
+          this.router.navigate(['/congrats']);
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.notificationService.addPopup({
+          title: 'Something went wrong, with our server',
+          text: 'We notified our team. Sorry about the inconvenience.'
+        });
+      }
+    );
   }
 }

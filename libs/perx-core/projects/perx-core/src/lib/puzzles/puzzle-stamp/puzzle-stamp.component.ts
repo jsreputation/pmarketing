@@ -30,6 +30,7 @@ export class PuzzleStampComponent implements OnInit {
 
   @Output() public moved: EventEmitter<IMove> = new EventEmitter();
   @Output() public completed: EventEmitter<void> = new EventEmitter();
+  @Output() public stampAll: EventEmitter<void> = new EventEmitter();
 
   public isUnlockedAll: boolean = false;
   protected count: number = 0;
@@ -101,7 +102,7 @@ export class PuzzleStampComponent implements OnInit {
     }
     this.nbPlayedPieces = this.nbPlayedPieces + i;
     this.nbAvailablePieces = this.nbAvailablePieces - i;
-    this.isWon();
+    this.stampAll.emit();
   }
 
   public stampStyle(): object {
