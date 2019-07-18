@@ -1,0 +1,67 @@
+@import "variables";
+
+.active-btn-item {
+  border: solid 1px $secondary-font-color !important;
+  background-color: $dark-color !important;
+  color: $white-color !important;
+}
+
+.btn-item {
+  width: 4rem;
+  height: 4rem;
+  background-color: $white-color;
+  font-family: $secondary-font;
+  font-size: 1.2rem;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.58;
+  letter-spacing: normal;
+  text-align: center;
+  color: rgba($dark-color, 0.5);
+  border-radius: 0.4rem;
+  border: solid 1px $secondary-font-color;
+
+  &.active {
+    @extend .active-btn-item;
+  }
+}
+
+.btn-list {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .mat-radio-button {
+    @extend .btn-item;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    margin-left: 0 !important;
+    margin-right: 0.8rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .mat-radio-label-content {
+      padding: 0;
+    }
+
+    .mat-radio-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+  }
+
+  .mat-radio-container {
+    display: none;
+  }
+
+  .mat-radio-checked {
+    @extend .active-btn-item;
+  }
+}

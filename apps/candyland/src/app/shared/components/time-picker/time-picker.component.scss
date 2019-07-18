@@ -1,0 +1,17 @@
+.time {
+  width: 100%;
+  min-width: 7rem;
+  max-width: 10rem;
+
+  &-button {
+    height: 2.1rem !important;
+    width: 2.1rem !important;
+  }
+}
+
+::ng-deep.ngx-material-timepicker-toggle {
+  position: relative;
+  box-sizing: content-box;
+  bottom: -0.6rem;
+  padding: 0;
+}
