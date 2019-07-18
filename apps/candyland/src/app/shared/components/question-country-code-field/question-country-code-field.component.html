@@ -1,0 +1,13 @@
+<div class="country-code-field" [formGroup]="group">
+  <mat-form-field>
+    <mat-label>Default Country Code</mat-label>
+    <mat-select [formControlName]="'phone'">
+      <mat-option [value]="+65">
+        Singapore +65
+      </mat-option>
+      <mat-option [value]="+75">
+        Singapore +75
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

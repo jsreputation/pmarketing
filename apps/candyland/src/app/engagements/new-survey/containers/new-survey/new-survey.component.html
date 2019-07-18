@@ -94,7 +94,14 @@
         <cl-question-type class="btn-add-question"
                           [addQuestionType]="true"
                           (selectTypeQuestion)="choseTypeQuestion($event)"
-        ></cl-question-type>
+        >
+          <cl-button [classList]="'primary'"
+          >
+        <span>
+         + Add Question
+        </span>
+          </cl-button>
+        </cl-question-type>
       </mat-card>
     </div>
 

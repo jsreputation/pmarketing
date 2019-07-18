@@ -45,6 +45,9 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   }
 
   public getIndex(): any {
+    if (!this.currentIndex && +this.currentIndex !== 0) {
+      return null;
+    }
     return this.currentIndex
       .toString()
       .split('-')

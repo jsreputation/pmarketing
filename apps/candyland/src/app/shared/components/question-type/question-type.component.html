@@ -20,11 +20,8 @@
 </div>
 
 <ng-template #addTypeQuestion>
-  <cl-button [classList]="'primary'"
-             (click)="openSelect()"
-  >
-        <span>
-         + Add Question
-        </span>
-  </cl-button>
+  <div (click)="openSelect()">
+    <ng-content>
+    </ng-content>
+  </div>
 </ng-template>

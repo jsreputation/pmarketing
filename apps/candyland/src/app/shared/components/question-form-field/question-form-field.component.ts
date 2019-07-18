@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-question-form-field',
   templateUrl: './question-form-field.component.html',
   styleUrls: ['./question-form-field.component.scss']
 })
-export class QuestionFormFieldComponent implements OnInit {
+export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
   @Input() public formGroup: FormGroup;
   @Input() public level: number;
@@ -16,9 +18,11 @@ export class QuestionFormFieldComponent implements OnInit {
   public showDescription: boolean;
   public required = false;
   public closed = true;
+  private destroy$ = new Subject();
 
   // test = [1, 2];
-  constructor(private questionFormFieldService: QuestionFormFieldService, private fb: FormBuilder) {
+  constructor(private questionFormFieldService: QuestionFormFieldService,
+              private fb: FormBuilder) {
   }
 
   public isActive() {
@@ -52,7 +56,9 @@ export class QuestionFormFieldComponent implements OnInit {
   private subscribeDescriptionControl(): void {
     this.descriptionField
       .valueChanges
-      .pipe()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
       .subscribe(value => {
         console.log('if true show discription and add control to the form', value);
         this.showDescription = value;
@@ -65,5 +71,10 @@ export class QuestionFormFieldComponent implements OnInit {
       ? this.group.setControl(name, this.questionFormFieldService.getSimpleControl())
       : this.group.removeControl(name);
     this.group.updateValueAndValidity();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

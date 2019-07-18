@@ -30,17 +30,11 @@
 
       <div class="nested-form-group">
         <div clDynamicField [group]="group" [type]="getTypeField().value">
-
         </div>
       </div>
 
     </div>
   </div>
-  <pre>
-    level : {{level | json}}
-  </pre>
-
-
 
   <ng-container *ngIf="level <= 0">
     <cl-question-form-field *ngFor="let item of test; let i = index;"

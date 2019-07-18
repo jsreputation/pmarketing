@@ -1,0 +1,8 @@
+<div class="date-group" [formGroup]="group"
+>
+  <cl-date-picker placeholder="From" [formControlName]="'startDate'" [max]="endDate.value"></cl-date-picker>
+
+  <cl-date-picker placeholder="To" [formControlName]="'endDate'" [min]="startDate.value"></cl-date-picker>
+
+  <mat-checkbox (change)="toggleEndDate($event.checked)" color="primary">Duration</mat-checkbox>
+</div>

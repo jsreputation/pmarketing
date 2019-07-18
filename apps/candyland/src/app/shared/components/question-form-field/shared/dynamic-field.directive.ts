@@ -1,8 +1,14 @@
 import { ComponentFactoryResolver, Directive, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QuestionRatingFieldComponent } from '@cl-shared/components/question-rating-field/question-rating-field.component';
+import { QuestionDateFieldComponent } from '@cl-shared/components/question-date-field/question-date-field.component';
+import { QuestionCountryCodeFieldComponent } from '@cl-shared/components/question-country-code-field/question-country-code-field.component';
+import { QuestionGroupFieldComponent } from '@cl-shared/components/question-group-field/question-group-field.component';
 const componentMapper = {
-  rating: QuestionRatingFieldComponent
+  rating: QuestionRatingFieldComponent,
+  date: QuestionDateFieldComponent,
+  phone: QuestionCountryCodeFieldComponent,
+  questionGroup: QuestionGroupFieldComponent
 };
 @Directive({
   // tslint:disable-next-line
@@ -23,8 +29,6 @@ export class DynamicFieldDirective implements OnInit {
     if (!this.type) {
       return;
     }
-    console.log('@@@', this.type);
-    console.log(componentMapper[this.type]);
     const factory = this.resolver.resolveComponentFactory(componentMapper[this.type]);
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.group = this.group;

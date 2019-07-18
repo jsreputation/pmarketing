@@ -68,14 +68,6 @@ export class NewSurveyComponent implements OnInit {
 
   private createControlQuestion(questionType: string): FormGroup {
     return this.questionFormFieldService.createFormField(questionType);
-    // return this.fb.group({
-    //   selectedType: [questionType, [Validators.required]],
-    //   title: [null, [Validators.required,
-    //     Validators.minLength(1),
-    //     Validators.maxLength(60)]],
-    //   question: [null, []],
-    //   children: []
-    // });
   }
 
   private createSurveyForm(): void {
