@@ -12,7 +12,7 @@ export abstract class LoyaltyService {
   public abstract getHistory(loyaltyId: number, page?: number, pageSize?: number): Observable<IPointHistory[]>;
 
   // @ts-ignore
-  public exchangePoints(rewardId: number): Observable<IVoucher> {
+  public exchangePoints(rewardId: number): Observable<IVoucher[]> {
     return throwError('Not implemented yet');
   }
 }
