@@ -1,12 +1,11 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from './profile.service';
+import { V4ProfileService } from './v4-profile.service';
 
 @NgModule({
   imports: [
     CommonModule
-  ],
-  exports: [
   ]
 })
 export class ProfileModule {
@@ -14,7 +13,10 @@ export class ProfileModule {
     return {
       ngModule: ProfileModule,
       providers: [
-        ProfileService,
+        {
+          provide: ProfileService,
+          useClass: V4ProfileService
+        },
         {
           provide: 'config',
           useValue: config

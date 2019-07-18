@@ -1,14 +1,22 @@
 export interface IProfile {
-  first_name: string;
-  last_name: string;
-  code: string;
-  last4: string;
+  id: number;
+  state: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  phone?: string;
+  email?: string;
+  birthDate?: string;
+  gender?: string;
+  joinedDate?: string;
+  passwordExpiryDate?: string;
+  personalProperties?: IPersonalProperties;
 }
 
-export interface IProfileResponse {
-  data: IProfile;
+export interface IPersonalProperties {
+  [key: string]: string | number;
 }
 
 export interface ICustomProperties {
-  [key: string]: string;
+  [key: string]: string | number;
 }
