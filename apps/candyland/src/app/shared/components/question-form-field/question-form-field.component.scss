@@ -8,8 +8,15 @@
     box-sizing: border-box;
     border-radius: 4px;
     border: solid 1px #d9dfe4;
-    background-color: #f4f4f5;
     font-size: 1.4rem;
+  }
+
+  &-nested-0 {
+    background-color: $simple-light-gray;
+  }
+
+  &-nested-1 {
+    background-color: #f4f4f5;;
   }
 
   &-form-header {
@@ -20,6 +27,36 @@
   &-btn-type {
     margin-right: 1.4rem;
   }
+
+  &-text-field__wrap {
+    flex: 1;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -20px;
+    padding: 20px 20px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  &-btn-actions {
+    display: flex;
+
+  }
+
+  &-btn-section {
+    margin-right: 1.4rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+cl-question-type {
+  align-self: end;
+  margin-top: 12px;
 }
 
 cl-question-form-field {
@@ -29,4 +66,15 @@ cl-question-form-field {
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.nested-form-group {
+  margin-top: 1.4rem;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
 }

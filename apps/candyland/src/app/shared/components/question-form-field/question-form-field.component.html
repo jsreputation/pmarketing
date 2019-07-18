@@ -1,26 +1,79 @@
-<div class="question-form-field" [ngClass]="'nested-' + currentIndex">
-  question-form-field works!
+<div class="question-form-field" [ngClass]="'question-nested-' + level" [formGroup]="group">
+
+  question-form-field works! <span>{{level | json}}</span>
+
   <div class="question-form-header">
-    <cl-question-type class="question-btn-type"
+    <cl-question-type class="question-btn-type" [formControlName]="'selectedType'"
                       (selectTypeQuestion)="choseTypeQuestion($event)"
+                      [currentIndex]="currentIndex"
     ></cl-question-type>
 
-    <div class="control-input">
-      <mat-form-field class="messages-input">
-        <input type="text" matInput [placeholder]="'Sub-headline message'">
-        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
-      </mat-form-field>
+    <div class="question-text-field__wrap">
+      <div class="control-input">
+        <mat-form-field class="messages-input" >
+          <input type="text" matInput [formControlName]="'title'">
+          <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+        </mat-form-field>
+      </div>
+      <div class="control-input" *ngIf="showDescription" [ngClass]="{hidden: isActive()}">
+        <mat-form-field class="messages-input">
+          <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
+          <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+          <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+        </mat-form-field>
+      </div>
+
+      <div class="nested-form-group">
+        <div clDynamicField [group]="group" [type]="getTypeField().value">
+
+        </div>
+      </div>
+
     </div>
   </div>
+  <pre>
+    level : {{level | json}}
+  </pre>
 
-  <ng-container *ngIf="currentIndex >= 0">
+
+
+  <ng-container *ngIf="level <= 0">
     <cl-question-form-field *ngFor="let item of test; let i = index;"
-                            [clOpenClose]=" 'current' + currentIndex + '-' + i"
-                            [level]="currentLevel"
+                            [clOpenClose]="currentIndex + '-' + i"
+                            [currentIndex]="currentIndex + '-' + i"
+                            [level]="level + 1"
     ></cl-question-form-field>
   </ng-container>
 
+  <div class="question-actions" [ngClass]="{hidden: isActive()}">
+    <section class="question-btn-actions">
+      <section class="question-btn-section">
+        <mat-slide-toggle
+          class="question-slide-toggle"
+          [color]="'primary'"
+          [formControlName]="'required'"
+        >
+          Required field
+        </mat-slide-toggle>
+      </section>
+
+      <section class="question-btn-section">
+        <mat-slide-toggle
+          class="question-slide-toggle"
+          [color]="'primary'"
+          [formControl]="descriptionField"
+        >
+          Description
+        </mat-slide-toggle>
+      </section>
+    </section>
+    <button class="question-remove btn-transparent" (click)="remove()">
+      <i class="icon delete"></i>
+    </button>
+  </div>
 </div>

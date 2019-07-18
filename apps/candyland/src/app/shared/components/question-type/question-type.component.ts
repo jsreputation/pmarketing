@@ -1,12 +1,5 @@
 import {
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
+  ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SurveyService } from '@cl-core/services/survey.service';
@@ -29,6 +22,7 @@ export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
 export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Input() public addQuestionType = false;
   @Input() typeList: IEngagementType[];
+  @Input() currentIndex: string;
 
   @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
 
@@ -39,7 +33,8 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   public onChange: any = () => {};
   public onTouch: any = () => {};
-  constructor(private surveyService: SurveyService) { }
+  constructor(private surveyService: SurveyService,
+              private cd: ChangeDetectorRef) { }
 
   public closed(): void {
     this.selectTypeQuestion.emit(this.type.value);
@@ -47,6 +42,14 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   public openSelect(): void {
     this.matSelect.open();
+  }
+
+  public getIndex(): any {
+    return this.currentIndex
+      .toString()
+      .split('-')
+      .map(item => +item + 1)
+      .join('-');
   }
 
   ngOnInit() {
@@ -68,8 +71,8 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   private getSurveyQuestionType(): void {
     this.surveyService.getSurveyQuestionType()
       .subscribe(res => {
-        this.type.patchValue(res[0].value);
         this.typeList = res;
+        this.cd.markForCheck();
       });
   }
 

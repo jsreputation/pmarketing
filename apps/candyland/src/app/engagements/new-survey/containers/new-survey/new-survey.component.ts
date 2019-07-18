@@ -1,5 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
+
+export enum SurveyQuestionType {
+  rating = 'rating',
+  pictureChoice = 'pictureChoice',
+  longText = 'longText',
+  multipleChoice = 'multipleChoice',
+  questionGroup = 'questionGroup',
+  date = 'date',
+  phone = 'phone'
+}
 
 @Component({
   selector: 'cl-new-survey',
@@ -11,7 +22,8 @@ export class NewSurveyComponent implements OnInit {
   public formSurvey: FormGroup;
   public surveyQuestionType: IEngagementType[];
   public level = 0;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private questionFormFieldService: QuestionFormFieldService) { }
 
   ngOnInit() {
     this.createSurveyForm();
@@ -33,13 +45,14 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public save(): void {
+    console.log('formSurvey.value', this.formSurvey.value);
   }
 
   public deleteQuestion(index: number) {
     this.surveyQuestion.removeAt(index);
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: IEngagementType): void {
+  public choseTypeQuestion(selectedTypeQuestion: string): void {
     console.log(selectedTypeQuestion);
     this.addQuestion(selectedTypeQuestion);
     console.log(this.formSurvey.value);
@@ -49,19 +62,20 @@ export class NewSurveyComponent implements OnInit {
     return (this.formSurvey.get('questions') as FormArray);
   }
 
-  public addQuestion(questionType: IEngagementType): void {
+  public addQuestion(questionType: string): void {
     this.surveyQuestion.push(this.createControlQuestion(questionType));
   }
 
-  private createControlQuestion(questionType: IEngagementType): FormGroup {
-    return this.fb.group({
-      selectedType: [questionType, [Validators.required]],
-      title: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
-      question: [null, []],
-      children: []
-    });
+  private createControlQuestion(questionType: string): FormGroup {
+    return this.questionFormFieldService.createFormField(questionType);
+    // return this.fb.group({
+    //   selectedType: [questionType, [Validators.required]],
+    //   title: [null, [Validators.required,
+    //     Validators.minLength(1),
+    //     Validators.maxLength(60)]],
+    //   question: [null, []],
+    //   children: []
+    // });
   }
 
   private createSurveyForm(): void {

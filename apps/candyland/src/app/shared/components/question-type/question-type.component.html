@@ -2,7 +2,7 @@
   <ng-container *ngIf="!addQuestionType; else addTypeQuestion">
     <button class="btn-in-group" (click)="openSelect()">
       <i class="icon" [ngClass]="type.value"></i>
-      <span class="btn-in-group_text">1</span>
+      <span class="btn-in-group_text">{{getIndex()}}</span>
     </button>
   </ng-container>
   <mat-select #matSelect [formControl]="type" class="question-select-type">

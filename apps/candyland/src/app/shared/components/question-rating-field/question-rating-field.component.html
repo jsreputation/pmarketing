@@ -1,0 +1,86 @@
+<div class="form-group" [formGroup]="group">
+  <div class="rating-field-wrap" >
+    <div class="control-input">
+      <mat-form-field>
+        <mat-label>Scale</mat-label>
+        <mat-select [formControlName]="'scale'">
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="control-input">
+      <mat-form-field>
+        <mat-label>Select Shape</mat-label>
+        <mat-select [formControlName]="'selectShape'">
+          <mat-option [value]="'star'">Star</mat-option>
+          <mat-option [value]="'star 2'">Star2</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="control-input">
+      <mat-form-field color="primary">
+        <mat-label>Select Color</mat-label>
+        <mat-select [formControlName]="'selectColor'">
+          <mat-select-trigger>
+            <div class="select-color">
+              <div class="select-color-preview" [ngClass]="color.value">
+              </div>
+              <p class="select-color-text">
+                {{color.value}}
+              </p>
+            </div>
+          </mat-select-trigger>
+          <mat-option [value]="'primary'">
+            <div class="select-color">
+              <div class="select-color-preview primary">
+              </div>
+              <span class="select-color-text">
+              Primary
+            </span>
+            </div>
+          </mat-option>
+          <mat-option [value]="'accent'">
+            <div class="select-color">
+              <div class="select-color-preview accent">
+              </div>
+              <span class="select-color-text">
+              Accent
+            </span>
+            </div>
+          </mat-option>
+          <mat-option [value]="'warn'">
+            <div class="select-color">
+              <div class="select-color-preview warn">
+              </div>
+              <span class="select-color-text">
+              Warn
+            </span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="rating-field-wrap">
+    <div class="control-input">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput [placeholder]="'Left'" [formControlName]="'left'"><!--formControlName=""-->
+        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+      </mat-form-field>
+    </div>
+    <div class="control-input">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput [placeholder]="'Right'" [formControlName]="'right'"><!--formControlName=""-->
+        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+

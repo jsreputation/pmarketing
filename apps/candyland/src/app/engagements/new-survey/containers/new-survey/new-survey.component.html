@@ -76,7 +76,8 @@
 
         <!--questions form array-->
         <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
-                                [control]="item"
+                                [group]="item"
+                                [formGroup]="surveyQuestion"
                                 [currentIndex]="i"
                                 [clOpenClose]="i"
                                 [level]="level"

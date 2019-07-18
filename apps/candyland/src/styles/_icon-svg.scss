@@ -1,8 +1,9 @@
-
+@import "variables";
 .icon {
   display: block;
   background-color: rgba(255, 255, 255, 0.51);
   width: 18px;
+  height: 18px;
   padding: 0 0 0 16px;
   box-sizing: content-box;
 }
@@ -96,6 +97,12 @@
   mask: url("assets/images/engagement-question/question-type-icon/phone-min.svg") no-repeat 50% 50%;
   width: 16px;
   height: 16px;
+}
+
+.delete {
+  mask: url("assets/images/delete.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: $dark-color;
 }
 
 .active {
