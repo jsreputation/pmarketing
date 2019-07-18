@@ -1,0 +1,8 @@
+<div class="main-container">
+  <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
+    <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
+      <img (click)="onAvailableStampClicked(i, rowNum)" [src]="getStampImage(i, rowNum)"/>
+      <div *ngIf="isIssued(i, rowNum)" class="add">+</div>
+    </div>
+  </div>
+</div>
