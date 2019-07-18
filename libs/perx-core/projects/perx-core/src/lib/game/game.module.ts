@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { GameService } from './game.service';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PinataComponent } from './pinata/pinata.component';
 

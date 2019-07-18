@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
@@ -52,7 +52,7 @@ export class V4RewardsService extends RewardsService {
 
   constructor(private http: HttpClient, config: EnvConfig) {
     super();
-    this.apiHost = config.env.apiHost;
+    this.apiHost = config.env.apiHost as string;
   }
 
   public static v4RewardToReward(reward: IV4Reward): IReward {

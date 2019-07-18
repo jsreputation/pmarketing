@@ -2,12 +2,12 @@
   <ng-container *ngIf="profile">
     <div class="user">
       <mat-icon class="user-icon">account_circle</mat-icon>
-      <p class="name">{{profile.last_name}}</p>
+      <p class="name">{{profile.lastName}}</p>
     </div>
     <p>Player Code</p>
-    <p class="text-field">{{profile.code}}</p>
+    <p class="text-field">{{profile.customProperties['code']}}</p>
     <p>Card Last 4 Digit</p>
-    <p class="text-field">{{profile.last4}}</p>
+    <p class="text-field">{{profile.customProperties['last_4']}}</p>
   </ng-container>
   <a mat-list-item (click)="onClick('/tnc')"><mat-icon>description</mat-icon>TERMS AND CONDITIONS</a>
   <a mat-list-item (click)="onClick('/faq')"><mat-icon>help</mat-icon>FAQ</a>

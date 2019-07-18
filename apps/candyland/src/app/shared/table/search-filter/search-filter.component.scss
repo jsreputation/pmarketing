@@ -1,7 +1,10 @@
 
 
 .search-filter{
-  width: 56rem;
+  flex: 1;
+  width: 100%;
+  min-width: 36.5rem;
+  max-width: 56rem;
 }
 
 .grey-icon{

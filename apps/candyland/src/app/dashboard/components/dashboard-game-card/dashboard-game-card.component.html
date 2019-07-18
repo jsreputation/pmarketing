@@ -1,11 +1,11 @@
-<div class="card-content">
-  <p class="card-title sub-title">
+<div class="dashboard-card-content">
+  <p class="dashboard-card-title sub-title">
     {{gameCard.title}}
   </p>
-  <p class="card-description">
+  <p class="dashboard-card-description">
     {{gameCard.description}}
   </p>
-  <p class="card-actions">
+  <p class="dashboard-card-actions">
     <cl-button [classList]="'tertiary'"
                [disableRipple]="true"
                (click)="clickToLink(gameCard.link)"
@@ -15,7 +15,7 @@
         </span>
     </cl-button>
   </p>
-  <div class="card-img-wrap">
+  <div class="dashboard-card-img-wrap">
     <img [src]="gameCard.img" alt="icon">
   </div>
 </div>

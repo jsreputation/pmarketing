@@ -13,6 +13,10 @@
   font-size: 1.4rem;
   padding: 0 2rem;
   box-shadow: none;
+
+  &.no-padding {
+    padding: 0;
+  }
 }
 
 .primary {
@@ -20,6 +24,16 @@
 
   &:hover {
     background-color: #124cc8;
+  }
+}
+
+.primary-invert {
+  background-color: $white-color;
+  border: 1px solid $primary-color;
+  color: $primary-color;
+
+  &:hover {
+    background-color: $light-gray;
   }
 }
 
@@ -62,3 +76,13 @@
   border-radius: 2px;
   border: solid 1px #9ca4b7;
 }
+
+.invert {
+  background-color: transparent;
+  color: $primary-color;
+
+  &:hover {
+    color: #124cc8;
+  }
+}
+
