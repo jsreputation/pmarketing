@@ -1,0 +1,20 @@
+<mat-form-field class="time">
+  <input
+    matInput
+    [ngxTimepicker]="toggleTimepicker"
+    [placeholder]="placeholder"
+    [disableClick]="disabledState"
+    [formControl]="control"
+    readonly>
+  <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker">
+            <mat-icon class="time-button" ngxMaterialTimepickerToggleIcon>
+                      <i class="icon full-with time-icon"></i>
+            </mat-icon>
+  </ngx-material-timepicker-toggle>
+  <ngx-material-timepicker
+    #toggleTimepicker
+    [minutesGap]="5"
+    [enableKeyboardInput]="false"
+    [ngxMaterialTimepickerTheme]="theme">
+  </ngx-material-timepicker>
+</mat-form-field>

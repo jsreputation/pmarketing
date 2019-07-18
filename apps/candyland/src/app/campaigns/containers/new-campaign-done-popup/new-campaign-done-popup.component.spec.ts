@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewCampaignDonePopupComponent } from './new-campaign-done-popup.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material';
 
 describe('NewCampaignDonePopupComponent', () => {
   let component: NewCampaignDonePopupComponent;
@@ -8,9 +10,15 @@ describe('NewCampaignDonePopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewCampaignDonePopupComponent ]
+      imports: [MatDialogModule],
+      providers: [
+        {provide: MatDialogRef, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: []},
+      ],
+      declarations: [NewCampaignDonePopupComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

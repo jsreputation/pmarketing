@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
-import { NewInfoPageComponent } from './containers/new-info-page/new-info-page.component';
+import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
 import { NewAudiencePageComponent } from './containers/new-audience-page/new-audience-page.component';
 import { NewChannelPageComponent } from './containers/new-channel-page/new-channel-page.component';
-import { NewReviewPageComponent } from './containers/new-review-page/new-review-page.component';
+import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
 import { NewCampaignDonePopupComponent } from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import { CampaignsComponent } from './containers/campaigns/campaigns.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatDatepickerModule,
@@ -22,7 +22,9 @@ import {
   MatPaginatorModule,
   MatSelectModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatStepperModule,
+  MatRadioModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatChipsModule
 } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -35,21 +37,44 @@ import {
   SeparateRangeDatePickerFilterModule
 } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { NewCampaignComponent } from './containers/new-campaign/new-campaign.component';
+import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewards-page/new-campaign-rewards-page.component';
+import {
+  NewCampaignSelectTemplatePageComponent
+} from './containers/new-campaign-select-template-page/new-campaign-select-template-page.component';
+import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
+import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
+import { RewardItemComponent } from './components/reward-item/reward-item.component';
+import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
+import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
+import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
+import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
+import { RewardItemPreviewComponent } from './components/reward-item-preview/reward-item-preview.component';
+import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.module';
+import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
+import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
+
 
 @NgModule({
   declarations: [
     CampaignsListPageComponent,
-    NewInfoPageComponent,
+    NewCampaignDetailPageComponent,
     NewAudiencePageComponent,
     NewChannelPageComponent,
-    NewReviewPageComponent,
+    NewCampaignReviewPageComponent,
     NewCampaignDonePopupComponent,
-    CampaignsComponent
+    CampaignsComponent,
+    NewCampaignComponent,
+    NewCampaignRewardsPageComponent,
+    NewCampaignSelectTemplatePageComponent,
+    RewardItemComponent,
+    RewardItemPreviewComponent
   ],
   imports: [
     CommonModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDialogModule,
     MatMenuModule,
     MatIconModule,
@@ -65,6 +90,7 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatStepperModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,
@@ -72,7 +98,21 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     RangeDatePickerFilterModule,
     ButtonModule,
     SeparateRangeDatePickerFilterModule,
-    NoDataModule
+    NoDataModule,
+    EngagementItemModule,
+    ItemListModule,
+    MatRadioModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatChipsModule,
+    ProgressBarModule,
+    DateTimePickerModule,
+    TimePickerModule,
+    DatePickerModule,
+    SmsEditorModule,
+    CopyLinkModule,
+    DownloadLinkModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

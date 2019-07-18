@@ -1,6 +1,6 @@
 :host {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 .sidenav-dropdown-indicator {
@@ -25,15 +25,15 @@ mat-nav-list {
 }
 
 .mat-nav-list .mat-list-item {
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .mat-list-item {
 
-  height: 30px !important;
+  height: 3rem !important;
 
   mat-icon {
-    padding: 0 0 0 14px !important;
+    padding: 0 0 0 1.4rem !important;
     color: rgba(255, 255, 255, 0.7);
   }
 
@@ -58,7 +58,7 @@ mat-nav-list {
     left: 0;
     bottom: 0;
     background-color: #f55511;
-    width: 12px;
+    width: 1.2rem;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
   }
@@ -67,4 +67,10 @@ mat-nav-list {
     color: #ffffff;
     fill: #ffffff;
   }
+}
+
+.icon-menu {
+    width: 2.4rem !important;
+    padding: 0 0 0 1.6rem !important;
+    box-sizing: content-box;
 }

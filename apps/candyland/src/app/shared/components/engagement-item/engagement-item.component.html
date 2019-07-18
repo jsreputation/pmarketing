@@ -1,0 +1,10 @@
+<div class="engagement-item">
+  <div class="engagement-item-img-container">
+    <img class="engagement-item-img" [src]="data?.image">
+  </div>
+  <div class="engagement-item-info">
+    <p class="engagement-item-type">{{data?.type}}</p>
+    <p class="engagement-item-name">{{data?.name}}</p>
+    <p class="engagement-item-date">{{data?.begin | date: 'dd MMM yyyy' }}</p>
+  </div>
+</div>
