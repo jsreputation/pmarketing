@@ -1,20 +1,9 @@
 import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
-import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import {
-  CreateEngagementPopupComponent
-} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-
-
-
-export interface Engagements {
-  id: number;
-  name: string;
-  status: string;
-  type: string;
-}
+import { EngagementsService } from '@cl-core/services/engagements.service';
+import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -23,14 +12,12 @@ export interface Engagements {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementsListPageComponent implements AfterViewInit {
-
-  public displayedColumns = ['name', 'status', 'type', 'actions'];
-  public dataSource = new MatTableDataSource<any>();
+  public dataSource = new MatTableDataSource<Engagement>();
   public tabsFilterConfig;
   public hasData = true;
+  public isGridMode = true;
 
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private engagementsService: EngagementsService,
               public cd: ChangeDetectorRef,
@@ -40,24 +27,14 @@ export class EngagementsListPageComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
   public openDialogCreate(): void {
-    this.dialog.open(CreateEngagementPopupComponent);
-  }
+    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
 
-  public editItem() {
-  }
-
-  public duplicateItem() {
-  }
-
-  public deleteItem() {
-  }
-
-  public useAsCaptionItem() {
+    dialogRef.afterClosed().subscribe(() => {
+    });
   }
 
   private getData() {
@@ -69,7 +46,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(data, counterObject);
         }),
       )
-      .subscribe((res: Engagements[]) => {
+      .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
