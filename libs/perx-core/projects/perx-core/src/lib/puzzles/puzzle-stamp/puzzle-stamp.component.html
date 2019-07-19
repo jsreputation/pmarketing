@@ -40,7 +40,7 @@
         perxCoreAppDebounceClick
         [debounceTime]="1000"
         [ngClass]="availablePieces()"
-        [disabled]="!isCurrent"
+        [disabled]="!isDisabled()"
         (debounceClick)="unlockAvailable()"
         (click)="unlockAllAvailable()"
       >

@@ -19,6 +19,7 @@
       [isCurrent]="isCurrent(card)"
       [isCompleted]="isCompleted(card)"
       (moved)="onMoved(card)($event)"
+      [stamps]="card.stamps"
       (stampAll)="stampAll(card)"
     >
     </perx-core-puzzle-stamp>
