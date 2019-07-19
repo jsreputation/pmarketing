@@ -13,12 +13,13 @@
       [highlightColor]="'#FAE4A4'"
       [borderColor]="'#BC9B3A'"
       [rows]="rows"
-      [cols]="cols"
+      [cols]="getCols(card)"
       [nbPlayedPieces]="getPlayedPieces(card)"
       [nbAvailablePieces]="getAvailablePieces(card)"
       [isCurrent]="isCurrent(card)"
       [isCompleted]="isCompleted(card)"
-      (moved)="onMoved(card)($event)"
+      [stamps]="card.stamps"
+      (moved)="onMoved(card)"
     >
     </perx-core-puzzle-stamp>
   </div>

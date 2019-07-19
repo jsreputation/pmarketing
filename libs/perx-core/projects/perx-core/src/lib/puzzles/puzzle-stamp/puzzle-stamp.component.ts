@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IStamp } from '../../stamp/models/stamp.model';
 
 export interface IStyleObject {
   [key: string]: string;
@@ -27,6 +28,7 @@ export class PuzzleStampComponent implements OnInit {
   @Input() public bgImage: string;
   @Input() public isCompleted: boolean;
   @Input() public isCurrent: boolean;
+  @Input() public stamps: IStamp[];
 
   @Output() public moved: EventEmitter<IMove> = new EventEmitter();
   @Output() public completed: EventEmitter<void> = new EventEmitter();
@@ -78,7 +80,7 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   public cardClick(): void {
-    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces && this.isCurrent) {
+    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
       this.movedItems.push(this.currentClick++);
       this.nbPlayedPieces++;
       this.nbAvailablePieces--;

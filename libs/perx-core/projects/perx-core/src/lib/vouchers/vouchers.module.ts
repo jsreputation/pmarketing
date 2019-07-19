@@ -21,8 +21,6 @@ const components = [
 @NgModule({
   declarations: [
     ...components,
-    BcodeRedemptionComponent,
-    QrcodeRedemptionComponent
   ],
   imports: [
     CommonModule,

@@ -26,6 +26,8 @@
                 [available]="isStampAvailable(stampRow, stampCol)"
                 [isUnlockedAll]="isStampAvailable(stampRow, stampCol) && isUnlockedAll"
                 [isCurrent]="isCurrent"
+                [stampCol]="stampCol"
+                [stamps]="stamps"
                 (moveCard)="cardClick()"
                 >
               </perx-core-stamp>
