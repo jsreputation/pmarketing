@@ -22,7 +22,7 @@ export class PuzzleStampComponent implements OnInit {
   @Input() public highlightColor: string;
   @Input() public borderColor: string;
   @Input() public rows: number;
-  @Input() public columns: number;
+  @Input() public cols: number;
   @Input() public nbPlayedPieces: number;
   @Input() public nbAvailablePieces: number;
   @Input() public bgImage: string;
@@ -63,7 +63,7 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   public getCurrentColumn(r: number, c: number): number {
-    return (r + 1 - 1) * this.columns + c + 1 - 1;
+    return (r + 1 - 1) * this.cols + c + 1 - 1;
   }
 
   public isStampClicked(r: number, c: number): boolean {
@@ -75,7 +75,7 @@ export class PuzzleStampComponent implements OnInit {
       nbPlayedPieces: this.nbPlayedPieces,
       nbAvailablePieces: this.nbAvailablePieces
     });
-    if (this.nbPlayedPieces >= this.rows * this.columns) {
+    if (this.nbPlayedPieces >= this.rows * this.cols) {
       this.completed.emit();
     }
   }
@@ -96,7 +96,7 @@ export class PuzzleStampComponent implements OnInit {
   public unlockAvailable(): void {
     let i = 0;
     while (i < this.nbAvailablePieces) {
-      if (i === this.columns * this.rows - this.nbPlayedPieces) {
+      if (i === this.cols * this.rows - this.nbPlayedPieces) {
         break;
       }
       this.movedItems.push(this.currentClick++);
@@ -115,9 +115,9 @@ export class PuzzleStampComponent implements OnInit {
 
   public availablePieces(): string {
     const redeemdStamp = this.stamps.filter(stamp => stamp.state === 'redeemed');
-    this.buttonText = redeemdStamp.length >= this.columns ? 'Netflix rebate earned' : this.buttonText;
+    this.buttonText = redeemdStamp.length >= this.cols ? 'Netflix rebate earned' : this.buttonText;
 
-    if (redeemdStamp.length >= this.columns) {
+    if (redeemdStamp.length >= this.cols) {
       return 'btn-redeemed';
     }
     if (!this.isCurrent) {
