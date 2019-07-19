@@ -108,10 +108,7 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  public onMoved = (card: IStampCard) => (_MOVE: {
-    nbPlayedPieces: number,
-    nbAvailablePieces: number
-  }) => {
+  public onMoved = (card: IStampCard) => {
     const stamps = card.stamps && card.stamps.filter(stmp => stmp.state === STAMP_STATE.issued) || [];
     if (stamps.length === 0) {
       return;
