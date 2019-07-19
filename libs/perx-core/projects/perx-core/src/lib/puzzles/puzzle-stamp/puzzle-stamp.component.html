@@ -12,21 +12,21 @@
         >
           <div 
             class="stamp" 
-            *ngFor="let col of [].constructor(cols); index as stampCol"
+            *ngFor="let col of [].constructor(columns); index as stampColumn"
             [ngStyle]="stampStyle()"
           >
             <div 
-              [ngClass]="isStampClicked(stampRow, stampCol) ? 'hidden content' : 'content'"
-              [ngStyle]="styleObject(stampRow, stampCol)"
+              [ngClass]="isStampClicked(stampRow, stampColumn) ? 'hidden content' : 'content'"
+              [ngStyle]="styleObject(stampRow, stampColumn)"
             >
               <perx-core-stamp
                 [lockImg]="lockImg"
                 [unlockImg]="unlockImg"
-                [ngClass]="isStampAvailable(stampRow, stampCol) ? 'available' : ''"
-                [available]="isStampAvailable(stampRow, stampCol)"
-                [isUnlockedAll]="isStampAvailable(stampRow, stampCol) && isUnlockedAll"
+                [ngClass]="isStampAvailable(stampRow, stampColumn) ? 'available' : ''"
+                [available]="isStampAvailable(stampRow, stampColumn)"
+                [isUnlockedAll]="isStampAvailable(stampRow, stampColumn) && isUnlockedAll"
                 [isCurrent]="isCurrent"
-                [stampCol]="stampCol"
+                [stampColumn]="stampColumn"
                 [stamps]="stamps"
                 (moveCard)="cardClick()"
                 >
@@ -46,7 +46,7 @@
         (debounceClick)="unlockAvailable()"
         (click)="unlockAllAvailable()"
       >
-        {{btnTxt}}
+        {{buttonText}}
       </button>
     </mat-card-actions>
   </div>
