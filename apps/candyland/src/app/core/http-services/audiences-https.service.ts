@@ -12,4 +12,8 @@ export class AudiencesHttpsService {
   public getUsers() {
     return this.http.get('assets/mocks/users.json');
   }
+
+  public getAudiences() {
+    return this.http.get('assets/mocks/audiences.json');
+  }
 }

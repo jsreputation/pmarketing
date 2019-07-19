@@ -53,22 +53,22 @@ export class PrepareTableFilers {
           if (item[key] as string) {
             return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
           }
-          if ('begin' in filters[key] && 'end' in filters[key]) {
-            if (filters[key].begin) {
-              const beginCurrent = item.begin.getTime();
-              const beginFilter = new Date(filters[key].begin).getTime();
-              if (beginCurrent < beginFilter) {
-                return false;
-              }
-            }
-            if (filters[key].end) {
-              const endCurrent = item.end.getTime();
-              const endFilter = new Date(filters[key].end).getTime();
-              if (endCurrent > endFilter) {
-                return false;
-              }
-            }
-          }
+          // if ('begin' in filters[key] && 'end' in filters[key]) {
+          //   if (filters[key].begin) {
+          //     const beginCurrent = item.begin.getTime();
+          //     const beginFilter = new Date(filters[key].begin).getTime();
+          //     if (beginCurrent < beginFilter) {
+          //       return false;
+          //     }
+          //   }
+          //   if (filters[key].end) {
+          //     const endCurrent = item.end.getTime();
+          //     const endFilter = new Date(filters[key].end).getTime();
+          //     if (endCurrent > endFilter) {
+          //       return false;
+          //     }
+          //   }
+          // }
           return true;
         });
     };

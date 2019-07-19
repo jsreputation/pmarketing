@@ -6,20 +6,19 @@
 <section class="content">
   <ng-container *ngIf="hasData">
     <!--filters-->
-    <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
-      </ng-container>
-    </cl-table-filters>
-    <cl-tabs-filter [formControl]="tabs" [tabs]="tabsFilterConfig"></cl-tabs-filter>
-
+<!--    <cl-table-filters [dataSource]="dataSource" classList="block">-->
+<!--      <ng-container *clTableFilter="searchKey; let filter">-->
+        <cl-search-filter class="search-block" [control]="search"></cl-search-filter>
+<!--      </ng-container>-->
+<!--    </cl-table-filters>-->
+    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!--table-->
-    <cl-audiences-users-list [dataSource]="dataSource"></cl-audiences-users-list>
-    <!--   <cl-audiences-list [dataSource]="dataSource"></cl-audiences-list>-->
-    <!--grid-->
-    <!--    <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource"></cl-engagements-grid>-->
+    <ng-container [ngSwitch]="currentTab">
+      <cl-audiences-users-list *ngSwitchDefault [dataSource]="dataSource"></cl-audiences-users-list>
+      <cl-audiences-list *ngSwitchCase="'audience'" [dataSource]="dataSource"></cl-audiences-list>
+    </ng-container>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator class="paginator" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

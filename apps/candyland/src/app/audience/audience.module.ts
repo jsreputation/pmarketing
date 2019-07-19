@@ -16,7 +16,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -60,7 +60,8 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatCheckboxModule,
     DatePickerModule,
     UploadFileModule,
-    NoDataModule
+    NoDataModule,
+    MatTabsModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

@@ -17,6 +17,11 @@ import { noop } from 'rxjs';
 })
 export class TabsFilterComponent implements ControlValueAccessor {
   @Input() tabs;
+
+  @Input() set value(setValue) {
+    this.writeValue(setValue);
+  }
+
   public currentValue;
   public onChange: any = noop;
   public onTouched: any = noop();
@@ -32,8 +37,10 @@ export class TabsFilterComponent implements ControlValueAccessor {
 
 
   public writeValue(value) {
-    this.currentValue = value;
-    this.onChange(this.currentValue);
+    if (this.currentValue !== value) {
+      this.currentValue = value;
+      this.onChange(this.currentValue);
+    }
   }
 
   public registerOnChange(fn) {
