@@ -130,7 +130,7 @@ export class GameComponent implements OnInit {
                   return -1;
                 }
               });
-              this.router.navigate(['/congrats']);
+              this.router.navigate(['bpi/congrats']);
             }
           }
         },
