@@ -12,7 +12,7 @@ export class StampComponent implements OnInit, DoCheck {
   @Input() public available: boolean;
   @Input() public isUnlockedAll: boolean;
   @Input() public isCurrent: boolean;
-  @Input() public stampCol: number;
+  @Input() public stampColumn: number;
   @Input() public stamps: IStamp[];
 
   @Output() public moveCard: EventEmitter<void> = new EventEmitter();
@@ -31,7 +31,7 @@ export class StampComponent implements OnInit, DoCheck {
   }
 
   private isCurrentStamp(): boolean {
-    const selectedStamp = this.stamps[this.stampCol].id;
+    const selectedStamp = this.stamps[this.stampColumn].id;
     const activeStamp = this.stamps.filter(stamp => stamp.state === 'issued')[0].id;
     return selectedStamp === activeStamp;
   }
