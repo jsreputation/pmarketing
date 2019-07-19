@@ -6,8 +6,8 @@ export interface IStyleObject {
 }
 
 export interface IMove {
-    nbPlayedPieces: number;
-    nbAvailablePieces: number;
+  nbPlayedPieces: number;
+  nbAvailablePieces: number;
 }
 
 @Component({
