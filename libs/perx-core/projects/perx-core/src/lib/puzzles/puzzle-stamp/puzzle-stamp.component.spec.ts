@@ -3,6 +3,7 @@ import { PuzzleStampComponent } from './puzzle-stamp.component';
 import { StampComponent } from './stamp/stamp.component';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
+import { STAMP_STATE } from '../../stamp/models/stamp.model';
 
 describe('PuzzleStampComponent', () => {
   let component: PuzzleStampComponent;
@@ -19,6 +20,16 @@ describe('PuzzleStampComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PuzzleStampComponent);
     component = fixture.componentInstance;
+    component.stamps = [{
+      "id": 1,
+      "user_account_id": 1,
+      "state": STAMP_STATE.redeemed,
+      "stamp_card_id": 1,
+      "created_at": "",
+      "updated_at": "",
+      "campaign_id": 1,
+      "vouchers": []
+    }]
     fixture.detectChanges();
   });
 
