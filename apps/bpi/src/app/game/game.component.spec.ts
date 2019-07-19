@@ -53,7 +53,7 @@ describe('GameComponent', () => {
 
   it('should execute onMoved function', () => {
     spy = spyOn(component, 'onMoved').and.callThrough();
-    (component.onMoved({} as IStampCard))({ nbPlayedPieces: 1, nbAvailablePieces: 1 });
+    (component.onMoved({} as IStampCard));
     expect(spy).toHaveBeenCalled();
   });
 

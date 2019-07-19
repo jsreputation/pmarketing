@@ -81,7 +81,7 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   public cardClick(): void {
-    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces && this.isCurrent) {
+    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
       this.movedItems.push(this.currentClick++);
       this.nbPlayedPieces++;
       this.nbAvailablePieces--;

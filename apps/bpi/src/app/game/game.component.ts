@@ -25,7 +25,6 @@ export class GameComponent implements OnInit {
   public cards: IStampCard[] = [];
 
   public rows: number = 1;
-  public cols: number = 5;
   public keys: number = 0;
 
   constructor(
@@ -108,10 +107,7 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  public onMoved = (card: IStampCard) => (_MOVE: {
-    nbPlayedPieces: number,
-    nbAvailablePieces: number
-  }) => {
+  public onMoved = (card: IStampCard) => {
     const stamps = card.stamps && card.stamps.filter(stmp => stmp.state === STAMP_STATE.issued) || [];
     if (stamps.length === 0) {
       return;
@@ -151,7 +147,8 @@ export class GameComponent implements OnInit {
   }
 
   public isCompleted(card: IStampCard): boolean {
-    return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * this.cols;
+    const totalSlots = card.display_properties.total_slots;
+    return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * totalSlots;
   }
 
   public isCurrent(card: IStampCard): boolean {
@@ -196,5 +193,9 @@ export class GameComponent implements OnInit {
         });
       }
     );
+  }
+
+  public getCols(card: IStampCard): number {
+    return card.display_properties.total_slots;
   }
 }
