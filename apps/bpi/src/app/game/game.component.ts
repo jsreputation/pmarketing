@@ -107,41 +107,69 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  public onMoved = (card: IStampCard) => (move: {
-    nbPlayedPieces: number,
-    nbAvailablePieces: number
-  }) => {
-    const stamps = card.stamps && card.stamps.filter(s => s.state === STAMP_STATE.issued) || [];
+  public onMoved = (card: IStampCard) => {
+    const stamps = card.stamps && card.stamps.filter(stmp => stmp.state === STAMP_STATE.issued) || [];
     if (stamps.length === 0) {
       return;
     }
 
-    let numOfStampsToRedeem = stamps.length - move.nbAvailablePieces;
-    let index = 0;
-    while (numOfStampsToRedeem > 0) {
-      const s = stamps[index];
-      s.state = STAMP_STATE.redeemed;
-      this.keys--;
-      this.stampService.putStamp(s.id)
-        .subscribe(
-          (stamp) => {
-            if (stamp.state === STAMP_STATE.redeemed) {
-              if (stamp.vouchers && stamp.vouchers.length > 0) {
-                this.router.navigate(['/congrats']);
-              }
-            }
-          },
-          () => {
-            this.notificationService.addPopup({
-              title: 'Something went wrong, with our server',
-              text: 'We notified our team. Sorry about the inconvenience.'
-            });
-          }
-        );
+    const s = stamps[0];
+    s.state = STAMP_STATE.redeemed;
 
-      index++;
-      numOfStampsToRedeem--;
-    }
+    const totalRedeemed = card.stamps.filter(stmp => stmp.state === STAMP_STATE.redeemed).length;
+    const totalSlots = card.display_properties.total_slots;
+
+    this.stampService.putStamp(s.id)
+      .subscribe(
+        (stamp) => {
+          if (stamp.state === STAMP_STATE.redeemed) {
+            // The vouchers is always zero
+            // if (stamp.vouchers && stamp.vouchers.length > 0) {
+            //   this.router.navigate(['/congrats']);
+            // }
+            this.keys--;
+            if (totalRedeemed === totalSlots) {
+              this.cards.sort( (_A, b) => {
+                if (b.stamps.filter(stmp => stmp.state === 'redeemed').length === totalSlots) {
+                  return -1;
+                }
+              });
+              this.router.navigate(['/congrats']);
+            }
+          }
+        },
+        () => {
+          this.notificationService.addPopup({
+            title: 'Something went wrong, with our server',
+            text: 'We notified our team. Sorry about the inconvenience.'
+          });
+        }
+      );
+
+    // while (numOfStampsToRedeem > 0) {
+    //   const s = stamps[index];
+    //   s.state = STAMP_STATE.redeemed;
+    //   this.keys--;
+    //   this.stampService.putStamp(s.id)
+    //     .subscribe(
+    //       (stamp) => {
+    //         if (stamp.state === STAMP_STATE.redeemed) {
+    //           if (stamp.vouchers && stamp.vouchers.length > 0) {
+    //             this.router.navigate(['/congrats']);
+    //           }
+    //         }
+    //       },
+    //       () => {
+    //         this.notificationService.addPopup({
+    //           title: 'Something went wrong, with our server',
+    //           text: 'We notified our team. Sorry about the inconvenience.'
+    //         });
+    //       }
+    //     );
+
+    //   index++;
+    //   numOfStampsToRedeem--;
+    // }
   }
 
   public onCompleted(): void {
