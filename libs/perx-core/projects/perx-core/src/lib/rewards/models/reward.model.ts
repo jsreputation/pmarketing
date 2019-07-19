@@ -11,7 +11,7 @@ export interface IReward {
   rewardPrice?: {
     rewardCurrency: string,
     rewardAmount: string
-  };
+  }[];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
