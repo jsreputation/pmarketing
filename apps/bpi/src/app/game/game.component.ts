@@ -143,9 +143,6 @@ export class GameComponent implements OnInit {
       );
   }
 
-  public onCompleted(): void {
-  }
-
   public isCompleted(card: IStampCard): boolean {
     const totalSlots = card.display_properties.total_slots;
     return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * totalSlots;
@@ -155,7 +152,7 @@ export class GameComponent implements OnInit {
     return this.cards[0].id === card.id;
   }
 
-  public checkKeys(): void {
+  private checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
         title: `You have a total of ${this.keys} keys!`,
@@ -166,7 +163,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  public stampAll(card: IStampCard): void {
+  public onStampAll(card: IStampCard): void {
     const id = card.id;
     const totalSlots = card.display_properties.total_slots;
     const index = this.cards.findIndex(x => x.id === card.id);
