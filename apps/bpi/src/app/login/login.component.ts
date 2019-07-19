@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, DoCheck, PLATFORM_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, DoCheck {
   public loginForm: FormGroup;
 
   private authed: boolean;
@@ -33,23 +33,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  ngDoCheck() {
+    if(this.authed) {
+      this.router.navigateByUrl('bpi/landing');
+    }
+  }
+
   public onSubmit(): void {
     if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
       this.authService.v4AutoLogin().then(
         (isAuthed: boolean) => {
-          if (!isAuthed) {
-            this.authService.autoLogin().then(
-              (isAuthed: boolean) => {
-                this.authed = isAuthed;
-                if (this.authed) {
-                  this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                }
-              },
-              () => {
-                this.failedAuth = true;
-                this.authed = false;
-              }
-            );
+          this.authed = isAuthed;
+          if (this.authed) {
+            this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
             this.router.navigateByUrl('bpi/landing');
           }
