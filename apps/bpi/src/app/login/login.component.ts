@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, DoCheck {
       this.authService.v4AutoLogin().then(
         (isAuthed: boolean) => {
           this.authed = isAuthed;
-          if (this.authed) {
+          if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
             this.router.navigateByUrl('bpi/landing');
