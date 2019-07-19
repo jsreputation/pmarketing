@@ -37,11 +37,21 @@ export class LoginComponent implements OnInit {
     if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
       this.authService.v4AutoLogin().then(
         (isAuthed: boolean) => {
-          this.authed = isAuthed;
-          if (this.authed) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
+          if (!isAuthed) {
+            this.authService.autoLogin().then(
+              (isAuthed: boolean) => {
+                this.authed = isAuthed;
+                if (this.authed) {
+                  this.router.navigateByUrl(this.authService.getInterruptedUrl());
+                }
+              },
+              () => {
+                this.failedAuth = true;
+                this.authed = false;
+              }
+            );
           } else {
-            this.router.navigateByUrl('landing');
+            this.router.navigateByUrl('bpi/landing');
           }
         },
         (_) => {
