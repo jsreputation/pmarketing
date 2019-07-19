@@ -21,15 +21,15 @@ describe('PuzzleStampComponent', () => {
     fixture = TestBed.createComponent(PuzzleStampComponent);
     component = fixture.componentInstance;
     component.stamps = [{
-      "id": 1,
-      "user_account_id": 1,
-      "state": STAMP_STATE.redeemed,
-      "stamp_card_id": 1,
-      "created_at": "",
-      "updated_at": "",
-      "campaign_id": 1,
-      "vouchers": []
-    }]
+      id: 1,
+      user_account_id: 1,
+      state: STAMP_STATE.redeemed,
+      stamp_card_id: 1,
+      created_at: '',
+      updated_at: '',
+      campaign_id: 1,
+      vouchers: []
+    }];
     fixture.detectChanges();
   });
 
