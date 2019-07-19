@@ -62,16 +62,27 @@ export class V4RewardsService extends RewardsService {
   }
 
   public static v4RewardToReward(reward: IV4Reward): IReward {
+    const images = reward.images || [];
+    let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
+    }
+    const thumbnailImg = thumbnail && thumbnail.url;
+    const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
+    const rewardBanner = banner && banner.url;
+    const merchantImg = reward[`merchantImg`] ? reward[`merchantImg`] : null;
     return {
       id: reward.id,
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
-      images: reward.images,
+      rewardThumbnail: thumbnailImg,
+      rewardBanner,
       validFrom: reward.valid_from,
       validTo: reward.valid_to,
       merchantId: reward.merchant_id,
       merchantName: reward.merchant_name,
+      merchantImg,
       merchantWebsite: reward.merchant_website,
     };
   }

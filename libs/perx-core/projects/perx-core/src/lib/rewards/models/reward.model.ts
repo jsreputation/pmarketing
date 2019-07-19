@@ -5,10 +5,9 @@ export interface IReward {
   subtitle: string;
   validFrom: Date;
   validTo: Date;
-  images?: {
-    type: string;
-    url: string;
-  }[];
+  rewardThumbnail: string;
+  rewardBanner: string;
+  merchantImg: string;
   rewardPrice?: {
     rewardCurrency: string,
     rewardAmount: string
