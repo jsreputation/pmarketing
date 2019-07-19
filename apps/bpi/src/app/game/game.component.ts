@@ -163,15 +163,16 @@ export class GameComponent implements OnInit {
     }
   }
 
-  public onStampAll(card: IStampCard): void {
-    const id = card.id;
-    const totalSlots = card.display_properties.total_slots;
-    const index = this.cards.findIndex(x => x.id === card.id);
-    const redeemedCard = card.stamps.map(stamp => {
+  public onStampAll(cardSelected: IStampCard): void {
+    const id = cardSelected.id;
+    const totalSlots = cardSelected.display_properties.total_slots;
+    const index = this.cards.findIndex(card => card.id === id);
+
+    const redeemedStamps = cardSelected.stamps.map(stamp => {
       return {...stamp, state: STAMP_STATE.redeemed};
     });
 
-    this.cards[index].stamps = redeemedCard;
+    this.cards[index].stamps = redeemedStamps;
 
     this.stampService.stampAll(id).subscribe(
       (stamps) => {
