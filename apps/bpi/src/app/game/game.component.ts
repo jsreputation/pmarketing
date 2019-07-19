@@ -130,7 +130,7 @@ export class GameComponent implements OnInit {
                   return -1;
                 }
               });
-              this.router.navigate(['/congrats']);
+              this.router.navigate(['bpi/congrats']);
             }
           }
         },
@@ -178,7 +178,7 @@ export class GameComponent implements OnInit {
       (stamps) => {
         this.keys -= totalSlots;
         if (stamps) {
-          this.router.navigate(['/congrats']);
+          this.router.navigate(['bpi/congrats']);
         }
       },
       (err) => {
