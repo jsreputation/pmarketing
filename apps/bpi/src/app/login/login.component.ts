@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck() {
-    if(this.authed) {
+  public ngDoCheck(): void {
+    if (this.authed) {
       this.router.navigateByUrl('bpi/landing');
     }
   }
