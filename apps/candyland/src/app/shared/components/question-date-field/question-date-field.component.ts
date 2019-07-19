@@ -24,8 +24,7 @@ export class QuestionDateFieldComponent implements OnInit, OnDestroy {
   }
 
   public toggleEndDate(value: boolean) {
-    console.log(value);
-    if (value) {
+    if (!value) {
       this.endDate.reset();
       this.endDate.disable();
     } else {

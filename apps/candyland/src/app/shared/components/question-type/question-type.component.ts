@@ -23,6 +23,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   @Input() public addQuestionType = false;
   @Input() typeList: IEngagementType[];
   @Input() currentIndex: string;
+  @Input() level: number;
 
   @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
 

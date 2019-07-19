@@ -1,8 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SurveyQuestionType } from '../../../engagements/new-survey/containers/new-survey/new-survey.component';
 
 @Component({
   selector: 'cl-question-form-field',
@@ -14,13 +15,14 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   @Input() public formGroup: FormGroup;
   @Input() public level: number;
   @Input() public currentIndex: number;
+  @Output() public removed = new EventEmitter<number>();
   public descriptionField: FormControl;
   public showDescription: boolean;
   public required = false;
   public closed = true;
+  public surveyQuestionType = SurveyQuestionType;
   private destroy$ = new Subject();
 
-  // test = [1, 2];
   constructor(private questionFormFieldService: QuestionFormFieldService,
               private fb: FormBuilder) {
   }
@@ -42,11 +44,14 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   }
 
   public remove() {
-
+    this.removed.emit(this.currentIndex);
   }
 
   public choseTypeQuestion(selectedTypeQuestion: IEngagementType): void {
-    console.log(selectedTypeQuestion);
+    console.log('@@@@@@', selectedTypeQuestion);
+    // TODO: need change control for group
+    this.getTypeField().patchValue(selectedTypeQuestion);
+    console.log('new value', this.getTypeField().value);
   }
 
   private createDescriptionControl(): void {
@@ -60,7 +65,6 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(value => {
-        console.log('if true show discription and add control to the form', value);
         this.showDescription = value;
         this.toggleControl('description', value);
       });

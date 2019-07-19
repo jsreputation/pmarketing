@@ -4,5 +4,5 @@
 
   <cl-date-picker placeholder="To" [formControlName]="'endDate'" [min]="startDate.value"></cl-date-picker>
 
-  <mat-checkbox (change)="toggleEndDate($event.checked)" color="primary">Duration</mat-checkbox>
+  <mat-checkbox [checked]="true" (change)="toggleEndDate($event.checked)" color="primary">Duration</mat-checkbox>
 </div>

@@ -8,7 +8,10 @@ export class QuestionFormFieldService {
     rating: (type) => this.ratingGroup(type),
     date: (type) => this.dateGroup(type),
     phone: (type) => this.phoneGroup(type),
-    questionGroup: (type) => this.questionGroup(type)
+    questionGroup: (type) => this.questionGroup(type),
+    longText: (type) => this.questionLongText(type),
+    pictureChoice: (type) => this.questionPictureChoice(type),
+    multipleChoice: (type) => this.questionMultipleChoice(type),
   };
   constructor(private fb: FormBuilder) { }
 
@@ -81,6 +84,41 @@ export class QuestionFormFieldService {
         Validators.minLength(1),
         Validators.maxLength(60)]],
       questionGroup: this.fb.array([]),
+      required: [null, []]
+    });
+  }
+
+  private questionLongText(type: string): FormGroup {
+    return this.fb.group({
+      selectedType: [type, [Validators.required]],
+      title: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
+      text: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(200)]],
+      required: [null, []]
+    });
+  }
+
+  private questionPictureChoice(type: string): FormGroup {
+    return this.fb.group({
+      selectedType: [type, [Validators.required]],
+      title: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
+      picture: this.fb.array([]),
+      required: [null, []]
+    });
+  }
+
+  private questionMultipleChoice(type: string): FormGroup {
+    return this.fb.group({
+      selectedType: [type, [Validators.required]],
+      title: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
+      choice: this.fb.array([]),
       required: [null, []]
     });
   }

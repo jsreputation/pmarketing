@@ -17,9 +17,11 @@ export class QuestionGroupFieldComponent implements OnInit {
   }
 
   public choseTypeQuestion(selectedTypeQuestion: string): void {
-    console.log(selectedTypeQuestion);
     this.addQuestion(selectedTypeQuestion);
-    console.log(this.surveyQuestionGroup.value);
+  }
+
+  public deleteQuestion(index: number): void {
+    this.surveyQuestionGroup.removeAt(index);
   }
 
   public addQuestion(questionType: string): void {

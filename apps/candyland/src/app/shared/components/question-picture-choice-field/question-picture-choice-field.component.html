@@ -1,0 +1,37 @@
+<div class="form-group" [formGroup]="group">
+  <div class="choice-wrap" *ngFor="let item of choice.controls; let i = index">
+
+    <div class="choice-group-control" [formGroup]="item">
+      <cl-upload-image class="choice-upload-img" [formControlName]="'image'"></cl-upload-image>
+
+      <div class="control-input-action">
+        <div class="control-input">
+          <mat-form-field class="messages-input">
+            <input type="text" matInput [placeholder]="'- Add Choice'" [formControlName]="'text'">
+            <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+            <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+            <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+            <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+          </mat-form-field>
+        </div>
+        <button class="btn-transparent btn-remove" (click)="removeControl(i)">
+          <mat-icon aria-hidden="false" aria-label="icon">highlight_off</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="choice-group-control">
+  <cl-upload-image class="choice-upload-img" #uploadImage (selectUploadGraphic)="selectUploadGraphic($event, uploadImage)"></cl-upload-image>
+
+  <div class="control-input">
+    <mat-form-field class="messages-input">
+      <input type="text" #choiceText (keydown.enter)="addedField(choiceText)" matInput [placeholder]="'- Add Choice'" />
+      <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
+      <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
+      <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
+      <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+    </mat-form-field>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 <div class="question-form-field" [ngClass]="'question-nested-' + level" [formGroup]="group">
 
-  question-form-field works! <span>{{level | json}}</span>
-
-  <div class="question-form-header">
+  <div class="question-form-header"
+       [ngClass]="{'exist-nested-group': getTypeField().value === surveyQuestionType.questionGroup}"
+  >
     <cl-question-type class="question-btn-type" [formControlName]="'selectedType'"
                       (selectTypeQuestion)="choseTypeQuestion($event)"
                       [currentIndex]="currentIndex"
@@ -28,21 +28,29 @@
         </mat-form-field>
       </div>
 
-      <div class="nested-form-group">
-        <div clDynamicField [group]="group" [type]="getTypeField().value">
+      <div class="nested-form-group"
+           *ngIf="getTypeField().value !== surveyQuestionType.questionGroup"
+           [ngClass]="{hidden: isActive()}">
+        <div clDynamicField
+             [currentIndex]="currentIndex"
+             [level]="level"
+             [group]="group"
+             [type]="getTypeField().value"
+        >
         </div>
       </div>
+    </div>
 
+  </div>
+  <div class="nested-form-group" *ngIf="getTypeField().value === surveyQuestionType.questionGroup" [ngClass]="{hidden: isActive()}">
+    <div clDynamicField
+         [currentIndex]="currentIndex"
+         [level]="level"
+         [group]="group"
+         [type]="getTypeField().value"
+    >
     </div>
   </div>
-
-  <ng-container *ngIf="level <= 0">
-    <cl-question-form-field *ngFor="let item of test; let i = index;"
-                            [clOpenClose]="currentIndex + '-' + i"
-                            [currentIndex]="currentIndex + '-' + i"
-                            [level]="level + 1"
-    ></cl-question-form-field>
-  </ng-container>
 
   <div class="question-actions" [ngClass]="{hidden: isActive()}">
     <section class="question-btn-actions">

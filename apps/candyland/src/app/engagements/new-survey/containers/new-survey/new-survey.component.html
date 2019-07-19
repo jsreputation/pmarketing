@@ -81,15 +81,10 @@
                                 [currentIndex]="i"
                                 [clOpenClose]="i"
                                 [level]="level"
+                                (removed)="deleteQuestion($event)"
         >
         </cl-question-form-field>
-        <!--<div *ngFor="let item of surveyQuestion.controls; let i = index;" style="background: red; width: 100px; height: 100px;">-->
-          <!--&lt;!&ndash;<dynamic-form [fields]="field.fields" [group]="item" >&ndash;&gt;-->
-          <!--&lt;!&ndash;</dynamic-form>&ndash;&gt;-->
-          <!--<button type="button" (click)="deleteQuestion(i)">remove control</button>-->
-        <!--</div>-->
         <!--end questions form array-->
-
 
         <cl-question-type class="btn-add-question"
                           [addQuestionType]="true"

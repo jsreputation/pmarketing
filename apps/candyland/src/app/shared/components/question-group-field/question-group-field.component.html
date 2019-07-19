@@ -6,6 +6,7 @@
                           [clOpenClose]="currentIndex + '-' + i"
                           [currentIndex]="currentIndex + '-' + i"
                           [level]="level + 1"
+                          (removed)="deleteQuestion($event)"
   >
   </cl-question-form-field>
   <!--end questions form array-->
@@ -13,6 +14,7 @@
   <cl-question-type class="question-select-type"
                     addQuestionType="true"
                     (selectTypeQuestion)="choseTypeQuestion($event)"
+                    [level]="level"
   >
     <cl-button [classList]="'tertiary'"
     >

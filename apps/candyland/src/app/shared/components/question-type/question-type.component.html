@@ -7,14 +7,20 @@
   </ng-container>
   <mat-select #matSelect [formControl]="type" class="question-select-type">
     <mat-optgroup class="view-group-label" label="Select question type">
-      <mat-option *ngFor="let type of typeList" [value]="type.value" (click)="closed()">
-        <div class="view-wrap">
-          <mat-icon class="view-mat-icon">
-            <img [src]="type?.img" alt="icon">
-          </mat-icon>
-          <div class="view-text">{{type.viewValue}}</div>
-        </div>
-      </mat-option>
+      <ng-container *ngFor="let type of typeList">
+        <mat-option *ngIf="!(level >= 0 && type.value === 'questionGroup')"
+          [value]="type.value"
+          (click)="closed()"
+        >
+          <div class="view-wrap">
+            <mat-icon class="view-mat-icon">
+              <img [src]="type?.img" alt="icon">
+            </mat-icon>
+            <div class="view-text">{{type.viewValue}}</div>
+          </div>
+        </mat-option>
+      </ng-container>
+
     </mat-optgroup>
   </mat-select>
 </div>

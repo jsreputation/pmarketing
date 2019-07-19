@@ -49,6 +49,7 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public deleteQuestion(index: number) {
+    console.log('remove', index);
     this.surveyQuestion.removeAt(index);
   }
 
