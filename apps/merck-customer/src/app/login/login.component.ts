@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService
   ) {
     this.initForm();
-    if (this.authService.authing) {}
   }
 
   private initForm(): void {
