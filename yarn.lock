@@ -139,7 +139,7 @@
     "@angular-devkit/core" "8.0.4"
     rxjs "6.4.0"
 
-"@angular/animations@^8.0.2":
+"@angular/animations@^8.0.2", "@angular/animations@~8.0.1":
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-8.0.3.tgz#9fc82919b8eb28d4d1a9ff93095907acb2a64e91"
   integrity sha512-9zciJ4YRR0bodFSYgsgXdYMz8wKKyVjch7XZADGkWubXT8mGuwlpdPMlQ6n9Cwj8Ebu0u52WxMeQsX76K9RlYA==
@@ -256,6 +256,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/compiler@~8.0.1":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-8.0.3.tgz#93855340bc029ab15871f6e699dcb8d3ffdfb54d"
+  integrity sha512-1/vF8D6l1O6IfWiDtaj6nC+B8CtkVtFgXgooDzLBO6XAkaCuJCnhKT1HnpWG5GtVsGaY9MGoTl1vE9ZMDbRQjg==
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/core@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-8.0.1.tgz#29dd1236fba716d1b16e9df3e62b32b1fa22dc37"
@@ -267,6 +274,13 @@
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.1.tgz#de8106d64ae69617b8bbf1ba1dd3d247a8385adc"
   integrity sha512-Hv0EK29ihe5zGu2TJVnQ5gNpRrT0Xu5RZMjbtjHKuVohGnhZfZJDqGvw9RfIOYdpuUs6ofQZuMNO/8NWSX8qvQ==
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/forms@~8.0.1":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.3.tgz#21282ba5616ee1641c2cbec9d34afd1c3482e44d"
+  integrity sha512-22s82QDRQ72K4vMYuNh3NAN+da9uanwoydnfKlp2rb9dZAb2QVX9NN6gSoMrkSSr2O9KTP6pWiw6A3/MW8sGRA==
   dependencies:
     tslib "^1.9.0"
 
