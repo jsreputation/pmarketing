@@ -6,14 +6,14 @@ import { EnvConfig } from '../shared/env-config';
 import { V4LoyaltyService } from './v4-loyalty.service';
 import { LoyaltyService } from './loyalty.service';
 import { LoyaltySummaryComponent } from './loyalty-summary/loyalty-summary.component';
-import { LoyaltyTransactionHistoryComponent } from './loyalty-transaction-history/loyalty-transaction-history.component';
-import { TransactionPipe } from './loyalty-transaction-history/transaction.pipe';
+import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list/loyalty-transactions-list.component';
+import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 
 @NgModule({
   declarations: [
     TransactionPipe,
     LoyaltySummaryComponent,
-    LoyaltyTransactionHistoryComponent
+    LoyaltyTransactionsListComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +21,7 @@ import { TransactionPipe } from './loyalty-transaction-history/transaction.pipe'
   ],
   exports: [
     LoyaltySummaryComponent,
-    LoyaltyTransactionHistoryComponent
+    LoyaltyTransactionsListComponent
   ]
 })
 export class LoyaltyModule {

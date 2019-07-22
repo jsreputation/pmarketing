@@ -10,11 +10,11 @@ import { ITransaction } from '../models/loyalty.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
-  selector: 'perx-core-loyalty-transaction-history',
-  templateUrl: './loyalty-transaction-history.component.html',
-  styleUrls: ['./loyalty-transaction-history.component.scss']
+  selector: 'perx-core-loyalty-transactions-list',
+  templateUrl: './loyalty-transactions-list.component.html',
+  styleUrls: ['./loyalty-transactions-list.component.scss']
 })
-export class LoyaltyTransactionHistoryComponent {
+export class LoyaltyTransactionsListComponent {
   @Input()
   public transactions$: Observable<ITransaction[]>;
 
