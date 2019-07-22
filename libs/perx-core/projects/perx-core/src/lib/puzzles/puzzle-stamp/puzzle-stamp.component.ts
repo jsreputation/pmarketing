@@ -13,7 +13,7 @@ export interface IMove {
 @Component({
   selector: 'perx-core-puzzle-stamp',
   templateUrl: './puzzle-stamp.component.html',
-  styleUrls: ['./puzzle-stamp.component.css']
+  styleUrls: ['./puzzle-stamp.component.scss']
 })
 export class PuzzleStampComponent implements OnInit {
   @Input() public img: string;
