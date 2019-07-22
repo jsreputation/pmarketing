@@ -64,9 +64,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UtilsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

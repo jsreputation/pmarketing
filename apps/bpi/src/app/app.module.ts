@@ -53,9 +53,6 @@ import { LandingComponent } from './landing/landing.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

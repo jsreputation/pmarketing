@@ -78,10 +78,7 @@ import { ResultComponent } from './result/result.component';
   providers: [
     DatePipe
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
