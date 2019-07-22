@@ -1,19 +1,21 @@
-<table mat-table [dataSource]="dataSource" matSort>
+<table class="table" mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="id">ID</th>
     <td mat-cell *matCellDef="let element">
-      <p class="">
-        <span class="">#{{element?.id}}</span>
-      </p>
+      <a class="table-link" [routerLink]="'/audience/'+ element?.id">
+        <span>#{{element?.id}}</span>
+      </a>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="firstName">Name</th>
-<!--    <th mat-header-cell *matHeaderCellDef>Name</th>-->
+    <!--    <th mat-header-cell *matHeaderCellDef>Name</th>-->
     <td mat-cell *matCellDef="let element">
-        <span class="">{{element?.firstName}} {{element?.lastName}}</span>
+      <a class="table-link" [routerLink]="'/audience/'+ element?.id">
+        <span>{{element?.firstName}} {{element?.lastName}}</span>
+      </a>
     </td>
   </ng-container>
 
@@ -41,8 +43,8 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #itemMenu="matMenu">
-        <button mat-menu-item (click)="manageList(element.id)">Manage List</button>
-        <button mat-menu-item (click)="deactivateItem(element.id)">Deactivate</button>
+        <button mat-menu-item (click)="manageList(element)">Manage List</button>
+        <button mat-menu-item (click)="deactivateItem(element)">Deactivate</button>
       </mat-menu>
     </td>
   </ng-container>

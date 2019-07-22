@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -14,14 +15,19 @@ export class AudiencesHttpsService {
   }
 
   public getUser(id: number) {
-    return this.http.get('assets/mocks/users.json');
+    return this.http.get('assets/mocks/users.json')
+      .pipe(
+        map((users: any[]) => {
+          return users.find(user => user.id === +id);
+        })
+      );
   }
 
   public getAudiences() {
     return this.http.get('assets/mocks/audiences.json');
   }
 
-  public getVouchers(id: number) {
+  public getVouchers() {
     return this.http.get('assets/mocks/vouchers.json');
   }
 }

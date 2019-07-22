@@ -19,14 +19,13 @@ export class AudiencesUsersListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<Engagement>;
   @Input() public displayedColumns = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public clickManageList = new EventEmitter();
 
   constructor() {
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    console.log('dataSource', this.dataSource);
   }
 
   public joinList(list: string[]) {
@@ -34,10 +33,10 @@ export class AudiencesUsersListComponent implements AfterViewInit {
   }
 
   public manageList(id: number) {
-    this.itemAction.emit(id);
+    this.clickManageList.emit(id);
   }
 
   public deactivateItem(id: number) {
-    this.itemAction.emit(id);
+    this.clickManageList.emit(id);
   }
 }

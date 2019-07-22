@@ -1,9 +1,18 @@
-import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, AfterViewInit} from '@angular/core';
-import {AudiencesService} from "@cl-core/services/audiences.service";
-import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
-import {PrepareTableFilers} from "@cl-helpers/prepare-table-filers";
-import {ActivatedRoute, Router} from "@angular/router";
-import {tap} from "rxjs/operators";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy
+} from '@angular/core';
+import { AudiencesService } from '@cl-core/services/audiences.service';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -11,7 +20,7 @@ import {tap} from "rxjs/operators";
   styleUrls: ['./audiences-user-info-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit {
+export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public userId: number;
   public user;
   public vouchers;
@@ -29,12 +38,15 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.userId = this.route.snapshot.params.id;
     this.getUser(this.userId);
-    this.getVouchers(this.userId);
+    this.getVouchers();
   }
 
   ngAfterViewInit() {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
   }
 
   getUser(id: number) {
@@ -43,19 +55,30 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit {
 
   }
 
-  getVouchers(id: number) {
-    this.audiencesService.getVouchers(id)
+  getVouchers() {
+    this.audiencesService.getVouchers()
       .pipe(
-        tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
-          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(data, counterObject);
+        tap((data: any) => {
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
+          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
         }),
       )
       .subscribe(vouchers => {
         this.vouchers = vouchers;
         this.dataSource.data = this.vouchers;
-        console.log(this.userId, this.user, this.vouchers, this.tabsFilterConfig);
       });
+  }
+
+  public openChangeExpiryDateDialog(item): void {
+    const dialogRef = this.dialog.open(ChangeExpiryDatePopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
   }
 
 

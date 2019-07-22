@@ -59,7 +59,6 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   }
 
   private updateFilters() {
-    console.log('updateFilters');
     Object.values(this.cache).forEach(item => {
       item.detach();
     });

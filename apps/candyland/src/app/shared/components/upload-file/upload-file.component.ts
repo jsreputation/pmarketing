@@ -51,7 +51,6 @@ export class UploadFileComponent implements ControlValueAccessor {
     }
 
     const fileSize = this.bitsToMBytes(files[0].size);
-    console.log(fileSize);
     if (fileSize > this.MAX_SIZE) {
       this.message = `File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`;
       return;

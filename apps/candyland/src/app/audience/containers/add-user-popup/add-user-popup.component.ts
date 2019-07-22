@@ -36,8 +36,14 @@ export class AddUserPopupComponent implements OnInit {
   ngOnInit() {
   }
 
-  public closeDialog() {
+  public close() {
     this.dialogRef.close();
+  }
+
+  public add() {
+    if (this.form.valid) {
+      this.dialogRef.close(this.form.value);
+    }
   }
 
   private initForm() {
@@ -56,6 +62,5 @@ export class AddUserPopupComponent implements OnInit {
       audienceList: [],
       file: [],
     });
-    // this.form.patchValue(this.store.currentCampaign);
   }
 }

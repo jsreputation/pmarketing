@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from "@angular/material";
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'cl-audiences-vouchers-list',
@@ -11,24 +11,22 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
   TIME_FORMAT = 'hh:ssa';
   @Input() public dataSource: MatTableDataSource<Engagement>;
   @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign', 'redemptionType', 'actions'];
-  // @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public clickChangeExpiryDate = new EventEmitter();
 
   constructor() {
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    console.log('dataSource', this.dataSource);
   }
 
   public joinList(list: string[]) {
     return list.join(', ');
   }
 
-  public changeExpiryDate(item: any) {
-    this.itemAction.emit(item);
+  public changeExpiryDate(item) {
+    this.clickChangeExpiryDate.emit(item);
   }
 }
 

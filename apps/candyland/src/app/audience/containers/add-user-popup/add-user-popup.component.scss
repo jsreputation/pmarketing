@@ -9,20 +9,10 @@
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-  //width: 80vh;
-  //max-width: 74.8rem;
-  //min-height: 53.5rem;
-  //text-align: center;
-  //padding: 1.4rem 4.5rem 4.6rem;
 
   ::ng-deep .mat-tab-header {
     padding: 0 32px !important;
   }
-  //
-  //::ng-deep mat-dialog-content {
-  //  height: 100%;
-  //  overflow-y: auto;
-  //}
 
   &-content {
     flex: 1;
@@ -32,14 +22,11 @@
   }
 
   &-header-wrap {
-    //height: 6.2rem;
     padding: 3.2rem 3.2rem 1rem;
-    //background-color: rgba(217, 223, 228, 0.2);
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //padding-left: 3rem;
     box-sizing: border-box;
   }
 
@@ -73,15 +60,12 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    //margin: 0 -10px;
 
     &.last {
       margin-bottom: 1.5rem;
     }
 
     & > * {
-      //padding: 0 10px;
-      //flex: 1;
       width: 332px;
       box-sizing: content-box;
       @media (max-width: 780px) {
@@ -91,9 +75,6 @@
   }
 
   &-closed {
-    //position: absolute;
-    //right: 4.5rem;
-    //top: 4.5rem;
     color: $secondary-color;
   }
 
@@ -113,10 +94,6 @@
   }
 
   &-actions {
-    //vertical-align: bottom; /* вот она */
-    //display: inline-block;
-    //margin-top: 4rem;
-    //height: fit-content;
     box-sizing: border-box;
     padding: 3.2rem;
     width: 100%;

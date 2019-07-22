@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cl-audiences-user-info',
@@ -6,9 +6,26 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./audiences-user-info.component.scss']
 })
 export class AudiencesUserInfoComponent implements OnInit {
-  @Input() user;
+  @Input() user = {
+    id: 1,
+    firstName: 'John',
+    lastName: 'Tan',
+    email: 'john@perxtech.com',
+    phone: '+65 9123 1231',
+    gender: 'Male',
+    race: '-',
+    birthday: '01 Feb 1993',
+    country: 'Singapore',
+    state: '-',
+    city: 'Singapore',
+    audienceList: [
+      'Bronze_users',
+      'Silver_users'
+    ],
+  };
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

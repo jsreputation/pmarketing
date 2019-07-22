@@ -69,7 +69,8 @@ import {AudiencesVouchersListComponent} from "./components/audiences-vouchers-li
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent
+    AddUserPopupComponent,
+    ManageListPopupComponent,
   ]
 })
 export class AudienceModule { }

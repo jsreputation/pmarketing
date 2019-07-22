@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +27,14 @@ import { DateAdapter } from '@angular/material';
 })
 export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() control: FormControl = new FormControl(null, []);
+
+  @Input() set value(obj) {
+    if (obj) {
+      const newDate = new Date(obj);
+      this.writeValue(newDate);
+    }
+  }
+
   @Input() placeholder = 'Choose date';
   @Input() max: Date | null = null;
   @Input() min: Date | null = null;
@@ -32,7 +48,8 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor(private dateAdapter: DateAdapter<Date>) {
+  constructor(private dateAdapter: DateAdapter<Date>,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -75,13 +92,14 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
     }
   }
 
-  public writeValue(obj: DatepickerRangeValue<Date> | null): void {
-    if (obj) {
+  public writeValue(obj: Date | null): void {
+    if (obj) {;
       this.control.patchValue(obj);
     } else {
       this.control.reset();
     }
     this.onChange(obj);
+    this.cd.detectChanges();
   }
 
   private getNextDay(date: Date): Date {

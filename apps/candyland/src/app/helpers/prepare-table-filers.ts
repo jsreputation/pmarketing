@@ -1,10 +1,16 @@
 export class PrepareTableFilers {
 
-  public static prepareTabsFilterConfig(data: any[], counterObject: { [key: string]: number }): OptionConfig[] {
-    const config: OptionConfig[] = [{
-      title: 'All (' + data.length + ')',
-      value: null
-    }];
+  public static prepareTabsFilterConfig(counterObject: { [key: string]: number }, data: any[] = null): OptionConfig[] {
+
+    const config: OptionConfig[] = [];
+
+    if (data) {
+      config.push({
+        title: 'All (' + data.length + ')',
+        value: null
+      });
+    }
+
     Object.keys(counterObject).forEach((key) => {
       config.push({
         title: key + ' (' + counterObject[key] + ')',

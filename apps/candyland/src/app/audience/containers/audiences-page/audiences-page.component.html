@@ -1,24 +1,27 @@
 <section class="page-header">
-  <h1 class="title">Engagements</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary">Create new</cl-button>
+  <h1 class="title">Audiences</h1>
+  <cl-button (click)="openAddUserDialog()" classList="primary">Add User</cl-button>
 </section>
 
 <section class="content">
   <ng-container *ngIf="hasData">
     <!--filters-->
-<!--    <cl-table-filters [dataSource]="dataSource" classList="block">-->
-<!--      <ng-container *clTableFilter="searchKey; let filter">-->
-        <cl-search-filter class="search-block" [control]="search"></cl-search-filter>
-<!--      </ng-container>-->
-<!--    </cl-table-filters>-->
+    <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter>
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
-      <cl-audiences-users-list *ngSwitchDefault [dataSource]="dataSource"></cl-audiences-users-list>
-      <cl-audiences-list *ngSwitchCase="'audience'" [dataSource]="dataSource"></cl-audiences-list>
+      <cl-audiences-users-list *ngSwitchDefault
+                               (clickManageList)="openManageListDialog($event)"
+                               [dataSource]="dataSource">
+
+      </cl-audiences-users-list>
+      <cl-audiences-list *ngSwitchCase="'audience'"
+                         [dataSource]="dataSource">
+
+      </cl-audiences-list>
     </ng-container>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

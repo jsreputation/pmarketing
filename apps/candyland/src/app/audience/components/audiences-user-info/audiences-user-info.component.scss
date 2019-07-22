@@ -26,17 +26,19 @@
 
   &-list {
     width: 100%;
-    max-width: 100rem;
+    max-width: 120rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: stretch;
-    margin-left: -1.6rem;
+    margin-left: -1rem;
   }
 
   &-item {
-    min-width: 17.3rem;
+    min-width: 20rem;
+    word-break: break-word;
+    flex: 1;
     margin-bottom: 4rem;
-    margin-left: 1.6rem;
+    margin-left: 1rem;
   }
 
   &-item-title {
