@@ -4,7 +4,7 @@ import { EnvConfig } from '../shared/env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
 import { LoyaltyService } from './loyalty.service';
-import { ILoyalty, IPointHistory } from './models/loyalty.model';
+import { ILoyalty, ITransaction } from './models/loyalty.model';
 
 interface IV4Meta {
   count?: number;
@@ -91,7 +91,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): IPointHistory {
+  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
     return {
       id: pointHistory.id,
       name: pointHistory.name,
@@ -128,25 +128,25 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getAllHistory(loyaltyId: number): Observable<IPointHistory[]> {
+  public getAllTransactions(loyaltyId: number): Observable<ITransaction[]> {
     const pageSize = 100;
-    return this.getHistory(loyaltyId, 1, pageSize).pipe(
-      mergeMap((histories: IPointHistory[]) => {
+    return this.getTransactions(loyaltyId, 1, pageSize).pipe(
+      mergeMap((histories: ITransaction[]) => {
         const streams = [
           of(histories)
         ];
         for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getHistory(loyaltyId, i, pageSize);
+          const stream = this.getTransactions(loyaltyId, i, pageSize);
           streams.push(stream);
         }
         return streams;
       }),
       concatAll(),
-      reduce((acc: IPointHistory[], curr: IPointHistory[]) => acc.concat(curr), [])
+      reduce((acc: ITransaction[], curr: ITransaction[]) => acc.concat(curr), [])
     );
   }
 
-  public getHistory(loyaltyId: number, page: number = 1, pageSize: number = 25): Observable<IPointHistory[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 25): Observable<ITransaction[]> {
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
