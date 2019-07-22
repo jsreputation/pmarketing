@@ -1,0 +1,65 @@
+<table class="table" mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="rewardName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="rewardName">Reward Name</th>
+    <td mat-cell *matCellDef="let element">
+      <p class="name-cell">
+        <a class="name-cell__link" routerLink="/">{{element?.rewardName}}</a>
+        <span class="name-cell__id">ID: {{element?.id}}</span>
+      </p>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="merchant">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="merchant">Merchant</th>
+    <td mat-cell *matCellDef="let element"> {{element?.merchant}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="issuedDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="issuedDate" class="date-column">Issued Date</th>
+    <td mat-cell *matCellDef="let element" class="date-column">
+      {{element?.issuedDate | date: DATE_FORMAT}}
+      <br>
+      {{element?.issuedDate | date: TIME_FORMAT}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expiryDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="expiryDate" class="date-column">Expiry Date</th>
+    <td mat-cell *matCellDef="let element" class="date-column">
+      {{element?.expiryDate | date: DATE_FORMAT}}
+      <br>
+      {{element?.expiryDate | date: TIME_FORMAT}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="campaign">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="campaignName">Campaign</th>
+    <td mat-cell *matCellDef="let element">
+      <p class="name-cell">
+        <a class="name-cell__link" routerLink="/">{{element?.campaignName}}</a>
+        <span class="name-cell__sub">{{element?.campaignType}}</span>
+      </p>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="redemptionType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="redemptionType">Redemption Type</th>
+    <td mat-cell *matCellDef="let element"> {{element?.redemptionType}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
+    <td mat-cell *matCellDef="let element" class="menu-column">
+      <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #itemMenu="matMenu">
+        <button mat-menu-item (click)="changeExpiryDate(element)">Manage List</button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
