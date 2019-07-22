@@ -139,17 +139,17 @@
     "@angular-devkit/core" "8.0.4"
     rxjs "6.4.0"
 
-"@angular/animations@^8.0.2", "@angular/animations@~8.0.1":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-8.0.3.tgz#9fc82919b8eb28d4d1a9ff93095907acb2a64e91"
-  integrity sha512-9zciJ4YRR0bodFSYgsgXdYMz8wKKyVjch7XZADGkWubXT8mGuwlpdPMlQ6n9Cwj8Ebu0u52WxMeQsX76K9RlYA==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/animations@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-8.0.1.tgz#805f08b0af9423d1c600f4c99586c097295d18f0"
   integrity sha512-m4shu+wkVquFSKMmTA2Do+e8FhYnxcAiQdW1UtM9Ue1j4yKxUFgHNYauaG8pmzEzheeQqxGlA/cVcEi5XnRebw==
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/animations@~8.0.1":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-8.0.3.tgz#9fc82919b8eb28d4d1a9ff93095907acb2a64e91"
+  integrity sha512-9zciJ4YRR0bodFSYgsgXdYMz8wKKyVjch7XZADGkWubXT8mGuwlpdPMlQ6n9Cwj8Ebu0u52WxMeQsX76K9RlYA==
   dependencies:
     tslib "^1.9.0"
 
@@ -6506,9 +6506,9 @@ lru-cache@^5.1.1:
     yallist "^3.0.2"
 
 luxon@^1.11.3:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.16.1.tgz#62568d483989fa108f5c87178a05bcc707f7698b"
-  integrity sha512-3aYYMFpIRdEQJl00ki+NDr2zx/Ulf7ZgohBUb6ifZQuVkP8/KCYJluISl0YNbvZXBdzCbVhpQnS4M6Svjpn7EA==
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.17.1.tgz#7261aae6f7a2cc3cf83cbe24c62335cf3a48caad"
+  integrity sha512-+xo7Pj54xwyEzlMdXzDqm60Ewqbn0QqACwfIo6so9M1idUtYQrD7/PHjEFQQmLCBu8wUe2IDC2jrcJJ3Buk4Pw==
 
 macos-release@^2.2.0:
   version "2.3.0"
@@ -7035,9 +7035,9 @@ ngx-auth@^5.0.0:
     tslib "^1.9.0"
 
 ngx-material-timepicker@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-material-timepicker/-/ngx-material-timepicker-4.0.0.tgz#804182dac05c489c617d36041298924727e42d97"
-  integrity sha512-FdRd98qUrjeaTlI+MFXIoreNK/9wF8+Tu5gzt8erwGX00f1+VpFxQP2X2m6+1qqwr+SDSaiUIGmGYf6UbNP1jw==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-material-timepicker/-/ngx-material-timepicker-4.0.1.tgz#8f7898b3f8a316782dcddb8c1694c99344e98d8a"
+  integrity sha512-JMs/ldTEjvUNk8DCkvDBhoI0OrNbv01Me9TWFfnvbusILEnZ/LPrSgkKow4dtbsp6JLt21LEAP+rD4FE3tTXwg==
   dependencies:
     luxon "^1.11.3"
     tslib "^1.9.0"
