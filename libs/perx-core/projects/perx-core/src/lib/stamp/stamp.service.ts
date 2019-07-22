@@ -18,6 +18,7 @@ import {
   IStamp,
   IGetStampTransactionsResponse,
   IPutStampTransactionResponse,
+  IStampAllTransactionResponse,
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -104,6 +105,22 @@ export class StampService implements IStampService {
         if (res.data.vouchers && res.data.vouchers.length > 0) {
           this.vouchersService.reset();
         }
+      }),
+      map(res => res.data)
+    );
+  }
+
+  public stampAll(cardId: number): Observable<IStamp[]> {
+    return this.http.post<IStampAllTransactionResponse>(
+      `${this.baseUrl}/v4/stamp_cards/${cardId}/redeem`,
+      null
+    ).pipe(
+      tap((res: IStampAllTransactionResponse) => {
+        res.data[`stamps`].map(r => {
+          if (r.vouchers && r.vouchers.length > 0) {
+            this.vouchersService.reset();
+          }
+        });
       }),
       map(res => res.data)
     );

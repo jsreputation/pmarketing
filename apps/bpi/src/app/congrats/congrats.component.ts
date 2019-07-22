@@ -13,7 +13,7 @@ export class CongratsComponent {
   constructor(private router: Router) { }
 
   public onBackToGame(): void {
-    this.router.navigate(['/game']);
+    this.router.navigate(['bpi/game']);
   }
 
 }
