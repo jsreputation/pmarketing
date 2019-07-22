@@ -1,4 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IStamp } from '../../stamp/models/stamp.model';
+
+export interface IStyleObject {
+  [key: string]: string;
+}
+
+export interface IMove {
+  nbPlayedPieces: number;
+  nbAvailablePieces: number;
+}
 
 @Component({
   selector: 'perx-core-puzzle-stamp',
@@ -6,54 +16,61 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./puzzle-stamp.component.css']
 })
 export class PuzzleStampComponent implements OnInit {
-  @Input() img: string;
-  @Input() lockImg: string;
-  @Input() unlockImg: string;
-  @Input() highlightColor: string;
-  @Input() borderColor: string;
-  @Input() rows: number;
-  @Input() cols: number;
-  @Input() nbPlayedPieces: number;
-  @Input() nbAvailablePieces: number;
+  @Input() public img: string;
+  @Input() public lockImg: string;
+  @Input() public unlockImg: string;
+  @Input() public highlightColor: string;
+  @Input() public borderColor: string;
+  @Input() public rows: number;
+  @Input() public cols: number;
+  @Input() public nbPlayedPieces: number;
+  @Input() public nbAvailablePieces: number;
+  @Input() public bgImage: string;
+  @Input() public isCompleted: boolean;
+  @Input() public isCurrent: boolean;
+  @Input() public stamps: IStamp[];
 
-  @Output() moved = new EventEmitter();
-  @Output() completed = new EventEmitter();
+  @Output() public moved: EventEmitter<IMove> = new EventEmitter();
+  @Output() public completed: EventEmitter<void> = new EventEmitter();
+  @Output() public stampAll: EventEmitter<void> = new EventEmitter();
 
-  movedItems = [];
-  currentClick;
+  public isUnlockedAll: boolean = false;
+  protected count: number = 0;
+  public buttonText: string = 'Tap here to use all earned keys';
 
-  constructor() {}
+  public movedItems: number[] = [];
+  public currentClick: number;
 
-  ngOnInit() {
+  public ngOnInit(): void {
     if (this.nbPlayedPieces > 0) {
       this.movedItems = Array.from(Array(this.nbPlayedPieces).keys());
     }
     this.currentClick = this.nbPlayedPieces;
   }
 
-  isLessThanAvailblePieces(r, c) {
+  public isStampAvailable(r: number, c: number): boolean {
     return (
       this.getCurrentColumn(r, c) < this.nbAvailablePieces + this.nbPlayedPieces
     );
   }
 
-  styleObject(r, c) {
+  public styleObject(r: number, c: number): IStyleObject {
     const style = { 'border-color': this.borderColor };
-    if (this.isLessThanAvailblePieces(r, c)) {
+    if (this.isStampAvailable(r, c)) {
       style['background-color'] = this.highlightColor;
     }
     return style;
   }
 
-  getCurrentColumn(r, c) {
+  public getCurrentColumn(r: number, c: number): number {
     return (r + 1 - 1) * this.cols + c + 1 - 1;
   }
 
-  isMoved(r, c) {
+  public isStampClicked(r: number, c: number): boolean {
     return this.movedItems.includes(this.getCurrentColumn(r, c));
   }
 
-  isWon() {
+  public isWon(): void {
     this.moved.emit({
       nbPlayedPieces: this.nbPlayedPieces,
       nbAvailablePieces: this.nbAvailablePieces
@@ -63,7 +80,7 @@ export class PuzzleStampComponent implements OnInit {
     }
   }
 
-  cardClick() {
+  public cardClick(): void {
     if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
       this.movedItems.push(this.currentClick++);
       this.nbPlayedPieces++;
@@ -72,11 +89,14 @@ export class PuzzleStampComponent implements OnInit {
     }
   }
 
-  unlockAvailable() {
+  public unlockAllAvailable(): void {
+    this.isUnlockedAll = true;
+  }
+
+  public unlockAvailable(): void {
     let i = 0;
     while (i < this.nbAvailablePieces) {
       if (i === this.cols * this.rows - this.nbPlayedPieces) {
-        console.log('should break');
         break;
       }
       this.movedItems.push(this.currentClick++);
@@ -84,6 +104,29 @@ export class PuzzleStampComponent implements OnInit {
     }
     this.nbPlayedPieces = this.nbPlayedPieces + i;
     this.nbAvailablePieces = this.nbAvailablePieces - i;
-    this.isWon();
+    this.stampAll.emit();
+  }
+
+  public stampStyle(): IStyleObject {
+    return this.bgImage && !this.isCompleted ?
+    {'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000'} :
+    {'background-image': 'none', 'background-color': 'transparent'};
+  }
+
+  public availablePieces(): string {
+    const redeemdStamp = this.stamps.filter(stamp => stamp.state === 'redeemed');
+    this.buttonText = redeemdStamp.length >= this.cols ? 'Netflix rebate earned' : this.buttonText;
+
+    if (redeemdStamp.length >= this.cols) {
+      return 'btn-redeemed';
+    }
+    if (!this.isCurrent) {
+      return 'btn-unavailable';
+    }
+  }
+
+  public isDisabled(): boolean {
+    const issuedStamp = this.stamps.filter(stamp => stamp.state === 'issued');
+    return this.isCurrent && issuedStamp.length > 0;
   }
 }

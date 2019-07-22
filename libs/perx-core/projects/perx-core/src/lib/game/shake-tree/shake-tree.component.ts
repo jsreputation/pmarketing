@@ -7,6 +7,17 @@ enum GIFT_STATUS {
   drop = 'drop'
 }
 
+export interface IManStyle {
+  left: string;
+  bottom: string;
+}
+
+export interface IGift {
+  id: number;
+  status: GIFT_STATUS;
+  display: boolean;
+}
+
 @Component({
   selector: 'perx-core-shake-tree',
   templateUrl: './shake-tree.component.html',
@@ -14,60 +25,60 @@ enum GIFT_STATUS {
 })
 export class ShakeTreeComponent implements OnInit, OnChanges {
   @Input()
-  treeImg: string;
+  public treeImg: string;
   @Input()
-  giftImg: string;
+  public giftImg: string;
   @Input()
-  waitingManImg: string;
+  public waitingManImg: string;
   @Input()
-  waitingManCelebrateImg: string;
+  public waitingManCelebrateImg: string;
   @Input()
-  nbShakes = 1;
+  public nbShakes: number = 1;
   @Input()
-  nbHangedGifts = 1;
+  public nbHangedGifts: number = 1;
   @Input()
-  nbFallingGifts = 10;
+  public nbFallingGifts: number = 10;
   @Input()
-  enabled = false;
+  public enabled: boolean = false;
 
   @Input()
-  distanceFromTree = 16;
+  public distanceFromTree: number = 16;
   @Input()
-  bottomDistance = 5;
+  public bottomDistance: number = 5;
 
   @Output()
-  completed: EventEmitter<void> = new EventEmitter<void>();
+  public completed: EventEmitter<void> = new EventEmitter<void>();
   @Output()
-  tap: EventEmitter<number> = new EventEmitter<number>();
+  public tap: EventEmitter<number> = new EventEmitter<number>();
 
-  gifts = [
+  public gifts: IGift[] = [
     { id: 1, status: GIFT_STATUS.hang, display: true },
-    { id: 2, status:  GIFT_STATUS.hang, display: true },
-    { id: 3, status:  GIFT_STATUS.hang, display: true },
-    { id: 4, status:  GIFT_STATUS.hang, display: true },
-    { id: 5, status:  GIFT_STATUS.hang, display: true },
-    { id: 6, status:  GIFT_STATUS.hang, display: true },
-    { id: 7, status:  GIFT_STATUS.hang, display: true },
-    { id: 8, status:  GIFT_STATUS.hang, display: true },
-    { id: 9, status:  GIFT_STATUS.hang, display: true },
-    { id: 10, status:  GIFT_STATUS.hang, display: true }
+    { id: 2, status: GIFT_STATUS.hang, display: true },
+    { id: 3, status: GIFT_STATUS.hang, display: true },
+    { id: 4, status: GIFT_STATUS.hang, display: true },
+    { id: 5, status: GIFT_STATUS.hang, display: true },
+    { id: 6, status: GIFT_STATUS.hang, display: true },
+    { id: 7, status: GIFT_STATUS.hang, display: true },
+    { id: 8, status: GIFT_STATUS.hang, display: true },
+    { id: 9, status: GIFT_STATUS.hang, display: true },
+    { id: 10, status: GIFT_STATUS.hang, display: true }
   ];
 
-  celebrate = false;
-  shakeAnimationClass = '';
-  n = 0;
+  public celebrate: boolean = false;
+  public shakeAnimationClass: string = '';
+  public n: number = 0;
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.updateGifts();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.nbHangedGifts) {
       this.updateGifts();
     }
   }
 
-  private updateGifts() {
+  private updateGifts(): void {
     this.gifts.map(gift => {
       if (gift.id > this.nbHangedGifts) {
         gift.display = false;
@@ -75,12 +86,12 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
       return gift;
     });
   }
-  tapped() {
+  public tapped(): void {
     if (this.enabled) {
       this.tap.emit(this.n);
       this.n++;
       this.shakeAnimationClass = '';
-      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe( className => this.shakeAnimationClass = className);
+      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
       if (this.n === this.nbShakes) {
         this.gifts.map(gift => {
           if (gift.id <= this.nbFallingGifts) {
@@ -97,17 +108,17 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  getCurrentShakeAction(ngTap: number): Observable<string> {
+  public getCurrentShakeAction(ngTap: number): Observable<string> {
     if (ngTap < this.nbShakes) {
       return of('shake');
     }
     return of('');
   }
 
-  getManStyle() {
+  public getManStyle(): IManStyle {
     return {
-          left: this.distanceFromTree + '%',
-          bottom: this.bottomDistance + '%',
-        };
+      left: this.distanceFromTree + '%',
+      bottom: this.bottomDistance + '%',
+    };
   }
 }

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { GameService } from './game.service';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IGame, GAME_TYPE } from './game.model';
 import { Type } from '@angular/core';

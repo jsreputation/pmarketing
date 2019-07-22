@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 export class EnvConfig {
   // defaults
-  env = {
+  public env: any = {
     apiHost: 'localhost:3000',
     production: false,
     isWhistler: false,
@@ -17,7 +17,7 @@ export class EnvConfig {
   providedIn: 'root'
 })
 export class OauthService {
-  authEndpoint: string;
+  public authEndpoint: string;
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
     if (!config.env.production) {
@@ -27,8 +27,7 @@ export class OauthService {
     }
   }
 
-
-  authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
+  public authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     let httpParams = new HttpParams()
       .append('url', location.host)
       .append('username', user)
@@ -45,7 +44,7 @@ export class OauthService {
     });
   }
 
-  authenticateUserIdWithAppBearer(user: string): Observable<any> {
+  public authenticateUserIdWithAppBearer(user: string): Observable<any> {
     const httpParams = new HttpParams()
       .append('url', location.host)
       .append('identifier', user);

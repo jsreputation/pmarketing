@@ -1,12 +1,52 @@
-.game-container {
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 15px 15px;
+.app-container {
+  background-color: #b20000;
+  height: 100%;
+}
 
-  img {
-    display: block;
+.game-container {
+  padding: 0 1.5rem 2rem 1.5rem;
+  background-color: #b20000;
+
+  .contents {
+    max-width: 50rem;
     margin: 0 auto;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem 1.5rem;
+    margin-top: 2rem;
+
+    img {
+      width: 100%;
+      margin-bottom: 3.6rem;
+      display: block;
+    }
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+
+    a {
+      color: #00a6f9;
+    }
+  }
+
+  strong {
+    font-size: 1.4rem;
+  }
+
+  ul {
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 1.5rem;
+
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    text-transform: uppercase;
   }
 }
