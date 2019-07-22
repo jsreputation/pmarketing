@@ -35,7 +35,7 @@ export class LoyaltyTransactionHistoryComponent {
     }
   }
 
-  public trackByIndex(index: number): number {
-    return index;
+  public trackById(_: number, transaction: ITransaction): number {
+    return transaction.id;
   }
 }
