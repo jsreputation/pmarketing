@@ -156,7 +156,7 @@ export class GameComponent implements OnInit {
   private checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
-        title: `You have a total of ${this.keys} keys!`,
+        title: `You have a total of ${ this.keys } keys!`,
         imageUrl: 'assets/key.png',
         text: 'Tap the highlighted locks to unlock.',
         buttonTxt: 'Start Unlocking!'
