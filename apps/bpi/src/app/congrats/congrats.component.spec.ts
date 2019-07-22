@@ -34,7 +34,7 @@ describe('CongratsComponent', () => {
 
   it('should call onBackToGame', () => {
     component.onBackToGame();
-    expect(router.navigate).toHaveBeenCalledWith(['/game']);
+    expect(router.navigate).toHaveBeenCalledWith(['bpi/game']);
   });
 
 });

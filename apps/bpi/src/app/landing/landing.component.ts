@@ -11,6 +11,6 @@ export class LandingComponent {
   constructor(private router: Router) { }
 
   public onProceed(): void {
-    this.router.navigate(['/game']);
+    this.router.navigate(['bpi/game']);
   }
 }

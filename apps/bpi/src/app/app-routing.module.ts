@@ -8,9 +8,8 @@ import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'bpi',
     children: [
-      { path: '', redirectTo: '/landing', pathMatch: 'full' },
       { path: 'game', component: GameComponent },
       { path: 'game/:campaignId', component: GameComponent },
       { path: 'congrats', component: CongratsComponent },
@@ -18,8 +17,8 @@ const routes: Routes = [
     ],
     canActivate: [ProtectedGuard]
   },
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/game' }
+  { path: '', component: LoginComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
