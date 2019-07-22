@@ -17,18 +17,21 @@ import {
 import {
   AuthenticationModule,
   OauthModule,
-  CognitoModule
+  CognitoModule,
+  ProfileModule
    } from '@perx/core/dist/perx-core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    AuthenticationModule
+    AuthenticationModule,
+    ProfileModule.forRoot({ env: environment })
   ],
   providers: [],
   bootstrap: [AppComponent]
