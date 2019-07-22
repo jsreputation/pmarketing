@@ -60,7 +60,7 @@ export class StampService implements IStampService {
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IGetStampTransactionsResponse>(
-      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`, {
         params: {
           size: '100'
         }
@@ -84,10 +84,10 @@ export class StampService implements IStampService {
 
   private getAllFromPage(campaignId: number, page: number): Observable<IStamp[]> {
     return this.http.get<IGetStampTransactionsResponse>(
-      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`,
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`,
       {
         params: {
-          page: `${ page }`,
+          page: `${page}`,
           size: '100'
         }
       })
@@ -115,14 +115,15 @@ export class StampService implements IStampService {
       `${this.baseUrl}/v4/stamp_cards/${cardId}/redeem`,
       null
     ).pipe(
-      tap((res: IStampAllTransactionResponse) => {
-        res.data[`stamps`].map(r => {
+      map(res => res.data.stamps),
+      tap((res) => {
+        res.map(r => {
           if (r.vouchers && r.vouchers.length > 0) {
             this.vouchersService.reset();
           }
         });
       }),
-      map(res => res.data)
+      map(res => res)
     );
   }
 }
