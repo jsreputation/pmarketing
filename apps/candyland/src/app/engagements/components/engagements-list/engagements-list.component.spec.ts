@@ -13,12 +13,12 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
-import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
-import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
-import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { StatusLabelModule } from '../../../shared/components/status-label/status-label.module';
+import { TableFiltersModule } from '../../../shared/table/table-filters/table-filters.module';
+import { SearchFilterModule } from '../../../shared/table/search-filter/search-filter.module';
+import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
+import { ButtonModule } from '../../../shared/components/button/button.module';
+import { NoDataModule } from '../../../shared/table/no-data/no-data.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EngagementsListComponent', () => {

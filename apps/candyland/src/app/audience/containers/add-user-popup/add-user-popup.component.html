@@ -6,8 +6,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <mat-dialog-content [formGroup]="form">
-    <!--    <div class="dialog-content">-->
+  <mat-dialog-content class="dialog-content" [formGroup]="form">
     <mat-tab-group>
       <mat-tab label="Custom user">
         <div class="dialog-tab-content">
@@ -42,7 +41,7 @@
               <input matInput type="text" formControlName="race" placeholder="Race">
             </mat-form-field>
           </div>
-          <div class="dialog-input-group">
+          <div class="dialog-input-group last">
             <mat-form-field>
               <mat-select placeholder="Country" formControlName="country">
                 <mat-option *ngFor="let option of config.country" [value]="option?.value">{{option?.title}}</mat-option>
@@ -67,21 +66,11 @@
             <mat-form-field>
               <mat-select formControlName="audienceList" multiple>
                 <mat-option *ngFor="let option of config.audienceList"
-                            [value]="option.value">{{option.title}}</mat-option>
+                            [value]="option.value">{{option.title}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-
-
-          <!--            <mat-form-field>-->
-          <!--              <input matInput formControlName="email" placeholder="Email Address">-->
-          <!--            </mat-form-field>-->
-
-          <!--            <mat-form-field>-->
-          <!--              <input matInput formControlName="email" placeholder="Email Address">-->
-          <!--            </mat-form-field>-->
-
-
         </div>
       </mat-tab>
       <mat-tab label="Upload by file">
@@ -90,29 +79,25 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-    <!--    </div>-->
-    <!--    <div class="dialog-action" [ngSwitch]="data?.type">-->
-    <!--    </div>-->
   </mat-dialog-content>
-  <!--  <div class="dialog-actions"-->
-  <!--  >-->
-  <!--    <cl-button [classList]="'third'"-->
-  <!--               class="actions-close"-->
-  <!--               (click)="close()"-->
-  <!--               [disableRipple]="true">-->
-  <!--      <span>-->
-  <!--        Cancel-->
-  <!--      </span>-->
-  <!--    </cl-button>-->
+  <div class="dialog-actions">
+    <cl-button classList="invert"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
 
-  <!--    <cl-button [classList]="'primary'"-->
-  <!--               (click)="next()"-->
-  <!--               [disableRipple]="true">-->
-  <!--      <span>-->
-  <!--        Next-->
-  <!--      </span>-->
-  <!--    </cl-button>-->
-  <!--  </div>-->
+    <cl-button classList="primary"
+               (click)="next()"
+               [disableRipple]="true">
+        <span>
+          Add
+        </span>
+    </cl-button>
+  </div>
 </div>
 
 

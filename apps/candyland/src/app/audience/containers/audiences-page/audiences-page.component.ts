@@ -54,7 +54,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit {
   }
 
   public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(AddUserPopupComponent, {    width: 'fit-content'});
+    const dialogRef = this.dialog.open(AddUserPopupComponent, {panelClass: 'audience-dialog'});
 
     dialogRef.afterClosed().subscribe(() => {
     });
