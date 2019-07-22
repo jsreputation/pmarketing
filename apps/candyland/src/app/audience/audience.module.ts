@@ -26,8 +26,8 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { AudiencesUserInfoComponent } from './components/audiences-user-info/audiences-user-info.component';
-import {AudiencesUserInfoPageComponent} from "./containers/audiences-user-info-page/audiences-user-info-page.component";
-import {AudiencesVouchersListComponent} from "./components/audiences-vouchers-list/audiences-vouchers-list.component";
+import { AudiencesUserInfoPageComponent } from './containers/audiences-user-info-page/audiences-user-info-page.component';
+import { AudiencesVouchersListComponent } from './components/audiences-vouchers-list/audiences-vouchers-list.component';
 
 @NgModule({
   declarations: [
@@ -73,4 +73,5 @@ import {AudiencesVouchersListComponent} from "./components/audiences-vouchers-li
     ManageListPopupComponent,
   ]
 })
-export class AudienceModule { }
+export class AudienceModule {
+}

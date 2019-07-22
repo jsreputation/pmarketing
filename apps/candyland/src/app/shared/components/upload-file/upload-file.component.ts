@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, forwardRef, Input, } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-
 @Component({
   selector: 'cl-upload-file',
   templateUrl: './upload-file.component.html',
@@ -21,7 +20,6 @@ export class UploadFileComponent implements ControlValueAccessor {
   @Input() selectedGraphic: any;
   @Input() label = '';
 
-
   public lock: boolean;
   public fileName;
   public file: any;
@@ -29,10 +27,10 @@ export class UploadFileComponent implements ControlValueAccessor {
   public loadedFile = false;
 
   public onChange: any = () => {
-  };
+  }
 
   public onTouch: any = () => {
-  };
+  }
 
   constructor(private sanitizer: DomSanitizer,
               private cd: ChangeDetectorRef) {
@@ -69,20 +67,10 @@ export class UploadFileComponent implements ControlValueAccessor {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 
-  // public setActive() {
-  //   this.loadedFile = true;
-  //   this.onChange(this.file);
-  // }
-
   public clear(): void {
     this.file = null;
     this.loadedFile = false;
   }
-
-  // public setSelectedGraphic(graphic: any): void {
-  //   this.selectUploadGraphic.emit(graphic);
-  //   this.onChange(graphic);
-  // }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;

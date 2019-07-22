@@ -93,7 +93,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   public writeValue(obj: Date | null): void {
-    if (obj) {;
+    if (obj) {
       this.control.patchValue(obj);
     } else {
       this.control.reset();
