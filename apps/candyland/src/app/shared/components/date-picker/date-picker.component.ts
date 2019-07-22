@@ -22,6 +22,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   @Input() placeholder = 'Choose date';
   @Input() max: Date | null = null;
   @Input() min: Date | null = null;
+  private disabledState = false;
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);
@@ -68,6 +69,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   public setDisabledState(isDisabled: boolean): void {
+    this.disabledState = isDisabled;
     if (isDisabled) {
       this.control.disable();
     } else {

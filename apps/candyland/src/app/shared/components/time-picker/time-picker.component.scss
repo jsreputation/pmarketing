@@ -1,7 +1,19 @@
-.time {
+.time-picker {
   width: 100%;
   min-width: 7rem;
   max-width: 10rem;
+
+  &-toggle {
+    cursor: pointer;
+
+    &.disable {
+      cursor: default !important;
+
+      .ngx-material-timepicker-toggle {
+        cursor: default !important;
+      }
+    }
+  }
 
   &-button {
     height: 2.1rem !important;

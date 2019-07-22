@@ -1,7 +1,15 @@
-.date {
+.date-picker {
   width: 100%;
   min-width: 10rem;
   max-width: 17rem;
+
+  &-toggle {
+    cursor: pointer;
+
+    &.disable {
+      cursor: default;
+    }
+  }
 
   &-button {
     height: 2.1rem !important;
