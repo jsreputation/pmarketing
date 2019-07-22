@@ -1,85 +1,82 @@
 .mat-card .inner {
   border: 0.1rem solid #cac6c6;
   border-radius: 0.3rem;
-}
 
-.mat-card-content {
-  position: relative;
+  mat-card-content {
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+
+    .bg-img {
+      visibility: hidden;
+      width: 100%;
+    }
+
+    .stamp-container {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+
+      .stamps {
+        display: flex;
+
+        .stamp {
+          flex-grow: 1;
+          flex-basis: 0;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          padding: 0.5rem 0.5rem;
+          background-color: transparent;
+          background-position: center;
+          background-repeat: no-repeat;
+
+          .content {
+            border-radius: 0.3rem;
+            border: 0.2rem solid;
+            height: 100%;
+            width: 100%;
+            background-color: #000;
+
+            perx-core-stamp {
+              height: 100%;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .mat-card-actions {
   margin: 0 0 1rem 0;
   padding: 0 1.5rem 0 1.5rem;
   text-align: center;
-}
 
-.stamp-container {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
+  button {
+    background-color: #b20000;
+    color: #fff;
+    border: 0;
+    padding: 1.5rem;
+    width: 100%;
 
-.stamps {
-  display: flex;
-}
+    &.btn-redeemed {
+      background-color: transparent;
+      color: #b20000 !important;
+    }
 
-.stamp {
-  flex-grow: 1;
-  flex-basis: 0;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  padding: 0.5rem 0.5rem;
-  background-color: transparent;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.stamp .content {
-  border-radius: 0.3rem;
-  border: 0.2rem solid;
-  height: 100%;
-  width: 100%;
-  background-color: #000;
-}
-
-mat-card-content {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.bg-img {
-  visibility: hidden;
-}
-
-.mat-card-content .bg-img {
-  width: 100%;
+    &.btn-unavailable,
+    &:disabled,
+    &[disabled] {
+      background-color: #D6D6D6;
+      color: #A8A8A8;
+    }
+  }
 }
 
 .hidden {
   visibility: hidden;
 }
 
-button {
-  background-color: #b20000;
-  color: #fff;
-  border: 0;
-  padding: 1.5rem;
-  width: 100%;
-}
-
-perx-core-stamp {
-  height: 100%;
-  width: 100%;
-}
-
-.btn-redeemed {
-  background-color: transparent;
-  color: #b20000 !important;
-}
-
-.btn-unavailable, button:disabled, button[disabled] {
-  background-color: #D6D6D6;
-  color: #A8A8A8;
-}
