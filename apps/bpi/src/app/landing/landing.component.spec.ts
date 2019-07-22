@@ -31,7 +31,7 @@ describe('LandingComponent', () => {
 
   it('should call onProceed', () => {
     component.onProceed();
-    expect(router.navigate).toHaveBeenCalledWith(['/game']);
+    expect(router.navigate).toHaveBeenCalledWith(['bpi/game']);
   });
 
 });

@@ -88,3 +88,7 @@ export interface IGetStampTransactionsResponse {
 export interface IPutStampTransactionResponse {
   data: IStamp;
 }
+
+export interface IStampAllTransactionResponse {
+  data: IStampCard;
+}

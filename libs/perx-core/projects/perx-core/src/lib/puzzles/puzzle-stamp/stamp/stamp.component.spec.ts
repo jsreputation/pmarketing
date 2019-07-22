@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { StampComponent } from './stamp.component';
 import { UtilsModule } from '../../../utils/utils.module';
+import { STAMP_STATE } from '../../../stamp/models/stamp.model';
 
 describe('StampComponent', () => {
   let component: StampComponent;
@@ -40,6 +41,19 @@ describe('StampComponent', () => {
   it('should show unlocked image on changeLockImage Call', () => {
     component.isCurrent = true;
     component.unlockImg = 'unlocked.png';
+    component.stamps = [
+      {
+        id: 1,
+        user_account_id: 1,
+        stamp_card_id: 1,
+        state: STAMP_STATE.issued,
+        created_at: '',
+        updated_at: '',
+        campaign_id: 1,
+        vouchers: [],
+      }
+    ];
+    component.stampColumn = 0;
     component.changeLockImage();
     expect(component.imageLock).toBe('unlocked.png');
   });
@@ -52,7 +66,20 @@ describe('StampComponent', () => {
   });
 
   it('should moveCard have been Call', () => {
-    component.available = true;
+    component.isCurrent = true;
+    component.stamps = [
+      {
+        id: 1,
+        user_account_id: 1,
+        stamp_card_id: 1,
+        state: STAMP_STATE.issued,
+        created_at: '',
+        updated_at: '',
+        campaign_id: 1,
+        vouchers: [],
+      }
+    ];
+    component.stampColumn = 0;
     spyOn(component.moveCard, 'emit');
     component.onCardUnlock();
     expect(component.moveCard.emit).toHaveBeenCalled();

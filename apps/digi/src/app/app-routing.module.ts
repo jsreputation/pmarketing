@@ -11,13 +11,13 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', component: HomeComponent },
-      { path: 'result', component: ResultComponent },
       { path: 'games', component: GameComponent },
       { path: 'games/:gameId', component: GameComponent }
     ],
     canActivate: [ProtectedGuard]
   },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'result', component: ResultComponent },
 ];
 
 @NgModule({
