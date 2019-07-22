@@ -53,7 +53,7 @@ describe('StampComponent', () => {
         vouchers: [],
       }
     ];
-    component.stampCol = 0;
+    component.stampColumn = 0;
     component.changeLockImage();
     expect(component.imageLock).toBe('unlocked.png');
   });
@@ -79,7 +79,7 @@ describe('StampComponent', () => {
         vouchers: [],
       }
     ];
-    component.stampCol = 0;
+    component.stampColumn = 0;
     spyOn(component.moveCard, 'emit');
     component.onCardUnlock();
     expect(component.moveCard.emit).toHaveBeenCalled();

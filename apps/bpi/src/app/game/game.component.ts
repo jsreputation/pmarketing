@@ -123,10 +123,6 @@ export class GameComponent implements OnInit {
       .subscribe(
         (stamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
-            // The vouchers is always zero
-            // if (stamp.vouchers && stamp.vouchers.length > 0) {
-            //   this.router.navigate(['/congrats']);
-            // }
             this.keys--;
             if (totalRedeemed === totalSlots) {
               this.cards.sort( (_A, b) => {
@@ -134,7 +130,7 @@ export class GameComponent implements OnInit {
                   return -1;
                 }
               });
-              this.router.navigate(['/congrats']);
+              this.router.navigate(['bpi/congrats']);
             }
           }
         },
@@ -145,34 +141,6 @@ export class GameComponent implements OnInit {
           });
         }
       );
-
-    // while (numOfStampsToRedeem > 0) {
-    //   const s = stamps[index];
-    //   s.state = STAMP_STATE.redeemed;
-    //   this.keys--;
-    //   this.stampService.putStamp(s.id)
-    //     .subscribe(
-    //       (stamp) => {
-    //         if (stamp.state === STAMP_STATE.redeemed) {
-    //           if (stamp.vouchers && stamp.vouchers.length > 0) {
-    //             this.router.navigate(['/congrats']);
-    //           }
-    //         }
-    //       },
-    //       () => {
-    //         this.notificationService.addPopup({
-    //           title: 'Something went wrong, with our server',
-    //           text: 'We notified our team. Sorry about the inconvenience.'
-    //         });
-    //       }
-    //     );
-
-    //   index++;
-    //   numOfStampsToRedeem--;
-    // }
-  }
-
-  public onCompleted(): void {
   }
 
   public isCompleted(card: IStampCard): boolean {
@@ -184,7 +152,7 @@ export class GameComponent implements OnInit {
     return this.cards[0].id === card.id;
   }
 
-  public checkKeys(): void {
+  private checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
         title: `You have a total of ${this.keys} keys!`,
@@ -195,7 +163,35 @@ export class GameComponent implements OnInit {
     }
   }
 
-  public getCols(card: IStampCard): number {
+  public onStampAll(cardSelected: IStampCard): void {
+    const id = cardSelected.id;
+    const totalSlots = cardSelected.display_properties.total_slots;
+    const index = this.cards.findIndex(card => card.id === id);
+
+    const redeemedStamps = cardSelected.stamps.map(stamp => {
+      return {...stamp, state: STAMP_STATE.redeemed};
+    });
+
+    this.cards[index].stamps = redeemedStamps;
+
+    this.stampService.stampAll(id).subscribe(
+      (stamps) => {
+        this.keys -= totalSlots;
+        if (stamps) {
+          this.router.navigate(['bpi/congrats']);
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.notificationService.addPopup({
+          title: 'Something went wrong, with our server',
+          text: 'We notified our team. Sorry about the inconvenience.'
+        });
+      }
+    );
+  }
+
+  public getCardColumn(card: IStampCard): number {
     return card.display_properties.total_slots;
   }
 }
