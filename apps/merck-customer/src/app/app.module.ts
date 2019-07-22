@@ -10,7 +10,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatRippleModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCheckboxModule,
+  MatRadioModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -37,6 +39,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     MatInputModule,
     MatRippleModule,
     MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
