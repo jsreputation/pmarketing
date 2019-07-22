@@ -10,4 +10,7 @@ export interface IStampService {
   getStamps(campaignId: number): Observable<IStamp[]>;
 
   putStamp(stampId: number): Observable<IStamp>;
+
+  stampAll(cardId: number): Observable<IStamp[]>;
+
 }

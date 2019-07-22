@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { map } from 'rxjs/operators';
 import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
@@ -41,7 +41,7 @@ export class CampaignService implements ICampaignService {
   public baseUrl: string;
 
   constructor(private http: HttpClient, config: EnvConfig) {
-    this.baseUrl = config.env.apiHost;
+    this.baseUrl = config.env.apiHost as string;
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {

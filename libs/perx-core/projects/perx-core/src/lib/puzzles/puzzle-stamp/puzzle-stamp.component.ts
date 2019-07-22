@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IStamp } from '../../stamp/models/stamp.model';
 
 export interface IStyleObject {
   [key: string]: string;
 }
 
 export interface IMove {
-    nbPlayedPieces: number;
-    nbAvailablePieces: number;
+  nbPlayedPieces: number;
+  nbAvailablePieces: number;
 }
 
 @Component({
@@ -27,13 +28,15 @@ export class PuzzleStampComponent implements OnInit {
   @Input() public bgImage: string;
   @Input() public isCompleted: boolean;
   @Input() public isCurrent: boolean;
+  @Input() public stamps: IStamp[];
 
   @Output() public moved: EventEmitter<IMove> = new EventEmitter();
   @Output() public completed: EventEmitter<void> = new EventEmitter();
+  @Output() public stampAll: EventEmitter<void> = new EventEmitter();
 
   public isUnlockedAll: boolean = false;
   protected count: number = 0;
-  public btnTxt: string = 'Tap here to use all earned keys';
+  public buttonText: string = 'Tap here to use all earned keys';
 
   public movedItems: number[] = [];
   public currentClick: number;
@@ -78,7 +81,7 @@ export class PuzzleStampComponent implements OnInit {
   }
 
   public cardClick(): void {
-    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces && this.isCurrent) {
+    if (this.currentClick < this.nbAvailablePieces + this.nbPlayedPieces) {
       this.movedItems.push(this.currentClick++);
       this.nbPlayedPieces++;
       this.nbAvailablePieces--;
@@ -101,22 +104,29 @@ export class PuzzleStampComponent implements OnInit {
     }
     this.nbPlayedPieces = this.nbPlayedPieces + i;
     this.nbAvailablePieces = this.nbAvailablePieces - i;
-    this.isWon();
+    this.stampAll.emit();
   }
 
-  public stampStyle(): object {
+  public stampStyle(): IStyleObject {
     return this.bgImage && !this.isCompleted ?
     {'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000'} :
     {'background-image': 'none', 'background-color': 'transparent'};
   }
 
   public availablePieces(): string {
-    this.btnTxt = this.nbAvailablePieces <= 0 ? 'Netflix rebate earned' : this.btnTxt;
-    if (this.nbAvailablePieces <= 0) {
+    const redeemdStamp = this.stamps.filter(stamp => stamp.state === 'redeemed');
+    this.buttonText = redeemdStamp.length >= this.cols ? 'Netflix rebate earned' : this.buttonText;
+
+    if (redeemdStamp.length >= this.cols) {
       return 'btn-redeemed';
     }
     if (!this.isCurrent) {
       return 'btn-unavailable';
     }
+  }
+
+  public isDisabled(): boolean {
+    const issuedStamp = this.stamps.filter(stamp => stamp.state === 'issued');
+    return this.isCurrent && issuedStamp.length > 0;
   }
 }

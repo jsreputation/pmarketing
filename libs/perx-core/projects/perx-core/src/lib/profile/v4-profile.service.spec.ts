@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProfileService } from './profile.service';
+import { V4ProfileService } from './v4-profile.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileModule } from './profile.module';
 
@@ -13,7 +13,7 @@ describe('ProfileService', () => {
   }));
 
   it('should be created', () => {
-    const service: ProfileService = TestBed.get(ProfileService);
+    const service: V4ProfileService = TestBed.get(V4ProfileService);
     expect(service).toBeTruthy();
   });
 });

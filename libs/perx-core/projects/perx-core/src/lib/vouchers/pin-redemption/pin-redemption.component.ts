@@ -6,6 +6,9 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
+/**
+ * @todo this component currently implements its own logic, it should actually leverage pin-input component from UtilsModule
+ */
 @Component({
   selector: 'perx-core-pin-redemption',
   templateUrl: './pin-redemption.component.html',

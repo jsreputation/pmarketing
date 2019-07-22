@@ -1,3 +1,8 @@
+export interface IExpiringPoints {
+  expireDate?: string;
+  points?: number;
+}
+
 export interface ILoyalty {
   id: number;
   name: string;
@@ -9,9 +14,10 @@ export interface ILoyalty {
   pointsBalance: number;
   currencyBalance: number;
   currency: string;
+  expiringPoints?: IExpiringPoints[];
 }
 
-export interface IPointHistory {
+export interface ITransaction {
   id: number;
   name?: string;
   points: number;

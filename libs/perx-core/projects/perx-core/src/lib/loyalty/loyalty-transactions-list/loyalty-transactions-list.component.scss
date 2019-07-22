@@ -1,0 +1,17 @@
+cdk-virtual-scroll-viewport {
+  height: 100vh;
+}
+
+.transaction {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  height: 10rem;
+}
+
+.transaction-point {
+  flex: 2 1 0;
+}
+
+.transaction-date {
+  flex: 1 1 0;
+}
