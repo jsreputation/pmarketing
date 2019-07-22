@@ -75,15 +75,27 @@
         </div>
 
         <!--questions form array-->
-        <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
-                                [group]="item"
-                                [formGroup]="surveyQuestion"
-                                [currentIndex]="i"
-                                [clOpenClose]="i"
-                                [level]="level"
-                                (removed)="deleteQuestion($event)"
-        >
-        </cl-question-form-field>
+          <div cdkDropList (cdkDropListDropped)="drop($event)"
+               class="drag-list"
+               [cdkDropListData]="surveyQuestion.controls"
+               [id]="listId"
+               [cdkDropListConnectedTo]="listDropConnectedTo"
+          >
+            <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
+                                    cdkDrag
+                                    [group]="item"
+                                    [formGroup]="surveyQuestion"
+                                    [currentIndex]="i"
+                                    [clOpenClose]="i"
+                                    [level]="level"
+                                    (removed)="deleteQuestion($event)"
+                                    (changeControl)="updateQuestionType($event)"
+            >
+              <div class="example-handle" cdkDragHandle>
+                <i class="icon drag-icon"></i>
+              </div>
+            </cl-question-form-field>
+          </div>
         <!--end questions form array-->
 
         <cl-question-type class="btn-add-question"

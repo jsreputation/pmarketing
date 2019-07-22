@@ -8,9 +8,30 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 })
 export class QuestionRatingFieldComponent implements OnInit {
   @Input() public group: FormGroup;
+  public scales: CommonSelect[] = [];
   constructor() { }
 
   ngOnInit() {
+    this.setScales();
+  }
+
+  public get left(): AbstractControl {
+    return this.group.get('left');
+  }
+
+  public get right(): AbstractControl {
+    return this.group.get('right');
+  }
+
+  private setScales(): void {
+    for (let i = 3; i <= 10; i++) {
+      this.scales.push(
+        {
+          value: `${i}`,
+          viewValue: `Scale ${i}`
+        }
+      );
+    }
   }
 
   public get color(): AbstractControl {

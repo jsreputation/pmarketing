@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 export enum SurveyQuestionType {
   rating = 'rating',
@@ -23,11 +24,36 @@ export class NewSurveyComponent implements OnInit {
   public surveyQuestionType: IEngagementType[];
   public level = 0;
   constructor(private fb: FormBuilder,
-              private questionFormFieldService: QuestionFormFieldService) { }
+              private questionFormFieldService: QuestionFormFieldService,
+              private cd: ChangeDetectorRef) {
+    this.questionFormFieldService.cd = this.cd;
+  }
 
   ngOnInit() {
     this.createSurveyForm();
   }
+
+  public get listId(): string {
+    const id = this.questionFormFieldService.listId;
+    this.questionFormFieldService.listId = id;
+    return id;
+  }
+
+  public get listDropConnectedTo(): string[] {
+    return this.questionFormFieldService.listIdDrag;
+  }
+
+  public drop(event: any): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+  }
+
   public get name(): AbstractControl {
     return this.formSurvey.get('name');
   }
@@ -49,8 +75,12 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public deleteQuestion(index: number) {
-    console.log('remove', index);
     this.surveyQuestion.removeAt(index);
+  }
+
+  public updateQuestionType(data: {index: number, selectedTypeQuestion: string}): void {
+    this.deleteQuestion(data.index);
+    this.surveyQuestion.insert(data.index, this.createControlQuestion(data.selectedTypeQuestion));
   }
 
   public choseTypeQuestion(selectedTypeQuestion: string): void {

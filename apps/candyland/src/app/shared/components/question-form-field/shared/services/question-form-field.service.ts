@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable()
 export class QuestionFormFieldService {
-  focusedElementIndex: any;
+  public focusedElementIndex: any;
+  public cd: ChangeDetectorRef;
+  public listIdDrag = [];
+
   private formControls = {
     rating: (type) => this.ratingGroup(type),
     date: (type) => this.dateGroup(type),
@@ -13,7 +16,16 @@ export class QuestionFormFieldService {
     pictureChoice: (type) => this.questionPictureChoice(type),
     multipleChoice: (type) => this.questionMultipleChoice(type),
   };
+  private idCounter = 0;
   constructor(private fb: FormBuilder) { }
+
+  public get listId() {
+    return `drag-list-id-${this.idCounter++}`;
+  }
+
+  public set listId(id: string) {
+    this.listIdDrag.push(id);
+  }
 
   public set focusedElem(val: any) {
     this.focusedElementIndex = val.toString();
@@ -32,7 +44,11 @@ export class QuestionFormFieldService {
   }
 
   public getSimpleControl(): FormControl {
-    return this.fb.control(null, []);
+    return this.fb.control(null, [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(120)
+    ]);
   }
 
   public createFormField(type: string) {
@@ -42,84 +58,84 @@ export class QuestionFormFieldService {
   private ratingGroup(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
-      scale: [null, []],
-      selectShape: [null, []],
-      selectColor: [null, []],
-      left: [null, []],
-      right: [null, []],
-      required: [null, []]
+      scale: ['5', []],
+      selectShape: ['star', []],
+      selectColor: ['primary', []],
+      left: ['Not Very', [Validators.maxLength(10)]],
+      right: ['Very much', [Validators.maxLength(10)]],
+      required: [true, []]
     });
   }
 
   private dateGroup(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       startDate: [null, [Validators.required]],
       endDate: [null],
-      required: [null, []]
+      required: [true, []]
     });
   }
 
   private phoneGroup(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       phone: [null, [Validators.required]],
-      required: [null, []]
+      required: [true, []]
     });
   }
 
   private questionGroup(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       questionGroup: this.fb.array([]),
-      required: [null, []]
+      required: [true, []]
     });
   }
 
   private questionLongText(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       text: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(200)]],
-      required: [null, []]
+      required: [true, []]
     });
   }
 
   private questionPictureChoice(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       picture: this.fb.array([]),
-      required: [null, []]
+      required: [true, []]
     });
   }
 
   private questionMultipleChoice(type: string): FormGroup {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
-      title: [null, [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]],
       choice: this.fb.array([]),
-      required: [null, []]
+      required: [true, []]
     });
   }
 }

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output
+} from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -8,7 +9,7 @@ import { SurveyQuestionType } from '../../../engagements/new-survey/containers/n
 @Component({
   selector: 'cl-question-form-field',
   templateUrl: './question-form-field.component.html',
-  styleUrls: ['./question-form-field.component.scss']
+  styleUrls: ['./question-form-field.component.scss'],
 })
 export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
@@ -16,6 +17,7 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   @Input() public level: number;
   @Input() public currentIndex: number;
   @Output() public removed = new EventEmitter<number>();
+  @Output() public changeControl = new EventEmitter<any>();
   public descriptionField: FormControl;
   public showDescription: boolean;
   public required = false;
@@ -24,7 +26,8 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(private questionFormFieldService: QuestionFormFieldService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              ) {
   }
 
   public isActive() {
@@ -32,9 +35,6 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('this.group', this.group);
-    console.log('level', this.level);
-    console.log('currentIndex', this.currentIndex);
     this.createDescriptionControl();
     this.subscribeDescriptionControl();
   }
@@ -43,15 +43,20 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     return this.group.get('selectedType');
   }
 
+  public get name(): AbstractControl {
+    return this.group.get('name');
+  }
+
+  public get description(): AbstractControl {
+    return this.group.get('description');
+  }
+
   public remove() {
     this.removed.emit(this.currentIndex);
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: IEngagementType): void {
-    console.log('@@@@@@', selectedTypeQuestion);
-    // TODO: need change control for group
-    this.getTypeField().patchValue(selectedTypeQuestion);
-    console.log('new value', this.getTypeField().value);
+  public choseTypeQuestion(selectedTypeQuestion: string): void {
+    this.changeControl.emit({index: this.currentIndex, selectedTypeQuestion});
   }
 
   private createDescriptionControl(): void {

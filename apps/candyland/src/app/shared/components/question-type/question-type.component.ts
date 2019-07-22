@@ -56,6 +56,13 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
       .join('-');
   }
 
+  public hideQuestionGroup(type: string): boolean {
+    if (this.addQuestionType) {
+      return !(this.level >= 0 && type === 'questionGroup');
+    }
+    return !(this.level > 0 && type === 'questionGroup');
+  }
+
   ngOnInit() {
     this.getSurveyQuestionType();
     this.subscribeControlValueChanges();

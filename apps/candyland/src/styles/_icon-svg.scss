@@ -104,6 +104,13 @@
   height: 16px;
 }
 
+.drag-icon {
+  mask: url("assets/images/drag-dots.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 18px;
+  background: #d8d8d8;
+}
+
 .delete {
   mask: url("assets/images/delete.svg") no-repeat 50% 50%;
   background-position: center;

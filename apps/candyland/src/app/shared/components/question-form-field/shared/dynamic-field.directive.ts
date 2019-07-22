@@ -38,6 +38,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     if (!this.type) {
       return;
     }
+    this.clear();
     const factory = this.resolver.resolveComponentFactory(componentMapper[this.type]);
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.group = this.group;
@@ -52,8 +53,8 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     this.componentRef.instance.currentIndex = this.currentIndex;
   }
 
-  private detach(): void {
-    // TODO: need implement
+  private clear(): void {
+    this.container.clear();
   }
 
   ngOnChanges(): void {

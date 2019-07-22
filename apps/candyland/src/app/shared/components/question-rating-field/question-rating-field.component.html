@@ -4,8 +4,7 @@
       <mat-form-field>
         <mat-label>Scale</mat-label>
         <mat-select [formControlName]="'scale'">
-          <mat-option [value]="4">4</mat-option>
-          <mat-option [value]="5">5</mat-option>
+          <mat-option *ngFor="let item of scales" [value]="item.value">{{item.viewValue}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -14,7 +13,8 @@
         <mat-label>Select Shape</mat-label>
         <mat-select [formControlName]="'selectShape'">
           <mat-option [value]="'star'">Star</mat-option>
-          <mat-option [value]="'star 2'">Star2</mat-option>
+          <mat-option [value]="'heart'">Heart</mat-option>
+          <mat-option [value]="'circle'">Circle</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -65,20 +65,16 @@
   <div class="rating-field-wrap">
     <div class="control-input">
       <mat-form-field class="messages-input">
-        <input type="text" matInput [placeholder]="'Left'" [formControlName]="'left'"><!--formControlName=""-->
-        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+        <input type="text" matInput [placeholder]="'Left'" [formControlName]="'left'">
+        <mat-hint align="end">{{left.value?.length || 0}}/10</mat-hint>
+        <mat-error *ngIf="left.hasError('maxlength')">Max length 10</mat-error>
       </mat-form-field>
     </div>
     <div class="control-input">
       <mat-form-field class="messages-input">
-        <input type="text" matInput [placeholder]="'Right'" [formControlName]="'right'"><!--formControlName=""-->
-        <!--<mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>-->
-        <!--<mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>-->
+        <input type="text" matInput [placeholder]="'Right'" [formControlName]="'right'">
+        <mat-hint align="end">{{right.value?.length || 0}}/10</mat-hint>
+        <mat-error *ngIf="right.hasError('maxlength')">Max length 10</mat-error>
       </mat-form-field>
     </div>
   </div>

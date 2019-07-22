@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { QuestionFormFieldModule } from '@cl-shared/components/question-form-field/question-form-field.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [NewSurveyQuestionsPageComponent, NewSurveyAppearancePageComponent, NewSurveyRewardsPageComponent, NewSurveyComponent],
@@ -25,6 +26,7 @@ import { QuestionFormFieldModule } from '@cl-shared/components/question-form-fie
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    DragDropModule,
   ]
 })
 export class NewSurveyModule { }

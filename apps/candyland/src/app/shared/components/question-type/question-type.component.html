@@ -8,7 +8,7 @@
   <mat-select #matSelect [formControl]="type" class="question-select-type">
     <mat-optgroup class="view-group-label" label="Select question type">
       <ng-container *ngFor="let type of typeList">
-        <mat-option *ngIf="!(level >= 0 && type.value === 'questionGroup')"
+        <mat-option *ngIf="hideQuestionGroup(type.value)"
           [value]="type.value"
           (click)="closed()"
         >
@@ -16,11 +16,11 @@
             <mat-icon class="view-mat-icon">
               <img [src]="type?.img" alt="icon">
             </mat-icon>
-            <div class="view-text">{{type.viewValue}}</div>
+            <div class="view-text">{{type.viewValue}}
+            </div>
           </div>
         </mat-option>
       </ng-container>
-
     </mat-optgroup>
   </mat-select>
 </div>
