@@ -60,7 +60,7 @@ export { LoyaltyModule } from './lib/loyalty/loyalty.module';
 export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
-  IPointHistory,
+  ITransaction,
   IExpiringPoints
 } from './lib/loyalty/models/loyalty.model';
 
