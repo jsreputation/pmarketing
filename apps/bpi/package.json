@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:bpi:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node set-env.ts",
