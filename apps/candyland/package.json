@@ -7,8 +7,9 @@
     "build": "npm run config && ng build",
     "build:candyland:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node set-env.ts",
+    "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && stylelint src/**/*.scss",
+    "lint": "ng lint && stylelint src/**/*.*css",
     "styleLint": "stylelint src/**/*.*css",
     "e2e~": "ng e2e"
   },
