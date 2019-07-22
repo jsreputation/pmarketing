@@ -90,5 +90,5 @@ export interface IPutStampTransactionResponse {
 }
 
 export interface IStampAllTransactionResponse {
-  data: IStamp[];
+  data: IStampCard;
 }

@@ -6,6 +6,7 @@ import {
   CAMPAIGN_TYPE,
   ICampaign,
   IStampCard,
+  IStamp,
   STAMP_CARD_STATE,
   STAMP_STATE
 } from '@perx/core/dist/perx-core';
@@ -125,7 +126,7 @@ export class GameComponent implements OnInit {
           if (stamp.state === STAMP_STATE.redeemed) {
             this.keys--;
             if (totalRedeemed === totalSlots) {
-              this.cards.sort( (_A, b) => {
+              this.cards.sort((_A, b) => {
                 if (b.stamps.filter(stmp => stmp.state === 'redeemed').length === totalSlots) {
                   return -1;
                 }
@@ -169,15 +170,16 @@ export class GameComponent implements OnInit {
     const index = this.cards.findIndex(card => card.id === id);
 
     const redeemedStamps = cardSelected.stamps.map(stamp => {
-      return {...stamp, state: STAMP_STATE.redeemed};
+      return { ...stamp, state: STAMP_STATE.redeemed };
     });
 
     this.cards[index].stamps = redeemedStamps;
 
     this.stampService.stampAll(id).subscribe(
-      (stamps) => {
+      (res: IStamp[]) => {
         this.keys -= totalSlots;
-        if (stamps) {
+        const stampsRedeemeed = res.filter(stamp => stamp.state === 'redeemed').length;
+        if (stampsRedeemeed === totalSlots) {
           this.router.navigate(['bpi/congrats']);
         }
       },
