@@ -1,3 +1,7 @@
 export const environment = {
-  production: true
+  apiHost: 'https://api.perxtech.io',
+  production: true,
+  preAuth: false,
+  isWhistler: false,
+  baseHref: '/'
 };
