@@ -63,15 +63,15 @@ export class GameComponent implements OnInit {
 
   private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
-      .pipe(
-        map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
-      )
+    // .pipe(
+    // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
+    // )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
           this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
           const totalSlots = card.display_properties.total_slots || 0;
-          return card.state === STAMP_CARD_STATE.active &&
-            card.stamps &&
+          // return card.state === STAMP_CARD_STATE.active &&
+          return card.stamps &&
             card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
         });
 
