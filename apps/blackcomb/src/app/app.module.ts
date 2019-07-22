@@ -7,7 +7,6 @@ import {
   CognitoModule,
   OauthModule,
   GameModule,
-  PopupComponent,
   UtilsModule
 } from '@perx/core/dist/perx-core';
 import {

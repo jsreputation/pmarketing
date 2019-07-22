@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {
   VouchersModule,
   PerxCoreModule,
-  PopupComponent,
   CognitoModule,
   AuthenticationModule,
   OauthModule,

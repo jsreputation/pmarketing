@@ -9,7 +9,6 @@ import {
   OauthModule,
   AuthenticationModule,
   CampaignModule,
-  PopupComponent,
   VouchersModule,
   StampModule
 } from '@perx/core/dist/perx-core';
