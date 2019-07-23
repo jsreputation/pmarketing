@@ -66,29 +66,3 @@ export interface IVoucher {
   id: string;
   name: string;
 }
-
-export interface IGetStampCardResponse {
-  data: IStampCard;
-}
-
-export interface IGetStampCardsResponse {
-  data: IStampCard[];
-}
-
-export interface IGetStampTransactionsResponse {
-  data: IStamp[];
-  meta: {
-    count: number,
-    size: number,
-    total_pages: number,
-    page: number,
-  };
-}
-
-export interface IPutStampTransactionResponse {
-  data: IStamp;
-}
-
-export interface IStampAllTransactionResponse {
-  data: IStampCard;
-}
