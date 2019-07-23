@@ -19,15 +19,15 @@ import {
 import { VouchersService } from '../vouchers/vouchers.service';
 import { StampService } from './stamp.service';
 
-export interface IV4GetStampCardResponse {
+interface IV4GetStampCardResponse {
   data: IStampCard;
 }
 
-export interface IV4GetStampCardsResponse {
+interface IV4GetStampCardsResponse {
   data: IStampCard[];
 }
 
-export interface IV4GetStampTransactionsResponse {
+interface IV4GetStampTransactionsResponse {
   data: IStamp[];
   meta: {
     count: number,
@@ -41,11 +41,11 @@ export interface IV4PutStampTransactionResponse {
   data: IStamp;
 }
 
-export interface IV4StampAllTransactionResponse {
+interface IV4StampAllTransactionResponse {
   data: IStampCard;
 }
 
-export interface IV4StampCard {
+interface IV4StampCard {
   id: number;
   user_account_id: number;
   state: STAMP_CARD_STATE;
