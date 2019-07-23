@@ -80,7 +80,7 @@ interface IV4StampCard {
     card_image: {
       value: {
         image_url: string;
-      }[]
+      }
     };
     total_slots: number;
   };
