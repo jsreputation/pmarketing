@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchFilterComponent {
   @Input() control: FormControl;
+  @Input() placeholder =  'Search for engagements';
 
   constructor() {
   }

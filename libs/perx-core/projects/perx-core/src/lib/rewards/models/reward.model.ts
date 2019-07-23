@@ -5,10 +5,13 @@ export interface IReward {
   subtitle: string;
   validFrom: Date;
   validTo: Date;
+  rewardThumbnail: string;
+  rewardBanner: string;
+  merchantImg: string;
   rewardPrice?: {
     rewardCurrency: string,
     rewardAmount: string
-  };
+  }[];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;

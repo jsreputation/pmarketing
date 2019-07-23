@@ -53,15 +53,15 @@ export { defaultTree } from './lib/game/game.model';
 export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
-  IProfile,
-  IProfileResponse
+  IProfile
 } from './lib/profile/profile.model';
 
 export { LoyaltyModule } from './lib/loyalty/loyalty.module';
 export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
-  IPointHistory
+  ITransaction,
+  IExpiringPoints
 } from './lib/loyalty/models/loyalty.model';
 
 export { RewardsModule } from './lib/rewards/rewards.module';

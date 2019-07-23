@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
 import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata } from './game.model';
 import { map } from 'rxjs/operators';
@@ -59,7 +59,7 @@ export class GameService implements IGameService {
   private hostName: string;
 
   constructor(private httpClient: HttpClient, config: EnvConfig) {
-    this.hostName = config.env.apiHost;
+    this.hostName = config.env.apiHost as string;
   }
 
   public play(gameId: number): Observable<any> {

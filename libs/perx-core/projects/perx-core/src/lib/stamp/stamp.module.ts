@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { StampService } from './stamp.service';
 
 @NgModule({

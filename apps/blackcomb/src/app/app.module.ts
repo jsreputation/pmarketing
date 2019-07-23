@@ -7,7 +7,6 @@ import {
   CognitoModule,
   OauthModule,
   GameModule,
-  PopupComponent,
   UtilsModule
 } from '@perx/core/dist/perx-core';
 import {
@@ -64,9 +63,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UtilsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

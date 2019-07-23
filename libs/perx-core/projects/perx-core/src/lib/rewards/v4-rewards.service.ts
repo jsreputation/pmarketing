@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
@@ -18,6 +18,16 @@ interface IV4Tag {
   name: string;
 }
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
+interface IV4RewardPrice {
+  reward_currency: string;
+  reward_amount: string;
+}
+
 interface IV4Reward {
   id: number;
   name: string;
@@ -26,6 +36,8 @@ interface IV4Reward {
   valid_from: Date;
   valid_to: Date;
   favourite: boolean;
+  reward_price?: IV4RewardPrice[];
+  images?: IV4Image[];
   merchant_id?: number;
   merchant_name?: string;
   merchant_website?: string;
@@ -52,19 +64,36 @@ export class V4RewardsService extends RewardsService {
 
   constructor(private http: HttpClient, config: EnvConfig) {
     super();
-    this.apiHost = config.env.apiHost;
+    this.apiHost = config.env.apiHost as string;
   }
 
   public static v4RewardToReward(reward: IV4Reward): IReward {
+    const images = reward.images || [];
+    let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
+    }
+    const thumbnailImg = thumbnail && thumbnail.url;
+    const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
+    const rewardBanner = banner && banner.url;
+    const merchantImg = reward[`merchantImg`] ? reward[`merchantImg`] : null;
+
     return {
       id: reward.id,
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
+      rewardPrice: reward.reward_price.map(price => ({
+        rewardCurrency: price.reward_currency,
+        rewardAmount: price.reward_amount
+      })),
+      rewardThumbnail: thumbnailImg,
+      rewardBanner,
       validFrom: reward.valid_from,
       validTo: reward.valid_to,
       merchantId: reward.merchant_id,
       merchantName: reward.merchant_name,
+      merchantImg,
       merchantWebsite: reward.merchant_website,
     };
   }

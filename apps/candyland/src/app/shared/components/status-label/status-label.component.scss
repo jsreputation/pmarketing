@@ -6,16 +6,24 @@
   justify-content: center;
   font-size: 1.2rem;
   height: 2.5rem;
-  width: 5.7rem;
-  font-family: $base-font-family;
+  min-width: 5.7rem;
+  width: fit-content;
+  font-family: $primary-font;
   font-style: normal;
   font-weight: normal;
-  border-radius: 13.5rem;
+  border-radius: 1.35rem;
+  padding: 0 1.3rem;
+  box-sizing: border-box;
 }
 
 .active {
   background-color: #10d994;
   color: #cff7ea;
+}
+
+.inactive{
+  background-color: #a0a2a7;
+  color: #ececed;
 }
 
 .draft {
@@ -41,4 +49,14 @@
 .ended {
   background-color: #a0a2a7;
   color: #ececed;
+}
+
+.processed {
+  background-color: #10d994;
+  color: #cff7ea;
+}
+
+.failed {
+  background-color: $warning-color;
+  color: $white-color;
 }

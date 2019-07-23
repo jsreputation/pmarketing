@@ -1,0 +1,36 @@
+<table class="table" mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="listName">List Name</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="name-cell__id">{{element?.listName}}</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="format">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="format">Format</th>
+    <td mat-cell *matCellDef="let element"> {{element?.format}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="updated">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="updated" class="date-column">Last Updated</th>
+    <td mat-cell *matCellDef="let element" class="date-column">
+      {{element?.updated | date: DATE_FORMAT}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numberUsers">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="numberUsers">No. of users</th>
+    <td mat-cell *matCellDef="let element"> {{element?.numberUsers}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="status">Status</th>
+    <td mat-cell *matCellDef="let element">
+      <cl-status-label [status]="element?.status"></cl-status-label>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
