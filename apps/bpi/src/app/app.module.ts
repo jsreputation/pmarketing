@@ -9,7 +9,6 @@ import {
   OauthModule,
   AuthenticationModule,
   CampaignModule,
-  PopupComponent,
   VouchersModule,
   StampModule
 } from '@perx/core/dist/perx-core';
@@ -53,9 +52,6 @@ import { LandingComponent } from './landing/landing.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {
   VouchersModule,
   PerxCoreModule,
-  PopupComponent,
   CognitoModule,
   AuthenticationModule,
   OauthModule,
@@ -78,10 +77,7 @@ import { ResultComponent } from './result/result.component';
   providers: [
     DatePipe
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
