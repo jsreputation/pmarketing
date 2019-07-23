@@ -86,7 +86,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
-        
+
         this.checkKeys();
       });
   }
@@ -178,7 +178,8 @@ export class GameComponent implements OnInit {
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
       this.notificationService.addPopup({
-        text: `You only need ${ requiredKeysToUnlock } to unlock your Netflix rebate. Keep using your BPI Credit Card to get up to 6 months of Netflix rebate.`,
+        text: `You only need ${ requiredKeysToUnlock } to unlock your Netflix rebate.
+        Keep using your BPI Credit Card to get up to 6 months of Netflix rebate.`,
         buttonTxt: 'Close',
         afterClosedCallBack: this
       });
