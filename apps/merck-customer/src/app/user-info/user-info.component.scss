@@ -38,16 +38,16 @@
     .main-heading {
       font-weight: 900;
       font-size: 1.8rem;
-	  font-style: normal;
+      font-style: normal;
       color: $heading-font-color;
-	  text-align: center;
+      text-align: center;
     }
 
     .subtitle {
       font-weight: normal;
       font-size: 1.4rem;
       margin-top: 1rem;
-	  text-align: center;
+      text-align: center;
       color: $heading-font-color;
 
       .link {
@@ -58,17 +58,18 @@
     form {
       margin-top: 2rem;
 
-	  .diabetes-selection {
-		  display: flex;
-		  flex-direction: row;
-		  justify-content: flex-start;
-		  align-items: center;
-	  }
-	  mat-checkbox,
-	  mat-radio-button {
-		  margin: 2rem;
-		  font-size: 1.2rem;
-	  }
+      .diabetes-selection {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      mat-checkbox,
+      mat-radio-button {
+        margin: 2rem;
+        font-size: 1.2rem;
+      }
     }
 
     .full-width__button {
