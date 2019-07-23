@@ -26,6 +26,10 @@ const routes: Routes = [
         path: 'rewards',
         loadChildren: () => import('./rewards/rewards.module').then(mod => mod.RewardsModule)
       },
+      {
+        path: 'audience',
+        loadChildren: () => import('./audience/audience.module').then(mod => mod.AudienceModule)
+      },
     ]
   },
   { path: 'login', component: LoginComponent },

@@ -79,6 +79,24 @@
   background-color: #3e4e73;
 }
 
+.check-icon {
+  mask: url("/assets/images/check.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.link-icon {
+  mask: url("/assets/images/link.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.download-icon {
+  mask: url("/assets/images/download.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #2665ee;
+}
+
 .active {
   .icon {
     background-color: #ffffff;
