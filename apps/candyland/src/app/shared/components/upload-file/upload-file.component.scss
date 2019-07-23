@@ -1,0 +1,162 @@
+@import "variables";
+
+.upload-file {
+  font-size: 1.4rem;
+  position: relative;
+  width: 100%;
+  padding: 1rem 0;
+  box-sizing: border-box;
+
+  &-head {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-label {
+    flex: 1;
+    margin-bottom: 1rem;
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $secondary-color;
+  }
+
+  &-download {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    font-family: $primary-font;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $primary-color;
+    cursor: pointer;
+    text-decoration: none !important;
+    padding: 0;
+
+    &-icon {
+      margin-right: .48rem;
+    }
+
+    &-text {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &-wrap {
+    position: relative;
+    width: 100%;
+    height: 4rem;
+    box-sizing: border-box;
+  }
+
+  &-input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 55;
+    cursor: pointer;
+  }
+
+  &-btn {
+    height: 100%;
+    width: 100%;
+    padding: 0 1.6rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: $white-color;
+    border: dashed 1px rgba(62, 78, 115, 0.7);
+    border-radius: 4px;
+    transition: .5s cubic-bezier(.35, 0, .25, 1);
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: $primary-color;
+
+    &:after {
+      content: '';
+      opacity: 0;
+      transition: .5s cubic-bezier(.35, 0, .25, 1);
+    }
+  }
+
+  &-type {
+    font-size: 1.4rem;
+    color: rgba(51, 51, 51, 0.5);
+  }
+
+  &-type-wrap {
+    position: absolute;
+    bottom: -2.4rem;
+    left: 0;
+    right: -150%;
+  }
+
+
+  &-file {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba($success-color, 0.15);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    padding: 0 1.6rem;
+  }
+
+  &-file-icon {
+    margin: 0 0.8rem 0 0.4rem;
+    position: relative;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: $success-color;
+    color: white;
+
+    & > i {
+      height: 0.7rem !important;
+      background-color: $white-color;
+    }
+  }
+
+  &-file-name {
+    flex: 1;
+    font-family: $primary-font;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+
+  &-error {
+    margin-top: 1rem;
+    padding: 0.8rem;
+  }
+
+}

@@ -1,0 +1,19 @@
+<cl-audiences-user-info [user]="user"></cl-audiences-user-info>
+
+<section class="content">
+  <!--filters-->
+  <cl-table-filters [dataSource]="dataSource" classList="block">
+    <ng-container *clTableFilter="'rewardName'; let filter">
+      <cl-search-filter class="search-block" [control]="filter" placeholder="Search vouchers"></cl-search-filter>
+    </ng-container>
+    <ng-container *clTableFilter="'status'; let filter">
+      <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
+    </ng-container>
+  </cl-table-filters>
+  <!--table-->
+  <cl-audiences-vouchers-list [dataSource]="dataSource"
+                              (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
+  </cl-audiences-vouchers-list>
+  <!--paginator-->
+  <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</section>

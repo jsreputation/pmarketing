@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -15,7 +14,7 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
 
   DATE_FORMAT = 'dd MMM yyyy';
   TIME_FORMAT = 'hh:ssa';
-  public form: FormGroup;
+  // public form: FormGroup;
   public hasData = true;
 
   inlineRange;
@@ -30,9 +29,9 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      date: new FormControl([{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}], [])
-    });
+    // this.form = new FormGroup({
+    //   date: new FormControl([{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}], [])
+    // });
   }
 
   ngAfterViewInit() {

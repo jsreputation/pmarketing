@@ -1,0 +1,99 @@
+<div class="user-info">
+  <div class="user-info-name-container">
+    <p class="user-info-name">
+      {{user?.firstName}} {{user?.lastName}}
+    </p>
+  </div>
+  <div class="user-info-list">
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        ID
+      </p>
+      <p class="user-info-item-value">
+        #{{user?.id}}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Contact no.
+      </p>
+      <p class="user-info-item-value">
+        {{user?.phone || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Race
+      </p>
+      <p class="user-info-item-value">
+        {{user?.race || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Country
+      </p>
+      <p class="user-info-item-value">
+        {{user?.country || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        State
+      </p>
+      <p class="user-info-item-value">
+        {{user?.state || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Email
+      </p>
+      <p class="user-info-item-value">
+        {{user?.email || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Birthday
+      </p>
+      <p class="user-info-item-value">
+        {{user?.birthday || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Gender
+      </p>
+      <p class="user-info-item-value">
+        {{user?.gender || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        City
+      </p>
+      <p class="user-info-item-value">
+        {{user?.city || '-' }}
+      </p>
+    </div>
+
+    <div class="user-info-item">
+      <p class="user-info-item-title">
+        Audience list
+      </p>
+      <p class="user-info-item-value">
+        {{user?.audienceList || '-' }}
+      </p>
+    </div>
+  </div>
+</div>
