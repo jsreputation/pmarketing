@@ -3,15 +3,21 @@
   min-width: 7rem;
   max-width: 10rem;
 
+  .ngx-material-timepicker-toggle {
+    position: relative;
+    box-sizing: content-box;
+    bottom: -0.6rem;
+    padding: 0;
+  }
+
   &-toggle {
     cursor: pointer;
+  }
 
-    &.disable {
+  .disable {
+    cursor: default !important;
+    .ngx-material-timepicker-toggle {
       cursor: default !important;
-
-      .ngx-material-timepicker-toggle {
-        cursor: default !important;
-      }
     }
   }
 
@@ -19,11 +25,4 @@
     height: 2.1rem !important;
     width: 2.1rem !important;
   }
-}
-
-::ng-deep.ngx-material-timepicker-toggle {
-  position: relative;
-  box-sizing: content-box;
-  bottom: -0.6rem;
-  padding: 0;
 }

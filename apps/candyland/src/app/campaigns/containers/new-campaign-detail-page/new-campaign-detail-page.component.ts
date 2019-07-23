@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { debounceTime, distinctUntilChanged} from "rxjs/operators";
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -43,12 +44,33 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  get message() {
+    return this.fb.control([])
+  };
+
   ngOnInit() {
     this.config = this.store.config;
     this.initForm();
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe(value => this.store.updateCampaign(value));
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        debounceTime(500)
+      )
+      .subscribe(value => {
+        if (!this.form.contains('message') && value.channel.type === 'sms'){
+          this.form.registerControl('message', this.message);
+          // this.form.addControl('message', this.message);
+          // this.form.updateValueAndValidity();
+        } else {
+          this.form.removeControl('message');
+          // this.form.updateValueAndValidity();
+        }
+
+        console.log('value', value);
+
+        this.store.updateCampaign(value)
+      });
   }
 
   ngOnDestroy(): void {
@@ -98,9 +120,28 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         labels: []
       }),
       channel: this.fb.group({
-        type: []
+        type: ['weblink']
       })
     });
     this.form.patchValue(this.store.currentCampaign);
   }
+
+
+  // registerControl(name: string, control: AbstractControl): AbstractControl {
+  //   if (this.form[name]) return this.form[name];
+  //   this.form[name] = control;
+  //   control.setParent(this.form as FormGroup);
+  //   // control._registerOnCollectionChange(this._onCollectionChange);
+  //   return control;
+  // }
+
+  // addControl(name: string, control: AbstractControl): void {
+  //   this.registerControl(name, control);
+  //   this.form.updateValueAndValidity();
+  //   // this.form._onCollectionChange();
+  // }
+
+
+
+
 }

@@ -11,9 +11,9 @@
       <!--goal-->
       <mat-form-field class="card-row">
         <mat-select formControlName="goal" placeholder="Campagin goal">
-          <mat-option value="day">Day</mat-option>
-          <mat-option value="week">Week</mat-option>
-          <mat-option value="month">Month</mat-option>
+          <ng-container *ngFor="let goal of config?.goals">
+            <mat-option [value]="goal?.value">{{goal?.title}}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
       <!--duration-->
@@ -54,14 +54,17 @@
         Select channel
       </p>
     </mat-expansion-panel-header>
+    <!--channel type-->
     <div class="card-content">
       <div class="card-row">
         <mat-radio-group formControlName="type">
-          <mat-radio-button value="weblink">Weblink only</mat-radio-button>
-          <mat-radio-button value="sms">SMS</mat-radio-button>
+          <ng-container *ngFor="let type of config?.channelTypes">
+            <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+          </ng-container>
         </mat-radio-group>
       </div>
-      <div class="card-section">
+      <!--Message-->
+      <div class="card-section" *ngIf="form.contains('message')">
         <div class="card-header">
           <p class="card-title">
             Message
@@ -69,13 +72,13 @@
         </div>
         <div class="card-content">
           <!--<mat-form-field class="card-row">-->
-            <!--<mat-select placeholder="Select Message template">-->
-              <!--<mat-option value="day">Day</mat-option>-->
-              <!--<mat-option value="week">Week</mat-option>-->
-              <!--<mat-option value="month">Month</mat-option>-->
-            <!--</mat-select>-->
+          <!--<mat-select placeholder="Select Message template">-->
+          <!--<mat-option value="day">Day</mat-option>-->
+          <!--<mat-option value="week">Week</mat-option>-->
+          <!--<mat-option value="month">Month</mat-option>-->
+          <!--</mat-select>-->
           <!--</mat-form-field>-->
-          <cl-sms-editor [options]="config?.shortcodes"></cl-sms-editor>
+          <cl-sms-editor [options]="config?.shortcodes" [control]="form.get('message') "></cl-sms-editor>
         </div>
       </div>
 

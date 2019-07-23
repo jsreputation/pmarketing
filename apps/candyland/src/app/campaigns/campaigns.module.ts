@@ -39,9 +39,6 @@ import {
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { NewCampaignComponent } from './containers/new-campaign/new-campaign.component';
 import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewards-page/new-campaign-rewards-page.component';
-import {
-  NewCampaignSelectTemplatePageComponent
-} from './containers/new-campaign-select-template-page/new-campaign-select-template-page.component';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { RewardItemComponent } from './components/reward-item/reward-item.component';
@@ -54,6 +51,8 @@ import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.mod
 import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
 import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
+import {NewCampaignSelectEngagementPageComponent}
+from "./containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component";
 
 
 @NgModule({
@@ -67,7 +66,7 @@ import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.
     CampaignsComponent,
     NewCampaignComponent,
     NewCampaignRewardsPageComponent,
-    NewCampaignSelectTemplatePageComponent,
+    NewCampaignSelectEngagementPageComponent,
     RewardItemComponent,
     RewardItemPreviewComponent
   ],

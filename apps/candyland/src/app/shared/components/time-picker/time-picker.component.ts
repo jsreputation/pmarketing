@@ -5,11 +5,12 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { noop, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { customTimepickerTheme } from '@cl-shared/components/time-picker/custom-timepicker-theme';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {noop, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {customTimepickerTheme} from '@cl-shared/components/time-picker/custom-timepicker-theme';
 
 @Component({
   selector: 'cl-time-picker',
@@ -22,7 +23,8 @@ import { customTimepickerTheme } from '@cl-shared/components/time-picker/custom-
       multi: true,
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() control: FormControl = new FormControl(null, []);

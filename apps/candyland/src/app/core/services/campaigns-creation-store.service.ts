@@ -33,6 +33,18 @@ export class CampaignCreationStoreService {
       {title: 'User ID', value: '[userId]'},
       {title: 'First name', value: '[userFirstName]'},
       {title: 'Last name', value: '[userLastName]'},
+      {title: 'Salutation', value: '[salutation]'},
+    ],
+    goals: [
+      {title: 'Build awareness', value: 'Build awareness'},
+      {title: 'Acquire customers', value: 'Acquire customers'},
+      {title: 'Drive sales', value: 'Drive sales'},
+      {title: 'Re-engage audience', value: 'Re-engage audience'},
+      {title: 'Surprise & Delight', value: 'Surprise & Delight'},
+    ],
+    channelTypes: [
+      {title: 'Weblink', value: 'weblink'},
+      {title: 'SMS', value: 'sms'},
     ]
   };
 
