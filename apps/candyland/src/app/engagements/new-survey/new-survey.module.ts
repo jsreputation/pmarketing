@@ -11,6 +11,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { QuestionFormFieldModule } from '@cl-shared/components/question-form-field/question-form-field.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 
 @NgModule({
   declarations: [NewSurveyQuestionsPageComponent, NewSurveyAppearancePageComponent, NewSurveyRewardsPageComponent, NewSurveyComponent],
@@ -21,6 +22,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ReactiveFormsModule,
     ButtonModule,
     QuestionFormFieldModule,
+    SelectGraphicWrapModule,
 
     MatCardModule,
     MatFormFieldModule,

@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { SurveyService } from '@cl-core/services/survey.service';
 
 @Component({
   selector: 'cl-question-country-code-field',
@@ -8,9 +10,15 @@ import { FormGroup } from '@angular/forms';
 })
 export class QuestionCountryCodeFieldComponent implements OnInit {
   @Input() group: FormGroup;
-  constructor() { }
+  public countriesList$: Observable<any>;
+  constructor(private surveyService: SurveyService) { }
 
   ngOnInit() {
+    this.getCountries();
+  }
+
+  private getCountries(): void {
+    this.countriesList$ = this.surveyService.getCountriesList();
   }
 
 }

@@ -2,11 +2,9 @@
   <mat-form-field>
     <mat-label>Default Country Code</mat-label>
     <mat-select [formControlName]="'phone'">
-      <mat-option [value]="+65">
-        Singapore +65
-      </mat-option>
-      <mat-option [value]="+75">
-        Singapore +75
+      <mat-option *ngFor="let country of countriesList$ | async as countries" [value]="country.phone">
+        <span>{{country.name}}&nbsp;</span>
+        <span>{{country.phone}}</span>
       </mat-option>
     </mat-select>
   </mat-form-field>

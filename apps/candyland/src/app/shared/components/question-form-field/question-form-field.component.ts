@@ -35,7 +35,8 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.createDescriptionControl();
+    this.updateStatusDescriptionField();
+    this.createDescriptionControl(this.description.value);
     this.subscribeDescriptionControl();
   }
 
@@ -59,8 +60,14 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     this.changeControl.emit({index: this.currentIndex, selectedTypeQuestion});
   }
 
-  private createDescriptionControl(): void {
-    this.descriptionField = this.fb.control(null);
+  private updateStatusDescriptionField(): void {
+    if (this.description.value) {
+      this.description.enable();
+    }
+  }
+
+  private createDescriptionControl(val: boolean): void {
+    this.descriptionField = this.fb.control(val);
   }
 
   private subscribeDescriptionControl(): void {
@@ -71,14 +78,14 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
       )
       .subscribe(value => {
         this.showDescription = value;
-        this.toggleControl('description', value);
+        this.toggleControl( value);
       });
   }
 
-  private toggleControl(name: string, toggle: boolean): void {
+  private toggleControl(toggle: boolean): void {
     toggle
-      ? this.group.setControl(name, this.questionFormFieldService.getSimpleControl())
-      : this.group.removeControl(name);
+      ? this.description.enable({emitEvent: false})
+      : this.description.disable({emitEvent: false});
     this.group.updateValueAndValidity();
   }
 

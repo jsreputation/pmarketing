@@ -12,4 +12,8 @@ export class SurveyHttpService {
   public getQuestionType(): Observable<any> {
     return this.http.get('assets/actives/engagement-question/question-type.json');
   }
+
+  public getCountriesList(): Observable<any> {
+    return this.http.get('assets/actives/apac-phone-prefix-list/phone-list.json');
+  }
 }

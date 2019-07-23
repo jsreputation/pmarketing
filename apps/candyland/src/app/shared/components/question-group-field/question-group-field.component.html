@@ -4,11 +4,11 @@
     <div cdkDropList (cdkDropListDropped)="drop($event)"
          class="drag-list"
          [cdkDropListData]="surveyQuestionGroup.controls"
-         [id]="listId"
-         [cdkDropListConnectedTo]="listDropConnectedTo"
+
     >
       <cl-question-form-field *ngFor="let item of surveyQuestionGroup.controls; let i = index;"
                               cdkDrag
+                              [cdkDragData]="item"
                               [group]="item"
                               [clOpenClose]="currentIndex + '-' + i"
                               [currentIndex]="currentIndex + '-' + i"

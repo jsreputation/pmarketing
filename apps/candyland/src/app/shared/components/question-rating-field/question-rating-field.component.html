@@ -24,7 +24,7 @@
         <mat-select [formControlName]="'selectColor'">
           <mat-select-trigger>
             <div class="select-color">
-              <div class="select-color-preview" [ngClass]="color.value">
+              <div class="select-color-preview" [ngClass]="color.value + '-material'">
               </div>
               <p class="select-color-text">
                 {{color.value}}
@@ -33,7 +33,7 @@
           </mat-select-trigger>
           <mat-option [value]="'primary'">
             <div class="select-color">
-              <div class="select-color-preview primary">
+              <div class="select-color-preview primary-material">
               </div>
               <span class="select-color-text">
               Primary
@@ -42,7 +42,7 @@
           </mat-option>
           <mat-option [value]="'accent'">
             <div class="select-color">
-              <div class="select-color-preview accent">
+              <div class="select-color-preview accent-material">
               </div>
               <span class="select-color-text">
               Accent
@@ -51,7 +51,7 @@
           </mat-option>
           <mat-option [value]="'warn'">
             <div class="select-color">
-              <div class="select-color-preview warn">
+              <div class="select-color-preview warn-material">
               </div>
               <span class="select-color-text">
               Warn

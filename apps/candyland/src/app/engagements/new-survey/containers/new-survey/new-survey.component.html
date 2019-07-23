@@ -1,12 +1,3 @@
-<p>
-  new-survey-page works!
-</p>
-
-<ul>
-  <li><a routerLink="questions">questions</a></li>
-  <li><a routerLink="appearance">appearance</a></li>
-  <li><a routerLink="rewards">rewards</a></li>
-</ul>
 <router-outlet></router-outlet>
 <div class="survey-wrap" [formGroup]="formSurvey">
   <div class="full-with page-header">
@@ -23,7 +14,7 @@
     <div class="game-actions">
       <cl-button [classList]="'third'"
                  class="btn-cancel btn-right_padding"
-
+                 (click)="patchForm()"
       >
         <span>
           Cancel
@@ -75,14 +66,14 @@
         </div>
 
         <!--questions form array-->
-          <div cdkDropList (cdkDropListDropped)="drop($event)"
+          <div cdkDropList
+               (cdkDropListDropped)="drop($event)"
                class="drag-list"
                [cdkDropListData]="surveyQuestion.controls"
-               [id]="listId"
-               [cdkDropListConnectedTo]="listDropConnectedTo"
           >
             <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
                                     cdkDrag
+                                    [cdkDragData]="item"
                                     [group]="item"
                                     [formGroup]="surveyQuestion"
                                     [currentIndex]="i"
@@ -102,16 +93,98 @@
                           [addQuestionType]="true"
                           (selectTypeQuestion)="choseTypeQuestion($event)"
         >
-          <cl-button [classList]="'primary'"
-          >
-        <span>
-         + Add Question
-        </span>
+          <cl-button [classList]="'primary'">
+            <span>
+             + Add Question
+            </span>
           </cl-button>
         </cl-question-type>
       </mat-card>
-    </div>
 
+      <mat-card class="game-graphic">
+        <div class="survey-title-wrap">
+          <p class="sub-title">
+            Graphics
+          </p>
+        </div>
+        <div class="game-form">
+          <div class="survey-select-color">
+            <div class="control-input">
+              <mat-form-field color="primary">
+                <mat-label>Progress Bar Color</mat-label>
+                <mat-select [formControlName]="'color'">
+                  <mat-select-trigger>
+                    <div class="select-color">
+                      <div class="select-color-preview" [ngClass]="color.value + '-material'">
+                      </div>
+                      <p class="select-color-text">
+                        {{color.value}}
+                      </p>
+                    </div>
+                  </mat-select-trigger>
+                  <mat-option [value]="'primary'">
+                    <div class="select-color">
+                      <div class="select-color-preview primary-material">
+                      </div>
+                      <span class="select-color-text">
+                        Primary
+                      </span>
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'accent'">
+                    <div class="select-color">
+                      <div class="select-color-preview accent-material">
+                      </div>
+                      <span class="select-color-text">
+                        Accent
+                      </span>
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'warn'">
+                    <div class="select-color">
+                      <div class="select-color-preview warn-material">
+                      </div>
+                      <span class="select-color-text">
+                        Warn
+                      </span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="survey-background-box">
+            <p class="game-title">
+              Card Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="cardBackground$ | async as cardBackground"
+                formControlName="cardBackground"
+                class="game-selected-graphic"
+                [graphicList]="cardBackground"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+
+          <div class="survey-background">
+            <p class="game-title">
+              Background
+            </p>
+            <div class="game-gift-box_field">
+              <cl-select-graphic-wrap
+                *ngIf="backgrounds$ | async as backgrounds"
+                formControlName="background"
+                class="game-selected-graphic"
+                [graphicList]="backgrounds"
+              >
+              </cl-select-graphic-wrap>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
   </section>
 </div>
 

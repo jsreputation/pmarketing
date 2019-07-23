@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'cl-question-group-field',
@@ -26,6 +26,15 @@ export class QuestionGroupFieldComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+  }
+
+
+  public specialUseCase(drag?: CdkDrag, drop?: CdkDropList): boolean {
+    // console.log('drag', drag);
+    // console.log('CdkDropList', drop);
+    console.log('need check', drag.data.value.selectedType);
+
+    return drag.data.value.selectedType !== 'questionGroup';
   }
 
   public get listId(): string {

@@ -19,7 +19,7 @@
           <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
         </mat-form-field>
       </div>
-      <div class="control-input" *ngIf="showDescription" [ngClass]="{hidden: isActive()}">
+      <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">
         <mat-form-field class="messages-input">
           <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
           <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>

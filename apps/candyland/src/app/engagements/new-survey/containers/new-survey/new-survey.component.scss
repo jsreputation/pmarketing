@@ -4,6 +4,20 @@
     width: 100%;
     margin-right: 4rem;
   }
+
+  &-select-color {
+    .control-input, mat-form-field {
+      width: auto;
+    }
+  }
+
+  &-title-wrap {
+    margin-bottom: 3.5rem;
+  }
+
+  &-background {
+    margin-top: 6rem;
+  }
 }
 
 .btn-add-question {

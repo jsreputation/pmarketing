@@ -66,7 +66,8 @@ export class QuestionFormFieldService {
       selectColor: ['primary', []],
       left: ['Not Very', [Validators.maxLength(10)]],
       right: ['Very much', [Validators.maxLength(10)]],
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -78,7 +79,8 @@ export class QuestionFormFieldService {
         Validators.maxLength(60)]],
       startDate: [null, [Validators.required]],
       endDate: [null],
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -89,7 +91,8 @@ export class QuestionFormFieldService {
         Validators.minLength(1),
         Validators.maxLength(60)]],
       phone: [null, [Validators.required]],
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -100,7 +103,8 @@ export class QuestionFormFieldService {
         Validators.minLength(1),
         Validators.maxLength(60)]],
       questionGroup: this.fb.array([]),
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -113,7 +117,8 @@ export class QuestionFormFieldService {
       text: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(200)]],
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -124,7 +129,8 @@ export class QuestionFormFieldService {
         Validators.minLength(1),
         Validators.maxLength(60)]],
       picture: this.fb.array([]),
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 
@@ -135,7 +141,8 @@ export class QuestionFormFieldService {
         Validators.minLength(1),
         Validators.maxLength(60)]],
       choice: this.fb.array([]),
-      required: [true, []]
+      required: [true, []],
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
     });
   }
 }

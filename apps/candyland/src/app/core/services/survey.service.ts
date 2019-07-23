@@ -16,4 +16,11 @@ export class SurveyService {
         map(res => (res as IEngagementType[]))
       );
   }
+
+  public getCountriesList(): Observable<any> {
+    return this.surveyHttp.getCountriesList()
+      .pipe(
+        map(res => (res as IApacCountries[]))
+      );
+  }
 }
