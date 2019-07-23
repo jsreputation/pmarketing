@@ -22,12 +22,12 @@ import {
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
-import { IStampService } from './istamp.service';
+import { StampService } from './stamp.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class V4StampService implements IStampService {
+export class V4StampService implements StampService {
   public baseUrl: string;
 
   constructor(
