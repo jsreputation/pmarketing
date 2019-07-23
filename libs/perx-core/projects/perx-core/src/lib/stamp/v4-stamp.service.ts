@@ -45,6 +45,25 @@ interface IV4StampAllTransactionResponse {
   data: IStampCard;
 }
 
+interface IV4Reward {
+  id: number;
+  campaign_id: number;
+  modularizable_type: string;
+  modularizable_id: number;
+  created_at: string;
+  updated_at: string;
+  // ordering: any|null;
+  referee_required_for_reward: number;
+  total_reward_limit: number;
+  total_user_limit: number;
+  award_to_referral: boolean;
+  award_to_referee: boolean;
+  total_referree_limit: number;
+  stamp_number: number;
+  // total_referree_reward_limit: any|null;
+  // hidden: any|null;
+}
+
 interface IV4StampCard {
   id: number;
   user_account_id: number;
