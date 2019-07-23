@@ -13,7 +13,7 @@ import {
 import { EnvConfig } from '../shared/env-config';
 import {
   IStampCard,
-  IStamp,
+  IStamp, STAMP_CARD_STATE, IReward,
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -45,6 +45,29 @@ export interface IV4StampAllTransactionResponse {
   data: IStampCard;
 }
 
+export interface IV4StampCard {
+  id: number;
+  user_account_id: number;
+  state: STAMP_CARD_STATE;
+  campaign_id: number;
+  card_number: number;
+  campaign_config: {
+    total_slots: number;
+    rewards: IReward[];
+  };
+  display_properties: {
+    number_of_cols: number;
+    number_of_rows: number;
+    card_image: {
+      value: {
+        image_url: string;
+      }[]
+    };
+    total_slots: number;
+  };
+  stamps?: IStamp[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +84,7 @@ export class V4StampService implements StampService {
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IV4GetStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
         params: {
           size: '100'
         }
@@ -73,7 +96,7 @@ export class V4StampService implements StampService {
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
     return this.http.get<IV4GetStampCardResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards/current`
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards/current`
     ).pipe(
       map(res => res.data)
     );
@@ -81,7 +104,7 @@ export class V4StampService implements StampService {
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IV4GetStampTransactionsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`, {
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
         params: {
           size: '100'
         }
@@ -105,10 +128,10 @@ export class V4StampService implements StampService {
 
   private getAllFromPage(campaignId: number, page: number): Observable<IStamp[]> {
     return this.http.get<IV4GetStampTransactionsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`,
+      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`,
       {
         params: {
-          page: `${page}`,
+          page: `${ page }`,
           size: '100'
         }
       })
@@ -119,7 +142,7 @@ export class V4StampService implements StampService {
 
   public putStamp(stampId: number): Observable<IStamp> {
     return this.http.put<IV4PutStampTransactionResponse>(
-      `${this.baseUrl}/v4/stamp_transactions/${stampId}`,
+      `${ this.baseUrl }/v4/stamp_transactions/${ stampId }`,
       null
     ).pipe(
       tap((res: IV4PutStampTransactionResponse) => {
@@ -133,7 +156,7 @@ export class V4StampService implements StampService {
 
   public stampAll(cardId: number): Observable<IStamp[]> {
     return this.http.post<IV4StampAllTransactionResponse>(
-      `${this.baseUrl}/v4/stamp_cards/${cardId}/redeem`,
+      `${ this.baseUrl }/v4/stamp_cards/${ cardId }/redeem`,
       null
     ).pipe(
       map(res => res.data.stamps),
