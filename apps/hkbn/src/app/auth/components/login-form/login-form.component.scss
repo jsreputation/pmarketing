@@ -18,7 +18,11 @@
 }
 
 .additional-button {
-  color: $primary
+  color: $primary;
+}
+
+mat-form-field {
+  margin: 0.5rem 0;
 }
 
 mat-checkbox {

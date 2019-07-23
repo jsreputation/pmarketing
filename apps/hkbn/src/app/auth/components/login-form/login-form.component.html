@@ -2,11 +2,17 @@
   <mat-form-field appearance="fill">
     <mat-label>Phone number or email address</mat-label>
     <input type="text" matInput formControlName="user">
+    <mat-error *ngIf="loginForm.get('user').hasError('required') && loginForm.get('user').touched && loginForm.get('user').dirty">
+      This field is required
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
     <input type="password" matInput formControlName="pass">
+    <mat-error *ngIf="loginForm.get('pass').hasError('required') && loginForm.get('pass').touched && loginForm.get('pass').dirty">
+      This field is required
+    </mat-error>
   </mat-form-field>
 
   <a class="forget-password" [routerLink]="'/'">forget password</a>

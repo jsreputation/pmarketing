@@ -1,9 +1,14 @@
-
 // Custom Theming for Angular Material
 @import "custom-theme";
 @import "assets/styles/variables";
 @import "assets/styles/common";
 @import "assets/styles/reset";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
