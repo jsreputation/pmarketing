@@ -1,0 +1,47 @@
+<div class="dialog">
+  <div class="dialog-header-wrap">
+    <h3 class="dialog-title">Change expiry date</h3>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="dialog-content">
+    <div class="dialog-row">
+      <div class="dialog-card disable">
+        <span>From</span>
+        <span class="dialog-card-text main">Old</span>
+        <span>Current Expiry Date</span>
+        <cl-date-picker [value]="data?.expiryDate"
+                        [disabled]="true">
+        </cl-date-picker>
+      </div>
+
+      <div class="dialog-card">
+        <span>To</span>
+        <span class="dialog-card-text main">New</span>
+        <span>Enter New Expiry Date</span>
+        <cl-date-picker [formControl]="newDate"></cl-date-picker>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div class="dialog-actions">
+    <cl-button classList="invert"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="save()"
+               [disableRipple]="true">
+        <span>
+          Add
+        </span>
+    </cl-button>
+  </div>
+</div>
+
+

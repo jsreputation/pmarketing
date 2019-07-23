@@ -15,6 +15,10 @@ import { ReactiveFormsModule } from '@angular/forms';
         PopupComponent,
         PinInputComponent
     ],
+    entryComponents: [
+        PopupComponent,
+        PinInputComponent
+    ],
     imports: [
         CommonModule,
         MatDialogModule,

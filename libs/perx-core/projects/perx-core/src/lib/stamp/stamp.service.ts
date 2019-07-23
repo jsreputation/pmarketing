@@ -18,6 +18,7 @@ import {
   IStamp,
   IGetStampTransactionsResponse,
   IPutStampTransactionResponse,
+  IStampAllTransactionResponse,
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -59,7 +60,7 @@ export class StampService implements IStampService {
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IGetStampTransactionsResponse>(
-      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`, {
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`, {
         params: {
           size: '100'
         }
@@ -83,10 +84,10 @@ export class StampService implements IStampService {
 
   private getAllFromPage(campaignId: number, page: number): Observable<IStamp[]> {
     return this.http.get<IGetStampTransactionsResponse>(
-      `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_transactions`,
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`,
       {
         params: {
-          page: `${ page }`,
+          page: `${page}`,
           size: '100'
         }
       })
@@ -106,6 +107,23 @@ export class StampService implements IStampService {
         }
       }),
       map(res => res.data)
+    );
+  }
+
+  public stampAll(cardId: number): Observable<IStamp[]> {
+    return this.http.post<IStampAllTransactionResponse>(
+      `${this.baseUrl}/v4/stamp_cards/${cardId}/redeem`,
+      null
+    ).pipe(
+      map(res => res.data.stamps),
+      tap((res) => {
+        res.map(r => {
+          if (r.vouchers && r.vouchers.length > 0) {
+            this.vouchersService.reset();
+          }
+        });
+      }),
+      map(res => res)
     );
   }
 }

@@ -17,7 +17,7 @@ export interface ILoyalty {
   expiringPoints?: IExpiringPoints[];
 }
 
-export interface IPointHistory {
+export interface ITransaction {
   id: number;
   name?: string;
   points: number;

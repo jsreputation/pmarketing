@@ -6,6 +6,7 @@ import {
   CAMPAIGN_TYPE,
   ICampaign,
   IStampCard,
+  IStamp,
   STAMP_CARD_STATE,
   STAMP_STATE
 } from '@perx/core/dist/perx-core';
@@ -62,15 +63,15 @@ export class GameComponent implements OnInit {
 
   private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
-      .pipe(
-        map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
-      )
+    // .pipe(
+    // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
+    // )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
           this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
           const totalSlots = card.display_properties.total_slots || 0;
-          return card.state === STAMP_CARD_STATE.active &&
-            card.stamps &&
+          // return card.state === STAMP_CARD_STATE.active &&
+          return card.stamps &&
             card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
         });
 
@@ -123,18 +124,14 @@ export class GameComponent implements OnInit {
       .subscribe(
         (stamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
-            // The vouchers is always zero
-            // if (stamp.vouchers && stamp.vouchers.length > 0) {
-            //   this.router.navigate(['/congrats']);
-            // }
             this.keys--;
             if (totalRedeemed === totalSlots) {
-              this.cards.sort( (_A, b) => {
+              this.cards.sort((_A, b) => {
                 if (b.stamps.filter(stmp => stmp.state === 'redeemed').length === totalSlots) {
                   return -1;
                 }
               });
-              this.router.navigate(['/congrats']);
+              this.router.navigate(['bpi/congrats']);
             }
           }
         },
@@ -145,34 +142,6 @@ export class GameComponent implements OnInit {
           });
         }
       );
-
-    // while (numOfStampsToRedeem > 0) {
-    //   const s = stamps[index];
-    //   s.state = STAMP_STATE.redeemed;
-    //   this.keys--;
-    //   this.stampService.putStamp(s.id)
-    //     .subscribe(
-    //       (stamp) => {
-    //         if (stamp.state === STAMP_STATE.redeemed) {
-    //           if (stamp.vouchers && stamp.vouchers.length > 0) {
-    //             this.router.navigate(['/congrats']);
-    //           }
-    //         }
-    //       },
-    //       () => {
-    //         this.notificationService.addPopup({
-    //           title: 'Something went wrong, with our server',
-    //           text: 'We notified our team. Sorry about the inconvenience.'
-    //         });
-    //       }
-    //     );
-
-    //   index++;
-    //   numOfStampsToRedeem--;
-    // }
-  }
-
-  public onCompleted(): void {
   }
 
   public isCompleted(card: IStampCard): boolean {
@@ -184,10 +153,10 @@ export class GameComponent implements OnInit {
     return this.cards[0].id === card.id;
   }
 
-  public checkKeys(): void {
+  private checkKeys(): void {
     if (this.keys > 0) {
       this.notificationService.addPopup({
-        title: `You have a total of ${this.keys} keys!`,
+        title: `You have a total of ${ this.keys } keys!`,
         imageUrl: 'assets/key.png',
         text: 'Tap the highlighted locks to unlock.',
         buttonTxt: 'Start Unlocking!'
@@ -195,7 +164,36 @@ export class GameComponent implements OnInit {
     }
   }
 
-  public getCols(card: IStampCard): number {
+  public onStampAll(cardSelected: IStampCard): void {
+    const id = cardSelected.id;
+    const totalSlots = cardSelected.display_properties.total_slots;
+    const index = this.cards.findIndex(card => card.id === id);
+
+    const redeemedStamps = cardSelected.stamps.map(stamp => {
+      return { ...stamp, state: STAMP_STATE.redeemed };
+    });
+
+    this.cards[index].stamps = redeemedStamps;
+
+    this.stampService.stampAll(id).subscribe(
+      (res: IStamp[]) => {
+        this.keys -= totalSlots;
+        const stampsRedeemeed = res.filter(stamp => stamp.state === 'redeemed').length;
+        if (stampsRedeemeed === totalSlots) {
+          this.router.navigate(['bpi/congrats']);
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.notificationService.addPopup({
+          title: 'Something went wrong, with our server',
+          text: 'We notified our team. Sorry about the inconvenience.'
+        });
+      }
+    );
+  }
+
+  public getCardColumn(card: IStampCard): number {
     return card.display_properties.total_slots;
   }
 }

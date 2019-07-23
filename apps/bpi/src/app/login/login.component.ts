@@ -13,7 +13,6 @@ import { FormGroup } from '@angular/forms';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
-  private authed: boolean;
   protected preAuth: boolean;
   protected failedAuth: boolean;
 
@@ -36,17 +35,15 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
       this.authService.v4AutoLogin().then(
-        (isAuthed: boolean) => {
-          this.authed = isAuthed;
-          if (this.authed) {
+        () => {
+          if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
-            this.router.navigateByUrl('landing');
+            this.router.navigateByUrl('bpi/landing');
           }
         },
         (_) => {
           this.failedAuth = true;
-          this.authed = false;
         }
       );
     }
