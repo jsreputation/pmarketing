@@ -15,7 +15,6 @@ import {
   CognitoModule,
   OauthModule,
   AuthenticationModule,
-  PopupComponent,
   CampaignModule,
   VouchersModule,
   ProfileModule,
@@ -91,8 +90,5 @@ import { ProfileComponent } from './profile/profile.component';
     {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
 })
 export class AppModule { }
