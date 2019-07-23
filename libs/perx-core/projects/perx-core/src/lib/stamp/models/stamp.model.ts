@@ -1,19 +1,19 @@
 export interface IReward {
   id: number;
-  campaign_id: number;
-  modularizable_type: string;
-  modularizable_id: number;
-  created_at: string;
-  updated_at: string;
+  campaignId: number;
+  modularizableType: string;
+  modularizableId: number;
+  createdAt: string;
+  updatedAt: string;
   // ordering: any|null;
-  referee_required_for_reward: number;
-  total_reward_limit: number;
-  total_user_limit: number;
-  award_to_referral: boolean;
-  award_to_referee: boolean;
-  total_referree_limit: number;
-  stamp_number: number;
-  // total_referree_reward_limit: any|null;
+  refereeRequiredForReward: number;
+  totalRewardLimit: number;
+  totalUserLimit: number;
+  awardToTeferral: boolean;
+  awardToReferee: boolean;
+  totalReferreeLimit: number;
+  stampNumber: number;
+  // totalReferreeReward_limit: any|null;
   // hidden: any|null;
 }
 
@@ -29,34 +29,34 @@ export enum STAMP_CARD_STATE {
 
 export interface IStamp {
   id: number;
-  user_account_id: number;
-  stamp_card_id: number;
+  userAccountId: number;
+  stampCardId: number;
   state: STAMP_STATE;
-  created_at: string;
-  updated_at: string;
-  campaign_id: number;
+  createdAt: string;
+  updatedAt: string;
+  campaignId: number;
   vouchers?: IVoucher[];
 }
 
 export interface IStampCard {
   id: number;
-  user_account_id: number;
+  userAccountId: number;
   state: STAMP_CARD_STATE;
-  campaign_id: number;
-  card_number: number;
-  campaign_config: {
-    total_slots: number;
+  campaignId: number;
+  cardNumber: number;
+  campaignConfig: {
+    totalSlots: number;
     rewards: IReward[];
   };
-  display_properties: {
-    number_of_cols: number;
-    number_of_rows: number;
-    card_image: {
+  displayProperties: {
+    numberOfCols: number;
+    numberOfRows: number;
+    cardImage: {
       value: {
-        image_url: string;
+        imageUrl: string;
       }
     };
-    total_slots: number;
+    totalSlots: number;
   };
   stamps?: IStamp[];
 }
