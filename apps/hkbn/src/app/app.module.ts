@@ -15,6 +15,7 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatDialogModule } from '@angular/material';
+import { ContentContainerModule } from './ui/content-container/content-container.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatDialogModule } from '@angular/material';
     HttpClientModule,
     MatDialogModule,
     AppRoutingModule,
+    ContentContainerModule,
     BrowserAnimationsModule
   ],
   providers: [],
