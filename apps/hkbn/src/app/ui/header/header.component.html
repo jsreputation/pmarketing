@@ -1,3 +1,34 @@
 <div class="container">
+  <div class="header-container">
+    <button mat-icon-button class="toggle-menu" (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img class="header-logo" src="assets/images/logo.png" alt="">
+  </div>
 
+
+  <mat-sidenav-container>
+    <mat-sidenav #snav position="start" class="sidenav"
+                 [autoFocus]="false"
+                 [fixedInViewport]="true">
+      <mat-nav-list>
+        <div class="nav_header">
+          <img class="nav_logo" src="assets/images/logo.png" alt="">
+          <p>Chen Haonan</p>
+        </div>
+
+        <mat-nav-list class="nav_links">
+          <mat-list-item><a href="">Reward</a></mat-list-item>
+          <mat-list-item><a href="">My Reward</a></mat-list-item>
+          <mat-list-item><a href="">My Account</a></mat-list-item>
+          <mat-list-item><a href="">About Us</a></mat-list-item>
+          <mat-list-item><a href="">Contact Us</a></mat-list-item>
+          <mat-list-item>Sign out</mat-list-item>
+        </mat-nav-list>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content [class.sidenav-backdrop]="snav.opened" (click)="snav.close()">
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

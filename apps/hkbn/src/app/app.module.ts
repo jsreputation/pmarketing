@@ -7,9 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
-  CognitoModule,
+  CognitoModule, LoyaltyModule,
   OauthModule,
-  PopupComponent,
+  PopupComponent, ProfileModule,
   UtilsModule,
 } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +28,8 @@ import { HomeModule } from './home/home.module';
     AuthenticationModule,
     OauthModule.forRoot({env: environment}),
     CognitoModule.forRoot({env: environment}),
+    ProfileModule.forRoot({env: environment}),
+    LoyaltyModule.forRoot({env: environment}),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
