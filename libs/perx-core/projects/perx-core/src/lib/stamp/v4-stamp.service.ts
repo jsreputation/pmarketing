@@ -20,11 +20,11 @@ import { VouchersService } from '../vouchers/vouchers.service';
 import { StampService } from './stamp.service';
 
 interface IV4GetStampCardResponse {
-  data: IStampCard;
+  data: IV4StampCard;
 }
 
 interface IV4GetStampCardsResponse {
-  data: IStampCard[];
+  data: IV4StampCard[];
 }
 
 interface IV4GetStampTransactionsResponse {
@@ -42,7 +42,7 @@ export interface IV4PutStampTransactionResponse {
 }
 
 interface IV4StampAllTransactionResponse {
-  data: IStampCard;
+  data: IV4StampCard;
 }
 
 interface IV4Reward {
@@ -72,7 +72,7 @@ interface IV4StampCard {
   card_number: number;
   campaign_config: {
     total_slots: number;
-    rewards: IReward[];
+    rewards: IV4Reward[];
   };
   display_properties: {
     number_of_cols: number;
@@ -101,6 +101,50 @@ export class V4StampService implements StampService {
     this.baseUrl = config.env.apiHost as string;
   }
 
+  private static v4RewardToReward(reward: IV4Reward): IReward {
+    return {
+      id: reward.id,
+      campaignId: reward.campaign_id,
+      modularizableType: reward.modularizable_type,
+      modularizableId: reward.modularizable_id,
+      createdAt: reward.created_at,
+      updatedAt: reward.updated_at,
+      refereeRequiredForReward: reward.referee_required_for_reward,
+      totalRewardLimit: reward.total_reward_limit,
+      totalUserLimit: reward.total_user_limit,
+      awardToTeferral: reward.award_to_referral,
+      awardToReferee: reward.award_to_referee,
+      totalReferreeLimit: reward.total_referree_limit,
+      stampNumber: reward.stamp_number,
+    };
+  }
+
+  private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
+    return {
+      id: stampCard.id,
+      userAccountId: stampCard.user_account_id,
+      state: stampCard.state,
+      campaignId: stampCard.campaign_id,
+      cardNumber: stampCard.card_number,
+      campaignConfig: {
+        totalSlots: stampCard.campaign_config.total_slots,
+        rewards: stampCard.campaign_config.rewards.map
+        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards))
+      },
+      displayProperties: {
+        numberOfCols: stampCard.display_properties.number_of_cols,
+        numberOfRows: stampCard.display_properties.number_of_rows,
+        cardImage: {
+          value: {
+            imageUrl: stampCard.display_properties.card_image.value.image_url,
+          }
+        },
+        totalSlots: stampCard.display_properties.total_slots,
+      },
+      stamps: stampCard.stamps,
+    };
+  }
+
   public getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IV4GetStampCardsResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
@@ -110,7 +154,10 @@ export class V4StampService implements StampService {
         }
       }
     ).pipe(
-      map(res => res.data)
+      map((res: IV4GetStampCardsResponse) => res.data),
+      map((stampCards: IV4StampCard[]) => stampCards.map(
+        (stampCard: IV4StampCard) => V4StampService.v4StampCardToStampCard(stampCard)
+      )),
     );
   }
 
@@ -118,7 +165,7 @@ export class V4StampService implements StampService {
     return this.http.get<IV4GetStampCardResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards/current`
     ).pipe(
-      map(res => res.data)
+      map((res: IV4GetStampCardResponse) => V4StampService.v4StampCardToStampCard(res.data))
     );
   }
 
