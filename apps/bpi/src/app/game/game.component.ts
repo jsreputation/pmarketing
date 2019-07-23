@@ -203,8 +203,8 @@ export class GameComponent implements OnInit {
     this.stampService.stampAll(id).subscribe(
       (res: IStamp[]) => {
         this.keys -= totalSlots;
-        const stampsRedeemeed = res.filter(stamp => stamp.state === 'redeemed').length;
-        if (stampsRedeemeed === totalSlots) {
+        const stampsRedeemed = res.filter(stamp => stamp.state === 'redeemed').length;
+        if (stampsRedeemed === totalSlots) {
           this.router.navigate(['bpi/congrats']);
         }
       },
