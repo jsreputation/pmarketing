@@ -12,13 +12,13 @@ import { CampaignsComponent } from './containers/campaigns/campaigns.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
-  MatDatepickerModule,
+  // MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatMenuModule,
-  MatNativeDateModule,
+  // MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSortModule,
@@ -26,7 +26,7 @@ import {
   MatStepperModule,
   MatRadioModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatChipsModule
 } from '@angular/material';
-import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+// import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
@@ -53,6 +53,7 @@ import { RewardItemPreviewComponent } from './components/reward-item-preview/rew
 import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.module';
 import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
 import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
+import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 
 
 @NgModule({
@@ -80,11 +81,10 @@ import { DownloadLinkModule } from '@cl-shared/components/download-link/download
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
-    SatDatepickerModule,
-    SatNativeDateModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
+    // SatDatepickerModule,
+    // SatNativeDateModule,
+    // MatDatepickerModule,
+    // MatNativeDateModule,
     MatInputModule,
     MatSortModule,
     MatTableModule,
@@ -112,7 +112,8 @@ import { DownloadLinkModule } from '@cl-shared/components/download-link/download
     DatePickerModule,
     SmsEditorModule,
     CopyLinkModule,
-    DownloadLinkModule
+    DownloadLinkModule,
+    UploadFileModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
