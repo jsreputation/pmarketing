@@ -12,8 +12,8 @@ import {
 
 import { EnvConfig } from '../shared/env-config';
 import {
-  IStampCard,
-  IStamp, STAMP_CARD_STATE, IReward,
+  IStampCard, IStamp,
+  STAMP_CARD_STATE, STAMP_STATE, IReward, IVoucher
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -27,8 +27,19 @@ interface IV4GetStampCardsResponse {
   data: IV4StampCard[];
 }
 
+export interface IV4Stamp {
+  id: number;
+  user_account_id: number;
+  stamp_card_id: number;
+  state: STAMP_STATE;
+  created_at: string;
+  updated_at: string;
+  campaign_id: number;
+  vouchers?: IVoucher[];
+}
+
 interface IV4GetStampTransactionsResponse {
-  data: IStamp[];
+  data: IV4Stamp[];
   meta: {
     count: number,
     size: number,
@@ -38,7 +49,7 @@ interface IV4GetStampTransactionsResponse {
 }
 
 export interface IV4PutStampTransactionResponse {
-  data: IStamp;
+  data: IV4Stamp;
 }
 
 interface IV4StampAllTransactionResponse {
@@ -84,7 +95,7 @@ interface IV4StampCard {
     };
     total_slots: number;
   };
-  stamps?: IStamp[];
+  stamps?: IV4Stamp[];
 }
 
 @Injectable({
@@ -99,6 +110,19 @@ export class V4StampService implements StampService {
     private vouchersService: VouchersService
   ) {
     this.baseUrl = config.env.apiHost as string;
+  }
+
+  private static v4StampToStamp(stamp: IV4Stamp): IStamp {
+    return {
+      id: stamp.id,
+      userAccountId: stamp.user_account_id,
+      stampCardId: stamp.stamp_card_id,
+      state: stamp.state,
+      createdAt: stamp.created_at,
+      updatedAt: stamp.updated_at,
+      campaignId: stamp.campaign_id,
+      vouchers: stamp.vouchers,
+    };
   }
 
   private static v4RewardToReward(reward: IV4Reward): IReward {
@@ -141,7 +165,7 @@ export class V4StampService implements StampService {
         },
         totalSlots: stampCard.display_properties.total_slots,
       },
-      stamps: stampCard.stamps,
+      stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };
   }
 
@@ -179,7 +203,7 @@ export class V4StampService implements StampService {
     ).pipe(
       flatMap((resp: IV4GetStampTransactionsResponse) => {
         const streams = [
-          of(resp.data)
+          of(resp.data.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)))
         ];
         for (let i = 2; i <= resp.meta.total_pages; i++) {
           const stream: Observable<IStamp[]> = this.getAllFromPage(campaignId, i);
@@ -203,7 +227,10 @@ export class V4StampService implements StampService {
         }
       })
       .pipe(
-        map(res => res.data)
+        map((res: IV4GetStampTransactionsResponse) => res.data),
+        map((stamps: IV4Stamp[]) => stamps.map(
+          (stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)
+        ))
       );
   }
 
@@ -217,7 +244,7 @@ export class V4StampService implements StampService {
           this.vouchersService.reset();
         }
       }),
-      map(res => res.data)
+      map((res: IV4PutStampTransactionResponse) => V4StampService.v4StampToStamp(res.data))
     );
   }
 
@@ -234,7 +261,9 @@ export class V4StampService implements StampService {
           }
         });
       }),
-      map(res => res)
+      map((stamps: IV4Stamp[]) => stamps.map(
+        (stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)
+      ))
     );
   }
 }
