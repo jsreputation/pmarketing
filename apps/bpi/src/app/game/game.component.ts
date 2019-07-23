@@ -86,6 +86,7 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+        
         this.checkKeys();
       });
   }
@@ -116,6 +117,7 @@ export class GameComponent implements OnInit {
 
     const s = stamps[0];
     s.state = STAMP_STATE.redeemed;
+    this.checkKeys(card);
 
     const totalRedeemed = card.stamps.filter(stmp => stmp.state === STAMP_STATE.redeemed).length;
     const totalSlots = card.display_properties.total_slots;
@@ -153,16 +155,37 @@ export class GameComponent implements OnInit {
     return this.cards[0].id === card.id;
   }
 
-  private checkKeys(): void {
-    if (this.keys > 0) {
+  private checkKeys(cardSelected?: IStampCard): void {
+    if (this.keys <= 0) {
+      return;
+    }
+
+    if (!cardSelected && this.keys > 0) {
       this.notificationService.addPopup({
         title: `You have a total of ${ this.keys } keys!`,
         imageUrl: 'assets/key.png',
         text: 'Tap the highlighted locks to unlock.',
-        buttonTxt: 'Start Unlocking!'
+        buttonTxt: 'Start Unlocking!',
+        afterClosedCallBack: this
+      });
+      return;
+    }
+
+    const cardSelectedLength = cardSelected.stamps.length;
+    const cardSelectedRedeemed = cardSelected.stamps.filter(stamp => stamp.state === 'redeemed').length;
+    const totalSlots = cardSelected.display_properties.total_slots;
+    const requiredKeysToUnlock = totalSlots - cardSelectedRedeemed;
+
+    if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
+      this.notificationService.addPopup({
+        text: `You only need ${ requiredKeysToUnlock } to unlock your Netflix rebate. Keep using your BPI Credit Card to get up to 6 months of Netflix rebate.`,
+        buttonTxt: 'Close',
+        afterClosedCallBack: this
       });
     }
   }
+
+  public dialogClosed(): void {}
 
   public onStampAll(cardSelected: IStampCard): void {
     const id = cardSelected.id;
@@ -174,6 +197,7 @@ export class GameComponent implements OnInit {
     });
 
     this.cards[index].stamps = redeemedStamps;
+    this.checkKeys(cardSelected);
 
     this.stampService.stampAll(id).subscribe(
       (res: IStamp[]) => {
