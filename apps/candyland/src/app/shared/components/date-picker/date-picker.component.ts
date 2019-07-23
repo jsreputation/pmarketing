@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateAdapter } from '@angular/material';
@@ -18,7 +18,7 @@ import { DateAdapter } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() control: FormControl = new FormControl(null, []);
+  @Input() control: AbstractControl = new FormControl(null, []);
   @Input() placeholder = 'Choose date';
   @Input() max: Date | null = null;
   @Input() min: Date | null = null;

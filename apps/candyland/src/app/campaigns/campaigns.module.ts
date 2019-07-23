@@ -53,6 +53,7 @@ import { DownloadLinkModule } from '@cl-shared/components/download-link/download
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import {NewCampaignSelectEngagementPageComponent}
 from "./containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component";
+import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ from "./containers/new-campaign-select-engagement-page/new-campaign-select-engag
     SmsEditorModule,
     CopyLinkModule,
     DownloadLinkModule,
-    UploadFileModule
+    UploadFileModule,
+    ChipListModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
