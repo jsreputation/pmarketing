@@ -27,7 +27,7 @@ import { IStampService } from './istamp.service';
 @Injectable({
   providedIn: 'root'
 })
-export class StampService implements IStampService {
+export class V4StampService implements IStampService {
   public baseUrl: string;
 
   constructor(

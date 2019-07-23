@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { EnvConfig } from '../shared/env-config';
-import { StampService } from './stamp.service';
+import { V4StampService } from './v4-stamp.service';
 
 @NgModule({
   declarations: [],
@@ -17,7 +17,7 @@ export class StampModule {
     return {
       ngModule: StampModule,
       providers: [
-        StampService,
+        V4StampService,
         {
           provide: EnvConfig,
           useValue: config

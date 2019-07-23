@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { StampService } from '../../stamp/stamp.service';
+import { V4StampService } from '../../stamp/v4-stamp.service';
 import { IStampCard , STAMP_CARD_STATE, STAMP_STATE } from '../../stamp/models/stamp.model';
 
 @Component({
@@ -23,7 +23,7 @@ export class PuzzleListComponent implements OnChanges {
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private stampService: StampService) { }
+  constructor(private stampService: V4StampService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {

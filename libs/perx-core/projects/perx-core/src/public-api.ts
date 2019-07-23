@@ -32,7 +32,7 @@ export {
 } from './lib/campaign/models/campaign.model';
 
 export { StampModule } from './lib/stamp/stamp.module';
-export { StampService } from './lib/stamp/stamp.service';
+export { V4StampService } from './lib/stamp/v4-stamp.service';
 export {
   IStampCard,
   IStamp,
