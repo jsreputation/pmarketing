@@ -5,7 +5,9 @@ import { ContentContainerComponent } from './ui/content-container/content-contai
 
 const routes: Routes = [
   {
-    path: '', component: ContentContainerComponent, children: []
+    path: '', component: ContentContainerComponent, children: [
+      {path: '', component:}
+    ]
   },
   {path: 'login', component: LoginComponent},
 ];
