@@ -98,6 +98,9 @@ interface IV4StampCard {
   stamps?: IV4Stamp[];
 }
 
+// tslint:disable-next-line:max-line-length
+// https://github.com/markwhitfeld/store/blob/15101c2a03624730366df1fd634b6bf6047d2e37/docs/concepts/select.md#angular-libraries-use-of-lambdas-in-static-functions
+// @dynamic
 @Injectable({
   providedIn: 'root'
 })
