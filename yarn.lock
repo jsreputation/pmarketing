@@ -287,6 +287,13 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/material@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.1.1.tgz#87e105fb657fa6e139ddcbd6b9c373936604f6d7"
+  integrity sha512-45aaxKuLTrthzhAhG2+OY86wafuRBteZcRjDG7rKZ3Cc3KteUp5QwAi+QbhHzs4O3WXLWTAmuLYJelRqRqqw7g==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser-dynamic@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.0.1.tgz#bdf1d4c6f2bbf4d611c44caa939f3d37b0335210"
@@ -1330,6 +1337,11 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/googlemaps@^3.37.0":
+  version "3.37.0"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.37.0.tgz#85596a2b93ded3850ac83ff575b66c34053c0ac8"
+  integrity sha512-kUF1DCVJISf6HZQdgROIs98C0MS40AK5KXxyOju5L1aifNXqMkN5siSGErHYxpEMkDcTA/hu6Dr22fZBTt2qRA==
 
 "@types/jasmine@*", "@types/jasmine@~3.3.8":
   version "3.3.13"
