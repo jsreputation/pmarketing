@@ -59,14 +59,14 @@
     .main-heading {
       font-weight: 900;
       font-size: 3.2rem;
-      color: #1B1B25;
+      color: $heading-font-color;
     }
 
     .subtitle {
       font-weight: normal;
       font-size: 1.2rem;
       margin-top: 1rem;
-      color: #1B1B25;
+      color: $heading-font-color;
 
       .link {
         color: $main-blue-theme;
