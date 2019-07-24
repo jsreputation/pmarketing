@@ -1,7 +1,15 @@
-<script src="http://maps.googleapis.com/maps/api/js"></script>
-<div #gmap></div>
+<div #gmap class="map"></div>
 
-<mat-card *ngIf="current">
+<div class="loc-card-container">
+<mat-card *ngIf="current" class="loc-card mat-elevation-z8">
   <mat-card-title>{{current.name}}</mat-card-title>
-  <mat-card-subtitle>sub-title</mat-card-subtitle>
+  <mat-card-subtitle>{{current.address}}</mat-card-subtitle>
+  <mat-card-actions>
+    <a href="tel:{{current.phone}}">
+      <mat-icon>phone</mat-icon>{{current.phone}}
+    </a>
+    <a target="_blank" [href]="gMapUrl(current)">View location</a>
+  </mat-card-actions>
 </mat-card>
+
+</div>

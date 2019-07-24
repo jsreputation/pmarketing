@@ -25,11 +25,13 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     this.loadScript()
       .then(() => {
         const mapProp: google.maps.MapOptions = {
-          center: new google.maps.LatLng(18.5793, 73.8143),
-          zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        // any click on the map should dismiss the current location
+        this.map.addListener('click', () => {
+          this.current = null;
+        });
         this.updateLocations();
       });
   }
@@ -41,9 +43,14 @@ export class LocationsMapComponent implements OnInit, OnChanges {
   }
 
   private loadScript(): Promise<void> {
+    // don't load it more than once.
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      return Promise.resolve();
+    }
     const body: HTMLBodyElement = document.body as HTMLBodyElement;
     const script: HTMLScriptElement = document.createElement('script');
     const p = new Promise<void>((resolve) => {
+      // when script is loaded, resolve the promise.
       script.addEventListener('load', () => {
         resolve();
       });
@@ -66,19 +73,29 @@ export class LocationsMapComponent implements OnInit, OnChanges {
       this.locations.subscribe(
         locations => {
           let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
-          const markers = locations.map(location => {
+          locations.map(location => {
             const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
             bbox = bbox.extend(latLng);
-            return new google.maps.Marker({
+            const marker = new google.maps.Marker({
               position: latLng,
               map: this.map,
               title: location.name
             });
+
+            marker.addListener('click', () => {
+              this.current = location;
+            });
+            marker.setClickable(true);
+            marker.setCursor('pointer');
+            return marker;
           });
           this.map.fitBounds(bbox);
-          markers.forEach(marker => marker.setClickable(true));
         }
       );
     }
+  }
+
+  public gMapUrl(loc: ILocation): string {
+    return `https://www.google.com/maps/search/?api=1&query=${loc.latitude},${loc.longitude}`;
   }
 }
