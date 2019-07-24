@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
-import  { SalesContactComponent } from '../sales-contact/sales-contact.component';
+import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

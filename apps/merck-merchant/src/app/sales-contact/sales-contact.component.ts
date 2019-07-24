@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SalesContactComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  public ngOnInit(): void {}
 
 }
