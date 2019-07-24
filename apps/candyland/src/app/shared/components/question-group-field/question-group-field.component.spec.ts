@@ -8,7 +8,9 @@ import { QuestionDateFieldModule } from '@cl-shared/components/question-date-fie
 import { QuestionCountryCodeFieldModule } from '@cl-shared/components/question-country-code-field/question-country-code-field.module';
 import { QuestionLongTextFieldModule } from '@cl-shared/components/question-long-text-field/question-long-text-field.module';
 import { QuestionPictureChoiceFieldModule } from '@cl-shared/components/question-picture-choice-field/question-picture-choice-field.module';
-import { QuestionMultipleChoiceFieldModule } from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.module';
+import {
+  QuestionMultipleChoiceFieldModule
+} from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatFormFieldModule, MatInputModule, MatSlideToggleModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
