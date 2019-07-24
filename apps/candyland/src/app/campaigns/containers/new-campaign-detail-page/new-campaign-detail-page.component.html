@@ -19,33 +19,20 @@
       <!--duration-->
       <div class="card-row">
         <div class="input-group">
-          <cl-date-picker [formControl]="campaignInfo.get('startDate')" [max]="campaignInfo.get('endDate').value"></cl-date-picker>
+          <cl-date-picker [formControl]="campaignInfo.get('startDate')"
+                          [max]="campaignInfo.get('endDate').value"></cl-date-picker>
           <cl-time-picker [formControl]="campaignInfo.get('startTime')"></cl-time-picker>
         </div>
         to
         <div class="input-group">
-          <cl-date-picker [formControl]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value"></cl-date-picker>
+          <cl-date-picker [formControl]="campaignInfo.get('endDate')"
+                          [min]="campaignInfo.get('startDate').value"></cl-date-picker>
           <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
         </div>
         <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
-      <cl-chip-list [formControl]="campaignInfo.get('labels')"></cl-chip-list>
-      <!--<mat-form-field class="card-row">-->
-        <!--<mat-chip-list #chipList aria-label="card-label">-->
-          <!--<mat-chip *ngFor="let label of labels" [selectable]="selectable"-->
-                    <!--[removable]="removable" (removed)="remove(label)">-->
-            <!--{{label.name}}-->
-            <!--<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
-          <!--</mat-chip>-->
-          <!--<input placeholder="Label"-->
-                 <!--[formControl]="campaignInfo.get('labels')"-->
-                 <!--[matChipInputFor]="chipList"-->
-                 <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-                 <!--[matChipInputAddOnBlur]="addOnBlur"-->
-                 <!--(matChipInputTokenEnd)="add($event)">-->
-        <!--</mat-chip-list>-->
-      <!--</mat-form-field>-->
+      <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
     </div>
   </mat-expansion-panel>
   <!--Select channel-->
@@ -72,13 +59,6 @@
           </p>
         </div>
         <div class="card-content">
-          <!--<mat-form-field class="card-row">-->
-          <!--<mat-select placeholder="Select Message template">-->
-          <!--<mat-option value="day">Day</mat-option>-->
-          <!--<mat-option value="week">Week</mat-option>-->
-          <!--<mat-option value="month">Month</mat-option>-->
-          <!--</mat-select>-->
-          <!--</mat-form-field>-->
           <cl-sms-editor [options]="config?.shortcodes" [control]="channel.get('message')"></cl-sms-editor>
         </div>
       </div>
@@ -129,13 +109,13 @@
                 <!--repeat on-->
                 <ng-container *ngIf="recurrence.get('repeatOn').enabled">
                   <label class="card-label">Repeat on</label>
-                  <mat-radio-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
+                  <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
                     <ng-container *ngFor="let day of config?.days">
-                      <mat-radio-button [value]="day.value">
+                      <mat-checkbox [value]="day.value">
                         <div>{{day.title}}</div>
-                      </mat-radio-button>
+                      </mat-checkbox>
                     </ng-container>
-                  </mat-radio-group>
+                  </cl-checkbox-group>
                 </ng-container>
               </div>
             </div>
@@ -144,7 +124,6 @@
         </div>
       </div>
     </div>
-
   </mat-expansion-panel>
   <!--Select audience-->
   <mat-expansion-panel class="card">

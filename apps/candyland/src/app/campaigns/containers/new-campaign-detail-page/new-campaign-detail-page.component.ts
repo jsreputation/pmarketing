@@ -1,6 +1,4 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -14,19 +12,22 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  config: any;
-  public visible = true;
-  public selectable = true;
-  public removable = true;
-  public addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  labels = [
-    {name: 'Label A'},
-    {name: 'Label B'},
-    {name: 'Label C'},
-  ];
-
+  public config: any;
   private formChanged;
+  private defaultFormValue = {
+    campaignInfo: {
+      disabledEndDate: false
+    },
+    channel: {
+      type: 'weblink',
+      schedule: {
+        enableRecurrence: false,
+        recurrence: {
+          repeatOn: ['wednesday', 'friday']
+        }
+      }
+    }
+  };
 
   public get campaignInfo() {
     return this.form.get('campaignInfo');
@@ -50,7 +51,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: CampaignCreationStoreService,
-    private cd: ChangeDetectorRef,
+    public cd: ChangeDetectorRef,
     private fb: FormBuilder
   ) {
   }
@@ -65,82 +66,11 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(value => {
-        this.formChanged = false;
         this.store.updateCampaign(value);
-        // if (this.campaignInfo.get('disabledEndDate').value === false) {
-        //   this.enableControl(this.campaignInfo.get('endDate'));
-        //   this.enableControl(this.campaignInfo.get('endTime'));
-        // } else {
-        //   this.disableControl(this.campaignInfo.get('endDate'));
-        //   this.disableControl(this.campaignInfo.get('endTime'));
-        // }
-        //
-        // if (value.channel.type === 'sms') {
-        //   this.enableControl(this.channel.get('message'));
-        //   this.enableControl(this.schedule);
-        //   if (this.schedule.get('enableRecurrence').value === true) {
-        //     this.enableControl(this.recurrence);
-        //     if (this.recurrence.get('period').value === 'week') {
-        //       this.enableControl(this.recurrence.get('repeatOn'));
-        //     } else {
-        //       this.disableControl(this.recurrence.get('repeatOn'));
-        //     }
-        //   } else {
-        //     this.disableControl(this.recurrence);
-        //   }
-        // } else {
-        //   this.disableControl(this.channel.get('message'));
-        //   this.disableControl(this.schedule);
-        // }
-        //
-        // if (this.audience.get('type').value === 'upload') {
-        //   this.enableControl(this.audience.get('file'));
-        // } else {
-        //   this.disableControl(this.audience.get('file'));
-        // }
-        console.log('update', value);
-        this.toggleControls(
-          this.campaignInfo.get('disabledEndDate').value === false,
-          [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
-          true
-        );
-
-        this.toggleControls(
-          this.channel.get('type').value === 'sms',
-          [this.channel.get('message'), this.schedule]
-        );
-
-        this.toggleControls(
-          this.schedule.get('enableRecurrence').value === true,
-          [this.recurrence]
-        );
-
-        this.toggleControls(
-          this.recurrence.get('period').value === 'week',
-          [this.recurrence.get('repeatOn')]
-        );
-
-        this.toggleControls(
-          this.audience.get('type').value === 'upload',
-          [this.audience.get('file')]
-        );
-
-        if (this.formChanged) {
-          this.updateForm();
-        }
+        this.updateFormStructure();
       });
 
-    this.form.patchValue({
-      campaignInfo: {
-        disabledEndDate: false
-      },
-      channel: {
-        type: 'weblink',
-        schedule: {
-          enableRecurrence: false,
-        }
-      }
-    });
+    this.form.patchValue(this.defaultFormValue);
   }
 
   private initForm() {
@@ -176,6 +106,40 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  private updateFormStructure() {
+    this.formChanged = false;
+
+    this.toggleControls(
+      this.campaignInfo.get('disabledEndDate').value === false,
+      [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
+      true
+    );
+
+    this.toggleControls(
+      this.channel.get('type').value === 'sms',
+      [this.channel.get('message'), this.schedule]
+    );
+
+    this.toggleControls(
+      this.schedule.get('enableRecurrence').value === true,
+      [this.recurrence]
+    );
+
+    this.toggleControls(
+      this.recurrence.get('period').value === 'week',
+      [this.recurrence.get('repeatOn')]
+    );
+
+    this.toggleControls(
+      this.audience.get('type').value === 'upload',
+      [this.audience.get('file')]
+    );
+
+    if (this.formChanged) {
+      this.updateForm();
+    }
+  }
+
   private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
     if (condition) {
       controls.forEach(control => this.enableControl(control));
@@ -205,33 +169,11 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   private updateForm() {
+    console.log(123);
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }
 
   ngOnDestroy(): void {
   }
-
-  public add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    if ((value || '').trim()) {
-      this.labels.push({name: value.trim()});
-    }
-
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  public remove(label): void {
-    const index = this.labels.indexOf(label);
-
-    if (index >= 0) {
-      this.labels.splice(index, 1);
-    }
-  }
-
-
 }

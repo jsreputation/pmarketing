@@ -54,6 +54,7 @@ import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.
 import {NewCampaignSelectEngagementPageComponent}
 from "./containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component";
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module
     CopyLinkModule,
     DownloadLinkModule,
     UploadFileModule,
-    ChipListModule
+    ChipListModule,
+    CheckboxGroupModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
