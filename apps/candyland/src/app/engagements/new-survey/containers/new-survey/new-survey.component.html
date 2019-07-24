@@ -1,4 +1,5 @@
 <router-outlet></router-outlet>
+
 <div class="survey-wrap" [formGroup]="formSurvey">
   <div class="full-with page-header">
     <div class="game-title-wrap">
@@ -16,16 +17,16 @@
                  class="btn-cancel btn-right_padding"
                  (click)="patchForm()"
       >
-        <span>
-          Cancel
-        </span>
+      <span>
+        Cancel
+      </span>
       </cl-button>
       <cl-button [classList]="'primary'"
                  (click)="save()"
       >
-        <span>
-          Save
-        </span>
+      <span>
+        Save
+      </span>
       </cl-button>
     </div>
   </div>
@@ -66,27 +67,27 @@
         </div>
 
         <!--questions form array-->
-          <div cdkDropList
-               (cdkDropListDropped)="drop($event)"
-               class="drag-list"
-               [cdkDropListData]="surveyQuestion.controls"
+        <div cdkDropList
+             (cdkDropListDropped)="drop($event)"
+             class="drag-list"
+             [cdkDropListData]="surveyQuestion.controls"
+        >
+          <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
+                                  cdkDrag
+                                  [cdkDragData]="item"
+                                  [group]="item"
+                                  [formGroup]="surveyQuestion"
+                                  [currentIndex]="i"
+                                  [clOpenClose]="i"
+                                  [level]="level"
+                                  (removed)="deleteQuestion($event)"
+                                  (changeControl)="updateQuestionType($event)"
           >
-            <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
-                                    cdkDrag
-                                    [cdkDragData]="item"
-                                    [group]="item"
-                                    [formGroup]="surveyQuestion"
-                                    [currentIndex]="i"
-                                    [clOpenClose]="i"
-                                    [level]="level"
-                                    (removed)="deleteQuestion($event)"
-                                    (changeControl)="updateQuestionType($event)"
-            >
-              <div class="example-handle" cdkDragHandle>
-                <i class="icon drag-icon"></i>
-              </div>
-            </cl-question-form-field>
-          </div>
+            <div class="example-handle" cdkDragHandle>
+              <i class="icon drag-icon"></i>
+            </div>
+          </cl-question-form-field>
+        </div>
         <!--end questions form array-->
 
         <cl-question-type class="btn-add-question"
@@ -94,9 +95,9 @@
                           (selectTypeQuestion)="choseTypeQuestion($event)"
         >
           <cl-button [classList]="'primary'">
-            <span>
-             + Add Question
-            </span>
+          <span>
+           + Add Question
+          </span>
           </cl-button>
         </cl-question-type>
       </mat-card>
@@ -127,8 +128,8 @@
                       <div class="select-color-preview primary-material">
                       </div>
                       <span class="select-color-text">
-                        Primary
-                      </span>
+                      Primary
+                    </span>
                     </div>
                   </mat-option>
                   <mat-option [value]="'accent'">
@@ -136,8 +137,8 @@
                       <div class="select-color-preview accent-material">
                       </div>
                       <span class="select-color-text">
-                        Accent
-                      </span>
+                      Accent
+                    </span>
                     </div>
                   </mat-option>
                   <mat-option [value]="'warn'">
@@ -145,8 +146,8 @@
                       <div class="select-color-preview warn-material">
                       </div>
                       <span class="select-color-text">
-                        Warn
-                      </span>
+                      Warn
+                    </span>
                     </div>
                   </mat-option>
                 </mat-select>
@@ -185,6 +186,13 @@
         </div>
       </mat-card>
     </div>
+
+    <div class="mobile-preview">
+      <div class="mobile-preview-mobile">
+      </div>
+    </div>
   </section>
 </div>
+
+
 
