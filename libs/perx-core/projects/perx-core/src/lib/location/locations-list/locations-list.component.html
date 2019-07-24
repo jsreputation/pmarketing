@@ -1,0 +1,11 @@
+Locations list
+<mat-list>
+  <div *ngFor="let location of locations | async">
+    <mat-list-item>
+      <h3 matLine>{{location.name}}</h3>
+      <small matLine>{{location.address}}</small>
+      <p matLine class="links"><a href="tel:{{location.phone}}">{{location.phone}}</a><a target="_blank" [href]="gMapUrl(location)">View location</a></p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </div>
+</mat-list>
