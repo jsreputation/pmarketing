@@ -60,7 +60,8 @@ export { LoyaltyModule } from './lib/loyalty/loyalty.module';
 export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
-  IPointHistory
+  ITransaction,
+  IExpiringPoints
 } from './lib/loyalty/models/loyalty.model';
 
 export { RewardsModule } from './lib/rewards/rewards.module';
@@ -74,3 +75,6 @@ export {
   PuzzleCollectReward,
   PUZZLE_COLLECT_STAMP_STATE
 } from './lib/puzzles/models/puzzle-stamp.model';
+
+export { LocationModule } from './lib/location/location.module';
+export { ILocation } from './lib/location/ilocation';

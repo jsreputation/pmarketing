@@ -1,0 +1,41 @@
+<div class="main-container">
+	<img src="assets/logo.png">
+	<div *ngIf="!errorMessage else error_message" class="logo-title">
+		Diabetes Loyality Program
+	</div>
+	<ng-template #error_message>
+		<div class="error-message-container">
+			<span>{{errorMessage}}</span>
+			<div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
+		</div>
+	</ng-template>
+	<div class="content-container">
+		<div class="main-heading">Log in</div>
+		<div class="subtitle">Not a memeber? <span class="link">Sign up</span></div>
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+			<mat-form-field class="full-width__input">
+				<mat-select placeholder="Country">
+					<mat-option value="hong_kong">Hong Kong(+852)</mat-option>
+					<mat-option value="pakistan">Pakistan(+92)</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label>Mobile No</mat-label>
+				<input matInput placeholder="Mobile No" formControlName="mobileNo" required>
+				<mat-error *ngIf="loginForm.hasError('mobileNo')">
+					Mobile No is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field class="full-width__input" [color]="red">
+				<mat-label>Password</mat-label>
+				<input matInput placeholder="Password" formControlName="password" required>
+				<mat-error *ngIf="loginForm.hasError('password')">
+					Password is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<div class="forgot-text">Forgot password?</div>
+			<button mat-flat-button type="submit" class="full-width__button">Log In</button>
+			<div class="bottom-text">Learn more about the program</div>
+		</form>
+	</div>
+</div>

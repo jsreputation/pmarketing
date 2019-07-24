@@ -52,6 +52,7 @@ import { RewardItemPreviewComponent } from './components/reward-item-preview/rew
 import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.module';
 import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
 import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
+import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 
 
 @NgModule({
@@ -78,10 +79,6 @@ import { DownloadLinkModule } from '@cl-shared/components/download-link/download
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatFormFieldModule,
-    SatDatepickerModule,
-    SatNativeDateModule,
-    MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
@@ -110,7 +107,8 @@ import { DownloadLinkModule } from '@cl-shared/components/download-link/download
     DatePickerModule,
     SmsEditorModule,
     CopyLinkModule,
-    DownloadLinkModule
+    DownloadLinkModule,
+    UploadFileModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

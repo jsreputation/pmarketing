@@ -1,0 +1,85 @@
+@import "~@angular/material/theming";
+
+.reward-content {
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 1;
+  justify-content: flex-start;
+
+  .reward-img__wrapper {
+    flex: 0 0 10.5rem;
+    height: 10.5rem;
+    width: 10.5rem;
+    display: flex;
+    justify-content: center;
+
+    .reward-img {
+      margin: auto;
+      max-height: 10.5rem;
+      max-width: 10.5rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  .reward-preview-details {
+    font-size: 1.4rem;
+    display: flex;
+    margin: auto 1.6rem;
+    padding-left: 0;
+    flex-direction: column;
+    flex: 1;
+
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+      padding: 0;
+      font-weight: 500;
+      margin: 4px 0;
+    }
+
+    p {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+      min-height: 1.6rem;
+      //color: #e42713;
+      margin: 4px 0;
+      padding: 0;
+    }
+
+    .reward-price-details {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+      min-height: 1.6rem;
+      color: #ddac27;
+    }
+  }
+}
+
+mat-card {
+  margin: 1.2rem 0;
+  display: flex;
+  padding: 0;
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-card.disabled {
+  background-color: #ebebeb;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.badge-warn {
+  background-color: rgba(228, 39, 19, 0.1);
+  //color: #e42713;
+  padding: 2px 4px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
