@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LocationsMapComponent } from './locations-map.component';
+import { MatCardModule, MatIconModule } from '@angular/material';
 
 describe('LocationsMapComponent', () => {
   let component: LocationsMapComponent;
@@ -8,9 +9,10 @@ describe('LocationsMapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationsMapComponent ]
+      declarations: [LocationsMapComponent],
+      imports: [MatCardModule, MatIconModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
