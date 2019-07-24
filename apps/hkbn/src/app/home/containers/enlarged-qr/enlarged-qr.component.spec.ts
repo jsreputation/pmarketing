@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { EnlargedQrComponent } from './enlarged-qr.component';
+import { MatButtonModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EnlargedQrComponent', () => {
   let component: EnlargedQrComponent;
@@ -8,9 +12,15 @@ describe('EnlargedQrComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnlargedQrComponent ]
+      imports: [
+        QRCodeModule,
+        MatButtonModule,
+        RouterTestingModule,
+        NoopAnimationsModule
+      ],
+      declarations: [EnlargedQrComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

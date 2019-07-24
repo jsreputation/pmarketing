@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -17,6 +18,7 @@ describe('HeaderComponent', () => {
         MatToolbarModule,
         MatButtonModule,
         NoopAnimationsModule,
+        RouterTestingModule,
       ],
       declarations: [ HeaderComponent ]
     })
