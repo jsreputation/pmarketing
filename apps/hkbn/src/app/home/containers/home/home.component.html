@@ -1,0 +1,20 @@
+<div class="bg-white">
+  <div class="container">
+    <div class="loyalty-section">
+      <perx-core-loyalty-summary class="loyalty-item"></perx-core-loyalty-summary>
+      <div class="loyalty-item loyalty-item-qr">
+        <qrcode [qrdata]="'http://example.com/'" [size]="80"></qrcode>
+        <button mat-raised-button color="primary" class="enlarge">Click here to enlarge</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="rewards-section">
+    <p class="promotion">This promotion</p>
+    <perx-core-rewards-carousel class="rewards-carousel" (tapped)="goToReward($event)">
+    </perx-core-rewards-carousel>
+
+    <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed>
+  </div>
+</div>

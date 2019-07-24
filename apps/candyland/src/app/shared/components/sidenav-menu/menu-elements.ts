@@ -28,12 +28,13 @@ export const menus = [
   //   icon: 'merchant',
   //   open: false,
   // },
+  {
+    name: 'Audience',
+    link: '/audience',
+    icon: 'users',
+    open: false,
+  },
   // {
-  //   name: 'Users',
-  //   link: '/users',
-  //   icon: 'users',
-  //   open: false,
-  // }, {
   //   name: 'Settings',
   //   link: '/settings',
   //   icon: 'settings',

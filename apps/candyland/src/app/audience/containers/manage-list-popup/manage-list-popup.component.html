@@ -1,3 +1,36 @@
-<p>
-  manage-list-popup works!
-</p>
+<div class="dialog">
+  <div class="dialog-header-wrap">
+    <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
+    <h3 class="dialog-title">Manage List</h3>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="dialog-content">
+
+      <label class="dialog-content-title">Audience lists</label>
+      <mat-checkbox class="dialog-row">Gold_Users</mat-checkbox>
+      <mat-checkbox class="dialog-row">Silver tier</mat-checkbox>
+      <mat-checkbox class="dialog-row">Bronze tier</mat-checkbox>
+  </mat-dialog-content>
+  <div class="dialog-actions">
+    <cl-button classList="invert"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="save()"
+               [disableRipple]="true">
+        <span>
+          Add
+        </span>
+    </cl-button>
+  </div>
+</div>
+
+

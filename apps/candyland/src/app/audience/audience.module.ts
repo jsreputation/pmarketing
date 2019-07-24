@@ -5,10 +5,9 @@ import { AudienceRoutingModule } from './audience-routing.module';
 import { ChangeExpiryDatePopupComponent } from './containers/change-expiry-date-popup/change-expiry-date-popup.component';
 import { AddUserPopupComponent } from './containers/add-user-popup/add-user-popup.component';
 import { ManageListPopupComponent } from './containers/manage-list-popup/manage-list-popup.component';
-import { AudiencesListComponent } from './containers/audiences-list/audiences-list.component';
+import { AudiencesListComponent } from './components/audiences-list/audiences-list.component';
 import { AudiencesPageComponent } from './containers/audiences-page/audiences-page.component';
-import { AudiencesUsersListComponent } from './containers/audiences-users-list/audiences-users-list.component';
-import { AudiencesUserInfoComponent } from './containers/audiences-user-info/audiences-user-info.component';
+import { AudiencesUsersListComponent } from './components/audiences-users-list/audiences-users-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule,
@@ -16,7 +15,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -26,6 +25,9 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { AudiencesUserInfoComponent } from './components/audiences-user-info/audiences-user-info.component';
+import { AudiencesUserInfoPageComponent } from './containers/audiences-user-info-page/audiences-user-info-page.component';
+import { AudiencesVouchersListComponent } from './components/audiences-vouchers-list/audiences-vouchers-list.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     AudiencesListComponent,
     AudiencesPageComponent,
     AudiencesUsersListComponent,
+    AudiencesUserInfoPageComponent,
+    AudiencesVouchersListComponent,
     AudiencesUserInfoComponent
   ],
   imports: [
@@ -60,11 +64,14 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatCheckboxModule,
     DatePickerModule,
     UploadFileModule,
-    NoDataModule
+    NoDataModule,
+    MatTabsModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent
+    AddUserPopupComponent,
+    ManageListPopupComponent,
   ]
 })
-export class AudienceModule { }
+export class AudienceModule {
+}

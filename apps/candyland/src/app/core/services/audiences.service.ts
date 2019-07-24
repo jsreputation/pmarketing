@@ -11,4 +11,16 @@ export class AudiencesService {
   public getUsers() {
     return this.http.getUsers();
   }
+
+  public getUser(id) {
+    return this.http.getUser(id);
+  }
+
+  public getAudiences() {
+    return this.http.getAudiences();
+  }
+
+  public getVouchers() {
+    return this.http.getVouchers();
+  }
 }

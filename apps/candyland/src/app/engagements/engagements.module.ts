@@ -21,8 +21,8 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { CreateEngagementPopupModule } from '../shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
-import { EngagementsListComponent } from './containers/engagements-list/engagements-list.component';
-import { EngagementsGridComponent } from './containers/engagements-grid/engagements-grid.component';
+import { EngagementsListComponent } from './components/engagements-list/engagements-list.component';
+import { EngagementsGridComponent } from './components/engagements-grid/engagements-grid.component';
 
 
 @NgModule({

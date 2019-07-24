@@ -1,0 +1,56 @@
+<div class="main-container">
+  <img src="assets/logo.png">
+
+	<div *ngIf="!errorMessage else error_message" class="logo-title">
+		Diabetes Loyality Program
+  </div>
+
+	<ng-template #error_message>
+		<div class="error-message-container">
+			<span>{{errorMessage}}</span>
+			<div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
+		</div>
+  </ng-template>
+
+	<div class="content-container">
+    <div class="main-heading">Welcome!</div>
+
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+			<mat-form-field class="full-width__input" [color]="red">
+				<mat-label>Name</mat-label>
+				<input matInput placeholder="Name">
+      </mat-form-field>
+
+			<mat-form-field class="full-width__input" [color]="red">
+				<mat-label>Email Address</mat-label>
+				<input matInput placeholder="Email Address" formControlName="email" required>
+				<mat-error *ngIf="loginForm.hasError('email')">
+					Email is <strong>required</strong>
+				</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width__input" [color]="red">
+				<mat-label>Password</mat-label>
+				<input matInput placeholder="Password" formControlName="password" required>
+				<mat-error *ngIf="loginForm.hasError('password')">
+					Password is <strong>required</strong>
+				</mat-error>
+      </mat-form-field>
+
+      <!-- TODO: Implement forgot password screen-->
+      <div class="forgot-text" (click)="onForgotPassword()">Forgot password?</div>
+      <button mat-flat-button type="submit" class="full-width__button">Login</button>
+
+      <div class="contacts-section">
+        <strong>Sales Contact</strong>
+        <ul>
+          <li>Personnel 1: <span>+852 1234 5678</span></li>
+          <li>Personnel 2: <span>+852 1234 5678</span></li>
+          <li>Personnel 3: <span>+852 1234 5678</span></li>
+        </ul>
+      </div>
+		</form>
+  </div>
+
+</div>

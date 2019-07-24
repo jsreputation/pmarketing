@@ -43,7 +43,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
         map((response: any) => response.results),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
-          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(data, counterObject);
+          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);
         }),
       )
       .subscribe((res: Engagement[]) => {
