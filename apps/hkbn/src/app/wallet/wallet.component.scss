@@ -1,0 +1,18 @@
+@import "~src/assets/styles/variables";
+
+hkbn-wallet {
+  .mat-tab-label {
+    flex: 1;
+    color: $black;
+    opacity: 1;
+  }
+
+
+  .mat-tab-label-active {
+    color: $text-green;
+  }
+
+  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: $text-green;
+  }
+}
