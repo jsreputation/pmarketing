@@ -1,0 +1,46 @@
+@import "variables";
+
+.dialog {
+
+  &-header-wrap {
+    height: 6.2rem;
+    background-color: rgba(217, 223, 228, 0.2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding:0 5rem 0 3rem;
+    box-sizing: border-box;
+  }
+
+  &-title {
+    line-height: 1.23;
+    font-size: 2rem;
+    font-weight: 500;
+    color: $secondary-color;
+    margin: 0;
+  }
+
+  &-closed {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.8rem;
+    color: $secondary-color;
+  }
+
+  &-content {
+    padding-top: 3rem;
+  }
+
+  &-content-title {
+    line-height: 1.23;
+    font-size: 2rem;
+    font-weight: 500;
+    color: $secondary-color;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+.merchant-list {
+  padding-top: 3.5rem;
+}
