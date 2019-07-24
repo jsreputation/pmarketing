@@ -1,4 +1,13 @@
-<div class="question-type-wrap">
+<div class="question-type-wrap">  <!--<div class="upload-error-wrap" *ngIf="message">-->
+    <!--<span class="upload-error">-->
+      <!--{{message}}-->
+    <!--</span>-->
+  <!--</div>-->
+  <!--<div class="upload-type-wrap" *ngIf="!message">-->
+    <!--<span class="upload-type">-->
+      <!--Recommended format: .JPG or .PNG-->
+    <!--</span>-->
+  <!--</div>-->
   <ng-container *ngIf="!addQuestionType; else addTypeQuestion">
     <button class="btn-in-group" (click)="openSelect()">
       <i class="icon" [ngClass]="type.value"></i>

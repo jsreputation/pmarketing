@@ -5,6 +5,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { SurveyService } from '@cl-core/services/survey.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+// tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => QuestionTypeComponent),

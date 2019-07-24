@@ -1,82 +1,85 @@
-<div class="form-group" [formGroup]="group">
-  <div class="rating-field-wrap" >
-    <div class="control-input">
-      <mat-form-field>
-        <mat-label>Scale</mat-label>
-        <mat-select [formControlName]="'scale'">
-          <mat-option *ngFor="let item of scales" [value]="item.value">{{item.viewValue}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="control-input">
-      <mat-form-field>
-        <mat-label>Select Shape</mat-label>
-        <mat-select [formControlName]="'selectShape'">
-          <mat-option [value]="'star'">Star</mat-option>
-          <mat-option [value]="'heart'">Heart</mat-option>
-          <mat-option [value]="'circle'">Circle</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="control-input">
-      <mat-form-field color="primary">
-        <mat-label>Select Color</mat-label>
-        <mat-select [formControlName]="'selectColor'">
-          <mat-select-trigger>
-            <div class="select-color">
-              <div class="select-color-preview" [ngClass]="color.value + '-material'">
+<ng-container *ngIf="group">
+  <div class="form-group" [formGroup]="group">
+    <div class="rating-field-wrap" >
+      <div class="control-input">
+        <mat-form-field>
+          <mat-label>Scale</mat-label>
+          <mat-select [formControlName]="'scale'">
+            <mat-option *ngFor="let item of scales" [value]="item.value">{{item.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="control-input">
+        <mat-form-field>
+          <mat-label>Select Shape</mat-label>
+          <mat-select [formControlName]="'selectShape'">
+            <mat-option [value]="'star'">Star</mat-option>
+            <mat-option [value]="'heart'">Heart</mat-option>
+            <mat-option [value]="'circle'">Circle</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="control-input">
+        <mat-form-field color="primary">
+          <mat-label>Select Color</mat-label>
+          <mat-select [formControlName]="'selectColor'">
+            <mat-select-trigger>
+              <div class="select-color">
+                <div class="select-color-preview" [ngClass]="color.value + '-material'">
+                </div>
+                <p class="select-color-text">
+                  {{color.value}}
+                </p>
               </div>
-              <p class="select-color-text">
-                {{color.value}}
-              </p>
-            </div>
-          </mat-select-trigger>
-          <mat-option [value]="'primary'">
-            <div class="select-color">
-              <div class="select-color-preview primary-material">
-              </div>
-              <span class="select-color-text">
+            </mat-select-trigger>
+            <mat-option [value]="'primary'">
+              <div class="select-color">
+                <div class="select-color-preview primary-material">
+                </div>
+                <span class="select-color-text">
               Primary
             </span>
-            </div>
-          </mat-option>
-          <mat-option [value]="'accent'">
-            <div class="select-color">
-              <div class="select-color-preview accent-material">
               </div>
-              <span class="select-color-text">
+            </mat-option>
+            <mat-option [value]="'accent'">
+              <div class="select-color">
+                <div class="select-color-preview accent-material">
+                </div>
+                <span class="select-color-text">
               Accent
             </span>
-            </div>
-          </mat-option>
-          <mat-option [value]="'warn'">
-            <div class="select-color">
-              <div class="select-color-preview warn-material">
               </div>
-              <span class="select-color-text">
+            </mat-option>
+            <mat-option [value]="'warn'">
+              <div class="select-color">
+                <div class="select-color-preview warn-material">
+                </div>
+                <span class="select-color-text">
               Warn
             </span>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="rating-field-wrap">
+      <div class="control-input">
+        <mat-form-field class="messages-input">
+          <input type="text" matInput [placeholder]="'Left'" [formControlName]="'left'">
+          <mat-hint align="end">{{left.value?.length || 0}}/10</mat-hint>
+          <mat-error *ngIf="left.hasError('maxlength')">Max length 10</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="control-input">
+        <mat-form-field class="messages-input">
+          <input type="text" matInput [placeholder]="'Right'" [formControlName]="'right'">
+          <mat-hint align="end">{{right.value?.length || 0}}/10</mat-hint>
+          <mat-error *ngIf="right.hasError('maxlength')">Max length 10</mat-error>
+        </mat-form-field>
+      </div>
     </div>
   </div>
-  <div class="rating-field-wrap">
-    <div class="control-input">
-      <mat-form-field class="messages-input">
-        <input type="text" matInput [placeholder]="'Left'" [formControlName]="'left'">
-        <mat-hint align="end">{{left.value?.length || 0}}/10</mat-hint>
-        <mat-error *ngIf="left.hasError('maxlength')">Max length 10</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="control-input">
-      <mat-form-field class="messages-input">
-        <input type="text" matInput [placeholder]="'Right'" [formControlName]="'right'">
-        <mat-hint align="end">{{right.value?.length || 0}}/10</mat-hint>
-        <mat-error *ngIf="right.hasError('maxlength')">Max length 10</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-</div>
+</ng-container>
+
 

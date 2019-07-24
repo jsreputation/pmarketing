@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { QuestionFormFieldService } from './services/question-form-field.service';
 
 @Directive({

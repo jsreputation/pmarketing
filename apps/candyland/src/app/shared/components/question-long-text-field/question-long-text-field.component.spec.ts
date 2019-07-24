@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionLongTextFieldComponent } from './question-long-text-field.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 
 describe('QuestionLongTextFieldComponent', () => {
   let component: QuestionLongTextFieldComponent;
@@ -8,6 +10,13 @@ describe('QuestionLongTextFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+      ],
       declarations: [ QuestionLongTextFieldComponent ]
     })
     .compileComponents();

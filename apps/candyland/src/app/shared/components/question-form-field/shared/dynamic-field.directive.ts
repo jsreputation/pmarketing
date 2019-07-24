@@ -6,8 +6,12 @@ import { QuestionCountryCodeFieldComponent } from '@cl-shared/components/questio
 import { QuestionGroupFieldComponent } from '@cl-shared/components/question-group-field/question-group-field.component';
 import { SurveyQuestionType } from '../../../../engagements/new-survey/containers/new-survey/new-survey.component';
 import { QuestionLongTextFieldComponent } from '@cl-shared/components/question-long-text-field/question-long-text-field.component';
-import { QuestionPictureChoiceFieldComponent } from '@cl-shared/components/question-picture-choice-field/question-picture-choice-field.component';
-import { QuestionMultipleChoiceFieldComponent } from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.component';
+import {
+  QuestionPictureChoiceFieldComponent
+} from '@cl-shared/components/question-picture-choice-field/question-picture-choice-field.component';
+import {
+  QuestionMultipleChoiceFieldComponent
+} from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.component';
 const componentMapper = {
   rating: QuestionRatingFieldComponent,
   date: QuestionDateFieldComponent,

@@ -14,7 +14,9 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { QuestionGroupFieldComponent } from '@cl-shared/components/question-group-field/question-group-field.component';
 import { QuestionLongTextFieldModule } from '@cl-shared/components/question-long-text-field/question-long-text-field.module';
 import { QuestionPictureChoiceFieldModule } from '@cl-shared/components/question-picture-choice-field/question-picture-choice-field.module';
-import { QuestionMultipleChoiceFieldModule } from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.module';
+import {
+  QuestionMultipleChoiceFieldModule
+} from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({

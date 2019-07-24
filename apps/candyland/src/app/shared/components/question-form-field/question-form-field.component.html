@@ -1,86 +1,88 @@
-<div class="question-form-field" [ngClass]="'question-nested-' + level" [formGroup]="group">
+<ng-container *ngIf="group">
+  <div class="question-form-field" [ngClass]="'question-nested-' + level" [formGroup]="group">
 
-  <div class="question-form-header"
-       [ngClass]="{'exist-nested-group': getTypeField()?.value === surveyQuestionType.questionGroup}"
-  >
-    <cl-question-type class="question-btn-type" [formControlName]="'selectedType'"
-                      (selectTypeQuestion)="choseTypeQuestion($event)"
-                      [currentIndex]="currentIndex"
-                      [level]="level"
-    ></cl-question-type>
+    <div class="question-form-header"
+         [ngClass]="{'exist-nested-group': getTypeField()?.value === surveyQuestionType.questionGroup}"
+    >
+      <cl-question-type class="question-btn-type" [formControlName]="'selectedType'"
+                        (selectTypeQuestion)="choseTypeQuestion($event)"
+                        [currentIndex]="currentIndex"
+                        [level]="level"
+      ></cl-question-type>
 
-    <div class="question-text-field__wrap">
-      <div class="control-input">
-        <mat-form-field class="messages-input" >
-          <input type="text" matInput [formControlName]="'name'">
-          <mat-hint align="end">{{name.value?.length || 0}}/60</mat-hint>
-          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">
-        <mat-form-field class="messages-input">
-          <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
-          <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
-          <mat-error *ngIf="description.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="description.hasError('minlength')">Min length 1</mat-error>
-          <mat-error *ngIf="description.hasError('maxlength')">Max length 120</mat-error>
-        </mat-form-field>
-      </div>
+      <div class="question-text-field__wrap">
+        <div class="control-input">
+          <mat-form-field class="messages-input" >
+            <input type="text" matInput [formControlName]="'name'">
+            <mat-hint align="end">{{name.value?.length || 0}}/60</mat-hint>
+            <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+            <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+            <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">
+          <mat-form-field class="messages-input">
+            <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
+            <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
+            <mat-error *ngIf="description.hasError('required')">Required field</mat-error>
+            <mat-error *ngIf="description.hasError('minlength')">Min length 1</mat-error>
+            <mat-error *ngIf="description.hasError('maxlength')">Max length 120</mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="nested-form-group"
-           *ngIf="getTypeField().value !== surveyQuestionType.questionGroup"
-           [ngClass]="{hidden: isActive()}">
-        <div clDynamicField
-             [currentIndex]="currentIndex"
-             [level]="level"
-             [group]="group"
-             [type]="getTypeField()?.value"
-        >
+        <div class="nested-form-group"
+             *ngIf="getTypeField().value !== surveyQuestionType.questionGroup"
+             [ngClass]="{hidden: isActive()}">
+          <div clDynamicField
+               [currentIndex]="currentIndex"
+               [level]="level"
+               [group]="group"
+               [type]="getTypeField()?.value"
+          >
+          </div>
         </div>
       </div>
+
+    </div>
+    <div class="nested-form-group" *ngIf="getTypeField()?.value === surveyQuestionType.questionGroup" [ngClass]="{hidden: isActive()}">
+      <div clDynamicField
+           [currentIndex]="currentIndex"
+           [level]="level"
+           [group]="group"
+           [type]="getTypeField()?.value"
+      >
+      </div>
     </div>
 
-  </div>
-  <div class="nested-form-group" *ngIf="getTypeField()?.value === surveyQuestionType.questionGroup" [ngClass]="{hidden: isActive()}">
-    <div clDynamicField
-         [currentIndex]="currentIndex"
-         [level]="level"
-         [group]="group"
-         [type]="getTypeField()?.value"
-    >
+    <div class="question-actions" [ngClass]="{hidden: isActive()}">
+      <section class="question-btn-actions">
+        <section class="question-btn-section">
+          <mat-slide-toggle
+            class="question-slide-toggle"
+            [color]="'primary'"
+            [formControlName]="'required'"
+          >
+            Required field
+          </mat-slide-toggle>
+        </section>
+
+        <section class="question-btn-section">
+          <mat-slide-toggle
+            class="question-slide-toggle"
+            [color]="'primary'"
+            [formControl]="descriptionField"
+          >
+            Description
+          </mat-slide-toggle>
+        </section>
+      </section>
+      <button class="question-remove btn-transparent" (click)="remove()">
+        <i class="icon delete"></i>
+      </button>
+    </div>
+
+    <div class="wrap-drop-zone">
+      <ng-content></ng-content>
     </div>
   </div>
-
-  <div class="question-actions" [ngClass]="{hidden: isActive()}">
-    <section class="question-btn-actions">
-      <section class="question-btn-section">
-        <mat-slide-toggle
-          class="question-slide-toggle"
-          [color]="'primary'"
-          [formControlName]="'required'"
-        >
-          Required field
-        </mat-slide-toggle>
-      </section>
-
-      <section class="question-btn-section">
-        <mat-slide-toggle
-          class="question-slide-toggle"
-          [color]="'primary'"
-          [formControl]="descriptionField"
-        >
-          Description
-        </mat-slide-toggle>
-      </section>
-    </section>
-    <button class="question-remove btn-transparent" (click)="remove()">
-      <i class="icon delete"></i>
-    </button>
-  </div>
-
-  <div class="wrap-drop-zone">
-    <ng-content></ng-content>
-  </div>
-</div>
+</ng-container>

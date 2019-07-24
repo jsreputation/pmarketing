@@ -1,10 +1,10 @@
-<div class="question-group-field">
+<ng-container *ngIf="group">
+  <div class="question-group-field">
 
-  <!--questions form array-->
+    <!--questions form array-->
     <div cdkDropList (cdkDropListDropped)="drop($event)"
          class="drag-list"
          [cdkDropListData]="surveyQuestionGroup.controls"
-
     >
       <cl-question-form-field *ngFor="let item of surveyQuestionGroup.controls; let i = index;"
                               cdkDrag
@@ -21,20 +21,22 @@
         </div>
       </cl-question-form-field>
     </div>
-  <!--end questions form array-->
+    <!--end questions form array-->
 
-  <cl-question-type class="question-select-type"
-                    addQuestionType="true"
-                    (selectTypeQuestion)="choseTypeQuestion($event)"
-                    [level]="level"
-  >
-    <cl-button [classList]="'tertiary'"
+    <cl-question-type class="question-select-type"
+                      addQuestionType="true"
+                      (selectTypeQuestion)="choseTypeQuestion($event)"
+                      [level]="level"
     >
+      <cl-button [classList]="'tertiary'"
+      >
         <span>
          + Add Sub Question
         </span>
-    </cl-button>
-  </cl-question-type>
-</div>
+      </cl-button>
+    </cl-question-type>
+  </div>
+</ng-container>
+
 
 

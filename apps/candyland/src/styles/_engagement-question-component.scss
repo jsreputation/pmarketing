@@ -2,7 +2,6 @@
 
 .view {
   &-group-label {
-
     .mat-optgroup-label {
       color: $dark-color;
       padding-left: 3.2rem;
@@ -22,8 +21,7 @@
   }
 
   &-text {
-
-    &:first-letter {
+    &::first-letter {
       text-transform: uppercase;
     }
   }
