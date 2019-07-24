@@ -1,5 +1,4 @@
 <div class="campaign-detail-content">
-  <cl-chip-list></cl-chip-list>
   <!--Campaign Info-->
   <mat-expansion-panel class="card">
     <mat-expansion-panel-header class="card-header">
@@ -31,21 +30,22 @@
         <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
-      <mat-form-field class="card-row">
-        <mat-chip-list #chipList aria-label="card-label">
-          <mat-chip *ngFor="let label of labels" [selectable]="selectable"
-                    [removable]="removable" (removed)="remove(label)">
-            {{label.name}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="Label"
-                 [formControl]="campaignInfo.get('labels')"
-                 [matChipInputFor]="chipList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 [matChipInputAddOnBlur]="addOnBlur"
-                 (matChipInputTokenEnd)="add($event)">
-        </mat-chip-list>
-      </mat-form-field>
+      <cl-chip-list [formControl]="campaignInfo.get('labels')"></cl-chip-list>
+      <!--<mat-form-field class="card-row">-->
+        <!--<mat-chip-list #chipList aria-label="card-label">-->
+          <!--<mat-chip *ngFor="let label of labels" [selectable]="selectable"-->
+                    <!--[removable]="removable" (removed)="remove(label)">-->
+            <!--{{label.name}}-->
+            <!--<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
+          <!--</mat-chip>-->
+          <!--<input placeholder="Label"-->
+                 <!--[formControl]="campaignInfo.get('labels')"-->
+                 <!--[matChipInputFor]="chipList"-->
+                 <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+                 <!--[matChipInputAddOnBlur]="addOnBlur"-->
+                 <!--(matChipInputTokenEnd)="add($event)">-->
+        <!--</mat-chip-list>-->
+      <!--</mat-form-field>-->
     </div>
   </mat-expansion-panel>
   <!--Select channel-->

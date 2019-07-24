@@ -1,29 +1,49 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatChipInputEvent } from '@angular/material';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { FormControl } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {MatChipInputEvent} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {noop, Subject} from "rxjs";
 
 @Component({
   selector: 'cl-chip-list',
   templateUrl: './chip-list.component.html',
-  styleUrls: ['./chip-list.component.scss']
+  styleUrls: ['./chip-list.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ChipListComponent),
+      multi: true,
+    }
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChipListComponent implements OnInit {
+export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public visible = true;
   @Input() public selectable = true;
   @Input() public removable = true;
   @Input() public addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  @Input() labels = [
-    {name: 'Label A'},
-    {name: 'Label B'},
-    {name: 'Label C'},
-  ];
-  control = new FormControl();
 
-  constructor() { }
+  @Input() set value(setValue: string[]) {
+    this.writeValue(setValue);
+  }
+
+  labels = [];
+  private control = new FormControl();
+  private destroy$ = new Subject();
+  private onChange: any = noop;
+  // @ts-ignore
+  private onTouched: any = noop;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public add(event: MatChipInputEvent): void {
@@ -31,12 +51,13 @@ export class ChipListComponent implements OnInit {
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.labels.push({name: value.trim()});
+      this.labels.push(value.trim());
     }
 
     if (input) {
       input.value = '';
     }
+    this.onChange(this.labels);
   }
 
   public remove(label): void {
@@ -45,6 +66,34 @@ export class ChipListComponent implements OnInit {
     if (index >= 0) {
       this.labels.splice(index, 1);
     }
+
+    this.onChange(this.labels);
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+    this.control.markAsTouched();
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.control.disable();
+    } else {
+      this.control.enable();
+    }
+  }
+
+  writeValue(value: any[]): void {
+    if (value && value.length > 0) {
+      this.labels = value;
+    } else {
+      this.control.reset('');
+    }
+    this.onChange(value);
   }
 
 }
