@@ -3,7 +3,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  background: $auth-bg-color;
+  background: $bg-color;
   flex: 1;
 }
 
@@ -16,8 +16,8 @@
   margin-bottom: 3.2rem;
 
   &-logo {
-    width: 9.5rem;
-    height: 11.5rem;
+    width: 10rem;
+    height: 10rem;
   }
 
   &-title {
