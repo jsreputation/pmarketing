@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,7 +52,7 @@ import { HomeComponent } from './home/home.component';
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment })
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

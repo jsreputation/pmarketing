@@ -291,6 +291,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/forms@~8.0.1":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.3.tgz#21282ba5616ee1641c2cbec9d34afd1c3482e44d"
+  integrity sha512-22s82QDRQ72K4vMYuNh3NAN+da9uanwoydnfKlp2rb9dZAb2QVX9NN6gSoMrkSSr2O9KTP6pWiw6A3/MW8sGRA==
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/language-service@~8.0.0":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-8.0.1.tgz#72aefb3d86f98e3d7e90ba970b65fabba3aac9b6"
