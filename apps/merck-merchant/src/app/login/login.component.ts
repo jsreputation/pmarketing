@@ -48,8 +48,7 @@ export class LoginComponent implements OnInit {
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
-            // TODO: implement navigation to home screen
-            // this.router.navigateByUrl('');
+            this.router.navigateByUrl('/home');
           }
         }
       })
@@ -71,6 +70,10 @@ export class LoginComponent implements OnInit {
 
   public onCrossClicked(): void {
     this.errorMessage = null;
+  }
+
+  public onForgotPassword(): void {
+    this.router.navigateByUrl('/reset');
   }
 
 }
