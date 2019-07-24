@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, CAMPAIGN_TYPE, IGame, GameService } from '@perx/core/dist/perx-core';
+import { CampaignService, CAMPAIGN_TYPE, IGame, GameService, ICampaign } from '@perx/core/dist/perx-core';
 import { map, take } from 'rxjs/operators';
 
 @Component({
@@ -43,7 +43,7 @@ export class GameComponent implements OnInit {
         if (!this.campaignId) {
           this.campaignService.getCampaigns()
             .pipe(
-              map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.game)),
+              map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.game)),
               take(1)
             )
             .subscribe(campaigns => {
