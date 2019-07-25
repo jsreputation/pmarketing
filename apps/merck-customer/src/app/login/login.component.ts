@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
+  public selectedCountry: string = '+852';
+
   public loginForm: FormGroup;
 
   private authenticated: boolean;
@@ -34,16 +36,20 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {}
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('mobileNo').value as string).toUpperCase();
+
+    // TODO: Uncomment the following line once merck-customer backend is setup with authentication service
+    // const mobileNo = this.selectedCountry + (this.loginForm.get('mobileNo').value as string);
+
+    const mobileNo = (this.loginForm.get('mobileNo').value as string).toUpperCase();
     const password: string = this.loginForm.get('password').value;
 
-    this.authService.v4GameOauth(username, password)
+    this.authService.v4GameOauth(mobileNo, password)
       .then((isAuthed: boolean) => {
         this.authenticated = isAuthed;
         if (this.authenticated) {
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = username;
+            (window as any).primaryIdentifier = mobileNo;
           }
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());

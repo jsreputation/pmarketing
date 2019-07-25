@@ -1,0 +1,39 @@
+@import "~src/assets/styles/variables";
+
+:host {
+  background: $bg-color;
+  height: 100%;
+}
+
+.loyalty-section {
+  width: 100%;
+  height: 17rem;
+  display: flex;
+}
+
+.loyalty-item {
+  flex: 1;
+
+  &-qr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.enlarge {
+  color: $white;
+  margin: 1.5rem 0 1rem;
+}
+
+.rewards-carousel {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.promotion {
+  margin: 3.2rem 0 1.6rem;
+  font-size: 1.8rem;
+  color: $text-green;
+}

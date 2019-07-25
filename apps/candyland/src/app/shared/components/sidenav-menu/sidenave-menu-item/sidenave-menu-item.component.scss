@@ -70,7 +70,12 @@ mat-nav-list {
 }
 
 .icon-menu {
-    width: 2.4rem !important;
-    padding: 0 0 0 1.6rem !important;
-    box-sizing: content-box;
+  width: 2.4rem !important;
+  padding: 0 0 0 1.6rem !important;
+  box-sizing: content-box;
+}
+
+.icon {
+  width: 18px !important;
+  padding: 0 0 0 16px !important;
 }
