@@ -203,7 +203,7 @@ export class AuthenticationService implements AuthService {
   }
 
   /**
-   * This method will send an OTP to the user. This otp should be used as input 
+   * This method will send an OTP to the user. This otp should be used as input
    * of method resetPassword.
    */
   // @ts-ignore
