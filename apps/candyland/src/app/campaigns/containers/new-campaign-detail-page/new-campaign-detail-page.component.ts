@@ -23,7 +23,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
       schedule: {
         enableRecurrence: false,
         recurrence: {
-          repeatOn: ['wednesday', 'friday']
+          repeatOn: []
         }
       }
     }
@@ -173,5 +173,6 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.cd.detach();
   }
 }

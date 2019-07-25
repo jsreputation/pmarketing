@@ -10,7 +10,7 @@ import {
 import { MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { noop, Subject } from 'rxjs';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'cl-chip-list',
@@ -39,7 +39,6 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   labels = [];
   private control = new FormControl();
-  private destroy$ = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -51,8 +50,6 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public add(event: MatChipInputEvent): void {
