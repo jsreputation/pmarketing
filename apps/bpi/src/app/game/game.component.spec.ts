@@ -6,6 +6,7 @@ import { NotificationService } from '../notification.service';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -212,8 +213,8 @@ describe('GameComponent', () => {
         }
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -317,8 +318,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -412,8 +413,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -549,8 +550,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -686,8 +687,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -813,8 +814,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
