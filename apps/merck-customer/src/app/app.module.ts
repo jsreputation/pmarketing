@@ -26,6 +26,8 @@ import { environment } from '../environments/environment';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { SignupComponent } from './signup/signup.component';
     LoginComponent,
     UserInfoComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    ForgotPasswordComponent,
+    EnterPinComponent
   ],
   imports: [
     BrowserModule,
