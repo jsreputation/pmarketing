@@ -1,14 +1,28 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/containers/login/login.component';
+import { ContentContainerComponent } from './ui/content-container/content-container.component';
+import { HomeComponent } from './home/containers/home/home.component';
+import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'login'},
-  {path: 'login', component: LoginComponent}
+  {
+    path: '', component: ContentContainerComponent, children: [
+      {path: '', component: HomeComponent},
+      {
+        path: 'qr', component: EnlargedQrComponent, data: {
+          back: true,
+          backUrl: ''
+        }
+      }
+    ]
+  },
+  {path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
