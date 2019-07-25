@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { MatDialog } from '@angular/material';
-import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -19,14 +18,9 @@ export class DashboardGameCardComponent implements OnInit {
     if (link.toLocaleLowerCase().includes('engagement')) {
       this.openDialogCreate();
     }
-    this.openDialogCreateDemo();
   }
 
   public openDialogCreate(): void {
     this.dialog.open(CreateEngagementPopupComponent);
-  }
-
-  public openDialogCreateDemo(): void {
-    this.dialog.open(SelectMerchantComponent);
   }
 }

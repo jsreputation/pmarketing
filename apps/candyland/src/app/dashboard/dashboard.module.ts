@@ -7,8 +7,6 @@ import { DashboardGameCardComponent } from './components/dashboard-game-card/das
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
-import { SelectMerchantModule } from '@cl-shared/containers/select-merchant/select-merchant.module';
-
 
 @NgModule({
   declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent],
@@ -17,9 +15,6 @@ import { SelectMerchantModule } from '@cl-shared/containers/select-merchant/sele
     DashboardRoutingModule,
     ButtonModule,
     CreateEngagementPopupModule,
-
-
-    SelectMerchantModule,
   ]
 })
 export class DashboardModule { }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -9,11 +9,9 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class MerchantListComponent implements OnInit, AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
   @Input() public displayedColumns = ['logo', 'name', 'phone', 'branches'];
-  // @Input() public set data(val) {
-  //   console.log('set val', val);
-  //   // this.dataSource.data = val;
-  // }
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @Output() selectedMerchant = new EventEmitter<IMerchant>();
+  public selected: IMerchant;
   constructor() { }
 
   ngOnInit() {
@@ -21,6 +19,15 @@ export class MerchantListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  public selectMerchant(item: IMerchant) {
+    this.selected = item;
+    this.selectedMerchant.emit(item);
+  }
+
+  public isSelected(item: IMerchant): boolean {
+    return this.selected && item.id === this.selected.id;
   }
 
 }

@@ -8,7 +8,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding:0 5rem 0 3rem;
+    padding: 0 5rem 0 3rem;
     box-sizing: border-box;
   }
 
@@ -41,6 +41,21 @@
   }
 }
 
-.merchant-list {
-  padding-top: 3.5rem;
+.merchant {
+  &-list {
+    padding-top: 3.5rem;
+  }
+
+  &-dialog-content {
+    padding: 0 3rem;
+    min-width: 94.4rem;
+  }
+
+  &-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2.4rem 3rem;
+  }
 }
+
