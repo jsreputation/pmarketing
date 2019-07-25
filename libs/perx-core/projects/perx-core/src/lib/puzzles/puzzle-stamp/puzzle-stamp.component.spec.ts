@@ -22,12 +22,12 @@ describe('PuzzleStampComponent', () => {
     component = fixture.componentInstance;
     component.stamps = [{
       id: 1,
-      user_account_id: 1,
+      userAccountId: 1,
       state: STAMP_STATE.redeemed,
-      stamp_card_id: 1,
-      created_at: '',
-      updated_at: '',
-      campaign_id: 1,
+      stampCardId: 1,
+      createdAt: '',
+      updatedAt: '',
+      campaignId: 1,
       vouchers: []
     }];
     fixture.detectChanges();
