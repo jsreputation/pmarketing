@@ -7,12 +7,14 @@ import { RewardsCarouselComponent } from './rewards-carousel/rewards-carousel.co
 import { RewardsListComponent } from './rewards-list/rewards-list.component';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { MaterialModule } from '../shared/material.module';
+import { RewardComponent } from './reward/reward.component';
 
 @NgModule({
   declarations: [
     RewardsCarouselComponent,
     RewardsListComponent,
-    RewardsListTabbedComponent
+    RewardsListTabbedComponent,
+    RewardComponent
   ],
   imports: [
     CommonModule,
