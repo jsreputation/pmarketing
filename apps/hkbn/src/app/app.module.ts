@@ -7,20 +7,25 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
-  CognitoModule, LoyaltyModule,
+  CognitoModule,
+  LoyaltyModule,
   OauthModule,
-  PopupComponent, ProfileModule,
+  PopupComponent,
+  ProfileModule,
   UtilsModule,
+  VouchersModule,
 } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule } from '@angular/material';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
 import { HomeModule } from './home/home.module';
+import { WalletComponent } from './wallet/wallet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    WalletComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,13 +35,15 @@ import { HomeModule } from './home/home.module';
     CognitoModule.forRoot({env: environment}),
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule.forRoot({env: environment}),
+    VouchersModule.forRoot({env: environment}),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
     AppRoutingModule,
     ContentContainerModule,
     HomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
