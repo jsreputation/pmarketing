@@ -158,7 +158,7 @@ export class GameComponent implements OnInit {
       this.notificationService.addPopup({
         title: `You have a total of ${ this.keys } keys!`,
         imageUrl: 'assets/key.png',
-        text: 'Tap the highlighted locks to unlock.',
+        text: 'Tap the highlighted locks to unlock your Netflix rebate.',
         buttonTxt: 'Start Unlocking!'
       });
     }
