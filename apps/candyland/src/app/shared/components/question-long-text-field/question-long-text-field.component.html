@@ -1,0 +1,9 @@
+<ng-container *ngIf="group">
+  <div class="form-group" [formGroup]="group">
+    <div class="control-input">
+      <mat-form-field class="messages-input">
+        <input type="number" matInput [placeholder]="'Max Characters'" [formControlName]="'text'"/>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-container>

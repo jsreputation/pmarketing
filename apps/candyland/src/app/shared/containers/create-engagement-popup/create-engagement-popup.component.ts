@@ -49,6 +49,8 @@ export class CreateEngagementPopupComponent implements OnInit {
       case EngagementType.games:
         this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
         break;
+      case EngagementType.survey:
+        this.router.navigateByUrl('/engagements/new-survey/appearance');
     }
     this.close();
   }
