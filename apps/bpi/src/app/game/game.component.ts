@@ -178,8 +178,8 @@ export class GameComponent implements OnInit {
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
       this.notificationService.addPopup({
-        text: `You only need ${ requiredKeysToUnlock } to unlock your Netflix rebate.
-        Keep using your BPI Credit Card to get up to 6 months of Netflix rebate.`,
+        text: `You only need ${requiredKeysToUnlock} key to earn your Netflix rebate. Keep using your
+        BPI Credit Card to get your Netflix rebate of up to 6 months.`,
         buttonTxt: 'Close',
         afterClosedCallBack: this
       });
@@ -202,8 +202,8 @@ export class GameComponent implements OnInit {
 
     this.stampService.stampAll(id).subscribe(
       (res: IStamp[]) => {
-        this.keys -= totalSlots;
         const stampsRedeemed = res.filter(stamp => stamp.state === 'redeemed').length;
+        this.keys -= stampsRedeemed;
         if (stampsRedeemed === totalSlots) {
           this.router.navigate(['bpi/congrats']);
         }
