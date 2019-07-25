@@ -1,5 +1,5 @@
 <div class="app-container">
-  <app-header [title]="title" [subTitle]="subTitle"></app-header>
+  <app-header *ngIf="path != 'terms-conditions'" [title]="title" [subTitle]="subTitle"></app-header>
   <div class="game-container">
     <div class="contents">
       <img src="assets/netflix-on-us.jpg" alt="Your netflix is on us" />

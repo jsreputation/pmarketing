@@ -5,11 +5,6 @@ export abstract class ProfileService {
   public abstract whoAmI(): Observable<IProfile>;
 
   // @ts-ignore
-  public resetPassword(password: string): Observable<void> {
-    return throwError('Not implemented yet');
-  }
-
-  // @ts-ignore
   public setCustomProperties(data: ICustomProperties): Observable<void> {
     return throwError('Not implemented yet');
   }
