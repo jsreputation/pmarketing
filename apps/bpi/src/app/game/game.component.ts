@@ -196,4 +196,8 @@ export class GameComponent implements OnInit {
   public getCardColumn(card: IStampCard): number {
     return card.display_properties.total_slots;
   }
+
+  public onReadTermsConditions(): void {
+    this.router.navigate(['bpi/terms-conditions']);
+  }
 }
