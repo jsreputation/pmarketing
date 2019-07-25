@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
@@ -139,10 +139,10 @@ export class AuthenticationService implements AuthService {
 
     const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId)
       .toPromise();
-      // .catch(() => {
-      //   console.log('login failed!');
-      //   this.authing = false;
-      // });
+    // .catch(() => {
+    //   console.log('login failed!');
+    //   this.authing = false;
+    // });
 
     if (v4AuthData === undefined) {
       return false;
@@ -200,6 +200,40 @@ export class AuthenticationService implements AuthService {
 
   public logout(): void {
     this.tokenStorage.clear();
+  }
+
+  /**
+   * This method will send an OTP to the user. This otp should be used as input 
+   * of method resetPassword.
+   */
+  // @ts-ignore
+  public forgotPassword(identifier: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public resetPassword(otp: string, password: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public resendOTP(identifier: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public signup(identifier: string, password: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public verifyOTP(identifier: string, otp: string): Observable<void> {
+    return throwError('Not implemented yet');
+  }
+
+  // @ts-ignore
+  public changePassword(newPassword: string, oldPassword?: string): Observable<void> {
+    return throwError('Not implemented yet');
   }
 
   /**
