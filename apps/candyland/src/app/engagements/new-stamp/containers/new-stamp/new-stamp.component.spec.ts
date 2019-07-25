@@ -20,7 +20,6 @@ describe('NewStampPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         ReactiveFormsModule,
         ImagesPreviewModule,
         ButtonModule,
@@ -30,6 +29,7 @@ describe('NewStampPageComponent', () => {
         GameMobilePreviewStampModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
+        RouterTestingModule,
 
         MatTabsModule,
         MatCardModule,
