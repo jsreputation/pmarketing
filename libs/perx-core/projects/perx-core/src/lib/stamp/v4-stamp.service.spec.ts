@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { StampService } from './stamp.service';
+import { V4StampService } from './v4-stamp.service';
 import { EnvConfig } from '../shared/env-config';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -19,7 +19,7 @@ describe('StampService', () => {
   }));
 
   it('should be created', () => {
-    const service: StampService = TestBed.get(StampService);
+    const service: V4StampService = TestBed.get(V4StampService);
     expect(service).toBeTruthy();
   });
 });
