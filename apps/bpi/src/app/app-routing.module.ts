@@ -13,7 +13,8 @@ const routes: Routes = [
       { path: 'game', component: GameComponent },
       { path: 'game/:campaignId', component: GameComponent },
       { path: 'congrats', component: CongratsComponent },
-      { path: 'landing', component: LandingComponent }
+      { path: 'landing', component: LandingComponent },
+      { path: 'terms-conditions', component: CongratsComponent },
     ],
     canActivate: [ProtectedGuard]
   },

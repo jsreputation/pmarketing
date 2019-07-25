@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -13,32 +12,46 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  config: any;
-  public visible = true;
-  public selectable = true;
-  public removable = true;
-  public addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  labels = [
-    {name: 'Label A'},
-    {name: 'Label B'},
-    {name: 'Label C'},
-  ];
+  public config: any;
+  private formChanged;
+  private defaultFormValue = {
+    campaignInfo: {
+      disabledEndDate: false
+    },
+    channel: {
+      type: 'weblink',
+      schedule: {
+        enableRecurrence: false,
+        recurrence: {
+          repeatOn: []
+        }
+      }
+    }
+  };
 
-  public get endDate() {
-    return this.form.get('campaignInfo').get('endDate');
+  public get campaignInfo() {
+    return this.form.get('campaignInfo');
   }
 
-  public get endTime() {
-    return this.form.get('campaignInfo').get('endTime');
+  public get channel() {
+    return this.form.get('channel');
   }
 
-  public get startDate() {
-    return this.form.get('campaignInfo').get('startDate');
+  public get schedule() {
+    return this.form.get('channel').get('schedule');
+  }
+
+  public get recurrence() {
+    return this.form.get('channel').get('schedule').get('recurrence');
+  }
+
+  public get audience() {
+    return this.form.get('audience');
   }
 
   constructor(
     private store: CampaignCreationStoreService,
+    public cd: ChangeDetectorRef,
     private fb: FormBuilder
   ) {
   }
@@ -47,44 +60,17 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     this.config = this.store.config;
     this.initForm();
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe(value => this.store.updateCampaign(value));
-  }
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        debounceTime(500)
+      )
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+        this.updateFormStructure();
+      });
 
-  ngOnDestroy(): void {
-  }
-
-  public toggleEndDate(value: boolean) {
-    if (value) {
-      this.endDate.reset();
-      this.endTime.reset();
-      this.endDate.disable();
-      this.endTime.disable();
-    } else {
-      this.endDate.enable();
-      this.endTime.enable();
-    }
-  }
-
-  public add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    if ((value || '').trim()) {
-      this.labels.push({name: value.trim()});
-    }
-
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  public remove(label): void {
-    const index = this.labels.indexOf(label);
-
-    if (index >= 0) {
-      this.labels.splice(index, 1);
-    }
+    this.form.patchValue(this.defaultFormValue);
   }
 
   private initForm() {
@@ -95,12 +81,98 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         startTime: [],
         endDate: [],
         endTime: [],
+        disabledEndDate: [],
         labels: []
       }),
       channel: this.fb.group({
-        type: []
+        type: [],
+        message: [],
+        schedule: this.fb.group({
+          sendDate: [],
+          sendTime: [],
+          enableRecurrence: [],
+          recurrence: this.fb.group({
+            times: [],
+            period: [],
+            repeatOn: []
+          })
+
+        })
+      }),
+      audience: this.fb.group({
+        type: ['none'],
+        file: []
       })
     });
-    this.form.patchValue(this.store.currentCampaign);
+  }
+
+  private updateFormStructure() {
+    this.formChanged = false;
+
+    this.toggleControls(
+      this.campaignInfo.get('disabledEndDate').value === false,
+      [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
+      true
+    );
+
+    this.toggleControls(
+      this.channel.get('type').value === 'sms',
+      [this.channel.get('message'), this.schedule]
+    );
+
+    this.toggleControls(
+      this.schedule.get('enableRecurrence').value === true,
+      [this.recurrence]
+    );
+
+    this.toggleControls(
+      this.recurrence.get('period').value === 'week',
+      [this.recurrence.get('repeatOn')]
+    );
+
+    this.toggleControls(
+      this.audience.get('type').value === 'upload',
+      [this.audience.get('file')]
+    );
+
+    if (this.formChanged) {
+      this.updateForm();
+    }
+  }
+
+  private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
+    if (condition) {
+      controls.forEach(control => this.enableControl(control));
+    } else {
+      controls.forEach(control => {
+        this.disableControl(control, resetValue);
+      });
+    }
+  }
+
+  private enableControl(control: AbstractControl) {
+    if (control.disabled && !(control.parent && control.parent.disabled)) {
+      control.enable({emitEvent: false});
+      this.formChanged = true;
+    }
+  }
+
+  private disableControl(control: AbstractControl, resetValue = false) {
+    if (control.enabled) {
+      control.disable({emitEvent: false});
+      if (resetValue) {
+        control.reset(null, {emitEvent: false});
+      }
+      this.formChanged = true;
+    }
+  }
+
+  private updateForm() {
+    this.form.updateValueAndValidity();
+    this.cd.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.cd.detach();
   }
 }
