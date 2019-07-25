@@ -44,12 +44,12 @@ describe('StampComponent', () => {
     component.stamps = [
       {
         id: 1,
-        user_account_id: 1,
-        stamp_card_id: 1,
+        userAccountId: 1,
+        stampCardId: 1,
         state: STAMP_STATE.issued,
-        created_at: '',
-        updated_at: '',
-        campaign_id: 1,
+        createdAt: '',
+        updatedAt: '',
+        campaignId: 1,
         vouchers: [],
       }
     ];
@@ -70,12 +70,12 @@ describe('StampComponent', () => {
     component.stamps = [
       {
         id: 1,
-        user_account_id: 1,
-        stamp_card_id: 1,
+        userAccountId: 1,
+        stampCardId: 1,
         state: STAMP_STATE.issued,
-        created_at: '',
-        updated_at: '',
-        campaign_id: 1,
+        createdAt: '',
+        updatedAt: '',
+        campaignId: 1,
         vouchers: [],
       }
     ];
