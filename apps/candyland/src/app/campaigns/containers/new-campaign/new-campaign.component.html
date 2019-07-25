@@ -10,8 +10,8 @@
     </div>
   </div>
   <div class="btn-group">
-    <cl-button classList="invert">Cancel</cl-button>
-    <cl-button classList="third">Save as a draft</cl-button>
+    <cl-button classList="invert" routerLink="..">Cancel</cl-button>
+    <cl-button classList="third" routerLink="..">Save as a draft</cl-button>
     <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>
     <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>
   </div>
@@ -20,8 +20,8 @@
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step>
-      <ng-template matStepLabel>Select template</ng-template>
-      <cl-new-campaign-select-template-page></cl-new-campaign-select-template-page>
+      <ng-template matStepLabel>Select engagement</ng-template>
+      <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Rewards & Limits</ng-template>
