@@ -33,12 +33,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       switchMap((route: ActivatedRoute) => route.data),
       takeUntil(this.destroy$)
     ).subscribe((routeData) => {
+      console.log(routeData);
       this.routeData = routeData;
     });
   }
 
   public goBack(): void {
-    if (this.routeData && this.routeData.back) {
+    if (this.routeData && (this.routeData.back || this.routeData.cross)) {
       const url = this.routeData.backUrl ? this.routeData.backUrl : '';
       this.router.navigate([url]);
     }

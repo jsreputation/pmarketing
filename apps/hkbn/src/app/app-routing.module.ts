@@ -5,6 +5,7 @@ import { ContentContainerComponent } from './ui/content-container/content-contai
 import { HomeComponent } from './home/containers/home/home.component';
 import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 
 const routes: Routes = [
   {
@@ -12,11 +13,17 @@ const routes: Routes = [
       {path: '', component: HomeComponent},
       {
         path: 'qr', component: EnlargedQrComponent, data: {
-          back: true,
+          cross: true,
           backUrl: ''
         }
       },
-      {path: 'wallet', component: WalletComponent}
+      {path: 'wallet', component: WalletComponent},
+      {
+        path: 'wallet/:id', component: VoucherDetailsComponent, data: {
+          back: true,
+          backUrl: '/wallet'
+        }
+      }
     ]
   },
   {path: 'login', component: LoginComponent},
