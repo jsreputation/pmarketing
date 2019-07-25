@@ -78,4 +78,8 @@ export class LoginComponent implements OnInit {
     this.errorMessage = null;
   }
 
+  public goToSignup(): void {
+    this.router.navigateByUrl('/signup');
+  }
+
 }
