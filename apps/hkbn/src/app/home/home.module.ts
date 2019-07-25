@@ -7,15 +7,18 @@ import { MatButtonModule } from '@angular/material';
 import {
   RewardsModule
 } from '@perx/core/dist/perx-core';
+import { EnlargedQrComponent } from './containers/enlarged-qr/enlarged-qr.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, EnlargedQrComponent],
   imports: [
     CommonModule,
     LoyaltyModule,
     QRCodeModule,
     MatButtonModule,
-    RewardsModule
+    RewardsModule,
+    RouterModule
   ],
   exports: [HomeComponent]
 })
