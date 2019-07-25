@@ -1,0 +1,52 @@
+@import "variables";
+
+.dialog {
+
+  &-header-wrap {
+    height: 6.2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 5rem 0 3rem;
+    box-sizing: border-box;
+  }
+
+  &-title {
+    font-size: 1.6rem;
+    line-height: 1.23;
+    font-weight: bold;
+    color: $secondary-color;
+    margin: 0;
+  }
+
+  &-closed {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.7rem;
+    color: $secondary-color;
+  }
+
+  &-content {
+    padding: 0 3.3rem;
+    width: 86rem;
+  }
+
+  &-content-title {
+    font-size: 2rem;
+    line-height: 1.23;
+    font-weight: 500;
+    color: $secondary-color;
+    box-sizing: border-box;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 3.4rem 4rem;
+
+    &.type-survey {
+      padding: 0 4rem 3rem 4rem;
+    }
+  }
+}
+

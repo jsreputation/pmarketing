@@ -1,6 +1,15 @@
 
 @import "variables";
 
+::ng-deep {
+  .upload-btn {
+    span ~ span {
+      display: none;
+    }
+  }
+}
+
+
 .upload {
 
   &-wrap {

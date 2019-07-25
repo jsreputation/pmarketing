@@ -1,0 +1,28 @@
+@import "variables";
+
+.merchant {
+  &-upload-img {
+    margin-top: 2.4rem;
+  }
+
+  &-description {
+    margin-top: 2rem;
+  }
+
+  &-name {
+    margin-top: 5rem;
+  }
+
+  &-control-row {
+    display: flex;
+
+    .control-input {
+      width: 33.3%;
+      margin-right: 2.4rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,3 +1,45 @@
-<p>
-  create-merchant works!
-</p>
+<section class="create-merchant-form" [formGroup]="formMerchant">
+  <div class="page-header full-with">
+    <div class="game-title-wrap">
+      <div class="control-input name-control name-control-title">
+        <mat-form-field class="messages-input">
+          <input type="text" matInput formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="game-actions">
+      <button (click)="openDialog()">popup</button>
+      <cl-button [classList]="'third'"
+                 class="merchant-btn-cancel"
+                 (click)="comeBack()"
+      >
+        <span>
+          Cancel
+        </span>
+      </cl-button>
+      <cl-button [classList]="'primary'"
+                 (click)="save()"
+      >
+        <span>
+          Save
+        </span>
+      </cl-button>
+    </div>
+  </div>
+  <section class="content flex">
+    <div class="merchant-main-block">
+      <mat-card class="game-graphic">
+        <div class="merchant-wrap">
+          <p class="merchant-title">
+            Merchant Info
+          </p>
+        </div>
+        <cl-create-merchant-form [formMerchant]="formMerchant"></cl-create-merchant-form>
+      </mat-card>
+    </div>
+  </section>
+</section>
+
