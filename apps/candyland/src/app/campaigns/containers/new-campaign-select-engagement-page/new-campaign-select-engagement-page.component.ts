@@ -8,12 +8,12 @@ import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creati
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
-  selector: 'cl-new-campaign-select-template-page',
-  templateUrl: './new-campaign-select-template-page.component.html',
-  styleUrls: ['./new-campaign-select-template-page.component.scss'],
+  selector: 'cl-new-campaign-select-engagement-page',
+  templateUrl: './new-campaign-select-engagement-page.component.html',
+  styleUrls: ['./new-campaign-select-engagement-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignSelectTemplatePageComponent implements OnInit, OnDestroy {
+export class NewCampaignSelectEngagementPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public dataSource = new MatTableDataSource<Engagement>();
   public typeFilterConfig: OptionConfig[];
