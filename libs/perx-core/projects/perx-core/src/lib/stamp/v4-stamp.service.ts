@@ -185,8 +185,7 @@ export class V4StampService implements StampService {
     return this.http.get<IV4GetStampCardsResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
         params: {
-          size: '100',
-          serializer: 'new'
+          size: '100'
         }
       }
     ).pipe(
