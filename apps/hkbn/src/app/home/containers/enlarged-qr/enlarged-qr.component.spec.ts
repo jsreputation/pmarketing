@@ -1,32 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { QRCodeModule } from 'angularx-qrcode';
 
-import { HeaderComponent } from './header.component';
-import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { EnlargedQrComponent } from './enlarged-qr.component';
+import { MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('EnlargedQrComponent', () => {
+  let component: EnlargedQrComponent;
+  let fixture: ComponentFixture<EnlargedQrComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatToolbarModule,
+        QRCodeModule,
         MatButtonModule,
-        NoopAnimationsModule,
         RouterTestingModule,
+        NoopAnimationsModule
       ],
-      declarations: [ HeaderComponent ]
+      declarations: [EnlargedQrComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(EnlargedQrComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

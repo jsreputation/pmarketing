@@ -1,0 +1,19 @@
+@import "~src/assets/styles/variables";
+
+.enlarged-qr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &-title {
+    margin: 7rem 0 2rem;
+    font-size: 1.4rem;
+  }
+}
+
+.carry-out {
+  margin-top: 7rem;
+  color: $white;
+  width: 100%;
+}
