@@ -147,17 +147,26 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
+
+    let campaignConfig = {
+      totalSlots: null,
+      rewards: null,
+    };
+    if (stampCard.campaign_config) {
+      campaignConfig = {
+        totalSlots: stampCard.campaign_config.total_slots,
+        rewards: stampCard.campaign_config.rewards.map
+        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards))
+      };
+    }
+
     return {
       id: stampCard.id,
       userAccountId: stampCard.user_account_id,
       state: stampCard.state,
       campaignId: stampCard.campaign_id,
       cardNumber: stampCard.card_number,
-      campaignConfig: {
-        totalSlots: stampCard.campaign_config.total_slots,
-        rewards: stampCard.campaign_config.rewards.map
-        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards))
-      },
+      campaignConfig,
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
@@ -176,8 +185,7 @@ export class V4StampService implements StampService {
     return this.http.get<IV4GetStampCardsResponse>(
       `${ this.baseUrl }/v4/campaigns/${ campaignId }/stamp_cards`, {
         params: {
-          size: '100',
-          serializer: 'new'
+          size: '100'
         }
       }
     ).pipe(
