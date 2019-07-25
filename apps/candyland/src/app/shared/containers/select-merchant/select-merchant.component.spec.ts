@@ -25,7 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   selector: 'cl-merchant-list',
   template: ''
 })
-class TestMerchantListCompoent {
+class TestMerchantListComponent {
   @Input() public dataSource: any;
 }
 
@@ -56,7 +56,7 @@ describe('SelectMerchantComponent', () => {
       ],
       declarations: [
         SelectMerchantComponent,
-        TestMerchantListCompoent
+        TestMerchantListComponent
       ],
       providers: [
         {
