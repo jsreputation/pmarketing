@@ -1,0 +1,263 @@
+<div class="page-header full-with">
+  <div class="game-title-wrap">
+    <div class="control-input name-control name-control-title">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput [formControl]="name">
+        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="btn-group">
+    <cl-button classList="invert" routerLink="..">Cancel</cl-button>
+    <!--    <cl-button classList="third" routerLink="..">Save as a draft</cl-button>-->
+    <!--    <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>-->
+    <!--    <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>-->
+    <cl-button classList="primary">Save</cl-button>
+  </div>
+</div>
+
+
+<div class="campaign-detail-content">
+  <!--Reward Info-->
+  <mat-expansion-panel class="card">
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Reward Info
+      </p>
+    </mat-expansion-panel-header>
+
+    <div class="card-content">
+      <!--image-->
+      <div class="card-row">
+        <cl-upload-graphic></cl-upload-graphic>
+      </div>
+      <div class="">
+        <div class="input-group">
+          <!-- Reward Type-->
+          <mat-form-field>
+            <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Reward Type">
+              <ng-container *ngFor="let option of config?.rewardType">
+                <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <!--Category-->
+          <mat-form-field>
+            <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Category">
+              <ng-container *ngFor="let option of config?.category">
+                <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!--Redemption Type-->
+        <div class="input-group">
+          <mat-form-field>
+            <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Redemption Type">
+              <ng-container *ngFor="let option of config?.category">
+                <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <!--Cost of Reward-->
+          <mat-form-field>
+            <input
+              type="number"
+              min="0"
+              step="1"
+              matInput
+              placeholder="Cost of Reward"
+              [formControl]="campaignInfo.get('goal')">
+            <span matSuffix>SGD</span>
+          </mat-form-field>
+        </div>
+      </div>
+      <!--Description-->
+      <mat-form-field appearance="outline">
+        <textarea matInput
+                  placeholder="Description"
+                  [formControl]="campaignInfo.get('goal')"></textarea>
+      </mat-form-field>
+      <!--Terms & Condition-->
+      <mat-form-field appearance="outline">
+        <textarea matInput
+                  placeholder="Terms & Condition"
+                  [formControl]="campaignInfo.get('goal')"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+  <!--Reward Info-->
+  <mat-expansion-panel class="card">
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Reward Info
+      </p>
+    </mat-expansion-panel-header>
+
+    <div class="card-content">
+      <!--items-->
+      <mat-radio-group class="item-list">
+        <mat-radio-button>
+          <div class="merchant-card">
+            <i class="icon select-merchant-icon  merchant-card-icon"></i>
+            <span class="merchant-card-label">Select existing merchant</span>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button value="create">
+          <div class="merchant-card">
+            <i class="icon create-merchant-icon merchant-card-icon"></i>
+            <span class="merchant-card-label">Create new merchant</span>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <div class="merchant-item">
+        <div class="merchant-item-img">
+          <img src="/assets/images/spin-the-wheel-preview.png">
+        </div>
+        <div class="merchant-item-info">
+          <span>Starbucks</span>
+          <span>+65 9129 8888</span>
+          <span>40 Branches</span>
+          <div class="merchant-item-action">
+            <button mat-icon-button>
+              <i class="icon full-with delete-action"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+
+  <!--duration-->
+  <!--      <div class="card-row">-->
+  <!--        <div class="input-group">-->
+  <!--          <cl-date-picker [formControl]="campaignInfo.get('startDate')"-->
+  <!--                          [max]="campaignInfo.get('endDate').value"></cl-date-picker>-->
+  <!--          <cl-time-picker [formControl]="campaignInfo.get('startTime')"></cl-time-picker>-->
+  <!--        </div>-->
+  <!--        to-->
+  <!--        <div class="input-group">-->
+  <!--          <cl-date-picker [formControl]="campaignInfo.get('endDate')"-->
+  <!--                          [min]="campaignInfo.get('startDate').value"></cl-date-picker>-->
+  <!--          <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>-->
+  <!--        </div>-->
+  <!--        <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>-->
+  <!--      </div>-->
+  <!--      &lt;!&ndash;labels&ndash;&gt;-->
+  <!--      <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>-->
+
+  <!--  Select channel-->
+  <!--  <mat-expansion-panel class="card">-->
+  <!--    <mat-expansion-panel-header class="card-header">-->
+  <!--      <p class="card-title">-->
+  <!--        Select channel-->
+  <!--      </p>-->
+  <!--    </mat-expansion-panel-header>-->
+  <!--    &lt;!&ndash;channel type&ndash;&gt;-->
+  <!--    <div class="card-content">-->
+  <!--      <div class="card-row">-->
+  <!--        <mat-radio-group [formControl]="channel.get('type')">-->
+  <!--          <ng-container *ngFor="let type of config?.channelTypes">-->
+  <!--            <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>-->
+  <!--          </ng-container>-->
+  <!--        </mat-radio-group>-->
+  <!--      </div>-->
+  <!--      &lt;!&ndash;Message&ndash;&gt;-->
+  <!--      <div class="card-section" *ngIf="channel.get('message').enabled">-->
+  <!--        <div class="card-header">-->
+  <!--          <p class="card-title">-->
+  <!--            Message-->
+  <!--          </p>-->
+  <!--        </div>-->
+  <!--        <div class="card-content">-->
+  <!--          <cl-sms-editor [options]="config?.shortcodes" [control]="channel.get('message')"></cl-sms-editor>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      &lt;!&ndash;schedule&ndash;&gt;-->
+  <!--      <div class="card-section" *ngIf="schedule.enabled">-->
+
+  <!--        <div class="card-header">-->
+  <!--          <p class="card-title">-->
+  <!--            Schedule the sending date-->
+  <!--          </p>-->
+  <!--        </div>-->
+
+  <!--        <div class="card-content">-->
+  <!--          &lt;!&ndash;send date&ndash;&gt;-->
+  <!--          <div class="card-row">-->
+  <!--            <div class="input-group">-->
+  <!--              <cl-date-picker [control]="schedule.get('sendDate')" placeholder="Send date">-->
+  <!--              </cl-date-picker>-->
+  <!--              <cl-time-picker [control]="schedule.get('sendTime')">-->
+  <!--              </cl-time-picker>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash;recurrence Settings&ndash;&gt;-->
+  <!--          <div class="card-row form-field">-->
+  <!--            <mat-checkbox [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash;recurrence&ndash;&gt;-->
+  <!--          <div class="card-row stretch" *ngIf="recurrence.enabled">-->
+  <!--            <div class="row">-->
+  <!--              <div>-->
+  <!--                <label class="card-label">Repeat every</label>-->
+  <!--                <div class="input-group">-->
+  <!--                  &lt;!&ndash;time&ndash;&gt;-->
+  <!--                  <mat-form-field>-->
+  <!--                    <input matInput type="number" [formControl]="recurrence.get('times')" [min]="0">-->
+  <!--                  </mat-form-field>-->
+  <!--                  &lt;!&ndash;period&ndash;&gt;-->
+  <!--                  <mat-form-field>-->
+  <!--                    <mat-select [formControl]="recurrence.get('period')">-->
+  <!--                      <mat-option value="day">Day</mat-option>-->
+  <!--                      <mat-option value="week">Week</mat-option>-->
+  <!--                      <mat-option value="month">Month</mat-option>-->
+  <!--                    </mat-select>-->
+  <!--                  </mat-form-field>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--              <div>-->
+  <!--                &lt;!&ndash;repeat on&ndash;&gt;-->
+  <!--                <ng-container *ngIf="recurrence.get('repeatOn').enabled">-->
+  <!--                  <label class="card-label">Repeat on</label>-->
+  <!--                  <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">-->
+  <!--                    <ng-container *ngFor="let day of config?.days">-->
+  <!--                      <mat-checkbox [value]="day.value">-->
+  <!--                        <div>{{day.title}}</div>-->
+  <!--                      </mat-checkbox>-->
+  <!--                    </ng-container>-->
+  <!--                  </cl-checkbox-group>-->
+  <!--                </ng-container>-->
+  <!--              </div>-->
+  <!--            </div>-->
+
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </mat-expansion-panel>-->
+
+  <!--Select audience-->
+  <!--  <mat-expansion-panel class="card">-->
+  <!--    <mat-expansion-panel-header class="card-header">-->
+  <!--      <p class="card-title">-->
+  <!--        Select audience-->
+  <!--      </p>-->
+  <!--    </mat-expansion-panel-header>-->
+  <!--    <div class="card-content">-->
+  <!--      <div class="card-row">-->
+  <!--        <mat-radio-group aria-label="Select an option" [formControl]="audience.get('type')">-->
+  <!--          <mat-radio-button [value]="'none'">No audience</mat-radio-button>-->
+  <!--          <mat-radio-button [value]="'upload'">Upload an audience list</mat-radio-button>-->
+  <!--        </mat-radio-group>-->
+  <!--      </div>-->
+  <!--      <cl-upload-file *ngIf="audience.get('file').enabled"-->
+  <!--                      [formControl]="audience.get('file')">-->
+  <!--      </cl-upload-file>-->
+  <!--    </div>-->
+  <!--  </mat-expansion-panel>-->
+</div>

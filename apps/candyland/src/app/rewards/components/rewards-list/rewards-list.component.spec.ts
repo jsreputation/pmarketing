@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {EngagementsListComponent} from './engagements-list.component';
+import {RewardsListComponent} from './rewards-list.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {
   MatButtonModule,
@@ -23,8 +23,8 @@ import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RewardsListComponent', () => {
-  let component: EngagementsListComponent;
-  let fixture: ComponentFixture<EngagementsListComponent>;
+  let component: RewardsListComponent;
+  let fixture: ComponentFixture<RewardsListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,14 +46,14 @@ describe('RewardsListComponent', () => {
         NoDataModule,
         HttpClientTestingModule
       ],
-      declarations: [EngagementsListComponent],
+      declarations: [RewardsListComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EngagementsListComponent);
+    fixture = TestBed.createComponent(RewardsListComponent);
     component = fixture.componentInstance;
     component.dataSource = new MatTableDataSource<Engagement>();
     fixture.detectChanges();
