@@ -49,7 +49,7 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
   it('subTitle defaults to: Unlock your Netflix rebate.', () => {
-    expect(component.subTitle).toEqual('Unlock your Netflix rebate.');
+    expect(component.subTitle).toEqual('Unlock your Netflix rebate with your BPI Credit Card.');
   });
   it('cards defaults to: []', () => {
     expect(component.cards).toEqual([]);
