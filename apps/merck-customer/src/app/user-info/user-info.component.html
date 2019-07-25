@@ -1,4 +1,19 @@
-<p></p>
-<p></p>
-<p></p>
-<p>user-info works!</p>
+<div class="main-container">
+	<img src="assets/logo.png">
+	<div class="logo-title">
+		<span i18n="@@login-subtitle">Diabetes Loyality Program</span>
+	</div>
+	<div class="content-container">
+		<div class="main-heading">Thank you for participating in this loyality program.</div>
+		<div class="subtitle">To better the experience for you, please indicate the current condition you're taking
+			treatment for</div>
+		<form [formGroup]="surveyForm" (ngSubmit)="onNext()">
+			<mat-radio-group class="diabetes-selection" formControlName="diabetes">
+				<mat-radio-button color="primary" value="diabetes">Diabetes</mat-radio-button>
+				<mat-radio-button color="primary" value="pre_diabetes">Pre-Diabetes</mat-radio-button>
+			</mat-radio-group>
+			<mat-checkbox color="primary" formControlName="hypertension">Hypertension</mat-checkbox>
+			<button [disabled]="!surveyForm.valid" mat-flat-button type="submit" class="full-width__button">Next</button>
+		</form>
+	</div>
+</div>

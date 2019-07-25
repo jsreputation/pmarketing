@@ -1,0 +1,42 @@
+.survey {
+  &-form {
+    min-width: 74.7rem;
+    width: 100%;
+    margin-right: 4rem;
+  }
+
+  &-select-color {
+    .control-input, mat-form-field {
+      width: auto;
+    }
+  }
+
+  &-title-wrap {
+    margin-bottom: 3.5rem;
+  }
+
+  &-background {
+    margin-top: 6rem;
+  }
+}
+
+.btn-add-question {
+  display: block;
+  margin-top: 1.6rem;
+}
+
+cl-question-form-field {
+  display: block;
+  margin-bottom: 1.6rem;
+  margin-top: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.mobile {
+  &-preview-mobile {
+    background: url("/assets/images/survey/survey_mobile.png") no-repeat 100% 100%;
+  }
+}
