@@ -173,7 +173,7 @@ export class GameComponent implements OnInit {
 
     const cardSelectedLength = cardSelected.stamps.length;
     const cardSelectedRedeemed = cardSelected.stamps.filter(stamp => stamp.state === 'redeemed').length;
-    const totalSlots = cardSelected.display_properties.total_slots;
+    const totalSlots = cardSelected.displayProperties.totalSlots;
     const requiredKeysToUnlock = totalSlots - cardSelectedRedeemed;
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
