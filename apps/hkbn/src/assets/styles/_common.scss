@@ -1,3 +1,5 @@
+@import "~src/assets/styles/variables";
+
 * {
   box-sizing: border-box;
 }
@@ -21,4 +23,8 @@ a {
 
 .bg-white {
   background: $white;
+}
+
+.text-white {
+  color: $white;
 }
