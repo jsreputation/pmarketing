@@ -7508,7 +7508,7 @@ resolve@^1.0.0, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.10.1
   dependencies:
     path-parse "^1.0.6"
 
-resolve@^1.4.0:
+resolve@^1.4.0, resolve@^1.9.0:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.11.1.tgz#ea10d8110376982fef578df8fc30b9ac30a07a3e"
   dependencies:
@@ -8774,6 +8774,11 @@ ts-node@~7.0.0:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
+ts-optchain@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/ts-optchain/-/ts-optchain-0.1.7.tgz#525b8cde0909b06b4fe3258f7fc16eb6a9446895"
+  integrity sha512-akxVhbQjWFU9J4jbu+hWmJSou8yZmh6J0GynYlIOq2qNoVD02wQcMZlce6Gs3hShynMpUjKFy0ivqNH028oh3Q==
+
 tsconfig@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/tsconfig/-/tsconfig-7.0.0.tgz#84538875a4dc216e5c4a5432b3a4dec3d54e91b7"
@@ -8868,6 +8873,13 @@ tsutils@^3.0.0:
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
+
+ttypescript@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/ttypescript/-/ttypescript-1.5.7.tgz#76bb96765b331194b58a4e7d79fae82b886fc29a"
+  integrity sha512-qloW8S60+xWVC2bQWldYQfESNFkIgDL5/M+vAOOsuLJ1pQu0SG2vQx5DNJO2nlwSrHxD8cDuF2sVDXg6v3GG3Q==
+  dependencies:
+    resolve "^1.9.0"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"

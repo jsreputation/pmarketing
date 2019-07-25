@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NewCampaignSelectTemplatePageComponent } from './new-campaign-select-template-page.component';
+import { NewCampaignSelectEngagementPageComponent } from './new-campaign-select-engagement-page.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,9 +7,9 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { MatRadioModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('NewCampaignSelectTemplatePageComponent', () => {
-  let component: NewCampaignSelectTemplatePageComponent;
-  let fixture: ComponentFixture<NewCampaignSelectTemplatePageComponent>;
+describe('NewCampaignSelectEngagementPageComponent', () => {
+  let component: NewCampaignSelectEngagementPageComponent;
+  let fixture: ComponentFixture<NewCampaignSelectEngagementPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,14 +21,14 @@ describe('NewCampaignSelectTemplatePageComponent', () => {
         MatRadioModule,
         MatSelectModule
       ],
-      declarations: [NewCampaignSelectTemplatePageComponent],
+      declarations: [NewCampaignSelectEngagementPageComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewCampaignSelectTemplatePageComponent);
+    fixture = TestBed.createComponent(NewCampaignSelectEngagementPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
