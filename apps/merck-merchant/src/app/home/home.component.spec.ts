@@ -4,6 +4,7 @@ import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
+import { MatToolbarModule } from '@angular/material';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,6 +15,7 @@ describe('HomeComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ HomeComponent, HeaderComponent, SalesContactComponent ],
+      imports: [ MatToolbarModule ],
       providers: [
         { provide: Router, useValue: routerStub },
         {

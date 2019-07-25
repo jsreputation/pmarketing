@@ -19,7 +19,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public subTitle: string = 'Unlock your Netflix rebate.';
+  public subTitle: string = 'Unlock your Netflix rebate with your BPI Credit Card.';
 
   private campaignId: number;
 
@@ -69,14 +69,14 @@ export class GameComponent implements OnInit {
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
           this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
-          const totalSlots = card.display_properties.total_slots || 0;
+          const totalSlots = card.displayProperties.totalSlots || 0;
           // return card.state === STAMP_CARD_STATE.active &&
           return card.stamps &&
             card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
         });
 
         const unlockedCards = cards.filter(card => {
-          const totalSlots = card.display_properties.total_slots || 0;
+          const totalSlots = card.displayProperties.totalSlots || 0;
           return card.state === STAMP_CARD_STATE.active &&
             card.stamps &&
             card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots;
@@ -118,7 +118,7 @@ export class GameComponent implements OnInit {
     s.state = STAMP_STATE.redeemed;
 
     const totalRedeemed = card.stamps.filter(stmp => stmp.state === STAMP_STATE.redeemed).length;
-    const totalSlots = card.display_properties.total_slots;
+    const totalSlots = card.displayProperties.totalSlots;
 
     this.stampService.putStamp(s.id)
       .subscribe(
@@ -145,7 +145,7 @@ export class GameComponent implements OnInit {
   }
 
   public isCompleted(card: IStampCard): boolean {
-    const totalSlots = card.display_properties.total_slots;
+    const totalSlots = card.displayProperties.totalSlots;
     return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * totalSlots;
   }
 
@@ -158,7 +158,7 @@ export class GameComponent implements OnInit {
       this.notificationService.addPopup({
         title: `You have a total of ${ this.keys } keys!`,
         imageUrl: 'assets/key.png',
-        text: 'Tap the highlighted locks to unlock.',
+        text: 'Tap the highlighted locks to unlock your Netflix rebate.',
         buttonTxt: 'Start Unlocking!'
       });
     }
@@ -166,7 +166,7 @@ export class GameComponent implements OnInit {
 
   public onStampAll(cardSelected: IStampCard): void {
     const id = cardSelected.id;
-    const totalSlots = cardSelected.display_properties.total_slots;
+    const totalSlots = cardSelected.displayProperties.totalSlots;
     const index = this.cards.findIndex(card => card.id === id);
 
     const redeemedStamps = cardSelected.stamps.map(stamp => {
@@ -194,6 +194,10 @@ export class GameComponent implements OnInit {
   }
 
   public getCardColumn(card: IStampCard): number {
-    return card.display_properties.total_slots;
+    return card.displayProperties.totalSlots;
+  }
+
+  public onReadTermsConditions(): void {
+    this.router.navigate(['bpi/terms-conditions']);
   }
 }
