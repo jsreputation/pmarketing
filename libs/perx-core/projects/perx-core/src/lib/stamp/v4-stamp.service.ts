@@ -155,7 +155,7 @@ export class V4StampService implements StampService {
       campaignId: stampCard.campaign_id,
       cardNumber: stampCard.card_number,
       campaignConfig: {
-        totalSlots: oc(stampCard).campaign_config.total_slots(null),
+        totalSlots: oc(stampCard).campaign_config.total_slots(),
         rewards: (oc(stampCard) as unknown as IV4StampCard).campaign_config.rewards.map
         ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
       },
@@ -164,7 +164,7 @@ export class V4StampService implements StampService {
         numberOfRows: stampCard.display_properties.number_of_rows,
         cardImage: {
           value: {
-            imageUrl: oc(stampCard).display_properties.card_image.value.image_url(null),
+            imageUrl: oc(stampCard).display_properties.card_image.value.image_url(),
           }
         },
         totalSlots: stampCard.display_properties.total_slots,
