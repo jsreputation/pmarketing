@@ -14,6 +14,9 @@ const routes: Routes = [
           back: true,
           backUrl: ''
         }
+      },
+      {
+        path: 'reward/:id', loadChildren: () => import('./reward/reward.module').then((m) => m.RewardModule)
       }
     ]
   },
