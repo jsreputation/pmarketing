@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { oc } from 'ts-optchain';
 import { Observable, of } from 'rxjs';
 import {
   map,
@@ -81,19 +81,19 @@ interface IV4StampCard {
   state: STAMP_CARD_STATE;
   campaign_id: number;
   card_number: number;
-  campaign_config: {
+  campaign_config?: {
     total_slots: number;
     rewards: IV4Reward[];
   };
   display_properties: {
-    number_of_cols: number;
-    number_of_rows: number;
-    card_image: {
-      value: {
-        image_url: string;
+    number_of_cols?: number;
+    number_of_rows?: number;
+    card_image?: {
+      value?: {
+        image_url?: string;
       }
     };
-    total_slots: number;
+    total_slots?: number;
   };
   stamps?: IV4Stamp[];
 }
@@ -148,31 +148,23 @@ export class V4StampService implements StampService {
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
 
-    let campaignConfig = {
-      totalSlots: null,
-      rewards: null,
-    };
-    if (stampCard.campaign_config) {
-      campaignConfig = {
-        totalSlots: stampCard.campaign_config.total_slots,
-        rewards: stampCard.campaign_config.rewards.map
-        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards))
-      };
-    }
-
     return {
       id: stampCard.id,
       userAccountId: stampCard.user_account_id,
       state: stampCard.state,
       campaignId: stampCard.campaign_id,
       cardNumber: stampCard.card_number,
-      campaignConfig,
+      campaignConfig: {
+        totalSlots: oc(stampCard).campaign_config.total_slots(),
+        rewards: (oc(stampCard) as unknown as IV4StampCard).campaign_config.rewards.map
+        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
+      },
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
         cardImage: {
           value: {
-            imageUrl: stampCard.display_properties.card_image.value.image_url,
+            imageUrl: oc(stampCard).display_properties.card_image.value.image_url(),
           }
         },
         totalSlots: stampCard.display_properties.total_slots,

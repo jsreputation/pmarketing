@@ -8,8 +8,9 @@ import { IReward } from '../models/reward.model';
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements OnInit {
-  @Input()
-  public rewards: Observable<IReward[]>;
+  // tslint:disable-next-line:no-input-rename
+  @Input('rewardsList')
+  public rewards$: Observable<IReward[]>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();

@@ -13,6 +13,7 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -75,7 +76,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       data: item
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(untilDestroyed(this)).subscribe(result => {
       if (result) {
       }
     });
