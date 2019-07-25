@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/containers/login/login.component';
 import { ContentContainerComponent } from './ui/content-container/content-container.component';
 import { HomeComponent } from './home/containers/home/home.component';
 import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
           backUrl: ''
         }
       },
+      {path: 'wallet', component: WalletComponent},
       {
         path: 'reward/:id', loadChildren: () => import('./reward/reward.module').then((m) => m.RewardModule)
       }

@@ -1,47 +1,51 @@
-.mat-card .inner {
-  border: 0.1rem solid #cac6c6;
-  border-radius: 0.3rem;
+.mat-card {
+  box-shadow: none;
 
-  mat-card-content {
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+  .inner {
+    border: 0.1rem solid #cac6c6;
+    border-radius: 0.3rem;
 
-    .bg-img {
-      visibility: hidden;
-      width: 100%;
-    }
+    mat-card-content {
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
 
-    .stamp-container {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      .bg-img {
+        visibility: hidden;
+        width: 100%;
+      }
 
-      .stamps {
-        display: flex;
+      .stamp-container {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
 
-        .stamp {
-          flex-grow: 1;
-          flex-basis: 0;
-          align-items: center;
-          justify-content: center;
+        .stamps {
           display: flex;
-          padding: 0.5rem 0.5rem;
-          background-color: transparent;
-          background-position: center;
-          background-repeat: no-repeat;
 
-          .content {
-            border-radius: 0.3rem;
-            border: 0.2rem solid;
-            height: 100%;
-            width: 100%;
-            background-color: #000;
+          .stamp {
+            flex-grow: 1;
+            flex-basis: 0;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            padding: 0.5rem 0.5rem;
+            background-color: transparent;
+            background-position: center;
+            background-repeat: no-repeat;
 
-            perx-core-stamp {
+            .content {
+              border-radius: 0.3rem;
+              border: 0.2rem solid;
               height: 100%;
               width: 100%;
+              background-color: #000;
+
+              perx-core-stamp {
+                height: 100%;
+                width: 100%;
+              }
             }
           }
         }

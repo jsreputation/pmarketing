@@ -12,5 +12,8 @@
       [nbPlayedPieces]="getPlayedPieces(card)" [nbAvailablePieces]="getAvailablePieces(card)" [isCurrent]="isCurrent(card)"
       [isCompleted]="isCompleted(card)" [stamps]="card.stamps" (stampAll)="onStampAll(card)" (moved)="onMoved(card)">
     </perx-core-puzzle-stamp>
+    <div class="terms-conditions">
+      <span (click)="onReadTermsConditions()">Read terms and conditions</span>
+    </div>
   </div>
 </div>
