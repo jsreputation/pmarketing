@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
@@ -48,8 +47,9 @@ import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.mod
 import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
 import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
-import {NewCampaignSelectEngagementPageComponent}
-from "./containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component";
+import {
+  NewCampaignSelectEngagementPageComponent
+} from './containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component';
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 

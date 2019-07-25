@@ -76,6 +76,7 @@
   .mat-checkbox-label {
     & > * {
       @extend .btn-item;
+
       display: flex;
       align-items: center;
       justify-content: center;

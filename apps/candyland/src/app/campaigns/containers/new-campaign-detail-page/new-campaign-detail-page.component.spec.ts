@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NewCampaignDetailPageComponent } from './new-campaign-detail-page.component';
-import { forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatCardModule,
@@ -23,7 +22,6 @@ import {
   MatTableModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
@@ -33,9 +31,6 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
-import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
-import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.module';
-import { Component } from '@angular/core';
 
 @Component({
   selector: 'cl-date-picker',
@@ -43,13 +38,13 @@ import { Component } from '@angular/core';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DatePickerComponent),
+      useExisting: forwardRef(() => TestDatePickerComponent),
       multi: true,
     }
   ]
 })
 // tslint:disable
-class DatePickerComponent implements ControlValueAccessor{
+class TestDatePickerComponent {
   registerOnChange(): void {
   }
 
@@ -63,6 +58,142 @@ class DatePickerComponent implements ControlValueAccessor{
   }
 
 }
+
+@Component({
+  selector: 'cl-time-picker',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TestTimePickerComponent),
+      multi: true,
+    }
+  ]
+})
+// tslint:disable
+class TestTimePickerComponent {
+  registerOnChange(): void {
+  }
+
+  registerOnTouched(): void {
+  }
+
+  setDisabledState(): void {
+  }
+
+  writeValue(): void {
+  }
+
+}
+
+
+
+@Component({
+  selector: 'cl-chip-list',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TestChipListComponent),
+      multi: true,
+    }
+  ]
+})
+// tslint:disable
+class TestChipListComponent {
+  registerOnChange(): void {
+  }
+
+  registerOnTouched(): void {
+  }
+
+  setDisabledState(): void {
+  }
+
+  writeValue(): void {
+  }
+
+}
+
+@Component({
+  selector: 'cl-checkbox-group',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TestCheckboxComponent),
+      multi: true,
+    }
+  ]
+})
+// tslint:disable
+class TestCheckboxComponent {
+  registerOnChange(): void {
+  }
+
+  registerOnTouched(): void {
+  }
+
+  setDisabledState(): void {
+  }
+
+  writeValue(): void {
+  }
+
+}
+@Component({
+  selector: 'cl-sms-editor',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TestEditorComponent),
+      multi: true,
+    }
+  ]
+})
+// tslint:disable
+class TestEditorComponent {
+  registerOnChange(): void {
+  }
+
+  registerOnTouched(): void {
+  }
+
+  setDisabledState(): void {
+  }
+
+  writeValue(): void {
+  }
+
+}
+@Component({
+  selector: 'cl-upload-file',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TesUploadComponent),
+      multi: true,
+    }
+  ]
+})
+// tslint:disable
+class TesUploadComponent {
+  registerOnChange(): void {
+  }
+
+  registerOnTouched(): void {
+  }
+
+  setDisabledState(): void {
+  }
+
+  writeValue(): void {
+  }
+
+}
+
 
 describe('NewCampaignDetailPageComponent', () => {
   let component: NewCampaignDetailPageComponent;
@@ -79,7 +210,6 @@ describe('NewCampaignDetailPageComponent', () => {
         MatIconModule,
         MatButtonModule,
         MatFormFieldModule,
-        // MatDatepickerModule,
         MatNativeDateModule,
         MatFormFieldModule,
         MatInputModule,
@@ -92,9 +222,7 @@ describe('NewCampaignDetailPageComponent', () => {
         TableFiltersModule,
         SearchFilterModule,
         TabsFilterModule,
-        // RangeDatePickerFilterModule,
         ButtonModule,
-        // SeparateRangeDatePickerFilterModule,
         NoDataModule,
         EngagementItemModule,
         ItemListModule,
@@ -104,12 +232,9 @@ describe('NewCampaignDetailPageComponent', () => {
         MatExpansionModule,
         MatChipsModule,
         ProgressBarModule,
-        DateTimePickerModule,
-        TimePickerModule,
-        SmsEditorModule
       ],
-      declarations: [NewCampaignDetailPageComponent,
-        DatePickerComponent],
+      declarations: [NewCampaignDetailPageComponent, TestDatePickerComponent, TestTimePickerComponent,
+        TestChipListComponent, TestCheckboxComponent, TestEditorComponent, TesUploadComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
@@ -118,6 +243,7 @@ describe('NewCampaignDetailPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NewCampaignDetailPageComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 

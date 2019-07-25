@@ -152,7 +152,6 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
 
   private enableControl(control: AbstractControl) {
     if (control.disabled && !(control.parent && control.parent.disabled)) {
-      console.log(control.status);
       control.enable({emitEvent: false});
       this.formChanged = true;
     }
@@ -169,7 +168,6 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   private updateForm() {
-    console.log(123);
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }

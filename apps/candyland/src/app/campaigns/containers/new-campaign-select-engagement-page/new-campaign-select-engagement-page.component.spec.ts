@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NewCampaignSelectEngagementPageComponent } from './new-campaign-select-template-page.component';
+import { NewCampaignSelectEngagementPageComponent } from './new-campaign-select-engagement-page.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
