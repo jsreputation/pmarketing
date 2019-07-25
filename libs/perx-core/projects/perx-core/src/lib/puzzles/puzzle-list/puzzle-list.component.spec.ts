@@ -5,7 +5,7 @@ import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EnvConfig } from '../../shared/env-config';
-import { V4StampService } from '../../stamp/v4-stamp.service';
+import { StampService } from '../../stamp/stamp.service';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
@@ -22,7 +22,7 @@ describe('PuzzleListComponent', () => {
       ],
       providers: [
         EnvConfig,
-        { provide: V4StampService, useValue: stampServiceMock }
+        { provide: StampService, useValue: stampServiceMock }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
