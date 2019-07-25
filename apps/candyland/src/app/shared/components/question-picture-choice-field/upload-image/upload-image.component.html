@@ -1,0 +1,24 @@
+<div class="upload-wrap"
+     [class.field-lock]="lock"
+>
+  <input #fileInput type="file"
+         *ngIf="!imgURL"
+         class="upload-input"
+         accept='image/*'
+         (change)="preview(fileInput)"
+  />
+  <div class="image-wrap"
+       (click)="setActive()"
+       [ngClass]="{active: imgURL === selectedGraphic}"
+       *ngIf="imgURL"
+  >
+    <img [src]="imgURL" class="image" alt="upload">
+    <button class="image-clear" (click)="clear()">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </div>
+
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="fileInput.click()">+</button>
+  </div>
+</div>
