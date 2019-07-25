@@ -73,7 +73,7 @@ export class PuzzleListComponent implements OnChanges {
       return false;
     }
 
-    const totalSlots = puzzle.display_properties.total_slots;
+    const totalSlots = puzzle.displayProperties.totalSlots;
 
     // if there is no more available stamp return false
     if (puzzle.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots) {

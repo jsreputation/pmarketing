@@ -95,12 +95,12 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       .subscribe((card: IStampCard) => {
         this.cardId = card.id;
         this.card = card;
-        this.cols = card.display_properties.number_of_cols;
-        this.rows = card.display_properties.number_of_rows;
+        this.cols = card.displayProperties.numberOfCols;
+        this.rows = card.displayProperties.numberOfRows;
         this.playedPieces = card.stamps.filter(stamp => stamp.state === STAMP_STATE.redeemed).length;
         const availablePieces = card.stamps.filter(stamp => stamp.state === STAMP_STATE.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
-        this.image = card.display_properties.card_image.value.image_url;
+        this.image = card.displayProperties.cardImage.value.imageUrl;
         if (this.availablePieces === 0 && card.state === STAMP_CARD_STATE.inactive) {
           this.notificationService.addPopup({
             title: 'Thank you!',
@@ -141,7 +141,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       .subscribe(
         (stamp: IStamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
-            if (this.card.card_number === this.cardsCount) { // we are on the last card
+            if (this.card.cardNumber === this.cardsCount) { // we are on the last card
               const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === STAMP_STATE.redeemed).length;
               if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
                 this.notificationService.addPopup({
