@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IReward } from '../models/reward.model';
 
 @Component({
   selector: 'perx-core-reward',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RewardComponent implements OnInit {
 
-  constructor() { }
+  // tslint:disable-next-line:no-input-rename
+  @Input('reward')
+  public reward$: Observable<IReward>;
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
