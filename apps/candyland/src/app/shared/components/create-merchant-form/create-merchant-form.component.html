@@ -20,10 +20,10 @@
     >
       <mat-form-field class="mat-form-field" appearance="outline">
         <textarea type="text" matInput [placeholder]="'Description'" [formControlName]="'description'"></textarea>
-        <mat-hint align="end">{{name.value?.length || 0}}/120</mat-hint>
-        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="name.hasError('minlength')">Min length 5</mat-error>
-        <mat-error *ngIf="name.hasError('maxlength')">Max length 120</mat-error>
+        <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
+        <mat-error *ngIf="description.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="description.hasError('minlength')">Min length 5</mat-error>
+        <mat-error *ngIf="description.hasError('maxlength')">Max length 120</mat-error>
       </mat-form-field>
     </div>
 
@@ -41,7 +41,7 @@
       </div>
       <div class="control-input small">
         <mat-form-field class="mat-form-field">
-          <input type="text" matInput [placeholder]="'Contact number'" [formControlName]="'contactNumber'">
+          <input type="text" matInput perxCoreNumericCharacter [placeholder]="'Contact number'" [formControlName]="'contactNumber'">
         </mat-form-field>
       </div>
     </div>
@@ -64,15 +64,42 @@
       </div>
       <div class="control-input small">
         <mat-form-field class="mat-form-field">
-          <input type="number" matInput [placeholder]="'Postal code'" [formControlName]="'postalCode'">
+          <input type="text" matInput [placeholder]="'Postal code'" [formControlName]="'postalCode'">
         </mat-form-field>
       </div>
     </div>
     <div class="control-input">
       <mat-form-field class="mat-form-field">
         <input type="url" matInput [placeholder]="'Weblink'" [formControlName]="'weblink'">
+        <mat-error *ngIf="weblink.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="weblink.hasError('patternUrl')">Wrong pattern web link</mat-error>
       </mat-form-field>
     </div>
+
+    <div class="merchant-banch">
+      <div class="control-input merchant-branch">
+        <mat-checkbox color="primary" (change)="removeBranches()" [formControlName]="'onBranches'">Add Branches</mat-checkbox>
+      </div>
+
+      <ng-container *ngIf="onBranches.value">
+        <cl-merchant-branch *ngFor="let control of branches.controls; let i = index;"
+                            [group]="control"
+                            [index]="i"
+                            (removeGroup)="removeBranches($event)"
+
+        ></cl-merchant-branch>
+        <cl-button [classList]="'tertiary'"
+                   class="merchant-btn-cancel"
+                   (click)="addBranch()"
+        >
+        <span>
+          + Add new branch
+        </span>
+        </cl-button>
+      </ng-container>
+
+    </div>
+
     </div>
 </section>
 

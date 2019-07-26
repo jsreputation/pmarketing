@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
-import { MatDialog } from '@angular/material';
-import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
+import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
 @Component({
   selector: 'cl-create-merchant',
@@ -12,10 +11,9 @@ import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merch
 })
 export class CreateMerchantComponent implements OnInit {
   public formMerchant: FormGroup;
-  constructor(private fb: FormBuilder,
-              private router: Router,
+  constructor(private router: Router,
               private routingState: RoutingStateService,
-              public dialog: MatDialog) { }
+              private merchantFormService: MerchantFormService) { }
 
   ngOnInit() {
     this.createFormMerchant();
@@ -26,7 +24,6 @@ export class CreateMerchantComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formMerchant.value);
     this.router.navigateByUrl('/merchants');
   }
 
@@ -35,31 +32,6 @@ export class CreateMerchantComponent implements OnInit {
   }
 
   private createFormMerchant(): void {
-    this.formMerchant = this.fb.group({
-      name: ['Merchant 1', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
-      ],
-      image: [null, [Validators.required]],
-      description: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(120)]],
-      countryCode: [null, [Validators.required]],
-      contactNumber: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      stateProvince: [null, [Validators.required]],
-      postalCode: [null, [Validators.required]],
-      weblink: [null, [Validators.required]],
-    });
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreateMerchantPopupComponent, {
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
+    this.formMerchant = this.merchantFormService.getMerchantForm();
   }
 }

@@ -25,4 +25,20 @@
       }
     }
   }
+
+  &-branch {
+    margin-top: 1.6rem;
+    margin-bottom: 2.7rem;
+  }
+}
+
+cl-merchant-branch {
+  margin-bottom: 0.8rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+cl-button {
+  margin-top: 1.6rem;
 }

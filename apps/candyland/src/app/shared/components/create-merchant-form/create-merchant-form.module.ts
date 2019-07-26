@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import {
+  MatCardModule, MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule
+} from '@angular/material';
 import { CreateMerchantFormComponent } from './create-merchant-form.component';
 import { ButtonModule } from '../button/button.module';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
+import { UtilsModule } from '../../../../../../../libs/perx-core/projects/perx-core/src/lib/utils/utils.module';
+import { MerchantBranchComponent } from './merchant-branch/merchant-branch.component';
 
 @NgModule({
   declarations: [
-    CreateMerchantFormComponent
+    CreateMerchantFormComponent,
+    MerchantBranchComponent
   ],
   exports: [
     CreateMerchantFormComponent
@@ -22,7 +30,10 @@ import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+
+    UtilsModule,
   ]
 })
 export class CreateMerchantFormModule { }

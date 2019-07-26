@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { SurveyService } from '@cl-core/services/survey.service';
 import { Observable } from 'rxjs';
+import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
 @Component({
   selector: 'cl-create-merchant-form',
@@ -10,12 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class CreateMerchantFormComponent implements OnInit {
   @Input() public settings: IMerchantFormConfig = {
-    title: 'Merchant Info',
     shoveName: false
   };
   @Input() public formMerchant: FormGroup;
   public countriesList$: Observable<any>;
-  constructor(private surveyService: SurveyService) { }
+  constructor(private surveyService: SurveyService,
+              private merchantFormService: MerchantFormService) { }
 
   ngOnInit() {
     this.getCountries();
@@ -25,8 +26,37 @@ export class CreateMerchantFormComponent implements OnInit {
     return this.formMerchant.get('name');
   }
 
+  public get description(): AbstractControl {
+    return this.formMerchant.get('description');
+  }
+
+  public get weblink(): AbstractControl {
+    return this.formMerchant.get('weblink');
+  }
+
   public get image(): AbstractControl {
     return this.formMerchant.get('image');
+  }
+
+  public get onBranches(): AbstractControl {
+    return this.formMerchant.get('onBranches');
+  }
+
+  public get branches(): FormArray {
+    return (this.formMerchant.get('branches') as FormArray);
+  }
+
+  public removeBranches(i?: number): void {
+    if (!i) {
+      this.branches.clear();
+      this.formMerchant.updateValueAndValidity();
+      return;
+    }
+    this.branches.removeAt(i);
+  }
+
+  public addBranch(): void {
+    this.branches.push(this.merchantFormService.getMerchantBranchField());
   }
 
   private getCountries(): void {
