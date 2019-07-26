@@ -13,6 +13,7 @@ import {
   PopupComponent,
   ProfileModule,
   UtilsModule,
+  RewardsModule,
   VouchersModule,
 } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +41,7 @@ import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.comp
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule.forRoot({env: environment}),
     VouchersModule.forRoot({env: environment}),
+    RewardsModule.forRoot({env: environment}),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
