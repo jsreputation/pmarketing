@@ -34,7 +34,9 @@ export class SignupComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public onSubmit(): void {}
+  public onSubmit(): void {
+    this.router.navigateByUrl('/enter-pin');
+  }
 
   public goToLogin(): void {
     this.router.navigateByUrl('/login');
