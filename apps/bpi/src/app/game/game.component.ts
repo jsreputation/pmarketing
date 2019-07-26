@@ -63,9 +63,9 @@ export class GameComponent implements OnInit {
 
   private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
-    // .pipe(
-    // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
-    // )
+      // .pipe(
+      // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
+      // )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
           this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
@@ -159,7 +159,7 @@ export class GameComponent implements OnInit {
 
     if (!cardSelected && this.keys > 0) {
       this.notificationService.addPopup({
-        title: `You have a total of ${ this.keys } keys!`,
+        title: `You have a total of ${this.keys} keys!`,
         imageUrl: 'assets/key.png',
         text: 'Tap the highlighted locks to unlock.',
         buttonTxt: 'Start Unlocking!',
@@ -174,16 +174,19 @@ export class GameComponent implements OnInit {
     const requiredKeysToUnlock = totalSlots - cardSelectedRedeemed;
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
+      const text = requiredKeysToUnlock === 1 ?
+        `You only need 1 key to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.` :
+        // tslint:disable-next-line:max-line-length
+        `You only need ${requiredKeysToUnlock} keys to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.`;
       this.notificationService.addPopup({
-        text: `You only need ${requiredKeysToUnlock} key to earn your Netflix rebate. Keep using your
-        BPI Credit Card to get your Netflix rebate of up to 6 months.`,
+        text,
         buttonTxt: 'Close',
         afterClosedCallBack: this
       });
     }
   }
 
-  public dialogClosed(): void {}
+  public dialogClosed(): void { }
 
   public onStampAll(cardSelected: IStampCard): void {
     const id = cardSelected.id;
