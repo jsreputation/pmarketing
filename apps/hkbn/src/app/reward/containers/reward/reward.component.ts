@@ -30,14 +30,12 @@ export class RewardComponent implements OnInit, OnDestroy {
     this.route.paramMap
       .pipe(
         map((params: ParamMap) => parseInt(params.get('id'), 10)),
-        switchMap((id: number) => this.rewardsService.getReward(id)
-          .pipe(
-            tap((reward: IReward) => this.rewardState$.next(reward))
-          )
-        ),
+        switchMap((id: number) => this.rewardsService.getReward(id)),
         takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe((reward: IReward) => {
+        this.rewardState$.next(reward);
+      });
   }
 
   public ngOnDestroy(): void {
@@ -59,7 +57,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         switchMap((result) => result ? this.exchangePoints() : of(null))
       )
-      .subscribe();
+      .subscribe(() => {});
   }
 
   public dialogClosed(): void {
