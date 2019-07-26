@@ -29,5 +29,4 @@ export class DashboardGameCardComponent implements OnInit {
   public openDialogCreate(): void {
     this.dialog.open(CreateEngagementPopupComponent);
   }
-
 }

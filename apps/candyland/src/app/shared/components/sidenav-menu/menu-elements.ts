@@ -22,12 +22,12 @@ export const menus = [
     icon: 'campaign',
     open: false,
   },
-  // {
-  //   name: 'Merchant',
-  //   link: '/merchant',
-  //   icon: 'merchant',
-  //   open: false,
-  // },
+  {
+    name: 'Merchant',
+    link: '/merchant',
+    icon: 'merchant',
+    open: false,
+  },
   {
     name: 'Audience',
     link: '/audience',
