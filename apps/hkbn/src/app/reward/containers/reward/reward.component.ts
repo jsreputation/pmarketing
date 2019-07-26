@@ -1,26 +1,43 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
-import { Observable, of, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
-import { NotificationService } from '@perx/core/dist/perx-core';
-import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { IReward, NotificationService, RewardsService } from '@perx/core/dist/perx-core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
   selector: 'hkbn-reward',
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })
-export class RewardComponent implements OnDestroy {
+export class RewardComponent implements OnInit, OnDestroy {
 
+  public rewardState$: BehaviorSubject<IReward> = new BehaviorSubject<IReward>(null);
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private dialog: MatDialog,
               private notificationService: NotificationService,
               private router: Router,
+              private route: ActivatedRoute,
+              private rewardsService: RewardsService,
               // TODO Uncomment when loyaltyService.exchangePoints will be implemented
               // private loyaltyService: LoyaltyService
   ) {
+  }
+
+  public ngOnInit(): void {
+    this.route.paramMap
+      .pipe(
+        map((params: ParamMap) => parseInt(params.get('id'), 10)),
+        switchMap((id: number) => this.rewardsService.getReward(id)
+          .pipe(
+            tap((reward: IReward) => this.rewardState$.next(reward))
+          )
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   public ngOnDestroy(): void {
