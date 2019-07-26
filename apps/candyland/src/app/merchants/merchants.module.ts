@@ -5,9 +5,12 @@ import { ListMerchantComponent } from './containers/list-merchant/list-merchant.
 import { DetailedMerchantComponent } from './containers/detailed-merchant/detailed-merchant.component';
 import { MerchantRoutingModule } from './merchant-routing.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-form/create-merchant-form.module';
+import { ListMerchantViewModule } from './components/list-merchant-view/list-merchant-view.module';
+import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
+import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,15 @@ import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-
     MerchantRoutingModule,
     ReactiveFormsModule,
     CreateMerchantFormModule,
+    ListMerchantViewModule,
     ButtonModule,
 
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule,
+    SearchFilterModule,
+    TableFiltersModule,
   ]
 })
 export class MerchantsModule { }

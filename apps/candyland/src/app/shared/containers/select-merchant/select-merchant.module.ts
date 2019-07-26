@@ -30,13 +30,9 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
   ],
   imports: [
     CommonModule,
-    TableFiltersModule,
     ButtonModule,
 
-
     MatDialogModule,
-    MatIconModule,
-
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
