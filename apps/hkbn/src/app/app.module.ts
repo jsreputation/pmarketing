@@ -21,11 +21,13 @@ import { MatDialogModule, MatTabsModule } from '@angular/material';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
 import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
+import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WalletComponent,
+    VoucherDetailsComponent,
   ],
   imports: [
     BrowserModule,
