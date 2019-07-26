@@ -8,7 +8,7 @@ import {
   OauthModule, CognitoModule,
   CampaignModule, GameModule,
   VouchersModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { GameComponent } from './game/game.component';
 
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
