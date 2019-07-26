@@ -18,11 +18,11 @@ export class HomeComponent implements OnInit {
   }
 
   public onSalesScan(): void {
-    this.router.navigate(['order/qrscanner']);
+    this.router.navigate(['/qrscanner/order']);
   }
 
   public onRedemption(): void {
-    this.router.navigate(['reward-redemption/qrscanner']);
+    this.router.navigate(['/qrscanner/reward-redemption']);
   }
 
   public onLogOut(): void {
