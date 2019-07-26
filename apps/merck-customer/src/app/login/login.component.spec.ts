@@ -5,7 +5,7 @@ import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 
 describe('LoginComponent', () => {
