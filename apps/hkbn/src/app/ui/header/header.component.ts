@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public goBack(): void {
-    if (this.routeData && this.routeData.back) {
+    if (this.routeData && (this.routeData.back || this.routeData.cross)) {
       const url = this.routeData.backUrl ? this.routeData.backUrl : '';
       this.router.navigate([url]);
     }
