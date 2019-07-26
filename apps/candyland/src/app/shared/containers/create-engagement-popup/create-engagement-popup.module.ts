@@ -36,7 +36,6 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatFormFieldModule,
     ButtonModule,
     NoDataModule,
-    MatDialogModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,

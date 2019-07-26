@@ -14,4 +14,20 @@ body {
   margin: 0;
   padding: 0;
   background: #0F69AF;
+  height: 100%;
+}
+
+.btn-blue {
+  background: #0F69AF;
+  color: #ffffff;
+}
+
+.btn-hollow-white {
+  border: 0.1rem solid #0F69AF !important;
+  background-color: #ffffff;
+  color: #0F69AF;
+}
+
+.full-width__button {
+  width: 100%;
 }

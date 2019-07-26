@@ -38,17 +38,11 @@
 				</mat-error>
       </mat-form-field>
 
-      <!-- TODO: Implement forgot password screen-->
       <div class="forgot-text" (click)="onForgotPassword()">Forgot password?</div>
       <button mat-flat-button type="submit" class="full-width__button">Login</button>
 
-      <div class="contacts-section">
-        <strong>Sales Contact</strong>
-        <ul>
-          <li>Personnel 1: <span>+852 1234 5678</span></li>
-          <li>Personnel 2: <span>+852 1234 5678</span></li>
-          <li>Personnel 3: <span>+852 1234 5678</span></li>
-        </ul>
+      <div class="sales-contact">
+        <app-sales-contact></app-sales-contact>
       </div>
 		</form>
   </div>
