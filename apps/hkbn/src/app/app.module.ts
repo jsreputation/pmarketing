@@ -22,12 +22,14 @@ import { ContentContainerModule } from './ui/content-container/content-container
 import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
+import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WalletComponent,
     VoucherDetailsComponent,
+    QrRedemptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,7 @@ import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-detail
     ContentContainerModule,
     HomeModule,
     BrowserAnimationsModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
