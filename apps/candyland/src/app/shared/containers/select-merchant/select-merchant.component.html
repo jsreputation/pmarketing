@@ -1,0 +1,50 @@
+<div class="dialog-header-wrap">
+  <p class="dialog-content-title">
+    Select Merchant
+  </p>
+  <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <section class="merchant-dialog-content">
+    <div class="merchant-list">
+      <!--filters-->
+      <cl-table-filters [dataSource]="dataSource" classList="block">
+        <ng-container *clTableFilter="'firstName'; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="Search"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+      <!--table-->
+      <cl-merchant-list [dataSource]="dataSource"
+                        (selectedMerchant)="selectedMerchant($event)"
+      >
+      </cl-merchant-list>
+      <!--paginator-->
+      <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </section>
+</mat-dialog-content>
+<!--<mat-dialog-actions>-->
+  <div class="merchant-dialog-actions"
+  >
+    <cl-button [classList]="'tertiary'"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true"
+    >
+      <span>
+        Cancel
+      </span>
+    </cl-button>
+
+    <cl-button [classList]="'primary'"
+               (click)="close()"
+               [disableRipple]="true"
+    >
+      <span>
+        Add Merchant
+      </span>
+    </cl-button>
+  </div>
+<!--</mat-dialog-actions>-->
