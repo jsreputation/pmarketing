@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class QrRedemptionComponent implements OnInit {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -25,6 +25,10 @@ export class QrRedemptionComponent implements OnInit {
       .subscribe((params: ParamMap) => {
         this.voucherId = parseInt(params.get('id'), 10);
       });
+  }
+
+  public cancel(): void {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }

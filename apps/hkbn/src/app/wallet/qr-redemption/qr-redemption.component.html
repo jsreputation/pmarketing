@@ -1,3 +1,7 @@
-<div class="container">
-  <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+<div class="container full-height">
+  <div class="qr-redemption">
+    <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+
+    <button mat-stroked-button class="qr-redemption-cancel" (click)="cancel()">Cancel</button>
+  </div>
 </div>
