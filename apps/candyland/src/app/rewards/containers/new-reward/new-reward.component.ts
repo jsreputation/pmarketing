@@ -43,10 +43,19 @@ export class NewRewardComponent implements OnInit, OnDestroy {
       {title: 'Merchant Self', value: 'Merchant Self'},
       {title: 'Others', value: 'Others'}
     ],
-    codeFormat: [
+    voucherCodeFormat: [
       {title: 'Alphanumeric  (eg.ABC123)', value: 'alphanumeric'},
       {title: 'Numeric (eg.123456)', value: 'numeric'},
       {title: 'Alphabet (eg.ABCDEF)', value: 'alphabet'}
+    ],
+    voucherCodeTypes: [
+      {title: 'Single code', value: 'Period'},
+      {title: 'Unique codes: System generated', value: 'Unique codes: System generated'},
+      {title: 'Unique codes: User upload', value: 'Unique codes: User upload'}
+    ],
+    voucherValidityType: [
+      {title: 'Period', value: 'Period'},
+      {title: 'Issuance date', value: 'Issuance date'}
     ],
     goals: [
       {title: 'Build awareness', value: 'Build awareness'},
@@ -127,14 +136,29 @@ export class NewRewardComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = this.fb.group({
       name: [],
-      campaignInfo: this.fb.group({
-        goal: [],
-        startDate: [],
-        startTime: [],
-        endDate: [],
-        endTime: [],
-        disabledEndDate: [],
-        labels: []
+      rewardInfo: this.fb.group({
+        image: [],
+        rewardType: [],
+        category: [],
+        redemptionType: [],
+        cost: [],
+        description: [],
+        termsAndCondition: []
+      }),
+      limits: this.fb.group({}),
+      voucherValidity: this.fb.group({
+        type: [],
+        period: this.fb.group({
+          startDate: [],
+          startTime: [],
+          endDate: [],
+          endTime: [],
+          disabledEndDate: []
+        }),
+        issuanceDate: this.fb.group({
+          times: [],
+          duration: []
+        })
       }),
       channel: this.fb.group({
         type: [],

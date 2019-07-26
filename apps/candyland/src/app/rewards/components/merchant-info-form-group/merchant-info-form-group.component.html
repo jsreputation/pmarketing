@@ -1,0 +1,33 @@
+<!--Merchant Cards-->
+<mat-radio-group class="item-list">
+  <mat-radio-button value="select" (click)="clickSelectMerchant()">
+    <div class="merchant-card">
+      <i class="icon select-merchant-icon  merchant-card-icon"></i>
+      <span class="merchant-card-label">Select existing merchant</span>
+    </div>
+  </mat-radio-button>
+  <mat-radio-button value="create" (click)="clickCreateMerchant()">
+    <div class="merchant-card">
+      <i class="icon create-merchant-icon merchant-card-icon"></i>
+      <span class="merchant-card-label">Create new merchant</span>
+    </div>
+  </mat-radio-button>
+</mat-radio-group>
+<!--/ Merchant Cards-->
+<!--Merchant items-->
+<div class="merchant-item" *ngIf="merchant">
+  <div class="merchant-item-img">
+    <img [src]="merchant?.image">
+  </div>
+  <div class="merchant-item-info">
+    <span>{{merchant?.type}}</span>
+    <span>{{merchant?.phone}}</span>
+    <span>{{merchant?.category}}</span>
+    <div class="merchant-item-action">
+      <button mat-icon-button (click)="clickDeleteMerchant()">
+        <i class="icon full-with delete-action"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<!--/ Merchant items-->

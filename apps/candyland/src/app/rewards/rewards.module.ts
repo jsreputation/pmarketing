@@ -35,13 +35,23 @@ import {TimePickerModule} from '@cl-shared/components/time-picker/time-picker.mo
 import {DatePickerModule} from '@cl-shared/components/date-picker/date-picker.module';
 import {UploadFileModule} from '@cl-shared/components/upload-file/upload-file.module';
 import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
+import {RewardInfoFormGroupComponent} from './components/reward-info-form-group/reward-info-form-group.component';
+import {MerchantInfoFormGroupComponent} from './components/merchant-info-form-group/merchant-info-form-group.component';
+import {LimitFormGroupComponent} from './components/limit-form-group/limit-form-group.component';
+import {VoucherValidityFormGroupComponent} from './components/voucher-validity-form-group/voucher-validity-form-group.component';
+import {RewardDetailPageComponent} from './containers/reward-detail-page/reward-detail-page.component';
 
 @NgModule({
   declarations: [
     RewardsListPageComponent,
     AddRewardPopupComponent,
     RewardsListComponent,
-    NewRewardComponent
+    NewRewardComponent,
+    RewardInfoFormGroupComponent,
+    MerchantInfoFormGroupComponent,
+    LimitFormGroupComponent,
+    VoucherValidityFormGroupComponent,
+    RewardDetailPageComponent
   ],
   imports: [
     CommonModule,

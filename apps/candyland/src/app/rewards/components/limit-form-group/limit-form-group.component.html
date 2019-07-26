@@ -1,0 +1,108 @@
+<div class="card-section">
+  <div class="card-header">
+    <div class="row">
+      <p class="card-title">
+        Voucher Limits Per Campaign
+      </p>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="input-group">
+      <!--input number-->
+      <mat-form-field>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          matInput>
+        <span matSuffix>Vouchers</span>
+      </mat-form-field>
+      <!--/ input number-->
+
+      <span class="nowrap-text">per campaign per</span>
+
+      <!-- duration Limits-->
+      <mat-form-field>
+        <mat-select>
+          <ng-container *ngFor="let option of config?.durationLimits">
+            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <!--/ duration Limits-->
+    </div>
+  </div>
+</div>
+
+<div class="card-section">
+  <div class="card-header">
+    <div class="row">
+      <p class="card-title">
+        Issuance Limits Per User
+      </p>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="input-group">
+      <!--input number-->
+      <mat-form-field>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          matInput>
+        <span matSuffix>Times</span>
+      </mat-form-field>
+      <!--/input number-->
+
+      <span class="nowrap-text">per campaign per</span>
+
+      <!-- duration Limits-->
+      <mat-form-field>
+        <mat-select>
+          <ng-container *ngFor="let option of config?.durationLimits">
+            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <!--/ duration Limits-->
+    </div>
+  </div>
+</div>
+
+<div class="card-section">
+  <div class="card-header">
+    <div class="row">
+      <p class="card-title">
+        Redemption Limits Per User
+      </p>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="input-group">
+      <!--input number-->
+      <mat-form-field>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          matInput>
+        <span matSuffix>Times</span>
+      </mat-form-field>
+      <!--/ input number-->
+      <span class="nowrap-text">per campaign per</span>
+      <!-- duration Limits-->
+      <mat-form-field>
+        <mat-select>
+          <ng-container *ngFor="let option of config?.durationLimits">
+            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <!--/ duration Limits-->
+    </div>
+  </div>
+</div>

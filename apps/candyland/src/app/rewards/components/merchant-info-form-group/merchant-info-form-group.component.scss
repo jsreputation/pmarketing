@@ -1,0 +1,77 @@
+@import "variables";
+
+.merchant-card {
+  width: 24.8rem;
+  height: 7.2rem;
+  box-sizing: border-box;
+  padding: 2.4rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: $light-gray;
+  font-family: $primary-font;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $secondary-color;
+  border-radius: 0.8rem;
+
+  &-icon {
+    position: absolute;
+  }
+
+  &-label {
+    margin-left: 3.8rem;
+  }
+}
+
+.merchant-item {
+  width: 100%;
+  height: 8.2rem;
+  box-sizing: border-box;
+  padding: 1.5rem 2.4rem;
+  border-radius: 4px;
+  background-color: $simple-light-gray;
+  color: $base-font-color;
+  font-family: $primary-font;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: stretch;
+
+  &-img {
+    position: relative;
+    height: 5rem;
+    width: 5rem;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &-info {
+    padding-left: 3.8rem;
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-action {
+    box-sizing: border-box;
+    padding: 0.5rem;
+  }
+
+}

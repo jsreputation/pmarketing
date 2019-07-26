@@ -1,0 +1,51 @@
+<!--Voucher Validity Type-->
+<div class="card-row">
+  <mat-radio-group [formControl]="formGroup.get('type')">
+    <ng-container *ngFor="let type of config?.voucherValidityType">
+      <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+    </ng-container>
+  </mat-radio-group>
+</div>
+<!--/ Voucher Validity Type-->
+<!-- Voucher Validity Period-->
+<div class="card-row">
+  <div class="input-group">
+    <cl-date-picker [formControl]="formGroup.get('period.startDate')"
+                    [max]="formGroup.get('period.endDate').value"></cl-date-picker>
+    <cl-time-picker [formControl]="formGroup.get('period.startTime')"></cl-time-picker>
+  </div>
+  to
+  <div class="input-group">
+    <cl-date-picker [formControl]="formGroup.get('period.endDate')"
+                    [min]="formGroup.get('period.startDate').value"></cl-date-picker>
+    <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
+  </div>
+  <mat-checkbox [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
+</div>
+<!--/ Voucher Validity Period-->
+<!-- Voucher Validity Isuance date-->
+<div class="card-row input-group">
+  <span class="nowrap-text">Valid for</span>
+  <!--input number-->
+  <mat-form-field>
+    <input
+      type="number"
+      min="0"
+      step="1"
+      matInput
+      placeholder="eg. 10"
+      [formControl]="formGroup.get('issuanceDate.times')">
+  </mat-form-field>
+  <!--/ input number-->
+  <!-- duration Limits-->
+  <mat-form-field>
+    <mat-select [formControl]="formGroup.get('issuanceDate.duration')">
+      <ng-container *ngFor="let option of config?.durationLimits">
+        <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <!--/ duration Limits-->
+  <span class="nowrap-text">After issuance</span>
+</div>
+<!--/ Voucher Validity Issuance date-->
