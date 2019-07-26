@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       switchMap((route: ActivatedRoute) => route.data),
       takeUntil(this.destroy$)
     ).subscribe((routeData) => {
-      console.log(routeData);
       this.routeData = routeData;
     });
   }
