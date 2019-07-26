@@ -13,7 +13,7 @@ export class MerchantService {
   public getMerchant(): Observable<IMerchant[]> {
     return this.merchantHttpService.getMerchants()
       .pipe(
-        map((response: any) => (response as IMerchant[]))
+        map((res: IMerchant[]) => res)
       );
   }
 }

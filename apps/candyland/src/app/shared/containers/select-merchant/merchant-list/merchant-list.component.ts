@@ -18,7 +18,9 @@ export class MerchantListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
   public selectMerchant(item: IMerchant) {

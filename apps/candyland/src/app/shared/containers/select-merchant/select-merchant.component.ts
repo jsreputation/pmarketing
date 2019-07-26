@@ -23,7 +23,10 @@ export class SelectMerchantComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   public selectedMerchant(merchant: IMerchant): void {
