@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -9,7 +10,8 @@ import { MatDialog } from '@angular/material';
 })
 export class DashboardGameCardComponent implements OnInit {
   @Input() gameCard: DashboardGameCard;
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -17,6 +19,10 @@ export class DashboardGameCardComponent implements OnInit {
   public clickToLink(link: string): void {
     if (link.toLocaleLowerCase().includes('engagement')) {
       this.openDialogCreate();
+    }
+    if (link.toLocaleLowerCase().includes('campaign')) {
+      console.log('campaigns');
+      this.router.navigate(['/campaigns/new-campaign/']);
     }
   }
 

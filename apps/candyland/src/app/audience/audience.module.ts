@@ -22,12 +22,12 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { AudiencesUserInfoComponent } from './components/audiences-user-info/audiences-user-info.component';
 import { AudiencesUserInfoPageComponent } from './containers/audiences-user-info-page/audiences-user-info-page.component';
 import { AudiencesVouchersListComponent } from './components/audiences-vouchers-list/audiences-vouchers-list.component';
+import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 
 @NgModule({
   declarations: [
@@ -62,10 +62,10 @@ import { AudiencesVouchersListComponent } from './components/audiences-vouchers-
     TabsFilterModule,
     ButtonModule,
     MatCheckboxModule,
-    DatePickerModule,
     UploadFileModule,
     NoDataModule,
-    MatTabsModule
+    MatTabsModule,
+    DatePickerModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

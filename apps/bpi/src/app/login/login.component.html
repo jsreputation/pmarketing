@@ -4,7 +4,7 @@
   </div>
   <div class="login-form">
     <form (ngSubmit)="onSubmit()">
-      <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign In</button>
+      <button *ngIf="!isHidden" mat-flat-button type="submit" color="primary" class="full-width__button">Sign In</button>
     </form>
   </div>
 </div>
