@@ -23,6 +23,9 @@ const routes: Routes = [
           back: true,
           backUrl: '/wallet'
         }
+      },
+      {
+        path: 'reward/:id', loadChildren: () => import('./reward/reward.module').then((m) => m.RewardModule)
       }
     ]
   },
