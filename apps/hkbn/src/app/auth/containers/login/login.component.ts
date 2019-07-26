@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { LoginFormValue } from '../../components/login-form/login-form.component';
 import { Router } from '@angular/router';
 

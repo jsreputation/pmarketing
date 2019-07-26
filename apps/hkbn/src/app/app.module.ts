@@ -14,7 +14,7 @@ import {
   ProfileModule,
   UtilsModule,
   VouchersModule,
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatDialogModule, MatTabsModule } from '@angular/material';
