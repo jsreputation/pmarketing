@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'qrscanner', component: QrscannerComponent }
+      { path: ':path/qrscanner', component: QrscannerComponent }
     ],
     canActivate: [ProtectedGuard]
   },
