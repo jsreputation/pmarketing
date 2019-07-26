@@ -128,12 +128,9 @@ export class GameComponent implements OnInit {
           if (stamp.state === STAMP_STATE.redeemed) {
             this.keys--;
             if (totalRedeemed === totalSlots) {
-              this.cards.sort((_A, b) => {
-                if (b.stamps.filter(stmp => stmp.state === 'redeemed').length === totalSlots) {
-                  return -1;
-                }
-              });
-              this.router.navigate(['bpi/congrats']);
+              setTimeout(() => {
+                this.router.navigate(['bpi/congrats']);
+              }, 3000);
             }
           }
         },
@@ -205,7 +202,9 @@ export class GameComponent implements OnInit {
         const stampsRedeemed = res.filter(stamp => stamp.state === 'redeemed').length;
         this.keys -= stampsRedeemed;
         if (stampsRedeemed === totalSlots) {
-          this.router.navigate(['bpi/congrats']);
+          setTimeout(() => {
+            this.router.navigate(['bpi/congrats']);
+          }, 3000);
         }
       },
       (err) => {

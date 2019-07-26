@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignService, PerxCoreModule, StampService, STAMP_CARD_STATE, STAMP_STATE } from '@perx/core/dist/perx-core';
@@ -6,6 +6,7 @@ import { NotificationService } from '../notification.service';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -62,7 +63,7 @@ describe('GameComponent', () => {
   });
 
   describe('onStampAll', () => {
-    it('should navigate to congrats page if zero redeemed, five stamps available', async(() => {
+    it('should navigate to congrats page if zero redeemed, five stamps available', fakeAsync(() => {
       const selectedCard = {
         id: 362,
         userAccountId: 72,
@@ -212,8 +213,8 @@ describe('GameComponent', () => {
         }
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -274,6 +275,7 @@ describe('GameComponent', () => {
       ));
 
       component.onStampAll(selectedCard);
+      tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
     }));
@@ -317,8 +319,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -412,8 +414,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -470,7 +472,7 @@ describe('GameComponent', () => {
       expect(router.navigate).not.toHaveBeenCalledWith(['bpi/congrats']);
     }));
 
-    it('should navigate to congrats page if two redeemed, three stamps available', async(() => {
+    it('should navigate to congrats page if two redeemed, three stamps available', fakeAsync(() => {
       const cards = {
         id: 362,
         userAccountId: 72,
@@ -549,8 +551,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -613,6 +615,7 @@ describe('GameComponent', () => {
       ));
 
       component.onStampAll(cards);
+      tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
     }));
@@ -686,8 +689,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -813,8 +816,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
