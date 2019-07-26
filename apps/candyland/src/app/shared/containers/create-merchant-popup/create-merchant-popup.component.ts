@@ -31,7 +31,12 @@ export class CreateMerchantPopupComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(120)]],
       countryCode: [null, [Validators.required]],
-      contactNumber: [null, [Validators.required]]
+      contactNumber: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      stateProvince: [null, [Validators.required]],
+      postalCode: [null, [Validators.required]],
+      weblink: [null, [Validators.required]],
     });
   }
 }

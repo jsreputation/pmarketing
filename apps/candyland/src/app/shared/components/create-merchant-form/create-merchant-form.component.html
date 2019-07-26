@@ -28,7 +28,7 @@
     </div>
 
     <div class="merchant-control-row">
-      <div class="control-input">
+      <div class="control-input small">
         <mat-form-field>
           <mat-label>Default Country Code</mat-label>
           <mat-select [formControlName]="'countryCode'">
@@ -39,11 +39,39 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="control-input">
+      <div class="control-input small">
         <mat-form-field class="mat-form-field">
           <input type="text" matInput [placeholder]="'Contact number'" [formControlName]="'contactNumber'">
         </mat-form-field>
       </div>
+    </div>
+
+    <div class="control-input">
+      <mat-form-field class="mat-form-field">
+        <input type="text" matInput [placeholder]="'Address'" [formControlName]="'address'">
+      </mat-form-field>
+    </div>
+    <div class="merchant-control-row">
+      <div class="control-input small">
+        <mat-form-field class="mat-form-field">
+          <input type="text" matInput [placeholder]="'City'" [formControlName]="'city'">
+        </mat-form-field>
+      </div>
+      <div class="control-input small">
+        <mat-form-field class="mat-form-field">
+          <input type="text" matInput [placeholder]="'State/Province'" [formControlName]="'stateProvince'">
+        </mat-form-field>
+      </div>
+      <div class="control-input small">
+        <mat-form-field class="mat-form-field">
+          <input type="number" matInput [placeholder]="'Postal code'" [formControlName]="'postalCode'">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="control-input">
+      <mat-form-field class="mat-form-field">
+        <input type="url" matInput [placeholder]="'Weblink'" [formControlName]="'weblink'">
+      </mat-form-field>
     </div>
     </div>
 </section>
