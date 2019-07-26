@@ -130,7 +130,7 @@ export class GameComponent implements OnInit {
             if (totalRedeemed === totalSlots) {
               setTimeout(() => {
                 this.router.navigate(['bpi/congrats']);
-              }, 3000);
+              }, 2000);
             }
           }
         },
@@ -204,7 +204,7 @@ export class GameComponent implements OnInit {
         if (stampsRedeemed === totalSlots) {
           setTimeout(() => {
             this.router.navigate(['bpi/congrats']);
-          }, 3000);
+          }, 2000);
         }
       },
       (err) => {
