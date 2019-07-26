@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
 import { SalesContactComponent } from './sales-contact/sales-contact.component';
 
@@ -30,6 +32,7 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     LoginComponent,
     HomeComponent,
     ResetPasswordComponent,
+    QrscannerComponent,
     HeaderComponent,
     SalesContactComponent
   ],
@@ -46,7 +49,8 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    AuthenticationModule
+    AuthenticationModule,
+    ZXingScannerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
