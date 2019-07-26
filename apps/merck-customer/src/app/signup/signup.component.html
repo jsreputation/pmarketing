@@ -1,0 +1,61 @@
+<div class="main-container">
+	<img src="assets/logo.png">
+	<div *ngIf="!errorMessage else error_message" class="logo-title">
+		<ng-container i18n="@@login-subtitle">Diabetes Loyality Program</ng-container>
+	</div>
+	<ng-template #error_message>
+		<div class="error-message-container">
+			<span>{{errorMessage}}</span>
+			<div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
+		</div>
+	</ng-template>
+	<div class="content-container">
+		<div i18n="@@sign-up" class="main-heading">Sign up</div>
+		<div class="subtitle"><ng-container i18n="@@static-have-account">Have an account? </ng-container><span i18n="@@static-login" class="link" (click)="goToLogin()">Sign in</span></div>
+		<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-name">Name</mat-label>
+				<input matInput i18n-placeholder="@@static-name" placeholder="Name" formControlName="name" required>
+				<mat-error *ngIf="signupForm.hasError('name')">
+					Name is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field class="full-width__input">
+				<mat-select [(value)]="selectedCountry">
+					<mat-option value="+852"><ng-container i18n="@@country-hongkong">Hong Kong</ng-container>(+852)</mat-option>
+					<mat-option value="+853"><ng-container i18n="@@country-macau">Macau</ng-container> (+853)</mat-option>
+					<mat-option value="+86"><ng-container i18n="@@country-china">China</ng-container> (+86)</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-mobile-no">Mobile No</mat-label>
+				<input matInput i18n-placeholder="@@static-mobile-no" placeholder="Mobile No" formControlName="mobileNo" required>
+				<mat-error *ngIf="signupForm.hasError('mobileNo')">
+					Mobile No is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-password">Password</mat-label>
+				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" required>
+				<mat-error *ngIf="signupForm.hasError('password')">
+					Password is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-password">Confirm Password</mat-label>
+				<input matInput i18n-placeholder="@@static-confirm-password" placeholder="Confirm Password" formControlName="confirmPassword" required>
+				<mat-error *ngIf="signupForm.hasError('confirmPassword')">
+					Password is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<div class="accept-terms">
+				<mat-checkbox i18n="@@static-accept-terms" color="primary" formControlName="accept_terms">I accept the terms & conditions</mat-checkbox>
+			</div>
+			<div class="checkbox-container">
+				<mat-checkbox color="primary" formControlName="accept_marketing"></mat-checkbox>			
+			 	<span i18n="@@static-agree-marketing" class="wrap-checkbox-text">I agree to receive marketing communications from Merck Group hk</span>
+			</div>
+			<button [disabled]="!signupForm.valid" i18n="@@static-login" mat-flat-button type="submit" class="full-width__button">Register</button>
+		</form>
+	</div>
+</div>

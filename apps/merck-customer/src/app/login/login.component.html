@@ -11,7 +11,7 @@
 	</ng-template>
 	<div class="content-container">
 		<div i18n="@@static-login" class="main-heading">Log in</div>
-		<div class="subtitle"><ng-container i18n="@@static-not-memeber">Not a memeber? </ng-container><span i18n="@@sign-up" class="link">Sign up</span></div>
+		<div class="subtitle"><ng-container i18n="@@static-not-memeber">Not a memeber? </ng-container><span i18n="@@sign-up" class="link" (click)="goToSignup()">Sign up</span></div>
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 			<mat-form-field class="full-width__input">
 				<mat-select [(value)]="selectedCountry">

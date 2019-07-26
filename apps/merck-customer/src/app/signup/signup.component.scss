@@ -75,6 +75,20 @@
 
     form {
       margin-top: 0;
+
+      .accept-terms {
+        margin: 1rem 0 2rem 0;
+      }
+
+      .checkbox-container {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+
+        .wrap-checkbox-text {
+          margin-left: 0.8rem;
+        }
+      }
     }
 
     .full-width__button {
@@ -87,18 +101,6 @@
     .full-width__input {
       width: 100%;
       margin-top: 1rem;
-    }
-
-    .bottom-text,
-    .forgot-text {
-      color: $main-blue-theme;
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .forgot-text {
-      text-align: start;
-      margin-top: 0;
     }
   }
 }

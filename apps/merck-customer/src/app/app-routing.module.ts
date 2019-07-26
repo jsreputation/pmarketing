@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { ProtectedGuard } from 'ngx-auth';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { HomeComponent } from './home/home.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,9 @@ const routes: Routes = [
     ],
     canActivate: [ProtectedGuard]
   },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: '**', redirectTo: '/home' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
