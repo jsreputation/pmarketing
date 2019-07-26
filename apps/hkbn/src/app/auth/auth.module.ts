@@ -11,9 +11,24 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './containers/registration/registration.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+
+const COMPONENTS = [
+  LoginFormComponent,
+  RegistrationFormComponent
+];
+
+const CONTAINERS = [
+  LoginComponent,
+  RegistrationComponent
+];
 
 @NgModule({
-  declarations: [LoginFormComponent, LoginComponent],
+  declarations: [
+    ...COMPONENTS,
+    ...CONTAINERS
+  ],
   imports: [
     CommonModule,
     MatCardModule,
@@ -25,8 +40,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   exports: [
-    LoginFormComponent,
-    LoginComponent
+    ...COMPONENTS,
+    ...CONTAINERS
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+}
