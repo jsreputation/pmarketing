@@ -6,39 +6,43 @@
   .scanner {
     position: relative;
 
-    &::before, &::after, > em:after, > em:before {
+    &::before, &::after, > em::after, > em::before {
       border-color: #000;
       content: "";
       position: absolute;
-      width: 19px;
-      height: 16px;
+      width: 1.9rem;
+      height: 1.6rem;
       border-style: solid;
-      border-width: 0px;
+      border-width: 0;
     }
+
     &::before {
       left: 0;
       top: 0;
-      border-left-width: 1px;
-      border-top-width: 1px;
+      border-left-width: 0.1rem;
+      border-top-width: 0.1rem;
     }
+
     &::after {
       right: 0;
       top: 0;
-      border-right-width: 1px;
-      border-top-width: 1px;
+      border-right-width: 0.1rem;
+      border-top-width: 0.1rem;
     }
+
     em {
       &::before {
         left: 0;
         bottom: 0;
-        border-left-width: 1px;
-        border-bottom-width: 1px;
+        border-left-width: 0.1rem;
+        border-bottom-width: 0.1rem;
       }
+
       &::after {
         right: 0;
         bottom: 0;
-        border-right-width: 1px;
-        border-bottom-width: 1px;
+        border-right-width: 0.1rem;
+        border-bottom-width: 0.1rem;
       }
     }
   }
