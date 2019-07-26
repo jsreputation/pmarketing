@@ -59,5 +59,14 @@
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
-  }
+  },
+  "main": "./dist/perx-core/bundles/perx-core.umd.js",
+  "module": "./dist/perx-core/fesm5/perx-core.js",
+  "es2015": "./dist/perx-core/fesm2015/perx-core.js",
+  "esm5": "./dist/perx-core/esm5/perx-core.js",
+  "esm2015": "./dist/perx-core/esm2015/perx-core.js",
+  "fesm5": "./dist/perx-core/fesm5/perx-core.js",
+  "fesm2015": "./dist/perx-core/fesm2015/perx-core.js",
+  "typings": "./dist/perx-core/perx-core.d.ts",
+  "metadata": "./dist/perx-core/perx-core.metadata.json"
 }
