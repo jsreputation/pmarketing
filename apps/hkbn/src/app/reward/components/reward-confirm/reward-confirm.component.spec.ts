@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardConfirmComponent } from './reward-confirm.component';
+import { MAT_DIALOG_DATA, MatButtonModule, MatDialogModule, MatDialogRef } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RewardsModule } from '@perx/core/dist/perx-core';
 
 describe('RewardConfirmComponent', () => {
   let component: RewardConfirmComponent;
@@ -8,9 +11,19 @@ describe('RewardConfirmComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardConfirmComponent ]
+      imports: [
+        MatDialogModule,
+        RewardsModule,
+        MatButtonModule,
+        NoopAnimationsModule,
+      ],
+      providers: [
+        {provide: MatDialogRef, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: {}}
+      ],
+      declarations: [RewardConfirmComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

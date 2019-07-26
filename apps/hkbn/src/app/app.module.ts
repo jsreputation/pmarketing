@@ -13,6 +13,7 @@ import {
   PopupComponent,
   ProfileModule,
   UtilsModule,
+  RewardsModule,
   VouchersModule,
 } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
@@ -36,6 +37,7 @@ import { WalletComponent } from './wallet/wallet.component';
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule.forRoot({env: environment}),
     VouchersModule.forRoot({env: environment}),
+    RewardsModule.forRoot({env: environment}),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
