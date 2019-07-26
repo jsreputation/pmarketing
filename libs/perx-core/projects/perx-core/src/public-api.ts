@@ -75,3 +75,6 @@ export {
   PuzzleCollectReward,
   PUZZLE_COLLECT_STAMP_STATE
 } from './lib/puzzles/models/puzzle-stamp.model';
+
+export { LocationModule } from './lib/location/location.module';
+export { ILocation } from './lib/location/ilocation';

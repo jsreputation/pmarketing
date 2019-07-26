@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignService, PerxCoreModule, StampService, STAMP_CARD_STATE, STAMP_STATE } from '@perx/core/dist/perx-core';
@@ -6,6 +6,7 @@ import { NotificationService } from '../notification.service';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -49,7 +50,7 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
   it('subTitle defaults to: Unlock your Netflix rebate.', () => {
-    expect(component.subTitle).toEqual('Unlock your Netflix rebate.');
+    expect(component.subTitle).toEqual('Unlock your Netflix rebate with your BPI Credit Card.');
   });
   it('cards defaults to: []', () => {
     expect(component.cards).toEqual([]);
@@ -62,158 +63,158 @@ describe('GameComponent', () => {
   });
 
   describe('onStampAll', () => {
-    it('should navigate to congrats page if zero redeemed, five stamps available', async(() => {
+    it('should navigate to congrats page if zero redeemed, five stamps available', fakeAsync(() => {
       const selectedCard = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1612,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           }
         ],
       };
       component.cards = [
         {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1612,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ],
         }
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -223,57 +224,58 @@ describe('GameComponent', () => {
       spyOn(stampService, 'stampAll').and.returnValue(of(
         [{
           id: 1608,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         },
         {
           id: 1609,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         },
         {
           id: 1610,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         },
         {
           id: 1611,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         },
         {
           id: 1612,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         }]
       ));
 
       component.onStampAll(selectedCard);
+      tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
     }));
@@ -281,34 +283,34 @@ describe('GameComponent', () => {
     it('should NOT navigate to congrats page if zero redeemed, one stamp available', async(() => {
       const cards = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           }
         ],
       };
@@ -317,8 +319,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -328,13 +330,13 @@ describe('GameComponent', () => {
       spyOn(stampService, 'stampAll').and.returnValue(of(
         [{
           id: 1608,
-          user_account_id: 72,
+          userAccountId: 72,
           state: STAMP_STATE.redeemed,
-          campaign_id: 1,
+          campaignId: 1,
           vouchers: [],
-          stamp_card_id: 1,
-          created_at: '',
-          updated_at: '',
+          stampCardId: 1,
+          createdAt: '',
+          updatedAt: '',
         }]
       ));
 
@@ -346,64 +348,64 @@ describe('GameComponent', () => {
     it('should NOT navigate to congrats page if one redeemed, three stamps available', async(() => {
       const cards = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           }
         ],
       };
@@ -412,8 +414,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -424,43 +426,43 @@ describe('GameComponent', () => {
         [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           }
         ]
       ));
@@ -470,77 +472,77 @@ describe('GameComponent', () => {
       expect(router.navigate).not.toHaveBeenCalledWith(['bpi/congrats']);
     }));
 
-    it('should navigate to congrats page if two redeemed, three stamps available', async(() => {
+    it('should navigate to congrats page if two redeemed, three stamps available', fakeAsync(() => {
       const cards = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1612,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ],
       };
@@ -549,8 +551,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -561,58 +563,59 @@ describe('GameComponent', () => {
         [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1612,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           }
         ]
       ));
 
       component.onStampAll(cards);
+      tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
     }));
@@ -620,64 +623,64 @@ describe('GameComponent', () => {
     it('should NOT navigate to congrats page if two redeemed, two stamps available', async(() => {
       const cards = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ],
       };
@@ -686,8 +689,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -698,43 +701,43 @@ describe('GameComponent', () => {
         [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ]
       ));
@@ -747,64 +750,64 @@ describe('GameComponent', () => {
     it('should NOT navigate to congrats page if zero redeemed, four stamps available', async(() => {
       const cards = {
         id: 362,
-        user_account_id: 72,
+        userAccountId: 72,
         state: STAMP_CARD_STATE.active,
-        campaign_id: 1,
-        card_number: 2,
-        campaign_config: {
-          total_slots: 5,
+        campaignId: 1,
+        cardNumber: 2,
+        campaignConfig: {
+          totalSlots: 5,
           rewards: [],
         },
-        display_properties: {
-          number_of_cols: 1,
-          number_of_rows: 5,
-          card_image: {
+        displayProperties: {
+          numberOfCols: 1,
+          numberOfRows: 5,
+          cardImage: {
             value: {
-              image_url: ''
+              imageUrl: ''
             }
           },
-          total_slots: 5,
+          totalSlots: 5,
         },
         stamps: [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.issued,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ],
       };
@@ -813,8 +816,8 @@ describe('GameComponent', () => {
         cards
       ];
 
-      const stampService: StampService = fixture.debugElement.injector.get(
-        StampService
+      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
+        StampService as Type<StampService>
       );
 
       const router: Router = fixture.debugElement.injector.get(
@@ -825,43 +828,43 @@ describe('GameComponent', () => {
         [
           {
             id: 1608,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1609,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1610,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
           {
             id: 1611,
-            user_account_id: 72,
+            userAccountId: 72,
             state: STAMP_STATE.redeemed,
-            campaign_id: 1,
+            campaignId: 1,
             vouchers: [],
-            stamp_card_id: 1,
-            created_at: '',
-            updated_at: '',
+            stampCardId: 1,
+            createdAt: '',
+            updatedAt: '',
           },
         ]
       ));

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UploadGraphicComponent } from './upload-graphic.component';
 import { MatIconModule } from '@angular/material';
 
-describe('UploadGraphicComponent', () => {
+describe('UploadFileComponent', () => {
   let component: UploadGraphicComponent;
   let fixture: ComponentFixture<UploadGraphicComponent>;
 

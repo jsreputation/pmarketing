@@ -13,8 +13,13 @@
     "noUnusedParameters": true,
     "importHelpers": true,
     "target": "es2015",
+    "plugins": [
+      { "transform": "ts-optchain/transform" }
+    ],
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
     ],
     "lib": [
       "es2018",

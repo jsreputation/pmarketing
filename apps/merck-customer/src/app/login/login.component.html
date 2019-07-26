@@ -1,0 +1,42 @@
+<div class="main-container">
+	<img src="assets/logo.png">
+	<div *ngIf="!errorMessage else error_message" class="logo-title">
+		<ng-container i18n="@@login-subtitle">Diabetes Loyality Program</ng-container>
+	</div>
+	<ng-template #error_message>
+		<div class="error-message-container">
+			<span>{{errorMessage}}</span>
+			<div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
+		</div>
+	</ng-template>
+	<div class="content-container">
+		<div i18n="@@static-login" class="main-heading">Log in</div>
+		<div class="subtitle"><ng-container i18n="@@static-not-memeber">Not a memeber? </ng-container><span i18n="@@sign-up" class="link" (click)="goToSignup()">Sign up</span></div>
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+			<mat-form-field class="full-width__input">
+				<mat-select [(value)]="selectedCountry">
+					<mat-option value="+852"><ng-container i18n="@@country-hongkong">Hong Kong</ng-container>(+852)</mat-option>
+					<mat-option value="+853"><ng-container i18n="@@country-macau">Macau</ng-container> (+853)</mat-option>
+					<mat-option value="+86"><ng-container i18n="@@country-china">China</ng-container> (+86)</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-mobile-no">Mobile No</mat-label>
+				<input matInput i18n-placeholder="@@static-mobile-no" placeholder="Mobile No" formControlName="mobileNo" required>
+				<mat-error *ngIf="loginForm.hasError('mobileNo')">
+					Mobile No is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field color="primary" class="full-width__input">
+				<mat-label i18n="@@static-password">Password</mat-label>
+				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" required>
+				<mat-error *ngIf="loginForm.hasError('password')">
+					Password is <strong>required</strong>
+				</mat-error>
+			</mat-form-field>
+			<div i18n="@@static-forgot-password" class="forgot-text">Forgot password?</div>
+			<button i18n="@@static-login" mat-flat-button type="submit" class="full-width__button">Log In</button>
+			<div i18n="@@static-learn-more" class="bottom-text">Learn more about the program</div>
+		</form>
+	</div>
+</div>

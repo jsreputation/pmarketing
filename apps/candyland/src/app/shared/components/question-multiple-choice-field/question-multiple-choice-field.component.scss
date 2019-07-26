@@ -1,0 +1,24 @@
+@import "variables";
+
+.control-input {
+  width: auto;
+  display: inline-flex;
+
+  &-action {
+    display: flex;
+    align-items: center;
+
+    &:hover .btn-remove{
+      opacity: 1;
+    }
+  }
+}
+
+.btn-remove {
+  opacity: 0;
+  transition: 0.4s cubic-bezier(.35, 0, .25, 1);
+}
+
+mat-icon {
+  color: $dark-color;
+}
