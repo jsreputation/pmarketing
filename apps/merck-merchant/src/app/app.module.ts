@@ -23,6 +23,8 @@ import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
+import { HeaderComponent } from './header/header.component';
+import { SalesContactComponent } from './sales-contact/sales-contact.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
     LoginComponent,
     HomeComponent,
     ResetPasswordComponent,
-    QrscannerComponent
+    QrscannerComponent,
+    HeaderComponent,
+    SalesContactComponent
   ],
   imports: [
     BrowserModule,
