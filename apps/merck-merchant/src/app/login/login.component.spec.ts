@@ -15,6 +15,7 @@ import {
   MatInputModule,
   MatRippleModule,
 } from '@angular/material';
+import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -23,7 +24,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [LoginComponent, SalesContactComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,

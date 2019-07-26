@@ -21,13 +21,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { HeaderComponent } from './header/header.component';
+import { SalesContactComponent } from './sales-contact/sales-contact.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    HeaderComponent,
+    SalesContactComponent
   ],
   imports: [
     BrowserModule,
