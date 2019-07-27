@@ -1,0 +1,20 @@
+@import "~src/assets/styles/variables";
+
+:host {
+  flex: 1;
+}
+
+.qr-redemption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &-cancel {
+    width: 100%;
+    margin: auto 0 8.5rem;
+    border-color: $text-green;
+    color: $text-green;
+  }
+}

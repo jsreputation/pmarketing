@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'hkbn-header',
@@ -11,6 +11,8 @@ import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operat
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public routeData: any = null;
+
+  private currentRoute: ActivatedRoute;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return route;
       }),
       filter((route: ActivatedRoute) => route.outlet === 'primary'),
+      tap((route) => this.currentRoute = route),
       switchMap((route: ActivatedRoute) => route.data),
       takeUntil(this.destroy$)
     ).subscribe((routeData) => {
@@ -40,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public goBack(): void {
     if (this.routeData && (this.routeData.back || this.routeData.cross)) {
       const url = this.routeData.backUrl ? this.routeData.backUrl : '';
-      this.router.navigate([url]);
+      this.router.navigate([url], {relativeTo: this.currentRoute});
     }
   }
 
