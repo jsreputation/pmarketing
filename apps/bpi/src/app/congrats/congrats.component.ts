@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CongratsComponent implements OnInit {
   public title: string = 'CONGRATULATIONS!';
-  public subTitle: string = 'You have unlocked 1 out of 6 months of Netflix rebate!';
+  public subTitles: string[] = ['You have unlocked 1 out of 6 months', 'of Netflix rebate!'];
   public path: string;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
