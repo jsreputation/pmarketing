@@ -6,5 +6,12 @@
   <p *ngIf="title" class="title">
     <strong>{{ title }}</strong>
   </p>
-  <p *ngIf="subTitle" class="sub-title">{{ subTitle }}</p>
+  <p *ngIf="subTitles" class="sub-title">    
+    <span *ngFor="let st of subTitles">{{ st }}<br/></span>
+  </p>
+
+  <p *ngIf="subsubTitles" class="sub-sub-title">
+    <span *ngFor="let sst of subsubTitles">{{ sst }}<br/></span>
+  </p>
+
 </div>
