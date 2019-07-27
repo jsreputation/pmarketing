@@ -15,7 +15,8 @@ describe('CongratsComponent', () => {
   };
 
   const stampServiceStub = {
-    getCards: (_id: number) => (of([]))
+    // @ts-ignore
+    getCards: (id: number) => (of([]))
   };
 
   beforeEach(async(() => {
