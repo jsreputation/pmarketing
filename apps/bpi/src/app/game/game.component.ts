@@ -19,7 +19,9 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public subTitle: string = 'Unlock your Netflix rebate.';
+  public subTitles: string[] = ['Unlock your Netflix rebate.'];
+  public subsubTitles: string[] = null;
+  public title: string = null;
 
   private campaignId: number;
 
@@ -86,6 +88,17 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+
+        if (lockedCards.length === 0) {
+          this.title = 'CONGRATULATIONS!';
+          this.subTitles = [`You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`];
+
+          // tslint:disable-next-line:max-line-length
+          this.subsubTitles = [
+            `You have reached the maximum of ${this.cards.length} months`,
+            'of Netflix rebate allowed per customer for this promo.'
+          ];
+        }
 
         this.checkKeys();
       });
