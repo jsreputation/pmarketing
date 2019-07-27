@@ -29,12 +29,12 @@ describe('GameComponent', () => {
       declarations: [GameComponent, HeaderComponent],
       imports: [PerxCoreModule],
       providers: [
-        {provide: Router, useValue: router },
+        { provide: Router, useValue: router },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({campaignId: 1})
+              paramMap: convertToParamMap({ campaignId: 1 })
             }
           }
         },
@@ -139,77 +139,77 @@ describe('GameComponent', () => {
       };
       component.cards = [
         {
-        id: 362,
-        userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
-        campaignId: 1,
-        cardNumber: 2,
-        campaignConfig: {
-          totalSlots: 5,
-          rewards: [],
-        },
-        displayProperties: {
-          numberOfCols: 1,
-          numberOfRows: 5,
-          cardImage: {
-            value: {
-              imageUrl: ''
-            }
+          id: 362,
+          userAccountId: 72,
+          state: STAMP_CARD_STATE.active,
+          campaignId: 1,
+          cardNumber: 2,
+          campaignConfig: {
+            totalSlots: 5,
+            rewards: [],
           },
-          totalSlots: 5,
-        },
-        stamps: [
-          {
-            id: 1608,
-            userAccountId: 72,
-            state: STAMP_STATE.issued,
-            campaignId: 1,
-            vouchers: [],
-            stampCardId: 1,
-            createdAt: '',
-            updatedAt: '',
+          displayProperties: {
+            numberOfCols: 1,
+            numberOfRows: 5,
+            cardImage: {
+              value: {
+                imageUrl: ''
+              }
+            },
+            totalSlots: 5,
           },
-          {
-            id: 1609,
-            userAccountId: 72,
-            state: STAMP_STATE.issued,
-            campaignId: 1,
-            vouchers: [],
-            stampCardId: 1,
-            createdAt: '',
-            updatedAt: '',
-          },
-          {
-            id: 1610,
-            userAccountId: 72,
-            state: STAMP_STATE.issued,
-            campaignId: 1,
-            vouchers: [],
-            stampCardId: 1,
-            createdAt: '',
-            updatedAt: '',
-          },
-          {
-            id: 1611,
-            userAccountId: 72,
-            state: STAMP_STATE.issued,
-            campaignId: 1,
-            vouchers: [],
-            stampCardId: 1,
-            createdAt: '',
-            updatedAt: '',
-          },
-          {
-            id: 1612,
-            userAccountId: 72,
-            state: STAMP_STATE.issued,
-            campaignId: 1,
-            vouchers: [],
-            stampCardId: 1,
-            createdAt: '',
-            updatedAt: '',
-          },
-        ],
+          stamps: [
+            {
+              id: 1608,
+              userAccountId: 72,
+              state: STAMP_STATE.issued,
+              campaignId: 1,
+              vouchers: [],
+              stampCardId: 1,
+              createdAt: '',
+              updatedAt: '',
+            },
+            {
+              id: 1609,
+              userAccountId: 72,
+              state: STAMP_STATE.issued,
+              campaignId: 1,
+              vouchers: [],
+              stampCardId: 1,
+              createdAt: '',
+              updatedAt: '',
+            },
+            {
+              id: 1610,
+              userAccountId: 72,
+              state: STAMP_STATE.issued,
+              campaignId: 1,
+              vouchers: [],
+              stampCardId: 1,
+              createdAt: '',
+              updatedAt: '',
+            },
+            {
+              id: 1611,
+              userAccountId: 72,
+              state: STAMP_STATE.issued,
+              campaignId: 1,
+              vouchers: [],
+              stampCardId: 1,
+              createdAt: '',
+              updatedAt: '',
+            },
+            {
+              id: 1612,
+              userAccountId: 72,
+              state: STAMP_STATE.issued,
+              campaignId: 1,
+              vouchers: [],
+              stampCardId: 1,
+              createdAt: '',
+              updatedAt: '',
+            },
+          ],
         }
       ];
 
@@ -277,7 +277,7 @@ describe('GameComponent', () => {
       component.onStampAll(selectedCard);
       tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
+      expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats'], { queryParams: { cid: undefined } });
     }));
 
     it('should NOT navigate to congrats page if zero redeemed, one stamp available', async(() => {
@@ -617,7 +617,7 @@ describe('GameComponent', () => {
       component.onStampAll(cards);
       tick(3500);
       expect(stampService.stampAll).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats']);
+      expect(router.navigate).toHaveBeenCalledWith(['bpi/congrats'], { queryParams: { cid: undefined } });
     }));
 
     it('should NOT navigate to congrats page if two redeemed, two stamps available', async(() => {

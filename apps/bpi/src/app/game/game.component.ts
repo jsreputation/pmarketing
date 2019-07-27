@@ -142,7 +142,7 @@ export class GameComponent implements OnInit {
             this.keys--;
             if (totalRedeemed === totalSlots) {
               setTimeout(() => {
-                this.router.navigate(['bpi/congrats']);
+                this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
               }, 2000);
             }
           }
@@ -220,7 +220,7 @@ export class GameComponent implements OnInit {
         this.keys -= stampsRedeemed;
         if (stampsRedeemed === totalSlots) {
           setTimeout(() => {
-            this.router.navigate(['bpi/congrats']);
+            this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
           }, 2000);
         }
       },

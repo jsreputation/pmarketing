@@ -4,6 +4,8 @@ import { CongratsComponent } from './congrats.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { StampService } from '@perx/core/dist/perx-core';
+import { of } from 'rxjs';
 
 describe('CongratsComponent', () => {
   let component: CongratsComponent;
@@ -12,13 +14,18 @@ describe('CongratsComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
+  const stampServiceStub = {
+    getCards: (_id: number) => (of([]))
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CongratsComponent, HeaderComponent],
       imports: [MatToolbarModule],
       providers: [
         { provide: Router, useValue: router },
-        { provide: ActivatedRoute, useValue: {snapshot: {url: 'congrats'}} }
+        { provide: ActivatedRoute, useValue: { snapshot: { url: 'congrats' }, queryParams: of({}) } },
+        { provide: StampService, useValue: stampServiceStub },
       ]
     }).compileComponents();
   }));
