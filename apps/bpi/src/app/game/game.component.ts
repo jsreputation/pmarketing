@@ -19,7 +19,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public subTitle: string = 'Unlock your Netflix rebate with your BPI Credit Card.';
+  public subTitle: string = 'Unlock your Netflix rebate.';
 
   private campaignId: number;
 
