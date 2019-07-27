@@ -175,9 +175,12 @@ export class GameComponent implements OnInit {
     const requiredKeysToUnlock = totalSlots - cardSelectedRedeemed;
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
+      const text = requiredKeysToUnlock === 1 ?
+        `You only need 1 key to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.` :
+        // tslint:disable-next-line:max-line-length
+        `You only need ${requiredKeysToUnlock} keys to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.`;
       this.notificationService.addPopup({
-        text: `You only need ${requiredKeysToUnlock} key to earn your Netflix rebate. Keep using your
-        BPI Credit Card to get your Netflix rebate of up to 6 months.`,
+        text,
         buttonTxt: 'Close',
         afterClosedCallBack: this
       });
