@@ -130,7 +130,7 @@ export class GameComponent implements OnInit {
             if (totalRedeemed === totalSlots) {
               setTimeout(() => {
                 this.router.navigate(['bpi/congrats']);
-              }, 3000);
+              }, 2000);
             }
           }
         },
@@ -158,8 +158,9 @@ export class GameComponent implements OnInit {
     }
 
     if (!cardSelected && this.keys > 0) {
+      const title = this.keys === 1 ? 'You have a total of 1 key!' : `You have a total of ${this.keys} keys!`;
       this.notificationService.addPopup({
-        title: `You have a total of ${this.keys} keys!`,
+        title,
         imageUrl: 'assets/key.png',
         text: 'Tap the highlighted locks to unlock.',
         buttonTxt: 'Start Unlocking!',
@@ -207,7 +208,7 @@ export class GameComponent implements OnInit {
         if (stampsRedeemed === totalSlots) {
           setTimeout(() => {
             this.router.navigate(['bpi/congrats']);
-          }, 3000);
+          }, 2000);
         }
       },
       (err) => {
