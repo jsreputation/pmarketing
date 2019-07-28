@@ -95,8 +95,7 @@ export class GameComponent implements OnInit {
 
           // tslint:disable-next-line:max-line-length
           this.subsubTitles = [
-            `You have reached the maximum of ${this.cards.length} months`,
-            'of Netflix rebate allowed per customer for this promo.'
+            `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
           ];
         }
 
