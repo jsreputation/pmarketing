@@ -139,6 +139,9 @@ export class GameComponent implements OnInit {
         (stamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
             this.keys--;
+            if (this.keys < 0) {
+              this.keys = 0;
+            }
             if (totalRedeemed === totalSlots) {
               setTimeout(() => {
                 this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
@@ -217,6 +220,9 @@ export class GameComponent implements OnInit {
       (res: IStamp[]) => {
         const stampsRedeemed = res.filter(stamp => stamp.state === 'redeemed').length;
         this.keys -= stampsRedeemed;
+        if (this.keys < 0) {
+          this.keys = 0;
+        }
         if (stampsRedeemed === totalSlots) {
           setTimeout(() => {
             this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
