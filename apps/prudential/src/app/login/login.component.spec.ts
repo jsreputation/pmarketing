@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 

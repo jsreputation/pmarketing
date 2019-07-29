@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, PopupComponent } from '@perx/core/dist/perx-core';
+import { NotificationService, PopupComponent } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
 @Component({

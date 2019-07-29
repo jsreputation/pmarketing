@@ -6,7 +6,7 @@ import {
   PuzzleCollectStamp,
   PuzzleCollectReward,
   PUZZLE_COLLECT_STAMP_STATE
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 
 const gamesInfo = [{
       title: 'Complete the survey to win an instant reward!',

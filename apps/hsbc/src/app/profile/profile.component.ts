@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile, AuthenticationService } from '@perx/core/dist/perx-core';
+import { ProfileService, IProfile, AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 

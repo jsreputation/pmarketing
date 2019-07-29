@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, CAMPAIGN_TYPE, IGame, GameService, ICampaign } from '@perx/core/dist/perx-core';
+import { CampaignService, CAMPAIGN_TYPE, IGame, GameService, ICampaign } from '@perx/core';
 import { map, take } from 'rxjs/operators';
 
 @Component({

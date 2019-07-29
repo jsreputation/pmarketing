@@ -15,7 +15,7 @@ import {
   UtilsModule,
   RewardsModule,
   VouchersModule,
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatButtonModule, MatDialogModule, MatTabsModule } from '@angular/material';
