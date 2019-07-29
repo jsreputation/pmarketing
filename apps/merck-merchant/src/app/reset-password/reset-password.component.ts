@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AuthenticationService } from '@perx/core/dist/perx-core';
 
 @Component({
   selector: 'app-reset-password',
@@ -9,10 +10,11 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class ResetPasswordComponent implements OnInit {
 
   public loginForm: FormGroup;
-  public errorMessage: string = null;
+  public infoMessage: string = null;
 
   constructor(
     private fb: FormBuilder,
+    private authenticationService: AuthenticationService,
   ) {
     this.initForm();
   }
@@ -27,7 +29,15 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    const email = (this.loginForm.get('email').value as string).toUpperCase();
+    this.authenticationService.forgotPassword(email).subscribe(
+      () => this.infoMessage = 'We\'ve sent a password reset link to the email you provided',
+      err => console.log(err)
+    );
+  }
 
+  public onCrossClicked(): void {
+    this.infoMessage = null;
   }
 
 }
