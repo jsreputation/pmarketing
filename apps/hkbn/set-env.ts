@@ -22,7 +22,7 @@ const envConfigFile = `export const environment = {
 console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
 console.log(colors.grey(envConfigFile));
 
-fs.writeFile(targetPath, envConfigFile, (err) => {
+fs.writeFile(targetPath, envConfigFile, (err: any) => {
   if (err) {
     throw console.error(err);
   } else {

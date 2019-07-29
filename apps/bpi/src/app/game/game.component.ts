@@ -19,7 +19,9 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public subTitle: string = 'Unlock your Netflix rebate with your BPI Credit Card.';
+  public subTitles: string[] = ['Unlock your Netflix rebate.'];
+  public subsubTitles: string[] = null;
+  public title: string = null;
 
   private campaignId: number;
 
@@ -63,9 +65,9 @@ export class GameComponent implements OnInit {
 
   private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
-    // .pipe(
-    // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
-    // )
+      // .pipe(
+      // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
+      // )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
           this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
@@ -86,6 +88,16 @@ export class GameComponent implements OnInit {
           ...lockedCards,
           ...unlockedCards
         ];
+
+        if (lockedCards.length === 0) {
+          this.title = 'CONGRATULATIONS!';
+          this.subTitles = [`You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`];
+
+          // tslint:disable-next-line:max-line-length
+          this.subsubTitles = [
+            `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
+          ];
+        }
 
         this.checkKeys();
       });
@@ -127,10 +139,13 @@ export class GameComponent implements OnInit {
         (stamp) => {
           if (stamp.state === STAMP_STATE.redeemed) {
             this.keys--;
+            if (this.keys < 0) {
+              this.keys = 0;
+            }
             if (totalRedeemed === totalSlots) {
               setTimeout(() => {
-                this.router.navigate(['bpi/congrats']);
-              }, 3000);
+                this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
+              }, 2000);
             }
           }
         },
@@ -158,10 +173,11 @@ export class GameComponent implements OnInit {
     }
 
     if (!cardSelected && this.keys > 0) {
+      const title = this.keys === 1 ? 'You have a total of 1 key!' : `You have a total of ${this.keys} keys!`;
       this.notificationService.addPopup({
-        title: `You have a total of ${ this.keys } keys!`,
+        title,
         imageUrl: 'assets/key.png',
-        text: 'Tap the highlighted locks to unlock.',
+        text: 'Tap the highlighted locks to unlock your Netflix rebate.',
         buttonTxt: 'Start Unlocking!',
         afterClosedCallBack: this
       });
@@ -174,16 +190,19 @@ export class GameComponent implements OnInit {
     const requiredKeysToUnlock = totalSlots - cardSelectedRedeemed;
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
+      const text = requiredKeysToUnlock === 1 ?
+        `You only need 1 key to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.` :
+        // tslint:disable-next-line:max-line-length
+        `You only need ${requiredKeysToUnlock} keys to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.`;
       this.notificationService.addPopup({
-        text: `You only need ${requiredKeysToUnlock} key to earn your Netflix rebate. Keep using your
-        BPI Credit Card to get your Netflix rebate of up to 6 months.`,
+        text,
         buttonTxt: 'Close',
         afterClosedCallBack: this
       });
     }
   }
 
-  public dialogClosed(): void {}
+  public dialogClosed(): void { }
 
   public onStampAll(cardSelected: IStampCard): void {
     const id = cardSelected.id;
@@ -201,10 +220,13 @@ export class GameComponent implements OnInit {
       (res: IStamp[]) => {
         const stampsRedeemed = res.filter(stamp => stamp.state === 'redeemed').length;
         this.keys -= stampsRedeemed;
+        if (this.keys < 0) {
+          this.keys = 0;
+        }
         if (stampsRedeemed === totalSlots) {
           setTimeout(() => {
-            this.router.navigate(['bpi/congrats']);
-          }, 3000);
+            this.router.navigate(['bpi/congrats'], { queryParams: { cid: this.campaignId } });
+          }, 2000);
         }
       },
       (err) => {
