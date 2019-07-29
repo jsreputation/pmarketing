@@ -6,7 +6,7 @@
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:bpi:prod": "PRODUCTION=true npm run config && ng build --prod",
-    "config": "ts-node set-env.ts",
+    "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
     "lint": "ng lint && stylelint \"src/**/*.*css\"",
     "e2e~": "ng e2e"
