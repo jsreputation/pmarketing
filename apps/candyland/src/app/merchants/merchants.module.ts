@@ -11,6 +11,7 @@ import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-
 import { ListMerchantViewModule } from './components/list-merchant-view/list-merchant-view.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
+import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
     CreateMerchantFormModule,
     ListMerchantViewModule,
     ButtonModule,
+    CreateMerchantPopupModule,
 
     MatFormFieldModule,
     MatInputModule,

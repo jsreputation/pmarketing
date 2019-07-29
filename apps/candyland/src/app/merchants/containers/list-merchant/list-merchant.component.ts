@@ -1,17 +1,22 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MerchantService } from '@cl-core/services/merchant.service';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
 
 @Component({
   selector: 'cl-list-merchant',
   templateUrl: './list-merchant.component.html',
   styleUrls: ['./list-merchant.component.scss']
 })
-export class ListMerchantComponent implements OnInit, AfterViewInit {
+export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   public dataSource = new MatTableDataSource<any>();
-  constructor(private merchantService: MerchantService) { }
+  private destroy$ = new Subject();
+  constructor(private merchantService: MerchantService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getListMerchant();
@@ -26,15 +31,27 @@ export class ListMerchantComponent implements OnInit, AfterViewInit {
   }
 
   public openDialogCreate(): void {
-    // open modal
+    const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        // result about new create merchant
+      });
   }
 
   private getListMerchant(): void {
     this.merchantService.getMerchantList()
       .subscribe((res) => {
-        console.log(res);
         this.dataSource.data = res;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
