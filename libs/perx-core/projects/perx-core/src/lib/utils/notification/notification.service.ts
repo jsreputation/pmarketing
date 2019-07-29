@@ -8,9 +8,11 @@ import { Observable, Subject } from 'rxjs';
 })
 export class NotificationService {
   private $popupSubject: Subject<IPopupConfig>;
+  public $message: Subject<string> = new Subject();
 
   constructor() {
     this.$popupSubject = new Subject();
+    this.$message = new Subject();
   }
 
   public addPopup(config: IPopupConfig): void {
@@ -20,4 +22,5 @@ export class NotificationService {
   get $popup(): Observable<IPopupConfig> {
     return this.$popupSubject;
   }
+
 }

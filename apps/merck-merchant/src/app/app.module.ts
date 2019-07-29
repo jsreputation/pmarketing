@@ -9,7 +9,8 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule
+  MatRippleModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -50,7 +51,8 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
