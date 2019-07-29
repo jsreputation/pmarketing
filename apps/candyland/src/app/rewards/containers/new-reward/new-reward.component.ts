@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
@@ -70,7 +70,7 @@ export class NewRewardComponent implements OnInit, OnDestroy {
     ]
   };
 
-  private formChanged;
+  // private formChanged;
   private defaultFormValue = {
     campaignInfo: {
       disabledEndDate: false
@@ -145,7 +145,6 @@ export class NewRewardComponent implements OnInit, OnDestroy {
         description: [],
         termsAndCondition: []
       }),
-      limits: this.fb.group({}),
       voucherValidity: this.fb.group({
         type: [],
         period: this.fb.group({
@@ -160,24 +159,19 @@ export class NewRewardComponent implements OnInit, OnDestroy {
           duration: []
         })
       }),
-      channel: this.fb.group({
-        type: [],
-        message: [],
-        schedule: this.fb.group({
-          sendDate: [],
-          sendTime: [],
-          enableRecurrence: [],
-          recurrence: this.fb.group({
-            times: [],
-            period: [],
-            repeatOn: []
-          })
-
+      limits: this.fb.group({
+        voucherPerCampaign: this.fb.group({
+          timesLimit: [],
+          durationLimit: []
+        }),
+        issuancePerUser: this.fb.group({
+          timesLimit: [],
+          durationLimit: []
+        }),
+        redemptionPerUser: this.fb.group({
+          timesLimit: [],
+          durationLimit: []
         })
-      }),
-      audience: this.fb.group({
-        type: ['none'],
-        file: []
       })
     });
   }
@@ -216,37 +210,37 @@ export class NewRewardComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
-    if (condition) {
-      controls.forEach(control => this.enableControl(control));
-    } else {
-      controls.forEach(control => {
-        this.disableControl(control, resetValue);
-      });
-    }
-  }
+  // private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
+  //   if (condition) {
+  //     controls.forEach(control => this.enableControl(control));
+  //   } else {
+  //     controls.forEach(control => {
+  //       this.disableControl(control, resetValue);
+  //     });
+  //   }
+  // }
 
-  private enableControl(control: AbstractControl) {
-    if (control.disabled && !(control.parent && control.parent.disabled)) {
-      control.enable({emitEvent: false});
-      this.formChanged = true;
-    }
-  }
+  // private enableControl(control: AbstractControl) {
+  //   if (control.disabled && !(control.parent && control.parent.disabled)) {
+  //     control.enable({emitEvent: false});
+  //     // this.formChanged = true;
+  //   }
+  // }
+  //
+  // private disableControl(control: AbstractControl, resetValue = false) {
+  //   if (control.enabled) {
+  //     control.disable({emitEvent: false});
+  //     if (resetValue) {
+  //       control.reset(null, {emitEvent: false});
+  //     }
+  //     // this.formChanged = true;
+  //   }
+  // }
 
-  private disableControl(control: AbstractControl, resetValue = false) {
-    if (control.enabled) {
-      control.disable({emitEvent: false});
-      if (resetValue) {
-        control.reset(null, {emitEvent: false});
-      }
-      this.formChanged = true;
-    }
-  }
-
-  private updateForm() {
-    this.form.updateValueAndValidity();
-    this.cd.detectChanges();
-  }
+  // private updateForm() {
+  //   this.form.updateValueAndValidity();
+  //   this.cd.detectChanges();
+  // }
 
   ngOnDestroy(): void {
     this.cd.detach();

@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RewardInfoFormGroupComponent} from './reward-info-form-group.component';
+import {RewardInfoPreviewComponent} from 'src/app/rewards/components/reward-info-preview/reward-info-preview.component';
 
 describe('RewardLimitsPreviewComponent', () => {
-  let component: RewardInfoFormGroupComponent;
-  let fixture: ComponentFixture<RewardInfoFormGroupComponent>;
+  let component: RewardInfoPreviewComponent;
+  let fixture: ComponentFixture<RewardInfoPreviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardInfoFormGroupComponent]
+      declarations: [RewardInfoPreviewComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RewardInfoFormGroupComponent);
+    fixture = TestBed.createComponent(RewardInfoPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

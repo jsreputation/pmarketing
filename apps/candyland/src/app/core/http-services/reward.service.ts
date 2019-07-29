@@ -27,4 +27,8 @@ export class RewardService {
         map(res => (res as IGraphic))
       );
   }
+
+  public getReward(): Observable<any> {
+    return this.http.get('assets/mocks/reward-detail.json');
+  }
 }

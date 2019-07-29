@@ -14,20 +14,3 @@
   </mat-radio-button>
 </mat-radio-group>
 <!--/ Merchant Cards-->
-<!--Merchant items-->
-<div class="merchant-item" *ngIf="merchant">
-  <div class="merchant-item-img">
-    <img [src]="merchant?.image">
-  </div>
-  <div class="merchant-item-info">
-    <span>{{merchant?.type}}</span>
-    <span>{{merchant?.phone}}</span>
-    <span>{{merchant?.category}}</span>
-    <div class="merchant-item-action">
-      <button mat-icon-button (click)="clickDeleteMerchant()">
-        <i class="icon full-with delete-action"></i>
-      </button>
-    </div>
-  </div>
-</div>
-<!--/ Merchant items-->

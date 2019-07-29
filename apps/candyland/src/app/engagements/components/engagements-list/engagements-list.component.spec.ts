@@ -22,7 +22,7 @@ import {ButtonModule} from '../../../shared/components/button/button.module';
 import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-describe('RewardsListComponent', () => {
+describe('RewardsCampaignsListComponent', () => {
   let component: EngagementsListComponent;
   let fixture: ComponentFixture<EngagementsListComponent>;
 

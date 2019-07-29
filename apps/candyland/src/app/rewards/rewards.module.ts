@@ -36,10 +36,16 @@ import {DatePickerModule} from '@cl-shared/components/date-picker/date-picker.mo
 import {UploadFileModule} from '@cl-shared/components/upload-file/upload-file.module';
 import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
 import {RewardInfoFormGroupComponent} from './components/reward-info-form-group/reward-info-form-group.component';
-import {MerchantInfoFormGroupComponent} from './components/merchant-info-form-group/merchant-info-form-group.component';
+import {RewardMerchantCardComponent} from 'src/app/rewards/components/reward-merchant-card/reward-merchant-card.component';
 import {LimitFormGroupComponent} from './components/limit-form-group/limit-form-group.component';
 import {VoucherValidityFormGroupComponent} from './components/voucher-validity-form-group/voucher-validity-form-group.component';
 import {RewardDetailPageComponent} from './containers/reward-detail-page/reward-detail-page.component';
+import {RewardsCampaignsListComponent} from 'src/app/rewards/components/rewards-campaigns-list/rewards-campaigns-list.component';
+import {RewardMerchantItemComponent} from 'src/app/rewards/components/reward-merchant-item/reward-merchant-item.component';
+import {RewardInfoPreviewComponent} from 'src/app/rewards/components/reward-info-preview/reward-info-preview.component';
+import {RewardLimitsPreviewComponent} from 'src/app/rewards/components/reward-limits-preview/reward-limits-preview.component';
+import {RewardVouchersPreviewComponent} from './components/reward-vouchers-preview/reward-vouchers-preview.component';
+import {DownloadButtonModule} from '@cl-shared/components/download-button/download-button.module';
 
 @NgModule({
   declarations: [
@@ -48,10 +54,15 @@ import {RewardDetailPageComponent} from './containers/reward-detail-page/reward-
     RewardsListComponent,
     NewRewardComponent,
     RewardInfoFormGroupComponent,
-    MerchantInfoFormGroupComponent,
+    RewardMerchantCardComponent,
     LimitFormGroupComponent,
     VoucherValidityFormGroupComponent,
-    RewardDetailPageComponent
+    RewardDetailPageComponent,
+    RewardsCampaignsListComponent,
+    RewardMerchantItemComponent,
+    RewardInfoPreviewComponent,
+    RewardLimitsPreviewComponent,
+    RewardVouchersPreviewComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +94,8 @@ import {RewardDetailPageComponent} from './containers/reward-detail-page/reward-
     TimePickerModule,
     DatePickerModule,
     UploadFileModule,
-    UploadGraphicModule
+    UploadGraphicModule,
+    DownloadButtonModule
   ],
   entryComponents: [
     AddRewardPopupComponent

@@ -1,0 +1,40 @@
+<!--image-->
+<div *ngIf="data?.image" class="card-row new-reward-image-block">
+  <cl-upload-graphic></cl-upload-graphic>
+</div>
+<div class="">
+  <div class="card-row stretch input-group">
+    <!-- Reward Type-->
+    <div>
+      <label class="card-label">Reward Type</label>
+      <p class="card-value">{{data?.rewardType || '-'}}</p>
+    </div>
+    <!--Category-->
+    <div>
+      <label class="card-label">Category</label>
+      <p class="card-value">{{data?.category || '-'}}</p>
+    </div>
+  </div>
+  <div class="card-row stretch input-group">
+    <!--Redemption Type-->
+    <div>
+      <label class="card-label">Redemption Type</label>
+      <p class="card-value">{{data?.redemptionType || '-'}}</p>
+    </div>
+    <!--Cost of Reward-->
+    <div>
+      <label class="card-label">Reward Type</label>
+      <p class="card-value">{{data?.rewardType || '-'}}</p>
+    </div>
+  </div>
+  <!--Description-->
+  <div *ngIf="data?.description">
+    <label class="card-label">Description</label>
+    <p class="card-value">{{data?.description}}</p>
+  </div>
+  <!--Terms & Condition-->
+  <div *ngIf="data?.termsAndCondition">
+    <label class="card-label">Terms & Condition</label>
+    <p class="card-value">{{data?.termsAndCondition}}</p>
+  </div>
+</div>

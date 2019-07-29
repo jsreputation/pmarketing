@@ -5,12 +5,26 @@
   background-color: $simple-light-gray;
 }
 
-.campaign-detail-content {
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 2rem;
+.reward-detail {
+
+  &-content {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2rem;
+  }
+
+  &-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &-status-filter {
+    width: 194px;
+  }
+
 }
 
