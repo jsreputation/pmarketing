@@ -17,9 +17,13 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public onSalesScan(): void {}
+  public onSalesScan(): void {
+    this.router.navigate(['/qrscanner/order']);
+  }
 
-  public onRedemption(): void {}
+  public onRedemption(): void {
+    this.router.navigate(['/qrscanner/reward-redemption']);
+  }
 
   public onLogOut(): void {
     this.authService.logout();

@@ -23,8 +23,8 @@ export const menus = [
     open: false,
   },
   {
-    name: 'Merchant',
-    link: '/merchant',
+    name: 'Merchants',
+    link: '/merchants',
     icon: 'merchant',
     open: false,
   },
