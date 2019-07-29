@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VouchersService, Voucher } from '@perx/core/dist/perx-core';
+import { VouchersService, Voucher } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 

@@ -20,7 +20,7 @@ import {
   ProfileModule,
   StampModule,
   UtilsModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { environment } from '../environments/environment';
 import {
   MatButtonModule,

@@ -12,7 +12,7 @@ import {
   CampaignModule,
   GameModule,
   UtilsModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
 import { RedemptionComponent } from './redemption/redemption.component';
