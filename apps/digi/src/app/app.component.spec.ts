@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
