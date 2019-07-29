@@ -1,6 +1,15 @@
 
 @import "variables";
 
+::ng-deep {
+  .upload-btn {
+    span ~ span {
+      display: none;
+    }
+  }
+}
+
+
 .upload {
 
   &-wrap {
@@ -48,7 +57,7 @@
     position: absolute;
     bottom: -2.4rem;
     left: 0;
-    right: -150%;
+    width: max-content;
   }
 
   &-type {
@@ -60,7 +69,7 @@
     position: absolute;
     bottom: -2.4rem;
     left: 0;
-    right: -150%;
+    width: max-content;
   }
 }
 

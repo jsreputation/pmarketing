@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { IPopupConfig, PopupComponent } from '@perx/core/dist/perx-core';
+import { IPopupConfig, PopupComponent } from '@perx/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 
@@ -9,9 +9,18 @@ import { HkbnValidators } from '../../../helpers/hkbn-validators';
 })
 export class ChangePasswordFormComponent {
 
+  @Output() public passwordChange: EventEmitter<any> = new EventEmitter<any>();
+
   public changePasswordForm: FormGroup = new FormGroup({
-    old_password: new FormControl(null, [Validators.required]),
-    new_password: new FormControl(null, [Validators.required]),
-    confirm_password: new FormControl(null, [Validators.required])
-  }, [HkbnValidators.equalityValidator('new_password', 'confirm_password')]);
+    oldPassword: new FormControl(null, [Validators.required]),
+    newPassword: new FormControl(null, [Validators.required]),
+    confirmPassword: new FormControl(null, [Validators.required])
+  }, [HkbnValidators.equalityValidator('newPassword', 'confirmPassword')]);
+
+  public submit(): void {
+    if (this.changePasswordForm.invalid) {
+      return;
+    }
+    this.passwordChange.emit(this.changePasswordForm.value);
+  }
 }

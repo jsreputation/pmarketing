@@ -27,11 +27,11 @@ describe('HeaderComponent', () => {
   });
 
   it('should show sub title', () => {
-    component.subTitle = 'sub title';
+    component.subTitles = ['sub title'];
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('p.sub-title').innerText
-    ).toEqual('sub title');
+    ).toEqual('sub title\n');
   });
 
   it('should create', () => {

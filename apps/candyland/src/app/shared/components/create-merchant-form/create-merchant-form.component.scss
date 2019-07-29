@@ -1,0 +1,44 @@
+@import "variables";
+
+.merchant {
+  &-upload-img {
+    margin-top: 2.4rem;
+  }
+
+  &-description {
+    margin-top: 2rem;
+  }
+
+  &-name {
+    margin-top: 5rem;
+  }
+
+  &-control-row {
+    display: flex;
+
+    .control-input.small {
+      width: 33.3%;
+      margin-right: 2.4rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-branch {
+    margin-top: 1.6rem;
+    margin-bottom: 2.7rem;
+  }
+}
+
+cl-merchant-branch {
+  margin-bottom: 0.8rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+cl-button {
+  margin-top: 1.6rem;
+}
