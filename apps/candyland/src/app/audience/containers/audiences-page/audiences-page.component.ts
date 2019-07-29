@@ -87,7 +87,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public openManageListDialog(item): void {
     const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
 
-    dialogRef.afterClosed().subscribe(user => {
+    dialogRef.afterClosed().pipe(untilDestroyed(this)).subscribe(user => {
       if (user) {
         this.users.push(user);
       }

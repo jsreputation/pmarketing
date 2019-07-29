@@ -13,19 +13,24 @@ import {
   PopupComponent,
   ProfileModule,
   UtilsModule,
+  RewardsModule,
   VouchersModule,
 } from '@perx/core/dist/perx-core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { MatDialogModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatTabsModule } from '@angular/material';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
 import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
+import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
+import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WalletComponent,
+    VoucherDetailsComponent,
+    QrRedemptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +41,7 @@ import { WalletComponent } from './wallet/wallet.component';
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule.forRoot({env: environment}),
     VouchersModule.forRoot({env: environment}),
+    RewardsModule.forRoot({env: environment}),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
@@ -43,7 +49,8 @@ import { WalletComponent } from './wallet/wallet.component';
     ContentContainerModule,
     HomeModule,
     BrowserAnimationsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

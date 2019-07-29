@@ -5,6 +5,8 @@ import { ContentContainerComponent } from './ui/content-container/content-contai
 import { HomeComponent } from './home/containers/home/home.component';
 import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
+import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 
 const routes: Routes = [
   {
@@ -12,11 +14,31 @@ const routes: Routes = [
       {path: '', component: HomeComponent},
       {
         path: 'qr', component: EnlargedQrComponent, data: {
-          back: true,
+          cross: true,
           backUrl: ''
         }
       },
-      {path: 'wallet', component: WalletComponent}
+      {path: 'wallet', component: WalletComponent},
+      {
+        path: 'wallet/:id', children: [
+          {
+            path: '',
+            component: VoucherDetailsComponent, data: {
+              back: true,
+              backUrl: '/wallet'
+            }
+          },
+          {
+            path: 'qrcode', component: QrRedemptionComponent, data: {
+              cross: true,
+              backUrl: '../',
+            }
+          }
+        ]
+      },
+      {
+        path: 'reward/:id', loadChildren: () => import('./reward/reward.module').then((m) => m.RewardModule)
+      }
     ]
   },
   {path: 'login', component: LoginComponent},

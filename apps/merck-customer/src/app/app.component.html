@@ -1,2 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<router-outlet></router-outlet>
+<mat-toolbar *ngIf="showHeader" class="toolbar">
+	<img src="assets/header_logo.png">
+</mat-toolbar>
+<router-outlet (activate)="onActivate($event)"></router-outlet>

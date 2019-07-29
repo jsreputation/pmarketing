@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CongratsComponent } from './congrats.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { StampService } from '@perx/core/dist/perx-core';
+import { of } from 'rxjs';
 
 describe('CongratsComponent', () => {
   let component: CongratsComponent;
@@ -12,12 +14,19 @@ describe('CongratsComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
+  const stampServiceStub = {
+    // @ts-ignore
+    getCards: (id: number) => (of([]))
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CongratsComponent, HeaderComponent],
       imports: [MatToolbarModule],
       providers: [
-        { provide: Router, useValue: router }
+        { provide: Router, useValue: router },
+        { provide: ActivatedRoute, useValue: { snapshot: { url: 'congrats' }, queryParams: of({}) } },
+        { provide: StampService, useValue: stampServiceStub },
       ]
     }).compileComponents();
   }));

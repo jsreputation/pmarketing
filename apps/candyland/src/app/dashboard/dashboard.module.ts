@@ -8,7 +8,6 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
-
 @NgModule({
   declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent],
   imports: [

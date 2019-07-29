@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
 
 @Component({
   selector: 'mc-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title: string = 'merck-customer';
+  public showHeader: boolean = false;
+
+  public onActivate(ref: any): void {
+    this.showHeader =
+      ref instanceof ForgotPasswordComponent ||
+      ref instanceof EnterPinComponent;
+  }
 }
