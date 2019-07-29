@@ -26,6 +26,9 @@ const routes: Routes = [
       },
       {
         path: 'reward/:id', loadChildren: () => import('./reward/reward.module').then((m) => m.RewardModule)
+      },
+      {
+        path: 'account', loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
       }
     ]
   },

@@ -1,0 +1,10 @@
+<div class="container">
+  <form [formGroup]="updatePhoneGroup" class="update-phone-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Telephone number</mat-label>
+      <input type="text" [textMask]="phoneMask" matInput formControlName="phone">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Submit</button>
+  </form>
+</div>
