@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VouchersService } from '@perx/core/dist/perx-core';
+import { VouchersService } from '@perx/core';
 import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 @Component({

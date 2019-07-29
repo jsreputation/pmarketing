@@ -9,7 +9,7 @@ import {
   VouchersService,
   GAME_TYPE,
   defaultTree
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

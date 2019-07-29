@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule
   } from '@angular/forms';
-import { ProfileModule, ProfileService } from '@perx/core/dist/perx-core';
+import { ProfileModule, ProfileService } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

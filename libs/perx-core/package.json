@@ -34,13 +34,13 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.0",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
-    "@angular/cli": "~8.0.2",
+    "@angular/cli": "~8.0.0",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
     "@types/googlemaps": "^3.37.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "~10.14.13",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -55,9 +55,18 @@
     "rxjs-tslint-rules": "^4.24.3",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
-    "ts-node": "~7.0.0",
+    "ts-node": "~8.3.0",
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
-  }
+  },
+  "main": "./dist/perx-core/bundles/perx-core.umd.js",
+  "module": "./dist/perx-core/fesm5/perx-core.js",
+  "es2015": "./dist/perx-core/fesm2015/perx-core.js",
+  "esm5": "./dist/perx-core/esm5/perx-core.js",
+  "esm2015": "./dist/perx-core/esm2015/perx-core.js",
+  "fesm5": "./dist/perx-core/fesm5/perx-core.js",
+  "fesm2015": "./dist/perx-core/fesm2015/perx-core.js",
+  "typings": "./dist/perx-core/perx-core.d.ts",
+  "metadata": "./dist/perx-core/perx-core.metadata.json"
 }

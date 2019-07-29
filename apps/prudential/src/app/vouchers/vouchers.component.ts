@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PopupComponent, IPopupConfig } from '@perx/core/dist/perx-core';
+import { PopupComponent, IPopupConfig } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
