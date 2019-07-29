@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class HeaderComponent {
   @Input() public title: string;
-  @Input() public subTitle: string;
-
+  @Input() public subTitles: string[];
+  @Input() public subsubTitles: string[];
 }

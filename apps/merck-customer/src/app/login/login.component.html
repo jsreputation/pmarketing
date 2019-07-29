@@ -34,7 +34,7 @@
 					Password is <strong>required</strong>
 				</mat-error>
 			</mat-form-field>
-			<div i18n="@@static-forgot-password" class="forgot-text">Forgot password?</div>
+			<div i18n="@@static-forgot-password" class="forgot-text" (click)="goToForgotPassword()">Forgot password?</div>
 			<button i18n="@@static-login" mat-flat-button type="submit" class="full-width__button">Log In</button>
 			<div i18n="@@static-learn-more" class="bottom-text">Learn more about the program</div>
 		</form>
