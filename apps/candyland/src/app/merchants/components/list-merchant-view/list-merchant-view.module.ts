@@ -5,7 +5,7 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatMenuModule,
   MatSelectModule,
   MatSortModule,
   MatTableModule
@@ -22,6 +22,9 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
   ],
   imports: [
     CommonModule,
+    StatusLabelModule,
+    TableFiltersModule,
+
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -29,8 +32,8 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
     MatSortModule,
     MatTableModule,
     MatSelectModule,
-    StatusLabelModule,
-    TableFiltersModule,
+    MatMenuModule,
+
 
   ]
 })

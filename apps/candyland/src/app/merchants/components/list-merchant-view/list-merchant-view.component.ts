@@ -8,9 +8,10 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 })
 export class ListMerchantViewComponent implements OnInit, AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
-  @Input() public displayedColumns = ['logo', 'name', 'phone', 'branches'];
+  @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() selectedMerchant = new EventEmitter<IMerchant>();
+  @Output() public itemAction = new EventEmitter<IMerchant>();
+  public DATE_FORMAT = 'dd MMM yyyy';
   constructor() { }
 
   ngOnInit() {
@@ -20,5 +21,18 @@ export class ListMerchantViewComponent implements OnInit, AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+
+  public editItem(element: IMerchant) {
+    this.itemAction.emit(element);
+  }
+
+  public duplicateItem(element: IMerchant) {
+    this.itemAction.emit(element);
+  }
+
+  public deleteItem(element: IMerchant) {
+    this.itemAction.emit(element);
   }
 }
