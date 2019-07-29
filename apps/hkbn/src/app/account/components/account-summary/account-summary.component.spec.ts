@@ -28,9 +28,9 @@ describe('AccountSummaryComponent', () => {
         ReactiveFormsModule,
         NoopAnimationsModule,
       ],
-      declarations: [ AccountSummaryComponent ]
+      declarations: [AccountSummaryComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

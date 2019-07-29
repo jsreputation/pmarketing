@@ -4,6 +4,7 @@ import { UpdateEmailComponent } from './update-email.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('UpdateEmailComponent', () => {
   let component: UpdateEmailComponent;
@@ -16,6 +17,7 @@ describe('UpdateEmailComponent', () => {
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
+        ErrorHandlerModule,
         NoopAnimationsModule
       ],
       declarations: [UpdateEmailComponent]

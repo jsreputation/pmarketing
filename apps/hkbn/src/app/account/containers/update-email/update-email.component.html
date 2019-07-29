@@ -1,16 +1,12 @@
 <div class="container">
-  <form #form='ngForm' [formGroup]="updateEmailGroup" class="update-email-form">
+  <form [formGroup]="updateEmailGroup" class="update-email-form">
     <mat-form-field appearance="fill">
       <mat-label>Email Address</mat-label>
       <input type="text" matInput formControlName="email">
-      <mat-error
-        *ngIf="updateEmailGroup.get('email').hasError('required')
-      && (updateEmailGroup.get('email').touched || form.submitted)">
+      <mat-error *hkbnErrorHandler="'required'">
         This field is required
       </mat-error>
-      <mat-error
-        *ngIf="updateEmailGroup.get('email').hasError('email')
-      && (updateEmailGroup.get('email').touched || form.submitted)">
+      <mat-error *hkbnErrorHandler="'email'">
         Wrong format
       </mat-error>
     </mat-form-field>

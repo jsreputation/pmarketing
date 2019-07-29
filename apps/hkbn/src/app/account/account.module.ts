@@ -16,9 +16,17 @@ import { UpdateEmailComponent } from './containers/update-email/update-email.com
 import { UpdatePhoneComponent } from './containers/update-phone/update-phone.component';
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
+import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 
 @NgModule({
-  declarations: [AccountComponent, AccountSummaryComponent, UpdateEmailComponent, UpdatePhoneComponent, ChangePasswordComponent, ChangePasswordFormComponent],
+  declarations: [
+    AccountComponent,
+    AccountSummaryComponent,
+    UpdateEmailComponent,
+    UpdatePhoneComponent,
+    ChangePasswordComponent,
+    ChangePasswordFormComponent
+  ],
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -28,7 +36,8 @@ import { ChangePasswordFormComponent } from './components/change-password-form/c
     AccountRoutingModule,
     TextMaskModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ErrorHandlerModule,
   ]
 })
 export class AccountModule {

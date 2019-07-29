@@ -1,11 +1,9 @@
 <div class="container">
-  <form #form='ngForm' [formGroup]="updatePhoneGroup" class="update-phone-form">
+  <form [formGroup]="updatePhoneGroup" class="update-phone-form">
     <mat-form-field appearance="fill">
       <mat-label>Telephone number</mat-label>
       <input type="text" [textMask]="phoneMask" matInput formControlName="phone">
-      <mat-error
-        *ngIf="updatePhoneGroup.get('phone').hasError('required')
-      && (updatePhoneGroup.get('phone').touched || form.submitted)">
+      <mat-error *hkbnErrorHandler="'required'">
         This field is required
       </mat-error>
     </mat-form-field>

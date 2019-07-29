@@ -4,6 +4,7 @@ import { ChangePasswordFormComponent } from './change-password-form.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('ChangePasswordFormComponent', () => {
   let component: ChangePasswordFormComponent;
@@ -16,6 +17,7 @@ describe('ChangePasswordFormComponent', () => {
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
+        ErrorHandlerModule,
         NoopAnimationsModule,
       ],
       declarations: [ChangePasswordFormComponent]

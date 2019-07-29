@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('UpdatePhoneComponent', () => {
   let component: UpdatePhoneComponent;
@@ -20,6 +21,7 @@ describe('UpdatePhoneComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         TextMaskModule,
+        ErrorHandlerModule,
         NoopAnimationsModule
       ],
       declarations: [UpdatePhoneComponent]

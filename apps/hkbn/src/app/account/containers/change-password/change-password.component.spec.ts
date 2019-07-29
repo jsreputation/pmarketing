@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
 import { of } from 'rxjs';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
@@ -21,6 +22,7 @@ describe('ChangePasswordComponent', () => {
         MatButtonModule,
         ReactiveFormsModule,
         RouterTestingModule,
+        ErrorHandlerModule,
         NoopAnimationsModule
       ],
       providers: [
