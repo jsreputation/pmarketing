@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class AppComponent {
   public title: string = 'merck-merchant';
 
-  constructor(private notificationService: NotificationService, private snackBar: MatSnackBar){
+  constructor(private notificationService: NotificationService, private snackBar: MatSnackBar) {
     this.notificationService.$message.subscribe((message: string) => {
       this.snackBar.open(message, 'Dismiss', {
         duration: 5000,
@@ -18,5 +18,3 @@ export class AppComponent {
     });
   }
 }
-
-// inject notification service, each events display snackbar
