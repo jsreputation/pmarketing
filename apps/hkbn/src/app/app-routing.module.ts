@@ -7,6 +7,7 @@ import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.c
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
+import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,12 @@ const routes: Routes = [
             path: 'qrcode', component: QrRedemptionComponent, data: {
               cross: true,
               backUrl: '../',
+            }
+          },
+          {
+            path: 'code', component: CodeRedemptionComponent, data: {
+              back: true,
+              backUrl: '../'
             }
           }
         ]

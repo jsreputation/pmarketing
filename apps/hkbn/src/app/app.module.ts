@@ -24,6 +24,7 @@ import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
+import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.comp
     WalletComponent,
     VoucherDetailsComponent,
     QrRedemptionComponent,
+    CodeRedemptionComponent,
   ],
   imports: [
     BrowserModule,
