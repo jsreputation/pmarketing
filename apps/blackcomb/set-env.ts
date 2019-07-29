@@ -1,5 +1,5 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-const fs = require('fs');
+import { writeFile } from 'fs'; // fs = require('fs');
 
 // Configure Angular `environment.ts` file path
 const targetPath = `./src/environments/environment.ts`;
@@ -23,7 +23,7 @@ const envConfigFile = `export const environment = {
 console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
 console.log(colors.grey(envConfigFile));
 
-fs.writeFile(targetPath, envConfigFile, (err) => {
+writeFile(targetPath, envConfigFile, (err) => {
   if (err) {
     throw console.error(err);
   } else {
