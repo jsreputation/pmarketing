@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignService, CAMPAIGN_TYPE, IGame, GameService, ICampaign } from '@perx/core';
 import { map, take } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-game',
@@ -86,6 +87,12 @@ export class GameComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             const payload = btoa(JSON.stringify(res));
+            this.router.navigate([`/result`], { queryParams: { payload }});
+          }
+        },
+        (e: HttpErrorResponse) => {
+          if (e && e.error) {
+            const payload = btoa(JSON.stringify(e.error));
             this.router.navigate([`/result`], { queryParams: { payload }});
           }
         });
