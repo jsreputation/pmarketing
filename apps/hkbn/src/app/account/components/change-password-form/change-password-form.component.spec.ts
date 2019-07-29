@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangePasswordFormComponent } from './change-password-form.component';
+import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ChangePasswordFormComponent', () => {
   let component: ChangePasswordFormComponent;
@@ -8,9 +11,16 @@ describe('ChangePasswordFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangePasswordFormComponent ]
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+      ],
+      declarations: [ChangePasswordFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

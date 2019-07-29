@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit {
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe((profile) => {
-      this.accountData = profile;
+      this.accountData = profile || {};
     });
   }
 }
