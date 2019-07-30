@@ -7,7 +7,7 @@ import { IReward } from '../models/reward.model';
   templateUrl: './rewards-carousel.component.html',
   styleUrls: ['./rewards-carousel.component.scss']
 })
-export class RewardsCarouselComponent implements OnInit {
+export class RewardsCollectionComponent implements OnInit {
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
