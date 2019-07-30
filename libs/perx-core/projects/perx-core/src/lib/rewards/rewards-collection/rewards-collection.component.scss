@@ -1,8 +1,10 @@
+$card-actual-height: 200px;
+
 .card-collection-container {
   .mat-card {
     max-width: 50%;
-    width: 200px;
-    height: 200px;
+    width: calc( #{$card-actual-height} - 16px);
+    height: calc( #{$card-actual-height} - 16px);
     display: flex;
     flex-direction: column;
 
