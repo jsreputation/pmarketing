@@ -1,3 +1,21 @@
-<p>
-  list-merchant works!
-</p>
+<section class="page-header">
+  <h1 class="title">Merchants</h1>
+  <cl-button (click)="openDialogCreate()" classList="primary">Create new</cl-button>
+</section>
+<section class="content merchant-list-content">
+  <div class="merchant-list">
+    <!--filters-->
+    <cl-table-filters [dataSource]="dataSource" classList="block">
+      <ng-container *clTableFilter="'firstName'; let filter">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="Search"></cl-search-filter>
+      </ng-container>
+    </cl-table-filters>
+    <!--table-->
+    <cl-list-merchant-view [dataSource]="dataSource"
+
+    >
+    </cl-list-merchant-view>
+    <!--paginator-->
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</section>

@@ -5,4 +5,5 @@ declare interface IMerchant {
   firstName: string;
   lastName: string;
   branches: any;
+  dateCreated?: string;
 }

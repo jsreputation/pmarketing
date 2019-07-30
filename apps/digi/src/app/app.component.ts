@@ -41,7 +41,8 @@ export class AppComponent implements OnInit {
     this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
-          this.router.navigateByUrl('login');
+          const payload = btoa(JSON.stringify({code: 401, message: 'Unauthorized'}));
+          this.router.navigate([`/result`], { queryParams: { payload }});
         }
       }
     );

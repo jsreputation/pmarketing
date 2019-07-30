@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
                 () => {
                   this.failedAuth = true;
                   this.authed = false;
+                  const payload = btoa(JSON.stringify({code: 401, message: 'Unauthorized'}));
+                  this.router.navigate([`/result`], { queryParams: { payload }});
                 }
               );
             } else {
