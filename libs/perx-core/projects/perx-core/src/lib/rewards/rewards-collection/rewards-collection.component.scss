@@ -6,9 +6,10 @@
     display: flex;
     flex-direction: column;
 
-    .mat-card-image {
+    img.mat-card-image {
       height: auto;
       margin-bottom: 0.8rem;
+      object-fit: cover;
     }
 
     .mat-card-content {
