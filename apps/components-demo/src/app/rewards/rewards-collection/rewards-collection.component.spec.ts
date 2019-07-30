@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RewardsCarouselComponent } from './rewards-carousel.component';
+import { RewardsCollectionComponent } from './rewards-collection.component';
 
-describe('RewardsCarouselComponent', () => {
-  let component: RewardsCarouselComponent;
-  let fixture: ComponentFixture<RewardsCarouselComponent>;
+describe('RewardsCollectionComponent', () => {
+  let component: RewardsCollectionComponent;
+  let fixture: ComponentFixture<RewardsCollectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsCarouselComponent ]
+      declarations: [ RewardsCollectionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RewardsCarouselComponent);
+    fixture = TestBed.createComponent(RewardsCollectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

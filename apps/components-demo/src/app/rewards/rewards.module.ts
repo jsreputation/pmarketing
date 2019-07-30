@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RewardsComponent } from './rewards.component';
-import { RewardsCarouselComponent } from './rewards-carousel/rewards-carousel.component';
+import { RewardsCollectionComponent } from './rewards-collection/rewards-collection.component';
 import { RewardsListComponent } from './rewards-list/rewards-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RewardsRoutingModule } from './rewards-routing.module';
@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     RewardsComponent,
-    RewardsCarouselComponent,
+    RewardsCollectionComponent,
     RewardsListComponent,
   ],
   imports: [

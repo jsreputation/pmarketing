@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RewardsCollectionComponent } from './rewards-carousel.component';
+import { RewardsCollectionComponent } from './rewards-collection.component';
 
 describe('RewardsCarouselComponent', () => {
   let component: RewardsCollectionComponent;
