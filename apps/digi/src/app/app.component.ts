@@ -2,7 +2,8 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage } from '@perx/core';
+import { AuthenticationService, TokenStorage, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +11,33 @@ import { AuthenticationService, TokenStorage } from '@perx/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'digi';
-
-  preAuth: boolean;
+  public preAuth: boolean;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     private tokenStorage: TokenStorage,
-    @Inject(PLATFORM_ID) private platformId: object) {
+    @Inject(PLATFORM_ID) private platformId: object,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+  ) {
     this.preAuth = environment.preAuth;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.notificationService.$popup.subscribe(
+      (data: IPopupConfig) => {
+        this.dialog.open(PopupComponent, { data });
+      }
+    );
+
     if (this.preAuth) {
       if (isPlatformBrowser(this.platformId)) {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
-          const param = location.search;
-          const searchParams = new URLSearchParams(param);
-          const token = searchParams.get('token');
+          const param: string = location.search;
+          const searchParams: URLSearchParams = new URLSearchParams(param);
+          const token: string | null = searchParams.get('token');
           if (token) {
             this.tokenStorage.setAccessToken(token);
           }
@@ -39,10 +47,10 @@ export class AppComponent implements OnInit {
       }
     }
     this.authService.failedAuthObservable.subscribe(
-      (didFailAuth) => {
+      (didFailAuth: boolean) => {
         if (didFailAuth) {
-          const payload = btoa(JSON.stringify({code: 401, message: 'Unauthorized'}));
-          this.router.navigate([`/result`], { queryParams: { payload }});
+          const payload: string = btoa(JSON.stringify({ code: 401, message: 'Unauthorized' }));
+          this.router.navigate([`/result`], { queryParams: { payload } });
         }
       }
     );
