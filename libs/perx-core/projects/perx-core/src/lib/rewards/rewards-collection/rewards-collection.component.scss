@@ -1,0 +1,36 @@
+.card-collection-container {
+  .mat-card {
+    max-width: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+
+    .mat-card-image {
+      height: auto;
+      margin-bottom: 0.8rem;
+    }
+
+    .mat-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
+}
+
+.mat-card-content {
+  .title {
+    flex: 0 auto;
+    margin: 0 0 0.5rem;
+    color: #212121;
+  }
+
+  .description {
+    flex: 1;
+  }
+
+  .points {
+    flex: 0 auto;
+  }
+}
