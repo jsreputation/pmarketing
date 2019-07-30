@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IReward, RewardsService } from '@perx/core';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-rewards-carousel',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RewardsCarouselComponent implements OnInit {
 
-  constructor() { }
+  rewards: Observable<IReward[]>;
 
-  ngOnInit() {
+  constructor(private rewardsService: RewardsService) {
   }
 
+  ngOnInit() {
+    this.getRewards();
+  }
+
+  getRewards() {
+    this.rewardsService.getAllRewards().subscribe(
+      (rewards: IReward[]) => {
+        if (rewards && rewards.length > 0) {
+          this.rewards = of(rewards);
+        }
+      }
+    );
+  }
 }
