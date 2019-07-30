@@ -14,6 +14,7 @@ import {
 export class CongratsComponent implements OnInit {
   public title: string = 'CONGRATULATIONS!';
   public subTitles: string[] = ['You have unlocked 1 out of 6 months', 'of Netflix rebate!'];
+  public subsubTitles: string[] = [];
   public path: string;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private stampService: StampService) { }
@@ -48,6 +49,12 @@ export class CongratsComponent implements OnInit {
         }).length;
 
         this.subTitles[0] = `You have unlocked ${unlockedCardsCount} out of ${cards.length} months`;
+
+        if (unlockedCardsCount === cards.length) {
+          this.subsubTitles = [
+            `You have reached the maximum Netflix rebate of ${cards.length} months allowed per customer for this promo.`
+          ];
+        }
       });
   }
 }
