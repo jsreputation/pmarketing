@@ -9,21 +9,23 @@ import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-t
 import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 
+const components = [
+  RewardsCarouselComponent,
+  RewardsListComponent,
+  RewardsListTabbedComponent,
+  RewardComponent
+];
+
 @NgModule({
   declarations: [
-    RewardsCarouselComponent,
-    RewardsListComponent,
-    RewardsListTabbedComponent,
-    RewardComponent
+    ...components
   ],
   imports: [
     CommonModule,
     MaterialModule
   ],
   exports: [
-    RewardsCarouselComponent,
-    RewardsListComponent,
-    RewardsListTabbedComponent
+    ...components
   ]
 })
 export class RewardsModule {

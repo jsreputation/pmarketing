@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
 import { MatIconModule } from '@angular/material';
-import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

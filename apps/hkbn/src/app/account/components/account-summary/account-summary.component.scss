@@ -1,0 +1,25 @@
+hkbn-account-summary {
+  .member-ship {
+    font-size: 1.4rem;
+    margin: 0.8rem 1.5rem;
+  }
+
+  .account-summary {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  mat-form-field {
+    margin: 0.5rem 0;
+  }
+
+  .mat-checkbox-layout {
+    white-space: normal !important;
+  }
+
+  .mat-checkbox-inner-container {
+    margin-top: 0.6rem;
+  }
+}

@@ -9,7 +9,7 @@ import {
   STAMP_STATE,
   NotificationService,
   IStamp
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SoundService } from '../sound/sound.service';

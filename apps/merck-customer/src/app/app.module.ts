@@ -19,19 +19,25 @@ import {
   OauthModule,
   CognitoModule,
   ProfileModule
-   } from '@perx/core/dist/perx-core';
+   } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { HomeComponent } from './home/home.component';
+import { SignupComponent } from './signup/signup.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserInfoComponent,
-    HomeComponent
+    HomeComponent,
+    SignupComponent,
+    ForgotPasswordComponent,
+    EnterPinComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export interface PopUpClosedCallBack {
 @Component({
   selector: 'perx-core-popup',
   templateUrl: './popup.component.html',
-  styleUrls: ['./popup.component.css']
+  styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
   public title: string = null;

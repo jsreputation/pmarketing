@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { LoyaltyModule, LoyaltyService, ProfileService, RewardsModule } from '@perx/core/dist/perx-core';
+import { LoyaltyModule, LoyaltyService, ProfileService, RewardsModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RouterTestingModule } from '@angular/router/testing';
