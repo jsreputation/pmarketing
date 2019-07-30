@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService } from '@perx/core/dist/perx-core';
+import { PopupComponent, NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-root',

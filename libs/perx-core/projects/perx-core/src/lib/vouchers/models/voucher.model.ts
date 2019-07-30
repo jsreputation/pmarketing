@@ -27,6 +27,7 @@ enum VOUCHER_STATE {
 enum REDEMPTION_TYPE {
   pin = 'pin',
   txtCode = 'txtCode',
+  qr = 'qrcode',
   none = 'none'
 }
 

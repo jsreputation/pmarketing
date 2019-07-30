@@ -1,0 +1,10 @@
+.merchant-list-view {
+  tr.mat-footer-row, tr.mat-row {
+    height: 60px;
+  }
+
+  td.mat-cell.menu-column, th.mat-header-cell.menu-column {
+    width: 5.4rem !important;
+    padding-right: 0 !important;
+  }
+}

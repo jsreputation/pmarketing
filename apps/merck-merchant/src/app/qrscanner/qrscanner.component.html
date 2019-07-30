@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div class="container">
+  <div class="scanner">
+    <em></em>
+    <zxing-scanner
+      (scanSuccess)="scanSuccessHandler($event)"
+    ></zxing-scanner>
+  </div>
+</div>

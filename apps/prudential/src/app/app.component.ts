@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { environment } from '../environments/environment';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { TncComponent } from './tnc/tnc.component';

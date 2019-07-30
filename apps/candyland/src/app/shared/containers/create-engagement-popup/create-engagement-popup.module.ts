@@ -29,7 +29,6 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
   ],
   imports: [
     CommonModule,
-    MatDialogModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatRadioModule,
