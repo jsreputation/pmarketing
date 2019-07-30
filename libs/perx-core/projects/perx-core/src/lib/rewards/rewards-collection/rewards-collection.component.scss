@@ -3,10 +3,11 @@ $card-actual-height: 200px;
 .card-collection-container {
   .mat-card {
     max-width: 50%;
-    width: calc( #{$card-actual-height} - 16px);
-    height: calc( #{$card-actual-height} - 16px);
+    width: calc( #{$card-actual-height} - 32px);
+    height: calc( #{$card-actual-height} - 24px);
     display: flex;
     flex-direction: column;
+    padding-bottom: 8px;
 
     img.mat-card-image {
       height: auto;
