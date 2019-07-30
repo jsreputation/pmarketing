@@ -38,7 +38,7 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   labels = [];
-  private control = new FormControl();
+  public control = new FormControl();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
