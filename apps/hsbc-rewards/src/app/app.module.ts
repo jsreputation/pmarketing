@@ -3,15 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  PerxCoreModule,
   CognitoModule,
   OauthModule,
   AuthenticationModule,
-  CampaignModule,
-  VouchersModule,
-  ProfileModule,
-  StampModule,
-  UtilsModule
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,12 +27,10 @@ import {
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +55,8 @@ import { HomeComponent } from './home/home.component';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
