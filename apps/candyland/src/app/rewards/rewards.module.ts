@@ -46,6 +46,7 @@ import {RewardInfoPreviewComponent} from 'src/app/rewards/components/reward-info
 import {RewardLimitsPreviewComponent} from 'src/app/rewards/components/reward-limits-preview/reward-limits-preview.component';
 import {RewardVouchersPreviewComponent} from './components/reward-vouchers-preview/reward-vouchers-preview.component';
 import {DownloadButtonModule} from '@cl-shared/components/download-button/download-button.module';
+import {RewardReplenishPopupComponent} from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {DownloadButtonModule} from '@cl-shared/components/download-button/downlo
     RewardMerchantItemComponent,
     RewardInfoPreviewComponent,
     RewardLimitsPreviewComponent,
-    RewardVouchersPreviewComponent
+    RewardVouchersPreviewComponent,
+    RewardReplenishPopupComponent
   ],
   imports: [
     CommonModule,
@@ -98,6 +100,7 @@ import {DownloadButtonModule} from '@cl-shared/components/download-button/downlo
     DownloadButtonModule
   ],
   entryComponents: [
+    RewardReplenishPopupComponent,
     AddRewardPopupComponent
   ]
 })

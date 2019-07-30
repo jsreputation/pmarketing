@@ -2,7 +2,7 @@
 <ng-container *ngIf="data?.voucherCode?.singleCode">
   <label class="card-label">Voucher Code Type</label>
   <p>Single code</p>
-  <p class="card-value">{{data?.voucherCode?.singleCode}}</p>
+  <p class="card-value">{{data?.voucherCode?.singleCode?.code}}</p>
 </ng-container>
 <!--/ Single code-->
 
@@ -18,7 +18,7 @@
 <ng-container *ngIf="data?.voucherCode?.uniqueUserUploadCode">
   <label class="card-label">Voucher Code Type</label>
   <p>Unique codes: User upload</p>
-  <div>
+  <div class="reward-vouchers-preview-download">
     {{data?.voucherCode?.uniqueUserUploadCode?.name}}
     <cl-download-button [file]="data?.voucherCode?.uniqueUserUploadCode?.file">Download voucher codes
     </cl-download-button>
@@ -29,7 +29,7 @@
 <!--Merchant PIN-->
 <ng-container *ngIf="data?.voucherCode?.merchantPIN">
   <label class="card-label">Merchant PIN</label>
-  <p class="card-value">{{data?.voucherCode?.merchantPIN}}</p>
+  <p class="card-value">{{data?.voucherCode?.merchantPIN.code}}</p>
 </ng-container>
 <!--/ Merchant PIN-->
 

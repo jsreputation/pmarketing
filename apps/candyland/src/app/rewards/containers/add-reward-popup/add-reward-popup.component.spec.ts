@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddRewardPopupComponent } from './add-reward-popup.component';
+import {AddRewardPopupComponent} from './add-reward-popup.component';
 
-describe('AddRewardPopupComponent', () => {
+describe('RewardReplenishPopupComponent', () => {
   let component: AddRewardPopupComponent;
   let fixture: ComponentFixture<AddRewardPopupComponent>;
 

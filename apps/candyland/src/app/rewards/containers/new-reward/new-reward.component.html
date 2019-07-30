@@ -30,86 +30,85 @@
     </mat-expansion-panel-header>
     <!--Message-->
     <div class="card-content">
+      <label class="card-label">Voucher Code Type</label>
+      <!--Voucher Code Type-->
+      <div class="card-row">
+        <mat-radio-group [formControl]="channel.get('type')">
+          <ng-container *ngFor="let type of config?.voucherCodeTypes">
+            <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
+      </div>
+      <!--/Voucher Code Type-->
+      <!--Voucher Single Code-->
+      <mat-form-field>
+        <input
+          type="text"
+          min="0"
+          step="1"
+          matInput
+          placeholder="eg. JKHJHJ"
+          [formControl]="campaignInfo.get('goal')">
+      </mat-form-field>
+      <!--/ Voucher Single Code-->
+      <!-- Unique codes: System generated-->
+      <div class="card-row">
+        <mat-form-field>
+          <input
+            type="text"
+            [minLength]="2"
+            [maxLength]="6"
+            matInput
+            placeholder="Prefix (eg.HB1234)"
+            [formControl]="campaignInfo.get('goal')">
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="number"
+            min="4"
+            max="10"
+            step="1"
+            matInput
+            placeholder="Length of code (Min.4 - Max.10)"
+            [formControl]="campaignInfo.get('goal')">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Code format">
+            <ng-container *ngFor="let option of config?.voucherCodeFormat">
+              <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--/ Unique codes: System generated-->
+      <!--Unique codes: User upload-->
+      <cl-upload-file></cl-upload-file>
+      <!-- /Unique codes: User upload-->
 
-      <!--              <label class="card-label">Voucher Code Type</label>-->
-      <!--              &lt;!&ndash;Voucher Code Type&ndash;&gt;-->
-      <!--              <div class="card-row">-->
-      <!--                <mat-radio-group [formControl]="channel.get('type')">-->
-      <!--                  <ng-container *ngFor="let type of config?.voucherCodeTypes">-->
-      <!--                    <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>-->
-      <!--                  </ng-container>-->
-      <!--                </mat-radio-group>-->
-      <!--              </div>-->
-      <!--              &lt;!&ndash;/Voucher Code Type&ndash;&gt;-->
-      <!--              &lt;!&ndash;Voucher Single Code&ndash;&gt;-->
-      <!--              <mat-form-field>-->
-      <!--                <input-->
-      <!--                  type="text"-->
-      <!--                  min="0"-->
-      <!--                  step="1"-->
-      <!--                  matInput-->
-      <!--                  placeholder="eg. JKHJHJ"-->
-      <!--                  [formControl]="campaignInfo.get('goal')">-->
-      <!--              </mat-form-field>-->
-      <!--              &lt;!&ndash;/ Voucher Single Code&ndash;&gt;-->
-      <!--              &lt;!&ndash; Unique codes: System generated&ndash;&gt;-->
-      <!--              <div class="card-row">-->
-      <!--                <mat-form-field>-->
-      <!--                  <input-->
-      <!--                    type="text"-->
-      <!--                    [minLength]="2"-->
-      <!--                    [maxLength]="6"-->
-      <!--                    matInput-->
-      <!--                    placeholder="Prefix (eg.HB1234)"-->
-      <!--                    [formControl]="campaignInfo.get('goal')">-->
-      <!--                </mat-form-field>-->
-      <!--                <mat-form-field>-->
-      <!--                  <input-->
-      <!--                    type="number"-->
-      <!--                    min="4"-->
-      <!--                    max="10"-->
-      <!--                    step="1"-->
-      <!--                    matInput-->
-      <!--                    placeholder="Length of code (Min.4 - Max.10)"-->
-      <!--                    [formControl]="campaignInfo.get('goal')">-->
-      <!--                </mat-form-field>-->
-      <!--                <mat-form-field>-->
-      <!--                  <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Code format">-->
-      <!--                    <ng-container *ngFor="let option of config?.voucherCodeFormat">-->
-      <!--                      <mat-option [value]="option?.value">{{option?.title}}</mat-option>-->
-      <!--                    </ng-container>-->
-      <!--                  </mat-select>-->
-      <!--                </mat-form-field>-->
-      <!--              </div>-->
-      <!--              &lt;!&ndash;/ Unique codes: System generated&ndash;&gt;-->
-      <!--              &lt;!&ndash;Unique codes: User upload&ndash;&gt;-->
-      <!--              <cl-upload-file></cl-upload-file>-->
-      <!--              &lt;!&ndash; /Unique codes: User upload&ndash;&gt;-->
-
-      <!--              <label class="card-label">Total Number of Voucher</label>-->
-      <!--              &lt;!&ndash;Total Number of Voucher&ndash;&gt;-->
-      <!--              <mat-form-field>-->
-      <!--                <input-->
-      <!--                  type="number"-->
-      <!--                  min="0"-->
-      <!--                  step="1"-->
-      <!--                  matInput-->
-      <!--                  placeholder="Cost of Reward">-->
-      <!--              </mat-form-field>-->
-      <!--              &lt;!&ndash;/ Total Number of Voucher&ndash;&gt;-->
+      <label class="card-label">Total Number of Voucher</label>
+      <!--Total Number of Voucher-->
+      <mat-form-field>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          matInput
+          placeholder="Cost of Reward">
+      </mat-form-field>
+      <!--/ Total Number of Voucher-->
 
 
-      <!--      <div class="card-section">-->
-      <!--        <div class="card-header">-->
-      <!--          <p class="card-title">-->
-      <!--            Voucher Validity-->
-      <!--          </p>-->
-      <!--        </div>-->
-      <!--        <div class="card-content">-->
-      <!--          <cl-voucher-validity-form-group [formGroup]="form.get('voucherValidity')"-->
-      <!--                                          [config]="config"></cl-voucher-validity-form-group>-->
-      <!--        </div>-->
-      <!--      </div>-->
+      <div class="card-section">
+        <div class="card-header">
+          <p class="card-title">
+            Voucher Validity
+          </p>
+        </div>
+        <div class="card-content">
+          <cl-voucher-validity-form-group [formGroup]="form.get('voucherValidity')"
+                                          [config]="config"></cl-voucher-validity-form-group>
+        </div>
+      </div>
     </div>
   </mat-expansion-panel>
   <!--/ Vouchers-->

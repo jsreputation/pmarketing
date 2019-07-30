@@ -163,15 +163,21 @@
   "vouchers": {
     "voucherCode": {
       "codeType": "",
-      "singleCode": "JKHJHJ",
+      "singleCode": {
+        "code": "JKHJHJ"
+      },
       "uniqueGeneratedCode": {
+        "code": "PX101-700",
+        "codeFormat": "Alphanumeric",
         "file": ""
       },
       "uniqueUserUploadCode": {
         "name": "my_voucher_codes.csv",
         "file": ""
       },
-      "merchantPIN": "pin"
+      "merchantPIN": {
+        "code": "FM12345678"
+      }
     },
     "voucherValidity": {
       "type": "period",

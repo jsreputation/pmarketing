@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {RewardService} from '@cl-core/http-services/reward.service';
 import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
-import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import {map, tap} from 'rxjs/operators';
 import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
+import {RewardReplenishPopupComponent} from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -33,7 +33,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
+    const dialogRef = this.dialog.open(RewardReplenishPopupComponent,
+      {panelClass: 'reward-replenish-dialog', data: this.data.vouchers.voucherCode});
 
     dialogRef.afterClosed().subscribe(() => {
     });
