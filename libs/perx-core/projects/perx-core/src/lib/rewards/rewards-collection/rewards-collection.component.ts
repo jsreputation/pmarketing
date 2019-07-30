@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { IReward } from '../models/reward.model';
 
 @Component({
-  selector: 'perx-core-rewards-carousel',
-  templateUrl: './rewards-carousel.component.html',
-  styleUrls: ['./rewards-carousel.component.scss']
+  selector: 'perx-core-rewards-collection',
+  templateUrl: './rewards-collection.component.html',
+  styleUrls: ['./rewards-collection.component.scss']
 })
 export class RewardsCollectionComponent implements OnInit {
 
