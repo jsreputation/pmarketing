@@ -11,7 +11,7 @@ export class AppComponent {
   public title: string = 'merck-merchant';
 
   constructor(private notificationService: NotificationService, private snackBar: MatSnackBar) {
-    this.notificationService.$message.subscribe((message: string) => {
+    this.notificationService.$snack.subscribe((message: string) => {
       this.snackBar.open(message, 'Dismiss', {
         duration: 5000,
       });

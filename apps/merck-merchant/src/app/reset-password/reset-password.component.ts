@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
     const email = (this.loginForm.get('email').value as string).toUpperCase();
     this.authenticationService.forgotPassword(email).subscribe(
       () => this.infoMessage = 'We\'ve sent a password reset link to the email you provided',
-      err => this.notificationService.$message.next(err)
+      err => this.notificationService.addSnack(err)
     );
   }
 
