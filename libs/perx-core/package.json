@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
