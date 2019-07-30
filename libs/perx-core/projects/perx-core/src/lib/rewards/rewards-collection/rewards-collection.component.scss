@@ -7,6 +7,18 @@ $card-actual-height: 200px;
   .ghost {
     overflow: hidden;
   }
+  .img-placeholder {
+    min-height: calc(100px - 0.8rem);
+    margin-bottom: 0.8rem;
+  }
+  .subtitle-1 {
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .points {
+    height: 1.6rem;
+    margin-top: 0.5rem;
+  }
 }
 
 .card-collection-container {
@@ -16,9 +28,13 @@ $card-actual-height: 200px;
   padding: 1.5rem 0;
 
   .mat-card {
-    max-width: 50%;
+    max-width: calc(#{$card-actual-height} - 32px);
     width: calc(#{$card-actual-height} - 32px);
+    min-width: calc(#{$card-actual-height} - 32px);
     height: calc(#{$card-actual-height} - 24px);
+    min-height: calc(#{$card-actual-height} - 24px);
+    height: calc(#{$card-actual-height} - 24px);
+    max-height: calc(#{$card-actual-height} - 24px);
     display: flex;
     flex-direction: column;
     padding-bottom: 8px;
