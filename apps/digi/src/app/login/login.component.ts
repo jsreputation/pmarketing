@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
                 () => {
                   this.failedAuth = true;
                   this.authed = false;
+                  const payload = btoa(JSON.stringify({code: 401, message: 'Unauthorized'}));
+                  this.router.navigate([`/result`], { queryParams: { payload }});
                 }
               );
             } else {

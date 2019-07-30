@@ -4,7 +4,7 @@ import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule } from '@perx/core/dist/perx-core';
+import { VouchersModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('WalletComponent', () => {

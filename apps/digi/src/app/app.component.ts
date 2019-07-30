@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage } from '@perx/core/dist/perx-core';
+import { AuthenticationService, TokenStorage } from '@perx/core';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +41,8 @@ export class AppComponent implements OnInit {
     this.authService.failedAuthObservable.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
-          this.router.navigateByUrl('login');
+          const payload = btoa(JSON.stringify({code: 401, message: 'Unauthorized'}));
+          this.router.navigate([`/result`], { queryParams: { payload }});
         }
       }
     );
