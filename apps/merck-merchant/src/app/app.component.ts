@@ -15,9 +15,8 @@ export class AppComponent {
     this.notificationService.$snack.subscribe((message: string) => {
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
         data: {
-          message: message,
+          message,
           icon: 'clear',
-          extraClasses: ['background-green'],
         },
         duration: 4000,
       });

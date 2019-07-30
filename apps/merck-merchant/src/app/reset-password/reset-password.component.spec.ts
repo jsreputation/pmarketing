@@ -61,9 +61,4 @@ describe('ResetPasswordComponent', () => {
     expect(spy).toHaveBeenCalled();
   }));
 
-  it('should set infoMessage to null on onCrossClicked', () => {
-    component.onCrossClicked();
-    expect(component.infoMessage).toBe(null);
-  });
-
 });
