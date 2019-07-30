@@ -1,3 +1,10 @@
-<p>
-  rewards-carousel works!
-</p>
+<div *ngIf="rewards$; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+  <ng-container *ngIf="rewards$ | async as rewards">
+
+  </ng-container>
+</ng-template>
+<ng-template #elseBlock>
+  <!--  todo: make loading screen  -->
+  Could not load Rewards, Please try again
+</ng-template>

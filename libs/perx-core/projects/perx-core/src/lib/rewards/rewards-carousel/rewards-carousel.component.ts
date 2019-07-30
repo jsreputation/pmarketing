@@ -9,8 +9,8 @@ import { IReward } from '../models/reward.model';
 })
 export class RewardsCarouselComponent implements OnInit {
 
-  @Input()
-  public rewards: Observable<IReward[]>;
+  @Input('rewardsList')
+  public rewards$: Observable<IReward[]>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
