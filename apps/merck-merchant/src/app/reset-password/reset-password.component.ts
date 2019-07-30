@@ -10,7 +10,6 @@ import { AuthenticationService, NotificationService } from '@perx/core/dist/perx
 export class ResetPasswordComponent implements OnInit {
 
   public loginForm: FormGroup;
-  public infoMessage: string = null;
 
   constructor(
     private fb: FormBuilder,
@@ -32,13 +31,9 @@ export class ResetPasswordComponent implements OnInit {
   public onSubmit(): void {
     const email = (this.loginForm.get('email').value as string).toUpperCase();
     this.authenticationService.forgotPassword(email).subscribe(
-      () => this.infoMessage = 'We\'ve sent a password reset link to the email you provided',
+      () => this.notificationService.addSnack('We\'ve sent a password reset link to the email you provided'),
       err => this.notificationService.addSnack(err)
     );
-  }
-
-  public onCrossClicked(): void {
-    this.infoMessage = null;
   }
 
 }

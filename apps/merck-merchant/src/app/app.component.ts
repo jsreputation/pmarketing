@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NotificationService } from '@perx/core/dist/perx-core';
 import { MatSnackBar } from '@angular/material';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,13 @@ export class AppComponent {
 
   constructor(private notificationService: NotificationService, private snackBar: MatSnackBar) {
     this.notificationService.$snack.subscribe((message: string) => {
-      this.snackBar.open(message, 'Dismiss', {
-        duration: 5000,
+      this.snackBar.openFromComponent(CustomSnackbarComponent, {
+        data: {
+          message: message,
+          icon: 'clear',
+          extraClasses: ['background-green'],
+        },
+        duration: 4000,
       });
     });
   }

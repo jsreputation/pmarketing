@@ -10,7 +10,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatRippleModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatIconModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -26,6 +27,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
 import { SalesContactComponent } from './sales-contact/sales-contact.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     ResetPasswordComponent,
     QrscannerComponent,
     HeaderComponent,
-    SalesContactComponent
+    SalesContactComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -55,6 +59,7 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent]
 })
 export class AppModule { }
