@@ -1,0 +1,7 @@
+<mat-radio-group class="item-list shadow" >
+  <ng-container *ngFor="let item of [{a: 4},{ a: 5}]">
+    <mat-radio-button [value]="item">
+   <div>{{item.a | json}}</div>
+    </mat-radio-button>
+  </ng-container>
+</mat-radio-group>

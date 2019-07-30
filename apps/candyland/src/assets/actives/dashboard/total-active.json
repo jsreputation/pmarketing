@@ -1,0 +1,24 @@
+{
+  "totals": [
+    {
+      "id": 1,
+      "title": "Total Active Customers",
+      "value": "1,892,902"
+    },
+    {
+      "id": 2,
+      "title": "Total Revenue",
+      "value": "1,658,902"
+    },
+    {
+      "id": 3,
+      "title": "Total Issued Rewards",
+      "value": "658,902"
+    },
+    {
+      "id": 4,
+      "title": "Total Active Campaigns",
+      "value": "32"
+    }
+  ]
+}

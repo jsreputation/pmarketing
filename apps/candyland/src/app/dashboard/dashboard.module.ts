@@ -7,14 +7,19 @@ import { DashboardGameCardComponent } from './components/dashboard-game-card/das
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
+import { VerticalTabsComponent } from './components/vertical-tabs/vertical-tabs.component';
+import { MatRadioModule } from '@angular/material';
+import { TabItemViewComponent } from './components/tab-item-view/tab-item-view.component';
 
 @NgModule({
-  declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent],
+  declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent, VerticalTabsComponent, TabItemViewComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ButtonModule,
     CreateEngagementPopupModule,
+
+    MatRadioModule,
   ]
 })
 export class DashboardModule { }

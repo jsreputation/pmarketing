@@ -19,7 +19,20 @@
     </cl-dashboard-game-card>
   </div>
   <p class="dashboard-title dashboard-title__indent">Business Insight</p>
-  <cl-business-insight>
-  </cl-business-insight>
+  <ng-container *ngIf="dashboardData; else noData">
+    <section class="dashboard-content">
+      <mat-radio-group class="tabs-list" >
+        <ng-container *ngFor="let item of dashboardData.totals; let first = first;">
+          <mat-radio-button [value]="item" [checked]="first">
+            <cl-tab-item-view [data]="item"></cl-tab-item-view>
+          </mat-radio-button>
+        </ng-container>
+      </mat-radio-group>
+    </section>
+  </ng-container>
+  <ng-template #noData>
+    <cl-business-insight>
+    </cl-business-insight>
+  </ng-template>
 
 </section>
