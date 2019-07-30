@@ -8,7 +8,7 @@ import { RewardsRoutingModule } from './rewards-routing.module';
 import {
   AuthenticationModule,
   RewardsModule as PerxRewardsModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 
