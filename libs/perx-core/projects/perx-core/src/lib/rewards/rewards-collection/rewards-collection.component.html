@@ -2,7 +2,7 @@
 <ng-template #thenBlock>
   <ng-container *ngIf="rewards$ | async as rewards">
     <div class="card-collection-container">
-      <mat-card>
+      <mat-card *ngFor="let reward of rewards">
         <img mat-card-image src="https://via.placeholder.com/200x100">
         <mat-card-content>
           <div class="subtitle-1">Product Name</div>
