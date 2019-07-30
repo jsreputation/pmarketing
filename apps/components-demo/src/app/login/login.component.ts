@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('rewards/list');
         }
       }
-    ).catch((err) => {
+    ).catch(() => {
       this.failedAuth = true;
       this.authed = false;
 
