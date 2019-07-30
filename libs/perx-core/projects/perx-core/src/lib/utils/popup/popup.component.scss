@@ -8,6 +8,10 @@ h1 {
   text-align: center;
   font-size: 2.4rem;
   line-height: 2.8rem;
+  margin: 0 auto;
+  @media (max-width: 424px) {
+    width: 20.8rem;
+  }
 }
 
 .img-wrapper {
