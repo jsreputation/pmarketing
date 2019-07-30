@@ -11,7 +11,7 @@ import {
   MatInputModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {

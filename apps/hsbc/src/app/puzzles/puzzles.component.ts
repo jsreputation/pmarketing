@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IStampCard, NotificationService } from '@perx/core/dist/perx-core';
+import { IStampCard, NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-puzzles',

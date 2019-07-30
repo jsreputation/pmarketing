@@ -8,7 +8,7 @@ import {
   OauthModule,
   GameModule,
   UtilsModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import {
   MatToolbarModule,
   MatButtonModule,

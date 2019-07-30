@@ -13,4 +13,8 @@ export class MerchantHttpService {
   public getMerchants(): Observable<any> {
     return this.http.get('assets/actives/merchant/merchants.json');
   }
+
+  public getMerchantList(): Observable<any> {
+    return this.http.get('assets/actives/merchant/list-merchant.json');
+  }
 }

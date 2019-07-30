@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, CampaignModule } from '@perx/core/dist/perx-core';
+import { VouchersModule, CampaignModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment';

@@ -1,18 +1,22 @@
 <div class="app-container">
-  <app-header [subTitle]="subTitle"></app-header>
+  <div class="header">
+    <app-header [title]="title" [subTitles]="subTitles" [subsubTitles]="subsubTitles"></app-header>
+  </div>
   <div class="key-display">
     <img src="assets/key-white.png" alt="">
     <span>You have earned {{keys}} keys</span>
   </div>
-  <div class="key-display-subtitle">Scroll down to view your earned Netflix rebate</div>
+  <div class="key-display-subtitle">Scroll down to view your earned Netflix rebate.</div>
 
   <div class="game-container">
-    <perx-core-puzzle-stamp *ngFor="let card of cards" [img]="'assets/netflix-bg.jpg'" [lockImg]="'assets/lock-icon.png'" [unlockImg]="'assets/unlock-icon.png'"
-      [bgImage]="'assets/netflix-symbol.png'" [highlightColor]="'#FAE4A4'" [borderColor]="'#BC9B3A'" [rows]="rows" [cols]="getCardColumn(card)"
-      [nbPlayedPieces]="getPlayedPieces(card)" [nbAvailablePieces]="getAvailablePieces(card)" [isCurrent]="isCurrent(card)"
-      [isCompleted]="isCompleted(card)" [stamps]="card.stamps" (stampAll)="onStampAll(card)" (moved)="onMoved(card)">
+    <perx-core-puzzle-stamp *ngFor="let card of cards" [img]="'assets/netflix-bg.jpg'"
+      [lockImg]="'assets/lock-icon.png'" [unlockImg]="'assets/unlock-icon.png'" [bgImage]="'assets/netflix-symbol.png'"
+      [highlightColor]="'#FAE4A4'" [borderColor]="'#BC9B3A'" [rows]="rows" [cols]="getCardColumn(card)"
+      [nbPlayedPieces]="getPlayedPieces(card)" [nbAvailablePieces]="getAvailablePieces(card)"
+      [isCurrent]="isCurrent(card)" [isCompleted]="isCompleted(card)" [stamps]="card.stamps"
+      (stampAll)="onStampAll(card)" (moved)="onMoved(card)">
     </perx-core-puzzle-stamp>
-    <div class="terms-conditions">
+    <div class="terms-conditions" *ngIf="cards.length>0">
       <span (click)="onReadTermsConditions()">Read terms and conditions</span>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProfileService } from '@perx/core/dist/perx-core';
+import { ProfileService } from '@perx/core';
 import { ICustomProperties } from '@perx/core/dist/perx-core/lib/profile/profile.model';
 
 @Component({
