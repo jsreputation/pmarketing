@@ -1,3 +1,5 @@
+@import "../../shared/reset";
+
 $card-actual-height: 200px;
 
 .card-collection-container {
@@ -70,26 +72,4 @@ $card-actual-height: 200px;
   .points {
     flex: 0 auto;
   }
-}
-
-.mat-caption {
-  line-height: 1.6rem;
-  color: #666666;
-}
-
-.overline {
-  font-size: 1rem;
-  line-height: 1.6rem;
-  color: #666666;
-}
-
-.subtitle-1 {
-  font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  color: #212121;
-}
-
-.ghost {
-  background: #EDEDED;
 }
