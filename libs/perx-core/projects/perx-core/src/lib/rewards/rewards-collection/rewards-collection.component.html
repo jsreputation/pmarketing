@@ -3,13 +3,17 @@
   <ng-container *ngIf="rewards$ | async as rewards">
     <div class="card-collection-container">
       <mat-card *ngFor="let reward of rewards">
-        <img mat-card-image src="https://via.placeholder.com/200x100">
+        <img mat-card-image [src]="reward.rewardThumbnail">
         <mat-card-content>
-          <div class="subtitle-1">Product Name</div>
+          <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
           <div class="description mat-caption" ngxEllipsis [lines]="2">
-            I think my strongest asset maybe by far is my placeholding temperament. I’m the best thing that ever happened to placeholder text.
+            {{reward.description}}
           </div>
-          <div class="points overline">Price/Points</div>
+          <div *ngIf="reward.rewardPrice &&
+                  reward.rewardPrice.length > 0 &&
+                  reward.rewardPrice[0] as rewardPrice">
+            <span class="points overline">Price/Points</span>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

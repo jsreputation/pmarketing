@@ -16,9 +16,11 @@ $card-actual-height: 200px;
     margin: 0 1rem;
 
     img.mat-card-image {
-      height: auto;
+      width: auto; //maintain aspect ratio
+      height: 100px;
+      max-height: 100px; //need to be specified so that bigger imgs get sized down
       margin-bottom: 0.8rem;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     .mat-card-content {
