@@ -41,4 +41,8 @@ export class ResetPasswordComponent implements OnInit {
     this.infoMessage = null;
   }
 
+  public onCrossClicked(): void {
+    this.errorMessage = null;
+  }
+
 }
