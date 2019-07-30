@@ -1,0 +1,28 @@
+<div class="content-container">
+  <div class="login-image">
+    <img src="assets/logo.png" />
+  </div>
+  <div class="error_msg">
+    <span>{{errorMessage}}</span>
+  </div>
+  <div class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width__input">
+        <mat-label>Player Code</mat-label>
+        <input matInput placeholder="Enter your player code" formControlName="playerCode" required>
+        <mat-error *ngIf="loginForm.hasError('playerCode')">
+          Player code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width__input">
+        <mat-label>Last 4 digits of your HSBC Credit Card</mat-label>
+        <input matInput placeholder="Enter your HSBC card last 4 digits" formControlName="hsbcCardLastFourDigits"
+          required perxCoreNumericCharacter minlength="4" maxlength="4">
+        <mat-error *ngIf="loginForm.hasError('hsbcCardLastFourDigits')">
+          HSBC card last 4 digit code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign In</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+.full-width__input,
+.full-width__button {
+  width: 100%;
+}
+
+.error_msg {
+  padding-bottom: 1rem;
+
+  span {
+    color: red;
+    font-size: 1.5rem;
+  }
+}
+
+.content-container {
+  justify-content: space-around;
+  text-align: center;
+  padding: 6rem 1.2rem 0;
+  top: unset;
+  display: flex;
+  flex-direction: column;
+
+  .error_msg {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    span {
+      align-self: flex-end;
+    }
+  }
+
+  .login-form {
+    flex: 0;
+    margin-bottom: 5rem;
+  }
+}
