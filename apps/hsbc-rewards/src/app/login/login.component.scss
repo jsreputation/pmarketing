@@ -2,7 +2,9 @@
 .full-width__button {
   width: 100%;
 }
-
+.full-width__button {
+  text-transform: uppercase;
+}
 .error_msg {
   padding-bottom: 1rem;
 
@@ -21,7 +23,6 @@
   flex-direction: column;
 
   .error_msg {
-    flex: 1;
     display: flex;
     justify-content: center;
 
@@ -34,4 +35,16 @@
     flex: 0;
     margin-bottom: 5rem;
   }
+}
+.login-image {
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 30px
 }
