@@ -4,18 +4,19 @@
 }
 
 .activation-code__inputs {
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: row;
 }
 
 input {
-  width: 63px;
+  width: 90%;
+  max-width: 30rem;
   height: 114px;
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   box-sizing: border-box;
-  margin: 8px;
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
