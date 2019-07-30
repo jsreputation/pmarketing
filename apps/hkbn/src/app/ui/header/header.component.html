@@ -18,7 +18,8 @@
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <img class="header-logo" src="assets/images/logo.png" alt="">
+    <img class="header-logo" src="assets/images/logo.png" alt="" *ngIf="!routeData?.title">
+    <p class="header-title" *ngIf="routeData?.title">{{routeData.title}}</p>
   </div>
 
 
