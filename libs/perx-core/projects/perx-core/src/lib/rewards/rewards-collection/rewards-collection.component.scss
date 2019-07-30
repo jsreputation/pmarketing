@@ -5,14 +5,16 @@ $card-actual-height: 200px;
   flex-direction: row;
   overflow-x: scroll;
   padding: 1.5rem 0;
+
   .mat-card {
     max-width: 50%;
-    width: calc( #{$card-actual-height} - 32px);
-    height: calc( #{$card-actual-height} - 24px);
+    width: calc(#{$card-actual-height} - 32px);
+    height: calc(#{$card-actual-height} - 24px);
     display: flex;
     flex-direction: column;
     padding-bottom: 8px;
     margin: 0 1rem;
+
     img.mat-card-image {
       height: auto;
       margin-bottom: 0.8rem;
