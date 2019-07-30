@@ -4,16 +4,24 @@
   <div class="game-wrapper__right">
     <perx-core-shake-tree
       *ngIf="game && game.type === 0"
-      [treeImg]="game.config.treeImg" [giftImg]="game.config.giftImg"
+      [treeImg]="game.config.treeImg" 
+      [giftImg]="game.config.giftImg"
       [waitingManImg]="game.config.waitingAccessoryImg"
-      [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" [nbHangedGifts]="game.config.nbHangedGift" [nbFallingGifts]="game.config.nbGiftsToDrop"
-      (completed)="onComplete()" [enabled]="isEnabled" [nbShakes]="game.config.nbTaps" [distanceFromTree]=26 [bottomDistance]=1>
+      [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" 
+      [nbHangedGifts]="game.config.nbHangedGift" 
+      [nbFallingGifts]="game.config.nbGiftsToDrop"
+      (completed)="onComplete()" 
+      [enabled]="isEnabled" 
+      [nbShakes]="game.config.nbTaps" 
+      [distanceFromTree]=26 
+      [bottomDistance]=1
+    >
     </perx-core-shake-tree>
     <perx-core-pinata
       *ngIf="game && game.type === 1"
-      [stillImg]="'assets/still-img.png'"
-      [openedImg]="'assets/opened-img.png'"
-      [nbTaps]="numberOfTaps"
+      [stillImg]="game.config.stillImg"
+      [openedImg]="game.config.brokenImg"
+      [nbTaps]="game.config.nbTaps"
       [enabled]="isEnabled"
       (broken)="onComplete()"
     >

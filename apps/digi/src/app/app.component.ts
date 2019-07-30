@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
+// import { Router } from '@angular/router';
+import { TokenStorage, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -14,8 +14,6 @@ export class AppComponent implements OnInit {
   public preAuth: boolean;
 
   constructor(
-    private router: Router,
-    private authService: AuthenticationService,
     private tokenStorage: TokenStorage,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
@@ -31,28 +29,25 @@ export class AppComponent implements OnInit {
       }
     );
 
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId)) {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          const param: string = location.search;
-          const searchParams: URLSearchParams = new URLSearchParams(param);
-          const token: string | null = searchParams.get('token');
-          if (token) {
-            this.tokenStorage.setAccessToken(token);
-          }
-          (window as any).primaryIdentifier = searchParams.get('pi');
-
+    if (isPlatformBrowser(this.platformId)) {
+      // set global userID var for GA tracking
+      if (!((window as any).primaryIdentifier)) {
+        const param: string = location.search;
+        const searchParams: URLSearchParams = new URLSearchParams(param);
+        const token: string | null = searchParams.get('token');
+        if (token) {
+          this.tokenStorage.setAccessToken(token);
+        } else {
+          this.tokenStorage.getAccessToken()
+            .subscribe((tok: string) => {
+              if (tok === null) {
+                this.notificationService.addPopup({
+                  text: 'Missing authentication information'
+                });
+              }
+            });
         }
       }
     }
-    this.authService.failedAuthObservable.subscribe(
-      (didFailAuth: boolean) => {
-        if (didFailAuth) {
-          const payload: string = btoa(JSON.stringify({ code: 401, message: 'Unauthorized' }));
-          this.router.navigate([`/result`], { queryParams: { payload } });
-        }
-      }
-    );
   }
 }

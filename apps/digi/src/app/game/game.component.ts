@@ -1,8 +1,16 @@
 // tslint:disable: rxjs-no-nested-subscribe
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { CampaignService, CAMPAIGN_TYPE, IGame, GameService, ICampaign, NotificationService } from '@perx/core';
-import { map, take } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import {
+  CampaignService,
+  CAMPAIGN_TYPE,
+  IGame,
+  GameService,
+  ICampaign,
+  NotificationService,
+  IGameOutcome,
+} from '@perx/core';
+import { map, take, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -11,19 +19,15 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public game: IGame;
-
-  public gameId: number;
-  public campaignId: number;
-
   public isEnabled: boolean = false;
-  public title: string = 'Hit the Pinata and Win!';
-  public subTitle: string = 'Enjoy your Gold membership reward.';
-  public buttonTxt: string = 'Start playing';
-  public numberOfTaps: number = 5;
+  public title: string = 'Play the game and win!';
+  public subTitle: string = 'Enjoy your reward.';
+  public buttonTxt: string = 'Get started';
+
+  private campaignId: number;
+  private gameIns: IGame;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private campaignService: CampaignService,
     private gameService: GameService,
@@ -32,9 +36,9 @@ export class GameComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.gameId = Number.parseInt(params.get('gameId'), 10);
-      if (this.gameId) {
-        this.gameService.get(this.gameId)
+      const gameId: number = Number.parseInt(params.get('gameId'), 10);
+      if (gameId) {
+        this.gameService.get(gameId)
           .pipe(take(1))
           .subscribe(
             (game: IGame) => this.game = game,
@@ -55,15 +59,7 @@ export class GameComponent implements OnInit {
             .subscribe(
               (campaign: ICampaign) => {
                 this.campaignId = campaign.id;
-                this.gameService.getGamesFromCampaign(this.campaignId)
-                  .pipe(
-                    take(1),
-                    map((games: IGame[]) => games[0])
-                  )
-                  .subscribe(
-                    (game: IGame) => this.game = game,
-                    () => { }
-                  );
+                this.fetchGame();
               },
               () => { }
             );
@@ -71,40 +67,71 @@ export class GameComponent implements OnInit {
           return;
         }
 
-        this.gameService.getGamesFromCampaign(this.campaignId)
-          .pipe(
-            take(1),
-            map((games: IGame[]) => games[0])
-          )
-          .subscribe(
-            (game: IGame) => { this.game = game; },
-            () => {
-              this.isEnabled = true;
-              this.notificationService.addPopup({
-                text: 'Something went wrong, games are down'
-              });
-            }
-          );
+        this.fetchGame();
       });
     });
+  }
+
+  public get game(): IGame {
+    return this.gameIns;
+  }
+
+  public set game(game: IGame) {
+    this.gameIns = game;
+    if (game.texts.button) {
+      this.buttonTxt = game.texts.button;
+    }
+    if (game.texts.title) {
+      this.title = game.texts.title;
+    }
+    if (game.texts.subTitle) {
+      this.subTitle = game.texts.subTitle;
+    }
+  }
+
+  private fetchGame(): void {
+    this.gameService.getGamesFromCampaign(this.campaignId)
+      .pipe(
+        tap((games: IGame[]) => { console.log(games); }),
+        take(1),
+        map((games: IGame[]) => games[0])
+      )
+      .subscribe(
+        (game: IGame) => this.game = game,
+        (err: any) => {
+          console.log(err);
+          this.isEnabled = true;
+          this.notificationService.addPopup({
+            title: 'Oooops!',
+            text: 'Something is wrong, game cannot be played at the moment!'
+          });
+        }
+      );
   }
 
   public onComplete(): void {
     if (this.game) {
       this.gameService.play(this.game.id)
-        .pipe(take(1))
+        .pipe(
+          take(1)
+        )
         .subscribe(
-          (res: any) => {
-            if (res) {
-              const payload: string = btoa(JSON.stringify(res));
-              this.router.navigate([`/result`], { queryParams: { payload } });
-            }
+          () => {
+            // todo select proper outcome based on play result
+            const outcome: IGameOutcome = this.game.results.noOutcome;
+            this.notificationService.addPopup({
+              title: outcome.title,
+              text: outcome.subTitle,
+              buttonTxt: outcome.button,
+              imageUrl: outcome.image
+            });
           },
           (e: HttpErrorResponse) => {
-            if (e && e.error) {
-              const payload: string = btoa(JSON.stringify(e.error));
-              this.router.navigate([`/result`], { queryParams: { payload } });
-            }
+            console.error(e);
+            this.notificationService.addPopup({
+              title: 'Oops',
+              text: 'Something went very wrong, please try again later'
+            });
           }
         );
     }

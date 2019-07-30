@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { ProtectedGuard } from 'ngx-auth';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     ],
     canActivate: [ProtectedGuard]
   },
+  { path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
