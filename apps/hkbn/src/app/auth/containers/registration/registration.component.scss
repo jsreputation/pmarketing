@@ -5,6 +5,7 @@
   flex-direction: column;
   background: $bg-color;
   flex: 1;
+  padding: 1rem 0;
 }
 
 .header {
@@ -34,6 +35,7 @@
 }
 
 .register-message {
+  display: inline-block;
   font-size: 1.4rem;
   margin-bottom: 1.4rem;
   color: $primary;

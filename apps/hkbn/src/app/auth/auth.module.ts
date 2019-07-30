@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './containers/registration/registration.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 
 const COMPONENTS = [
   LoginFormComponent,
@@ -38,6 +39,7 @@ const CONTAINERS = [
     MatButtonModule,
     RouterModule,
     ReactiveFormsModule,
+    ErrorHandlerModule,
   ],
   exports: [
     ...COMPONENTS,

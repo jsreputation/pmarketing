@@ -1,6 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationComponent } from './registration.component';
+import { RegistrationFormComponent } from '../../components/registration-form/registration-form.component';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -8,9 +20,20 @@ describe('RegistrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistrationComponent ]
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        ErrorHandlerModule,
+        NoopAnimationsModule
+      ],
+      declarations: [RegistrationComponent, RegistrationFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

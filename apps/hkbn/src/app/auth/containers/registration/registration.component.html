@@ -6,8 +6,8 @@
 
   <mat-card>
     <h2 class="sign-up">Registered account</h2>
-    <a class="register-message" [routerLink]="'/'">Register your membership account now</a>
+    <a class="register-message" [routerLink]="'/login'">Already have an account? Click here to login</a>
 
-    <hkbn-registration-form></hkbn-registration-form>
+    <hkbn-registration-form (formSubmit)="submitHandler($event)"></hkbn-registration-form>
   </mat-card>
 </div>

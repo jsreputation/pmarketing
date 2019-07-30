@@ -11,6 +11,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -26,6 +27,7 @@ describe('LoginFormComponent', () => {
         MatButtonModule,
         ReactiveFormsModule,
         RouterTestingModule,
+        ErrorHandlerModule,
         NoopAnimationsModule,
       ],
       declarations: [LoginFormComponent]
