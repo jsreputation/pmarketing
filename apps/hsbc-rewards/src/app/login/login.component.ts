@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
-            this.router.navigateByUrl('puzzle');
+            this.router.navigateByUrl('home');
           }
         }
       })

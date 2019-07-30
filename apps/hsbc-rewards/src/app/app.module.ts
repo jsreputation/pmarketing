@@ -33,10 +33,12 @@ import {
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
