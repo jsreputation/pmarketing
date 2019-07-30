@@ -1,3 +1,116 @@
-<p>
-  detailed-merchant works!
-</p>
+<section class="page-header">
+  <h1 class="title">{{merchant?.firstName}} {{merchant?.lastName}}</h1>
+  <div class="game-actions">
+    <cl-button (click)="close()" class="btn-cancel btn-right_padding" classList="third">Close</cl-button>
+    <cl-button (click)="edit()" classList="primary">Edit</cl-button>
+  </div>
+
+</section>
+<section class="content flex">
+  <div class="merchant-main-block">
+    <mat-card class="game-graphic">
+      <div class="merchant-wrap">
+        <p class="merchant-title">
+          Merchant Info
+        </p>
+      </div>
+      <div class="merchant-logo">
+        <p class="merchant-logo-block">
+          <img [src]="merchant.logo" alt="" class="merchant-logo-img">
+        </p>
+      </div>
+      <div class="detail-block">
+        <p class="detail-block-sub-title">
+          Description
+        </p>
+        <p class="detail-block-text">
+          {{merchant.description}}
+        </p>
+      </div>
+      <div class=" detail-block flex">
+        <div class="detail-block-single">
+          <p class="detail-block-sub-title">
+            Country Code
+          </p>
+          <p class="detail-block-text">
+            {{merchant.countryCode}}
+          </p>
+        </div>
+
+        <div class="detail-block-single">
+          <p class="detail-block-sub-title">
+            Country Code
+          </p>
+          <p class="detail-block-text">
+            {{merchant.phone}}
+          </p>
+        </div>
+      </div>
+      <div class="detail-block">
+        <p class="detail-block-sub-title">
+          Address
+        </p>
+        <p class="detail-block-text">
+          {{merchant.address}}
+        </p>
+      </div>
+      <div class="detail-block flex">
+        <div class="detail-block-single">
+          <p class="detail-block-sub-title">
+            City
+          </p>
+          <p class="detail-block-text">
+            {{merchant.city}}
+          </p>
+        </div>
+
+        <div class="detail-block-single">
+          <p class="detail-block-sub-title">
+            State/Province
+          </p>
+          <p class="detail-block-text">
+            {{merchant.stateProvince}}
+          </p>
+        </div>
+
+        <div class="detail-block-single">
+          <p class="detail-block-sub-title">
+            Postal code
+          </p>
+          <p class="detail-block-text">
+            {{merchant.postalCode}}
+          </p>
+        </div>
+      </div>
+      <div class="detail-block">
+        <p class="detail-block-sub-title">
+          Weblink
+        </p>
+        <p class="detail-block-text">
+          {{merchant.weblink}}
+        </p>
+      </div>
+      <div class="detail-block">
+        <p class="detail-block-sub-title">
+          Branches
+        </p>
+        <div class="detail-block">
+          <div class="detail-block-branch" *ngFor="let branch of merchant?.branches; let i = index;">
+            <span class="branch-index">
+             {{i + 1}}
+            </span>
+            <p class="branch-name detail-block-text">
+              {{branch.name}}
+            </p>
+            <p class="branch-address detail-block-text">
+              {{branch.address}}
+            </p>
+            <p class="branch-contact-number detail-block-text">
+              {{branch.contactNumber}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</section>
