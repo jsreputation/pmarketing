@@ -11,9 +11,11 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
+import { UtilsModule } from '@perx/core/dist/perx-core';
 
 @NgModule({
-  declarations: [LoginFormComponent, LoginComponent],
+  declarations: [LoginFormComponent, LoginComponent, SmsValidationComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -23,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     RouterModule,
     ReactiveFormsModule,
+    UtilsModule
   ],
   exports: [
     LoginFormComponent,

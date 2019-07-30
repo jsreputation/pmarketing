@@ -8,6 +8,7 @@ import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
+import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     ]
   },
   {path: 'login', component: LoginComponent},
+  {path: 'sms-validation', component: SmsValidationComponent}
 ];
 
 @NgModule({
