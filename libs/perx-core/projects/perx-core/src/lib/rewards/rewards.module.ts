@@ -8,6 +8,7 @@ import { RewardsListComponent } from './rewards-list/rewards-list.component';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 const components = [
   RewardsCollectionComponent,
@@ -22,7 +23,8 @@ const components = [
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    NgxMultiLineEllipsisModule
   ],
   exports: [
     ...components
