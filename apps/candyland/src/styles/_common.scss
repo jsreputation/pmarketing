@@ -288,3 +288,9 @@ button {
   margin: 20px;
   position: relative;
 }
+
+.dashboard-content {
+  .mat-form-field-wrapper {
+     padding-bottom: 0;
+  }
+}

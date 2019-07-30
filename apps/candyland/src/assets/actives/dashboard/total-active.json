@@ -1,24 +1,23 @@
-{
-  "totals": [
-    {
-      "id": 1,
-      "title": "Total Active Customers",
-      "value": "1,892,902"
-    },
-    {
-      "id": 2,
-      "title": "Total Revenue",
-      "value": "1,658,902"
-    },
-    {
-      "id": 3,
-      "title": "Total Issued Rewards",
-      "value": "658,902"
-    },
-    {
-      "id": 4,
-      "title": "Total Active Campaigns",
-      "value": "32"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "value": "1,892,902",
+    "name": "activeCustomers"
+  },
+  {
+    "id": 2,
+    "value": "1,658,902",
+    "name": "revenue"
+  },
+  {
+    "id": 3,
+    "value": "658,902",
+    "name": "issuedRewards"
+  },
+  {
+    "id": 4,
+    "value": "32",
+    "name": "activeCampaigns"
+  }
+]
+

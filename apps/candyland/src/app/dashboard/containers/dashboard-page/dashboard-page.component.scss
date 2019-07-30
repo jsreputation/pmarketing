@@ -25,12 +25,34 @@
   }
 
   &-content {
-    display: flex;
     border-radius: 4px;
     border: solid 1px rgba(0, 0, 0, 0.2);
     background-color: $white-color;
-    padding: 2.4rem 3rem;
     box-sizing: border-box;
+
+    &-header {
+      height: 6rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      cl-range-date-picker-filter {
+        display: block;
+        font-size: 1.4rem;
+        margin: 1rem 1.2rem;
+      }
+    }
+  }
+
+  &-group-bloc {
+    display: flex;
+    justify-content: space-between;
+    padding: 6rem 4rem 0;
+  }
+
+  &-group-graphics {
+    padding: 1.8rem;
   }
 }
 
@@ -47,4 +69,24 @@
     display: flex;
     margin-top: 2.4rem;
   }
+}
+
+.chart {
+
+
+  &-partial-block {
+    justify-content: space-between;
+  }
+
+  &-section {
+    display: flex;
+  }
+}
+
+.tabs-list-wrap {
+  margin-right: 4rem;
+}
+
+.time-line-block {
+  flex: 1;
 }

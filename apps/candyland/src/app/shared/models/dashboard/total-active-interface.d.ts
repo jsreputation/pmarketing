@@ -1,9 +1,6 @@
-declare interface ITotalActive {
-  totals: ITotal[];
-}
-
 declare interface ITotal {
   id?: number;
-  title: string;
+  name: string;
   value: any;
+  title: string;
 }

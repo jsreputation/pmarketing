@@ -17,10 +17,10 @@ export class DashboardService {
       );
   }
 
-  public getTotalActive(): Observable<ITotalActive> {
+  public getTotalActive(): Observable<ITotal[]> {
     return this.dashboardHttpService.getDashboardDataTotal()
       .pipe(
-        map((res: ITotalActive) => res)
+        map((res: ITotal[]) => res)
       );
   }
 }

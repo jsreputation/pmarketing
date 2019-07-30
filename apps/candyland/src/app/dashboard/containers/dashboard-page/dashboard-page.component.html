@@ -21,13 +21,135 @@
   <p class="dashboard-title dashboard-title__indent">Business Insight</p>
   <ng-container *ngIf="dashboardData; else noData">
     <section class="dashboard-content">
-      <mat-radio-group class="tabs-list" >
-        <ng-container *ngFor="let item of dashboardData.totals; let first = first;">
-          <mat-radio-button [value]="item" [checked]="first">
-            <cl-tab-item-view [data]="item"></cl-tab-item-view>
-          </mat-radio-button>
+      <div class="dashboard-content-header">
+        <cl-range-date-picker-filter></cl-range-date-picker-filter>
+      </div>
+      <!--group block contain tabs and one graphic-->
+      <div class="dashboard-group-bloc">
+
+        <div class="tabs-list-wrap">
+          <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event)" >
+            <ng-container *ngFor="let item of dashboardData;">
+              <mat-radio-button [value]="item.name">
+                <cl-tab-item-view [data]="item"></cl-tab-item-view>
+              </mat-radio-button>
+            </ng-container>
+          </mat-radio-group>
+        </div>
+
+        <div class="time-line-block">
+          <div [ngSwitch]="activeTab">
+            <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">
+              <cl-vertical-bar-chart>
+                <p class="chart-title">
+                  Total Active Customers
+                </p>
+              </cl-vertical-bar-chart>
+            </ng-container>
+            <div *ngSwitchCase="dictionaryTotal.revenue">
+
+              <cl-linear-chart>
+                <p class="chart-title">
+                  Total Revenue
+                </p>
+              </cl-linear-chart>
+            </div>
+            <div *ngSwitchCase="dictionaryTotal.issuedRewards">issuedRewards</div>
+            <div *ngSwitchCase="dictionaryTotal.activeCampaigns">activeCampaigns</div>
+
+            <div *ngSwitchDefault>activeCustomers</div>
+          </div>
+        </div>
+      </div>
+      <!--end group block contain tabs and one graphic-->
+
+      <!--group that contain all graphics-->
+      <div class="dashboard-group-graphics">
+        <ng-container  [ngSwitch]="activeTab">
+          <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">
+            <div class="chart-partial-block">
+              <div class="chart-section">
+                <div class="chart-block">
+                  <p class="chart-title">
+                    Total Active Customers
+                  </p>
+                  <div class="chart-wrap-img">
+                    <img src="assets/images/dashboard-business/column-chart.jpg" alt="chart">
+                  </div>
+                </div>
+
+                <div class="chart-block">
+                  <cl-circle-pie-chart>
+                    <p class="chart-title">
+                      Gender
+                    </p>
+                  </cl-circle-pie-chart>
+                </div>
+              </div>
+              <div class="chart-section">
+                <div class="chart-block">
+                  <cl-pie-chart>
+                    <p class="chart-title">
+                      Race
+                    </p>
+                  </cl-pie-chart>
+                </div>
+                <div class="chart-block">
+                  <cl-calendar-chart>
+                    <p class="chart-title">
+                      Popular Transaction Days
+                    </p>
+                  </cl-calendar-chart>
+                </div>
+              </div>
+
+            </div>
+            </ng-container>
+
+          <ng-container *ngSwitchCase="dictionaryTotal.revenue">
+            <div class="chart-partial-block">
+              <div class="chart-section">
+                <div class="chart-block">
+                  <p class="chart-title">
+                    Average Revenue per User
+                  </p>
+                  <div class="chart-wrap-img">
+                    <img src="assets/images/dashboard-business/vertical-chart-2.png" alt="chart">
+                  </div>
+                </div>
+                <div class="chart-block">
+                  <cl-map-chart>
+                    <p class="chart-title">
+                      Revenue by Location
+                    </p>
+                  </cl-map-chart>
+                </div>
+              </div>
+              <div class="chart-section">
+                <div class="chart-block">
+                  <cl-top-five-chart>
+                    <p class="chart-title">
+                      Top 5 Rewards by Revenue
+                    </p>
+                  </cl-top-five-chart>
+                </div>
+                <div class="chart-block">
+                  <cl-top-five-chart>
+                    <p class="chart-title">
+                      Top 5 Campaigns by Revenue
+                    </p>
+                  </cl-top-five-chart>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <div *ngSwitchCase="dictionaryTotal.issuedRewards">issuedRewards</div>
+          <div *ngSwitchCase="dictionaryTotal.activeCampaigns">activeCampaigns</div>
+
+          <div *ngSwitchDefault>activeCustomers</div>
         </ng-container>
-      </mat-radio-group>
+      </div>
+      <!--end group that contain all graphics-->
     </section>
   </ng-container>
   <ng-template #noData>

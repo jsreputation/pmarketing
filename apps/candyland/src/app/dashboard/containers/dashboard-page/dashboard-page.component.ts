@@ -1,7 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DashboardService } from '@cl-core/services/dashboard.service';
-
+import { map, tap } from 'rxjs/operators';
+export enum DictionaryTotal {
+  activeCustomers = 'activeCustomers',
+  revenue = 'revenue',
+  issuedRewards = 'issuedRewards',
+  activeCampaigns = 'activeCampaigns',
+}
 @Component({
   selector: 'cl-dashboard-page',
   templateUrl: './dashboard-page.component.html',
@@ -10,12 +16,25 @@ import { DashboardService } from '@cl-core/services/dashboard.service';
 })
 export class DashboardPageComponent implements OnInit {
   public gameCard$: Observable<DashboardGameCard[]>;
-  public dashboardData: ITotalActive;
-  constructor(private dashboardService: DashboardService) { }
+  public dashboardData: ITotal[];
+  public activeTab: any;
+  public mapTotal = {
+    activeCustomers: 'Total Active Customers',
+    revenue: 'Total Revenue',
+    issuedRewards: 'Total Issued Rewards',
+    activeCampaigns: 'Total Active Campaigns'
+  };
+  public dictionaryTotal = DictionaryTotal;
+  constructor(private dashboardService: DashboardService) {
+  }
 
   ngOnInit() {
     this.getGameCard();
     this.getTotalActive();
+  }
+
+  public selectedTab(tab): void {
+    this.activeTab = tab.value;
   }
 
   private getGameCard(): void {
@@ -24,7 +43,17 @@ export class DashboardPageComponent implements OnInit {
 
   private getTotalActive(): void {
     this.dashboardService.getTotalActive()
-      .subscribe((res) => this.dashboardData = res);
+      .pipe(
+        tap(res => this.activeTab = res[0].name),
+        map((res) => {
+        return res.map(item => {
+          item.title = this.mapTotal[item.name];
+          return item;
+        });
+      }))
+      .subscribe((res) => {
+        this.dashboardData = res;
+      });
   }
 
 }

@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./tab-item-view.component.scss']
 })
 export class TabItemViewComponent implements OnInit {
-  @Input() public data: any;
+  @Input() public data: ITotal;
   constructor() { }
 
   ngOnInit() {
