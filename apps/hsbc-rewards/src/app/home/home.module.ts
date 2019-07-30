@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { LoyaltyModule, ProfileModule, ProfileService } from '@perx/core';
+import { LoyaltyModule, ProfileModule, ProfileService, RewardsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 
 
@@ -15,7 +15,8 @@ import { environment } from 'src/environments/environment';
     CommonModule,
     HomeRoutingModule,
     LoyaltyModule.forRoot({env: environment}),
-    ProfileModule.forRoot({ env: environment })
+    ProfileModule.forRoot({ env: environment }),
+    RewardsModule.forRoot({ env: environment })
   ],
  
 })
