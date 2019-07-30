@@ -1,7 +1,7 @@
-<div *ngIf="rewards$; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-  <ng-container *ngIf="rewards$ | async as rewards">
-    <div class="card-collection-container">
+<div [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
+  <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <ng-container *ngIf="rewards$ | async as rewards">
       <mat-card *ngFor="let reward of rewards">
         <img mat-card-image [src]="reward.rewardThumbnail">
         <mat-card-content>
@@ -16,10 +16,42 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </div>
-  </ng-container>
-</ng-template>
-<ng-template #elseBlock>
-  <!--  todo: make loading screen  -->
-  Could not load Rewards, Please try again
-</ng-template>
+    </ng-container>
+  </ng-template>
+  <ng-template #elseBlock>
+    <mat-card>
+      <img mat-card-image src="https://via.placeholder.com/200x100">
+      <mat-card-content>
+        <div class="subtitle-1 ghost">Product Name</div>
+        <div class="description mat-caption ghost" ngxEllipsis [lines]="2">
+          I think my strongest asset maybe by far is my placeholding temperament. I’m the best thing that ever happened
+          to placeholder text.
+        </div>
+        <div class="points overline ghost">Price/Points</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <img mat-card-image src="https://via.placeholder.com/200x100">
+      <mat-card-content>
+        <div class="subtitle-1 ghost">Product Name</div>
+        <div class="description mat-caption ghost" ngxEllipsis [lines]="2">
+          I think my strongest asset maybe by far is my placeholding temperament. I’m the best thing that ever happened
+          to placeholder text.
+        </div>
+        <div class="points overline ghost">Price/Points</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <img mat-card-image src="https://via.placeholder.com/200x100">
+      <mat-card-content>
+        <div class="subtitle-1 ghost">Product Name</div>
+        <div class="description mat-caption ghost" ngxEllipsis [lines]="2">
+          I think my strongest asset maybe by far is my placeholding temperament. I’m the best thing that ever happened
+          to placeholder text.
+        </div>
+        <div class="points overline ghost">Price/Points</div>
+      </mat-card-content>
+    </mat-card>
+
+  </ng-template>
+</div>

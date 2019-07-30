@@ -1,6 +1,15 @@
 $card-actual-height: 200px;
 
 .card-collection-container {
+  &.loading {
+    overflow: hidden;
+  }
+  .ghost {
+    overflow: hidden;
+  }
+}
+
+.card-collection-container {
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
