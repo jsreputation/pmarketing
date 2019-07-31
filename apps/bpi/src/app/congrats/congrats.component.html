@@ -1,19 +1,25 @@
 <div class="app-container">
-  <app-header *ngIf="path != 'terms-conditions'" [title]="title" [subTitles]="subTitles"></app-header>
+  <div class="header" *ngIf="path != 'terms-conditions'">
+    <app-header [title]="title" [subTitles]="subTitles" [subsubTitles]="subsubTitles"></app-header>
+  </div>
   <div class="game-container">
     <div class="contents">
       <img src="assets/netflix-on-us.jpg" alt="Your netflix is on us" />
 
       <strong>Experience a world of entertainment with your Netflix reward.</strong>
       <ul>
-        <li>To receive your rebate, your BPI Credit Card must be the card used as payment method in your Netflix account.</li>
+        <li>To receive your rebate, your BPI Credit Card must be the card used as payment method in your Netflix
+          account.</li>
         <li>This means that the Netflix transaction must appear in your BPI Credit Card SOA.</li>
         <li>Netflix subscription is required.</li>
         <li>Your Netflix reward will be credited as a rebate in your Statement of Account (SOA).</li>
-        <li>We will send you an SMS and/or email once the Netflix rebate has been credited to your account, and you will see a cash credit worth P370 in your SOA.</li>
+        <li>We will send you an SMS and/or email once the Netflix rebate has been credited to your account, and you will
+          see a cash credit worth P370 in your SOA.</li>
         <li>You can only get one Netflix rebate in your account each month.</li>
-        <li>For complete terms and conditions, visit <a href="https://www.bpi.com.ph/cards/netflix" target="_blank">www.bpi.com.ph/cards/netflix</a></li>
-        <li>Not yet a Netflix subscriber? Sign up now at <a href="https://www.netflix.com/bpi" target="_blank">www.netflix.com/bpi</a></li>
+        <li>For complete terms and conditions, visit <a href="https://www.bpi.com.ph/cards/netflix"
+            target="_blank">www.bpi.com.ph/cards/netflix</a></li>
+        <li>Not yet a Netflix subscriber? Sign up now at <a href="https://www.netflix.com/bpi"
+            target="_blank">www.netflix.com/bpi</a></li>
       </ul>
       <p>
         Promo period is from August 1, 2019 to October 31, 2019.

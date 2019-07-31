@@ -1,0 +1,13 @@
+@import "~src/assets/styles/variables";
+
+.update-phone-form {
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+
+  & > button {
+    align-self: flex-start;
+    color: $white;
+  }
+}

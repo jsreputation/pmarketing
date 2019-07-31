@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('rewards/list');
         }
       }
-    ).catch((err) => {
+    ).catch(() => {
       this.failedAuth = true;
       this.authed = false;
 
