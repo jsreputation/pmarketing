@@ -16,10 +16,12 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true) };
+  const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: notificationServiceStub, useValue: notificationServiceStub }
       ],
       imports: [
         MatCardModule,
