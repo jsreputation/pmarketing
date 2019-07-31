@@ -1,0 +1,38 @@
+@import "~src/assets/styles/variables";
+
+hkbn-registration-form {
+  display: block;
+  padding: 1rem 0;
+
+  .registration-form {
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+
+    .submit-button {
+      color: $white;
+      margin-top: 3rem;
+    }
+
+    mat-form-field {
+      margin: 0.2rem 0;
+    }
+
+    mat-checkbox {
+      margin: 0.5rem 0;
+    }
+
+    .mat-checkbox-layout {
+      white-space: normal !important;
+    }
+
+    .mat-checkbox-inner-container {
+      margin-top: 0.6rem;
+    }
+  }
+
+  .terms-error {
+    font-size: 1.05rem;
+    margin-left: 2.4rem;
+  }
+}
