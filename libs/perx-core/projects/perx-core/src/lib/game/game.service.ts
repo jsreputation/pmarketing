@@ -131,7 +131,7 @@ export class GameService implements IGameService {
     const texts: { [key: string]: string } = {};
     if (game.display_properties.header) {
       texts.title = game.display_properties.header.value.title;
-      texts.description = game.display_properties.header.value.description;
+      texts.subTitle = game.display_properties.header.value.description;
     }
 
     if (game.display_properties.play_button_text) {

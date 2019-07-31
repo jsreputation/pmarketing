@@ -6218,6 +6218,11 @@ ngx-material-timepicker@^4.0.0:
     luxon "^1.11.3"
     tslib "^1.9.0"
 
+ngx-multi-line-ellipsis@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ngx-multi-line-ellipsis/-/ngx-multi-line-ellipsis-1.0.4.tgz#1354237469d757d8d2e4c320d3cfd516b4b3a271"
+  integrity sha1-E1QjdGnXV9jS5MMg08/VFrSzonE=
+
 ngx-take-until-destroy@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/ngx-take-until-destroy/-/ngx-take-until-destroy-5.4.0.tgz#6c8606ee956584dc947e2eb609c48b8f98b09900"
