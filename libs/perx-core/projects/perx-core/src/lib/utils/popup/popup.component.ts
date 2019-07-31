@@ -47,6 +47,8 @@ export class PopupComponent {
   }
 
   public popUpClosed(): void {
-    this.data.afterClosedCallBack.dialogClosed();
+    if (this.data.afterClosedCallBack) {
+      this.data.afterClosedCallBack.dialogClosed();
+    }
   }
 }
