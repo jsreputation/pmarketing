@@ -8,9 +8,31 @@ html {
   font-style: normal;
 }
 
-body{
+body {
   padding: 0;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
+}
+
+.mat-caption {
+  line-height: 1.6rem;
+  color: #666666;
+}
+
+.overline {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  color: #666666;
+}
+
+.subtitle-1 {
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: #212121;
+}
+
+.ghost {
+  background: #EDEDED;
 }

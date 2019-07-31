@@ -28,6 +28,8 @@ export class GameComponent implements OnInit {
     campaignId: -1,
     type: GAME_TYPE.shakeTheTree,
     remainingNumberOfTries: 20,
+    texts: {},
+    results: {},
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
   isWhistler: boolean;
