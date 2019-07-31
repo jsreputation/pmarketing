@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
-import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RegistrationComponent } from './registration.component';
+import { RegistrationFormComponent } from '../../components/registration-form/registration-form.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -10,41 +9,35 @@ import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('RegistrationComponent', () => {
+  let component: RegistrationComponent;
+  let fixture: ComponentFixture<RegistrationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatCardModule,
         MatFormFieldModule,
         MatInputModule,
+        MatCardModule,
         MatCheckboxModule,
         MatButtonModule,
         RouterTestingModule,
         ReactiveFormsModule,
         ErrorHandlerModule,
-        NoopAnimationsModule,
+        NoopAnimationsModule
       ],
-      providers: [
-        {
-          provide: AuthenticationService,
-          useValue: {v4GameOauth: () => Promise.resolve(true)}
-        }
-      ],
-      declarations: [LoginComponent, LoginFormComponent]
+      declarations: [RegistrationComponent, RegistrationFormComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
