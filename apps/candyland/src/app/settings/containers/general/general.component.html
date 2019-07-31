@@ -1,1 +1,33 @@
-<p>general works!</p>
+<section class="content" [formGroup]="formGeneral">
+  <mat-card class="general">
+    <p class="sub-title">
+      Time zone
+    </p>
+    <div class="control-input">
+      <mat-form-field class="game-stamp-select">
+        <mat-label>Select Time Zone</mat-label>
+        <mat-select formControlName="timeZone">
+          <mat-option *ngFor="let zone of timeZones$ | async" [value]="zone.id">
+            {{zone.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+  <mat-card class="general currency">
+    <p class="sub-title">
+      Currency
+    </p>
+    <div class="control-input">
+      <mat-form-field class="game-stamp-select">
+        <mat-label>Select Currency</mat-label>
+        <mat-select formControlName="currency">
+          <mat-option *ngFor="let currency of currency$ | async" [value]="currency.id">
+            {{currency.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+</section>
+

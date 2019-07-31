@@ -1,1 +1,39 @@
-<p>branding works!</p>
+<section class="content flex">
+  <div class="branding-form" [formGroup]="formBranding">
+    <mat-card >
+      <div class="reward-wrap">
+        <p class="sub-title">
+          Theme
+        </p>
+      </div>
+      <div class="flex">
+        <div class="control-input">
+          <p class="game-title">
+            <span>Style</span>
+          </p>
+          <mat-form-field class="game-stamp-select">
+            <mat-select formControlName="style">
+              <mat-option *ngFor="let style of styles" [value]="style.id">
+                {{style.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="control-input">
+          <p class="game-title">
+            <span>Font type</span>
+          </p>
+          <mat-form-field class="game-stamp-select">
+            <mat-select formControlName="font">
+              <mat-option *ngFor="let font of fonts" [value]="font.id">
+                {{font.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <cl-settings-mobile-preview>
+  </cl-settings-mobile-preview>
+</section>
