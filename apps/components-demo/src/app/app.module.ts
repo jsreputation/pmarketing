@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { UtilsModule } from './utils/utils.module';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,9 @@ import { FormsModule } from '@angular/forms';
     AuthenticationModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    RewardsModule,
     FormsModule,
+    RewardsModule,
+    UtilsModule,
   ],
   providers: [
   ],
