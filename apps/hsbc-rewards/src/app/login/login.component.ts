@@ -73,16 +73,17 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('playerCode').value as string;
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
+
     this.authService.v4GameOauth(username, password)
       .then((isAuthed: boolean) => {
         this.authed = isAuthed;
+        
         if (this.authed) {
-
+          
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
           }
-
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
