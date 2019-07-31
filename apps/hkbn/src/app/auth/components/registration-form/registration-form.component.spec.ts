@@ -37,4 +37,27 @@ describe('RegistrationFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not emit event when form invalid', () => {
+    const registerSubmitSpy = spyOn(component.formSubmit, 'emit');
+    component.submit();
+    expect(registerSubmitSpy.calls.count()).toBe(0);
+  });
+
+  it('should emit event when form valid', () => {
+    spyOn(component.formSubmit, 'emit');
+    component.registrationForm.setValue({
+      firstName: 'John',
+      lastName: 'Doe',
+      phone: '88005553535',
+      email: 'email@gmail.com',
+      password: 'qwerty123',
+      confirmPassword: 'qwerty123',
+      terms: true,
+      promo: true
+    });
+    fixture.detectChanges();
+    component.submit();
+    expect(component.formSubmit.emit).toHaveBeenCalled();
+  });
 });
