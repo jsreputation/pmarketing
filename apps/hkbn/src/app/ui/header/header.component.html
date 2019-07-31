@@ -1,18 +1,25 @@
 <div class="container">
   <div class="header-container">
     <button mat-icon-button class="header-left-icon"
-            *ngIf="!routeData || !routeData?.back"
+            *ngIf="routeData && (!routeData?.back && !routeData?.cross)"
             (click)="snav.toggle()"
     >
       <mat-icon>menu</mat-icon>
     </button>
     <button mat-icon-button class="header-left-icon"
-            *ngIf="routeData && routeData.back"
+            *ngIf="routeData && routeData?.cross"
             (click)="goBack()"
     >
       <mat-icon>close</mat-icon>
     </button>
-    <img class="header-logo" src="assets/images/logo.png" alt="">
+    <button mat-icon-button class="header-left-icon"
+            *ngIf="routeData && routeData?.back"
+            (click)="goBack()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <img class="header-logo" src="assets/images/logo.png" alt="" *ngIf="!routeData?.title">
+    <p class="header-title" *ngIf="routeData?.title">{{routeData.title}}</p>
   </div>
 
 

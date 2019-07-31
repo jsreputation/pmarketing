@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward } from '@perx/core/dist/perx-core';
+import { IReward } from '@perx/core';
 
 @Component({
   selector: 'hkbn-home',

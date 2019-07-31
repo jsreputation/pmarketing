@@ -4,6 +4,11 @@
   padding-top: 1rem;
 }
 
+.header {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
 .game-container {
   padding: 0 1.5rem 2rem 1.5rem;
   background-color: #b20000;
@@ -21,6 +26,10 @@
       margin-bottom: 3.6rem;
       display: block;
     }
+
+    strong {
+      font-size: 1.6rem;
+    }
   }
 
   p {
@@ -30,10 +39,6 @@
     a {
       color: #00a6f9;
     }
-  }
-
-  strong {
-    font-size: 1.4rem;
   }
 
   ul {

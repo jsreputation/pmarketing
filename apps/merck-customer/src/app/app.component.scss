@@ -1,0 +1,10 @@
+@import '../styles.scss';
+
+.toolbar {
+  display: flex;
+  height: 6rem;
+  align-items: center;
+  z-index: 4;
+  justify-content: center;
+  background-color: $main-blue-theme;
+}

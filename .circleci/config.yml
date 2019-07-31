@@ -193,7 +193,7 @@ jobs:
           command: |
             curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
             echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt-get update && sudo apt-get install yarn
+            sudo killall -9 apt-get || true && sudo apt-get update && sudo apt-get install -y yarn=1.16.0-1
       - run: |
           echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
           echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
@@ -208,11 +208,38 @@ jobs:
       - run: yarn run lint-ci
       - run: yarn run test-ci
     #      - run: yarn run e2e-ci
+  test-prod:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - run:
+          name: Install yarn
+          command: |
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo killall -9 apt-get || true && sudo apt-get update && sudo apt-get install -y yarn=1.16.0-1
+      - run: |
+          echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+          echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: Switch to latest node version
+          command: |
+            nvm install v10
+            nvm alias default v10
+      - checkout
+      - run: yarn install
+      - run: yarn run build --aot --prod
+    #      - run: yarn run e2e-ci
 
 workflows:
   build_and_deploy:
     jobs:
       - test:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - test-prod:
           filters:
             tags:
               # this enables circleci to trigger on tags
@@ -246,6 +273,7 @@ workflows:
           requires:
             - build_docker_image
             - test
+            - test-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:

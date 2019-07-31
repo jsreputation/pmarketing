@@ -10,7 +10,7 @@ import {
   defaultTree,
   GAME_TYPE,
   ICampaign
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { POPUP_TYPE } from '../vouchers/vouchers.component';
 import { environment } from '../../environments/environment';
 

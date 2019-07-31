@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -76,6 +76,14 @@ export class LoginComponent implements OnInit {
 
   public onCrossClicked(): void {
     this.errorMessage = null;
+  }
+
+  public goToSignup(): void {
+    this.router.navigateByUrl('/signup');
+  }
+
+  public goToForgotPassword(): void {
+    this.router.navigateByUrl('/forgot-password');
   }
 
 }
