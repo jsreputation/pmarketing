@@ -6,6 +6,7 @@ import { HomeComponent } from './home/containers/home/home.component';
 import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
+import { RegistrationComponent } from './auth/containers/registration/registration.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
@@ -53,6 +54,7 @@ const routes: Routes = [
     ]
   },
   {path: 'login', component: LoginComponent},
+  {path: 'registration', component: RegistrationComponent},
   {path: 'sms-validation', component: SmsValidationComponent}
 ];
 

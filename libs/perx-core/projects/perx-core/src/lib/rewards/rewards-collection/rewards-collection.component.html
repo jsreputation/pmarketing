@@ -1,0 +1,59 @@
+<div [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
+  <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <ng-container *ngIf="rewards$ | async as rewards">
+      <mat-card *ngFor="let reward of rewards">
+        <img mat-card-image [src]="reward.rewardThumbnail">
+        <mat-card-content>
+          <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
+          <!--
+          have to repeat div declaration because the directive reads the
+          dom to insert ellipsis and will otherwise render angular logic code
+          -->
+          <div *ngIf="reward.description; else showMerchantName">
+            <div class="description mat-caption" ngxEllipsis [lines]="2">
+              {{reward.description}}
+            </div>
+          </div>
+          <ng-template #showMerchantName>
+            <div class="description mat-caption" ngxEllipsis [lines]="2">
+              {{reward.merchantName}}
+            </div>
+          </ng-template>
+          <div *ngIf="reward.rewardPrice &&
+                  reward.rewardPrice.length > 0 &&
+                  reward.rewardPrice[0] as rewardPrice">
+            <span class="points overline">Price/Points</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-template>
+  <ng-template #elseBlock>
+    <mat-card>
+      <div class="img-placeholder ghost"></div>
+      <mat-card-content>
+        <div class="subtitle-1 ghost"></div>
+        <div class="description mat-caption ghost"></div>
+        <div class="points overline ghost"></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <div class="img-placeholder ghost"></div>
+      <mat-card-content>
+        <div class="subtitle-1 ghost"></div>
+        <div class="description mat-caption ghost"></div>
+        <div class="points overline ghost"></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <div class="img-placeholder ghost"></div>
+      <mat-card-content>
+        <div class="subtitle-1 ghost"></div>
+        <div class="description mat-caption ghost"></div>
+        <div class="points overline ghost"></div>
+      </mat-card-content>
+    </mat-card>
+
+  </ng-template>
+</div>

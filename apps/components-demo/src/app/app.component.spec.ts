@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core/dist/perx-core';
+import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from '../environments/environment';
 
