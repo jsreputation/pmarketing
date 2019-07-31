@@ -6,9 +6,20 @@
         <img mat-card-image [src]="reward.rewardThumbnail">
         <mat-card-content>
           <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
-          <div class="description mat-caption" ngxEllipsis [lines]="2">
-            {{reward.description}}
+          <!--
+          have to repeat div declaration because the directive reads the
+          dom to insert ellipsis and will otherwise render angular logic code
+          -->
+          <div *ngIf="reward.description; else showMerchantName">
+            <div class="description mat-caption" ngxEllipsis [lines]="2">
+              {{reward.description}}
+            </div>
           </div>
+          <ng-template #showMerchantName>
+            <div class="description mat-caption" ngxEllipsis [lines]="2">
+              {{reward.merchantName}}
+            </div>
+          </ng-template>
           <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0 &&
                   reward.rewardPrice[0] as rewardPrice">
