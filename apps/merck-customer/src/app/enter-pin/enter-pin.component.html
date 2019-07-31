@@ -1,1 +1,13 @@
-<p>enter-pin works!</p>
+<div class="main-container">
+	<h2 *ngIf="pinMode === 'password'" i18n="@@static-reset-password">Reset your password</h2>
+	<h2 *ngIf="pinMode === 'register'" i18n="@@static-new-register">Thank you for registering</h2>	
+	<div i18n="@@static-enter-number" class="subheading">Enter the 6-digit One-Time Password (OTP) sent to your mobile
+		number {{this.visibleNo}}</div>
+	<div class="pin-input-container">
+		<perx-core-pin-input 
+		[length]="numberOfDigits"
+		(full)="onPinEntered($event)">
+		</perx-core-pin-input>
+	</div>
+	<div i18n="@@static-resend-otp" class="bottom-text" (click)="resendOtp()">Resend OTP</div>
+</div>

@@ -5,17 +5,22 @@ import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import {
+  AuthenticationModule,
+  CognitoModule,
+  OauthModule,
+  AuthenticationService
+} from '@perx/core/dist/perx-core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-    const routerStub = { navigateByUrl: () => ({}) };
+    const routerStub = { navigateByUrl: () => ({}),
+                         navigate: () => ({})};
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
@@ -57,9 +62,9 @@ describe('LoginComponent', () => {
 
   it('should navigate to forgot password on forgot password click', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
-    spyOn(routerStub, 'navigateByUrl').and.callThrough();
+    spyOn(routerStub, 'navigate').and.callThrough();
     component.goToForgotPassword();
-    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/forgot-password');
+    expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { mobileNo: '' } });
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {
