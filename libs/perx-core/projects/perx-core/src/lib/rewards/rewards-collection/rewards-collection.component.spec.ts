@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
 
-describe('RewardsCarouselComponent', () => {
+describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
 
