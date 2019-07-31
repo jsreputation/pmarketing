@@ -23,7 +23,11 @@ export class HkbnValidators extends Validators {
       const firstValue = control.get(firstField).value;
       const secondValue = control.get(secondField).value;
 
-      return firstValue === secondValue ? null : {notEqual: true};
+      if (firstValue !== secondValue) {
+        control.get(secondField).setErrors({notEqual: true});
+        return {notEqual: true};
+      }
+      return null;
     };
   }
 }

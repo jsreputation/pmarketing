@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsListComponent } from './rewards-list.component';
-import { RewardsModule, RewardsService } from '@perx/core/dist/perx-core';
+import { RewardsModule, RewardsService } from '@perx/core';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
