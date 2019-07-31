@@ -76,6 +76,20 @@ interface GameResponse {
   data: Game;
 }
 
+interface IV4PlayResponse {
+  data: {
+    campaign_id: number;
+    game_id: number;
+    id: number;
+    outcomes: {
+      reward: any;
+      voucher_code: any;
+    }[];
+    state: string;
+    use_account_id: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -158,7 +172,7 @@ export class GameService implements IGameService {
   }
 
   public play(gameId: number): Observable<any> {
-    return this.httpClient.put(`${this.hostName}/v4/games/${gameId}/play`, null);
+    return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null);
   }
 
   public get(gameId: number): Observable<IGame> {
