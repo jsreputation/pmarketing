@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './containers/registration/registration.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
+import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
+import { UtilsModule } from '@perx/core';
 
 const COMPONENTS = [
   LoginFormComponent,
@@ -22,13 +24,14 @@ const COMPONENTS = [
 
 const CONTAINERS = [
   LoginComponent,
-  RegistrationComponent
+  RegistrationComponent,
+  ForgotPasswordComponent,
 ];
 
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    ...CONTAINERS
+    ...CONTAINERS,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ const CONTAINERS = [
     MatCheckboxModule,
     MatButtonModule,
     RouterModule,
+    UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
   ],
