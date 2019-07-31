@@ -1,3 +1,4 @@
+// tslint:disable: typedef
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
