@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./custom-theme.scss";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
 html {
   font-size: 62.5%;
@@ -77,4 +78,8 @@ body {
   background-color: #fff;
   border-radius: 0.8rem;
   max-width: 80rem;
+}
+
+.mat-snack-bar-container {
+  background-color: #FFC832;
 }
