@@ -14,7 +14,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #0F69AF;
   height: 100%;
 }
 
@@ -35,7 +34,7 @@ body {
 
 .main-container {
   padding: 0 1.5rem;
-  margin-top: 7rem;
+  height: 100%;
 
   > img {
     display: block;
@@ -82,4 +81,13 @@ body {
 
 .mat-snack-bar-container {
   background-color: #FFC832;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  height: auto !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  align-items: normal !important;
+  padding: 1.5rem !important;
 }

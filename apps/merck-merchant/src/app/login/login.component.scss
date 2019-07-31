@@ -3,6 +3,14 @@
   display: block;
 }
 
+.main-container {
+  background-color: #0F69AF;
+
+  .logo {
+    padding-top: 7rem;
+  }
+}
+
 .content-container {
   .main-heading {
     font-weight: 900;
