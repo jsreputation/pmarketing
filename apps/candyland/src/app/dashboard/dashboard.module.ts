@@ -7,7 +7,6 @@ import { DashboardGameCardComponent } from './components/dashboard-game-card/das
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
-import { VerticalTabsComponent } from './components/vertical-tabs/vertical-tabs.component';
 import { MatRadioModule } from '@angular/material';
 import { TabItemViewComponent } from './components/tab-item-view/tab-item-view.component';
 import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
@@ -22,7 +21,12 @@ import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart
 import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/radius-circle-chart.module';
 
 @NgModule({
-  declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent, VerticalTabsComponent, TabItemViewComponent],
+  declarations: [
+    DashboardPageComponent,
+    DashboardGameCardComponent,
+    BusinessInsightComponent,
+    TabItemViewComponent
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
