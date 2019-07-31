@@ -55,20 +55,16 @@ export class LoginComponent implements OnInit {
         this.authenticated = false;
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.errorMessage = 'We could not reach the server';
+            this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
             [this.loginForm.controls.email, this.loginForm.controls.password]
               .forEach(c => c.setErrors({
                 invalid: true
               }));
-            this.notificationService.addSnack('Invalid credentials')
+            this.notificationService.addSnack('Invalid credentials');
           }
         }
       });
-  }
-
-  public onCrossClicked(): void {
-    this.errorMessage = null;
   }
 
   public onForgotPassword(): void {
