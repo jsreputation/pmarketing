@@ -10,7 +10,7 @@ import {
   CognitoModule,
   OauthModule,
   AuthenticationService
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 

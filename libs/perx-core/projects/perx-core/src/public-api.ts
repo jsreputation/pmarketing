@@ -59,7 +59,8 @@ export { defaultTree } from './lib/game/game.model';
 export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
-  IProfile
+  IProfile,
+  ICustomProperties
 } from './lib/profile/profile.model';
 
 export { LoyaltyModule } from './lib/loyalty/loyalty.module';

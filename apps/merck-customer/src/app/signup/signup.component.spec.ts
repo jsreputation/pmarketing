@@ -7,7 +7,7 @@ import {
   MatButtonModule,
   MatCheckboxModule
 } from '@angular/material';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
