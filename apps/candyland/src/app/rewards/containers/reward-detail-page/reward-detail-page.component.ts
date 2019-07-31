@@ -1,9 +1,9 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {RewardService} from '@cl-core/http-services/reward.service';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
-import {map, tap} from 'rxjs/operators';
-import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
-import {RewardReplenishPopupComponent} from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { RewardService } from '@cl-core/http-services/reward.service';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { map, tap } from 'rxjs/operators';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -59,7 +59,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res: any) => {
         this.data = res;
-        console.log(res);
         this.dataSource.data = res.campaigns;
         this.cd.detectChanges();
       });

@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {untilDestroyed} from 'ngx-take-until-destroy';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {ToggleControlService} from "@cl-shared/providers/toggle-control.service";
-import {MatDialog} from "@angular/material";
-import {CreateMerchantPopupComponent} from "@cl-shared/containers/create-merchant-popup/create-merchant-popup.component";
-import {SelectMerchantComponent} from "@cl-shared/containers/select-merchant/select-merchant.component";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
+import { MatDialog } from '@angular/material';
+import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
+import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 
 @Component({
   selector: 'cl-new-reward',
@@ -101,8 +101,7 @@ export class NewRewardComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(value => {
-        console.log('value', value);
+      .subscribe(() => {
         this.toggleControlService.updateFormStructure();
         if (this.toggleControlService.formChanged) {
           this.updateForm();
@@ -247,22 +246,6 @@ export class NewRewardComponent implements OnInit, OnDestroy {
         condition: () => (this.form.get('limits.enabledRedemptionPerUser').value === true),
         controls: [this.form.get('limits.redemptionPerUser')]
       }
-      //   {
-      //     condition: () => (this.channel.get('type').value === 'sms'),
-      //     controls: [this.channel.get('message'), this.schedule],
-      //   },
-      //   {
-      //     condition: () => (this.schedule.get('enableRecurrence').value === true),
-      //     controls: [this.recurrence],
-      //   },
-      //   {
-      //     condition: () => (this.recurrence.get('period').value === 'week'),
-      //     controls: [this.recurrence.get('repeatOn')]
-      //   },
-      //   {
-      //     condition: () => (this.audience.get('type').value === 'upload'),
-      //     controls: [this.audience.get('file')]
-      //   },
     ];
   }
 

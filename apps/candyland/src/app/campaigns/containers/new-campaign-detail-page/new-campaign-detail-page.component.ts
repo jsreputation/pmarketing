@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
-import {untilDestroyed} from 'ngx-take-until-destroy';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {ToggleControlService} from "@cl-shared/providers/toggle-control.service";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -69,7 +69,6 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(value => {
-        console.log('value', value);
         this.store.updateCampaign(value);
         this.toggleControlService.updateFormStructure();
         if (this.toggleControlService.formChanged) {

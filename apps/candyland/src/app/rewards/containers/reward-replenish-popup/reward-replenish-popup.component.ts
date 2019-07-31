@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'cl-reward-replenish-popup',
@@ -15,7 +15,6 @@ export class RewardReplenishPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   public close() {
@@ -29,7 +28,6 @@ export class RewardReplenishPopupComponent implements OnInit {
   }
 
   public setReplenishVoucherCodes(value: any): void {
-    console.log(value);
     this.replenishVoucherCodes = value;
   }
 

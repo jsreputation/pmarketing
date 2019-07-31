@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'cl-reward-vouchers-preview',
@@ -14,7 +14,6 @@ export class RewardVouchersPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('vouchers', this.data);
   }
 
 }
