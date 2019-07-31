@@ -10,7 +10,7 @@ import {
   NotificationService,
   IGameOutcome,
 } from '@perx/core';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -92,7 +92,7 @@ export class GameComponent implements OnInit {
   private fetchGame(): void {
     this.gameService.getGamesFromCampaign(this.campaignId)
       .pipe(
-        tap((games: IGame[]) => { console.log(games); }),
+        // tap((games: IGame[]) => { console.log(games); }),
         take(1),
         map((games: IGame[]) => games[0])
       )
@@ -116,9 +116,16 @@ export class GameComponent implements OnInit {
           take(1)
         )
         .subscribe(
-          () => {
-            // todo select proper outcome based on play result
-            const outcome: IGameOutcome = this.game.results.noOutcome;
+          (res: any) => {
+            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.length > 0);
+            let outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
+            if (!outcome) {
+              outcome = {
+                title: 'Thanks for playing',
+                subTitle: null,
+                button: 'ok'
+              };
+            }
             this.notificationService.addPopup({
               title: outcome.title,
               text: outcome.subTitle,
