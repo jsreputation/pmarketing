@@ -7,9 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RedeemComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
