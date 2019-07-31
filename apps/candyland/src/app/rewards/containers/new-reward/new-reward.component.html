@@ -2,10 +2,10 @@
   <div class="game-title-wrap">
     <div class="control-input name-control name-control-title">
       <mat-form-field class="messages-input">
-        <input type="text" matInput [formControl]="name">
-        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+        <input type="text" matInput [formControl]="form.get('name')">
+        <mat-error *ngIf="form.get('name').hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="form.get('name').hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="form.get('name').hasError('maxlength')">Max length 60</mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -105,7 +105,7 @@
           </p>
         </div>
         <div class="card-content">
-          <cl-voucher-validity-form-group [formGroup]="form.get('voucherValidity')"
+          <cl-voucher-validity-form-group [formGroup]="form.get('vouchers.voucherValidity')"
                                           [config]="config"></cl-voucher-validity-form-group>
         </div>
       </div>
@@ -133,8 +133,15 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-merchant-card></cl-reward-merchant-card>
-      <cl-reward-merchant-item [enableActions]="true"></cl-reward-merchant-item>
+      <cl-reward-merchant-card
+        (createMerchant)="openDialogCreateMerchant()"
+        (selectMerchant)="openDialogSelectMerchant()">
+      </cl-reward-merchant-card>
+      <cl-reward-merchant-item *ngIf="form.get('merchantInfo').value"
+                               [merchant]="form.get('merchantInfo').value"
+                               (deleteMerchant)="deleteMerchant()"
+        [enableActions]="true">
+      </cl-reward-merchant-item>
     </div>
   </mat-expansion-panel>
   <!--/ Merchant Info-->

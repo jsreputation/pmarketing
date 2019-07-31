@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
+import {untilDestroyed} from 'ngx-take-until-destroy';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ToggleControlService} from "@cl-shared/providers/toggle-control.service";
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -13,7 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
-  private formChanged;
+  // private formChanged;
   private defaultFormValue = {
     campaignInfo: {
       disabledEndDate: false
@@ -52,13 +53,15 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   constructor(
     private store: CampaignCreationStoreService,
     public cd: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toggleControlService: ToggleControlService
   ) {
   }
 
   ngOnInit() {
     this.config = this.store.config;
     this.initForm();
+    this.initToggleForm();
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -66,11 +69,20 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(value => {
+        console.log('value', value);
         this.store.updateCampaign(value);
-        this.updateFormStructure();
+        this.toggleControlService.updateFormStructure();
+        if (this.toggleControlService.formChanged) {
+          this.updateForm();
+        }
       });
 
     this.form.patchValue(this.defaultFormValue);
+  }
+
+  private updateForm() {
+    this.form.updateValueAndValidity();
+    this.cd.detectChanges();
   }
 
   private initForm() {
@@ -106,70 +118,31 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateFormStructure() {
-    this.formChanged = false;
-
-    this.toggleControls(
-      this.campaignInfo.get('disabledEndDate').value === false,
-      [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
-      true
-    );
-
-    this.toggleControls(
-      this.channel.get('type').value === 'sms',
-      [this.channel.get('message'), this.schedule]
-    );
-
-    this.toggleControls(
-      this.schedule.get('enableRecurrence').value === true,
-      [this.recurrence]
-    );
-
-    this.toggleControls(
-      this.recurrence.get('period').value === 'week',
-      [this.recurrence.get('repeatOn')]
-    );
-
-    this.toggleControls(
-      this.audience.get('type').value === 'upload',
-      [this.audience.get('file')]
-    );
-
-    if (this.formChanged) {
-      this.updateForm();
-    }
-  }
-
-  private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
-    if (condition) {
-      controls.forEach(control => this.enableControl(control));
-    } else {
-      controls.forEach(control => {
-        this.disableControl(control, resetValue);
-      });
-    }
-  }
-
-  private enableControl(control: AbstractControl) {
-    if (control.disabled && !(control.parent && control.parent.disabled)) {
-      control.enable({emitEvent: false});
-      this.formChanged = true;
-    }
-  }
-
-  private disableControl(control: AbstractControl, resetValue = false) {
-    if (control.enabled) {
-      control.disable({emitEvent: false});
-      if (resetValue) {
-        control.reset(null, {emitEvent: false});
-      }
-      this.formChanged = true;
-    }
-  }
-
-  private updateForm() {
-    this.form.updateValueAndValidity();
-    this.cd.detectChanges();
+  private initToggleForm() {
+    this.toggleControlService.context = this;
+    this.toggleControlService.config = [
+      {
+        condition: () => (this.campaignInfo.get('disabledEndDate').value === false),
+        controls: [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
+        resetValue: true
+      },
+      {
+        condition: () => (this.channel.get('type').value === 'sms'),
+        controls: [this.channel.get('message'), this.schedule],
+      },
+      {
+        condition: () => (this.schedule.get('enableRecurrence').value === true),
+        controls: [this.recurrence],
+      },
+      {
+        condition: () => (this.recurrence.get('period').value === 'week'),
+        controls: [this.recurrence.get('repeatOn')]
+      },
+      {
+        condition: () => (this.audience.get('type').value === 'upload'),
+        controls: [this.audience.get('file')]
+      },
+    ]
   }
 
   ngOnDestroy(): void {

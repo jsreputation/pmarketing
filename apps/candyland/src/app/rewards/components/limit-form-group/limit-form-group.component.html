@@ -4,7 +4,7 @@
       <p class="card-title">
         Voucher Limits Per Campaign
       </p>
-      <mat-slide-toggle></mat-slide-toggle>
+      <mat-slide-toggle [formControl]="formGroup.get('enabledVoucherPerCampaign')"></mat-slide-toggle>
     </div>
   </div>
   <div class="card-content">
@@ -15,16 +15,15 @@
           type="number"
           min="0"
           step="1"
+          [formControl]="formGroup.get('voucherPerCampaign.vouchers')"
           matInput>
         <span matSuffix>Vouchers</span>
       </mat-form-field>
       <!--/ input number-->
-
       <span class="nowrap-text">per campaign per</span>
-
       <!-- duration Limits-->
       <mat-form-field>
-        <mat-select>
+        <mat-select [formControl]="formGroup.get('voucherPerCampaign.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
           </ng-container>
@@ -41,7 +40,7 @@
       <p class="card-title">
         Issuance Limits Per User
       </p>
-      <mat-slide-toggle></mat-slide-toggle>
+      <mat-slide-toggle [formControl]="formGroup.get('enabledIssuancePerUser')"></mat-slide-toggle>
     </div>
   </div>
   <div class="card-content">
@@ -52,6 +51,7 @@
           type="number"
           min="0"
           step="1"
+          [formControl]="formGroup.get('issuancePerUser.times')"
           matInput>
         <span matSuffix>Times</span>
       </mat-form-field>
@@ -61,7 +61,7 @@
 
       <!-- duration Limits-->
       <mat-form-field>
-        <mat-select>
+        <mat-select [formControl]="formGroup.get('issuancePerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
           </ng-container>
@@ -78,7 +78,7 @@
       <p class="card-title">
         Redemption Limits Per User
       </p>
-      <mat-slide-toggle></mat-slide-toggle>
+      <mat-slide-toggle [formControl]="formGroup.get('enabledRedemptionPerUser')"></mat-slide-toggle>
     </div>
   </div>
   <div class="card-content">
@@ -89,6 +89,7 @@
           type="number"
           min="0"
           step="1"
+          [formControl]="formGroup.get('redemptionPerUser.times')"
           matInput>
         <span matSuffix>Times</span>
       </mat-form-field>
@@ -96,7 +97,7 @@
       <span class="nowrap-text">per campaign per</span>
       <!-- duration Limits-->
       <mat-form-field>
-        <mat-select>
+        <mat-select  [formControl]="formGroup.get('redemptionPerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
           </ng-container>

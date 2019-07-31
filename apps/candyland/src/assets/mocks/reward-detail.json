@@ -141,10 +141,13 @@
     "termsAndCondition": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
   },
   "merchantInfo": {
-    "image": "assets/images/spin-the-wheel-preview.png",
+    "id": 4,
+    "logo": "assets/images/spin-the-wheel-preview.png",
     "type": "Starbucks",
+    "firstName": "Moreno",
+    "lastName": "Briggs",
     "phone": "+65 9129 8888",
-    "category": "40 Branches"
+    "branches": "40"
   },
   "limits": {
     "voucherPerCampaign": {
