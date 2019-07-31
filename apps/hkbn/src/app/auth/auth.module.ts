@@ -15,7 +15,7 @@ import { RegistrationComponent } from './containers/registration/registration.co
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
-import { UtilsModule } from '@perx/core/dist/perx-core';
+import { UtilsModule } from '@perx/core';
 
 const COMPONENTS = [
   LoginFormComponent,
