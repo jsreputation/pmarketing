@@ -91,11 +91,14 @@ export class GameComponent implements OnInit {
 
         if (lockedCards.length === 0) {
           this.title = 'CONGRATULATIONS!';
-          this.subTitles = [`You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`];
+          this.subTitles = [
+            // `You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`
+            `You have unlocked ${this.cards.length} out of ${this.cards.length} months of Netflix rebate!`
+          ];
 
-          // tslint:disable-next-line:max-line-length
           this.subsubTitles = [
-            `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
+            // `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
+            `You have reached the maximum Netflix rebate of ${this.cards.length} months allowed per customer for this promo.`
           ];
         }
 

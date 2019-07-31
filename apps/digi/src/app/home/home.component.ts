@@ -6,12 +6,11 @@ import { Router } from '@angular/router';
   template: ''
 })
 export class HomeComponent implements OnInit {
-
   constructor(
     private router: Router
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.router.navigate(['/games'], { queryParamsHandling: 'merge' });
   }
 }
