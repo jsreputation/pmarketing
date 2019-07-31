@@ -20,14 +20,14 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
-  const routerSub = { navigateByUrl: (url)=>{ } }
-  const authenticationServiceStub = { 
-    failedAuthObservable: new BehaviorSubject(true), 
-    v4GameOauth: new BehaviorSubject(true), 
-    getInterruptedUrl: ()=> null 
+  const routerSub = { navigateByUrl: (url) => { } };
+  const authenticationServiceStub = {
+    failedAuthObservable: new BehaviorSubject(true),
+    v4GameOauth: new BehaviorSubject(true),
+    getInterruptedUrl: () => null
   };
   let debugElement: DebugElement;
-  let authService:AuthenticationService;
+  let authService: AuthenticationService;
   let router: Router;
   let authSpy;
   beforeEach(async(() => {
@@ -35,12 +35,12 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: Router, useValue: routerSub}
+        { provide: Router, useValue: routerSub }
       ],
       imports: [
         MatCardModule,
         MatProgressSpinnerModule,
-        RouterTestingModule.withRoutes([ { path: 'home', component: LoginComponent }]),
+        RouterTestingModule.withRoutes([{ path: 'home', component: LoginComponent }]),
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
@@ -50,7 +50,7 @@ describe('LoginComponent', () => {
         OauthModule.forRoot({ env: environment }),
       ],
       declarations: [LoginComponent],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
@@ -64,9 +64,9 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(()=>{
+  beforeEach(() => {
     authSpy = spyOn(authService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
-  })
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -75,7 +75,7 @@ describe('LoginComponent', () => {
     authSpy.and.returnValue(Promise.resolve(true));
     component.onSubmit();
     expect(authSpy).toHaveBeenCalled();
-  })
+  });
 
   it('should redirect to home', fakeAsync(() => {
     authSpy.and.returnValue(Promise.resolve(true));
@@ -83,15 +83,15 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     component.onSubmit();
     tick();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('home')
-  }))
+    expect(router.navigateByUrl).toHaveBeenCalledWith('home');
+  }));
 
-  it('should display error message', fakeAsync(()=>{
-    authSpy.and.returnValue(Promise.reject(new HttpErrorResponse({status:401})));
+  it('should display error message', fakeAsync(() => {
+    authSpy.and.returnValue(Promise.reject(new HttpErrorResponse({ status: 401 })));
     component.onSubmit();
     tick();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.error_msg')) as DebugElement;
     expect(el.nativeElement.textContent).toBe('Invalid credentials');
-  }))
+  }));
 });

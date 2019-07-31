@@ -77,9 +77,9 @@ export class LoginComponent implements OnInit {
     this.authService.v4GameOauth(username, password)
       .then((isAuthed: boolean) => {
         this.authed = isAuthed;
-        
+
         if (this.authed) {
-          
+
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
               text: 'Please try again soon'
             });
           } else if (err.status === 401) {
-            
+
             [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
               .forEach(c => c.setErrors({
                 invalid: true
