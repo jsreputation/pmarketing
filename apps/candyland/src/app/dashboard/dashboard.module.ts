@@ -18,6 +18,8 @@ import { PieChartModule } from '@cl-shared/charts/pie-chart/pie-chart.module';
 import { LinearChartModule } from '@cl-shared/charts/linear-chart/linear-chart.module';
 import { MapChartModule } from '@cl-shared/charts/map-chart/map-chart.module';
 import { TopFiveChartModule } from '@cl-shared/charts/top-five-chart/top-five-chart.module';
+import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart/horizontal-bar-chart.module';
+import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/radius-circle-chart.module';
 
 @NgModule({
   declarations: [DashboardPageComponent, DashboardGameCardComponent, BusinessInsightComponent, VerticalTabsComponent, TabItemViewComponent],
@@ -34,6 +36,8 @@ import { TopFiveChartModule } from '@cl-shared/charts/top-five-chart/top-five-ch
     LinearChartModule,
     MapChartModule,
     TopFiveChartModule,
+    HorizontalBarChartModule,
+    RadiusCircleChartModule,
 
     MatRadioModule,
   ]

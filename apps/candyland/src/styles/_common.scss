@@ -19,7 +19,15 @@ button {
 }
 
 .w-100 {
-  width: 100%;
+  width: 100% !important;
+}
+
+.m-w-100 {
+  max-width: 100% !important;
+}
+
+.m-0 {
+  margin: 0 !important;
 }
 
 .text-center {
@@ -38,6 +46,12 @@ button {
 
 .flex {
   display: flex;
+}
+
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
 }
 
 .menu-item {
@@ -291,6 +305,6 @@ button {
 
 .dashboard-content {
   .mat-form-field-wrapper {
-     padding-bottom: 0;
+    padding-bottom: 0;
   }
 }

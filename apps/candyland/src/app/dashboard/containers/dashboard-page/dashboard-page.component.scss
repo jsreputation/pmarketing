@@ -52,7 +52,7 @@
   }
 
   &-group-graphics {
-    padding: 1.8rem;
+    padding: 1.8rem 4rem 4rem;
   }
 }
 
@@ -68,18 +68,6 @@
   &-wrap {
     display: flex;
     margin-top: 2.4rem;
-  }
-}
-
-.chart {
-
-
-  &-partial-block {
-    justify-content: space-between;
-  }
-
-  &-section {
-    display: flex;
   }
 }
 
