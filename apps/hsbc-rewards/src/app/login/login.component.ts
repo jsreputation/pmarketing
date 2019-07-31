@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit {
       .catch((err) => {
         this.failedAuth = true;
         this.authed = false;
-
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addPopup({
@@ -102,6 +101,7 @@ export class LoginComponent implements OnInit {
               text: 'Please try again soon'
             });
           } else if (err.status === 401) {
+            
             [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
               .forEach(c => c.setErrors({
                 invalid: true

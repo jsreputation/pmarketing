@@ -12,6 +12,8 @@ import { LoginComponent } from './login.component';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 describe('LoginComponent', () => {
@@ -78,10 +80,18 @@ describe('LoginComponent', () => {
   it('should redirect to home', fakeAsync(() => {
     authSpy.and.returnValue(Promise.resolve(true));
     spyOn(router, 'navigateByUrl').and.stub();
-    jasmine.createSpy()
     fixture.detectChanges();
     component.onSubmit();
     tick();
     expect(router.navigateByUrl).toHaveBeenCalledWith('home')
+  }))
+
+  it('should display error message', fakeAsync(()=>{
+    authSpy.and.returnValue(Promise.reject(new HttpErrorResponse({status:401})));
+    component.onSubmit();
+    tick();
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('.error_msg')) as DebugElement;
+    expect(el.nativeElement.textContent).toBe('Invalid credentials');
   }))
 });
