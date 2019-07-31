@@ -47,7 +47,9 @@ import { DownloadButtonModule } from '@cl-shared/components/download-button/down
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';
 import { SelectMerchantModule } from '@cl-shared/containers/select-merchant/select-merchant.module';
-import { RewardVoucherCodeFormGroupComponent } from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
+import {
+  RewardVoucherCodeFormGroupComponent
+} from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
 import { VouchersProgressBarModule } from '@cl-shared/components/vouchers-progress-bar/vouchers-progress-bar.module';
 
 @NgModule({

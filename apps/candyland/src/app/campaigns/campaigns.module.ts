@@ -32,7 +32,9 @@ import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { SeparateRangeDatePickerFilterModule } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
+import {
+  SeparateRangeDatePickerFilterModule
+} from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { NewCampaignComponent } from './containers/new-campaign/new-campaign.component';
 import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewards-page/new-campaign-rewards-page.component';
@@ -48,7 +50,9 @@ import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.mod
 import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
 import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
-import { NewCampaignSelectEngagementPageComponent } from './containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component';
+import {
+  NewCampaignSelectEngagementPageComponent
+} from './containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component';
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 
