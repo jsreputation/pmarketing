@@ -87,8 +87,7 @@
       "member-variable-declaration",
       "property-declaration",
       "arrow-call-signature",
-      "arrow-parameter",
-      "variable-declaration"
+      "arrow-parameter"
     ],
     "unnecessary-constructor": true,
     "rxjs-collapse-imports": true,
