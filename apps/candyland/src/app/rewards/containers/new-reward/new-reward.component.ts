@@ -1,8 +1,11 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {CampaignCreationStoreService} from '@cl-core/services/campaigns-creation-store.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ToggleControlService} from "@cl-shared/providers/toggle-control.service";
+import {MatDialog} from "@angular/material";
+import {CreateMerchantPopupComponent} from "@cl-shared/containers/create-merchant-popup/create-merchant-popup.component";
+import {SelectMerchantComponent} from "@cl-shared/containers/select-merchant/select-merchant.component";
 
 @Component({
   selector: 'cl-new-reward',
@@ -49,7 +52,7 @@ export class NewRewardComponent implements OnInit, OnDestroy {
       {title: 'Alphabet (eg.ABCDEF)', value: 'alphabet'}
     ],
     voucherCodeTypes: [
-      {title: 'Single code', value: 'Period'},
+      {title: 'Single code', value: 'Single code'},
       {title: 'Unique codes: System generated', value: 'Unique codes: System generated'},
       {title: 'Unique codes: User upload', value: 'Unique codes: User upload'}
     ],
@@ -69,56 +72,29 @@ export class NewRewardComponent implements OnInit, OnDestroy {
       {title: 'SMS', value: 'sms'}
     ]
   };
-
-  // private formChanged;
   private defaultFormValue = {
-    campaignInfo: {
-      disabledEndDate: false
+    rewardInfo: {
+      redemptionType: 'QR Code'
     },
-    channel: {
-      type: 'weblink',
-      schedule: {
-        enableRecurrence: false,
-        recurrence: {
-          repeatOn: []
-        }
+    vouchers: {
+      voucherCode: {
+        type: 'Single code'
+      },
+      voucherValidity: {
+        type: 'Period'
       }
     }
   };
 
-  public get name() {
-    return this.form.get('name');
-  }
-
-  public get campaignInfo() {
-    return this.form.get('campaignInfo');
-  }
-
-  public get channel() {
-    return this.form.get('channel');
-  }
-
-  public get schedule() {
-    return this.form.get('channel').get('schedule');
-  }
-
-  public get recurrence() {
-    return this.form.get('channel').get('schedule').get('recurrence');
-  }
-
-  public get audience() {
-    return this.form.get('audience');
-  }
-
-  constructor(
-    private store: CampaignCreationStoreService,
-    public cd: ChangeDetectorRef,
-    private fb: FormBuilder
-  ) {
+  constructor(public cd: ChangeDetectorRef,
+              private fb: FormBuilder,
+              public dialog: MatDialog,
+              private toggleControlService: ToggleControlService) {
   }
 
   ngOnInit() {
     this.initForm();
+    this.initToggleForm();
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -126,16 +102,43 @@ export class NewRewardComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(value => {
-        this.store.updateCampaign(value);
-        // this.updateFormStructure();
+        console.log('value', value);
+        this.toggleControlService.updateFormStructure();
+        if (this.toggleControlService.formChanged) {
+          this.updateForm();
+        }
       });
 
     this.form.patchValue(this.defaultFormValue);
   }
 
+  ngOnDestroy(): void {
+    this.cd.detach();
+  }
+
+  public openDialogCreateMerchant(): void {
+    const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
+
+    dialogRef.afterClosed().subscribe((merchant) => {
+      this.form.get('merchantInfo').patchValue(merchant);
+    });
+  }
+
+  public openDialogSelectMerchant(): void {
+    const dialogRef = this.dialog.open(SelectMerchantComponent);
+
+    dialogRef.afterClosed().subscribe((merchant) => {
+      this.form.get('merchantInfo').patchValue(merchant);
+    });
+  }
+
+  public deleteMerchant() {
+    this.form.get('merchantInfo').patchValue(null);
+  }
+
   private initForm() {
     this.form = this.fb.group({
-      name: [],
+      name: [''],
       rewardInfo: this.fb.group({
         image: [],
         rewardType: [],
@@ -145,104 +148,126 @@ export class NewRewardComponent implements OnInit, OnDestroy {
         description: [],
         termsAndCondition: []
       }),
-      voucherValidity: this.fb.group({
-        type: [],
-        period: this.fb.group({
-          startDate: [],
-          startTime: [],
-          endDate: [],
-          endTime: [],
-          disabledEndDate: []
+      merchantInfo: [],
+      vouchers: this.fb.group({
+        voucherCode: this.fb.group({
+          type: [],
+          total: [],
+          singleCode: this.fb.group({
+            code: [null]
+          }),
+          uniqueGeneratedCode: this.fb.group({
+            prefix: [],
+            codeFormat: [],
+            length: []
+          }),
+          uniqueUserUploadCode: this.fb.group({
+            file: []
+          }),
+          merchantPIN: this.fb.group({
+            code: [null]
+          })
         }),
-        issuanceDate: this.fb.group({
-          times: [],
-          duration: []
+        voucherValidity: this.fb.group({
+          type: [],
+          period: this.fb.group({
+            startDate: [],
+            startTime: [],
+            endDate: [],
+            endTime: [],
+            disabledEndDate: []
+          }),
+          issuanceDate: this.fb.group({
+            times: [],
+            duration: []
+          })
         })
       }),
       limits: this.fb.group({
+        enabledVoucherPerCampaign: [],
         voucherPerCampaign: this.fb.group({
-          timesLimit: [],
-          durationLimit: []
+          vouchers: [],
+          duration: []
         }),
+        enabledIssuancePerUser: [],
         issuancePerUser: this.fb.group({
-          timesLimit: [],
-          durationLimit: []
+          times: [],
+          duration: []
         }),
+        enabledRedemptionPerUser: [],
         redemptionPerUser: this.fb.group({
-          timesLimit: [],
-          durationLimit: []
+          times: [],
+          duration: []
         })
       })
     });
   }
 
-  // private updateFormStructure() {
-  //   this.formChanged = false;
-  //
-  //   this.toggleControls(
-  //     this.campaignInfo.get('disabledEndDate').value === false,
-  //     [this.campaignInfo.get('endDate'), this.campaignInfo.get('endTime')],
-  //     true
-  //   );
-  //
-  //   this.toggleControls(
-  //     this.channel.get('type').value === 'sms',
-  //     [this.channel.get('message'), this.schedule]
-  //   );
-  //
-  //   this.toggleControls(
-  //     this.schedule.get('enableRecurrence').value === true,
-  //     [this.recurrence]
-  //   );
-  //
-  //   this.toggleControls(
-  //     this.recurrence.get('period').value === 'week',
-  //     [this.recurrence.get('repeatOn')]
-  //   );
-  //
-  //   this.toggleControls(
-  //     this.audience.get('type').value === 'upload',
-  //     [this.audience.get('file')]
-  //   );
-  //
-  //   if (this.formChanged) {
-  //     this.updateForm();
-  //   }
-  // }
+  private initToggleForm() {
+    this.toggleControlService.context = this;
+    this.toggleControlService.config = [
+      {
+        condition: () => (this.form.get('rewardInfo.redemptionType').value === 'Merchant PIN'),
+        controls: [this.form.get('vouchers.voucherCode.merchantPIN')]
+      },
+      {
+        condition: () => (this.form.get('vouchers.voucherCode.type').value === 'Single code'),
+        controls: [this.form.get('vouchers.voucherCode.singleCode')]
+      },
+      {
+        condition: () => (this.form.get('vouchers.voucherCode.type').value === 'Unique codes: System generated'),
+        controls: [this.form.get('vouchers.voucherCode.uniqueGeneratedCode')]
+      },
+      {
+        condition: () => (this.form.get('vouchers.voucherCode.type').value === 'Unique codes: User upload'),
+        controls: [this.form.get('vouchers.voucherCode.uniqueUserUploadCode')]
+      },
+      {
+        condition: () => (this.form.get('vouchers.voucherValidity.type').value === 'Period'),
+        controls: [this.form.get('vouchers.voucherValidity.period')]
+      },
+      {
+        condition: () => (this.form.get('vouchers.voucherValidity.type').value === 'Issuance date'),
+        controls: [this.form.get('vouchers.voucherValidity.issuanceDate')]
+      },
+      {
+        condition: () => (!this.form.get('vouchers.voucherValidity.period.disabledEndDate').value),
+        controls: [this.form.get('vouchers.voucherValidity.period.endTime'), this.form.get('vouchers.voucherValidity.period.endDate')],
+        resetValue: true
+      },
+      {
+        condition: () => (this.form.get('limits.enabledVoucherPerCampaign').value === true),
+        controls: [this.form.get('limits.voucherPerCampaign')]
+      },
+      {
+        condition: () => (this.form.get('limits.enabledIssuancePerUser').value === true),
+        controls: [this.form.get('limits.issuancePerUser')]
+      },
+      {
+        condition: () => (this.form.get('limits.enabledRedemptionPerUser').value === true),
+        controls: [this.form.get('limits.redemptionPerUser')]
+      }
+      //   {
+      //     condition: () => (this.channel.get('type').value === 'sms'),
+      //     controls: [this.channel.get('message'), this.schedule],
+      //   },
+      //   {
+      //     condition: () => (this.schedule.get('enableRecurrence').value === true),
+      //     controls: [this.recurrence],
+      //   },
+      //   {
+      //     condition: () => (this.recurrence.get('period').value === 'week'),
+      //     controls: [this.recurrence.get('repeatOn')]
+      //   },
+      //   {
+      //     condition: () => (this.audience.get('type').value === 'upload'),
+      //     controls: [this.audience.get('file')]
+      //   },
+    ];
+  }
 
-  // private toggleControls(condition: boolean, controls: AbstractControl[], resetValue = false) {
-  //   if (condition) {
-  //     controls.forEach(control => this.enableControl(control));
-  //   } else {
-  //     controls.forEach(control => {
-  //       this.disableControl(control, resetValue);
-  //     });
-  //   }
-  // }
-
-  // private enableControl(control: AbstractControl) {
-  //   if (control.disabled && !(control.parent && control.parent.disabled)) {
-  //     control.enable({emitEvent: false});
-  //     // this.formChanged = true;
-  //   }
-  // }
-  //
-  // private disableControl(control: AbstractControl, resetValue = false) {
-  //   if (control.enabled) {
-  //     control.disable({emitEvent: false});
-  //     if (resetValue) {
-  //       control.reset(null, {emitEvent: false});
-  //     }
-  //     // this.formChanged = true;
-  //   }
-  // }
-
-  // private updateForm() {
-  //   this.form.updateValueAndValidity();
-  //   this.cd.detectChanges();
-  // }
-
-  ngOnDestroy(): void {
-    this.cd.detach();
+  private updateForm() {
+    this.form.updateValueAndValidity();
+    this.cd.detectChanges();
   }
 }

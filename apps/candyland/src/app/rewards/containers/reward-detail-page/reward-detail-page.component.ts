@@ -54,7 +54,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
         ),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data.campaigns, 'status');
-          this.statusFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data.campaigns);
+          this.statusFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
         })
       )
       .subscribe((res: any) => {

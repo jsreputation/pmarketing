@@ -1,0 +1,97 @@
+@import "variables";
+
+.vouchers-progress-bar {
+  padding-top: 2rem;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: center;
+
+  &-block {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 1.6rem;
+    width: 100%;
+    background: $progress-bar-background-color;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &-hint {
+    margin: 0.7rem 0 0.5rem;
+    text-align: right;
+    font-family: $primary-font;
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $progress-bar-background-color;
+  }
+
+  &-indicator {
+    height: 100%;
+    //background: $progress-bar-color;
+    //border-radius: 1rem;
+
+    &:first-of-type {
+      border-top-left-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    }
+  }
+
+  &-label-block {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &-label {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 3.2rem;
+    text-align: justify;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.29;
+    letter-spacing: normal;
+    height: 16px;
+    opacity: 0.7;
+    font-family: $primary-font;
+    color: $progress-bar-background-color;
+  }
+
+  &-rectangle {
+    margin-right: 0.8rem;
+    min-width: 12px;
+    min-height: 12px;
+  }
+
+  .available {
+    background-color: $success-color;
+  }
+
+  .expired {
+    background-color: #7b87a6;
+  }
+
+  .issued {
+    background-color: $progress-bar-background-color;
+  }
+}

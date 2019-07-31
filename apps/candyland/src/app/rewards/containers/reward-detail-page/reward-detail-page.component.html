@@ -6,10 +6,7 @@
   </div>
   <div class="btn-group">
     <cl-button classList="invert" routerLink="..">Close</cl-button>
-    <!--    <cl-button classList="third" routerLink="..">Save as a draft</cl-button>-->
-    <!--    <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>-->
-    <!--    <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>-->
-    <cl-button classList="primary">Edit</cl-button>
+    <cl-button classList="primary" routerLink="..">Edit</cl-button>
   </div>
 </div>
 
@@ -22,9 +19,10 @@
     </div>
     <div class="card-content">
       <div class="card-row">
-        <span>10,000</span>
+        <div class="reward-detail-vouchers-value">10,000</div>
         <cl-button classList="dark" (click)="openDialogReplenish()">Replenish</cl-button>
       </div>
+      <cl-vouchers-progress-bar></cl-vouchers-progress-bar>
     </div>
   </mat-card>
   <!--/ Available Vouchers-->
@@ -43,6 +41,9 @@
         <ng-container *clTableFilter="'status'; let filter">
           <mat-form-field class="reward-detail-status-filter" appearance="outline">
             <mat-select [formControl]="filter" placeholder="Status">
+              <mat-option [value]="null">
+                All
+              </mat-option>
               <mat-option *ngFor="let option of statusFilterConfig"
                           [value]="option.value">
                 {{option.value}}

@@ -1,11 +1,11 @@
 <div class="merchant-item" *ngIf="merchant">
   <div class="merchant-item-img">
-    <img [src]="merchant?.image">
+    <img [src]="merchant?.logo">
   </div>
   <div class="merchant-item-info">
     <span>{{merchant?.type || '-'}}</span>
     <span>{{merchant?.phone || '-'}}</span>
-    <span>{{merchant?.category || '-'}}</span>
+    <span>{{merchant?.branches ? merchant?.branches + ' branches' : '-'}}</span>
     <div class="merchant-item-action" *ngIf="enableActions">
       <button mat-icon-button (click)="clickDeleteMerchant()">
         <i class="icon full-with delete-action"></i>
