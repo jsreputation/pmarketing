@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 
-describe('OauthService', () => {
+fdescribe('OauthService', () => {
   const environment = {
     apiHost: 'localhost:4000',
     production: true,
@@ -41,8 +41,8 @@ describe('OauthService', () => {
         expect(true).toBeTruthy();
         done();
       });
-
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v2/oauth/token');
+    const url = location.host;
+    const req = httpTestingController.expectOne('https://api.perxtech.io/v2/oauth/token?url=' + url);
 
     expect(req.request.method).toEqual('POST');
 
