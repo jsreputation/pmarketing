@@ -16,7 +16,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
   public rewardsList: Reward[] = [
     {
       id: 1,
-      image: '/assets/images/mask-group.png',
+      image: 'assets/images/mask-group.png',
       name: 'Free Coffee',
       type: 'Starbucks',
       current: 500,
@@ -24,7 +24,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     },
     {
       id: 2,
-      image: '/assets/images/mask-group.png',
+      image: 'assets/images/mask-group.png',
       name: 'Free Coffee 2',
       type: 'Starbucks',
       current: 500,
@@ -34,7 +34,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
 
   public rewardsTemplate: Reward = {
     id: 1,
-    image: '/assets/images/mask-group.png',
+    image: 'assets/images/mask-group.png',
     name: 'Free Coffee',
     type: 'Starbucks',
     current: 500,

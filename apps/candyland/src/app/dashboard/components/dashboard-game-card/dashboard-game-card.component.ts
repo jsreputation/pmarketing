@@ -21,7 +21,6 @@ export class DashboardGameCardComponent implements OnInit {
       this.openDialogCreate();
     }
     if (link.toLocaleLowerCase().includes('campaign')) {
-      console.log('campaigns');
       this.router.navigate(['/campaigns/new-campaign/']);
     }
   }
