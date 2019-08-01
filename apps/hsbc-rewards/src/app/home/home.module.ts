@@ -5,6 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, ProfileService, RewardsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { environment } from 'src/environments/environment';
     HomeRoutingModule,
     LoyaltyModule.forRoot({env: environment}),
     ProfileModule.forRoot({ env: environment }),
-    RewardsModule.forRoot({ env: environment })
+    RewardsModule.forRoot({ env: environment }),
+    SharedModule
   ],
  
 })
