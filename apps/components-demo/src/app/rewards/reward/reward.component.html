@@ -1,12 +1,13 @@
-<p>reward works!</p>
-<perx-core-reward [reward]="reward"></perx-core-reward>
-<div class="actions-container" *ngIf="!hideActions">
-  <button
-      mat-raised-button
-      color="primary"
-      class="redeem-btn"
-      (click)="onClick()"
-  >
-    REDEEM NOW
-  </button>
+<div class="reward-container">
+  <perx-core-reward [reward]="reward"></perx-core-reward>
+  <div class="actions-container" *ngIf="!hideActions">
+    <button
+        mat-raised-button
+        color="primary"
+        class="redeem-btn"
+        (click)="onClick()"
+    >
+      REDEEM NOW
+    </button>
+  </div>
 </div>
