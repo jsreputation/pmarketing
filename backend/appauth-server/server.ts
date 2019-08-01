@@ -116,11 +116,10 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
     if (endpoint === undefined) {
       throw new Error(`No endpoints found: ${ url }`);
     }
-
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
-
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v2/oauth/token',
+      null,
       {
         params: {
           'client_id': endpointCredential.perx_access_key_id,
@@ -129,10 +128,9 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
         }
       }
     );
-
     res.json(endpointRequest.data);
   } catch (e) {
-    if (e.response && e.response.data && e.response.status) {
+    if (e.response && e.response && e.response.status) {
       res.status(e.response.status).json(e.response.data);
     } else {
       next(e);

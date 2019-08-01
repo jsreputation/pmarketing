@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,35 @@ export class AuthenticationService implements AuthService {
    * can execute pending requests or retry original one
    */
   public refreshToken(): Observable<any> {
-    throw new Error('Method not implemented.');
+    return this.preAuth().pipe(
+      tap((resp) => {
+        /* check if valid auth  */
+        this.retries++;
+        if (resp) {
+          this.authing = true;
+          this.userAuth(this.preAuthJWT).toPromise().then(
+            () => {
+              // @ts-ignore
+              const userBearer = resp.headers.get('Authorization');
+              if (userBearer) {
+                this.saveUserAccessToken(userBearer.split(' ')[1]);
+              }
+            },
+            () => {
+              if (this.retries === this.maxRetries) {
+                this.authing = false;
+                this.didFailAuth = true;
+                this.failedAuthObservable.next(this.didFailAuth);
+                this.failedAuthObservable.complete();
+                return of(this.logout());
+              }
+
+              return of();
+            }
+          );
+        }
+      }),
+    );
   }
 
   /**
@@ -52,28 +81,16 @@ export class AuthenticationService implements AuthService {
    * whether token be refreshed or not.
    * @description Essentially checks status
    */
-  public refreshShouldHappen(): boolean {
-    throw new Error('Method not implemented.');
+  public refreshShouldHappen(response: HttpErrorResponse): boolean {
+    return this.retries < this.maxRetries && response.status === 401;
   }
 
   /**
-   * Function, checks response of failed request to determine,
-   * whether token be refreshed or not.
-   * Essentially checks status
+   * Verify that outgoing request is refresh-token,
+   * so interceptor won't intercept this request
    */
-  public verifyTokenRequest(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  /**
-   * Add token to headers, dependent on server
-   * set-up, by default adds a bearer token.
-   * Called by interceptor.
-   *
-   * To change behavior, override this method.
-   */
-  public getHeaders?(): { [name: string]: string | string[]; } {
-    throw new Error('Method not implemented.');
+  public verifyTokenRequest(url: string): boolean {
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
   /**
@@ -209,7 +226,7 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public signUp(identifier: string, password: string): Observable<void> {
+  public signup(identifier: string, password: string): Observable<void> {
     return throwError('Not implemented yet');
   }
 

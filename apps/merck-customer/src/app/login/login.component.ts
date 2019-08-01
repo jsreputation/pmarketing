@@ -33,9 +33,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void {
-    this.authService.v4GetAppAccessToken();
-  }
+  public ngOnInit(): void {}
 
   public onSubmit(): void {
 

@@ -62,7 +62,12 @@ export class OauthService {
   }
 
   public getAppAccessToken(): Observable<any> {
-    return this.http.post(this.appAuthEndPoint + '/token', null);
+    debugger
+    const httpParams = new HttpParams()
+      .append('url', location.host);
+    return this.http.post(this.appAuthEndPoint + '/token', null, {
+      params: httpParams
+    });
   }
 
   public forgotPassword(phone: string): Observable<any> {
