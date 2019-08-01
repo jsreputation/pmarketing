@@ -35,8 +35,12 @@ export class AppComponent implements OnInit {
         const param: string = location.search;
         const searchParams: URLSearchParams = new URLSearchParams(param);
         const token: string | null = searchParams.get('token');
-        if (token) {
+        const pi: string | null = searchParams.get('pi');
+        if (token && pi) {
           this.tokenStorage.setAccessToken(token);
+          localStorage.setItem('user-id', pi);
+
+          (window as any).primaryIdentifier = searchParams.get('pi');
         } else {
           this.tokenStorage.getAccessToken()
             .subscribe((tok: string) => {
