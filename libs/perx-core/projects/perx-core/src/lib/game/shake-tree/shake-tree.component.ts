@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { IGameComponent } from '../IGame.component';
+import { Shake } from '../../utils/shake';
 
 enum GIFT_STATUS {
   hang = 'hang',
@@ -24,7 +25,7 @@ export interface IGift {
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
-export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent {
+export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, OnDestroy {
   @Input()
   public treeImg: string;
   @Input()
@@ -69,8 +70,22 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent {
   public shakeAnimationClass: string = '';
   public n: number = 0;
 
+  private shake: Shake;
+
+  constructor() {
+    this.shake = new Shake({ threshold: 5, timeout: 500 });
+    this.tapped = this.tapped.bind(this);
+  }
+
   public ngOnInit(): void {
     this.updateGifts();
+    this.shake.start();
+    window.addEventListener(Shake.EVENT, this.tapped, false);
+  }
+
+  public ngOnDestroy(): void {
+    this.shake.stop();
+    window.removeEventListener(Shake.EVENT, this.tapped, false);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
