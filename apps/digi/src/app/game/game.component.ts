@@ -1,5 +1,5 @@
 // tslint:disable: rxjs-no-nested-subscribe
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
   CampaignService,
@@ -9,6 +9,8 @@ import {
   ICampaign,
   NotificationService,
   IGameOutcome,
+  IGameComponent,
+  PopUpClosedCallBack,
 } from '@perx/core';
 import { map, take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,14 +20,20 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, PopUpClosedCallBack {
   public isEnabled: boolean = false;
   public title: string = 'Play the game and win!';
   public subTitle: string = 'Enjoy your reward.';
   public buttonTxt: string = 'Get started';
+  public showBtn: boolean = false;
 
   private campaignId: number;
   private gameIns: IGame;
+
+  @ViewChild('tree', { static: false })
+  private tree: IGameComponent;
+  @ViewChild('pinata', { static: false })
+  private pinata: IGameComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,12 +95,18 @@ export class GameComponent implements OnInit {
     if (game.texts.subTitle) {
       this.subTitle = game.texts.subTitle;
     }
+    if (game.remainingNumberOfTries > 0) {
+      this.showBtn = true;
+    } else {
+      const outcome = game.results.noOutcome;
+      outcome.button = null;
+      this.outcomePopup(outcome);
+    }
   }
 
   private fetchGame(): void {
     this.gameService.getGamesFromCampaign(this.campaignId)
       .pipe(
-        // tap((games: IGame[]) => { console.log(games); }),
         take(1),
         map((games: IGame[]) => games[0])
       )
@@ -117,30 +131,58 @@ export class GameComponent implements OnInit {
         )
         .subscribe(
           (res: any) => {
+            // one try has been used
+            this.game.remainingNumberOfTries--;
+            // select proper popup based on outcome
             const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.length > 0);
-            let outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
-            if (!outcome) {
-              outcome = {
-                title: 'Thanks for playing',
-                subTitle: null,
-                button: 'ok'
-              };
+            const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
+
+            // if there is no more tries don't show the button
+            if (this.game.remainingNumberOfTries <= 0) {
+              outcome.button = null;
             }
-            this.notificationService.addPopup({
-              title: outcome.title,
-              text: outcome.subTitle,
-              buttonTxt: outcome.button,
-              imageUrl: outcome.image
-            });
+            this.outcomePopup(outcome);
           },
           (e: HttpErrorResponse) => {
-            console.error(e);
-            this.notificationService.addPopup({
-              title: 'Oops',
-              text: 'Something went very wrong, please try again later'
-            });
+            if (e.status === 422) {
+              const outcome: IGameOutcome = this.game.results.noOutcome;
+              outcome.button = null;
+              this.outcomePopup(outcome);
+            } else {
+              this.notificationService.addPopup({
+                title: 'Oops',
+                text: 'Something went very wrong, please try again later',
+                buttonTxt: null
+              });
+            }
           }
         );
     }
+  }
+
+  public dialogClosed(): void {
+    this.reset();
+  }
+
+  private outcomePopup(outcome: IGameOutcome): void {
+    if (!outcome) {
+      outcome = {
+        title: 'Thanks for playing',
+        subTitle: null,
+        button: null
+      };
+    }
+    this.notificationService.addPopup({
+      title: outcome.title,
+      text: outcome.subTitle,
+      buttonTxt: outcome.button,
+      imageUrl: outcome.image,
+      afterClosedCallBack: this
+    });
+  }
+
+  private reset(): void {
+    this.isEnabled = false;
+    [this.tree, this.pinata].forEach((game: IGameComponent) => { if (game) { game.reset(); } });
   }
 }
