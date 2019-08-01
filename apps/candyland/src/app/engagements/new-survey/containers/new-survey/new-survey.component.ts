@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -137,7 +137,6 @@ export class NewSurveyComponent implements OnInit {
   public patchForm(): void {
     this.formSurvey.patchValue(this.data);
     this.data.questions.forEach((item) => {
-      console.log('patch', item);
       const group = this.createControlQuestion(item.selectedType);
       group.patchValue(item);
       this.surveyQuestion.push(group);

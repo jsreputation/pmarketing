@@ -11,7 +11,7 @@
   flex-flow: column nowrap;
 
   ::ng-deep .mat-tab-header {
-    padding: 0 32px !important;
+    padding: 0 3.2rem !important;
   }
 
   &-content {
@@ -64,7 +64,7 @@
     }
 
     & > * {
-      width: 332px;
+      width: 33.2rem;
       box-sizing: content-box;
       @media (max-width: 780px) {
         width: 100%;
@@ -80,7 +80,7 @@
     box-sizing: border-box;
     padding: 1.6rem 2rem 1.45rem;
     width: 19.8rem;
-    height: 161px;
+    height: 16.1rem;
     border-radius: 4px;
     background-color: rgba(26, 184, 255, 0.05);
     font-family: $primary-font;
@@ -89,7 +89,7 @@
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
-    letter-spacing: 0.13px;
+    letter-spacing: 0.013rem;
     color: $base-font-color;
 
     & > * {
@@ -97,8 +97,8 @@
     }
 
     .main {
-      width: 39px;
-      height: 21px;
+      width: 3.9rem;
+      height: 2.1rem;
       font-family: $primary-font;
       text-transform: uppercase;
       font-size: 1.8rem;
@@ -106,7 +106,7 @@
       font-style: normal;
       font-stretch: normal;
       line-height: normal;
-      letter-spacing: 0.16px;
+      letter-spacing: 0.016rem;
       color: $primary-color;
     }
 
@@ -152,7 +152,7 @@
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
-    letter-spacing: 0.18px;
+    letter-spacing: 0.018rem;
     color: $secondary-color;
   }
 
