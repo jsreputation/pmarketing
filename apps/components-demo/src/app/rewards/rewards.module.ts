@@ -12,6 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RewardComponent } from './reward/reward.component';
     HttpClientModule,
     PerxRewardsModule.forRoot({ env: environment }),
     AuthenticationModule,
-    RewardsRoutingModule
+    RewardsRoutingModule,
+    MatButtonModule
   ]
 })
 export class RewardsModule {
