@@ -5,46 +5,41 @@
     Diabetes Loyality Program
   </div>
 
-  <ng-template #error_message>
-    <div class="error-message-container">
-      <span>{{errorMessage}}</span>
-      <div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
+  <div class="container">
+    <div class="content">
+      <div class="main-heading">Welcome!</div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field class="full-width__input">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name">
+        </mat-form-field>
+
+        <mat-form-field class="full-width__input">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="Email Address" formControlName="email" required>
+          <mat-error *ngIf="loginForm.hasError('email')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width__input">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Password" formControlName="password" required>
+          <mat-error *ngIf="loginForm.hasError('password')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="forgot-text" (click)="onForgotPassword()">Forgot password?</div>
+        <button mat-flat-button type="submit" class="full-width__button">Login</button>
+
+        <div class="sales-contact">
+          <app-sales-contact></app-sales-contact>
+        </div>
+      </form>
     </div>
-  </ng-template>
-
-  <div class="content-container">
-    <div class="main-heading">Welcome!</div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-      <mat-form-field class="full-width__input">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Name">
-      </mat-form-field>
-
-      <mat-form-field class="full-width__input">
-        <mat-label>Email Address</mat-label>
-        <input matInput placeholder="Email Address" formControlName="email" required>
-        <mat-error *ngIf="loginForm.hasError('email')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="full-width__input">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" formControlName="password" required>
-        <mat-error *ngIf="loginForm.hasError('password')">
-          Password is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <div class="forgot-text" (click)="onForgotPassword()">Forgot password?</div>
-      <button mat-flat-button type="submit" class="full-width__button">Login</button>
-
-      <div class="sales-contact">
-        <app-sales-contact></app-sales-contact>
-      </div>
-    </form>
   </div>
 
 </div>

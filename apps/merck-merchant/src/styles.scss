@@ -18,14 +18,14 @@ body {
 }
 
 .btn-blue {
-  background: #0F69AF;
+  background: #0f69af;
   color: #ffffff;
 }
 
 .btn-hollow-white {
-  border: 0.1rem solid #0F69AF !important;
+  border: 0.1rem solid #0f69af !important;
   background-color: #ffffff;
-  color: #0F69AF;
+  color: #0f69af;
 }
 
 .full-width__button {
@@ -33,7 +33,6 @@ body {
 }
 
 .main-container {
-  padding: 0 1.5rem;
   height: 100%;
 
   > img {
@@ -46,33 +45,13 @@ body {
   font-style: normal;
   font-weight: 900;
   font-size: 2.2rem;
-  padding-top: 1.5rem;
+  padding: 1.5rem 0 1rem 0;
   color: #fff;
   text-align: center;
 }
 
-.error-message-container {
-  height: 2rem;
-  max-width: 80rem;
-  background: #FFC832;
-  padding: 1rem 2.1rem 1rem 2.1rem;
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: 900;
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  margin: 1.6rem auto 0 auto;
-
-  img {
-    margin: 0;
-  }
-}
-
-.content-container {
-  margin: 3.2rem auto auto auto;
+.content {
+  margin: 0 auto auto auto;
   padding: 3rem 1.5rem;
   background-color: #fff;
   border-radius: 0.8rem;
@@ -80,7 +59,7 @@ body {
 }
 
 .mat-snack-bar-container {
-  background-color: #FFC832;
+  background-color: #ffc832;
 }
 
 .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
