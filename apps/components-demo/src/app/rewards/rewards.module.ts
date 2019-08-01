@@ -11,12 +11,14 @@ import {
 } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
+import { RewardComponent } from './reward/reward.component';
 
 @NgModule({
   declarations: [
     RewardsComponent,
     RewardsCollectionComponent,
     RewardsListComponent,
+    RewardComponent,
   ],
   imports: [
     RouterModule,
