@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { IReward, NotificationService, RewardsService } from '@perx/core/dist/perx-core';
+import { IReward, NotificationService, RewardsService } from '@perx/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
