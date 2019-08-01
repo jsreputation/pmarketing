@@ -42,6 +42,7 @@ interface IV4Reward {
   merchant_name?: string;
   merchant_website?: string;
   terms_and_conditions?: string;
+  how_to_redeem?: string;
   tags?: IV4Tag[];
 }
 
@@ -95,6 +96,8 @@ export class V4RewardsService extends RewardsService {
       merchantName: reward.merchant_name,
       merchantImg,
       merchantWebsite: reward.merchant_website,
+      termsAndConditions: reward.terms_and_conditions,
+      howToRedeem: reward.how_to_redeem
     };
   }
 

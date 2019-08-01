@@ -28,6 +28,18 @@
       <div class="section-content" *ngIf="reward.description">
         <div [innerHtml]="reward.description"></div>
       </div>
+      <div class="section-heading" *ngIf="reward.termsAndConditions">
+        Terms and Conditions
+      </div>
+      <div class="section-content" *ngIf="reward.termsAndConditions">
+        <div [innerHtml]="reward.termsAndConditions"></div>
+      </div>
+      <div class="section-heading" *ngIf="reward.howToRedeem">
+        How to redeem
+      </div>
+      <div class="section-content" *ngIf="reward.howToRedeem">
+        <div [innerHtml]="reward.howToRedeem"></div>
+      </div>
     </div>
   </div>
 </ng-container>
