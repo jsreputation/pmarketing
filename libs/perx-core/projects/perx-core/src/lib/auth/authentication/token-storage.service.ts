@@ -16,7 +16,7 @@ export class TokenStorage {
    * Get User Info
    */
   public getAppInfo(): Observable<IAppInfo> {
-    this.appInfo = JSON.parse(localStorage.getItem('appInfo'));
+    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || {appAccessToken: '', userAccessToken: ''};
     return of(this.appInfo);
   }
 
