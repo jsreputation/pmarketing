@@ -73,16 +73,17 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('playerCode').value as string;
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
+
     this.authService.v4GameOauth(username, password)
       .then((isAuthed: boolean) => {
         this.authed = isAuthed;
+
         if (this.authed) {
 
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
           }
-
           if (this.authService.getInterruptedUrl()) {
             this.router.navigateByUrl(this.authService.getInterruptedUrl());
           } else {
@@ -93,7 +94,6 @@ export class LoginComponent implements OnInit {
       .catch((err) => {
         this.failedAuth = true;
         this.authed = false;
-
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addPopup({
@@ -101,6 +101,7 @@ export class LoginComponent implements OnInit {
               text: 'Please try again soon'
             });
           } else if (err.status === 401) {
+
             [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
               .forEach(c => c.setErrors({
                 invalid: true

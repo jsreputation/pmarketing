@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import { IReward } from '../models/reward.model';
 
 @Component({
-  selector: 'perx-core-rewards-carousel',
-  templateUrl: './rewards-carousel.component.html',
-  styleUrls: ['./rewards-carousel.component.scss']
+  selector: 'perx-core-rewards-collection',
+  templateUrl: './rewards-collection.component.html',
+  styleUrls: ['./rewards-collection.component.scss']
 })
-export class RewardsCarouselComponent implements OnInit {
+export class RewardsCollectionComponent implements OnInit {
 
-  @Input()
-  public rewards: Observable<IReward[]>;
+  @Input('rewardsList')
+  public rewards$: Observable<IReward[]>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
