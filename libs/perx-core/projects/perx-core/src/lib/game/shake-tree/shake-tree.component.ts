@@ -72,7 +72,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, OnDestroy {
   private shake: Shake;
 
   constructor() {
-    this.shake = new Shake({});
+    this.shake = new Shake({ threshold: 5, timeout: 500 });
+    this.tapped = this.tapped.bind(this);
   }
 
   public ngOnInit(): void {
@@ -102,6 +103,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public tapped(): void {
+    console.log('tapped', this.enabled);
     if (this.enabled) {
       this.tap.emit(this.n);
       this.n++;

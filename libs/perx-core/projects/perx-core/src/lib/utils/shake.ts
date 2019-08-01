@@ -29,6 +29,7 @@ export class Shake implements EventListenerObject {
       threshold: 15, // default velocity threshold for shake to register
       timeout: 1000 // default interval between events
     };
+    console.log(this.options);
 
     // create custom event
     // @ts-ignore
@@ -91,6 +92,7 @@ export class Shake implements EventListenerObject {
       const timeDifference: number = currentTime.getTime() - this.lastTime.getTime();
 
       if (timeDifference > this.options.timeout) {
+        console.log('shaked dispatched');
         window.dispatchEvent(this.event);
         this.lastTime = new Date();
       }
