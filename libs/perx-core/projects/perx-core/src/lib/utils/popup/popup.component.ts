@@ -5,7 +5,7 @@ export interface IPopupConfig {
   title?: string;
   text?: string;
   imageUrl?: string;
-  buttonTxt?: string;
+  buttonTxt?: string | null;
   afterClosedCallBack?: PopUpClosedCallBack;
 }
 
@@ -38,7 +38,7 @@ export class PopupComponent {
     if (data.text) {
       this.text = data.text;
     }
-    if (data.buttonTxt) {
+    if (data.buttonTxt !== undefined) {
       this.buttonTxt = data.buttonTxt;
     }
     if (data.imageUrl) {
@@ -46,7 +46,7 @@ export class PopupComponent {
     }
   }
 
-  public popUpClosed(): void {
+  public buttonPressed(): void {
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
     }

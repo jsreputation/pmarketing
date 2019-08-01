@@ -7,6 +7,7 @@ import {
   MatButtonModule,
   MatCheckboxModule
 } from '@angular/material';
+import { AuthenticationService } from '@perx/core';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -22,7 +23,13 @@ describe('SignupComponent', () => {
         MatButtonModule,
         MatCheckboxModule
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      providers: [
+        {
+          provide: AuthenticationService,
+          useValue: {forgotPassword: () => {}}
+        }
+      ]
     })
     .compileComponents();
   }));

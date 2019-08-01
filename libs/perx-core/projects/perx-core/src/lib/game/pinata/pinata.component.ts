@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { IGameComponent } from '../IGame.component';
 
 @Component({
   selector: 'perx-core-pinata',
   templateUrl: './pinata.component.html',
   styleUrls: ['./pinata.component.css']
 })
-export class PinataComponent implements OnInit, OnDestroy {
+export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
   @Input()
   public stillImg: string;
   @Input()
@@ -21,9 +22,9 @@ export class PinataComponent implements OnInit, OnDestroy {
   @Output() public broken: EventEmitter<void> = new EventEmitter();
 
   public shakeAnimationClass: string = '';
-  private n: number = 0;
-
   public currentImg: string;
+
+  private n: number = 0;
 
   public ngOnInit(): void {
     this.currentImg = this.stillImg;
@@ -37,18 +38,25 @@ export class PinataComponent implements OnInit, OnDestroy {
     if (this.enabled) {
       this.n++;
       if (this.n < this.nbTaps) {
+        if (this.movingImg !== undefined && this.movingImg !== null) {
+          this.currentImg = this.movingImg;
+        }
         this.shakeAnimationClass = '';
         this.tap.emit(this.n);
         setTimeout(() => {
           this.shakeAnimationClass = 'shake';
         }, 0);
-      } else {
+      } else if (this.n === this.nbTaps) {
         this.tap.emit(this.n);
         this.broken.emit();
-        this.broken.complete();
-        this.tap.complete();
         this.currentImg = this.openedImg;
       }
     }
+  }
+
+  public reset(): void {
+    this.n = 0;
+    this.currentImg = this.stillImg;
+    this.shakeAnimationClass = '';
   }
 }
