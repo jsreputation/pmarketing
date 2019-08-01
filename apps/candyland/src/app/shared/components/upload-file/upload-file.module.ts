@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadFileComponent } from './upload-file.component';
+import { DownloadButtonModule } from '@cl-shared/components/download-button/download-button.module';
 import { MatButtonModule, MatIconModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    ButtonModule
+    DownloadButtonModule
   ]
 })
-export class UploadFileModule { }
+export class UploadFileModule {
+}

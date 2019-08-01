@@ -7,8 +7,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 2px;
-  height: 2px;
+  width: 0.2rem;
+  height: 0.2rem;
   opacity: 0;
   font-size: 1.4rem;
 }
@@ -17,7 +17,7 @@
   &-in-group {
     min-width: 4.4rem;
     padding: .4rem;
-    height: 24px;
+    height: 2.4rem;
     border-radius: 4px;
     background-color: $dark-color;
     color: $white-color;
@@ -28,7 +28,7 @@
     justify-content: space-between;
 
     & .icon {
-      margin-right: 5px;
+      margin-right: 0.5rem;
       background-position: center;
       background-color: #ffffff;
       padding: 0 ;
