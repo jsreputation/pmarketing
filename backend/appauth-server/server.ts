@@ -105,6 +105,42 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   }
 });
 
+app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
+  try {
+    const url = req.query.url;
+    if (url === undefined) {
+      throw new Error('No query parameter "url" specified');
+    }
+
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found: ${ url }`);
+    }
+
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+
+    const endpointRequest = await axios.post(
+      endpoint.target_url + '/v2/oauth/token',
+      {
+        params: {
+          'client_id': endpointCredential.perx_access_key_id,
+          'client_secret': endpointCredential.perx_secret_access_key,
+          'grant_type': 'client_credentials'
+        }
+      }
+    );
+
+    res.json(endpointRequest.data);
+  } catch (e) {
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
+  }
+});
+
+
 if (process.env.PRODUCTION) {
   console.log('production mode ON');
   app.set('view engine', 'html');
