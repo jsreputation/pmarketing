@@ -117,4 +117,5 @@ export {
  * Locations
  */
 export { LocationModule } from './lib/location/location.module';
+export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
