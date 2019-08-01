@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
+import { AuthenticationService, RewardsModule, RewardsService } from '@perx/core';
+import { MatButtonModule } from '@angular/material';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -8,9 +10,17 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardComponent ]
+      imports: [
+        RewardsModule,
+        MatButtonModule
+      ],
+      declarations: [RewardComponent],
+      providers: [{
+        provide: RewardsService,
+        useValue: {getReward: () => {}}
+      }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
