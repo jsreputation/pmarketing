@@ -79,12 +79,12 @@ export class ShakeTreeComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnInit(): void {
     this.updateGifts();
     this.shake.start();
-    window.addEventListener('shake', this.tapped, false);
+    window.addEventListener(Shake.EVENT, this.tapped, false);
   }
 
   public ngOnDestroy(): void {
     this.shake.stop();
-    window.removeEventListener('shake', this.tapped, false);
+    window.removeEventListener(Shake.EVENT, this.tapped, false);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
