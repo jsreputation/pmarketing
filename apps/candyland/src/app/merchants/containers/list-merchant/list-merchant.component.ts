@@ -15,8 +15,10 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   public dataSource = new MatTableDataSource<any>();
   private destroy$ = new Subject();
+
   constructor(private merchantService: MerchantService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.getListMerchant();
@@ -38,7 +40,6 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        // result about new create merchant
       });
   }
 

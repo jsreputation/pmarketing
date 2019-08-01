@@ -87,3 +87,12 @@
   }
 }
 
+.dark {
+  background-color: $white-color;
+  color: $primary-color;
+
+  &:hover {
+    //color: ;
+  }
+}
+

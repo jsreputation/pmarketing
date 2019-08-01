@@ -1,0 +1,57 @@
+<!--image-->
+<div class="card-row new-reward-image-block">
+  <cl-upload-graphic [formControl]="formGroup.get('image')"></cl-upload-graphic>
+</div>
+<div class="">
+  <div class="input-group">
+    <!-- Reward Type-->
+    <mat-form-field>
+      <mat-select [formControl]="formGroup.get('rewardType')" placeholder="Reward Type">
+        <ng-container *ngFor="let option of config?.rewardType">
+          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <!--Category-->
+    <mat-form-field>
+      <mat-select [formControl]="formGroup.get('category')" placeholder="Category">
+        <ng-container *ngFor="let option of config?.category">
+          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!--Redemption Type-->
+  <div class="input-group">
+    <mat-form-field>
+      <mat-select [formControl]="formGroup.get('redemptionType')" placeholder="Redemption Type">
+        <ng-container *ngFor="let option of config?.redemptionType">
+          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <!--Cost of Reward-->
+    <mat-form-field>
+      <input
+        type="number"
+        min="0"
+        step="1"
+        matInput
+        placeholder="Cost of Reward"
+        [formControl]="formGroup.get('cost')">
+      <span matSuffix>SGD</span>
+    </mat-form-field>
+  </div>
+</div>
+<!--Description-->
+<mat-form-field appearance="outline">
+        <textarea matInput
+                  placeholder="Description"
+                  [formControl]="formGroup.get('description')"></textarea>
+</mat-form-field>
+<!--Terms & Condition-->
+<mat-form-field appearance="outline">
+        <textarea matInput
+                  placeholder="Terms & Condition"
+                  [formControl]="formGroup.get('termsAndCondition')"></textarea>
+</mat-form-field>

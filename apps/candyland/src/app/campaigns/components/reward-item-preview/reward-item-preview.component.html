@@ -1,7 +1,7 @@
 <div class="reward-item">
   <div class="reward-item-img-block">
     <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
-    <img class="reward-item-no-img" *ngIf="!data?.image" src="/assets/images/deactivate.svg">
+    <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/deactivate.svg">
   </div>
   <div class="reward-item-info">
     <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
