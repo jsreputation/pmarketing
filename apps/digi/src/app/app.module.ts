@@ -18,6 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { httpInterceptorProviders } from './UserIdInterceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { LoginComponent } from './login/login.component';
     GameModule.forRoot({ env: environment }),
     AuthenticationModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
