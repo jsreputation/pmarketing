@@ -29,10 +29,10 @@ export class UploadFileComponent implements ControlValueAccessor {
   public loadedFile = false;
 
   public onChange: any = () => {
-  };
+  }
 
   public onTouch: any = () => {
-  };
+  }
 
   constructor(private sanitizer: DomSanitizer,
               private cd: ChangeDetectorRef) {

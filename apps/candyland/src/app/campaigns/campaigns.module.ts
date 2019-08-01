@@ -30,7 +30,7 @@ import { StatusLabelModule } from '@cl-shared/components/status-label/status-lab
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
-import { RangeDatePickerFilterModule } from '@cl-shared/table/range-date-picker-filter/range-date-picker-filter.module';
+import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import {
   SeparateRangeDatePickerFilterModule

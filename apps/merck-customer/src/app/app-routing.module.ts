@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'enter-pin', component: EnterPinComponent},
+  { path: 'enter-pin/:type', component: EnterPinComponent},
   { path: '**', redirectTo: '/home' }
 ];
 @NgModule({

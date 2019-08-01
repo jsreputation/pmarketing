@@ -6,8 +6,6 @@ import {ToggleControlConfig} from 'src/app/models/toggle-control-config.interfac
   providedIn: 'root'
 })
 export class ToggleControlService {
-  config: any;
-  context;
   public formChanged;
 
   constructor() {
