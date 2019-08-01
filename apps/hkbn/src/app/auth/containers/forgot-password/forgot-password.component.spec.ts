@@ -33,7 +33,7 @@ describe('ForgotPasswordComponent', () => {
           provide: AuthenticationService, useValue: {
             forgotPassword: () => of(true),
             resendOTP: () => of(true),
-            verifyOTP: () => of (true),
+            verifyOTP: () => of(true),
             changePassword: () => of(true)
           }
         }
@@ -50,5 +50,16 @@ describe('ForgotPasswordComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('phoneHandler should move to step 2', () => {
+    component.phoneStepForm.setValue({phone: '88'});
+    component.phoneHandler();
+    expect(component.currentStep).toEqual(2);
+  });
+
+  it('pinHandle should move to step 3', () => {
+    component.handlePin('334245');
+    expect(component.currentStep).toEqual(3);
   });
 });

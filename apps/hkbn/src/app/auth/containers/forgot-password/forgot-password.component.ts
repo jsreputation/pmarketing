@@ -36,7 +36,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.route.queryParams
       .pipe(
-        filter((params) => !!params),
+        filter((params) => !!params.identifier),
         takeUntil(this.destroy$)
       )
       .subscribe((params) => {
@@ -49,15 +49,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public phoneHandler(data: any): void {
+  public phoneHandler(): void {
     if (this.phoneStepForm.invalid) {
       return;
     }
-    this.identifier = data.phone;
+    this.identifier = this.phoneStepForm.value.phone;
     // TODO: remove next line when forgotPassword method will be implemented
     this.currentStep = 2;
 
-    this.authenticationService.forgotPassword(data.phone).subscribe(() => {
+    this.authenticationService.forgotPassword(this.identifier).subscribe(() => {
       this.currentStep = 2;
       // TODO: Uncomment when method will be implemented
       // this.otp = otp;
