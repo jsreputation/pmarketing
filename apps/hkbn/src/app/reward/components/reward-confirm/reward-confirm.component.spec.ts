@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardConfirmComponent } from './reward-confirm.component';
 import { MAT_DIALOG_DATA, MatButtonModule, MatDialogModule, MatDialogRef } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RewardsModule } from '@perx/core/dist/perx-core';
+import { RewardsModule } from '@perx/core';
 
 describe('RewardConfirmComponent', () => {
   let component: RewardConfirmComponent;

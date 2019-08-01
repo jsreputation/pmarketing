@@ -16,12 +16,12 @@ export { IVoucher as Voucher } from './lib/vouchers/models/voucher.model';
 /**
  * Authentication
  */
-export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
 export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
-export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
+export { AuthenticationService } from './lib/auth/authentication/authentication.service';
+export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
+export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 
 /**
@@ -51,6 +51,7 @@ export {
 /**
  *  Games
  */
+export { GameModule } from './lib/game/game.module';
 export {
   IGame,
   GAME_TYPE,
@@ -59,7 +60,6 @@ export {
   ITree,
   defaultTree
 } from './lib/game/game.model';
-export { GameModule } from './lib/game/game.module';
 export { GameService } from './lib/game/game.service';
 export { IGameComponent } from './lib/game/IGame.component';
 
@@ -68,7 +68,10 @@ export { IGameComponent } from './lib/game/IGame.component';
  */
 export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
-export { IProfile } from './lib/profile/profile.model';
+export {
+  IProfile,
+  ICustomProperties
+} from './lib/profile/profile.model';
 
 /**
  * Loyalty
@@ -98,16 +101,17 @@ export {
   PopUpClosedCallBack
 } from './lib/utils/popup/popup.component';
 export { NotificationService } from './lib/utils/notification/notification.service';
+export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 
 /**
  * Puzzles
  */
+export { PuzzlesModule } from './lib/puzzles/puzzles.module';
 export {
   PuzzleCollectStamp,
   PuzzleCollectReward,
   PUZZLE_COLLECT_STAMP_STATE
 } from './lib/puzzles/models/puzzle-stamp.model';
-export { PuzzlesModule } from './lib/puzzles/puzzles.module';
 
 /**
  * Locations
