@@ -19,7 +19,15 @@ button {
 }
 
 .w-100 {
-  width: 100%;
+  width: 100% !important;
+}
+
+.m-w-100 {
+  max-width: 100% !important;
+}
+
+.m-0 {
+  margin: 0 !important;
 }
 
 .text-center {
@@ -38,6 +46,12 @@ button {
 
 .flex {
   display: flex;
+}
+
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
 }
 
 .menu-item {
@@ -115,19 +129,6 @@ button {
       margin-right: 0;
     }
   }
-}
-
-.mat-dialog-container {
-  padding: 0 !important;
-  overflow: visible !important;
-}
-
-.mat-dialog-content {
-  display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  max-height: 65vh;
-  overflow: visible !important;
 }
 
 .mat-form-field {
@@ -262,29 +263,8 @@ button {
   position: relative;
 }
 
-.audience-dialog {
-  max-width: 74.8rem !important;
-  max-height: 77.2rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 20px;
-  position: relative;
-}
-
-.manage-list-dialog {
-  max-width: 40.8rem !important;
-  max-height: 36.7rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 20px;
-  position: relative;
-}
-
-.change-expiry-date-dialog {
-  max-width: 53rem !important;
-  max-height: 36.1rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 20px;
-  position: relative;
+.dashboard-content {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
 }

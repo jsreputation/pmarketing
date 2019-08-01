@@ -2,7 +2,7 @@
 
 <div class="game-wrapper">
   <div class="game-wrapper__right">
-    <perx-core-shake-tree
+    <perx-core-shake-tree #tree
       *ngIf="game && game.type === 0"
       [treeImg]="game.config.treeImg" 
       [giftImg]="game.config.giftImg"
@@ -12,16 +12,17 @@
       [nbFallingGifts]="game.config.nbGiftsToDrop"
       (completed)="onComplete()" 
       [enabled]="isEnabled" 
-      [nbShakes]="game.config.nbTaps" 
+      [nbShakes]="2" 
       [distanceFromTree]=26 
       [bottomDistance]=1
     >
     </perx-core-shake-tree>
-    <perx-core-pinata
+    <perx-core-pinata #pinata
       *ngIf="game && game.type === 1"
       [stillImg]="game.config.stillImg"
       [openedImg]="game.config.brokenImg"
-      [nbTaps]="game.config.nbTaps"
+      [movingImg]="game.config.breakingImg"
+      [nbTaps]="2"
       [enabled]="isEnabled"
       (broken)="onComplete()"
     >
@@ -33,7 +34,7 @@
     mat-flat-button
     color="primary"
     (click)="isEnabled = true"
-    *ngIf="!isEnabled"
+    *ngIf="!isEnabled && showBtn"
   >
     {{buttonTxt}}
   </button>

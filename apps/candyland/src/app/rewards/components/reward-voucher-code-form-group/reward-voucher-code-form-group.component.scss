@@ -1,0 +1,44 @@
+@import "variables";
+
+.code-preview {
+  margin-top: 3rem;
+
+  &-block {
+    max-width: 39rem;
+    width: 100%;
+    margin-top: 0.8rem;
+    height: 4.9rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.3rem 2rem;
+    border-radius: 4px;
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.69;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+
+  &-value {
+    margin-top: 1.7rem;
+    font-family: $primary-font;
+    font-size: 3rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.9;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+}
+
+.radio-group-row {
+  margin: 2.3rem 0;
+}
+

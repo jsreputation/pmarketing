@@ -20,7 +20,7 @@ import {
   CognitoModule,
   ProfileModule,
   UtilsModule
-   } from '@perx/core/dist/perx-core';
+   } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';

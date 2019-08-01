@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { VouchersService } from '@perx/core/dist/perx-core';
+import { VouchersService } from '@perx/core';
 
 @Component({
   selector: 'hkbn-code-redemption',

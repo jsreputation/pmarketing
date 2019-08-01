@@ -5,5 +5,5 @@ declare interface Reward {
   type: string;
   current: number;
   total: number;
-  prprobability?: number
+  prprobability?: number;
 }
