@@ -59,7 +59,8 @@ export { defaultTree } from './lib/game/game.model';
 export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
-  IProfile
+  IProfile,
+  ICustomProperties
 } from './lib/profile/profile.model';
 
 export { LoyaltyModule } from './lib/loyalty/loyalty.module';
@@ -75,6 +76,7 @@ export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward } from './lib/rewards/models/reward.model';
 
 export { UtilsModule } from './lib/utils/utils.module';
+export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 
 export {
   PuzzleCollectStamp,

@@ -15,11 +15,13 @@ import { RegistrationComponent } from './containers/registration/registration.co
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
+import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
 import { UtilsModule } from '@perx/core';
 
 const COMPONENTS = [
   LoginFormComponent,
-  RegistrationFormComponent
+  RegistrationFormComponent,
+  SmsValidationComponent,
 ];
 
 const CONTAINERS = [
@@ -44,6 +46,7 @@ const CONTAINERS = [
     UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
+    UtilsModule
   ],
   exports: [
     ...COMPONENTS,
