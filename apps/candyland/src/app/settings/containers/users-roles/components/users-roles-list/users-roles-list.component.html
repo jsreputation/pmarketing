@@ -1,0 +1,86 @@
+<table class="table" mat-table [dataSource]="dataSource" matSort>
+
+  <!--  <ng-container matColumnDef="image">-->
+  <!--    <th mat-header-cell *matHeaderCellDef>Reward Image</th>-->
+  <!--    <td mat-cell *matCellDef="let element">-->
+  <!--      <p class="image-cell">-->
+  <!--        <img [src]="element?.image"/>-->
+  <!--      </p>-->
+  <!--    </td>-->
+  <!--  </ng-container>-->
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="name">
+        <div class="image-cell">
+          <img [src]="element?.avatar || 'assets/images/no-avatar.svg'" alt="logo-merchant">
+        </div>
+        <p>{{element?.name}}</p>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="role">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="role">Role
+      <cl-info-hint>
+        <div class="card-header">
+          <p class="card-title">Rewards</p>
+        </div>
+        <div class="card-content">
+          <cl-role-label role="admin"></cl-role-label>
+           <cl-role-label role="admin"></cl-role-label>
+           <cl-role-label role="admin"></cl-role-label>
+           <cl-role-label role="admin"></cl-role-label>
+           <cl-role-label role="admin"></cl-role-label>
+          sdfgsdfgs
+          dfgsdf
+          gsdfgsdf
+        </div>
+
+          <!--          <span class="info-text">-->
+          <!--                Image will be based on the-->
+          <!--              </span>-->
+          <!--          <span class="info-text">-->
+          <!--                reward/merchant in campaign creation.-->
+          <!--              </span>-->
+      </cl-info-hint>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <cl-role-label [role]="element?.role" [showTitle]="true"></cl-role-label>
+    </td>
+  </ng-container>
+
+  <!--  <ng-container matColumnDef="category">-->
+  <!--    <th mat-header-cell *matHeaderCellDef mat-sort-header="category">Category</th>-->
+  <!--    <td mat-cell *matCellDef="let element"> {{element?.category}}</td>-->
+  <!--  </ng-container>-->
+
+  <ng-container matColumnDef="invitedDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="invitedDate">Invited Date</th>
+    <td mat-cell *matCellDef="let element">{{element?.invitedDate | date: DATE_FORMAT}}</td>
+  </ng-container>
+
+  <!--  <ng-container matColumnDef="balance">-->
+  <!--    <th mat-header-cell *matHeaderCellDef mat-sort-header="current">Balance</th>-->
+  <!--    <td mat-cell *matCellDef="let element">-->
+  <!--      <cl-progress-bar [current]="element?.current" [total]="element?.total"></cl-progress-bar>-->
+  <!--    </td>-->
+  <!--  </ng-container>-->
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
+    <td mat-cell *matCellDef="let element" class="menu-column">
+      <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #itemMenu="matMenu">
+        <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
+        <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

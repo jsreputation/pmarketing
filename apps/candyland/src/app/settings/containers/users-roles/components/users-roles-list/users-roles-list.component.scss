@@ -1,0 +1,29 @@
+@import "variables";
+
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 30rem !important;
+}
+
+.name {
+  height: 6.6rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  & > * {
+    margin-right: 1.4rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
