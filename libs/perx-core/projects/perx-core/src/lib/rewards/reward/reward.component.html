@@ -20,7 +20,7 @@
         {{reward.rewardPrice[0].rewardAmount}} {{reward.rewardPrice[0].rewardCurrency}}
       </div>
       <div class="reward-expiry" *ngIf="reward.validTo !== null">
-        {{reward.validTo | date: 'dd/MM/yyyy'}}
+        Expiry: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="section-heading" *ngIf="reward.description">
         Description
