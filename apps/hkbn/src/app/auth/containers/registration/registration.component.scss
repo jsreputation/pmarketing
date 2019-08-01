@@ -29,12 +29,13 @@
   }
 }
 
-.sign-in {
+.sign-up {
   font-size: 3.2rem;
   margin: 0 0 1.2rem;
 }
 
 .register-message {
+  display: inline-block;
   font-size: 1.4rem;
   margin-bottom: 1.4rem;
   color: $primary;
