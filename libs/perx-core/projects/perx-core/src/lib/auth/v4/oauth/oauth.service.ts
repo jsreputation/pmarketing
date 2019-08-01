@@ -62,7 +62,6 @@ export class OauthService {
   }
 
   public getAppAccessToken(): Observable<any> {
-    debugger
     const httpParams = new HttpParams()
       .append('url', location.host);
     return this.http.post(this.appAuthEndPoint + '/token', null, {

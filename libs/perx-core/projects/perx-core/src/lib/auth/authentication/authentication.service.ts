@@ -248,7 +248,7 @@ export class AuthenticationService implements AuthService {
 
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
-    const appAccessToken = this.getAccessToken();
+    const appAccessToken = this.getAppAccessToken();
     return userAccessToken ? userAccessToken : appAccessToken;
   }
 
@@ -268,7 +268,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  private saveUserAccessToken(accessToken: string): void {
+  public saveUserAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
   }
 
@@ -288,8 +288,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  private saveAppAccessToken(accessToken: string): void {
-    debugger
+  public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
   }
 }
