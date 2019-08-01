@@ -95,7 +95,6 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor  {
   }
 
   writeValue(obj: any): void {
-    console.log('writeValue', obj);
     this.setGraphic = obj;
   }
 

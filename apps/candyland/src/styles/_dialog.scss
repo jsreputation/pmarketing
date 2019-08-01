@@ -1,0 +1,177 @@
+@import "variables";
+
+.dialog {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .mat-tab-header {
+    padding: 0 32px !important;
+  }
+
+  &-content {
+    flex: 1;
+    padding: 1.2rem 3.2rem 0 !important;
+  }
+
+  &-header-wrap {
+    padding: 3.2rem 3.2rem 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  &-title {
+    margin: 0;
+    font-family: $primary-font;
+    font-size: 2rem;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $secondary-color;
+  }
+
+  &-sub-title {
+    margin-top: 1.5rem;
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $secondary-color;
+  }
+
+  &-input-group {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    &.last {
+      margin-bottom: 1.5rem;
+    }
+
+    & > * {
+      width: 332px;
+      box-sizing: content-box;
+
+      @media (max-width: 780px) {
+        width: 100%;
+      }
+    }
+  }
+
+  &-row {
+    margin-top: 2rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: $primary-font;
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+
+  &-closed {
+    color: $secondary-color;
+  }
+
+  &-tab-content {
+    padding: 3.5rem 3.2rem;
+  }
+
+  &-content-title {
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.18px;
+    color: $secondary-color;
+  }
+
+  &-actions {
+    box-sizing: border-box;
+    padding: 3.2rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.nested-type {
+  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+}
+
+.actions {
+  &-close {
+    display: block;
+    margin-right: 1.2rem;
+  }
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.mat-dialog-content {
+  flex: 1;
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow: visible !important;
+}
+
+.audience-dialog {
+  max-width: 74.8rem !important;
+  max-height: 77.2rem !important;
+  width: 100%;
+  height: 100%;
+  margin: 2rem;
+  position: relative;
+}
+
+.manage-list-dialog {
+  max-width: 40.8rem !important;
+  max-height: 36.7rem !important;
+  width: 100%;
+  height: 100%;
+  margin: 2rem;
+  position: relative;
+}
+
+.change-expiry-date-dialog {
+  max-width: 53rem !important;
+  max-height: 36.1rem !important;
+  width: 100%;
+  height: 100%;
+  margin: 2rem;
+  position: relative;
+}
+
+.reward-replenish-dialog {
+  max-width: 56.3rem !important;
+  max-height: 37.8rem !important;
+  width: 100%;
+  height: 100%;
+  margin: 2rem;
+  position: relative;
+  font-size: 1.8rem;
+}
