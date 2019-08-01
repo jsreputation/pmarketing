@@ -13,7 +13,7 @@ export class RewardMerchantItemComponent implements OnInit {
     category: '40 Branches'
   };
   @Input() public enableActions = false;
-  @Output() public deleteMerchant = new EventEmitter<any>();
+  @Output() public deleteMerchant = new EventEmitter<void>();
 
   constructor() {
   }

@@ -6,8 +6,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./reward-merchant-card.component.scss']
 })
 export class RewardMerchantCardComponent implements OnInit {
-  @Output() public selectMerchant = new EventEmitter<any>();
-  @Output() public createMerchant = new EventEmitter<any>();
+  @Output() public selectMerchant = new EventEmitter<void>();
+  @Output() public createMerchant = new EventEmitter<void>();
 
   constructor() {
   }
