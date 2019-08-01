@@ -12,7 +12,8 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTabsModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -29,6 +30,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     HomeComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    EnterPinComponent
+    EnterPinComponent,
+    FindPharmacyComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatTabsModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
