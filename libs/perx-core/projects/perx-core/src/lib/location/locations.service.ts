@@ -5,7 +5,7 @@ import { ILocation } from './ilocation';
 @Injectable({
   providedIn: 'root'
 })
-export class LocationsService {
+export abstract class LocationsService {
   // @ts-ignore
   public getAll(tags: string[] = []): Observable<ILocation[]> {
     return throwError('not implemented yet');
