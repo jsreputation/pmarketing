@@ -68,8 +68,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
 
   public celebrate: boolean = false;
   public shakeAnimationClass: string = '';
-  public n: number = 0;
 
+  private n: number = 0;
   private shake: Shake;
 
   constructor() {
@@ -85,6 +85,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
 
   public ngOnDestroy(): void {
     this.shake.stop();
+    this.tap.complete();
+    this.completed.complete();
     window.removeEventListener(Shake.EVENT, this.tapped, false);
   }
 
@@ -101,12 +103,9 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
       this.shakeAnimationClass = '';
       this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
       if (this.n === this.nbShakes) {
-        this.gifts.map(gift => {
-          if (gift.id <= this.nbFallingGifts) {
-            gift.status = GIFT_STATUS.drop;
-          }
-          return gift;
-        });
+        this.gifts
+          .filter(gift => gift.id <= this.nbFallingGifts)
+          .forEach(gift => gift.status = GIFT_STATUS.drop);
         setTimeout(() => {
           this.celebrate = true;
           this.completed.emit();
@@ -123,7 +122,14 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
     };
   }
 
-  public reset(): void {}
+  public reset(): void {
+    this.gifts
+      .filter(gift => gift.id <= this.nbHangedGifts)
+      .forEach(gift => gift.status = GIFT_STATUS.hang);
+    this.n = 0;
+    this.celebrate = false;
+    this.shakeAnimationClass = '';
+  }
 
   private getCurrentShakeAction(ngTap: number): Observable<string> {
     if (ngTap < this.nbShakes) {
@@ -133,11 +139,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   }
 
   private updateGifts(): void {
-    this.gifts.map(gift => {
-      if (gift.id > this.nbHangedGifts) {
-        gift.display = false;
-      }
-      return gift;
-    });
+    this.gifts
+      .filter(gift => gift.id > this.nbHangedGifts)
+      .forEach(gift => gift.display = false);
   }
 }
