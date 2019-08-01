@@ -55,7 +55,8 @@ const routes: Routes = [
   },
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent}
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
