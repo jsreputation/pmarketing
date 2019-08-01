@@ -147,7 +147,7 @@ export class V4RewardsService extends RewardsService {
 
   public getReward(id: number): Observable<IReward> {
     return this.http.get<IV4GetRewardResponse>(
-      `${ this.apiHost }/v4/reward/${ id }`
+      `${ this.apiHost }/v4/rewards/${ id }`
     ).pipe(
       map(res => res.data),
       map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
