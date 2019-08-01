@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { IGameComponent } from '../IGame.component';
 
 enum GIFT_STATUS {
   hang = 'hang',
@@ -23,7 +24,7 @@ export interface IGift {
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
-export class ShakeTreeComponent implements OnInit, OnChanges {
+export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent {
   @Input()
   public treeImg: string;
   @Input()
@@ -78,14 +79,6 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateGifts(): void {
-    this.gifts.map(gift => {
-      if (gift.id > this.nbHangedGifts) {
-        gift.display = false;
-      }
-      return gift;
-    });
-  }
   public tapped(): void {
     if (this.enabled) {
       this.tap.emit(this.n);
@@ -108,17 +101,28 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  public getCurrentShakeAction(ngTap: number): Observable<string> {
+  public getManStyle(): IManStyle {
+    return {
+      left: this.distanceFromTree + '%',
+      bottom: this.bottomDistance + '%',
+    };
+  }
+
+  public reset(): void {}
+
+  private getCurrentShakeAction(ngTap: number): Observable<string> {
     if (ngTap < this.nbShakes) {
       return of('shake');
     }
     return of('');
   }
 
-  public getManStyle(): IManStyle {
-    return {
-      left: this.distanceFromTree + '%',
-      bottom: this.bottomDistance + '%',
-    };
+  private updateGifts(): void {
+    this.gifts.map(gift => {
+      if (gift.id > this.nbHangedGifts) {
+        gift.display = false;
+      }
+      return gift;
+    });
   }
 }

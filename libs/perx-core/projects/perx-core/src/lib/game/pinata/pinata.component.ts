@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { IGameComponent } from '../IGame.component';
 
 @Component({
   selector: 'perx-core-pinata',
   templateUrl: './pinata.component.html',
   styleUrls: ['./pinata.component.css']
 })
-export class PinataComponent implements OnInit, OnDestroy {
+export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
   @Input()
   public stillImg: string;
   @Input()
@@ -50,5 +51,9 @@ export class PinataComponent implements OnInit, OnDestroy {
         this.currentImg = this.openedImg;
       }
     }
+  }
+
+  public reset(): void {
+      
   }
 }
