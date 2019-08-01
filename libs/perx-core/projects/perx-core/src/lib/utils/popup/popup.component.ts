@@ -5,7 +5,7 @@ export interface IPopupConfig {
   title?: string;
   text?: string;
   imageUrl?: string;
-  buttonTxt?: string;
+  buttonTxt?: string | null;
   afterClosedCallBack?: PopUpClosedCallBack;
 }
 
@@ -19,7 +19,7 @@ export interface PopUpClosedCallBack {
 @Component({
   selector: 'perx-core-popup',
   templateUrl: './popup.component.html',
-  styleUrls: ['./popup.component.css']
+  styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
   public title: string = null;
@@ -38,7 +38,7 @@ export class PopupComponent {
     if (data.text) {
       this.text = data.text;
     }
-    if (data.buttonTxt) {
+    if (data.buttonTxt !== undefined) {
       this.buttonTxt = data.buttonTxt;
     }
     if (data.imageUrl) {
@@ -46,7 +46,9 @@ export class PopupComponent {
     }
   }
 
-  public popUpClosed(): void {
-    this.data.afterClosedCallBack.dialogClosed();
+  public buttonPressed(): void {
+    if (this.data.afterClosedCallBack) {
+      this.data.afterClosedCallBack.dialogClosed();
+    }
   }
 }

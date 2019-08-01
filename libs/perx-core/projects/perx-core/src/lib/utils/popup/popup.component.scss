@@ -1,0 +1,34 @@
+button {
+  margin-top: 16px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+  margin: 0 auto;
+
+  @media (max-width: 424px) {
+    width: 20.8rem;
+  }
+}
+
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem;
+}
+
+mat-dialog-content {
+  text-align: center;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}

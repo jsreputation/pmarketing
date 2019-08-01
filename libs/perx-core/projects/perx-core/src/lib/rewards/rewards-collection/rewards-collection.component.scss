@@ -1,0 +1,76 @@
+@import "../../shared/reset";
+
+$card-actual-height: 200px;
+
+.mat-card-content {
+  .title {
+    flex: 0 auto;
+    margin: 0 0 0.5rem;
+    color: #212121;
+  }
+
+  .description {
+    flex: 1;
+  }
+
+  .points {
+    flex: 0 auto;
+  }
+}
+
+.card-collection-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+  }
+
+  .img-placeholder {
+    min-height: calc(100px - 0.8rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .subtitle-1 {
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .points {
+    height: 1.6rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.card-collection-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  padding: 1.5rem 0;
+
+  .mat-card {
+    max-width: calc(#{$card-actual-height} - 32px);
+    width: calc(#{$card-actual-height} - 32px);
+    min-width: calc(#{$card-actual-height} - 32px);
+    max-height: calc(#{$card-actual-height} - 24px);
+    height: calc(#{$card-actual-height} - 24px);
+    min-height: calc(#{$card-actual-height} - 24px);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+    margin: 0 1rem;
+
+    img.mat-card-image {
+      width: auto; //maintain aspect ratio
+      height: 100px;
+      max-height: 100px; //need to be specified so that bigger imgs get sized down
+      margin-bottom: 0.8rem;
+      object-fit: contain;
+    }
+
+    .mat-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
+}

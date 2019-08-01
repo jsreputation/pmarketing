@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;

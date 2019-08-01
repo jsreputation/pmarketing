@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UtilsModule } from '@perx/core/dist/perx-core';
+import { UtilsModule, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { EnterPinComponent } from './enter-pin.component';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
 
 describe('EnterPinComponent', () => {
   let component: EnterPinComponent;

@@ -13,6 +13,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '@perx/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -28,6 +29,7 @@ describe('LoginComponent', () => {
         MatButtonModule,
         RouterTestingModule,
         ReactiveFormsModule,
+        ErrorHandlerModule,
         NoopAnimationsModule,
       ],
       providers: [
@@ -35,10 +37,10 @@ describe('LoginComponent', () => {
           provide: AuthenticationService,
           useValue: {v4GameOauth: () => Promise.resolve(true)}
         }
-        ],
-      declarations: [ LoginComponent, LoginFormComponent ]
+      ],
+      declarations: [LoginComponent, LoginFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

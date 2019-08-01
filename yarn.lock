@@ -1646,7 +1646,6 @@
 "@zxing/library@^0.14.0":
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.14.2.tgz#686a4218857b21e4a6c64561769d9901bf623d94"
-  integrity sha512-n621ErZ7tba9/7GlU6LsfbDgx1fnjZNxblwKU5W4p8vHGIJ2X+/F9rAUyHq8PAUN3HkZaelhS58qhnbbVH8SBA==
   dependencies:
     ts-custom-error "^3.0.0"
   optionalDependencies:
@@ -1655,7 +1654,6 @@
 "@zxing/ngx-scanner@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@zxing/ngx-scanner/-/ngx-scanner-2.0.0.tgz#a6751b048ae5a0b583634908e9c0be7e6490decd"
-  integrity sha512-pxIhIvh1/ZWAi+D3RFpER2MKqi2OhUoNWKDATV35CHDmNsGhNizvdUj9c4AZESBLXXsLIH2NxVnOkZqauRk3RA==
   dependencies:
     "@zxing/library" "^0.14.0"
     tslib "^1.9.0"
@@ -1750,6 +1748,12 @@ ajv@^6.9.1:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2-text-mask@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/angular2-text-mask/-/angular2-text-mask-9.0.0.tgz#70490170a8096241fc3ce9482ed6a758ddbce8ea"
+  dependencies:
+    text-mask-core "^5.0.0"
 
 angularx-qrcode@^1.6.1:
   version "1.6.1"
@@ -6214,6 +6218,11 @@ ngx-material-timepicker@^4.0.0:
     luxon "^1.11.3"
     tslib "^1.9.0"
 
+ngx-multi-line-ellipsis@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ngx-multi-line-ellipsis/-/ngx-multi-line-ellipsis-1.0.4.tgz#1354237469d757d8d2e4c320d3cfd516b4b3a271"
+  integrity sha1-E1QjdGnXV9jS5MMg08/VFrSzonE=
+
 ngx-take-until-destroy@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/ngx-take-until-destroy/-/ngx-take-until-destroy-5.4.0.tgz#6c8606ee956584dc947e2eb609c48b8f98b09900"
@@ -8712,11 +8721,18 @@ terser@^4.0.0:
 text-encoding@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
-  integrity sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==
 
 text-extensions@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-2.0.0.tgz#43eabd1b495482fae4a2bf65e5f56c29f69220f6"
+
+text-mask-addons@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/text-mask-addons/-/text-mask-addons-3.8.0.tgz#17b61ef665a4f36811f2ea1f01a223b4be61ab26"
+
+text-mask-core@^5.0.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/text-mask-core/-/text-mask-core-5.1.2.tgz#80dd5ebe04825757e46619e691407a9f8b3c1b6f"
 
 through2@^2.0.0, through2@^2.0.2:
   version "2.0.5"
@@ -8857,7 +8873,6 @@ trough@^1.0.0:
 ts-custom-error@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/ts-custom-error/-/ts-custom-error-3.1.1.tgz#d30c7415461dac93dc2cc9e9eb2dae92e6423901"
-  integrity sha512-f/syoy+pTE4z82qaiRuthEeZtCGNKzlfs0Zc8jpQFcz/CYMaFSwFSdfFt1sSFnPlDLOEm7RCROdIxZ44N8UlwA==
 
 ts-loader@^6.0.3:
   version "6.0.3"
@@ -8913,7 +8928,6 @@ ts-node@~7.0.0:
 ts-optchain@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/ts-optchain/-/ts-optchain-0.1.7.tgz#525b8cde0909b06b4fe3258f7fc16eb6a9446895"
-  integrity sha512-akxVhbQjWFU9J4jbu+hWmJSou8yZmh6J0GynYlIOq2qNoVD02wQcMZlce6Gs3hShynMpUjKFy0ivqNH028oh3Q==
 
 tsconfig@^7.0.0:
   version "7.0.0"
@@ -9013,7 +9027,6 @@ tty-browserify@0.0.0:
 ttypescript@^1.5.7:
   version "1.5.7"
   resolved "https://registry.yarnpkg.com/ttypescript/-/ttypescript-1.5.7.tgz#76bb96765b331194b58a4e7d79fae82b886fc29a"
-  integrity sha512-qloW8S60+xWVC2bQWldYQfESNFkIgDL5/M+vAOOsuLJ1pQu0SG2vQx5DNJO2nlwSrHxD8cDuF2sVDXg6v3GG3Q==
   dependencies:
     resolve "^1.9.0"
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core/dist/perx-core';
+import { IReward, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 
 @Component({
