@@ -14,4 +14,9 @@ export abstract class LocationsService {
   public getTags(): Observable<string[]> {
     return throwError('not implemented yet');
   }
+
+  // @ts-ignore
+  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
+    return throwError('not implemented yet');
+  }
 }

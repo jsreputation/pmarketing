@@ -107,20 +107,16 @@ export class V4LocationsService extends LocationsService {
 
         return res.data;
       }),
-      mergeMap((merchants: IV4Merchant[]) => {
-        const streams = merchants.map((merchant: IV4Merchant) => {
-          return this.getMerchant(merchant.id);
-        });
-
-        return streams;
-      }),
+      mergeMap((merchants: IV4Merchant[]) =>
+        merchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id))
+      ),
       concatAll()
     );
   }
 
-  private getMerchant(id: number): Observable<ILocation[]> {
+  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
     return this.http.get<IV4GetMerchantResponse>(
-      `${this.apiHost}/v4/merchants/${id}`
+      `${this.apiHost}/v4/merchants/${merchantId}`
     ).pipe(
       map((res: IV4GetMerchantResponse) => res.data),
       filter((merchant: IV4Merchant) => merchant.outlets && merchant.outlets.length > 0),
