@@ -8,3 +8,36 @@
   justify-content: center;
   background-color: $main-blue-theme;
 }
+
+.bottom-bar {
+  position: fixed;
+  width: 100%;
+  height: 7rem;
+  bottom: 0;
+  background: white;
+  left: 0;
+  z-index: 800;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  .bottom-bar-item {
+    display: flex;
+    height: 70%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.2rem;
+
+    .selected {
+      color: $main-blue-theme;
+    }
+
+    .unselected {
+      color: $bottom-bar-text-color;
+    }
+  }
+}

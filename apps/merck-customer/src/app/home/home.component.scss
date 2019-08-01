@@ -1,0 +1,29 @@
+@import '../../styles.scss';
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  background: $home-page-background-color;
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+
+  .loyalty-section {
+    width: 100%;
+    height: 17rem;
+    display: flex;
+  }
+
+  .loyalty-item {
+    flex: 1;
+
+    &-qr {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

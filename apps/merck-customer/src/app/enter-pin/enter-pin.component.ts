@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 
 @Component({
   selector: 'mc-enter-pin',
   templateUrl: './enter-pin.component.html',
   styleUrls: ['./enter-pin.component.scss']
 })
-export class EnterPinComponent implements OnInit {
+export class EnterPinComponent implements OnInit, PageProperties {
 
   public numberOfDigits: number = 6;
   public pinMode: string = 'password'; // || 'register'
@@ -23,6 +24,14 @@ export class EnterPinComponent implements OnInit {
         this.visibleNo = this.encodeMobileNo(this.mobileNo);
       }
     }
+  }
+
+  public showHeader(): boolean {
+    return true;
+  }
+
+  public bottomSelectedItem(): BAR_SELECTED_ITEM {
+    return BAR_SELECTED_ITEM.NONE;
   }
 
   private encodeMobileNo(mobileNo: string): string {
@@ -46,33 +55,28 @@ export class EnterPinComponent implements OnInit {
   }
 
   public onPinEntered(enteredPin: string): void {
-    try {
-      this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
-        () => {
-          this.router.navigateByUrl('/home');
-        },
-        err => {
-          console.error('Observer got an error: ' + err);
-          // TODO: AuthService is not implementing 'verifyOTP' yet. Remove this line once done.
-          this.router.navigateByUrl('/home');
-        });
-    } catch (error) {
-        console.log(error);
+    if (this.pinMode === 'password') {
+      this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
   }
 
   public resendOtp(): void {
-    try {
-      this.authService.resendOTP(this.mobileNo).subscribe(
+    if (this.pinMode === 'password') {
+      this.authService.forgotPassword(this.mobileNo).subscribe(
         () => {
-          console.log('Oto resend request created');
+          console.log('Forgot password api called again');
         },
         err => {
-          console.error('Observer got an error: ' + err);
+          console.error('ForgotPassword: ' + err);
         });
-    } catch (error) {
-        console.log(error);
+    } else {
+    this.authService.resendOTP(this.mobileNo).subscribe(
+      () => {
+        console.log('Resend Otp request sent');
+      },
+      err => {
+        console.error('ResendOTP: ' + err);
+      });
     }
   }
-
 }

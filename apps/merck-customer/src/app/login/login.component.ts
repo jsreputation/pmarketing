@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 
 @Component({
   selector: 'mc-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, PageProperties {
 
   public selectedCountry: string = '+852';
 
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService
   ) {
-    this.initForm();
+      this.initForm();
   }
 
   private initForm(): void {
@@ -31,6 +32,14 @@ export class LoginComponent implements OnInit {
       mobileNo: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  public showHeader(): boolean {
+    return false;
+  }
+
+  public bottomSelectedItem(): BAR_SELECTED_ITEM {
+    return BAR_SELECTED_ITEM.NONE;
   }
 
   public ngOnInit(): void {}
@@ -84,7 +93,7 @@ export class LoginComponent implements OnInit {
 
   public goToForgotPassword(): void {
     const mobileNumber = (this.loginForm.get('mobileNo').value as string);
-    this.router.navigate(['forgot-password'], { state: { mobileNo: mobileNumber } } );
+    this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } } );
   }
 
 }

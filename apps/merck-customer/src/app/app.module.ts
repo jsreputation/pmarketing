@@ -19,8 +19,9 @@ import {
   OauthModule,
   CognitoModule,
   ProfileModule,
-  UtilsModule
-   } from '@perx/core/dist/perx-core';
+  UtilsModule,
+  LoyaltyModule
+   } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
@@ -29,6 +30,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     HomeComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    EnterPinComponent
+    EnterPinComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
-    UtilsModule
+    UtilsModule,
+    LoyaltyModule.forRoot({env: environment})
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent]
