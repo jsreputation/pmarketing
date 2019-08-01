@@ -12,7 +12,7 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfileService } from '@perx/core/dist/perx-core';
+import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('AccountComponent', () => {

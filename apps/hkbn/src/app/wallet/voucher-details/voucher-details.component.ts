@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { VouchersService } from '@perx/core/dist/perx-core';
+import { VouchersService } from '@perx/core';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 
 @Component({

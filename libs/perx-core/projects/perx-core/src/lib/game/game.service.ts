@@ -106,25 +106,32 @@ export class GameService implements IGameService {
     switch (game.game_type) {
       case GAME_TYPE.shakeTheTree:
         type = TYPE.shakeTheTree;
+        const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
         config = {
           ...defaultTree(),
-          treeImg: (game.display_properties as TreeDisplayProperties).tree_image.value.image_url,
-          giftImg: (game.display_properties as TreeDisplayProperties).gift_image.value.image_url,
-          nbHangedGift: (game.display_properties as TreeDisplayProperties).number_of_gifts_shown,
-          nbGiftsToDrop: (game.display_properties as TreeDisplayProperties).number_of_gifts_to_drop,
+          treeImg: dpts.tree_image.value.image_url,
+          giftImg: dpts.gift_image.value.image_url,
+          nbHangedGift: dpts.number_of_gifts_shown,
+          nbGiftsToDrop: dpts.number_of_gifts_to_drop,
           nbTaps: 5,
-          waitingAccessoryImg: (game.display_properties as TreeDisplayProperties).waiting_image.value.image_url,
-          celebratingAccessoryImg: (game.display_properties as TreeDisplayProperties).celebrating_image.value.image_url
+          waitingAccessoryImg: dpts.waiting_image.value.image_url,
+          celebratingAccessoryImg: dpts.celebrating_image.value.image_url
         };
         break;
       case GAME_TYPE.pinata:
         type = TYPE.pinata;
+        const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
         config = {
           ...defaultPinata(),
-          stillImg: (game.display_properties as PinataDisplayProperties).still_image.value.image_url,
-          brokenImg: (game.display_properties as PinataDisplayProperties).opened_image.value.image_url,
+          stillImg: dpps.still_image.value.image_url,
+          brokenImg: dpps.opened_image.value.image_url,
           nbTaps: 5
         };
+
+        if (dpps.cracking_image) {
+          config.breakingImg = dpps.cracking_image.value.image_url;
+        }
+
         break;
     }
 

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "value": "1,892,902",
+    "name": "activeCustomers"
+  },
+  {
+    "id": 2,
+    "value": "1,658,902",
+    "name": "revenue"
+  },
+  {
+    "id": 3,
+    "value": "658,902",
+    "name": "issuedRewards"
+  },
+  {
+    "id": 4,
+    "value": "32",
+    "name": "activeCampaigns"
+  }
+]
+
