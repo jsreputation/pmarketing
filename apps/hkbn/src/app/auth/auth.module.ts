@@ -14,10 +14,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './containers/registration/registration.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
+import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
+import { UtilsModule } from '@perx/core';
 
 const COMPONENTS = [
   LoginFormComponent,
-  RegistrationFormComponent
+  RegistrationFormComponent,
+  SmsValidationComponent,
 ];
 
 const CONTAINERS = [
@@ -40,6 +43,7 @@ const CONTAINERS = [
     RouterModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
+    UtilsModule
   ],
   exports: [
     ...COMPONENTS,

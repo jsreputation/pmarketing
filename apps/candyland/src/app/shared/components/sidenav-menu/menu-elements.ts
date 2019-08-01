@@ -34,11 +34,11 @@ export const menus = [
     icon: 'users',
     open: false,
   },
-  // {
-  //   name: 'Settings',
-  //   link: '/settings',
-  //   icon: 'settings',
-  //   open: false,
-  // },
+  {
+    name: 'Settings',
+    link: '/settings',
+    icon: 'settings',
+    open: false,
+  },
 
 ];

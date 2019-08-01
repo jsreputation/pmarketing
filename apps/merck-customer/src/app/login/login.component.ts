@@ -85,7 +85,8 @@ export class LoginComponent implements OnInit {
   }
 
   public goToForgotPassword(): void {
-    this.router.navigateByUrl('/forgot-password');
+    const mobileNumber = (this.loginForm.get('mobileNo').value as string);
+    this.router.navigate(['forgot-password'], { state: { mobileNo: mobileNumber } } );
   }
 
 }
