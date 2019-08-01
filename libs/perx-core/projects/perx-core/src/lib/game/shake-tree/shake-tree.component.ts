@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { IGameComponent } from '../IGame.component';
+import { Shake } from '../../utils/shake';
 
 enum GIFT_STATUS {
   hang = 'hang',
@@ -23,7 +25,7 @@ export interface IGift {
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
-export class ShakeTreeComponent implements OnInit, OnChanges {
+export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, OnDestroy {
   @Input()
   public treeImg: string;
   @Input()
@@ -66,10 +68,26 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
 
   public celebrate: boolean = false;
   public shakeAnimationClass: string = '';
-  public n: number = 0;
+
+  private n: number = 0;
+  private shake: Shake;
+
+  constructor() {
+    this.shake = new Shake({ threshold: 5, timeout: 500 });
+    this.tapped = this.tapped.bind(this);
+  }
 
   public ngOnInit(): void {
     this.updateGifts();
+    this.shake.start();
+    window.addEventListener(Shake.EVENT, this.tapped, false);
+  }
+
+  public ngOnDestroy(): void {
+    this.shake.stop();
+    this.tap.complete();
+    this.completed.complete();
+    window.removeEventListener(Shake.EVENT, this.tapped, false);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -78,14 +96,6 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateGifts(): void {
-    this.gifts.map(gift => {
-      if (gift.id > this.nbHangedGifts) {
-        gift.display = false;
-      }
-      return gift;
-    });
-  }
   public tapped(): void {
     if (this.enabled) {
       this.tap.emit(this.n);
@@ -93,12 +103,9 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
       this.shakeAnimationClass = '';
       this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
       if (this.n === this.nbShakes) {
-        this.gifts.map(gift => {
-          if (gift.id <= this.nbFallingGifts) {
-            gift.status = GIFT_STATUS.drop;
-          }
-          return gift;
-        });
+        this.gifts
+          .filter(gift => gift.id <= this.nbFallingGifts)
+          .forEach(gift => gift.status = GIFT_STATUS.drop);
         setTimeout(() => {
           this.celebrate = true;
           this.completed.emit();
@@ -108,17 +115,32 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  public getCurrentShakeAction(ngTap: number): Observable<string> {
+  public getManStyle(): IManStyle {
+    return {
+      left: this.distanceFromTree + '%',
+      bottom: this.bottomDistance + '%',
+    };
+  }
+
+  public reset(): void {
+    this.gifts
+      .filter(gift => gift.id <= this.nbHangedGifts)
+      .forEach(gift => gift.status = GIFT_STATUS.hang);
+    this.n = 0;
+    this.celebrate = false;
+    this.shakeAnimationClass = '';
+  }
+
+  private getCurrentShakeAction(ngTap: number): Observable<string> {
     if (ngTap < this.nbShakes) {
       return of('shake');
     }
     return of('');
   }
 
-  public getManStyle(): IManStyle {
-    return {
-      left: this.distanceFromTree + '%',
-      bottom: this.bottomDistance + '%',
-    };
+  private updateGifts(): void {
+    this.gifts
+      .filter(gift => gift.id > this.nbHangedGifts)
+      .forEach(gift => gift.display = false);
   }
 }
