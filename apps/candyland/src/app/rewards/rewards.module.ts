@@ -51,8 +51,12 @@ import {
   RewardVoucherCodeFormGroupComponent
 } from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
 import { VouchersProgressBarModule } from '@cl-shared/components/vouchers-progress-bar/vouchers-progress-bar.module';
+import { NewRewardFormService } from './services/new-reward-form.service';
 
 @NgModule({
+  providers: [
+    NewRewardFormService
+  ],
   declarations: [
     RewardsListPageComponent,
     RewardsListComponent,

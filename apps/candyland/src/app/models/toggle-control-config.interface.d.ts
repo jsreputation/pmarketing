@@ -1,7 +1,7 @@
 import {AbstractControl} from '@angular/forms';
 
 declare interface ToggleControlConfig {
-  condition: () => {};
+  condition: boolean;
   controls: AbstractControl[];
   resetValue?: boolean;
 }

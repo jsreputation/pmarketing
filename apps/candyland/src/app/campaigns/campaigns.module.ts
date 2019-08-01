@@ -55,9 +55,13 @@ import {
 } from './containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component';
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 
 
 @NgModule({
+  providers: [
+    NewCampaignDetailFormService
+  ],
   declarations: [
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,

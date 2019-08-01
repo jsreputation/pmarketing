@@ -13,17 +13,16 @@ export class ToggleControlService {
   constructor() {
   }
 
-  public updateFormStructure() {
+  public updateFormStructure(config) {
     this.formChanged = false;
-    for (const conditionConfig of this.config) {
-      this.toggleControls(conditionConfig, this.context);
+    for (const conditionConfig of config) {
+      this.toggleControls(conditionConfig);
     }
   }
 
-  private toggleControls(config: ToggleControlConfig, context) {
-    const condition = config.condition.call(context);
+  private toggleControls(config: ToggleControlConfig) {
     const resetValue = ('resetValue' in config) && config.resetValue;
-    if (condition) {
+    if (config.condition) {
       config.controls.forEach(control => this.enableControl(control));
     } else {
       config.controls.forEach(control => {
@@ -48,10 +47,4 @@ export class ToggleControlService {
       this.formChanged = true;
     }
   }
-
-  // private updateForm() {
-  //   this.form.updateValueAndValidity();
-  // this.cd.detectChanges();
-  // }
-
 }

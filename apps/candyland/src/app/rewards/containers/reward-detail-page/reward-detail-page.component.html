@@ -13,16 +13,16 @@
 <div class="reward-detail-content">
 
   <!--Available Vouchers-->
-  <mat-card class="card dark-theme" expanded>
+  <mat-card class="card dark-theme" *ngIf="data?.vouchersStatistics" expanded>
     <div class="card-header">
       <p class="card-title">Available Vouchers</p>
     </div>
     <div class="card-content">
       <div class="card-row">
-        <div class="reward-detail-vouchers-value">10,000</div>
+        <div class="reward-detail-vouchers-value">{{avaibleVouchers?.value | number: '2.'}}</div>
         <cl-button classList="dark" (click)="openDialogReplenish()">Replenish</cl-button>
       </div>
-      <cl-vouchers-progress-bar></cl-vouchers-progress-bar>
+      <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
     </div>
   </mat-card>
   <!--/ Available Vouchers-->

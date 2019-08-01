@@ -36,8 +36,19 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(RewardReplenishPopupComponent,
       {panelClass: 'reward-replenish-dialog', data: this.data.vouchers.voucherCode});
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((value) => {
+      if (value) {
+        this.avaibleVouchers = value;
+      }
     });
+  }
+
+  get avaibleVouchers() {
+    return this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
+  }
+
+  set avaibleVouchers(value) {
+    this.avaibleVouchers.value = value;
   }
 
   private getData() {
@@ -63,5 +74,4 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
         this.cd.detectChanges();
       });
   }
-
 }

@@ -131,6 +131,20 @@
     }
   ],
   "name": "Reward 1",
+  "vouchersStatistics": [
+    {
+      "type": "available",
+      "value": 30000
+    },
+    {
+      "type": "expired",
+      "value": 10000
+    },
+    {
+      "type": "issued",
+      "value": 50000
+    }
+  ],
   "rewardInfo": {
     "image": "assets/images/spin-the-wheel-preview.png",
     "rewardType": "Buy X get Y",

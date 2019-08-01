@@ -18,7 +18,7 @@
 .cl-ink-bar {
   position: absolute;
   bottom: 0;
-  height: 2px;
+  height: 0.2rem;
   transition: .5s cubic-bezier(.35,0,.25,1);
 }
 .cl-ink-bar {
@@ -43,7 +43,7 @@
   }
 
   &:before {
-    bottom: -1px;
+    bottom: -0.1rem;
     z-index: 5;
     border-bottom: 8px solid #fff;
   }

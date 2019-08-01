@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class RewardMerchantItemComponent implements OnInit {
   @Input() public merchant = {
-    image: '/assets/images/spin-the-wheel-preview.png',
+    image: 'assets/images/spin-the-wheel-preview.png',
     type: 'Starbucks',
     phone: '+65 9129 8888',
     category: '40 Branches'
