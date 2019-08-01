@@ -4,7 +4,7 @@ import { UsersRolesComponent } from './users-roles.component';
 import { UsersRolesListComponent } from './components/users-roles-list/users-roles-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatButtonModule, MatDialogModule, MatFormFieldModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule,
   MatIconModule,
   MatMenuModule,
   MatPaginatorModule, MatRadioModule, MatSelectModule,
@@ -42,7 +42,8 @@ import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module
     MatDialogModule,
     NoDataModule,
     RoleLabelModule,
-    InfoHintModule
+    InfoHintModule,
+    MatCardModule
   ]
 })
 export class UsersRolesModule { }

@@ -1,36 +1,29 @@
 {
-  "rewardType": [
+  "roleTypes": [
     {
-      "title": "Free",
-      "value": "Free"
+      "title": "Admin",
+      "value": "admin",
+      "description": "Has full access to the internal group settings provided by the Super Admin, can invite users to the group"
     },
     {
-      "title": "Cashback",
-      "value": "Cashback"
+      "title": "Creator",
+      "value": "creator",
+      "description": "Has access to customer support features and view only"
     },
     {
-      "title": "Points",
-      "value": "Points"
+      "title": "Customer Support",
+      "value": "customer",
+      "description": "Has access to create, update within the scope of module provided access to. Manager can launch campaigns"
     },
     {
-      "title": "Buy X Get Y",
-      "value": "Buy X Get Y"
+      "title": "Manager",
+      "value": "manager",
+      "description": "Has access to create, update within the scope of modules provided access to. Creator may not launch campaigns"
     },
     {
-      "title": "Fixed Discount Amount",
-      "value": "Fixed Discount Amount"
-    },
-    {
-      "title": "Fixed Discount Item",
-      "value": "Fixed Discount Item"
-    },
-    {
-      "title": "Percent Discount",
-      "value": "Percent Discount"
-    },
-    {
-      "title": "Set Price Coupon",
-      "value": "Set Price Coupon"
+      "title": "Viewer",
+      "value": "viewer",
+      "description": "Has access to view only"
     }
   ],
   "durationLimits": [

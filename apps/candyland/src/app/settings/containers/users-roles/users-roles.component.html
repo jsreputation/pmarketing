@@ -9,18 +9,15 @@
         <mat-form-field appearance="outline" class="control-input">
           <mat-select [formControl]="filter" placeholder="All">
             <mat-option value="">All</mat-option>
-            <mat-option value="active">Active</mat-option>
-            <!--          <mat-option value="pending">pending</mat-option>-->
-            <mat-option value="draft">Draft</mat-option>
-            <mat-option value="sheduled">Sheduled</mat-option>
-            <mat-option value="paused">Paused</mat-option>
-            <mat-option value="ended">Ended</mat-option>
+            <ng-container *ngFor="let option of config?.roleTypes">
+              <mat-option [value]="option.value">{{option.title}}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
       </ng-container>
     </cl-table-filters>
     <!--table-->
-    <cl-users-roles-list [dataSource]="dataSource"></cl-users-roles-list>
+    <cl-users-roles-list [dataSource]="dataSource" [config]="config"></cl-users-roles-list>
     <!--paginator-->
     <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>

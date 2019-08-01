@@ -13,6 +13,7 @@ import { SettingsService } from '@cl-core/services/settings.service';
 export class UsersRolesComponent  implements AfterViewInit {
   public dataSource = new MatTableDataSource<Engagement>();
   public hasData = true;
+  public config: any;
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
@@ -22,6 +23,8 @@ export class UsersRolesComponent  implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.settingsService.getRolesOptions()
+      .subscribe( config => this.config = config);
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;

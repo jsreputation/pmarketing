@@ -27,4 +27,8 @@ export class SettingsService {
   public getRoles(): Observable<any[]> {
     return this.settingsHttpService.getRoles();
   }
+
+  public getRolesOptions(): Observable<any[]> {
+    return this.settingsHttpService.getRolesOptions();
+  }
 }

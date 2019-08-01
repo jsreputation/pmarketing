@@ -11,6 +11,7 @@ export class UsersRolesListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<any>;
   // @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
   @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
+  @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
 
