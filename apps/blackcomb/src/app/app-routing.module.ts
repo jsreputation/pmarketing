@@ -6,7 +6,6 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { LoginComponent } from './login/login.component';
 
-
 const routes: Routes = [
   {
     path: '',
