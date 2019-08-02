@@ -221,8 +221,8 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public resendOTP(identifier: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public resendOTP(phone: string): Observable<void> {
+    return this.v4OauthService.resendOTP(phone);
   }
 
   // @ts-ignore
