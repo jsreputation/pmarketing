@@ -210,12 +210,12 @@ export class AuthenticationService implements AuthService {
    * of method resetPassword.
    */
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<void> {
+  public forgotPassword(phone: string): Observable<any> {
     return this.v4OauthService.forgotPassword(phone);
   }
 
   // @ts-ignore
-  public resetPassword(phone: string, newPwd: string, otp: string): Observable<void> {
+  public resetPassword(phone: string, newPwd: string, otp: string): Observable<any> {
     return this.v4OauthService.resetPassword(phone, newPwd, otp);
   }
 
@@ -230,7 +230,7 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<void> {
+  public verifyOTP(phone: string, otp: string): Observable<any> {
     return this.v4OauthService.verifyOTP(phone, otp);
   }
 
