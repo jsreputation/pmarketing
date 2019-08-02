@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'mc-root',
@@ -13,6 +14,7 @@ export class AppComponent {
   public onActivate(ref: any): void {
     this.showHeader =
       ref instanceof ForgotPasswordComponent ||
-      ref instanceof EnterPinComponent;
+      ref instanceof EnterPinComponent ||
+      ref instanceof HomeComponent;
   }
 }

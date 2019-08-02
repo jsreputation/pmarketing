@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '@perx/core/dist/perx-core';
+import { ProfileService } from '@perx/core';
 
 const MOCK = {
   firstName: 'John',

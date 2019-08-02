@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +8,15 @@ import { PopupComponent, NotificationService } from '@perx/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'blackcomb';
+  public title: string = 'blackcomb';
 
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog
-    ) {}
+  ) { }
 
-    ngOnInit(): void {
-    this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
-    });
+  public ngOnInit(): void {
+    this.notificationService.$popup
+      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
   }
 }

@@ -4,7 +4,7 @@ import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { VouchersModule } from '@perx/core/dist/perx-core';
+import { VouchersModule } from '@perx/core';
 
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
