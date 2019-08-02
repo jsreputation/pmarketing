@@ -26,6 +26,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   public subTitle: string = 'Enjoy your reward.';
   public buttonTxt: string = 'Get started';
   public showBtn: boolean = false;
+  public bgImgUrl: string = '';
 
   private campaignId: number;
   private gameIns: IGame;
@@ -86,6 +87,9 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
 
   public set game(game: IGame) {
     this.gameIns = game;
+    if (game.backgroundImg) {
+      this.bgImgUrl = game.backgroundImg;
+    }
     if (game.texts.button) {
       this.buttonTxt = game.texts.button;
     }
