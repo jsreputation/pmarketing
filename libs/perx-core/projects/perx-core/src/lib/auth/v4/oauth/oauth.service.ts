@@ -90,7 +90,7 @@ export class OauthService {
   }
 
   public resendOTP(phone: string): Observable<any> {
-    return this.http.get<{ message: string, code: number }>(
+    return this.http.get<{ message: string }>(
       this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
         tap( // Log the result or error
           data => console.log(data),
