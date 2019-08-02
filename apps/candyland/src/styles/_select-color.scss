@@ -1,0 +1,30 @@
+
+.select-color {
+  display: flex;
+  align-items: center;
+
+  &-preview {
+    width: 30px;
+    height: 23px;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+
+  &-text {
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.primary-material {
+  background: #3f51b5;
+}
+
+.accent-material {
+  background: #ff4081;
+}
+
+.warn-material {
+  background: #f44336;
+}
