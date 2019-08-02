@@ -6,6 +6,8 @@ import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ISignUpRequestData } from './models/authentication.model';
+import { IProfile } from '../../profile/profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -226,8 +228,8 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public signup(identifier: string, password: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public signup(profile: ISignUpRequestData): Observable<IProfile> {
+    return this.v4OauthService.signup(profile);
   }
 
   // @ts-ignore

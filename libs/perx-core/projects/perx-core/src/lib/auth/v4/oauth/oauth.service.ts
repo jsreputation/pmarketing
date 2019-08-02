@@ -1,7 +1,10 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { IProfile } from '../../../profile/profile.model';
+import { ISignUpRequestData } from '../../authentication/models/authentication.model';
+import { V4ProfileService, IV4ProfileResponse } from '../../../profile/v4-profile.service';
 
 export class EnvConfig {
   // defaults
@@ -106,5 +109,17 @@ export class OauthService {
           error => console.log(error)
         )
       );
+  }
+
+  public signup(profile: ISignUpRequestData): Observable<IProfile> {
+    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', {
+      params: profile
+    }).pipe(
+      tap( // Log the result or error
+        data => console.log(data),
+        error => console.log(error)
+      ),
+      map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+    );
   }
 }
