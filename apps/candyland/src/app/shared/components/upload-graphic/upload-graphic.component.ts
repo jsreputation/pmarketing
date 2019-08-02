@@ -15,6 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
+  @Input() public placeholder = 'Recommended format: .JPG or .PNG';
+  @Input() public classList = '';
   @Input() selectGraphic: any;
   @Input() selectedGraphic: any;
 
