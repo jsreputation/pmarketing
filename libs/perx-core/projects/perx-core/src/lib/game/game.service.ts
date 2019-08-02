@@ -10,6 +10,7 @@ enum GAME_TYPE {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata'
 }
+
 interface Asset {
   type: string;
   value: {
@@ -18,6 +19,7 @@ interface Asset {
     image_url: string;
   };
 }
+
 interface Outcome {
   button_text: string;
   description: string;
@@ -60,7 +62,7 @@ interface PinataDisplayProperties extends GameProperties {
 
 interface Game {
   campaign_id: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties;
+  display_properties: TreeDisplayProperties|PinataDisplayProperties;
   game_type: GAME_TYPE;
   id: number;
   number_of_tries: number;
@@ -102,7 +104,7 @@ export class GameService implements IGameService {
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree|IPinata;
     switch (game.game_type) {
       case GAME_TYPE.shakeTheTree:
         type = TYPE.shakeTheTree;
@@ -179,11 +181,11 @@ export class GameService implements IGameService {
   }
 
   public play(gameId: number): Observable<any> {
-    return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null);
+    return this.httpClient.put<IV4PlayResponse>(`${ this.hostName }/v4/games/${ gameId }/play`, null);
   }
 
   public get(gameId: number): Observable<IGame> {
-    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
+    return this.httpClient.get<GameResponse>(`${ this.hostName }/v4/games/${ gameId }`)
       .pipe(
         map(res => res.data),
         map(game => GameService.v4GameToGame(game))
@@ -191,7 +193,7 @@ export class GameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    return this.httpClient.get<GamesResponse>(`${ this.hostName }/v4/campaigns/${ campaignId }/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
