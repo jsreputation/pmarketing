@@ -1,0 +1,69 @@
+.container {
+  height: 100%;
+  background-color: #ffffff;
+
+  .main {
+    background-color: #ffffff;
+  }
+
+  .customer-info {
+    text-align: center;
+    padding: 3.2rem 1.5rem;
+
+    p {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 900;
+    }
+
+    small {
+      font-size: 1.4rem;
+    }
+  }
+
+  .rewards {
+    background-color: #ffffff;
+
+    .reward {
+      .reward-image {
+        text-align: center;
+        width: 33.33%;
+
+        img {
+          width: 100%;
+          max-width: 10rem;
+        }
+      }
+
+      .reward-info {
+        text-align: left;
+        width: 33.33%;
+        padding-left: 0.5rem;
+
+        .reward-name {
+          font-size: 1.4rem;
+          font-weight: 900;
+        }
+
+        .reward-description {
+          font-size: 1.2rem;
+        }
+      }
+
+      .reward-quantity {
+        text-align: center;
+        position: relative;
+        width: 33.33%;
+      }
+    }
+  }
+
+  .btn-container {
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+
+    .btn-transparent {
+      color: #0f69af;
+      margin-top: 1rem;
+    }
+  }
+}

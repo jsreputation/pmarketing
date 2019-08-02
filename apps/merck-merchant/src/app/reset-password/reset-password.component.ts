@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-reset-password',
