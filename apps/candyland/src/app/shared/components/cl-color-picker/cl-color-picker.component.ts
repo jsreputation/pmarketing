@@ -18,10 +18,10 @@ export class ClColorPickerComponent implements ControlValueAccessor {
   public color = '#2883e9';
   public disable: boolean;
   public onChange: any = () => {
-  };
+  }
 
   public onTouch: any = () => {
-  };
+  }
   constructor() {
   }
 
