@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 
-fdescribe('OauthService', () => {
+describe('OauthService', () => {
   const environment = {
     apiHost: 'localhost:4000',
     production: false,
@@ -100,4 +100,21 @@ fdescribe('OauthService', () => {
 
     httpTestingController.verify();
   });
+
+  it('should resend OTP', (done: DoneFn) => {
+    service.resendOTP('6398898888')
+      .subscribe((res: { message: string }) => {
+        expect(res.message).toBe('Verification code has been resent');
+        done();
+      });
+
+    const req = httpTestingController.expectOne(baseUrl + 'v4/customers/resend_confirmation?phone=6398898888');
+
+    expect(req.request.method).toEqual('GET');
+
+    req.flush({ message: 'Verification code has been resent' });
+
+    httpTestingController.verify();
+  });
+
 });
