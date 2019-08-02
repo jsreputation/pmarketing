@@ -183,14 +183,11 @@ export class AuthenticationService implements AuthService {
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
    */
-  public v4GetAppAccessToken(): void {
-    this.v4OauthService.getAppAccessToken().subscribe(
-      (resp) => {
+  public v4GetAppAccessToken(): Observable<any> {
+    return this.v4OauthService.getAppAccessToken().pipe(
+      tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
-      },
-      (err) => {
-        console.log(err);
-      }
+      })
     );
   }
 

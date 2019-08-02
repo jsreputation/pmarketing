@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class EnvConfig {
   // defaults
   public env: any = {
-    apiHost: 'localhost:3000',
+    apiHost: 'https://api.perxtech.io',
     production: false,
     isWhistler: true,
     preAuth: false,
