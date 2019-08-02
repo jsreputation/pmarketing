@@ -1,12 +1,12 @@
 <div class="home-body">
-  <perx-core-loyalty-summary [loyaltyId]="1"></perx-core-loyalty-summary>
+  <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
   <!-- <perx-core-rewards-carousel></perx-core-rewards-carousel> -->
   <!-- <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed> -->
   <div class="reward-collection">
-      <div class="reward-title">
-        Featured Rewards
-      </div>
-      <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
+    <div class="reward-title">
+      Featured Rewards
+    </div>
+    <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
   </div>
-  
+
 </div>
