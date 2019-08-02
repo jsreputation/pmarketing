@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.reward-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  perx-core-reward {
+    flex: 1 auto;
+  }
+
+  .actions-container {
+    flex: 0;
+    position: relative;
+    bottom: 0;
+  }
+}
+
+.actions-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-top: 0.1rem solid darkgray;
+
+  button {
+    text-transform: uppercase;
+    margin: 1rem 1.2rem;
+
+    &#save-to-wallet-btn {
+      margin-bottom: 1.6rem;
+    }
+  }
+}

@@ -1,3 +1,29 @@
-<p>
-  rewards-list-page works!
-</p>
+<section class="page-header">
+  <h1 class="title">Rewards</h1>
+  <cl-button routerLink="/rewards/new-reward/" classList="primary">Create new</cl-button>
+</section>
+
+<section class="content">
+  <ng-container *ngIf="hasData">
+    <!--filters-->
+    <cl-table-filters [dataSource]="dataSource" classList="block">
+      <ng-container *clTableFilter="'type'; let filter">
+        <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
+      </ng-container>
+    </cl-table-filters>
+    <!--table-->
+    <cl-rewards-list [dataSource]="dataSource"></cl-rewards-list>
+    <!--paginator-->
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </ng-container>
+
+  <cl-no-data *ngIf="!hasData">
+    <h2>
+      Nothing to use yet
+    </h2>
+    <p>
+      See your rewards list here once you created your first reward
+    </p>
+  </cl-no-data>
+</section>
+
