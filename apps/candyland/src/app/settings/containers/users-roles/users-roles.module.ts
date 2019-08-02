@@ -17,7 +17,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { RoleLabelModule } from '@cl-shared/components/role-label/role-label.module';
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
-import { InviteNewUsersPopupComponent } from 'src/app/settings/containers/users-roles/containers/invite-new-users-popup/invite-new-users-popup.component';
+import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 
 @NgModule({
   declarations: [

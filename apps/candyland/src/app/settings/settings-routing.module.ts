@@ -7,12 +7,13 @@ import { CommunicationsComponent } from './containers/communications/communicati
 import { UsersRolesComponent } from './containers/users-roles/users-roles.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/settings/general'},
   {
     path: '',
     component: SettingsComponent,
     children: [
       {
-        path: '',
+        path: 'general',
         component: GeneralComponent
       },
       {

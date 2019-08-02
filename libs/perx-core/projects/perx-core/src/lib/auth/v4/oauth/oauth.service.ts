@@ -1,6 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export class EnvConfig {
   // defaults
@@ -17,13 +18,19 @@ export class EnvConfig {
   providedIn: 'root'
 })
 export class OauthService {
-  public authEndpoint: string;
+  public appAuthEndPoint: string;
+  public userAuthEndPoint: string;
+  public customersEndPoint: string;
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
     if (!config.env.production) {
-      this.authEndpoint = 'http://localhost:4000/v4/oauth';
+      this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
+      this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
+      this.customersEndPoint = 'http://localhost:4000/v4/customers';
     } else {
-      this.authEndpoint = config.env.baseHref + 'v4/oauth';
+      this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
+      this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
+      this.customersEndPoint = config.env.baseHref + 'v4/customers';
     }
   }
 
@@ -39,7 +46,7 @@ export class OauthService {
       httpParams = httpParams.append('campaign_id', campaignId);
     }
 
-    return this.http.post(this.authEndpoint + '/token', null, {
+    return this.http.post(this.userAuthEndPoint + '/token', null, {
       params: httpParams
     });
   }
@@ -49,8 +56,55 @@ export class OauthService {
       .append('url', location.host)
       .append('identifier', user);
 
-    return this.http.post(this.authEndpoint + '/token', null, {
+    return this.http.post(this.userAuthEndPoint + '/token', null, {
       params: httpParams
     });
+  }
+
+  public getAppAccessToken(): Observable<any> {
+    const httpParams = new HttpParams()
+      .append('url', location.host);
+    return this.http.post(this.appAuthEndPoint + '/token', null, {
+      params: httpParams
+    });
+  }
+
+  public forgotPassword(phone: string): Observable<any> {
+    return this.http.get<{ message: string }>(
+      this.customersEndPoint + '/forget_password', { params: { phone } }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
+  }
+
+  public verifyOTP(phone: string, otp: string): Observable<any> {
+    return this.http.put<{ message: string, code: number }>(
+      this.customersEndPoint + '/confirm', { params: { phone, confirmation_token: otp } }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
+  }
+
+  public resetPassword(phone: string, password: string, otp: string): Observable<any> {
+    return this.http.put<{ message: string }>(
+      this.customersEndPoint + '/reset_password',
+      {
+        params:
+        {
+          phone,
+          password,
+          password_confirmation: password,
+          confirmation_token: otp
+        }
+      }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
 }
