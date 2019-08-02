@@ -99,7 +99,6 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       this.showBtn = true;
     } else {
       const outcome = game.results.noOutcome;
-      outcome.button = null;
       this.outcomePopup(outcome);
     }
   }
