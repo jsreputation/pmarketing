@@ -17,6 +17,9 @@ export class LoginFormComponent {
   @Output()
   public loginSubmit: EventEmitter<LoginFormValue> = new EventEmitter<LoginFormValue>();
 
+  @Output()
+  public forgotPassword: EventEmitter<string> = new EventEmitter<string>();
+
   public loginForm: FormGroup = new FormGroup({
     user: new FormControl(null, [Validators.required]),
     pass: new FormControl(null, [Validators.required]),
@@ -28,6 +31,10 @@ export class LoginFormComponent {
       return;
     }
     this.loginSubmit.emit(this.loginForm.value);
+  }
+
+  public forgot(): void {
+    this.forgotPassword.emit(this.loginForm.value.user);
   }
 
 }

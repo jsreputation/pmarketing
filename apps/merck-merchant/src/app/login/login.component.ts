@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -12,14 +12,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
   private authenticated: boolean;
-  public errorMessage: string = null;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.initForm();
   }
@@ -56,20 +55,16 @@ export class LoginComponent implements OnInit {
         this.authenticated = false;
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.errorMessage = 'We could not reach the server';
+            this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
             [this.loginForm.controls.email, this.loginForm.controls.password]
               .forEach(c => c.setErrors({
                 invalid: true
               }));
-            this.errorMessage = 'Invalid credentials';
+            this.notificationService.addSnack('Invalid credentials');
           }
         }
       });
-  }
-
-  public onCrossClicked(): void {
-    this.errorMessage = null;
   }
 
   public onForgotPassword(): void {

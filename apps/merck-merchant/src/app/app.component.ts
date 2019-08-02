@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService } from '@perx/core/dist/perx-core';
+import { NotificationService } from '@perx/core';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 

@@ -15,7 +15,7 @@
     </mat-error>
   </mat-form-field>
 
-  <a class="forget-password" [routerLink]="'/'">forget password</a>
+  <a class="forget-password" (click)="forgot()">forget password</a>
   <mat-checkbox formControlName="stayLoggedIn">Stay logged in</mat-checkbox>
 
   <button mat-raised-button color="primary" class="submit-button">Sign in</button>
