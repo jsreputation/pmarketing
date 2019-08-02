@@ -5,11 +5,11 @@ import { UsersRolesListComponent } from './components/users-roles-list/users-rol
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule,
-  MatIconModule,
+  MatIconModule, MatInputModule,
   MatMenuModule,
-  MatPaginatorModule, MatRadioModule, MatSelectModule,
+  MatPaginatorModule, MatRadioModule, MatSelectModule, MatSlideToggleModule,
   MatSortModule, MatStepperModule,
-  MatTableModule, MatTabsModule
+  MatTableModule, MatTabsModule, MatDividerModule
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
@@ -47,7 +47,10 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
     InfoHintModule,
     MatCardModule,
     MatStepperModule,
-    MatTabsModule
+    MatTabsModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatDividerModule
   ],
   entryComponents: [
     InviteNewUsersPopupComponent
