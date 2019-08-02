@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./custom-theme.scss";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
 $main-blue-theme: #0F69AF;
 $inputfield-background:#F8F8FC;
 $error-message-container-color: #FFC832;
@@ -17,4 +20,8 @@ html {
   font-size: 62.5%;
   font-family: Lato, sans-serif;
   font-style: normal;
+}
+
+.mat-snack-bar-container {
+  background-color: #FFC832 !important;
 }

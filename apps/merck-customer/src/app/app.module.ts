@@ -12,7 +12,9 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSnackBarModule,
+  MatIconModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -31,6 +33,7 @@ import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     SignupComponent,
     ForgotPasswordComponent,
     EnterPinComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatSnackBarModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -65,6 +71,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoyaltyModule.forRoot({env: environment})
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent]
 })
 export class AppModule { }

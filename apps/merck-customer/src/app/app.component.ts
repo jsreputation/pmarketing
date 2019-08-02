@@ -2,8 +2,10 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { PageProperties, BAR_SELECTED_ITEM } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @Component({
   selector: 'mc-root',
@@ -20,9 +22,20 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
+    private notificationService: NotificationService,
+    private snackBar: MatSnackBar
   ) {
       this.preAuth = environment.preAuth;
+      this.notificationService.$snack.subscribe((message: string) => {
+      this.snackBar.openFromComponent(CustomSnackbarComponent, {
+        data: {
+          message,
+          icon: 'clear',
+        },
+        duration: 4000,
+      });
+    });
   }
 
   public ngOnInit(): void {
