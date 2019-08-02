@@ -8,8 +8,8 @@ import {
   MatIconModule,
   MatMenuModule,
   MatPaginatorModule, MatRadioModule, MatSelectModule,
-  MatSortModule,
-  MatTableModule
+  MatSortModule, MatStepperModule,
+  MatTableModule, MatTabsModule
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
@@ -45,7 +45,9 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
     NoDataModule,
     RoleLabelModule,
     InfoHintModule,
-    MatCardModule
+    MatCardModule,
+    MatStepperModule,
+    MatTabsModule
   ],
   entryComponents: [
     InviteNewUsersPopupComponent

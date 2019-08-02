@@ -31,7 +31,7 @@ export class UsersRolesComponent  implements AfterViewInit {
   }
 
   public openDialogInviteNewUsers(): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent);
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog'});
 
     dialogRef.afterClosed().subscribe(() => {
     });
