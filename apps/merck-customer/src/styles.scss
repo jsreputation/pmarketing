@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
 $main-blue-theme: #0F69AF;
 $inputfield-background:#F8F8FC;
 $error-message-container-color: #FFC832;
@@ -15,4 +17,41 @@ html {
   font-size: 62.5%;
   font-family: Lato, sans-serif;
   font-style: normal;
+}
+
+.tabs {
+  h3.mat-line {
+    color: $heading-font-color;
+    font-weight: 900 !important;
+    font-size: 1.4rem !important;
+    line-height: 1.7rem;
+  }
+
+  small {
+    color: #494953;
+    font-size: 1.2rem !important;
+    line-height: 2.1rem;
+  }
+
+  p.links {
+    line-height: 2.5rem;
+    a {
+      color: $main-blue-theme;
+      text-decoration: none;
+
+      &:first-child {
+        float: left;
+        font-size: 1.4rem;
+      }
+
+      &:last-child {
+        float: right;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.mat-snack-bar-container {
+  background-color: $error-message-container-color !important;
 }

@@ -13,14 +13,17 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatRadioModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule,
+  MatIconModule
 } from '@angular/material';
 import {
   AuthenticationModule,
   OauthModule,
   CognitoModule,
   ProfileModule,
-  UtilsModule
+  UtilsModule,
+  LocationModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +34,7 @@ import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,8 @@ import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
     SignupComponent,
     ForgotPasswordComponent,
     EnterPinComponent,
-    FindPharmacyComponent
+    FindPharmacyComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,8 @@ import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
     MatCheckboxModule,
     MatRadioModule,
     MatTabsModule,
+    MatSnackBarModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -62,9 +69,11 @@ import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
-    UtilsModule
+    UtilsModule,
+    LocationModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent]
 })
 export class AppModule { }
