@@ -101,4 +101,21 @@ describe('OauthService', () => {
 
     httpTestingController.verify();
   });
+
+  it('should resend OTP', (done: DoneFn) => {
+    service.resendOTP('6398898888')
+      .subscribe((res: { message: string }) => {
+        expect(res.message).toBe('Verification code has been resent');
+        done();
+      });
+
+    const req = httpTestingController.expectOne(baseUrl + 'v4/customers/resend_confirmation?phone=6398898888');
+
+    expect(req.request.method).toEqual('GET');
+
+    req.flush({ message: 'Verification code has been resent' });
+
+    httpTestingController.verify();
+  });
+
 });
