@@ -169,7 +169,7 @@ describe('VouchersService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should reddem the voucher', (done: DoneFn) => {
+  it('should redeem the voucher', (done: DoneFn) => {
     service.redeemVoucher(21)
       .subscribe(() => {
         expect(true).toBeTruthy();

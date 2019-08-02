@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 // import { Router } from '@angular/router';
-import { TokenStorage, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
+import { AuthenticationService, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public preAuth: boolean;
 
   constructor(
-    private tokenStorage: TokenStorage,
+    private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
     private dialog: MatDialog,
@@ -37,12 +37,12 @@ export class AppComponent implements OnInit {
         const token: string | null = searchParams.get('token');
         const pi: string | null = searchParams.get('pi');
         if (token && pi) {
-          this.tokenStorage.setAccessToken(token);
+          this.authService.saveUserAccessToken(token);
           localStorage.setItem('user-id', pi);
 
           (window as any).primaryIdentifier = searchParams.get('pi');
         } else {
-          this.tokenStorage.getAccessToken()
+          this.authService.getUserAccessToken()
             .subscribe((tok: string) => {
               if (tok === null) {
                 this.notificationService.addPopup({

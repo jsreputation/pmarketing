@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService implements AuthService {
-
   public lastURL: string;
   public authing: boolean;
   public retries: number = 0;
@@ -34,19 +33,10 @@ export class AuthenticationService implements AuthService {
    */
   public isAuthorized(): Observable<boolean> {
     return this.tokenStorage
-      .getAccessToken()
+      .getAppInfoProperty('userAccessToken')
       .pipe(map(token => {
         return !!token;
       }));
-  }
-
-  /**
-   * Get access token
-   * @description Should return access token in Observable from e.g.
-   * localStorage
-   */
-  public getAccessToken(): Observable<string> {
-    return this.tokenStorage.getAccessToken();
   }
 
   /**
@@ -66,7 +56,7 @@ export class AuthenticationService implements AuthService {
               // @ts-ignore
               const userBearer = resp.headers.get('Authorization');
               if (userBearer) {
-                this.saveAccessData(userBearer.split(' ')[1]);
+                this.saveUserAccessToken(userBearer.split(' ')[1]);
               }
             },
             () => {
@@ -100,7 +90,7 @@ export class AuthenticationService implements AuthService {
    * so interceptor won't intercept this request
    */
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
   /**
@@ -120,7 +110,7 @@ export class AuthenticationService implements AuthService {
     // @ts-ignore
     const userBearer = userAuthData.body.data[0].attributes.jwt;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -150,7 +140,7 @@ export class AuthenticationService implements AuthService {
 
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -172,7 +162,7 @@ export class AuthenticationService implements AuthService {
     // @ts-ignore
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -189,6 +179,17 @@ export class AuthenticationService implements AuthService {
       })
     );
   }
+  /**
+   * This is important, for those public pages, API require app level access token in request header
+   * Please add this call in every first page of the app to make sure those public page's API call works
+   */
+  public v4GetAppAccessToken(): Observable<any> {
+    return this.v4OauthService.getAppAccessToken().pipe(
+      tap((resp) => {
+        this.saveAppAccessToken(resp.access_token);
+      })
+    );
+  }
 
   public setInterruptedUrl(url: string): void {
     this.lastURL = url;
@@ -199,7 +200,7 @@ export class AuthenticationService implements AuthService {
   }
 
   public logout(): void {
-    this.tokenStorage.clear();
+    this.tokenStorage.clearAppInfoProperty('userAccessToken');
   }
 
   /**
@@ -207,13 +208,13 @@ export class AuthenticationService implements AuthService {
    * of method resetPassword.
    */
   // @ts-ignore
-  public forgotPassword(identifier: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public forgotPassword(phone: string): Observable<void> {
+    return this.v4OauthService.forgotPassword(phone);
   }
 
   // @ts-ignore
-  public resetPassword(otp: string, password: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public resetPassword(phone: string, newPwd: string, otp: string): Observable<void> {
+    return this.v4OauthService.resetPassword(phone, newPwd, otp);
   }
 
   // @ts-ignore
@@ -227,8 +228,8 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public verifyOTP(identifier: string, otp: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public verifyOTP(phone: string, otp: string): Observable<void> {
+    return this.v4OauthService.verifyOTP(phone, otp);
   }
 
   // @ts-ignore
@@ -237,18 +238,54 @@ export class AuthenticationService implements AuthService {
   }
 
   /**
-   * PRIVATE HELPER FUNCTIONS
+   * Get access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
    */
 
-  private saveAccessData(accessToken: string): void {
-    this.tokenStorage.setAccessToken(accessToken);
+  public getAccessToken(): Observable<string> {
+    const userAccessToken = this.getUserAccessToken();
+    const appAccessToken = this.getAppAccessToken();
+    return userAccessToken ? userAccessToken : appAccessToken;
   }
 
-  // private getUrlParameter(name) {
-  //   const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
-  //   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  //   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  //   const results = regex.exec(url);
-  //   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  // }
+  /**
+   * Get user access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public getUserAccessToken(): Observable<string> {
+    return this.tokenStorage.getAppInfoProperty('userAccessToken');
+  }
+
+  /**
+   * Set user access token
+   * @description Should set user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public saveUserAccessToken(accessToken: string): void {
+    this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
+  }
+
+  /**
+   * Get user access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public getAppAccessToken(): Observable<string> {
+    return this.tokenStorage.getAppInfoProperty('appAccessToken');
+  }
+
+  /**
+   * Set access token
+   * @description Should set user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public saveAppAccessToken(accessToken: string): void {
+    this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
+  }
 }
