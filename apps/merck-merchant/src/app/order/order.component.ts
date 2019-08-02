@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RewardsService, IReward } from '../services/rewards.service';
 
-interface IPayload {
+export interface IPayload {
   name: string;
   id: string;
 }
