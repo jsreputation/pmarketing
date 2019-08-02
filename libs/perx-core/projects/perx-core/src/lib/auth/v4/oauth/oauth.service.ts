@@ -33,7 +33,7 @@ export class OauthService {
       this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
     }
-    this.customersEndPoint = config.env.apiHost + 'v4/customers';
+    this.customersEndPoint = config.env.apiHost + '/v4/customers';
   }
 
   public authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
