@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 
-fdescribe('OauthService', () => {
+describe('OauthService', () => {
   const environment = {
     apiHost: 'localhost:4000',
     production: true,
