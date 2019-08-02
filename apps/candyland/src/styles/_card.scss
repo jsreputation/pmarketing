@@ -133,4 +133,14 @@
   .mat-horizontal-content-container {
     padding: 0;
   }
+
+  &.dark-theme {
+    color: $white-color;
+    border-radius: 8px !important;
+    background-color: $dark-color !important;
+
+    .card-title, .card-label {
+      color: $white-color;
+    }
+  }
 }

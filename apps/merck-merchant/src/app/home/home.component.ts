@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onRedemption(): void {
-    this.router.navigate(['/qrscanner/reward-redemption']);
+    this.router.navigate(['/qrscanner/redeem']);
   }
 
   public onLogOut(): void {

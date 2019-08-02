@@ -10,7 +10,7 @@ import {
   MatInputModule,
   MatRippleModule,
 } from '@angular/material';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('ResetPasswordComponent', () => {

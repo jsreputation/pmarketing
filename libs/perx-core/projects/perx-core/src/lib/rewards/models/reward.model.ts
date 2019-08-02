@@ -15,4 +15,6 @@ export interface IReward {
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
+  termsAndConditions: string;
+  howToRedeem: string;
 }

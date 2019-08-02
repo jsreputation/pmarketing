@@ -11,7 +11,9 @@ const routes: Routes = [
   {
     path: 'rewards', loadChildren: () => import('./rewards/rewards.module').then(mod => mod.RewardsModule),
     canActivate: [ProtectedGuard]
-
+  },
+  {
+    path: 'utils', loadChildren: () => import('./utils/utils.module').then(mod => mod.UtilsModule)
   },
   { path: 'login', component: LoginComponent }
 ];
