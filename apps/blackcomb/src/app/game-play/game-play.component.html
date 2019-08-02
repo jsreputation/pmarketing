@@ -9,7 +9,7 @@
         *ngIf="gameType == 'pinata'" 
         [stillImg]="'assets/pinata/still-img.png'"
         [openedImg]="'assets/pinata/opened-img.png'" 
-        (tap)="onPinataTap($event)"
+        (broken)="gameCompleted()"
         [nbTaps]="pinataTotalTaps"
         [enabled]="isEnabled">
       </perx-core-pinata>
