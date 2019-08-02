@@ -1,5 +1,6 @@
 <div class="upload-wrap"
      [class.field-lock]="lock"
+     [ngClass]="classList"
 >
   <input #fileInput type="file"
          *ngIf="!imgURL"
@@ -31,7 +32,7 @@
   </div>
   <div class="upload-type-wrap" *ngIf="!message">
     <span class="upload-type">
-      Recommended format: .JPG or .PNG
+      {{placeholder}}
     </span>
   </div>
 </div>

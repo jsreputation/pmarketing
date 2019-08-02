@@ -2,7 +2,7 @@
   <h1 class="title">Setting</h1>
   <nav mat-tab-nav-bar>
     <a mat-tab-link
-       *ngFor="let link of navLinks"
+       *ngFor="let link of navLinks;"
        [routerLink]="link.path"
        routerLinkActive #rla="routerLinkActive"
        [routerLinkActiveOptions]="{exact: true}"
