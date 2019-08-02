@@ -1,5 +1,8 @@
 <div class="home-body">
-  <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
+  <div class="loyalty-summer">
+    <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
+  </div>
+
   <!-- <perx-core-rewards-carousel></perx-core-rewards-carousel> -->
   <!-- <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed> -->
   <div class="reward-collection">
@@ -8,5 +11,10 @@
     </div>
     <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
   </div>
-
+  <div class="bottom-navigation">
+    <div *ngFor="let bar of navigatePanel" class="nav-bar">
+      <img [src]="bar.img">
+      <div>{{bar.title}}</div>
+    </div>
+  </div>
 </div>

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule), 
+    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule),
   },
-  { 
-    path: 'home', 
-    loadChildren: () => import('./home/home.module').then(mod => mod.HomeModule), 
-    canActivate: [] 
+  {
+    path: '',
+    loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
+    canActivate: [ProtectedGuard]
   }
 ];
 

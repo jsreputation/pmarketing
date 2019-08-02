@@ -11,6 +11,19 @@ import { } from '@perx/core'
 export class HomeComponent implements OnInit, AfterViewInit {
   rewards: Observable<IReward[]>;
   @ViewChild('loyaltySummary', {static: false}) loyaltySummary;
+  navigatePanel = [{
+    activated: false,
+    title: 'Home',
+    img: 'assets/img/home.svg',
+  }, {
+    activated: false,
+    title: 'My Rewards',
+    img: 'assets/img/rewards.svg'
+  }, {
+    activated: false,
+    title: 'Account',
+    img: 'assets/img/account.svg'
+  }]
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
@@ -23,7 +36,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getRewards();
   }
   ngAfterViewInit(): void {
-    this.loyaltySummary.loyalty$ = new BehaviorSubject(['a']);
+    this.loyaltySummary.loyalty$ = new BehaviorSubject({
+      pointsBalance: '100,000', expiringPoints: [ {expireDate :new Date('Jul 17 2017')}], points: 1000, expireDate: new Date('Jul 17 2017')
+    });
     this.cd.detectChanges();
   }
   getRewards() {
