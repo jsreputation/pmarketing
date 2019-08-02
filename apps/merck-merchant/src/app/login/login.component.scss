@@ -3,7 +3,20 @@
   display: block;
 }
 
-.content-container {
+.main-container {
+  background-color: #0f69af;
+
+  .logo {
+    padding-top: 7rem;
+  }
+
+  .container {
+    background-color: #0f69af;
+    padding: 0 1.5rem 1.5rem;
+  }
+}
+
+.content {
   .main-heading {
     font-weight: 900;
     font-size: 3.2rem;
@@ -15,14 +28,14 @@
   }
 
   .forgot-text {
-    color: #0F69AF;
+    color: #0f69af;
     margin-bottom: 3.5rem;
     font-size: 1.2rem;
   }
 
   .full-width__button {
     width: 100%;
-    background-color: #0F69AF;
+    background-color: #0f69af;
     color: #fff;
   }
 }

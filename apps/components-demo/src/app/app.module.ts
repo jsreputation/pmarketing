@@ -5,7 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RewardsModule } from './rewards/rewards.module';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import {
+  AuthenticationModule,
+  CognitoModule,
+  OauthModule,
+  UtilsModule as PerxCoreUtilsModule
+} from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material';
@@ -28,9 +33,9 @@ import { UtilsModule } from './utils/utils.module';
     FormsModule,
     RewardsModule,
     UtilsModule,
+    PerxCoreUtilsModule
   ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
