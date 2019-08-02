@@ -11,17 +11,20 @@ import { CampaignsComponent } from './containers/campaigns/campaigns.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
   MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatMenuModule,
   MatPaginatorModule,
+  MatRadioModule,
   MatSelectModule,
   MatSortModule,
-  MatTableModule,
   MatStepperModule,
-  MatRadioModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatChipsModule
+  MatTableModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -52,9 +55,13 @@ import {
 } from './containers/new-campaign-select-engagement-page/new-campaign-select-engagement-page.component';
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 
 
 @NgModule({
+  providers: [
+    NewCampaignDetailFormService
+  ],
   declarations: [
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,
@@ -99,7 +106,6 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
     MatCardModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatChipsModule,
     ProgressBarModule,
     DateTimePickerModule,
     TimePickerModule,

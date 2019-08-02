@@ -5,13 +5,18 @@ import { ILocation } from './ilocation';
 @Injectable({
   providedIn: 'root'
 })
-export class LocationsService {
+export abstract class LocationsService {
   // @ts-ignore
   public getAll(tags: string[] = []): Observable<ILocation[]> {
     return throwError('not implemented yet');
   }
 
   public getTags(): Observable<string[]> {
+    return throwError('not implemented yet');
+  }
+
+  // @ts-ignore
+  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
     return throwError('not implemented yet');
   }
 }
