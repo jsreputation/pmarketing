@@ -15,6 +15,9 @@ const routes: Routes = [
   {
     path: 'utils', loadChildren: () => import('./utils/utils.module').then(mod => mod.UtilsModule)
   },
+  {
+    path: 'location', loadChildren: () => import('./location/location.module').then(mod => mod.LocationModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 
