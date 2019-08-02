@@ -133,6 +133,14 @@
     "@angular-devkit/architect" "0.800.3"
     rxjs "6.4.0"
 
+"@angular-devkit/build-ng-packagr@~0.800.6":
+  version "0.800.6"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-ng-packagr/-/build-ng-packagr-0.800.6.tgz#2d6201a129100bb66b93da0e6bd754d158dddaa6"
+  integrity sha512-Ahu4Q9zNtgulD9d96vpKkqg5wGpeYpnq8VBZ/wKCA1M1DLNQAdGegDMfpPErzVKYBRc85ZItVh0yffyFIe6waQ==
+  dependencies:
+    "@angular-devkit/architect" "0.800.6"
+    rxjs "6.4.0"
+
 "@angular-devkit/build-optimizer@0.800.3":
   version "0.800.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.800.3.tgz#c7d17d35e501ab8f5bb31005d2c51928d8664555"
