@@ -9,10 +9,10 @@ import { Type } from '@angular/core';
 describe('OauthService', () => {
   const environment = {
     apiHost: 'localhost:4000',
-    production: true,
+    production: false,
     isWhistler: false,
     preAuth: false,
-    baseHref: 'https://api.perxtech.io/'
+    baseHref: 'http://localhost:4000'
   };
 
   let httpTestingController: HttpTestingController;
@@ -42,7 +42,7 @@ describe('OauthService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v2/oauth/token?url=' + url);
+    const req = httpTestingController.expectOne('http://localhost:4000/v2/oauth/token?url=' + url);
 
     expect(req.request.method).toEqual('POST');
 
@@ -58,7 +58,7 @@ describe('OauthService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/customers/forget_password?phone=6398898888');
+    const req = httpTestingController.expectOne('http://localhost:4000/v4/customers/forget_password?phone=6398898888');
 
     expect(req.request.method).toEqual('GET');
 
@@ -75,7 +75,7 @@ describe('OauthService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/customers/confirm');
+    const req = httpTestingController.expectOne('http://localhost:4000/v4/customers/confirm');
 
     expect(req.request.method).toEqual('PUT');
 
@@ -91,7 +91,7 @@ describe('OauthService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/customers/reset_password');
+    const req = httpTestingController.expectOne('http://localhost:4000/v4/customers/reset_password');
 
     expect(req.request.method).toEqual('PUT');
 
