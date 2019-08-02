@@ -8,14 +8,15 @@ import { Type } from '@angular/core';
 
 describe('OauthService', () => {
   const environment = {
-    apiHost: 'localhost:4000',
+    apiHost: 'https://api.perxtech.io',
     production: false,
     isWhistler: false,
     preAuth: false,
     baseHref: '/'
   };
 
-  const baseUrl = 'http://localhost:4000/';
+  const baseUrl = 'https://api.perxtech.io/';
+  const baseUrlForAppAccessToken = 'http://localhost:4000/';
   let httpTestingController: HttpTestingController;
   let service: OauthService;
 
@@ -43,7 +44,7 @@ describe('OauthService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(baseUrl + 'v2/oauth/token?url=' + url);
+    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token?url=' + url);
 
     expect(req.request.method).toEqual('POST');
 

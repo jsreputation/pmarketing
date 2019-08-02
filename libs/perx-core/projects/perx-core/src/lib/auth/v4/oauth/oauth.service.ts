@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 export class EnvConfig {
   // defaults
   public env: any = {
-    apiHost: 'localhost:3000',
+    apiHost: 'https://api.perxtech.io',
     production: false,
     isWhistler: false,
     preAuth: false,
@@ -26,12 +26,11 @@ export class OauthService {
     if (!config.env.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
-      this.customersEndPoint = 'http://localhost:4000/v4/customers';
     } else {
       this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
-      this.customersEndPoint = config.env.baseHref + 'v4/customers';
     }
+    this.customersEndPoint = config.env.apiHost + '/v4/customers';
   }
 
   public authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
