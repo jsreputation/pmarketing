@@ -48,5 +48,14 @@
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
-  }
+  },
+  "main": "dist/perx-chart/bundles/perx-chart.umd.js",
+  "module": "dist/perx-chart/fesm5/perx-chart.js",
+  "es2015": "dist/perx-chart/fesm2015/perx-chart.js",
+  "esm5": "dist/perx-chart/esm5/perx-chart.js",
+  "esm2015": "dist/perx-chart/esm2015/perx-chart.js",
+  "fesm5": "dist/perx-chart/fesm5/perx-chart.js",
+  "fesm2015": "dist/perx-chart/fesm2015/perx-chart.js",
+  "typings": "dist/perx-chart/perx-chart.d.ts",
+  "metadata": "dist/perx-chart/perx-chart.metadata.json"
 }

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IData } from '../data.model';
 
 @Component({
   selector: 'pc-map',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
-
+  @Input()
+  public data: Observable<IData>;
 }

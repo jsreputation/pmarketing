@@ -2,4 +2,5 @@
  * Public API Surface of perx-chart
  */
 
-export * from './lib/perx-chart.module';
+export { PerxChartModule } from './lib/perx-chart.module';
+export { IData } from './lib/data.model';

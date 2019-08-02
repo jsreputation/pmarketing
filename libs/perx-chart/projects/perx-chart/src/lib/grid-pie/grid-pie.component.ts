@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IData } from '../data.model';
 
 @Component({
   selector: 'pc-grid-pie',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./grid-pie.component.scss']
 })
 export class GridPieComponent {
-
+  @Input()
+  public data: Observable<IData>;
 }

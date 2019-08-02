@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IData } from '../data.model';
 
 @Component({
   selector: 'pc-calendar-heatmap',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./calendar-heatmap.component.scss']
 })
 export class CalendarHeatmapComponent {
-
+  @Input()
+  public data: Observable<IData>;
 }

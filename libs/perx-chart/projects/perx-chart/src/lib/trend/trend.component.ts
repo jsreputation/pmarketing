@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IData } from '../data.model';
 
 @Component({
   selector: 'pc-trend',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./trend.component.scss']
 })
 export class TrendComponent {
-
+  @Input()
+  public data: Observable<IData>;
 }
