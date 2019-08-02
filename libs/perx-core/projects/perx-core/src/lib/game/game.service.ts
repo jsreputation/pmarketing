@@ -43,6 +43,7 @@ interface GameProperties {
   play_button_text?: string;
   nooutcome?: Outcome;
   outcome?: Outcome;
+  background_image: Asset;
 }
 
 interface TreeDisplayProperties extends GameProperties {
@@ -160,6 +161,7 @@ export class GameService implements IGameService {
       id: game.id,
       campaignId: game.campaign_id,
       type,
+      backgroundImg: game.display_properties.background_image.value.image_url,
       remainingNumberOfTries: game.number_of_tries,
       config,
       texts,
