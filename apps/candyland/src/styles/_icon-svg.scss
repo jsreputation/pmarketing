@@ -154,6 +154,18 @@
   background-color: #2665ee;
 }
 
+.select-merchant-icon {
+  mask: url("/assets/images/select-merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.create-merchant-icon {
+  mask: url("/assets/images/create-merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
 .active {
   .icon {
     background-color: #ffffff;

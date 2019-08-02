@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<div class="container">
+  <div *ngIf="rewards" class="main">
+    <div *ngIf="payload" class="customer-info">
+      <p>{{ payload.name }}</p>
+      <small>{{ payload.id }}</small>
+    </div>
+    <div class="rewards">
+      <mat-divider></mat-divider>
+      <mat-list role="list">
+        <mat-list-item *ngFor="let reward of rewards; let i = index;" class="reward">
+          <mat-divider></mat-divider>
+          <div class="reward-image">
+            <img *ngIf="reward.imageUrl else placeholder" src="{{reward.imageUrl}}" alt="">
+            <ng-template #placeholder>
+              <img src="assets/product-placeholder.jpg" alt="">
+            </ng-template>
+          </div>
+          <div class="reward-info">
+            <p class="reward-name">{{ reward.name }}</p>
+            <p class="reward-description">{{ reward.description }}</p>
+          </div>
+          <div class="reward-quantity">
+            <app-order-quantity
+              [index]="i"
+              [quantity]="reward.quantity"
+              (newQuantity)="newQuantity($event)"
+            ></app-order-quantity>
+          </div>
+        </mat-list-item>
+        <mat-action-list class="btn-container">
+          <button mat-flat-button (click)="onNext()" class="full-width__button btn-blue">Next</button>
+          <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">Cancel</button>
+        </mat-action-list>
+      </mat-list>
+    </div>
+  </div>
+</div>

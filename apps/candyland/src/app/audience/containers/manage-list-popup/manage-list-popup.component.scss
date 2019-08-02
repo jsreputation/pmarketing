@@ -11,7 +11,7 @@
   flex-flow: column nowrap;
 
   ::ng-deep .mat-tab-header {
-    padding: 0 32px !important;
+    padding: 0 3.2rem !important;
   }
 
   &-content {
@@ -64,7 +64,7 @@
     }
 
     & > * {
-      width: 332px;
+      width: 33.2rem;
       box-sizing: content-box;
       @media (max-width: 780px) {
         width: 100%;
@@ -103,7 +103,7 @@
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
-    letter-spacing: 0.18px;
+    letter-spacing: 0.18rem;
     color: $secondary-color;
   }
 

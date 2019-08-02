@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddRewardPopupComponent } from './add-reward-popup.component';
+import { RedeemComponent } from './redeem.component';
 
-describe('AddRewardPopupComponent', () => {
-  let component: AddRewardPopupComponent;
-  let fixture: ComponentFixture<AddRewardPopupComponent>;
+describe('RedeemComponent', () => {
+  let component: RedeemComponent;
+  let fixture: ComponentFixture<RedeemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddRewardPopupComponent ]
+      declarations: [ RedeemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddRewardPopupComponent);
+    fixture = TestBed.createComponent(RedeemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

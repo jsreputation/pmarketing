@@ -1,14 +1,14 @@
-<div class="dialog-header-wrap">
-  <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
-  <p class="dialog-content-title">
+<div class="create-engagement-dialog-header-wrap">
+  <!--<h2 mat-dialog-title class="create-engagement-dialog-title">Create Engagement</h2>-->
+  <p class="create-engagement-dialog-content-title">
     Select Engagement Type
   </p>
-  <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+  <button class="create-engagement-dialog-closed btn-transparent" [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 <mat-dialog-content>
-  <div class="dialog-content">
+  <div class="create-engagement-dialog-content">
 
     <cl-ink [border]="true" [triangle]="true">
       <cl-engagement-type #engagementHost
@@ -36,7 +36,7 @@
 </div>
 
 </mat-dialog-content>
-<div class="dialog-actions"
+<div class="create-engagement-dialog-actions"
 >
 <cl-button [classList]="'third'"
            class="actions-close"

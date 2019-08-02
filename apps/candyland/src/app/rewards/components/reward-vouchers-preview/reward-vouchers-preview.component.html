@@ -1,0 +1,56 @@
+<!--Single code-->
+<ng-container *ngIf="data?.voucherCode?.singleCode">
+  <label class="card-label">Voucher Code Type</label>
+  <p>Single code</p>
+  <p class="card-value">{{data?.voucherCode?.singleCode?.code}}</p>
+</ng-container>
+<!--/ Single code-->
+
+<!--Unique codes: System generated-->
+<ng-container *ngIf="data?.voucherCode?.uniqueGeneratedCode">
+  <label class="card-label">Voucher Code Type</label>
+  <p>Unique codes: System generated</p>
+  <cl-download-button [file]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cl-download-button>
+</ng-container>
+<!--/ Unique codes: System generated-->
+
+<!--Unique codes: User upload-->
+<ng-container *ngIf="data?.voucherCode?.uniqueUserUploadCode">
+  <label class="card-label">Voucher Code Type</label>
+  <p>Unique codes: User upload</p>
+  <div class="reward-vouchers-preview-download">
+    {{data?.voucherCode?.uniqueUserUploadCode?.name}}
+    <cl-download-button [file]="data?.voucherCode?.uniqueUserUploadCode?.file">Download voucher codes
+    </cl-download-button>
+  </div>
+</ng-container>
+<!--/ Unique codes: User upload-->
+
+<!--Merchant PIN-->
+<ng-container *ngIf="data?.voucherCode?.merchantPIN">
+  <label class="card-label">Merchant PIN</label>
+  <p class="card-value">{{data?.voucherCode?.merchantPIN.code}}</p>
+</ng-container>
+<!--/ Merchant PIN-->
+
+<!--Voucher Validity-->
+<div *ngIf="data?.voucherValidity" class="card-section">
+  <div class="card-header">
+    <p class="card-title">
+      Voucher Validity
+    </p>
+  </div>
+  <div class="card-content">
+    <p class="card-value" *ngIf="data?.voucherValidity?.period">
+      {{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}}
+      - {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}
+    </p>
+    <p class="card-value" *ngIf="data?.voucherValidity?.issuanceDate">
+      Valid for
+      {{data?.voucherValidity?.issuanceDate?.times}}
+      {{data?.voucherValidity?.issuanceDate?.duration}}{{data?.voucherValidity?.issuanceDate?.times > 1 ? 's' : ''}}
+      after issuance
+    </p>
+  </div>
+</div>
+<!--/ Voucher Validity-->

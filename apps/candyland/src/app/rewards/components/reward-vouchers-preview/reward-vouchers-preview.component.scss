@@ -1,0 +1,15 @@
+@import "variables";
+
+.reward-vouchers-preview {
+  &-download {
+    height: 4rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.3rem 2rem;
+    border-radius: 4px;
+    background-color: #f8fbfd;
+  }
+}
