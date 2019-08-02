@@ -1,1 +1,175 @@
-<p>branding works!</p>
+<section class="content flex">
+  <div class="branding-form" [formGroup]="formBranding">
+    <mat-card>
+      <div class="reward-wrap">
+        <p class="sub-title">
+          Theme
+        </p>
+      </div>
+      <div class="flex">
+        <div class="control-input select">
+          <p class="game-title">
+            <span>Style</span>
+          </p>
+          <mat-form-field class="branding-select">
+            <mat-select formControlName="style">
+              <mat-option *ngFor="let style of styles" [value]="style.id">
+                {{style.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="control-input">
+          <p class="game-title">
+            <span>Font type</span>
+          </p>
+          <mat-form-field class="branding-select">
+            <mat-select formControlName="font">
+              <mat-option *ngFor="let font of fonts" [value]="font.id">
+                {{font.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="control-input select">
+          <p class="game-title">
+            <span>Primary Color</span>
+          </p>
+          <cl-color-picker [formControlName]="'primaryColor'"></cl-color-picker>
+        </div>
+        <div class="control-input">
+          <p class="game-title">
+            <span>Secondary Color</span>
+          </p>
+          <cl-color-picker [formControlName]="'secondaryColor'"></cl-color-picker>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="card-section">
+      <div class="reward-wrap">
+        <p class="sub-title">
+          Header & Navbar
+        </p>
+      </div>
+      <div class="flex">
+        <div class="control-input select">
+          <p class="game-title">
+            <span>Color</span>
+          </p>
+          <!--color select-->
+          <div class="control-input w-50 select">
+            <mat-form-field color="primary" appearance="outline">
+              <mat-select [formControlName]="'headerNavbarColor'">
+                <mat-select-trigger>
+                  <div class="select-color">
+                    <div class="select-color-preview"
+                         [ngStyle]="{'background-color': headerNavbarColor.value?.color}"
+                    >
+                    </div>
+                    <p class="select-color-text">
+                      {{headerNavbarColor.value?.labelView}}
+                    </p>
+                  </div>
+                </mat-select-trigger>
+                <mat-option [value]="color" *ngFor="let color of listColors">
+                  <div class="select-color">
+                    <div class="select-color-preview"
+                         [ngStyle]="{'background-color': color.color}"
+                    >
+                    </div>
+                    <span class="select-color-text">
+                      {{color.labelView}}
+                    </span>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!--end color select-->
+        </div>
+      </div>
+      <div class="flex">
+        <div class="logo">
+          <mat-radio-group (change)="resetLogo($event)"
+                           class="control-input input-group"
+                           color="primary"
+                           formControlName="logoType">
+            <mat-radio-button value="image">Logo header</mat-radio-button>
+            <mat-radio-button value="text">Text header</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="flex" *ngIf="logoType.value === 'image'">
+        <div class="logo-header-wrap section-margin-t">
+          <cl-upload-graphic classList="stretch"
+                             placeholder="Recommended size: 250px by 50px"
+                             formControlName="logo"
+          >
+
+          </cl-upload-graphic>
+        </div>
+      </div>
+      <div class="flex section-margin-t" *ngIf="logoType.value === 'text'">
+        <div class="control-input">
+          <mat-form-field class="messages-input">
+            <input type="text" [placeholder]="'Your company name'" matInput formControlName="logo">
+            <mat-hint align="end">{{logo.value?.length || 0}}/20</mat-hint>
+            <mat-error *ngIf="logo.hasError('required')">Required field</mat-error>
+            <mat-error *ngIf="logo.hasError('minlength')">Min length 2</mat-error>
+            <mat-error *ngIf="logo.hasError('maxlength')">Max length 20</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="card-section">
+      <div class="reward-wrap">
+        <p class="sub-title">
+          Button
+        </p>
+      </div>
+      <div class="flex">
+        <div class="control-input select">
+          <p class="game-title">
+            <span>Color</span>
+          </p>
+          <!--color select-->
+          <div class="control-input w-50 select">
+            <mat-form-field color="primary" appearance="outline">
+              <mat-select [formControlName]="'button'">
+                <mat-select-trigger>
+                  <div class="select-color">
+                    <div class="select-color-preview"
+                         [ngStyle]="{'background-color': button.value?.color}"
+                    >
+                    </div>
+                    <p class="select-color-text">
+                      {{button.value?.labelView}}
+                    </p>
+                  </div>
+                </mat-select-trigger>
+                <mat-option [value]="color" *ngFor="let color of listColors">
+                  <div class="select-color">
+                    <div class="select-color-preview"
+                         [ngStyle]="{'background-color': color.color}"
+                    >
+                    </div>
+                    <span class="select-color-text">
+                      {{color.labelView}}
+                    </span>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!--end color select-->
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <cl-settings-mobile-preview>
+  </cl-settings-mobile-preview>
+</section>
+
