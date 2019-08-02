@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'mc-forgot-password',
@@ -17,7 +18,8 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.initForm();
   }
@@ -45,6 +47,8 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
   }
 
   public ngOnInit(): void {
+    // TODO: The following Api should return a promise or observable so user should be blocked unless this token gets generated.
+    this.authService.v4GetAppAccessToken();
   }
 
   public onSubmit(): void {
@@ -55,8 +59,16 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
           this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } } );
         },
         err => {
-          console.error('ForgotPassword: ' + err);
-          // TODO: AuthService is not implementing 'forgotPassword' yet. Remove this line once done.
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 0) {
+              this.notificationService.addSnack('We could not reach the server');
+            } else if (err.status === 401) {
+              this.notificationService.addSnack('Invalid mobile number.');
+            } else {
+              this.notificationService.addSnack(err.statusText);
+            }
+          }
+          // TODO: Currently 'forgotPassword' is not stable. Remove this line once done.
           this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } } );
         });
     } catch (error) {

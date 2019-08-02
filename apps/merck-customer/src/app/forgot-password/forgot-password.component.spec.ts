@@ -22,7 +22,7 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {forgotPassword: () => {}}
+          useValue: {forgotPassword: () => {}, v4GetAppAccessToken: () => {}}
         }
       ]
     })
