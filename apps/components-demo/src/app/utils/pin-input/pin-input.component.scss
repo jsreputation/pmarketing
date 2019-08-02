@@ -1,0 +1,13 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 80rem;
+  margin: 3rem 2rem;
+
+  .pin-input-container {
+    width: 100%;
+    margin: 3rem auto;
+    float: none;
+  }
+}
