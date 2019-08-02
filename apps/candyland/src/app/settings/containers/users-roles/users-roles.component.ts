@@ -1,9 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { map } from 'rxjs/operators';
 import { SettingsService } from '@cl-core/services/settings.service';
+import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 
 @Component({
   selector: 'cl-users-roles',
@@ -30,8 +30,8 @@ export class UsersRolesComponent  implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
+  public openDialogInviteNewUsers(): void {
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent);
 
     dialogRef.afterClosed().subscribe(() => {
     });

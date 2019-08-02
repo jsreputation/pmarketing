@@ -9,7 +9,6 @@ import {MatSort, MatTableDataSource} from '@angular/material';
 export class UsersRolesListComponent implements AfterViewInit {
   DATE_FORMAT = 'dd MMM yyyy';
   @Input() public dataSource: MatTableDataSource<any>;
-  // @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
   @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
@@ -20,22 +19,6 @@ export class UsersRolesListComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-  }
-
-  public editItem(id: number) {
-    this.itemAction.emit(id);
-  }
-
-  public duplicateItem(id: number) {
-    this.itemAction.emit(id);
-  }
-
-  public deleteItem(id: number) {
-    this.itemAction.emit(id);
-  }
-
-  public useAsCaptionItem(id: number) {
-    this.itemAction.emit(id);
   }
 
 }
