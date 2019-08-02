@@ -14,6 +14,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   public currentStep: number = 1;
+  public usersPhone: string;
 
   public phoneStepForm: FormGroup = new FormGroup({
     phone: new FormControl(null, [HkbnValidators.required])
@@ -54,6 +55,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       return;
     }
     this.identifier = this.phoneStepForm.value.phone;
+    this.usersPhone = this.identifier.slice(-2);
     // TODO: remove next line when forgotPassword method will be implemented
     this.currentStep = 2;
 
