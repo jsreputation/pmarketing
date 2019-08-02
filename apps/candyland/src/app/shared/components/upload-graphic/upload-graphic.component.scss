@@ -9,7 +9,6 @@
   }
 }
 
-
 .upload {
 
   &-wrap {
@@ -142,3 +141,18 @@
     background: url("/assets/images/preview/triangle.png") no-repeat;
   }
 }
+
+
+.stretch {
+  width: 100%;
+  height: 100%;
+  .upload-input, .upload-btn, .image-wrap, .upload-wrap-btn {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+
+
+
