@@ -1,8 +1,8 @@
 <div class="top-text">
   <p>
-    <strong>{{ title }}</strong>
+    <strong ngxEllipsis [lines]="2">{{ title }}</strong>
   </p>
-  <p>{{ subTitle }}</p>
+  <p ngxEllipsis [lines]="4">{{ subTitle }}</p>
 </div>
 <!-- <div class="logo-area">
   <img class="logo" src="assets/digi-logo.png" />
