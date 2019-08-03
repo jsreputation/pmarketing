@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HorizontalBarComponent } from './horizontal-bar.component';
+import { PerxChartModule } from '@perx/chart';
 
 describe('HorizontalBarComponent', () => {
   let component: HorizontalBarComponent;
@@ -8,9 +9,10 @@ describe('HorizontalBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorizontalBarComponent ]
+      declarations: [HorizontalBarComponent],
+      imports: [PerxChartModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

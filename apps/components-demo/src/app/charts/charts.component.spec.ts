@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChartsComponent } from './charts.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatButtonModule } from '@angular/material';
 
 describe('ChartsComponent', () => {
   let component: ChartsComponent;
@@ -8,9 +10,10 @@ describe('ChartsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartsComponent ]
+      declarations: [ChartsComponent],
+      imports: [RouterTestingModule, MatButtonModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

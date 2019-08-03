@@ -7,13 +7,15 @@ import { VerticalBarComponent } from './vertical-bar/vertical-bar.component';
 import { PerxChartModule} from '@perx/chart';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [ChartsComponent, VerticalBarComponent, HorizontalBarComponent, PieComponent],
   imports: [
     CommonModule,
     ChartsRoutingModule,
-    PerxChartModule
+    PerxChartModule,
+    MatButtonModule
   ]
 })
 export class ChartsModule { }
