@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-communications',
@@ -6,10 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./communications.component.scss']
 })
 export class CommunicationsComponent implements OnInit {
-
-  constructor() { }
+  public formCommunications: FormGroup;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.createFormCommunications();
+  }
+
+  public get smsDisable(): AbstractControl {
+    return this.formCommunications.get('smsDisable');
+  }
+
+  public get emailDisable(): AbstractControl {
+    return this.formCommunications.get('emailDisable');
+  }
+
+  public get smsType(): AbstractControl {
+    return this.formCommunications.get('smsType');
+  }
+
+  private createFormCommunications(): void {
+    this.formCommunications = this.fb.group({
+      smsType: ['perx'],
+      smsDisable: [false],
+      smsContent: [null],
+      emailType: [null],
+      emailDisable: [false]
+    });
   }
 
 }

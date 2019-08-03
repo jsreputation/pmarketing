@@ -54,6 +54,12 @@ button {
   justify-content: space-between !important;
 }
 
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
 .menu-item {
   .mat-list-text {
     padding-left: 0.8rem !important;
