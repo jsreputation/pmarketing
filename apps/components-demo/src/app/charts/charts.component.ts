@@ -14,6 +14,7 @@ export class ChartsComponent {
     { path: 'grid-pie', label: 'Pie Grid' },
     { path: 'trend', label: 'Trend' },
     { path: 'map', label: 'Map' },
-    { path: 'heatmap', label: 'Heat map' },
+    { path: 'heatmap', label: 'Calendar Heat map' },
+    { path: 'line', label: 'Line' },
   ];
 }

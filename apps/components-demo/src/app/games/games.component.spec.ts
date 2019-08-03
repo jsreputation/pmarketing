@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UtilsComponent } from './utils.component';
+import { GamesComponent } from './games.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatToolbarModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 
-describe('UtilsComponent', () => {
-  let component: UtilsComponent;
-  let fixture: ComponentFixture<UtilsComponent>;
+describe('ChartsComponent', () => {
+  let component: GamesComponent;
+  let fixture: ComponentFixture<GamesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatTabsModule],
-      declarations: [UtilsComponent]
+      declarations: [GamesComponent],
+      imports: [RouterTestingModule, MatTabsModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UtilsComponent);
+    fixture = TestBed.createComponent(GamesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

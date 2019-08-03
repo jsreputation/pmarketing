@@ -18,6 +18,9 @@ const routes: Routes = [
   {
     path: 'charts', loadChildren: () => import('./charts/charts.module').then(mod => mod.ChartsModule)
   },
+  {
+    path: 'games', loadChildren: () => import('./games/games.module').then(mod => mod.GamesModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 

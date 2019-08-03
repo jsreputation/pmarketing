@@ -1,0 +1,9 @@
+<mat-form-field>
+    <input matInput placeholder="Nb taps" value="5" min="1" type="number" aria-autocomplete="none" #nbTaps>
+</mat-form-field>
+<perx-core-pinata 
+    #tap 
+    [stillImg]="'assets/games/full-pinata.png'" 
+    [openedImg]="'assets/games/opened-pinata.png'"
+    [nbTaps]="nbTaps.value">
+</perx-core-pinata>
