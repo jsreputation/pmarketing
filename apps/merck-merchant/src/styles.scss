@@ -70,3 +70,13 @@ body {
   align-items: normal !important;
   padding: 1.5rem !important;
 }
+
+.scanner {
+  max-width: 60rem;
+  max-height: 60rem;
+  margin: 0 auto;
+
+  video {
+    min-height: 40rem;
+  }
+}

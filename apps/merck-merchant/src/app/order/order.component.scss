@@ -1,7 +1,4 @@
 .container {
-  height: 100%;
-  background-color: #ffffff;
-
   .main {
     background-color: #ffffff;
     padding-top: 5rem;
@@ -25,7 +22,13 @@
   .rewards {
     background-color: #ffffff;
 
-    .reward {
+    .reward, .rewards-selected {
+      .points {
+        color: #149b5f;
+        text-align: center;
+        font-size: 1.6rem;
+      }
+
       .reward-image {
         text-align: center;
         width: 33.33%;
@@ -55,6 +58,14 @@
         text-align: center;
         position: relative;
         width: 33.33%;
+
+        .qty {
+          position: absolute;
+          width: 100%;
+          font-size: 1.6rem;
+          font-weight: normal;
+          bottom: 0;
+        }
       }
     }
   }
