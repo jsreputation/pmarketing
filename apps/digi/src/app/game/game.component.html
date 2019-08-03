@@ -1,41 +1,46 @@
-<app-header [title]="title" [subTitle]="subTitle"> </app-header>
+<div class="game-container">
+  <app-header [title]="title" [subTitle]="subTitle"></app-header>
 
-<div class="game-wrapper">
-  <div class="game-wrapper__right">
-    <perx-core-shake-tree #tree
-      *ngIf="game && game.type === 0"
-      [treeImg]="game.config.treeImg" 
-      [giftImg]="game.config.giftImg"
-      [waitingManImg]="game.config.waitingAccessoryImg"
-      [waitingManCelebrateImg]="game.config.celebratingAccessoryImg" 
-      [nbHangedGifts]="game.config.nbHangedGift" 
-      [nbFallingGifts]="game.config.nbGiftsToDrop"
-      (completed)="onComplete()" 
-      [enabled]="isEnabled" 
-      [nbShakes]="2" 
-      [distanceFromTree]=26 
-      [bottomDistance]=1
+  <div class="game-wrapper">
+    <div class="game-wrapper__right">
+      <perx-core-shake-tree #tree
+                            *ngIf="game && game.type === 0"
+                            [treeImg]="game.config.treeImg"
+                            [giftImg]="game.config.giftImg"
+                            [waitingManImg]="game.config.waitingAccessoryImg"
+                            [waitingManCelebrateImg]="game.config.celebratingAccessoryImg"
+                            [nbHangedGifts]="game.config.nbHangedGift"
+                            [nbFallingGifts]="game.config.nbGiftsToDrop"
+                            (completed)="onComplete()"
+                            [enabled]="isEnabled"
+                            [nbShakes]="2"
+                            [distanceFromTree]=26
+                            [bottomDistance]=1
+      >
+      </perx-core-shake-tree>
+      <perx-core-pinata #pinata
+                        *ngIf="game && game.type === 1"
+                        [stillImg]="game.config.stillImg"
+                        [openedImg]="game.config.brokenImg"
+                        [movingImg]="game.config.breakingImg"
+                        [nbTaps]="2"
+                        [enabled]="isEnabled"
+                        (broken)="onComplete()"
+      >
+      </perx-core-pinata>
+    </div>
+  </div>
+  <div class="actions-container">
+    <button
+        mat-flat-button
+        color="primary"
+        (click)="isEnabled = true"
+        *ngIf="!isEnabled && showBtn"
     >
-    </perx-core-shake-tree>
-    <perx-core-pinata #pinata
-      *ngIf="game && game.type === 1"
-      [stillImg]="game.config.stillImg"
-      [openedImg]="game.config.brokenImg"
-      [movingImg]="game.config.breakingImg"
-      [nbTaps]="2"
-      [enabled]="isEnabled"
-      (broken)="onComplete()"
-    >
-    </perx-core-pinata>
+      {{buttonTxt}}
+    </button>
   </div>
 </div>
-<div class="actions-container">
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="isEnabled = true"
-    *ngIf="!isEnabled && showBtn"
-  >
-    {{buttonTxt}}
-  </button>
+<div class="full-bg-img">
+  <img [src]="bgImgUrl">
 </div>
