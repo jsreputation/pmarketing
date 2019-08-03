@@ -35,7 +35,8 @@
         mat-flat-button
         color="primary"
         (click)="isEnabled = true"
-        *ngIf="!isEnabled && showBtn"
+        [disabled]="disableBtn"
+        *ngIf="!isEnabled"
     >
       {{buttonTxt}}
     </button>
