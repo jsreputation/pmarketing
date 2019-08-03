@@ -184,6 +184,16 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
+  test:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run lint-ci
+      - run: yarn run test-ci
+#      - run: yarn run e2e-ci
   build:
     machine:
       image: ubuntu-1604:201903-01
@@ -205,9 +215,6 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-      - run: yarn run lint-ci
-      - run: yarn run test-ci
-    #      - run: yarn run e2e-ci
   build-prod:
     machine:
       image: ubuntu-1604:201903-01
@@ -234,6 +241,11 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
+      - test:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
       - build:
           filters:
             tags:
