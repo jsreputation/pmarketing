@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { RewardsService, IReward } from '../services/rewards.service';
 import { NotificationService } from '@perx/core';
 
-interface IPayload {
+export interface IPayload {
   name: string;
   id: string;
 }
