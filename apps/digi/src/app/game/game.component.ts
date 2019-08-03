@@ -25,8 +25,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   public title: string = 'Play the game and win!';
   public subTitle: string = 'Enjoy your reward.';
   public buttonTxt: string = 'Get started';
-  public showBtn: boolean = false;
   public bgImgUrl: string = '';
+  public disableBtn: boolean = true;
 
   private campaignId: number;
   private gameIns: IGame;
@@ -100,7 +100,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       this.subTitle = game.texts.subTitle;
     }
     if (game.remainingNumberOfTries > 0) {
-      this.showBtn = true;
+      this.disableBtn = false;
     } else {
       const outcome = game.results.noOutcome;
       this.outcomePopup(outcome);

@@ -33,9 +33,10 @@
   <div class="actions-container">
     <button
         mat-flat-button
-        color="primary"
+        [color]="!disableBtn ? 'primary' : ''"
         (click)="isEnabled = true"
-        *ngIf="!isEnabled && showBtn"
+        [disabled]="disableBtn"
+        *ngIf="!isEnabled"
     >
       {{buttonTxt}}
     </button>
