@@ -299,6 +299,8 @@ workflows:
           requires:
             - build_docker_image
             - build
+            - test
+            - lint
             - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
