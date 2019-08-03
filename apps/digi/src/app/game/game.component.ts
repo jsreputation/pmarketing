@@ -102,8 +102,11 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
     if (game.remainingNumberOfTries > 0) {
       this.disableBtn = false;
     } else {
-      const outcome = game.results.noOutcome;
-      this.outcomePopup(outcome);
+      this.notificationService.addPopup({
+        title: 'No more tries',
+        text: 'Earn more tries and come back',
+        buttonTxt: 'Dismiss'
+      });
     }
   }
 
