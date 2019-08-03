@@ -120,7 +120,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         (game: IGame) => this.game = game,
         (err: any) => {
           console.log(err);
-          this.isEnabled = true;
+          this.isEnabled = false;
           this.notificationService.addPopup({
             title: 'Oooops!',
             text: 'Something is wrong, game cannot be played at the moment!'
@@ -153,7 +153,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
               this.notificationService.addPopup({
                 title: 'Oops',
                 text: 'Something went very wrong, please try again later',
-                buttonTxt: 'Try Again'
+                buttonTxt: 'Try Again',
+                disableOverlayClose: true
               });
             }
           }
@@ -178,7 +179,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       text: outcome.subTitle,
       buttonTxt: outcome.button,
       imageUrl: outcome.image,
-      afterClosedCallBack: this
+      afterClosedCallBack: this,
+      disableOverlayClose: true
     });
   }
 
