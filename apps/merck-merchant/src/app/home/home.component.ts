@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,9 +17,13 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public onSalesScan(): void {}
+  public onSalesScan(): void {
+    this.router.navigate(['/qrscanner/order']);
+  }
 
-  public onRedemption(): void {}
+  public onRedemption(): void {
+    this.router.navigate(['/qrscanner/redeem']);
+  }
 
   public onLogOut(): void {
     this.authService.logout();

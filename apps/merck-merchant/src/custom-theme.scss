@@ -12,10 +12,10 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$custom-blue: map-merge($mat-red, (500: #0F69AF));
+$custom-blue: map-merge($mat-blue, (500: #0f69af));
 
 $merck-primary: mat-palette($custom-blue);
-$merck-accent: mat-palette($mat-pink, A200, A100, A400);
+$merck-accent: mat-palette($mat-lime, 700, 600, 500);
 
 // The warn palette is optional (defaults to red).
 $merck-warn: mat-palette($mat-red);

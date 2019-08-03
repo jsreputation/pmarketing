@@ -1,54 +1,22 @@
-.main-container {
-  padding: 0 1.5rem;
-  margin-top: 7rem;
-
-  > img {
-    display: block;
-    margin: 0 auto;
-  }
-}
-
-.logo-title {
-  font-style: normal;
-  font-weight: 900;
-  font-size: 2.2rem;
-  padding-top: 1.5rem;
-  color: #fff;
-  text-align: center;
-}
-
 .full-width__input {
   width: 100%;
   display: block;
 }
 
-.error-message-container {
-  height: 2rem;
-  max-width: 80rem;
-  background: #FFC832;
-  padding: 1rem 2.1rem 1rem 2.1rem;
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: 900;
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  margin: 1.6rem auto 0 auto;
+.main-container {
+  background-color: #0f69af;
 
-  img {
-    margin: 0;
+  .logo {
+    padding-top: 7rem;
+  }
+
+  .container {
+    background-color: #0f69af;
+    padding: 0 1.5rem 1.5rem;
   }
 }
 
-.content-container {
-  margin: 3.2rem auto auto auto;
-  padding: 3rem 1.5rem;
-  background-color: #fff;
-  border-radius: 0.8rem;
-  max-width: 80rem;
-
+.content {
   .main-heading {
     font-weight: 900;
     font-size: 3.2rem;
@@ -60,14 +28,14 @@
   }
 
   .forgot-text {
-    color: #0F69AF;
+    color: #0f69af;
     margin-bottom: 3.5rem;
     font-size: 1.2rem;
   }
 
   .full-width__button {
     width: 100%;
-    background-color: #0F69AF;
+    background-color: #0f69af;
     color: #fff;
   }
 }

@@ -1,5 +1,6 @@
 <div class="upload-wrap"
      [class.field-lock]="lock"
+     [ngClass]="classList"
 >
   <input #fileInput type="file"
          *ngIf="!imgURL"
@@ -19,7 +20,10 @@
   </div>
 
   <div class="upload-wrap-btn" *ngIf="!imgURL">
-    <button class="upload-btn" (click)="fileInput.click()">+ Add New</button>
+    <button class="upload-btn" (click)="fileInput.click()">
+        <ng-content></ng-content>
+        <span>+ Add New</span>
+    </button>
   </div>
   <div class="upload-error-wrap" *ngIf="message">
     <span class="upload-error">
@@ -28,7 +32,7 @@
   </div>
   <div class="upload-type-wrap" *ngIf="!message">
     <span class="upload-type">
-      Recommended format: .JPG or .PNG
+      {{placeholder}}
     </span>
   </div>
 </div>

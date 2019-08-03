@@ -18,8 +18,9 @@ import {
   AuthenticationModule,
   OauthModule,
   CognitoModule,
-  ProfileModule
-   } from '@perx/core/dist/perx-core';
+  ProfileModule,
+  UtilsModule
+   } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
@@ -56,7 +57,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
-    ProfileModule.forRoot({ env: environment })
+    ProfileModule.forRoot({ env: environment }),
+    UtilsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent]

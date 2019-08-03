@@ -23,8 +23,8 @@ export const menus = [
     open: false,
   },
   {
-    name: 'Merchant',
-    link: '/merchant',
+    name: 'Merchants',
+    link: '/merchants',
     icon: 'merchant',
     open: false,
   },
@@ -34,11 +34,11 @@ export const menus = [
     icon: 'users',
     open: false,
   },
-  // {
-  //   name: 'Settings',
-  //   link: '/settings',
-  //   icon: 'settings',
-  //   open: false,
-  // },
+  {
+    name: 'Settings',
+    link: '/settings',
+    icon: 'settings',
+    open: false,
+  },
 
 ];

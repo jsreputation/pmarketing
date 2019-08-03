@@ -1,6 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatButtonModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRippleModule,
+} from '@angular/material';
+import { AuthenticationService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -8,7 +19,23 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetPasswordComponent ]
+      declarations: [ ResetPasswordComponent ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatRippleModule,
+        BrowserAnimationsModule
+      ],
+      providers: [
+        {
+          provide: AuthenticationService,
+          useValue: {forgotPassword: () => {}}
+        }
+      ]
     })
     .compileComponents();
   }));
@@ -22,4 +49,16 @@ describe('ResetPasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call forgot password on from submit', fakeAsync(() => {
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
+      AuthenticationService
+    );
+    const spy = spyOn(authenticationService, 'forgotPassword').and.callFake(() => of());
+    component.onSubmit();
+    tick();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
+  }));
+
 });

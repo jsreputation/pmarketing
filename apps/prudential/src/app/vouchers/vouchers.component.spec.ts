@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, POPUP_TYPE } from './vouchers.component';
-import { VouchersModule } from '@perx/core/dist/perx-core';
+import { VouchersModule } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

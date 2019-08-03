@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { NgForm } from '@angular/forms';
 
 @Component({

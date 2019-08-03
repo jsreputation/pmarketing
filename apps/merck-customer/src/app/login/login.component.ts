@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { AuthenticationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -83,7 +83,8 @@ export class LoginComponent implements OnInit {
   }
 
   public goToForgotPassword(): void {
-    this.router.navigateByUrl('/forgot-password');
+    const mobileNumber = (this.loginForm.get('mobileNo').value as string);
+    this.router.navigate(['forgot-password'], { state: { mobileNo: mobileNumber } } );
   }
 
 }

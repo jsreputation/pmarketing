@@ -9,7 +9,6 @@ import { IReward } from '../models/reward.model';
 })
 export class RewardComponent implements OnInit {
 
-  // tslint:disable-next-line:no-input-rename
   @Input('reward')
   public reward$: Observable<IReward>;
 

@@ -30,6 +30,14 @@ const routes: Routes = [
         path: 'audience',
         loadChildren: () => import('./audience/audience.module').then(mod => mod.AudienceModule)
       },
+      {
+        path: 'merchants',
+        loadChildren: () => import('./merchants/merchants.module').then(mod => mod.MerchantsModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then(mod => mod.SettingsModule)
+      },
     ]
   },
   { path: 'login', component: LoginComponent },

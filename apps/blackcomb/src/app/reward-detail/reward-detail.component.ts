@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,19 +6,15 @@ import { Router } from '@angular/router';
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
-export class RewardDetailComponent implements OnInit {
+export class RewardDetailComponent {
 
   constructor(private router: Router) {}
 
-  id = 140380; // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
+  public id: number = 140380; // TODO: Currently using this static voucher Id. Its needs to be replaced with id coming from VoucherService
 
-  firstTime = true;
+  public firstTime: boolean = true;
 
-  ngOnInit() {
-  }
-
-  onRedeem() {
+  public onRedeem(): void {
     this.router.navigate(['redeem/pin/1']);
   }
-
 }

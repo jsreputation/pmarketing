@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+//@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "./custom-theme.scss";
+
+html {
+  font-size: 62.5%;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100%;
+
+}
+
+.mat-caption {
+  line-height: 1.6rem;
+  color: #666666;
+}
+
+.overline {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  color: #666666;
+}
+
+.subtitle-1 {
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: #212121;
+}
+
+.ghost {
+  background: #EDEDED;
+}

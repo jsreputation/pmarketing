@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./custom-theme.scss";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
 html {
   font-size: 62.5%;
@@ -13,21 +14,69 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #0F69AF;
   height: 100%;
 }
 
 .btn-blue {
-  background: #0F69AF;
+  background: #0f69af;
   color: #ffffff;
 }
 
 .btn-hollow-white {
-  border: 0.1rem solid #0F69AF !important;
+  border: 0.1rem solid #0f69af !important;
   background-color: #ffffff;
-  color: #0F69AF;
+  color: #0f69af;
 }
 
 .full-width__button {
   width: 100%;
+}
+
+.main-container {
+  height: 100%;
+
+  > img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.logo-title {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 2.2rem;
+  padding: 1.5rem 0 1rem 0;
+  color: #fff;
+  text-align: center;
+}
+
+.content {
+  margin: 0 auto auto auto;
+  padding: 3rem 1.5rem;
+  background-color: #fff;
+  border-radius: 0.8rem;
+  max-width: 80rem;
+}
+
+.mat-snack-bar-container {
+  background-color: #ffc832;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  height: auto !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  align-items: normal !important;
+  padding: 1.5rem !important;
+}
+
+.scanner {
+  max-width: 60rem;
+  max-height: 60rem;
+  margin: 0 auto;
+
+  video {
+    min-height: 40rem;
+  }
 }

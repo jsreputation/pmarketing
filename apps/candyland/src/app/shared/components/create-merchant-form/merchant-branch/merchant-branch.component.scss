@@ -1,0 +1,33 @@
+@import "variables";
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $simple-light-gray;
+  border-radius: 4px;
+  padding: 0 3.2rem 0 1.6rem;
+  position: relative;
+
+  .index {
+    font-size: 1.4rem;
+    color: $secondary-color;
+    margin-right: 2.5rem;
+  }
+
+  .control-input.small {
+    width: 33.3%;
+    margin-right: 2.4rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .btn-remove {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}

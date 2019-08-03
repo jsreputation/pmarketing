@@ -1,0 +1,36 @@
+{
+  "vouchers": {
+    "voucherCode": {
+      "codeType": "",
+      "singleCode": {
+        "code": "JKHJHJ"
+      },
+      "uniqueGeneratedCode": {
+        "code": "PX101-700",
+        "codeFormat": "Alphanumeric",
+        "file": ""
+      },
+      "uniqueUserUploadCode": {
+        "name": "my_voucher_codes.csv",
+        "file": ""
+      },
+      "merchantPIN": {
+        "code": "FM12345678"
+      }
+    },
+    "voucherValidity": {
+      "type": "period",
+      "period": {
+        "startDate": "2018-12-17 03:24:00",
+        "startTime": "04:00 PM",
+        "endDate": "2019-12-17 03:24:00",
+        "endTime": "04:00 PM",
+        "disabledEndDate": false
+      },
+      "issuanceDate": {
+        "times": 3,
+        "duration": "day"
+      }
+    }
+  }
+}

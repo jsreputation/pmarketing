@@ -1,10 +1,3 @@
-.tree {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 0 1.6rem;
-  overflow: hidden;
-}
 
 .tree__img {
   display: flex;
@@ -29,131 +22,151 @@
   left: 0;
 }
 
-.tree .drop.gift-wrapper__1 {
-  transform: translateY(70%);
-}
+.tree {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 1.6rem;
+  overflow: hidden;
 
-.tree .drop.gift-wrapper__2 {
-  transform: translateY(60%);
-}
+  .shake {
+    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
 
-.tree .drop.gift-wrapper__3 {
-  transform: translateY(45%);
-}
+  .gift-wrapper {
+    &.drop {
+      transition: all 0.5s ease-in;
 
-.tree .drop.gift-wrapper__4 {
-  transform: translateY(43%);
-  z-index: 2;
-}
+      &.gift-wrapper {
+        &__1 {
+          transform: translateY(70%);
+        }
 
-.tree .drop.gift-wrapper__5 {
-  transform: translateY(64%);
-  z-index: 2;
-}
+        &__2 {
+          transform: translateY(60%);
+        }
 
-.tree .drop.gift-wrapper__6 {
-  transform: translateY(59%);
-  z-index: 3;
-}
+        &__3 {
+          transform: translateY(45%);
+        }
 
-.tree .drop.gift-wrapper__7 {
-  transform: translateY(75%);
-  z-index: 2;
-}
+        &__4 {
+          transform: translateY(43%);
+          z-index: 2;
+        }
 
-.tree .drop.gift-wrapper__8 {
-  transform: translateY(49%);
-  z-index: 3;
-}
+        &__5 {
+          transform: translateY(64%);
+          z-index: 2;
+        }
 
-.tree .drop.gift-wrapper__9 {
-  transform: translateY(54%);
-  z-index: 1;
-}
+        &__6 {
+          transform: translateY(59%);
+          z-index: 3;
+        }
 
-.tree .drop.gift-wrapper__10 {
-  transform: translateY(59%);
-}
+        &__7 {
+          transform: translateY(75%);
+          z-index: 2;
+        }
 
-.gift-wrapper__1 {
-  left: 35%;
-}
+        &__8 {
+          transform: translateY(49%);
+          z-index: 3;
+        }
 
-.gift-img__1 {
-  top: 18%;
-}
+        &__9 {
+          transform: translateY(54%);
+          z-index: 1;
+        }
 
-.gift-wrapper__2 {
-  left: 60%;
-}
+        &__10 {
+          transform: translateY(59%);
+        }
+      }
+    }
 
-.gift-img__2 {
-  top: 28%;
-}
+    &__1 {
+      left: 35%;
 
-.gift-wrapper__3 {
-  left: 31%;
-  z-index: 3;
-}
+      .gift-img__1 {
+        top: 18%;
+      }
+    }
 
-.gift-img__3 {
-  top: 46%;
-}
+    &__2 {
+      left: 60%;
 
-.gift-wrapper__4 {
-  left: 73%;
-}
+      .gift-img__2 {
+        top: 28%;
+      }
+    }
 
-.gift-img__4 {
-  top: 45%;
-}
+    &__3 {
+      left: 31%;
+      z-index: 3;
 
-.gift-wrapper__5 {
-  left: 24%;
-}
+      .gift-img__3 {
+        top: 46%;
+      }
+    }
 
-.gift-img__5 {
-  top: 25%;
-}
+    &__4 {
+      left: 73%;
 
-.gift-wrapper__6 {
-  left: 75%;
-}
+      .gift-img__4 {
+        top: 45%;
+      }
+    }
 
-.gift-img__6 {
-  top: 32%;
-}
+    &__5 {
+      left: 24%;
 
-.gift-wrapper__7 {
-  left: 55%;
-}
+      .gift-img__5 {
+        top: 25%;
+      }
+    }
 
-.gift-img__7 {
-  top: 14%;
-}
+    &__6 {
+      left: 75%;
 
-.gift-wrapper__8 {
-  left: 57%;
-}
+      .gift-img__6 {
+        top: 32%;
+      }
+    }
 
-.gift-img__8 {
-  top: 41%;
-}
+    &__7 {
+      left: 55%;
 
-.gift-wrapper__9 {
-  left: 15%;
-}
+      .gift-img__7 {
+        top: 14%;
+      }
+    }
 
-.gift-img__9 {
-  top: 36%;
-}
+    &__8 {
+      left: 57%;
 
-.gift-wrapper__10 {
-  left: 40%;
-}
+      .gift-img__8 {
+        top: 41%;
+      }
+    }
 
-.gift-img__10 {
-  top: 32%;
+    &__9 {
+      left: 15%;
+
+      .gift-img__9 {
+        top: 36%;
+      }
+    }
+
+    &__10 {
+      left: 40%;
+
+      .gift-img__10 {
+        top: 32%;
+      }
+    }
+  }
 }
 
 .man__img {
@@ -163,14 +176,6 @@
 
   /* bottom: 5%;
   left: 16%; */
-}
-
-.tree .shake {
-  animation: shake 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-.tree .gift-wrapper {
-  transition: all 0.3s ease-in;
 }
 
 @keyframes shake {
@@ -187,11 +192,11 @@
   30%,
   50%,
   70% {
-    transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
   }
 
   40%,
   60% {
-    transform: translate3d(4px, 0, 0);
+    transform: translate3d(10px, 0, 0);
   }
 }

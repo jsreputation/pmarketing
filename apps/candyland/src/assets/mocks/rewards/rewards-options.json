@@ -1,0 +1,172 @@
+{
+  "rewardType": [
+    {
+      "title": "Free",
+      "value": "Free"
+    },
+    {
+      "title": "Cashback",
+      "value": "Cashback"
+    },
+    {
+      "title": "Points",
+      "value": "Points"
+    },
+    {
+      "title": "Buy X Get Y",
+      "value": "Buy X Get Y"
+    },
+    {
+      "title": "Fixed Discount Amount",
+      "value": "Fixed Discount Amount"
+    },
+    {
+      "title": "Fixed Discount Item",
+      "value": "Fixed Discount Item"
+    },
+    {
+      "title": "Percent Discount",
+      "value": "Percent Discount"
+    },
+    {
+      "title": "Set Price Coupon",
+      "value": "Set Price Coupon"
+    }
+  ],
+  "durationLimits": [
+    {
+      "title": "Day",
+      "value": "day"
+    },
+    {
+      "title": "Week",
+      "value": "week"
+    },
+    {
+      "title": "Month",
+      "value": "month"
+    }
+  ],
+  "redemptionType": [
+    {
+      "title": "QR Code",
+      "value": "QR Code"
+    },
+    {
+      "title": "Bar Code",
+      "value": "Bar Code"
+    },
+    {
+      "title": "Merchant PIN",
+      "value": "Merchant PIN"
+    },
+    {
+      "title": "Promo Code",
+      "value": "Promo Code"
+    }
+  ],
+  "category": [
+    {
+      "title": "Food & Beverage",
+      "value": "Food & Beverage"
+    },
+    {
+      "title": "Travel",
+      "value": "Travel"
+    },
+    {
+      "title": "Electronics",
+      "value": "Electronics"
+    },
+    {
+      "title": "Wellness",
+      "value": "Wellness"
+    },
+    {
+      "title": "Entertainment",
+      "value": "Entertainment"
+    },
+    {
+      "title": "Shopping",
+      "value": "Shopping"
+    },
+    {
+      "title": "Merchant Self",
+      "value": "Merchant Self"
+    },
+    {
+      "title": "Others",
+      "value": "Others"
+    }
+  ],
+  "voucherCodeFormat": [
+    {
+      "title": "Alphanumeric  (eg.ABC123)",
+      "value": "alphanumeric"
+    },
+    {
+      "title": "Numeric (eg.123456)",
+      "value": "numeric"
+    },
+    {
+      "title": "Alphabet (eg.ABCDEF)",
+      "value": "alphabet"
+    }
+  ],
+  "voucherCodeTypes": [
+    {
+      "title": "Single code",
+      "value": "Single code"
+    },
+    {
+      "title": "Unique codes: System generated",
+      "value": "Unique codes: System generated"
+    },
+    {
+      "title": "Unique codes: User upload",
+      "value": "Unique codes: User upload"
+    }
+  ],
+  "voucherValidityType": [
+    {
+      "title": "Period",
+      "value": "Period"
+    },
+    {
+      "title": "Issuance date",
+      "value": "Issuance date"
+    }
+  ],
+  "goals": [
+    {
+      "title": "Build awareness",
+      "value": "Build awareness"
+    },
+    {
+      "title": "Acquire customers",
+      "value": "Acquire customers"
+    },
+    {
+      "title": "Drive sales",
+      "value": "Drive sales"
+    },
+    {
+      "title": "Re-engage audience",
+      "value": "Re-engage audience"
+    },
+    {
+      "title": "Surprise & Delight",
+      "value": "Surprise & Delight"
+    }
+  ],
+  "channelTypes": [
+    {
+      "title": "Weblink",
+      "value": "weblink"
+    },
+    {
+      "title": "SMS",
+      "value": "sms"
+    }
+  ]
+}

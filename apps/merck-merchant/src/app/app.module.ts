@@ -9,20 +9,29 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule
+  MatRippleModule,
+  MatSnackBarModule,
+  MatIconModule,
+  MatListModule
 } from '@angular/material';
 import {
   AuthenticationModule,
   OauthModule,
   CognitoModule
-   } from '@perx/core/dist/perx-core';
+   } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
 import { SalesContactComponent } from './sales-contact/sales-contact.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { OrderComponent } from './order/order.component';
+import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
+import { RedeemComponent } from './redeem/redeem.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +39,13 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     LoginComponent,
     HomeComponent,
     ResetPasswordComponent,
+    QrscannerComponent,
     HeaderComponent,
-    SalesContactComponent
+    SalesContactComponent,
+    CustomSnackbarComponent,
+    OrderComponent,
+    OrderQuantityComponent,
+    RedeemComponent
   ],
   imports: [
     BrowserModule,
@@ -41,14 +55,19 @@ import { SalesContactComponent } from './sales-contact/sales-contact.component';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    MatIconModule,
+    MatListModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    AuthenticationModule
+    AuthenticationModule,
+    ZXingScannerModule,
+    MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent]
 })
 export class AppModule { }

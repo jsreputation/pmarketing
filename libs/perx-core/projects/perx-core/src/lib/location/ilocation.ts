@@ -4,6 +4,8 @@ export interface ILocation {
     name: string;
     tags: string[];
     address: string;
+    address2?: string;
+    address3?: string;
     latitude: number;
     longitude: number;
     phone: string;

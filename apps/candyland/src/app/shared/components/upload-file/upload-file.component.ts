@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -19,6 +19,8 @@ export class UploadFileComponent implements ControlValueAccessor {
   @Input() selectGraphic: any;
   @Input() selectedGraphic: any;
   @Input() label = '';
+  @Output() deleteFile = new EventEmitter();
+  @Output() uploadFile = new EventEmitter();
 
   public lock: boolean;
   public fileName;
@@ -60,6 +62,8 @@ export class UploadFileComponent implements ControlValueAccessor {
       this.file = this.sanitizeUrl(reader.result);
       this.loadedFile = true;
       this.cd.markForCheck();
+      this.uploadFile.emit(this.file);
+      this.onChange(this.file);
     };
   }
 
@@ -69,7 +73,9 @@ export class UploadFileComponent implements ControlValueAccessor {
 
   public clear(): void {
     this.file = null;
+    this.onChange(this.file);
     this.loadedFile = false;
+    this.deleteFile.emit(this.file);
   }
 
   registerOnChange(fn: any): void {

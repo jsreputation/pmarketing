@@ -10,7 +10,7 @@ import {
   defaultTree,
   GAME_TYPE,
   ICampaign
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { POPUP_TYPE } from '../vouchers/vouchers.component';
 import { environment } from '../../environments/environment';
 
@@ -28,6 +28,8 @@ export class GameComponent implements OnInit {
     campaignId: -1,
     type: GAME_TYPE.shakeTheTree,
     remainingNumberOfTries: 20,
+    texts: {},
+    results: {},
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
   isWhistler: boolean;

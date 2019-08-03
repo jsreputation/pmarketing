@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+import { Component } from '@angular/core';
+import { AuthenticationService } from '@perx/core';
 import { LoginFormValue } from '../../components/login-form/login-form.component';
 import { Router } from '@angular/router';
 
@@ -8,15 +8,11 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public authed: boolean;
 
   constructor(private authService: AuthenticationService, private router: Router) {
-  }
-
-  public ngOnInit(): void {
-    console.log(this.authService);
   }
 
   public login(data: LoginFormValue): void {
@@ -31,6 +27,14 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl(this.authService.getInterruptedUrl());
       } else {
         this.router.navigateByUrl('puzzle');
+      }
+    });
+  }
+
+  public forgotPassword(identifier: string): void {
+    this.router.navigate(['/forgot-password'], {
+      queryParams: {
+        identifier
       }
     });
   }

@@ -15,6 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
+  @Input() public placeholder = 'Recommended format: .JPG or .PNG';
+  @Input() public classList = '';
   @Input() selectGraphic: any;
   @Input() selectedGraphic: any;
 
@@ -29,9 +31,10 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   public onTouch: any = () => {};
 
   public set setGraphic(val: any) {
-    if (val !== undefined && this.selectedGraphic !== val) {
+    if (val !== undefined ) {
       this.onChange(val);
       this.onTouch(val);
+      this.imgURL = val;
     }
   }
 
@@ -56,7 +59,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     reader.onload = () => {
       this.imgURL = this.sanitizeUrl(reader.result);
       this.loadedImg = true;
-      this.setSelectedGraphic(this.imgURL);
+      this.setSelectedGraphic(this.imgURL.changingThisBreaksApplicationSecurity);
       this.cd.markForCheck();
     };
   }

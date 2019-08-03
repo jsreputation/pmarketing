@@ -16,17 +16,29 @@
       <div class="reward-subtitle" *ngIf="reward.subtitle">
         {{reward.subtitle}}
       </div>
-      <div class="reward-price" *ngIf="reward.rewardPrice">
+      <div class="reward-price" *ngIf="reward.rewardPrice[0]">
         {{reward.rewardPrice[0].rewardAmount}} {{reward.rewardPrice[0].rewardCurrency}}
       </div>
       <div class="reward-expiry" *ngIf="reward.validTo !== null">
-        {{reward.validTo | date: 'dd/MM/yyyy'}}
+        Expiry: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="section-heading" *ngIf="reward.description">
         Description
       </div>
       <div class="section-content" *ngIf="reward.description">
         <div [innerHtml]="reward.description"></div>
+      </div>
+      <div class="section-heading" *ngIf="reward.termsAndConditions">
+        Terms and Conditions
+      </div>
+      <div class="section-content" *ngIf="reward.termsAndConditions">
+        <div [innerHtml]="reward.termsAndConditions"></div>
+      </div>
+      <div class="section-heading" *ngIf="reward.howToRedeem">
+        How to redeem
+      </div>
+      <div class="section-content" *ngIf="reward.howToRedeem">
+        <div [innerHtml]="reward.howToRedeem"></div>
       </div>
     </div>
   </div>

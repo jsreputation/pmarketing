@@ -11,9 +11,30 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './containers/registration/registration.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
+import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
+import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
+import { UtilsModule } from '@perx/core';
+
+const COMPONENTS = [
+  LoginFormComponent,
+  RegistrationFormComponent,
+  SmsValidationComponent,
+];
+
+const CONTAINERS = [
+  LoginComponent,
+  RegistrationComponent,
+  ForgotPasswordComponent,
+];
 
 @NgModule({
-  declarations: [LoginFormComponent, LoginComponent],
+  declarations: [
+    ...COMPONENTS,
+    ...CONTAINERS,
+  ],
   imports: [
     CommonModule,
     MatCardModule,
@@ -22,11 +43,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatButtonModule,
     RouterModule,
+    UtilsModule,
     ReactiveFormsModule,
+    ErrorHandlerModule,
+    UtilsModule
   ],
   exports: [
-    LoginFormComponent,
-    LoginComponent
+    ...COMPONENTS,
+    ...CONTAINERS
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+}
