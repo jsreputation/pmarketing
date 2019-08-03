@@ -103,7 +103,6 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       this.showBtn = true;
     } else {
       const outcome = game.results.noOutcome;
-      outcome.button = null;
       this.outcomePopup(outcome);
     }
   }
@@ -141,22 +140,17 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
             const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.length > 0);
             const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
 
-            // if there is no more tries don't show the button
-            if (this.game.remainingNumberOfTries <= 0) {
-              outcome.button = null;
-            }
             this.outcomePopup(outcome);
           },
           (e: HttpErrorResponse) => {
             if (e.status === 422) {
               const outcome: IGameOutcome = this.game.results.noOutcome;
-              outcome.button = null;
               this.outcomePopup(outcome);
             } else {
               this.notificationService.addPopup({
                 title: 'Oops',
                 text: 'Something went very wrong, please try again later',
-                buttonTxt: null
+                buttonTxt: 'Try Again'
               });
             }
           }
@@ -173,7 +167,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       outcome = {
         title: 'Thanks for playing',
         subTitle: null,
-        button: null
+        button: 'Play Again'
       };
     }
     this.notificationService.addPopup({
