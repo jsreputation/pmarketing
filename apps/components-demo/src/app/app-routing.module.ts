@@ -15,6 +15,9 @@ const routes: Routes = [
   {
     path: 'utils', loadChildren: () => import('./utils/utils.module').then(mod => mod.UtilsModule)
   },
+  {
+    path: 'charts', loadChildren: () => import('./charts/charts.module').then(mod => mod.ChartsModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 
