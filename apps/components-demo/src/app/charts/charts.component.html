@@ -1,6 +1,10 @@
-<nav>
-    <a mat-button [routerLink]="[ 'vertical-bar' ]" color="primary">Vertical Bar</a>
-    <a mat-button [routerLink]="[ 'horizontal-bar' ]" color="primary">Horizontal Bar</a>
-    <a mat-button [routerLink]="[ 'pie' ]" color="primary">Pie</a>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link
+     *ngFor="let link of navLinks"
+     [routerLink]="link.path"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{link.label}}
+  </a>
 </nav>
 <router-outlet></router-outlet>
