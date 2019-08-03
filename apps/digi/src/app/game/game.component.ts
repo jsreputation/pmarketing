@@ -181,6 +181,13 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
 
   private reset(): void {
     this.isEnabled = false;
-    [this.tree, this.pinata].forEach((game: IGameComponent) => { if (game) { game.reset(); } });
+    [this.tree, this.pinata].forEach((game: IGameComponent) => {
+      if (game) {
+        game.reset();
+        if (this.game.remainingNumberOfTries === 0) {
+          this.disableBtn = true;
+        }
+      }
+    });
   }
 }
