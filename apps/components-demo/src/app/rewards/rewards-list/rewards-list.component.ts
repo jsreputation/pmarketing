@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { mock } from '../reward-mock';
 
 @Component({
@@ -21,7 +20,10 @@ export class RewardsListComponent implements OnInit {
   }
 
   getRewards() {
-    this.rewards = this.rewardsService.getAllRewards()
-      .pipe(catchError(() => of(mock)));
+    this.rewardsService.getAllRewards()
+      .subscribe(
+        (rewards) => this.rewards = of(rewards),
+        () => this.rewards = of(mock)
+      );
   }
 }

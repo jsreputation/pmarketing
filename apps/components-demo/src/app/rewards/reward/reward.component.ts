@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IReward, NotificationService, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { mock } from '../reward-mock';
 
 @Component({
@@ -23,8 +22,11 @@ export class RewardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.reward = this.rewardService.getReward(this.rewardId)
-      .pipe(catchError(() => of(mock[0])));
+    this.rewardService.getReward(this.rewardId)
+      .subscribe(
+        (reward) => this.reward = of(reward),
+        () => this.reward = of(mock[0])
+      );
   }
 
   onRedeem() {
