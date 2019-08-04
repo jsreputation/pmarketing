@@ -185,6 +185,25 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   test:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run lerna run build:lib
+      - run: yarn run lerna run config
+      - run: yarn run test-ci
+#      - run: yarn run e2e-ci
+  lint:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run lint-ci
+  build:
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -205,10 +224,7 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-      - run: yarn run lint-ci
-      - run: yarn run test-ci
-    #      - run: yarn run e2e-ci
-  test-prod:
+  build-prod:
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -234,12 +250,22 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
+      - lint:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
       - test:
           filters:
             tags:
               # this enables circleci to trigger on tags
               only: /.*/
-      - test-prod:
+      - build:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - build-prod:
           filters:
             tags:
               # this enables circleci to trigger on tags
@@ -272,8 +298,10 @@ workflows:
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
           requires:
             - build_docker_image
+            - build
             - test
-            - test-prod
+            - lint
+            - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:
