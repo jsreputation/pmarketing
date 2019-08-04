@@ -19,7 +19,6 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './UserIdInterceptor';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,6 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
     CampaignModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
     AuthenticationModule,
-    NgxMultiLineEllipsisModule
   ],
   providers: [
     httpInterceptorProviders
