@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PieGridComponent } from './pie-grid.component';
+import { PerxChartModule } from '@perx/chart';
 
 describe('PieGridComponent', () => {
   let component: PieGridComponent;
@@ -8,7 +9,10 @@ describe('PieGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PieGridComponent ]
+      declarations: [ PieGridComponent ],
+      imports: [
+        PerxChartModule
+      ]
     })
     .compileComponents();
   }));

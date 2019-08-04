@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrendComponent } from './trend.component';
+import { PerxChartModule } from '@perx/chart';
 
 describe('TrendComponent', () => {
   let component: TrendComponent;
@@ -8,7 +9,10 @@ describe('TrendComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrendComponent ]
+      declarations: [ TrendComponent ],
+      imports: [
+        PerxChartModule
+      ]
     })
     .compileComponents();
   }));

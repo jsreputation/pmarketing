@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarHeatmapComponent } from './calendar-heatmap.component';
+import { PerxChartModule } from '@perx/chart';
 
 describe('CalendarHeatmapComponent', () => {
   let component: CalendarHeatmapComponent;
@@ -8,9 +9,10 @@ describe('CalendarHeatmapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarHeatmapComponent ]
+      declarations: [CalendarHeatmapComponent],
+      imports: [PerxChartModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
