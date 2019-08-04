@@ -1,5 +1,9 @@
 <div class="game-container">
-  <app-header [title]="title" [subTitle]="subTitle"></app-header>
+  <app-header [title]="title" [subTitle]="subTitle">
+    <div class="caption-container">
+      <p class="mat-caption" *ngIf="!isEnabled">Click on <strong>{{buttonTxt}}</strong> to get started!</p>
+    </div>
+  </app-header>
 
   <div class="game-wrapper">
     <div class="game-wrapper__right">
