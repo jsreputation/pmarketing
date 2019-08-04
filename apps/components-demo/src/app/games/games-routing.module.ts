@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: '', component: GamesComponent,
     children: [
+      { path: '', redirectTo: 'shake', pathMatch: 'full' },
       { path: 'shake', component: ShakeComponent },
       { path: 'tap', component: TapComponent }
     ],

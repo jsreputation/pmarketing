@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthenticationService, NotificationService, PopupComponent } from '@perx/core';
 import { environment } from '../environments/environment';
@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   preAuth: boolean;
 
   constructor(
-    private location: Location,
     private router: Router,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
@@ -25,7 +24,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     // initialise notification service
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
@@ -42,5 +40,14 @@ export class AppComponent implements OnInit {
         }
       }
     );
+  }
+
+  get loggedIn(): boolean {
+    // todo
+    return false;
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

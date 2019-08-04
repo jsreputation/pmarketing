@@ -15,6 +15,7 @@ const routes: Routes = [
   {
     path: '', component: ChartsComponent,
     children: [
+      { path: '', redirectTo: 'vertical-bar', pathMatch: 'full' },
       { path: 'vertical-bar', component: VerticalBarComponent },
       { path: 'horizontal-bar', component: HorizontalBarComponent },
       { path: 'pie', component: PieComponent },
@@ -22,7 +23,7 @@ const routes: Routes = [
       { path: 'grid-pie', component: PieGridComponent },
       { path: 'trend', component: TrendComponent },
       { path: 'map', component: MapComponent },
-      { path: 'heatmap', component: CalendarHeatmapComponent},
+      { path: 'heatmap', component: CalendarHeatmapComponent },
       { path: 'line', component: LineComponent },
     ],
   },

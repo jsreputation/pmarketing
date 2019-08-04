@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: '', component: UtilsComponent,
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'pin-input' },
       { path: 'pin-input', component: PinInputComponent },
       { path: 'popup', component: PopupComponent },
     ],
