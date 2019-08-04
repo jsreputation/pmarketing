@@ -22,7 +22,8 @@ import {
   CognitoModule,
   ProfileModule,
   UtilsModule,
-  LoyaltyModule
+  LoyaltyModule,
+  RewardsModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,7 +69,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
     UtilsModule,
-    LoyaltyModule.forRoot({env: environment})
+    LoyaltyModule.forRoot({env: environment}),
+    RewardsModule.forRoot({ env: environment })
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],

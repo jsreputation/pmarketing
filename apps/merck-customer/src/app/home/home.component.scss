@@ -10,27 +10,43 @@
 
 .main-container {
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
   padding: 6rem 0;
   overflow: auto;
 
-  .loyalty-section {
-    width: 100%;
-    height: 17rem;
-    display: flex;
+  .section-heading {
+    padding-left: 1rem;
+    color: $main-blue-theme;
+    font-size: 1.8rem;
+
+    h4 {
+      margin: 4rem 0 0 0;
+    }
   }
 
-  .loyalty-item {
-    flex: 1;
+  .loyalty-section {
+    width: 100%;
+    height: 14rem;
+    display: flex;
+    position: relative;
+    background: white;
 
-    &-qr {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    button {
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+      background-color: $main-blue-theme;
+      color: white;
+      font-size: 1.4rem;
     }
+  }
+
+  .rewards-carousel {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .rewards-tabbed {
+    margin: 1rem;
   }
 }

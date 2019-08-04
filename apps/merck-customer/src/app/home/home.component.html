@@ -1,6 +1,17 @@
 <div class="cover"></div>
 <div class="main-container">
 	<div class="loyalty-section">
-      <perx-core-loyalty-summary class="loyalty-item"></perx-core-loyalty-summary>
-    </div>
+      <perx-core-loyalty-summary class="loyalty-item">        	
+      </perx-core-loyalty-summary>
+      <button mat-flat-button i18n="@@static-my-qr" (click)="myQrClicked()">MY QR</button>
+  </div>
+  <div class="section-heading">
+    <h4>Featured Rewards</h4>
+  </div>
+  <div class="rewards-carousel">
+    <perx-core-rewards-collection [rewardsList]="rewards" (tapped)="rewardClicked($event)"></perx-core-rewards-collection>
+  </div>
+  <div class="rewards-tabbed">
+    <perx-core-rewards-list-tabbed [rewards]="rewards"></perx-core-rewards-list-tabbed>
+  </div>
 </div>
