@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
 import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 enum GAME_TYPE {
@@ -52,8 +52,8 @@ interface TreeDisplayProperties extends GameProperties {
   number_of_gifts_to_drop: number;
   gift_image: Asset;
   tree_image: Asset;
-  waiting_image: Asset;
-  celebrating_image: Asset;
+  waiting_image?: Asset;
+  celebrating_image?: Asset;
 }
 
 interface PinataDisplayProperties extends GameProperties {
@@ -118,8 +118,8 @@ export class GameService implements IGameService {
           nbHangedGift: dpts.number_of_gifts_shown,
           nbGiftsToDrop: dpts.number_of_gifts_to_drop,
           nbTaps: 5,
-          waitingAccessoryImg: dpts.waiting_image.value.image_url,
-          celebratingAccessoryImg: dpts.celebrating_image.value.image_url
+          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url(),
+          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url()
         };
         break;
       case GAME_TYPE.pinata:
@@ -200,7 +200,14 @@ export class GameService implements IGameService {
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
+          if (games.length === 0) {
+            throw new Error('Games list is empty');
+          }
           return games.map((game: Game): IGame => GameService.v4GameToGame(game));
+        }),
+        catchError((err) => {
+          // rethrow error for subscriber to handle
+          return throwError(err);
         })
       );
   }
