@@ -12,14 +12,17 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSnackBarModule,
+  MatIconModule
 } from '@angular/material';
 import {
   AuthenticationModule,
   OauthModule,
   CognitoModule,
   ProfileModule,
-  UtilsModule
+  UtilsModule,
+  LoyaltyModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +32,8 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,9 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     HomeComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    EnterPinComponent
+    EnterPinComponent,
+    ResetPasswordComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +58,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatSnackBarModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -58,9 +67,11 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
-    UtilsModule
+    UtilsModule,
+    LoyaltyModule.forRoot({env: environment})
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent]
 })
 export class AppModule { }

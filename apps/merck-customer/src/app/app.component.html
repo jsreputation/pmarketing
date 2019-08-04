@@ -1,4 +1,18 @@
 <mat-toolbar *ngIf="showHeader" class="toolbar">
 	<img src="assets/header_logo.png">
 </mat-toolbar>
+<div *ngIf="currentSelectedItem !== 'none'" class="bottom-bar">
+	<div class="bottom-bar-item">
+		<img [src]="currentSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
+		<span [ngClass]="currentSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
+	</div>
+	<div class="bottom-bar-item">
+		<img [src]="currentSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
+		<span [ngClass]="currentSelectedItem === 'search' ? 'selected' : 'unselected'">Find a pharmacy</span>
+	</div>
+	<div class="bottom-bar-item">
+		<img [src]="currentSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
+		<span [ngClass]="currentSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
+	</div>
+</div>
 <router-outlet (activate)="onActivate($event)"></router-outlet>

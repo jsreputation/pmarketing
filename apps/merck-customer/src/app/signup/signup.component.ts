@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
+import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, PageProperties {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
@@ -34,6 +35,14 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  public showHeader(): boolean {
+    return false;
+  }
+
+  public bottomSelectedItem(): BAR_SELECTED_ITEM {
+    return BAR_SELECTED_ITEM.NONE;
+  }
+
   public ngOnInit(): void {}
 
   public onSubmit(): void {
@@ -56,13 +65,13 @@ export class SignupComponent implements OnInit {
         this.errorMessage = 'Please agree to receive marketing communications from Merck Group hk.';
         return;
       }
-      const mobileNumber = this.signupForm.get('mobileNo').value as string;
+      const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
       this.authService.signup(mobileNumber, password).subscribe(
         () => {
           this.router.navigateByUrl('/home');
         },
         err => {
-          console.error('Observer got an error: ' + err);
+          console.error('Signup: ' + err);
           // TODO: AuthService is not implementing 'signup' method yet. Remove this line once done.
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
         });

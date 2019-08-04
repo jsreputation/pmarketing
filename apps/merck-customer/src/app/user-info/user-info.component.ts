@@ -3,13 +3,14 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from '@perx/core';
 import { ICustomProperties } from '@perx/core/dist/perx-core/lib/profile/profile.model';
+import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 
 @Component({
   selector: 'mc-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, PageProperties {
 
   public surveyForm: FormGroup;
 
@@ -27,7 +28,16 @@ export class UserInfoComponent implements OnInit {
       hypertension: [false]
     });
   }
+
   public ngOnInit(): void {}
+
+  public showHeader(): boolean {
+    return false;
+  }
+
+  public bottomSelectedItem(): BAR_SELECTED_ITEM {
+    return BAR_SELECTED_ITEM.NONE;
+  }
 
   public onNext(): void {
     try {
@@ -42,7 +52,7 @@ export class UserInfoComponent implements OnInit {
           this.router.navigateByUrl('/home');
         },
         err => {
-          console.error('Observer got an error: ' + err);
+          console.error('ProfileService::SetCustomProperties : ' + err);
           this.router.navigateByUrl('/home'); // TODO: ProfileService is not set yet.
                                               // Remove this line once done.
         });

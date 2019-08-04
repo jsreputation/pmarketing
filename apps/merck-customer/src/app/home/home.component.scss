@@ -1,0 +1,36 @@
+@import '../../styles.scss';
+
+.cover {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: $home-page-background-color;
+  z-index: -1;
+}
+
+.main-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 0;
+  overflow: auto;
+
+  .loyalty-section {
+    width: 100%;
+    height: 17rem;
+    display: flex;
+  }
+
+  .loyalty-item {
+    flex: 1;
+
+    &-qr {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
