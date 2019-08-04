@@ -6,7 +6,7 @@ import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { GamesComponent } from './games.component';
 import { GameModule } from '@perx/core';
-import { MatTabsModule, MatFormFieldModule, MatSliderModule, MatInputModule } from '@angular/material';
+import { MatTabsModule, MatFormFieldModule, MatSliderModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     GameModule,
     MatTabsModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatInputModule,
     MatSliderModule,
     FormsModule
