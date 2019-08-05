@@ -15,7 +15,7 @@ const comps: any[] = [LocationsListComponent, LocationsMapComponent];
     MatDividerModule,
     MatListModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
   ],
   exports: comps
 })
