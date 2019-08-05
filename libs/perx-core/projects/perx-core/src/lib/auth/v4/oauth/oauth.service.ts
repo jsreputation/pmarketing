@@ -101,7 +101,7 @@ export class OauthService {
       );
   }
 
-  public resetPassword(phone: string, password: string, otp: string): Observable<any> {
+  public resetPassword(phone: string, password: string, otp: string, passwordConfirmation: string): Observable<any> {
     return this.http.put<{ message: string }>(
       this.customersEndPoint + '/reset_password',
       {
@@ -109,7 +109,7 @@ export class OauthService {
         {
           phone,
           password,
-          password_confirmation: password,
+          password_confirmation: passwordConfirmation,
           confirmation_token: otp
         }
       }).pipe(
