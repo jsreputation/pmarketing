@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HorizontalBarComponent } from './horizontal-bar.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HorizontalBarComponent', () => {
   let component: HorizontalBarComponent;
@@ -8,7 +10,11 @@ describe('HorizontalBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorizontalBarComponent ]
+      declarations: [ HorizontalBarComponent ],
+      imports: [
+        NgxChartsModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));
