@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { IProfile } from '../../../profile/profile.model';
-import { ISignUpRequestData } from '../../authentication/models/authentication.model';
+import { ISignUpData, IResetPasswordData, IMessageResponse, IAppAccessTokenResponse, IChangePasswordData } from '../../authentication/models/authentication.model';
 import { V4ProfileService, IV4ProfileResponse } from '../../../profile/v4-profile.service';
 
 export class EnvConfig {
@@ -63,15 +63,15 @@ export class OauthService {
     });
   }
 
-  public getAppAccessToken(): Observable<any> {
+  public getAppAccessToken(): Observable<IAppAccessTokenResponse> {
     const httpParams = new HttpParams()
       .append('url', location.host);
-    return this.http.post(this.appAuthEndPoint + '/token', null, {
+    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', null, {
       params: httpParams
     });
   }
 
-  public forgotPassword(phone: string): Observable<any> {
+  public forgotPassword(phone: string): Observable<IMessageResponse> {
     return this.http.get<{ message: string }>(
       this.customersEndPoint + '/forget_password', { params: { phone } }).pipe(
         tap( // Log the result or error
@@ -81,7 +81,7 @@ export class OauthService {
       );
   }
 
-  public verifyOTP(phone: string, otp: string): Observable<any> {
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return this.http.put<{ message: string, code: number }>(
       this.customersEndPoint + '/confirm', { params: { phone, confirmation_token: otp } }).pipe(
         tap( // Log the result or error
@@ -91,7 +91,7 @@ export class OauthService {
       );
   }
 
-  public resendOTP(phone: string): Observable<any> {
+  public resendOTP(phone: string): Observable<IMessageResponse> {
     return this.http.get<{ message: string }>(
       this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
         tap( // Log the result or error
@@ -101,16 +101,16 @@ export class OauthService {
       );
   }
 
-  public resetPassword(phone: string, password: string, otp: string, passwordConfirmation: string): Observable<any> {
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return this.http.put<{ message: string }>(
       this.customersEndPoint + '/reset_password',
       {
         params:
         {
-          phone,
-          password,
-          password_confirmation: passwordConfirmation,
-          confirmation_token: otp
+          phone: resetPasswordInfo.phone,
+          password: resetPasswordInfo.newPassword,
+          password_confirmation: resetPasswordInfo.passwordConfirmation,
+          confirmation_token: resetPasswordInfo.otp
         }
       }).pipe(
         tap( // Log the result or error
@@ -120,7 +120,7 @@ export class OauthService {
       );
   }
 
-  public signup(profile: ISignUpRequestData): Observable<IProfile> {
+  public signup(profile: ISignUpData): Observable<IProfile> {
     return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', {
       params: profile
     }).pipe(
@@ -132,22 +132,15 @@ export class OauthService {
     );
   }
 
-  public changePassword(
-    newPassword: string,
-    passwordConfirmation: string,
-    otp: string,
-    userId: string,
-    oldPassword: string
-  ): Observable<any> {
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.http.put<{ message: string }>(
-      `${this.customersEndPoint}/${userId}/reset_password`,
+      `${this.customersEndPoint}/${changePasswordData.userId}/reset_password`,
       {
         params:
         {
-          password: newPassword,
-          password_confirmation: passwordConfirmation,
-          old_password: oldPassword,
-          confirmation_token: otp
+          password: changePasswordData.newPassword,
+          password_confirmation: changePasswordData.passwordConfirmation,
+          confirmation_token: changePasswordData.otp
         }
       }).pipe(
         tap( // Log the result or error
