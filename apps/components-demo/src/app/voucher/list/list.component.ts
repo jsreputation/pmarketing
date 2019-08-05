@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Voucher } from '@perx/core';
+import {
+  Observable,
+  of
+} from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Voucher, VouchersService } from '@perx/core';
 import { mock } from '../mock';
 
 @Component({
@@ -11,7 +15,9 @@ import { mock } from '../mock';
 export class ListComponent implements OnInit {
   public data: Observable<Voucher[]>;
 
+  constructor(private vouchersService: VouchersService) { }
+
   public ngOnInit(): void {
-    this.data = of(mock);
+    this.data = this.vouchersService.getAll().pipe(catchError(() => of(mock)));
   }
 }

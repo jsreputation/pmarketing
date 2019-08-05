@@ -12,11 +12,11 @@ export const mock: Voucher[] = [
         merchantImg: 'https://picsum.photos/200/300?random=3',
         merchantName: 'Starbucks',
         expiry: new Date(),
-        description: {
+        description: [{
             title: '',
             content: '',
             tag: []
-        },
+        }],
         redemptionSuccessImg: 'https://picsum.photos/200/300?random=4',
         redemptionSuccessTxt: ''
     },
@@ -31,11 +31,11 @@ export const mock: Voucher[] = [
         merchantImg: 'https://picsum.photos/200/300?random=7',
         merchantName: 'Starbucks',
         expiry: new Date(),
-        description: {
+        description: [{
             title: '',
             content: '',
             tag: []
-        },
+        }],
         redemptionSuccessImg: 'https://picsum.photos/200/300?random=8',
         redemptionSuccessTxt: ''
     },
@@ -50,11 +50,11 @@ export const mock: Voucher[] = [
         merchantImg: 'https://picsum.photos/200/300?random=11',
         merchantName: 'Starbucks',
         expiry: new Date(),
-        description: {
+        description: [{
             title: '',
             content: '',
             tag: []
-        },
+        }],
         redemptionSuccessImg: 'https://picsum.photos/200/300?random=12',
         redemptionSuccessTxt: ''
     },
