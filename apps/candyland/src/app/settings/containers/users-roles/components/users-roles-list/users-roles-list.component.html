@@ -55,8 +55,8 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #itemMenu="matMenu">
-        <button mat-menu-item>Edit</button>
-        <button mat-menu-item>Duplicate</button>
+        <button mat-menu-item (click)="editItem(element?.id)">Edit</button>
+        <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
       </mat-menu>
     </td>
   </ng-container>
