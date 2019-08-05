@@ -12,7 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { MatButtonModule } from '@angular/material';
     PerxRewardsModule.forRoot({ env: environment }),
     AuthenticationModule,
     RewardsRoutingModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule
   ]
 })
 export class RewardsModule {

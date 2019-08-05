@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'cl-info-hint',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info-hint.component.scss']
 })
 export class InfoHintComponent implements OnInit {
+  @Input() public classList = '';
 
   constructor() { }
 
