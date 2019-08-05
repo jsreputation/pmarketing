@@ -5,26 +5,43 @@ import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IVoucher, VOUCHER_STATE, REDEMPTION_TYPE } from '../models/voucher.model';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
-  const mockRedeemedVoucherDetail = {
-    description: 'Vidyut',
+  const mockRedeemedVoucherDetail: IVoucher = {
+    description: { title: 'Vidyut', content: '', tag: [] },
     id: 21,
     name: 'Vidyut what are you doing',
-    expiresAt: null,
-    state: 'redeemed',
-    img: undefined,
+    expiry: null,
+    state: VOUCHER_STATE.redeemed,
+    rewardId: 12,
+    redemptionType: REDEMPTION_TYPE.none,
+    thumbnailImg: '',
+    rewardBanner: '',
+    merchantImg: '',
+    merchantName: '',
+    redemptionSuccessTxt: '',
+    redemptionSuccessImg: ''
+    // img: undefined,
   };
 
-  const mockIssuedVoucherDetail = {
-    description: 'Vidyut',
+  const mockIssuedVoucherDetail: IVoucher = {
+    description: { title: 'Vidyut', content: '', tag: [] },
     id: 21,
     name: 'Vidyut what are you doing',
-    expiresAt: null,
-    state: 'issued',
-    img: undefined,
+    expiry: null,
+    state: VOUCHER_STATE.issued,
+    rewardId: 12,
+    redemptionType: REDEMPTION_TYPE.none,
+    thumbnailImg: '',
+    rewardBanner: '',
+    merchantImg: '',
+    merchantName: '',
+    redemptionSuccessTxt: '',
+    redemptionSuccessImg: ''
+    // img: undefined,
   };
 
   beforeEach(async(() => {
