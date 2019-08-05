@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard } from 'ngx-auth';
+// import { ProtectedGuard } from 'ngx-auth';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 
@@ -25,6 +25,9 @@ const routes: Routes = [
   },
   {
     path: 'stamps', loadChildren: () => import('./stamps/stamps.module').then(mod => mod.StampsModule)
+  },
+  {
+    path: 'voucher', loadChildren: () => import('./voucher/voucher.module').then(mod => mod.VoucherModule)
   },
   { path: 'login', component: LoginComponent }
 ];

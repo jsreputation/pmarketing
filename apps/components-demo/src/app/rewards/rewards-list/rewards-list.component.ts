@@ -10,17 +10,14 @@ import { mock } from '../reward-mock';
 })
 export class RewardsListComponent implements OnInit {
 
-  rewards: Observable<IReward[]>;
+  public rewards: Observable<IReward[]>;
 
   constructor(private rewardsService: RewardsService) {
   }
 
-  ngOnInit() {
-    this.getRewards();
-  }
-
-  getRewards() {
-    this.rewardsService.getAllRewards()
+  public ngOnInit(): void {
+    this.rewardsService
+      .getAllRewards()
       .subscribe(
         (rewards) => this.rewards = of(rewards),
         () => this.rewards = of(mock)

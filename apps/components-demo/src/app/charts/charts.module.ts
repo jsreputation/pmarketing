@@ -7,7 +7,10 @@ import { VerticalBarComponent } from './vertical-bar/vertical-bar.component';
 import { PerxChartModule } from '@perx/chart';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
-import { MatButtonModule, MatTabsModule } from '@angular/material';
+import {
+  // MatButtonModule,
+  MatTabsModule
+} from '@angular/material';
 import { AdvancedPieComponent } from './advanced-pie/advanced-pie.component';
 import { PieGridComponent } from './pie-grid/pie-grid.component';
 import { TrendComponent } from './trend/trend.component';
