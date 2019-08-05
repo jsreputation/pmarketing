@@ -10,10 +10,16 @@ const routes: Routes = [
   {
     path: '', component: RewardsComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'collection'},
+      { path: '', pathMatch: 'full', redirectTo: 'collection' },
       { path: 'collection', component: RewardsCollectionComponent },
       { path: 'list', component: RewardsListComponent },
-      { path: 'list-tabbed', component: RewardsListTabbedComponent},
+      {
+        path: 'list-tabbed', component: RewardsListTabbedComponent,
+        children: [
+          { path: 'issued', component: RewardsListComponent },
+          { path: 'redeemed', component: RewardsListComponent }
+        ]
+      },
       { path: 'detail', component: RewardComponent },
     ],
   },

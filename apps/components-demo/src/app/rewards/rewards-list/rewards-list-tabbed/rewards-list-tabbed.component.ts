@@ -11,6 +11,10 @@ import { mock } from '../../reward-mock';
 export class RewardsListTabbedComponent implements OnInit {
 
   rewards: Observable<IReward[]>;
+  public navLinks = [
+    { path: 'issued', label: 'Issued' },
+    { path: 'redeemed', label: 'Redeemed' },
+  ];
 
   constructor(private rewardsService: RewardsService) {
   }
