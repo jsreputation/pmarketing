@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
-import { } from '@perx/core';
+
+const mockTags = [
+  'Lifestyle', 'Travel', 'Shopping'
+]
 
 @Component({
   selector: 'app-home',
@@ -9,32 +12,25 @@ import { } from '@perx/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+  tags:Array<string>;
   rewards: Observable<IReward[]>;
+
+  currentTag: string;
+
   @ViewChild('loyaltySummary', { static: false }) loyaltySummary;
-  navigatePanel = [{
-    activated: false,
-    title: 'Home',
-    img: 'assets/img/home.svg',
-  }, {
-    activated: false,
-    title: 'My Rewards',
-    img: 'assets/img/rewards.svg'
-  }, {
-    activated: false,
-    title: 'Account',
-    img: 'assets/img/account.svg'
-  }];
+
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private profile: ProfileService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
 
   }
 
   ngOnInit() {
     this.getRewards();
+    this.getTags();
   }
   ngAfterViewInit(): void {
     this.loyaltySummary.loyalty$ = new BehaviorSubject({
@@ -50,5 +46,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       }
     );
+  }
+
+  getTags() {
+    this.rewardsService.getTags();
+    this.tags = mockTags;
+    this.currentTag = this.tags[0];
+  }
+
+  changeTage(tag){
+    this.currentTag = tag;
   }
 }
