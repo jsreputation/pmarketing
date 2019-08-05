@@ -59,7 +59,7 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
   public onSubmit(): void {
     const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     try {
-      this.authService.forgotPassword('639876543210').subscribe(
+      this.authService.forgotPassword(mobileNumber).subscribe(
         () => {
           this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } } );
         },
