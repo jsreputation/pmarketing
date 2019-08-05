@@ -29,6 +29,7 @@ describe('PinataComponent', () => {
         expect(false).toBeTruthy('It should not shake');
       }
     );
+    component.enabled = false;
     component.shake();
     expect(true).toBeTruthy('just for the sake of having one expectation');
   });
