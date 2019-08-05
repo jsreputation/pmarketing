@@ -59,3 +59,13 @@ $max-width: 60rem;
     display: block;
   }
 }
+
+app-header {
+  .caption-container {
+    min-height: 4.4rem;
+
+    p {
+      text-align: center;
+    }
+  }
+}
