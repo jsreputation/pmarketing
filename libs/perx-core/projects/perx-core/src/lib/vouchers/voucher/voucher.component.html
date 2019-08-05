@@ -9,14 +9,22 @@
     <div class="details">
       <div class="reward-name">
         {{voucher.name}}
-      </div> 
+      </div>
       <div class="merchant-name" *ngIf="!hideMerchantName">
         {{voucher.merchantName}}
       </div>
       <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
         {{voucher.expiry | date: 'dd/MM/yyyy'}}
-        </div>
-      <div class="section-heading" *ngIf="voucher.description">
+      </div>
+      <div *ngFor="let description of voucher.description">
+          <div class="section-heading">
+              {{description.title}}
+            </div>
+            <div class="section-content">
+              <div [innerHtml]="description.content"></div>
+            </div>
+      </div>
+      <!-- <div class="section-heading" *ngIf="voucher.description">
         Description
       </div>
       <div class="section-content" *ngIf="voucher.description">
@@ -33,16 +41,11 @@
       </div>
       <div class="section-content" *ngIf="voucher.howToRedeem">
         <div [innerHtml]="voucher.howToRedeem"></div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="actions-container" *ngIf="!hideActions">
-    <button
-      mat-raised-button
-      color="primary" 
-      class="redeem-btn"
-      (click)="onClick()"
-    >
+    <button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
       REDEEM NOW
     </button>
   </div>

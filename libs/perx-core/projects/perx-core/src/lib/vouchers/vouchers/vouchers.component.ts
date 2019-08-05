@@ -16,7 +16,7 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input() public showTitle: boolean = true;
   @Input() public showMerchant: boolean = true;
   @Input() public showExpireDate: boolean = true;
-  @Input() public showRedeemedDate: boolean = false;
+  @Input() public showRedeemedDate: boolean = true;
   @Input() public showRedeemedIcon: boolean = true;
   @Input() public canSelectRedeemed: boolean = false;
 
@@ -34,9 +34,7 @@ export class VouchersComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers => {
-          return vouchers.filter(v => v.state === this.filter);
-        })
+        map(vouchers =>  (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
       );
     }
   }
