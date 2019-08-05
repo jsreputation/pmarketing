@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { INavLink } from '../navlink.model';
 
 @Component({
   selector: 'app-rewards',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rewards.component.scss']
 })
 export class RewardsComponent {
-  public navLinks = [
+  public navLinks: INavLink[] = [
     { path: 'collection', label: 'Collection' },
     { path: 'list', label: 'List' },
     { path: 'detail', label: 'Detail' },

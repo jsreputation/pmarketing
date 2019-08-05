@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { INavLink } from '../navlink.model';
 
 @Component({
   selector: 'app-utils',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./utils.component.scss']
 })
 export class UtilsComponent {
-  public navLinks = [
+  public navLinks: INavLink[] = [
     { path: 'pin-input', label: 'Pin Input' },
     { path: 'popup', label: 'Popup' }
   ];

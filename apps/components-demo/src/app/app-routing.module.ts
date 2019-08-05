@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard } from 'ngx-auth';
+// import { ProtectedGuard } from 'ngx-auth';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 

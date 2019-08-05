@@ -11,9 +11,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  public authed: boolean;
+  public preAuth: boolean;
+  public failedAuth: boolean;
 
   constructor(private router: Router,
               private authService: AuthenticationService,
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.failedAuth = false;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     if (this.preAuth) {
       if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
         this.authService.isAuthorized().subscribe(
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   // TODO: error states
-  onSubmit(loginForm: NgForm) {
+  public onSubmit(loginForm: NgForm): void {
     const username = loginForm.value.username.toUpperCase();
     const password = loginForm.value.password;
 
