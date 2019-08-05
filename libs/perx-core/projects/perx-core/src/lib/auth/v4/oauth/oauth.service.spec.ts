@@ -87,7 +87,7 @@ describe('OauthService', () => {
   });
 
   it('should reset password', (done: DoneFn) => {
-    service.resetPassword('6398898888', '1237', '8888', '1237')
+    service.resetPassword({ phone: '6398898888', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
       .subscribe((res: { message: string }) => {
         expect(res.message).toBe('Password has been reset!');
         done();
@@ -98,6 +98,22 @@ describe('OauthService', () => {
     expect(req.request.method).toEqual('PUT');
 
     req.flush({ message: 'Password has been reset!' });
+
+    httpTestingController.verify();
+  });
+
+  it('should change password', (done: DoneFn) => {
+    service.changePassword({ userId: '1', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
+      .subscribe((res: { message: string }) => {
+        expect(res.message).toBe('Password has been changed!');
+        done();
+      });
+
+    const req = httpTestingController.expectOne(baseUrl + 'v4/customers/1/change_password');
+
+    expect(req.request.method).toEqual('PUT');
+
+    req.flush({ message: 'Password has been changed!' });
 
     httpTestingController.verify();
   });

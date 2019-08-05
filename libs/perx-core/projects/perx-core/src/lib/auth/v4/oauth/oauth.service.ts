@@ -3,7 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { IProfile } from '../../../profile/profile.model';
-import { ISignUpData, IResetPasswordData, IMessageResponse, IAppAccessTokenResponse, IChangePasswordData } from '../../authentication/models/authentication.model';
+import {
+  ISignUpData,
+  IResetPasswordData,
+  IMessageResponse,
+  IAppAccessTokenResponse,
+  IChangePasswordData
+} from '../../authentication/models/authentication.model';
 import { V4ProfileService, IV4ProfileResponse } from '../../../profile/v4-profile.service';
 
 export class EnvConfig {
@@ -134,7 +140,7 @@ export class OauthService {
 
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.http.put<{ message: string }>(
-      `${this.customersEndPoint}/${changePasswordData.userId}/reset_password`,
+      `${this.customersEndPoint}/${changePasswordData.userId}/change_password`,
       {
         params:
         {
