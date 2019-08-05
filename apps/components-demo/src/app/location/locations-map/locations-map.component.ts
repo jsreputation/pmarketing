@@ -38,8 +38,8 @@ const test2: ILocation[] = [
 })
 export class LocationsMapComponent {
 
-  public currentList = 'list1';
-  public key = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
+  public currentList: string = 'list1';
+  public key: string = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
   public locations: BehaviorSubject<ILocation[]> = new BehaviorSubject(test1);
 
   public onChange(newValue: string): void {
