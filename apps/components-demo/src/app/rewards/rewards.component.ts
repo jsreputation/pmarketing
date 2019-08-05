@@ -9,6 +9,7 @@ export class RewardsComponent {
   public navLinks = [
     { path: 'collection', label: 'Collection' },
     { path: 'list', label: 'List' },
+    { path: 'list-tabbed', label: 'List-Tabbed' },
     { path: 'detail', label: 'Detail' },
   ];
 }
