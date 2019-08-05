@@ -11,9 +11,9 @@ export class ChangePasswordComponent {
   constructor(private router: Router, private authService: AuthenticationService) {
   }
 
-  public changePassword(data: any): void {
-    this.authService.changePassword(data.oldPassword, data.newPassword).subscribe(() => {
-      this.router.navigate(['/account']);
-    });
-  }
+  // public changePassword(data: any): void {
+  //   this.authService.changePassword(data.oldPassword, data.newPassword).subscribe(() => {
+  //     this.router.navigate(['/account']);
+  //   });
+  // }
 }
