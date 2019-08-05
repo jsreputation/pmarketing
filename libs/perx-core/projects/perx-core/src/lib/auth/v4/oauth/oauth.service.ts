@@ -1,7 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, mergeMap } from 'rxjs/operators';
 import { IProfile } from '../../../profile/profile.model';
 import {
   ISignUpData,
@@ -31,7 +31,7 @@ export class OauthService {
   public userAuthEndPoint: string;
   public customersEndPoint: string;
 
-  constructor(@Optional() config: EnvConfig, private http: HttpClient) {
+  constructor(@Optional() config: EnvConfig, private http: HttpClient, private profileService: V4ProfileService) {
     if (!config.env.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
@@ -139,21 +139,22 @@ export class OauthService {
   }
 
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
-    return this.http.put<{ message: string }>(
-      `${this.customersEndPoint}/${changePasswordData.userId}/change_password`,
-      {
-        params:
-        {
-          password: changePasswordData.newPassword,
-          password_confirmation: changePasswordData.passwordConfirmation,
-          confirmation_token: changePasswordData.otp
+    return this.profileService.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => {
+          return this.http.put<IMessageResponse>(
+            `${this.customersEndPoint}/${profile.id}/change_password`,
+            {
+              params:
+              {
+                password: changePasswordData.newPassword,
+                password_confirmation: changePasswordData.passwordConfirmation,
+                confirmation_token: changePasswordData.otp
+              }
+            });
         }
-      }).pipe(
-        tap( // Log the result or error
-          data => console.log(data),
-          error => console.log(error)
-        )
-      );
+      )
+    );
   }
 
 }

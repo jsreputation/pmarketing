@@ -33,5 +33,4 @@ export interface IChangePasswordData {
     newPassword: string;
     passwordConfirmation: string;
     otp: string;
-    userId: string;
 }
