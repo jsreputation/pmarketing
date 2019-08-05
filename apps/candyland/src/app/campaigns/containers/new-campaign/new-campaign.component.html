@@ -19,15 +19,15 @@
 
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step>
+    <mat-step [completed]="getStepConditions(0) | async">
       <ng-template matStepLabel>Select engagement</ng-template>
       <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Rewards & Limits</ng-template>
+    <mat-step [completed]="getStepConditions(1) | async">
+    <ng-template matStepLabel>Rewards & Limits</ng-template>
       <cl-new-campaign-rewards-page></cl-new-campaign-rewards-page>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="getStepConditions(3) | async">
       <ng-template matStepLabel>Campaign Details</ng-template>
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>

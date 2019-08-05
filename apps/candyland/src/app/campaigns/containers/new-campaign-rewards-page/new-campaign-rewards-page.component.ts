@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -54,6 +55,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(private store: CampaignCreationStoreService,
+              private stepConditionService: StepConditionService,
               private fb: FormBuilder) {
     this.initForm();
   }
@@ -63,7 +65,10 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.updateRewards();
     this.form.valueChanges.pipe(
       untilDestroyed(this)
-    ).subscribe(value => this.store.updateCampaign(value));
+    ).subscribe(value => {
+      this.stepConditionService.registerStepCondition(1, this.form.valid);
+      this.store.updateCampaign(value);
+    });
     this.enableProbability.valueChanges.pipe(untilDestroyed(this)).subscribe(() => this.updateRewards());
   }
 

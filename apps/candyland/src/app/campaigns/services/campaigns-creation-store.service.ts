@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CampaignCreationStoreService {
   public currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private steperCondition$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public config = {
     typeFilterConfig: [
       {title: 'All', value: null},

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -38,6 +39,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: CampaignCreationStoreService,
+    private stepConditionService: StepConditionService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService
@@ -58,6 +60,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(() => {
+        this.stepConditionService.registerStepCondition(2, this.form.valid);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {

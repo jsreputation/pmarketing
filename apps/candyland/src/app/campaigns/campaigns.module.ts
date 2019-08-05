@@ -56,10 +56,14 @@ import {
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 
 @NgModule({
   providers: [
+    CampaignCreationStoreService,
+    StepConditionService,
     NewCampaignDetailFormService
   ],
   declarations: [

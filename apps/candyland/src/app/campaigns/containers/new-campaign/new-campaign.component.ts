@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router } from '@angular/router';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -17,6 +19,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   constructor(private store: CampaignCreationStoreService,
+              private campaignCreationStepConditionService: StepConditionService,
               private router: Router,
               public dialog: MatDialog,
               private fb: FormBuilder) {
@@ -47,6 +50,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
+  public getStepConditions(key: number): Observable<boolean> {
+    return this.campaignCreationStepConditionService.stepCondition$(key);
+  }
+
   goBack() {
     this.stepper.previous();
   }
@@ -58,6 +65,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
+
+
 
   private getDialogData(campaign) {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
@@ -77,7 +86,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       default:
         return {
           title: 'Yay! you just created a campaign',
-          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.',
+          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
         };
     }
   }
