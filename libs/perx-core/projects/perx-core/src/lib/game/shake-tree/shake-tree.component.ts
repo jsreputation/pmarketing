@@ -41,7 +41,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   @Input()
   public nbFallingGifts: number = 10;
   @Input()
-  public enabled: boolean = false;
+  public enabled: boolean = true;
 
   @Input()
   public distanceFromTree: number = 16;
@@ -102,7 +102,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
       this.n++;
       this.shakeAnimationClass = '';
       this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
-      if (this.n === this.nbShakes) {
+      // @ts-ignore
+      if (this.n === Number.parseInt(this.nbShakes, 10)) {
         this.gifts
           .filter(gift => gift.id <= this.nbFallingGifts)
           .forEach(gift => gift.status = GIFT_STATUS.drop);
@@ -140,7 +141,6 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
 
   private updateGifts(): void {
     this.gifts
-      .filter(gift => gift.id > this.nbHangedGifts)
-      .forEach(gift => gift.display = false);
+      .forEach(gift => gift.display = gift.id <= this.nbHangedGifts);
   }
 }
