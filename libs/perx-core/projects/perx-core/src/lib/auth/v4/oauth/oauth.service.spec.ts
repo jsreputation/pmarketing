@@ -87,7 +87,7 @@ describe('OauthService', () => {
   });
 
   it('should reset password', (done: DoneFn) => {
-    service.resetPassword('6398898888', '1237', '8888')
+    service.resetPassword('6398898888', '1237', '8888', '1237')
       .subscribe((res: { message: string }) => {
         expect(res.message).toBe('Password has been reset!');
         done();

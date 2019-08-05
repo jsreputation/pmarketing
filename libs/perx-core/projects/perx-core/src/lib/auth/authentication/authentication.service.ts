@@ -215,8 +215,8 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public resetPassword(phone: string, newPwd: string, otp: string): Observable<any> {
-    return this.v4OauthService.resetPassword(phone, newPwd, otp);
+  public resetPassword(phone: string, newPwd: string, otp: string, passwordConfirmation: string): Observable<any> {
+    return this.v4OauthService.resetPassword(phone, newPwd, otp, passwordConfirmation);
   }
 
   // @ts-ignore
@@ -235,8 +235,14 @@ export class AuthenticationService implements AuthService {
   }
 
   // @ts-ignore
-  public changePassword(newPassword: string, oldPassword?: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public changePassword(
+    newPassword: string,
+    passwordConfirmation: string,
+    otp: string,
+    userId: string,
+    oldPassword?: string
+  ): Observable<any> {
+    return this.v4OauthService.changePassword(newPassword, passwordConfirmation, oldPassword, otp, userId);
   }
 
   /**
