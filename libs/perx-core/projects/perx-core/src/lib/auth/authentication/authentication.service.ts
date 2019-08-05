@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
@@ -40,11 +40,10 @@ export class AuthenticationService implements AuthService {
    * @memberOf AuthService
    */
   public isAuthorized(): Observable<boolean> {
-    return this.tokenStorage
-      .getAppInfoProperty('userAccessToken')
-      .pipe(map(token => {
-        return !!token;
-      }));
+    const token = this.tokenStorage
+    .getAppInfoProperty('userAccessToken');
+
+    return of(!!token);
   }
 
   /**
@@ -254,7 +253,7 @@ export class AuthenticationService implements AuthService {
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
     const appAccessToken = this.getAppAccessToken();
-    return userAccessToken ? userAccessToken : appAccessToken;
+    return of(userAccessToken ? userAccessToken : appAccessToken);
   }
 
   /**
@@ -263,7 +262,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getUserAccessToken(): Observable<string> {
+  public getUserAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('userAccessToken');
   }
 
@@ -283,7 +282,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getAppAccessToken(): Observable<string> {
+  public getAppAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('appAccessToken');
   }
 

@@ -23,10 +23,9 @@ export class TokenStorage {
   /**
    * Get appInfo property
    */
-  public getAppInfoProperty(key: string): Observable<string> {
+  public getAppInfoProperty(key: string): string {
     this.getAppInfo();
-    const result: string = this.appInfo[key];
-    return of(result);
+    return this.appInfo[key];
   }
 
   /**
