@@ -17,6 +17,8 @@ export interface RoleLabelConfig {
 export class RoleLabelComponent implements OnChanges {
   @Input() public role: Role = Role.ADMIN;
   @Input() public showTitle = false;
+  @Input() public email: string;
+  @Input() public classList = '';
   public roleConfig: RoleLabelConfig;
   private config: { [key: string]: RoleLabelConfig } = {
     [Role.ADMIN]: {abbr: 'A', title: 'Admin', class: 'admin'},
