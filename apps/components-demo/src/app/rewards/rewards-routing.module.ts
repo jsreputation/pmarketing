@@ -9,6 +9,7 @@ const routes: Routes = [
   {
     path: '', component: RewardsComponent,
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'collection'},
       { path: 'collection', component: RewardsCollectionComponent },
       { path: 'list', component: RewardsListComponent },
       { path: 'detail', component: RewardComponent },

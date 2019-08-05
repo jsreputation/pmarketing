@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { PuzzleCollectStamp, PuzzleCollectReward, PUZZLE_COLLECT_STAMP_STATE } from '../models/puzzle-stamp.model';
 
 @Component({
@@ -7,8 +7,7 @@ import { PuzzleCollectStamp, PuzzleCollectReward, PUZZLE_COLLECT_STAMP_STATE } f
   styleUrls: ['./puzzle-collect-stamps.component.css']
 })
 
-export class PuzzleCollectStampsComponent implements OnInit {
-
+export class PuzzleCollectStampsComponent implements OnChanges {
   // This dummy array is describing the slots templates
   private stampsOrientations: number[][] = [[1, 2],
                         [2, 2],
@@ -20,10 +19,10 @@ export class PuzzleCollectStampsComponent implements OnInit {
                         [3, 3, 3, 1]];
 
   @Input()
-  private stamps: PuzzleCollectStamp[] = null;
+  private stamps: PuzzleCollectStamp[] | null = [];
 
   @Input()
-  private rewards: PuzzleCollectReward[] = null;
+  private rewards: PuzzleCollectReward[] = [];
 
   @Input()
   private nbSlots: number = null;
@@ -45,8 +44,10 @@ export class PuzzleCollectStampsComponent implements OnInit {
 
   public currentActiveOrientation: number[] = null;
 
-  public ngOnInit(): void {
-    this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.nbSlots) {
+      this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
+    }
   }
 
   public counter(i: number): number[] {
@@ -110,5 +111,4 @@ export class PuzzleCollectStampsComponent implements OnInit {
     }
     return itemIndex;
   }
-
 }
