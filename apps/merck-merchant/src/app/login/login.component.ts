@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {}
 
   public onSubmit(): void {
-    const email = (this.loginForm.get('email').value as string).toUpperCase();
+    const email = (this.loginForm.get('email').value as string);
     const password: string = this.loginForm.get('password').value;
 
     this.authService.v4GameOauth(email, password)
