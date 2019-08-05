@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'cl-users-roles-list',
@@ -12,13 +12,22 @@ export class UsersRolesListComponent implements AfterViewInit {
   @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public delete = new EventEmitter<number>();
+  @Output() public edit = new EventEmitter<number>();
 
   constructor() {
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  public editItem(id: number) {
+    this.edit.emit(id);
+  }
+
+  public deleteItem(id: number) {
+    this.delete.emit(id);
   }
 
 }

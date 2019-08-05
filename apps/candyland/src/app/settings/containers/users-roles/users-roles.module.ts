@@ -9,7 +9,7 @@ import {
   MatMenuModule,
   MatPaginatorModule, MatRadioModule, MatSelectModule, MatSlideToggleModule,
   MatSortModule, MatStepperModule,
-  MatTableModule, MatTabsModule, MatDividerModule
+  MatTableModule, MatTabsModule, MatDividerModule, MatCheckboxModule
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
@@ -18,12 +18,25 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { RoleLabelModule } from '@cl-shared/components/role-label/role-label.module';
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
+import { InviteNewUsersPlatformComponent } from './components/invite-new-users-platform/invite-new-users-platform.component';
+import { InviteNewUsersRewardsComponent } from './components/invite-new-users-rewards/invite-new-users-rewards.component';
+import { InviteNewUsersEngagementsComponent } from './components/invite-new-users-engagements/invite-new-users-engagements.component';
+import { InviteNewUsersCampaignComponent } from './components/invite-new-users-campaign/invite-new-users-campaign.component';
+import { InviteNewUsersLoyaltyComponent } from './components/invite-new-users-loyalty/invite-new-users-loyalty.component';
+import { InviteNewUsersInsightComponent } from './components/invite-new-users-insight/invite-new-users-insight.component';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 
 @NgModule({
   declarations: [
     UsersRolesComponent,
     UsersRolesListComponent,
-    InviteNewUsersPopupComponent
+    InviteNewUsersPopupComponent,
+    InviteNewUsersPlatformComponent,
+    InviteNewUsersRewardsComponent,
+    InviteNewUsersEngagementsComponent,
+    InviteNewUsersCampaignComponent,
+    InviteNewUsersLoyaltyComponent,
+    InviteNewUsersInsightComponent
   ],
   exports: [UsersRolesComponent],
   imports: [
@@ -50,10 +63,13 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
     MatTabsModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCheckboxModule,
+    CheckboxGroupModule
   ],
   entryComponents: [
     InviteNewUsersPopupComponent
   ]
 })
-export class UsersRolesModule { }
+export class UsersRolesModule {
+}

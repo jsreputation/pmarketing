@@ -1,9 +1,61 @@
-.invite-new-users-dialog {
+@import "variables";
+
+.invite-new-users {
 
   &-content {
     position: relative;
     flex: 1;
     padding: 0 3.2rem;
+  }
+
+  &-top-row {
+    margin-bottom: 3.2rem;
+  }
+
+  &-section {
+    margin-bottom: 1.6rem;
+    padding: 2.4rem 2rem;
+    border-radius: 4px;
+    background-color: $simple-light-gray;
+
+    &.primary {
+      padding: 3.4rem 2rem;
+      background-color: $primary-section-color;
+    }
+
+    & > * {
+      margin-bottom: 2.4rem;
+
+      &.invite-new-users-top-row {
+        margin: 0.8rem 0 1.2rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &-table-group {
+    display: flex;
+    flex-flow: row nowrap;
+
+    & > * {
+      width: 9rem;
+      padding: 0 1.2px;
+      text-align: center;
+    }
+  }
+
+  &-label {
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $secondary-color;
   }
 
   .mat-horizontal-stepper-header-container {
@@ -16,7 +68,6 @@
     overflow: hidden;
     padding: 0;
   }
-
 
   .mat-tab-label {
     height: 30px;
@@ -31,5 +82,14 @@
     align-items: center;
     white-space: nowrap;
     position: relative;
+  }
+
+  .content-height {
+    height: 50rem;
+  }
+
+  .tab-content-height {
+    height: 30rem;
+    padding-bottom: 0;
   }
 }
