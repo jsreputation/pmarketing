@@ -1,0 +1,9 @@
+<mat-radio-group [ngModel]="currentList" (ngModelChange)="onChange($event)">
+  <mat-radio-button class="example-margin" value="list1">
+    list1
+  </mat-radio-button>
+  <mat-radio-button class="example-margin" value="list2">
+    list2
+  </mat-radio-button>
+</mat-radio-group>
+<perx-core-locations-map [locations]="locations" [key]="key"></perx-core-locations-map>
