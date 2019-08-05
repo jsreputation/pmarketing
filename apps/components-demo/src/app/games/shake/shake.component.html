@@ -1,0 +1,27 @@
+<div class="setup-form">
+    <div>
+        Number of gifts
+        <mat-slider min="1" max="10" step="1" value="5" #nbGifts thumbLabel
+        ></mat-slider>
+    </div>
+    <div>
+        Number of falling gifts
+        <mat-slider min="1" [max]="nbGifts.value" step="1" value="5" #nbFallingGifts thumbLabel></mat-slider>
+    </div>
+    <mat-form-field>
+        <input matInput placeholder="Number of shakes/taps" value="2" min="1" type="number" #nbShakes aria-autocomplete="none">
+    </mat-form-field>
+    <button (click)="reset()" mat-flat-button color="primary">Reset</button>
+</div>
+<perx-core-shake-tree
+    #shake
+    [treeImg]="'assets/games/tree.png'" 
+    [giftImg]="'assets/games/gift.png'"
+    [waitingManImg]="'assets/games/person.png'" 
+    [waitingManCelebrateImg]="'assets/games/person-celebrate.png'"
+    [nbHangedGifts]="nbGifts.value" 
+    [nbFallingGifts]="nbFallingGifts.value" 
+    [nbShakes]="nbShakes.value" 
+    [distanceFromTree]="26" 
+    [bottomDistance]="1">
+</perx-core-shake-tree>

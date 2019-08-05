@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
+import { mock } from '../reward-mock';
 
 @Component({
   selector: 'app-rewards-collection',
@@ -19,12 +20,10 @@ export class RewardsCollectionComponent implements OnInit {
   }
 
   getRewards() {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
-      }
-    );
+    this.rewardsService.getAllRewards()
+      .subscribe(
+        (rewards) => this.rewards = of(rewards),
+        () => this.rewards = of(mock)
+      );
   }
 }

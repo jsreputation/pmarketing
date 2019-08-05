@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IReward, NotificationService, RewardsService } from '@perx/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mock } from '../reward-mock';
 
 @Component({
   selector: 'app-reward',
@@ -15,18 +16,23 @@ export class RewardComponent implements OnInit {
   @Input()
   public hideActions = false;
 
-  constructor(private rewardService: RewardsService,
-              private notificationService: NotificationService) {
-  }
+  constructor(
+    private rewardService: RewardsService,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
-    this.reward = this.rewardService.getReward(this.rewardId);
+    this.rewardService.getReward(this.rewardId)
+      .subscribe(
+        (reward) => this.reward = of(reward),
+        () => this.reward = of(mock[0])
+      );
   }
 
   onRedeem() {
     this.notificationService.addPopup({
       title: 'Event Triggered',
-      text: `${ this.rewardId }`
+      text: `${this.rewardId}`
     });
   }
 

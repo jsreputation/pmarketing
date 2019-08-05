@@ -16,7 +16,7 @@ export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
   @Input()
   public nbTaps: number = 5;
   @Input()
-  public enabled: boolean = false;
+  public enabled: boolean = true;
 
   @Output() public tap: EventEmitter<number> = new EventEmitter();
   @Output() public broken: EventEmitter<void> = new EventEmitter();
@@ -46,7 +46,8 @@ export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
         setTimeout(() => {
           this.shakeAnimationClass = 'shake';
         }, 0);
-      } else if (this.n === this.nbTaps) {
+        // @ts-ignore
+      } else if (this.n === Number.parseInt(this.nbTaps, 10)) {
         this.tap.emit(this.n);
         this.broken.emit();
         this.currentImg = this.openedImg;
