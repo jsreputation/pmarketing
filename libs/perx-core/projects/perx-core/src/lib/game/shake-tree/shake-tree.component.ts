@@ -37,9 +37,9 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   @Input()
   public nbShakes: number = 1;
   @Input()
-  public nbHangedGifts: number = 1;
+  public nbHangedGifts: number = 3;
   @Input()
-  public nbFallingGifts: number = 10;
+  public nbFallingGifts: number = 3;
   @Input()
   public enabled: boolean = true;
 

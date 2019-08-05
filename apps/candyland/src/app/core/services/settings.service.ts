@@ -10,7 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SettingsService {
 
   constructor(private settingsHttpService: SettingsHttpService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder) {
+  }
 
   public getTimeZone(): Observable<ISimpleValue[]> {
     return this.settingsHttpService.getTimeZone()
@@ -24,6 +25,14 @@ export class SettingsService {
       .pipe(
         map((res: ISimpleValue[]) => res)
       );
+  }
+
+  public getRoles(): Observable<any[]> {
+    return this.settingsHttpService.getRoles();
+  }
+
+  public getRolesOptions(): Observable<any[]> {
+    return this.settingsHttpService.getRolesOptions();
   }
 
   public getFormBranding(): FormGroup {
