@@ -9,6 +9,11 @@ export interface IReward {
   quantity?: number;
 }
 
+export interface IGift {
+  name: string;
+  pointsPerUnit: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -59,5 +64,12 @@ export class RewardsService {
         pointsPerUnit: 5,
       }
     ]);
+  }
+
+  public getReward(): Observable<IGift> {
+    return of({
+      name: 'Glucophage 10% Discount',
+      pointsPerUnit: 5,
+    });
   }
 }

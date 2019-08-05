@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
 import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
 enum GAME_TYPE {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata'
 }
+
 interface Asset {
   type: string;
   value: {
@@ -18,6 +20,7 @@ interface Asset {
     image_url: string;
   };
 }
+
 interface Outcome {
   button_text: string;
   description: string;
@@ -41,6 +44,7 @@ interface GameProperties {
   play_button_text?: string;
   nooutcome?: Outcome;
   outcome?: Outcome;
+  background_image?: Asset;
 }
 
 interface TreeDisplayProperties extends GameProperties {
@@ -48,8 +52,8 @@ interface TreeDisplayProperties extends GameProperties {
   number_of_gifts_to_drop: number;
   gift_image: Asset;
   tree_image: Asset;
-  waiting_image: Asset;
-  celebrating_image: Asset;
+  waiting_image?: Asset;
+  celebrating_image?: Asset;
 }
 
 interface PinataDisplayProperties extends GameProperties {
@@ -60,7 +64,7 @@ interface PinataDisplayProperties extends GameProperties {
 
 interface Game {
   campaign_id: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties;
+  display_properties: TreeDisplayProperties|PinataDisplayProperties;
   game_type: GAME_TYPE;
   id: number;
   number_of_tries: number;
@@ -102,7 +106,7 @@ export class GameService implements IGameService {
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree|IPinata;
     switch (game.game_type) {
       case GAME_TYPE.shakeTheTree:
         type = TYPE.shakeTheTree;
@@ -114,8 +118,8 @@ export class GameService implements IGameService {
           nbHangedGift: dpts.number_of_gifts_shown,
           nbGiftsToDrop: dpts.number_of_gifts_to_drop,
           nbTaps: 5,
-          waitingAccessoryImg: dpts.waiting_image.value.image_url,
-          celebratingAccessoryImg: dpts.celebrating_image.value.image_url
+          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url(),
+          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url()
         };
         break;
       case GAME_TYPE.pinata:
@@ -158,6 +162,7 @@ export class GameService implements IGameService {
       id: game.id,
       campaignId: game.campaign_id,
       type,
+      backgroundImg: oc(game).display_properties.background_image.value.image_url(),
       remainingNumberOfTries: game.number_of_tries,
       config,
       texts,
@@ -179,11 +184,11 @@ export class GameService implements IGameService {
   }
 
   public play(gameId: number): Observable<any> {
-    return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null);
+    return this.httpClient.put<IV4PlayResponse>(`${ this.hostName }/v4/games/${ gameId }/play`, null);
   }
 
   public get(gameId: number): Observable<IGame> {
-    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
+    return this.httpClient.get<GameResponse>(`${ this.hostName }/v4/games/${ gameId }`)
       .pipe(
         map(res => res.data),
         map(game => GameService.v4GameToGame(game))
@@ -191,11 +196,18 @@ export class GameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    return this.httpClient.get<GamesResponse>(`${ this.hostName }/v4/campaigns/${ campaignId }/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
+          if (games.length === 0) {
+            throw new Error('Games list is empty');
+          }
           return games.map((game: Game): IGame => GameService.v4GameToGame(game));
+        }),
+        catchError((err) => {
+          // rethrow error for subscriber to handle
+          return throwError(err);
         })
       );
   }
