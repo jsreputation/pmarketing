@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { INavLink } from '../navlink.model';
 
 @Component({
   selector: 'app-games',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./games.component.scss']
 })
 export class GamesComponent {
-  public navLinks = [
+  public navLinks: INavLink[] = [
     { path: 'shake', label: 'Shake' },
     { path: 'tap', label: 'Tap' }
   ];
