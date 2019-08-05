@@ -26,6 +26,9 @@ const routes: Routes = [
   {
     path: 'stamps', loadChildren: () => import('./stamps/stamps.module').then(mod => mod.StampsModule)
   },
+  {
+    path: 'voucher', loadChildren: () => import('./voucher/voucher.module').then(mod => mod.VoucherModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 

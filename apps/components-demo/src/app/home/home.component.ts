@@ -13,6 +13,7 @@ export class HomeComponent {
     { path: 'charts', label: 'Charts' },
     { path: 'games', label: 'Games' },
     { path: 'stamps', label: 'Stamps' },
-    { path: 'login', label: 'Login' }
+    { path: 'login', label: 'Login' },
+    { path: 'voucher', label: 'Vouchers' }
   ];
 }
