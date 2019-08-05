@@ -1,0 +1,14 @@
+<ngx-charts-bar-vertical-2d
+    *ngIf="!single"
+    [results]="ngxChartData"
+    [showGridLines]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+></ngx-charts-bar-vertical-2d>
+<ngx-charts-bar-vertical
+    *ngIf="single"
+    [results]="ngxChartData"
+    [showGridLines]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+></ngx-charts-bar-vertical>

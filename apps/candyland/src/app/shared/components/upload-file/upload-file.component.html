@@ -3,14 +3,7 @@
     <div class="upload-file-label">
       {{label}}
     </div>
-    <a class="upload-file-download-text" href="assets/files/Users_template.csv" download>
-      <button mat-button class="upload-file-download">
-        <mat-icon class="upload-file-download-icon">
-          <i class="icon full-with download-icon"></i>
-        </mat-icon>
-        <span class="upload-file-download-text">Download a sample file</span>
-      </button>
-    </a>
+    <cl-download-button file="assets/files/Users_template.csv">Download a sample file</cl-download-button>
   </div>
 
   <div class="upload-file-wrap"

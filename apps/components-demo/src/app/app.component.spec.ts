@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -13,6 +13,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         MatToolbarModule,
+        MatDialogModule,
         FormsModule,
         HttpClientTestingModule,
         AuthenticationModule,
