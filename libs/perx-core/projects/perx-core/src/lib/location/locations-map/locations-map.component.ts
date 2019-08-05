@@ -78,11 +78,9 @@ export class LocationsMapComponent implements OnInit, OnChanges {
 
   public findMe(): void {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.watchPosition((position) => {
         this.showPosition(position);
       });
-    } else {
-      alert('Geolocation is not supported by this browser.');
     }
   }
 

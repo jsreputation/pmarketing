@@ -10,7 +10,6 @@ import {
   CognitoModule,
   OauthModule,
   UtilsModule as PerxCoreUtilsModule,
-  LocationModule as PerxCoreLocationModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,9 +36,8 @@ import { LocationModule } from './location/location.module';
     FormsModule,
     RewardsModule,
     UtilsModule,
-    LocationModule,
-    PerxCoreLocationModule,
     PerxCoreUtilsModule,
+    LocationModule,
     MatCardModule,
     MatRippleModule,
     MatIconModule
