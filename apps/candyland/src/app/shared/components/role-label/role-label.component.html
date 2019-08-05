@@ -1,0 +1,6 @@
+<div class="role-label">
+  <div class="role-label-abbr" [ngClass]="roleConfig?.class">
+    {{roleConfig?.abbr}}
+  </div>
+  <span *ngIf="showTitle" class="role-label-title">{{roleConfig?.title}}</span>
+</div>
