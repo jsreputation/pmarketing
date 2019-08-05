@@ -131,4 +131,30 @@ export class OauthService {
       map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
     );
   }
+
+  public changePassword(
+    newPassword: string,
+    passwordConfirmation: string,
+    otp: string,
+    userId: string,
+    oldPassword: string
+  ): Observable<any> {
+    return this.http.put<{ message: string }>(
+      `${this.customersEndPoint}/${userId}/reset_password`,
+      {
+        params:
+        {
+          password: newPassword,
+          password_confirmation: passwordConfirmation,
+          old_password: oldPassword,
+          confirmation_token: otp
+        }
+      }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
+  }
+
 }
