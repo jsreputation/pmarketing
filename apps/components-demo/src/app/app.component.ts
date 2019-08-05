@@ -11,8 +11,8 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'components-demo';
-  preAuth: boolean;
+  public title: string = 'components-demo';
+  public preAuth: boolean;
 
   constructor(
     private router: Router,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     this.preAuth = environment.preAuth;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // initialise notification service
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     return false;
   }
 
-  logout(): void {
+  public logout(): void {
     this.authService.logout();
   }
 }
