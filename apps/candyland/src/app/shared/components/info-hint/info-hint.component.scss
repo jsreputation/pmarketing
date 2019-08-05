@@ -26,7 +26,7 @@
     border-radius: 4px;
     opacity: 0;
     visibility: hidden;
-    transition: .5s cubic-bezier(.35,0,.25,1);
+    transition: .5s cubic-bezier(.35, 0, .25, 1);
     z-index: 5;
     display: block;
     min-width: 21.1rem;
@@ -50,4 +50,14 @@
     }
   }
 
+}
+
+.light {
+  .info-content {
+    padding: 0;
+    background-color: $white-color;
+    &::after {
+      display: none;
+    }
+  }
 }

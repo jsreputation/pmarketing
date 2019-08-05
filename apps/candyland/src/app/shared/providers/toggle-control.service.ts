@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
-import {ToggleControlConfig} from 'src/app/models/toggle-control-config.interface';
+import {ToggleControlConfig} from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable({
   providedIn: 'root'

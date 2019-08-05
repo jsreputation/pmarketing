@@ -20,7 +20,6 @@ import { UsersRolesModule } from './containers/users-roles/users-roles.module';
     BrandingModule,
     CommunicationsModule,
     UsersRolesModule,
-
     MatTabsModule,
   ]
 })

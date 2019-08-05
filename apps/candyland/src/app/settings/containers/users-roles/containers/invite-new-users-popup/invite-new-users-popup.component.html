@@ -1,0 +1,38 @@
+<div class="dialog">
+  <div class="dialog-header-wrap">
+    <h3 class="dialog-title">Invite new users</h3>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="dialog-content">
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+      <mat-step>
+        <ng-template matStepLabel>Email</ng-template>
+        Email
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Permission</ng-template>
+        Permission
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-dialog-content>
+  <div class="dialog-actions">
+    <cl-button classList="invert"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="add()"
+               [disableRipple]="true">
+        <span>
+          Add
+        </span>
+    </cl-button>
+  </div>
+</div>
