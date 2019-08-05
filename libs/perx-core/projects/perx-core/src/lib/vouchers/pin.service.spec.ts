@@ -4,6 +4,7 @@ import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
 import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
+import { IVoucher } from './models/voucher.model';
 
 enum VOUCHER_STATE {
   issued = 'issued',
@@ -37,7 +38,7 @@ describe('PinService', () => {
   });
 
   it('should get pin from voucher Id', (done: DoneFn) => {
-    const mockReturn = {
+    const mockReturn: IVoucher = {
       id: 1,
       rewardId: 52,
       state: VOUCHER_STATE.expired,
@@ -50,11 +51,11 @@ describe('PinService', () => {
       merchantName: 'Kluang Station',
       expiry: new Date('2019-04-30T15:59:59.999Z'),
       redemptionDate: new Date(),
-      description: {
+      description: [{
         title: '',
         content: '',
         tag: []
-      },
+      }],
       redemptionSuccessTxt: '',
       redemptionSuccessImg: ''
     };

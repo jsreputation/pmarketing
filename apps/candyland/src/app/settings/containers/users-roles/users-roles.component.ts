@@ -37,6 +37,13 @@ export class UsersRolesComponent  implements AfterViewInit {
     });
   }
 
+  public openDialogEditUsers(id: number): void {
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog', data: id});
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
   private getData() {
     this.settingsService.getRoles()
       .pipe(
