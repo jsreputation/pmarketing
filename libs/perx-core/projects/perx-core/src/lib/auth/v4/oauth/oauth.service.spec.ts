@@ -7,7 +7,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Type } from '@angular/core';
 import { ProfileModule } from '../../../profile/profile.module';
 
-fdescribe('OauthService', () => {
+describe('OauthService', () => {
   const environment = {
     apiHost: 'https://api.perxtech.io',
     production: false,
