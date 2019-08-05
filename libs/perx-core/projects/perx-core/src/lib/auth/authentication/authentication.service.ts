@@ -6,7 +6,13 @@ import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ISignUpData, IMessageResponse, IResetPasswordData, IAppAccessTokenResponse } from './models/authentication.model';
+import {
+  ISignUpData,
+  IMessageResponse,
+  IResetPasswordData,
+  IAppAccessTokenResponse,
+  IChangePasswordData
+} from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
 
 @Injectable({
