@@ -42,73 +42,72 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-        this.authService.isAuthorized().subscribe(
-          authed => {
-            if (!authed) {
-              this.authService.autoLogin().then(
-                (isAuthed: boolean) => {
-                  this.authed = isAuthed;
-                  if (this.authed) {
-                    this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                  }
-                },
-                () => {
-                  this.failedAuth = true;
-                  this.authed = false;
-                }
-              );
-            } else {
-              this.authed = authed;
-            }
-
-          },
-        );
-      }
+    if (!this.preAuth) {
+      return;
     }
+
+    if (!isPlatformBrowser(this.platformId) || this.authService.authing) {
+      return;
+    }
+
+    this.authService.isAuthorized().subscribe(
+      authed => {
+        if (!authed) {
+          this.authService.autoLogin().then(
+            (isAuthed: boolean) => {
+              this.authed = isAuthed;
+              if (this.authed) {
+                this.router.navigateByUrl(this.authService.getInterruptedUrl());
+              }
+            },
+            () => {
+              this.failedAuth = true;
+              this.authed = false;
+            }
+          );
+        } else {
+          this.authed = authed;
+        }
+      },
+    );
   }
 
-  onSubmit() {
+  async onSubmit() {
     const username = this.loginForm.get('playerCode').value as string;
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
+    try {
+      const isAuthed = await this.authService.v4GameOauth(username, password);
+      this.authed = isAuthed;
 
-    this.authService.v4GameOauth(username, password)
-      .then((isAuthed: boolean) => {
-        this.authed = isAuthed;
-
-        if (this.authed) {
-
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = username;
-          }
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('home');
-          }
+      if (this.authed) {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = username;
         }
-      })
-      .catch((err) => {
-        this.failedAuth = true;
-        this.authed = false;
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 0) {
-            this.notificationService.addPopup({
-              title: 'We could not reach the server',
-              text: 'Please try again soon'
-            });
-          } else if (err.status === 401) {
-
-            [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
-              .forEach(c => c.setErrors({
-                invalid: true
-              }));
-            this.errorMessage = 'Invalid credentials';
-          }
+        if (this.authService.getInterruptedUrl()) {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl());
+        } else {
+          this.router.navigateByUrl('home');
         }
-      });
+      }
+    } catch (err) {
+      this.failedAuth = true;
+      this.authed = false;
+      if (err instanceof HttpErrorResponse) {
+        if (err.status === 0) {
+          this.notificationService.addPopup({
+            title: 'We could not reach the server',
+            text: 'Please try again soon'
+          });
+        } else if (err.status === 401) {
+          [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
+            .forEach(c => c.setErrors({
+              invalid: true
+            }));
+          this.errorMessage = 'Invalid credentials';
+        }
+      }
+    }
   }
 }
