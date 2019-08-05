@@ -1,7 +1,12 @@
 <mat-tab-group mat-stretch-tabs class="tabs">
-  <mat-tab label="Map">
-  </mat-tab>
+  <mat-tab label="Map"></mat-tab>
   <mat-tab label="List">
+    <div class="filter-area">
+      <button mat-button (click)="openDialog()">
+        <img src="assets/funnel.png" alt="">
+        Filter
+      </button>
+    </div>
     <perx-core-locations-list [locations]="locations"></perx-core-locations-list>
   </mat-tab>
 </mat-tab-group>

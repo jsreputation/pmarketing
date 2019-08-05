@@ -15,7 +15,8 @@ import {
   MatRadioModule,
   MatTabsModule,
   MatSnackBarModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -35,6 +36,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ForgotPasswordComponent,
     EnterPinComponent,
     FindPharmacyComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    FilterDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatTabsModule,
     MatSnackBarModule,
     MatIconModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -74,6 +78,6 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],
-  entryComponents: [CustomSnackbarComponent]
+  entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
 export class AppModule { }

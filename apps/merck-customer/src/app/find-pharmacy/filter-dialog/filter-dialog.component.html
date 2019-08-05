@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <div>
+    <button mat-icon-button class="left-icon" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="title">Filter</div>
+  <div class="clear">Clear all</div>
+</mat-toolbar>
+
+<mat-dialog-content>
+  <p class="label">Categories</p>
+  <mat-radio-group>
+    <mat-radio-button value="1">Option 1</mat-radio-button>
+    <mat-radio-button value="2">Option 2</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Apply</button>
+</mat-dialog-actions>
