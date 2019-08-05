@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -22,7 +23,7 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {forgotPassword: () => {}, v4GetAppAccessToken: () => {}}
+          useValue: {forgotPassword: () => {}, v4GetAppAccessToken: () => of({})}
         }
       ]
     })

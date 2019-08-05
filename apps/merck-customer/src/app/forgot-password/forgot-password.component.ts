@@ -48,13 +48,18 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
 
   public ngOnInit(): void {
     // TODO: The following Api should return a promise or observable so user should be blocked unless this token gets generated.
-    this.authService.v4GetAppAccessToken();
+    this.authService.v4GetAppAccessToken().subscribe(() => {
+      console.log('Received App token');
+    },
+    (err) => {
+      console.log('Error' + err);
+    });
   }
 
   public onSubmit(): void {
     const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     try {
-      this.authService.forgotPassword(mobileNumber).subscribe(
+      this.authService.forgotPassword('639876543210').subscribe(
         () => {
           this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } } );
         },
