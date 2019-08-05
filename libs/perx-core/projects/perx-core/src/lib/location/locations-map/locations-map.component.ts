@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
 
 import { Component, Input, ViewChild, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { ILocation } from '../ilocation';
 
 @Component({
@@ -15,6 +15,10 @@ export class LocationsMapComponent implements OnInit, OnChanges {
 
   public current: ILocation;
 
+  public userMarker: google.maps.Marker;
+  public markersArray: google.maps.Marker[] = [];
+  public userLocation: Subject<Position> = new Subject();
+
   @Input()
   public key: string = null;
 
@@ -22,6 +26,9 @@ export class LocationsMapComponent implements OnInit, OnChanges {
   private map: google.maps.Map;
 
   public ngOnInit(): void {
+    this.userLocation.subscribe((pos) => {
+      this.updateLocations(pos);
+    });
     this.loadScript()
       .then(() => {
         const mapProp: google.maps.MapOptions = {
@@ -32,6 +39,7 @@ export class LocationsMapComponent implements OnInit, OnChanges {
         this.map.addListener('click', () => {
           this.current = null;
         });
+        this.findMe();
         this.updateLocations();
       });
   }
@@ -68,20 +76,56 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     return p;
   }
 
-  private updateLocations(): void {
+  public findMe(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition((position) => {
+        this.showPosition(position);
+      });
+    }
+  }
+
+  private showPosition(position: Position): void {
+    const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    this.map.panTo(location);
+    this.userLocation.next(position);
+
+    if (!this.userMarker) {
+      this.userMarker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+      });
+    } else {
+      this.userMarker.setPosition(location);
+    }
+  }
+
+  public clearMarkers(): void {
+    this.markersArray.forEach(item => {
+      item.setMap(null);
+    });
+  }
+
+  private updateLocations(userPosition?: Position): void {
     if (this.locations && this.map) {
       this.locations.subscribe(
         locations => {
+          this.clearMarkers();
           let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
           locations.map(location => {
             const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
             bbox = bbox.extend(latLng);
+            if (userPosition) {
+              const userLatLng: google.maps.LatLng = new google.maps.LatLng(
+                { lat: userPosition.coords.latitude, lng: userPosition.coords.longitude }
+              );
+              bbox = bbox.extend(userLatLng);
+            }
             const marker = new google.maps.Marker({
               position: latLng,
               map: this.map,
               title: location.name
             });
-
+            this.markersArray.push(marker);
             marker.addListener('click', () => {
               this.current = location;
             });

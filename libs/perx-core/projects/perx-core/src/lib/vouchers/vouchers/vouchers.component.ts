@@ -1,7 +1,7 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { VouchersService } from './vouchers.service';
+import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher } from './models/voucher.model';
+import { IVoucher } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss']
 })
-export class VouchersComponent implements OnInit {
+export class VouchersComponent implements OnInit, OnChanges {
   @Input() public filter: string;
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
@@ -20,24 +20,44 @@ export class VouchersComponent implements OnInit {
   @Input() public showRedeemedIcon: boolean = true;
   @Input() public canSelectRedeemed: boolean = false;
 
+  /**
+   * @deprecated
+   */
   @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
+  @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
+  @Input('data')
   public vouchers$: Observable<IVoucher[]>;
 
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
-    this.vouchers$ = this.vouchersService.getAll().pipe(
-      map(vouchers => {
-        return vouchers.filter(v => v.state === this.filter);
-      })
-    );
+    if (!this.vouchers$) {
+      this.vouchers$ = this.vouchersService.getAll().pipe(
+        map(vouchers => {
+          return vouchers.filter(v => v.state === this.filter);
+        })
+      );
+    }
   }
 
-  public onClick(voucher: { id: number, state: string, name: string, img: string, description: string, expiresAt: string }): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.filter) {
+      this.vouchers$ = this.vouchersService.getAll().pipe(
+        map(vouchers => {
+          return vouchers.filter(v => v.state === this.filter);
+        })
+      );
+    }
+  }
+
+  public onClick(voucher: IVoucher): void {
     if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
       return;
     }
+    // tslint:disable-next-line: deprecation
     this.route.emit(voucher.id);
+
+    this.tapped.emit(voucher);
   }
 }
