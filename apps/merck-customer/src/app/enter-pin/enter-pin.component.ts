@@ -10,7 +10,7 @@ import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 })
 export class EnterPinComponent implements OnInit, PageProperties {
 
-  public numberOfDigits: number = 6;
+  public MAX_DIGITS_COUNT: number = 6;
   public pinMode: string = 'password'; // || 'register'
   private mobileNo: string = null;
   public visibleNo: string = '';

@@ -39,32 +39,35 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
+    if (!this.preAuth) {
+      return;
+    }
+
+    if (isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
 
-        this.authService.isAuthorized().subscribe(
-          authed => {
-            if (!authed) {
-              this.authService.v4AutoLogin().then(
-                (isAuthed: boolean) => {
-                  if (isAuthed) {
-                    this.router.navigateByUrl('/home');
-                  }
-                },
-                () => {
-                  console.log('Error failed to authenticate.');
+    if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
+
+      this.authService.isAuthorized().subscribe(
+        authed => {
+          if (!authed) {
+            this.authService.v4AutoLogin().then(
+              (isAuthed: boolean) => {
+                if (isAuthed) {
+                  this.router.navigateByUrl('/home');
                 }
-              );
-            } else {
-              this.router.navigateByUrl('/home');
-            }
-          },
-        );
-      }
+              },
+              () => {
+                console.log('Error failed to authenticate.');
+              }
+            );
+          } else {
+            this.router.navigateByUrl('/home');
+          }
+        },
+      );
     }
   }
 

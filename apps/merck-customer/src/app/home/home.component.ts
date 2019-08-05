@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, PageProperties {
+export class HomeComponent implements PageProperties {
 
   public rewards: Observable<IReward[]>;
 
@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit, PageProperties {
   ) {
     this.rewards = this.rewardsService.getAllRewards();
   }
-  public ngOnInit(): void {}
 
   public myQrClicked(): void {
     console.log('My Qr clicked');

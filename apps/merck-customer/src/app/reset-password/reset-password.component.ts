@@ -22,12 +22,15 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     private fb: FormBuilder,
     private authService: AuthenticationService
   ) {
-     if (this.router.getCurrentNavigation() !== null) {
-      if (this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-          this.mobileNumber = this.router.getCurrentNavigation().extras.state.mobileNo;
-          this.otp = this.router.getCurrentNavigation().extras.state.otp;
+      const currentNavigation = this.router.getCurrentNavigation();
+      if (!currentNavigation) {
+        return;
       }
-    }
+
+      if (currentNavigation.extras.hasOwnProperty('state')) {
+          this.mobileNumber = currentNavigation.extras.state.mobileNo;
+          this.otp = currentNavigation.extras.state.otp;
+      }
    }
 
   public ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
@@ -9,7 +9,7 @@ import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit, PageProperties {
+export class SignupComponent implements PageProperties {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
@@ -42,8 +42,6 @@ export class SignupComponent implements OnInit, PageProperties {
   public bottomSelectedItem(): BAR_SELECTED_ITEM {
     return BAR_SELECTED_ITEM.NONE;
   }
-
-  public ngOnInit(): void {}
 
   public onSubmit(): void {
     try {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from '@perx/core';
@@ -10,7 +10,7 @@ import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit, PageProperties {
+export class UserInfoComponent implements PageProperties {
 
   public surveyForm: FormGroup;
 
@@ -28,8 +28,6 @@ export class UserInfoComponent implements OnInit, PageProperties {
       hypertension: [false]
     });
   }
-
-  public ngOnInit(): void {}
 
   public showHeader(): boolean {
     return false;
