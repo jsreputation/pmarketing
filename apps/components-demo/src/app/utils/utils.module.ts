@@ -6,7 +6,7 @@ import { UtilsModule as PerxCoreUtilsModule } from '@perx/core';
 import { RouterModule } from '@angular/router';
 import { UtilsRoutingModule } from './utils-routing.module';
 import { PopupComponent } from './popup/popup.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [PinInputComponent, UtilsComponent, PopupComponent],
@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material';
     CommonModule,
     PerxCoreUtilsModule,
     UtilsRoutingModule,
+    MatButtonModule,
     MatTabsModule
   ]
 })

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
+import { PuzzlesModule } from '@perx/core';
+import { MatSliderModule } from '@angular/material';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -8,9 +10,13 @@ describe('CardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardComponent ]
+      declarations: [CardComponent],
+      imports: [
+        PuzzlesModule,
+        MatSliderModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

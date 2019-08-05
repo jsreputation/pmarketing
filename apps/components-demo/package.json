@@ -8,7 +8,8 @@
     "build:components-demo:prod": "ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint && stylelint \"src/**/*.*css\"",
+    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e"
   },
   "private": true,
