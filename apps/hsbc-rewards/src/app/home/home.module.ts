@@ -15,11 +15,10 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    LoyaltyModule.forRoot({env: environment}),
+    LoyaltyModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     RewardsModule.forRoot({ env: environment }),
     SharedModule
-  ],
- 
+  ]
 })
 export class HomeModule { }
