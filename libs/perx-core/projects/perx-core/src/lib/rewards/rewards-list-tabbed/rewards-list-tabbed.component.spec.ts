@@ -4,6 +4,7 @@ import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
 import { RewardsListComponent } from '../rewards-list/rewards-list.component';
 import { MaterialModule } from '../../shared/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('RewardsListTabbedComponent', () => {
   let component: RewardsListTabbedComponent;
@@ -13,7 +14,8 @@ describe('RewardsListTabbedComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        MaterialModule
+        MaterialModule,
+        UtilsModule
       ],
       declarations: [RewardsListTabbedComponent, RewardsListComponent]
     })
