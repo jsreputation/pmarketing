@@ -28,20 +28,6 @@
         [distanceFromTree]=26
         [bottomDistance]=1>
       </perx-core-shake-tree>
-      <perx-core-puzzle-stamp
-        *ngIf="gameType == 'puzzle-stamp'"
-        [img]="'assets/puzzle-stamp/netflix-bg.jpg'"
-        [lockImg]="'assets/puzzle-stamp/lock-icon.png'"
-        [unlockImg]="'assets/puzzle-stamp/unlock-icon.png'"
-        [highlightColor]="'#FAE4A4'"
-        [borderColor]="'#BC9B3A'"
-        [rows]="2"
-        [cols]="5"
-        [nbPlayedPieces]="0"
-        [nbAvailablePieces]="10"
-        (moved)="onMoved($event)"
-        (completed)="gameCompleted()">
-      </perx-core-puzzle-stamp>
       <perx-core-puzzle-collect-stamps 
         *ngIf="gameType == 'puzzle-collect-stamp'"
         [nbSlots]="10"

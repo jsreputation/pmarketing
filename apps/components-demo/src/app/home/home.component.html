@@ -3,6 +3,7 @@
 
         <mat-card matRipple>
             <mat-card-header>
+                <mat-icon mat-card-avatar aria-hidden="false" aria-label="Example home icon" *ngIf="link.icon">{{link.icon}}</mat-icon>
                 <mat-card-title>{{link.label}}</mat-card-title>
             </mat-card-header>
         </mat-card>
