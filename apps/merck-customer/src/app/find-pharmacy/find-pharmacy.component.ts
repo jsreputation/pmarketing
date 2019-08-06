@@ -4,6 +4,15 @@ import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
+export interface ITag {
+  name: string;
+  isSelected: boolean;
+}
+
+export interface IData {
+  tags: ITag[];
+}
+
 @Component({
   selector: 'mc-find-pharmacy',
   templateUrl: './find-pharmacy.component.html',
@@ -11,8 +20,8 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 })
 export class FindPharmacyComponent implements OnInit {
   public locations: Observable<ILocation[]>;
-  public tags: Observable<string[]>;
-  public filters: string[];
+  public tags: ITag[];
+  public filteredLocations: Observable<ILocation[]>;
 
   constructor(
     private locationsService: LocationsService,
@@ -27,38 +36,52 @@ export class FindPharmacyComponent implements OnInit {
           merchantId: 1,
           locationId: 1,
           name: 'Pharmacy Name',
-          tags: ['1', '2'],
+          tags: ['Drug', 'Medical Supply'],
           address: 'Pharmacy Address',
-          latitude: 0,
-          longitude: 1,
+          latitude: 15.470044,
+          longitude: 120.955672,
           phone: '+852 3102 4028'
         },
         {
           merchantId: 1,
           locationId: 1,
           name: 'Pharmacy Name',
-          tags: ['1', '2'],
+          tags: ['Drug'],
           address: 'Pharmacy Address',
-          latitude: 0,
-          longitude: 1,
+          latitude: 15.459698,
+          longitude: 120.950294,
           phone: '+852 3102 4028'
         }
       ]
     );
 
-    this.locationsService.getTags();
+    this.locationsService.getTags().subscribe((res) => {
+      this.tags = res.map(tag => ({name: tag, isSelected: false}));
+    });
+
+    const tempDataTags = ['Drug', 'Medical Supply'];
+    this.tags = tempDataTags.map(tag => ({name: tag, isSelected: false}));
+
   }
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
       width: '320px',
-      data: {filters: this.filters}
+      data: {tags: this.tags}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.filters = result;
+    dialogRef.afterClosed().subscribe(res => {
+      if(typeof res != 'object') {
+        return;
+      }
+      this.tags = res;
+      this.filterLocations();
     });
   }
 
+  public filterLocations(): void {
+    // const filters = this.tags.filter(tag => tag.isSelected === true).map(tag => tag.name);
+    // this.locations = this.locationsService.getAll(filters);
+    console.log('filter applied');
+  }
 }

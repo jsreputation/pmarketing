@@ -55,3 +55,36 @@ html {
 .mat-snack-bar-container {
   background-color: $error-message-container-color !important;
 }
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+
+perx-core-locations-list {
+  .mat-list-base {
+    padding-top: 6rem;
+  }
+}
+
+.loc-card-container {
+  .mat-card-actions {
+    align-items: center;
+  }
+
+  .mat-icon {
+    vertical-align: middle;
+  }
+
+  a {
+    color: #0f69af;
+    text-decoration: none;
+
+    &:first-child {
+      font-size: 1.4rem;
+    }
+
+    &:last-child {
+      font-size: 1.4rem;
+    }
+  }
+}
