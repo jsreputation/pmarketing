@@ -18,11 +18,11 @@ export class RewardsListTabbedComponent implements OnInit {
   constructor(private rewardsService: RewardsService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getRewards();
   }
 
-  getRewards() {
+  public getRewards(): void {
     this.rewardsService.getAllRewards()
       .subscribe(
         (rewards: IReward[]) => {
