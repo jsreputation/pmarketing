@@ -9,6 +9,8 @@ import { IReward } from '../models/reward.model';
 })
 export class RewardsListComponent implements OnInit {
 
+  public repeatGhostCount: number = 10;
+
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
 
