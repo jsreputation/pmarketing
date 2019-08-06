@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewCampaignRewardsPageComponent } from './new-campaign-rewards-page.component';
+import { NewCampaignRewardsFormGroupComponent } from 'src/app/campaigns/components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
@@ -13,8 +13,8 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewCampaignRewardsStampsPageComponent', () => {
-  let component: NewCampaignRewardsPageComponent;
-  let fixture: ComponentFixture<NewCampaignRewardsPageComponent>;
+  let component: NewCampaignRewardsFormGroupComponent;
+  let fixture: ComponentFixture<NewCampaignRewardsFormGroupComponent>;
   // let form: FormGroup;
 
   beforeEach(async(() => {
@@ -28,14 +28,14 @@ describe('NewCampaignRewardsStampsPageComponent', () => {
         MatInputModule,
         MatButtonModule
       ],
-      declarations: [NewCampaignRewardsPageComponent],
+      declarations: [NewCampaignRewardsFormGroupComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewCampaignRewardsPageComponent);
+    fixture = TestBed.createComponent(NewCampaignRewardsFormGroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     // form = new FormGroup({}, []);

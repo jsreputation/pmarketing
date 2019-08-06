@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -13,9 +14,10 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
   styleUrls: ['./new-campaign-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
+  public campaign;
 
   public get campaignInfo() {
     return this.form.get('campaignInfo');
@@ -38,17 +40,18 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private store: CampaignCreationStoreService,
-    private stepConditionService: StepConditionService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService
   ) {
+    super(2, store, stepConditionService, cd);
+    this.initForm();
   }
 
   ngOnInit() {
-    this.config = this.store.config;
-    this.initForm();
+   super.ngOnInit();
   }
 
   private initForm() {
@@ -60,7 +63,6 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(() => {
-        this.stepConditionService.registerStepCondition(2, this.form.valid);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
