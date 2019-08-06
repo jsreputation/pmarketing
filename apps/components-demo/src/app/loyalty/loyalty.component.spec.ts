@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltyComponent } from './loyalty.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatTabsModule } from '@angular/material';
 
 describe('LoyaltyComponent', () => {
   let component: LoyaltyComponent;
@@ -8,7 +10,8 @@ describe('LoyaltyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltyComponent ]
+      declarations: [ LoyaltyComponent ],
+      imports: [RouterTestingModule, MatTabsModule]
     })
     .compileComponents();
   }));

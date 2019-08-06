@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list.component';
-import { LoyaltyModule } from './../loyalty.module';
+import { LoyaltyModule as PerxLoyaltyModule} from '@perx/core';
+import { environment } from 'src/environments/environment';
 
 describe('TransactionsListComponent', () => {
   let component: LoyaltyTransactionsListComponent;
@@ -15,8 +16,9 @@ describe('TransactionsListComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatButtonModule,
+        MatTabsModule,
         HttpClientTestingModule,
-        LoyaltyModule
+        PerxLoyaltyModule.forRoot({ env: environment })
       ]
     })
     .compileComponents();

@@ -2,9 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltySummaryComponent } from './loyalty-summary.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ProfileModule, LoyaltyModule } from '@perx/core';
+import { ProfileModule as PerxProfileModule, LoyaltyModule as PerxLoyaltyModule } from '@perx/core';
+import { environment } from 'src/environments/environment';
 
 describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -16,9 +17,10 @@ describe('SummaryComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatButtonModule,
+        MatTabsModule,
         HttpClientTestingModule,
-        ProfileModule,
-        LoyaltyModule
+        PerxProfileModule.forRoot({ env: environment }),
+        PerxLoyaltyModule.forRoot({ env: environment })
       ]
     })
     .compileComponents();
