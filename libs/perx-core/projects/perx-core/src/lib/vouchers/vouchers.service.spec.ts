@@ -5,25 +5,13 @@ import { Type } from '@angular/core';
 import { VouchersService } from './vouchers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { VouchersModule } from './vouchers.module';
-import { IVoucher } from './models/voucher.model';
-
-enum VOUCHER_STATE {
-  issued = 'issued',
-  redeemed = 'redeemed',
-  expired = 'expired'
-}
-
-enum REDEMPTION_TYPE {
-  pin = 'pin',
-  txtCode = 'txtCode',
-  none = 'none'
-}
+import { IVoucher, VOUCHER_STATE, REDEMPTION_TYPE } from './models/voucher.model';
 
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: VouchersService;
 
-  const mockIVouchers = [
+  const mockIVouchers: IVoucher[] = [
     {
       id: 21,
       rewardId: 5,
@@ -37,11 +25,11 @@ describe('VouchersService', () => {
       merchantName: 'Lumiere Photography',
       expiry: new Date('Fri Jan 31 2020 23:59:00 GMT+0800 (Philippine Standard Time)'),
       redemptionDate: null,
-      description: {
+      description: [{
         title: 'Please visit',
         content: '',
         tag: []
-      },
+      }],
       redemptionSuccessTxt: null,
       redemptionSuccessImg: null
     }
@@ -54,7 +42,7 @@ describe('VouchersService', () => {
     voucher_code: null,
     voucher_key: null,
     voucher_type: 'code',
-    state: 'issued',
+    state: VOUCHER_STATE.issued,
     given_by: null,
     given_to: null,
     given_date: null,
@@ -64,16 +52,12 @@ describe('VouchersService', () => {
     redemption_type: {
       call_to_action: null,
       timer: 0,
-      type: 'pin'
+      type: REDEMPTION_TYPE.pin
     },
     reward: {
       id: 5,
       name: 'General Indoor Studio package @ $99',
-      description: {
-        title: 'Please visit',
-        content: '',
-        tag: [],
-      },
+      description: 'Please visit',
       favourite: false,
       merchant_id: 5,
       merchant_name: 'Lumiere Photography',
@@ -193,7 +177,7 @@ describe('VouchersService', () => {
         expect(updateVoucher.state).toEqual('issued');
         expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
         expect(updateVoucher.code).toEqual(null);
-        expect(updateVoucher.description.title).toEqual('Please visit');
+        expect(updateVoucher.description[0].content).toEqual('Please visit');
         expect(updateVoucher.thumbnailImg).toEqual(
           'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
         expect(updateVoucher.rewardBanner).toEqual(
@@ -280,7 +264,7 @@ describe('VouchersService', () => {
     expect(updateVoucher.state).toEqual('issued');
     expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
     expect(updateVoucher.code).toEqual(null);
-    expect(updateVoucher.description.title).toEqual('Please visit');
+    expect(updateVoucher.description[0].content).toEqual('Please visit');
     expect(updateVoucher.thumbnailImg).toEqual(
       'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
     expect(updateVoucher.rewardBanner).toEqual(

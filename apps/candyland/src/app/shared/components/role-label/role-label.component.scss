@@ -1,0 +1,96 @@
+@import 'variables';
+
+.role-label {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  &-abbr {
+    width: 3.2rem;
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-family: $primary-font;
+    font-style: normal;
+    font-weight: normal;
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: $white-color;
+  }
+
+  &-title {
+    margin-left: 0.8rem;
+    font-family: $primary-font;
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+
+  &-email {
+    margin-left: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-family: $primary-font;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $base-font-color;
+  }
+}
+
+.large {
+  .role-label-abbr {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .role-label-title, .role-label-email {
+    margin-left: 1.6rem;
+  }
+}
+
+.medium {
+  .role-label-abbr {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+}
+
+.small {
+  .role-label-abbr {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+}
+
+.admin {
+  background-color: #7449f0;
+}
+
+.creator {
+  background-color: #4cd9d0;
+}
+
+.customer {
+  background-color: #4455fd;
+}
+
+.manager {
+  background-color: #40bbe9;
+}
+
+.viewer {
+  background-color: #b5bcc8;
+}

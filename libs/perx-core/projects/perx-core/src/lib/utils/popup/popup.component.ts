@@ -1,12 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface IPopupConfig {
   title?: string;
   text?: string;
   imageUrl?: string;
-  buttonTxt?: string | null;
+  buttonTxt?: string|null;
   afterClosedCallBack?: PopUpClosedCallBack;
+  disableOverlayClose?: boolean;
 }
 
 export interface PopUpClosedCallBack {
@@ -26,12 +27,14 @@ export class PopupComponent {
   public text: string = null;
   public imageUrl: string = null;
   public buttonTxt: string = 'close';
-  public image: string = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IPopupConfig
   ) {
+    if (data.disableOverlayClose) {
+      dialogRef.disableClose = data.disableOverlayClose;
+    }
     if (data.title) {
       this.title = data.title;
     }
@@ -44,6 +47,12 @@ export class PopupComponent {
     if (data.imageUrl) {
       this.imageUrl = data.imageUrl;
     }
+  }
+
+  // todo: only set up host listener if disableOverlayClose = true
+  @HostListener('window:keyup.esc')
+  public onKeyUp(): void {
+    this.dialogRef.close();
   }
 
   public buttonPressed(): void {

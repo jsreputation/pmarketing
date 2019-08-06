@@ -8,7 +8,8 @@ export enum REDEMPTION_TYPE {
   pin = 'pin',
   txtCode = 'txtCode',
   qr = 'qrcode',
-  none = 'none'
+  none = 'none',
+  offline = 'offline'
 }
 
 interface IVoucherDescription {
@@ -32,9 +33,9 @@ export interface IVoucher {
   rewardBanner: string;
   merchantImg: string;
   merchantName: string;
-  expiry: Date;
-  redemptionDate?: Date;
-  description: IVoucherDescription;
+  expiry: Date | null;
+  redemptionDate?: Date | null;
+  description: IVoucherDescription[];
   redemptionSuccessTxt: string;
   redemptionSuccessImg: string;
 }

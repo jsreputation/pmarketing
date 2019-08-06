@@ -96,7 +96,6 @@ import { NewRewardFormService } from './services/new-reward-form.service';
     ProgressBarModule,
     MatInputModule,
     ItemListModule,
-    MatRadioModule,
     MatCardModule,
     MatCheckboxModule,
     MatExpansionModule,
