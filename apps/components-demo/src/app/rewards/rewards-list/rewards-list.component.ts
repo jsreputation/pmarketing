@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IReward, NotificationService, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
@@ -8,7 +8,7 @@ import { mock } from '../reward-mock';
   templateUrl: './rewards-list.component.html',
   styleUrls: ['./rewards-list.component.scss']
 })
-export class RewardsListComponent implements OnInit, OnDestroy {
+export class RewardsListComponent implements OnInit {
 
   public rewards: Observable<IReward[]>;
 
