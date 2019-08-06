@@ -7,32 +7,39 @@ import { NotificationService } from './notification/notification.service';
 import { DebounceClickDirective } from './debounce-click.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NTimesPipe } from './pipes/n-times.pipe';
+
+const directives = [
+  NumericCharacterDirective,
+  DebounceClickDirective,
+];
+
+const components = [
+  PopupComponent,
+  PinInputComponent,
+];
 
 @NgModule({
-    declarations: [
-        NumericCharacterDirective,
-        DebounceClickDirective,
-        PopupComponent,
-        PinInputComponent
-    ],
-    entryComponents: [
-        PopupComponent,
-        PinInputComponent
-    ],
-    imports: [
-        CommonModule,
-        MatDialogModule,
-        MatButtonModule,
-        ReactiveFormsModule
-    ],
-    exports: [
-        NumericCharacterDirective,
-        DebounceClickDirective,
-        PopupComponent,
-        PinInputComponent
-    ],
-    providers: [
-        NotificationService
-    ]
+  declarations: [
+    ...directives,
+    ...components,
+  ],
+  entryComponents: [
+    ...components,
+  ],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    ...directives,
+    ...components,
+  ],
+  providers: [
+    NotificationService
+  ]
 })
-export class UtilsModule { }
+export class UtilsModule {
+}
