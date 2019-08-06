@@ -4,6 +4,7 @@ import { SmsValidationComponent } from './sms-validation.component';
 import { AuthenticationService, UtilsModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;
@@ -20,6 +21,11 @@ describe('SmsValidationComponent', () => {
             v4GameOauth: () => Promise.resolve(true),
             resendOTP: () => of(true)
           }
+        },
+        {
+          provide: ActivatedRoute, useValue: {
+            queryParams: of({identifier: '639876543210'})
+          }
         }
       ]
     })
@@ -34,5 +40,22 @@ describe('SmsValidationComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should validate otp and redirect to root page', () => {
+    const authenticationService = TestBed.get(AuthenticationService);
+    const verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of(true));
+    const router = TestBed.get(Router);
+    const navigateSpy = spyOn(router, 'navigate');
+    component.validate('888888');
+    expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
+    expect(navigateSpy).toHaveBeenCalledWith(['/']);
+  });
+
+  it('should make request for send otp, when call resendSms method', () => {
+    const authenticationService = TestBed.get(AuthenticationService);
+    const resendSpy = spyOn(authenticationService, 'resendOTP').and.returnValue(of(null));
+    component.resendSms();
+    expect(resendSpy).toHaveBeenCalledWith('639876543210');
   });
 });

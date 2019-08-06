@@ -18,6 +18,7 @@ import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.modu
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  // let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,6 +47,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    // router = TestBed.get(Router);
     fixture.detectChanges();
   });
 

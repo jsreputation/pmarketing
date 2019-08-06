@@ -67,5 +67,3 @@ describe('VoucherDetailsComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1/code']);
   });
 });
-
-// import 'jasmine';
