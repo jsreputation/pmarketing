@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage } from '@perx/core';
+import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
@@ -26,6 +26,7 @@ describe('AppComponent', () => {
         NoopAnimationsModule,
         HttpClientModule,
         AuthenticationModule,
+        ProfileModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
       ],
