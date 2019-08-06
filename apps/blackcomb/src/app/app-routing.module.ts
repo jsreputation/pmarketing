@@ -6,6 +6,7 @@ import { VoucherDetailComponent } from './voucher-detail/voucher-detail.componen
 import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
+import { LoadingComponent } from './loading/loading.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
       {
         path: 'reward',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantReward.module)
-      }
+      },
+      { path: 'loading', component: LoadingComponent }
     ]
   },
   { path: 'login', component: LoginComponent },

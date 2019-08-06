@@ -1,25 +1,20 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  NotificationService
+  NotificationService,
 } from '@perx/core';
 
 @Component({
-  selector: 'app-tap',
-  templateUrl: './tap.component.html',
-  styleUrls: ['./tap.component.scss']
+  selector: 'app-shake',
+  templateUrl: './shake.component.html',
+  styleUrls: ['./shake.component.scss']
 })
-export class TapComponent {
-  public title: string = 'Hit the Pinata!';
-  public subTitle: string = 'Hit the Pinata and win rewards';
-  public gameType: string = 'pinata';
-
+export class ShakeComponent {
+  public title: string = 'Tap the Tree!';
+  public subTitle: string = 'Tap the tree and win rewards';
+  public gameType: string = 'shake-tree';
   public gameId: number;
-
   public isEnabled: boolean = false;
-
-  // Pinata static Values
-  public pinataTotalTaps: number = 2;
 
   public congratsDetailText: string = 'You just won 2 rewards';
 

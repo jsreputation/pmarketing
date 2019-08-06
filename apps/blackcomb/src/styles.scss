@@ -9,6 +9,11 @@ html {
   background-color: #FAFAFA;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .actions-container {
   background-color: transparent;
   position: fixed;

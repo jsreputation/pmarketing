@@ -18,7 +18,8 @@ import {
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -63,6 +64,7 @@ import { HistoryComponent } from './history/history.component';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,

@@ -1,13 +1,16 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .toolbar {
-  position: fixed;
   display: flex;
   justify-content: center;
-  left: 0;
-  top: 0;
   height: 7rem;
   z-index: 800;
-  color: #fff;
-  background: #202C46;
+  // color: #fff;
+  background: #186de1;
   font-size: 2rem;
   line-height: 1.9rem;
 }
@@ -15,24 +18,26 @@
 .main-app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 }
 
 .game-container {
   flex: 2;
   width: 100%;
+  overflow-y: scroll;
 }
 
 .navbar {
-  position: fixed;
   display: flex;
   justify-content: space-around;
-  left: 0;
-  bottom: 0;
   height: 7rem;
   z-index: 800;
   color: #666666;
   background: #fff;
-  font-size: 2rem;
-  line-height: 1.9rem;
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  a {
+    text-decoration: none;
+  }
 }

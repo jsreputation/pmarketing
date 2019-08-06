@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GamePlayComponent } from './game-play.component';
+import { ShakeComponent } from './shake.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PerxCoreModule, GameModule } from '@perx/core';
 
-describe('GamePlayComponent', () => {
-  let component: GamePlayComponent;
-  let fixture: ComponentFixture<GamePlayComponent>;
+describe('ShakeComponent', () => {
+  let component: ShakeComponent;
+  let fixture: ComponentFixture<ShakeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GamePlayComponent ],
+      declarations: [ ShakeComponent ],
       imports: [RouterTestingModule, PerxCoreModule, GameModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GamePlayComponent);
+    fixture = TestBed.createComponent(ShakeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,13 +1,19 @@
- <div class="main-app-container">
-  <mat-toolbar class="toolbar mat-elevation-z2">
+<div class="main-app-container">
+  <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader">
     <img class="logo" src="assets/logo.png" />
   </mat-toolbar>
   <div class="game-container">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
-  <mat-toolbar class="navbar mat-elevation-z2">
-    <a [routerLink]="[ '/wallet' ]">Wallet</a>
-    <a [routerLink]="[ '/history' ]">History</a>
-    <a [routerLink]="[ '/account' ]">Account</a>
+  <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
+    <a [routerLink]="[ '/wallet' ]">
+      <div>Wallet</div>
+    </a>
+    <a [routerLink]="[ '/history' ]">
+      <div>History</div>
+    </a>
+    <a [routerLink]="[ '/account' ]">
+      <div>Account</div>
+    </a>
   </mat-toolbar>
 </div>
