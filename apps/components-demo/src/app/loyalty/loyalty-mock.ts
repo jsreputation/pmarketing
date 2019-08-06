@@ -1,4 +1,4 @@
-import { IProfile, ILoyalty } from '@perx/core';
+import { IProfile, ILoyalty, ITransaction } from '@perx/core';
 
 export const mockProfile: IProfile = {
     id: 952,
@@ -60,3 +60,60 @@ export const mockLoyalty: ILoyalty = {
         }
     ]
 };
+
+export const mockTransactions: ITransaction[] = [
+    {
+        id: 92213,
+        name: null,
+        earnedDate: '2019-05-30T10:24:01.738Z',
+        points: 10,
+        pointsBalance: 10,
+        currencyBalance: 100,
+        properties: {}
+    },
+    {
+        id: 92188,
+        name: null,
+        earnedDate: '2019-04-24T07:53:28.310Z',
+        points: 100000000,
+        pointsBalance: 100000000,
+        currencyBalance: 1000000000,
+        properties: {}
+    },
+    {
+        id: 92187,
+        name: null,
+        earnedDate: '2019-04-24T07:53:18.047Z',
+        points: 1000,
+        pointsBalance: 1000,
+        currencyBalance: 10000,
+        properties: {}
+    },
+    {
+        id: 92186,
+        name: null,
+        earnedDate: '2019-04-22T10:43:44.642Z',
+        points: 260,
+        pointsBalance: 260,
+        currencyBalance: 2600,
+        properties: {}
+    },
+    {
+        id: 92185,
+        name: null,
+        earnedDate: '2019-04-22T10:43:07.455Z',
+        points: 200,
+        pointsBalance: 200,
+        currencyBalance: 2000,
+        properties: {}
+    },
+    {
+        id: 92184,
+        name: null,
+        earnedDate: '2019-04-22T10:42:43.539Z',
+        points: 100,
+        pointsBalance: 100,
+        currencyBalance: 1000,
+        properties: {}
+    }
+];
