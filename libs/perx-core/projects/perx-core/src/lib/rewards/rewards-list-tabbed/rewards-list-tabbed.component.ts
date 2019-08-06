@@ -44,9 +44,9 @@ export class RewardsListTabbedComponent {
     );
   }
 
-  public tabChanged(event: any): void {
-    console.log(event);
-  }
+  // public tabChanged(event: any): void {
+  //   console.log(event);
+  // }
 
   public rewardTappedHandler(reward: IReward): void {
     // forward the tapped event
