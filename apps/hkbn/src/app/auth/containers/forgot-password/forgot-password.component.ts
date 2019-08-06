@@ -22,8 +22,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   public newPasswordForm: FormGroup = new FormGroup({
     newPassword: new FormControl(null, [HkbnValidators.required]),
-    confirmPassword: new FormControl(null, [HkbnValidators.required])
-  }, [HkbnValidators.equalityValidator('newPassword', 'confirmPassword')]);
+    passwordConfirmation: new FormControl(null, [HkbnValidators.required])
+  }, [HkbnValidators.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   private otp: string;
   private identifier: string;
@@ -56,47 +56,36 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
     this.identifier = this.phoneStepForm.value.phone;
     this.usersPhone = this.identifier.slice(-2);
-    // TODO: remove next line when forgotPassword method will be implemented
-    this.currentStep = 2;
 
     this.authenticationService.forgotPassword(this.identifier).subscribe(() => {
       this.currentStep = 2;
-      // TODO: Uncomment when method will be implemented
-      // this.otp = otp;
     });
   }
 
   public resend(): void {
     this.authenticationService.resendOTP(this.otp).subscribe(() => {
-      // TODO: Uncomment when method will be implemented
-      // this.otp = otp;
     });
   }
 
   public handlePin(otp: string): void {
     // TODO: remove when verifyOTP method will be implemented
     this.currentStep = 3;
-
-    this.authenticationService.verifyOTP(this.identifier, otp).subscribe(() => {
-      this.currentStep = 3;
-    });
+    this.otp = otp;
   }
 
-  public changePassword(data: any): void {
+  public changePassword(): void {
     if (this.newPasswordForm.invalid) {
       return;
     }
-    // TODO: remove when changePassword method will be implemented
-    this.router.navigate(['/']);
+    const value = this.newPasswordForm.value;
 
-    this.authenticationService.changePassword(data.newPassword)
+    this.authenticationService.resetPassword({phone: this.identifier, otp: this.otp, ...value})
       .subscribe(() => {
-        // TODO: Uncomment when method will be implemented
 
-        // const authorized = this.authenticationService.v4GameOauth(this.identifier, pass);
-        // if (authorized) {
-        //   this.router.navigate(['/']);
-        // }
+        const authorized = this.authenticationService.v4GameOauth(this.identifier, value.newPassword);
+        if (authorized) {
+          this.router.navigate(['/']);
+        }
       });
   }
 
