@@ -3,6 +3,7 @@
 import { Component, Input, ViewChild, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { ILocation } from '../ilocation';
+import { GeoLocationService } from '../geolocation.service';
 
 @Component({
   selector: 'perx-core-locations-map',
@@ -25,10 +26,13 @@ export class LocationsMapComponent implements OnInit, OnChanges {
   @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
   private map: google.maps.Map;
 
+  public constructor(private geoLocationService: GeoLocationService) { }
+
   public ngOnInit(): void {
-    this.userLocation.subscribe((pos) => {
-      this.updateLocations(pos);
+    this.userLocation.subscribe(() => {
+      this.updateLocations();
     });
+    // load google map script
     this.loadScript()
       .then(() => {
         const mapProp: google.maps.MapOptions = {
@@ -36,10 +40,8 @@ export class LocationsMapComponent implements OnInit, OnChanges {
         };
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
         // any click on the map should dismiss the current location
-        this.map.addListener('click', () => {
-          this.current = null;
-        });
-        this.findMe();
+        this.map.addListener('click', () => this.current = null);
+        this.geoLocationService.positions().subscribe((position: Position) => this.updateUserPosition(position));
         this.updateLocations();
       });
   }
@@ -76,27 +78,21 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     return p;
   }
 
-  public findMe(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition((position) => {
-        this.showPosition(position);
-      });
-    }
-  }
-
-  private showPosition(position: Position): void {
+  private updateUserPosition(position: Position): void {
     const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     this.map.panTo(location);
     this.userLocation.next(position);
 
     if (!this.userMarker) {
       this.userMarker = new google.maps.Marker({
+        icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
         position: location,
         map: this.map,
       });
     } else {
       this.userMarker.setPosition(location);
     }
+    this.updateBoundingBox();
   }
 
   public clearMarkers(): void {
@@ -105,38 +101,41 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     });
   }
 
-  private updateLocations(userPosition?: Position): void {
+  private updateLocations(): void {
     if (this.locations && this.map) {
       this.locations.subscribe(
         locations => {
           this.clearMarkers();
-          let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
           locations.map(location => {
             const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
-            bbox = bbox.extend(latLng);
-            if (userPosition) {
-              const userLatLng: google.maps.LatLng = new google.maps.LatLng(
-                { lat: userPosition.coords.latitude, lng: userPosition.coords.longitude }
-              );
-              bbox = bbox.extend(userLatLng);
-            }
             const marker = new google.maps.Marker({
               position: latLng,
               map: this.map,
               title: location.name
             });
-            this.markersArray.push(marker);
             marker.addListener('click', () => {
               this.current = location;
             });
             marker.setClickable(true);
             marker.setCursor('pointer');
+            this.markersArray.push(marker);
             return marker;
           });
-          this.map.fitBounds(bbox);
+          this.updateBoundingBox();
         }
       );
     }
+  }
+
+  private updateBoundingBox(): void {
+    let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
+    this.markersArray.forEach((marker: google.maps.Marker) => {
+      bbox = bbox.extend(marker.getPosition());
+    });
+    if (this.userMarker) {
+      bbox.extend(this.userMarker.getPosition());
+    }
+    this.map.fitBounds(bbox);
   }
 
   public gMapUrl(loc: ILocation): string {
