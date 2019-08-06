@@ -1,29 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ForgotPasswordComponent } from './forgot-password.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ResetPasswordComponent } from './reset-password.component';
 import { AuthenticationService } from '@perx/core';
-import { of } from 'rxjs';
 
-describe('ForgotPasswordComponent', () => {
-  let component: ForgotPasswordComponent;
-  let fixture: ComponentFixture<ForgotPasswordComponent>;
+describe('ResetPasswordComponent', () => {
+  let component: ResetPasswordComponent;
+  let fixture: ComponentFixture<ResetPasswordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordComponent ],
+      declarations: [ ResetPasswordComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [
+       providers: [
         {
           provide: AuthenticationService,
-          useValue: {forgotPassword: () => {}, v4GetAppAccessToken: () => of({})}
+          useValue: {v4GameOauth: () => {}}
         }
       ]
     })
@@ -31,7 +30,7 @@ describe('ForgotPasswordComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ForgotPasswordComponent);
+    fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
