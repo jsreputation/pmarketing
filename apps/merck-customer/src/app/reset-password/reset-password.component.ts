@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -20,7 +20,9 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
+
   ) {
       const currentNavigation = this.router.getCurrentNavigation();
       if (!currentNavigation) {
@@ -58,14 +60,14 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     const password = this.resetPasswordForm.get('password').value as string;
     const confirmPassword = this.resetPasswordForm.get('confirmPassword').value as string;
     if (password !== confirmPassword) {
-        this.errorMessage = 'Passwords do not match.';
-        // Use snack bar to throw message
+        this.notificationService.addSnack('Passwords do not match.');
         return;
     }
 
-    const resetPasswordInfo = { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword};
     // First send reset password using otp and password on successful return call below
-    this.authService.resetPassword(resetPasswordInfo).subscribe(
+    this.authService.resetPassword(
+      { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword})
+      .subscribe(
       (response) => {
         console.log(`Response : ${response.message}`);
         console.log(`Response code: ${response.code}`);
@@ -73,8 +75,8 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
         this.sendLoginCall(password);
       },
       err =>  {
-        this.errorMessage = err;
         console.error('ResetPassword: ' + err);
+        this.notificationService.addSnack(err.code);
       });
   }
   private sendLoginCall(password: string): void {
@@ -95,13 +97,9 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
       .catch((err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.errorMessage = 'We could not reach the server';
+            this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
-            [this.resetPasswordForm.controls.password, this.resetPasswordForm.controls.confirmPassword]
-              .forEach(c => c.setErrors({
-                invalid: true
-              }));
-            this.errorMessage = 'Invalid credentials';
+            this.notificationService.addSnack('Invalid credentials');
           }
         }
       });

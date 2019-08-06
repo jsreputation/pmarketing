@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -28,7 +29,7 @@ describe('LoginComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null}
+          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null, v4GetAppAccessToken: () => of({})}
         }
       ]
     })

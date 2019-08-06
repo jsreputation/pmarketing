@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit, PageProperties {
+export class ForgotPasswordComponent implements PageProperties {
 
   public selectedCountry: string = '+852';
   public resetPasswordForm: FormGroup;
@@ -46,18 +46,8 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
     return BAR_SELECTED_ITEM.NONE;
   }
 
-  public ngOnInit(): void {
-    // TODO: The following Api should return a promise or observable so user should be blocked unless this token gets generated.
-    this.authService.v4GetAppAccessToken().subscribe(() => {
-      console.log('Received App token');
-    },
-    (err) => {
-      console.log('Error' + err);
-    });
-  }
-
   public onSubmit(): void {
-    const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
+    const mobileNumber = '639876543210'; // this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     try {
       this.authService.forgotPassword(mobileNumber).subscribe(
         () => {
@@ -73,8 +63,6 @@ export class ForgotPasswordComponent implements OnInit, PageProperties {
               this.notificationService.addSnack(err.statusText);
             }
           }
-          // TODO: Currently 'forgotPassword' is not stable. Remove this line once done.
-          this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } } );
         });
     } catch (error) {
         console.log(error);

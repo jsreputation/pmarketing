@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perx/core';
 import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
 
 @Component({
@@ -19,7 +19,7 @@ export class SignupComponent implements PageProperties {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    // private authService: AuthenticationService
+    private authService: AuthenticationService
 ) {
      this.initForm();
   }
@@ -46,9 +46,9 @@ export class SignupComponent implements PageProperties {
   public onSubmit(): void {
     try {
       this.errorMessage = null;
-      const password = this.signupForm.get('password').value as string;
+      const passwordString = this.signupForm.get('password').value as string;
       const confirmPassword = this.signupForm.get('confirmPassword').value as string;
-      if (password !== confirmPassword) {
+      if (passwordString !== confirmPassword) {
         this.errorMessage = 'Passwords do not match.';
         return;
       }
@@ -63,16 +63,33 @@ export class SignupComponent implements PageProperties {
         this.errorMessage = 'Please agree to receive marketing communications from Merck Group hk.';
         return;
       }
+
+      // TODO: Currently '+' sign is not beign saved in the backend
       // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
-      // this.authService.signup(mobileNumber, password).subscribe(
-      //   () => {
-      //     this.router.navigateByUrl('/home');
-      //   },
-      //   err => {
-      //     console.error('Signup: ' + err);
-      //     // TODO: AuthService is not implementing 'signup' method yet. Remove this line once done.
-      //     this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
-      //   });
+
+      const mobileNumber = this.signupForm.get('mobileNo').value as string;
+
+      const name = this.signupForm.get('name').value as string;
+
+      const signUpData = {
+        firstName: '',
+        lastName: name,
+        middleName: '',
+        phone: mobileNumber,
+        email: '',
+        birthDay: '',
+        gender: '',
+        password: passwordString,
+        password_confirmation: confirmPassword
+      };
+
+      this.authService.signup(signUpData).subscribe(
+        () => {
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
+        },
+        err => {
+          console.error('Signup: ' + err);
+        });
     } catch (error) {
         console.log(error);
     }
