@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HistoryComponent } from './history.component';
+import { VouchersModule } from '@perx/core';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
@@ -8,9 +11,13 @@ describe('HistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoryComponent ]
+      declarations: [HistoryComponent],
+      imports: [
+        VouchersModule.forRoot({ env: environment }),
+        HttpClientModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

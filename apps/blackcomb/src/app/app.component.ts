@@ -12,7 +12,6 @@ import { AccountComponent } from './account/account.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public title: string = 'blackcomb';
   public showHeader: boolean = true;
   public showToolbar: boolean = true;
 
