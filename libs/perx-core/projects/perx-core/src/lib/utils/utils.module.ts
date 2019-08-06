@@ -6,11 +6,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationService } from './notification/notification.service';
 import { NumericCharacterDirective } from './directives/numeric-character.directive';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
+import { RepeatTimesDirective } from './directives/repeat-times.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
 
 const directives = [
   NumericCharacterDirective,
   DebounceClickDirective,
+  RepeatTimesDirective,
 ];
 
 const components = [
