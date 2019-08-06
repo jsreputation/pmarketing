@@ -4,6 +4,8 @@ import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, RewardsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,6 +16,8 @@ describe('HomeComponent', () => {
       declarations: [HomeComponent],
       imports: [
         HttpClientTestingModule,
+        NavigateToolbarModule,
+        RouterTestingModule,
         LoyaltyModule.forRoot({ env: environment }),
         ProfileModule.forRoot({ env: environment }),
         RewardsModule.forRoot({ env: environment }),

@@ -30,13 +30,13 @@ export class NavigateToolbarComponent implements OnInit {
 
   ngOnInit() {
     const url = this.router.url;
-    this.navigatePanel.forEach((nav)=> nav.route === url ? nav.activated = true: nav.activated=false);
-    this.router.events.subscribe((event)=>{
-      if(event instanceof NavigationEnd) {
-        const url = event.url;
-        this.navigatePanel.forEach((nav)=> nav.route === url ? nav.activated = true: nav.activated=false);
+    this.navigatePanel.forEach((nav) => nav.route === url ? nav.activated = true : nav.activated = false);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const nextUrl = event.url;
+        this.navigatePanel.forEach((nav) => nav.route === nextUrl ? nav.activated = true : nav.activated = false);
       }
-    })
+    });
   }
 
 }

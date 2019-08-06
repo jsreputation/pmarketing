@@ -4,7 +4,7 @@ import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/c
 
 const mockTags = [
   'Lifestyle', 'Travel', 'Shopping'
-]
+];
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ const mockTags = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  tags:Array<string>;
+  tags: Array<string>;
   rewards: Observable<IReward[]>;
 
   currentTag: string;
@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private profile: ProfileService,
     private cd: ChangeDetectorRef,
   ) {
-
   }
 
   ngOnInit() {
@@ -54,7 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.currentTag = this.tags[0];
   }
 
-  changeTage(tag){
+  changeTage(tag) {
     this.currentTag = tag;
   }
 }

@@ -1,16 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigateToolbarComponent } from './navigate-toolbar.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('NavigateToolbarComponent', () => {
+fdescribe('NavigateToolbarComponent', () => {
   let component: NavigateToolbarComponent;
   let fixture: ComponentFixture<NavigateToolbarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigateToolbarComponent ]
+      declarations: [NavigateToolbarComponent],
+      imports: [
+        RouterTestingModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,4 +26,5 @@ describe('NavigateToolbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
