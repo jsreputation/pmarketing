@@ -1,0 +1,20 @@
+<div class="home-body">
+  <div class="loyalty-summer">
+    <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
+  </div>
+  <div class="reward-collection">
+    <div class="reward-title">
+      Featured Rewards
+    </div>
+    <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
+  </div>
+  <div class="reward-list-container">
+    <div class="flex">
+      <ng-container *ngFor="let tag of tags">
+        <div [ngClass]="{'current': tag === currentTag }" (click)="changeTage(tag)">{{tag}}</div>
+      </ng-container>
+    </div>
+    <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed>
+  </div>
+  <app-navigate-toolbar></app-navigate-toolbar>
+</div>

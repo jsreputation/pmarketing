@@ -7,6 +7,7 @@
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
     "build:digi:prod": "lerna run build:lib && lerna run build:digi:prod --",
     "build:hsbc:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
+    "build:hsbc-reward:prod": "lerna run build:lib && lerna run build:hsbc-reward:prod --",
     "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:components-demo:prod": "echo nothing here",
