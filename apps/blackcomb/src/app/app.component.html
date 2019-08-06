@@ -1,8 +1,13 @@
  <div class="main-app-container">
-  <mat-toolbar class="toolbar">
+  <mat-toolbar class="toolbar mat-elevation-z2">
     <img class="logo" src="assets/logo.png" />
   </mat-toolbar>
   <div class="game-container">
     <router-outlet></router-outlet>
   </div>
+  <mat-toolbar class="navbar mat-elevation-z2">
+    <a [routerLink]="[ '/wallet' ]">Wallet</a>
+    <a [routerLink]="[ '/history' ]">History</a>
+    <a [routerLink]="[ '/account' ]">Account</a>
+  </mat-toolbar>
 </div>

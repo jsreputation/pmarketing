@@ -25,11 +25,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { GamePlayComponent } from './game-play/game-play.component';
-import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { GamePlayComponent } from './instant-reward/game-play/game-play.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoadingComponent } from './loading/loading.component';
+import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
+import { AccountComponent } from './account/account.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +40,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     LoginComponent,
     HomeComponent,
     GamePlayComponent,
-    RewardDetailComponent,
-    RedeemComponent
+    RedeemComponent,
+    LoadingComponent,
+    VoucherDetailComponent,
+    AccountComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-reward-detail',
-  templateUrl: './reward-detail.component.html',
-  styleUrls: ['./reward-detail.component.scss']
+  selector: 'app-voucher-detail',
+  templateUrl: './voucher-detail.component.html',
+  styleUrls: ['./voucher-detail.component.scss']
 })
-export class RewardDetailComponent {
+export class VoucherDetailComponent {
 
   constructor(private router: Router) {}
 
