@@ -1,36 +1,7 @@
 import { Component } from '@angular/core';
 import { ILocation } from '../../../../../../libs/perx-core/projects/perx-core/src/lib/location/ilocation';
 import { BehaviorSubject } from 'rxjs';
-
-const test1: ILocation[] = [
-  {
-    name: 'Title A1',
-    latitude: 13.74428,
-    longitude: 100.532525,
-    phone: '433112',
-  },
-  {
-    name: 'Title B1',
-    latitude: 13.74428,
-    longitude: 100.5564525,
-    phone: '1234567',
-  },
-];
-
-const test2: ILocation[] = [
-  {
-    name: 'Title a2',
-    latitude: 13.74428,
-    longitude: 100.5404525,
-    phone: '22223112',
-  },
-  {
-    name: 'Title b2',
-    latitude: 13.73540,
-    longitude: 100.555525,
-    phone: '1222234567',
-  },
-];
+import { test1, test2 } from '../mock';
 
 @Component({
   selector: 'app-locations-map',

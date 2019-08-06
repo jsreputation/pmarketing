@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-export interface IReward {
+export interface IProduct {
   name: string;
   description: string;
   imageUrl: string;
@@ -9,17 +9,12 @@ export interface IReward {
   quantity?: number;
 }
 
-export interface IGift {
-  name: string;
-  pointsPerUnit: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
-export class RewardsService {
+export class ProductService {
 
-  public getRewards(): Observable<IReward[]> {
+  public getProducts(): Observable<IProduct[]> {
     return of([
       {
         name: 'Glucophage XR Tab',
@@ -64,12 +59,5 @@ export class RewardsService {
         pointsPerUnit: 5,
       }
     ]);
-  }
-
-  public getReward(): Observable<IGift> {
-    return of({
-      name: 'Glucophage 10% Discount',
-      pointsPerUnit: 5,
-    });
   }
 }
