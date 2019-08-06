@@ -14,7 +14,7 @@
         <div [ngClass]="{'current': tag === currentTag }" (click)="changeTage(tag)">{{tag}}</div>
       </ng-container>
     </div>
-    <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [routerLink]="[ '/detail', 1 ]"></perx-core-rewards-list-tabbed>
   </div>
   <app-navigate-toolbar></app-navigate-toolbar>
 </div>
