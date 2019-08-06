@@ -6,6 +6,8 @@ import {
   CognitoModule,
   OauthModule,
   AuthenticationModule,
+  RewardsModule,
+  ProfileModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +26,8 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
+    RewardsModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment })
   ],
   providers: [
   ],

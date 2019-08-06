@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { Router } from '@angular/router';
 
 const mockTags = [
   'Lifestyle', 'Travel', 'Shopping'
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private loyaltyService: LoyaltyService,
     private profile: ProfileService,
     private cd: ChangeDetectorRef,
+    private router: Router
   ) {
   }
 
@@ -55,5 +57,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   changeTage(tag) {
     this.currentTag = tag;
+  }
+
+  async openRewardDetails(event) {
+    const url = 'detail/' + (event instanceof Observable ?
+      (await event.toPromise())[0].id : event.id)
+
+    this.router.navigate([url]);
   }
 }

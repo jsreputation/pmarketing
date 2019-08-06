@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RewardsService } from '@perx/core';
-
+import { RewardsService, IReward, ProfileService } from '@perx/core';
+import { switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-reward-detail',
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
 export class RewardDetailComponent implements OnInit {
-
+  reward : Observable<IReward>;
+  userData;
   constructor(
     private router: ActivatedRoute,
-    private rewardService: RewardsService
+    private rewardService: RewardsService,
+    private profService: ProfileService
   ) { }
 
   ngOnInit() {
-    this.router.params.subscribe((val) => {
-      console.log(val);
-      this.rewardService.getReward(1).subscribe((va) => {
-        console.log(val);
-      });
+    this.reward = this.router.params.pipe(switchMap((param)=>{
+      return this.rewardService.getReward(param.id);
+    }))
+    this.profService.whoAmI().subscribe((res)=>{
+      this.userData = res;
     })
-    this.rewardService.getAllRewards().subscribe((val) => {
-      console.log(val);
-    })
+    
   }
 
 }

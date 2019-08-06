@@ -8,8 +8,6 @@ const routes: Routes = [
     path: '',
     component: HeaderComponent,
     children: [{
-      path: '', redirectTo: '/login', pathMatch: 'full'
-    }, {
       path: 'home',
       loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
       canActivate: [ProtectedGuard]
