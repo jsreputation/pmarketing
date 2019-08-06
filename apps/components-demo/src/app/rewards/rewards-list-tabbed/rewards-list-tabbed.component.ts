@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, NotificationService, PopupComponent, RewardsService } from '@perx/core';
+import { IReward, NotificationService, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-rewards-list-tabbed',
@@ -17,14 +16,10 @@ export class RewardsListTabbedComponent implements OnInit {
   public rewards: Observable<IReward[]>;
 
   constructor(private rewardsService: RewardsService,
-              private dialog: MatDialog,
               private notificationService: NotificationService) {
   }
 
   public ngOnInit(): void {
-    this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
-    });
     this.getRewards();
   }
 
