@@ -22,13 +22,13 @@ const routes: Routes = [
       { path: 'stamp', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantReward.module)
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
       },
       { path: 'loading', component: LoadingComponent }
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/wallet' }
 ];
 
 @NgModule({

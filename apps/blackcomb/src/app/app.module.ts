@@ -26,7 +26,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { GamePlayComponent } from './instant-reward/game-play/game-play.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -40,7 +39,6 @@ import { HistoryComponent } from './history/history.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    GamePlayComponent,
     RedeemComponent,
     LoadingComponent,
     VoucherDetailComponent,

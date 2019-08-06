@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GamePlayComponent } from './game-play.component';
+import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PerxCoreModule, GameModule } from '@perx/core';
 
-describe('GamePlayComponent', () => {
-  let component: GamePlayComponent;
-  let fixture: ComponentFixture<GamePlayComponent>;
+describe('RewardComponent', () => {
+  let component: RewardComponent;
+  let fixture: ComponentFixture<RewardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GamePlayComponent ],
+      declarations: [ RewardComponent ],
       imports: [RouterTestingModule, PerxCoreModule, GameModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GamePlayComponent);
+    fixture = TestBed.createComponent(RewardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
