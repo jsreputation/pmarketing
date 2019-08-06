@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigateToolbarComponent } from './navigate-toolbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('NavigateToolbarComponent', () => {
+describe('NavigateToolbarComponent', () => {
   let component: NavigateToolbarComponent;
   let fixture: ComponentFixture<NavigateToolbarComponent>;
 
