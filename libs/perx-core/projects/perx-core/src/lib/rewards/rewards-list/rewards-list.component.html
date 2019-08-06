@@ -2,7 +2,7 @@
   <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <ng-container *ngIf="rewards$ | async as rewards">
-      <mat-card matRipple *ngFor="let reward of rewards">
+      <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
         <div class="reward-content">
           <div class="reward-img__wrapper">
             <img class="reward-img" [src]="reward.rewardThumbnail"/>

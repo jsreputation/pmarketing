@@ -7,7 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import {
   AuthenticationModule,
-  RewardsModule as PerxRewardsModule
+  RewardsModule as PerxRewardsModule,
+  UtilsModule as PerxCoreUtilsModule
 } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
@@ -31,7 +32,8 @@ import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-t
     AuthenticationModule,
     RewardsRoutingModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    PerxCoreUtilsModule,
   ]
 })
 export class RewardsModule {
