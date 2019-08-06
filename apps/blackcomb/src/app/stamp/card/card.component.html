@@ -1,0 +1,21 @@
+<div class="main-puzzle-container">
+  <div class="game-wrapper">
+    <div>
+      <h1>{{this.title}}</h1>
+      <h3>{{this.subTitle}}</h3>
+    </div>
+    <perx-core-puzzle-collect-stamps 
+      [nbSlots]="10" 
+      [stamps]="stamps" 
+      [rewards]="rewards"
+      [preStampImg]="'assets/stamps/pre_stamp.png'" 
+      [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
+      [rewardPreStamp]="'assets/stamps/pre_reward.png'" 
+      [rewardPostStamp]="'assets/stamps/post_reward.png'">
+    </perx-core-puzzle-collect-stamps>
+  </div>
+  <button mat-flat-button color="primary" (click)="isEnabled = true"
+    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+    Play
+  </button>
+</div>

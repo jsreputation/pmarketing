@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin: 2rem -1.2rem;
+  // margin: 2rem -1.2rem;
   height: 100%;
   background: linear-gradient(180deg, #3a6186 0%, #89243e 100%);
 
@@ -28,17 +28,9 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-
-  .pinata-wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
 }
 
 button {
-  background: linear-gradient(90deg, #2bb673 0%, #40e495 100%);
-  width: 50%;
+  max-width: 31.5rem;
+  min-width: 50%;
 }
