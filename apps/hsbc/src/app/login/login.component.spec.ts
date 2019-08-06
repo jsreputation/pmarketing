@@ -7,7 +7,7 @@ import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 
 describe('LoginComponent', () => {
@@ -26,6 +26,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         AuthenticationModule,
         NoopAnimationsModule,
+        ProfileModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
       ],

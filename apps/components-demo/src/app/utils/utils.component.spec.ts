@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UtilsComponent } from './utils.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatTabsModule, MatDialogModule } from '@angular/material';
 
 describe('UtilsComponent', () => {
   let component: UtilsComponent;
@@ -9,7 +10,7 @@ describe('UtilsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MatTabsModule, MatDialogModule],
       declarations: [UtilsComponent]
     })
       .compileComponents();

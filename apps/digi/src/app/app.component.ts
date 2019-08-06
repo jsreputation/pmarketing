@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 
           (window as any).primaryIdentifier = searchParams.get('pi');
         } else {
-          this.authService.getUserAccessToken()
+          this.authService.getAccessToken()
             .subscribe((tok: string) => {
               if (tok === null) {
                 this.notificationService.addPopup({
