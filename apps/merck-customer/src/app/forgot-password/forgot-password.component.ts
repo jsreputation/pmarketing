@@ -47,7 +47,7 @@ export class ForgotPasswordComponent implements PageProperties {
   }
 
   public onSubmit(): void {
-    const mobileNumber = '639876543210'; // this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
+    const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     try {
       this.authService.forgotPassword(mobileNumber).subscribe(
         () => {
