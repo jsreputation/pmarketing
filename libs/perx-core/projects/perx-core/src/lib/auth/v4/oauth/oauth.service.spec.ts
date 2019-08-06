@@ -81,7 +81,7 @@ describe('OauthService', () => {
 
     const req = httpTestingController.expectOne(baseUrl + 'v4/customers/confirm');
 
-    expect(req.request.method).toEqual('PUT');
+    expect(req.request.method).toEqual('PATCH');
 
     req.flush({ message: 'OTP is correct', code: 20 });
 
@@ -97,7 +97,7 @@ describe('OauthService', () => {
 
     const req = httpTestingController.expectOne(baseUrl + 'v4/customers/reset_password');
 
-    expect(req.request.method).toEqual('PUT');
+    expect(req.request.method).toEqual('PATCH');
 
     req.flush({ message: 'Password has been reset!' });
 
