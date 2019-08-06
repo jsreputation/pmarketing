@@ -1,38 +1,5 @@
 @import "~@angular/material/theming";
 
-.card-list-container.loading {
-  overflow: hidden;
-
-  .ghost {
-    overflow: hidden;
-  }
-
-  .reward-content {
-    .reward-img__wrapper {
-      .img-placeholder {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    .reward-preview-details {
-      .reward-name {
-        height: 1.6rem;
-        margin: 0.4rem 0;
-      }
-
-      .reward-subtitle {
-        height: 1.6rem;
-        margin: 0.4rem 0;
-      }
-
-      .reward-price-details {
-        height: 1.6rem;
-      }
-    }
-  }
-}
-
 .reward-content {
   display: flex;
   flex-basis: auto;
@@ -88,6 +55,39 @@
       line-height: 1.6rem;
       min-height: 1.6rem;
       color: #ddac27;
+    }
+  }
+}
+
+.card-list-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+  }
+
+  .reward-content {
+    .reward-img__wrapper {
+      .img-placeholder {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .reward-preview-details {
+      .reward-name {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-subtitle {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-price-details {
+        height: 1.6rem;
+      }
     }
   }
 }
