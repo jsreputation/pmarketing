@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile, ILoyalty, LoyaltyService, ProfileService } from '@perx/core';
-import { of, Observable } from 'rxjs';
+import { of, Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { mockLoyalty, mockProfile } from './../loyalty-mock';
 
@@ -16,14 +16,19 @@ export class LoyaltySummaryComponent implements OnInit {
   constructor(private loyaltyService: LoyaltyService, private profileService: ProfileService) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe(
-      (profile) => this.profile = of(profile),
-      () => this.profile = of(mockProfile)
+    forkJoin(
+      this.profileService.whoAmI(),
+      this.loyaltyService.getLoyalties().pipe(
+        map(loyalties => loyalties && loyalties.length > 0 && loyalties[0]))
+    ).subscribe(
+      ([profile, loyalty]) => {
+        this.profile = of(profile);
+        this.loyalty = of(loyalty);
+      },
+      () => {
+        this.profile = of(mockProfile);
+        this.loyalty = of(mockLoyalty);
+      }
     );
-    this.loyaltyService.getLoyalties().pipe(
-      map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])).subscribe(
-        (loyalty) => this.loyalty = of(loyalty),
-        () => this.loyalty = of(mockLoyalty)
-      );
   }
 }
