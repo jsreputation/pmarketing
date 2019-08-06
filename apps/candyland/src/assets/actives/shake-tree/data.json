@@ -1,0 +1,110 @@
+{
+  "background": [
+    {
+      "id": 1,
+      "type": "background1",
+      "title": "icon",
+      "img": "assets/images/background/background1.png",
+      "fullImg": "assets/images/background/full_bg_1.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "background2",
+      "title": "icon",
+      "img": "assets/images/background/background2.png",
+      "fullImg": "assets/images/background/full_bg_2.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "background3",
+      "title": "icon",
+      "img": "assets/images/background/background3.png",
+      "fullImg": "assets/images/background/full_bg_3.jpg",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "giftBox": [
+    {
+      "id": 1,
+      "type": "state1",
+      "title": "icon",
+      "img": "assets/images/gifts/state1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "state2",
+      "title": "icon",
+      "img": "assets/images/gifts/state2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "state3",
+      "title": "icon",
+      "img": "assets/images/gifts/state3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "gamesTree": [
+    {
+      "id": 1,
+      "type": "simple-tree",
+      "active": "false",
+      "img": "assets/images/tree/simple-tree.png",
+      "title": "tree"
+    },
+    {
+      "id": 2,
+      "type": "fir-tree",
+      "active": "false",
+      "img": "assets/images/tree/fir-tree.png",
+      "title": "fir tree"
+    },
+    {
+      "id": 3,
+      "type": "tree-pot",
+      "active": "false",
+      "img": "assets/images/tree/tree-pot.png",
+      "title": "tree in a pot"
+    }
+  ],
+  "gameNumberGift": [
+    {
+      "value": "3",
+      "viewValue": "3 gifts"
+    },
+    {
+      "value": "4",
+      "viewValue": "4 gifts"
+    },
+    {
+      "value": "5",
+      "viewValue": "5 gifts"
+    },
+    {
+      "value": "6",
+      "viewValue": "6 gifts"
+    },
+    {
+      "value": "7",
+      "viewValue": "7 gifts"
+    },
+    {
+      "value": "8",
+      "viewValue": "8 gifts"
+    },
+    {
+      "value": "9",
+      "viewValue": "9 gifts"
+    }
+  ]
+}

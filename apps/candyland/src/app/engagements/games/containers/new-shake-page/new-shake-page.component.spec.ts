@@ -12,7 +12,7 @@ import { ShakeDataService } from './shared/services/shake-data.service';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GameModule } from '../../../../../../../../libs/perx-core/dist/perx-core';
+import { GameModule } from '@perx/core';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;

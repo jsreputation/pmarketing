@@ -1,14 +1,5 @@
-<!--<p>-->
-  <!--new-shake-page works!-->
-<!--</p>-->
-
-<!--<ul>-->
-  <!--<li><a routerLink="settings">settings</a></li>-->
-  <!--<li><a routerLink="rewards">rewards</a></li>-->
-<!--</ul>-->
-
 <router-outlet></router-outlet>
-<div class="tree-wrap" [formGroup]="shakeTree">
+<div class="tree-wrap" *ngIf="shakeTreeData$ | async as shakeTreeData" [formGroup]="shakeTree">
   <div class="full-with page-header">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -82,21 +73,21 @@
 
           <div class="game-tree-wrap">
             <cl-select-graphic
-              *ngIf="gamesTree$ | async as gamesTree"
+              *ngIf="shakeTreeData.gamesTree"
               formControlName="treeType"
-              [graphicList]="gamesTree"
+              [graphicList]="shakeTreeData.gamesTree"
             >
             </cl-select-graphic>
           </div>
 
           <div class="game-number-gifts">
             <div class="control-input"
-                 *ngIf="gameGifts$ | async as gameGifts"
+                 *ngIf="shakeTreeData.gameGift"
             >
               <mat-form-field class="game-gift-select">
                 <mat-label>Total number of gifts in tree</mat-label>
                 <mat-select formControlName="gameGift">
-                  <mat-option *ngFor="let gift of gameGifts" [value]="gift.value">
+                  <mat-option *ngFor="let gift of shakeTreeData.gameGift" [value]="gift.value">
                     {{gift.viewValue}}
                   </mat-option>
                 </mat-select>
@@ -110,10 +101,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="giftBox$ | async as giftBox"
+                *ngIf="shakeTreeData.giftBox"
                 class="game-selected-graphic"
                 formControlName="giftBox"
-                [graphicList]="giftBox"
+                [graphicList]="shakeTreeData.giftBox"
                 (selectGraphic)="setSelectGiftBox($event)"
               >
               </cl-select-graphic-wrap>
@@ -126,10 +117,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="backgrounds$ | async as backgrounds"
+                *ngIf="shakeTreeData.background"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="shakeTreeData.background"
                 (selectGraphic)="setSelectGiftBox($event)"
               >
               </cl-select-graphic-wrap>

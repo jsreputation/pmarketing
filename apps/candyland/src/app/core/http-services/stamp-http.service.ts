@@ -67,4 +67,18 @@ export class StampHttpService {
         map(res => (res as CommonSelect[]))
       );
   }
+
+  public getStampsData() {
+    return this.http.get<{
+      number: CommonSelect[],
+      slotNumber: CommonSelect[],
+      cardBackground: IGraphic[],
+      rewardPost: IGraphic[],
+      stampsPost: IGraphic[],
+      rewardPreStamp: IGraphic[],
+      preStamp: IGraphic[],
+      backgroundStamp: IGraphic[],
+    }>('assets/actives/stamps/stamps-data.json');
+  }
+
 }

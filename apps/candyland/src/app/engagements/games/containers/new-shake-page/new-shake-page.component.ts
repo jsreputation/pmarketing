@@ -1,7 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IGameTree } from './shared/models/game-tree.model';
-import { IGameGifts } from './shared/models/game-gifts.model';
 
 import { ShakeDataService } from './shared/services/shake-data.service';
 import { Observable } from 'rxjs';
@@ -9,6 +7,8 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ControlValueService } from '@cl-core/services/control-value.service';
+import { ControlsName } from '../../../../models/controlsName';
+import { IGameGifts } from './shared/models/game-gifts.model';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -19,10 +19,12 @@ import { ControlValueService } from '@cl-core/services/control-value.service';
 })
 export class NewShakePageComponent implements OnInit {
   public shakeTree: FormGroup;
-  public gamesTree$: Observable<IGameTree[]>;
-  public gameGifts$: Observable<IGameGifts[]>;
-  public giftBox$: Observable<IGraphic[]>;
-  public backgrounds$: Observable<IGraphic[]>;
+  public shakeTreeData$: Observable<{
+    gameNumberGift: IGameGifts[],
+    gamesTree: IGraphic[],
+    giftBox: IGraphic[],
+    'background': IGraphic[]
+  }>;
 
   public selectGiftBox: IGraphic;
   public gameGift: AbstractControl;
@@ -33,33 +35,32 @@ export class NewShakePageComponent implements OnInit {
               private router: Router,
               private controlValueService: ControlValueService) {
   }
-
   public get name(): AbstractControl {
-    return this.shakeTree.get('name');
+    return this.shakeTree.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.shakeTree.get('headlineMessage');
+    return this.shakeTree.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.shakeTree.get('subHeadlineMessage');
+    return this.shakeTree.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.shakeTree.get('buttonText');
-  }
-
-  public get treeType(): AbstractControl {
-    return this.shakeTree.get('treeType');
-  }
-
-  public get giftBox(): AbstractControl {
-    return this.shakeTree.get('giftBox');
+    return this.shakeTree.get(ControlsName.buttonText);
   }
 
   public get background(): AbstractControl {
-    return this.shakeTree.get('background');
+    return this.shakeTree.get(ControlsName.background);
+  }
+
+  public get treeType(): AbstractControl {
+    return this.shakeTree.get(ControlsName.treeType);
+  }
+
+  public get giftBox(): AbstractControl {
+    return this.shakeTree.get(ControlsName.giftBox);
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -67,16 +68,13 @@ export class NewShakePageComponent implements OnInit {
   }
 
   public get gameGiftView() {
-    return this.shakeTree.get('gameGift');
+    return this.shakeTree.get(ControlsName.gameGift);
   }
 
   ngOnInit() {
     this.createShakeTreeForm();
     this.createGameGiftField();
-    this.getBackgroundData();
-    this.getGiftBox();
-    this.getGamesTree();
-    this.getGameNumberGifts();
+    this.getData();
   }
 
   public save(): void {
@@ -122,46 +120,17 @@ export class NewShakePageComponent implements OnInit {
     });
   }
 
-  private getBackgroundData(): void {
-    this.backgrounds$ = this.shakeDataService.getBackground()
+  private getData(): void {
+    this.shakeTreeData$ = this.shakeDataService.getData()
       .pipe(
         tap((res) => {
-          this.patchForm('background', res[0]);
+          this.shakeTree.patchValue({
+            [ControlsName.background]: res.background[0],
+            [ControlsName.giftBox]: res.giftBox[0],
+            [ControlsName.treeType]: res.gamesTree[0],
+            [ControlsName.gameGift]: res.gameNumberGift[0].value
+          });
         })
       );
   }
-
-  private getGiftBox(): void {
-    this.giftBox$ = this.shakeDataService.getGiftBox()
-      .pipe(
-        tap((res) => {
-          this.patchForm('giftBox', res[0]);
-        })
-      );
-  }
-
-  private getGamesTree(): void {
-    this.gamesTree$ = this.shakeDataService.getGamesTree()
-      .pipe(
-        tap((res) => {
-          this.patchForm('treeType', res[0]);
-        })
-      );
-  }
-
-  private getGameNumberGifts(): void {
-    this.gameGifts$ = this.shakeDataService.getGameNumberGifts()
-      .pipe(
-        tap((res) => {
-          this.patchForm('gameGift', res[0].value);
-        })
-      );
-  }
-
-  private patchForm(fieldName: string, value: any): void {
-    this.shakeTree.patchValue({
-      [fieldName]: value
-    });
-  }
-
 }

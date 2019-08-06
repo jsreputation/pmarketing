@@ -12,8 +12,12 @@ export class ControlValueService {
     if (!(control && control.value)) {
       return defaultImg;
     }
-    return control.value.img
-      ? control.value.img
-      : control.value;
+    if (control.value.fullImg) {
+      return control.value.fullImg;
+    }
+    if (control.value.img) {
+      return control.value.img;
+    }
+    return control.value;
   }
 }

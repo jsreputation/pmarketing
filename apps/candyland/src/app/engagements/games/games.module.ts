@@ -13,7 +13,8 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatSelectModule, MatSliderModule,
+  MatSelectModule,
+  MatSliderModule,
   MatTabsModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
@@ -22,6 +23,7 @@ import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { GameModule } from '@perx/core';
+import { environment } from '@cl-environments/environment';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { GameModule } from '@perx/core';
     ButtonModule,
     SelectGraphicModule,
     SelectGraphicWrapModule,
-    GameModule,
+    GameModule.forRoot({ env: environment }),
 
     MatTabsModule,
     MatCardModule,

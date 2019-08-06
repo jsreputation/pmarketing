@@ -10,7 +10,7 @@ import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GameModule } from '../../../../../../../../libs/perx-core/dist/perx-core';
+import { GameModule } from '@perx/core';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;

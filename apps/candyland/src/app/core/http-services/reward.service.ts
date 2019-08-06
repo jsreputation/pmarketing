@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +13,11 @@ export class RewardService {
     return this.http.get('assets/mocks/rewards/rewards.json');
   }
 
-  public getRewardCardBackground(): Observable<IGraphic> {
-    return this.http.get('assets/actives/reward-card-background.json')
-      .pipe(
-        map(res => (res as IGraphic))
-      );
-  }
-
-  public getRewardBackground(): Observable<IGraphic> {
-    return this.http.get<IGraphic>('assets/actives/reward-background.json');
+  public getRewardData() {
+    return this.http.get<{
+      background: IGraphic[],
+      cardBackground: IGraphic[]
+    }>('assets/actives/reward/reward-data.json');
   }
 
   public getReward(): Observable<any> {

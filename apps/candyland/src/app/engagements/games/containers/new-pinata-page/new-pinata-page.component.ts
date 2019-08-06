@@ -7,6 +7,7 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ControlValueService } from '@cl-core/services/control-value.service';
+import { ControlsName } from '../../../../models/controlsName';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -16,8 +17,10 @@ import { ControlValueService } from '@cl-core/services/control-value.service';
 })
 export class NewPinataPageComponent implements OnInit {
   public formPinata: FormGroup;
-  public backgrounds$: Observable<IGraphic>;
-  public pinata$: Observable<IGraphic>;
+  public pinataData$: Observable<{
+    pinata: IGraphic[],
+    background: IGraphic[]
+  }>;
   constructor(private fb: FormBuilder,
               private pinataHttpService: PinataHttpService,
               private routingState: RoutingStateService,
@@ -26,10 +29,8 @@ export class NewPinataPageComponent implements OnInit {
 
   ngOnInit() {
     this.createPinataForm();
-    this.getPinata();
-    this.getBackgroundData();
+    this.getPinataData();
   }
-
 
   public save(): void {
     this.router.navigateByUrl('/engagements');
@@ -40,28 +41,27 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   public get name(): AbstractControl {
-    return this.formPinata.get('name');
+    return this.formPinata.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.formPinata.get('headlineMessage');
+    return this.formPinata.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.formPinata.get('subHeadlineMessage');
+    return this.formPinata.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.formPinata.get('buttonText');
+    return this.formPinata.get(ControlsName.buttonText);
   }
 
   public get background(): AbstractControl {
-    return this.formPinata.get('background');
+    return this.formPinata.get(ControlsName.background);
   }
 
   public get pinata(): AbstractControl {
-    console.log(this.formPinata.get('pinata').value);
-    return this.formPinata.get('pinata');
+    return this.formPinata.get(ControlsName.pinata);
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -94,27 +94,15 @@ export class NewPinataPageComponent implements OnInit {
     });
   }
 
-  private getPinata(): void {
-    this.pinata$ = this.pinataHttpService.getPinata()
+  private getPinataData(): void {
+    this.pinataData$ = this.pinataHttpService.getPinataData()
       .pipe(
         tap((res) => {
-          this.patchForm('pinata', res[0]);
+          this.formPinata.patchValue({
+            [ControlsName.pinata]: res.pinata[0],
+            [ControlsName.background]: res.background[0]
+          });
         })
       );
-  }
-
-  private getBackgroundData(): void {
-     this.backgrounds$ = this.pinataHttpService.getBackground()
-       .pipe(
-         tap((res) => {
-           this.patchForm('background', res[0]);
-         })
-       );
-  }
-
-  private patchForm(fieldName: string, value: any): void {
-    this.formPinata.patchValue({
-      [fieldName]: value
-    });
   }
 }
