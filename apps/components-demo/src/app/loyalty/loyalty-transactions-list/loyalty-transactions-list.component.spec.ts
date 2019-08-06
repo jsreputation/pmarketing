@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list.component';
+import { LoyaltyModule } from './../loyalty.module';
 
 describe('TransactionsListComponent', () => {
   let component: LoyaltyTransactionsListComponent;
@@ -8,7 +11,13 @@ describe('TransactionsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltyTransactionsListComponent ]
+      declarations: [ LoyaltyTransactionsListComponent ],
+      imports: [
+        NoopAnimationsModule,
+        MatButtonModule,
+        HttpClientTestingModule,
+        LoyaltyModule
+      ]
     })
     .compileComponents();
   }));
