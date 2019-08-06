@@ -63,9 +63,12 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
         return;
     }
 
+    const resetPasswordInfo = { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword};
     // First send reset password using otp and password on successful return call below
-    this.authService.resetPassword(this.mobileNumber, password, this.otp).subscribe(
-      () => {
+    this.authService.resetPassword(resetPasswordInfo).subscribe(
+      (response) => {
+        console.log(`Response : ${response.message}`);
+        console.log(`Response code: ${response.code}`);
         // Send Login Call on successfull password reset
         this.sendLoginCall(password);
       },
