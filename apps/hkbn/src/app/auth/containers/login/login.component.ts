@@ -26,7 +26,7 @@ export class LoginComponent {
       if (this.authService.getInterruptedUrl()) {
         this.router.navigateByUrl(this.authService.getInterruptedUrl());
       } else {
-        this.router.navigateByUrl('puzzle');
+        this.router.navigateByUrl('/');
       }
     });
   }
