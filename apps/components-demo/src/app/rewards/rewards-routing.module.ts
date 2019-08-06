@@ -4,7 +4,8 @@ import { RewardsComponent } from './rewards.component';
 import { RewardsCollectionComponent } from './rewards-collection/rewards-collection.component';
 import { RewardsListComponent } from './rewards-list/rewards-list.component';
 import { RewardComponent } from './reward/reward.component';
-import { RewardsListTabbedComponent } from './rewards-list/rewards-list-tabbed/rewards-list-tabbed.component';
+import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { RewardsListFilteredComponent } from './rewards-list-tabbed/rewards-list-filtered/rewards-list-filtered.component';
 
 const routes: Routes = [
   {
@@ -16,8 +17,9 @@ const routes: Routes = [
       {
         path: 'list-tabbed', component: RewardsListTabbedComponent,
         children: [
-          { path: 'issued', component: RewardsListComponent },
-          { path: 'redeemed', component: RewardsListComponent }
+          { path: '', pathMatch: 'full', redirectTo: 'hsbc'},
+          { path: 'hsbc', component: RewardsListFilteredComponent },
+          { path: 'others', component: RewardsListFilteredComponent }
         ]
       },
       { path: 'detail', component: RewardComponent },
