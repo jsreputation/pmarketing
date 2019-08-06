@@ -1,0 +1,24 @@
+<div class="main-puzzle-container">
+  <div>
+    <h1>{{this.title}}</h1>
+    <h3>{{this.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <perx-core-shake-tree
+      [treeImg]="'assets/shake-tree/tree.png'"
+      [giftImg]="'assets/shake-tree/gift.png'"
+      [nbHangedGifts]="3"
+      [nbFallingGifts]="1"
+      (completed)="gameCompleted()"
+      [enabled]="isEnabled"
+      [nbShakes]="4">
+    </perx-core-shake-tree>
+  </div>  
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="isEnabled = true"
+    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+    Play
+  </button>
+</div>

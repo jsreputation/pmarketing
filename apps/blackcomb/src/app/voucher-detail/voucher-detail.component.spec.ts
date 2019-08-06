@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RewardDetailComponent } from './reward-detail.component';
+import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('RewardDetailComponent', () => {
-  let component: RewardDetailComponent;
-  let fixture: ComponentFixture<RewardDetailComponent>;
+describe('VoucherDetailComponent', () => {
+  let component: VoucherDetailComponent;
+  let fixture: ComponentFixture<VoucherDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardDetailComponent ],
+      declarations: [ VoucherDetailComponent ],
       imports: [
         HttpClientModule,
         RouterTestingModule
@@ -21,7 +21,7 @@ describe('RewardDetailComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RewardDetailComponent);
+    fixture = TestBed.createComponent(VoucherDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
