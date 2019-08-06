@@ -12,13 +12,11 @@ const routes: Routes = [
       loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
       canActivate: [ProtectedGuard]
     }, {
-      path: 'detail/:id',
-      loadChildren: () => import('../reward-detail/reward-detail.module').then(mod => mod.RewardDetailModule)
-    }, {
       path: '**',
       pathMatch: 'full',
       redirectTo: 'home'
-    }]
+    }
+    ]
   }
 ];
 

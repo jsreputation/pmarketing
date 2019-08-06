@@ -1,0 +1,16 @@
+.reward-header:last-child {
+  background: red;
+}
+
+.reward-page {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+.reward-body {
+  flex-grow: 1;
+  max-height: 100%;
+  overflow: auto;
+}
