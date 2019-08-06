@@ -16,5 +16,6 @@ export class HomeComponent {
     { path: 'login', label: 'Login' },
     { path: 'voucher', label: 'Vouchers' },
     { path: 'location', label: 'Locations', icon: 'map' },
+    { path: 'loyalty', label: 'Loyalty' },
   ];
 }

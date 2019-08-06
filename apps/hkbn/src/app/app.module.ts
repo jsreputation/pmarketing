@@ -1,19 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  AuthenticationModule,
+  AuthenticationModule, AuthenticationService,
   CognitoModule,
   LoyaltyModule,
   OauthModule,
   PopupComponent,
   ProfileModule,
-  UtilsModule,
   RewardsModule,
+  UtilsModule,
   VouchersModule,
 } from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +25,11 @@ import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
+
+const getAppAccessToken = (authenticationService: AuthenticationService) => {
+  console.log(authenticationService);
+  return () => authenticationService.v4GetAppAccessToken().toPromise();
+};
 
 @NgModule({
   declarations: [
@@ -54,7 +59,9 @@ import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemptio
     MatTabsModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     PopupComponent
