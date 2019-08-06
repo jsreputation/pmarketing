@@ -12,9 +12,8 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
-import { MatButtonModule, MatToolbarModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
-import { RewardsListFilteredComponent } from './rewards-list-tabbed/rewards-list-filtered/rewards-list-filtered.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { RewardsListFilteredComponent } from './rewards-list-tabbed/rewards-list
     RewardsListComponent,
     RewardComponent,
     RewardsListTabbedComponent,
-    RewardsListFilteredComponent,
   ],
   imports: [
     RouterModule,
