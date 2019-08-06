@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core';
+// import { AuthenticationService } from '@perx/core';
 
 @Component({
   selector: 'mc-signup',
@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService
+    // private authService: AuthenticationService
 ) {
      this.initForm();
   }
@@ -56,16 +56,16 @@ export class SignupComponent implements OnInit {
         this.errorMessage = 'Please agree to receive marketing communications from Merck Group hk.';
         return;
       }
-      const mobileNumber = this.signupForm.get('mobileNo').value as string;
-      this.authService.signup(mobileNumber, password).subscribe(
-        () => {
-          this.router.navigateByUrl('/home');
-        },
-        err => {
-          console.error('Observer got an error: ' + err);
-          // TODO: AuthService is not implementing 'signup' method yet. Remove this line once done.
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
-        });
+      // const mobileNumber = this.signupForm.get('mobileNo').value as string;
+      // this.authService.signup(mobileNumber, password).subscribe(
+      //   () => {
+      //     this.router.navigateByUrl('/home');
+      //   },
+      //   err => {
+      //     console.error('Observer got an error: ' + err);
+      //     // TODO: AuthService is not implementing 'signup' method yet. Remove this line once done.
+      //     this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
+      //   });
     } catch (error) {
         console.log(error);
     }
