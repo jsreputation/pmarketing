@@ -47,6 +47,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
         }),
       )
       .subscribe((res: Engagement[]) => {
+        console.log(res);
         this.dataSource.data = res;
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();

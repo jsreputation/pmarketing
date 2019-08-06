@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IGameTree } from './shared/models/game-tree.model';
 import { IGameGifts } from './shared/models/game-gifts.model';
 
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ControlValueService } from '@cl-core/services/control-value.service';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -29,7 +30,8 @@ export class NewShakePageComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private shakeDataService: ShakeDataService,
               private routingState: RoutingStateService,
-              private router: Router) {
+              private router: Router,
+              private controlValueService: ControlValueService) {
   }
 
   public get name(): AbstractControl {
@@ -46,6 +48,26 @@ export class NewShakePageComponent implements OnInit {
 
   public get buttonText(): AbstractControl {
     return this.shakeTree.get('buttonText');
+  }
+
+  public get treeType(): AbstractControl {
+    return this.shakeTree.get('treeType');
+  }
+
+  public get giftBox(): AbstractControl {
+    return this.shakeTree.get('giftBox');
+  }
+
+  public get background(): AbstractControl {
+    return this.shakeTree.get('background');
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return this.controlValueService.getImgLink(control, defaultImg);
+  }
+
+  public get gameGiftView() {
+    return this.shakeTree.get('gameGift');
   }
 
   ngOnInit() {

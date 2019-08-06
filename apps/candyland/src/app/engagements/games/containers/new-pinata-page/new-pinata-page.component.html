@@ -119,6 +119,26 @@
 
     <div class="mobile-preview">
       <div class="mobile-preview-mobile">
+        <div class="mobile-preview-header">
+          <p class="mobile-preview-headline">
+            {{headlineMessage.value}}
+          </p>
+          <p class="mobile-preview-sub-headline">
+            {{subHeadlineMessage.value}}
+          </p>
+        </div>
+        <perx-core-pinata class="mobile-preview-background"
+                          [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
+                          [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
+                          [openedImg]="'assets/images/games/pinata/opened-pinata.png'"
+                          [nbTaps]="5"
+        >
+        </perx-core-pinata>
+        <div class="mobile-preview-btn-wrap">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
       </div>
     </div>
 

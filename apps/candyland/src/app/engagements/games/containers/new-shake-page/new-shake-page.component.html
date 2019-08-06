@@ -160,6 +160,32 @@
     </div>
     <div class="mobile-preview">
       <div class="mobile-preview-mobile">
+        <div class="mobile-preview-header">
+          <p class="mobile-preview-headline">
+            {{headlineMessage.value}}
+          </p>
+          <p class="mobile-preview-sub-headline">
+            {{subHeadlineMessage.value}}
+          </p>
+        </div>
+        <perx-core-shake-tree class="mobile-preview-background"
+                              [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
+                              [treeImg]="treeType.value?.img"
+                              [giftImg]="getImgLink(giftBox, 'assets/images/gifts/state1.png')"
+                              [waitingManImg]="''"
+                              [waitingManCelebrateImg]="''"
+                              [nbHangedGifts]="gameGiftView.value"
+                              [nbFallingGifts]="gameGiftView.value"
+                              [nbShakes]="5"
+                              [distanceFromTree]="26"
+                              [bottomDistance]="1"
+        >
+        </perx-core-shake-tree>
+        <div class="mobile-preview-btn-wrap">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { ControlValueService } from '@cl-core/services/control-value.service';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -20,7 +21,8 @@ export class NewPinataPageComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private pinataHttpService: PinataHttpService,
               private routingState: RoutingStateService,
-              private router: Router) { }
+              private router: Router,
+              private controlValueService: ControlValueService) { }
 
   ngOnInit() {
     this.createPinataForm();
@@ -51,6 +53,19 @@ export class NewPinataPageComponent implements OnInit {
 
   public get buttonText(): AbstractControl {
     return this.formPinata.get('buttonText');
+  }
+
+  public get background(): AbstractControl {
+    return this.formPinata.get('background');
+  }
+
+  public get pinata(): AbstractControl {
+    console.log(this.formPinata.get('pinata').value);
+    return this.formPinata.get('pinata');
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return this.controlValueService.getImgLink(control, defaultImg);
   }
 
   private createPinataForm(): void {
