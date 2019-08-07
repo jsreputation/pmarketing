@@ -35,6 +35,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { RedeemComponent } from './redeem/redeem.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,9 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ForgotPasswordComponent,
     EnterPinComponent,
     ResetPasswordComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    RewardDetailComponent,
+    RedeemComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ProfileModule.forRoot({ env: environment }),
     UtilsModule,
     LoyaltyModule.forRoot({env: environment}),
-    RewardsModule.forRoot({ env: environment })
+    RewardsModule.forRoot({ env: environment }),
+    QRCodeModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],

@@ -21,4 +21,8 @@ export class RewardsCollectionComponent implements OnInit {
   public ngOnInit(): void {
   }
 
+  public rewardClicked(reward: IReward): void {
+    this.tapped.emit(reward);
+  }
+
 }

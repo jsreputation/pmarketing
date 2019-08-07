@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit, PageProperties {
     return BAR_SELECTED_ITEM.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   public onSubmit(): void {
 
     // TODO: Uncomment the following line once merck-customer backend is setup with authentication service

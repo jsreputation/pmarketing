@@ -43,6 +43,10 @@ export class SignupComponent implements PageProperties {
     return BAR_SELECTED_ITEM.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   public onSubmit(): void {
     try {
       this.errorMessage = null;

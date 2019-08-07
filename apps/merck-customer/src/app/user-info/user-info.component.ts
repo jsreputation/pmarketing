@@ -37,6 +37,10 @@ export class UserInfoComponent implements PageProperties {
     return BAR_SELECTED_ITEM.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   public onNext(): void {
     try {
       const diabetesValue = this.surveyForm.get('diabetes').value;

@@ -1,5 +1,6 @@
 export interface PageProperties {
   showHeader(): boolean;
+  backButtonEnabled(): boolean;
   bottomSelectedItem(): BAR_SELECTED_ITEM;
 }
 
