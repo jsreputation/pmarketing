@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   PuzzleCollectStamp,
   PuzzleCollectReward,
-  PUZZLE_COLLECT_STAMP_STATE
+  PuzzleCollectStampState
 } from '@perx/core';
 
 @Component({
@@ -18,10 +18,10 @@ export class CardComponent {
   public isEnabled: boolean = false;
 
   // For static stamp card input values
-  public stamps: PuzzleCollectStamp[] = [{ id: 1, state: PUZZLE_COLLECT_STAMP_STATE.redeemed },
-  { id: 2, state: PUZZLE_COLLECT_STAMP_STATE.redeemed },
-  { id: 3, state: PUZZLE_COLLECT_STAMP_STATE.redeemed },
-  { id: 3, state: PUZZLE_COLLECT_STAMP_STATE.issued }];
+  public stamps: PuzzleCollectStamp[] = [{ id: 1, state: PuzzleCollectStampState.redeemed },
+  { id: 2, state: PuzzleCollectStampState.redeemed },
+  { id: 3, state: PuzzleCollectStampState.redeemed },
+  { id: 3, state: PuzzleCollectStampState.issued }];
 
   public rewards: PuzzleCollectReward[] = [{ rewardPosition: 0 },
   { rewardPosition: 2 }];

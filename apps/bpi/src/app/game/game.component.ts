@@ -3,13 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {
   StampService,
   CampaignService,
-  CAMPAIGN_TYPE,
+  CampaignType,
   ICampaign,
   IStampCard,
   IStamp,
-  STAMP_CARD_STATE,
-  STAMP_STATE
-} from '@perx/core/dist/perx-core';
+  StampCardState,
+  StampState
+} from '@perx/core';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 
@@ -55,7 +55,7 @@ export class GameComponent implements OnInit {
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp))
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
@@ -66,22 +66,22 @@ export class GameComponent implements OnInit {
   private fetchCards(): void {
     this.stampService.getCards(this.campaignId)
       // .pipe(
-      // map(cards => cards.filter(card => card.state === STAMP_CARD_STATE.active))
+      // map(cards => cards.filter(card => card.state === StampCardState.active))
       // )
       .subscribe(cards => {
         const lockedCards = cards.filter(card => {
-          this.keys += card.stamps.filter(st => st.state === STAMP_STATE.issued).length;
+          this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
           const totalSlots = card.displayProperties.totalSlots || 0;
-          // return card.state === STAMP_CARD_STATE.active &&
+          // return card.state === StampCardState.active &&
           return card.stamps &&
-            card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
+            card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
         });
 
         const unlockedCards = cards.filter(card => {
           const totalSlots = card.displayProperties.totalSlots || 0;
-          return card.state === STAMP_CARD_STATE.active &&
+          return card.state === StampCardState.active &&
             card.stamps &&
-            card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots;
+            card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
         });
 
         this.cards = [
@@ -108,7 +108,7 @@ export class GameComponent implements OnInit {
 
   public getPlayedPieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
-      const redeemedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.redeemed);
+      const redeemedStamps = card.stamps.filter(stamp => stamp.state === StampState.redeemed);
       return redeemedStamps.length;
     }
 
@@ -117,7 +117,7 @@ export class GameComponent implements OnInit {
 
   public getAvailablePieces(card: IStampCard): number {
     if (card.stamps && card.stamps.length > 0) {
-      const issuedStamps = card.stamps.filter(stamp => stamp.state === STAMP_STATE.issued);
+      const issuedStamps = card.stamps.filter(stamp => stamp.state === StampState.issued);
       return issuedStamps.length;
     }
 
@@ -125,22 +125,22 @@ export class GameComponent implements OnInit {
   }
 
   public onMoved = (card: IStampCard) => {
-    const stamps = card.stamps && card.stamps.filter(stmp => stmp.state === STAMP_STATE.issued) || [];
+    const stamps = card.stamps && card.stamps.filter(stmp => stmp.state === StampState.issued) || [];
     if (stamps.length === 0) {
       return;
     }
 
     const s = stamps[0];
-    s.state = STAMP_STATE.redeemed;
+    s.state = StampState.redeemed;
     this.checkKeys(card);
 
-    const totalRedeemed = card.stamps.filter(stmp => stmp.state === STAMP_STATE.redeemed).length;
+    const totalRedeemed = card.stamps.filter(stmp => stmp.state === StampState.redeemed).length;
     const totalSlots = card.displayProperties.totalSlots;
 
     this.stampService.putStamp(s.id)
       .subscribe(
         (stamp) => {
-          if (stamp.state === STAMP_STATE.redeemed) {
+          if (stamp.state === StampState.redeemed) {
             this.keys--;
             if (this.keys < 0) {
               this.keys = 0;
@@ -213,7 +213,7 @@ export class GameComponent implements OnInit {
     const index = this.cards.findIndex(card => card.id === id);
 
     const redeemedStamps = cardSelected.stamps.map(stamp => {
-      return { ...stamp, state: STAMP_STATE.redeemed };
+      return { ...stamp, state: StampState.redeemed };
     });
 
     this.cards[index].stamps = redeemedStamps;

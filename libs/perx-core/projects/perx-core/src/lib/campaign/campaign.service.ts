@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvConfig } from '../shared/env-config';
 import { map } from 'rxjs/operators';
-import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
+import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
 
 interface IV4Campaign {
@@ -13,13 +13,13 @@ interface IV4Campaign {
   begins_at: string;
   ends_at?: string;
   enrolled: boolean;
-  campaign_type: CAMPAIGN_TYPE;
+  campaign_type: CampaignType;
   images: any[];
   favourite: boolean;
   custom_fields: any;
   category_tags: any[];
   tags: any[];
-  state: CAMPAIGN_STATE;
+  state: CampaignState;
 }
 
 interface IV4CampaignResponse {
