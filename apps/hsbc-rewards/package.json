@@ -1,5 +1,5 @@
 {
-  "name": "hsbc-rewards",
+  "name": "@perx/hsbc-rewards",
   "version": "0.0.0",
   "scripts": {
     "start": "npm run config && ng serve --host 0.0.0.0",
