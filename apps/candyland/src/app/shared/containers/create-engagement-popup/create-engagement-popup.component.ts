@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { EngagementsService } from '@cl-core/services/engagements.service';
 
-export enum gamesRouterLink {
+export enum GamesRouterLink {
   shakeTheTree = 'engagements/games/new-shake',
   hitThePinata = 'engagements/games/new-pinata'
 }
@@ -47,7 +47,7 @@ export class CreateEngagementPopupComponent implements OnInit {
         this.router.navigateByUrl('/engagements/new-instant-reward/appearance');
         break;
       case EngagementType.games:
-        this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
+        this.router.navigateByUrl(GamesRouterLink[this.selectedGame.type]);
         break;
       case EngagementType.survey:
         this.router.navigateByUrl('/engagements/new-survey/appearance');
@@ -63,7 +63,7 @@ export class CreateEngagementPopupComponent implements OnInit {
     this.selectedGame = game;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getEngagementType();
     this.getGamesType();
   }

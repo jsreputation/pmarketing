@@ -6,7 +6,7 @@ import {
   ContentChildren,
   Input,
   OnDestroy,
-  OnInit, QueryList,
+  QueryList,
   ViewChild
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './ink.component.html',
   styleUrls: ['./ink.component.scss']
 })
-export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input() public triangle = false;
   @Input() public border = false;
 
@@ -29,22 +29,18 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   @ViewChild(InkBarDirective, {static: false}) public inkBar: InkBarDirective;
 
   private destroy$ = new Subject();
-  constructor() { }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.getHost();
   }
 
-  ngAfterContentInit(): void {
+  public ngAfterContentInit(): void {
     this.runHandlerSecond();
   }
 
   // first strategy get data from nested component
 
-  getHost() {
+  public getHost(): void {
     const host =  this.inkHost ? this.inkHost.getHost() : null;
     let inkListeners: QueryList<InkListenerDirective>;
     if (host) {
@@ -83,7 +79,7 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
     inkListeners.toArray().forEach(ink => ink.inkBar = this.inkBar);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

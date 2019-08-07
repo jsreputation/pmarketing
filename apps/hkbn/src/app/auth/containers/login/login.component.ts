@@ -31,7 +31,7 @@ export class LoginComponent {
     });
   }
 
-  public forgotPassword(identifier: string): void {
+  public forgotPassword(identifier: string = ''): void {
     this.router.navigate(['/forgot-password'], {
       queryParams: {
         identifier

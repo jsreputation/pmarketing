@@ -2,7 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'fullname'})
 export class FullnamePipe implements PipeTransform {
-  transform(user): string {
+  public transform(user: any): string {
     if (!user) {
       return '';
     }

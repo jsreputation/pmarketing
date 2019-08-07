@@ -227,6 +227,7 @@ jobs:
   build-prod:
     machine:
       image: ubuntu-1604:201903-01
+    parallelism: 10
     steps:
       - run:
           name: Install yarn
@@ -244,9 +245,10 @@ jobs:
             nvm alias default v10
       - checkout
       - run: yarn install
-      - run: yarn run build --aot --prod
     #      - run: yarn run e2e-ci
-
+      - run:
+          command: |
+            (cd apps; ls -d *) | circleci tests split | xargs -n 1 -I {} yarn build:{}:prod
 workflows:
   build_and_deploy:
     jobs:

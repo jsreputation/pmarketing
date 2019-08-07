@@ -88,7 +88,7 @@ export class OauthService {
   }
 
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.http.put<{ message: string, code: number }>(
+    return this.http.patch<{ message: string, code: number }>(
       this.customersEndPoint + '/confirm', { params: { phone, confirmation_token: otp } }).pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -108,7 +108,7 @@ export class OauthService {
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return this.http.put<{ message: string }>(
+    return this.http.patch<{ message: string }>(
       this.customersEndPoint + '/reset_password',
       {
         params:
@@ -142,7 +142,7 @@ export class OauthService {
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => {
-          return this.http.put<IMessageResponse>(
+          return this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
               params:

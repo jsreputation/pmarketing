@@ -42,14 +42,31 @@ describe('SmsValidationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should validate otp and redirect to root page', () => {
-    const authenticationService = TestBed.get(AuthenticationService);
-    const verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of(true));
-    const router = TestBed.get(Router);
-    const navigateSpy = spyOn(router, 'navigate');
-    component.validate('888888');
-    expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
-    expect(navigateSpy).toHaveBeenCalledWith(['/']);
+  describe('validate method', () => {
+    let authenticationService;
+    let verifyOTPSpy;
+    let router;
+    let navigateSpy;
+
+    beforeEach(() => {
+      authenticationService = TestBed.get(AuthenticationService);
+      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of(true));
+      router = TestBed.get(Router);
+      navigateSpy = spyOn(router, 'navigate');
+    });
+
+    it('should validate otp, authorize and redirect to root page', () => {
+      component.validate('888888');
+      expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
+      expect(navigateSpy).toHaveBeenCalledWith(['/']);
+    });
+
+    it('should validate otp, but not authorized', () => {
+      spyOn(authenticationService, 'v4GameOauth').and.returnValue(false);
+      component.validate('888888');
+      expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
+      expect(navigateSpy.calls.count()).toBe(0);
+    });
   });
 
   it('should make request for send otp, when call resendSms method', () => {

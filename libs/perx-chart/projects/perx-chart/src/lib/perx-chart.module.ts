@@ -7,6 +7,7 @@ import { GridPieComponent } from './grid-pie/grid-pie.component';
 import { TrendComponent } from './trend/trend.component';
 import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
+import { LineComponent } from './line/line.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const comps: any[] = [
@@ -17,7 +18,8 @@ const comps: any[] = [
     GridPieComponent,
     TrendComponent,
     MapComponent,
-    CalendarHeatmapComponent
+    CalendarHeatmapComponent,
+    LineComponent
 ];
 
 @NgModule({

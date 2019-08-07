@@ -28,7 +28,7 @@ export class RoleLabelComponent implements OnChanges {
     [Role.VIEWER]: {abbr: 'V', title: 'Viewer', class: 'viewer'}
   };
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this.roleConfig = this.config[this.role];
     console.log(this.role);
   }

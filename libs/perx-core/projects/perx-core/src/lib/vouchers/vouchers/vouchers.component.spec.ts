@@ -5,7 +5,7 @@ import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucher, VOUCHER_STATE, REDEMPTION_TYPE } from '../models/voucher.model';
+import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -15,9 +15,9 @@ describe('VouchersComponent', () => {
     id: 21,
     name: 'Vidyut what are you doing',
     expiry: null,
-    state: VOUCHER_STATE.redeemed,
+    state: VoucherState.redeemed,
     rewardId: 12,
-    redemptionType: REDEMPTION_TYPE.none,
+    redemptionType: RedemptionType.none,
     thumbnailImg: '',
     rewardBanner: '',
     merchantImg: '',
@@ -32,9 +32,9 @@ describe('VouchersComponent', () => {
     id: 21,
     name: 'Vidyut what are you doing',
     expiry: null,
-    state: VOUCHER_STATE.issued,
+    state: VoucherState.issued,
     rewardId: 12,
-    redemptionType: REDEMPTION_TYPE.none,
+    redemptionType: RedemptionType.none,
     thumbnailImg: '',
     rewardBanner: '',
     merchantImg: '',

@@ -34,7 +34,6 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
     MatSelectModule,
     MatMenuModule,
 
-
   ]
 })
 export class ListMerchantViewModule { }

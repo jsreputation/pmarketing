@@ -15,7 +15,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent {
-  @Input()
+  @Input('transactions')
   public transactions$: Observable<ITransaction[]>;
 
   @Output()
