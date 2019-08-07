@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
-import { IStampCard , STAMP_CARD_STATE, STAMP_STATE } from '../../stamp/models/stamp.model';
+import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -39,7 +39,7 @@ export class PuzzleListComponent implements OnChanges {
               if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
                 // if there is no stamps objet at all then, it is not completed
                 completed = false;
-              } else if (puzzle.stamps.some(stamp => stamp.state === STAMP_STATE.issued)) {
+              } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
                 // if any transction is issued, then it is not all completed
                 completed = false;
               }
@@ -76,15 +76,15 @@ export class PuzzleListComponent implements OnChanges {
     const totalSlots = puzzle.displayProperties.totalSlots;
 
     // if there is no more available stamp return false
-    if (puzzle.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots) {
+    if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
       return false;
     }
 
     // get list of active puzzles
     const activePuzzles = this.puzzles.filter(p => {
-      return p.state === STAMP_CARD_STATE.active &&
+      return p.state === StampCardState.active &&
         p.stamps &&
-        p.stamps.filter(st => st.state === STAMP_STATE.redeemed).length < totalSlots;
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
     });
 
     // if there is no active puzzle, this one should not be active
@@ -110,13 +110,13 @@ export class PuzzleListComponent implements OnChanges {
     if (puzzle.stamps === undefined) {
       return 0;
     }
-    return puzzle.stamps.filter(st => st.state === STAMP_STATE.issued).length;
+    return puzzle.stamps.filter(st => st.state === StampState.issued).length;
   }
 
   public nbPlacedStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
     }
-    return puzzle.stamps.filter(st => st.state === STAMP_STATE.redeemed).length;
+    return puzzle.stamps.filter(st => st.state === StampState.redeemed).length;
   }
 }

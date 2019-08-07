@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
 
@@ -32,7 +32,7 @@ export class HomeComponent implements PageProperties {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.HOME;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.HOME;
   }
 }

@@ -4,11 +4,11 @@ import { interval, forkJoin, Observable, of } from 'rxjs';
 import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
 import {
   CampaignService,
-  CAMPAIGN_TYPE,
+  CampaignType,
   GameService,
   IGame,
   defaultTree,
-  GAME_TYPE,
+  GameType,
   ICampaign
 } from '@perx/core';
 import { POPUP_TYPE } from '../vouchers/vouchers.component';
@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
   game: IGame = {
     id: -1,
     campaignId: -1,
-    type: GAME_TYPE.shakeTheTree,
+    type: GameType.shakeTheTree,
     remainingNumberOfTries: 20,
     texts: {},
     results: {},
@@ -46,7 +46,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.$game = this.campaignService.getCampaigns()
       .pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.game)),
+        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.game)),
         map(campaigns => campaigns[0]),
         switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
         map(game => game[0])
