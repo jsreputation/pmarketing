@@ -15,6 +15,7 @@ enum GAME_TYPE {
 interface Asset {
   type: string;
   value: {
+    file: string;
     filename: string;
     image_id: number;
     image_url: string;
@@ -27,6 +28,7 @@ interface Outcome {
   title: string;
   type?: string;
   value?: {
+    file: string;
     filename: string;
     image_id: number;
     image_url: string;
@@ -113,13 +115,13 @@ export class GameService implements IGameService {
         const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
         config = {
           ...defaultTree(),
-          treeImg: dpts.tree_image.value.image_url,
-          giftImg: dpts.gift_image.value.image_url,
+          treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
+          giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
           nbHangedGift: dpts.number_of_gifts_shown,
           nbGiftsToDrop: dpts.number_of_gifts_to_drop,
           nbTaps: 5,
-          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url(),
-          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url()
+          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
+          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
         };
         break;
       case GAME_TYPE.pinata:
@@ -127,13 +129,13 @@ export class GameService implements IGameService {
         const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
         config = {
           ...defaultPinata(),
-          stillImg: dpps.still_image.value.image_url,
-          brokenImg: dpps.opened_image.value.image_url,
+          stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
+          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
           nbTaps: 5
         };
 
         if (dpps.cracking_image) {
-          config.breakingImg = dpps.cracking_image.value.image_url;
+          config.breakingImg = dpps.cracking_image.value.image_url || dpps.cracking_image.value.file;
         }
 
         break;
@@ -162,7 +164,8 @@ export class GameService implements IGameService {
       id: game.id,
       campaignId: game.campaign_id,
       type,
-      backgroundImg: oc(game).display_properties.background_image.value.image_url(),
+      backgroundImg: oc(game).display_properties.background_image.value.image_url() ||
+        oc(game).display_properties.background_image.value.file(),
       remainingNumberOfTries: game.number_of_tries,
       config,
       texts,
@@ -177,7 +180,7 @@ export class GameService implements IGameService {
       button: outcome.button_text
     };
     if (outcome.type === 'image' && outcome.value) {
-      res.image = outcome.value.image_url;
+      res.image = outcome.value.image_url || outcome.value.file;
     }
 
     return res;
