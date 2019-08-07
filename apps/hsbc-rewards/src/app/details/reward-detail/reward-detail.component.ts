@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RewardsService, IReward, ProfileService } from '@perx/core';
+import { RewardsService, IReward, ProfileService, LoyaltyService } from '@perx/core';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 @Component({
@@ -14,7 +14,8 @@ export class RewardDetailComponent implements OnInit {
   constructor(
     private router: ActivatedRoute,
     private rewardService: RewardsService,
-    private profService: ProfileService
+    private profService: ProfileService,
+    private loyaltyService: LoyaltyService
   ) { }
 
   ngOnInit() {
@@ -24,7 +25,7 @@ export class RewardDetailComponent implements OnInit {
     this.profService.whoAmI().subscribe((res)=>{
       this.userData = res;
     })
-    
+
   }
 
 }
