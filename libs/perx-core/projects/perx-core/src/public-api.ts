@@ -11,7 +11,7 @@ export { VouchersModule } from './lib/vouchers/vouchers.module';
 export { VouchersService } from './lib/vouchers/vouchers.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, REDEMPTION_TYPE, VOUCHER_STATE } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, RedemptionType, VoucherState } from './lib/vouchers/models/voucher.model';
 
 /**
  * Authentication
@@ -31,8 +31,8 @@ export { CampaignModule } from './lib/campaign/campaign.module';
 export { CampaignService } from './lib/campaign/campaign.service';
 export { ICampaignService } from './lib/campaign/icampaign.service';
 export {
-  CAMPAIGN_TYPE,
-  CAMPAIGN_STATE,
+  CampaignType,
+  CampaignState,
   ICampaign
 } from './lib/campaign/models/campaign.model';
 
@@ -44,8 +44,8 @@ export { StampService } from './lib/stamp/stamp.service';
 export {
   IStampCard,
   IStamp,
-  STAMP_CARD_STATE,
-  STAMP_STATE
+  StampCardState,
+  StampState
 } from './lib/stamp/models/stamp.model';
 
 /**
@@ -54,7 +54,7 @@ export {
 export { GameModule } from './lib/game/game.module';
 export {
   IGame,
-  GAME_TYPE,
+  GameType,
   IGameOutcome,
   IPinata,
   ITree,
@@ -110,7 +110,7 @@ export { PuzzlesModule } from './lib/puzzles/puzzles.module';
 export {
   PuzzleCollectStamp,
   PuzzleCollectReward,
-  PUZZLE_COLLECT_STAMP_STATE
+  PuzzleCollectStampState
 } from './lib/puzzles/models/puzzle-stamp.model';
 
 /**

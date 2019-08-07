@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
-import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
+import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
 import { catchError, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-enum GAME_TYPE {
+const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata'
 }
@@ -65,7 +65,7 @@ interface PinataDisplayProperties extends GameProperties {
 interface Game {
   campaign_id: number;
   display_properties: TreeDisplayProperties|PinataDisplayProperties;
-  game_type: GAME_TYPE;
+  game_type: GameType;
   id: number;
   number_of_tries: number;
   state: null;
@@ -108,7 +108,7 @@ export class GameService implements IGameService {
     let type = TYPE.unknown;
     let config: ITree|IPinata;
     switch (game.game_type) {
-      case GAME_TYPE.shakeTheTree:
+      case GameType.shakeTheTree:
         type = TYPE.shakeTheTree;
         const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
         config = {
@@ -122,7 +122,7 @@ export class GameService implements IGameService {
           celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url()
         };
         break;
-      case GAME_TYPE.pinata:
+      case GameType.pinata:
         type = TYPE.pinata;
         const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
         config = {
