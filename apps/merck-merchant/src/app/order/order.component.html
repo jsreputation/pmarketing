@@ -36,9 +36,9 @@
           </mat-action-list>
         </div>
 
-        <div *ngIf="isSummaryActivated && selectedRewards.length > 0" class="rewards-selected">
+        <div *ngIf="isSummaryActivated && selectedProducts.length > 0" class="rewards-selected">
           <p class="points">{{totalPoints}} points will be issued</p>
-          <mat-list-item *ngFor="let reward of selectedRewards; let i = index;">
+          <mat-list-item *ngFor="let reward of selectedProducts; let i = index;">
             <mat-divider></mat-divider>
             <div class="reward-image">
               <img *ngIf="reward.imageUrl else placeholder" [src]="reward.imageUrl" alt="">
