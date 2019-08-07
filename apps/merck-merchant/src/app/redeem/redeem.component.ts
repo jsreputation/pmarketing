@@ -1,8 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayload } from '../order/order.component';
 import { Router } from '@angular/router';
-import { NotificationService, RewardsService, IReward } from '@perx/core';
-// import { VouchersService } from '@perx/core';
+import {
+  NotificationService,
+  RewardsService,
+  IReward,
+  LoyaltyService,
+  VouchersService
+} from '@perx/core';
+import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { map, flatMap } from 'rxjs/operators';
+import { HttpResponseBase } from '@angular/common/http';
+
+interface IHttpResponseBase extends HttpResponseBase {
+  error: {
+    code: number;
+    message: string;
+  };
+}
 
 @Component({
   selector: 'app-redeem',
@@ -18,7 +33,8 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    // private vouchersService: VouchersService
+    private loyaltyService: LoyaltyService,
+    private vouchersService: VouchersService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if ( !navigation.extras.state ) {
@@ -38,10 +54,15 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    // TODO: Call api to exchange points to voucher
-    // Then
-    // this.vouchersService.redeemVoucher(1).subscribe(() => call snackbar);
-    this.notificationService.addSnack('Transaction completed');
+    this.loyaltyService.exchangePoints(this.payload.id, this.payload.rewardId)
+      .pipe(
+        map(res => res[0]),
+        flatMap((res: IVoucher) => this.vouchersService.redeemVoucher(res.id))
+      )
+      .subscribe(
+        () => this.notificationService.addSnack('Transaction completed'),
+        (err: IHttpResponseBase) => this.notificationService.addSnack(err.error.message)
+      );
   }
 
   public getPrice(): number {
