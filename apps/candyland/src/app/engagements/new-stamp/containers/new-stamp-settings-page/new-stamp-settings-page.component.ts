@@ -10,7 +10,7 @@ export class NewStampSettingsPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

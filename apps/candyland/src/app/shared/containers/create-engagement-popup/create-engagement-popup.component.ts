@@ -63,7 +63,7 @@ export class CreateEngagementPopupComponent implements OnInit {
     this.selectedGame = game;
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getEngagementType();
     this.getGamesType();
   }

@@ -9,7 +9,7 @@ export class UserComponent implements OnInit {
   @Input() public isOpen: boolean;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

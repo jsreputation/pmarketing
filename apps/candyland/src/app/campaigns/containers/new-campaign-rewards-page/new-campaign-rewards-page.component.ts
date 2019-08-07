@@ -67,9 +67,8 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.enableProbability.valueChanges.pipe(untilDestroyed(this)).subscribe(() => this.updateRewards());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
-
 
   public addReward(value: any = this.rewardsTemplate): void {
     this.rewardsList.push(value);

@@ -9,7 +9,7 @@ export class RadiusCircleChartComponent implements OnInit {
   @Input() public imgPath = 'radius-circle-chart.png';
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

@@ -9,7 +9,7 @@ export class VerticalBarChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

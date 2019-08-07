@@ -7,12 +7,12 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardInfoPreviewComponent implements OnInit {
-  @Input() data: any;
+  @Input() public data: any;
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

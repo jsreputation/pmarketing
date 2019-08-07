@@ -10,7 +10,7 @@ export class NewSurveyQuestionsPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

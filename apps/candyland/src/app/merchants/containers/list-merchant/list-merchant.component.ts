@@ -20,13 +20,12 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
               public dialog: MatDialog) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getListMerchant();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
   }
 
-
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
@@ -50,7 +49,7 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

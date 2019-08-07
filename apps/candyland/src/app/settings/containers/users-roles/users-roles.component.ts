@@ -22,7 +22,7 @@ export class UsersRolesComponent  implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.settingsService.getRolesOptions()
       .subscribe( config => this.config = config);
     this.getData();

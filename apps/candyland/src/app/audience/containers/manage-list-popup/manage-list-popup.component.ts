@@ -21,7 +21,7 @@ export class ManageListPopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }

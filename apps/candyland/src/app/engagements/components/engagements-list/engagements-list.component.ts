@@ -15,7 +15,7 @@ export class EngagementsListComponent implements AfterViewInit {
   constructor() {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 

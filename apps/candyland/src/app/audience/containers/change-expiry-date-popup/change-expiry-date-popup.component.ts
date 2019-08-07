@@ -24,10 +24,10 @@ export class ChangeExpiryDatePopupComponent implements OnInit, DoCheck {
     this.dialogRef.close(this.newDate.value);
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  ngDoCheck(): void {
+  public ngDoCheck(): void {
     this.cd.detectChanges();
   }
 

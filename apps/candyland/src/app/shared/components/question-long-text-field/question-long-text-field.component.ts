@@ -10,7 +10,7 @@ export class QuestionLongTextFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

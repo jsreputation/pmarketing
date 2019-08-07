@@ -36,27 +36,27 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.userId = this.route.snapshot.params.id;
     this.getUser(this.userId);
     this.getVouchers();
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
-  getUser(id: number) {
+  public getUser(id: number) {
     this.audiencesService.getUser(id)
       .subscribe(user => this.user = user);
 
   }
 
-  getVouchers() {
+  public getVouchers() {
     this.audiencesService.getVouchers()
       .pipe(
         tap((data: any) => {
@@ -81,6 +81,5 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       }
     });
   }
-
 
 }

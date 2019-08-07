@@ -9,7 +9,7 @@ export class SettingsMobilePreviewComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

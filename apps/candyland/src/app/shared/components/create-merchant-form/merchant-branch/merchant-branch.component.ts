@@ -7,12 +7,12 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   styleUrls: ['./merchant-branch.component.scss']
 })
 export class MerchantBranchComponent implements OnInit {
-  @Input() group: FormGroup;
-  @Input() index: number;
-  @Output() removeGroup = new EventEmitter<number>();
+  @Input() public group: FormGroup;
+  @Input() public index: number;
+  @Output() public removeGroup = new EventEmitter<number>();
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public get name(): AbstractControl {

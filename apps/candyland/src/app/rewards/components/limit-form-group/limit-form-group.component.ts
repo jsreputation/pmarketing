@@ -7,13 +7,13 @@ import {AbstractControl} from '@angular/forms';
   styleUrls: ['./limit-form-group.component.scss']
 })
 export class LimitFormGroupComponent implements OnInit {
-  @Input() formGroup: AbstractControl;
-  @Input() config: any;
+  @Input() public formGroup: AbstractControl;
+  @Input() public config: any;
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

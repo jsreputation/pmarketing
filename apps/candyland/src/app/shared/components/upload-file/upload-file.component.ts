@@ -15,12 +15,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class UploadFileComponent implements ControlValueAccessor {
-  MAX_SIZE = 1;
-  @Input() selectGraphic: any;
-  @Input() selectedGraphic: any;
-  @Input() label = '';
-  @Output() deleteFile = new EventEmitter();
-  @Output() uploadFile = new EventEmitter();
+  public MAX_SIZE = 1;
+  @Input() public selectGraphic: any;
+  @Input() public selectedGraphic: any;
+  @Input() public label = '';
+  @Output() public deleteFile = new EventEmitter();
+  @Output() public uploadFile = new EventEmitter();
 
   public lock: boolean;
   public fileName;
@@ -78,19 +78,19 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.deleteFile.emit(this.file);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.file = obj;
   }
 

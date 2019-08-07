@@ -9,7 +9,7 @@ export class TopFiveChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

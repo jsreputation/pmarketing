@@ -9,7 +9,7 @@ export class HorizontalBarChartComponent implements OnInit {
   @Input() public imgPath = 'horizontal-bar-chart.png';
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

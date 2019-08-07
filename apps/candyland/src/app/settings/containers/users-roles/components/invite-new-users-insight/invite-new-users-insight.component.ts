@@ -10,7 +10,7 @@ export class InviteNewUsersInsightComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

@@ -33,21 +33,20 @@ export class ClColorPickerComponent implements ControlValueAccessor {
     this.color = data;
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.disable = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.color = obj;
   }
 
 }
-

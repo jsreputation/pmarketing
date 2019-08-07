@@ -16,7 +16,7 @@ export class GameComponent implements OnInit, OnChanges {
   public control: FormControl;
   constructor(private fb: FormBuilder) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.createControl();
     this.setControl();
   }
@@ -41,7 +41,7 @@ export class GameComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this.setControl();
   }
 

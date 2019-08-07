@@ -13,7 +13,7 @@ export class LoginFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.createForm();
   }
 

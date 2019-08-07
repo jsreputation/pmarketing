@@ -10,7 +10,7 @@ export class InviteNewUsersLoyaltyComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

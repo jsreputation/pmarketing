@@ -29,13 +29,13 @@ export class NewCampaignSelectEngagementPageComponent implements OnInit, OnDestr
     this.initForm();
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(value => this.store.updateCampaign(value));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
   private initForm() {

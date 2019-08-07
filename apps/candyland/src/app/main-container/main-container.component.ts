@@ -10,7 +10,7 @@ export class MainContainerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

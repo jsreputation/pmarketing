@@ -10,7 +10,7 @@ export class InviteNewUsersCampaignComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

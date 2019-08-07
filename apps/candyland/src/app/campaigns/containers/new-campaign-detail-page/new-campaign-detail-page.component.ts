@@ -44,7 +44,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.config = this.store.config;
     this.initForm();
   }
@@ -72,7 +72,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.cd.detach();
   }
 }

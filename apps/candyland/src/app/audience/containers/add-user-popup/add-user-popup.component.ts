@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class AddUserPopupComponent implements OnInit {
 
   public form: FormGroup;
-  config: { [key: string]: OptionConfig[] } = {
+  public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
       {title: 'Female', value: 'female'}
@@ -33,7 +33,7 @@ export class AddUserPopupComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public close() {

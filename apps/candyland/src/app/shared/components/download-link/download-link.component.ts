@@ -6,12 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./download-link.component.scss']
 })
 export class DownloadLinkComponent implements OnInit {
-  @Input() file: string;
+  @Input() public file: string;
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

@@ -9,7 +9,7 @@ export class TabItemViewComponent implements OnInit {
   @Input() public data: ITotal;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

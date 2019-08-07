@@ -9,7 +9,7 @@ export class BusinessInsightComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

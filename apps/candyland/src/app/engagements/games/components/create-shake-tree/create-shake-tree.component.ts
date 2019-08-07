@@ -9,7 +9,7 @@ export class CreateShakeTreeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

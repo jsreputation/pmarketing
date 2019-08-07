@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
-  form: FormGroup;
+  @ViewChild('stepper', {static: false}) public stepper: MatStepper;
+  public form: FormGroup;
 
   constructor(private store: CampaignCreationStoreService,
               private router: Router,
@@ -22,14 +22,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
               private fb: FormBuilder) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initForm();
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => this.store.updateCampaign(value));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
   private initForm() {
@@ -47,11 +47,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
-  goBack() {
+  public goBack() {
     this.stepper.previous();
   }
 
-  goNext() {
+  public goNext() {
     this.stepper.next();
   }
 
@@ -91,4 +91,3 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     });
   }
 }
-

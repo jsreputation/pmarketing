@@ -8,7 +8,7 @@ import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
   styleUrls: ['./engagement-type.component.scss']
 })
 export class EngagementTypeComponent implements OnInit, IInkBarHost {
-  @Output() selectType = new EventEmitter<IGraphic>();
+  @Output() public selectType = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
   @Input() public selectedType: IGraphic;
 
@@ -16,7 +16,7 @@ export class EngagementTypeComponent implements OnInit, IInkBarHost {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public setTypeEngagement(type: IGraphic): void {

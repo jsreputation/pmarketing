@@ -41,10 +41,10 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   constructor(private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.handlCheckboxList();
   }
 

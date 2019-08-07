@@ -14,7 +14,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesListComponent implements AfterViewInit {
-  DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['name', 'format', 'updated', 'numberUsers', 'status'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
@@ -22,7 +22,7 @@ export class AudiencesListComponent implements AfterViewInit {
   constructor() {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 

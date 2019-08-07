@@ -12,7 +12,7 @@ export class GamesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public setGame(game: IGraphic): void {

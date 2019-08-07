@@ -10,7 +10,7 @@ export class InviteNewUsersPlatformComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

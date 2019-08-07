@@ -10,7 +10,7 @@ export class NewChannelPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

@@ -10,7 +10,7 @@ export class SidenavMenuComponent implements OnInit {
   public menus = menus;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

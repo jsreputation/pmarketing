@@ -12,7 +12,7 @@ export class QuestionDateFieldComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public get endDate() {
@@ -32,7 +32,7 @@ export class QuestionDateFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

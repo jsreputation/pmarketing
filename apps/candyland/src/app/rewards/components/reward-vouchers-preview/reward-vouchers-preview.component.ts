@@ -7,13 +7,13 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardVouchersPreviewComponent implements OnInit {
-  DATE_FORMAT = 'dd MMM yyyy';
-  @Input() data: any;
+  public DATE_FORMAT = 'dd MMM yyyy';
+  @Input() public data: any;
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

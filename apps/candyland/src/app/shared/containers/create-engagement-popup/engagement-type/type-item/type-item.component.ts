@@ -13,7 +13,7 @@ export class TypeItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public onSelectType(): void {

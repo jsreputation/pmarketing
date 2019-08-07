@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./range-date-picker-filter.component.scss']
 })
 export class RangeDatePickerFilterComponent {
-  @Input() control = new FormControl();
+  @Input() public control = new FormControl();
 
   constructor() { }
 

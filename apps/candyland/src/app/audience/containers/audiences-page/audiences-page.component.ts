@@ -23,10 +23,10 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  currentTab;
-  tabs: FormControl;
-  search: FormControl;
-  searchKey = 'firstName';
+  public currentTab;
+  public tabs: FormControl;
+  public search: FormControl;
+  public searchKey = 'firstName';
   public dataSource = new MatTableDataSource<any>();
   public users;
   public audiences;
@@ -44,7 +44,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.search = new FormControl('');
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.tabs.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(tab => this.changeList(tab));
@@ -60,14 +60,14 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       );
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.getUsers();
     this.getAudiences();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
   private updateDataSource(data) {
@@ -94,7 +94,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     });
   }
 
-  changeList(tab) {
+  public changeList(tab) {
     switch (tab) {
       case 'audience':
         this.updateDataSource(this.audiences);

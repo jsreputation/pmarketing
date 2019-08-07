@@ -10,7 +10,7 @@ export class CampaignsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

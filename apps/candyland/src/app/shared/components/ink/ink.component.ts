@@ -31,20 +31,20 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   private destroy$ = new Subject();
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.getHost();
   }
 
-  ngAfterContentInit(): void {
+  public ngAfterContentInit(): void {
     this.runHandlerSecond();
   }
 
   // first strategy get data from nested component
 
-  getHost() {
+  public getHost() {
     const host =  this.inkHost ? this.inkHost.getHost() : null;
     let inkListeners: QueryList<InkListenerDirective>;
     if (host) {
@@ -83,7 +83,7 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
     inkListeners.toArray().forEach(ink => ink.inkBar = this.inkBar);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

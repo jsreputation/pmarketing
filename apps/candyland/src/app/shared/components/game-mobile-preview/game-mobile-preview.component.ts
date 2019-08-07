@@ -9,7 +9,7 @@ export class GameMobilePreviewComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

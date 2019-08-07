@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./audiences-user-info.component.scss']
 })
 export class AudiencesUserInfoComponent implements OnInit {
-  @Input() user = {
+  @Input() public user = {
     id: 1,
     firstName: 'John',
     lastName: 'Tan',
@@ -27,7 +27,7 @@ export class AudiencesUserInfoComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

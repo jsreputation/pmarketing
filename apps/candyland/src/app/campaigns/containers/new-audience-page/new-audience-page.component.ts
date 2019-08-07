@@ -10,7 +10,7 @@ export class NewAudiencePageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

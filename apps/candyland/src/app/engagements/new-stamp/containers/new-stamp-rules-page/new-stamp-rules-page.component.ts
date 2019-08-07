@@ -10,7 +10,7 @@ export class NewStampRulesPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

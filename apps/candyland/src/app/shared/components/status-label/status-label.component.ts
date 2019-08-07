@@ -28,7 +28,7 @@ export class StatusLabelComponent implements OnChanges {
     [StatusLabel.ENDED]: {title: 'Ended', class: 'ended'},
   };
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this.statusConfig = this.config[this.status];
   }
 }

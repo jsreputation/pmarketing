@@ -12,7 +12,7 @@ export class ButtonComponent implements OnInit {
   @Input() public disableRipple = false;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

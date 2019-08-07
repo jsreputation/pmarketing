@@ -7,7 +7,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
   @Input() public config: any;
@@ -18,7 +18,7 @@ export class UsersRolesListComponent implements AfterViewInit {
   constructor() {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 

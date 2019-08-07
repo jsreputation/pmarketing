@@ -26,15 +26,15 @@ const componentMapper = {
   selector: '[clDynamicField]'
 })
 export class DynamicFieldDirective implements OnInit, OnChanges {
-  @Input() group: FormGroup;
-  @Input() type: string;
+  @Input() public group: FormGroup;
+  @Input() public type: string;
   @Input() public level: number;
   @Input() public currentIndex: number;
-  componentRef: any;
+  public componentRef: any;
   constructor(private resolver: ComponentFactoryResolver,
               private container: ViewContainerRef) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.createComponentFactory();
   }
 
@@ -61,7 +61,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     this.container.clear();
   }
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this.createComponentFactory();
   }
 

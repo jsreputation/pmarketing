@@ -7,11 +7,11 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementItemComponent implements OnInit {
-  @Input() data: Engagement;
+  @Input() public data: Engagement;
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

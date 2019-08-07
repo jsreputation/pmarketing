@@ -14,15 +14,14 @@ export class ListMerchantViewComponent implements OnInit, AfterViewInit {
   public DATE_FORMAT = 'dd MMM yyyy';
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
   }
-
 
   public editItem(element: IMerchant) {
     this.itemAction.emit(element);

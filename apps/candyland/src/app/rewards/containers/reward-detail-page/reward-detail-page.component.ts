@@ -17,16 +17,15 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
-
   constructor(private rewardsService: RewardService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;

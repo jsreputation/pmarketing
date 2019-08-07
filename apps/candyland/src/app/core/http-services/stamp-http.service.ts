@@ -32,7 +32,6 @@ export class StampHttpService {
       );
   }
 
-
   public getPostStamps(): Observable<IGraphic[]> {
     return this.http.get('assets/actives/stamps/post-stamps.json')
       .pipe(

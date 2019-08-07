@@ -36,14 +36,14 @@ export function fnTransition(stateChangeExpr, time) {
   ]
 })
 export class SideNavComponent implements OnInit {
-  @Input() isVisible = true;
+  @Input() public isVisible = true;
   public isOpen = true;
   public visibility = 'shown';
   public sideNavOpened = true;
   public sideNavMode = 'side';
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public toggle(): void {

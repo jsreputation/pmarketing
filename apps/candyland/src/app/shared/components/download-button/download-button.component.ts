@@ -6,7 +6,7 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./download-button.component.scss']
 })
 export class DownloadButtonComponent {
-  @Input() file: any;
+  @Input() public file: any;
 
   constructor() {
   }

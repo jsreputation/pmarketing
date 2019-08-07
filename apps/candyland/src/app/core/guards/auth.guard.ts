@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   ) {
   }
 
-  canActivate(
+  public canActivate(
   ): Observable<boolean | UrlTree> {
       return of(true);
   }

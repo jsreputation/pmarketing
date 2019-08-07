@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,30 +7,23 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./reward-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RewardItemComponent implements OnInit {
-  @Input() public group: FormGroup = new FormGroup({value: new FormControl(null), propability: new FormControl(0)});
-  @Output() clickDelete: EventEmitter<any> = new EventEmitter<any>();
+export class RewardItemComponent {
+  @Input() public group: FormGroup = new FormGroup({ value: new FormControl(null), propability: new FormControl(0) });
+  @Output() public clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
-  get data() {
+  get data(): any {
     return this.group.value.value;
   }
 
-  get propability() {
+  get propability(): any {
     return this.group.get('probability') || null;
   }
 
-  get isInvalid() {
+  get isInvalid(): boolean {
     return this.group.parent.invalid;
   }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  public delete() {
+  public delete(): void {
     this.clickDelete.emit(this.data);
   }
-
 }

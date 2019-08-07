@@ -11,7 +11,7 @@ export class QuestionRatingFieldComponent implements OnInit {
   public scales: CommonSelect[] = [];
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.setScales();
   }
 

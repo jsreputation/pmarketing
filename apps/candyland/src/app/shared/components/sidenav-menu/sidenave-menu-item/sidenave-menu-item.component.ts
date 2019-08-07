@@ -23,12 +23,12 @@ animations: [
 ]
 })
 export class SidenaveMenuItemComponent implements OnInit {
-  @Input() menu;
-  @Input() isOpen: boolean;
-  @Input() secondaryMenu = false;
+  @Input() public menu;
+  @Input() public isOpen: boolean;
+  @Input() public secondaryMenu = false;
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public openLink(): void {

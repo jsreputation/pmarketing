@@ -10,7 +10,7 @@ export class StampRulePopupComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

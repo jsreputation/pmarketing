@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output }
 import { DomSanitizer } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-
 @Component({
   selector: 'cl-upload-graphic',
   templateUrl: './upload-graphic.component.html',
@@ -17,8 +16,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public placeholder = 'Recommended format: .JPG or .PNG';
   @Input() public classList = '';
-  @Input() selectGraphic: any;
-  @Input() selectedGraphic: any;
+  @Input() public selectGraphic: any;
+  @Input() public selectedGraphic: any;
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
   public lock: boolean;
@@ -83,19 +82,19 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     this.onChange(graphic);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
 

@@ -22,7 +22,7 @@ export class RewardsListPageComponent implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;

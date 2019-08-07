@@ -31,13 +31,13 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   @Input() public selectable = true;
   @Input() public removable = true;
   @Input() public addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Input() set value(setValue: string[]) {
     this.writeValue(setValue);
   }
 
-  labels = [];
+  public labels = [];
   public control = new FormControl();
   private onChange: any = noop;
   // @ts-ignore
@@ -46,7 +46,7 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public ngOnDestroy(): void {
@@ -76,16 +76,16 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
     this.onChange(this.labels);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
     this.control.markAsTouched();
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     if (isDisabled) {
       this.control.disable();
     } else {
@@ -93,7 +93,7 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
     }
   }
 
-  writeValue(value: any[]): void {
+  public writeValue(value: any[]): void {
     if (value && value.length > 0) {
       this.labels = value;
     } else {

@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard-game-card.component.scss']
 })
 export class DashboardGameCardComponent implements OnInit {
-  @Input() gameCard: DashboardGameCard;
+  @Input() public gameCard: DashboardGameCard;
   constructor(public dialog: MatDialog,
               private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public clickToLink(link: string): void {

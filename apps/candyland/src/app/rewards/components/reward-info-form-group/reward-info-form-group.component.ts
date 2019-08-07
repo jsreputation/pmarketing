@@ -8,13 +8,13 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardInfoFormGroupComponent implements OnInit {
-  @Input() formGroup: AbstractControl;
-  @Input() config: { [key: string]: OptionConfig[] };
+  @Input() public formGroup: AbstractControl;
+  @Input() public config: { [key: string]: OptionConfig[] };
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

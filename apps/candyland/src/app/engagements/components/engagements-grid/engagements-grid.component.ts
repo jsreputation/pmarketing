@@ -7,11 +7,11 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./engagements-grid.component.scss']
 })
 export class EngagementsGridComponent implements OnInit {
-  @Input() dataSource: MatTableDataSource<Engagement>;
+  @Input() public dataSource: MatTableDataSource<Engagement>;
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

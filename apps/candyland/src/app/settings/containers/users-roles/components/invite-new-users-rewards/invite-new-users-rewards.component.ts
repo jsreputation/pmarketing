@@ -10,7 +10,7 @@ export class InviteNewUsersRewardsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

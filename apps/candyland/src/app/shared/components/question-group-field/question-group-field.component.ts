@@ -14,7 +14,7 @@ export class QuestionGroupFieldComponent implements OnInit {
   @Input() public currentIndex: number;
   constructor(private questionFormFieldService: QuestionFormFieldService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public drop(event: any): void {

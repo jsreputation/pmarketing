@@ -6,12 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./copy-link.component.scss']
 })
 export class CopyLinkComponent implements OnInit {
-  @Input() link: string;
+  @Input() public link: string;
 
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public copyInputMessage(inputElement) {

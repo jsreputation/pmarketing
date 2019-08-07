@@ -8,10 +8,10 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardVoucherCodeFormGroupComponent implements OnInit {
-  DATE_FORMAT = 'dd MMM yyyy';
-  @Input() formGroup: AbstractControl;
-  @Input() form: AbstractControl;
-  @Input() config: { [key: string]: OptionConfig[] };
+  public DATE_FORMAT = 'dd MMM yyyy';
+  @Input() public formGroup: AbstractControl;
+  @Input() public form: AbstractControl;
+  @Input() public config: { [key: string]: OptionConfig[] };
 
   public codeFormatConfig = {
     alphanumeric: {eg: 'HB1234'},
@@ -31,7 +31,7 @@ export class RewardVoucherCodeFormGroupComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   public setTotalVoucher(value) {
