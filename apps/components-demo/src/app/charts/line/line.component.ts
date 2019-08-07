@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { IData } from '@perx/chart';
+import { multipleData } from '../mock';
 
 @Component({
   selector: 'app-line',
@@ -6,4 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./line.component.scss']
 })
 export class LineComponent {
+  public view: number[] = [700, 400];
+
+  public multipleData: Observable<IData> = of(multipleData);
 }
