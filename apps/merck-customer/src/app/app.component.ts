@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BAR_SELECTED_ITEM } from './page-properties';
+import { PageProperties, BarSelectedItem } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   public showBottomBar: boolean = false;
   public isHomeComponent: boolean = false;
   private preAuth: boolean;
-  public currentSelectedItem: BAR_SELECTED_ITEM = BAR_SELECTED_ITEM.NONE;
+  public currentSelectedItem: BarSelectedItem = BarSelectedItem.NONE;
 
   constructor(
     private router: Router,

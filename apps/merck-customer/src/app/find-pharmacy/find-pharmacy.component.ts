@@ -3,7 +3,7 @@ import { LocationsService, ILocation } from '@perx/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
-import { BAR_SELECTED_ITEM } from '../page-properties';
+import { BarSelectedItem } from '../page-properties';
 
 export interface ITag {
   name: string;
@@ -61,7 +61,7 @@ export class FindPharmacyComponent implements OnInit {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.SEARCH;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.SEARCH;
   }
 }
