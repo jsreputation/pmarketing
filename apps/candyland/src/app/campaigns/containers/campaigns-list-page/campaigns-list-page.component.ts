@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -10,7 +10,7 @@ import { CampaignsService } from '@cl-core/services/campaigns.service';
   styleUrls: ['./campaigns-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CampaignsListPageComponent implements OnInit, AfterViewInit {
+export class CampaignsListPageComponent implements  AfterViewInit {
 
   public DATE_FORMAT: string = 'dd MMM yyyy';
   public TIME_FORMAT: string = 'hh:ssa';

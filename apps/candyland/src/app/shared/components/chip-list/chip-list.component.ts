@@ -4,7 +4,6 @@ import {
   forwardRef,
   Input,
   OnDestroy,
-  OnInit,
   ViewEncapsulation
 } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material';
@@ -26,7 +25,7 @@ import { noop } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class ChipListComponent implements OnDestroy, ControlValueAccessor {
   @Input() public visible = true;
   @Input() public selectable = true;
   @Input() public removable = true;

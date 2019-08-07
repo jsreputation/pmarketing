@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-new-tap-page',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./new-tap-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewTapPageComponent implements OnInit {
+export class NewTapPageComponent {
 
 }

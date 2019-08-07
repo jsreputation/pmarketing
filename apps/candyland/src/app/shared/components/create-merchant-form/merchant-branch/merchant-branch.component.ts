@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   templateUrl: './merchant-branch.component.html',
   styleUrls: ['./merchant-branch.component.scss']
 })
-export class MerchantBranchComponent implements OnInit {
+export class MerchantBranchComponent {
   @Input() public group: FormGroup;
   @Input() public index: number;
   @Output() public removeGroup = new EventEmitter<number>();

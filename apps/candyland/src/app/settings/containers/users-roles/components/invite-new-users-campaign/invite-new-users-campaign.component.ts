@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-invite-new-users-campaign',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./invite-new-users-campaign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InviteNewUsersCampaignComponent implements OnInit {
+export class InviteNewUsersCampaignComponent {
 
 }

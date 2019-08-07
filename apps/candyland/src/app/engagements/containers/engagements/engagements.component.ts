@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-engagements',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./engagements.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EngagementsComponent implements OnInit {
+export class EngagementsComponent  {
 
 }

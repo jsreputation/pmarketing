@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import {AbstractControl} from '@angular/forms';
   styleUrls: ['./reward-voucher-code-form-group.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardVoucherCodeFormGroupComponent implements OnInit {
+export class RewardVoucherCodeFormGroupComponent {
   public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public formGroup: AbstractControl;
   @Input() public form: AbstractControl;

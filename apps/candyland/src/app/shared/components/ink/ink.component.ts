@@ -6,7 +6,7 @@ import {
   ContentChildren,
   Input,
   OnDestroy,
-  OnInit, QueryList,
+  QueryList,
   ViewChild
 } from '@angular/core';
 import { Subject } from 'rxjs';

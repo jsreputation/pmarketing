@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material';
   templateUrl: './engagements-grid.component.html',
   styleUrls: ['./engagements-grid.component.scss']
 })
-export class EngagementsGridComponent implements OnInit {
+export class EngagementsGridComponent  {
   @Input() public dataSource: MatTableDataSource<Engagement>;
 
 }

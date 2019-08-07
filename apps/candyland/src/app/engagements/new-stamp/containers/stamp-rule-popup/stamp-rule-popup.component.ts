@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-stamp-rule-popup',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./stamp-rule-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StampRulePopupComponent implements OnInit {
+export class StampRulePopupComponent  {
 
 }

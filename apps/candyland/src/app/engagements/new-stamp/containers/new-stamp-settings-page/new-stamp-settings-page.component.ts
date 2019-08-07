@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-new-stamp-settings-page',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./new-stamp-settings-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewStampSettingsPageComponent implements OnInit {
+export class NewStampSettingsPageComponent  {
 
 }

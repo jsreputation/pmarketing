@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { RewardService } from '@cl-core/http-services/reward.service';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward
   templateUrl: './reward-detail-page.component.html',
   styleUrls: ['./reward-detail-page.component.scss']
 })
-export class RewardDetailPageComponent implements OnInit, AfterViewInit {
+export class RewardDetailPageComponent implements  AfterViewInit {
   public dataSource = new MatTableDataSource<any>();
   public data;
   public statusFilterConfig: OptionConfig[];

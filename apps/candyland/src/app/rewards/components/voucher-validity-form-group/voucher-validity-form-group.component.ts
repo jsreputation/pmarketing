@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import {AbstractControl} from '@angular/forms';
   templateUrl: './voucher-validity-form-group.component.html',
   styleUrls: ['./voucher-validity-form-group.component.scss']
 })
-export class VoucherValidityFormGroupComponent implements OnInit {
+export class VoucherValidityFormGroupComponent {
   @Input() public formGroup: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
 

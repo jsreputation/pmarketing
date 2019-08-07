@@ -77,7 +77,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
       .pipe(
         takeUntil(this.destroy$),
         distinctUntilChanged(),
-        map((data: any) => ({checked: data.checked, value: data.source.value})),
+        map((data: any) => ({ checked: data.checked, value: data.source.value })),
         tap((data: any) => {
           if (data.checked) {
             this.data.push(data.value);
@@ -87,7 +87,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
           this.onChange(this.data);
         })
       )
-      .subscribe();
+      .subscribe(() => { });
   }
 
   private updateCheckboxList() {

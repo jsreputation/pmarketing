@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -6,7 +6,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   templateUrl: './list-merchant-view.component.html',
   styleUrls: ['./list-merchant-view.component.scss']
 })
-export class ListMerchantViewComponent implements OnInit, AfterViewInit {
+export class ListMerchantViewComponent implements  AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
   @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

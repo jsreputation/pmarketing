@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-new-shake-settings-page',
@@ -6,6 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./new-shake-settings-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewShakeSettingsPageComponent implements OnInit {
+export class NewShakeSettingsPageComponent  {
 
 }
