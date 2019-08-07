@@ -12,10 +12,9 @@ export class ListMerchantViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter<IMerchant>();
   public DATE_FORMAT = 'dd MMM yyyy';
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
   public ngAfterViewInit() {
     if (this.sort) {

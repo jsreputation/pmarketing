@@ -22,8 +22,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  public ngOnInit() {
-  }
+  
 
   public ngAfterViewInit(): void {
     this.getData();

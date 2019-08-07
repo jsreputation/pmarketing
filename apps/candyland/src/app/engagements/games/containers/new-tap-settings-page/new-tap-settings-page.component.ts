@@ -8,9 +8,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class NewTapSettingsPageComponent implements OnInit {
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

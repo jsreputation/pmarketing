@@ -8,9 +8,8 @@ import { menus } from './menu-elements';
 export class SidenavMenuComponent implements OnInit {
   @Input() public isOpen: boolean;
   public menus = menus;
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
 }

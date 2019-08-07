@@ -13,9 +13,6 @@ export class NewCampaignDonePopupComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public ngOnInit() {
-  }
-
   public closeDialog() {
     this.dialogRef.close();
   }

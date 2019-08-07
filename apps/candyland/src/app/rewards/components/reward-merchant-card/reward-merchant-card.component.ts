@@ -12,8 +12,7 @@ export class RewardMerchantCardComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
   public clickSelectMerchant() {
     this.selectMerchant.emit();

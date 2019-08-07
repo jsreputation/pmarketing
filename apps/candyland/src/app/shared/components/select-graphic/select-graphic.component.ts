@@ -29,11 +29,6 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
   public setSelectedGraphic(graphic: IGraphic): void {
     this.selectedGraphic = graphic;
     this.selectGraphic.emit(graphic);

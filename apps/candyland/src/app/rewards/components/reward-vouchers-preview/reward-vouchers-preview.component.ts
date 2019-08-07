@@ -13,7 +13,6 @@ export class RewardVouchersPreviewComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
 }

@@ -7,9 +7,4 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarChartComponent implements OnInit {
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

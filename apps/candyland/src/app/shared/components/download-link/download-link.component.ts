@@ -11,7 +11,4 @@ export class DownloadLinkComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
-
 }

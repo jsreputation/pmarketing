@@ -14,9 +14,6 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickChangeExpiryDate = new EventEmitter();
 
-  constructor() {
-  }
-
   public ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }

@@ -14,9 +14,6 @@ export class RewardReplenishPopupComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public ngOnInit() {
-  }
-
   public close() {
     this.dialogRef.close();
   }

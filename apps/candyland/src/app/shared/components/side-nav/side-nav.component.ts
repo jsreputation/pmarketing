@@ -41,10 +41,9 @@ export class SideNavComponent implements OnInit {
   public visibility = 'shown';
   public sideNavOpened = true;
   public sideNavMode = 'side';
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
   public toggle(): void {
     this.isOpen = !this.isOpen;

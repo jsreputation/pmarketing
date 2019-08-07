@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class StampDataService {
 
-  constructor() { }
-
   public filterStampSlot(slotNumber: CommonSelect[], count: string ) {
     return slotNumber.filter((slot) => {
       return +slot.value <= +count;

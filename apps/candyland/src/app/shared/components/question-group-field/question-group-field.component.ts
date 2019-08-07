@@ -14,9 +14,6 @@ export class QuestionGroupFieldComponent implements OnInit {
   @Input() public currentIndex: number;
   constructor(private questionFormFieldService: QuestionFormFieldService) { }
 
-  public ngOnInit() {
-  }
-
   public drop(event: any): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

@@ -12,7 +12,4 @@ export class ItemListComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
-
 }

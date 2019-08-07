@@ -8,9 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class InviteNewUsersInsightComponent implements OnInit {
 
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
 }

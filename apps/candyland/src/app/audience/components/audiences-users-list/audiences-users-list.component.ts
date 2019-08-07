@@ -17,26 +17,23 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 })
 export class AudiencesUsersListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<Engagement>;
-  @Input() public displayedColumns = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
+  @Input() public displayedColumns: string[] = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public clickManageList = new EventEmitter();
+  @Output() public clickManageList: EventEmitter<number> = new EventEmitter();
 
-  constructor() {
-  }
-
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public joinList(list: string[]) {
+  public joinList(list: string[]): string {
     return list.join(', ');
   }
 
-  public manageList(id: number) {
+  public manageList(id: number): void {
     this.clickManageList.emit(id);
   }
 
-  public deactivateItem(id: number) {
+  public deactivateItem(id: number): void {
     this.clickManageList.emit(id);
   }
 }

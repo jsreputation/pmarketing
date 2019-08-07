@@ -7,9 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
   @Input() public isOpen: boolean;
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
 }

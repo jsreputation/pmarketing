@@ -8,9 +8,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class MainContainerComponent implements OnInit {
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

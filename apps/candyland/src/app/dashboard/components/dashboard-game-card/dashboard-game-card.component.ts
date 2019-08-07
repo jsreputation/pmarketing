@@ -13,9 +13,6 @@ export class DashboardGameCardComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private router: Router) { }
 
-  public ngOnInit() {
-  }
-
   public clickToLink(link: string): void {
     if (link.toLocaleLowerCase().includes('engagement')) {
       this.openDialogCreate();

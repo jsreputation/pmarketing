@@ -9,9 +9,4 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class EngagementItemComponent implements OnInit {
   @Input() public data: Engagement;
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

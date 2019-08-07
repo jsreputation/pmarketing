@@ -7,14 +7,7 @@ import {AbstractControl} from '@angular/forms';
   styleUrls: ['./reward-info-form-group.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardInfoFormGroupComponent implements OnInit {
+export class RewardInfoFormGroupComponent {
   @Input() public formGroup: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
-
-  constructor() {
-  }
-
-  public ngOnInit() {
-  }
-
 }

@@ -10,10 +10,6 @@ import { Subject } from 'rxjs';
 export class QuestionDateFieldComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
   private destroy$ = new Subject();
-  constructor() { }
-
-  public ngOnInit() {
-  }
 
   public get endDate() {
     return this.group.get('endDate');

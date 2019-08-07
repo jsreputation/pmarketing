@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-new-survey-questions-page',
@@ -6,11 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./new-survey-questions-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewSurveyQuestionsPageComponent implements OnInit {
-
-  constructor() { }
-
-  public ngOnInit() {
-  }
+export class NewSurveyQuestionsPageComponent {
 
 }

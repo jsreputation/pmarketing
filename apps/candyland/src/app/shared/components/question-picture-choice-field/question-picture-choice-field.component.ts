@@ -11,9 +11,6 @@ export class QuestionPictureChoiceFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   constructor(private fb: FormBuilder) { }
 
-  public ngOnInit() {
-  }
-
   public get choice(): FormArray {
     return (this.group.get('picture') as FormArray);
   }

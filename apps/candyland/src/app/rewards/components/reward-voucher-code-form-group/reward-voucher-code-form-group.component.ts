@@ -31,8 +31,7 @@ export class RewardVoucherCodeFormGroupComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
   public setTotalVoucher(value) {
     this.formGroup.get('total').patchValue(value);

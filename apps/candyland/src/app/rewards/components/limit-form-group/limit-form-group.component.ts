@@ -13,7 +13,6 @@ export class LimitFormGroupComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
 }

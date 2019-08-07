@@ -7,9 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LogoComponent implements OnInit {
   @Input() public sizeClass: string;
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
 }

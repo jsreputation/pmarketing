@@ -7,9 +7,5 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HorizontalBarChartComponent implements OnInit {
   @Input() public imgPath = 'horizontal-bar-chart.png';
-  constructor() { }
-
-  public ngOnInit() {
-  }
 
 }

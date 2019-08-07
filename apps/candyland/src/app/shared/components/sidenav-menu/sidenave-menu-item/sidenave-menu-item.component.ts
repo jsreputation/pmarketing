@@ -26,10 +26,9 @@ export class SidenaveMenuItemComponent implements OnInit {
   @Input() public menu;
   @Input() public isOpen: boolean;
   @Input() public secondaryMenu = false;
-  constructor() { }
+  
 
-  public ngOnInit() {
-  }
+  
 
   public openLink(): void {
     this.menu.open = !this.menu.open;

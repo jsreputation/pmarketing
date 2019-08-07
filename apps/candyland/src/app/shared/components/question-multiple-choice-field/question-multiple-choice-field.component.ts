@@ -10,9 +10,6 @@ export class QuestionMultipleChoiceFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   constructor(private fb: FormBuilder) { }
 
-  public ngOnInit() {
-  }
-
   public get choice(): FormArray {
     return (this.group.get('choice') as FormArray);
   }

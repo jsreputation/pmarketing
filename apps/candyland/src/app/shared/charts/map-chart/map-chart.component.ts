@@ -7,9 +7,4 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapChartComponent implements OnInit {
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

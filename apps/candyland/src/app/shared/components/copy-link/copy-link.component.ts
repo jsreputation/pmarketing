@@ -11,9 +11,6 @@ export class CopyLinkComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
-
   public copyInputMessage(inputElement) {
     inputElement.select();
     document.execCommand('copy');

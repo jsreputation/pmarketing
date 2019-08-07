@@ -9,10 +9,6 @@ export class ImagesPreviewComponent implements OnInit {
   @Input() public img: IGraphic;
   @Input() public selected: any;
   @Output() public selectPreview = new EventEmitter<IGraphic>();
-  constructor() { }
-
-  public ngOnInit() {
-  }
 
   public handlerClick() {
     this.selectPreview.emit(this.img);

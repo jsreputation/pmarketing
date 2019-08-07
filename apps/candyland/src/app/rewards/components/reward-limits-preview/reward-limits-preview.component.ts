@@ -12,7 +12,6 @@ export class RewardLimitsPreviewComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
 }

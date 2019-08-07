@@ -9,9 +9,4 @@ import { MatTableDataSource } from '@angular/material';
 export class EngagementsGridComponent implements OnInit {
   @Input() public dataSource: MatTableDataSource<Engagement>;
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
 }

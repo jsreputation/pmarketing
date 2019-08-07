@@ -12,7 +12,6 @@ export class RewardInfoPreviewComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
 }

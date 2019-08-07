@@ -13,7 +13,6 @@ export class VoucherValidityFormGroupComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
 }

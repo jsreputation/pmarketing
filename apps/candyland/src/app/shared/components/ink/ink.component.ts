@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './ink.component.html',
   styleUrls: ['./ink.component.scss']
 })
-export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input() public triangle = false;
   @Input() public border = false;
 
@@ -29,10 +29,6 @@ export class InkComponent implements OnInit, AfterViewInit, AfterContentInit, On
   @ViewChild(InkBarDirective, {static: false}) public inkBar: InkBarDirective;
 
   private destroy$ = new Subject();
-  constructor() { }
-
-  public ngOnInit() {
-  }
 
   public ngAfterViewInit(): void {
     this.getHost();

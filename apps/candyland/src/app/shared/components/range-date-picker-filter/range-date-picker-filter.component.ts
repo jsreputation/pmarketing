@@ -9,6 +9,4 @@ import { FormControl } from '@angular/forms';
 export class RangeDatePickerFilterComponent {
   @Input() public control = new FormControl();
 
-  constructor() { }
-
 }

@@ -33,8 +33,7 @@ export class AddUserPopupComponent implements OnInit {
     this.initForm();
   }
 
-  public ngOnInit() {
-  }
+  
 
   public close() {
     this.dialogRef.close();

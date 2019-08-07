@@ -14,11 +14,6 @@ export class EngagementTypeComponent implements OnInit, IInkBarHost {
 
   @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
 
-  constructor() { }
-
-  public ngOnInit() {
-  }
-
   public setTypeEngagement(type: IGraphic): void {
      this.selectedType = type;
      this.selectType.emit(type);

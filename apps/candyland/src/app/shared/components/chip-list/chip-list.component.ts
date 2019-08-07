@@ -46,9 +46,6 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   constructor() {
   }
 
-  public ngOnInit() {
-  }
-
   public ngOnDestroy(): void {
   }
 

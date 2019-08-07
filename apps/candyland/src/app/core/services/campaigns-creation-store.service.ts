@@ -48,9 +48,6 @@ export class CampaignCreationStoreService {
     ]
   };
 
-  constructor() {
-  }
-
   public set currentCampaign(value) {
     this.currentCampaign$.next(value);
   }

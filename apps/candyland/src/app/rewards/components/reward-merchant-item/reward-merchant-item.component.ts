@@ -18,8 +18,7 @@ export class RewardMerchantItemComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit() {
-  }
+  
 
   public clickDeleteMerchant() {
     this.deleteMerchant.emit();

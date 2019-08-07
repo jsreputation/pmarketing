@@ -10,9 +10,5 @@ export class ButtonComponent implements OnInit {
   @Input() public formId = 'primary';
   @Input() public disable: boolean;
   @Input() public disableRipple = false;
-  constructor() { }
-
-  public ngOnInit() {
-  }
 
 }
