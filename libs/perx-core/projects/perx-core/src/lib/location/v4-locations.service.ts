@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { ILocation } from './ilocation';
 import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
-import { map, mergeMap, concatAll, reduce, filter } from 'rxjs/operators';
+import { map, mergeMap, filter, scan, tap, mergeAll } from 'rxjs/operators';
 
 interface IV4Meta {
   count?: number;
@@ -70,24 +70,107 @@ export class V4LocationsService extends LocationsService {
 
   // @ts-ignore
   public getAll(tags: string[] = []): Observable<ILocation[]> {
-    const pageSize = 100;
-    return this.getLocations(1, pageSize).pipe(
-      mergeMap((merchants: ILocation[]) => {
-        const streams = [
-          of(merchants)
-        ];
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getLocations(i, pageSize);
-          streams.push(stream);
+    return this.getAllMerchants().pipe(
+      mergeMap((merchants: IV4Merchant[]) => {
+        let filteredMerchants: IV4Merchant[];
+        if (tags && tags.length > 0) {
+          filteredMerchants = merchants.filter(merchant => {
+            let found = false;
+            if (merchant.tags) {
+              found = tags.some(tag => merchant.tags.map(t => t.name).includes(tag));
+            }
+            return found;
+          });
         }
-        return streams;
+
+        filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
+
+        filteredMerchants.map((merchant: IV4Merchant) => {
+          console.log(merchant.id);
+          console.log(merchant.tags);
+          return merchant;
+        });
+
+        return filteredMerchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id));
       }),
-      concatAll(),
-      reduce((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), [])
+      mergeAll(5),
+      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), [])
     );
   }
 
-  public getLocations(page: number = 1, pageSize: number = 25): Observable<ILocation[]> {
+  public getLocations(page: number = 1, pageSize: number = 25, tags: string[] = []): Observable<ILocation[]> {
+    return this.getMerchants(page, pageSize).pipe(
+      mergeMap((merchants: IV4Merchant[]) => {
+        let filteredMerchants: IV4Merchant[];
+        if (tags && tags.length > 0) {
+          filteredMerchants = merchants.filter(merchant => {
+            let found = false;
+            if (merchant.tags) {
+              found = tags.some(tag => merchant.tags.map(t => t.name).includes(tag));
+            }
+            return found;
+          });
+        }
+
+        filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
+
+        filteredMerchants.map((merchant: IV4Merchant) => {
+          console.log(merchant.id);
+          console.log(merchant.tags);
+          return merchant;
+        });
+
+        return filteredMerchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id));
+      }),
+      mergeAll(5),
+      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), [])
+    );
+  }
+
+  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
+    return this.http.get<IV4GetMerchantResponse>(
+      `${this.apiHost}/v4/merchants/${merchantId}`
+    ).pipe(
+      map((res: IV4GetMerchantResponse) => res.data),
+      filter((merchant: IV4Merchant) => merchant.outlets && merchant.outlets.length > 0),
+      tap(x => console.log(x)),
+      map((merchant: IV4Merchant) => {
+        return merchant.outlets.map((outlet: IV4Outlet) => ({
+          merchantId: merchant.id,
+          locationId: outlet.outlet_id,
+          name: outlet.outlet_name,
+          tags: outlet.tags && outlet.tags.map(tag => tag.name),
+          address: outlet.outlet_address1,
+          address2: outlet.outlet_address2,
+          address3: outlet.outlet_address3,
+          latitude: outlet.coordinates.lat,
+          longitude: outlet.coordinates.lng,
+          phone: outlet.tel
+        }));
+      })
+    );
+  }
+
+  private getAllMerchants(): Observable<IV4Merchant[]> {
+    const pageSize = 100;
+    return this.getMerchants(1, pageSize).pipe(
+      mergeMap((merchants: IV4Merchant[]) => {
+        const streams = [
+          of(merchants)
+        ];
+
+        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
+          const stream = this.getMerchants(i, pageSize);
+          streams.push(stream);
+        }
+
+        return streams;
+      }),
+      mergeAll(5),
+    );
+  }
+
+  private getMerchants(page: number = 1, pageSize: number = 25): Observable<IV4Merchant[]> {
     return this.http.get<IV4GetMerchantsResponse>(
       `${this.apiHost}/v4/merchants`,
       {
@@ -106,33 +189,6 @@ export class V4LocationsService extends LocationsService {
         }
 
         return res.data;
-      }),
-      mergeMap((merchants: IV4Merchant[]) =>
-        merchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id))
-      ),
-      concatAll()
-    );
-  }
-
-  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
-    return this.http.get<IV4GetMerchantResponse>(
-      `${this.apiHost}/v4/merchants/${merchantId}`
-    ).pipe(
-      map((res: IV4GetMerchantResponse) => res.data),
-      filter((merchant: IV4Merchant) => merchant.outlets && merchant.outlets.length > 0),
-      map((merchant: IV4Merchant) => {
-        return merchant.outlets.map((outlet: IV4Outlet) => ({
-          merchantId: merchant.id,
-          locationId: outlet.outlet_id,
-          name: outlet.outlet_name,
-          tags: outlet.tags && outlet.tags.map(tag => tag.name),
-          address: outlet.outlet_address1,
-          address2: outlet.outlet_address2,
-          address3: outlet.outlet_address3,
-          latitude: outlet.coordinates.lat,
-          longitude: outlet.coordinates.lng,
-          phone: outlet.tel
-        }));
       })
     );
   }
