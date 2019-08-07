@@ -10,7 +10,7 @@ export class ImagesPreviewComponent {
   @Input() public selected: any;
   @Output() public selectPreview = new EventEmitter<IGraphic>();
 
-  public handlerClick() {
+  public handlerClick(): void {
     this.selectPreview.emit(this.img);
   }
 

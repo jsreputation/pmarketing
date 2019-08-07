@@ -28,7 +28,7 @@ export class DashboardPageComponent implements OnInit {
   constructor(private dashboardService: DashboardService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.getGameCard();
     this.getTotalActive();
   }

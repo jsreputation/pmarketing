@@ -12,7 +12,7 @@ export class EngagementsListComponent implements AfterViewInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 

@@ -13,7 +13,7 @@ export class NewCampaignDonePopupComponent  {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public closeDialog() {
+  public closeDialog(): void {
     this.dialogRef.close();
   }
 }

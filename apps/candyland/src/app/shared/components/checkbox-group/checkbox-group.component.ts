@@ -72,7 +72,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     }, 0);
   }
 
-  private handlCheckboxList() {
+  private handlCheckboxList(): void {
     merge(...this.checkboxList.map(value => value.change))
       .pipe(
         takeUntil(this.destroy$),
@@ -90,7 +90,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
       .subscribe(() => { });
   }
 
-  private updateCheckboxList() {
+  private updateCheckboxList(): void {
     if (this.checkboxList && this.data.length > 0) {
       this.checkboxList.map((checkbox: MatCheckbox) => {
         if (this.data.includes(checkbox.value)) {
@@ -101,7 +101,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     this.cd.detectChanges();
   }
 
-  private toggleDisableCheckboxList(isDisabled) {
+  private toggleDisableCheckboxList(isDisabled): void {
     if (this.checkboxList && this.data.length > 0) {
       this.checkboxList.forEach((checkbox: MatCheckbox) => {
         if (checkbox.disabled !== isDisabled) {

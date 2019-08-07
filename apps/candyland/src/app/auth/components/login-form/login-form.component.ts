@@ -13,7 +13,7 @@ export class LoginFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createForm();
   }
 
@@ -23,9 +23,9 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  get email() { return this.formLogin.get('email'); }
-  get password() { return this.formLogin.get('password'); }
-  get accountId() { return this.formLogin.get('accountId'); }
+  get email(): any { return this.formLogin.get('email'); }
+  get password(): any { return this.formLogin.get('password'); }
+  get accountId(): any { return this.formLogin.get('accountId'); }
 
   private createForm(): void {
     this.formLogin = this.fb.group({

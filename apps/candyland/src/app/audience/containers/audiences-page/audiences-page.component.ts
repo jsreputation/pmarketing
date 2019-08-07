@@ -60,7 +60,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       );
   }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getUsers();
     this.getAudiences();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
@@ -70,7 +70,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public ngOnDestroy(): void {
   }
 
-  private updateDataSource(data) {
+  private updateDataSource(data): void {
     this.dataSource.data = data;
   }
 
@@ -94,7 +94,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     });
   }
 
-  public changeList(tab) {
+  public changeList(tab): void {
     switch (tab) {
       case 'audience':
         this.updateDataSource(this.audiences);
@@ -109,11 +109,11 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.cd.detectChanges();
   }
 
-  get hasData() {
+  get hasData(): boolean {
     return true;
   }
 
-  private getUsers() {
+  private getUsers(): void {
     this.audiencesService.getUsers()
       .subscribe((res: any[]) => {
         this.users = res;
@@ -121,7 +121,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       });
   }
 
-  private getAudiences() {
+  private getAudiences(): void {
     this.audiencesService.getAudiences().pipe(
       map((data: any[]) => (
           data.map(item => {

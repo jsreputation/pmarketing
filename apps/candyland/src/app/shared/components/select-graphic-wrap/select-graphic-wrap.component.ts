@@ -52,7 +52,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public onChange: any = () => {};
   public onTouch: any = () => {};
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createDefaultControl();
     this.createControl();
     this.subscribeControlDefaultValueChanges();
@@ -86,7 +86,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.controlUpload = this.showUpload ? this.fb.control(null) : null;
   }
 
-  private createDefaultControl() {
+  private createDefaultControl(): void {
     if (!this.controlDefault) {
       this.controlDefault = this.fb.control(null);
     }

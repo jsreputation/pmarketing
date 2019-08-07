@@ -3,7 +3,7 @@ import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
 
-export function fnTransition(stateChangeExpr, time) {
+export function fnTransition(stateChangeExpr, time): any {
   return transition(stateChangeExpr, [
     animate(time)
   ]);

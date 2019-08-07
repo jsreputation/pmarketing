@@ -16,7 +16,7 @@ export class NewCampaignReviewPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.store.currentCampaign$.asObservable()
       .pipe(untilDestroyed(this))
       .subscribe(data => {

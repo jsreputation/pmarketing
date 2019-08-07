@@ -13,23 +13,23 @@ export class RewardsListComponent implements AfterViewInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public editItem(id: number) {
+  public editItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public duplicateItem(id: number) {
+  public duplicateItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public deleteItem(id: number) {
+  public deleteItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public useAsCaptionItem(id: number) {
+  public useAsCaptionItem(id: number): void {
     this.itemAction.emit(id);
   }
 

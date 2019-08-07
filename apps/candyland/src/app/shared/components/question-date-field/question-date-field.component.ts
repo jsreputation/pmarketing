@@ -11,15 +11,15 @@ export class QuestionDateFieldComponent implements OnDestroy {
   @Input() public group: FormGroup;
   private destroy$ = new Subject();
 
-  public get endDate() {
+  public get endDate(): any {
     return this.group.get('endDate');
   }
 
-  public get startDate() {
+  public get startDate(): any {
     return this.group.get('startDate');
   }
 
-  public toggleEndDate(value: boolean) {
+  public toggleEndDate(value: boolean): any {
     if (!value) {
       this.endDate.reset();
       this.endDate.disable();

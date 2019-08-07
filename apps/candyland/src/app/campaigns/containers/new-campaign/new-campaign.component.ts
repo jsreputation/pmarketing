@@ -22,7 +22,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
               private fb: FormBuilder) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.initForm();
     this.form.valueChanges
       .pipe(untilDestroyed(this))
@@ -32,7 +32,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.fb.group({
       name: ['Campaign Name', [
         Validators.required,
@@ -47,11 +47,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
-  public goBack() {
+  public goBack(): void {
     this.stepper.previous();
   }
 
-  public goNext() {
+  public goNext(): void {
     this.stepper.next();
   }
 
@@ -59,7 +59,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
-  private getDialogData(campaign) {
+  private getDialogData(campaign): any {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     switch (type) {
       case 'sms':

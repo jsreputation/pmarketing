@@ -36,13 +36,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.userId = this.route.snapshot.params.id;
     this.getUser(this.userId);
     this.getVouchers();
   }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
   }
@@ -50,13 +50,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public ngOnDestroy(): void {
   }
 
-  public getUser(id: number) {
+  public getUser(id: number): void {
     this.audiencesService.getUser(id)
       .subscribe(user => this.user = user);
 
   }
 
-  public getVouchers() {
+  public getVouchers(): void {
     this.audiencesService.getVouchers()
       .pipe(
         tap((data: any) => {

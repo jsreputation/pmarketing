@@ -10,7 +10,7 @@ export class QuestionRatingFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   public scales: CommonSelect[] = [];
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.setScales();
   }
 

@@ -16,23 +16,23 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
 
-  public get campaignInfo() {
+  public get campaignInfo(): any {
     return this.form.get('campaignInfo');
   }
 
-  public get channel() {
+  public get channel(): any {
     return this.form.get('channel');
   }
 
-  public get schedule() {
+  public get schedule(): any {
     return this.form.get('channel.schedule');
   }
 
-  public get recurrence() {
+  public get recurrence(): any {
     return this.form.get('channel.schedule.recurrence');
   }
 
-  public get audience() {
+  public get audience(): any {
     return this.form.get('audience');
   }
 
@@ -44,12 +44,12 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.config = this.store.config;
     this.initForm();
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
     this.form.valueChanges
       .pipe(
@@ -67,7 +67,7 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
   }
 
-  private updateForm() {
+  private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }

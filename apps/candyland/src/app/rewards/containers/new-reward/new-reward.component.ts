@@ -25,7 +25,7 @@ export class NewRewardComponent implements OnInit, OnDestroy {
               private toggleControlService: ToggleControlService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.rewardService.getRewardsOptions()
       .subscribe((config: OptionConfig[]) => this.config = config);
     this.initForm();

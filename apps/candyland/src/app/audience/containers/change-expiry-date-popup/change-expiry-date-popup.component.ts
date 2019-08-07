@@ -16,11 +16,11 @@ export class ChangeExpiryDatePopupComponent implements OnInit, DoCheck {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public close() {
+  public close(): void {
     this.dialogRef.close(null);
   }
 
-  public save() {
+  public save(): void {
     this.dialogRef.close(this.newDate.value);
   }
 

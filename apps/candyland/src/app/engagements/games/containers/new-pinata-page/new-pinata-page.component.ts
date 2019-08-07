@@ -22,7 +22,7 @@ export class NewPinataPageComponent implements OnInit {
               private routingState: RoutingStateService,
               private router: Router) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createPinataForm();
     this.getPinata();
     this.getBackgroundData();

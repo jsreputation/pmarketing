@@ -13,7 +13,7 @@ export class QuestionCountryCodeFieldComponent implements OnInit {
   public countriesList$: Observable<any>;
   constructor(private surveyService: SurveyService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.getCountries();
   }
 

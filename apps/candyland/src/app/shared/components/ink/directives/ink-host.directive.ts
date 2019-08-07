@@ -10,7 +10,7 @@ export class InkHostDirective {
 
   private host: any;
 
-  public getHost() {
+  public getHost(): any {
     return this.host;
   }
 }

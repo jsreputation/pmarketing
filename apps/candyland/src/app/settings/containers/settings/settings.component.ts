@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit {
   ];
   constructor(private cd: ChangeDetectorRef) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     setTimeout(() => this.cd.detectChanges());
   }
 

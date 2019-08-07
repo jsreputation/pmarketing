@@ -33,17 +33,17 @@ export class AddUserPopupComponent {
     this.initForm();
   }
 
-  public close() {
+  public close(): void {
     this.dialogRef.close();
   }
 
-  public add() {
+  public add(): void {
     if (this.form.valid) {
       this.dialogRef.close(this.form.value);
     }
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.fb.group({
       firstName: [],
       lastName: [],

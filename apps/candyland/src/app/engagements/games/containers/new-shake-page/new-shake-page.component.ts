@@ -48,7 +48,7 @@ export class NewShakePageComponent implements OnInit {
     return this.shakeTree.get('buttonText');
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createShakeTreeForm();
     this.createGameGiftField();
     this.getBackgroundData();

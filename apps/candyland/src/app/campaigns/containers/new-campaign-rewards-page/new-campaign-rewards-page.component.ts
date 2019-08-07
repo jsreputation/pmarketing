@@ -58,7 +58,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.config = this.store.config;
     this.updateRewards();
     this.form.valueChanges.pipe(

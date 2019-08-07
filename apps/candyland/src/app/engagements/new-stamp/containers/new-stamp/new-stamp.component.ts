@@ -31,7 +31,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
               private router: Router,
               private stampDataService: StampDataService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createStampForm();
     this.getNumberStamps();
     this.getSlotStamps();

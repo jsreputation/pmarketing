@@ -21,7 +21,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.settingsService.getRolesOptions().subscribe(config => this.config = config);
     this.initForm();
   }

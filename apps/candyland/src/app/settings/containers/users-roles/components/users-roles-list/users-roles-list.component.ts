@@ -15,15 +15,15 @@ export class UsersRolesListComponent implements AfterViewInit {
   @Output() public delete = new EventEmitter<number>();
   @Output() public edit = new EventEmitter<number>();
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public editItem(id: number) {
+  public editItem(id: number): void {
     this.edit.emit(id);
   }
 
-  public deleteItem(id: number) {
+  public deleteItem(id: number): void {
     this.delete.emit(id);
   }
 

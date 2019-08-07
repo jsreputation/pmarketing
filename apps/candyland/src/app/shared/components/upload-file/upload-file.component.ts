@@ -94,7 +94,7 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.file = obj;
   }
 
-  private bitsToMBytes(bit: number) {
+  private bitsToMBytes(bit: number): number {
     return (bit / 1000000);
   }
 

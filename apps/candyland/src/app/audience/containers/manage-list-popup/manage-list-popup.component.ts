@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -7,21 +7,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./manage-list-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageListPopupComponent implements OnInit {
+export class ManageListPopupComponent {
 
   constructor(public dialogRef: MatDialogRef<ManageListPopupComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public close() {
+  public close(): void {
     this.dialogRef.close(null);
   }
 
-  public save() {
+  public save(): void {
     this.dialogRef.close();
   }
-
-  public ngOnInit(): void {
-  }
-
 }

@@ -24,7 +24,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;

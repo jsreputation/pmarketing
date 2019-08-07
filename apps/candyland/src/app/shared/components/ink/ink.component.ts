@@ -40,7 +40,7 @@ export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy 
 
   // first strategy get data from nested component
 
-  public getHost() {
+  public getHost(): void {
     const host =  this.inkHost ? this.inkHost.getHost() : null;
     let inkListeners: QueryList<InkListenerDirective>;
     if (host) {

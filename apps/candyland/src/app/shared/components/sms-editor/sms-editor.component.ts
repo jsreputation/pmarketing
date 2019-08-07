@@ -11,7 +11,7 @@ export class SmsEditorComponent {
   @Input() public options: OptionConfig;
   @Input() public control = new FormControl('');
 
-  public selectShortCode(value: string) {
+  public selectShortCode(value: string): void {
     const newValue = this.control.value + ` ${value} `;
     this.control.patchValue(newValue);
   }

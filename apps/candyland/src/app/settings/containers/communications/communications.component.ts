@@ -10,7 +10,7 @@ export class CommunicationsComponent implements OnInit {
   public formCommunications: FormGroup;
   constructor(private fb: FormBuilder) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createFormCommunications();
   }
 

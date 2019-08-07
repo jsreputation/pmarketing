@@ -13,7 +13,7 @@ export class ListMerchantViewComponent implements  AfterViewInit {
   @Output() public itemAction = new EventEmitter<IMerchant>();
   public DATE_FORMAT = 'dd MMM yyyy';
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }

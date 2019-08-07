@@ -66,7 +66,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor  {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 
-  public setActive() {
+  public setActive(): void {
     this.loadedImg = true;
     this.onChange(this.imgURL);
   }

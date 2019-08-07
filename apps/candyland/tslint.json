@@ -80,6 +80,10 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
+    "typedef": [
+      true,
+      "call-signature"
+    ],
     "unnecessary-constructor": true,
     "rxjs-collapse-imports": true,
     "rxjs-pipeable-operators-only": true,

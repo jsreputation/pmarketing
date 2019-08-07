@@ -15,7 +15,7 @@ export class CreateMerchantComponent implements OnInit {
               private routingState: RoutingStateService,
               private merchantFormService: MerchantFormService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.createFormMerchant();
   }
 
