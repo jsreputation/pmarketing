@@ -1,25 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'cl-reward-merchant-card',
   templateUrl: './reward-merchant-card.component.html',
   styleUrls: ['./reward-merchant-card.component.scss']
 })
-export class RewardMerchantCardComponent implements OnInit {
+export class RewardMerchantCardComponent {
   @Output() public selectMerchant = new EventEmitter<void>();
   @Output() public createMerchant = new EventEmitter<void>();
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  public clickSelectMerchant() {
+  public clickSelectMerchant(): void {
     this.selectMerchant.emit();
   }
 
-  public clickCreateMerchant() {
+  public clickCreateMerchant(): void {
     this.createMerchant.emit();
   }
 

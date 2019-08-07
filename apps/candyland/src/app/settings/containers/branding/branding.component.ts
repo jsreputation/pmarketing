@@ -62,8 +62,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.logo.markAsUntouched({onlySelf: true});
   }
 
-
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createFormBranding();
     this.listColors = [{
       labelView: 'Primary Color', color: this.primaryColor.value
@@ -101,7 +100,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

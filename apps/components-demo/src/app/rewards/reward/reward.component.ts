@@ -10,18 +10,18 @@ import { mock } from '../reward-mock';
 })
 export class RewardComponent implements OnInit {
 
-  reward: Observable<IReward>;
-  rewardId = 8;
+  public reward: Observable<IReward>;
+  public rewardId: number = 8;
 
   @Input()
-  public hideActions = false;
+  public hideActions: boolean = false;
 
   constructor(
     private rewardService: RewardsService,
     private notificationService: NotificationService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.rewardService.getReward(this.rewardId)
       .subscribe(
         (reward) => this.reward = of(reward),
@@ -29,7 +29,7 @@ export class RewardComponent implements OnInit {
       );
   }
 
-  onRedeem() {
+  public onRedeem(): void {
     this.notificationService.addPopup({
       title: 'Event Triggered',
       text: `${this.rewardId}`

@@ -27,7 +27,7 @@ export class NewPinataPageComponent implements OnInit {
               private router: Router,
               private controlValueService: ControlValueService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createPinataForm();
     this.getPinataData();
   }

@@ -6,12 +6,12 @@
       <p>{{ payload.name }}</p>
       <small>{{ payload.id }}</small>
     </div>
-    <div class="gift">
-      <p class="gift-name">
-        {{gift.name}}
+    <div *ngIf="reward" class="reward">
+      <p class="reward-name">
+        {{reward.name}}
       </p>
-      <p *ngIf="!didProceed" class="point">
-        {{gift.pointsPerUnit}} points will be deducted
+      <p *ngIf="!didProceed && reward.rewardPrice.length > 0" class="point">
+        {{getPrice()}} points will be deducted
       </p>
     </div>
   </div>

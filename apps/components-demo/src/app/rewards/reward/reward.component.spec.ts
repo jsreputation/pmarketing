@@ -2,12 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
 import {
-  RewardsModule,
-  RewardsService,
-  IReward
+  RewardsModule
 } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
-import { of, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -22,25 +19,7 @@ describe('RewardComponent', () => {
         MatButtonModule,
         HttpClientTestingModule
       ],
-      declarations: [RewardComponent],
-      // providers: [{
-      //   provide: RewardsService,
-      //   useValue: {
-      //     getReward: (id: number): Observable<IReward> => of({
-      //       id: 1,
-      //       name: 'Guru naru $5',
-      //       subtitle: 'So yummy',
-      //       description: 'Better than anything',
-      //       validFrom: null,
-      //       validTo: null,
-      //       rewardThumbnail: 'https://picsum.photos/600/300?random=2',
-      //       rewardBanner: 'https://picsum.photos/200/300?random=2',
-      //       merchantImg: 'https://picsum.photos/200/300?random=2',
-      //       termsAndConditions: '',
-      //       howToRedeem: ''
-      //     })
-      //   }
-      // }]
+      declarations: [RewardComponent]
     })
       .compileComponents();
   }));

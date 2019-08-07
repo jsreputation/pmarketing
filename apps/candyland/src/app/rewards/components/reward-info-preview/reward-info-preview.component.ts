@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'cl-reward-info-preview',
@@ -6,13 +6,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./reward-info-preview.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardInfoPreviewComponent implements OnInit {
-  @Input() data: any;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+export class RewardInfoPreviewComponent {
+  @Input() public data: any;
 
 }

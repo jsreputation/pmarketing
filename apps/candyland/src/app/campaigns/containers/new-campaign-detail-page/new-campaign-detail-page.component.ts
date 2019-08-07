@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -16,23 +16,23 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
 
-  public get campaignInfo() {
+  public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
   }
 
-  public get channel() {
+  public get channel(): AbstractControl | null {
     return this.form.get('channel');
   }
 
-  public get schedule() {
+  public get schedule(): AbstractControl | null {
     return this.form.get('channel.schedule');
   }
 
-  public get recurrence() {
+  public get recurrence(): AbstractControl | null {
     return this.form.get('channel.schedule.recurrence');
   }
 
-  public get audience() {
+  public get audience(): AbstractControl | null {
     return this.form.get('audience');
   }
 
@@ -44,12 +44,12 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.config = this.store.config;
     this.initForm();
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
     this.form.valueChanges
       .pipe(
@@ -67,12 +67,12 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
   }
 
-  private updateForm() {
+  private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.cd.detach();
   }
 }

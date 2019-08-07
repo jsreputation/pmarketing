@@ -12,7 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
-import { MatButtonModule, MatToolbarModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 
 @NgModule({
   declarations: [
