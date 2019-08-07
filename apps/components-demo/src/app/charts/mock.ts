@@ -1,10 +1,10 @@
-import { BASE_TYPE, IData } from '@perx/chart';
+import { BaseType, IData } from '@perx/chart';
 
 export const singleData: IData = {
   columns: ['age', 'count'],
   cols: [
-    { name: 'age', display_name: 'Age', base_type: BASE_TYPE.text, source: 'native' },
-    { name: 'count', display_name: 'Count', base_type: BASE_TYPE.integer, source: 'native' }
+    { name: 'age', display_name: 'Age', base_type: BaseType.text, source: 'native' },
+    { name: 'count', display_name: 'Count', base_type: BaseType.integer, source: 'native' }
   ],
   rows: [
     ['18-', 178],
@@ -22,9 +22,9 @@ export const singleData: IData = {
 export const multipleData: IData = {
   columns: ['age', '2010', '2011'],
   cols: [
-    { name: 'age', display_name: 'Age', base_type: BASE_TYPE.text, source: 'native' },
-    { name: '2010', display_name: '2010', base_type: BASE_TYPE.integer, source: 'native' },
-    { name: '2011', display_name: '2011', base_type: BASE_TYPE.integer, source: 'native' }
+    { name: 'age', display_name: 'Age', base_type: BaseType.text, source: 'native' },
+    { name: '2010', display_name: '2010', base_type: BaseType.integer, source: 'native' },
+    { name: '2011', display_name: '2011', base_type: BaseType.integer, source: 'native' }
   ],
   rows: [
     ['18-', 178, 80],
