@@ -29,7 +29,7 @@
   &-name {
     padding-top: .4rem;
     font-family: $primary-font;
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 500;
     line-height: 1.69;
     text-align: center;
@@ -38,7 +38,7 @@
 
   &-company {
     font-family: $primary-font;
-    font-size: 14px;
+    font-size: 1.4rem;
     line-height: 1.93;
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
@@ -60,8 +60,8 @@
   height: .4rem;
   border-radius: 50%;
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 0.2rem;
+  right: 0.2rem;
 
   &-none {
     background-color: #f85400;

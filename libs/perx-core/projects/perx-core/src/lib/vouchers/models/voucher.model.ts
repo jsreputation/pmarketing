@@ -1,34 +1,15 @@
-/*
- * Not in use, build is failing if not commented out
- */
-// interface IV4Voucher {
-//   id: number;
-//   rewardId: number;
-//   state: string;
-//   name: string;
-//   code: string;
-//   description: string;
-//   thumbnailUrl: string;
-//   bannerUrl: string;
-//   expiresAt: Date | null;
-//   redeemedOn: Date;
-//   merchantName: string;
-//   merchantLogoUrl: string;
-//   termsAndConditions: string;
-//   howToRedeem: string | null;
-// }
-
-enum VOUCHER_STATE {
+export enum VOUCHER_STATE {
   issued = 'issued',
   redeemed = 'redeemed',
   expired = 'expired'
 }
 
-enum REDEMPTION_TYPE {
+export enum REDEMPTION_TYPE {
   pin = 'pin',
   txtCode = 'txtCode',
   qr = 'qrcode',
-  none = 'none'
+  none = 'none',
+  offline = 'offline'
 }
 
 interface IVoucherDescription {
@@ -52,9 +33,9 @@ export interface IVoucher {
   rewardBanner: string;
   merchantImg: string;
   merchantName: string;
-  expiry: Date;
-  redemptionDate?: Date;
-  description: IVoucherDescription;
+  expiry: Date | null;
+  redemptionDate?: Date | null;
+  description: IVoucherDescription[];
   redemptionSuccessTxt: string;
   redemptionSuccessImg: string;
 }

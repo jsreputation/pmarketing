@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -8,10 +8,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./add-user-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddUserPopupComponent implements OnInit {
+export class AddUserPopupComponent {
 
   public form: FormGroup;
-  config: { [key: string]: OptionConfig[] } = {
+  public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
       {title: 'Female', value: 'female'}
@@ -33,20 +33,17 @@ export class AddUserPopupComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnInit() {
-  }
-
-  public close() {
+  public close(): void {
     this.dialogRef.close();
   }
 
-  public add() {
+  public add(): void {
     if (this.form.valid) {
       this.dialogRef.close(this.form.value);
     }
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.fb.group({
       firstName: [],
       lastName: [],

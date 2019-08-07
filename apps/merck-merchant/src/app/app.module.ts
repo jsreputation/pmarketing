@@ -11,12 +11,14 @@ import {
   MatInputModule,
   MatRippleModule,
   MatSnackBarModule,
-  MatIconModule
+  MatIconModule,
+  MatListModule
 } from '@angular/material';
 import {
   AuthenticationModule,
   OauthModule,
-  CognitoModule
+  CognitoModule,
+  RewardsModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +30,9 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
 import { SalesContactComponent } from './sales-contact/sales-contact.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { OrderComponent } from './order/order.component';
+import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
+import { RedeemComponent } from './redeem/redeem.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,10 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     QrscannerComponent,
     HeaderComponent,
     SalesContactComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    OrderComponent,
+    OrderQuantityComponent,
+    RedeemComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +57,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatInputModule,
     MatRippleModule,
     MatIconModule,
+    MatListModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -56,7 +65,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ZXingScannerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RewardsModule.forRoot({ env: environment }),
   ],
   providers: [],
   bootstrap: [AppComponent],

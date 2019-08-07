@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cl-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
   public navLinks = [
     {
-      path: '/settings',
+      path: 'general',
       label: 'General'
     },
     {
@@ -24,9 +25,10 @@ export class SettingsComponent implements OnInit {
       label: 'Users & Roles'
     },
   ];
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    setTimeout(() => this.cd.detectChanges());
   }
 
 }

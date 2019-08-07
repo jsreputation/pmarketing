@@ -10,7 +10,7 @@ export class InkListenerDirective {
   constructor(public el: ElementRef) {
   }
 
-  @HostListener('click') onMouseOver() {
+  @HostListener('click') public onMouseOver(): void {
     this.setPosition();
   }
 

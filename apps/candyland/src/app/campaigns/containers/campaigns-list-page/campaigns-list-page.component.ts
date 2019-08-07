@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -10,16 +10,16 @@ import { CampaignsService } from '@cl-core/services/campaigns.service';
   styleUrls: ['./campaigns-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CampaignsListPageComponent implements OnInit, AfterViewInit {
+export class CampaignsListPageComponent implements  AfterViewInit {
 
-  DATE_FORMAT = 'dd MMM yyyy';
-  TIME_FORMAT = 'hh:ssa';
+  public DATE_FORMAT: string = 'dd MMM yyyy';
+  public TIME_FORMAT: string = 'hh:ssa';
   // public form: FormGroup;
-  public hasData = true;
+  public hasData: boolean = true;
 
-  inlineRange;
-  public displayedColumns = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
-  public dataSource = new MatTableDataSource<any>();
+  public inlineRange: any;
+  public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
@@ -28,37 +28,31 @@ export class CampaignsListPageComponent implements OnInit, AfterViewInit {
               public cd: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-    // this.form = new FormGroup({
-    //   date: new FormControl([{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}], [])
-    // });
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
-  public editItem() {
+  public editItem(): void {
   }
 
-  public duplicateItem() {
+  public duplicateItem(): void {
   }
 
-  public deleteItem() {
+  public deleteItem(): void {
   }
 
-  public pauseItem() {
+  public pauseItem(): void {
   }
 
-  private getData() {
+  private getData(): void {
     this.campaignsService.getCampaigns()
       .pipe(
         map((response: any) => response.results),
-        map(result => (
-          result.map(item => {
+        map((result: any) => (
+          result.map((item: any) => {
               item.begin = new Date(item.begin);
               item.end = new Date(item.end);
               return item;

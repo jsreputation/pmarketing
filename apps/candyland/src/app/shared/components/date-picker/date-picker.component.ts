@@ -26,16 +26,16 @@ import { DateAdapter } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() control: AbstractControl = new FormControl(null, []);
+  @Input() public control: AbstractControl = new FormControl(null, []);
   @Input() set value(obj) {
     if (obj) {
       const newDate = new Date(obj);
       this.writeValue(newDate);
     }
   }
-  @Input() placeholder = 'Choose date';
-  @Input() max: Date | null = null;
-  @Input() min: Date | null = null;
+  @Input() public placeholder = 'Choose date';
+  @Input() public max: Date | null = null;
+  @Input() public min: Date | null = null;
   public disabledState = false;
 
   @Input() set disabled(value: boolean) {
@@ -51,7 +51,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
               private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$)

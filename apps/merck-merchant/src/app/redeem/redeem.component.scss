@@ -1,0 +1,45 @@
+.container {
+  background-color: #ffffff;
+  padding: 0 1.5rem;
+
+  .main {
+    padding-top: 12rem;
+  }
+}
+
+.customer-info {
+  text-align: center;
+
+  p {
+    font-size: 1.6rem;
+    margin: 0;
+    font-weight: 900;
+  }
+
+  small {
+    font-size: 1.4rem;
+  }
+}
+
+.reward {
+  text-align: center;
+
+  .reward-name {
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin: 2.5rem 0;
+  }
+
+  .point {
+    color: #e61e50;
+    font-size: 1.6rem;
+  }
+}
+
+.btn-container {
+  padding: inherit;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5rem;
+}

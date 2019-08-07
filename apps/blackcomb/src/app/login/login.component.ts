@@ -8,30 +8,30 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  public loginForm: FormGroup;
 
-  loginForm: FormGroup;
+  public authed: boolean;
+  public preAuth: boolean;
+  public failedAuth: boolean;
 
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
-
-  constructor(private router: Router,
-              private fb: FormBuilder) {
-                this.initForm();
+  constructor(
+    private router: Router,
+    private fb: FormBuilder
+  ) {
   }
 
-  initForm() {
-     this.loginForm = this.fb.group({
+  public ngOnInit(): void {
+    this.initForm();
+  }
+
+  public initForm(): void {
+    this.loginForm = this.fb.group({
       customerID: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
+  public onSubmit(): void {
+    this.router.navigate([`loading`]);
   }
-
-  onSubmit() {
-    this.router.navigate([`game-play/1`]);
-  }
-
 }

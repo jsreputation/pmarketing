@@ -1,57 +1,52 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+
+interface IAppInfo {
+  appAccessToken?: string;
+  userAccessToken?: string;
+  [others: string]: any;
+}
 
 @Injectable()
 export class TokenStorage {
 
-  // accessToken: string;
-  // refreshToken: string;
+  public appInfo: IAppInfo;
 
   /**
-   * Get access token
+   * Get User Info
    */
-  public getAccessToken(): Observable<string> {
-    // const token: string = this.accessToken;
-    const token: string = localStorage.getItem('accessToken') as string;
-    return of(token);
+  public getAppInfo(): Observable<IAppInfo> {
+    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || {appAccessToken: '', userAccessToken: ''};
+    return of(this.appInfo);
   }
 
   /**
-   * Get refresh token
+   * Get appInfo property
    */
-  public getRefreshToken(): Observable<string> {
-    // const token: string = this.refreshToken;
-    const token: string = localStorage.getItem('refreshToken') as string;
-    return of(token);
+  public getAppInfoProperty(key: string): string {
+    this.getAppInfo();
+    return this.appInfo[key];
   }
 
   /**
-   * Set access token
+   * Set appInfo property
    */
-  public setAccessToken(token: string): TokenStorage {
-    // this.accessToken = token;
-    localStorage.setItem('accessToken', token);
-
-    return this;
+  public setAppInfoProperty(value: string, key: string): void {
+    this.getAppInfo();
+    this.appInfo[key] = value;
+    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
   }
 
   /**
-   * Set refresh token
+   * Remove appInfo property
    */
-  public setRefreshToken(token: string): TokenStorage {
-    // this.refreshToken = token;
-    localStorage.setItem('refreshToken', token);
-
-    return this;
-  }
-
-  /**
-   * Remove tokens
-   */
-  public clear(): void {
-    // this.accessToken = null;
-    // this.refreshToken = null;
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+  public clearAppInfoProperty(key: string): void {
+    this.getAppInfo();
+    if (key) {
+      delete this.appInfo[key];
+    } else {
+      this.appInfo = {};
+    }
+    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
   }
 }

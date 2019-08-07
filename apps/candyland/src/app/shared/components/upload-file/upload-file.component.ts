@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -15,10 +15,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class UploadFileComponent implements ControlValueAccessor {
-  MAX_SIZE = 1;
-  @Input() selectGraphic: any;
-  @Input() selectedGraphic: any;
-  @Input() label = '';
+  public MAX_SIZE = 1;
+  @Input() public selectGraphic: any;
+  @Input() public selectedGraphic: any;
+  @Input() public label = '';
+  @Output() public deleteFile = new EventEmitter();
+  @Output() public uploadFile = new EventEmitter();
 
   public lock: boolean;
   public fileName;
@@ -60,6 +62,8 @@ export class UploadFileComponent implements ControlValueAccessor {
       this.file = this.sanitizeUrl(reader.result);
       this.loadedFile = true;
       this.cd.markForCheck();
+      this.uploadFile.emit(this.file);
+      this.onChange(this.file);
     };
   }
 
@@ -69,26 +73,28 @@ export class UploadFileComponent implements ControlValueAccessor {
 
   public clear(): void {
     this.file = null;
+    this.onChange(this.file);
     this.loadedFile = false;
+    this.deleteFile.emit(this.file);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.file = obj;
   }
 
-  private bitsToMBytes(bit: number) {
+  private bitsToMBytes(bit: number): number {
     return (bit / 1000000);
   }
 

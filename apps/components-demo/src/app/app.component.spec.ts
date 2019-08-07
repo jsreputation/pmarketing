@@ -1,9 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from '../environments/environment';
 
@@ -12,10 +12,13 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        MatIconModule,
         MatToolbarModule,
+        MatDialogModule,
         FormsModule,
         HttpClientTestingModule,
         AuthenticationModule,
+        ProfileModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
       ],

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,17 +7,11 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./sms-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SmsEditorComponent implements OnInit {
-  @Input() options: OptionConfig;
-  @Input() control = new FormControl('');
+export class SmsEditorComponent {
+  @Input() public options: OptionConfig;
+  @Input() public control = new FormControl('');
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  selectShortCode(value: string) {
+  public selectShortCode(value: string): void {
     const newValue = this.control.value + ` ${value} `;
     this.control.patchValue(newValue);
   }

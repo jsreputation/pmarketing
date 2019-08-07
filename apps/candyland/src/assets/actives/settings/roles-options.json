@@ -1,0 +1,165 @@
+{
+  "roleTypes": [
+    {
+      "title": "Admin",
+      "value": "admin",
+      "description": "Has full access to the internal group settings provided by the Super Admin, can invite users to the group"
+    },
+    {
+      "title": "Creator",
+      "value": "creator",
+      "description": "Has access to customer support features and view only"
+    },
+    {
+      "title": "Customer Support",
+      "value": "customer",
+      "description": "Has access to create, update within the scope of module provided access to. Manager can launch campaigns"
+    },
+    {
+      "title": "Manager",
+      "value": "manager",
+      "description": "Has access to create, update within the scope of modules provided access to. Creator may not launch campaigns"
+    },
+    {
+      "title": "Viewer",
+      "value": "viewer",
+      "description": "Has access to view only"
+    }
+  ],
+  "durationLimits": [
+    {
+      "title": "Day",
+      "value": "day"
+    },
+    {
+      "title": "Week",
+      "value": "week"
+    },
+    {
+      "title": "Month",
+      "value": "month"
+    }
+  ],
+  "redemptionType": [
+    {
+      "title": "QR Code",
+      "value": "QR Code"
+    },
+    {
+      "title": "Bar Code",
+      "value": "Bar Code"
+    },
+    {
+      "title": "Merchant PIN",
+      "value": "Merchant PIN"
+    },
+    {
+      "title": "Promo Code",
+      "value": "Promo Code"
+    }
+  ],
+  "category": [
+    {
+      "title": "Food & Beverage",
+      "value": "Food & Beverage"
+    },
+    {
+      "title": "Travel",
+      "value": "Travel"
+    },
+    {
+      "title": "Electronics",
+      "value": "Electronics"
+    },
+    {
+      "title": "Wellness",
+      "value": "Wellness"
+    },
+    {
+      "title": "Entertainment",
+      "value": "Entertainment"
+    },
+    {
+      "title": "Shopping",
+      "value": "Shopping"
+    },
+    {
+      "title": "Merchant Self",
+      "value": "Merchant Self"
+    },
+    {
+      "title": "Others",
+      "value": "Others"
+    }
+  ],
+  "voucherCodeFormat": [
+    {
+      "title": "Alphanumeric  (eg.ABC123)",
+      "value": "alphanumeric"
+    },
+    {
+      "title": "Numeric (eg.123456)",
+      "value": "numeric"
+    },
+    {
+      "title": "Alphabet (eg.ABCDEF)",
+      "value": "alphabet"
+    }
+  ],
+  "voucherCodeTypes": [
+    {
+      "title": "Single code",
+      "value": "Single code"
+    },
+    {
+      "title": "Unique codes: System generated",
+      "value": "Unique codes: System generated"
+    },
+    {
+      "title": "Unique codes: User upload",
+      "value": "Unique codes: User upload"
+    }
+  ],
+  "voucherValidityType": [
+    {
+      "title": "Period",
+      "value": "Period"
+    },
+    {
+      "title": "Issuance date",
+      "value": "Issuance date"
+    }
+  ],
+  "goals": [
+    {
+      "title": "Build awareness",
+      "value": "Build awareness"
+    },
+    {
+      "title": "Acquire customers",
+      "value": "Acquire customers"
+    },
+    {
+      "title": "Drive sales",
+      "value": "Drive sales"
+    },
+    {
+      "title": "Re-engage audience",
+      "value": "Re-engage audience"
+    },
+    {
+      "title": "Surprise & Delight",
+      "value": "Surprise & Delight"
+    }
+  ],
+  "channelTypes": [
+    {
+      "title": "Weblink",
+      "value": "weblink"
+    },
+    {
+      "title": "SMS",
+      "value": "sms"
+    }
+  ]
+}

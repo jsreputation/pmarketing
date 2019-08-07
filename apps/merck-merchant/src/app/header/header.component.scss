@@ -1,5 +1,7 @@
 .mat-toolbar {
-  background-color: #0F69AF;
+  background-color: #0f69af;
+  position: fixed;
+  z-index: 1;
 
   img {
     display: block;
