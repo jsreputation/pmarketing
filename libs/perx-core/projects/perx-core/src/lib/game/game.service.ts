@@ -131,12 +131,9 @@ export class GameService implements IGameService {
           ...defaultPinata(),
           stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
           brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+          breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
           nbTaps: 5
         };
-
-        if (dpps.cracking_image) {
-          config.breakingImg = dpps.cracking_image.value.image_url || dpps.cracking_image.value.file;
-        }
 
         break;
     }
@@ -179,8 +176,8 @@ export class GameService implements IGameService {
       subTitle: outcome.description,
       button: outcome.button_text
     };
-    if (outcome.type === 'image' && outcome.value) {
-      res.image = outcome.value.image_url || outcome.value.file;
+    if (outcome.type === 'image') {
+      res.image = oc(outcome).value.image_url() || oc(outcome).value.file();
     }
 
     return res;
