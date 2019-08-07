@@ -53,8 +53,8 @@ export class FindPharmacyComponent implements OnInit {
   }
 
   public filterLocations(): void {
-    const filters = this.tags.filter(tag => tag.isSelected === true).map(tag => tag.name);
-    this.locations = this.locationsService.getAll(filters);
+    const filteredTags = this.tags.filter(tag => tag.isSelected).map(tag => tag.name);
+    this.locations = this.locationsService.getAll(filteredTags);
   }
 
   public showHeader(): boolean {
