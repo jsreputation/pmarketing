@@ -155,7 +155,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
                 title: 'Oops',
                 text: 'Something went very wrong, please try again later',
                 buttonTxt: 'Try Again',
-                disableOverlayClose: true
+                disableOverlayClose: true,
+                afterClosedCallBack: this
               });
             }
           }
