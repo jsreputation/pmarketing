@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { combineLatest } from 'rxjs';
@@ -47,8 +47,8 @@ export class RedeemComponent implements OnInit, PageProperties {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
   }
 
   public backButtonEnabled(): boolean {

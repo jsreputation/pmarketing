@@ -1,4 +1,4 @@
-export enum GAME_TYPE {
+export enum GameType {
     unknown = -1,
     shakeTheTree,
     pinata
@@ -13,7 +13,7 @@ export interface IGameOutcome {
 export interface IGame {
     id: number;
     campaignId: number;
-    type: GAME_TYPE;
+    type: GameType;
     remainingNumberOfTries: number;
     config: ITree | IPinata;
     backgroundImg?: string;

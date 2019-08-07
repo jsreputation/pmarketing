@@ -9,11 +9,11 @@ import { SurveyService } from '@cl-core/services/survey.service';
   styleUrls: ['./question-country-code-field.component.scss']
 })
 export class QuestionCountryCodeFieldComponent implements OnInit {
-  @Input() group: FormGroup;
+  @Input() public group: FormGroup;
   public countriesList$: Observable<any>;
   constructor(private surveyService: SurveyService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getCountries();
   }
 

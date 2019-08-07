@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PieGridComponent } from './pie-grid.component';
 import { PerxChartModule } from '@perx/chart';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PieGridComponent', () => {
   let component: PieGridComponent;
@@ -11,7 +12,8 @@ describe('PieGridComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PieGridComponent ],
       imports: [
-        PerxChartModule
+        PerxChartModule,
+        NoopAnimationsModule
       ]
     })
     .compileComponents();

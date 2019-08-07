@@ -1,1 +1,4 @@
-<perx-core-rewards-list [rewardsList]="rewards"></perx-core-rewards-list>
+<perx-core-rewards-list
+    [rewardsList]="rewards"
+    (tapped)="rewardClickedHandler($event)"
+></perx-core-rewards-list>

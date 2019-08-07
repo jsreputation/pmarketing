@@ -7,10 +7,10 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private routingState: RoutingStateService) {}
+  constructor(private routingState: RoutingStateService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.routingState.loadRouting()
-      .subscribe();
+      .subscribe(() => { });
   }
 }

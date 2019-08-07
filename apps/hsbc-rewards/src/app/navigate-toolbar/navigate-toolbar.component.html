@@ -1,0 +1,6 @@
+<div class="bottom-navigation">
+  <a *ngFor="let bar of navigatePanel" class="nav-bar" [routerLink]="[bar.route]">
+    <img [src]="bar.img + (bar.activated ? '_activated' : '') + '.svg'">
+    <div [ngClass]="{'activated': bar.activated}">{{bar.title}}</div>
+  </a>
+</div>

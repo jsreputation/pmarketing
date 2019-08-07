@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-enter-pin',
@@ -15,14 +15,15 @@ export class EnterPinComponent implements OnInit, PageProperties {
   private mobileNo: string = null;
   public visibleNo: string = '';
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private authService: AuthenticationService) {
-    if (this.router.getCurrentNavigation() !== null) {
-      if (this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-        this.mobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
-        this.visibleNo = this.encodeMobileNo(this.mobileNo);
-      }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthenticationService
+  ) {
+    if (this.router.getCurrentNavigation() !== null
+      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
+      this.mobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
+      this.visibleNo = this.encodeMobileNo(this.mobileNo);
     }
   }
 
@@ -30,8 +31,8 @@ export class EnterPinComponent implements OnInit, PageProperties {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
   }
 
   public backButtonEnabled(): boolean {
@@ -74,13 +75,13 @@ export class EnterPinComponent implements OnInit, PageProperties {
           console.error('ForgotPassword: ' + err);
         });
     } else {
-    this.authService.resendOTP(this.mobileNo).subscribe(
-      () => {
-        console.log('Resend Otp request sent');
-      },
-      err => {
-        console.error('ResendOTP: ' + err);
-      });
+      this.authService.resendOTP(this.mobileNo).subscribe(
+        () => {
+          console.log('Resend Otp request sent');
+        },
+        err => {
+          console.error('ResendOTP: ' + err);
+        });
     }
   }
 }

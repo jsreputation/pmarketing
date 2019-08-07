@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
@@ -40,8 +40,8 @@ export class RewardDetailComponent implements OnInit, PageProperties {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
   }
 
   public backButtonEnabled(): boolean {

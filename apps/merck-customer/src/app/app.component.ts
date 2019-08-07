@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { PageProperties, BAR_SELECTED_ITEM } from './page-properties';
+import { PageProperties, BarSelectedItem } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { AuthenticationService, NotificationService } from '@perx/core';
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   public isHomeComponent: boolean = false;
   public backButtonEnabled: boolean = false;
   private preAuth: boolean;
-  public currentSelectedItem: BAR_SELECTED_ITEM = BAR_SELECTED_ITEM.NONE;
+  public currentSelectedItem: BarSelectedItem = BarSelectedItem.NONE;
   public leftIconToShow: string = '';
   public rightIconToShow: string = '';
 

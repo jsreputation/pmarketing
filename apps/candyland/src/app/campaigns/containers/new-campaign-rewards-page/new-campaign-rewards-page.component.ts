@@ -53,12 +53,14 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     return this.rewards.getError('sumMoreThan');
   }
 
-  constructor(private store: CampaignCreationStoreService,
-              private fb: FormBuilder) {
+  constructor(
+    private store: CampaignCreationStoreService,
+    private fb: FormBuilder
+  ) {
     this.initForm();
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.config = this.store.config;
     this.updateRewards();
     this.form.valueChanges.pipe(
@@ -67,9 +69,8 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.enableProbability.valueChanges.pipe(untilDestroyed(this)).subscribe(() => this.updateRewards());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
-
 
   public addReward(value: any = this.rewardsTemplate): void {
     this.rewardsList.push(value);
@@ -84,7 +85,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       enableProbability: ([false]),
       rewards: this.fb.array([],
-        [ClValidators.sumMoreThan({fieldName: 'probability'})]
+        [ClValidators.sumMoreThan({ fieldName: 'probability' })]
       ),
       limits: this.fb.group({
         times: [null, [
@@ -116,10 +117,9 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
         value: [value],
         probability: [0]
       });
-    } else {
-      return this.fb.group({
-        value: [value]
-      });
     }
+    return this.fb.group({
+      value: [value]
+    });
   }
 }

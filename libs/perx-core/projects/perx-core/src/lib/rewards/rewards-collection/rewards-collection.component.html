@@ -2,7 +2,7 @@
   <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <ng-container *ngIf="rewards$ | async as rewards">
-      <mat-card *ngFor="let reward of rewards" (click)="rewardClicked(reward)">
+      <mat-card *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
         <img mat-card-image [src]="reward.rewardThumbnail">
         <mat-card-content>
           <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
@@ -30,7 +30,7 @@
     </ng-container>
   </ng-template>
   <ng-template #elseBlock>
-    <mat-card>
+    <mat-card *perxCoreRepeatTimes="repeatGhostCount">
       <div class="img-placeholder ghost"></div>
       <mat-card-content>
         <div class="subtitle-1 ghost"></div>
@@ -38,22 +38,5 @@
         <div class="points overline ghost"></div>
       </mat-card-content>
     </mat-card>
-    <mat-card>
-      <div class="img-placeholder ghost"></div>
-      <mat-card-content>
-        <div class="subtitle-1 ghost"></div>
-        <div class="description mat-caption ghost"></div>
-        <div class="points overline ghost"></div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <div class="img-placeholder ghost"></div>
-      <mat-card-content>
-        <div class="subtitle-1 ghost"></div>
-        <div class="description mat-caption ghost"></div>
-        <div class="points overline ghost"></div>
-      </mat-card-content>
-    </mat-card>
-
   </ng-template>
 </div>
