@@ -1,27 +1,39 @@
-<div *ngIf="rewards$; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-  <ng-container *ngIf="rewards$ | async as rewards">
-    <mat-card matRipple *ngFor="let reward of rewards">
-      <div class="reward-content">
-        <div class="reward-img__wrapper">
-          <img class="reward-img" [src]="reward.rewardThumbnail"/>
-        </div>
-        <div class="reward-preview-details">
-          <h1>{{ reward.name }}</h1>
-          <p [innerHtml]="reward.subtitle"></p>
-          <div class="reward-price-details">
-            <div *ngIf="reward.rewardPrice &&
+<div [class]=" rewards$ ? 'card-list-container' : 'card-list-container loading'">
+  <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <ng-container *ngIf="rewards$ | async as rewards">
+      <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
+        <div class="reward-content">
+          <div class="reward-img__wrapper">
+            <img class="reward-img" [src]="reward.rewardThumbnail"/>
+          </div>
+          <div class="reward-preview-details">
+            <h1>{{ reward.name }}</h1>
+            <p [innerHtml]="reward.subtitle"></p>
+            <div class="reward-price-details">
+              <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0 &&
                   reward.rewardPrice[0] as rewardPrice">
-              <span>{{rewardPrice.rewardAmount}} {{rewardPrice.rewardCurrency}}</span>
+                <span>{{rewardPrice.rewardAmount}} {{rewardPrice.rewardCurrency}}</span>
+              </div>
             </div>
           </div>
         </div>
+      </mat-card>
+    </ng-container>
+  </ng-template>
+  <ng-template #elseBlock>
+    <mat-card *perxCoreRepeatTimes="repeatGhostCount">
+      <div class="reward-content">
+        <div class="reward-img__wrapper">
+          <div class="img-placeholder ghost"></div>
+        </div>
+        <div class="reward-preview-details">
+          <div class="reward-name ghost"></div>
+          <div class="reward-subtitle ghost"></div>
+          <div class="reward-price-details ghost"></div>
+        </div>
       </div>
     </mat-card>
-  </ng-container>
-</ng-template>
-<ng-template #elseBlock>
-  <!--  todo: make loading screen  -->
-  Could not load Rewards, Please try again
-</ng-template>
+  </ng-template>
+</div>
