@@ -14,3 +14,21 @@ export interface IData {
     rows: any[][];
     insights: any;
 }
+
+export interface MultipleChartData {
+  series: {
+    extra: {
+      code: string
+    };
+    name: string;
+    value: number;
+  }[];
+  name: string;
+}
+
+export interface SingleChartData {
+  name: string;
+  value: number;
+}
+
+export type ChartData = MultipleChartData | SingleChartData;
