@@ -7,7 +7,7 @@ import {
   GameModule,
   GameService,
   VouchersService,
-  GAME_TYPE,
+  GameType,
   defaultTree,
   IGame
 } from '@perx/core';
@@ -28,7 +28,7 @@ describe('GameComponent', () => {
   const fakeGame: IGame = {
     id: 1,
     campaignId: 1,
-    type: GAME_TYPE.shakeTheTree,
+    type: GameType.shakeTheTree,
     remainingNumberOfTries: 10,
     // name: 'UAT GAME',
     texts: {},
