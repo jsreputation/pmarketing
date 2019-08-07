@@ -1,0 +1,21 @@
+<div class="main-puzzle-container">
+  <div>
+    <h1>{{this.title}}</h1>
+    <h3>{{this.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <div class="pinata-wrapper">
+      <perx-core-pinata *ngIf="gameType === 'pinata'" 
+        [stillImg]="'assets/pinata/still-img.png'"
+        [openedImg]="'assets/pinata/opened-img.png'" 
+        (broken)="gameCompleted()" 
+        [nbTaps]="pinataTotalTaps"
+        [enabled]="isEnabled">
+      </perx-core-pinata>
+    </div>
+  </div>
+  <button mat-flat-button color="primary" (click)="isEnabled = true"
+    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+    Play
+  </button>
+</div>

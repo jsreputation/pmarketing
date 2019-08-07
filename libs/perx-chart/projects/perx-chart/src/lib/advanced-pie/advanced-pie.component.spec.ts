@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdvancedPieComponent } from './advanced-pie.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AdvancedPieComponent', () => {
   let component: AdvancedPieComponent;
@@ -8,7 +10,11 @@ describe('AdvancedPieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdvancedPieComponent ]
+      declarations: [ AdvancedPieComponent ],
+      imports: [
+        NgxChartsModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

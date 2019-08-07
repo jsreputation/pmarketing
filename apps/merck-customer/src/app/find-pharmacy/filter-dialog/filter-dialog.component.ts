@@ -14,7 +14,7 @@ export class FilterDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<FilterDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: IData) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.tags = this.data.tags;
   }
 
@@ -26,7 +26,7 @@ export class FilterDialogComponent implements OnInit {
     this.dialogRef.close(this.tags);
   }
 
-  public onClearFilter() : void {
+  public onClearFilter(): void {
     this.tags = this.tags.map(tag => ({...tag, isSelected: false}));
   }
 }

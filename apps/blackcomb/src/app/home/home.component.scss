@@ -8,58 +8,28 @@ mat-card {
   justify-content: space-between;
 }
 
-mat-icon {
-  color: #b2b2b2;
-  font-size: 1.5rem;
-  height: 1.5rem;
-  flex: 0 0 1.6rem;
-}
-
 h1 {
   padding: 0.8rem 0 0;
   margin: 0;
   display: flex;
-  font-size: 1.6rem;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
 }
 
-.puzzle-details {
-  font-size: 1.4rem;
-  display: flex;
-  margin: auto 0;
-  margin-left: 1rem;
-  flex-direction: column;
-
-  h1 {
-    font-size: 1.4rem;
-    line-height: 1.6rem;
-    padding: 0;
-    font-weight: 500;
-    margin: 4px 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.3rem;
-    color: #858585;
-    margin: 4px 0;
-    padding: 0;
-  }
-}
-
-.tab-group {
-  margin: 7rem -1.2rem;
-}
+// .tab-group {
+//   margin: 7rem -1.2rem;
+// }
 
 .tab-group__content {
   padding: 0 1.6rem;
   flex-direction: column;
-  background-color: #e5e5e5;
   box-sizing: border-box;
   display: flex;
   min-height: calc(100vh - 108px);
 
   > h1:first-child {
-    padding-top: 2.4rem;
+    padding-top: 2rem;
   }
 }
 
@@ -68,32 +38,56 @@ h1 {
   flex-basis: auto;
   flex-grow: 1;
   justify-content: flex-start;
-}
 
-.puzzle-img__wrapper {
-  flex: 0 0 7.5rem;
-  height: 10.5rem;
-  display: flex;
-  justify-content: center;
-}
+  .puzzle-img__wrapper {
+    flex: 0 0 7.5rem;
+    height: 10.5rem;
+    display: flex;
+    justify-content: center;
+  }
 
-.puzzle-img {
-  width: 100%;
-  height: 100%;
-}
+  .puzzle-img {
+    width: 100%;
+    height: 100%;
+  }
 
-.puzzle-details:nth-child(1) {
-  margin-top: 0;
-}
+  .puzzle-details {
+    font-size: 1.4rem;
+    display: flex;
+    margin: auto 0;
+    margin-left: 1rem;
+    flex-direction: column;
 
-.main-reward-title {
-  font-size: 1.6rem;
-  line-height: 1.9rem;
-  color: #212B36;
-}
+    // h1 {
+    //   font-size: 1.4rem;
+    //   line-height: 1.6rem;
+    //   padding: 0;
+    //   font-weight: 500;
+    //   margin: 4px 0;
+    // }
 
-.reward-subtitle {
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-  color: #6B6B6B;
+    // p {
+    //   font-size: 1.1rem;
+    //   line-height: 1.3rem;
+    //   color: #858585;
+    //   margin: 4px 0;
+    //   padding: 0;
+    // }
+  }
+
+  .puzzle-details:nth-child(1) {
+    margin-top: 0;
+  }
+
+  .main-reward-title {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    color: #212b36;
+  }
+
+  .reward-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    color: #6b6b6b;
+  }
 }

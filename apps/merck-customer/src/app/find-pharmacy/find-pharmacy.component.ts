@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationsService, ILocation } from '@perx/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { BAR_SELECTED_ITEM } from '../page-properties';
 
 export interface ITag {
   name: string;
@@ -28,60 +29,40 @@ export class FindPharmacyComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.locations = this.locationsService.getAll();
-    this.locations = of(
-      [
-        {
-          merchantId: 1,
-          locationId: 1,
-          name: 'Pharmacy Name',
-          tags: ['Drug', 'Medical Supply'],
-          address: 'Pharmacy Address',
-          latitude: 15.470044,
-          longitude: 120.955672,
-          phone: '+852 3102 4028'
-        },
-        {
-          merchantId: 1,
-          locationId: 1,
-          name: 'Pharmacy Name',
-          tags: ['Drug'],
-          address: 'Pharmacy Address',
-          latitude: 15.459698,
-          longitude: 120.950294,
-          phone: '+852 3102 4028'
-        }
-      ]
-    );
 
     this.locationsService.getTags().subscribe((res) => {
       this.tags = res.map(tag => ({name: tag, isSelected: false}));
     });
-
-    const tempDataTags = ['Drug', 'Medical Supply'];
-    this.tags = tempDataTags.map(tag => ({name: tag, isSelected: false}));
-
   }
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
-      width: '320px',
+      width: '35rem',
       data: {tags: this.tags}
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      if(typeof res != 'object') {
+      if (typeof res !== 'object') {
         return;
       }
+      console.log(res);
       this.tags = res;
       this.filterLocations();
     });
   }
 
   public filterLocations(): void {
-    // const filters = this.tags.filter(tag => tag.isSelected === true).map(tag => tag.name);
-    // this.locations = this.locationsService.getAll(filters);
-    console.log('filter applied');
+    const filters = this.tags.filter(tag => tag.isSelected === true).map(tag => tag.name);
+    this.locations = this.locationsService.getAll(filters);
+  }
+
+  public showHeader(): boolean {
+    return true;
+  }
+
+  public bottomSelectedItem(): BAR_SELECTED_ITEM {
+    return BAR_SELECTED_ITEM.SEARCH;
   }
 }

@@ -24,6 +24,8 @@ import {
   CognitoModule,
   ProfileModule,
   UtilsModule,
+  LoyaltyModule,
+  RewardsModule,
   LocationModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -35,8 +37,9 @@ import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
-import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dialog.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,9 @@ import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dial
     EnterPinComponent,
     FindPharmacyComponent,
     CustomSnackbarComponent,
-    FilterDialogComponent
+    FilterDialogComponent,
+    ResetPasswordComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,8 @@ import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dial
     MatSnackBarModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -74,6 +81,8 @@ import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dial
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
     UtilsModule,
+    LoyaltyModule.forRoot({env: environment}),
+    RewardsModule.forRoot({ env: environment }),
     LocationModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
