@@ -5,14 +5,9 @@ import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  AuthenticationModule,
-  CognitoModule,
-  OauthModule,
-  AuthenticationService
-} from '@perx/core';
-import { environment } from '../../environments/environment';
+import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -27,16 +22,14 @@ describe('LoginComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        AuthenticationModule,
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment })],
+        HttpClientTestingModule
+        ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null}
+          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null, v4GetAppAccessToken: () => of({})}
         }
       ]
     })
@@ -64,7 +57,7 @@ describe('LoginComponent', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     spyOn(routerStub, 'navigate').and.callThrough();
     component.goToForgotPassword();
-    expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { mobileNo: '' } });
+    expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { country: '+852', mobileNo: '' } });
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {

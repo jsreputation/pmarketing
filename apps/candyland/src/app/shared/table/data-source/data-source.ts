@@ -22,7 +22,7 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
     this.data$.next(this.initData);
   }
 
-  connect(): BehaviorSubject<T[]> {
+  public connect(): BehaviorSubject<T[]> {
     const displayDataChanges = [
       this.filtersState$,
       this.sortState$,
@@ -31,7 +31,7 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
     ];
 
     combineLatest(...displayDataChanges).subscribe(
-      ([filtersState, sortState, paginatorState]) => {
+      ([filtersState, sortState, paginatorState]: any[]) => {
         let data = this.initData.slice();
         if (filtersState.filters) {
           data = this.dataMultiFilter(data, filtersState.filters);
@@ -49,23 +49,23 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
     return this.data$;
   }
 
-  disconnect() {
+  public disconnect(): void {
   }
 
-  public applySort(sortInfo) {
+  public applySort(sortInfo: any): void {
     this.sortState$.next({ sort: sortInfo });
   }
 
-  public applyPaginator(paginatorInfo) {
+  public applyPaginator(paginatorInfo: any): void {
     this.paginatorState$.next({ paginator: paginatorInfo });
   }
 
-  public applyDeleted(id: string) {
-    this.initData = this.initData.filter((item) => item.id !== id);
+  public applyDeleted(id: string): void {
+    this.initData = this.initData.filter((item: any) => item.id !== id);
     this.addDeleteData$.next(this.initData);
   }
 
-  public applyAddItems(data: any) {
+  public applyAddItems(data: any): void {
     this.initData = this.initData.concat(data);
     this.addDeleteData$.next(this.initData);
   }
@@ -73,8 +73,8 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
   // TODO typings
   private dataMultiFilter(data: any[], filters: any): any[] {
     const filterKeys = Object.keys(filters);
-    return data.filter((item) => {
-      return filterKeys.every((key) => {
+    return data.filter((item: any) => {
+      return filterKeys.every((key: any) => {
         return item[key].match(filters[key]);
       });
     });
@@ -85,7 +85,7 @@ export class ClientSideDataSource<T> extends MatTableDataSource<T> {
     if (!sortData.active || sortData.direction === '') {
       return data;
     }
-    return data.sort((valueA, valueB) => {
+    return data.sort((valueA: any, valueB: any) => {
       return (
         (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
         (sortData.direction === 'asc' ? 1 : -1)

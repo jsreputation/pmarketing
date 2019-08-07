@@ -5,7 +5,6 @@ import {ProfilePhotoPipe} from './profile-photo.pipe';
 import {DaysOnGoingPipe} from './daysOnGoing.pipe';
 import {UppercaseSplitPipe} from '@cl-shared/pipes/uppercase-split.pipe';
 
-
 const PIPES = [
   FullnamePipe,
   ProfilePhotoPipe,

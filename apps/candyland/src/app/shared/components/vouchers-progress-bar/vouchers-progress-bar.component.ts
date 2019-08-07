@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VouchersProgressBarComponent {
-  @Input() options: { type: string, value: number }[];
+  @Input() public options: { type: string, value: number }[];
 
   public get total(): number {
     const reducer = (accumulator, item) => accumulator + item.value;

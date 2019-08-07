@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { InkListenerDirective } from '../../../components/ink/directives/ink-listener.directive';
 import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
 
@@ -7,17 +7,12 @@ import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
   templateUrl: './engagement-type.component.html',
   styleUrls: ['./engagement-type.component.scss']
 })
-export class EngagementTypeComponent implements OnInit, IInkBarHost {
-  @Output() selectType = new EventEmitter<IGraphic>();
+export class EngagementTypeComponent implements IInkBarHost {
+  @Output() public selectType = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
   @Input() public selectedType: IGraphic;
 
   @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   public setTypeEngagement(type: IGraphic): void {
      this.selectedType = type;

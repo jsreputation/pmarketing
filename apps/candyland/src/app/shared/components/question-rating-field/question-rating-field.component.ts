@@ -9,9 +9,8 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class QuestionRatingFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   public scales: CommonSelect[] = [];
-  constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.setScales();
   }
 

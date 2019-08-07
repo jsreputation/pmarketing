@@ -27,8 +27,8 @@ import {customTimepickerTheme} from '@cl-shared/components/time-picker/custom-ti
   encapsulation: ViewEncapsulation.None
 })
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() control: AbstractControl = new FormControl(null, []);
-  @Input() placeholder = 'Time';
+  @Input() public control: AbstractControl = new FormControl(null, []);
+  @Input() public placeholder = 'Time';
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);
@@ -41,10 +41,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$)
