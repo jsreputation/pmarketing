@@ -47,7 +47,6 @@ export class FindPharmacyComponent implements OnInit {
       if (typeof res !== 'object') {
         return;
       }
-      console.log(res);
       this.tags = res;
       this.filterLocations();
     });
