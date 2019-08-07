@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-item',
@@ -15,7 +15,7 @@ export class RewardItemComponent {
     return this.group.value.value;
   }
 
-  get propability(): any {
+  get propability(): AbstractControl | null {
     return this.group.get('probability') || null;
   }
 

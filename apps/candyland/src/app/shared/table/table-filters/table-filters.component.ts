@@ -13,7 +13,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { TableFilterDirective } from './table-filter.directive';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material';
@@ -29,7 +29,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public classList: string = '';
   @ContentChildren(TableFilterDirective) public filters: QueryList<TableFilterDirective>;
-  @ViewChild('filtersContainer', {read: ViewContainerRef, static: true}) public filtersContainer: ViewContainerRef;
+  @ViewChild('filtersContainer', { read: ViewContainerRef, static: true }) public filtersContainer: ViewContainerRef;
   private fg: FormGroup = new FormGroup({});
   private cache: { [name: string]: EmbeddedViewRef<any> } = {};
   private destroy$: Subject<void> = new Subject();
@@ -43,8 +43,8 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
     this.filters.changes
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-      this.updateFilters();
-    });
+        this.updateFilters();
+      });
     this.fg.valueChanges
       .pipe(
         startWith(this.fg.value),
@@ -77,7 +77,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
     });
   }
 
-  private addControl(name: string, defaultValue: any = null): any {
+  private addControl(name: string, defaultValue: any = null): AbstractControl | null {
     if (!this.fg.contains(name)) {
       this.fg.addControl(name, new FormControl(defaultValue));
     }

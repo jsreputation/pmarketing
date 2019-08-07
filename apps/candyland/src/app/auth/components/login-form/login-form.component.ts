@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,9 +23,9 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  get email(): any { return this.formLogin.get('email'); }
-  get password(): any { return this.formLogin.get('password'); }
-  get accountId(): any { return this.formLogin.get('accountId'); }
+  get email(): AbstractControl | null { return this.formLogin.get('email'); }
+  get password(): AbstractControl | null { return this.formLogin.get('password'); }
+  get accountId(): AbstractControl | null { return this.formLogin.get('accountId'); }
 
   private createForm(): void {
     this.formLogin = this.fb.group({
