@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { IGameComponent } from '../IGame.component';
 
 @Component({
@@ -6,7 +6,7 @@ import { IGameComponent } from '../IGame.component';
   templateUrl: './pinata.component.html',
   styleUrls: ['./pinata.component.css']
 })
-export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
+export class PinataComponent implements OnInit, OnDestroy, IGameComponent, OnChanges {
   @Input()
   public stillImg: string;
   @Input()
@@ -59,5 +59,11 @@ export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
     this.n = 0;
     this.currentImg = this.stillImg;
     this.shakeAnimationClass = '';
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.stillImg) {
+      this.currentImg = this.stillImg;
+    }
   }
 }

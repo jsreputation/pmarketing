@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<section class="stamp-wrap" [formGroup]="formStamp">
+<section class="stamp-wrap" *ngIf="stampData$ | async as stampData" [formGroup]="formStamp">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -68,12 +68,12 @@
         <div class="game-form">
           <div class="game-number">
             <div class="control-input"
-                 *ngIf="stampNumbers$ | async as stampNumbers"
+                 *ngIf="stampData.number"
             >
               <mat-form-field class="game-stamp-select">
                 <mat-label>Total number of stamps on a card</mat-label>
                 <mat-select formControlName="stampsNumber">
-                  <mat-option *ngFor="let stamp of stampNumbers" [value]="stamp.value">
+                  <mat-option *ngFor="let stamp of stampData.number" [value]="stamp.value">
                     {{stamp.viewValue}}
                   </mat-option>
                 </mat-select>
@@ -101,10 +101,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="preStamps$ | async as preStamps"
+                *ngIf="stampData.preStamp"
                 formControlName="preStamp"
                 class="game-selected-graphic"
-                [graphicList]="preStamps"
+                [graphicList]="stampData.preStamp"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -119,10 +119,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardPreStamps$ | async as rewardPreStamps"
+                *ngIf="stampData.rewardPreStamp"
                 formControlName="rewardPreStamps"
                 class="game-selected-graphic"
-                [graphicList]="rewardPreStamps"
+                [graphicList]="stampData.rewardPreStamp"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -133,10 +133,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="postStamps$ | async as postStamps"
+                *ngIf="stampData.stampsPost"
                 formControlName="postStamps"
                 class="game-selected-graphic"
-                [graphicList]="postStamps"
+                [graphicList]="stampData.stampsPost"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -151,10 +151,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardPostStamps$ | async as rewardPostStamps"
+                *ngIf="stampData.rewardPost"
                 formControlName="rewardPostStamps"
                 class="game-selected-graphic"
-                [graphicList]="rewardPostStamps"
+                [graphicList]="stampData.rewardPost"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -165,10 +165,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="cardBackground$ | async as cardBackground"
+                *ngIf="stampData.cardBackground"
                 formControlName="cardBackground"
                 class="game-selected-graphic"
-                [graphicList]="cardBackground"
+                [graphicList]="stampData.cardBackground"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -180,10 +180,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="backgrounds$ | async as backgrounds"
+                *ngIf="stampData.backgroundStamp"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="stampData.backgroundStamp"
               >
               </cl-select-graphic-wrap>
             </div>
