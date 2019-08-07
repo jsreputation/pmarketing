@@ -1,12 +1,11 @@
 <mat-tab-group class="mobile-preview-tabs">
   <mat-tab label="Single Reward">
-    <div class="mobile-preview-single">
-
-    </div>
+    <ng-content select=".mobile-content-single"></ng-content>
+    <!--<div class="mobile-preview-single">-->
+      <!--<ng-content select=".sing-reward"></ng-content>-->
+    <!--</div>-->
   </mat-tab>
   <mat-tab label="Multiple Rewards">
-    <div class="mobile-preview-multiple">
-
-    </div>
+    <ng-content select=".mobile-content-multiple"></ng-content>
   </mat-tab>
 </mat-tab-group>

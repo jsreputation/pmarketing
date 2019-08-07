@@ -226,6 +226,12 @@ button {
   }
 }
 
+cl-game-mobile-preview {
+  .mat-tab-body-content {
+     overflow: visible;
+  }
+}
+
 .game {
   &-title-wrap {
     flex: 1;

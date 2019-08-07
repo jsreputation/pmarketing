@@ -24,6 +24,11 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.module';
 
+import {
+  RewardsModule as PerxRewardsModule,
+} from '@perx/core';
+import { environment } from '@cl-environments/environment';
+
 @NgModule({
   declarations: [
     NewInstantRewardComponent,
@@ -40,6 +45,7 @@ import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-previ
     SelectGraphicWrapModule,
     InfoHintModule,
     GameMobilePreviewModule,
+    PerxRewardsModule.forRoot({ env: environment }),
 
     MatTabsModule,
     MatCardModule,
