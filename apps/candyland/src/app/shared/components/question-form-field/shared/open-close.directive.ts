@@ -12,7 +12,7 @@ export class OpenCloseDirective {
 
   constructor(private questionFormFieldService: QuestionFormFieldService) { }
 
-  @HostListener('click', ['$event']) public onClick(e) {
+  @HostListener('click', ['$event']) public onClick(e): void {
     e.stopPropagation();
     this.questionFormFieldService.focusedElem = this.index;
   }

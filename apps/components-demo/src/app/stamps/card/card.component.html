@@ -1,0 +1,10 @@
+<div class="setup-form">
+    Number of slots
+    <mat-slider min="3" max="10" #nbStamps value="10"></mat-slider>
+    Number of stamps
+    <mat-slider min="0" max="nbStamps.value" #nbSlots></mat-slider>
+</div>
+<perx-core-puzzle-collect-stamps [nbSlots]="nbStamps.value" [preStampImg]="'assets/stamps/pre_stamp.png'"
+    [postStampImg]="'assets/stamps/post_stamp_redeemed.png'" [rewardPreStamp]="'assets/stamps/pre_reward.png'"
+    [rewardPostStamp]="'assets/stamps/post_reward.png'">
+</perx-core-puzzle-collect-stamps>

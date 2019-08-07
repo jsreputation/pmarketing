@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import {
+  ISignUpData,
+  IMessageResponse,
+  IResetPasswordData,
+  IAppAccessTokenResponse,
+  IChangePasswordData
+} from './models/authentication.model';
+import { IProfile } from '../../profile/profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +40,10 @@ export class AuthenticationService implements AuthService {
    * @memberOf AuthService
    */
   public isAuthorized(): Observable<boolean> {
-    return this.tokenStorage
-      .getAppInfoProperty('userAccessToken')
-      .pipe(map(token => {
-        return !!token;
-      }));
+    const token = this.tokenStorage
+    .getAppInfoProperty('userAccessToken');
+
+    return of(!!token);
   }
 
   /**
@@ -183,7 +190,7 @@ export class AuthenticationService implements AuthService {
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
    */
-  public v4GetAppAccessToken(): Observable<any> {
+  public v4GetAppAccessToken(): Observable<IAppAccessTokenResponse> {
     return this.v4OauthService.getAppAccessToken().pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
@@ -208,33 +215,33 @@ export class AuthenticationService implements AuthService {
    * of method resetPassword.
    */
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<any> {
+  public forgotPassword(phone: string): Observable<IMessageResponse> {
     return this.v4OauthService.forgotPassword(phone);
   }
 
   // @ts-ignore
-  public resetPassword(phone: string, newPwd: string, otp: string): Observable<any> {
-    return this.v4OauthService.resetPassword(phone, newPwd, otp);
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return this.v4OauthService.resetPassword(resetPasswordInfo);
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<any> {
+  public resendOTP(phone: string): Observable<IMessageResponse> {
     return this.v4OauthService.resendOTP(phone);
   }
 
   // @ts-ignore
-  public signup(identifier: string, password: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public signup(profile: ISignUpData): Observable<IProfile> {
+    return this.v4OauthService.signup(profile);
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<any> {
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return this.v4OauthService.verifyOTP(phone, otp);
   }
 
   // @ts-ignore
-  public changePassword(newPassword: string, oldPassword?: string): Observable<void> {
-    return throwError('Not implemented yet');
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
+    return this.v4OauthService.changePassword(changePasswordData);
   }
 
   /**
@@ -246,7 +253,7 @@ export class AuthenticationService implements AuthService {
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
     const appAccessToken = this.getAppAccessToken();
-    return userAccessToken ? userAccessToken : appAccessToken;
+    return of(userAccessToken ? userAccessToken : appAccessToken);
   }
 
   /**
@@ -255,7 +262,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getUserAccessToken(): Observable<string> {
+  public getUserAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('userAccessToken');
   }
 
@@ -275,7 +282,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getAppAccessToken(): Observable<string> {
+  public getAppAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('appAccessToken');
   }
 

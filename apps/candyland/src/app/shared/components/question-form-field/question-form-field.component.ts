@@ -30,11 +30,11 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
               ) {
   }
 
-  public isActive() {
+  public isActive(): boolean {
     return !this.questionFormFieldService.getFocusedElem(this.currentIndex, this.level);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.updateStatusDescriptionField();
     this.createDescriptionControl(this.description.value);
     this.subscribeDescriptionControl();
@@ -52,7 +52,7 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     return this.group.get('description');
   }
 
-  public remove() {
+  public remove(): void {
     this.removed.emit(this.currentIndex);
   }
 
@@ -89,7 +89,7 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     this.group.updateValueAndValidity();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

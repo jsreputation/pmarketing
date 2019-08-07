@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 @Component({
@@ -7,11 +7,11 @@ import {AbstractControl} from '@angular/forms';
   styleUrls: ['./reward-voucher-code-form-group.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardVoucherCodeFormGroupComponent implements OnInit {
-  DATE_FORMAT = 'dd MMM yyyy';
-  @Input() formGroup: AbstractControl;
-  @Input() form: AbstractControl;
-  @Input() config: { [key: string]: OptionConfig[] };
+export class RewardVoucherCodeFormGroupComponent {
+  public DATE_FORMAT = 'dd MMM yyyy';
+  @Input() public formGroup: AbstractControl;
+  @Input() public form: AbstractControl;
+  @Input() public config: { [key: string]: OptionConfig[] };
 
   public codeFormatConfig = {
     alphanumeric: {eg: 'HB1234'},
@@ -19,22 +19,16 @@ export class RewardVoucherCodeFormGroupComponent implements OnInit {
     alphabet: {eg: 'ABCDEF'}
   };
 
-  get codePlaceholder() {
+  get codePlaceholder(): string {
     const type = this.formGroup.get('uniqueGeneratedCode.codeFormat').value || 'alphanumeric';
     return 'Prefix (eg.' + this.codeFormatConfig[type].eg + ')';
   }
 
-  get redemptionType() {
+  get redemptionType(): any {
     return this.form.get('rewardInfo.redemptionType').value;
   }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  public setTotalVoucher(value) {
+  public setTotalVoucher(value): void {
     this.formGroup.get('total').patchValue(value);
   }
 
