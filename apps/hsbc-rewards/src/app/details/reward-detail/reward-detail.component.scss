@@ -14,3 +14,18 @@
   max-height: 100%;
   overflow: auto;
 }
+.full-width__button {
+    padding: 0;
+    margin: 3rem 1.5rem 0;
+}
+.redeem-container{
+    width: 100%;
+    padding: 3rem 1.5rem 4.5rem;
+    box-sizing: border-box;
+    bottom: 0;
+    position: absolute;
+
+    button {
+        width: 100%;;
+    }
+}
