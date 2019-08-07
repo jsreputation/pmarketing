@@ -26,7 +26,7 @@ export class ClValidators extends Validators {
       }
       const total = sum(control.value, options.fieldName);
       if (total > 100) {
-        return {sumMoreThan: total};
+        return {sumMoreThan: true};
       }
       return null;
     };
