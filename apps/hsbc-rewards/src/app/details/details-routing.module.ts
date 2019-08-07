@@ -6,8 +6,11 @@ const routes: Routes = [{
   path: '',
   component: DetailsComponent,
   children: [{
-    path: ':id',
+    path: 'element/:id',
     loadChildren: () => import('./reward-detail/reward-detail.module').then(mod => mod.RewardDetailModule)
+  }, {
+    path: 'booking/:id',
+    loadChildren: () => import('./redemption-booking/redemption-booking.module').then(mod => mod.RedemptionBookingModule)
   }]
 }];
 

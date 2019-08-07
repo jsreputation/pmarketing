@@ -9,6 +9,7 @@ import {
   RewardsModule,
   ProfileModule,
   LoyaltyModule,
+  LocationModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +30,8 @@ import { environment } from 'src/environments/environment';
     OauthModule.forRoot({ env: environment }),
     RewardsModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
-    LoyaltyModule.forRoot({env: environment})
+    LoyaltyModule.forRoot({ env: environment }),
+    LocationModule.forRoot({ env: environment })
   ],
   providers: [
   ],

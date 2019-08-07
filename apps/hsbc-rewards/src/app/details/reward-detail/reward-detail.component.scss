@@ -28,4 +28,8 @@
     button {
         width: 100%;;
     }
+    button:disabled {
+      background: #EBEBEB;
+      color: #989797;
+    }
 }

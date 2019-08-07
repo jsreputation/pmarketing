@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./detail-header.component.scss']
 })
 export class DetailHeaderComponent implements OnInit {
-
+  @Input() customBackButton;
   constructor(
     private location: Location
   ) { }

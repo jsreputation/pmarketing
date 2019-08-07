@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { IReward, RewardsService, LoyaltyService } from '@perx/core';
 import { Router } from '@angular/router';
 
 const mockTags = [
@@ -15,15 +15,12 @@ const mockTags = [
 export class HomeComponent implements OnInit, AfterViewInit {
   tags: Array<string>;
   rewards: Observable<IReward[]>;
-
   currentTag: string;
-
   @ViewChild('loyaltySummary', { static: false }) loyaltySummary;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private profile: ProfileService,
     private cd: ChangeDetectorRef,
     private router: Router
   ) {
@@ -60,9 +57,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   async openRewardDetails(event) {
-    const url = 'detail/' + (event instanceof Observable ?
+    const url = 'detail/element/' + (event instanceof Observable ?
       (await event.toPromise())[0].id : event.id)
-
     this.router.navigate([url]);
   }
 }
