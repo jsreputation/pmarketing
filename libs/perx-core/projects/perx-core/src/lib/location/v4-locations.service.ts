@@ -85,12 +85,6 @@ export class V4LocationsService extends LocationsService {
 
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
 
-        filteredMerchants.map((merchant: IV4Merchant) => {
-          console.log(merchant.id);
-          console.log(merchant.tags);
-          return merchant;
-        });
-
         return filteredMerchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
@@ -114,12 +108,6 @@ export class V4LocationsService extends LocationsService {
 
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
 
-        filteredMerchants.map((merchant: IV4Merchant) => {
-          console.log(merchant.id);
-          console.log(merchant.tags);
-          return merchant;
-        });
-
         return filteredMerchants.map((merchant: IV4Merchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
@@ -133,7 +121,6 @@ export class V4LocationsService extends LocationsService {
     ).pipe(
       map((res: IV4GetMerchantResponse) => res.data),
       filter((merchant: IV4Merchant) => merchant.outlets && merchant.outlets.length > 0),
-      tap(x => console.log(x)),
       map((merchant: IV4Merchant) => {
         return merchant.outlets.map((outlet: IV4Outlet) => ({
           merchantId: merchant.id,
