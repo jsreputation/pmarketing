@@ -83,6 +83,7 @@ export {
   ITransaction,
   IExpiringPoints
 } from './lib/loyalty/models/loyalty.model';
+export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 
 /**
  * Rewards

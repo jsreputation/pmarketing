@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;

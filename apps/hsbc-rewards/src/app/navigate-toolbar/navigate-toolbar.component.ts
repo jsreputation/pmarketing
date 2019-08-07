@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+interface IRoute {
+  activated: boolean;
+  title: string;
+  img: string;
+  route: string;
+}
+
 @Component({
   selector: 'app-navigate-toolbar',
   templateUrl: './navigate-toolbar.component.html',
   styleUrls: ['./navigate-toolbar.component.scss']
 })
 export class NavigateToolbarComponent implements OnInit {
-  navigatePanel = [{
+  public navigatePanel: IRoute[] = [{
     activated: false,
     title: 'Home',
     img: 'assets/img/home',
@@ -28,7 +35,7 @@ export class NavigateToolbarComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const url = this.router.url;
     this.navigatePanel.forEach((nav) => nav.route === url ? nav.activated = true : nav.activated = false);
     this.router.events.subscribe((event) => {
