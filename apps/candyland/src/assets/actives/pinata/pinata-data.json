@@ -31,6 +31,7 @@
       "type": "bg1",
       "title": "icon",
       "img": "assets/images/pinata/bg1.png",
+      "fullImg": "assets/images/pinata/full_bg_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -39,6 +40,7 @@
       "type": "bg2",
       "title": "icon",
       "img": "assets/images/pinata/bg2.png",
+      "fullImg": "assets/images/pinata/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -47,6 +49,7 @@
       "type": "bg3",
       "title": "icon",
       "img": "assets/images/pinata/bg3.png",
+      "fullImg": "assets/images/pinata/full_bg_3.jpg",
       "format": ".png",
       "active": "false"
     }
