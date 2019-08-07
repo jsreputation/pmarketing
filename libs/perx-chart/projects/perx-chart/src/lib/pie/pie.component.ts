@@ -12,7 +12,7 @@ export class PieComponent implements OnChanges {
   public data: Observable<IData>;
 
   @Input()
-  public view: any[];
+  public view: number[];
 
   public ngxChartData: any[];
 
