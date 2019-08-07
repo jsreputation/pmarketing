@@ -15,12 +15,12 @@ import {
   CognitoModule,
   OauthModule,
   AuthenticationModule,
-  PopupComponent,
   CampaignModule,
   VouchersModule,
   ProfileModule,
+  StampModule,
   UtilsModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { environment } from '../environments/environment';
 import {
   MatButtonModule,
@@ -82,6 +82,7 @@ import { ProfileComponent } from './profile/profile.component';
     AuthenticationModule,
     CampaignModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
+    StampModule.forRoot({ env: environment }),
     FormsModule
   ],
   providers: [
@@ -89,8 +90,5 @@ import { ProfileComponent } from './profile/profile.component';
     {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
 })
 export class AppModule { }

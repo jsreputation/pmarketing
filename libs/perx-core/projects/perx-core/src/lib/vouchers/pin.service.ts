@@ -10,7 +10,7 @@ export class PinService {
 
   constructor(private vouchersService: VouchersService) { }
 
-  getPin(voucherId: number): Observable<string> {
+  public getPin(voucherId: number): Observable<string> {
     return this.vouchersService.get(voucherId).pipe(
       map(voucher => {
         let rewardId = '0000';
@@ -22,8 +22,7 @@ export class PinService {
       }));
   }
 
-  generatePinCode(rewardId: string) {
-    const pinCode = ('0000' + rewardId).slice(-4);
-    return pinCode;
+  public generatePinCode(rewardId: string): string {
+    return ('0000' + rewardId).slice(-4);
   }
 }

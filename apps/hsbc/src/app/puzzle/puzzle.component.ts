@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  CAMPAIGN_TYPE,
+  CampaignType,
   CampaignService,
+  StampService,
   ICampaign,
   IStampCard,
-  IStampCardResponse,
-  STAMP_CARD_STATUS,
-  TRANSACTION_STATE,
-  NotificationService
-} from '@perx/core/dist/perx-core';
+  StampCardState,
+  StampState,
+  NotificationService,
+  IStamp
+} from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SoundService } from '../sound/sound.service';
@@ -32,6 +33,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   constructor(
     private campaignService: CampaignService,
+    private stampService: StampService,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
@@ -78,7 +80,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private fetchCampaign() {
     this.campaignService.getCampaigns()
       .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp))
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
@@ -89,24 +91,24 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private fetchCard() {
-    this.campaignService.getCurrentCard(this.campaignId)
-      .subscribe((res: IStampCardResponse) => {
-        const card = res.data;
+    this.stampService.getCurrentCard(this.campaignId)
+      .subscribe((card: IStampCard) => {
         this.cardId = card.id;
         this.card = card;
-        this.cols = card.display_properties.number_of_cols;
-        this.rows = card.display_properties.number_of_rows;
-        this.playedPieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.redeemed).length;
-        const availablePieces = card.stamps.filter(stamp => stamp.state === TRANSACTION_STATE.issued).length;
+        this.cols = card.displayProperties.numberOfCols;
+        this.rows = card.displayProperties.numberOfRows;
+        this.playedPieces = card.stamps.filter(stamp => stamp.state === StampState.redeemed).length;
+        const availablePieces = card.stamps.filter(stamp => stamp.state === StampState.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
-        this.image = card.display_properties.card_image.value.image_url;
-        if (this.availablePieces === 0 && card.state === STAMP_CARD_STATUS.inactive) {
+        this.image = card.displayProperties.cardImage.value.imageUrl;
+        if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
           this.notificationService.addPopup({
             title: 'Thank you!',
             text: 'Unfortunately, you have no pieces available.'
           });
           this.router.navigate(['/home']);
         }
+
       });
   }
 
@@ -114,7 +116,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     if (this.campaignId === null) {
       return;
     }
-    this.campaignService.getCards(this.campaignId)
+    this.stampService.getCards(this.campaignId)
       .subscribe(
         (cards: IStampCard[]) => { this.cardsCount = cards.length; },
         () => { }
@@ -122,26 +124,25 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private fetchStampTransactionCount() {
-    this.campaignService.getAllStampTransaction(this.campaignId)
-      .subscribe((stampTransactions => {
-        this.totalAvailablePieces = stampTransactions.filter(v => v.state === TRANSACTION_STATE.issued).length;
-      }));
+    this.stampService.getStamps(this.campaignId)
+      .subscribe((stamps: IStamp[]) => {
+        this.totalAvailablePieces = stamps.filter(stamp => stamp.state === StampState.issued).length;
+      });
   }
 
   onMoved() {
-    const stamps = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
+    const stamps = this.card.stamps.filter(s => s.state === StampState.issued);
     if (stamps.length === 0) {
       // don't do anything
       return;
     }
-    const stamp = stamps[0];
-    stamp.state = TRANSACTION_STATE.redeemed;
-    this.campaignService.putStampTransaction(stamp.id)
+    const firstAvailableStamp = stamps[0];
+    this.stampService.putStamp(firstAvailableStamp.id)
       .subscribe(
-        (res) => {
-          if (res.data.state === TRANSACTION_STATE.redeemed) {
-            if (this.card.card_number === this.cardsCount) { // we are on the last card
-              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.redeemed).length;
+        (stamp: IStamp) => {
+          if (stamp.state === StampState.redeemed) {
+            if (this.card.cardNumber === this.cardsCount) { // we are on the last card
+              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
               if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
                 this.notificationService.addPopup({
                   // tslint:disable-next-line: max-line-length
@@ -150,12 +151,12 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               }
             }
 
-            if (res.data.vouchers && res.data.vouchers.length > 0) {
-              const voucherId = res.data.vouchers[0].id;
+            if (stamp.vouchers && stamp.vouchers.length > 0) {
+              const voucherId = stamp.vouchers[0].id;
               this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
             }
           } else {
-            const issuedLeft = this.card.stamps.filter(s => s.state === TRANSACTION_STATE.issued);
+            const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
               // all redeemed but no voucher
               this.notificationService.addPopup({

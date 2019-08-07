@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core/dist/perx-core';
+// import { Router } from '@angular/router';
+import { AuthenticationService, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -10,33 +11,47 @@ import { AuthenticationService } from '@perx/core/dist/perx-core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'digi';
-
-  preAuth: boolean;
+  public preAuth: boolean;
 
   constructor(
-    private router: Router,
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: object) {
+    @Inject(PLATFORM_ID) private platformId: object,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+  ) {
     this.preAuth = environment.preAuth;
   }
 
-  ngOnInit(): void {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId)) {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          const param = location.search;
-          (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
+  public ngOnInit(): void {
+    this.notificationService.$popup.subscribe(
+      (data: IPopupConfig) => {
+        this.dialog.open(PopupComponent, { data });
+      }
+    );
+
+    if (isPlatformBrowser(this.platformId)) {
+      // set global userID var for GA tracking
+      if (!((window as any).primaryIdentifier)) {
+        const param: string = location.search;
+        const searchParams: URLSearchParams = new URLSearchParams(param);
+        const token: string | null = searchParams.get('token');
+        const pi: string | null = searchParams.get('pi');
+        if (token && pi) {
+          this.authService.saveUserAccessToken(token);
+          localStorage.setItem('user-id', pi);
+
+          (window as any).primaryIdentifier = searchParams.get('pi');
+        } else {
+          this.authService.getAccessToken()
+            .subscribe((tok: string) => {
+              if (tok === null) {
+                this.notificationService.addPopup({
+                  text: 'Missing authentication information'
+                });
+              }
+            });
         }
       }
     }
-    this.authService.failedAuthObservable.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
   }
 }

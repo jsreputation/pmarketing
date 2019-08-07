@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  ISignUpData,
+  IMessageResponse,
+  IResetPasswordData,
+  IAppAccessTokenResponse,
+  IChangePasswordData
+} from './models/authentication.model';
+import { IProfile } from '../../profile/profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService implements AuthService {
-
-  lastURL: string;
-  authing: boolean;
-  retries = 0;
-  maxRetries = 2;
-  preAuthJWT: string;
-  didFailAuth = false;
-  failedAuthObservable = new BehaviorSubject(this.didFailAuth);
+  public lastURL: string;
+  public authing: boolean;
+  public retries: number = 0;
+  public maxRetries: number = 2;
+  public preAuthJWT: string;
+  public didFailAuth: boolean = false;
+  public failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     private tokenStorage: TokenStorage,
@@ -33,20 +40,10 @@ export class AuthenticationService implements AuthService {
    * @memberOf AuthService
    */
   public isAuthorized(): Observable<boolean> {
-    return this.tokenStorage
-      .getAccessToken()
-      .pipe(map(token => {
-        return !!token;
-      }));
-  }
+    const token = this.tokenStorage
+    .getAppInfoProperty('userAccessToken');
 
-  /**
-   * Get access token
-   * @description Should return access token in Observable from e.g.
-   * localStorage
-   */
-  public getAccessToken(): Observable<string> {
-    return this.tokenStorage.getAccessToken();
+    return of(!!token);
   }
 
   /**
@@ -66,7 +63,7 @@ export class AuthenticationService implements AuthService {
               // @ts-ignore
               const userBearer = resp.headers.get('Authorization');
               if (userBearer) {
-                this.saveAccessData(userBearer.split(' ')[1]);
+                this.saveUserAccessToken(userBearer.split(' ')[1]);
               }
             },
             () => {
@@ -100,14 +97,14 @@ export class AuthenticationService implements AuthService {
    * so interceptor won't intercept this request
    */
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
   /**
    * EXTRA AUTH FUNCTIONS
    */
 
-  public async autoLogin() {
+  public async autoLogin(): Promise<boolean> {
     this.authing = true;
     let success = false;
 
@@ -120,7 +117,7 @@ export class AuthenticationService implements AuthService {
     // @ts-ignore
     const userBearer = userAuthData.body.data[0].attributes.jwt;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -128,7 +125,7 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public userAuth(bearer: string) {
+  public userAuth(bearer: string): Observable<any> {
     const userId = (window as any).primaryIdentifier;
     return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
   }
@@ -139,10 +136,10 @@ export class AuthenticationService implements AuthService {
 
     const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId)
       .toPromise();
-      // .catch(() => {
-      //   console.log('login failed!');
-      //   this.authing = false;
-      // });
+    // .catch(() => {
+    //   console.log('login failed!');
+    //   this.authing = false;
+    // });
 
     if (v4AuthData === undefined) {
       return false;
@@ -150,7 +147,7 @@ export class AuthenticationService implements AuthService {
 
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -158,7 +155,7 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public async v4AutoLogin() {
+  public async v4AutoLogin(): Promise<boolean> {
     this.authing = true;
     let success = false;
 
@@ -172,7 +169,7 @@ export class AuthenticationService implements AuthService {
     // @ts-ignore
     const userBearer = v4AuthData.bearer_token;
     if (userBearer) {
-      this.saveAccessData(userBearer);
+      this.saveUserAccessToken(userBearer);
 
       success = true;
     }
@@ -180,12 +177,23 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public preAuth() {
+  public preAuth(): Observable<any> {
     return this.cognitoService.authenticateAppWithPreAuth(location.host).pipe(
       tap((resp) => {
         // @ts-ignore
         this.preAuthJWT = resp.headers.get('Authorization');
         return resp;
+      })
+    );
+  }
+  /**
+   * This is important, for those public pages, API require app level access token in request header
+   * Please add this call in every first page of the app to make sure those public page's API call works
+   */
+  public v4GetAppAccessToken(): Observable<IAppAccessTokenResponse> {
+    return this.v4OauthService.getAppAccessToken().pipe(
+      tap((resp) => {
+        this.saveAppAccessToken(resp.access_token);
       })
     );
   }
@@ -199,22 +207,92 @@ export class AuthenticationService implements AuthService {
   }
 
   public logout(): void {
-    this.tokenStorage.clear();
+    this.tokenStorage.clearAppInfoProperty('userAccessToken');
   }
 
   /**
-   * PRIVATE HELPER FUNCTIONS
+   * This method will send an OTP to the user. This otp should be used as input
+   * of method resetPassword.
    */
-
-  private saveAccessData(accessToken: string) {
-    this.tokenStorage.setAccessToken(accessToken);
+  // @ts-ignore
+  public forgotPassword(phone: string): Observable<IMessageResponse> {
+    return this.v4OauthService.forgotPassword(phone);
   }
 
-  // private getUrlParameter(name) {
-  //   const url = this.getInterruptedUrl() !== undefined ? this.getInterruptedUrl() : window.location.toString();
-  //   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  //   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  //   const results = regex.exec(url);
-  //   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  // }
+  // @ts-ignore
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return this.v4OauthService.resetPassword(resetPasswordInfo);
+  }
+
+  // @ts-ignore
+  public resendOTP(phone: string): Observable<IMessageResponse> {
+    return this.v4OauthService.resendOTP(phone);
+  }
+
+  // @ts-ignore
+  public signup(profile: ISignUpData): Observable<IProfile> {
+    return this.v4OauthService.signup(profile);
+  }
+
+  // @ts-ignore
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
+    return this.v4OauthService.verifyOTP(phone, otp);
+  }
+
+  // @ts-ignore
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
+    return this.v4OauthService.changePassword(changePasswordData);
+  }
+
+  /**
+   * Get access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public getAccessToken(): Observable<string> {
+    const userAccessToken = this.getUserAccessToken();
+    const appAccessToken = this.getAppAccessToken();
+    return of(userAccessToken ? userAccessToken : appAccessToken);
+  }
+
+  /**
+   * Get user access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public getUserAccessToken(): string {
+    return this.tokenStorage.getAppInfoProperty('userAccessToken');
+  }
+
+  /**
+   * Set user access token
+   * @description Should set user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public saveUserAccessToken(accessToken: string): void {
+    this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
+  }
+
+  /**
+   * Get user access token
+   * @description Should return user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public getAppAccessToken(): string {
+    return this.tokenStorage.getAppInfoProperty('appAccessToken');
+  }
+
+  /**
+   * Set access token
+   * @description Should set user access token in Observable from e.g.
+   * localStorage
+   */
+
+  public saveAppAccessToken(accessToken: string): void {
+    this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
+  }
 }

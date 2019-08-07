@@ -22,22 +22,23 @@ export const menus = [
     icon: 'campaign',
     open: false,
   },
-  // {
-  //   name: 'Merchant',
-  //   link: '/merchant',
-  //   icon: 'merchant',
-  //   open: false,
-  // },
-  // {
-  //   name: 'Users',
-  //   link: '/users',
-  //   icon: 'users',
-  //   open: false,
-  // }, {
-  //   name: 'Settings',
-  //   link: '/settings',
-  //   icon: 'settings',
-  //   open: false,
-  // },
+  {
+    name: 'Merchants',
+    link: '/merchants',
+    icon: 'merchant',
+    open: false,
+  },
+  {
+    name: 'Audience',
+    link: '/audience',
+    icon: 'users',
+    open: false,
+  },
+  {
+    name: 'Settings',
+    link: '/settings',
+    icon: 'settings',
+    open: false,
+  },
 
 ];

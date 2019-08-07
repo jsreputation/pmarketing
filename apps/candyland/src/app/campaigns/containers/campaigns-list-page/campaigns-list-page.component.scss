@@ -5,11 +5,11 @@ table {
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-}
 
-th.mat-header-cell {
-  text-align: left;
-  max-width: 30rem !important;
+  th.mat-header-cell {
+    text-align: left;
+    max-width: 30rem !important;
+  }
 }
 
 .name-cell {
@@ -47,5 +47,6 @@ th.mat-header-cell {
 
 .search-block {
   flex: 1;
+  margin-right: 1.5rem;
 }
 

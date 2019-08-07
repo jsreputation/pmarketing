@@ -1,0 +1,146 @@
+@import "variables";
+
+.card {
+  width: 100%;
+  min-width: 40rem;
+  max-width: 84rem;
+  font-family: $base-font-family;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  color: $base-font-color;
+  border-radius: 8px !important;
+  background-color: $white-color !important;
+  padding: 0 !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
+  margin-bottom: 1.6rem !important;
+
+  &-header {
+    height: 5.7rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  &-title {
+    @extend .sub-title;
+  }
+
+  &-content {
+    position: relative;
+    padding: 0.4rem 2.4rem 3rem !important;
+  }
+
+  &-item {
+    margin-bottom: 1.6rem;
+  }
+
+  &-label {
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $secondary-color;
+  }
+
+  &-value {
+    font-family: $primary-font;
+    font-size: 1.6rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $base-font-color;
+    margin: 1.6rem 0 1rem;
+  }
+
+  &-chip {
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    padding: 0.7rem 0.8rem 0.7rem 1.2rem;
+    border-radius: 1.6rem;
+    align-items: center;
+    cursor: default;
+    min-height: 3.2rem;
+    height: 1px;
+    background-color: #e0e0e0;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  &-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    & > * {
+      margin-right: 1.5rem;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+
+    &.stretch {
+      justify-content: stretch;
+
+      & > * {
+        flex: 1;
+      }
+    }
+
+    &.form-field {
+      align-items: flex-end;
+      height: 5.66rem;
+      padding-bottom: 1.25em;
+    }
+  }
+
+  &-section {
+    margin-top: 1.9rem;
+    border-radius: 4px;
+    background-color: $simple-light-gray;
+
+    .card-header {
+      padding: 0 3rem;
+    }
+
+    .card-title {
+      @extend .card-label;
+    }
+
+    .card-content {
+      padding: 0.4rem 3rem 3rem !important;
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 1.6rem;
+  }
+
+  .mat-horizontal-content-container {
+    padding: 0;
+  }
+
+  &.dark-theme {
+    color: $white-color;
+    border-radius: 8px !important;
+    background-color: $dark-color !important;
+
+    .card-title, .card-label {
+      color: $white-color;
+    }
+  }
+}

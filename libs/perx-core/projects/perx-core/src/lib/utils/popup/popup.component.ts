@@ -1,12 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface IPopupConfig {
   title?: string;
   text?: string;
   imageUrl?: string;
-  buttonTxt?: string;
+  buttonTxt?: string|null;
   afterClosedCallBack?: PopUpClosedCallBack;
+  disableOverlayClose?: boolean;
 }
 
 export interface PopUpClosedCallBack {
@@ -19,26 +20,28 @@ export interface PopUpClosedCallBack {
 @Component({
   selector: 'perx-core-popup',
   templateUrl: './popup.component.html',
-  styleUrls: ['./popup.component.css']
+  styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-
-  title: string = null;
-  text: string = null;
-  imageUrl: string = null;
-  buttonTxt = 'close';
+  public title: string = null;
+  public text: string = null;
+  public imageUrl: string = null;
+  public buttonTxt: string = 'close';
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IPopupConfig
   ) {
+    if (data.disableOverlayClose) {
+      dialogRef.disableClose = data.disableOverlayClose;
+    }
     if (data.title) {
       this.title = data.title;
     }
     if (data.text) {
       this.text = data.text;
     }
-    if (data.buttonTxt) {
+    if (data.buttonTxt !== undefined) {
       this.buttonTxt = data.buttonTxt;
     }
     if (data.imageUrl) {
@@ -46,7 +49,15 @@ export class PopupComponent {
     }
   }
 
-  popUpClosed() {
-    this.data.afterClosedCallBack.dialogClosed();
+  // todo: only set up host listener if disableOverlayClose = true
+  @HostListener('window:keyup.esc')
+  public onKeyUp(): void {
+    this.dialogRef.close();
+  }
+
+  public buttonPressed(): void {
+    if (this.data.afterClosedCallBack) {
+      this.data.afterClosedCallBack.dialogClosed();
+    }
   }
 }

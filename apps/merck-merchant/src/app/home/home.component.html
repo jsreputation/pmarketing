@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="app-main">
+    <div class="button-group">
+      <button
+        mat-flat-button
+        class="full-width__button btn-blue"
+        (click)="onSalesScan()"
+      >
+        Sales Scan
+      </button>
+      <button
+        mat-flat-button
+        class="full-width__button btn-hollow-white"
+        (click)="onRedemption()"
+      >
+        Redemption
+      </button>
+      <div class="sales-contact">
+        <app-sales-contact></app-sales-contact>
+      </div>
+    </div>
+  </div>
+  <div class="logout">
+    <div>
+      <button
+        mat-flat-button
+        class="full-width__button btn-transparent"
+        (click)="onLogOut()"
+      >
+        Log Out
+      </button>
+    </div>
+  </div>
+</div>

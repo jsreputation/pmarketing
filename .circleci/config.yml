@@ -163,6 +163,14 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
+            if [ $APP == 'bpi' ]
+            then
+              echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
+            fi
+            if [ $APP == 'candyland' ]
+            then
+              echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
@@ -177,6 +185,25 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   test:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run lerna run build:lib
+      - run: yarn run lerna run config
+      - run: yarn run test-ci
+#      - run: yarn run e2e-ci
+  lint:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run lint-ci
+  build:
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -185,7 +212,7 @@ jobs:
           command: |
             curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
             echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt-get update && sudo apt-get install yarn
+            sudo killall -9 apt-get || true && sudo apt-get update && sudo apt-get install -y yarn=1.16.0-1
       - run: |
           echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
           echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
@@ -197,14 +224,50 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-      - run: yarn run lint-ci
-      - run: yarn run test-ci
+  build-prod:
+    machine:
+      image: ubuntu-1604:201903-01
+    parallelism: 10
+    steps:
+      - run:
+          name: Install yarn
+          command: |
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo killall -9 apt-get || true && sudo apt-get update && sudo apt-get install -y yarn=1.16.0-1
+      - run: |
+          echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+          echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: Switch to latest node version
+          command: |
+            nvm install v10
+            nvm alias default v10
+      - checkout
+      - run: yarn install
     #      - run: yarn run e2e-ci
-
+      - run:
+          command: |
+            (cd apps; ls -d *) | circleci tests split | xargs -n 1 -I {} yarn build:{}:prod
 workflows:
   build_and_deploy:
     jobs:
+      - lint:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
       - test:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - build:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /.*/
+      - build-prod:
           filters:
             tags:
               # this enables circleci to trigger on tags
@@ -237,7 +300,10 @@ workflows:
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
           requires:
             - build_docker_image
+            - build
             - test
+            - lint
+            - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:

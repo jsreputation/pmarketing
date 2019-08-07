@@ -1,16 +1,31 @@
-export enum GAME_TYPE {
+export enum GameType {
     unknown = -1,
     shakeTheTree,
     pinata
 }
 
+export interface IGameOutcome {
+    title: string;
+    subTitle: string;
+    image?: string;
+    button: string;
+}
 export interface IGame {
     id: number;
     campaignId: number;
-    type: GAME_TYPE;
+    type: GameType;
     remainingNumberOfTries: number;
-    config: ITree|IPinata;
+    config: ITree | IPinata;
     backgroundImg?: string;
+    texts: {
+        title?: string;
+        subTitle?: string;
+        button?: string;
+    };
+    results: {
+        outcome?: IGameOutcome;
+        noOutcome?: IGameOutcome;
+    };
 }
 
 export function defaultTree(): ITree {

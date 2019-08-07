@@ -1,0 +1,22 @@
+.container {
+  .app-main {
+    padding: 10rem 1.5rem 0 1.5rem;
+  }
+
+  .button-group {
+    button {
+      margin: 0.8rem 0;
+    }
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 4rem;
+    width: 100%;
+    text-align: center;
+
+    > div {
+      padding: 0 1.5rem 0 1.5rem;
+    }
+  }
+}

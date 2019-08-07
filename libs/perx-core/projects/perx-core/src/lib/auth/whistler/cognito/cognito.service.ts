@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 
 export class EnvConfig {
   // defaults
-  env = {
-    apiHost: 'localhost:3000',
+  public env: any = {
+    apiHost: 'https://api.perxtech.io',
     production: false,
     isWhistler: true,
     preAuth: false,
@@ -26,11 +26,9 @@ export class EnvConfig {
   providedIn: 'root'
 })
 export class CognitoService {
-
-
-  apiHost: string;
-  preAuthEndpoint: string;
-  isAuthenticated: boolean;
+  public apiHost: string;
+  public preAuthEndpoint: string;
+  public isAuthenticated: boolean;
 
   constructor(@Optional() config: EnvConfig, private http: HttpClient) {
     this.apiHost = config.env.apiHost;
@@ -42,7 +40,7 @@ export class CognitoService {
     }
   }
 
-  authenticateAppWithPreAuth(referrer: string): Observable<any> {
+  public authenticateAppWithPreAuth(referrer: string): Observable<any> {
 
     return this.http.get(this.preAuthEndpoint, {
       params: {
@@ -52,7 +50,7 @@ export class CognitoService {
     });
   }
 
-  authenticateUserIdWithAppBearer(bearer: string, user: string): Observable<any> {
+  public authenticateUserIdWithAppBearer(bearer: string, user: string): Observable<any> {
     const payload = {
       data: {
         type: 'login',

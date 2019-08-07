@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
-import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
-import { CampaignsService } from '@cl-core/http-services/campaigns-https.service';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { CampaignsService } from '@cl-core/services/campaigns.service';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -11,59 +10,49 @@ import { CampaignsService } from '@cl-core/http-services/campaigns-https.service
   styleUrls: ['./campaigns-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CampaignsListPageComponent implements OnInit, AfterViewInit {
+export class CampaignsListPageComponent implements  AfterViewInit {
 
-  DATE_FORMAT = 'dd MMM yyyy';
-  TIME_FORMAT = 'hh:ssa';
-  public form: FormGroup;
-  public hasData = true;
+  public DATE_FORMAT: string = 'dd MMM yyyy';
+  public TIME_FORMAT: string = 'hh:ssa';
+  // public form: FormGroup;
+  public hasData: boolean = true;
 
-  inlineRange;
-  public displayedColumns = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
-  public dataSource = new MatTableDataSource<any>();
+  public inlineRange: any;
+  public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private campaignsService: CampaignsService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+              public cd: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-    this.form = new FormGroup({
-      date: new FormControl([{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}], [])
-    });
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
-  public openDialog(): void {
+  public editItem(): void {
   }
 
-  public editItem() {
+  public duplicateItem(): void {
   }
 
-  public duplicateItem() {
+  public deleteItem(): void {
   }
 
-  public deleteItem() {
+  public pauseItem(): void {
   }
 
-  public pauseItem() {
-  }
-
-  private getData() {
+  private getData(): void {
     this.campaignsService.getCampaigns()
       .pipe(
         map((response: any) => response.results),
-        map(result => (
-          result.map(item => {
+        map((result: any) => (
+          result.map((item: any) => {
               item.begin = new Date(item.begin);
               item.end = new Date(item.end);
               return item;

@@ -1,10 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { IGameComponent } from '../IGame.component';
+import { Shake } from '../../utils/shake';
 
-enum GIFT_STATUS {
+const enum GiftStatus {
   hang = 'hang',
   drop = 'drop'
+}
+
+export interface IManStyle {
+  left: string;
+  bottom: string;
+}
+
+export interface IGift {
+  id: number;
+  status: GiftStatus;
+  display: boolean;
 }
 
 @Component({
@@ -12,82 +25,88 @@ enum GIFT_STATUS {
   templateUrl: './shake-tree.component.html',
   styleUrls: ['./shake-tree.component.scss']
 })
-export class ShakeTreeComponent implements OnInit, OnChanges {
+export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, OnDestroy {
   @Input()
-  treeImg: string;
+  public treeImg: string;
   @Input()
-  giftImg: string;
+  public giftImg: string;
   @Input()
-  waitingManImg: string;
+  public waitingManImg: string;
   @Input()
-  waitingManCelebrateImg: string;
+  public waitingManCelebrateImg: string;
   @Input()
-  nbShakes = 1;
+  public nbShakes: number = 1;
   @Input()
-  nbHangedGifts = 1;
+  public nbHangedGifts: number = 3;
   @Input()
-  nbFallingGifts = 10;
+  public nbFallingGifts: number = 3;
   @Input()
-  enabled = false;
+  public enabled: boolean = true;
 
   @Input()
-  distanceFromTree = 16;
+  public distanceFromTree: number = 16;
   @Input()
-  bottomDistance = 5;
+  public bottomDistance: number = 5;
 
   @Output()
-  completed: EventEmitter<void> = new EventEmitter<void>();
+  public completed: EventEmitter<void> = new EventEmitter<void>();
   @Output()
-  tap: EventEmitter<number> = new EventEmitter<number>();
+  public tap: EventEmitter<number> = new EventEmitter<number>();
 
-  gifts = [
-    { id: 1, status: GIFT_STATUS.hang, display: true },
-    { id: 2, status:  GIFT_STATUS.hang, display: true },
-    { id: 3, status:  GIFT_STATUS.hang, display: true },
-    { id: 4, status:  GIFT_STATUS.hang, display: true },
-    { id: 5, status:  GIFT_STATUS.hang, display: true },
-    { id: 6, status:  GIFT_STATUS.hang, display: true },
-    { id: 7, status:  GIFT_STATUS.hang, display: true },
-    { id: 8, status:  GIFT_STATUS.hang, display: true },
-    { id: 9, status:  GIFT_STATUS.hang, display: true },
-    { id: 10, status:  GIFT_STATUS.hang, display: true }
+  public gifts: IGift[] = [
+    { id: 1, status: GiftStatus.hang, display: true },
+    { id: 2, status: GiftStatus.hang, display: true },
+    { id: 3, status: GiftStatus.hang, display: true },
+    { id: 4, status: GiftStatus.hang, display: true },
+    { id: 5, status: GiftStatus.hang, display: true },
+    { id: 6, status: GiftStatus.hang, display: true },
+    { id: 7, status: GiftStatus.hang, display: true },
+    { id: 8, status: GiftStatus.hang, display: true },
+    { id: 9, status: GiftStatus.hang, display: true },
+    { id: 10, status: GiftStatus.hang, display: true }
   ];
 
-  celebrate = false;
-  shakeAnimationClass = '';
-  n = 0;
+  public celebrate: boolean = false;
+  public shakeAnimationClass: string = '';
 
-  ngOnInit() {
-    this.updateGifts();
+  private n: number = 0;
+  private shake: Shake;
+
+  constructor() {
+    this.shake = new Shake({ threshold: 5, timeout: 500 });
+    this.tapped = this.tapped.bind(this);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnInit(): void {
+    this.updateGifts();
+    this.shake.start();
+    window.addEventListener(Shake.EVENT, this.tapped, false);
+  }
+
+  public ngOnDestroy(): void {
+    this.shake.stop();
+    this.tap.complete();
+    this.completed.complete();
+    window.removeEventListener(Shake.EVENT, this.tapped, false);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.nbHangedGifts) {
       this.updateGifts();
     }
   }
 
-  private updateGifts() {
-    this.gifts.map(gift => {
-      if (gift.id > this.nbHangedGifts) {
-        gift.display = false;
-      }
-      return gift;
-    });
-  }
-  tapped() {
+  public tapped(): void {
     if (this.enabled) {
       this.tap.emit(this.n);
       this.n++;
       this.shakeAnimationClass = '';
-      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe( className => this.shakeAnimationClass = className);
-      if (this.n === this.nbShakes) {
-        this.gifts.map(gift => {
-          if (gift.id <= this.nbFallingGifts) {
-            gift.status = GIFT_STATUS.drop;
-          }
-          return gift;
-        });
+      this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
+      // @ts-ignore
+      if (this.n === Number.parseInt(this.nbShakes, 10)) {
+        this.gifts
+          .filter(gift => gift.id <= this.nbFallingGifts)
+          .forEach(gift => gift.status = GiftStatus.drop);
         setTimeout(() => {
           this.celebrate = true;
           this.completed.emit();
@@ -97,17 +116,31 @@ export class ShakeTreeComponent implements OnInit, OnChanges {
     }
   }
 
-  getCurrentShakeAction(ngTap: number): Observable<string> {
+  public getManStyle(): IManStyle {
+    return {
+      left: this.distanceFromTree + '%',
+      bottom: this.bottomDistance + '%',
+    };
+  }
+
+  public reset(): void {
+    this.gifts
+      .filter(gift => gift.id <= this.nbHangedGifts)
+      .forEach(gift => gift.status = GiftStatus.hang);
+    this.n = 0;
+    this.celebrate = false;
+    this.shakeAnimationClass = '';
+  }
+
+  private getCurrentShakeAction(ngTap: number): Observable<string> {
     if (ngTap < this.nbShakes) {
       return of('shake');
     }
     return of('');
   }
 
-  getManStyle() {
-    return {
-          left: this.distanceFromTree + '%',
-          bottom: this.bottomDistance + '%',
-        };
+  private updateGifts(): void {
+    this.gifts
+      .forEach(gift => gift.display = gift.id <= this.nbHangedGifts);
   }
 }

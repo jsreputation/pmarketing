@@ -1,0 +1,14 @@
+<div class="main-app-container">
+  <mat-toolbar class="toolbar">
+    <a [routerLink]="[ '/' ]" matTooltip="Go Home">
+      <mat-icon aria-hidden="false" aria-label="Home">home</mat-icon>
+    </a>
+    <img class="logo" src="assets/logo.png" />
+    <mat-icon aria-hidden="false" aria-label="Login" [routerLink]="[ '/login' ]" *ngIf="!loggedIn">
+      link_off</mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Logout" *ngIf="loggedIn" (click)="logout()">link</mat-icon>
+  </mat-toolbar>
+  <div class="game-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

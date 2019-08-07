@@ -1,0 +1,39 @@
+<div class="page-header full-with" [formGroup]="form">
+  <div class="game-title-wrap">
+    <div class="control-input name-control name-control-title">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput formControlName="name">
+        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="btn-group">
+    <cl-button classList="invert" routerLink="..">Cancel</cl-button>
+    <cl-button classList="third" routerLink="..">Save as a draft</cl-button>
+    <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>
+  </div>
+</div>
+
+<section class="content">
+  <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Select engagement</ng-template>
+      <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Rewards & Limits</ng-template>
+      <cl-new-campaign-rewards-page></cl-new-campaign-rewards-page>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Campaign Details</ng-template>
+      <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <cl-new-campaign-review-page></cl-new-campaign-review-page>
+    </mat-step>
+  </mat-horizontal-stepper>
+</section>

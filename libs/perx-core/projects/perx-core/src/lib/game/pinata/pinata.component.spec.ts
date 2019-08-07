@@ -8,9 +8,9 @@ describe('PinataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PinataComponent ]
+      declarations: [PinataComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +21,43 @@ describe('PinataComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not shake if not enabled', () => {
+    component.tap.subscribe(
+      () => {
+        expect(false).toBeTruthy('It should not shake');
+      }
+    );
+    component.enabled = false;
+    component.shake();
+    expect(true).toBeTruthy('just for the sake of having one expectation');
+  });
+
+  it('should shake if enabled', (done: DoneFn) => {
+    component.tap.subscribe(
+      (tap: number) => {
+        expect(tap).toBe(1);
+        done();
+      }
+    );
+    component.enabled = true;
+    component.shake();
+  });
+
+  it('should break', (done: DoneFn) => {
+    const taps = 3;
+    component.broken
+      .subscribe(
+        () => {
+          expect(true).toBeTruthy();
+          done();
+        }
+      );
+    component.enabled = true;
+    component.nbTaps = taps;
+    for (let i = 0; i < taps * 2; i++) {
+      component.shake();
+    }
   });
 });

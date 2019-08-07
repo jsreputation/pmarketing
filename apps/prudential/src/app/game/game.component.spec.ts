@@ -7,9 +7,10 @@ import {
   GameModule,
   GameService,
   VouchersService,
-  GAME_TYPE,
-  defaultTree
-} from '@perx/core/dist/perx-core';
+  GameType,
+  defaultTree,
+  IGame
+} from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,12 +25,14 @@ describe('GameComponent', () => {
   let router: Router;
   let gameService: GameService;
 
-  const fakeGame = {
+  const fakeGame: IGame = {
     id: 1,
     campaignId: 1,
-    type: GAME_TYPE.shakeTheTree,
+    type: GameType.shakeTheTree,
     remainingNumberOfTries: 10,
-    name: 'UAT GAME',
+    // name: 'UAT GAME',
+    texts: {},
+    results: {},
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 

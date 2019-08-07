@@ -21,6 +21,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('EngagementsListPageComponent', () => {
   let component: EngagementsListPageComponent;
@@ -50,7 +51,8 @@ describe('EngagementsListPageComponent', () => {
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ],
-      declarations: [ EngagementsListPageComponent ]
+      declarations: [ EngagementsListPageComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

@@ -1,0 +1,10 @@
+<div class="quantity-controls">
+  <span (click)="onDecreaseQty()">&#8722;</span>
+  <input
+    type="text"
+    [(ngModel)]="quantity"
+    (ngModelChange)="onQuantityChange($event)"
+    perxCoreNumericCharacter
+  >
+  <span (click)="onIncreaseQty()">&#43;</span>
+</div>

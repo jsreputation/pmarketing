@@ -1,0 +1,22 @@
+@import "variables";
+
+.view {
+  &-group-label {
+    .mat-optgroup-label {
+      color: $dark-color;
+      padding-left: 3.2rem;
+    }
+  }
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-list.cdk-drop-list-dragging .cl-question-form-field:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.7;
+}

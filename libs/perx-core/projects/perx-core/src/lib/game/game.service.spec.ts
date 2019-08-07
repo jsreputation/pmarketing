@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { GameService } from './game.service';
-import { EnvConfig } from './env-config';
+import { EnvConfig } from '../shared/env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IGame, GAME_TYPE } from './game.model';
+import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
 
 describe('GameService', () => {
@@ -16,7 +16,6 @@ describe('GameService', () => {
       ]
     });
 
-    // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
   });
 
@@ -50,10 +49,17 @@ describe('GameService', () => {
   it('should get games from campaign Id', (done: DoneFn) => {
     const service: GameService = TestBed.get(GameService);
     service.getGamesFromCampaign(1)
-      .subscribe((games: IGame[]) => {
-        expect(games.length).toBe(0);
-        done();
-      });
+      // .subscribe((games: IGame[]) => {
+      //     expect(games.length).toBe(0);
+      //     done();
+      //   },
+      .subscribe(
+        () => {},
+        (err: any) => {
+          expect(err.message).toEqual('Games list is empty');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/games');
 
@@ -68,11 +74,15 @@ describe('GameService', () => {
     const service: GameService = TestBed.get(GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
-        expect(games.length).toBe(1);
-        const game = games[0];
-        expect(game.id).toBe(4);
-        expect(game.campaignId).toBe(1);
-        expect(game.type).toBe(GAME_TYPE.shakeTheTree);
+        expect(games.length).toBe(2);
+        const tree = games[0];
+        expect(tree.id).toBe(4);
+        expect(tree.campaignId).toBe(1);
+        expect(tree.type).toBe(GameType.shakeTheTree);
+        const pinata = games[1];
+        expect(pinata.id).toBe(5);
+        expect(pinata.campaignId).toBe(1);
+        expect(pinata.type).toBe(GameType.pinata);
         done();
       });
 
@@ -112,6 +122,23 @@ describe('GameService', () => {
           number_of_tries: 23,
           state: null,
           user_account_id: 42
+        },
+        {
+          id: 5,
+          campaign_id: 1,
+          game_type: 'hit_the_pinata',
+          display_properties: {
+            still_image: {
+              value: {
+                image_url: ''
+              }
+            },
+            opened_image: {
+              value: {
+                image_url: ''
+              }
+            }
+          }
         }
       ]
     });

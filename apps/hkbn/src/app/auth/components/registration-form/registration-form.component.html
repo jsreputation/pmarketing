@@ -1,0 +1,71 @@
+<form #form='ngForm' [formGroup]="registrationForm" (submit)="submit()" class="registration-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Last name (English)</mat-label>
+    <input type="text" matInput formControlName="lastName">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>First name (English)</mat-label>
+    <input type="text" matInput formControlName="firstName">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Telephone number</mat-label>
+    <input type="text" matInput formControlName="phone">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input type="text" matInput formControlName="email">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+    <mat-error *hkbnErrorHandler="'email'">
+      Wrong format
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Confirm Password</mat-label>
+    <input type="password" matInput formControlName="confirmPassword">
+    <mat-error *hkbnErrorHandler="'required'">
+      This field is required
+    </mat-error>
+    <mat-error *hkbnErrorHandler="'notEqual'">
+      Password not match
+    </mat-error>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="terms">
+    I understand and agree to the terms and conditions of Home+
+  </mat-checkbox>
+  <mat-error
+    class="terms-error"
+    *ngIf="registrationForm.get('terms').invalid && (registrationForm.get('terms').touched || form.submitted)">
+    This field is required
+  </mat-error>
+
+  <mat-checkbox formControlName="promo">
+    I accept that it is issued by Home+ and its partner companies.
+    Promotion information
+  </mat-checkbox>
+
+  <button mat-raised-button color="primary" class="submit-button">Submit and send a verification SMS</button>
+</form>

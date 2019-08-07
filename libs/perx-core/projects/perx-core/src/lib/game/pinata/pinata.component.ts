@@ -1,49 +1,63 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { IGameComponent } from '../IGame.component';
 
 @Component({
   selector: 'perx-core-pinata',
   templateUrl: './pinata.component.html',
   styleUrls: ['./pinata.component.css']
 })
-export class PinataComponent implements OnInit {
+export class PinataComponent implements OnInit, OnDestroy, IGameComponent {
   @Input()
-  stillImg: string;
+  public stillImg: string;
   @Input()
-  movingImg: string;
+  public movingImg: string;
   @Input()
-  openedImg: string;
+  public openedImg: string;
   @Input()
-  npTaps = 5;
+  public nbTaps: number = 5;
   @Input()
-  enabled = false;
+  public enabled: boolean = true;
 
-  @Output() tap = new EventEmitter();
-  @Output() broken = new EventEmitter();
+  @Output() public tap: EventEmitter<number> = new EventEmitter();
+  @Output() public broken: EventEmitter<void> = new EventEmitter();
 
-  shakeAnimationClass = '';
-  n = 0;
+  public shakeAnimationClass: string = '';
+  public currentImg: string;
 
-  currentImg;
+  private n: number = 0;
 
-  constructor() {}
-
-  ngOnInit() {
+  public ngOnInit(): void {
     this.currentImg = this.stillImg;
   }
 
-  shake() {
+  public ngOnDestroy(): void {
+    [this.tap, this.broken].forEach(emitter => emitter.complete());
+  }
+
+  public shake(): void {
     if (this.enabled) {
       this.n++;
-      if (this.n < this.npTaps) {
+      if (this.n < this.nbTaps) {
+        if (this.movingImg !== undefined && this.movingImg !== null) {
+          this.currentImg = this.movingImg;
+        }
         this.shakeAnimationClass = '';
+        this.tap.emit(this.n);
         setTimeout(() => {
           this.shakeAnimationClass = 'shake';
         }, 0);
-      } else {
+        // @ts-ignore
+      } else if (this.n === Number.parseInt(this.nbTaps, 10)) {
+        this.tap.emit(this.n);
         this.broken.emit();
         this.currentImg = this.openedImg;
       }
-      this.tap.emit({ tap: this.n });
     }
+  }
+
+  public reset(): void {
+    this.n = 0;
+    this.currentImg = this.stillImg;
+    this.shakeAnimationClass = '';
   }
 }

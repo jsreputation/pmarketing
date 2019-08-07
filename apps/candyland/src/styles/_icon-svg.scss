@@ -1,10 +1,17 @@
+@import "variables";
 
 .icon {
   display: block;
   background-color: rgba(255, 255, 255, 0.51);
-  width: 18px !important;
-  padding: 0 0 0 16px !important;
+  width: 18px;
+  height: 18px;
+  padding: 0 0 0 16px;
   box-sizing: content-box;
+
+  &.full-with {
+    height: 100% !important;
+    width: auto !important;
+  }
 }
 
 .dashboard {
@@ -50,10 +57,113 @@
 }
 
 .logout {
-  height: 18px;
+  height: 24px;
   mask: url("assets/images/icon-logout.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+.rating {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-star.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.pictureChoice {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-image.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.longText {
+  mask: url("assets/images/engagement-question/question-type-icon/long-text-min.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.multipleChoice {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-spreadsheet.svg") no-repeat 50% 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.questionGroup {
+  mask: url("assets/images/engagement-question/question-type-icon/bxs-folder-open.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.date {
+  mask: url("assets/images/engagement-question/question-type-icon/calendar.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.phone {
+  mask: url("assets/images/engagement-question/question-type-icon/phone-min.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.drag-icon {
+  mask: url("assets/images/drag-dots.svg") no-repeat 50% 50%;
+  width: 16px;
+  height: 18px;
+  background: #d8d8d8;
+}
+
+.delete {
+  mask: url("assets/images/delete.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: $dark-color;
+}
+
+.delete-action {
+  mask: url("/assets/images/delete-action.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.date-icon {
+  mask: url("/assets/images/date.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.time-icon {
+  mask: url("/assets/images/time.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.check-icon {
+  mask: url("/assets/images/check.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.link-icon {
+  mask: url("/assets/images/link.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.download-icon {
+  mask: url("/assets/images/download.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #2665ee;
+}
+
+.select-merchant-icon {
+  mask: url("/assets/images/select-merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
+}
+
+.create-merchant-icon {
+  mask: url("/assets/images/create-merchant.svg") no-repeat 50% 50%;
+  background-position: center;
+  background-color: #3e4e73;
 }
 
 .active {

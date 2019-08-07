@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PuzzlesComponent } from './puzzles.component';
 import { MatListModule } from '@angular/material';
-import { CampaignModule, VouchersModule, PuzzlesModule } from '@perx/core/dist/perx-core';
+import { CampaignModule, VouchersModule, PuzzlesModule, StampModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../environments/environment';
 
@@ -19,6 +19,7 @@ describe('PuzzlesComponent', () => {
         NoopAnimationsModule,
         CampaignModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
+        StampModule.forRoot({ env: environment }),
         RouterTestingModule,
       ],
       providers: [

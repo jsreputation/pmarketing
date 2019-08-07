@@ -9,10 +9,11 @@ import {
   OnDestroy,
   QueryList,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  ViewEncapsulation
 } from '@angular/core';
 import { TableFilterDirective } from './table-filter.directive';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material';
@@ -21,16 +22,17 @@ import { MatTableDataSource } from '@angular/material';
   selector: 'cl-table-filters',
   templateUrl: './table-filters.component.html',
   styleUrls: ['./table-filters.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TableFiltersComponent implements AfterContentInit, OnDestroy {
-  @Input() dataSource: MatTableDataSource<any>;
-  @Input() classList = '';
-  @ContentChildren(TableFilterDirective) filters: QueryList<TableFilterDirective>;
-  @ViewChild('filtersContainer', {read: ViewContainerRef, static: true}) filtersContainer: ViewContainerRef;
-  private fg = new FormGroup({});
+  @Input() public dataSource: MatTableDataSource<any>;
+  @Input() public classList: string = '';
+  @ContentChildren(TableFilterDirective) public filters: QueryList<TableFilterDirective>;
+  @ViewChild('filtersContainer', { read: ViewContainerRef, static: true }) public filtersContainer: ViewContainerRef;
+  private fg: FormGroup = new FormGroup({});
   private cache: { [name: string]: EmbeddedViewRef<any> } = {};
-  private destroy$ = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {
   }
@@ -38,42 +40,29 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   public ngAfterContentInit(): void {
     this.filtersContainer.clear();
     this.updateFilters();
-    this.filters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.updateFilters();
-    });
+    this.filters.changes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updateFilters();
+      });
     this.fg.valueChanges
       .pipe(
         startWith(this.fg.value),
-        map(values => JSON.stringify(values)),
+        map((values: any) => JSON.stringify(values)),
         distinctUntilChanged(),
         debounceTime(500),
         takeUntil(this.destroy$)
       )
-      .subscribe(value => {
+      .subscribe((value: any) => {
         this.dataSource.filter = value;
-        // let date = value['date'];
-        // ({date, ...value} = {...value, ...date}); //tslint:disable-line
-        // this.dataSource.setFilters(value);
-        // if(value.name) {
-        //   this.dataSource.filter = value.name.toLocaleLowerCase();
-        // }
-
-        // this.dataSource.filterPredicate =
-        //   (item: any, filter: string) => {
-        //     Object.keys(value).forEach(key => {
-        //       if(value[key] && !item[key].includes(value[key]))
-        //       return false
-        //     });
-        //     return true;
-        //   };
       });
   }
 
-  private updateFilters() {
-    Object.values(this.cache).forEach(item => {
+  private updateFilters(): void {
+    Object.values(this.cache).forEach((item: any) => {
       item.detach();
     });
-    this.filters.forEach(item => {
+    this.filters.forEach((item: any) => {
       if (!this.cache[item.name] || this.cache[item.name].destroyed) {
         if (item.value && item.value.value) {
           item.value = item.value.value;
@@ -88,7 +77,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
     });
   }
 
-  private addControl(name: string, defaultValue = null) {
+  private addControl(name: string, defaultValue: any = null): AbstractControl | null {
     if (!this.fg.contains(name)) {
       this.fg.addControl(name, new FormControl(defaultValue));
     }
@@ -98,7 +87,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    Object.values(this.cache).forEach(item => {
+    Object.values(this.cache).forEach((item: any) => {
       item.destroy();
     });
   }

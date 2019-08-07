@@ -1,0 +1,28 @@
+// todo update
+:host {
+  display: block;
+  height: 100%;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.loc-card-container {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+
+  .loc-card {
+    background-color: #FFF;
+    margin: 0 2rem 2rem;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

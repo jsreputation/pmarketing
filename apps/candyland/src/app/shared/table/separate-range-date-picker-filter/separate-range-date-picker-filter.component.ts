@@ -21,7 +21,7 @@ export class SepareteRangeDatePickerFilterComponent implements OnInit, OnDestroy
 
   public timeForm: FormGroup;
   public disabledState: boolean;
-  private destroy$ = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -33,7 +33,7 @@ export class SepareteRangeDatePickerFilterComponent implements OnInit, OnDestroy
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.timeForm.valueChanges
       .pipe(
         takeUntil(this.destroy$)

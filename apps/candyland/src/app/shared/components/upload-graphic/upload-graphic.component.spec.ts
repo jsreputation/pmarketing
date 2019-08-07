@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UploadGraphicComponent } from './upload-graphic.component';
-import { MatIconModule } from '@angular/material';
+import {UploadGraphicComponent} from './upload-graphic.component';
+import {MatIconModule} from '@angular/material';
 
-describe('UploadGraphicComponent', () => {
+describe('DownloadButtonComponent', () => {
   let component: UploadGraphicComponent;
   let fixture: ComponentFixture<UploadGraphicComponent>;
 

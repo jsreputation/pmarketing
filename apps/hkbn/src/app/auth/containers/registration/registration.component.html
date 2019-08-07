@@ -1,0 +1,13 @@
+<div class="container">
+  <header class="header">
+    <img class="header-logo" src="assets/images/logo.png" alt="">
+    <h1 class="header-title">Home + Shop</h1>
+  </header>
+
+  <mat-card>
+    <h2 class="sign-up">Registered account</h2>
+    <a class="register-message" [routerLink]="'/login'">Already have an account? Click here to login</a>
+
+    <hkbn-registration-form (formSubmit)="submitHandler($event)"></hkbn-registration-form>
+  </mat-card>
+</div>

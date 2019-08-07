@@ -1,12 +1,10 @@
 @import "variables";
 .reward {
-
   &-btn-cancel {
-    padding-right: .8rem;
+    padding-right: 0.8rem;
   }
 
   &-form {
-    min-width: 74.7rem;
     width: 100%;
     margin-right: 4rem;
   }
@@ -24,10 +22,6 @@
   }
 }
 
-.name-control {
-  min-width: 74.7rem;
-}
-
 .info-text {
   font-size: 1.2rem;
   color: $white-color;
@@ -35,6 +29,3 @@
   min-width: 21.1rem;
 }
 
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
-}

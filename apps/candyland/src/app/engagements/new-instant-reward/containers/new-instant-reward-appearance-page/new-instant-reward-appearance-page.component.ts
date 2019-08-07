@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { RewardService } from '@cl-core/http-services/reward.service';
 import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -16,15 +18,17 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public rewardsBackground$: Observable<IGraphic>;
   constructor(private fb: FormBuilder,
               private rewardService: RewardService,
-              private routingState: RoutingStateService) { }
+              private routingState: RoutingStateService,
+              private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createRewardForm();
     this.getRewardBackground();
     this.getRewardCardBackground();
   }
 
   public save(): void {
+    this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {
@@ -53,20 +57,19 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: [null, [
+      headlineMessage: ['You have got rewards!', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
       subHeadlineMessage: [null, [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      typeImage: [null, [Validators.required]],
+      typeImage: ['2', [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: [null, [
+      buttonText: ['See my rewards', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -75,10 +78,26 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   }
 
   private getRewardCardBackground(): void {
-    this.rewardsCardBackground$ = this.rewardService.getRewardCardBackground();
+    this.rewardsCardBackground$ = this.rewardService.getRewardCardBackground()
+      .pipe(
+        tap((res) => {
+          this.patchForm('cardBackground', res[0]);
+        })
+      );
   }
 
   private getRewardBackground(): void {
-    this.rewardsBackground$ = this.rewardService.getRewardBackground();
+    this.rewardsBackground$ = this.rewardService.getRewardBackground()
+      .pipe(
+        tap((res) => {
+          this.patchForm('background', res[0]);
+        })
+      );
+  }
+
+  private patchForm(fieldName: string, value: any): void {
+    this.formReward.patchValue({
+      [fieldName]: value
+    });
   }
 }

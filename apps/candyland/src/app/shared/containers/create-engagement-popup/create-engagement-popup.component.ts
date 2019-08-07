@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { EngagementType } from './shared/models/EngagementType';
-import { EngagementsService } from '@cl-core/http-services/engagements-https.service';
+
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { EngagementsService } from '@cl-core/services/engagements.service';
 
 export enum gamesRouterLink {
   shakeTheTree = 'engagements/games/new-shake',
@@ -48,6 +49,8 @@ export class CreateEngagementPopupComponent implements OnInit {
       case EngagementType.games:
         this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
         break;
+      case EngagementType.survey:
+        this.router.navigateByUrl('/engagements/new-survey/appearance');
     }
     this.close();
   }
@@ -60,7 +63,7 @@ export class CreateEngagementPopupComponent implements OnInit {
     this.selectedGame = game;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getEngagementType();
     this.getGamesType();
   }

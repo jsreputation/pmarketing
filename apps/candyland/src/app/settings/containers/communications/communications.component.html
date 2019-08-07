@@ -1,0 +1,58 @@
+<section class="content" [formGroup]="formCommunications">
+  <mat-expansion-panel class="card" hideToggle="true" [expanded]="smsDisable.value" [disabled]="!smsDisable.value">
+    <mat-expansion-panel-header class="card-header">
+      <div class="flex align-items-center justify-content-between w-100">
+        <p class="card-title">
+          SMS
+        </p>
+        <mat-slide-toggle class="flex" color="primary" formControlName="smsDisable"></mat-slide-toggle>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <div class="input-group">
+        <mat-radio-group class="input-group" color="primary" formControlName="smsType">
+          <mat-radio-button value="perx">Use Perx</mat-radio-button>
+          <mat-radio-button value="other">Use other channels</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="other-channels-content" *ngIf="smsType.value === 'other'">
+        <div class="other-wrap flex">
+          <div class="other-img-wrap">
+            <img src="assets/images/settings/twilio.png" alt="preview">
+          </div>
+          <div class="other-content">
+            <div class="other-content-text">
+              <p class="other-name">Twilio</p>
+              <p class="other-description">
+                Connect to Twilio to customise your SMS.
+              </p>
+            </div>
+            <div class="other-action">
+              <cl-button  classList="primary" >Connect to Twilio</cl-button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="card" hideToggle="true" [expanded]="emailDisable.value" [disabled]="!emailDisable.value">
+    <mat-expansion-panel-header class="card-header">
+      <div class="flex align-items-center justify-content-between w-100">
+        <p class="card-title">
+          Email
+        </p>
+        <mat-slide-toggle class="flex" color="primary" formControlName="emailDisable"></mat-slide-toggle>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <div class="input-group">
+        <mat-radio-group class="input-group" color="primary" formControlName="emailType">
+          <mat-radio-button value="perx">Use Perx</mat-radio-button>
+          <mat-radio-button value="other">Use other channels</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</section>

@@ -1,0 +1,12 @@
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+p,
+small {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

@@ -1,38 +1,39 @@
 <mat-card class="example-card">
   <div class="inner">
-    <mat-card-content
-      (click)="cardClick()"
-      [ngStyle]="{ 'background-image': 'url(' + img + ')' }"
-    >
-      <img [src]="img" class="bg-img" />
+    <mat-card-content [ngStyle]="{ 'background-image': 'url(' + img + ')' }">
+      <img [src]="img" class="bg-img"/>
       <div class="stamp-container">
-        <div
-          class="stamps"
-          *ngFor="let row of [].constructor(rows); index as r"
-          [ngStyle]="{ height: 100 / rows + '%' }"
-        >
-          <div
-            *ngFor="let col of [].constructor(cols); index as c"
-            [ngClass]="isMoved(r, c) ? 'stamp hidden' : 'stamp'"
-          >
-            <div
-              [ngClass]="
-                isLessThanAvailblePieces(r, c) ? 'content available' : 'content'
-              "
-              [ngStyle]="styleObject(r, c)"
-            >
-              <img
-                [src]="isLessThanAvailblePieces(r, c) ? unlockImg : lockImg"
-                alt=""
-              />
+        <div class="stamps"
+             *ngFor="let row of [].constructor(rows); index as stampRow"
+             [ngStyle]="{ height: 100 / rows + '%' }">
+          <div class="stamp"
+               *ngFor="let col of [].constructor(cols); index as stampColumn" [ngStyle]="stampStyle()">
+            <div [ngClass]="isStampClicked(stampRow, stampColumn) ? 'hidden content' : 'content'"
+                 [ngStyle]="styleObject(stampRow, stampColumn)">
+              <perx-core-stamp [lockImg]="lockImg"
+                               [unlockImg]="unlockImg"
+                               [ngClass]="isStampAvailable(stampRow, stampColumn) ? 'available' : ''"
+                               [available]="isStampAvailable(stampRow, stampColumn)"
+                               [isUnlockedAll]="isStampAvailable(stampRow, stampColumn) && isUnlockedAll"
+                               [isCurrent]="isCurrent"
+                               [stampColumn]="stampColumn"
+                               [stamps]="stamps"
+                               (moveCard)="cardClick()">
+              </perx-core-stamp>
             </div>
           </div>
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button *ngIf="nbAvailablePieces" (click)="unlockAvailable()">
-        Unlock All
+      <button mat-button
+              perxCoreAppDebounceClick
+              [debounceTime]="400"
+              [ngClass]="availablePieces()"
+              [disabled]="!isDisabled()"
+              (debounceClick)="unlockAvailable()"
+              (click)="unlockAllAvailable()">
+        {{buttonText}}
       </button>
     </mat-card-actions>
   </div>

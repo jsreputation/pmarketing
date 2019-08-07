@@ -1,0 +1,14 @@
+<div *ngIf="preAuth; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+
+  <ng-content></ng-content>
+</ng-template>
+<ng-template #elseBlock>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+
+    <!-- To be replaced by proper components-->
+    <input placeholder="Enter your username" type="text" name="username" ngModel required #username="ngModel">
+    <input placeholder="Enter your password" type="text" name="password" ngModel required #password="ngModel">
+    <button mat-flat-button type="submit" color="primary">Sign In</button>
+  </form>
+</ng-template>

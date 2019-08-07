@@ -1,16 +1,32 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Candyland</title>
   <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <script type="text/javascript">
+    // walkme integration
+    (function () {
+      var walkme = document.createElement('script');
+      walkme.type = 'text/javascript';
+      walkme.async = true;
+      walkme.src = 'https://cdn.walkme.com/users/6f487e3a460341e19578f17aa8543c16/test/walkme_6f487e3a460341e19578f17aa8543c16_https.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(walkme, s);
+      window._walkmeConfig = { smartLoad: true };
+    })();
+  </script>
 </head>
+
 <body>
   <cl-root></cl-root>
 </body>
+
 </html>

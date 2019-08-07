@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, ICampaign, CAMPAIGN_TYPE, NotificationService } from '@perx/core/dist/perx-core';
+import { CampaignService, ICampaign, CampaignType, NotificationService } from '@perx/core';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.campaignService.getCampaigns()
       .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp).slice(0, 1))
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1))
       )
       .subscribe(
         campaigns => {

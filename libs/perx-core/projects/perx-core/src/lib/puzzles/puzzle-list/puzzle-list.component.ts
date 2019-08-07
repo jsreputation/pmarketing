@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IStampCard, CampaignService, STAMP_CARD_STATUS, TRANSACTION_STATE } from '../../campaign/campaign.service';
+import { StampService } from '../../stamp/stamp.service';
+import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -7,28 +8,28 @@ import { IStampCard, CampaignService, STAMP_CARD_STATUS, TRANSACTION_STATE } fro
   styleUrls: ['./puzzle-list.component.css']
 })
 export class PuzzleListComponent implements OnChanges {
-  puzzles: IStampCard[];
+  public puzzles: IStampCard[];
 
   @Input()
-  campaignId: number = null;
+  public campaignId: number = null;
   @Input()
-  iconDisplay = 'arrow_forward_ios';
+  public iconDisplay: string = 'arrow_forward_ios';
 
-  total = 6;
-
-  @Output()
-  selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
+  public total: number = 6;
 
   @Output()
-  completed: EventEmitter<void> = new EventEmitter<void>();
+  public selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
 
-  constructor(private campaignService: CampaignService) { }
+  @Output()
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
-  ngOnChanges(changes: SimpleChanges): void {
+  constructor(private stampService: StampService) { }
+
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
       this.puzzles = null;
       if (this.campaignId !== null) {
-        this.campaignService.getCards(this.campaignId)
+        this.stampService.getCards(this.campaignId)
           .subscribe((res: IStampCard[]) => {
             this.puzzles = res;
             // assume all is completed
@@ -38,7 +39,7 @@ export class PuzzleListComponent implements OnChanges {
               if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
                 // if there is no stamps objet at all then, it is not completed
                 completed = false;
-              } else if (puzzle.stamps.some(stamp => stamp.state === TRANSACTION_STATE.issued)) {
+              } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
                 // if any transction is issued, then it is not all completed
                 completed = false;
               }
@@ -57,12 +58,12 @@ export class PuzzleListComponent implements OnChanges {
     }
   }
 
-  puzzleSelected(puzzle: IStampCard) {
+  public puzzleSelected(puzzle: IStampCard): void {
     this.selected.emit(puzzle);
   }
 
   // in the UX only mark the 1st active puzzle as active
-  isActive(puzzle: IStampCard): boolean {
+  public isActive(puzzle: IStampCard): boolean {
     // if there is no puzzle in list, it should never happen but return false
     if (!Array.isArray(this.puzzles)) {
       return false;
@@ -72,18 +73,18 @@ export class PuzzleListComponent implements OnChanges {
       return false;
     }
 
-    const totalSlots = puzzle.display_properties.total_slots;
+    const totalSlots = puzzle.displayProperties.totalSlots;
 
     // if there is no more available stamp return false
-    if (puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length >= totalSlots) {
+    if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
       return false;
     }
 
     // get list of active puzzles
     const activePuzzles = this.puzzles.filter(p => {
-      return p.state === STAMP_CARD_STATUS.active &&
+      return p.state === StampCardState.active &&
         p.stamps &&
-        p.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length < totalSlots;
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
     });
 
     // if there is no active puzzle, this one should not be active
@@ -97,7 +98,7 @@ export class PuzzleListComponent implements OnChanges {
     }
   }
 
-  indexToLetter(index: number): string {
+  public indexToLetter(index: number): string {
     const base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (index < 0) {
       return '';
@@ -105,17 +106,17 @@ export class PuzzleListComponent implements OnChanges {
     return base[index % base.length];
   }
 
-  nbAvailableStamps(puzzle: IStampCard): number {
+  public nbAvailableStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
     }
-    return puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.issued).length;
+    return puzzle.stamps.filter(st => st.state === StampState.issued).length;
   }
 
-  nbPlacedStamps(puzzle: IStampCard): number {
+  public nbPlacedStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
     }
-    return puzzle.stamps.filter(st => st.state === TRANSACTION_STATE.redeemed).length;
+    return puzzle.stamps.filter(st => st.state === StampState.redeemed).length;
   }
 }

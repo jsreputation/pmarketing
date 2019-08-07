@@ -1,0 +1,26 @@
+<div class="container">
+  <ng-container *ngIf="profile$ | async as profile">
+    <div class="welcome-text">
+      <ng-container *ngIf="profile.firstName || profile.lastName as name; else anonymous">
+        Welcome {{name}},
+      </ng-container>
+      <ng-template #anonymous>Welcome,</ng-template>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="loyalty$ | async as loyalty">
+    <div class="points">
+      {{loyalty.pointsBalance}}
+    </div>
+    <div>
+      Your total points
+    </div>
+    <div 
+      *ngIf="loyalty.expiringPoints && 
+             loyalty.expiringPoints.length > 0 &&
+             loyalty.expiringPoints[0] as expiring"
+      class="expiring-points"
+    >
+      {{expiring.points || 'Some'}} points expiring {{expiring.expireDate ? 'on' + (expiring.expireDate | date: 'dd MMM yyyy') : 'soon'}}
+    </div>
+  </ng-container>
+</div>

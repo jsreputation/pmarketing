@@ -31,67 +31,100 @@
       "id": 123,
       "name": "cafe",
       "status": "active",
-      "type": "Survey"
+      "type": "Survey",
+      "image": "/assets/images/spin-the-wheel-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 324,
       "name": "caffrghe",
       "status": "pending",
-      "type": "Stamp"
+      "type": "Stamp",
+      "image": "/assets/images/pinata-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 456,
       "name": "cafghfe",
       "status": "draft",
-      "type": "Game"
+      "type": "Game",
+      "image": "/assets/images/shake-tree-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 456,
       "name": "cafe",
       "status": "active",
-      "type": "Instant Reward"
+      "type": "Instant Reward",
+      "image": "/assets/images/spin-the-wheel-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 165,
       "name": "cajjfe",
       "status": "active",
-      "type": "Instant Reward"
+      "type": "Instant Reward",
+      "image": "/assets/images/pinata-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 186,
       "name": "cafe",
       "status": "active",
-      "type": "Survey"
+      "type": "Survey",
+      "image": "/assets/images/shake-tree-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 197,
       "name": "tycafe",
       "status": "active",
-      "type": "Stamp"
+      "type": "Stamp",
+      "image": "/assets/images/spin-the-wheel-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 168,
       "name": "rtycafe",
       "status": "active",
-      "type": "Survey"
+      "type": "Survey",
+      "image": "/assets/images/pinata-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 178,
       "name": "cafe",
       "status": "active",
-      "type": "Instant Reward"
+      "type": "Instant Reward",
+      "image": "/assets/images/pinata-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 561,
       "name": "aasdfgcafe",
       "status": "active",
-      "type": "Game"
+      "type": "Game",
+      "image": "/assets/images/spin-the-wheel-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     },
     {
       "id": 108,
       "name": "thyfrcafe",
       "status": "active",
-      "type": "Instant Reward"
+      "type": "Instant Reward",
+      "image": "/assets/images/pinata-preview.png",
+      "begin": "2018-12-17 03:24:00",
+      "end": "2019-12-17 03:24:00"
     }
   ]
 }

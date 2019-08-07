@@ -1,14 +1,34 @@
 export class PrepareTableFilers {
 
-  public static prepareTabsFilterConfig(data, counterObject: { [key: string]: number }): OptionConfig[] {
+  public static prepareTabsFilterConfig(counterObject: { [key: string]: number }, data: any[] = null): OptionConfig[] {
+
+    const config: OptionConfig[] = [];
+
+    if (data) {
+      config.push({
+        title: 'All (' + data.length + ')',
+        value: null
+      });
+    }
+
+    Object.keys(counterObject).forEach((key) => {
+      config.push({
+        title: key + ' (' + counterObject[key] + ')',
+        value: key
+      });
+    });
+    return config;
+  }
+
+  public static prepareOptionsConfig(counterObject: { [key: string]: number }): OptionConfig[] {
     const config: OptionConfig[] = [{
-      title: 'All (' + data.length + ')',
+      title: 'All',
       value: null
     }];
     Object.keys(counterObject).forEach((key) => {
       config.push({
-        title: key + ' (' + counterObject[key] + ')',
-        value: key.toString()
+        title: key,
+        value: key
       });
     });
     return config;
@@ -39,22 +59,22 @@ export class PrepareTableFilers {
           if (item[key] as string) {
             return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
           }
-          if ('begin' in filters[key] && 'end' in filters[key]) {
-            if (filters[key].begin) {
-              const beginCurrent = item.begin.getTime();
-              const beginFilter = new Date(filters[key].begin).getTime();
-              if (beginCurrent < beginFilter) {
-                return false;
-              }
-            }
-            if (filters[key].end) {
-              const endCurrent = item.end.getTime();
-              const endFilter = new Date(filters[key].end).getTime();
-              if (endCurrent > endFilter) {
-                return false;
-              }
-            }
-          }
+          // if ('begin' in filters[key] && 'end' in filters[key]) {
+          //   if (filters[key].begin) {
+          //     const beginCurrent = item.begin.getTime();
+          //     const beginFilter = new Date(filters[key].begin).getTime();
+          //     if (beginCurrent < beginFilter) {
+          //       return false;
+          //     }
+          //   }
+          //   if (filters[key].end) {
+          //     const endCurrent = item.end.getTime();
+          //     const endFilter = new Date(filters[key].end).getTime();
+          //     if (endCurrent > endFilter) {
+          //       return false;
+          //     }
+          //   }
+          // }
           return true;
         });
     };

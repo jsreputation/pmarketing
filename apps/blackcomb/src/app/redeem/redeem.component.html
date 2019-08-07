@@ -6,12 +6,12 @@
         <ng-template #error_image>
           <img src="assets/redeem_failure.png" #error_image/>
         </ng-template>
-        <span class="result-text">{{getTitleText()}}</span>
-        <span class="result-reward-text">{{getSubTitleText()}}</span>      
+        <span class="result-text">{{titleText}}</span>
+        <span class="result-reward-text">{{subTitleText}}</span>      
       </div>
-      <button class="back-to-wallet" mat-stroked-button color="primary" routerLink="/home">{{getBottomButtonText()}}</button>
-    </div>    
-    <div *ngIf="redeemType == 'pin' && !hasResultFetched">
+      <button class="back-to-wallet" mat-stroked-button color="primary" routerLink="/home">{{bottomButtonText}}</button>
+    </div>
+    <div *ngIf="redeemType === 'pin' && !hasResultFetched">
       <p>
         The merchant will enter the redemption code when you are ready to redeem at the venue.
       </p>
@@ -21,10 +21,10 @@
       <perx-core-pin-redemption length="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)">
       </perx-core-pin-redemption>
     </div>
-    <div *ngIf="redeemType == 'bcode' && !hasResultFetched">
+    <div *ngIf="redeemType === 'txtCode' && !hasResultFetched">
       <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
     </div>
-    <div class="qrcode-container" *ngIf="redeemType == 'qrcode' && !hasResultFetched">
+    <div class="qrcode-container" *ngIf="redeemType === 'qrcode' && !hasResultFetched">
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
     </div>
     <button class="redeem-btn" *ngIf="!hasResultFetched" mat-stroked-button (click)="onCancel()">Redeem</button>

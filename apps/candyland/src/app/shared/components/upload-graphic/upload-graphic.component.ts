@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -15,8 +14,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
-  @Input() selectGraphic: any;
-  @Input() selectedGraphic: any;
+  @Input() public placeholder = 'Recommended format: .JPG or .PNG';
+  @Input() public classList = '';
+  @Input() public selectGraphic: any;
+  @Input() public selectedGraphic: any;
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
   public lock: boolean;
@@ -29,9 +30,10 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   public onTouch: any = () => {};
 
   public set setGraphic(val: any) {
-    if (val !== undefined && this.selectedGraphic !== val) {
+    if (val !== undefined ) {
       this.onChange(val);
       this.onTouch(val);
+      this.imgURL = val;
     }
   }
 
@@ -56,16 +58,16 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     reader.onload = () => {
       this.imgURL = this.sanitizeUrl(reader.result);
       this.loadedImg = true;
-      this.setSelectedGraphic(this.imgURL);
+      this.setSelectedGraphic(this.imgURL.changingThisBreaksApplicationSecurity);
       this.cd.markForCheck();
     };
   }
 
-  public sanitizeUrl(data): any {
+  public sanitizeUrl(data): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 
-  public setActive() {
+  public setActive(): void {
     this.loadedImg = true;
     this.onChange(this.imgURL);
   }
@@ -80,19 +82,19 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     this.onChange(graphic);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
 

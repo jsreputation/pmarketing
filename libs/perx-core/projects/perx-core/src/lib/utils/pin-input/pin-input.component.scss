@@ -1,0 +1,53 @@
+.activation-code {
+  display: flex;
+  flex-direction: column;
+}
+
+.activation-code__inputs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+input {
+  width: 90%;
+  max-width: 6.3rem;
+  height: 114px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 80px;
+  line-height: 96px;
+
+  /* identical to box height */
+  text-align: center;
+}
+
+input:focus {
+  outline-color: #106cc8;
+}
+
+.error input {
+  border-color: #eb202f;
+}
+
+.error input:focus {
+  outline-color: #eb202f;
+}
+
+.error-label {
+  color: #eb202f;
+  display: none;
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  margin-top: 2rem;
+}
+
+.error .error-label {
+  display: block;
+}

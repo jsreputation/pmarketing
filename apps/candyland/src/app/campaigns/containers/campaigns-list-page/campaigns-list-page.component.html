@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1 class="title">Campaigns</h1>
-  <cl-button (click)="openDialog()" classList="primary">Create new</cl-button>
+  <cl-button routerLink="/campaigns/new-campaign" classList="primary">Create new</cl-button>
 </div>
 
 <section class="content">
@@ -30,7 +30,7 @@
     </cl-table-filters>
 
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table class="table" mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>

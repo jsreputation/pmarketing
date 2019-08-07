@@ -7,29 +7,26 @@ import {
   AuthenticationModule,
   OauthModule, CognitoModule,
   CampaignModule, GameModule,
-  VouchersModule
-} from '@perx/core/dist/perx-core';
+  VouchersModule,
+  UtilsModule
+} from '@perx/core';
 import { GameComponent } from './game/game.component';
 
-import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ResultComponent } from './result/result.component';
 import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { ShakeGameComponent } from './shake-game/shake-game.component';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
-
+import { LoginComponent } from './login/login.component';
+import { httpInterceptorProviders } from './UserIdInterceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
-    ResultComponent,
     HeaderComponent,
+    HomeComponent,
     LoginComponent,
-    ShakeGameComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +34,8 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    UtilsModule,
+    MatDialogModule,
     VouchersModule.forRoot({ env: environment }),
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
@@ -44,7 +43,9 @@ import { HomeComponent } from './home/home.component';
     GameModule.forRoot({ env: environment }),
     AuthenticationModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

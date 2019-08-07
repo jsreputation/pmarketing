@@ -1,31 +1,18 @@
-<mat-tab-group color="primary" mat-stretch-tabs class="tab-group wallet-tabs">
-    <mat-tab label="My Wallet">
-        <div class="tab-group__content">
-            <h1>My Puzzles</h1>
-            <mat-card *ngFor="let campaign of campaigns" routerLink="" matRipple>
-                <div class="puzzle-content">
-                    <div class="puzzle-img__wrapper">
-                        <img class="puzzle-img" src="assets/static_image.png">
-                    </div>
-                    <div class="puzzle-details">
-                      <span class='main-reward-title'>
-                          $3 voucher
-                      </span>
-                      <span class="reward-subtitle">details goes here</span>
-                    </div>
-                </div>
-                <mat-icon>
-                    arrow_forward_ios
-                </mat-icon>
-            </mat-card>
-            <h1>My Rewards</h1>
-            <p>My rewards goes here</p>
+<div class="tab-group__content">
+    <h1>My Stamp Card</h1>
+    <mat-card *ngFor="let campaign of campaigns" routerLink="" matRipple (click)="onCampaignSelect(campaign)">
+        <div class="puzzle-content">
+            <div class="puzzle-img__wrapper">
+                <img class="puzzle-img" src="assets/static_image.png">
+            </div>
+            <div class="puzzle-details">
+                <span class='main-reward-title'>
+                    {{campaign.name}}
+                </span>
+                <span class="reward-subtitle">{{campaign.description}}</span>
+            </div>
         </div>
-    </mat-tab>
-    <mat-tab label="History">
-        <div class="tab-group__content">
-            <h1>Redeemed Rewards</h1>
-            <p>My rewards goes here</p>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+    </mat-card>
+    <h1>My Rewards</h1>
+    <perx-core-vouchers (tapped)="voucherSelected($event)"></perx-core-vouchers>
+</div>

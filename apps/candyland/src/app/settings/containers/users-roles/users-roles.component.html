@@ -1,0 +1,40 @@
+<section class="content">
+  <ng-container *ngIf="hasData">
+    <!--filters-->
+    <div class="row">
+      <cl-table-filters [dataSource]="dataSource" classList="row input-group">
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
+        </ng-container>
+        <ng-container *clTableFilter="'role'; value: ''; let filter">
+          <mat-form-field appearance="outline" class="type-block">
+            <mat-select [formControl]="filter" placeholder="All">
+              <mat-option value="">All</mat-option>
+              <ng-container *ngFor="let option of config?.roleTypes">
+                <mat-option [value]="option.value">{{option.title}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </cl-table-filters>
+      <cl-button classList="primary" (click)="openDialogInviteNewUsers()">Invite new user</cl-button>
+    </div>
+    <!--table-->
+    <cl-users-roles-list [dataSource]="dataSource"
+                         [config]="config"
+                         (edit)="openDialogEditUsers($event)"
+    ></cl-users-roles-list>
+    <!--paginator-->
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </ng-container>
+
+  <cl-no-data *ngIf="!hasData">
+    <h2>
+      Nothing to use yet
+    </h2>
+    <p>
+      See your Users & Roles list here once you created your first reward
+    </p>
+  </cl-no-data>
+</section>
+

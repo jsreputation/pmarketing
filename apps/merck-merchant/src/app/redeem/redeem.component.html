@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="main">
+    <div *ngIf="payload" class="customer-info">
+      <p>{{ payload.name }}</p>
+      <small>{{ payload.id }}</small>
+    </div>
+    <div *ngIf="reward" class="reward">
+      <p class="reward-name">
+        {{reward.name}}
+      </p>
+      <p *ngIf="!didProceed && reward.rewardPrice.length > 0" class="point">
+        {{getPrice()}} points will be deducted
+      </p>
+    </div>
+  </div>
+  <div class="btn-container">
+    <div *ngIf="!didProceed else proceeded">
+      <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">Proceed</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">Cancel</button>
+    </div>
+    <ng-template #proceeded>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-blue">Close</button>
+    </ng-template>
+  </div>
+</div>

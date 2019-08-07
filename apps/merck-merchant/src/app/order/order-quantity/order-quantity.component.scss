@@ -1,0 +1,21 @@
+.quantity-controls {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  span {
+    font-size: 2.5rem;
+    padding: 0 1rem;
+    color: #0f69af;
+    vertical-align: bottom;
+  }
+
+  input {
+    background-color: #f8f8fc;
+    border: 0;
+    outline: none;
+    padding: 0.5rem;
+    max-width: 2rem;
+    text-align: center;
+  }
+}

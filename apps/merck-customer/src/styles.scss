@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./custom-theme.scss";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+$main-blue-theme: #0F69AF;
+$inputfield-background:#F8F8FC;
+$error-message-container-color: #FFC832;
+$heading-font-color: #1B1B25;
+$subheading-light-gray-color: #494953;
+$home-page-background-color: #E5E5E5;
+$bottom-bar-text-color: #93939D;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: Lato, sans-serif;
+  font-style: normal;
+}
+
+.mat-snack-bar-container {
+  background-color: #FFC832 !important;
+}

@@ -4,13 +4,13 @@ import { PuzzleListComponent } from './puzzle-list.component';
 import { MatCardModule, MatRippleModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { EnvConfig } from '../../campaign/env-config';
-import { VouchersService } from '../../vouchers/vouchers.service';
+import { EnvConfig } from '../../shared/env-config';
+import { StampService } from '../../stamp/stamp.service';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
   let fixture: ComponentFixture<PuzzleListComponent>;
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const stampServiceMock = jasmine.createSpyObj('StampService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('PuzzleListComponent', () => {
       ],
       providers: [
         EnvConfig,
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: StampService, useValue: stampServiceMock }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

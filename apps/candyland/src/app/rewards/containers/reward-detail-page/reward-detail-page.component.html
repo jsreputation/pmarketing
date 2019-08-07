@@ -1,0 +1,113 @@
+<div class="page-header full-with">
+  <div class="game-title-wrap">
+    <div class="control-input name-control name-control-title">
+      Reward 1
+    </div>
+  </div>
+  <div class="btn-group">
+    <cl-button classList="invert" routerLink="..">Close</cl-button>
+    <cl-button classList="primary" routerLink="..">Edit</cl-button>
+  </div>
+</div>
+
+<div class="reward-detail-content">
+
+  <!--Available Vouchers-->
+  <mat-card class="card dark-theme" *ngIf="data?.vouchersStatistics" expanded>
+    <div class="card-header">
+      <p class="card-title">Available Vouchers</p>
+    </div>
+    <div class="card-content">
+      <div class="card-row">
+        <div class="reward-detail-vouchers-value">{{avaibleVouchers?.value | number: '2.'}}</div>
+        <cl-button classList="dark" (click)="openDialogReplenish()">Replenish</cl-button>
+      </div>
+      <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
+    </div>
+  </mat-card>
+  <!--/ Available Vouchers-->
+
+  <!--Voucher codes Issued-->
+  <mat-expansion-panel class="card" *ngIf="dataSource?.data && dataSource?.data?.length > 0" expanded>
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Voucher codes Issued (15 Campaigns)
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+
+      <!--filters-->
+      <cl-table-filters class="reward-detail-filters" [dataSource]="dataSource" classList="block">
+        <ng-container *clTableFilter="'status'; let filter">
+          <mat-form-field class="reward-detail-status-filter" appearance="outline">
+            <mat-select [formControl]="filter" placeholder="Status">
+              <mat-option [value]="null">
+                All
+              </mat-option>
+              <mat-option *ngFor="let option of statusFilterConfig"
+                          [value]="option.value">
+                {{option.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </cl-table-filters>
+      <!--table-->
+      <cl-rewards-campaigns-list [dataSource]="dataSource"></cl-rewards-campaigns-list>
+      <!--paginator-->
+      <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </mat-expansion-panel>
+  <!--/ Voucher codes Issued-->
+
+  <!--Reward Info-->
+  <mat-expansion-panel class="card" *ngIf="data?.rewardInfo" expanded>
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Reward Info
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <cl-reward-info-preview [data]="data?.rewardInfo"></cl-reward-info-preview>
+    </div>
+  </mat-expansion-panel>
+  <!--/ Reward Info-->
+
+  <!-- Merchant Info-->
+  <mat-expansion-panel class="card" *ngIf="data?.merchantInfo" expanded>
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Merchant Info
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <cl-reward-merchant-item [merchant]="data?.merchantInfo"></cl-reward-merchant-item>
+    </div>
+  </mat-expansion-panel>
+  <!--Merchant Info-->
+
+  <!--Vouchers-->
+  <mat-expansion-panel class="card" *ngIf="data?.vouchers" expanded>
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Vouchers
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <cl-reward-vouchers-preview [data]="data?.vouchers"></cl-reward-vouchers-preview>
+    </div>
+  </mat-expansion-panel>
+
+  <!--  Limits-->
+  <mat-expansion-panel class="card" *ngIf="data?.limits" expanded>
+    <mat-expansion-panel-header class="card-header">
+      <p class="card-title">
+        Limits
+      </p>
+    </mat-expansion-panel-header>
+    <div class="card-content">
+      <cl-reward-limits-preview [data]="data?.limits"></cl-reward-limits-preview>
+    </div>
+  </mat-expansion-panel>
+  <!--  / Limits-->
+</div>

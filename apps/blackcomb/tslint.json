@@ -1,26 +1,19 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:recommended",
+    "rxjs-tslint-rules"
+  ],
+  "rulesDirectory": [
+    "codelyzer",
+    "rxjs-tslint",
+    "tslint-consistent-codestyle"
+  ],
   "rules": {
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warn"
     },
-    "component-class-suffix": true,
-    "contextual-lifecycle": true,
-    "directive-class-suffix": true,
-    "directive-selector": [
-      true,
-      "attribute",
-      "app",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "kebab-case"
-    ],
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -31,7 +24,7 @@
       true,
       140
     ],
-    "member-access": false,
+    "member-access": true,
     "member-ordering": [
       true,
       {
@@ -43,7 +36,7 @@
         ]
       }
     ],
-    "no-consecutive-blank-lines": false,
+    "no-consecutive-blank-lines": true,
     "no-console": [
       true,
       "debug",
@@ -54,8 +47,7 @@
     ],
     "no-empty": false,
     "no-inferrable-types": [
-      true,
-      "ignore-params"
+      false
     ],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
@@ -73,6 +65,9 @@
       "single"
     ],
     "trailing-comma": false,
+    "component-class-suffix": true,
+    "contextual-lifecycle": true,
+    "directive-class-suffix": true,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
     "no-input-rename": true,
@@ -80,13 +75,44 @@
     "no-output-native": true,
     "no-output-on-prefix": true,
     "no-output-rename": true,
+    "no-default-export": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+    "use-pipe-transform-interface": true,
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "member-variable-declaration",
+      "property-declaration",
+      "arrow-call-signature",
+      "arrow-parameter"
+    ],
+    "unnecessary-constructor": true,
+    "rxjs-collapse-imports": true,
+    "rxjs-pipeable-operators-only": true,
+    "rxjs-no-static-observable-methods": true,
+    "rxjs-proper-imports": true,
+    "rxjs-no-exposed-subjects": false,
+    "rxjs-no-ignored-subscribe": true,
+    "rxjs-no-internal": true,
+    "rxjs-no-nested-subscribe": true,
+    "rxjs-no-wholesale": false,
+    "rxjs-no-create": true,
+    "naming-convention": [
+      true,
+      {"type": "enum", "format": "PascalCase"}
+    ],
+    "no-accessor-recursion": true,
+    "no-collapsible-if": true,
+    "no-else-after-return": true,
+    "no-return-undefined": true,
+    "no-static-this": true,
+    "no-unnecessary-else": true,
+    "no-unused-expression": true,
+    "no-var-before-return": true,
+    "prefer-const-enum": true
+  }
 }
