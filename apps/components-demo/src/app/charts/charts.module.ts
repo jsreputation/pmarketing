@@ -15,6 +15,7 @@ import { TrendComponent } from './trend/trend.component';
 import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
+import { MetabaseComponent } from './metabase/metabase.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LineComponent } from './line/line.component';
     TrendComponent,
     MapComponent,
     CalendarHeatmapComponent,
-    LineComponent
+    LineComponent,
+    MetabaseComponent
   ],
   imports: [
     CommonModule,

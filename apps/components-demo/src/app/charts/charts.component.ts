@@ -17,5 +17,6 @@ export class ChartsComponent {
     { path: 'trend', label: 'Trend' },
     { path: 'map', label: 'Map' },
     { path: 'heatmap', label: 'Calendar Heat map' },
+    { path: 'metabase', label: 'Metabase' },
   ];
 }

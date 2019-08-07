@@ -8,6 +8,7 @@ import { TrendComponent } from './trend/trend.component';
 import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
+import { MetabaseComponent } from './metabase/metabase.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'map', component: MapComponent },
       { path: 'heatmap', component: CalendarHeatmapComponent },
       { path: 'line', component: LineComponent },
+      { path: 'metabase', component: MetabaseComponent },
     ],
   },
 ];

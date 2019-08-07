@@ -26,7 +26,9 @@ export class DataService {
             .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
             .join('&');
 
-          return this.http.get<IMetabaseResponse>(`https://metabase.perxtech.io/api/card?${query}`);
+          return this.http.get<IMetabaseResponse>(
+            `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
+          );
         }),
         map((res: IMetabaseResponse) => res.data)
       );
