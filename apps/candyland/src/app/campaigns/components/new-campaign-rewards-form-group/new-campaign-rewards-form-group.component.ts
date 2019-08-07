@@ -10,6 +10,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
+  @Input() public title: string = 'Rewards';
   @Input() public formGroup: FormGroup = this.fb.group({
     enableProbability: ([false]),
     rewards: this.fb.array([],

@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { ClValidators } from '@cl-helpers/cl-validators';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 
@@ -64,7 +63,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   public ngOnInit() {
     super.ngOnInit();
-    this.updateRewards();
+    // this.updateRewards();
     // this.enableProbability.valueChanges
     //   .pipe(untilDestroyed(this))
     //   .subscribe(() => this.updateRewards());
