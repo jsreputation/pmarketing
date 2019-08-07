@@ -3,4 +3,4 @@
  */
 
 export { PerxChartModule } from './lib/perx-chart.module';
-export { IData, BASE_TYPE } from './lib/data.model';
+export { IData, BaseType } from './lib/data.model';

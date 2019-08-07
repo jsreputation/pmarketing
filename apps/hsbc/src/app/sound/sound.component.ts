@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -6,19 +6,16 @@ import { MatDialogRef } from '@angular/material';
   templateUrl: './sound.component.html',
   styleUrls: ['./sound.component.scss']
 })
-export class SoundComponent implements OnInit {
-  enabled = false;
+export class SoundComponent {
+  public enabled: boolean = false;
 
-  onEnable = new EventEmitter<boolean>();
+  public onEnable: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<SoundComponent>
   ) { }
 
-  ngOnInit() {
-  }
-
-  onEnableSound(enable: boolean) {
+  public onEnableSound(enable: boolean): void {
     this.enabled = enable;
     this.onEnable.emit(enable);
   }

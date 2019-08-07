@@ -7,14 +7,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
-  voucherId: number;
+  public voucherId: number;
 
   constructor(
     private route: ActivatedRoute,
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.voucherId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
   }
 }
