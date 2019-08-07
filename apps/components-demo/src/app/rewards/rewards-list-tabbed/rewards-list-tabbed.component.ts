@@ -39,10 +39,6 @@ export class RewardsListTabbedComponent implements OnInit {
       title: 'Clicked!',
       text: 'ID: ' + reward.id + '\n' +
         'Reward Name: ' + reward.name,
-      afterClosedCallBack: this
     });
-  }
-
-  public dialogClosed(): void {
   }
 }
