@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
@@ -123,7 +124,8 @@ import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-
     DownloadLinkModule,
     UploadFileModule,
     ChipListModule,
-    CheckboxGroupModule
+    CheckboxGroupModule,
+    SelectRewardPopupModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

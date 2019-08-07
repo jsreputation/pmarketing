@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'cl-rewards-list',
@@ -8,16 +8,30 @@ import {MatSort, MatTableDataSource} from '@angular/material';
 })
 export class RewardsListComponent implements AfterViewInit {
   DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<any>;
+  @Input() public dataSource: MatTableDataSource<Reward[]>;
   @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
+  @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
+  @Output() public selectReward = new EventEmitter<Reward>();
+
+
+  public selected;
 
   constructor() {
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  public selectItem(item: Reward) {
+    this.selected = item;
+    this.selectReward.emit(item);
+  }
+
+  public isSelected(item: Reward): boolean {
+    return this.selected && item.id === this.selected.id;
   }
 
   public editItem(id: number) {

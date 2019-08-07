@@ -5,8 +5,8 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 // import { untilDestroyed } from 'ngx-take-until-destroy';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import {ClValidators} from "@cl-helpers/cl-validators";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { ClValidators } from '@cl-helpers/cl-validators';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cl-new-campaign-rewards-stamps-page',
@@ -16,6 +16,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
+
+  public get rewardsList(): FormArray {
+    return this.form.get('rewardsList') as FormArray;
+  }
   // public rewardsList: Reward[] = [
   //   {
   //     id: 1,
@@ -86,24 +90,28 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   // }
 
   private initForm(): void {
-    this.form = this.fb.group({
-      enableProbability: ([false]),
-      rewards: this.fb.array([],
-        [ClValidators.sumMoreThan({fieldName: 'probability'})]
-      ),
-      limits: this.fb.group({
-        times: [null, [
-          Validators.required,
-          Validators.min(1),
-          Validators.max(60)
-        ]],
-        duration: [null, [
-          Validators.required
-        ]]
-      })
-    });
+    this.form = this.fb.group(
+      {
+        rewardsList: this.fb.array([
+          this.fb.group({
+            enableProbability: ([false]),
+            rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})])
+          })
+        ]),
+        limits: this.fb.group({
+          times: [null, [
+            Validators.required,
+            Validators.min(1),
+            Validators.max(60)
+          ]],
+          duration: [null, [
+            Validators.required
+          ]]
+        })
+      });
     this.form.patchValue(this.store.currentCampaign);
   }
+
   //
   // private createRewardForm(value): FormGroup {
   //   if (this.enableProbability.value) {

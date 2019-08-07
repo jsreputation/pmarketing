@@ -1,36 +1,56 @@
 <div class="tab-content">
   <div class="forms-container" [formGroup]="form">
     <!--Rewards-->
-    <mat-card class="card">
-      <cl-new-campaign-rewards-form-group title="Rewards for slot 4"></cl-new-campaign-rewards-form-group>
-      <cl-new-campaign-rewards-form-group title="Rewards for slot 8" [rewardsList]="[]"></cl-new-campaign-rewards-form-group>
+    <mat-card class="card" [formGroup]="">
+      <ng-container *ngFor="let rewardGroup of rewardsList; let i = index">
+        <cl-new-campaign-rewards-form-group [title]="i"
+                                            [group]="rewardGroup">
+        </cl-new-campaign-rewards-form-group>
+      </ng-container>
     </mat-card>
     <!--limits-->
     <mat-card class="card" formGroupName="limits">
       <div class="card-header">
-        <p class="card-title">Play Limits</p>
+        <p class="card-title">Limits</p>
       </div>
       <div class="card-content">
-        <div class="card-row stretch">
-          <div>
-            <label class="card-label">Limit per user</label>
+        <div class="card-section">
+          <div class="card-header">
+            <p class="card-title">Stamp Card Limits</p>
+          </div>
+          <div class="card-content">
+            <label class="card-label">Stamp cards per campaign</label>
             <mat-form-field>
               <input matInput type="number" [min]="1" formControlName="times">
-              <span matSuffix>Play</span>
-            </mat-form-field>
-          </div>
-          <div>
-            <label class="card-label">Limit per duration</label>
-            <mat-form-field>
-              <mat-select formControlName="duration">
-                <mat-option *ngFor="let option of config?.durationLimits"
-                            [value]="option?.value">
-                  {{option?.title}}
-                </mat-option>
-              </mat-select>
+              <span matSuffix>stamp cards</span>
             </mat-form-field>
           </div>
         </div>
+        <!--    <mat-card class="card" formGroupName="limits">-->
+        <!--      <div class="card-header">-->
+        <!--        <p class="card-title">Play Limits</p>-->
+        <!--      </div>-->
+        <!--      <div class="card-content">-->
+        <!--        <div class="card-row stretch">-->
+        <!--          <div>-->
+        <!--            <label class="card-label">Limit per user</label>-->
+        <!--            <mat-form-field>-->
+        <!--              <input matInput type="number" [min]="1" formControlName="times">-->
+        <!--              <span matSuffix>Play</span>-->
+        <!--            </mat-form-field>-->
+        <!--          </div>-->
+        <!--          <div>-->
+        <!--            <label class="card-label">Limit per duration</label>-->
+        <!--            <mat-form-field>-->
+        <!--              <mat-select formControlName="duration">-->
+        <!--                <mat-option *ngFor="let option of config?.durationLimits"-->
+        <!--                            [value]="option?.value">-->
+        <!--                  {{option?.title}}-->
+        <!--                </mat-option>-->
+        <!--              </mat-select>-->
+        <!--            </mat-form-field>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </mat-card>
   </div>

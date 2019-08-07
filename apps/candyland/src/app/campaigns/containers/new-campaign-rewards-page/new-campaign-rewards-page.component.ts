@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { ClValidators } from '@cl-helpers/cl-validators';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 
@@ -13,24 +12,33 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
-  // public rewardsList: Reward[] = [
-  //   {
-  //     id: 1,
-  //     image: 'assets/images/mask-group.png',
-  //     name: 'Free Coffee',
-  //     type: 'Starbucks',
-  //     current: 500,
-  //     total: 1000
-  //   },
-  //   {
-  //     id: 2,
-  //     image: 'assets/images/mask-group.png',
-  //     name: 'Free Coffee 2',
-  //     type: 'Starbucks',
-  //     current: 500,
-  //     total: 800
-  //   }
-  // ];
+  defaultValue = {
+    rewardsGroup: {
+      enableProbability: true,
+      rewards: [
+        {
+          value: {
+            id: 1,
+            image: 'assets/images/mask-group.png',
+            name: 'Free Coffee',
+            type: 'Starbucks',
+            current: 500,
+            total: 1000
+          }
+        },
+        {
+          value: {
+            id: 2,
+            image: 'assets/images/mask-group.png',
+            name: 'Free Coffee 2',
+            type: 'Starbucks',
+            current: 500,
+            total: 800
+          }
+        }
+      ]
+    }
+  };
 
   // public rewardsTemplate: Reward = {
   //   id: 1,
@@ -83,10 +91,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   private initForm(): void {
     this.form = this.fb.group({
-      enableProbability: ([false]),
-      rewards: this.fb.array([],
-        [ClValidators.sumMoreThan({fieldName: 'probability'})]
-      ),
+      rewardsGroup: [],
       limits: this.fb.group({
         times: [null, [
           Validators.required,
@@ -98,7 +103,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
         ]]
       })
     });
-    this.form.patchValue(this.store.currentCampaign);
+    this.form.patchValue(this.defaultValue);
   }
 
   // private createRewardForm(value): FormGroup {

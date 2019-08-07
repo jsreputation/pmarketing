@@ -19,7 +19,7 @@
       <cl-button classList="invert">+ Create New Engagement</cl-button>
     </div>
     <!--items-->
-    <mat-error *ngIf="form.get('template').hasError('required')" class="error">Choose an engagement</mat-error>
+<!--    <mat-error *ngIf="form.get('template').hasError('required')" class="error">Choose an engagement</mat-error>-->
     <mat-radio-group class="item-list shadow" [formControl]="form.get('template')">
       <ng-container *ngIf="(dataSource.connect() | async) as items">
         <ng-container *ngFor="let item of items">
