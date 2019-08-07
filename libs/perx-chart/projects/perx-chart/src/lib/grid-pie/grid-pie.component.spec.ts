@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GridPieComponent } from './grid-pie.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GridPieComponent', () => {
   let component: GridPieComponent;
@@ -8,7 +10,11 @@ describe('GridPieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridPieComponent ]
+      declarations: [ GridPieComponent ],
+      imports: [
+        NgxChartsModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));
