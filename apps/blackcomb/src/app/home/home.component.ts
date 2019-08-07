@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ICampaign, CAMPAIGN_STATE, CAMPAIGN_TYPE } from '@perx/core';
+import { ICampaign, CampaignState, CampaignType } from '@perx/core';
 import { Router } from '@angular/router';
 import { IVoucher } from '@perx/core/dist/perx-core/lib/stamp/models/stamp.model';
 
@@ -14,8 +14,8 @@ export class HomeComponent {
       id: 1,
       name: 'Smash that Pinata',
       description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
+      type: CampaignType.stamp,
+      state: CampaignState.active
     }
   ];  // test Array
 
