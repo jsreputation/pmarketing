@@ -8,7 +8,4 @@ import {Component, Input} from '@angular/core';
 export class DownloadButtonComponent {
   @Input() public file: any;
 
-  constructor() {
-  }
-
 }

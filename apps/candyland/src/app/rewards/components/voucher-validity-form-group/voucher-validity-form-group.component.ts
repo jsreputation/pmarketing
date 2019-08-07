@@ -10,9 +10,4 @@ export class VoucherValidityFormGroupComponent implements OnInit {
   @Input() public formGroup: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
 
-  constructor() {
-  }
-
-  
-
 }

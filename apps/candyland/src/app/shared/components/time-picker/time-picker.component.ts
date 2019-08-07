@@ -41,9 +41,6 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor() {
-  }
-
   public ngOnInit(): void {
     this.control.valueChanges
       .pipe(

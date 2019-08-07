@@ -41,7 +41,6 @@ export class DetailedMerchantComponent {
       }
     ]
   };
-  
 
   public edit(): void {
 

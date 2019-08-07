@@ -10,9 +10,4 @@ export class LimitFormGroupComponent implements OnInit {
   @Input() public formGroup: AbstractControl;
   @Input() public config: any;
 
-  constructor() {
-  }
-
-  
-
 }

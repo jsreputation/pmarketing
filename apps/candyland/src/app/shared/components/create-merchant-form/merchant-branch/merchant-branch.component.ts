@@ -10,9 +10,6 @@ export class MerchantBranchComponent implements OnInit {
   @Input() public group: FormGroup;
   @Input() public index: number;
   @Output() public removeGroup = new EventEmitter<number>();
-  
-
-  
 
   public get name(): AbstractControl {
     return this.group.get('name');

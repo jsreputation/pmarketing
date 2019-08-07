@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./add-user-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddUserPopupComponent implements OnInit {
+export class AddUserPopupComponent {
 
   public form: FormGroup;
   public config: { [key: string]: OptionConfig[] } = {
@@ -32,8 +32,6 @@ export class AddUserPopupComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.initForm();
   }
-
-  
 
   public close() {
     this.dialogRef.close();

@@ -22,8 +22,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  
-
   public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();

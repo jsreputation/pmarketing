@@ -9,9 +9,4 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 export class RewardInfoPreviewComponent implements OnInit {
   @Input() public data: any;
 
-  constructor() {
-  }
-
-  
-
 }

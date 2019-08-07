@@ -9,11 +9,6 @@ export class RewardMerchantCardComponent implements OnInit {
   @Output() public selectMerchant = new EventEmitter<void>();
   @Output() public createMerchant = new EventEmitter<void>();
 
-  constructor() {
-  }
-
-  
-
   public clickSelectMerchant() {
     this.selectMerchant.emit();
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   templateUrl: './question-date-field.component.html',
   styleUrls: ['./question-date-field.component.scss']
 })
-export class QuestionDateFieldComponent implements OnInit, OnDestroy {
+export class QuestionDateFieldComponent implements OnDestroy {
   @Input() public group: FormGroup;
   private destroy$ = new Subject();
 

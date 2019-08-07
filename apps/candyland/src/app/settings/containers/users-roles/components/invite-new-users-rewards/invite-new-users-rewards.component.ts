@@ -8,8 +8,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class InviteNewUsersRewardsComponent implements OnInit {
 
-  
-
-  
-
 }

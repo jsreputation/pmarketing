@@ -8,7 +8,4 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DownloadLinkComponent implements OnInit {
   @Input() public file: string;
 
-  constructor() {
-  }
-
 }

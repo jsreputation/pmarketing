@@ -15,11 +15,6 @@ export class RewardMerchantItemComponent implements OnInit {
   @Input() public enableActions = false;
   @Output() public deleteMerchant = new EventEmitter<void>();
 
-  constructor() {
-  }
-
-  
-
   public clickDeleteMerchant() {
     this.deleteMerchant.emit();
   }

@@ -28,11 +28,6 @@ export class RewardVoucherCodeFormGroupComponent implements OnInit {
     return this.form.get('rewardInfo.redemptionType').value;
   }
 
-  constructor() {
-  }
-
-  
-
   public setTotalVoucher(value) {
     this.formGroup.get('total').patchValue(value);
   }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -9,7 +9,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class MerchantListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
   @Input() public displayedColumns: string[] = ['logo', 'name', 'phone', 'branches'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public selectedMerchant: EventEmitter<IMerchant> = new EventEmitter<IMerchant>();
   public selected: IMerchant;
 

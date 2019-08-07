@@ -10,9 +10,4 @@ export class RewardVouchersPreviewComponent implements OnInit {
   public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public data: any;
 
-  constructor() {
-  }
-
-  
-
 }

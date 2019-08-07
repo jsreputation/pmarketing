@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
+export class SelectGraphicComponent implements ControlValueAccessor {
   @Input() public selectedGraphic: IGraphic;
   @Input() public graphicList: IGraphic[];
   @Output() private selectGraphic = new EventEmitter<IGraphic>();

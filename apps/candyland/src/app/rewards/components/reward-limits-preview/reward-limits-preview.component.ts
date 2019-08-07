@@ -9,9 +9,4 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 export class RewardLimitsPreviewComponent implements OnInit {
   @Input() public data: any;
 
-  constructor() {
-  }
-
-  
-
 }

@@ -15,9 +15,6 @@ export class UsersRolesListComponent implements AfterViewInit {
   @Output() public delete = new EventEmitter<number>();
   @Output() public edit = new EventEmitter<number>();
 
-  constructor() {
-  }
-
   public ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }

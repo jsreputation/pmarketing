@@ -22,8 +22,6 @@ export class ClColorPickerComponent implements ControlValueAccessor {
 
   public onTouch: any = () => {
   }
-  constructor() {
-  }
 
   public onEventLog(data: any): void {
     if (this.disable) {

@@ -8,9 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CopyLinkComponent implements OnInit {
   @Input() public link: string;
 
-  constructor() {
-  }
-
   public copyInputMessage(inputElement) {
     inputElement.select();
     document.execCommand('copy');

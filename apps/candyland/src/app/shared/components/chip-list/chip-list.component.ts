@@ -43,9 +43,6 @@ export class ChipListComponent implements OnInit, OnDestroy, ControlValueAccesso
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor() {
-  }
-
   public ngOnDestroy(): void {
   }
 

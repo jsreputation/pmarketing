@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './question-multiple-choice-field.component.html',
   styleUrls: ['./question-multiple-choice-field.component.scss']
 })
-export class QuestionMultipleChoiceFieldComponent implements OnInit {
+export class QuestionMultipleChoiceFieldComponent {
   @Input() public group: FormGroup;
   constructor(private fb: FormBuilder) { }
 
