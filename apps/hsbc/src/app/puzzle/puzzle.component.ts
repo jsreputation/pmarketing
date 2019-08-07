@@ -20,16 +20,16 @@ import { SoundService } from '../sound/sound.service';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  campaignId: number = null;
+  public campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
-  availablePieces = 0;
-  playedPieces = 0;
-  totalAvailablePieces = 0;
-  rows = 2;
-  cols = 3;
-  image = '';
-  private cardsCount = 0;
+  public availablePieces: number = 0;
+  public playedPieces: number = 0;
+  public totalAvailablePieces: number = 0;
+  public rows: number = 2;
+  public cols: number = 3;
+  public image: string = '';
+  private cardsCount: number = 0;
 
   constructor(
     private campaignService: CampaignService,
@@ -41,7 +41,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
     if (campaignIdStr !== null && campaignIdStr !== '') {
       this.campaignId = Number.parseInt(campaignIdStr, 10);
@@ -54,12 +54,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
     if (this.campaignId === null) {
       this.fetchCampaign();
-    } else {
-      if (this.cardId === null || this.card === null) {
-        this.fetchCard();
-        this.fetchStampTransactionCount();
-        this.fetchCardsCount();
-      }
+    } else if (this.cardId === null || this.card === null) {
+      this.fetchCard();
+      this.fetchStampTransactionCount();
+      this.fetchCardsCount();
     }
 
     if (!localStorage.getItem('enableSound')) {
@@ -73,11 +71,11 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.soundService.pause(false);
   }
 
-  private fetchCampaign() {
+  private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
@@ -90,7 +88,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCard() {
+  private fetchCard(): void {
     this.stampService.getCurrentCard(this.campaignId)
       .subscribe((card: IStampCard) => {
         this.cardId = card.id;
@@ -112,7 +110,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCardsCount() {
+  private fetchCardsCount(): void {
     if (this.campaignId === null) {
       return;
     }
@@ -123,14 +121,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       );
   }
 
-  private fetchStampTransactionCount() {
+  private fetchStampTransactionCount(): void {
     this.stampService.getStamps(this.campaignId)
       .subscribe((stamps: IStamp[]) => {
         this.totalAvailablePieces = stamps.filter(stamp => stamp.state === StampState.issued).length;
       });
   }
 
-  onMoved() {
+  public onMoved(): void {
     const stamps = this.card.stamps.filter(s => s.state === StampState.issued);
     if (stamps.length === 0) {
       // don't do anything

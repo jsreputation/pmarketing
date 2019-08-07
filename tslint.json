@@ -5,7 +5,8 @@
   ],
   "rulesDirectory": [
     "codelyzer",
-    "rxjs-tslint"
+    "rxjs-tslint",
+    "tslint-consistent-codestyle"
   ],
   "rules": {
     "array-type": false,
@@ -69,7 +70,7 @@
     "directive-class-suffix": true,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
-    "no-input-rename": true,
+    "no-input-rename": false,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
     "no-output-on-prefix": true,
@@ -85,9 +86,7 @@
       "call-signature",
       "parameter",
       "member-variable-declaration",
-      "property-declaration",
-      "arrow-call-signature",
-      "arrow-parameter"
+      "property-declaration"
     ],
     "unnecessary-constructor": true,
     "rxjs-collapse-imports": true,
@@ -99,6 +98,32 @@
     "rxjs-no-internal": true,
     "rxjs-no-nested-subscribe": true,
     "rxjs-no-wholesale": false,
-    "rxjs-no-create": true
+    "rxjs-no-create": true,
+    "naming-convention": [
+      true,
+      {
+        "type": "enum",
+        "format": "PascalCase"
+      }
+    ],
+    "no-accessor-recursion": true,
+    "no-collapsible-if": true,
+    "no-else-after-return": true,
+    "no-return-undefined": true,
+    "no-static-this": true,
+    "no-unnecessary-else": true,
+    "no-unused-expression": true,
+    "no-var-before-return": true,
+    "prefer-const-enum": true,
+    "directive-selector": [
+      true,
+      "attribute",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "kebab-case"
+    ]
   }
 }
