@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
 
-export function fnTransition(stateChangeExpr, time) {
+export function fnTransition(stateChangeExpr, time): any {
   return transition(stateChangeExpr, [
     animate(time)
   ]);
@@ -35,16 +35,12 @@ export function fnTransition(stateChangeExpr, time) {
     ]),
   ]
 })
-export class SideNavComponent implements OnInit {
-  @Input() isVisible = true;
+export class SideNavComponent {
+  @Input() public isVisible = true;
   public isOpen = true;
   public visibility = 'shown';
   public sideNavOpened = true;
   public sideNavMode = 'side';
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   public toggle(): void {
     this.isOpen = !this.isOpen;

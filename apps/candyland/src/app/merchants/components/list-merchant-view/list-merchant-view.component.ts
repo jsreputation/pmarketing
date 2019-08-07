@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -6,33 +6,28 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   templateUrl: './list-merchant-view.component.html',
   styleUrls: ['./list-merchant-view.component.scss']
 })
-export class ListMerchantViewComponent implements OnInit, AfterViewInit {
+export class ListMerchantViewComponent implements  AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
   @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter<IMerchant>();
   public DATE_FORMAT = 'dd MMM yyyy';
-  constructor() { }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
   }
 
-
-  public editItem(element: IMerchant) {
+  public editItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 
-  public duplicateItem(element: IMerchant) {
+  public duplicateItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 
-  public deleteItem(element: IMerchant) {
+  public deleteItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 }

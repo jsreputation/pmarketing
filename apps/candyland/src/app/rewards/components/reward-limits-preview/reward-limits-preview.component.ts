@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'cl-reward-limits-preview',
@@ -6,13 +6,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./reward-limits-preview.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardLimitsPreviewComponent implements OnInit {
-  @Input() data: any;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+export class RewardLimitsPreviewComponent  {
+  @Input() public data: any;
 
 }

@@ -16,7 +16,7 @@ export class CreateMerchantPopupComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private merchantFormService: MerchantFormService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createFormMerchant();
   }
 

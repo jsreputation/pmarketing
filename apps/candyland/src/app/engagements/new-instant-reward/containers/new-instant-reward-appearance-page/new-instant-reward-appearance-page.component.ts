@@ -21,7 +21,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
               private routingState: RoutingStateService,
               private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createRewardForm();
     this.getRewardBackground();
     this.getRewardCardBackground();

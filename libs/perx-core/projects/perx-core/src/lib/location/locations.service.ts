@@ -11,6 +11,11 @@ export abstract class LocationsService {
     return throwError('not implemented yet');
   }
 
+  // @ts-ignore
+  public getLocations(page: number = 1, pageSize: number = 25, tags: string[] = []): Observable<ILocation[]> {
+    return throwError('not implemented yet');
+  }
+
   public getTags(): Observable<string[]> {
     return throwError('not implemented yet');
   }

@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'cl-reward-merchant-item',
   templateUrl: './reward-merchant-item.component.html',
   styleUrls: ['./reward-merchant-item.component.scss']
 })
-export class RewardMerchantItemComponent implements OnInit {
+export class RewardMerchantItemComponent {
   @Input() public merchant = {
     image: 'assets/images/spin-the-wheel-preview.png',
     type: 'Starbucks',
@@ -15,13 +15,7 @@ export class RewardMerchantItemComponent implements OnInit {
   @Input() public enableActions = false;
   @Output() public deleteMerchant = new EventEmitter<void>();
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  public clickDeleteMerchant() {
+  public clickDeleteMerchant(): void {
     this.deleteMerchant.emit();
   }
 
