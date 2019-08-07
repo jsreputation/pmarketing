@@ -1,20 +1,19 @@
 <div class="content-container">
-  <div class="login-image">
-    <img src="assets/login_logo.png"/>
-  </div>
+  <img class="logo" src="assets/logo.png" />
+
   <div class="login-form">
+    <h1>Log In</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="full-width__input">        
+      <mat-form-field appearance="outline" class="full-width__input">
         <mat-label>Enter your customer ID</mat-label>
-        <input matInput placeholder="Enter your customer ID" formControlName="customerID">        
+        <input matInput placeholder="Enter your customer ID" formControlName="customerID">
         <mat-error *ngIf="loginForm.hasError('customerID')">
           Player code is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width__input">
         <mat-label>Enter your password</mat-label>
-        <input matInput placeholder="Enter your password"
-               formControlName="password">
+        <input matInput placeholder="Enter your password" formControlName="password">
         <mat-error *ngIf="loginForm.hasError('password')">
           Password is <strong>required</strong>
         </mat-error>

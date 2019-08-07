@@ -1,14 +1,23 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+// Define your application's custom theme.
+$primary: mat-palette($mat-indigo);
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .toolbar {
-  position: fixed;
   display: flex;
   justify-content: center;
-  left: 0;
-  top: 0;
   height: 7rem;
   z-index: 800;
-  color: #fff;
-  background: #202C46;
-  box-shadow: 0 4px 4px rgba(131, 126, 126, 0.24), 0 0 4px rgba(0, 0, 0, 0.12);
+  // color: #fff;
+  background: #186de1;
   font-size: 2rem;
   line-height: 1.9rem;
 }
@@ -16,10 +25,36 @@
 .main-app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 }
 
 .game-container {
   flex: 2;
   width: 100%;
+  overflow-y: scroll;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  height: 7rem;
+  z-index: 800;
+  background: #fff;
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  a {
+    text-decoration: none;
+    color: #666666;
+
+    &.active {
+      color: mat-color($primary);
+    }
+  }
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
