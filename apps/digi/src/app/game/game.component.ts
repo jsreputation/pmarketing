@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
   CampaignService,
-  CAMPAIGN_TYPE,
+  CampaignType,
   IGame,
   GameService,
   ICampaign,
@@ -62,7 +62,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
           this.campaignService.getCampaigns()
             .pipe(
               take(1),
-              map((campaigns: ICampaign[]) => campaigns.filter((camp: ICampaign) => camp.type === CAMPAIGN_TYPE.game)),
+              map((campaigns: ICampaign[]) => campaigns.filter((camp: ICampaign) => camp.type === CampaignType.game)),
               map((campaigns: ICampaign[]) => campaigns[0])
             )
             .subscribe(

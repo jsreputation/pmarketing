@@ -5,7 +5,8 @@
   ],
   "rulesDirectory": [
     "codelyzer",
-    "rxjs-tslint"
+    "rxjs-tslint",
+    "tslint-consistent-codestyle"
   ],
   "rules": {
     "array-type": false,
@@ -99,6 +100,19 @@
     "rxjs-no-internal": true,
     "rxjs-no-nested-subscribe": true,
     "rxjs-no-wholesale": false,
-    "rxjs-no-create": true
+    "rxjs-no-create": true,
+    "naming-convention": [
+      true,
+      {"type": "enum", "format": "PascalCase"}
+    ],
+    "no-accessor-recursion": true,
+    "no-collapsible-if": true,
+    "no-else-after-return": true,
+    "no-return-undefined": true,
+    "no-static-this": true,
+    "no-unnecessary-else": true,
+    "no-unused-expression": true,
+    "no-var-before-return": true,
+    "prefer-const-enum": true
   }
 }

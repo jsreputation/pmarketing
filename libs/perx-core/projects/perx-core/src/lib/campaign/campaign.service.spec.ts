@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CampaignService } from './campaign.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
-import { ICampaign, CAMPAIGN_TYPE, CAMPAIGN_STATE } from './models/campaign.model';
+import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 
 describe('CampaignService', () => {
@@ -56,7 +56,7 @@ describe('CampaignService', () => {
         expect(campaign.name).toBe('UAT GAME');
         expect(campaign.description).toBe('UAT description');
         expect(campaign.type).toBe('game');
-        expect(campaign.state).toBe(CAMPAIGN_STATE.active);
+        expect(campaign.state).toBe(CampaignState.active);
         done();
       });
 
@@ -69,7 +69,7 @@ describe('CampaignService', () => {
         {
           id: 1,
           name: 'UAT GAME',
-          state: CAMPAIGN_STATE.active,
+          state: CampaignState.active,
           description: 'UAT description',
           begins_at: '2019-06-26T08:46:06.000Z',
           ends_at: null,
@@ -96,13 +96,13 @@ describe('CampaignService', () => {
       begins_at: '2019-06-26T08:46:06.000Z',
       ends_at: null,
       enrolled: true,
-      campaign_type: CAMPAIGN_TYPE.game,
+      campaign_type: CampaignType.game,
       images: [],
       favourite: false,
       custom_fields: {},
       category_tags: [],
       tags: [],
-      state: CAMPAIGN_STATE.active
+      state: CampaignState.active
     });
     expect(mapCampaign.id).toBe(1);
     expect(mapCampaign.name).toBe('UAT GAME');

@@ -1,10 +1,10 @@
-export enum VOUCHER_STATE {
+export enum VoucherState {
   issued = 'issued',
   redeemed = 'redeemed',
   expired = 'expired'
 }
 
-export enum REDEMPTION_TYPE {
+export enum RedemptionType {
   pin = 'pin',
   txtCode = 'txtCode',
   qr = 'qrcode',
@@ -25,10 +25,10 @@ interface IVoucherDescription {
 export interface IVoucher {
   id: number;
   rewardId: number; // use at \lib\vouchers\vouchers.service.ts
-  state: VOUCHER_STATE;
+  state: VoucherState;
   name: string;
   code?: string;
-  redemptionType: REDEMPTION_TYPE;
+  redemptionType: RedemptionType;
   thumbnailImg: string;
   rewardBanner: string;
   merchantImg: string;

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { StampComponent } from './stamp.component';
 import { UtilsModule } from '../../../utils/utils.module';
-import { STAMP_STATE } from '../../../stamp/models/stamp.model';
+import { StampState } from '../../../stamp/models/stamp.model';
 
 describe('StampComponent', () => {
   let component: StampComponent;
@@ -46,7 +46,7 @@ describe('StampComponent', () => {
         id: 1,
         userAccountId: 1,
         stampCardId: 1,
-        state: STAMP_STATE.issued,
+        state: StampState.issued,
         createdAt: '',
         updatedAt: '',
         campaignId: 1,
@@ -72,7 +72,7 @@ describe('StampComponent', () => {
         id: 1,
         userAccountId: 1,
         stampCardId: 1,
-        state: STAMP_STATE.issued,
+        state: StampState.issued,
         createdAt: '',
         updatedAt: '',
         campaignId: 1,

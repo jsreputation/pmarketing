@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { CampaignService, PerxCoreModule, StampService, STAMP_CARD_STATE, STAMP_STATE } from '@perx/core/dist/perx-core';
+import { CampaignService, PerxCoreModule, StampService, StampCardState, StampState } from '@perx/core';
 import { NotificationService } from '../notification.service';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
@@ -67,7 +67,7 @@ describe('GameComponent', () => {
       const selectedCard = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -88,7 +88,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -98,7 +98,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -108,7 +108,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -118,7 +118,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -128,7 +128,7 @@ describe('GameComponent', () => {
           {
             id: 1612,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -141,7 +141,7 @@ describe('GameComponent', () => {
         {
           id: 362,
           userAccountId: 72,
-          state: STAMP_CARD_STATE.active,
+          state: StampCardState.active,
           campaignId: 1,
           cardNumber: 2,
           campaignConfig: {
@@ -162,7 +162,7 @@ describe('GameComponent', () => {
             {
               id: 1608,
               userAccountId: 72,
-              state: STAMP_STATE.issued,
+              state: StampState.issued,
               campaignId: 1,
               vouchers: [],
               stampCardId: 1,
@@ -172,7 +172,7 @@ describe('GameComponent', () => {
             {
               id: 1609,
               userAccountId: 72,
-              state: STAMP_STATE.issued,
+              state: StampState.issued,
               campaignId: 1,
               vouchers: [],
               stampCardId: 1,
@@ -182,7 +182,7 @@ describe('GameComponent', () => {
             {
               id: 1610,
               userAccountId: 72,
-              state: STAMP_STATE.issued,
+              state: StampState.issued,
               campaignId: 1,
               vouchers: [],
               stampCardId: 1,
@@ -192,7 +192,7 @@ describe('GameComponent', () => {
             {
               id: 1611,
               userAccountId: 72,
-              state: STAMP_STATE.issued,
+              state: StampState.issued,
               campaignId: 1,
               vouchers: [],
               stampCardId: 1,
@@ -202,7 +202,7 @@ describe('GameComponent', () => {
             {
               id: 1612,
               userAccountId: 72,
-              state: STAMP_STATE.issued,
+              state: StampState.issued,
               campaignId: 1,
               vouchers: [],
               stampCardId: 1,
@@ -225,7 +225,7 @@ describe('GameComponent', () => {
         [{
           id: 1608,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -235,7 +235,7 @@ describe('GameComponent', () => {
         {
           id: 1609,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -245,7 +245,7 @@ describe('GameComponent', () => {
         {
           id: 1610,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -255,7 +255,7 @@ describe('GameComponent', () => {
         {
           id: 1611,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -265,7 +265,7 @@ describe('GameComponent', () => {
         {
           id: 1612,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -284,7 +284,7 @@ describe('GameComponent', () => {
       const cards = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -305,7 +305,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -331,7 +331,7 @@ describe('GameComponent', () => {
         [{
           id: 1608,
           userAccountId: 72,
-          state: STAMP_STATE.redeemed,
+          state: StampState.redeemed,
           campaignId: 1,
           vouchers: [],
           stampCardId: 1,
@@ -349,7 +349,7 @@ describe('GameComponent', () => {
       const cards = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -370,7 +370,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -380,7 +380,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -390,7 +390,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -400,7 +400,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -427,7 +427,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -437,7 +437,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -447,7 +447,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -457,7 +457,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -476,7 +476,7 @@ describe('GameComponent', () => {
       const cards = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -497,7 +497,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -507,7 +507,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -517,7 +517,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -527,7 +527,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -537,7 +537,7 @@ describe('GameComponent', () => {
           {
             id: 1612,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -564,7 +564,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -574,7 +574,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -584,7 +584,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -594,7 +594,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -604,7 +604,7 @@ describe('GameComponent', () => {
           {
             id: 1612,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -624,7 +624,7 @@ describe('GameComponent', () => {
       const cards = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -645,7 +645,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -655,7 +655,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -665,7 +665,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -675,7 +675,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -702,7 +702,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -712,7 +712,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -722,7 +722,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -732,7 +732,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -751,7 +751,7 @@ describe('GameComponent', () => {
       const cards = {
         id: 362,
         userAccountId: 72,
-        state: STAMP_CARD_STATE.active,
+        state: StampCardState.active,
         campaignId: 1,
         cardNumber: 2,
         campaignConfig: {
@@ -772,7 +772,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -782,7 +782,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -792,7 +792,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -802,7 +802,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.issued,
+            state: StampState.issued,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -829,7 +829,7 @@ describe('GameComponent', () => {
           {
             id: 1608,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -839,7 +839,7 @@ describe('GameComponent', () => {
           {
             id: 1609,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -849,7 +849,7 @@ describe('GameComponent', () => {
           {
             id: 1610,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
@@ -859,7 +859,7 @@ describe('GameComponent', () => {
           {
             id: 1611,
             userAccountId: 72,
-            state: STAMP_STATE.redeemed,
+            state: StampState.redeemed,
             campaignId: 1,
             vouchers: [],
             stampCardId: 1,
