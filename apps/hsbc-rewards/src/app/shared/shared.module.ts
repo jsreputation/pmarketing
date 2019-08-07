@@ -13,7 +13,8 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
-  MatRadioModule
+  MatRadioModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -50,7 +52,8 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService } from '@perx/core';
+import { LocationsService, RewardsService } from '@perx/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -7,14 +9,26 @@ import { LocationsService } from '@perx/core';
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
-  customBackButton = 'assets/img/close.svg'
+  customBackButton = 'assets/img/close.svg';
+  locationData;
+  reward;
+  merchants = [];
+  quantityes = [];
   constructor(
-    private locationService: LocationsService
+    private locationService: LocationsService,
+    private rewardsService: RewardsService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.locationService.getFromMerchant(1).subscribe((val)=>{
-      console.log(val);
+    this.route.params.pipe(switchMap((param)=>{
+     return this.rewardsService.getReward(param.id);
+    })).subscribe((reward)=>{
+      console.log(reward);
+      this.reward = reward;
+    })
+    this.locationService.getFromMerchant(1).subscribe((result)=>{
+      this.locationData = result;
     });
   }
 

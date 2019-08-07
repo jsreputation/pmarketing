@@ -24,13 +24,22 @@
   font-size: 1.4rem;
 }
 .radio-button {
-  color: red;
+  color: #000000;
+  margin-bottom: 1.6rem;
+  display: block;
 }
 .radio-group {
   flex-grow: 1;
+  margin-top: 0.8rem;
 }
 .booking-form {
   display: flex;
   height: 100%;
   flex-direction: column;
+}
+button {
+  width: 100%;;
+}
+.aggriement {
+  display: flex;
 }
