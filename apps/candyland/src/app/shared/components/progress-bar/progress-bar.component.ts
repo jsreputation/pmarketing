@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProgressBarComponent {
-  @Input() current: number;
-  @Input() total: number;
+  @Input() public current: number;
+  @Input() public total: number;
 
   public get progress(): number {
     return this.current / this.total * 100;

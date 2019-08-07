@@ -1,25 +1,34 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GamePlayComponent } from './game-play/game-play.component';
 import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { LoginComponent } from './login/login.component';
+import { HistoryComponent } from './history/history.component';
+import { AccountComponent } from './account/account.component';
+import { LoadingComponent } from './loading/loading.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
-      { path: 'game-play/:id', component: GamePlayComponent },
+      { path: 'wallet', component: HomeComponent },
+      { path: 'history', component: HistoryComponent },
+      { path: 'account', component: AccountComponent },
       { path: 'redeem/:mode/:id', component: RedeemComponent },
-      { path: 'reward-detail/:id', component: RewardDetailComponent },
+      { path: 'voucher-detail/:id', component: VoucherDetailComponent },
+      { path: 'tap', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
+      { path: 'shake', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
+      { path: 'stamp', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
+      {
+        path: 'reward',
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+      },
+      { path: 'loading', component: LoadingComponent }
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/home' }
-
+  { path: '**', redirectTo: '/wallet' }
 ];
 
 @NgModule({

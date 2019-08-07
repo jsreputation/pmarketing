@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { RewardService } from '@cl-core/http-services/reward.service';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
@@ -10,23 +10,19 @@ import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward
   templateUrl: './reward-detail-page.component.html',
   styleUrls: ['./reward-detail-page.component.scss']
 })
-export class RewardDetailPageComponent implements OnInit, AfterViewInit {
+export class RewardDetailPageComponent implements  AfterViewInit {
   public dataSource = new MatTableDataSource<any>();
   public data;
   public statusFilterConfig: OptionConfig[];
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
-
   constructor(private rewardsService: RewardService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
   }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
@@ -43,7 +39,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get avaibleVouchers() {
+  get avaibleVouchers(): any {
     return this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
   }
 
@@ -51,7 +47,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit {
     this.avaibleVouchers.value = value;
   }
 
-  private getData() {
+  private getData(): void {
     this.rewardsService.getReward()
       .pipe(
         map((data: any) => {

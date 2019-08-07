@@ -18,7 +18,7 @@ export class CreateMerchantFormComponent implements OnInit {
   constructor(private surveyService: SurveyService,
               private merchantFormService: MerchantFormService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getCountries();
   }
 

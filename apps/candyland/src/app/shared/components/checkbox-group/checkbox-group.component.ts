@@ -41,10 +41,10 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   constructor(private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.handlCheckboxList();
   }
 
@@ -72,12 +72,12 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     }, 0);
   }
 
-  private handlCheckboxList() {
+  private handlCheckboxList(): void {
     merge(...this.checkboxList.map(value => value.change))
       .pipe(
         takeUntil(this.destroy$),
         distinctUntilChanged(),
-        map((data: any) => ({checked: data.checked, value: data.source.value})),
+        map((data: any) => ({ checked: data.checked, value: data.source.value })),
         tap((data: any) => {
           if (data.checked) {
             this.data.push(data.value);
@@ -87,10 +87,10 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
           this.onChange(this.data);
         })
       )
-      .subscribe();
+      .subscribe(() => { });
   }
 
-  private updateCheckboxList() {
+  private updateCheckboxList(): void {
     if (this.checkboxList && this.data.length > 0) {
       this.checkboxList.map((checkbox: MatCheckbox) => {
         if (this.data.includes(checkbox.value)) {
@@ -101,7 +101,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     this.cd.detectChanges();
   }
 
-  private toggleDisableCheckboxList(isDisabled) {
+  private toggleDisableCheckboxList(isDisabled): void {
     if (this.checkboxList && this.data.length > 0) {
       this.checkboxList.forEach((checkbox: MatCheckbox) => {
         if (checkbox.disabled !== isDisabled) {

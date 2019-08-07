@@ -22,7 +22,7 @@ export class RewardsListPageComponent implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
@@ -35,7 +35,7 @@ export class RewardsListPageComponent implements AfterViewInit {
     });
   }
 
-  private getData() {
+  private getData(): void {
     this.rewardsService.getRewards()
       .pipe(
         map((data: any[]) => (

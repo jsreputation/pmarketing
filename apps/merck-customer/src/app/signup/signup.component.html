@@ -36,14 +36,14 @@
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Password</mat-label>
-				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" required>
+				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" type="password" required>
 				<mat-error *ngIf="signupForm.hasError('password')">
 					Password is <strong>required</strong>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Confirm Password</mat-label>
-				<input matInput i18n-placeholder="@@static-confirm-password" placeholder="Confirm Password" formControlName="confirmPassword" required>
+				<input matInput i18n-placeholder="@@static-confirm-password" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
 				<mat-error *ngIf="signupForm.hasError('confirmPassword')">
 					Password is <strong>required</strong>
 				</mat-error>

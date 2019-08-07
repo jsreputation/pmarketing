@@ -52,7 +52,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public onChange: any = () => {};
   public onTouch: any = () => {};
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createDefaultControl();
     this.createControl();
     this.subscribeControlDefaultValueChanges();
@@ -66,19 +66,19 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.cd.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
 
@@ -86,7 +86,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.controlUpload = this.showUpload ? this.fb.control(null) : null;
   }
 
-  private createDefaultControl() {
+  private createDefaultControl(): void {
     if (!this.controlDefault) {
       this.controlDefault = this.fb.control(null);
     }
@@ -123,7 +123,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

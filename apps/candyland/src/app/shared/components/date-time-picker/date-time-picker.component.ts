@@ -20,7 +20,7 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 })
 export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-  customTheme: NgxMaterialTimepickerTheme = {
+  public customTheme: NgxMaterialTimepickerTheme = {
     container: {
       bodyBackgroundColor: '#fff',
       buttonColor: '#3b4e77'
@@ -34,7 +34,6 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
       clockFaceTimeInactiveColor: '#3b4e77'
     }
   };
-
 
   public timeForm: FormGroup;
   public disabledState: boolean;
@@ -50,7 +49,7 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.timeForm.valueChanges
       .pipe(
         takeUntil(this.destroy$)
