@@ -39,7 +39,7 @@ export class RewardDetailPageComponent implements  AfterViewInit {
     });
   }
 
-  get avaibleVouchers() {
+  get avaibleVouchers(): any {
     return this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
   }
 
@@ -47,7 +47,7 @@ export class RewardDetailPageComponent implements  AfterViewInit {
     this.avaibleVouchers.value = value;
   }
 
-  private getData() {
+  private getData(): void {
     this.rewardsService.getReward()
       .pipe(
         map((data: any) => {

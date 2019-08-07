@@ -14,11 +14,11 @@ export class RewardReplenishPopupComponent  {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  public close() {
+  public close(): void {
     this.dialogRef.close();
   }
 
-  public replenish() {
+  public replenish(): void {
     if (this.replenishVoucherCodes) {
       this.dialogRef.close(this.replenishVoucherCodes);
     }

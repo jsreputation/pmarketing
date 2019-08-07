@@ -35,7 +35,7 @@ export class RewardsListPageComponent implements AfterViewInit {
     });
   }
 
-  private getData() {
+  private getData(): void {
     this.rewardsService.getRewards()
       .pipe(
         map((data: any[]) => (

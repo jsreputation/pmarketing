@@ -19,15 +19,15 @@ export class ListMerchantViewComponent implements  AfterViewInit {
     }
   }
 
-  public editItem(element: IMerchant) {
+  public editItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 
-  public duplicateItem(element: IMerchant) {
+  public duplicateItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 
-  public deleteItem(element: IMerchant) {
+  public deleteItem(element: IMerchant): void {
     this.itemAction.emit(element);
   }
 }

@@ -37,7 +37,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
     });
   }
 
-  private getData() {
+  private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
         map((response: any) => response.results),

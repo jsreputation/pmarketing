@@ -9,11 +9,11 @@ export class RewardMerchantCardComponent {
   @Output() public selectMerchant = new EventEmitter<void>();
   @Output() public createMerchant = new EventEmitter<void>();
 
-  public clickSelectMerchant() {
+  public clickSelectMerchant(): void {
     this.selectMerchant.emit();
   }
 
-  public clickCreateMerchant() {
+  public clickCreateMerchant(): void {
     this.createMerchant.emit();
   }
 

@@ -19,16 +19,16 @@ export class RewardVoucherCodeFormGroupComponent {
     alphabet: {eg: 'ABCDEF'}
   };
 
-  get codePlaceholder() {
+  get codePlaceholder(): string {
     const type = this.formGroup.get('uniqueGeneratedCode.codeFormat').value || 'alphanumeric';
     return 'Prefix (eg.' + this.codeFormatConfig[type].eg + ')';
   }
 
-  get redemptionType() {
+  get redemptionType(): any {
     return this.form.get('rewardInfo.redemptionType').value;
   }
 
-  public setTotalVoucher(value) {
+  public setTotalVoucher(value): void {
     this.formGroup.get('total').patchValue(value);
   }
 

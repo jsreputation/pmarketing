@@ -15,7 +15,7 @@ export class RewardMerchantItemComponent {
   @Input() public enableActions = false;
   @Output() public deleteMerchant = new EventEmitter<void>();
 
-  public clickDeleteMerchant() {
+  public clickDeleteMerchant(): void {
     this.deleteMerchant.emit();
   }
 
