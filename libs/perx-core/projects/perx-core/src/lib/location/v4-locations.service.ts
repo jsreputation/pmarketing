@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { ILocation } from './ilocation';
 import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
-import { map, mergeMap, filter, scan, tap, mergeAll } from 'rxjs/operators';
+import { map, mergeMap, filter, scan, mergeAll } from 'rxjs/operators';
 
 interface IV4Meta {
   count?: number;
