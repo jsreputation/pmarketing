@@ -9,7 +9,7 @@ import {
   IStamp,
   StampCardState,
   StampState
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { CampaignService, PerxCoreModule, StampService, STAMP_CARD_STATE, STAMP_STATE } from '@perx/core/dist/perx-core';
+import { CampaignService, PerxCoreModule, StampService, STAMP_CARD_STATE, STAMP_STATE } from '@perx/core';
 import { NotificationService } from '../notification.service';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
