@@ -13,7 +13,10 @@ export class RewardService {
     return this.http.get('assets/mocks/rewards/rewards.json');
   }
 
-  public getRewardData() {
+  public getRewardData(): Observable<{
+    background: IGraphic[],
+    cardBackground: IGraphic[]
+  }> {
     return this.http.get<{
       background: IGraphic[],
       cardBackground: IGraphic[]

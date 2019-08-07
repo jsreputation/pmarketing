@@ -14,7 +14,7 @@
       "type": "background2",
       "title": "icon",
       "img": "assets/images/background/background2.png",
-      "fullImg": "assets/images/background/full_bg_2.jpg",
+      "fullImg": "assets/images/background/full_bg_2_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -60,6 +60,7 @@
       "type": "simple-tree",
       "active": "false",
       "img": "assets/images/tree/simple-tree.png",
+      "fullImg": "assets/images/tree/full_tree_1.png",
       "title": "tree"
     },
     {
@@ -67,6 +68,7 @@
       "type": "fir-tree",
       "active": "false",
       "img": "assets/images/tree/fir-tree.png",
+      "fullImg": "assets/images/tree/full_tree_2.png",
       "title": "fir tree"
     },
     {
@@ -74,6 +76,7 @@
       "type": "tree-pot",
       "active": "false",
       "img": "assets/images/tree/tree-pot.png",
+      "fullImg": "assets/images/tree/full_tree_3.png",
       "title": "tree in a pot"
     }
   ],

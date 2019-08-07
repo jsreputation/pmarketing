@@ -11,6 +11,4 @@ export enum ControlsName {
   treeType = 'treeType',
   giftBox = 'giftBox',
   gameGift = 'gameGift',
-
-
 }

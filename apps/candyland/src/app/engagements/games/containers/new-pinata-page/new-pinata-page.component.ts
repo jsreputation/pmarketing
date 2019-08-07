@@ -7,7 +7,7 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ControlValueService } from '@cl-core/services/control-value.service';
-import { ControlsName } from '../../../../models/controlsName';
+import { ControlsName } from '../../../../models/controls-name';
 
 @Component({
   selector: 'cl-new-pinata-page',

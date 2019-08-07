@@ -7,7 +7,7 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ControlValueService } from '@cl-core/services/control-value.service';
-import { ControlsName } from '../../../../models/controlsName';
+import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
 
 @Component({
@@ -23,7 +23,7 @@ export class NewShakePageComponent implements OnInit {
     gameNumberGift: IGameGifts[],
     gamesTree: IGraphic[],
     giftBox: IGraphic[],
-    'background': IGraphic[]
+    background: IGraphic[]
   }>;
 
   public selectGiftBox: IGraphic;
@@ -67,7 +67,7 @@ export class NewShakePageComponent implements OnInit {
     return this.controlValueService.getImgLink(control, defaultImg);
   }
 
-  public get gameGiftView() {
+  public get gameGiftView(): AbstractControl {
     return this.shakeTree.get(ControlsName.gameGift);
   }
 

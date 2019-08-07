@@ -6,7 +6,7 @@ import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
-import { ControlsName } from '../../../../models/controlsName';
+import { ControlsName } from '../../../../models/controls-name';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -35,7 +35,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
               private router: Router,
               private stampDataService: StampDataService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.createStampForm();
     this.subscribeStampsNumberChanges();
     this.getStampData();
@@ -133,7 +133,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

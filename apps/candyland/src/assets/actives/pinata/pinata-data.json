@@ -5,6 +5,7 @@
       "type": "state1",
       "title": "icon",
       "img": "assets/images/pinata/pinata1.png",
+      "fullImg": "assets/images/pinata/full_pinata_1.png",
       "format": ".png",
       "active": "false"
     },
@@ -13,6 +14,7 @@
       "type": "state2",
       "title": "icon",
       "img": "assets/images/pinata/pinata2.png",
+      "fullImg": "assets/images/pinata/full_pinata_2.png",
       "format": ".png",
       "active": "false"
     },
@@ -21,6 +23,7 @@
       "type": "state3",
       "title": "icon",
       "img": "assets/images/pinata/pinata3.png",
+      "fullImg": "assets/images/pinata/full_pinata_3.png",
       "format": ".png",
       "active": "false"
     }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { ControlsName } from '../../../../models/controlsName';
+import { ControlsName } from '../../../../models/controls-name';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
