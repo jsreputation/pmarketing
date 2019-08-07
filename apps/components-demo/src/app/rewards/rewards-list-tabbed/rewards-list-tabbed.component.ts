@@ -4,12 +4,15 @@ import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
 
 @Component({
-  selector: 'app-rewards-list',
-  templateUrl: './rewards-list.component.html',
-  styleUrls: ['./rewards-list.component.scss']
+  selector: 'app-rewards-list-tabbed',
+  templateUrl: './rewards-list-tabbed.component.html',
+  styleUrls: ['./rewards-list-tabbed.component.scss']
 })
-export class RewardsListComponent implements OnInit {
-
+export class RewardsListTabbedComponent implements OnInit {
+  // public navLinks = [
+  //   { path: 'hsbc', label: 'HSBC' },
+  //   { path: 'others', label: 'others' },
+  // ];
   public rewards: Observable<IReward[]>;
 
   constructor(private rewardsService: RewardsService,
@@ -17,10 +20,16 @@ export class RewardsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewardsService
-      .getAllRewards()
+    this.getRewards();
+  }
+
+  public getRewards(): void {
+    this.rewardsService.getAllRewards()
       .subscribe(
-        (rewards) => this.rewards = of(rewards),
+        (rewards: IReward[]) => {
+
+          this.rewards = of(rewards);
+        },
         () => this.rewards = of(mock)
       );
   }

@@ -1,23 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
-import { RewardsListComponent } from '../rewards-list/rewards-list.component';
-import { MaterialModule } from '../../shared/material.module';
+import { RewardsModule as PerxRewardsModule, RewardsService } from '@perx/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { UtilsModule } from '../../utils/utils.module';
 
 describe('RewardsListTabbedComponent', () => {
   let component: RewardsListTabbedComponent;
   let fixture: ComponentFixture<RewardsListTabbedComponent>;
 
+  const rewardsServiceStub = {
+    getAllRewards: () => ({ subscribe: () => ({}) }),
+    getReward: () => ({ subscribe: () => ({}) })
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
-        MaterialModule,
-        UtilsModule
+        PerxRewardsModule,
+        NoopAnimationsModule
       ],
-      declarations: [RewardsListTabbedComponent, RewardsListComponent]
+      declarations: [RewardsListTabbedComponent],
+      providers: [
+        {
+          provide: RewardsService,
+          useValue: rewardsServiceStub
+        }
+      ]
     })
       .compileComponents();
   }));
