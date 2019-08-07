@@ -24,7 +24,6 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { EngagementsListComponent } from './components/engagements-list/engagements-list.component';
 import { EngagementsGridComponent } from './components/engagements-grid/engagements-grid.component';
 
-
 @NgModule({
   declarations: [
     EngagementsListPageComponent,

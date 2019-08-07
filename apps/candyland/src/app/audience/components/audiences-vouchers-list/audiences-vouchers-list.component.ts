@@ -7,26 +7,22 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./audiences-vouchers-list.component.scss']
 })
 export class AudiencesVouchersListComponent implements AfterViewInit {
-  DATE_FORMAT = 'dd MMM yyyy';
-  TIME_FORMAT = 'hh:ssa';
+  public DATE_FORMAT = 'dd MMM yyyy';
+  public TIME_FORMAT = 'hh:ssa';
   @Input() public dataSource: MatTableDataSource<Engagement>;
   @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign', 'redemptionType', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickChangeExpiryDate = new EventEmitter();
 
-  constructor() {
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public joinList(list: string[]) {
+  public joinList(list: string[]): string {
     return list.join(', ');
   }
 
-  public changeExpiryDate(item) {
+  public changeExpiryDate(item): void {
     this.clickChangeExpiryDate.emit(item);
   }
 }
-

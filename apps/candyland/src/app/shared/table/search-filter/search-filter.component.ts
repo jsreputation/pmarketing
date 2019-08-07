@@ -8,10 +8,6 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFilterComponent {
-  @Input() control: FormControl;
-  @Input() placeholder =  'Search for engagements';
-
-  constructor() {
-  }
-
+  @Input() public control: FormControl;
+  @Input() public placeholder: string =  'Search for engagements';
 }

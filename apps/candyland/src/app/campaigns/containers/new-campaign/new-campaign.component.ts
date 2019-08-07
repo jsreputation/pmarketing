@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
-  form: FormGroup;
+  @ViewChild('stepper', {static: false}) public stepper: MatStepper;
+  public form: FormGroup;
 
   constructor(private store: CampaignCreationStoreService,
               private router: Router,
@@ -22,17 +22,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
               private fb: FormBuilder) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.initForm();
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => this.store.updateCampaign(value));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.fb.group({
       name: ['Campaign Name', [
         Validators.required,
@@ -47,11 +47,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
-  goBack() {
+  public goBack(): void {
     this.stepper.previous();
   }
 
-  goNext() {
+  public goNext(): void {
     this.stepper.next();
   }
 
@@ -59,7 +59,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
-  private getDialogData(campaign) {
+  private getDialogData(campaign): any {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     switch (type) {
       case 'sms':
@@ -91,4 +91,3 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     });
   }
 }
-

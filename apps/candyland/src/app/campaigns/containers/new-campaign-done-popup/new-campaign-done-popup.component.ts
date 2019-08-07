@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -7,16 +7,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./new-campaign-done-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDonePopupComponent implements OnInit {
+export class NewCampaignDonePopupComponent  {
 
   constructor(public dialogRef: MatDialogRef<NewCampaignDonePopupComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  ngOnInit() {
-  }
-
-  public closeDialog() {
+  public closeDialog(): void {
     this.dialogRef.close();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'cl-reward-vouchers-preview',
@@ -6,14 +6,8 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./reward-vouchers-preview.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardVouchersPreviewComponent implements OnInit {
-  DATE_FORMAT = 'dd MMM yyyy';
-  @Input() data: any;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+export class RewardVouchersPreviewComponent {
+  public DATE_FORMAT = 'dd MMM yyyy';
+  @Input() public data: any;
 
 }

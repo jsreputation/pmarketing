@@ -24,7 +24,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.getData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
@@ -37,7 +37,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
     });
   }
 
-  private getData() {
+  private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
         map((response: any) => response.results),

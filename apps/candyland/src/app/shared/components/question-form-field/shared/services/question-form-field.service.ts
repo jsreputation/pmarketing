@@ -19,7 +19,7 @@ export class QuestionFormFieldService {
   private idCounter = 0;
   constructor(private fb: FormBuilder) { }
 
-  public get listId() {
+  public get listId(): string {
     return `drag-list-id-${this.idCounter++}`;
   }
 
@@ -31,7 +31,7 @@ export class QuestionFormFieldService {
     this.focusedElementIndex = val.toString();
   }
 
-  public getFocusedElem( index: number, level: number) {
+  public getFocusedElem(index: number, level: number): any {
     if (!this.focusedElementIndex) {
       return false;
     }
@@ -51,7 +51,7 @@ export class QuestionFormFieldService {
     ]);
   }
 
-  public createFormField(type: string) {
+  public createFormField(type: string): any {
     return this.formControls[type](type);
   }
 
@@ -59,15 +59,15 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       scale: ['5', []],
       selectShape: ['star', []],
       selectColor: ['primary', []],
       left: ['Not Very', [Validators.maxLength(10)]],
       right: ['Very much', [Validators.maxLength(10)]],
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -75,12 +75,12 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       startDate: [null, [Validators.required]],
       endDate: [null],
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -88,11 +88,11 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       phone: [null, [Validators.required]],
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -100,11 +100,11 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       questionGroup: this.fb.array([]),
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -112,13 +112,13 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       text: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(200)]],
+      Validators.minLength(1),
+      Validators.maxLength(200)]],
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -126,11 +126,11 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       picture: this.fb.array([]),
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 
@@ -138,11 +138,11 @@ export class QuestionFormFieldService {
     return this.fb.group({
       selectedType: [type, [Validators.required]],
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]],
+      Validators.minLength(1),
+      Validators.maxLength(60)]],
       choice: this.fb.array([]),
       required: [true, []],
-      description: [{value: '', disabled: true}, [Validators.maxLength(120)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });
   }
 }

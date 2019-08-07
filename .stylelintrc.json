@@ -6,7 +6,10 @@
         "at-rule-no-unknown": null,
         "selector-list-comma-newline-after": null,
         "no-empty-source": null,
-        "color-hex-case": null
+        "color-hex-case": null,
+        "selector-pseudo-element-no-unknown": [true, {
+            "ignorePseudoElements": ["ng-deep"]
+        }]
     },
     "defaultSeverity": "error"
 }

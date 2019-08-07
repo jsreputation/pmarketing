@@ -10,18 +10,20 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectMerchantComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  public dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public selectMerchant: IMerchant;
-  constructor(public dialogRef: MatDialogRef<SelectMerchantComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private merchantService: MerchantService) { }
+  constructor(
+    public dialogRef: MatDialogRef<SelectMerchantComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private merchantService: MerchantService
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getMerchants();
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
 
     if (this.paginator) {
@@ -39,8 +41,8 @@ export class SelectMerchantComponent implements OnInit, AfterViewInit {
 
   private getMerchants(): void {
     this.merchantService.getMerchant()
-       .subscribe((val: IMerchant[]) => {
-         this.dataSource.data = val;
-       });
+      .subscribe((val: IMerchant[]) => {
+        this.dataSource.data = val;
+      });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'cl-invite-new-users-platform',
@@ -6,11 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./invite-new-users-platform.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InviteNewUsersPlatformComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class InviteNewUsersPlatformComponent {
 
 }
