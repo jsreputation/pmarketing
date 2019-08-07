@@ -6,7 +6,7 @@
 		<img [src]="currentSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
 		<span [ngClass]="currentSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
 	</div>
-	<div class="bottom-bar-item">
+	<div class="bottom-bar-item" (click)="onTabNavigate('find-pharmacy')">
 		<img [src]="currentSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
 		<span [ngClass]="currentSelectedItem === 'search' ? 'selected' : 'unselected'">Find a pharmacy</span>
 	</div>
