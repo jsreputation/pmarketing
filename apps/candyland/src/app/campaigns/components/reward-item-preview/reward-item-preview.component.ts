@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'cl-reward-item-preview',
@@ -7,14 +7,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
     '../reward-item/reward-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RewardItemPreviewComponent implements OnInit {
-  @Input() public data;
-  @Input() public probability;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+export class RewardItemPreviewComponent {
+  @Input() public data: any;
+  @Input() public probability: any;
 }

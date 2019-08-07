@@ -7,32 +7,29 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements AfterViewInit {
-  DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
 
-  constructor() {
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public editItem(id: number) {
+  public editItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public duplicateItem(id: number) {
+  public duplicateItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public deleteItem(id: number) {
+  public deleteItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public useAsCaptionItem(id: number) {
+  public useAsCaptionItem(id: number): void {
     this.itemAction.emit(id);
   }
 

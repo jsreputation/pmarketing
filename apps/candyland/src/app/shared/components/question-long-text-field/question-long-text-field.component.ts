@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,11 +6,6 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './question-long-text-field.component.html',
   styleUrls: ['./question-long-text-field.component.scss']
 })
-export class QuestionLongTextFieldComponent implements OnInit {
+export class QuestionLongTextFieldComponent {
   @Input() public group: FormGroup;
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

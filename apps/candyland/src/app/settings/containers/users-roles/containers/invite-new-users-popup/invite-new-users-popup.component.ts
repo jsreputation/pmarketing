@@ -11,7 +11,7 @@ import { ClValidators } from '@cl-helpers/cl-validators';
   encapsulation: ViewEncapsulation.None
 })
 export class InviteNewUsersPopupComponent implements OnInit {
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) public stepper: MatStepper;
   public form: FormGroup;
   public config;
 
@@ -21,7 +21,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.settingsService.getRolesOptions().subscribe(config => this.config = config);
     this.initForm();
   }
@@ -37,7 +37,6 @@ export class InviteNewUsersPopupComponent implements OnInit {
   public goNext(): void {
     this.stepper.next();
   }
-
 
   public close(): void {
     this.dialogRef.close();

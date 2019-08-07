@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
+export class SelectGraphicComponent implements ControlValueAccessor {
   @Input() public selectedGraphic: IGraphic;
   @Input() public graphicList: IGraphic[];
   @Output() private selectGraphic = new EventEmitter<IGraphic>();
@@ -29,30 +29,25 @@ export class SelectGraphicComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
   public setSelectedGraphic(graphic: IGraphic): void {
     this.selectedGraphic = graphic;
     this.selectGraphic.emit(graphic);
     this.onChange(graphic);
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     this.lock = isDisabled;
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
 
