@@ -28,6 +28,7 @@ import {
   RewardsModule as PerxRewardsModule,
 } from '@perx/core';
 import { environment } from '@cl-environments/environment';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { environment } from '@cl-environments/environment';
     InfoHintModule,
     GameMobilePreviewModule,
     PerxRewardsModule.forRoot({ env: environment }),
+    SimpleMobileViewModule,
 
     MatTabsModule,
     MatCardModule,

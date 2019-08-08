@@ -23,7 +23,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
     cardBackground: IGraphic[]
   }>;
   public reward$: Observable<IReward[]>;
-  public reward: Observable<IReward>;
+  public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
   constructor(private fb: FormBuilder,
               private rewardService: RewardService,
@@ -36,7 +36,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
     this.getRewardData();
     console.log(MockRewardsMobilePreview);
     this.reward$ = of([MockRewardsMobilePreview[0]]);
-    this.reward = of(MockRewardsMobilePreview[0]);
+    this.rewards$ = of(MockRewardsMobilePreview);
   }
 
   public save(): void {
@@ -64,6 +64,10 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
 
   public get background(): AbstractControl {
     return this.formReward.get(ControlsName.background);
+  }
+
+  public get cardBackground(): AbstractControl {
+    return this.formReward.get(ControlsName.cardBackground);
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {

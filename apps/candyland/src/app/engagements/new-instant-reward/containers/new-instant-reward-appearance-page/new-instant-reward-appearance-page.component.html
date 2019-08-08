@@ -138,94 +138,57 @@
       </mat-card>
     </div>
     <cl-game-mobile-preview>
-
-      <div class="mobile-preview mobile-content-single">
-        <div class="mobile-preview-mobile">
-          <div class="mobile-preview-header">
-            <p class="mobile-preview-headline">
-              {{headlineMessage.value}}
-            </p>
-            <p class="mobile-preview-sub-headline">
-              {{subHeadlineMessage.value}}
-            </p>
-          </div>
-          <!--<perx-core-pinata class="mobile-preview-plugin"-->
-          <!--[stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"-->
-          <!--[openedImg]="'assets/images/games/pinata/opened-pinata.png'"-->
-          <!--[nbTaps]="5"-->
-          <!--&gt;-->
-          <!--</perx-core-pinata>-->
-          <div class="mobile-preview-background"
-               [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
+      <cl-simple-mobile-view class="firs-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
           >
-          </div>
-          <div class="mobile-preview-btn-wrap">
-            <button class="mobile-preview-btn">
-              {{buttonText.value}}
-            </button>
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="reward$"
+            ></perx-core-rewards-collection>
           </div>
         </div>
-      </div>
 
-      <div class="mobile-preview mobile-content-multiple">
-        <div class="mobile-preview-mobile">
-          <div class="mobile-preview-header">
-            <p class="mobile-preview-headline">
-              {{headlineMessage.value}}
-            </p>
-            <p class="mobile-preview-sub-headline">
-              {{subHeadlineMessage.value}}
-            </p>
-          </div>
-          <!--<perx-core-pinata class="mobile-preview-plugin"-->
-          <!--[stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"-->
-          <!--[openedImg]="'assets/images/games/pinata/opened-pinata.png'"-->
-          <!--[nbTaps]="5"-->
-          <!--&gt;-->
-          <!--</perx-core-pinata>-->
-          <div class="mobile-preview-background"
-               [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
+
+      <cl-simple-mobile-view class="second-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
           >
-          </div>
-          <div class="mobile-preview-btn-wrap">
-            <button class="mobile-preview-btn">
-              {{buttonText.value}}
-            </button>
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="rewards$"
+            ></perx-core-rewards-collection>
           </div>
         </div>
-      </div>
 
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
     </cl-game-mobile-preview>
   </section>
 </section>
-<perx-core-rewards-collection
-  [rewardsList]="reward$"
-></perx-core-rewards-collection>
 
-<!--<div class="mobile-preview">-->
-  <!--<div class="mobile-preview-mobile">-->
-    <!--<div class="mobile-preview-header">-->
-      <!--<p class="mobile-preview-headline">-->
-        <!--{{headlineMessage.value}}-->
-      <!--</p>-->
-      <!--<p class="mobile-preview-sub-headline">-->
-        <!--{{subHeadlineMessage.value}}-->
-      <!--</p>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<perx-core-pinata class="mobile-preview-plugin"&ndash;&gt;-->
-                      <!--&lt;!&ndash;[stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"&ndash;&gt;-->
-                      <!--&lt;!&ndash;[openedImg]="'assets/images/games/pinata/opened-pinata.png'"&ndash;&gt;-->
-                      <!--&lt;!&ndash;[nbTaps]="5"&ndash;&gt;-->
-    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;</perx-core-pinata>&ndash;&gt;-->
-    <!--<div class="mobile-preview-background"-->
-         <!--[ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"-->
-    <!--&gt;-->
-    <!--</div>-->
-    <!--<div class="mobile-preview-btn-wrap">-->
-      <!--<button class="mobile-preview-btn">-->
-        <!--{{buttonText.value}}-->
-      <!--</button>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+
