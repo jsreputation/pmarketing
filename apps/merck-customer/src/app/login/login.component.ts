@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-login',
@@ -49,8 +49,12 @@ export class LoginComponent implements OnInit, PageProperties {
     return false;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
+  }
+
+  public backButtonEnabled(): boolean {
+    return false;
   }
 
   public onSubmit(): void {

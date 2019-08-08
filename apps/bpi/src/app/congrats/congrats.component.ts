@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {
   StampService,
-  STAMP_STATE,
-  STAMP_CARD_STATE
-} from '@perx/core/dist/perx-core';
+  StampState,
+  StampCardState
+} from '@perx/core';
 
 @Component({
   selector: 'app-congrats',
@@ -43,9 +43,9 @@ export class CongratsComponent implements OnInit {
       .subscribe(cards => {
         const unlockedCardsCount: number = cards.filter(card => {
           const totalSlots = card.displayProperties.totalSlots || 0;
-          return card.state === STAMP_CARD_STATE.active &&
+          return card.state === StampCardState.active &&
             card.stamps &&
-            card.stamps.filter(st => st.state === STAMP_STATE.redeemed).length >= totalSlots;
+            card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
         }).length;
 
         this.subTitles[0] = `You have unlocked ${unlockedCardsCount} out of ${cards.length} months`;

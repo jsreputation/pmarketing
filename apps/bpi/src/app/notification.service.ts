@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPopupConfig } from '@perx/core/dist/perx-core';
+import { IPopupConfig } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
