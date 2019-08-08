@@ -6,10 +6,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./detail-agreement.component.scss']
 })
 export class DetailAgreementComponent {
-  @Output() public close = new EventEmitter<void>();
+  @Output() public closeModal: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
-  public closeAgreement() {
-    this.close.emit();
+  public closeAgreement(): void {
+    this.closeModal.emit();
   }
 }

@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';
 export class RewardDetailComponent implements OnInit {
   public reward: Observable<IReward>;
   public loyalty: ILoyalty;
-  public pointsBalance;
-  public userData : IProfile;
+  public pointsBalance: any;
+  public userData: IProfile;
   public id: number;
-  public loyaltyId = 0;
+  public loyaltyId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,14 +23,14 @@ export class RewardDetailComponent implements OnInit {
     private loyaltyService: LoyaltyService
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.reward = this.route.params.pipe(switchMap((param) => {
-      this.id = param.id
+      this.id = param.id;
       return this.rewardService.getReward(this.id);
-    }))
+    }));
     this.profService.whoAmI().subscribe((res) => {
       this.userData = res;
-    })
+    });
     this.loyaltyService.getLoyalty(this.loyaltyId).subscribe((res) => {
       this.loyalty = res;
     }, (err) => {
@@ -39,9 +39,9 @@ export class RewardDetailComponent implements OnInit {
       } : {
           insufficientPoints: 100
         };
-    })
+    });
   }
-  public moveToBooking() {
+  public moveToBooking(): void {
     this.router.navigate([`/detail/booking/${this.id}`]);
   }
 }

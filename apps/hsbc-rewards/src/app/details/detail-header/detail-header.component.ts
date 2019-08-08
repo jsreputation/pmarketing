@@ -7,13 +7,12 @@ import { Location } from '@angular/common';
   styleUrls: ['./detail-header.component.scss']
 })
 export class DetailHeaderComponent {
-  @Input() public customBackButton;
+  @Input() public customBackButton: string;
   constructor(
     private location: Location
   ) { }
 
-
-  back() {
+  public back(): void {
     this.location.back();
   }
 }

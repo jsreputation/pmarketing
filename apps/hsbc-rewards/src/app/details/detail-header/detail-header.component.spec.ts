@@ -9,7 +9,7 @@ import { ExpectedConditions } from 'protractor';
 describe('DetailHeaderComponent', () => {
   let component: DetailHeaderComponent;
   let fixture: ComponentFixture<DetailHeaderComponent>;
-  let debugElement: DebugElement
+  let debugElement: DebugElement;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DetailHeaderComponent],
@@ -31,16 +31,16 @@ describe('DetailHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shoud have default image', ()=>{
+  it('shoud have default image', () => {
     const element = debugElement.query(By.css('img')).nativeElement;
-    expect(element.getAttribute('src')).toBe('assets/img/back.svg')
+    expect(element.getAttribute('src')).toBe('assets/img/back.svg');
   });
 
-  it('should have image from input', ()=>{
-    const url = 'assets/img/some-other-src.svg'
+  it('should have image from input', () => {
+    const url = 'assets/img/some-other-src.svg';
     component.customBackButton = url;
     fixture.detectChanges();
     const element = debugElement.query(By.css('img')).nativeElement;
     expect(element.getAttribute('src')).toBe(url);
-  })
+  });
 });

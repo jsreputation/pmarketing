@@ -60,9 +60,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.currentTag = tag;
   }
 
-  async openRewardDetails(event) {
+  public async openRewardDetails(event: any): Promise<void> {
     const url = 'detail/element/' + (event instanceof Observable ?
-      (await event.toPromise())[0].id : event.id)
+      (await event.toPromise())[0].id : event.id);
     this.router.navigate([url]);
   }
 }

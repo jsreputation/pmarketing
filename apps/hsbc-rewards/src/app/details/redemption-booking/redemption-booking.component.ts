@@ -12,12 +12,12 @@ import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.c
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
-  public customBackButton = 'assets/img/close.svg';
-  public locationData:ILocation[];
-  public reward:IReward;
-  public merchants = [];
-  public quantityes = [];
-  public bookingForm : FormGroup;
+  public customBackButton: string = 'assets/img/close.svg';
+  public locationData: ILocation[];
+  public reward: IReward;
+  public merchants: any[] = [];
+  public quantityes: any[] = [];
+  public bookingForm: FormGroup;
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
@@ -26,31 +26,31 @@ export class RedemptionBookingComponent implements OnInit {
     private compCreate: DinamicCreateService
   ) { }
 
-  public ngOnInit() {
-    this.route.params.pipe(switchMap((param)=>{
-     return this.rewardsService.getReward(param.id);
-    })).subscribe((reward)=>{
+  public ngOnInit(): void {
+    this.route.params.pipe(switchMap((param) => {
+      return this.rewardsService.getReward(param.id);
+    })).subscribe((reward) => {
       this.reward = reward;
-    })
-    this.locationService.getFromMerchant(1).subscribe((result)=>{
+    });
+    this.locationService.getFromMerchant(1).subscribe((result) => {
       this.locationData = result;
     });
     this.buildForm();
   }
-  public buildForm() {
+  public buildForm(): void {
     this.bookingForm = this.build.group({
-      quantity: [null], 
-      merchant: [null], 
-      location: [null], 
-      pointsBalance: [null], 
+      quantity: [null],
+      merchant: [null],
+      location: [null],
+      pointsBalance: [null],
       aggriement: [false, [Validators.requiredTrue]]
     });
   }
-  public openAgreement() {
+  public openAgreement(): void {
     const comp = this.compCreate.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
-    comp.instance.close.subscribe(()=>this.compCreate.removeComponent(comp));
+    comp.instance.closeModal.subscribe(() => this.compCreate.removeComponent(comp));
   }
-  public submitForm() {
-    
+  public submitForm(): void {
+
   }
 }
