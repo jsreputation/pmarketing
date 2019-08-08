@@ -53,8 +53,10 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     return this.rewards.getError('sumMoreThan');
   }
 
-  constructor(private store: CampaignCreationStoreService,
-              private fb: FormBuilder) {
+  constructor(
+    private store: CampaignCreationStoreService,
+    private fb: FormBuilder
+  ) {
     this.initForm();
   }
 
@@ -83,7 +85,7 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       enableProbability: ([false]),
       rewards: this.fb.array([],
-        [ClValidators.sumMoreThan({fieldName: 'probability'})]
+        [ClValidators.sumMoreThan({ fieldName: 'probability' })]
       ),
       limits: this.fb.group({
         times: [null, [
@@ -115,10 +117,9 @@ export class NewCampaignRewardsPageComponent implements OnInit, OnDestroy {
         value: [value],
         probability: [0]
       });
-    } else {
-      return this.fb.group({
-        value: [value]
-      });
     }
+    return this.fb.group({
+      value: [value]
+    });
   }
 }

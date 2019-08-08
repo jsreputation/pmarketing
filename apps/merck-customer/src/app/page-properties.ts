@@ -1,9 +1,9 @@
 export interface PageProperties {
   showHeader(): boolean;
-  bottomSelectedItem(): BAR_SELECTED_ITEM;
+  bottomSelectedItem(): BarSelectedItem;
 }
 
-export enum BAR_SELECTED_ITEM {
+export enum BarSelectedItem {
   HOME = 'home',
   SEARCH = 'search',
   ACCOUNT = 'account',

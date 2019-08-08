@@ -14,13 +14,13 @@ export class VoucherComponent implements OnInit {
     private activeRoute: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((params: ParamMap) => {
       this.voucherId = parseInt(params.get('id'), 10);
     });
   }
 
-  onRedeem(id: string): void {
+  public onRedeem(id: string): void {
     this.router.navigate([`/activation/${id}`]);
   }
 }

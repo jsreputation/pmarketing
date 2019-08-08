@@ -13,11 +13,11 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'prudential';
-  showBack = false;
-  defaultBackLocation = '/vouchers';
+  public title: string = 'prudential';
+  public showBack: boolean = false;
+  public defaultBackLocation: string = '/vouchers';
 
-  preAuth: boolean;
+  public preAuth: boolean;
 
   constructor(
     private location: Location,
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     this.preAuth = environment.preAuth;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
@@ -41,17 +41,17 @@ export class AppComponent implements OnInit {
     );
   }
 
-  goBack() {
+  public goBack(): void {
     this.location.back();
   }
 
-  onActivate(ref: any) {
+  public onActivate(ref: any): void {
     this.showBack = ref instanceof VoucherComponent ||
                     ref instanceof TncComponent ||
                     ref instanceof ContactUsComponent;
   }
 
-  redirectTo(url: string) {
+  public redirectTo(url: string): void {
     if (url !== 'tnc' && url !== 'contact-us') {
       return null;
     }

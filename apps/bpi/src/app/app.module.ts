@@ -11,7 +11,7 @@ import {
   CampaignModule,
   VouchersModule,
   StampModule
-} from '@perx/core/dist/perx-core';
+} from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';

@@ -59,6 +59,39 @@
   }
 }
 
+.card-list-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+  }
+
+  .reward-content {
+    .reward-img__wrapper {
+      .img-placeholder {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .reward-preview-details {
+      .reward-name {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-subtitle {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-price-details {
+        height: 1.6rem;
+      }
+    }
+  }
+}
+
 mat-card {
   margin: 1.2rem 0;
   display: flex;

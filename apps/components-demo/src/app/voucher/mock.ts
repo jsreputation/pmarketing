@@ -1,12 +1,12 @@
-import { Voucher, VOUCHER_STATE, REDEMPTION_TYPE } from '@perx/core';
+import { Voucher, VoucherState, RedemptionType } from '@perx/core';
 
 export const mock: Voucher[] = [
     {
         id: 123,
         rewardId: 42,
-        state: VOUCHER_STATE.issued,
+        state: VoucherState.issued,
         name: 'Starbucks grande',
-        redemptionType: REDEMPTION_TYPE.pin,
+        redemptionType: RedemptionType.pin,
         thumbnailImg: 'https://picsum.photos/200/300?random=1',
         rewardBanner: 'https://picsum.photos/200/300?random=2',
         merchantImg: 'https://picsum.photos/200/300?random=3',
@@ -23,9 +23,9 @@ export const mock: Voucher[] = [
     {
         id: 124,
         rewardId: 42,
-        state: VOUCHER_STATE.issued,
+        state: VoucherState.issued,
         name: 'Starbucks',
-        redemptionType: REDEMPTION_TYPE.pin,
+        redemptionType: RedemptionType.pin,
         thumbnailImg: 'https://picsum.photos/200/300?random=5',
         rewardBanner: 'https://picsum.photos/200/300?random=6',
         merchantImg: 'https://picsum.photos/200/300?random=7',
@@ -42,9 +42,9 @@ export const mock: Voucher[] = [
     {
         id: 125,
         rewardId: 42,
-        state: VOUCHER_STATE.issued,
+        state: VoucherState.issued,
         name: 'Starbucks',
-        redemptionType: REDEMPTION_TYPE.pin,
+        redemptionType: RedemptionType.pin,
         thumbnailImg: 'https://picsum.photos/200/300?random=9',
         rewardBanner: 'https://picsum.photos/200/300?random=10',
         merchantImg: 'https://picsum.photos/200/300?random=11',

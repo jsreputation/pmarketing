@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 
-
 @NgModule({
   declarations: [
     HomeComponent

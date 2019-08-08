@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { LoyaltySummaryComponent } from '@perx/core';
 
 const mockTags = [
   'Lifestyle', 'Travel', 'Shopping'
@@ -12,12 +13,12 @@ const mockTags = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  tags: Array<string>;
-  rewards: Observable<IReward[]>;
+  public tags: string[];
+  public rewards: Observable<IReward[]>;
 
-  currentTag: string;
+  public currentTag: string;
 
-  @ViewChild('loyaltySummary', { static: false }) loyaltySummary;
+  @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
 
   constructor(
     private rewardsService: RewardsService,
@@ -27,17 +28,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getRewards();
     this.getTags();
   }
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
+    // @ts-ignore to be verified
     this.loyaltySummary.loyalty$ = new BehaviorSubject({
       pointsBalance: '100,000', expiringPoints: [{ expireDate: new Date('Jul 17 2017') }], points: 1000, expireDate: new Date('Jul 17 2017')
     });
     this.cd.detectChanges();
   }
-  getRewards() {
+  public getRewards(): void {
     this.rewardsService.getAllRewards().subscribe(
       (rewards: IReward[]) => {
         if (rewards && rewards.length > 0) {
@@ -47,13 +49,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getTags() {
+  public getTags(): void {
     this.rewardsService.getTags();
     this.tags = mockTags;
     this.currentTag = this.tags[0];
   }
 
-  changeTage(tag) {
+  public changeTage(tag: string): void {
     this.currentTag = tag;
   }
 }

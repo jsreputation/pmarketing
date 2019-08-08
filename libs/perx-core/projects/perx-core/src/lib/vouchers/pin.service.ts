@@ -23,7 +23,6 @@ export class PinService {
   }
 
   public generatePinCode(rewardId: string): string {
-    const pinCode = ('0000' + rewardId).slice(-4);
-    return pinCode;
+    return ('0000' + rewardId).slice(-4);
   }
 }

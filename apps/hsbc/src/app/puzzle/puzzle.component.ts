@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  CAMPAIGN_TYPE,
+  CampaignType,
   CampaignService,
   StampService,
   ICampaign,
   IStampCard,
-  STAMP_CARD_STATE,
-  STAMP_STATE,
+  StampCardState,
+  StampState,
   NotificationService,
   IStamp
 } from '@perx/core';
@@ -20,16 +20,16 @@ import { SoundService } from '../sound/sound.service';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  campaignId: number = null;
+  public campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
-  availablePieces = 0;
-  playedPieces = 0;
-  totalAvailablePieces = 0;
-  rows = 2;
-  cols = 3;
-  image = '';
-  private cardsCount = 0;
+  public availablePieces: number = 0;
+  public playedPieces: number = 0;
+  public totalAvailablePieces: number = 0;
+  public rows: number = 2;
+  public cols: number = 3;
+  public image: string = '';
+  private cardsCount: number = 0;
 
   constructor(
     private campaignService: CampaignService,
@@ -41,7 +41,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
     if (campaignIdStr !== null && campaignIdStr !== '') {
       this.campaignId = Number.parseInt(campaignIdStr, 10);
@@ -54,12 +54,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
     if (this.campaignId === null) {
       this.fetchCampaign();
-    } else {
-      if (this.cardId === null || this.card === null) {
-        this.fetchCard();
-        this.fetchStampTransactionCount();
-        this.fetchCardsCount();
-      }
+    } else if (this.cardId === null || this.card === null) {
+      this.fetchCard();
+      this.fetchStampTransactionCount();
+      this.fetchCardsCount();
     }
 
     if (!localStorage.getItem('enableSound')) {
@@ -73,14 +71,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.soundService.pause(false);
   }
 
-  private fetchCampaign() {
+  private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CAMPAIGN_TYPE.stamp))
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
       )
       .subscribe((campaigns: ICampaign[]) => {
         this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
@@ -90,18 +88,18 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCard() {
+  private fetchCard(): void {
     this.stampService.getCurrentCard(this.campaignId)
       .subscribe((card: IStampCard) => {
         this.cardId = card.id;
         this.card = card;
         this.cols = card.displayProperties.numberOfCols;
         this.rows = card.displayProperties.numberOfRows;
-        this.playedPieces = card.stamps.filter(stamp => stamp.state === STAMP_STATE.redeemed).length;
-        const availablePieces = card.stamps.filter(stamp => stamp.state === STAMP_STATE.issued).length;
+        this.playedPieces = card.stamps.filter(stamp => stamp.state === StampState.redeemed).length;
+        const availablePieces = card.stamps.filter(stamp => stamp.state === StampState.issued).length;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = card.displayProperties.cardImage.value.imageUrl;
-        if (this.availablePieces === 0 && card.state === STAMP_CARD_STATE.inactive) {
+        if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
           this.notificationService.addPopup({
             title: 'Thank you!',
             text: 'Unfortunately, you have no pieces available.'
@@ -112,7 +110,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCardsCount() {
+  private fetchCardsCount(): void {
     if (this.campaignId === null) {
       return;
     }
@@ -123,15 +121,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       );
   }
 
-  private fetchStampTransactionCount() {
+  private fetchStampTransactionCount(): void {
     this.stampService.getStamps(this.campaignId)
       .subscribe((stamps: IStamp[]) => {
-        this.totalAvailablePieces = stamps.filter(stamp => stamp.state === STAMP_STATE.issued).length;
+        this.totalAvailablePieces = stamps.filter(stamp => stamp.state === StampState.issued).length;
       });
   }
 
-  onMoved() {
-    const stamps = this.card.stamps.filter(s => s.state === STAMP_STATE.issued);
+  public onMoved(): void {
+    const stamps = this.card.stamps.filter(s => s.state === StampState.issued);
     if (stamps.length === 0) {
       // don't do anything
       return;
@@ -140,9 +138,9 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     this.stampService.putStamp(firstAvailableStamp.id)
       .subscribe(
         (stamp: IStamp) => {
-          if (stamp.state === STAMP_STATE.redeemed) {
+          if (stamp.state === StampState.redeemed) {
             if (this.card.cardNumber === this.cardsCount) { // we are on the last card
-              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === STAMP_STATE.redeemed).length;
+              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
               if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
                 this.notificationService.addPopup({
                   // tslint:disable-next-line: max-line-length
@@ -156,7 +154,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
             }
           } else {
-            const issuedLeft = this.card.stamps.filter(s => s.state === STAMP_STATE.issued);
+            const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
               // all redeemed but no voucher
               this.notificationService.addPopup({

@@ -4,7 +4,10 @@
   </div>
   <div class="key-display">
     <img src="assets/key-white.png" alt="">
-    <span>You have earned {{keys}} keys</span>
+    <span [ngPlural]="keys">
+        <ng-template ngPluralCase="=1">You have earned {{keys}} key</ng-template>
+        <ng-template ngPluralCase="other">You have earned {{keys}} keys</ng-template>
+    </span>
   </div>
   <div class="key-display-subtitle">Scroll down to view your earned Netflix rebate.</div>
 
