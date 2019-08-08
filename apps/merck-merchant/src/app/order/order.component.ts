@@ -30,16 +30,13 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private notificationService: NotificationService
-  ) {
-    const navigation = this.router.getCurrentNavigation();
-    if ( !navigation.extras.state ) {
-      return;
-    }
-    const state = navigation.extras.state.data;
-    this.payload = JSON.parse(state);
-  }
+  ) {}
 
   public ngOnInit(): void {
+    const scannedQrCode = history.state.data;
+    if (scannedQrCode) {
+      this.payload = JSON.parse(scannedQrCode);
+    }
     this.productService.getProducts().subscribe(res => this.rewards = res);
   }
 

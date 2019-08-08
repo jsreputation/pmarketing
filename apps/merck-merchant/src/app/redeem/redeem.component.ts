@@ -35,16 +35,16 @@ export class RedeemComponent implements OnInit {
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private vouchersService: VouchersService
-  ) {
-    if (this.router.getCurrentNavigation() !== null
-      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-      this.payload = JSON.parse(this.router.getCurrentNavigation().extras.state.data);
-    }
-  }
+  ) {}
 
   public ngOnInit(): void {
-    if (this.payload) {
-      this.rewardsService.getReward(this.payload.rewardId).subscribe((res: IReward) => this.reward = res);
+    console.log(history);
+    const scannedQrCode = history.state.data;
+    console.log(scannedQrCode);
+    if (scannedQrCode) {
+      const parsedQrCode = JSON.parse(scannedQrCode);
+      this.payload = parsedQrCode;
+      this.rewardsService.getReward(parsedQrCode.rewardId).subscribe((res: IReward) => this.reward = res);
     }
   }
 

@@ -12,6 +12,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
+
   const routerStub = {
     navigate: () => ({}),
     getCurrentNavigation: () =>  (
