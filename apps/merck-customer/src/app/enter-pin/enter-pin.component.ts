@@ -20,11 +20,16 @@ export class EnterPinComponent implements OnInit, PageProperties {
     private route: ActivatedRoute,
     private authService: AuthenticationService
   ) {
-    if (this.router.getCurrentNavigation() !== null
-      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-      this.mobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
-      this.visibleNo = this.encodeMobileNo(this.mobileNo);
-    }
+      const currentNavigation = this.router.getCurrentNavigation();
+      if (!currentNavigation) {
+        return;
+      }
+
+      if (currentNavigation.extras.hasOwnProperty('state')) {
+
+        this.mobileNo = currentNavigation.extras.state.mobileNo;
+        this.visibleNo = this.encodeMobileNo(this.mobileNo);
+      }
   }
 
   public showHeader(): boolean {
@@ -60,9 +65,16 @@ export class EnterPinComponent implements OnInit, PageProperties {
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === 'register') {
+      this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
+        (response) => {
+          console.log(`Response: ${response.message}`);
+        }
+      );
+    } else if (this.pinMode === 'password') {
       this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
+
   }
 
   public resendOtp(): void {

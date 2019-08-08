@@ -70,7 +70,7 @@ export class SignupComponent implements PageProperties {
       // TODO: Currently '+' sign is not beign saved in the backend
       // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
 
-      const mobileNumber = this.signupForm.get('mobileNo').value as string;
+      const mobileNumber = this.signupForm.get('mobileNo').value.toString();
 
       const name = this.signupForm.get('name').value as string;
 
