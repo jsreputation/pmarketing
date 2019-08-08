@@ -35,7 +35,11 @@ export class OrderComponent implements OnInit {
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;
     if (scannedQrCode) {
-      this.payload = JSON.parse(scannedQrCode);
+      try {
+        this.payload = JSON.parse(scannedQrCode);
+      } catch (error) {
+        this.notificationService.addSnack('Invalid Merck QR Code');
+      }
     }
     this.productService.getProducts().subscribe(res => this.rewards = res);
   }

@@ -31,7 +31,7 @@
             </div>
           </mat-list-item>
           <mat-action-list class="btn-container">
-            <button mat-flat-button (click)="toggleSummary()" class="full-width__button btn-blue">Next</button>
+            <button *ngIf="payload" mat-flat-button (click)="toggleSummary()" class="full-width__button btn-blue">Next</button>
             <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">Cancel</button>
           </mat-action-list>
         </div>

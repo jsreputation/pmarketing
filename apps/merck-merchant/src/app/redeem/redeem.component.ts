@@ -40,9 +40,13 @@ export class RedeemComponent implements OnInit {
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;
     if (scannedQrCode) {
-      const parsedQrCode = JSON.parse(scannedQrCode);
-      this.payload = parsedQrCode;
-      this.rewardsService.getReward(parsedQrCode.rewardId).subscribe((res: IReward) => this.reward = res);
+      try {
+        const parsedQrCode = JSON.parse(scannedQrCode);
+        this.payload = parsedQrCode;
+        this.rewardsService.getReward(parsedQrCode.rewardId).subscribe((res: IReward) => this.reward = res);
+      } catch (error) {
+        this.notificationService.addSnack('Invalid Merck QR Code');
+      }
     }
   }
 
