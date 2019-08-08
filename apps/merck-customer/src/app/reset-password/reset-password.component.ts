@@ -55,6 +55,10 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     return BarSelectedItem.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   public onUpdatePassword(): void {
 
     const password = this.resetPasswordForm.get('password').value as string;
