@@ -9,6 +9,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { RedeemComponent } from './redeem/redeem.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,8 @@ const routes: Routes = [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'user-info', component: UserInfoComponent },
       { path: 'home', component: HomeComponent },
+      { path: 'reward-detail/:rewardId', component: RewardDetailComponent },
+      { path: 'redeem/:rewardId', component: RedeemComponent },
       { path: 'find-pharmacy', component: FindPharmacyComponent }
     ],
     canActivate: [ProtectedGuard]
