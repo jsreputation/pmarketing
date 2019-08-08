@@ -1,54 +1,42 @@
-import { Component } from '@angular/core';
-import { ICampaign, CAMPAIGN_STATE, CAMPAIGN_TYPE } from '@perx/core';
+import { Component, OnInit } from '@angular/core';
+import { ICampaign, CampaignState, CampaignType, VouchersService, VoucherState } from '@perx/core';
 import { Router } from '@angular/router';
+import { Voucher } from '@perx/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public campaigns: ICampaign[] = [
     {
       id: 1,
       name: 'Smash that Pinata',
       description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
-    },
-    {
-      id: 2,
-      name: 'Smash that Pinata',
-      description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
-    },
-    {
-      id: 3,
-      name: 'Smash that Pinata',
-      description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
-    },
-    {
-      id: 4,
-      name: 'Smash that Pinata',
-      description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
-    },
-    {
-      id: 5,
-      name: 'Smash that Pinata',
-      description: '',
-      type: CAMPAIGN_TYPE.stamp,
-      state: CAMPAIGN_STATE.active
+      type: CampaignType.stamp,
+      state: CampaignState.active
     }
   ];  // test Array
 
-  constructor(private router: Router) { }
+  public vouchers$: Observable<Voucher[]>;
+
+  constructor(private router: Router, private vouchersService: VouchersService) { }
+
+  public ngOnInit(): void {
+    this.vouchers$ = this.vouchersService.getAll()
+      .pipe(map((vouchers: Voucher[]) => vouchers.filter((voucher: Voucher) => {
+        return voucher.state === VoucherState.issued;
+      })));
+  }
 
   public onCampaignSelect(campaign: ICampaign): void {
     this.router.navigate([`/game-play/${campaign.id}`]);
+  }
+
+  public voucherSelected(voucher: Voucher): void {
+    this.router.navigate([`/voucher-detail/${voucher.id}`]);
   }
 }

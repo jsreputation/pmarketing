@@ -4,18 +4,19 @@ import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
 import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
+import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 
-enum VOUCHER_STATE {
-  issued = 'issued',
-  redeemed = 'redeemed',
-  expired = 'expired'
-}
+// const enum VoucherState {
+//   issued = 'issued',
+//   redeemed = 'redeemed',
+//   expired = 'expired'
+// }
 
-enum REDEMPTION_TYPE {
-  pin = 'pin',
-  txtCode = 'txtCode',
-  none = 'none'
-}
+// const enum RedemptionType {
+//   pin = 'pin',
+//   txtCode = 'txtCode',
+//   none = 'none'
+// }
 
 describe('PinService', () => {
   let service: PinService;
@@ -37,24 +38,24 @@ describe('PinService', () => {
   });
 
   it('should get pin from voucher Id', (done: DoneFn) => {
-    const mockReturn = {
+    const mockReturn: IVoucher = {
       id: 1,
       rewardId: 52,
-      state: VOUCHER_STATE.expired,
+      state: VoucherState.expired,
       name: 'Vidyut what are you doing',
       code: '697974626635625878704f6750536e4b5231673762773d3d',
-      redemptionType: REDEMPTION_TYPE.pin,
+      redemptionType: RedemptionType.pin,
       thumbnailImg: '',
       rewardBanner: '',
       merchantImg: '',
       merchantName: 'Kluang Station',
       expiry: new Date('2019-04-30T15:59:59.999Z'),
       redemptionDate: new Date(),
-      description: {
+      description: [{
         title: '',
         content: '',
         tag: []
-      },
+      }],
       redemptionSuccessTxt: '',
       redemptionSuccessImg: ''
     };

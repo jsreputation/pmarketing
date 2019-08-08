@@ -11,48 +11,48 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  public authed: boolean;
+  public preAuth: boolean;
+  public failedAuth: boolean;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {
     this.preAuth = environment.preAuth;
     this.failedAuth = false;
   }
 
-  ngOnInit() {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-        this.authService.isAuthorized().subscribe(
-          authed => {
-            if (!authed) {
-              this.authService.v4AutoLogin().then(
-                (isAuthed: boolean) => {
-                  this.authed = isAuthed;
-                  if (this.authed) {
-                    this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                  } else {
-                    this.router.navigateByUrl('games');
-                  }
-                },
-                () => {
-                  this.failedAuth = true;
-                  this.authed = false;
+  public ngOnInit(): void {
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.authing) {
+      this.authService.isAuthorized().subscribe(
+        authed => {
+          if (!authed) {
+            this.authService.v4AutoLogin().then(
+              (isAuthed: boolean) => {
+                this.authed = isAuthed;
+                if (this.authed) {
+                  this.router.navigateByUrl(this.authService.getInterruptedUrl());
+                } else {
+                  this.router.navigateByUrl('games');
                 }
-              );
-            } else {
-              this.authed = authed;
-            }
-          },
-        );
-      }
+              },
+              () => {
+                this.failedAuth = true;
+                this.authed = false;
+              }
+            );
+          } else {
+            this.authed = authed;
+          }
+        },
+      );
     }
   }
 
   // TODO: error states
-  onSubmit(loginForm: NgForm) {
+  public onSubmit(loginForm: NgForm): void {
     const username = loginForm.value.username.toUpperCase();
     const password = loginForm.value.password;
 

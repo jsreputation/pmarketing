@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -6,24 +6,20 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   templateUrl: './merchant-list.component.html',
   styleUrls: ['./merchant-list.component.scss']
 })
-export class MerchantListComponent implements OnInit, AfterViewInit {
+export class MerchantListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
-  @Input() public displayedColumns = ['logo', 'name', 'phone', 'branches'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() selectedMerchant = new EventEmitter<IMerchant>();
+  @Input() public displayedColumns: string[] = ['logo', 'name', 'phone', 'branches'];
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
+  @Output() public selectedMerchant: EventEmitter<IMerchant> = new EventEmitter<IMerchant>();
   public selected: IMerchant;
-  constructor() { }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
   }
 
-  public selectMerchant(item: IMerchant) {
+  public selectMerchant(item: IMerchant): void {
     this.selected = item;
     this.selectedMerchant.emit(item);
   }
@@ -31,5 +27,4 @@ export class MerchantListComponent implements OnInit, AfterViewInit {
   public isSelected(item: IMerchant): boolean {
     return this.selected && item.id === this.selected.id;
   }
-
 }

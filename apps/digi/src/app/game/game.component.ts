@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
   CampaignService,
-  CAMPAIGN_TYPE,
+  CampaignType,
   IGame,
   GameService,
   ICampaign,
@@ -62,7 +62,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
           this.campaignService.getCampaigns()
             .pipe(
               take(1),
-              map((campaigns: ICampaign[]) => campaigns.filter((camp: ICampaign) => camp.type === CAMPAIGN_TYPE.game)),
+              map((campaigns: ICampaign[]) => campaigns.filter((camp: ICampaign) => camp.type === CampaignType.game)),
               map((campaigns: ICampaign[]) => campaigns[0])
             )
             .subscribe(
@@ -104,8 +104,9 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
     } else {
       this.notificationService.addPopup({
         title: 'No more tries',
-        text: 'Earn more tries and come back',
-        buttonTxt: 'Dismiss'
+        text: 'Come back when you\'ve earned more tries!',
+        buttonTxt: '',
+        disableOverlayClose: true
       });
     }
   }
@@ -154,7 +155,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
                 title: 'Oops',
                 text: 'Something went very wrong, please try again later',
                 buttonTxt: 'Try Again',
-                disableOverlayClose: true
+                disableOverlayClose: true,
+                afterClosedCallBack: this
               });
             }
           }
@@ -191,6 +193,12 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         game.reset();
         if (this.game.remainingNumberOfTries === 0) {
           this.disableBtn = true;
+          this.notificationService.addPopup({
+            title: 'No more tries',
+            text: 'Come back when you\'ve earned more tries!',
+            buttonTxt: null,
+            disableOverlayClose: true
+          });
         }
       }
     });

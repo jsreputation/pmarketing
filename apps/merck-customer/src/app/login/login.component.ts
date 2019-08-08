@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-login',
@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit, PageProperties {
   public loginForm: FormGroup;
 
   private authenticated: boolean;
+
+  private appAccessTokenFetched: boolean = false;
 
   constructor(
     private router: Router,
@@ -34,22 +36,33 @@ export class LoginComponent implements OnInit, PageProperties {
     });
   }
 
+  public ngOnInit(): void {
+    this.authService.v4GetAppAccessToken().subscribe(() => {
+      this.appAccessTokenFetched = true;
+    },
+    (err) => {
+      console.log('Error' + err);
+    });
+  }
+
   public showHeader(): boolean {
     return false;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
   }
 
-  public ngOnInit(): void {}
+  public backButtonEnabled(): boolean {
+    return false;
+  }
 
   public onSubmit(): void {
 
     // TODO: Uncomment the following line once merck-customer backend is setup with authentication service
     // const mobileNo = this.selectedCountry + (this.loginForm.get('mobileNo').value as string);
 
-    const mobileNo = (this.loginForm.get('mobileNo').value as string).toUpperCase();
+    const mobileNo = (this.loginForm.get('mobileNo').value as string);
     const password: string = this.loginForm.get('password').value;
 
     this.authService.v4GameOauth(mobileNo, password)
@@ -84,10 +97,16 @@ export class LoginComponent implements OnInit, PageProperties {
   }
 
   public goToSignup(): void {
+    if (!this.appAccessTokenFetched) {
+      return;
+    }
     this.router.navigateByUrl('/signup');
   }
 
   public goToForgotPassword(): void {
+    if (!this.appAccessTokenFetched) {
+      return;
+    }
     const mobileNumber = (this.loginForm.get('mobileNo').value as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } } );
   }

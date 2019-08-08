@@ -4,7 +4,7 @@ import { delay } from 'rxjs/operators';
 import { IGameComponent } from '../IGame.component';
 import { Shake } from '../../utils/shake';
 
-enum GIFT_STATUS {
+const enum GiftStatus {
   hang = 'hang',
   drop = 'drop'
 }
@@ -16,7 +16,7 @@ export interface IManStyle {
 
 export interface IGift {
   id: number;
-  status: GIFT_STATUS;
+  status: GiftStatus;
   display: boolean;
 }
 
@@ -37,11 +37,11 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   @Input()
   public nbShakes: number = 1;
   @Input()
-  public nbHangedGifts: number = 1;
+  public nbHangedGifts: number = 3;
   @Input()
-  public nbFallingGifts: number = 10;
+  public nbFallingGifts: number = 3;
   @Input()
-  public enabled: boolean = false;
+  public enabled: boolean = true;
 
   @Input()
   public distanceFromTree: number = 16;
@@ -54,16 +54,16 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   public tap: EventEmitter<number> = new EventEmitter<number>();
 
   public gifts: IGift[] = [
-    { id: 1, status: GIFT_STATUS.hang, display: true },
-    { id: 2, status: GIFT_STATUS.hang, display: true },
-    { id: 3, status: GIFT_STATUS.hang, display: true },
-    { id: 4, status: GIFT_STATUS.hang, display: true },
-    { id: 5, status: GIFT_STATUS.hang, display: true },
-    { id: 6, status: GIFT_STATUS.hang, display: true },
-    { id: 7, status: GIFT_STATUS.hang, display: true },
-    { id: 8, status: GIFT_STATUS.hang, display: true },
-    { id: 9, status: GIFT_STATUS.hang, display: true },
-    { id: 10, status: GIFT_STATUS.hang, display: true }
+    { id: 1, status: GiftStatus.hang, display: true },
+    { id: 2, status: GiftStatus.hang, display: true },
+    { id: 3, status: GiftStatus.hang, display: true },
+    { id: 4, status: GiftStatus.hang, display: true },
+    { id: 5, status: GiftStatus.hang, display: true },
+    { id: 6, status: GiftStatus.hang, display: true },
+    { id: 7, status: GiftStatus.hang, display: true },
+    { id: 8, status: GiftStatus.hang, display: true },
+    { id: 9, status: GiftStatus.hang, display: true },
+    { id: 10, status: GiftStatus.hang, display: true }
   ];
 
   public celebrate: boolean = false;
@@ -102,10 +102,11 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
       this.n++;
       this.shakeAnimationClass = '';
       this.getCurrentShakeAction(this.n).pipe(delay(100)).subscribe(className => this.shakeAnimationClass = className);
-      if (this.n === this.nbShakes) {
+      // @ts-ignore
+      if (this.n === Number.parseInt(this.nbShakes, 10)) {
         this.gifts
           .filter(gift => gift.id <= this.nbFallingGifts)
-          .forEach(gift => gift.status = GIFT_STATUS.drop);
+          .forEach(gift => gift.status = GiftStatus.drop);
         setTimeout(() => {
           this.celebrate = true;
           this.completed.emit();
@@ -125,7 +126,7 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
   public reset(): void {
     this.gifts
       .filter(gift => gift.id <= this.nbHangedGifts)
-      .forEach(gift => gift.status = GIFT_STATUS.hang);
+      .forEach(gift => gift.status = GiftStatus.hang);
     this.n = 0;
     this.celebrate = false;
     this.shakeAnimationClass = '';
@@ -140,7 +141,6 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
 
   private updateGifts(): void {
     this.gifts
-      .filter(gift => gift.id > this.nbHangedGifts)
-      .forEach(gift => gift.display = false);
+      .forEach(gift => gift.display = gift.id <= this.nbHangedGifts);
   }
 }

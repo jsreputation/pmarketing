@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayload } from '../order/order.component';
 import { Router } from '@angular/router';
-import { RewardsService, IGift } from '../services/rewards.service';
-import { NotificationService } from '@perx/core';
-// import { VouchersService } from '@perx/core/dist/perx-core';
+import { NotificationService, RewardsService, IReward } from '@perx/core';
+// import { VouchersService } from '@perx/core';
 
 @Component({
   selector: 'app-redeem',
@@ -12,13 +11,13 @@ import { NotificationService } from '@perx/core';
 })
 export class RedeemComponent implements OnInit {
   public payload: IPayload;
-  public gift: IGift;
   public didProceed: boolean = false;
+  public reward: IReward;
 
   constructor(
     private router: Router,
-    private rewardsService: RewardsService,
     private notificationService: NotificationService,
+    private rewardsService: RewardsService,
     // private vouchersService: VouchersService
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -30,7 +29,7 @@ export class RedeemComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewardsService.getReward().subscribe(res => this.gift = res);
+    this.rewardsService.getReward(this.payload.rewardId).subscribe((res: IReward) => this.reward = res);
   }
 
   public onClose(): void {
@@ -45,4 +44,7 @@ export class RedeemComponent implements OnInit {
     this.notificationService.addSnack('Transaction completed');
   }
 
+  public getPrice(): number {
+    return parseInt(this.reward.rewardPrice[0].rewardAmount, 10);
+  }
 }

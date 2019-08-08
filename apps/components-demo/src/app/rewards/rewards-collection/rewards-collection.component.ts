@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
+import { mock } from '../reward-mock';
+import { NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-rewards-collection',
@@ -9,22 +11,29 @@ import { Observable, of } from 'rxjs';
 })
 export class RewardsCollectionComponent implements OnInit {
 
-  rewards: Observable<IReward[]>;
+  public rewards: Observable<IReward[]>;
 
-  constructor(private rewardsService: RewardsService) {
+  constructor(private rewardsService: RewardsService,
+              private notificationService: NotificationService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.getRewards();
   }
 
-  getRewards() {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
-      }
-    );
+  public getRewards(): void {
+    this.rewardsService.getAllRewards()
+      .subscribe(
+        (rewards) => this.rewards = of(rewards),
+        () => this.rewards = of(mock)
+      );
+  }
+
+  public rewardClickedHandler(reward: IReward): void {
+    this.notificationService.addPopup({
+      title: 'Clicked!',
+      text: 'ID: ' + reward.id + '\n' +
+        'Reward Name: ' + reward.name,
+    });
   }
 }

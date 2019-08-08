@@ -1,2 +1,4 @@
-<p>rewards-carousel works!</p>
-<perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
+<perx-core-rewards-collection
+    [rewardsList]="rewards"
+    (tapped)="rewardClickedHandler($event)"
+></perx-core-rewards-collection>

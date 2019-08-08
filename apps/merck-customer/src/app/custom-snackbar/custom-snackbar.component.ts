@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material';
 
@@ -7,12 +7,9 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './custom-snackbar.component.html',
   styleUrls: ['./custom-snackbar.component.scss']
 })
-export class CustomSnackbarComponent implements OnInit {
+export class CustomSnackbarComponent {
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any, private snackBar: MatSnackBar) {
-  }
-
-  public ngOnInit(): void {
   }
 
   public dismissSnackbar(): void {

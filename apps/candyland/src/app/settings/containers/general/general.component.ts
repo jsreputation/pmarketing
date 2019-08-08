@@ -15,7 +15,7 @@ export class GeneralComponent implements OnInit {
   constructor(private settingsService: SettingsService,
               private fb: FormBuilder) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createFormGeneral();
     this.getTimeZone();
     this.getCurrency();

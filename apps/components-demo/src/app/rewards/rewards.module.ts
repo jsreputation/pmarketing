@@ -7,12 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import {
   AuthenticationModule,
-  RewardsModule as PerxRewardsModule
+  RewardsModule as PerxRewardsModule,
+  UtilsModule as PerxCoreUtilsModule
 } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
+import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { MatButtonModule } from '@angular/material';
     RewardsCollectionComponent,
     RewardsListComponent,
     RewardComponent,
+    RewardsListTabbedComponent,
   ],
   imports: [
     RouterModule,
@@ -28,7 +31,9 @@ import { MatButtonModule } from '@angular/material';
     PerxRewardsModule.forRoot({ env: environment }),
     AuthenticationModule,
     RewardsRoutingModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule,
+    PerxCoreUtilsModule,
   ]
 })
 export class RewardsModule {

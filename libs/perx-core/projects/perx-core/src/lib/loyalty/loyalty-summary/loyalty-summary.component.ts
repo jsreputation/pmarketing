@@ -16,8 +16,11 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public loyaltyId: number;
 
-  public profile$: Observable<IProfile>;
-  public loyalty$: Observable<ILoyalty>;
+  @Input('profile')
+  public profile$: Observable<IProfile> | undefined;
+
+  @Input('loyalty')
+  public loyalty$: Observable<ILoyalty> | undefined;
 
   constructor(
     private profileService: ProfileService,
@@ -25,14 +28,14 @@ export class LoyaltySummaryComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.profile$ = this.profileService.whoAmI();
-    this.loyalty$ = this.loyaltyId === undefined ?
-      this.loyaltyService.getLoyalties().pipe(
-        map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
-      ) : this.loyaltyService.getLoyalty(this.loyaltyId);
-  }
-
-  public consoleLog(log: any): void {
-    console.log(log);
+    if (!this.profile$) {
+      this.profile$ = this.profileService.whoAmI();
+    }
+    if (!this.loyalty$) {
+      this.loyalty$ = this.loyaltyId === undefined ?
+        this.loyaltyService.getLoyalties().pipe(
+          map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
+        ) : this.loyaltyService.getLoyalty(this.loyaltyId);
+    }
   }
 }

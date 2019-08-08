@@ -1,10 +1,9 @@
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IPopupConfig, PopupComponent } from '@perx/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-
 
 @Component({
   selector: 'app-activation-code',
@@ -28,8 +27,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class ActivationCodeComponent implements OnInit {
-  voucherId: number;
-  hideActionContainer = false;
+  public voucherId: number;
+  public hideActionContainer: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -39,21 +38,21 @@ export class ActivationCodeComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.voucherId = parseInt(params.get('id'), 10);
     });
   }
 
-  pinInputSuccess(): void {
+  public pinInputSuccess(): void {
     this.router.navigate([`/redemption/${this.voucherId}`]);
   }
 
-  onCancel() {
+  public onCancel(): void {
     this.location.back();
   }
 
-  errorHandler(status: number) {
+  public errorHandler(status: number): void {
     if (status === 401) {
       this.needLoginPopup();
     } else {
@@ -61,7 +60,7 @@ export class ActivationCodeComponent implements OnInit {
     }
   }
 
-  needLoginPopup(): void {
+  public needLoginPopup(): void {
     const goToLoginDialog = this.popup({
       title: 'You need to login to redeem the voucher',
       buttonTxt: 'Go to login'
@@ -69,18 +68,18 @@ export class ActivationCodeComponent implements OnInit {
     goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
   }
 
-  errorPopup(): void {
+  public errorPopup(): void {
     this.popup({
       title: 'Error occur, please try again later'
     });
   }
 
-  popup(data: IPopupConfig) {
+  public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
     return this.dialog
       .open(PopupComponent, { data });
   }
 
-  isPinFocused(pinFocused: boolean) {
+  public isPinFocused(pinFocused: boolean): void {
     this.hideActionContainer = pinFocused;
   }
 }

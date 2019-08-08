@@ -3,7 +3,7 @@ import { PuzzleStampComponent } from './puzzle-stamp.component';
 import { StampComponent } from './stamp/stamp.component';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
-import { STAMP_STATE } from '../../stamp/models/stamp.model';
+import { StampState } from '../../stamp/models/stamp.model';
 
 describe('PuzzleStampComponent', () => {
   let component: PuzzleStampComponent;
@@ -23,7 +23,7 @@ describe('PuzzleStampComponent', () => {
     component.stamps = [{
       id: 1,
       userAccountId: 1,
-      state: STAMP_STATE.redeemed,
+      state: StampState.redeemed,
       stampCardId: 1,
       createdAt: '',
       updatedAt: '',

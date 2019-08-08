@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { INavLink } from '../navlink.model';
 
 @Component({
   selector: 'app-charts',
@@ -6,14 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent {
-  public navLinks = [
+  public navLinks: INavLink[] = [
     { path: 'vertical-bar', label: 'Vertical Bar' },
     { path: 'horizontal-bar', label: 'Horizontal Bar' },
+    { path: 'line', label: 'Line' },
     { path: 'pie', label: 'Pie' },
     { path: 'advanced-pie', label: 'Advanced Pie' },
     { path: 'grid-pie', label: 'Pie Grid' },
     { path: 'trend', label: 'Trend' },
     { path: 'map', label: 'Map' },
-    { path: 'heatmap', label: 'Heat map' },
+    { path: 'heatmap', label: 'Calendar Heat map' },
   ];
 }

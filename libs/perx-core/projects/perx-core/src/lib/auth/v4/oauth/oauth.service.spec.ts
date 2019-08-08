@@ -5,6 +5,7 @@ import { OauthModule } from './oauth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
+import { ProfileModule } from '../../../profile/profile.module';
 
 describe('OauthService', () => {
   const environment = {
@@ -25,6 +26,7 @@ describe('OauthService', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
+        ProfileModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
       ]
     });
@@ -79,7 +81,7 @@ describe('OauthService', () => {
 
     const req = httpTestingController.expectOne(baseUrl + 'v4/customers/confirm');
 
-    expect(req.request.method).toEqual('PUT');
+    expect(req.request.method).toEqual('PATCH');
 
     req.flush({ message: 'OTP is correct', code: 20 });
 
@@ -87,7 +89,7 @@ describe('OauthService', () => {
   });
 
   it('should reset password', (done: DoneFn) => {
-    service.resetPassword('6398898888', '1237', '8888')
+    service.resetPassword({ phone: '6398898888', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
       .subscribe((res: { message: string }) => {
         expect(res.message).toBe('Password has been reset!');
         done();
@@ -95,7 +97,7 @@ describe('OauthService', () => {
 
     const req = httpTestingController.expectOne(baseUrl + 'v4/customers/reset_password');
 
-    expect(req.request.method).toEqual('PUT');
+    expect(req.request.method).toEqual('PATCH');
 
     req.flush({ message: 'Password has been reset!' });
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from './notification.service';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, AuthenticationService } from '@perx/core/dist/perx-core';
+import { PopupComponent, AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({

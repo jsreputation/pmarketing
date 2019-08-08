@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToggleControlConfig } from 'src/app/models/toggle-control-config.interface';
+import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
 export class NewRewardFormService {
@@ -123,7 +123,7 @@ export class NewRewardFormService {
     ];
   }
 
-  public getDefaultValue() {
+  public getDefaultValue(): any {
     return {
       rewardInfo: {
         redemptionType: 'QR Code'

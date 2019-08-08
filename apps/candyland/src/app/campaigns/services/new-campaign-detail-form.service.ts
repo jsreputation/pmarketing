@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToggleControlConfig } from 'src/app/models/toggle-control-config.interface';
+import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
 export class NewCampaignDetailFormService {
@@ -66,7 +66,7 @@ export class NewCampaignDetailFormService {
     ];
   }
 
-  public getDefaultValue() {
+  public getDefaultValue(): any {
     return {
       campaignInfo: {
         disabledEndDate: false

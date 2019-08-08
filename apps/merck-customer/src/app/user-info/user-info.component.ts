@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService, ICustomProperties, NotificationService } from '@perx/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'mc-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit, PageProperties {
+export class UserInfoComponent implements PageProperties {
 
   public surveyForm: FormGroup;
 
@@ -20,7 +19,7 @@ export class UserInfoComponent implements OnInit, PageProperties {
     private profileService: ProfileService,
     private notificationService: NotificationService
   ) {
-        this.initForm();
+    this.initForm();
   }
 
   private initForm(): void {
@@ -30,14 +29,17 @@ export class UserInfoComponent implements OnInit, PageProperties {
       hypertension: [false]
     });
   }
-  public ngOnInit(): void {}
 
   public showHeader(): boolean {
     return false;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
+  }
+
+  public backButtonEnabled(): boolean {
+    return false;
   }
 
   public diabetesConditionUpdated(isChecked: boolean): void {

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
-import { IGame, GAME_TYPE as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
-import { map } from 'rxjs/operators';
+import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
+import { catchError, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-enum GAME_TYPE {
+const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata'
 }
@@ -15,6 +15,7 @@ enum GAME_TYPE {
 interface Asset {
   type: string;
   value: {
+    file: string;
     filename: string;
     image_id: number;
     image_url: string;
@@ -27,6 +28,7 @@ interface Outcome {
   title: string;
   type?: string;
   value?: {
+    file: string;
     filename: string;
     image_id: number;
     image_url: string;
@@ -65,7 +67,7 @@ interface PinataDisplayProperties extends GameProperties {
 interface Game {
   campaign_id: number;
   display_properties: TreeDisplayProperties|PinataDisplayProperties;
-  game_type: GAME_TYPE;
+  game_type: GameType;
   id: number;
   number_of_tries: number;
   state: null;
@@ -108,33 +110,30 @@ export class GameService implements IGameService {
     let type = TYPE.unknown;
     let config: ITree|IPinata;
     switch (game.game_type) {
-      case GAME_TYPE.shakeTheTree:
+      case GameType.shakeTheTree:
         type = TYPE.shakeTheTree;
         const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
         config = {
           ...defaultTree(),
-          treeImg: dpts.tree_image.value.image_url,
-          giftImg: dpts.gift_image.value.image_url,
+          treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
+          giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
           nbHangedGift: dpts.number_of_gifts_shown,
           nbGiftsToDrop: dpts.number_of_gifts_to_drop,
           nbTaps: 5,
-          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url(),
-          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url()
+          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
+          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
         };
         break;
-      case GAME_TYPE.pinata:
+      case GameType.pinata:
         type = TYPE.pinata;
         const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
         config = {
           ...defaultPinata(),
-          stillImg: dpps.still_image.value.image_url,
-          brokenImg: dpps.opened_image.value.image_url,
+          stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
+          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+          breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
           nbTaps: 5
         };
-
-        if (dpps.cracking_image) {
-          config.breakingImg = dpps.cracking_image.value.image_url;
-        }
 
         break;
     }
@@ -162,7 +161,8 @@ export class GameService implements IGameService {
       id: game.id,
       campaignId: game.campaign_id,
       type,
-      backgroundImg: oc(game).display_properties.background_image.value.image_url(),
+      backgroundImg: oc(game).display_properties.background_image.value.image_url() ||
+        oc(game).display_properties.background_image.value.file(),
       remainingNumberOfTries: game.number_of_tries,
       config,
       texts,
@@ -176,8 +176,8 @@ export class GameService implements IGameService {
       subTitle: outcome.description,
       button: outcome.button_text
     };
-    if (outcome.type === 'image' && outcome.value) {
-      res.image = outcome.value.image_url;
+    if (outcome.type === 'image') {
+      res.image = oc(outcome).value.image_url() || oc(outcome).value.file();
     }
 
     return res;
@@ -200,7 +200,14 @@ export class GameService implements IGameService {
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
+          if (games.length === 0) {
+            throw new Error('Games list is empty');
+          }
           return games.map((game: Game): IGame => GameService.v4GameToGame(game));
+        }),
+        catchError((err) => {
+          // rethrow error for subscriber to handle
+          return throwError(err);
         })
       );
   }

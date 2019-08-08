@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { AuthenticationService, NotificationService } from '@perx/core';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit, PageProperties {
+export class SignupComponent implements PageProperties {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
 
-  public errorMessage: string = null;
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
 ) {
      this.initForm();
   }
@@ -28,8 +27,8 @@ export class SignupComponent implements OnInit, PageProperties {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
       mobileNo: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
       accept_marketing: [false, Validators.required]
     });
@@ -39,41 +38,60 @@ export class SignupComponent implements OnInit, PageProperties {
     return false;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
   }
 
-  public ngOnInit(): void {}
+  public backButtonEnabled(): boolean {
+    return false;
+  }
 
   public onSubmit(): void {
+
     try {
-      this.errorMessage = null;
-      const password = this.signupForm.get('password').value as string;
+      const passwordString = this.signupForm.get('password').value as string;
       const confirmPassword = this.signupForm.get('confirmPassword').value as string;
-      if (password !== confirmPassword) {
-        this.errorMessage = 'Passwords do not match.';
+      if (passwordString !== confirmPassword) {
+        this.notificationService.addSnack('Passwords do not match.');
         return;
       }
       const termsConditions = this.signupForm.get('accept_terms').value as boolean;
       if (!termsConditions) {
-        this.errorMessage = 'Please accept terms & conditions.';
+        this.notificationService.addSnack('Please accept terms & conditions.');
         return;
       }
 
       const marketingCommunication = this.signupForm.get('accept_marketing').value as boolean;
       if (!marketingCommunication) {
-        this.errorMessage = 'Please agree to receive marketing communications from Merck Group hk.';
+        this.notificationService.addSnack('Please agree to receive marketing communications from Merck Group hk.');
         return;
       }
-      const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
-      this.authService.signup(mobileNumber, password).subscribe(
+
+      // TODO: Currently '+' sign is not beign saved in the backend
+      // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
+
+      const mobileNumber = this.signupForm.get('mobileNo').value as string;
+
+      const name = this.signupForm.get('name').value as string;
+
+      const signUpData = {
+        firstName: '',
+        lastName: name,
+        middleName: '',
+        phone: mobileNumber,
+        email: '',
+        birthDay: '',
+        gender: '',
+        password: passwordString,
+        password_confirmation: confirmPassword
+      };
+
+      this.authService.signup(signUpData).subscribe(
         () => {
-          this.router.navigateByUrl('/home');
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
         },
         err => {
           console.error('Signup: ' + err);
-          // TODO: AuthService is not implementing 'signup' method yet. Remove this line once done.
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
         });
     } catch (error) {
         console.log(error);
@@ -82,9 +100,5 @@ export class SignupComponent implements OnInit, PageProperties {
 
   public goToLogin(): void {
     this.router.navigateByUrl('/login');
-  }
-
-  public onCrossClicked(): void {
-    this.errorMessage = null;
   }
 }

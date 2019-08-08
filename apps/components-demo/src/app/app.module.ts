@@ -9,18 +9,21 @@ import {
   AuthenticationModule,
   CognitoModule,
   OauthModule,
-  UtilsModule as PerxCoreUtilsModule
+  UtilsModule as PerxCoreUtilsModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from './utils/utils.module';
+import { HomeComponent } from './home/home.component';
+import { LocationModule } from './location/location.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     MatToolbarModule,
@@ -33,7 +36,11 @@ import { UtilsModule } from './utils/utils.module';
     FormsModule,
     RewardsModule,
     UtilsModule,
-    PerxCoreUtilsModule
+    PerxCoreUtilsModule,
+    LocationModule,
+    MatCardModule,
+    MatRippleModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

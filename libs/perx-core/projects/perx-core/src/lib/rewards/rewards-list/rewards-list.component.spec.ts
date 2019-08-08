@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsListComponent } from './rewards-list.component';
 import { MatCardModule } from '@angular/material';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
@@ -12,6 +13,7 @@ describe('RewardsListComponent', () => {
       declarations: [RewardsListComponent],
       imports: [
         MatCardModule,
+        UtilsModule
       ],
     })
       .compileComponents();

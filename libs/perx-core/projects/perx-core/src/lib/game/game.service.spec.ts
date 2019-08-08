@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { GameService } from './game.service';
 import { EnvConfig } from '../shared/env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IGame, GAME_TYPE } from './game.model';
+import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
 
 describe('GameService', () => {
@@ -49,10 +49,17 @@ describe('GameService', () => {
   it('should get games from campaign Id', (done: DoneFn) => {
     const service: GameService = TestBed.get(GameService);
     service.getGamesFromCampaign(1)
-      .subscribe((games: IGame[]) => {
-        expect(games.length).toBe(0);
-        done();
-      });
+      // .subscribe((games: IGame[]) => {
+      //     expect(games.length).toBe(0);
+      //     done();
+      //   },
+      .subscribe(
+        () => {},
+        (err: any) => {
+          expect(err.message).toEqual('Games list is empty');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/games');
 
@@ -71,11 +78,11 @@ describe('GameService', () => {
         const tree = games[0];
         expect(tree.id).toBe(4);
         expect(tree.campaignId).toBe(1);
-        expect(tree.type).toBe(GAME_TYPE.shakeTheTree);
+        expect(tree.type).toBe(GameType.shakeTheTree);
         const pinata = games[1];
         expect(pinata.id).toBe(5);
         expect(pinata.campaignId).toBe(1);
-        expect(pinata.type).toBe(GAME_TYPE.pinata);
+        expect(pinata.type).toBe(GameType.pinata);
         done();
       });
 
