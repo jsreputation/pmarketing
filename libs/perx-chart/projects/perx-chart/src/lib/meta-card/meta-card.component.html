@@ -1,0 +1,12 @@
+<div [ngSwitch]="cardType">
+  <pc-advanced-pie *ngSwitchCase="'advancedPie'" [data]="data"></pc-advanced-pie>
+  <pc-pie *ngSwitchCase="'pie'" [data]="data"></pc-pie>
+  <pc-grid-pie *ngSwitchCase="'gridPie'" [data]="data"></pc-grid-pie>
+  <pc-horizontal-bar *ngSwitchCase="'horizontalBar'" [data]="data"></pc-horizontal-bar>
+  <pc-vertical-bar *ngSwitchCase="'verticalBar'" [data]="data"></pc-vertical-bar>
+  <pc-line *ngSwitchCase="'line'" [data]="data"></pc-line>
+  <pc-map *ngSwitchCase="'map'" [data]="data"></pc-map>
+  <pc-trend *ngSwitchCase="'trend'" [data]="data"></pc-trend>
+  <pc-calendar-heatmap *ngSwitchCase="'calendardHeatmap'" [data]="data"></pc-calendar-heatmap>
+  <div *ngSwitchDefault>Wrong type selected '{{cardType}}'</div>
+</div>
