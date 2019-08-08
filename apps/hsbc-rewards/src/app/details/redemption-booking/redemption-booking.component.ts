@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService, RewardsService } from '@perx/core';
+import { LocationsService, RewardsService, ILocation, IReward } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,12 +10,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
-  customBackButton = 'assets/img/close.svg';
-  locationData;
-  reward;
-  merchants = [];
-  quantityes = [];
-  bookingForm : FormGroup;
+  public customBackButton = 'assets/img/close.svg';
+  public locationData:ILocation[];
+  public reward:IReward;
+  public merchants = [];
+  public quantityes = [];
+  public bookingForm : FormGroup;
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
@@ -23,7 +23,7 @@ export class RedemptionBookingComponent implements OnInit {
     private build: FormBuilder
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.route.params.pipe(switchMap((param)=>{
      return this.rewardsService.getReward(param.id);
     })).subscribe((reward)=>{
@@ -34,7 +34,7 @@ export class RedemptionBookingComponent implements OnInit {
     });
     this.buildForm();
   }
-  buildForm() {
+  public buildForm() {
     this.bookingForm = this.build.group({
       quantity: [null], 
       merchant: [null], 
@@ -44,7 +44,7 @@ export class RedemptionBookingComponent implements OnInit {
     });
   }
 
-  submitForm() {
+  public submitForm() {
     
   }
 }
