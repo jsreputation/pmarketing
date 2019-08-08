@@ -38,9 +38,7 @@ export class RedeemComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    console.log(history);
     const scannedQrCode = history.state.data;
-    console.log(scannedQrCode);
     if (scannedQrCode) {
       const parsedQrCode = JSON.parse(scannedQrCode);
       this.payload = parsedQrCode;
