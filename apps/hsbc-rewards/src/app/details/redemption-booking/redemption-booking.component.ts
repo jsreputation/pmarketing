@@ -3,6 +3,8 @@ import { LocationsService, RewardsService, ILocation, IReward } from '@perx/core
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DinamicCreateService } from 'src/app/shared/service/dinamic-create.service';
+import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.component';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -20,7 +22,8 @@ export class RedemptionBookingComponent implements OnInit {
     private locationService: LocationsService,
     private rewardsService: RewardsService,
     private route: ActivatedRoute,
-    private build: FormBuilder
+    private build: FormBuilder,
+    private compCreate: DinamicCreateService
   ) { }
 
   public ngOnInit() {
@@ -43,7 +46,10 @@ export class RedemptionBookingComponent implements OnInit {
       aggriement: [false, [Validators.requiredTrue]]
     });
   }
-
+  public openAgreement() {
+    const comp = this.compCreate.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
+    comp.instance.close.subscribe(()=>this.compCreate.removeComponent(comp));
+  }
   public submitForm() {
     
   }

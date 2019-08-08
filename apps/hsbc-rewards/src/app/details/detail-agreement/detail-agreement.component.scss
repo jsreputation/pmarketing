@@ -1,0 +1,22 @@
+.modal-widow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+}
+.modal-header {
+    padding: 1.8rem;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    position: relative;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .back {
+        position: absolute;
+        left: 2rem;
+    }
+}

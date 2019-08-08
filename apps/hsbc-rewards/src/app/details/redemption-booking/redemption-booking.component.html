@@ -31,7 +31,7 @@
       <div class="aggriement">
         <mat-checkbox formControlName="aggriement"></mat-checkbox>
         <p>
-          I have read, understood the <a [routerLink]="[ '/path', routeParam ]">HSBC’s Rewards Terms & Conditions </a>
+          I have read, understood the <a (click)="openAgreement()">HSBC’s Rewards Terms & Conditions </a>
           and agree to all clauses stated therein*
         </p>
       </div>
