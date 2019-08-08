@@ -62,8 +62,21 @@ export class PinataComponent implements OnInit, OnDestroy, IGameComponent, OnCha
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.stillImg) {
+    if (changes.stillImg || changes.movingImg || changes.openedImg) {
+      this.updateImage();
+    }
+  }
+
+  private updateImage(): void {
+    if (this.n === 0) {
       this.currentImg = this.stillImg;
+    } else if (this.n < this.nbTaps) {
+      if (this.movingImg !== undefined && this.movingImg !== null) {
+        this.currentImg = this.movingImg;
+      }
+      // @ts-ignore
+    } else if (this.n >= Number.parseInt(this.nbTaps, 10)) {
+      this.currentImg = this.openedImg;
     }
   }
 }
