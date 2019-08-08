@@ -23,6 +23,18 @@ export class EnvConfig {
   };
 }
 
+interface IV4SignUpData {
+  first_name?: string;
+  last_name: string;
+  middle_name?: string;
+  phone: string;
+  email?: string;
+  birthday?: string;
+  gender?: string;
+  password: string;
+  password_confirmation: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +52,18 @@ export class OauthService {
       this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
     }
     this.customersEndPoint = config.env.apiHost + '/v4/customers';
+  }
+
+  private static signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
+    const res = {
+      last_name: data.lastName,
+      first_name: data.firstName,
+      birthday: data.birthDay,
+      ...data
+    };
+    res.lastName = undefined;
+    res.firstName = undefined;
+    return res;
   }
 
   public authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
@@ -127,15 +151,15 @@ export class OauthService {
   }
 
   public signup(profile: ISignUpData): Observable<IProfile> {
-    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', {
-      params: profile
-    }).pipe(
-      tap( // Log the result or error
-        data => console.log(data),
-        error => console.log(error)
-      ),
-      map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
-    );
+    const profileV4 = OauthService.signUpDataToV4SignUpData(profile);
+    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        ),
+        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+      );
   }
 
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
