@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { PageProperties, BarSelectedItem } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
@@ -86,5 +86,9 @@ export class AppComponent implements OnInit {
 
   public onLeftActionClick(): void {
     this.location.back();
+  }
+
+  public onTabNavigate(path: string): void {
+    this.router.navigate([path]);
   }
 }

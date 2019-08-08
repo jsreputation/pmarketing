@@ -9,7 +9,10 @@
     "tslint-consistent-codestyle"
   ],
   "rules": {
-    "array-type": false,
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-parens": false,
     "deprecation": {
       "severity": "warn"

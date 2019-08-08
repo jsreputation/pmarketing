@@ -1,0 +1,36 @@
+.survey-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #3a6186 0%, #89243e 100%);
+
+  .survey-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 34rem;
+    max-width: 80%;
+    margin-top: 2rem;
+
+    h1 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.6rem;
+      text-align: center;
+      color: #666666;
+    }
+
+    button {
+      width: 80%;
+    }
+  }
+}
