@@ -14,13 +14,13 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
 
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  public authed: boolean;
+  public preAuth: boolean;
+  public failedAuth: boolean;
 
-  errorMessage: string;
+  public errorMessage: string;
 
   constructor(
     private router: Router,
@@ -34,14 +34,14 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
+  public initForm(): void {
     this.loginForm = this.fb.group({
       playerCode: ['', Validators.required],
       hsbcCardLastFourDigits: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     if (!this.preAuth) {
       return;
     }
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  async onSubmit() {
+  public async onSubmit(): Promise<void> {
     const username = this.loginForm.get('playerCode').value as string;
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;

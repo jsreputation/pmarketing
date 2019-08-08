@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build",
-    "build:starhub:prod": "ng build --prod",
+    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
+    "build": "npm run config && ng build",
+    "build:starhub:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
     "lint": "ng lint && stylelint \"src/**/*.*css\"",
@@ -44,8 +46,9 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
-    "ts-node": "~7.0.0",
+    "ts-node": "~8.3.0",
     "tslint": "~5.15.0",
+    "tslint-consistent-codestyle": "^1.15.1",
     "typescript": "~3.4.3"
   }
 }

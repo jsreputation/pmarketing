@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPayload } from '../order/order.component';
 import { Router } from '@angular/router';
 import { NotificationService, RewardsService, IReward } from '@perx/core';
-// import { VouchersService } from '@perx/core/dist/perx-core';
+// import { VouchersService } from '@perx/core';
 
 @Component({
   selector: 'app-redeem',

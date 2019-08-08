@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  profile: IProfile;
+  public profile: IProfile;
 
   constructor(
     private router: Router,
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthenticationService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.profileService.whoAmI()
       .pipe(
         take(1)
@@ -27,11 +27,11 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  onClick(url: string) {
+  public onClick(url: string): void {
     this.router.navigate([url]);
   }
 
-  onSignout() {
+  public onSignout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }

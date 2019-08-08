@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IVoucher, VOUCHER_STATE, REDEMPTION_TYPE } from './models/voucher.model';
+import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
 import { IVoucherService } from './ivoucher.service';
 
@@ -43,11 +43,11 @@ interface IV4Voucher {
   redemption_type: {
     call_to_action: any;
     timer: any;
-    type: REDEMPTION_TYPE;
+    type: RedemptionType;
   };
   reservation_expires_at: any;
   reward?: IV4Reward;
-  state: VOUCHER_STATE;
+  state: VoucherState;
   valid_from: string;
   valid_to: string;
   voucher_code: any;
@@ -152,10 +152,7 @@ export class VouchersService implements IVoucherService {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
       map(resp => resp.data),
-      map((v: IV4Voucher) => {
-        const voucher = VouchersService.voucherToVoucher(v);
-        return voucher;
-      })
+      map((v: IV4Voucher) => VouchersService.voucherToVoucher(v))
     );
   }
 

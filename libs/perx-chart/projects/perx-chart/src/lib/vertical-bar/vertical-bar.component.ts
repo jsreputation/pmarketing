@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IData } from '../data.model';
+import { IData, ChartData  } from '../data.model';
 
 @Component({
   selector: 'pc-vertical-bar',
@@ -11,7 +11,7 @@ export class VerticalBarComponent implements OnChanges {
   @Input()
   public data: Observable<IData>;
 
-  public ngxChartData: any[];
+  public ngxChartData: ChartData[];
   public single: boolean = true;
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -27,7 +27,7 @@ export class VerticalBarComponent implements OnChanges {
             };
           }
 
-          const series = row.slice(1).map((v: any, i: number) => {
+          const series = row.slice(1).map((v: number, i: number) => {
             return {
               name: data.cols[i + 1].display_name,
               value: v,

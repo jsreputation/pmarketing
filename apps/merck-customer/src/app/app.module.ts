@@ -13,8 +13,10 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatRadioModule,
+  MatTabsModule,
   MatSnackBarModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -23,7 +25,8 @@ import {
   ProfileModule,
   UtilsModule,
   LoyaltyModule,
-  RewardsModule
+  RewardsModule,
+  LocationModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,8 +36,13 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
+import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dialog.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { RedeemComponent } from './redeem/redeem.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +53,13 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     SignupComponent,
     ForgotPasswordComponent,
     EnterPinComponent,
+    FindPharmacyComponent,
+    CustomSnackbarComponent,
+    FilterDialogComponent,
     ResetPasswordComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    RewardDetailComponent,
+    RedeemComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +72,10 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatTabsModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatDialogModule,
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -70,10 +87,12 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ProfileModule.forRoot({ env: environment }),
     UtilsModule,
     LoyaltyModule.forRoot({env: environment}),
-    RewardsModule.forRoot({ env: environment })
+    RewardsModule.forRoot({ env: environment }),
+    QRCodeModule,
+    LocationModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],
-  entryComponents: [CustomSnackbarComponent]
+  entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
 export class AppModule { }

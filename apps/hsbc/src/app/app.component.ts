@@ -21,17 +21,17 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'HSBC Win A Treat';
-  showHeader: boolean;
-  leftIconToShow = '';
-  rightIconToShow = '';
-  currentPage: string;
-  failedAuthSubscriber: Subscription;
+  public title: string = 'HSBC Win A Treat';
+  public showHeader: boolean;
+  public leftIconToShow: string = '';
+  public rightIconToShow: string = '';
+  public currentPage: string;
+  public failedAuthSubscriber: Subscription;
   private soundToggleSubscription: Subscription;
-  @ViewChild('drawer', { static: false }) drawer: MatSidenav;
+  @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
 
-  onLeftActionClick: () => void = () => { };
-  onRightActionClick: () => void = () => { };
+  public onLeftActionClick: () => void = () => { };
+  public onRightActionClick: () => void = () => { };
 
   constructor(
     private router: Router,
@@ -40,11 +40,11 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private soundService: SoundService,
-    @Inject(DOCUMENT) private document
+    @Inject(DOCUMENT) private document: any
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const bases = this.document.getElementsByTagName('base');
 
     if (bases.length > 0) {
@@ -64,15 +64,15 @@ export class AppComponent implements OnInit {
     });
   }
 
-  goHome() {
+  public goHome(): void {
     this.router.navigate(['/home']);
   }
 
-  goBack() {
+  public goBack(): void {
     this.location.back();
   }
 
-  onActivate(ref: any) {
+  public onActivate(ref: any): void {
     const dummy = () => { };
 
     this.drawer.close();
@@ -130,12 +130,10 @@ export class AppComponent implements OnInit {
       ref instanceof HomeComponent ? sideNavToggle : dummy;
   }
 
-  onDeactivate(ref: any) {
-    if (ref instanceof PuzzleComponent) {
-      if (this.soundToggleSubscription) {
-        this.soundToggleSubscription.unsubscribe();
-        this.soundToggleSubscription = undefined;
-      }
+  public onDeactivate(ref: any): void {
+    if (ref instanceof PuzzleComponent && this.soundToggleSubscription) {
+      this.soundToggleSubscription.unsubscribe();
+      this.soundToggleSubscription = undefined;
     }
   }
 }
