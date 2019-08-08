@@ -142,9 +142,11 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
             // one try has been used
             this.game.remainingNumberOfTries--;
             // select proper popup based on outcome
-            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.filter(() => true).length > 0);
+            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.filter((out) => {
+              return out.outcome_type === 'reward';
+            }).length > 0);
             const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
-            this.lastPayload = hasOutcome ? res : undefined;
+            this.lastPayload = hasOutcome ? res.data.outcomes : undefined;
             if (this.game.remainingNumberOfTries === 0 && !hasOutcome) {
               outcome.button = null;
             }
