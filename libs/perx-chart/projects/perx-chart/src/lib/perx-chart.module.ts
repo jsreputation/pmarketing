@@ -9,28 +9,30 @@ import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MetaCardComponent } from './meta-card/meta-card.component';
 
 const comps: any[] = [
-    VerticalBarComponent,
-    HorizontalBarComponent,
-    PieComponent,
-    AdvancedPieComponent,
-    GridPieComponent,
-    TrendComponent,
-    MapComponent,
-    CalendarHeatmapComponent,
-    LineComponent
+  VerticalBarComponent,
+  HorizontalBarComponent,
+  PieComponent,
+  AdvancedPieComponent,
+  GridPieComponent,
+  TrendComponent,
+  MapComponent,
+  CalendarHeatmapComponent,
+  LineComponent,
+  MetaCardComponent,
 ];
 
 @NgModule({
-    imports: [
-        NgxChartsModule
-    ],
-    exports: [
-        ...comps
-    ],
-    declarations: [
-        ...comps
-    ]
+  imports: [
+    NgxChartsModule
+  ],
+  exports: [
+    ...comps
+  ],
+  declarations: [
+    ...comps,
+  ]
 })
 export class PerxChartModule { }
