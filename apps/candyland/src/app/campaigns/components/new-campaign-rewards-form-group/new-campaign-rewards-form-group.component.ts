@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
-  forwardRef
+  forwardRef, AfterViewInit
 } from '@angular/core';
 import {
   AbstractControl,
@@ -20,6 +20,7 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { noop } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -34,45 +35,17 @@ import { noop } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: ([false]),
-    rewards: this.fb.array([],
-      [ClValidators.sumMoreThan({fieldName: 'probability'})]
+    rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})]
     )
   });
   // private rewardsList: Reward[] = [];
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
-  //   = [
-  //   {
-  //     id: 1,
-  //     image: 'assets/images/mask-group.png',
-  //     name: 'Free Coffee',
-  //     type: 'Starbucks',
-  //     current: 500,
-  //     total: 1000
-  //   },
-  //   {
-  //     id: 2,
-  //     image: 'assets/images/mask-group.png',
-  //     name: 'Free Coffee 2',
-  //     type: 'Starbucks',
-  //     current: 500,
-  //     total: 800
-  //   }
-  // ];
-
-  public rewardsTemplate: Reward = {
-    id: 1,
-    image: 'assets/images/mask-group.png',
-    name: 'Free Coffee',
-    type: 'Starbucks',
-    current: 500,
-    total: 1000
-  };
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -92,15 +65,22 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public ngOnInit() {
-    this.updateRewards();
-    this.enableProbability.valueChanges.pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.updateRewards();
+    this.enableProbability.valueChanges
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged()
+      )
+      .subscribe((value: boolean) => {
+        this.updateRewards(value);
       });
-    this.group.valueChanges.pipe(untilDestroyed(this))
+    this.group.valueChanges
+      .pipe(untilDestroyed(this))
       .subscribe((reward) => {
         this.onChange(reward);
       });
+  }
+
+  ngAfterViewInit(): void {
   }
 
   ngOnDestroy(): void {
@@ -117,60 +97,45 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     });
   }
 
-  public addReward(value: any = this.rewardsTemplate): void {
-    // this.rewardsList.push(value);
-    this.rewards.push(this.createRewardForm(value));
+  public addReward(value: Reward): void {
+    this.rewards.push(this.createRewardForm(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
 
   public removeReward(index: number): void {
-    // this.rewardsList.splice(index, 1);
     this.rewards.removeAt(index);
   }
 
-  private createRewardForm(value): FormGroup {
-    // if (this.enableProbability.value) {
-      return this.fb.group({
-        value: [value],
-        probability: [0]
-      });
-    // } else {
-    //   return this.fb.group({
-    //     value: [value]
-    //   });
-    // }
+  private createRewardForm(value: Reward, isEnableProbability: boolean = false): FormGroup {
+    return this.fb.group({
+      value: [value],
+      probability: {value: 0, disabled: !isEnableProbability}
+    });
   }
 
-  private updateRewards(): void {
-    // this.rewards.clear();
-    if (this.enableProbability.value) {
-      // this.rewards.push(this.createRewardForm(null));
-      this.rewards.insert(0, this.createRewardForm(null));
-      for (const key in this.rewards) {
-        this.rewards.get(key).get('probability').enable();
+  private updateRewards(isEnableProbability: boolean): void {
+    if (isEnableProbability) {
+      this.rewards.insert(0, this.createRewardForm(null, isEnableProbability));
+      for (let i = 0; i < this.rewards.length; i++) {
+        this.rewards.at(i).get('probability').enable({emitEvent: false});
       }
     } else {
       this.rewards.removeAt(0);
-      for (const key in this.rewards) {
-        this.rewards.get(key).get('probability').enable();
+      for (let i = 0; i < this.rewards.length; i++) {
+        this.rewards.at(i).get('probability').reset(0, {emitEvent: false});
+        this.rewards.at(i).get('probability').disable({emitEvent: false});
       }
     }
-    // this.rewardsList.forEach(reward => {
-    //   this.rewards.push(this.createRewardForm(reward));
-    // });
     this.cd.detectChanges();
   }
 
-  writeValue(rewards: any): void {
-    console.log('writeValue', rewards);
-    if (rewards && rewards.length > 0) {
-      this.rewardsList = rewards;
-    } else {
-      this.rewardsList = [];
+  writeValue(data: any): void {
+    const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
+    for (let i = 0; i < data.rewards.length; i++) {
+      this.rewards.insert(i, this.createRewardForm(null, enableProbability));
     }
-    this.updateRewards();
-    this.group.patchValue(rewards);
-    this.onChange(rewards);
+    this.group.patchValue(data, {emitEvent: false});
+    this.cd.detectChanges();
   }
 
   registerOnChange(fn: any): void {
@@ -189,6 +154,5 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       this.group.enable();
     }
   }
-
 
 }

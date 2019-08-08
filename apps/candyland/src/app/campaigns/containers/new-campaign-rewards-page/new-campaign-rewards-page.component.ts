@@ -17,6 +17,10 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
       enableProbability: true,
       rewards: [
         {
+          value: null,
+          probability: 5
+        },
+        {
           value: {
             id: 1,
             image: 'assets/images/mask-group.png',
@@ -24,7 +28,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
             type: 'Starbucks',
             current: 500,
             total: 1000
-          }
+          },
+          probability: 20
         },
         {
           value: {
@@ -34,7 +39,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
             type: 'Starbucks',
             current: 500,
             total: 800
-          }
+          },
+          probability: 43
         }
       ]
     }

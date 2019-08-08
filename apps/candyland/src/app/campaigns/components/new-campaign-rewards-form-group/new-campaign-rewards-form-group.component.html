@@ -2,14 +2,14 @@
   <p class="card-title">{{title}}</p>
   <cl-button classList="invert no-padding" (click)="openDialogSelectReward()">+ Add Rewards</cl-button>
 </div>
-<div class="card-content" *ngIf="rewards.controls.length > 0">
+<div class="card-content" *ngIf="group && rewards?.controls?.length > 0">
   <div>
     <mat-checkbox [formControl]="enableProbability">Include Probability</mat-checkbox>
   </div>
   <div>
     <div [formGroup]="rewards">
       <cl-reward-item class="item"
-                      *ngFor="let reward of rewards.controls; let i = index"
+                      *ngFor="let reward of rewards?.controls; let i = index"
                       [group]="reward"
                       (clickDelete)="removeReward(i)">
       </cl-reward-item>

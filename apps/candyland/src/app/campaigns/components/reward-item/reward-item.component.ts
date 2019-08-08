@@ -5,18 +5,21 @@ import { FormControl, FormGroup } from '@angular/forms';
   selector: 'cl-reward-item',
   templateUrl: './reward-item.component.html',
   styleUrls: ['./reward-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardItemComponent implements OnInit {
-  @Input() public group: FormGroup = new FormGroup({value: new FormControl(null), propability: new FormControl(0)});
+  @Input() public group: FormGroup = new FormGroup({
+    value: new FormControl(null),
+    probability: new FormControl({value: 0, disabled: true})
+  });
   @Output() clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
   get data() {
     return this.group.value.value;
   }
 
-  get propability() {
-    return this.group.get('probability') || null;
+  get probability() {
+    return this.group.get('probability');
   }
 
   get isInvalid() {

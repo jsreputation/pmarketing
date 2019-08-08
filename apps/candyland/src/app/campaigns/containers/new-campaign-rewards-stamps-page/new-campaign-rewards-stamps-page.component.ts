@@ -92,12 +92,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   private initForm(): void {
     this.form = this.fb.group(
       {
-        rewardsList: this.fb.array([
-          this.fb.group({
-            enableProbability: ([false]),
-            rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})])
-          })
-        ]),
+        rewardsList: this.fb.array([{}, {}, {}]),
         limits: this.fb.group({
           times: [null, [
             Validators.required,

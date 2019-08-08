@@ -4,7 +4,7 @@
     <mat-card class="card" [formGroup]="">
       <ng-container *ngFor="let rewardGroup of rewardsList; let i = index">
         <cl-new-campaign-rewards-form-group [title]="i"
-                                            [group]="rewardGroup">
+                                            [formControl]="rewardGroup">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
     </mat-card>
