@@ -35,6 +35,10 @@ export class EnterPinComponent implements OnInit, PageProperties {
     return BarSelectedItem.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   private encodeMobileNo(mobileNo: string): string {
     let encodedString = '';
     for (let i = 0; i < mobileNo.length; i++) {

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { ICampaign, CampaignState, CampaignType } from '@perx/core';
+import { Component, OnInit } from '@angular/core';
+import { ICampaign, CampaignState, CampaignType, VouchersService, VoucherState } from '@perx/core';
 import { Router } from '@angular/router';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/stamp/models/stamp.model';
+import { Voucher } from '@perx/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public campaigns: ICampaign[] = [
     {
       id: 1,
@@ -19,13 +21,22 @@ export class HomeComponent {
     }
   ];  // test Array
 
-  constructor(private router: Router) { }
+  public vouchers$: Observable<Voucher[]>;
+
+  constructor(private router: Router, private vouchersService: VouchersService) { }
+
+  public ngOnInit(): void {
+    this.vouchers$ = this.vouchersService.getAll()
+      .pipe(map((vouchers: Voucher[]) => vouchers.filter((voucher: Voucher) => {
+        return voucher.state === VoucherState.issued;
+      })));
+  }
 
   public onCampaignSelect(campaign: ICampaign): void {
     this.router.navigate([`/game-play/${campaign.id}`]);
   }
 
-  public voucherSelected(voucher: IVoucher): void {
+  public voucherSelected(voucher: Voucher): void {
     this.router.navigate([`/voucher-detail/${voucher.id}`]);
   }
 }

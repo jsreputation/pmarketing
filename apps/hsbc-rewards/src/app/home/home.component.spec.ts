@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -17,6 +18,7 @@ describe('HomeComponent', () => {
       imports: [
         HttpClientTestingModule,
         NavigateToolbarModule,
+        NoopAnimationsModule,
         RouterTestingModule,
         LoyaltyModule.forRoot({ env: environment }),
         ProfileModule.forRoot({ env: environment }),

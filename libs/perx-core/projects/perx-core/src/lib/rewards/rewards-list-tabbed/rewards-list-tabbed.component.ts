@@ -4,6 +4,7 @@ import { IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
 
 export interface ITabConfig {
+  filter: string;
   tabName: string;
   tabValue: string;
 }
@@ -20,12 +21,9 @@ export class RewardsListTabbedComponent {
   @Input()
   public tabs: ITabConfig[] = [
     {
+      filter: null,
       tabName: 'All Rewards',
       tabValue: null
-    },
-    {
-      tabName: 'HSBC',
-      tabValue: 'hsbc'
     }
   ];
 
@@ -34,11 +32,12 @@ export class RewardsListTabbedComponent {
 
   public selectedIndex: number = 0;
 
-  public filterRewardsByMerchantName(value: string): Observable<IReward[]> {
+  public filterRewards(tab: ITabConfig): Observable<IReward[]> {
     return this.rewards.pipe(
-      map(rewards => value === null ? rewards : rewards.filter((reward: IReward) => {
-          return reward.merchantName &&
-            reward.merchantName.toLowerCase() === value.toLowerCase();
+      map(rewards => tab.tabValue === null || tab.filter === null ? rewards : rewards.filter((reward: IReward) => {
+          const filterBy = tab.filter;
+          return reward[`${filterBy}`] &&
+            reward[`${filterBy}`].toLowerCase() === tab.tabValue.toLowerCase();
         }
       ))
     );
