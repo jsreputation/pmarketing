@@ -46,10 +46,8 @@ export class ClValidators extends Validators {
   }
 
   public static checkUrl(control: AbstractControl): { [key: string]: boolean } | null {
-    if (control.value !== null) {
-      if (control.value.length > 0) {
-        return !ClValidators.url.test(control.value) ? { patternUrl: true } : null;
-      }
+    if (control.value !== null && control.value.length > 0) {
+      return !ClValidators.url.test(control.value) ? { patternUrl: true } : null;
     }
   }
 

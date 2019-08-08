@@ -17,12 +17,12 @@ export interface IReward {
   // hidden: any|null;
 }
 
-export enum STAMP_STATE {
+export enum StampState {
   redeemed = 'redeemed',
   issued = 'issued',
 }
 
-export enum STAMP_CARD_STATE {
+export enum StampCardState {
   active = 'active',
   inactive = 'inactive'
 }
@@ -31,7 +31,7 @@ export interface IStamp {
   id: number;
   userAccountId: number;
   stampCardId: number;
-  state: STAMP_STATE;
+  state: StampState;
   createdAt: string;
   updatedAt: string;
   campaignId: number;
@@ -41,7 +41,7 @@ export interface IStamp {
 export interface IStampCard {
   id: number;
   userAccountId: number;
-  state: STAMP_CARD_STATE;
+  state: StampCardState;
   campaignId: number;
   cardNumber: number;
   campaignConfig: {

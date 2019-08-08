@@ -64,53 +64,49 @@ export class PuzzlePlayComponent implements OnChanges {
   public ngOnChanges(
     // changes: SimpleChanges
   ): void {
-    if (this.img) {
+    // if (this.img) {
 
-      if (this.nbAvailablePieces !== 0 && this.showHint) {
-        // this.imageReady = true;
-      }
-      // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
-      //     this.imageHeight = this.imageWidth * ratio;
-/*
-      this.tileWidth = this.imageWidth / this.cols;
-      this.tileHeight = this.imageHeight / this.rows;
-      this.totalPieces = this.rows * this.cols;
+    // if (this.nbAvailablePieces !== 0 && this.showHint) {
+    // this.imageReady = true;
+    // }
+    // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
+    //     this.imageHeight = this.imageWidth * ratio;
+    /*
+          this.tileWidth = this.imageWidth / this.cols;
+          this.tileHeight = this.imageHeight / this.rows;
+          this.totalPieces = this.rows * this.cols;
 
-      for (let x = 0; x < this.totalPieces; x++) {
-        this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-      }
-      for (let i = 0; i < this.nbAvailablePieces; i++) {
-        const location = this.nbPlayedPieces + i;
-        this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
-      }
-      for (let i = 0; i < this.totalPieces; i++) {
-        this.staticPuzzleDummyTiles[i] = [i];
-      }*/
+          for (let x = 0; x < this.totalPieces; x++) {
+            this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
+          }
+          for (let i = 0; i < this.nbAvailablePieces; i++) {
+            const location = this.nbPlayedPieces + i;
+            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
+          }
+          for (let i = 0; i < this.totalPieces; i++) {
+            this.staticPuzzleDummyTiles[i] = [i];
+          }*/
 
-      // },
-      // err => console.error('Observer got an error: ' + err));
-    }
+    // },
+    // err => console.error('Observer got an error: ' + err));
+    // }
   }
 
   public nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
       this.completed.emit();
-    } else {
-
-      if ((this.remainingPuzzleTiles.length) > 0) {
-        const puzzleLocation = this.remainingPuzzleTiles[0].puzzleLocation;
-        this.moved.emit();
-        this.boardPuzzleTiles[puzzleLocation].isSelected = true;
-        this.remainingPuzzleTiles = this.remainingPuzzleTiles.filter((currentValue) => {
-          return currentValue.puzzleLocation !== puzzleLocation;
-        });
-      }
+    } else if ((this.remainingPuzzleTiles.length) > 0) {
+      const puzzleLocation = this.remainingPuzzleTiles[0].puzzleLocation;
+      this.moved.emit();
+      this.boardPuzzleTiles[puzzleLocation].isSelected = true;
+      this.remainingPuzzleTiles = this.remainingPuzzleTiles.filter((currentValue: DrawTile) => {
+        return currentValue.puzzleLocation !== puzzleLocation;
+      });
     }
   }
 
   public getPuzzleTileStyle(tile: DrawTile): any {
-
     const leftPosition = (tile.puzzleLocation % this.cols) * this.tileWidth;
     const topPosition = Math.floor((tile.puzzleLocation / this.cols)) * this.tileHeight;
     if (tile.isSelected) {
@@ -125,20 +121,18 @@ export class PuzzlePlayComponent implements OnChanges {
         filter: 'none',
         '-webkit-transform': 'translateZ(0)'
       };
-
-    } else {
-      return {
-        width: this.tileWidth + 'px',
-        height: this.tileHeight + 'px',
-        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        'background-image': 'url(' + this.img + ')',
-        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
-        'background-repeat': 'no-repeat',
-        '-webkit-filter': 'grayscale(100%)',
-        filter: 'grayscale(100%)',
-        '-webkit-transform': 'translateZ(0)'  // Hacky way to make filter work on iOS
-      };
     }
+    return {
+      width: this.tileWidth + 'px',
+      height: this.tileHeight + 'px',
+      'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
+      'background-image': 'url(' + this.img + ')',
+      'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+      'background-repeat': 'no-repeat',
+      '-webkit-filter': 'grayscale(100%)',
+      filter: 'grayscale(100%)',
+      '-webkit-transform': 'translateZ(0)'  // Hacky way to make filter work on iOS
+    };
   }
 
   public getBottomTilesStyle(index: number): any {

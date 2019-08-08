@@ -7,7 +7,7 @@ import {
   GameModule,
   GameService,
   VouchersService,
-  GAME_TYPE,
+  GameType,
   defaultTree,
   IGame
 } from '@perx/core';
@@ -17,7 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../../environments/environment';
 import { of, Observable } from 'rxjs';
-import { POPUP_TYPE } from '../vouchers/vouchers.component';
+import { PopupType } from '../vouchers/vouchers.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -28,7 +28,7 @@ describe('GameComponent', () => {
   const fakeGame: IGame = {
     id: 1,
     campaignId: 1,
-    type: GAME_TYPE.shakeTheTree,
+    type: GameType.shakeTheTree,
     remainingNumberOfTries: 10,
     // name: 'UAT GAME',
     texts: {},
@@ -79,7 +79,7 @@ describe('GameComponent', () => {
     spyOn(router, 'navigate');
     component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
     component.actionOnGameStatus();
-    expect(router.navigate).toHaveBeenCalledWith(['/vouchers', { popup: POPUP_TYPE.completed }]);
+    expect(router.navigate).toHaveBeenCalledWith(['/vouchers', { popup: PopupType.completed }]);
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {

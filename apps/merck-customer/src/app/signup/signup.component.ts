@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
@@ -39,8 +39,12 @@ export class SignupComponent implements PageProperties {
     return false;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.NONE;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.NONE;
+  }
+
+  public backButtonEnabled(): boolean {
+    return false;
   }
 
   public onSubmit(): void {

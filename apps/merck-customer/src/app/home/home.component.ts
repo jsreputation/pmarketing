@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { PageProperties, BAR_SELECTED_ITEM } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mc-home',
@@ -13,7 +14,9 @@ export class HomeComponent implements PageProperties {
   public rewards: Observable<IReward[]>;
 
   public constructor(
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private router: Router
+
   ) {
     this.rewards = this.rewardsService.getAllRewards();
   }
@@ -23,16 +26,19 @@ export class HomeComponent implements PageProperties {
   }
 
   public rewardClicked(reward: IReward): void {
-    // TODO: Currentlu tapped event is not being emmited from perx core.
-    // Navigate to Reward Detail once tapped events are active.
-    console.log(reward);
+    this.router.navigateByUrl(`reward-detail/${reward.id}`);
   }
 
   public showHeader(): boolean {
     return true;
   }
 
-  public bottomSelectedItem(): BAR_SELECTED_ITEM {
-    return BAR_SELECTED_ITEM.HOME;
+  public bottomSelectedItem(): BarSelectedItem {
+    return BarSelectedItem.HOME;
   }
+
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
 }

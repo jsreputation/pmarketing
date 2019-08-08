@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import { VouchersService } from './vouchers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { VouchersModule } from './vouchers.module';
-import { IVoucher, VOUCHER_STATE, REDEMPTION_TYPE } from './models/voucher.model';
+import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
@@ -15,10 +15,10 @@ describe('VouchersService', () => {
     {
       id: 21,
       rewardId: 5,
-      state: VOUCHER_STATE.issued,
+      state: VoucherState.issued,
       name: 'General Indoor Studio package @ $99',
       code: null,
-      redemptionType: REDEMPTION_TYPE.pin,
+      redemptionType: RedemptionType.pin,
       thumbnailImg: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png',
       rewardBanner: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png',
       merchantImg: null,
@@ -42,7 +42,7 @@ describe('VouchersService', () => {
     voucher_code: null,
     voucher_key: null,
     voucher_type: 'code',
-    state: VOUCHER_STATE.issued,
+    state: VoucherState.issued,
     given_by: null,
     given_to: null,
     given_date: null,
@@ -52,7 +52,7 @@ describe('VouchersService', () => {
     redemption_type: {
       call_to_action: null,
       timer: 0,
-      type: REDEMPTION_TYPE.pin
+      type: RedemptionType.pin
     },
     reward: {
       id: 5,

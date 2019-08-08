@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { REDEMPTION_TYPE } from '@perx/core';
+import { RedemptionType } from '@perx/core';
 
 @Component({
   selector: 'app-redeem',
@@ -9,7 +9,7 @@ import { REDEMPTION_TYPE } from '@perx/core';
 })
 export class RedeemComponent implements OnInit {
   public gameId: number;
-  public redeemType: REDEMPTION_TYPE; // 'pin' || 'bcode' || 'qrcode'
+  public redeemType: RedemptionType; // 'pin' || 'bcode' || 'qrcode'
 
   public voucherId: number = 2646396;
 
@@ -23,7 +23,7 @@ export class RedeemComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.gameId = Number.parseInt(params.get('id'), 10);
-      this.redeemType = params.get('mode') as REDEMPTION_TYPE;
+      this.redeemType = params.get('mode') as RedemptionType;
     });
   }
 
