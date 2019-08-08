@@ -15,20 +15,18 @@ export class LoginComponent {
   constructor(private authService: AuthenticationService, private router: Router) {
   }
 
-  public login(data: LoginFormValue): void {
-    this.authService.v4GameOauth(data.user, data.pass).then((isAuthed: boolean) => {
-      this.authed = isAuthed;
+  public async login(data: LoginFormValue): Promise<void> {
+    this.authed = await this.authService.v4GameOauth(data.user, data.pass);
 
-      if (!((window as any).primaryIdentifier)) {
-        (window as any).primaryIdentifier = data.user;
-      }
+    if (!((window as any).primaryIdentifier)) {
+      (window as any).primaryIdentifier = data.user;
+    }
 
-      if (this.authService.getInterruptedUrl()) {
-        this.router.navigateByUrl(this.authService.getInterruptedUrl());
-      } else {
-        this.router.navigateByUrl('/');
-      }
-    });
+    if (this.authService.getInterruptedUrl()) {
+      this.router.navigate([this.authService.getInterruptedUrl()]);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   public forgotPassword(identifier: string = ''): void {

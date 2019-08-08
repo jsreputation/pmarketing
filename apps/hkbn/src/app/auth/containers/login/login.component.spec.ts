@@ -37,7 +37,10 @@ describe('LoginComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => Promise.resolve(true)}
+          useValue: {
+            v4GameOauth: () => Promise.resolve(true),
+            getInterruptedUrl: () => null
+          }
         }
       ],
       declarations: [LoginComponent, LoginFormComponent]
@@ -60,5 +63,42 @@ describe('LoginComponent', () => {
     const navigateSpy = spyOn(router, 'navigate');
     component.forgotPassword();
     expect(navigateSpy).toHaveBeenCalledWith(['/forgot-password'], {queryParams: {identifier: ''}});
+  });
+
+  describe('login method', () => {
+
+    let authenticationService;
+    let v4GameOauthSpy;
+    let getInterruptedUrlSpy;
+    let navigateSpy;
+
+    beforeEach(() => {
+      authenticationService = TestBed.get(AuthenticationService);
+      v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth');
+      getInterruptedUrlSpy = spyOn(authenticationService, 'getInterruptedUrl');
+      navigateSpy = spyOn(router, 'navigate');
+    });
+
+    it('should call v4GameOauth method, authorize and redirect to root page', async () => {
+      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+      getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
+
+      await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
+
+      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
+      expect(component.authed).toBeTruthy();
+      expect(navigateSpy).toHaveBeenCalledWith(['/']);
+    });
+
+    it('should call v4GameOauth method, authorize and redirect to InterruptedUrl page', async () => {
+      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+      getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
+
+      await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
+
+      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
+      expect(component.authed).toBeTruthy();
+      expect(navigateSpy).toHaveBeenCalledWith(['/wallet']);
+    });
   });
 });
