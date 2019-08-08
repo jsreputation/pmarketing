@@ -27,14 +27,16 @@ export class RedeemComponent implements OnInit, PageProperties {
       this.route.paramMap
     ]).subscribe(
         ([profile, params]) => {
-          if (params.get('rewardId')) {
-          this.rewardId = +params.get('rewardId');
+          const rewarIdParam = params.get('rewardId');
+          if (!rewarIdParam) {
+            return;
+          }
+          this.rewardId = +rewarIdParam;
           this.rewardDetails = JSON.stringify(
             { id: profile.id,
               name: profile.lastName,
               rewardId: this.rewardId
             });
-          }
         }
     );
   }
