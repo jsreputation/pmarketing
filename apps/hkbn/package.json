@@ -23,6 +23,8 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@perx/core": "^0.0.0",
     "angular2-text-mask": "^9.0.0",
     "angularx-qrcode": "^1.6.4",

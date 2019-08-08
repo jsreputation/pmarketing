@@ -16,7 +16,7 @@ import {
   UtilsModule,
   VouchersModule,
 } from '@perx/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatButtonModule, MatDialogModule, MatTabsModule } from '@angular/material';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
@@ -25,11 +25,17 @@ import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
   console.log(authenticationService);
   return () => authenticationService.v4GetAppAccessToken().toPromise();
 };
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -49,6 +55,13 @@ const getAppAccessToken = (authenticationService: AuthenticationService) => {
     LoyaltyModule.forRoot({env: environment}),
     VouchersModule.forRoot({env: environment}),
     RewardsModule.forRoot({env: environment}),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     UtilsModule,
     HttpClientModule,
     MatDialogModule,
