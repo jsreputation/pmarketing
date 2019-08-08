@@ -3,7 +3,7 @@ import { LocationsService, ILocation } from '@perx/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
-import { BarSelectedItem } from '../page-properties';
+import { PageProperties, BarSelectedItem } from '../page-properties';
 
 export interface ITag {
   name: string;
@@ -19,7 +19,7 @@ export interface IData {
   templateUrl: './find-pharmacy.component.html',
   styleUrls: ['./find-pharmacy.component.scss']
 })
-export class FindPharmacyComponent implements OnInit {
+export class FindPharmacyComponent implements OnInit, PageProperties {
   public locations: Observable<ILocation[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
@@ -63,5 +63,9 @@ export class FindPharmacyComponent implements OnInit {
 
   public bottomSelectedItem(): BarSelectedItem {
     return BarSelectedItem.SEARCH;
+  }
+
+  public backButtonEnabled(): boolean {
+    return false;
   }
 }

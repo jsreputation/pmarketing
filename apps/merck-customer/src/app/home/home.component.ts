@@ -1,21 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageProperties, BarSelectedItem } from '../page-properties';
 import { IReward, RewardsService } from '@perx/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mc-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements PageProperties {
+export class HomeComponent implements PageProperties, OnInit {
 
   public rewards: Observable<IReward[]>;
 
   public constructor(
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private router: Router
   ) {
-    this.rewards = this.rewardsService.getAllRewards();
+  }
+
+  public ngOnInit(): void {
+    this.rewardsService
+      .getAllRewards()
+      .subscribe(
+        (rewards) => this.rewards = of(rewards)
+      );
   }
 
   public myQrClicked(): void {
@@ -23,9 +32,7 @@ export class HomeComponent implements PageProperties {
   }
 
   public rewardClicked(reward: IReward): void {
-    // TODO: Currentlu tapped event is not being emmited from perx core.
-    // Navigate to Reward Detail once tapped events are active.
-    console.log(reward);
+    this.router.navigateByUrl(`reward-detail/${ reward.id }`);
   }
 
   public showHeader(): boolean {
@@ -35,4 +42,9 @@ export class HomeComponent implements PageProperties {
   public bottomSelectedItem(): BarSelectedItem {
     return BarSelectedItem.HOME;
   }
+
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
 }

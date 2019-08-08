@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'mc-root',
@@ -16,15 +17,19 @@ export class AppComponent implements OnInit {
   public showHeader: boolean = false;
   public showBottomBar: boolean = false;
   public isHomeComponent: boolean = false;
+  public backButtonEnabled: boolean = false;
   private preAuth: boolean;
   public currentSelectedItem: BarSelectedItem = BarSelectedItem.NONE;
+  public leftIconToShow: string = '';
+  public rightIconToShow: string = '';
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
       this.preAuth = environment.preAuth;
       this.notificationService.$snack.subscribe((message: string) => {
@@ -74,7 +79,13 @@ export class AppComponent implements OnInit {
   public onActivate(ref: any): void {
     const activeComponent = ref as PageProperties;
     this.showHeader = activeComponent.showHeader();
+    this.backButtonEnabled = activeComponent.backButtonEnabled();
+    this.leftIconToShow =  this.backButtonEnabled ? 'arrow_back_ios' : '';
     this.currentSelectedItem = activeComponent.bottomSelectedItem();
+  }
+
+  public onLeftActionClick(): void {
+    this.location.back();
   }
 
   public onTabNavigate(path: string): void {

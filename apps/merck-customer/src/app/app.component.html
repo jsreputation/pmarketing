@@ -1,8 +1,18 @@
 <mat-toolbar *ngIf="showHeader" class="toolbar">
+	<button [disabled]="!backButtonEnabled" mat-icon-button (click)="onLeftActionClick()">
+        <mat-icon *ngIf="backButtonEnabled">
+          {{leftIconToShow}}
+        </mat-icon>
+    </button>
 	<img src="assets/header_logo.png">
+	<button [disabled]="rightIconToShow === ''" mat-icon-button>
+        <mat-icon *ngIf="rightIconToShow !== ''">
+          {{rightIconToShow}}
+        </mat-icon>
+    </button>
 </mat-toolbar>
 <div *ngIf="currentSelectedItem !== 'none'" class="bottom-bar">
-	<div class="bottom-bar-item">
+	<div class="bottom-bar-item" (click)="onTabNavigate('home')">
 		<img [src]="currentSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
 		<span [ngClass]="currentSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
 	</div>

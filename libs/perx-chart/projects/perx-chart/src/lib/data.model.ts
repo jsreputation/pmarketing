@@ -1,18 +1,19 @@
 export enum BaseType {
-    text = 'type/Text',
-    integer = 'type/Integer'
+  text = 'type/Text',
+  integer = 'type/Integer',
+  float = 'type/Float',
 }
 
 export interface IData {
-    columns: string[];
-    cols: {
-        name: string;
-        display_name: string;
-        base_type: BaseType;
-        source: string;
-    }[];
-    rows: any[][];
-    insights: any;
+  columns: string[];
+  cols: {
+    name: string;
+    display_name: string;
+    base_type: BaseType;
+    source: string;
+  }[];
+  rows: (string | number)[][];
+  insights: any;
 }
 
 export interface MultipleChartData {
