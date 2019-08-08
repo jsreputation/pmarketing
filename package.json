@@ -14,7 +14,7 @@
     "build:components-demo:prod": "echo nothing here",
     "build:hkbn:prod": "echo nothing here",
     "build:hsbc-rewards:prod": "echo nothing here",
-    "build:merck-customer:prod": "echo nothing here",
+    "build:merck-customer:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:merck-merchant:prod": "echo nothing here",
     "build:backend": "lerna run build:backend",
     "clean": "lerna clean --yes && lerna run clean && rm -rf ./dist ./node_modules",
