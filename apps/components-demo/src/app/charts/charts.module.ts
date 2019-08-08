@@ -8,7 +8,6 @@ import { PerxChartModule } from '@perx/chart';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
 import {
-  // MatButtonModule,
   MatTabsModule
 } from '@angular/material';
 import { TrendComponent } from './trend/trend.component';

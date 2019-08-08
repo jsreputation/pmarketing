@@ -9,7 +9,7 @@ interface ITokenResponse {
 }
 
 interface IMetabaseResponse {
-  data: IData
+  data: IData;
 }
 
 @Injectable({

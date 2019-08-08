@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get(':id')
-  getToken(@Param('id') id: string): ITokenResponse {
-    return { token: this.appService.getToken(Number.parseInt(id)) };
+  public getToken(@Param('id') id: string): ITokenResponse {
+    return { token: this.appService.getToken(Number.parseInt(id, 10)) };
   }
 }

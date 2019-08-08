@@ -6,7 +6,7 @@ export class AppService {
   public getToken(id: number): string {
     // you will need to install via 'npm install jsonwebtoken' or in your package.json
     // const METABASE_SITE_URL = "https://metabase.perxtech.io";
-    const METABASE_SECRET_KEY = "516b794bfd85e5aebfe3de3e7708ea7bcc1064f3a953a06fd444065ed263cd77";
+    const METABASE_SECRET_KEY = '516b794bfd85e5aebfe3de3e7708ea7bcc1064f3a953a06fd444065ed263cd77';
 
     const payload = {
       resource: { question: id },
