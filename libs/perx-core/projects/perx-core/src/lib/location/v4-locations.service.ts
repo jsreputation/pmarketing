@@ -68,7 +68,6 @@ export class V4LocationsService extends LocationsService {
     this.apiHost = config.env.apiHost as string;
   }
 
-  // @ts-ignore
   public getAll(tags: string[] = []): Observable<ILocation[]> {
     return this.getAllMerchants().pipe(
       mergeMap((merchants: IV4Merchant[]) => {
@@ -77,7 +76,7 @@ export class V4LocationsService extends LocationsService {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
             if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name).includes(tag));
+              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
             }
             return found;
           });
@@ -100,7 +99,7 @@ export class V4LocationsService extends LocationsService {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
             if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name).includes(tag));
+              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
             }
             return found;
           });
@@ -135,6 +134,21 @@ export class V4LocationsService extends LocationsService {
           phone: outlet.tel
         }));
       })
+    );
+  }
+
+  public getTags(): Observable<string[]> {
+    return this.getAllMerchants().pipe(
+      map((merchants: IV4Merchant[]) => {
+        return merchants.filter((merchant: IV4Merchant) => merchant.tags && merchant.tags.length > 0);
+      }),
+      filter((merchants: IV4Merchant[]) => merchants.length > 0),
+      map((merchants: IV4Merchant[]) => {
+        let tags = [];
+        tags = [...merchants.map((merchant: IV4Merchant) => merchant.tags.map(tag => tag.name))];
+        return tags;
+      }),
+      scan((acc: string[], curr: string[]) => acc.concat(...curr), [])
     );
   }
 
