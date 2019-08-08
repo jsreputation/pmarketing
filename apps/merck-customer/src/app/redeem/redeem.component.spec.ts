@@ -1,25 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { HomeComponent } from './home.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService } from '@perx/core';
+import { QRCodeModule } from 'angularx-qrcode';
+import { ProfileService } from '@perx/core';
+import { RedeemComponent } from './redeem.component';
+import { of } from 'rxjs';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('RedeemComponent', () => {
+  let component: RedeemComponent;
+  let fixture: ComponentFixture<RedeemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
+      declarations: [ RedeemComponent ],
       imports: [
-        RouterTestingModule
-      ],
+        RouterTestingModule,
+        QRCodeModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [
         {
-          provide: RewardsService,
-          useValue: {getAllRewards: () => {}}
+          provide: ProfileService,
+          useValue: { whoAmI: () => of({})}
         }
       ]
     })
@@ -27,7 +28,7 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(RedeemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

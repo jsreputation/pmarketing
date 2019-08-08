@@ -1,25 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { HomeComponent } from './home.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RewardsService } from '@perx/core';
+import { RewardDetailComponent } from './reward-detail.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('RewardDetailComponent', () => {
+  let component: RewardDetailComponent;
+  let fixture: ComponentFixture<RewardDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
-      imports: [
-        RouterTestingModule
-      ],
+      declarations: [ RewardDetailComponent ],
+      imports: [ RouterTestingModule ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [
         {
           provide: RewardsService,
-          useValue: {getAllRewards: () => {}}
+          useValue: {getReward: () => {}}
         }
       ]
     })
@@ -27,7 +24,7 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(RewardDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
