@@ -22,10 +22,6 @@ export class RewardsListTabbedComponent {
     {
       tabName: 'All Rewards',
       tabValue: null
-    },
-    {
-      tabName: 'HSBC',
-      tabValue: 'hsbc'
     }
   ];
 
