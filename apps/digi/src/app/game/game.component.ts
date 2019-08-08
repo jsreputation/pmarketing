@@ -30,11 +30,12 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
 
   private campaignId: number;
   private gameIns: IGame;
+  private lastPayload: any;
 
   @ViewChild('tree', { static: false })
-  private tree: IGameComponent;
+  private tree: IGameComponent | undefined;
   @ViewChild('pinata', { static: false })
-  private pinata: IGameComponent;
+  private pinata: IGameComponent | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -141,13 +142,23 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
             // one try has been used
             this.game.remainingNumberOfTries--;
             // select proper popup based on outcome
-            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.length > 0);
+            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.filter((out) => {
+              return out.outcome_type === 'reward';
+            }).length > 0);
             const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
+            this.lastPayload = hasOutcome ? res.data.outcomes : undefined;
+            if (this.game.remainingNumberOfTries === 0 && !hasOutcome) {
+              outcome.button = null;
+            }
 
             this.outcomePopup(outcome);
           },
           (e: HttpErrorResponse) => {
             if (e.status === 422) {
+              const outcome: IGameOutcome = this.game.results.noOutcome;
+              outcome.button = null;
+              this.outcomePopup(outcome);
+            } else if (e.status === 400) {
               const outcome: IGameOutcome = this.game.results.noOutcome;
               this.outcomePopup(outcome);
             } else {
@@ -165,7 +176,13 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public dialogClosed(): void {
-    this.reset();
+    if (this.lastPayload) {
+      const jsonString: string = JSON.stringify(this.lastPayload);
+      const base64: string = btoa(jsonString);
+      window.location.href = `https://success?payload=${base64}`;
+    } else {
+      this.reset();
+    }
   }
 
   private outcomePopup(outcome: IGameOutcome): void {
