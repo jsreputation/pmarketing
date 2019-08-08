@@ -45,6 +45,10 @@ export class ForgotPasswordComponent implements PageProperties {
     return BarSelectedItem.NONE;
   }
 
+  public backButtonEnabled(): boolean {
+    return false;
+  }
+
   public onSubmit(): void {
     const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     try {

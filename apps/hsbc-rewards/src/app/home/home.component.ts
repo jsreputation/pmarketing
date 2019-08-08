@@ -13,7 +13,7 @@ const mockTags = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: Array<string>;
+  public tags: string[];
   public rewards: Observable<IReward[]>;
 
   public currentTag: string;
