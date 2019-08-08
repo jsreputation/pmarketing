@@ -1,36 +1,43 @@
 <div class="reward-page">
   <app-detail-header [customBackButton]="customBackButton"></app-detail-header>
   <div class="reward-body">
-    <form class="booking-form">
-      <select>
-        <option disabled>Quantity</option>
-        <option *ngFor="let quantity of quantityes" [value]="quantity.id">{{quantity.address}}</option>
-      </select>
-      <select>
-        <option disabled>Merchant</option>
-        <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.address}}</option>
-      </select>
-      <select>
-        <option disabled>Location</option>
-        <option *ngFor="let location of locationData" [value]="location.id">{{location.address}}</option>
-      </select>
-      <mat-radio-group class="radio-group">
+    <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
+      <div class="select-wrap">
+        <select formControlName="quantity">
+          <option disabled [value]="null">Quantity</option>
+          <option *ngFor="let quantity of quantityes" [value]="quantity.id">{{quantity.address}}</option>
+        </select>
+      </div>
+      <div class="select-wrap no-content">
+        <select formControlName="merchant">
+          <option disabled [value]="null">Merchant</option>
+          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.address}}</option>
+        </select>
+      </div>
+      <div class="select-wrap">
+        <select formControlName="location">
+          <option disabled [value]="null">Location</option>
+          <option *ngFor="let location of locationData" [value]="location.id">{{location.address}}</option>
+        </select>
+      </div>
+      <mat-radio-group class="radio-group" formControlName="pointsBalance">
         <mat-radio-button class="radio-button" [value]="1">
           Use 20 points (Code HAC11P)
         </mat-radio-button>
         <mat-radio-button class="radio-button" [value]="2">
-          Use 20 points (Code HAC11P)
+          Use 15 points + PHP 680.00 (Code HAC11F)
         </mat-radio-button>
       </mat-radio-group>
+      <div class="aggriement">
+        <mat-checkbox formControlName="aggriement"></mat-checkbox>
+        <p>
+          I have read, understood the <a [routerLink]="[ '/path', routeParam ]">HSBC’s Rewards Terms & Conditions </a>
+          and agree to all clauses stated therein*
+        </p>
+      </div>
+      <div class="redeem-container">
+        <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid">Submit</button>
+      </div>
     </form>
-    <div class="aggriement">
-      <mat-checkbox></mat-checkbox>
-      <p>
-        I have read, understood the HSBC’s Rewards Terms & Conditions and agree to all clauses stated therein*
-      </p>
-    </div>
-    <div class="redeem-container">
-      <button mat-flat-button type="submit" color="primary" (click)="moveToBooking()">Submit</button>
-    </div>
   </div>
 </div>

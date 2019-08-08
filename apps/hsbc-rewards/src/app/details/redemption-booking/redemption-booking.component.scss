@@ -20,7 +20,6 @@
   padding: 1rem 1.5rem;
   border: none;
   border-bottom: 1px solid #E9E9ED;
-  margin-bottom:  1.6rem;
   font-size: 1.4rem;
 }
 .radio-button {
@@ -42,4 +41,37 @@ button {
 }
 .aggriement {
   display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+
+  p {
+    margin-left: 1rem;
+  }
+
+  a {
+    color: #E42713;
+  }
+}
+
+.radio-group {
+  font-size: 1.4rem;
+}
+
+.select-wrap {
+  position: relative;
+  margin-bottom:  1.6rem;
+  &::after {
+    content: url('/assets/img/arrow.svg');
+    position: absolute;
+    display: flex;
+    top: 0;
+    right: 1.5rem;
+    height: 100%;
+    align-items: center;
+  }
+}
+.no-content {
+  &::after {
+    display: none;
+  }
 }
