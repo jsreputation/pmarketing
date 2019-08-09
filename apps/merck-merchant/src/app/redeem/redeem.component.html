@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="btn-container">
-    <div *ngIf="!didProceed else proceeded">
+    <div *ngIf="!didProceed && payload else proceeded">
       <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">Proceed</button>
       <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">Cancel</button>
     </div>
