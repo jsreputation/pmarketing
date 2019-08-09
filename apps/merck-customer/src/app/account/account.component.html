@@ -1,0 +1,42 @@
+<div class="cover"></div>
+<div class="main-container">
+  <mat-card class="basic-info mat-elevation-z0">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img src="assets/avatar.png" alt="">
+      </div>
+      <mat-card-title>{{profile.firstName}} {{profile.lastName}}</mat-card-title>
+      <mat-card-subtitle>{{profile.state}}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <mat-action-list class="btn-container">
+    <button
+      mat-flat-button
+      class="full-width__button btn-transparent"
+      (click)="onAccountScreenNavigate('account/profile')"
+    >Profile</button>
+
+    <button
+      mat-flat-button
+      class="full-width__button btn-transparent"
+      (click)="onAccountScreenNavigate('account/transaction-history')"
+    >Transaction History</button>
+
+    <button
+      mat-flat-button
+      class="full-width__button btn-transparent"
+      (click)="onAccountScreenNavigate('account/privacy-policy')"
+    >Privacy Policy</button>
+
+  </mat-action-list>
+
+  <mat-action-list class="btn-container">
+    <button
+      mat-flat-button
+      class="full-width__button btn-transparent"
+      (click)="onLogout()"
+    >Log Out</button>
+  </mat-action-list>
+
+</div>

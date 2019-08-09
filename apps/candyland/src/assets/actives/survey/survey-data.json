@@ -1,0 +1,54 @@
+{
+  "background": [
+    {
+      "id": 1,
+      "type": "bg-1",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "bg-2",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "bg-3",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "cardBackground": [
+    {
+      "id": 1,
+      "type": "card-bg-1",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "card-bg-2",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "card-bg-3",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-<section class="reward-wrap" [formGroup]="formReward">
+<section class="reward-wrap" *ngIf="rewardData$ | async as rewardData" [formGroup]="formReward">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -92,10 +92,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardsCardBackground$ | async as backgrounds"
+                *ngIf="rewardData.cardBackground"
                 formControlName="cardBackground"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="rewardData.cardBackground"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -107,10 +107,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardsBackground$ | async as backgrounds"
+                *ngIf="rewardData.background"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="rewardData.background"
               >
               </cl-select-graphic-wrap>
             </div>
