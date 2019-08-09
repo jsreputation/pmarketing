@@ -15,8 +15,8 @@ export class RedemptionBookingComponent implements OnInit {
   public customBackButton: string = 'assets/img/close.svg';
   public locationData: ILocation[];
   public reward: IReward;
-  public merchants: any[] = [];
-  public quantityes: any[] = [];
+  public merchants: IMerchant[] = [];
+  public quantityes: number[] = [];
   public bookingForm: FormGroup;
   constructor(
     private locationService: LocationsService,
