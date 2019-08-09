@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { ControlsName } from '../../../../models/controls-name';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -14,7 +15,10 @@ import { tap } from 'rxjs/operators';
 })
 export class NewInstantRewardAppearancePageComponent implements OnInit {
   public formReward: FormGroup;
-  public rewardsCardBackground$: Observable<IGraphic>;
+  public rewardData$: Observable<{
+    background: IGraphic[],
+    cardBackground: IGraphic[]
+  }>;
   public rewardsBackground$: Observable<IGraphic>;
   constructor(private fb: FormBuilder,
               private rewardService: RewardService,
@@ -23,8 +27,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.createRewardForm();
-    this.getRewardBackground();
-    this.getRewardCardBackground();
+    this.getRewardData();
   }
 
   public save(): void {
@@ -34,21 +37,24 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
-
   public get name(): AbstractControl {
-    return this.formReward.get('name');
+    return this.formReward.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.formReward.get('headlineMessage');
+    return this.formReward.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.formReward.get('subHeadlineMessage');
+    return this.formReward.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.formReward.get('buttonText');
+    return this.formReward.get(ControlsName.buttonText);
+  }
+
+  public get background(): AbstractControl {
+    return this.formReward.get(ControlsName.background);
   }
 
   private createRewardForm(): void {
@@ -77,27 +83,15 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
     });
   }
 
-  private getRewardCardBackground(): void {
-    this.rewardsCardBackground$ = this.rewardService.getRewardCardBackground()
+  private getRewardData(): void {
+    this.rewardData$ = this.rewardService.getRewardData()
       .pipe(
         tap((res) => {
-          this.patchForm('cardBackground', res[0]);
+          this.formReward.patchValue({
+            [ControlsName.background]: res.background[0],
+            [ControlsName.cardBackground]: res.cardBackground[0]
+          });
         })
       );
-  }
-
-  private getRewardBackground(): void {
-    this.rewardsBackground$ = this.rewardService.getRewardBackground()
-      .pipe(
-        tap((res) => {
-          this.patchForm('background', res[0]);
-        })
-      );
-  }
-
-  private patchForm(fieldName: string, value: any): void {
-    this.formReward.patchValue({
-      [fieldName]: value
-    });
   }
 }

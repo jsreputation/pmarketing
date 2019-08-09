@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<section class="pinata-wrap" [formGroup]="formPinata">
+<section class="pinata-wrap" *ngIf="pinataData$ | async as pinataData" [formGroup]="formPinata">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -72,10 +72,10 @@
 
           <div class="game-tree-wrap">
             <cl-select-graphic
-              *ngIf="pinata$ | async as pinata"
+              *ngIf="pinataData.pinata"
               formControlName="pinata"
               class="game-selected-graphic"
-              [graphicList]="pinata"
+              [graphicList]="pinataData.pinata"
             >
             </cl-select-graphic>
           </div>
@@ -86,10 +86,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="backgrounds$ | async as backgrounds"
+                *ngIf="pinataData.background"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="pinataData.background"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -119,6 +119,30 @@
 
     <div class="mobile-preview">
       <div class="mobile-preview-mobile">
+        <div class="mobile-preview-header">
+          <p class="mobile-preview-headline">
+            {{headlineMessage.value}}
+          </p>
+          <p class="mobile-preview-sub-headline">
+            {{subHeadlineMessage.value}}
+          </p>
+        </div>
+        <perx-core-pinata class="mobile-preview-plugin"
+                          [enabled]="false"
+                          [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
+                          [openedImg]="'assets/images/games/pinata/opened-pinata.png'"
+                          [nbTaps]="5"
+        >
+        </perx-core-pinata>
+        <div class="mobile-preview-background"
+             [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
+        >
+        </div>
+        <div class="mobile-preview-btn-wrap">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
       </div>
     </div>
 
