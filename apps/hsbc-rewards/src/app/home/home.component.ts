@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getRewards();
     this.getTags();
   }
+
   public ngAfterViewInit(): void {
     // @ts-ignore to be verified
     this.loyaltySummary.loyalty$ = new BehaviorSubject({
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
     this.cd.detectChanges();
   }
+
   public getRewards(): void {
     this.rewardsService.getAllRewards().subscribe(
       (rewards: IReward[]) => {
