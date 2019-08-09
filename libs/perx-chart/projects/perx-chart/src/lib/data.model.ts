@@ -18,18 +18,33 @@ export interface IData {
 
 export interface MultipleChartData {
   series: {
-    extra: {
+    extra?: {
       code: string
     };
-    name: string;
-    value: number;
+    name: string | number;
+    value: string | number;
   }[];
-  name: string;
+  name: string | number;
 }
 
 export interface SingleChartData {
-  name: string;
-  value: number;
+  name: string | number;
+  value: string | number;
+}
+
+export interface TrendChartData {
+  reward_name: string | number;
+  revenue: string | number;
+  chart_data: {
+    series: {
+      extra: {
+        code: string
+      };
+      name: string;
+      value: number;
+    }[];
+    name: string | number;
+  }[];
 }
 
 export type ChartData = MultipleChartData | SingleChartData;
