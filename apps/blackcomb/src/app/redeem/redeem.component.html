@@ -11,21 +11,21 @@
       </div>
       <button class="back-to-wallet" mat-stroked-button color="primary" routerLink="/home">{{bottomButtonText}}</button>
     </div>
-    <div *ngIf="redeemType === 'pin' && !hasResultFetched">
+    <div *ngIf="voucher.redemptionType === 'pin'">
       <p>
         The merchant will enter the redemption code when you are ready to redeem at the venue.
       </p>
       <h1>
         Merchant to enter the code
       </h1>
-      <perx-core-pin-redemption length="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)">
+      <perx-core-pin-redemption length="4" (full)="pinInput($event)" (hasErrorEmit)="errorHandler($event)" [voucher]="voucher">
       </perx-core-pin-redemption>
     </div>
-    <div *ngIf="redeemType === 'txtCode' && !hasResultFetched">
-      <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
+    <div *ngIf="voucher.redemptionType === 'txtCode' || voucher.redemptionType === 'offline'">
+      <perx-core-bcode-redemption [voucher]="voucher"></perx-core-bcode-redemption>
     </div>
-    <div class="qrcode-container" *ngIf="redeemType === 'qrcode' && !hasResultFetched">
-      <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+    <div *ngIf="voucher.redemptionType === 'qrcode'" class="qrcode-container" >
+      <perx-core-qrcode-redemption [voucher]="voucher"></perx-core-qrcode-redemption>
     </div>
     <button class="redeem-btn" *ngIf="!hasResultFetched" mat-stroked-button (click)="onCancel()">Redeem</button>
   </div>

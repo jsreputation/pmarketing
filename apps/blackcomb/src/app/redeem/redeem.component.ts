@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { RedemptionType } from '@perx/core';
+import { Voucher, VouchersService } from '@perx/core';
+import { Observable } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-redeem',
@@ -8,23 +10,19 @@ import { RedemptionType } from '@perx/core';
   styleUrls: ['./redeem.component.scss']
 })
 export class RedeemComponent implements OnInit {
-  public gameId: number;
-  public redeemType: RedemptionType; // 'pin' || 'bcode' || 'qrcode'
-
-  public voucherId: number = 2646396;
-
-  public encodedValue: string = 'Encoded voucher Id';  // TODO: To be replaced with Value to be encoded
-
-  public hasResultFetched: boolean = false;
-  public isRedeemSuccessful: boolean = false;
-
-  constructor(private route: ActivatedRoute) { }
+  public voucher: Observable<Voucher>;
+  constructor(private route: ActivatedRoute, private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.gameId = Number.parseInt(params.get('id'), 10);
-      this.redeemType = params.get('mode') as RedemptionType;
-    });
+    this.voucher = this.route.paramMap
+      .pipe(
+        filter((params: ParamMap) => params.has('id')),
+        switchMap((params: ParamMap) => {
+          const id: string = params.get('id');
+          const idN: number = Number.parseInt(id, 10);
+          return this.vouchersService.get(idN);
+        })
+      );
   }
 
   public pinInput(id: string): void {
@@ -32,8 +30,8 @@ export class RedeemComponent implements OnInit {
   }
 
   public onCancel(): void {
-    this.hasResultFetched = true;
-    this.isRedeemSuccessful = true;
+    // this.hasResultFetched = true;
+    // this.isRedeemSuccessful = true;
   }
 
   public errorHandler(status: number): void {
@@ -41,23 +39,23 @@ export class RedeemComponent implements OnInit {
   }
 
   public get titleText(): string {
-    if (this.isRedeemSuccessful) {
-      return 'Successfully Redeemed!';
-    }
+    // if (this.isRedeemSuccessful) {
+    //   return 'Successfully Redeemed!';
+    // }
     return 'Redemption Unsucessful';
   }
 
   public get subTitleText(): string {
-    if (this.isRedeemSuccessful) {
-      return `You have redeemed $3 voucher from Starbucks`;
-    }
+    // if (this.isRedeemSuccessful) {
+    //   return `You have redeemed $3 voucher from Starbucks`;
+    // }
     return `Please ensure the code entered is correct`;
   }
 
   public get bottomButtonText(): string {
-    if (this.isRedeemSuccessful) {
-      return `Back to wallet`;
-    }
+    // if (this.isRedeemSuccessful) {
+    //   return `Back to wallet`;
+    // }
     return `Redeem`;
   }
 }
