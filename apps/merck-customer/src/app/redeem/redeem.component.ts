@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { combineLatest } from 'rxjs';
@@ -10,7 +10,7 @@ import { ProfileService } from '@perx/core';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit, PageProperties {
+export class RedeemComponent implements OnInit, PageAppearence {
 
   public rewardDetails: string = null;
   public rewardId: number = null;
@@ -45,15 +45,12 @@ export class RedeemComponent implements OnInit, PageProperties {
     this.location.back();
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return true;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: true,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 }
