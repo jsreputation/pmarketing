@@ -8,6 +8,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { ControlValueService } from '@cl-core/services/control-value.service';
+import { PuzzleCollectStamp, PuzzleCollectStampState } from '../../../../../../../../libs/perx-core/dist/perx-core';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -29,6 +30,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
     preStamp: IGraphic[],
     backgroundStamp: IGraphic[],
   }>;
+  public stamps: PuzzleCollectStamp[] = [];
+  public stampsSlotNumberData = [];
   private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
               private stampService: StampHttpService,
@@ -40,6 +43,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.createStampForm();
     this.subscribeStampsNumberChanges();
+    this.subscribeStampsSlotChanges();
     this.getStampData();
   }
   public get name(): AbstractControl {
@@ -148,17 +152,35 @@ export class NewStampComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
+          for (let i = 0; i <= value; i++) {
+            this.stamps.push({
+              id: 1,
+              state: PuzzleCollectStampState.redeemed,
+            });
+          }
           this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
           this.patchForm('stampsSlotNumber', [this.stampSlotNumbers[this.stampSlotNumbers.length - 1].value]);
         }
       );
   }
 
+  private subscribeStampsSlotChanges(): void {
+    this.formStamp.get(ControlsName.stampsSlotNumber)
+      .valueChanges
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe((value: string[]) => {
+        this.stampsSlotNumberData = value.map((item: string) => {
+          return { rewardPosition: +item - 1};
+        });
+      });
+  }
+
   private getStampData(): void {
     this.stampData$ = this.stampService.getStampsData()
       .pipe(
         tap((res) => {
-          console.log(res);
           this.stampSlotNumbers = this.allStampSlotNumbers = res.slotNumber;
           this.formStamp.patchValue({
             stampsNumber: res.number[res.number.length - 1].value,

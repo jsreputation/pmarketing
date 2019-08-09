@@ -224,12 +224,14 @@
                 {{subHeadlineMessage.value}}
               </p>
             </div>
+            <!--use change background image-->
             <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value"
-                                             [stamps]="stampsSlotNumber"
+                                             [stamps]="stamps"
+                                             [rewards]="stampsSlotNumberData"
                                              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                                             [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
+                                             [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
                                              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-                                             [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
+                                             [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
             </perx-core-puzzle-collect-stamps>
           </div>
         </div>
@@ -255,7 +257,8 @@
               </p>
             </div>
             <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value"
-                                             [stamps]="stampsSlotNumber"
+                                             [stamps]="stamps"
+                                             [rewards]="stampsSlotNumberData"
                                              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
                                              [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
                                              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
