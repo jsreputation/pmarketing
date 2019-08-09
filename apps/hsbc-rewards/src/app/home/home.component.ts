@@ -5,7 +5,7 @@ import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/c
 import { LoyaltySummaryComponent } from '@perx/core';
 import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
-const mockTags : ITabConfig[] = [{
+const mockTags: ITabConfig[] = [{
   filter: null,
   tabName: 'Lifestyle',
   tabValue: ''
@@ -17,7 +17,7 @@ const mockTags : ITabConfig[] = [{
   filter: null,
   tabName: 'Shopping',
   tabValue: ''
-}]
+}];
 
 @Component({
   selector: 'app-home',
@@ -26,7 +26,6 @@ const mockTags : ITabConfig[] = [{
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   public tags: ITabConfig[];
-   
   public rewards: Observable<IReward[]>;
 
   @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
@@ -67,8 +66,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.tags = mockTags;
   }
 
-
-  public openRewardDetails(tab) {
+  public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
 }
