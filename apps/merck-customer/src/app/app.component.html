@@ -20,7 +20,7 @@
 		<img [src]="currentSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
 		<span [ngClass]="currentSelectedItem === 'search' ? 'selected' : 'unselected'">Find a pharmacy</span>
 	</div>
-	<div class="bottom-bar-item">
+	<div class="bottom-bar-item" (click)="onTabNavigate('account')">
 		<img [src]="currentSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
 		<span [ngClass]="currentSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
 	</div>
