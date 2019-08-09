@@ -25,7 +25,7 @@
 
 .modal-body {
   font-size: 1.4rem;
-  padding: 2rem 1.5rem
+  padding: 2rem 1.5rem;
 }
 
 .alphabet {
@@ -50,9 +50,10 @@ ol.general-level {
 
 h4 {
   margin: 2rem 0 0;
+  display: inline-block;
 }
 
-ol.general-level>li {
+ol.general-level > li {
   display: block;
 
   &:first-child h4 {
@@ -60,7 +61,7 @@ ol.general-level>li {
   }
 }
 
-ol.general-level>li:before {
+ol.general-level > li::before {
   content: counter(item) ". ";
   counter-increment: item;
   font-weight: bold;
@@ -74,16 +75,15 @@ p {
   margin: 0;
 }
 
-h4 {
-  display: inline-block;
-}
-
-table, th, td {
+table,
+th,
+td {
   border: 0.1rem solid #000;
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding-left: 1rem;
 }
 
