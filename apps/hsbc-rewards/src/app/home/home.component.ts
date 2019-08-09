@@ -3,10 +3,21 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
 import { LoyaltySummaryComponent } from '@perx/core';
+import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
-const mockTags = [
-  'Lifestyle', 'Travel', 'Shopping'
-];
+const mockTags : ITabConfig[] = [{
+  filter: null,
+  tabName: 'Lifestyle',
+  tabValue: ''
+}, {
+  filter: null,
+  tabName: 'Travel',
+  tabValue: ''
+}, {
+  filter: null,
+  tabName: 'Shopping',
+  tabValue: ''
+}]
 
 @Component({
   selector: 'app-home',
@@ -14,10 +25,9 @@ const mockTags = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: string[];
+  public tags: ITabConfig[];
+   
   public rewards: Observable<IReward[]>;
-
-  public currentTag: string;
 
   @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
 
@@ -53,16 +63,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public getTags(): void {
     this.rewardsService.getTags();
     this.tags = mockTags;
-    this.currentTag = this.tags[0];
   }
 
-  public changeTage(tag: string): void {
-    this.currentTag = tag;
-  }
 
-  public async openRewardDetails(event: any): Promise<void> {
-    const url = 'detail/element/' + (event instanceof Observable ?
-      (await event.toPromise())[0].id : event.id);
-    this.router.navigate([url]);
+  public openRewardDetails(tab) {
+    this.router.navigate([`detail/element/${tab.id}`]);
   }
 }
