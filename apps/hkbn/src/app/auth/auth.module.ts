@@ -47,7 +47,6 @@ const CONTAINERS = [
     UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
-    UtilsModule,
     TranslateModule
   ],
   exports: [

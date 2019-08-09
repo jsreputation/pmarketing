@@ -8,8 +8,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
-// import 'jasmine'
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const mockReward = {
   id: 1,
@@ -39,6 +39,7 @@ describe('RewardComponent', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       providers: [{
         provide: ActivatedRoute, useValue: {paramMap: of(convertToParamMap({id: '1'}))}

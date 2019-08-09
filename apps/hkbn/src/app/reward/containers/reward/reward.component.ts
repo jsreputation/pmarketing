@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { IReward, NotificationService, RewardsService } from '@perx/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'hkbn-reward',
@@ -22,7 +22,7 @@ export class RewardComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private rewardsService: RewardsService,
-              private translate: TranslatePipe,
+              private translateService: TranslateService,
               // TODO Uncomment when loyaltyService.exchangePoints will be implemented
               // private loyaltyService: LoyaltyService
   ) {
@@ -74,7 +74,7 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         tap(() => this.notificationService.addPopup({
           title: '[Reward Title]',
-          text: `${this.translate.transform('YOUR_BALANCE_IS')} ${29} ${this.translate.transform('POINTS')}`,
+          text: `${this.translateService.get('YOUR_BALANCE_IS')} ${29} ${this.translateService.get('POINTS')}`,
           afterClosedCallBack: this
         }))
       );

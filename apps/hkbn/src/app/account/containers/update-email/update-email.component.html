@@ -4,7 +4,7 @@
       <mat-label>{{"EMAIL" | translate}}</mat-label>
       <input type="text" matInput formControlName="email">
       <mat-error *hkbnErrorHandler="'required'">
-        This field is required
+        {{"REQUIRED" | translate}}
       </mat-error>
       <mat-error *hkbnErrorHandler="'email'">
         {{"ENTER_VALID_EMAIL" | translate}}

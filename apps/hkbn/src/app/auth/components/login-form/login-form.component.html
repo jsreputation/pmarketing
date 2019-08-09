@@ -3,7 +3,7 @@
     <mat-label>{{"MOBILE_NUMBER_OR_EMAIL" | translate}}</mat-label>
     <input type="text" matInput formControlName="user">
     <mat-error *hkbnErrorHandler="'required'">
-      This field is required
+      {{"REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
 
@@ -11,7 +11,7 @@
     <mat-label>{{"PASSWORD" | translate}}</mat-label>
     <input type="password" matInput formControlName="pass">
     <mat-error *hkbnErrorHandler="'required'">
-      This field is required
+      {{"REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
 
