@@ -1,32 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { map } from 'rxjs/operators';
 import { IGameGifts } from '../models/game-gifts.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ShakeDataService {
 
   constructor(private http: HttpClient) { }
 
-  public getBackground(): Observable<IGraphic[]> {
-    return this.http.get('assets/actives/background.json')
-      .pipe(map((response) => (response as IGraphic[])));
-  }
-
-  public getGiftBox(): Observable<IGraphic[]> {
-    return this.http.get('assets/actives/gift-box.json')
-      .pipe(map((response) => (response as IGraphic[])));
-  }
-
-  public getGamesTree(): Observable<IGraphic[]> {
-    return this.http.get('assets/actives/games-tree.json')
-      .pipe(map((response) => (response as IGraphic[])));
-  }
-
-  public getGameNumberGifts(): Observable<IGameGifts[]> {
-    return this.http.get('assets/actives/game-number-gift.json')
-      .pipe(map((response) => (response as IGameGifts[])));
+  public getData(): Observable<{
+    gameNumberGift: IGameGifts[],
+    gamesTree: IGraphic[],
+    giftBox: IGraphic[],
+    'background': IGraphic[]
+  }> {
+    return this.http.get<{
+      gameNumberGift: IGameGifts[],
+      gamesTree: IGraphic[],
+      giftBox: IGraphic[],
+      'background': IGraphic[]
+    }>('assets/actives/shake-tree/data.json');
   }
 }

@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 
-<div class="survey-wrap" [formGroup]="formSurvey">
+<div class="survey-wrap" [formGroup]="formSurvey" *ngIf="surveyData$ |async as surveyData">
   <div class="full-with page-header">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -160,10 +160,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="cardBackground$ | async as cardBackground"
+                *ngIf="surveyData.cardBackground"
                 formControlName="cardBackground"
                 class="game-selected-graphic"
-                [graphicList]="cardBackground"
+                [graphicList]="surveyData.cardBackground"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -175,10 +175,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="backgrounds$ | async as backgrounds"
+                *ngIf="surveyData.background"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="surveyData.background"
               >
               </cl-select-graphic-wrap>
             </div>
