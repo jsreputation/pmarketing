@@ -1,14 +1,14 @@
 <div class="tab-content">
   <div class="forms-container" [formGroup]="form">
     <!--Rewards-->
-    <mat-card class="card" [formGroup]="">
-      <ng-container *ngFor="let rewardGroup of rewardsList; let i = index">
-        <cl-new-campaign-rewards-form-group [title]="i"
-                                            [formControl]="rewardGroup">
+    <mat-card class="card">
+      <ng-container *ngFor="let rewardGroup of rewardsList?.controls; let i = index">
+        <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')"
+                                            [title]="'Rewards for slot ' + rewardGroup.get('stampSlotNumber').value">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
     </mat-card>
-    <!--limits-->
+    <!--    limits-->
     <mat-card class="card" formGroupName="limits">
       <div class="card-header">
         <p class="card-title">Limits</p>
@@ -16,41 +16,88 @@
       <div class="card-content">
         <div class="card-section">
           <div class="card-header">
-            <p class="card-title">Stamp Card Limits</p>
+            <div class="row">
+              <p class="card-title">Stamp Card Limits</p>
+              <mat-slide-toggle formControlName="enableStampCard"></mat-slide-toggle>
+            </div>
           </div>
-          <div class="card-content">
+          <div class="card-content" formGroupName="stampCard">
             <label class="card-label">Stamp cards per campaign</label>
-            <mat-form-field>
-              <input matInput type="number" [min]="1" formControlName="times">
-              <span matSuffix>stamp cards</span>
-            </mat-form-field>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perCampaign">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <div></div>
+            </div>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <span>per</span>
+              <mat-form-field>
+                <mat-select formControlName="duration">
+                  <mat-option value="day">Day</mat-option>
+                  <mat-option value="week">Week</mat-option>
+                  <mat-option value="month">Month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
-        <!--    <mat-card class="card" formGroupName="limits">-->
-        <!--      <div class="card-header">-->
-        <!--        <p class="card-title">Play Limits</p>-->
-        <!--      </div>-->
-        <!--      <div class="card-content">-->
-        <!--        <div class="card-row stretch">-->
-        <!--          <div>-->
-        <!--            <label class="card-label">Limit per user</label>-->
-        <!--            <mat-form-field>-->
-        <!--              <input matInput type="number" [min]="1" formControlName="times">-->
-        <!--              <span matSuffix>Play</span>-->
-        <!--            </mat-form-field>-->
-        <!--          </div>-->
-        <!--          <div>-->
-        <!--            <label class="card-label">Limit per duration</label>-->
-        <!--            <mat-form-field>-->
-        <!--              <mat-select formControlName="duration">-->
-        <!--                <mat-option *ngFor="let option of config?.durationLimits"-->
-        <!--                            [value]="option?.value">-->
-        <!--                  {{option?.title}}-->
-        <!--                </mat-option>-->
-        <!--              </mat-select>-->
-        <!--            </mat-form-field>-->
-        <!--          </div>-->
-        <!--        </div>-->
+        <div class="card-section">
+          <div class="card-header">
+            <div class="row">
+              <p class="card-title">Stamp Limits</p>
+              <mat-slide-toggle formControlName="enableStamp"></mat-slide-toggle>
+            </div>
+          </div>
+          <div class="card-content" formGroupName="stamp">
+            <label class="card-label">Limit per user</label>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <span>per</span>
+              <mat-form-field>
+                <mat-select formControlName="duration">
+                  <mat-option value="day">Day</mat-option>
+                  <mat-option value="week">Week</mat-option>
+                  <mat-option value="month">Month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+
+    <mat-card class="card">
+      <div class="card-header">
+        <div class="row">
+          <p class="card-title">Stamp Cards Validity</p>
+          <mat-slide-toggle formControlName="enableStampCardsValidity"></mat-slide-toggle>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-row input-group" formGroupName="stampCardsValidity">
+          <span class="row">Valid for</span>
+          <mat-form-field>
+            <input matInput type="number" [min]="1" formControlName="times">
+            <span matSuffix>Play</span>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="duration">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span class="row"> After 1st stamp earned</span>
+        </div>
       </div>
     </mat-card>
   </div>

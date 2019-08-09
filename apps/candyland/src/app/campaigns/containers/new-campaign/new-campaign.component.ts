@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 export class NewCampaignComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
   form: FormGroup;
+  public campaign;
 
   constructor(private store: CampaignCreationStoreService,
               private campaignCreationStepConditionService: StepConditionService,
@@ -27,6 +28,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.store.currentCampaign$
+      .asObservable()
+      .subscribe(data => {
+        this.campaign = data;
+      });
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => this.store.updateCampaign(value));

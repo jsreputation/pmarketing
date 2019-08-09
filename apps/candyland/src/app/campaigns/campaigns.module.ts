@@ -22,7 +22,7 @@ import {
   MatMenuModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatSelectModule,
+  MatSelectModule, MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule
@@ -83,7 +83,7 @@ import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-
     NewCampaignSelectEngagementPageComponent,
     RewardItemComponent,
     RewardItemPreviewComponent,
-    NewCampaignRewardsFormGroupComponent
+    NewCampaignRewardsFormGroupComponent,
   ],
   imports: [
     CommonModule,
@@ -125,7 +125,8 @@ import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-
     UploadFileModule,
     ChipListModule,
     CheckboxGroupModule,
-    SelectRewardPopupModule
+    SelectRewardPopupModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

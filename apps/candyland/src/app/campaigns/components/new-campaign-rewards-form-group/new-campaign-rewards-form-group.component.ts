@@ -38,7 +38,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
   @Input() public group: FormGroup = this.fb.group({
-    enableProbability: ([false]),
+    enableProbability: [false],
     rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})]
     )
   });
@@ -98,7 +98,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   }
 
   public addReward(value: Reward): void {
-    this.rewards.push(this.createRewardForm(value, this.enableProbability.value));
+    this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
 
@@ -106,7 +106,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     this.rewards.removeAt(index);
   }
 
-  private createRewardForm(value: Reward, isEnableProbability: boolean = false): FormGroup {
+  private createRewardFormGroup(value: Reward, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
       value: [value],
       probability: {value: 0, disabled: !isEnableProbability}
@@ -115,7 +115,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
 
   private updateRewards(isEnableProbability: boolean): void {
     if (isEnableProbability) {
-      this.rewards.insert(0, this.createRewardForm(null, isEnableProbability));
+      this.rewards.insert(0, this.createRewardFormGroup(null, isEnableProbability));
       for (let i = 0; i < this.rewards.length; i++) {
         this.rewards.at(i).get('probability').enable({emitEvent: false});
       }
@@ -130,11 +130,17 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   }
 
   writeValue(data: any): void {
+    if (data === null) {
+      return;
+    }
     const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
-    for (let i = 0; i < data.rewards.length; i++) {
-      this.rewards.insert(i, this.createRewardForm(null, enableProbability));
+    if ('rewards' in data && data.rewards) {
+      for (let i = 0; i < data.rewards.length; i++) {
+        this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
+      }
     }
     this.group.patchValue(data, {emitEvent: false});
+    this.group.updateValueAndValidity();
     this.cd.detectChanges();
   }
 

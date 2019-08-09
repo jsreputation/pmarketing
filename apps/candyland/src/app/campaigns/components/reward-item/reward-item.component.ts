@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-item',
   templateUrl: './reward-item.component.html',
   styleUrls: ['./reward-item.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardItemComponent implements OnInit {
   @Input() public group: FormGroup = new FormGroup({

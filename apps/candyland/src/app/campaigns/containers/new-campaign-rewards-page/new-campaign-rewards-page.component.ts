@@ -13,7 +13,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   defaultValue = {
-    rewardsGroup: {
+    rewardsOptions: {
       enableProbability: true,
       rewards: [
         {
@@ -46,27 +46,6 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     }
   };
 
-  // public rewardsTemplate: Reward = {
-  //   id: 1,
-  //   image: 'assets/images/mask-group.png',
-  //   name: 'Free Coffee',
-  //   type: 'Starbucks',
-  //   current: 500,
-  //   total: 1000
-  // };
-
-  // public get enableProbability(): AbstractControl {
-  //   return this.form.get('enableProbability');
-  // }
-
-  // public get rewards(): FormArray {
-  //   return this.form.get('rewards') as FormArray;
-  // }
-
-  // public get sumMoreThanError(): number {
-  //   return this.rewards.getError('sumMoreThan');
-  // }
-
   constructor(public store: CampaignCreationStoreService,
               public stepConditionService: StepConditionService,
               public cd: ChangeDetectorRef,
@@ -77,27 +56,14 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   public ngOnInit() {
     super.ngOnInit();
-    // this.updateRewards();
-    // this.enableProbability.valueChanges
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(() => this.updateRewards());
   }
 
   ngOnDestroy(): void {
   }
 
-  // public addReward(value: any = this.rewardsTemplate): void {
-  //   this.rewardsList.push(value);
-  //   this.rewards.push(this.createRewardForm(value));
-  // }
-
-  // public removeReward(index: number): void {
-  //   this.rewards.removeAt(index);
-  // }
-
   private initForm(): void {
     this.form = this.fb.group({
-      rewardsGroup: [],
+      rewardsOptions: [],
       limits: this.fb.group({
         times: [null, [
           Validators.required,
@@ -111,27 +77,4 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     });
     this.form.patchValue(this.defaultValue);
   }
-
-  // private createRewardForm(value): FormGroup {
-  //   if (this.enableProbability.value) {
-  //     return this.fb.group({
-  //       value: [value],
-  //       probability: [0]
-  //     });
-  //   } else {
-  //     return this.fb.group({
-  //       value: [value]
-  //     });
-  //   }
-  // }
-
-  // private updateRewards(): void {
-  //   this.rewards.clear();
-  //   if (this.enableProbability.value) {
-  //     this.rewards.push(this.createRewardForm(null));
-  //   }
-  //   this.rewardsList.forEach(reward => {
-  //     this.rewards.push(this.createRewardForm(reward));
-  //   });
-  // }
 }

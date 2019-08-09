@@ -29,8 +29,12 @@
     </mat-step>
     <mat-step [completed]="getStepConditions(1) | async">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
-<!--      <cl-new-campaign-rewards-page></cl-new-campaign-rewards-page>-->
-      <cl-new-campaign-rewards-stamps-page></cl-new-campaign-rewards-stamps-page>
+      <ng-container [ngSwitch]="campaign?.template?.type">
+        <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'Stamp'"></cl-new-campaign-rewards-stamps-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Survey'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Instant Reward'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Game'"></cl-new-campaign-rewards-page>
+      </ng-container>
     </mat-step>
     <mat-step [completed]="getStepConditions(2) | async">
       <ng-template matStepLabel>Campaign Details</ng-template>
