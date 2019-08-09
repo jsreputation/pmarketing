@@ -23,4 +23,11 @@ export class SurveyService {
         map(res => (res as IApacCountries[]))
       );
   }
+
+  public getSurveyData(): Observable<{
+    background: IGraphic[],
+    cardBackground: IGraphic[]
+  }> {
+    return this.surveyHttp.getSurveyData();
+  }
 }

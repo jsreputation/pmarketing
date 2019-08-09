@@ -4,7 +4,8 @@ import { QuestionFormFieldService } from '@cl-shared/components/question-form-fi
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
+import { ControlsName } from '../../../../models/controls-name';
+import { SurveyService } from '@cl-core/services/survey.service';
 
 export enum SurveyQuestionType {
   rating = 'rating',
@@ -24,8 +25,7 @@ export enum SurveyQuestionType {
 export class NewSurveyComponent implements OnInit {
   public formSurvey: FormGroup;
   public surveyQuestionType: IEngagementType[];
-  public cardBackground$: Observable<IGraphic[]>;
-  public backgrounds$: Observable<IGraphic[]>;
+  public surveyData$: Observable<any>;
   public level = 0;
   // tslint:disable
   private data = {
@@ -91,7 +91,7 @@ export class NewSurveyComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private questionFormFieldService: QuestionFormFieldService,
-              private stampService: StampHttpService) {
+              private surveyService: SurveyService) {
   }
 
   public get listId(): string {
@@ -105,19 +105,19 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public get name(): AbstractControl {
-    return this.formSurvey.get('name');
+    return this.formSurvey.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.formSurvey.get('headlineMessage');
+    return this.formSurvey.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.formSurvey.get('subHeadlineMessage');
+    return this.formSurvey.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.formSurvey.get('buttonText');
+    return this.formSurvey.get(ControlsName.buttonText);
   }
 
   public get surveyQuestion(): FormArray {
@@ -130,8 +130,7 @@ export class NewSurveyComponent implements OnInit {
 
   ngOnInit() {
     this.createSurveyForm();
-    this.getCardBackground();
-    this.getBackground();
+    this.getSurveyData();
   }
 
   public patchForm(): void {
@@ -152,7 +151,6 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public save(): void {
-    console.log('formSurvey.value', this.formSurvey.value);
   }
 
   public deleteQuestion(index: number) {
@@ -188,23 +186,14 @@ export class NewSurveyComponent implements OnInit {
     });
   }
 
-  private getCardBackground(): void {
-    this.cardBackground$ = this.stampService.getCardBackground()
+  private getSurveyData(): void {
+    this.surveyData$ = this.surveyService.getSurveyData()
       .pipe(tap((res) => {
-        this.patchFieldForm('cardBackground', res[0]);
+        this.formSurvey.patchValue({
+          background: res.background[0],
+          cardBackground: res.cardBackground[0],
+        });
       }));
   }
 
-  private getBackground(): void {
-    this.backgrounds$ = this.stampService.getBackground()
-      .pipe(tap((res) => {
-        this.patchFieldForm('background', res[0]);
-      }));
-  }
-
-  private patchFieldForm(fieldName: string, value: any): void {
-    this.formSurvey.patchValue({
-      [fieldName]: value
-    });
-  }
 }

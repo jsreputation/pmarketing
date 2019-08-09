@@ -10,6 +10,7 @@ import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const components = [
   RewardsCollectionComponent,
@@ -24,6 +25,7 @@ const components = [
   ],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     MaterialModule,
     NgxMultiLineEllipsisModule,
     UtilsModule

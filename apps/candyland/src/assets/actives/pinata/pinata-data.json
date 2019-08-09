@@ -1,0 +1,61 @@
+{
+  "pinata": [
+    {
+      "id": 1,
+      "type": "state1",
+      "title": "icon",
+      "img": "assets/images/pinata/pinata1.png",
+      "fullImg": "assets/images/pinata/full_pinata_1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "state2",
+      "title": "icon",
+      "img": "assets/images/pinata/pinata2.png",
+      "fullImg": "assets/images/pinata/full_pinata_2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "state3",
+      "title": "icon",
+      "img": "assets/images/pinata/pinata3.png",
+      "fullImg": "assets/images/pinata/full_pinata_3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "background": [
+    {
+      "id": 1,
+      "type": "bg1",
+      "title": "icon",
+      "img": "assets/images/pinata/bg1.png",
+      "fullImg": "assets/images/pinata/full_bg_1.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "bg2",
+      "title": "icon",
+      "img": "assets/images/pinata/bg2.png",
+      "fullImg": "assets/images/pinata/full_bg_2.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "bg3",
+      "title": "icon",
+      "img": "assets/images/pinata/bg3.png",
+      "fullImg": "assets/images/pinata/full_bg_3.jpg",
+      "format": ".png",
+      "active": "false"
+    }
+  ]
+
+}
