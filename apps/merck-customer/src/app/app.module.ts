@@ -16,7 +16,9 @@ import {
   MatTabsModule,
   MatSnackBarModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatCardModule,
+  MatListModule,
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -43,6 +45,11 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RedeemComponent } from './redeem/redeem.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
+import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
+import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +66,12 @@ import { RedeemComponent } from './redeem/redeem.component';
     ResetPasswordComponent,
     CustomSnackbarComponent,
     RewardDetailComponent,
-    RedeemComponent
+    RedeemComponent,
+    AccountComponent,
+    ProfileComponent,
+    TransactionHistoryComponent,
+    PrivacyPolicyComponent,
+    SubscreenToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +90,8 @@ import { RedeemComponent } from './redeem/redeem.component';
     MatDialogModule,
     MatSnackBarModule,
     MatIconModule,
+    MatCardModule,
+    MatListModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
