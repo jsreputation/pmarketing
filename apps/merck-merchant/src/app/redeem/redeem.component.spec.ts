@@ -4,13 +4,16 @@ import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
-import { RewardsService } from '@perx/core';
+import { RewardsService, LoyaltyService, VouchersService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
+
   const routerStub = {
     navigate: () => ({}),
     getCurrentNavigation: () =>  (
@@ -51,13 +54,23 @@ describe('RedeemComponent', () => {
     getReward: () => of(reward)
   };
 
+  const loyaltyServiceStub = {
+    exchangePoints: () => of()
+  };
+
+  const vouchersServiceStub = {
+    redeemVoucher: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RedeemComponent, HeaderComponent ],
-      imports: [ MatToolbarModule ],
+      imports: [ MatToolbarModule, HttpClientTestingModule ],
       providers: [
         { provide: Router, useValue: routerStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ]
     })
     .compileComponents();
