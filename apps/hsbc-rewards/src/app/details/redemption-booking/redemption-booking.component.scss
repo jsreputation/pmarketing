@@ -22,23 +22,29 @@
   border-bottom: 1px solid #E9E9ED;
   font-size: 1.4rem;
 }
+
 .radio-button {
   color: #000000;
   margin-bottom: 1.6rem;
   display: block;
 }
+
 .radio-group {
   flex-grow: 1;
   margin-top: 0.8rem;
+  font-size: 1.4rem;
 }
+
 .booking-form {
   display: flex;
   height: 100%;
   flex-direction: column;
 }
+
 button {
-  width: 100%;;
+  width: 100%;
 }
+
 .aggriement {
   display: flex;
   align-items: center;
@@ -53,13 +59,10 @@ button {
   }
 }
 
-.radio-group {
-  font-size: 1.4rem;
-}
-
 .select-wrap {
   position: relative;
-  margin-bottom:  1.6rem;
+  margin-bottom: 1.6rem;
+
   &::after {
     content: url('/assets/img/arrow.svg');
     position: absolute;
@@ -70,6 +73,7 @@ button {
     align-items: center;
   }
 }
+
 .no-content {
   &::after {
     display: none;

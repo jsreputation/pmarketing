@@ -4,19 +4,25 @@
   left: 0;
   background: #fff;
 }
+
 .modal-header {
-    padding: 1.8rem;
-    width: 100%;
-    background: #000;
-    color: #fff;
-    position: relative;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .back {
-        position: absolute;
-        left: 2rem;
-    }
+  padding: 1.8rem;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  position: relative;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .back {
+    position: absolute;
+    left: 2rem;
+  }
+}
+
+.modal-body {
+  font-size: 1.4rem;
 }
