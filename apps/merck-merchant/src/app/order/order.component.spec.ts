@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 describe('OrderComponent', () => {
   let component: OrderComponent;
   let fixture: ComponentFixture<OrderComponent>;
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
 
   const routerStub = {
     navigate: () => ({}),

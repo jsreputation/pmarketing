@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProfileService } from '@perx/core';
-import { ICustomProperties } from '@perx/core/dist/perx-core/lib/profile/profile.model';
+import { ProfileService, ICustomProperties, NotificationService } from '@perx/core';
 import { PageProperties, BarSelectedItem } from '../page-properties';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'mc-user-info',
@@ -17,14 +16,16 @@ export class UserInfoComponent implements PageProperties {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private notificationService: NotificationService
   ) {
     this.initForm();
   }
 
   private initForm(): void {
     this.surveyForm = this.fb.group({
-      diabetes: ['', Validators.required],
+      diabetesCondition: [false],
+      diabetes: [''],
       hypertension: [false]
     });
   }
@@ -41,26 +42,27 @@ export class UserInfoComponent implements PageProperties {
     return false;
   }
 
-  public onNext(): void {
-    try {
-      const diabetesValue = this.surveyForm.get('diabetes').value;
-      const customProperties: ICustomProperties = {
-        Diabetes: (diabetesValue === 'diabetes').toString(),
-        'Pre-Diabetes': (diabetesValue === 'pre_diabetes').toString(),
-        Hypertension: (this.surveyForm.get('hypertension').value).toString()
-      };
-      this.profileService.setCustomProperties(customProperties).subscribe(
-        () => {
-          this.router.navigateByUrl('/home');
-        },
-        err => {
-          console.error('ProfileService::SetCustomProperties : ' + err);
-          this.router.navigateByUrl('/home'); // TODO: ProfileService is not set yet.
-          // Remove this line once done.
-        });
-    } catch (error) {
-      console.log(error);
-    }
+  public diabetesConditionUpdated(isChecked: boolean): void {
+    const formvalue = isChecked ? 'diabetes' : '';
+    this.surveyForm.controls.diabetes.setValue(formvalue);
   }
 
+  public onNext(): void {
+
+    const customProperties: ICustomProperties = {
+                                diabetes: (this.surveyForm.get('diabetesCondition').value).toString(),
+                                diabetesState: (this.surveyForm.get('diabetes').value),
+                                hypertension: (this.surveyForm.get('hypertension').value).toString()
+                              };
+    this.profileService.setCustomProperties(customProperties).subscribe(
+      () => {
+        this.router.navigateByUrl('/home');
+      },
+      err => {
+        console.error('ProfileService::SetCustomProperties : ' + err);
+        this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
+        this.router.navigateByUrl('/home'); // TODO: ProfileService is not set yet.
+                                              // Remove this line once done.
+      });
+  }
 }
