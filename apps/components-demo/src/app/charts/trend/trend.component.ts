@@ -10,7 +10,7 @@ import { data } from '../trend-mock';
 })
 export class TrendComponent  {
 
-  public singleData: Observable<IData> = of(data);
+  public data: Observable<IData> = of(data);
 
   public view: number[] = [350, 150];
 }
