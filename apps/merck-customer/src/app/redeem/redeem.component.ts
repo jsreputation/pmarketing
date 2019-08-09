@@ -13,7 +13,7 @@ import { ProfileService } from '@perx/core';
 export class RedeemComponent implements OnInit, PageProperties {
 
   public rewardDetails: string = null;
-  private rewardId: number = null;
+  public rewardId: number = null;
 
   constructor(
     private route: ActivatedRoute,
