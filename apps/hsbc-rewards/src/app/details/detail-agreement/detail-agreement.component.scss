@@ -25,4 +25,70 @@
 
 .modal-body {
   font-size: 1.4rem;
+  padding: 2rem 1.5rem
+}
+
+.alphabet {
+  list-style-type: lower-alpha;
+}
+
+.rim {
+  list-style-type: lower-roman;
+}
+
+.header {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+ol.general-level {
+  counter-reset: item;
+  padding-left: 0;
+  line-height: 2.5rem;
+}
+
+h4 {
+  margin: 2rem 0 0;
+}
+
+ol.general-level>li {
+  display: block;
+
+  &:first-child h4 {
+    margin: 0 0 2rem;
+  }
+}
+
+ol.general-level>li:before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+p {
+  margin: 0;
+}
+
+h4 {
+  display: inline-block;
+}
+
+table, th, td {
+  border: 0.1rem solid #000;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding-left: 1rem;
+}
+
+table {
+  position: relative;
+  right: 0.5rem;
+  margin-bottom: 2rem;
 }
