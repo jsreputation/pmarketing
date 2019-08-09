@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { IReward, RewardsService, LoyaltyService } from '@perx/core';
 import { LoyaltySummaryComponent } from '@perx/core';
 import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
