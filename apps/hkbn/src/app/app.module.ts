@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  AuthenticationModule, AuthenticationService,
+  AuthenticationModule,
+  AuthenticationService,
   CognitoModule,
   LoyaltyModule,
   OauthModule,
@@ -25,12 +26,18 @@ import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
-  console.log(authenticationService);
   return () => authenticationService.v4GetAppAccessToken().toPromise();
+};
+
+const setLanguage = (translateService: TranslateService) => {
+  return () => new Promise((resolve) => {
+    translateService.setDefaultLang(environment.defaultLang);
+    resolve();
+  });
 };
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -73,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatButtonModule,
   ],
   providers: [
-    {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true}
+    {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true},
+    {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true}
   ],
   bootstrap: [AppComponent],
   entryComponents: [

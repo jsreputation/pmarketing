@@ -1,16 +1,16 @@
 <div class="container">
   <form [formGroup]="updateEmailGroup" class="update-email-form">
     <mat-form-field appearance="fill">
-      <mat-label>Email Address</mat-label>
+      <mat-label>{{"EMAIL" | translate}}</mat-label>
       <input type="text" matInput formControlName="email">
       <mat-error *hkbnErrorHandler="'required'">
         This field is required
       </mat-error>
       <mat-error *hkbnErrorHandler="'email'">
-        Wrong format
+        {{"ENTER_VALID_EMAIL" | translate}}
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="primary">{{"UPDATE" | translate}}</button>
   </form>
 </div>
