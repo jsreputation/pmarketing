@@ -24,6 +24,7 @@ import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { GameModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { environment } from '@cl-environments/environment';
     SelectGraphicModule,
     SelectGraphicWrapModule,
     GameModule.forRoot({ env: environment }),
+    SimpleMobileViewModule,
 
     MatTabsModule,
     MatCardModule,

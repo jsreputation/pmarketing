@@ -138,6 +138,57 @@
       </mat-card>
     </div>
     <cl-game-mobile-preview>
+      <cl-simple-mobile-view class="firs-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
+          >
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="reward$"
+            ></perx-core-rewards-collection>
+          </div>
+        </div>
+
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
+
+      <cl-simple-mobile-view class="second-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
+          >
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="rewards$"
+            ></perx-core-rewards-collection>
+          </div>
+        </div>
+
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
     </cl-game-mobile-preview>
   </section>
 </section>
+
+

@@ -117,16 +117,16 @@
       </mat-card>
     </div>
 
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
-        <div class="mobile-preview-header">
-          <p class="mobile-preview-headline">
-            {{headlineMessage.value}}
-          </p>
-          <p class="mobile-preview-sub-headline">
-            {{subHeadlineMessage.value}}
-          </p>
-        </div>
+    <cl-simple-mobile-view class="second-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          {{headlineMessage.value}}
+        </p>
+        <p class="mobile-preview-sub-headline">
+          {{subHeadlineMessage.value}}
+        </p>
+      </div>
+      <div class="plugin-block">
         <perx-core-pinata class="mobile-preview-plugin"
                           [enabled]="false"
                           [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
@@ -134,17 +134,13 @@
                           [nbTaps]="5"
         >
         </perx-core-pinata>
-        <div class="mobile-preview-background"
-             [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
-        >
-        </div>
-        <div class="mobile-preview-btn-wrap">
-          <button class="mobile-preview-btn">
-            {{buttonText.value}}
-          </button>
-        </div>
       </div>
-    </div>
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn">
+          {{buttonText.value}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
 
   </section>
 </section>
