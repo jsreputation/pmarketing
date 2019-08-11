@@ -150,6 +150,10 @@ button {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
     border-radius: 0.8rem;
     position: relative;
+
+    &-headline, &-sub-headline {
+      text-align: center;
+    }
   }
 
   &-preview-header {
@@ -196,16 +200,16 @@ button {
 
   &-preview-background {
     width: 24.1rem;
-    height: 45.2rem;
+    height: 457px;
     display: block;
     margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
-    top: 11.7rem;
+    top: 112px;
     left: 5.4rem;
-    border-bottom-right-radius: 28px;
-    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
     z-index: 2;
   }
 
@@ -219,10 +223,31 @@ button {
     z-index: 3;
   }
 
+  &-preview-card {
+    position: absolute;
+    padding: 1.7rem 2rem;
+    box-sizing: border-box;
+    top: 15rem;
+    left: 50%;
+    transform: translateX(-49%);
+    width: 22.8rem;
+    min-height: 31.7rem;
+    background: $white-color;
+    background-size: cover;
+    border-radius: 8px;
+    z-index: 3;
+  }
+
   &-preview-mobile {
     width: 34.4rem;
     height: 63.8rem;
     background: url("assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
+  }
+}
+
+cl-game-mobile-preview {
+  .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
+    overflow: visible;
   }
 }
 
