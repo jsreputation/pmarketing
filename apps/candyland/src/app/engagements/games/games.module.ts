@@ -9,12 +9,21 @@ import { NewTapSettingsPageComponent } from './containers/new-tap-settings-page/
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
 import { GameComponent } from './containers/game/game.component';
 import { CreateShakeTreeComponent } from './components/create-shake-tree/create-shake-tree.component';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatTabsModule
+} from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
+import { GameModule } from '@perx/core';
+import { environment } from '@cl-environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,12 +44,14 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
     ButtonModule,
     SelectGraphicModule,
     SelectGraphicWrapModule,
+    GameModule.forRoot({ env: environment }),
 
     MatTabsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatSliderModule,
 
   ]
 })

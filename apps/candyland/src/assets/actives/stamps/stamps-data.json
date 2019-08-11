@@ -1,0 +1,234 @@
+{
+  "number": [
+    {
+      "value": "3",
+      "viewValue": "3 stamps"
+    },
+    {
+      "value": "4",
+      "viewValue": "4 stamps"
+    },
+    {
+      "value": "5",
+      "viewValue": "5 stamps"
+    },
+    {
+      "value": "6",
+      "viewValue": "6 stamps"
+    },
+    {
+      "value": "7",
+      "viewValue": "7 stamps"
+    },
+    {
+      "value": "8",
+      "viewValue": "8 stamps"
+    },
+    {
+      "value": "9",
+      "viewValue": "9 stamps"
+    },
+    {
+      "value": "10",
+      "viewValue": "10 stamps"
+    }
+  ],
+  "slotNumber": [
+    {
+      "value": "1",
+      "viewValue": "1 Slot"
+    },
+    {
+      "value": "2",
+      "viewValue": "2 Slot"
+    },
+    {
+      "value": "3",
+      "viewValue": "3 Slot"
+    },
+    {
+      "value": "4",
+      "viewValue": "4 Slot"
+    },
+    {
+      "value": "5",
+      "viewValue": "5 Slot"
+    },
+    {
+      "value": "6",
+      "viewValue": "6 Slot"
+    },
+    {
+      "value": "7",
+      "viewValue": "7 Slot"
+    },
+    {
+      "value": "8",
+      "viewValue": "8 Slot"
+    },
+    {
+      "value": "9",
+      "viewValue": "9 Slot"
+    },
+    {
+      "value": "10",
+      "viewValue": "10 Slot"
+    }
+  ],
+  "cardBackground": [
+    {
+      "id": 1,
+      "type": "card-bg-1",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "card-bg-2",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "card-bg-3",
+      "title": "icon",
+      "img": "assets/images/stamps/card-background/card-bg-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "rewardPost": [
+    {
+      "id": 1,
+      "type": "reward-post-stamp-1",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "reward-post-stamp-2",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-post-stamps/reward-post-stamp-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "reward-post-stamp-3",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-post-stamps/reward-post-stamp-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "stampsPost": [
+    {
+      "id": 1,
+      "type": "post-stamp-1",
+      "title": "icon",
+      "img": "assets/images/stamps/post-stamps/post-stamp-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "post-stamp-2",
+      "title": "icon",
+      "img": "assets/images/stamps/post-stamps/post-stamp-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "post-stamp-3",
+      "title": "icon",
+      "img": "assets/images/stamps/post-stamps/post-stamp-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "rewardPreStamp": [
+    {
+      "id": 1,
+      "type": "reward-pre-stamp-1",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "reward-pre-stamp-2",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-pre-stamps/reward-pre-stamp-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "reward-pre-stamp-3",
+      "title": "icon",
+      "img": "assets/images/stamps/reward-pre-stamps/reward-pre-stamp-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "preStamp": [
+    {
+      "id": 1,
+      "type": "pre-stamp-1",
+      "title": "icon",
+      "img": "assets/images/stamps/pre-stamps/pre-stamp-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "pre-stamp-2",
+      "title": "icon",
+      "img": "assets/images/stamps/pre-stamps/pre-stamp-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "pre-stamp-3",
+      "title": "icon",
+      "img": "assets/images/stamps/pre-stamps/pre-stamp-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "backgroundStamp": [
+    {
+      "id": 1,
+      "type": "bg-1",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "bg-2",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "bg-3",
+      "title": "icon",
+      "img": "assets/images/stamps/background/stamp-bg-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ]
+}
