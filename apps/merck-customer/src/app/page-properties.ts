@@ -1,7 +1,12 @@
+export interface PageAppearence {
+  getPageProperties(): PageProperties;
+}
+
 export interface PageProperties {
-  showHeader(): boolean;
-  backButtonEnabled(): boolean;
-  bottomSelectedItem(): BarSelectedItem;
+  header: boolean;
+  backButtonEnabled: boolean;
+  bottomSelectedItem: BarSelectedItem;
+  pageTitle: string;
 }
 
 export enum BarSelectedItem {
