@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements PageProperties, OnInit {
+export class HomeComponent implements OnInit, PageAppearence {
 
   public rewards: Observable<IReward[]>;
 
@@ -35,16 +35,12 @@ export class HomeComponent implements PageProperties, OnInit {
     this.router.navigateByUrl(`reward-detail/${ reward.id }`);
   }
 
-  public showHeader(): boolean {
-    return true;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.HOME,
+      pageTitle: ''
+    };
   }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.HOME;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
-  }
-
 }

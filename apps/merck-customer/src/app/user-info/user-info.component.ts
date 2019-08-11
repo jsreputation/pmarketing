@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService, ICustomProperties, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements PageProperties {
+export class UserInfoComponent implements PageAppearence {
 
   public surveyForm: FormGroup;
 
@@ -30,16 +30,13 @@ export class UserInfoComponent implements PageProperties {
     });
   }
 
-  public showHeader(): boolean {
-    return false;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
+  public getPageProperties(): PageProperties {
+    return {
+      header: false,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public diabetesConditionUpdated(isChecked: boolean): void {
