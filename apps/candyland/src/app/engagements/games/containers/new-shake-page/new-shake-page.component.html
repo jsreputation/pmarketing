@@ -149,16 +149,17 @@
         </div>
       </mat-card>
     </div>
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
-        <div class="mobile-preview-header">
-          <p class="mobile-preview-headline">
-            {{headlineMessage.value}}
-          </p>
-          <p class="mobile-preview-sub-headline">
-            {{subHeadlineMessage.value}}
-          </p>
-        </div>
+
+    <cl-simple-mobile-view class="second-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          {{headlineMessage.value}}
+        </p>
+        <p class="mobile-preview-sub-headline">
+          {{subHeadlineMessage.value}}
+        </p>
+      </div>
+      <div class="plugin-block">
         <perx-core-shake-tree class="mobile-preview-plugin"
                               [treeImg]="getImgLink(treeType, 'assets/images/tree/full_tree_1.png')"
                               [giftImg]="getImgLink(giftBox, 'assets/images/gifts/state1.png')"
@@ -172,16 +173,12 @@
                               [enabled]="false"
         >
         </perx-core-shake-tree>
-        <div class="mobile-preview-background"
-             [ngStyle]="{'background-image': 'url(' + getImgLink(background, 'assets/images/background/background1.png') + ')'}"
-        >
-        </div>
-        <div class="mobile-preview-btn-wrap">
-          <button class="mobile-preview-btn">
-            {{buttonText.value}}
-          </button>
-        </div>
       </div>
-    </div>
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn">
+          {{buttonText.value}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
   </div>
 </div>

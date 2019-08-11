@@ -125,6 +125,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
             stampsNumber: res.number[res.number.length - 1].value,
             stampsSlotNumber: [res.slotNumber[res.slotNumber.length - 1].value],
             preStamp: res.preStamp[0],
+            postStamps: res.stampsPost[0],
+            rewardPostStamps: res.rewardPreStamp[0],
             rewardPreStamps: res.rewardPreStamp[0],
             cardBackground: res.cardBackground[0],
             background: res.backgroundStamp[0]
