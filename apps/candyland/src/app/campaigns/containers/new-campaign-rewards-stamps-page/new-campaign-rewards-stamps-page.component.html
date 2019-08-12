@@ -8,6 +8,38 @@
         </cl-new-campaign-rewards-form-group>
       </ng-container>
     </mat-card>
+    <!--/ Rewards-->
+    <!-- Stamps Rule-->
+    <mat-card class="card">
+      <div class="card-header">
+        <p class="card-title">Stamps Rule</p>
+      </div>
+      <div class="card-content" formGroupName="stampsRule">
+        <div class="card-row">
+          <mat-checkbox formControlName="sequence">Sequence</mat-checkbox>
+        </div>
+        <div class="flex flex-end" *ngIf="!isSequence">
+          <cl-button classList="invert no-padding" (click)="addStampRule()">+ Add Rule</cl-button>
+        </div>
+        <div class="card-section" *ngFor="let rule of stampRule?.controls; let i = index; let first = first">
+          <div class="card-content">
+            <div class="stamp-rule">
+              <div class="stamp-rule-label-block" *ngIf="isSequence">
+                <label class="stamp-rule-label">Slot {{i + 1}}:</label>
+              </div>
+              <cl-new-campaign-stamp-rule-form-group class="stamp-rule-form-group" [formControl]="rule">
+              </cl-new-campaign-stamp-rule-form-group>
+              <div class="stamp-rule-action" *ngIf="!isSequence && !first">
+                <button mat-icon-button (click)="removeStampRule(i)">
+                  <i class="icon full-with delete-action"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <!--/ Stamps Rule-->
     <!--    limits-->
     <mat-card class="card" formGroupName="limits">
       <div class="card-header">
@@ -73,8 +105,8 @@
         </div>
       </div>
     </mat-card>
-
-
+    <!--/    limits-->
+    <!--  Stamp Cards Validity-->
     <mat-card class="card">
       <div class="card-header">
         <div class="row">
@@ -100,6 +132,7 @@
         </div>
       </div>
     </mat-card>
+    <!--/  Stamp Cards Validity-->
   </div>
   <div class="preview">
     <div class="preview-mobile">

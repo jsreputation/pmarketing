@@ -21,15 +21,14 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     this.config = this.store.config;
     this.store.currentCampaign$
       .asObservable()
+      .pipe(untilDestroyed(this))
       .subscribe(data => {
         this.campaign = data;
         this.cd.detectChanges();
       });
     if (this.form && this.stepConditionService) {
       this.form.valueChanges
-        .pipe(
-          untilDestroyed(this)
-        )
+        .pipe(untilDestroyed(this))
         .subscribe((value) => {
           this.stepConditionService.registerStepCondition(this.stepIndex, this.form.valid);
           this.store.updateCampaign(value);

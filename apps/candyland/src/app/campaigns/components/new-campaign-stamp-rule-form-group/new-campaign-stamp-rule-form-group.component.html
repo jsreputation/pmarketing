@@ -1,0 +1,38 @@
+<div [formGroup]="group">
+  <div class="card-row">
+    <mat-form-field>
+      <mat-select formControlName="ruleType">
+        <mat-option *ngFor="let option of config?.ruleType" [value]="option?.value">
+          {{option?.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="card-row input-group" *ngIf="group.get('condition').enabled" formGroupName="condition">
+    <mat-form-field>
+      <mat-select formControlName="rule">
+        <mat-option *ngFor="let option of config?.rule" [value]="option?.value">
+          {{option?.title}}
+        </mat-option>
+      </mat-select>
+      <span matSuffix>{{currencyID}}</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="number"
+        min="0"
+        step="1"
+        matInput
+        formControlName="value">
+    </mat-form-field>
+  </div>
+  <div *ngIf="group.get('product').enabled">
+    <mat-form-field>
+      <mat-select formControlName="product">
+        <mat-option *ngFor="let option of config?.product" [value]="option?.value">
+          {{option?.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

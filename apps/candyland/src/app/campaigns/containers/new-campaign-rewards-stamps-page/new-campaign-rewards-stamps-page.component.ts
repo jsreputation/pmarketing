@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -86,20 +87,26 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     private fb: FormBuilder) {
     super(1, store, stepConditionService, cd);
     this.initForm();
-    // this.form = this.fb.group({
-    //   rewardsList: this.fb.array([this.createRewardForm(0)])
-    // });
   }
 
   public ngOnInit() {
     super.ngOnInit();
     const stampsSlotNumber = this.store.currentCampaign.template.payload.stampsSlotNumber;
-    console.log('stampsSlotNumber', stampsSlotNumber);
     for (const slotNumber of stampsSlotNumber) {
-      console.log('slotNumber', slotNumber);
       this.addReward(this.createRewardForm(slotNumber));
     }
-    // this.form.patchValue(this.defaultValue);
+    this.form.get('stampsRule.sequence').valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(value => {
+        console.log('sequence', value);
+        if (value) {
+          this.initSequenceRules();
+        } else {
+          this.initUnsequenceRules();
+        }
+      });
+
+    this.form.patchValue(this.defaultValue);
   }
 
   ngOnDestroy(): void {
@@ -109,9 +116,23 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     return this.form.get('rewardsList') as FormArray;
   }
 
+  public get stampRule() {
+    return this.form.get('stampsRule.rules') as FormArray;
+  }
+
+  public get isSequence() {
+    return this.form.get('stampsRule.sequence').value;
+  }
+
   private initForm(): void {
     this.form = this.fb.group({
       rewardsList: this.fb.array([]),
+      stampsRule: this.fb.group({
+        sequence: [],
+        rules: this.fb.array([
+          this.fb.control(null)
+        ])
+      }),
       limits: this.fb.group({
         enableStampCard: [true],
         stampCard: this.fb.group({
@@ -136,19 +157,45 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public addReward(formGroup: FormGroup): void {
     this.rewardsList.push(formGroup);
-    this.cd.detectChanges();
   }
 
   public removeReward(index: number): void {
     this.rewardsList.removeAt(index);
   }
 
+  public addStampRule(): void {
+    if (this.stampRule.length <= 20) {
+      this.stampRule.push(this.fb.control(null));
+    }
+  }
+
+  public removeStampRule(index: number): void {
+    this.stampRule.removeAt(index);
+  }
+
   private createRewardForm(slotNumber: number): FormGroup {
-    console.log(slotNumber);
-    // return this.fb.control([]);
     return this.fb.group({
       stampSlotNumber: slotNumber,
       rewardsOptions: []
     });
   }
+
+  private clearFormArray(formArray: FormArray) {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
+  }
+
+  private initUnsequenceRules() {
+    this.clearFormArray(this.stampRule);
+    this.addStampRule();
+  }
+
+  private initSequenceRules() {
+    this.clearFormArray(this.stampRule);
+    for (let i = 0; i < 9; i++) {
+      this.addStampRule();
+    }
+  }
+
 }

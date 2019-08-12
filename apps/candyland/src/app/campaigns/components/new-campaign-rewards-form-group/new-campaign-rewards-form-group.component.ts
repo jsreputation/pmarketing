@@ -42,7 +42,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})]
     )
   });
-  // private rewardsList: Reward[] = [];
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -90,7 +89,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     const dialogRef = this.dialog.open(SelectRewardPopupComponent);
 
     dialogRef.afterClosed().subscribe((reward) => {
-      console.log('reward', reward);
       if (reward) {
         this.addReward(reward);
       }

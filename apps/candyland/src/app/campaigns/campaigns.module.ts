@@ -61,6 +61,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { NewCampaignRewardsStampsPageComponent } from 'src/app/campaigns/containers/new-campaign-rewards-stamps-page/new-campaign-rewards-stamps-page.component';
 import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import { NewCampaignStampRuleFormGroupComponent } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-
     RewardItemComponent,
     RewardItemPreviewComponent,
     NewCampaignRewardsFormGroupComponent,
+    NewCampaignStampRuleFormGroupComponent
   ],
   imports: [
     CommonModule,

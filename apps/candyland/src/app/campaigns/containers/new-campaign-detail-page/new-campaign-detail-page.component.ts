@@ -78,6 +78,5 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   }
 
   ngOnDestroy(): void {
-    this.cd.detach();
   }
 }
