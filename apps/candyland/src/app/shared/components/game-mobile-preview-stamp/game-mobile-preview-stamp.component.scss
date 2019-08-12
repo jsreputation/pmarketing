@@ -1,4 +1,5 @@
 @import "variables";
+
 :host {
   width: 36.3rem;
   height: 68rem;
@@ -11,11 +12,9 @@
 .mobile-preview {
   &-single {
     background-image: url("/assets/images/stamps/mobile-preview-stamps/pre-stamps.png");
-
   }
 
   &-multiple {
     background-image: url("/assets/images/stamps/mobile-preview-stamps/post-stamps.png");
-
   }
 }

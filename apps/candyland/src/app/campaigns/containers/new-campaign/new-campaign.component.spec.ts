@@ -6,8 +6,8 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
-import {CampaignCreationStoreService} from "../../services/campaigns-creation-store.service";
-import {StepConditionService} from "../../services/step-condition.service";
+import {CampaignCreationStoreService} from '../../services/campaigns-creation-store.service';
+import {StepConditionService} from '../../services/step-condition.service';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;

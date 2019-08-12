@@ -11,8 +11,8 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {CampaignCreationStoreService} from "../../services/campaigns-creation-store.service";
-import {StepConditionService} from "../../services/step-condition.service";
+import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
+import { StepConditionService } from '../../services/step-condition.service';
 
 describe('NewCampaignRewardsPageComponent', () => {
   let component: NewCampaignRewardsPageComponent;
