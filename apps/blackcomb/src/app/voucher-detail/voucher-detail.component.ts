@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { VouchersService, Voucher } from '@perx/core';
+import { filter, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-voucher-detail',
@@ -7,19 +10,29 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./voucher-detail.component.scss']
 })
 export class VoucherDetailComponent implements OnInit {
-  constructor(private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private vouchersService: VouchersService
+  ) { }
 
-  public id: number;
+  public voucher: Observable<Voucher>;
 
   public onRedeem(): void {
-    this.router.navigate(['redeem/pin/1']);
+    this.voucher.subscribe((v: Voucher) => {
+      this.router.navigate(['redeem'], { queryParams: { id: v.id } });
+    });
   }
 
   public ngOnInit(): void {
-    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
-      if (params.has('id')) {
-        this.id = Number.parseInt(params.get('id'), 10);
-      }
-    });
+    this.voucher = this.activeRoute.paramMap
+      .pipe(
+        filter((params: ParamMap) => params.has('id')),
+        switchMap((params: ParamMap) => {
+          const id: string = params.get('id');
+          const idN: number = Number.parseInt(id, 10);
+          return this.vouchersService.get(idN);
+        })
+      );
   }
 }

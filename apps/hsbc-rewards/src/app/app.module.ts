@@ -6,25 +6,14 @@ import {
   CognitoModule,
   OauthModule,
   AuthenticationModule,
+  RewardsModule,
+  ProfileModule,
+  LoyaltyModule,
+  LocationModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import {
-  MatButtonModule,
-  MatListModule,
-  MatTabsModule,
-  MatCardModule,
-  MatRippleModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-  MatProgressBarModule,
-  MatSidenavModule
-} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 @NgModule({
@@ -39,6 +28,10 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
+    RewardsModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
+    LoyaltyModule.forRoot({ env: environment }),
+    LocationModule.forRoot({ env: environment })
   ],
   providers: [
   ],
