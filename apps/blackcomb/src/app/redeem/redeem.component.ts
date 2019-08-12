@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Voucher, VouchersService } from '@perx/core';
+import { Voucher, VouchersService, RedemptionType } from '@perx/core';
 import { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
@@ -11,6 +11,8 @@ import { filter, switchMap } from 'rxjs/operators';
 })
 export class RedeemComponent implements OnInit {
   public voucher: Observable<Voucher>;
+  public redemptionType: RedemptionType;
+
   constructor(private route: ActivatedRoute, private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
@@ -23,39 +25,9 @@ export class RedeemComponent implements OnInit {
           return this.vouchersService.get(idN);
         })
       );
-  }
-
-  public pinInput(id: string): void {
-    console.log(`Pin input ${id}`);
-  }
-
-  public onCancel(): void {
-    // this.hasResultFetched = true;
-    // this.isRedeemSuccessful = true;
-  }
-
-  public errorHandler(status: number): void {
-    console.log(`Error status: ${status}`);
-  }
-
-  public get titleText(): string {
-    // if (this.isRedeemSuccessful) {
-    //   return 'Successfully Redeemed!';
-    // }
-    return 'Redemption Unsucessful';
-  }
-
-  public get subTitleText(): string {
-    // if (this.isRedeemSuccessful) {
-    //   return `You have redeemed $3 voucher from Starbucks`;
-    // }
-    return `Please ensure the code entered is correct`;
-  }
-
-  public get bottomButtonText(): string {
-    // if (this.isRedeemSuccessful) {
-    //   return `Back to wallet`;
-    // }
-    return `Redeem`;
+    this.voucher.subscribe((voucher: Voucher) => {
+      console.log(voucher);
+      this.redemptionType = voucher.redemptionType;
+    });
   }
 }
