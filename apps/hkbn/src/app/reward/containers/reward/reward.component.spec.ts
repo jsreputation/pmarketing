@@ -9,7 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 const mockReward = {
   id: 1,
@@ -90,6 +90,8 @@ describe('RewardComponent', () => {
     });
 
     it('should show success popup, when buying confirmed', () => {
+      const translateService = TestBed.get(TranslateService);
+      spyOn(translateService, 'get').and.returnValues(of('Your points balance is'), of('points'));
       dialogSpy = dialogSpy.and.returnValue({afterClosed: () => of(true)});
       component.buyReward();
       expect(dialogSpy).toHaveBeenCalledWith(RewardConfirmComponent, {
@@ -101,7 +103,7 @@ describe('RewardComponent', () => {
       });
       expect(notificationServiceSpy).toHaveBeenCalledWith({
         title: '[Reward Title]',
-        text: `Points balance: ${29} points`,
+        text: `Your points balance is ${29} points`,
         afterClosedCallBack: component
       });
     });
