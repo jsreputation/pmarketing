@@ -34,4 +34,22 @@ describe('ChangePasswordFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not emit event when form invalid', () => {
+    const passwordChangeSpy = spyOn(component.passwordChange, 'emit');
+    component.submit();
+    expect(passwordChangeSpy.calls.count()).toBe(0);
+  });
+
+  it('should emit event when form valid', () => {
+    spyOn(component.passwordChange, 'emit');
+    component.changePasswordForm.setValue({
+      oldPassword: 'qwerty123',
+      newPassword: '123qwerty',
+      confirmPassword: '123qwerty'
+    });
+    fixture.detectChanges();
+    component.submit();
+    expect(component.passwordChange.emit).toHaveBeenCalled();
+  });
 });
