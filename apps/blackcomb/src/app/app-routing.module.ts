@@ -16,7 +16,7 @@ const routes: Routes = [
       { path: 'wallet', component: HomeComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'account', component: AccountComponent },
-      { path: 'redeem/:mode/:id', component: RedeemComponent },
+      { path: 'redeem', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'tap', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
       { path: 'shake', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },

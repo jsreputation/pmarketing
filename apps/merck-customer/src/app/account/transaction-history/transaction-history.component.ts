@@ -1,26 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { BarSelectedItem } from 'src/app/page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 
 @Component({
   selector: 'mc-transaction-history',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.scss']
 })
-export class TransactionHistoryComponent implements OnInit {
+export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
-  public ngOnInit(): void {
+  public ngOnInit(): void {}
+
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: true,
+      bottomSelectedItem: BarSelectedItem.ACCOUNT,
+      pageTitle: 'Transaction History'
+    };
   }
-
-  public showHeader(): boolean {
-    return false;
-  }
-
-  public backButtonEnabled(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.ACCOUNT;
-  }
-
 }

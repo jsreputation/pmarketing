@@ -1,0 +1,94 @@
+.modal-widow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+}
+
+.modal-header {
+  padding: 1.8rem;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  position: relative;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .back {
+    position: absolute;
+    left: 2rem;
+  }
+}
+
+.modal-body {
+  font-size: 1.4rem;
+  padding: 2rem 1.5rem;
+}
+
+.alphabet {
+  list-style-type: lower-alpha;
+}
+
+.rim {
+  list-style-type: lower-roman;
+}
+
+.header {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+ol.general-level {
+  counter-reset: item;
+  padding-left: 0;
+  line-height: 2.5rem;
+}
+
+h4 {
+  margin: 2rem 0 0;
+  display: inline-block;
+}
+
+ol.general-level > li {
+  display: block;
+
+  &:first-child h4 {
+    margin: 0 0 2rem;
+  }
+}
+
+ol.general-level > li::before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+p {
+  margin: 0;
+}
+
+table,
+th,
+td {
+  border: 0.1rem solid #000;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding-left: 1rem;
+}
+
+table {
+  position: relative;
+  right: 0.5rem;
+  margin-bottom: 2rem;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
-export class RewardDetailComponent implements OnInit, PageProperties {
+export class RewardDetailComponent implements OnInit, PageAppearence {
   public reward: Observable<IReward>;
   public rewardId: number;
 
@@ -36,15 +37,12 @@ export class RewardDetailComponent implements OnInit, PageProperties {
     this.router.navigateByUrl(`redeem/${this.rewardId}`);
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return true;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: true,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 }
