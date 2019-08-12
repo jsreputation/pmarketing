@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import { SubscreenToolbarComponent } from '../subscreen-toolbar/subscreen-toolbar.component';
 import {
   MatIconModule,
   MatToolbarModule
@@ -17,7 +16,7 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent, SubscreenToolbarComponent ],
+      declarations: [ ProfileComponent ],
       imports: [ MatIconModule, MatToolbarModule ],
       providers: [
         { provide: Location, useValue: locationStub }
