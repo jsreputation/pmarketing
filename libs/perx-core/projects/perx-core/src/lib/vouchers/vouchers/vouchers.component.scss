@@ -80,7 +80,7 @@ mat-icon {
   color: #858585;
 }
 
-.ribbon {
+/*.ribbon {
   background: #ef241c;
   box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.3);
   color: #f0f0f0;
@@ -93,4 +93,39 @@ mat-icon {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   position: absolute;
+}*/
+
+.ribbon {
+  position: absolute;
+  font-size: 1rem;
+  width: 5.7rem;
+  top: 8rem;
+  right: 1.2rem;
+  text-align: center;
+  line-height: 1.6rem;
+}
+
+.ribbon.redeemed {
+  background: #BBE5B3;
+  color: #173630;
+}
+
+.ribbon.expired {
+  background: #919EAB;
+  color: #212121;
+}
+
+.ribbon.issued {
+  background: #BBE5B3;
+  color: #173630;
+}
+
+.ribbon.reserved {
+ background: #FFC58B;
+  color: #4A1504;
+}
+
+.ribbon.released {
+ background: #FEAD9A;
+  color: #330101;
 }

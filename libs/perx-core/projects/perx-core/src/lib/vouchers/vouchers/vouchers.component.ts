@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
+import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -30,6 +30,14 @@ export class VouchersComponent implements OnInit, OnChanges {
   public vouchers$: Observable<IVoucher[]>;
 
   constructor(private vouchersService: VouchersService) { }
+
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
 
   public ngOnInit(): void {
     if (!this.vouchers$) {
