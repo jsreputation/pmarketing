@@ -1,23 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { VouchersService, VouchersModule } from '@perx/core';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
   let fixture: ComponentFixture<VoucherDetailComponent>;
+  const vouchersServiceStub = {
+
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VoucherDetailComponent ],
+      declarations: [VoucherDetailComponent],
       imports: [
-        HttpClientModule,
-        RouterTestingModule
-       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        RouterTestingModule,
+        VouchersModule
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceStub }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
