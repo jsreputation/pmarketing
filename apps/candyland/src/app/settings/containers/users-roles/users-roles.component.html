@@ -20,7 +20,10 @@
       <cl-button classList="primary" (click)="openDialogInviteNewUsers()">Invite new user</cl-button>
     </div>
     <!--table-->
-    <cl-users-roles-list [dataSource]="dataSource" [config]="config"></cl-users-roles-list>
+    <cl-users-roles-list [dataSource]="dataSource"
+                         [config]="config"
+                         (edit)="openDialogEditUsers($event)"
+    ></cl-users-roles-list>
     <!--paginator-->
     <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>

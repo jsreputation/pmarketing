@@ -1,0 +1,45 @@
+.home-body {
+  background: #E5E5E5;
+  height: 100%;
+}
+
+.reward-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 1.2rem 1.2rem 0;
+}
+
+.loyalty-summer {
+  background-color: #fff;
+  margin-bottom: 2rem;
+}
+
+.reward-collection {
+  padding: 0 0 0.5rem 0.5rem;
+}
+
+:host ::ng-deep .points {
+  margin-top: 2rem;
+  color: red;
+}
+
+.flex {
+  display: flex;
+
+  div {
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    margin-right: 2.8rem;
+  }
+
+  .current {
+    font-weight: 900;
+    border-bottom: 1px solid #E42713;
+    color: #E42713;
+  }
+}
+
+.reward-list-container {
+  padding: 1.5rem;
+  background: inherit;
+}

@@ -46,10 +46,6 @@ export class CampaignCreationStoreService {
     ]
   };
 
-
-  constructor() {
-  }
-
   public set currentCampaign(value) {
     this.currentCampaign$.next(value);
   }
@@ -58,7 +54,7 @@ export class CampaignCreationStoreService {
     return this.currentCampaign$.value ? this.currentCampaign$.value : {};
   }
 
-  public updateCampaign(value: any) {
+  public updateCampaign(value: any): void {
     if ('rewards' in value) {
       this.currentCampaign.rewards = value.rewards;
     }

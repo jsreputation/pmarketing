@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RewardsService, IReward } from '../services/rewards.service';
+import { ProductService, IProduct } from '../services/product.service';
 import { NotificationService } from '@perx/core';
 
 export interface IPayload {
   name: string;
-  id: string;
+  id: number;
+  rewardId?: number;
 }
 
 interface Product {
@@ -20,26 +21,27 @@ interface Product {
 })
 export class OrderComponent implements OnInit {
   public payload: IPayload;
-  public rewards: IReward[];
+  public rewards: IProduct[];
   public isSummaryActivated: boolean = false;
-  public selectedRewards: IReward[];
+  public selectedProducts: IProduct[];
   public totalPoints: number;
 
   constructor(
     private router: Router,
-    private rewardsService: RewardsService,
+    private productService: ProductService,
     private notificationService: NotificationService
-  ) {
-    const navigation = this.router.getCurrentNavigation();
-    if ( !navigation.extras.state ) {
-      return;
-    }
-    const state = navigation.extras.state.data;
-    this.payload = JSON.parse(state);
-  }
+  ) {}
 
   public ngOnInit(): void {
-    this.rewardsService.getRewards().subscribe(res => this.rewards = res);
+    const scannedQrCode = history.state.data;
+    if (scannedQrCode) {
+      try {
+        this.payload = JSON.parse(scannedQrCode);
+      } catch (error) {
+        this.notificationService.addSnack('Invalid Merck QR Code');
+      }
+    }
+    this.productService.getProducts().subscribe(res => this.rewards = res);
   }
 
   public newQuantity(newData: Product): void {
@@ -47,8 +49,8 @@ export class OrderComponent implements OnInit {
   }
 
   private checkUpdatedRewards(): void {
-    this.selectedRewards = this.rewards.filter(reward => reward.quantity > 0);
-    this.totalPoints = this.selectedRewards.reduce((sum, current) =>  sum + current.quantity  * current.pointsPerUnit, 0);
+    this.selectedProducts = this.rewards.filter(reward => reward.quantity > 0);
+    this.totalPoints = this.selectedProducts.reduce((sum, current) =>  sum + current.quantity  * current.pointsPerUnit, 0);
   }
 
   public toggleSummary(): void {

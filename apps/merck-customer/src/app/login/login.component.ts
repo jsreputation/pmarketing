@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, PageAppearence {
 
   public selectedCountry: string = '+852';
 
   public loginForm: FormGroup;
 
   private authenticated: boolean;
-  public errorMessage: string = null;
+
+  private appAccessTokenFetched: boolean = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
-    this.initForm();
+      this.initForm();
   }
 
   private initForm(): void {
@@ -33,14 +36,30 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.authService.v4GetAppAccessToken().subscribe(() => {
+      this.appAccessTokenFetched = true;
+    },
+    (err) => {
+      console.log('Error' + err);
+    });
+  }
+
+  public getPageProperties(): PageProperties {
+    return {
+      header: false,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
+  }
 
   public onSubmit(): void {
 
     // TODO: Uncomment the following line once merck-customer backend is setup with authentication service
     // const mobileNo = this.selectedCountry + (this.loginForm.get('mobileNo').value as string);
 
-    const mobileNo = (this.loginForm.get('mobileNo').value as string).toUpperCase();
+    const mobileNo = (this.loginForm.get('mobileNo').value as string);
     const password: string = this.loginForm.get('password').value;
 
     this.authService.v4GameOauth(mobileNo, password)
@@ -62,29 +81,31 @@ export class LoginComponent implements OnInit {
         this.authenticated = false;
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.errorMessage = 'We could not reach the server';
+            this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
             [this.loginForm.controls.mobileNo, this.loginForm.controls.password]
               .forEach(c => c.setErrors({
                 invalid: true
               }));
-            this.errorMessage = 'Invalid credentials';
+            this.notificationService.addSnack('Invalid credentials');
           }
         }
       });
   }
 
-  public onCrossClicked(): void {
-    this.errorMessage = null;
-  }
-
   public goToSignup(): void {
+    if (!this.appAccessTokenFetched) {
+      return;
+    }
     this.router.navigateByUrl('/signup');
   }
 
   public goToForgotPassword(): void {
+    if (!this.appAccessTokenFetched) {
+      return;
+    }
     const mobileNumber = (this.loginForm.get('mobileNo').value as string);
-    this.router.navigate(['forgot-password'], { state: { mobileNo: mobileNumber } } );
+    this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } } );
   }
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,19 +9,19 @@ export class AudiencesService {
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getUsers() {
+  public getUsers(): Observable<any> {
     return this.http.getUsers();
   }
 
-  public getUser(id) {
+  public getUser(id): Observable<any> {
     return this.http.getUser(id);
   }
 
-  public getAudiences() {
+  public getAudiences(): Observable<any> {
     return this.http.getAudiences();
   }
 
-  public getVouchers() {
+  public getVouchers(): Observable<any> {
     return this.http.getVouchers();
   }
 }

@@ -64,7 +64,6 @@ import { NewCampaignRewardsStampsPageComponent } from 'src/app/campaigns/contain
 import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
 import { NewCampaignStampRuleFormGroupComponent } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 
-
 @NgModule({
   providers: [
     CampaignCreationStoreService,

@@ -38,15 +38,15 @@ export class RewardsListComponent implements AfterViewInit {
     this.itemAction.emit(id);
   }
 
-  public duplicateItem(id: number) {
+  public duplicateItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public deleteItem(id: number) {
+  public deleteItem(id: number): void {
     this.itemAction.emit(id);
   }
 
-  public useAsCaptionItem(id: number) {
+  public useAsCaptionItem(id: number): void {
     this.itemAction.emit(id);
   }
 

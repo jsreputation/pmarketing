@@ -12,14 +12,23 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTabsModule,
+  MatSnackBarModule,
+  MatIconModule,
+  MatDialogModule,
+  MatCardModule,
+  MatListModule,
 } from '@angular/material';
 import {
   AuthenticationModule,
   OauthModule,
   CognitoModule,
   ProfileModule,
-  UtilsModule
+  UtilsModule,
+  LoyaltyModule,
+  RewardsModule,
+  LocationModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +38,18 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
+import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dialog.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { RedeemComponent } from './redeem/redeem.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
+import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
+import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +59,19 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     HomeComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    EnterPinComponent
+    EnterPinComponent,
+    FindPharmacyComponent,
+    CustomSnackbarComponent,
+    FilterDialogComponent,
+    ResetPasswordComponent,
+    CustomSnackbarComponent,
+    RewardDetailComponent,
+    RedeemComponent,
+    AccountComponent,
+    ProfileComponent,
+    TransactionHistoryComponent,
+    PrivacyPolicyComponent,
+    SubscreenToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +84,14 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatTabsModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatCardModule,
+    MatListModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -58,9 +99,14 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ProfileModule.forRoot({ env: environment }),
-    UtilsModule
+    UtilsModule,
+    LoyaltyModule.forRoot({env: environment}),
+    RewardsModule.forRoot({ env: environment }),
+    QRCodeModule,
+    LocationModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
 export class AppModule { }

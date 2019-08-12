@@ -1,7 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProtectedGuard } from 'ngx-auth';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
+    canActivate: [ProtectedGuard]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

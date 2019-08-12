@@ -1,9 +1,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { VouchersService, VouchersModule } from '@perx/core';
+import { of } from 'rxjs';
+import { MatCardModule } from '@angular/material';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -12,13 +14,21 @@ describe('HomeComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
+  const vouchersServiceStub = {
+    getAll: () => of([])
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      imports: [NoopAnimationsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        NoopAnimationsModule,
+        MatCardModule,
+        VouchersModule
+      ],
       providers: [
         { provide: Router, useValue: router },
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

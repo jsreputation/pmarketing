@@ -11,3 +11,26 @@
     <cl-create-merchant-form [formMerchant]="formMerchant" [settings]="formConfig"></cl-create-merchant-form>
   </div>
 </mat-dialog-content>
+<div class="dialog-actions"
+>
+
+  <cl-button [classList]="'tertiary'"
+             class="actions-close"
+             (click)="close()"
+             [disableRipple]="true"
+  >
+      <span>
+        Cancel
+      </span>
+  </cl-button>
+
+  <cl-button [classList]="'primary'"
+             (click)="addMerchant()"
+             [disableRipple]="true"
+  >
+      <span>
+        Add Merchant
+      </span>
+  </cl-button>
+</div>
+

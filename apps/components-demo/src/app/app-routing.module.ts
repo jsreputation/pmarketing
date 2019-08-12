@@ -29,6 +29,12 @@ const routes: Routes = [
   {
     path: 'voucher', loadChildren: () => import('./voucher/voucher.module').then(mod => mod.VoucherModule)
   },
+  {
+    path: 'location', loadChildren: () => import('./location/location.module').then(mod => mod.LocationModule)
+  },
+  {
+    path: 'loyalty', loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 

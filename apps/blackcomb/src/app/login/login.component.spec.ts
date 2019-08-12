@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,8 +15,11 @@ describe('LoginComponent', () => {
       imports: [
         RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule
+      ],
     })
     .compileComponents();
   }));

@@ -1,0 +1,13 @@
+<div class="home-body">
+  <div class="loyalty-summer">
+    <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
+  </div>
+  <div class="reward-collection">
+    <div class="reward-title">
+      Featured Rewards
+    </div>
+    <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
+  </div>
+  <perx-core-rewards-list-tabbed [rewards]="rewards" [tabs]="tags" (tapped)="openRewardDetails($event)"></perx-core-rewards-list-tabbed>
+  <app-navigate-toolbar></app-navigate-toolbar>
+</div>

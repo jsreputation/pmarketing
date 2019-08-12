@@ -29,28 +29,26 @@ export class AppComponent implements OnInit {
       }
     );
 
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       // set global userID var for GA tracking
-      if (!((window as any).primaryIdentifier)) {
-        const param: string = location.search;
-        const searchParams: URLSearchParams = new URLSearchParams(param);
-        const token: string | null = searchParams.get('token');
-        const pi: string | null = searchParams.get('pi');
-        if (token && pi) {
-          this.authService.saveUserAccessToken(token);
-          localStorage.setItem('user-id', pi);
+      const param: string = location.search;
+      const searchParams: URLSearchParams = new URLSearchParams(param);
+      const token: string | null = searchParams.get('token');
+      const pi: string | null = searchParams.get('pi');
+      if (token && pi) {
+        this.authService.saveUserAccessToken(token);
+        localStorage.setItem('user-id', pi);
 
-          (window as any).primaryIdentifier = searchParams.get('pi');
-        } else {
-          this.authService.getUserAccessToken()
-            .subscribe((tok: string) => {
-              if (tok === null) {
-                this.notificationService.addPopup({
-                  text: 'Missing authentication information'
-                });
-              }
-            });
-        }
+        (window as any).primaryIdentifier = searchParams.get('pi');
+      } else {
+        this.authService.getAccessToken()
+          .subscribe((tok: string) => {
+            if (tok === null) {
+              this.notificationService.addPopup({
+                text: 'Missing authentication information'
+              });
+            }
+          });
       }
     }
   }

@@ -19,23 +19,23 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   public config: any;
   public campaign;
 
-  public get campaignInfo() {
+  public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
   }
 
-  public get channel() {
+  public get channel(): AbstractControl | null {
     return this.form.get('channel');
   }
 
-  public get schedule() {
+  public get schedule(): AbstractControl | null {
     return this.form.get('channel.schedule');
   }
 
-  public get recurrence() {
+  public get recurrence(): AbstractControl | null {
     return this.form.get('channel.schedule.recurrence');
   }
 
-  public get audience() {
+  public get audience(): AbstractControl | null {
     return this.form.get('audience');
   }
 
@@ -72,7 +72,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
     this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
   }
 
-  private updateForm() {
+  private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }

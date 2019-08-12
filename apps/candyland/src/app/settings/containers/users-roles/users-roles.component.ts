@@ -22,7 +22,7 @@ export class UsersRolesComponent  implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.settingsService.getRolesOptions()
       .subscribe( config => this.config = config);
     this.getData();
@@ -37,7 +37,14 @@ export class UsersRolesComponent  implements AfterViewInit {
     });
   }
 
-  private getData() {
+  public openDialogEditUsers(id: number): void {
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog', data: id});
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
+  private getData(): void {
     this.settingsService.getRoles()
       .pipe(
         map((data: any[]) => (

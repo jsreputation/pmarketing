@@ -17,7 +17,10 @@ import {
 import {
   AuthenticationModule,
   OauthModule,
-  CognitoModule
+  CognitoModule,
+  RewardsModule,
+  LoyaltyModule,
+  VouchersModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,7 +67,10 @@ import { RedeemComponent } from './redeem/redeem.component';
     OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ZXingScannerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RewardsModule.forRoot({ env: environment }),
+    LoyaltyModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment })
   ],
   providers: [],
   bootstrap: [AppComponent],

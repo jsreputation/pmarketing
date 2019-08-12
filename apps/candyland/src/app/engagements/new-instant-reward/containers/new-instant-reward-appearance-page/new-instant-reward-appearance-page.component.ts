@@ -1,10 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RewardService } from '@cl-core/http-services/reward.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { ControlsName } from '../../../../models/controls-name';
+import { IReward } from '@perx/core';
+import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
+import { ControlValueService } from '@cl-core/services/control-value.service';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -14,17 +18,25 @@ import { tap } from 'rxjs/operators';
 })
 export class NewInstantRewardAppearancePageComponent implements OnInit {
   public formReward: FormGroup;
-  public rewardsCardBackground$: Observable<IGraphic>;
-  public rewardsBackground$: Observable<IGraphic>;
+  public rewardData$: Observable<{
+    background: IGraphic[],
+    cardBackground: IGraphic[]
+  }>;
+  public reward$: Observable<IReward[]>;
+  public rewards$: Observable<IReward[]>;
+  public rewardId: number = 8;
   constructor(private fb: FormBuilder,
               private rewardService: RewardService,
               private routingState: RoutingStateService,
-              private router: Router) { }
+              private router: Router,
+              private controlValueService: ControlValueService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createRewardForm();
-    this.getRewardBackground();
-    this.getRewardCardBackground();
+    this.getRewardData();
+    console.log(MockRewardsMobilePreview);
+    this.reward$ = of([MockRewardsMobilePreview[0]]);
+    this.rewards$ = of(MockRewardsMobilePreview);
   }
 
   public save(): void {
@@ -34,21 +46,32 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
-
   public get name(): AbstractControl {
-    return this.formReward.get('name');
+    return this.formReward.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.formReward.get('headlineMessage');
+    return this.formReward.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.formReward.get('subHeadlineMessage');
+    return this.formReward.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.formReward.get('buttonText');
+    return this.formReward.get(ControlsName.buttonText);
+  }
+
+  public get background(): AbstractControl {
+    return this.formReward.get(ControlsName.background);
+  }
+
+  public get cardBackground(): AbstractControl {
+    return this.formReward.get(ControlsName.cardBackground);
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return this.controlValueService.getImgLink(control, defaultImg);
   }
 
   private createRewardForm(): void {
@@ -77,27 +100,15 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
     });
   }
 
-  private getRewardCardBackground(): void {
-    this.rewardsCardBackground$ = this.rewardService.getRewardCardBackground()
+  private getRewardData(): void {
+    this.rewardData$ = this.rewardService.getRewardData()
       .pipe(
         tap((res) => {
-          this.patchForm('cardBackground', res[0]);
+          this.formReward.patchValue({
+            [ControlsName.background]: res.background[0],
+            [ControlsName.cardBackground]: res.cardBackground[0]
+          });
         })
       );
-  }
-
-  private getRewardBackground(): void {
-    this.rewardsBackground$ = this.rewardService.getRewardBackground()
-      .pipe(
-        tap((res) => {
-          this.patchForm('background', res[0]);
-        })
-      );
-  }
-
-  private patchForm(fieldName: string, value: any): void {
-    this.formReward.patchValue({
-      [fieldName]: value
-    });
   }
 }

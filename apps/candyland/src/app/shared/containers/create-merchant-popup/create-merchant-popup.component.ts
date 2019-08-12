@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
 @Component({
@@ -14,10 +14,19 @@ export class CreateMerchantPopupComponent implements OnInit {
     shoveName: true
   };
   constructor(public dialog: MatDialog,
+              private dialogRef: MatDialogRef<CreateMerchantPopupComponent>,
               private merchantFormService: MerchantFormService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.createFormMerchant();
+  }
+
+  public close(): void {
+    this.dialogRef.close();
+  }
+
+  public addMerchant(): void {
+    this.dialogRef.close(this.formMerchant.value);
   }
 
   private createFormMerchant(): void {

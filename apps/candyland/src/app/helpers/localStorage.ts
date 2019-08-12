@@ -1,13 +1,13 @@
 export class LocalStorage {
-  static setToStorage(key: string, value: any) {
+  public static setToStorage(key: string, value: any): void {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  static getFromStorage(key: string) {
+  public static getFromStorage(key: string): any {
     return JSON.parse(localStorage.getItem(key));
   }
 
-  static removeFromStorage(key: string) {
+  public static removeFromStorage(key: string): void {
     localStorage.removeItem(key);
   }
 }

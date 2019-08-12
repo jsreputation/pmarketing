@@ -6,17 +6,17 @@
       <p>{{ payload.name }}</p>
       <small>{{ payload.id }}</small>
     </div>
-    <div class="gift">
-      <p class="gift-name">
-        {{gift.name}}
+    <div *ngIf="reward" class="reward">
+      <p class="reward-name">
+        {{reward.name}}
       </p>
-      <p *ngIf="!didProceed" class="point">
-        {{gift.pointsPerUnit}} points will be deducted
+      <p *ngIf="!didProceed && reward.rewardPrice.length > 0" class="point">
+        {{getPrice()}} points will be deducted
       </p>
     </div>
   </div>
   <div class="btn-container">
-    <div *ngIf="!didProceed else proceeded">
+    <div *ngIf="!didProceed && payload else proceeded">
       <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">Proceed</button>
       <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">Cancel</button>
     </div>

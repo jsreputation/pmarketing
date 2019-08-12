@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  apiHost: 'https://api.perxtech.io',
+  production: false,
+  preAuth: false,
+  isWhistler: false,
+  baseHref: '/'
 };
 
 /*

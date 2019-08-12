@@ -21,7 +21,7 @@ interface IV4Profile {
   personal_properties?: {};
 }
 
-interface IV4ProfileResponse {
+export interface IV4ProfileResponse {
   data: IV4Profile;
 }
 

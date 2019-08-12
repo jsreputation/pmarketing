@@ -12,8 +12,12 @@ import {
 
 import { EnvConfig } from '../shared/env-config';
 import {
-  IStampCard, IStamp,
-  STAMP_CARD_STATE, STAMP_STATE, IReward, IVoucher
+  IStampCard,
+  IStamp,
+  StampCardState,
+  StampState,
+  IReward,
+  IVoucher
 } from './models/stamp.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -31,7 +35,7 @@ export interface IV4Stamp {
   id: number;
   user_account_id: number;
   stamp_card_id: number;
-  state: STAMP_STATE;
+  state: StampState;
   created_at: string;
   updated_at: string;
   campaign_id: number;
@@ -78,7 +82,7 @@ interface IV4Reward {
 interface IV4StampCard {
   id: number;
   user_account_id: number;
-  state: STAMP_CARD_STATE;
+  state: StampCardState;
   campaign_id: number;
   card_number: number;
   campaign_config?: {

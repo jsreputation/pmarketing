@@ -16,38 +16,37 @@ import { noop } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsFilterComponent implements ControlValueAccessor {
-  @Input() tabs;
+  @Input() public tabs: any;
 
-  @Input() set value(setValue) {
+  @Input() set value(setValue: any) {
     this.writeValue(setValue);
   }
 
-  public currentValue;
+  public currentValue: any;
   public onChange: any = noop;
   public onTouched: any = noop();
 
   constructor(private cd: ChangeDetectorRef) {
   }
 
-  changeTab(value) {
+  public changeTab(value: any): void {
     this.writeValue(value);
     this.onTouched();
     this.cd.detectChanges();
   }
 
-
-  public writeValue(value) {
+  public writeValue(value: any): void {
     if (this.currentValue !== value) {
       this.currentValue = value;
       this.onChange(this.currentValue);
     }
   }
 
-  public registerOnChange(fn) {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 }

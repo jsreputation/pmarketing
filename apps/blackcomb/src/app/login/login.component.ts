@@ -32,6 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.router.navigate([`game-play/1`]);
+    this.router.navigate([`loading`]);
   }
 }

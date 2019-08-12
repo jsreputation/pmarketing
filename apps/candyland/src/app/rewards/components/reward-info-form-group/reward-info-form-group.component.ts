@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 @Component({
@@ -7,14 +7,7 @@ import {AbstractControl} from '@angular/forms';
   styleUrls: ['./reward-info-form-group.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardInfoFormGroupComponent implements OnInit {
-  @Input() formGroup: AbstractControl;
-  @Input() config: { [key: string]: OptionConfig[] };
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+export class RewardInfoFormGroupComponent {
+  @Input() public formGroup: AbstractControl;
+  @Input() public config: { [key: string]: OptionConfig[] };
 }

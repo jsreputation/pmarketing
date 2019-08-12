@@ -1,9 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./custom-theme.scss";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
 $main-blue-theme: #0F69AF;
 $inputfield-background:#F8F8FC;
 $error-message-container-color: #FFC832;
 $heading-font-color: #1B1B25;
 $subheading-light-gray-color: #494953;
+$home-page-background-color: #E5E5E5;
+$bottom-bar-text-color: #93939D;
 
 html,
 body {
@@ -15,4 +20,79 @@ html {
   font-size: 62.5%;
   font-family: Lato, sans-serif;
   font-style: normal;
+}
+
+.loc-card-container {
+  .mat-card-actions {
+    align-items: center;
+  }
+
+  .mat-icon {
+    vertical-align: middle;
+  }
+
+  a {
+    color: #0f69af;
+    text-decoration: none;
+
+    &:first-child {
+      font-size: 1.4rem;
+    }
+
+    &:last-child {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.tabs {
+  mat-tab-header {
+    padding-top: 6rem;
+  }
+
+  h3.mat-line {
+    color: $heading-font-color;
+    font-weight: 900 !important;
+    font-size: 1.4rem !important;
+    line-height: 1.7rem;
+  }
+
+  small {
+    color: #494953;
+    font-size: 1.2rem !important;
+    line-height: 2.1rem;
+  }
+
+  p.links {
+    line-height: 2.5rem;
+
+    a {
+      color: $main-blue-theme;
+      text-decoration: none;
+
+      &:first-child {
+        float: left;
+        font-size: 1.4rem;
+      }
+
+      &:last-child {
+        float: right;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+
+perx-core-locations-list {
+  .mat-list-base {
+    padding-top: 6rem;
+  }
+}
+
+.mat-snack-bar-container {
+  background-color: #FFC832 !important;
 }
