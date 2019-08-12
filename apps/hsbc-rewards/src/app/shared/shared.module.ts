@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   MatFormFieldModule,
@@ -13,13 +12,14 @@ import {
   MatRippleModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatRadioModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
@@ -34,13 +34,26 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatListModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatRippleModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatRadioModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }
