@@ -58,4 +58,10 @@ describe('LoginFormComponent', () => {
     component.submit();
     expect(component.loginSubmit.emit).toHaveBeenCalled();
   });
+
+  it('should emit event when clicking on forgot password', () => {
+    spyOn(component.forgotPassword, 'emit');
+    component.forgot();
+    expect(component.forgotPassword.emit).toHaveBeenCalled();
+  });
 });
