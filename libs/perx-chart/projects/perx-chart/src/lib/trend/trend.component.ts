@@ -1,6 +1,21 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TrendChartData, IData } from '../data.model';
+import { IData } from '../data.model';
+
+interface TrendChartData {
+  reward_name: string | number;
+  revenue: string | number;
+  chart_data: {
+    series: {
+      extra: {
+        code: string
+      };
+      name: string;
+      value: number;
+    }[];
+    name: string | number;
+  }[];
+}
 
 @Component({
   selector: 'pc-trend',
