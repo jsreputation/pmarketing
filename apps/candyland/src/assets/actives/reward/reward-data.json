@@ -5,6 +5,7 @@
       "type": "bg1",
       "title": "icon",
       "img": "assets/images/reward/background/bg-1.png",
+      "fullImg": "assets/images/reward/background/full_bg_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -13,6 +14,7 @@
       "type": "bg2",
       "title": "icon",
       "img": "assets/images/reward/background/bg-2.png",
+      "fullImg": "assets/images/reward/background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -21,6 +23,7 @@
       "type": "bg3",
       "title": "icon",
       "img": "assets/images/reward/background/bg-3.png",
+      "fullImg": "assets/images/reward/background/full_bg_3.jpg",
       "format": ".png",
       "active": "false"
     }
@@ -31,6 +34,7 @@
       "type": "bg1",
       "title": "icon",
       "img": "assets/images/reward/card-background/card-bg-1.png",
+      "fullImg": "assets/images/reward/card-background/card-bg-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -39,6 +43,7 @@
       "type": "bg2",
       "title": "icon",
       "img": "assets/images/reward/card-background/card-bg-2.png",
+      "fullImg": "assets/images/reward/card-background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -47,6 +52,8 @@
       "type": "bg3",
       "title": "icon",
       "img": "assets/images/reward/card-background/card-bg-3.png",
+      "fullImg": "assets/images/reward/card-background/full_bg_3.jpg",
+
       "format": ".png",
       "active": "false"
     }

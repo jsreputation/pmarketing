@@ -11,6 +11,7 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GameModule } from '@perx/core';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -27,6 +28,7 @@ describe('NewPinataPageComponent', () => {
         SelectGraphicModule,
         SelectGraphicWrapModule,
         GameModule,
+        SimpleMobileViewModule,
         MatTabsModule,
         MatCardModule,
         MatFormFieldModule,
