@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { UserInfoComponent } from './user-info.component';
-import { CUSTOM_ELEMENTS_SCHEMA, Type } from '@angular/core';
+import { Type } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule
@@ -35,8 +35,7 @@ describe('UserInfoComponent', () => {
         MatCheckboxModule,
         MatRadioModule,
         ProfileModule.forRoot({ env: environment })
-         ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         {
@@ -72,4 +71,10 @@ describe('UserInfoComponent', () => {
     expect(profileServiceSpy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith('/home');
   }));
+
+  it('should update diabetes condition', () => {
+
+    component.diabetesConditionUpdated(true);
+    expect(component.surveyForm.get('diabetes').value).toBe('diabetes');
+  });
 });
