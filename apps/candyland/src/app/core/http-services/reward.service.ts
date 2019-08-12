@@ -9,16 +9,18 @@ export class RewardService {
 
   constructor(private http: HttpClient) { }
 
-  public getRewards(): any {
-    return this.http.get('assets/actives/rewards/rewards.json');
+  public getRewards(): Observable<any> {
+    return this.http.get('assets/mocks/rewards/rewards.json');
   }
 
-  public getRewardCardBackground(): Observable<IGraphic> {
-    return this.http.get<IGraphic>('assets/actives/rewards/reward-card-background.json');
-  }
-
-  public getRewardBackground(): Observable<IGraphic> {
-    return this.http.get<IGraphic>('assets/actives/rewards/reward-background.json');
+  public getRewardData(): Observable<{
+    background: IGraphic[],
+    cardBackground: IGraphic[]
+  }> {
+    return this.http.get<{
+      background: IGraphic[],
+      cardBackground: IGraphic[]
+    }>('assets/actives/reward/reward-data.json');
   }
 
   public getReward(): Observable<any> {

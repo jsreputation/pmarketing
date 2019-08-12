@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { MatRadioModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {StepConditionService} from "../../services/step-condition.service";
+import {CampaignCreationStoreService} from "../../services/campaigns-creation-store.service";
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -13,6 +15,10 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        StepConditionService,
+        CampaignCreationStoreService
+      ],
       imports: [
         BrowserAnimationsModule,
         HttpClientTestingModule,
@@ -21,7 +27,9 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
         MatRadioModule,
         MatSelectModule
       ],
-      declarations: [NewCampaignSelectEngagementPageComponent],
+      declarations: [
+        NewCampaignSelectEngagementPageComponent
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();

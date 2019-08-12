@@ -11,14 +11,20 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {CampaignCreationStoreService} from "../../services/campaigns-creation-store.service";
+import {StepConditionService} from "../../services/step-condition.service";
 
-describe('NewCampaignRewardsStampsPageComponent', () => {
+describe('NewCampaignRewardsPageComponent', () => {
   let component: NewCampaignRewardsPageComponent;
   let fixture: ComponentFixture<NewCampaignRewardsPageComponent>;
   // let form: FormGroup;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        CampaignCreationStoreService,
+        StepConditionService
+      ],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,

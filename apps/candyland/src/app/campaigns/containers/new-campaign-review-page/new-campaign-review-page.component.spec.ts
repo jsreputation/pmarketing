@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewCampaignReviewPageComponent } from './new-campaign-review-page.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {CampaignCreationStoreService} from "../../services/campaigns-creation-store.service";
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -9,6 +10,7 @@ describe('NewCampaignReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [CampaignCreationStoreService],
       declarations: [ NewCampaignReviewPageComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
