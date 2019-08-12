@@ -1,0 +1,25 @@
+<div class="page">
+  <form class="personalData" [formGroup]="personalData">
+    <div class="block">
+      <div class="profile">
+        <img src="assets/img/account_img.svg">
+        <span class="acc-name">Pear</span>
+      </div>
+      <div class="form-input">
+        <label>Player Code</label>
+        <input type="password" formControlName="name">
+      </div>
+      <div class="form-input">
+        <label>Card Last 4 Digit</label>
+        <input type="password" formControlName="password">
+      </div>
+    </div>
+    <div class="block">
+      <button (click)="displayAgreement()">Terms and Conditions</button>
+      <button>FAQ</button>
+    </div>
+    <div class="block">
+      <button (click)="logOut()">Log Out</button>
+    </div>
+  </form>
+</div>

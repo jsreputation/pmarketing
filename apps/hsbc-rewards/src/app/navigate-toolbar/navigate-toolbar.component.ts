@@ -13,6 +13,7 @@ interface IRoute {
   templateUrl: './navigate-toolbar.component.html',
   styleUrls: ['./navigate-toolbar.component.scss']
 })
+
 export class NavigateToolbarComponent implements OnInit {
   public navigatePanel: IRoute[] = [{
     activated: false,
