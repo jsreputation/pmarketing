@@ -12,6 +12,9 @@ const routes: Routes = [
       loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
       canActivate: [ProtectedGuard]
     }, {
+      path: 'wallet',
+      loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule)
+    }, {
       path: '**',
       pathMatch: 'full',
       redirectTo: 'home'

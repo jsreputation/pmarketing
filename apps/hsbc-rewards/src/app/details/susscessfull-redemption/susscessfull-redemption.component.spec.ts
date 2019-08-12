@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SusscessfullRedemptionComponent } from './susscessfull-redemption.component';
 import { HeaderModule } from '../../header/header.module';
 
-fdescribe('SusscessfullRedemptionComponent', () => {
+describe('SusscessfullRedemptionComponent', () => {
   let component: SusscessfullRedemptionComponent;
   let fixture: ComponentFixture<SusscessfullRedemptionComponent>;
   beforeEach(async(() => {
@@ -15,8 +15,7 @@ fdescribe('SusscessfullRedemptionComponent', () => {
       imports: [
         RouterTestingModule,
         HeaderModule
-      ],
-     
+      ]
     })
       .compileComponents();
   }));

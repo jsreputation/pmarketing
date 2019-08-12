@@ -10,6 +10,7 @@ import {
   ProfileModule,
   LoyaltyModule,
   LocationModule,
+  VouchersModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
