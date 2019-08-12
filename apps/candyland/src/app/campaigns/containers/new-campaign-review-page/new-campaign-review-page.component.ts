@@ -14,10 +14,10 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
     super(0, store, null, cd);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     super.ngOnInit();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 }

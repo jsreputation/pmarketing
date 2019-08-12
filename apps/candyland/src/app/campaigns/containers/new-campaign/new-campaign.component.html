@@ -14,7 +14,7 @@
     <cl-button classList="third" routerLink="..">Save as a draft</cl-button>
     <cl-button *ngIf="!isLastStep"
                classList="primary"
-               [disable]="!(getStepConditions(stepper.selectedIndex) | async)"
+               [disable]="(getStepConditions(stepper.selectedIndex) | async) === 0"
                (click)="goNext()">Next
     </cl-button>
     <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>

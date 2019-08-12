@@ -12,7 +12,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
-  defaultValue = {
+  public defaultValue = {
     rewardsOptions: {
       enableProbability: true,
       rewards: [
@@ -54,11 +54,11 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     this.initForm();
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     super.ngOnInit();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
   private initForm(): void {

@@ -20,11 +20,11 @@ export class SelectRewardPopupComponent implements OnInit, AfterViewInit {
               public cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getData();
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -43,7 +43,7 @@ export class SelectRewardPopupComponent implements OnInit, AfterViewInit {
     this.dialogRef.close(this.selectedReward);
   }
 
-  private getData() {
+  private getData(): void {
     this.rewardsService.getRewards()
       .pipe(
         map((data: any[]) => (

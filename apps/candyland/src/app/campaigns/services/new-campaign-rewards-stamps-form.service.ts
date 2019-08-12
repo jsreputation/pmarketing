@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import {Injectable} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToggleControlConfig} from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
 export class NewCampaignRewardsStampsFormService {
@@ -54,7 +54,7 @@ export class NewCampaignRewardsStampsFormService {
     ];
   }
 
-  public getDefaultValue() {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       rewardsList: [
         {
@@ -124,44 +124,44 @@ export class NewCampaignRewardsStampsFormService {
         sequence: true,
         rules: [
           {
-            'ruleType': 'review',
-            'product': 'productC'
+            ruleType: 'review',
+            product: 'productC'
           },
           {
-            'ruleType': 'purchase',
-            'product': 'productB'
+            ruleType: 'purchase',
+            product: 'productB'
           },
           {
-            'ruleType': 'transaction',
-            'condition': {
-              'rule': 'isMoreThan',
-              'value': 54
+            ruleType: 'transaction',
+            condition: {
+              rule: 'isMoreThan',
+              value: 54
             }
           },
           {
-            'ruleType': 'Bill payment'
+            ruleType: 'Bill payment'
           },
           {
-            'ruleType': 'Reward redeemed'
+            ruleType: 'Reward redeemed'
           },
           {
-            'ruleType': 'Sign up'
+            ruleType: 'Sign up'
           },
           {
-            'ruleType': 'Bill payment'
+            ruleType: 'Bill payment'
           },
           {
-            'ruleType': 'Sign up'
+            ruleType: 'Sign up'
           },
           {
-            'ruleType': 'review',
-            'product': 'productB'
+            ruleType: 'review',
+            product: 'productB'
           },
           {
-            'ruleType': 'transaction',
-            'condition': {
-              'rule': 'isMoreThan',
-              'value': 47
+            ruleType: 'transaction',
+            condition: {
+              rule: 'isMoreThan',
+              value: 47
             }
           }
         ]

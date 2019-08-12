@@ -27,7 +27,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.initForm();
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     super.ngOnInit();
     const stampsSlotNumber = this.store.currentCampaign.template.payload.stampsSlotNumber;
     const stampsNumber = +this.store.currentCampaign.template.payload.stampsNumber;
@@ -47,18 +47,18 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.form.patchValue(this.formService.getDefaultValue());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
-  public get rewardsList() {
+  public get rewardsList(): FormArray {
     return this.form.get('rewardsList') as FormArray;
   }
 
-  public get stampRule() {
+  public get stampRule(): FormArray {
     return this.form.get('stampsRule.rules') as FormArray;
   }
 
-  public get isSequence() {
+  public get isSequence(): boolean {
     return this.form.get('stampsRule.sequence').value;
   }
 
@@ -80,7 +80,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.stampRule.removeAt(index);
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.formService.getForm();
     this.form.valueChanges
       .pipe(
@@ -97,7 +97,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
       });
   }
 
-  private updateForm() {
+  private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }
@@ -109,18 +109,18 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     });
   }
 
-  private clearFormArray(formArray: FormArray) {
+  private clearFormArray(formArray: FormArray): void {
     while (formArray.length !== 0) {
       formArray.removeAt(0);
     }
   }
 
-  private initUnsequenceRules() {
+  private initUnsequenceRules(): void {
     this.clearFormArray(this.stampRule);
     this.addStampRule();
   }
 
-  private initSequenceRules(stampsNumber: number) {
+  private initSequenceRules(stampsNumber: number): void {
     this.clearFormArray(this.stampRule);
     for (let i = 0; i < stampsNumber; i++) {
       this.addStampRule();

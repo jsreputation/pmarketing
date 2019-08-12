@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {AbstractControl, FormGroup} from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -50,11 +50,14 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
     this.initForm();
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
    super.ngOnInit();
   }
 
-  private initForm() {
+  public ngOnDestroy(): void {
+  }
+
+  private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
     this.form.valueChanges
       .pipe(
@@ -75,8 +78,5 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy(): void {
   }
 }

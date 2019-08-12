@@ -6,10 +6,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 export class StepConditionService {
   private stepConditions$: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
-  constructor() {
-  }
-
-  public registerStepCondition(key: number | string, value: boolean) {
+  public registerStepCondition(key: number | string, value: boolean): void {
     const conditions = this.stepConditions$.value;
     conditions[key] = value;
     this.stepConditions$.next(conditions);

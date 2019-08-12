@@ -31,23 +31,23 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.initForm();
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     super.ngOnInit();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
-  private initForm() {
+  private initForm(): void {
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
     this.form.patchValue(this.store.currentCampaign);
   }
 
-  private initData() {
+  private initData(): void {
     this.engagementsService.getEngagements()
       .pipe(
         map((response: any) => response.results),
