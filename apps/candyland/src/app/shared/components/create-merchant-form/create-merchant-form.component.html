@@ -76,31 +76,23 @@
       </mat-form-field>
     </div>
 
-    <div class="merchant-banch">
-      <div class="control-input merchant-branch">
-        <mat-checkbox color="primary" (change)="removeBranches()" [formControlName]="'onBranches'">Add Branches</mat-checkbox>
-      </div>
+    <div class="merchant-branch">
+      <cl-merchant-branch *ngFor="let control of branches.controls; let i = index;"
+                          [group]="control"
+                          [index]="i"
+                          (removeGroup)="removeBranches($event)"
 
-      <ng-container *ngIf="onBranches.value">
-        <cl-merchant-branch *ngFor="let control of branches.controls; let i = index;"
-                            [group]="control"
-                            [index]="i"
-                            (removeGroup)="removeBranches($event)"
-
-        ></cl-merchant-branch>
-        <cl-button [classList]="'tertiary'"
-                   class="merchant-btn-cancel"
-                   (click)="addBranch()"
-        >
-        <span>
-          + Add new branch
-        </span>
-        </cl-button>
-      </ng-container>
-
+      ></cl-merchant-branch>
+      <cl-button [classList]="'tertiary'"
+                 class="merchant-btn-cancel"
+                 (click)="addBranch()"
+      >
+      <span>
+        + Add new branch
+      </span>
+      </cl-button>
     </div>
-
-    </div>
+  </div>
 </section>
 
 
