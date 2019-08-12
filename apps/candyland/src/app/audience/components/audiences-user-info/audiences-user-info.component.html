@@ -19,9 +19,9 @@
       <p class="user-info-item-title">
         Contact no.
       </p>
-      <p class="user-info-item-value">
+      <a class="user-info-item-value" [href]="'tel:' + user?.phone">
         {{user?.phone || '-' }}
-      </p>
+      </a>
     </div>
 
     <div class="user-info-item">
@@ -55,9 +55,9 @@
       <p class="user-info-item-title">
         Email
       </p>
-      <p class="user-info-item-value">
-        {{user?.email || '-' }}
-      </p>
+      <a class="user-info-item-value" [href]="'mailto:' + user?.email">
+        {{user?.email || '-'}}
+      </a>
     </div>
 
     <div class="user-info-item">
