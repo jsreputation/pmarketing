@@ -17,18 +17,19 @@ export class CalendarHeatmapComponent implements OnChanges {
   public ngxChartData: ChartData[];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data) {
-      this.data.subscribe((data: IData) => {
-        this.ngxChartData = data.rows.map((row: (string | number)[]) => {
-          return {
-            name: row[0],
-            series: [{
-              name: row[1],
-              value: row[2]
-            }]
-          };
-        });
-      });
+    if (!changes.data) {
+      return;
     }
+    this.data.subscribe((data: IData) => {
+      this.ngxChartData = data.rows.map((row: (string | number)[]) => {
+        return {
+          name: row[0],
+          series: [{
+            name: row[1],
+            value: row[2]
+          }]
+        };
+      });
+    });
   }
 }
