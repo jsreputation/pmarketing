@@ -12,7 +12,6 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
   selector: 'cl-new-campaign-select-engagement-page',
   templateUrl: './new-campaign-select-engagement-page.component.html',
   styleUrls: ['./new-campaign-select-engagement-page.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;

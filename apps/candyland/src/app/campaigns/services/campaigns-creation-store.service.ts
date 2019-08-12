@@ -63,7 +63,7 @@ export class CampaignCreationStoreService {
       this.currentCampaign.rewards = value.rewards;
     }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
-    console.log(this.currentCampaign);
+    console.log('currentCampaign', this.currentCampaign);
   }
 
 }

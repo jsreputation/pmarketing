@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -13,78 +16,13 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
-  private defaultValue = {
-    rewardsList: [
-      {
-        stampSlotNumber: 2,
-        rewardsOptions: {
-          enableProbability: true,
-          rewards: [
-            {
-              value: null,
-              probability: 5
-            },
-            {
-              value: {
-                id: 1,
-                image: 'assets/images/mask-group.png',
-                name: 'Free Coffee',
-                type: 'Starbucks',
-                current: 500,
-                total: 1000
-              },
-              probability: 20
-            },
-            {
-              value: {
-                id: 2,
-                image: 'assets/images/mask-group.png',
-                name: 'Free Coffee 2',
-                type: 'Starbucks',
-                current: 500,
-                total: 800
-              },
-              probability: 43
-            }
-          ]
-        }
-      },
-      {
-        stampSlotNumber: 4,
-        rewardsOptions: {
-          enableProbability: false,
-          rewards: [
-            {
-              value: {
-                id: 1,
-                image: 'assets/images/mask-group.png',
-                name: 'Free Coffee',
-                type: 'Starbucks',
-                current: 500,
-                total: 1000
-              }
-            },
-            {
-              value: {
-                id: 2,
-                image: 'assets/images/mask-group.png',
-                name: 'Free Coffee 2',
-                type: 'Starbucks',
-                current: 500,
-                total: 800
-              }
-            }
-          ]
-        }
-      }
-    ]
-  };
 
   constructor(
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
     public cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
+    private toggleControlService: ToggleControlService,
+    private formService: NewCampaignRewardsStampsFormService) {
     super(1, store, stepConditionService, cd);
     this.initForm();
   }
@@ -92,21 +30,21 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   public ngOnInit() {
     super.ngOnInit();
     const stampsSlotNumber = this.store.currentCampaign.template.payload.stampsSlotNumber;
+    const stampsNumber = +this.store.currentCampaign.template.payload.stampsNumber;
     for (const slotNumber of stampsSlotNumber) {
       this.addReward(this.createRewardForm(slotNumber));
     }
     this.form.get('stampsRule.sequence').valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
-        console.log('sequence', value);
         if (value) {
-          this.initSequenceRules();
+          this.initSequenceRules(stampsNumber);
         } else {
           this.initUnsequenceRules();
         }
       });
 
-    this.form.patchValue(this.defaultValue);
+    this.form.patchValue(this.formService.getDefaultValue());
   }
 
   ngOnDestroy(): void {
@@ -124,37 +62,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     return this.form.get('stampsRule.sequence').value;
   }
 
-  private initForm(): void {
-    this.form = this.fb.group({
-      rewardsList: this.fb.array([]),
-      stampsRule: this.fb.group({
-        sequence: [],
-        rules: this.fb.array([
-          this.fb.control(null)
-        ])
-      }),
-      limits: this.fb.group({
-        enableStampCard: [true],
-        stampCard: this.fb.group({
-          perCampaign: [null, [Validators.max(1000)]],
-          perUser: [null, [Validators.max(1000)]],
-          duration: []
-        }),
-        enableStamp: [true],
-        stamp: this.fb.group({
-          perUser: [null, [Validators.max(1000)]],
-          duration: []
-        })
-      }),
-      enableStampCardsValidity: [],
-      stampCardsValidity: this.fb.group({
-        times: [],
-        duration: []
-      })
-    });
-  }
-
-
   public addReward(formGroup: FormGroup): void {
     this.rewardsList.push(formGroup);
   }
@@ -165,7 +72,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public addStampRule(): void {
     if (this.stampRule.length <= 20) {
-      this.stampRule.push(this.fb.control(null));
+      this.stampRule.push(new FormControl(null));
     }
   }
 
@@ -173,10 +80,32 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.stampRule.removeAt(index);
   }
 
+  private initForm() {
+    this.form = this.formService.getForm();
+    this.form.valueChanges
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        debounceTime(500)
+      )
+      .subscribe(() => {
+        const toggleConfig = this.formService.getToggleConfig(this.form);
+        this.toggleControlService.updateFormStructure(toggleConfig);
+        if (this.toggleControlService.formChanged) {
+          this.updateForm();
+        }
+      });
+  }
+
+  private updateForm() {
+    this.form.updateValueAndValidity();
+    this.cd.detectChanges();
+  }
+
   private createRewardForm(slotNumber: number): FormGroup {
-    return this.fb.group({
-      stampSlotNumber: slotNumber,
-      rewardsOptions: []
+    return new FormGroup({
+      stampSlotNumber: new FormControl(slotNumber),
+      rewardsOptions: new FormControl([])
     });
   }
 
@@ -191,9 +120,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.addStampRule();
   }
 
-  private initSequenceRules() {
+  private initSequenceRules(stampsNumber: number) {
     this.clearFormArray(this.stampRule);
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < stampsNumber; i++) {
       this.addStampRule();
     }
   }

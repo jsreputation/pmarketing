@@ -8,7 +8,7 @@
     <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
   </div>
   <cl-progress-bar class="reward-item-progress"
-                    *ngIf="data?.current && data?.total"
+                   *ngIf="data?.current && data?.total"
                    [current]="data?.current"
                    [total]="data?.total">
 
@@ -28,9 +28,9 @@
     </mat-form-field>
   </div>
   <div class="reward-item-actions">
-<!--    <button mat-icon-button (click)="delete()">-->
-<!--      <i class="icon delete-action"></i>-->
-<!--    </button>-->
+    <!--    <button mat-icon-button (click)="delete()">-->
+    <!--      <i class="icon delete-action"></i>-->
+    <!--    </button>-->
     <button mat-icon-button *ngIf="data" (click)="delete()">
       <i class="icon full-with delete-action"></i>
     </button>

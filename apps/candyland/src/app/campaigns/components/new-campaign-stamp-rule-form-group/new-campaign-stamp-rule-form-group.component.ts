@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
@@ -33,6 +32,7 @@ import { noop } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
+  // TODO: integrate when global settings are implemented
   config = {
     ruleType: [
       {'title': 'Transaction', 'value': 'transaction'},
@@ -55,8 +55,8 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
       {'title': 'Product C', 'value': 'productC'}
     ]
   };
-  // TODO: integrate when global settings are implemented
   @Input() public currencyID = 'SGD';
+
   @Input() public group: FormGroup;
   private onChange: any = noop;
   // @ts-ignore
@@ -74,7 +74,6 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
       .pipe(untilDestroyed(this))
       .subscribe((value) => {
         this.onChange(value);
-        debugger;
         const toggleConfig = this.getToggleConfig(this.group);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
@@ -103,16 +102,16 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
     this.cd.detectChanges();
   }
 
-  public getToggleConfig(form: FormGroup): ToggleControlConfig[] {
+  private getToggleConfig(form: FormGroup): ToggleControlConfig[] {
     return [
       {
         condition: form.get('ruleType').value === 'transaction',
-        controls: [form.get('condition')],
+        controls: [form.get('condition')]
       },
       {
         condition: form.get('ruleType').value === 'purchase' || form.get('ruleType').value === 'review',
-        controls: [form.get('product')],
-      },
+        controls: [form.get('product')]
+      }
     ];
   }
 
@@ -128,14 +127,12 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   }
 
   writeValue(data: any): void {
-    console.log('writeValue', data);
     if (data === null) {
       this.group.patchValue(this.getDefaultValue(), {emitEvent: false});
+    } else {
+      this.group.patchValue(data, {emitEvent: false});
     }
-    // this.group.patchValue(data, {emitEvent: false});
-    // this.group.updateValueAndValidity();
-    // this.cd.detectChanges();
-    // this.updateGroup();
+    this.updateGroup();
   }
 
   registerOnChange(fn: any): void {
