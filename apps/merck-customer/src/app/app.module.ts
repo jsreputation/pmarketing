@@ -49,7 +49,6 @@ import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
-import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -70,8 +69,7 @@ import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen
     AccountComponent,
     ProfileComponent,
     TransactionHistoryComponent,
-    PrivacyPolicyComponent,
-    SubscreenToolbarComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
