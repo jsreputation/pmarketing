@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameModule } from '@perx/core';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -29,6 +30,7 @@ describe('NewShakePageComponent', () => {
         SelectGraphicModule,
         SelectGraphicWrapModule,
         GameModule,
+        SimpleMobileViewModule,
         MatTabsModule,
         MatCardModule,
         MatFormFieldModule,

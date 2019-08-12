@@ -1,4 +1,3 @@
-<mc-subscreen-toolbar [title]="'Profile'"></mc-subscreen-toolbar>
 <mat-list *ngIf="profile">
   <mat-list-item>
     <p matLine class="label">Name</p>
@@ -31,7 +30,7 @@
 
   <mat-list-item>
     <p matLine class="label">Condition</p>
-    <p matLine>{{conditions.join(', ')}}</p>
+    <p matLine class="conditions">{{conditions.join(', ')}}</p>
     <mat-icon (click)="onSubScreenNavigate('account/condition')">edit</mat-icon>
   </mat-list-item>
   <mat-divider></mat-divider>
