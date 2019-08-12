@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TapComponent } from './tap.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule } from '@perx/core';
+import { GameModule } from '@perx/core';
 
 describe('TapComponent', () => {
   let component: TapComponent;
@@ -10,7 +10,7 @@ describe('TapComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TapComponent ],
-      imports: [RouterTestingModule, PerxCoreModule, GameModule]
+      imports: [RouterTestingModule, GameModule]
     })
     .compileComponents();
   }));

@@ -14,6 +14,7 @@ export class BcodeRedemptionComponent implements OnChanges {
 
   public bCode: string = ``;
 
+  @Input('voucher')
   public voucher$: Observable<IVoucher>;
 
   constructor(
