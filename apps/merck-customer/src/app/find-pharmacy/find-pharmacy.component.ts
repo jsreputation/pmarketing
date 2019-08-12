@@ -3,7 +3,7 @@ import { LocationsService, ILocation } from '@perx/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 export interface ITag {
   name: string;
@@ -19,7 +19,7 @@ export interface IData {
   templateUrl: './find-pharmacy.component.html',
   styleUrls: ['./find-pharmacy.component.scss']
 })
-export class FindPharmacyComponent implements OnInit, PageProperties {
+export class FindPharmacyComponent implements OnInit, PageAppearence {
   public locations: Observable<ILocation[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
@@ -57,15 +57,12 @@ export class FindPharmacyComponent implements OnInit, PageProperties {
     this.locations = this.locationsService.getAll(filteredTags);
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.SEARCH;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.SEARCH,
+      pageTitle: ''
+    };
   }
 }

@@ -34,7 +34,7 @@ export class LoginFormComponent {
   }
 
   public forgot(): void {
-    this.forgotPassword.emit(this.loginForm.value.user);
+    this.forgotPassword.emit(this.loginForm.value.user || '');
   }
 
 }
