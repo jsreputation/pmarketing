@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConditionComponent } from './condition.component';
-import { SubscreenToolbarComponent } from '../subscreen-toolbar/subscreen-toolbar.component';
 import {
   MatIconModule,
   MatToolbarModule
@@ -17,7 +16,7 @@ describe('ConditionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConditionComponent, SubscreenToolbarComponent ],
+      declarations: [ ConditionComponent ],
       imports: [ MatIconModule, MatToolbarModule ],
       providers: [
         { provide: Location, useValue: locationStub }
