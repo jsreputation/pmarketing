@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatSortModule, MatTableModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
 import { RewardsListComponent } from './rewards-list.component';
@@ -17,7 +18,8 @@ import { RewardsListComponent } from './rewards-list.component';
     MatIconModule,
     MatButtonModule,
     ButtonModule,
-    ProgressBarModule
+    ProgressBarModule,
+    RouterModule,
   ],
   exports: [
     RewardsListComponent
