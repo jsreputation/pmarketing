@@ -8,7 +8,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { ControlValueService } from '@cl-core/services/control-value.service';
-import { PuzzleCollectStamp, PuzzleCollectStampState } from '../../../../../../../../libs/perx-core/dist/perx-core';
+import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 
 @Component({
   selector: 'cl-new-stamp',
