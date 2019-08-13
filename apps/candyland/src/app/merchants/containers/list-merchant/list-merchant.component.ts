@@ -31,8 +31,10 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
+  public openDialogCreate(merchant?: IMerchant): void {
+    const dialogRef = this.dialog.open(CreateMerchantPopupComponent, {
+      data: merchant
+    });
 
     dialogRef.afterClosed()
       .pipe(
@@ -40,6 +42,16 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe(() => {
       });
+  }
+
+  public handlerAction(data: {action: 'edit' | 'delete' | 'duplicate', merchant: IMerchant}): void {
+    const actions = {
+      edit: this.openDialogCreate.bind(this),
+      delete: '',
+      duplicate: ''
+    };
+    // tslint:disable
+    ( typeof actions[data.action] === 'function' ) && actions[data.action](data.merchant);
   }
 
   private getListMerchant(): void {

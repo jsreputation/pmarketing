@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShakeComponent } from './shake.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule, ProfileModule, CognitoModule, OauthModule } from '@perx/core';
+import { GameModule, ProfileModule, CognitoModule, OauthModule } from '@perx/core';
 import { environment } from '../../../environments/environment';
 
 describe('ShakeComponent', () => {
@@ -13,7 +13,6 @@ describe('ShakeComponent', () => {
       declarations: [ShakeComponent],
       imports: [
         RouterTestingModule,
-        PerxCoreModule,
         GameModule.forRoot({ env: environment }),
         ProfileModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),

@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from './page-properties';
+import {
+  PageProperties,
+  BarSelectedItem,
+  PageAppearence } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
@@ -14,14 +17,18 @@ import { Location } from '@angular/common';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public showHeader: boolean = false;
-  public showBottomBar: boolean = false;
-  public isHomeComponent: boolean = false;
-  public backButtonEnabled: boolean = false;
-  private preAuth: boolean;
-  public currentSelectedItem: BarSelectedItem = BarSelectedItem.NONE;
   public leftIconToShow: string = '';
   public rightIconToShow: string = '';
+
+  // Default Values
+  public pageProperties: PageProperties = {
+    header: false,
+    backButtonEnabled: false,
+    bottomSelectedItem: BarSelectedItem.HOME,
+    pageTitle: ''
+  };
+
+  private preAuth: boolean;
 
   constructor(
     private router: Router,
@@ -77,11 +84,9 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    const activeComponent = ref as PageProperties;
-    this.showHeader = activeComponent.showHeader();
-    this.backButtonEnabled = activeComponent.backButtonEnabled();
-    this.leftIconToShow =  this.backButtonEnabled ? 'arrow_back_ios' : '';
-    this.currentSelectedItem = activeComponent.bottomSelectedItem();
+    const activeComponent = ref as PageAppearence;
+    this.pageProperties = activeComponent.getPageProperties();
+    this.leftIconToShow =  this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
   }
 
   public onLeftActionClick(): void {

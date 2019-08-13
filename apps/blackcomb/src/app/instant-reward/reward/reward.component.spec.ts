@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule, RewardsModule, ProfileModule, CognitoModule, OauthModule } from '@perx/core';
+import { GameModule, RewardsModule, ProfileModule, CognitoModule, OauthModule } from '@perx/core';
 import { environment } from '../../../environments/environment';
 
 describe('RewardComponent', () => {
@@ -13,7 +13,6 @@ describe('RewardComponent', () => {
       declarations: [RewardComponent],
       imports: [
         RouterTestingModule,
-        PerxCoreModule,
         GameModule,
         RewardsModule,
         ProfileModule.forRoot({ env: environment }),

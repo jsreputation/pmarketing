@@ -26,6 +26,7 @@ export class VoucherComponent implements OnChanges {
   @Input()
   public voucherId: number;
 
+  @Input('voucher')
   public voucher$: Observable<IVoucher>;
 
   constructor(private vouchersService: VouchersService) { }

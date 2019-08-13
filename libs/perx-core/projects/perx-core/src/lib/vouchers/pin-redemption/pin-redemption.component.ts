@@ -5,6 +5,7 @@ import { VouchersService } from '../vouchers.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
+import { IVoucher } from '../models/voucher.model';
 
 /**
  * @todo this component currently implements its own logic, it should actually leverage pin-input component from UtilsModule
@@ -17,21 +18,19 @@ import { of } from 'rxjs';
 export class PinRedemptionComponent implements OnInit, OnChanges {
   @Input()
   public length: number = 4;
+  @Input()
+  public voucherId: number;
+  @Input()
+  public voucher: IVoucher;
 
   @Output()
   public full: EventEmitter<string> = new EventEmitter<string>();
-
   @Output()
   public hasErrorEmit: EventEmitter<number> = new EventEmitter<number>();
-
   @Output()
   public update: EventEmitter<string> = new EventEmitter<string>();
-
   @Output()
   public pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Input()
-  public voucherId: number;
 
   public pinCode: string;
 
@@ -63,6 +62,10 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   public ngOnChanges(simpleChanges: SimpleChanges): void {
     if (simpleChanges.voucherId) {
       this.pin.getPin(this.voucherId).subscribe(code => {
+        this.pinCode = code;
+      });
+    } else if (simpleChanges.voucher) {
+      this.pin.getPin(this.voucher.id).subscribe(code => {
         this.pinCode = code;
       });
     }
