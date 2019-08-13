@@ -1,22 +1,10 @@
 import { TestBed, async } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
 import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
-
-// const enum VoucherState {
-//   issued = 'issued',
-//   redeemed = 'redeemed',
-//   expired = 'expired'
-// }
-
-// const enum RedemptionType {
-//   pin = 'pin',
-//   txtCode = 'txtCode',
-//   none = 'none'
-// }
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PinService', () => {
   let service: PinService;
@@ -25,7 +13,7 @@ describe('PinService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         VouchersModule.forRoot({ env: { apiHost: '' } })
       ]
     }).compileComponents();
