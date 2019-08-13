@@ -66,7 +66,7 @@ export class NewCampaignDetailFormService {
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       campaignInfo: {
         disabledEndDate: false

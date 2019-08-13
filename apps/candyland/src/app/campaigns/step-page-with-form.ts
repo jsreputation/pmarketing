@@ -17,7 +17,7 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.config = this.store.config;
     this.store.currentCampaign$
       .asObservable()
@@ -36,6 +36,6 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 }

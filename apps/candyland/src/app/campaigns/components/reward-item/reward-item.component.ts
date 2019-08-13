@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-item',
@@ -11,9 +11,9 @@ export class RewardItemComponent implements OnInit {
     value: new FormControl(null),
     probability: new FormControl({value: 0, disabled: true})
   });
-  @Output() clickDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
-  get data() {
+  public get data(): Reward | null {
     return this.group.value.value;
   }
 
@@ -21,17 +21,14 @@ export class RewardItemComponent implements OnInit {
     return this.group.get('probability');
   }
 
-  public get isInvalid() {
+  public get isInvalid(): boolean {
     return this.group.parent.invalid;
   }
 
-  constructor() {
+  public ngOnInit(): void {
   }
 
-  ngOnInit() {
-  }
-
-  public delete() {
+  public delete(): void {
     this.clickDelete.emit(this.data);
   }
 

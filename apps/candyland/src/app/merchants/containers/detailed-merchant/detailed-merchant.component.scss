@@ -1,4 +1,5 @@
 @import "variables";
+
 .merchant {
   &-title {
     font-size: 2rem;
@@ -36,7 +37,6 @@
     height: 9rem;
     object-fit: contain;
   }
-
 }
 
 .detail-block {
@@ -67,6 +67,7 @@
     background-color: $simple-light-gray;
     padding: 0 5.2rem;
     margin-bottom: 1rem;
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -100,5 +101,4 @@
       margin: 0 1rem;
     }
   }
-
 }

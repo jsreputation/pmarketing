@@ -33,30 +33,29 @@ import { noop } from 'rxjs';
 })
 export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
   // TODO: integrate when global settings are implemented
-  config = {
+  public config = {
     ruleType: [
-      {'title': 'Transaction', 'value': 'transaction'},
-      {'title': 'First login', 'value': 'First login'},
-      {'title': 'Sign up', 'value': 'Sign up'},
-      {'title': 'Purchase', 'value': 'purchase'},
-      {'title': 'Review', 'value': 'review'},
-      {'title': 'Referral', 'value': 'Referral'},
-      {'title': 'Reward redeemed', 'value': 'Reward redeemed'},
-      {'title': 'Bill payment', 'value': 'Bill payment'}
+      {title: 'Transaction', value: 'transaction'},
+      {title: 'First login', value: 'First login'},
+      {title: 'Sign up', value: 'Sign up'},
+      {title: 'Purchase', value: 'purchase'},
+      {title: 'Review', value: 'review'},
+      {title: 'Referral', value: 'Referral'},
+      {title: 'Reward redeemed', value: 'Reward redeemed'},
+      {title: 'Bill payment', value: 'Bill payment'}
     ],
     rule: [
-      {'title': 'is more than', 'value': 'isMoreThan'},
-      {'title': 'is less than', 'value': 'isLessThan'},
-      {'title': 'is equal to', 'value': 'isEqualTo'}
+      {title: 'is more than', value: 'isMoreThan'},
+      {title: 'is less than', value: 'isLessThan'},
+      {title: 'is equal to', value: 'isEqualTo'}
     ],
     product: [
-      {'title': 'Product A', 'value': 'productA'},
-      {'title': 'Product B', 'value': 'productB'},
-      {'title': 'Product C', 'value': 'productC'}
+      {title: 'Product A', value: 'productA'},
+      {title: 'Product B', value: 'productB'},
+      {title: 'Product C', value: 'productC'}
     ]
   };
   @Input() public currencyID = 'SGD';
-
   @Input() public group: FormGroup;
   private onChange: any = noop;
   // @ts-ignore
@@ -69,7 +68,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
     this.initGroup();
   }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.group.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((value) => {
@@ -83,10 +82,36 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
     this.group.patchValue(this.getDefaultValue());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
-  private initGroup() {
+  public writeValue(data: any): void {
+    if (data === null) {
+      this.group.patchValue(this.getDefaultValue(), {emitEvent: false});
+    } else {
+      this.group.patchValue(data, {emitEvent: false});
+    }
+    this.updateGroup();
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+    this.group.markAsTouched();
+  }
+
+  public setDisabledState?(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.group.disable();
+    } else {
+      this.group.enable();
+    }
+  }
+
+  private initGroup(): void {
     this.group = this.fb.group({
       ruleType: ['transaction'],
       condition: this.fb.group({
@@ -97,7 +122,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
     });
   }
 
-  private updateGroup() {
+  private updateGroup(): void {
     this.group.updateValueAndValidity();
     this.cd.detectChanges();
   }
@@ -115,7 +140,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
     ];
   }
 
-  private getDefaultValue() {
+  private getDefaultValue(): { [key: string]: any } {
     return {
       ruleType: 'transaction',
       condition: {
@@ -124,32 +149,6 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
       },
       product: 'productA'
     };
-  }
-
-  writeValue(data: any): void {
-    if (data === null) {
-      this.group.patchValue(this.getDefaultValue(), {emitEvent: false});
-    } else {
-      this.group.patchValue(data, {emitEvent: false});
-    }
-    this.updateGroup();
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-    this.group.markAsTouched();
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.group.disable();
-    } else {
-      this.group.enable();
-    }
   }
 
 }

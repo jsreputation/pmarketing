@@ -63,7 +63,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
               private fb: FormBuilder) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.enableProbability.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -79,10 +79,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       });
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
   }
 
   public openDialogSelectReward(): void {
@@ -102,6 +102,38 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
 
   public removeReward(index: number): void {
     this.rewards.removeAt(index);
+  }
+
+  public writeValue(data: any): void {
+    if (data === null) {
+      return;
+    }
+    const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
+    if ('rewards' in data && data.rewards) {
+      for (let i = 0; i < data.rewards.length; i++) {
+        this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
+      }
+    }
+    this.group.patchValue(data, {emitEvent: false});
+    this.group.updateValueAndValidity();
+    this.cd.detectChanges();
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+    this.group.markAsTouched();
+  }
+
+  public setDisabledState?(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.group.disable();
+    } else {
+      this.group.enable();
+    }
   }
 
   private createRewardFormGroup(value: Reward, isEnableProbability: boolean = false): FormGroup {
@@ -125,38 +157,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       }
     }
     this.cd.detectChanges();
-  }
-
-  writeValue(data: any): void {
-    if (data === null) {
-      return;
-    }
-    const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
-    if ('rewards' in data && data.rewards) {
-      for (let i = 0; i < data.rewards.length; i++) {
-        this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
-      }
-    }
-    this.group.patchValue(data, {emitEvent: false});
-    this.group.updateValueAndValidity();
-    this.cd.detectChanges();
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-    this.group.markAsTouched();
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.group.disable();
-    } else {
-      this.group.enable();
-    }
   }
 
 }

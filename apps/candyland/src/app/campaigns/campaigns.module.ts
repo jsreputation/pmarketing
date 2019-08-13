@@ -60,9 +60,15 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
-import { NewCampaignRewardsStampsPageComponent } from 'src/app/campaigns/containers/new-campaign-rewards-stamps-page/new-campaign-rewards-stamps-page.component';
-import { NewCampaignRewardsFormGroupComponent } from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
-import { NewCampaignStampRuleFormGroupComponent } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
+import {
+  NewCampaignRewardsStampsPageComponent
+} from 'src/app/campaigns/containers/new-campaign-rewards-stamps-page/new-campaign-rewards-stamps-page.component';
+import {
+  NewCampaignRewardsFormGroupComponent
+} from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import {
+  NewCampaignStampRuleFormGroupComponent
+} from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 
 @NgModule({
   providers: [
