@@ -4,6 +4,7 @@ import { RewardConfirmComponent } from './reward-confirm.component';
 import { MAT_DIALOG_DATA, MatButtonModule, MatDialogModule, MatDialogRef } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RewardsModule } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardConfirmComponent', () => {
   let component: RewardConfirmComponent;
@@ -17,6 +18,7 @@ describe('RewardConfirmComponent', () => {
         RewardsModule,
         MatButtonModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {

@@ -5,6 +5,7 @@ import { AuthenticationService, UtilsModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;
@@ -12,7 +13,7 @@ describe('SmsValidationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [UtilsModule, RouterTestingModule],
+      imports: [UtilsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [SmsValidationComponent],
       providers: [
         {
