@@ -1,23 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
-import { VouchersModule } from '@perx/core';
-import { environment } from '../../../environments/environment';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { VouchersModule, VouchersService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
+  const vouchersServiceStub = {
+    getAll: () => of([])
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListComponent ],
+      declarations: [ListComponent],
       imports: [
-        VouchersModule.forRoot({ env: environment }),
-        HttpClientTestingModule
+        VouchersModule
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
