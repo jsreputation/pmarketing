@@ -17,6 +17,7 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
 import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
 import { UtilsModule } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [
   LoginFormComponent,
@@ -46,7 +47,7 @@ const CONTAINERS = [
     UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
-    UtilsModule
+    TranslateModule
   ],
   exports: [
     ...COMPONENTS,

@@ -8,10 +8,10 @@ import {
   IStampCard,
   IStamp,
   StampCardState,
-  StampState
+  StampState,
+  NotificationService
 } from '@perx/core';
 import { map } from 'rxjs/operators';
-import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-game',
