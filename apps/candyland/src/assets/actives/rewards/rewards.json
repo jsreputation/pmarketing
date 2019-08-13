@@ -14,9 +14,9 @@
     "termsCondition": ""
   },
   {
-    "id": 1,
+    "id": 2,
     "image": "/assets/images/mask-group.png",
-    "name": "Free Coffee",
+    "name": "Free Garlic Bread",
     "type": "Starbucks",
     "category": "Food & Beverage",
     "begin": "2018-12-17 03:24:00",
@@ -28,9 +28,9 @@
     "termsCondition": ""
   },
   {
-    "id": 1,
+    "id": 3,
     "image": "/assets/images/mask-group.png",
-    "name": "Free Coffee",
+    "name": "Free Coke",
     "type": "Starbucks",
     "category": "Food & Beverage",
     "begin": "2018-12-17 03:24:00",
@@ -42,7 +42,7 @@
     "termsCondition": ""
   },
   {
-    "id": 1,
+    "id": 4,
     "image": "/assets/images/mask-group.png",
     "name": "Free Coffee",
     "type": "Starbucks",

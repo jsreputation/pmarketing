@@ -1480,6 +1480,13 @@
   dependencies:
     optional "0.1.4"
 
+"@nestjs/testing@^6.0.0":
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.5.3.tgz#fcc2a9ed77ae2f5626e6472e67964a0c401edec6"
+  integrity sha512-W8tPhkNVhmX+jaDu4R7WUOtIl0PK3ZDso434rEm/b1+S6ZRgAKwNVHWM/rwIuTi5+erPTEULtTsZgrXFrzC1sA==
+  dependencies:
+    optional "0.1.4"
+
 "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"

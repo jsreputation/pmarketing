@@ -66,6 +66,7 @@
     & > * {
       width: 33.2rem;
       box-sizing: content-box;
+
       @media (max-width: 780px) {
         width: 100%;
       }
@@ -113,11 +114,11 @@
     &.disable {
       color: $base-font-color !important;
       background-color: transparent !important;
-      .main{
+
+      .main {
         color: $base-font-color !important;
       }
     }
-
   }
 
 
@@ -164,5 +165,4 @@
     justify-content: flex-end;
     align-items: center;
   }
-
 }

@@ -67,7 +67,7 @@ export class NewCampaignDetailFormService {
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       campaignInfo: {
         startTime: `${(new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
