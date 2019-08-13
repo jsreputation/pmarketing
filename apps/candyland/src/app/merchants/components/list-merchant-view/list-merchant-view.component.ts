@@ -10,7 +10,7 @@ export class ListMerchantViewComponent implements  AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IMerchant>;
   @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter<IMerchant>();
+  @Output() public itemAction = new EventEmitter<{action: 'edit' | 'delete' | 'duplicate', merchant: IMerchant}>();
   public DATE_FORMAT = 'dd MMM yyyy';
 
   public ngAfterViewInit(): void {
@@ -20,14 +20,14 @@ export class ListMerchantViewComponent implements  AfterViewInit {
   }
 
   public editItem(element: IMerchant): void {
-    this.itemAction.emit(element);
+    this.itemAction.emit({action: 'edit', merchant: element});
   }
 
   public duplicateItem(element: IMerchant): void {
-    this.itemAction.emit(element);
+    this.itemAction.emit({action: 'duplicate', merchant: element});
   }
 
   public deleteItem(element: IMerchant): void {
-    this.itemAction.emit(element);
+    this.itemAction.emit({action: 'delete', merchant: element});
   }
 }
