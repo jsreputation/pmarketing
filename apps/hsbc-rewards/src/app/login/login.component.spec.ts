@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { AuthenticationModule, CognitoModule, OauthModule, AuthenticationService, NotificationService } from '@perx/core';
 
 import { LoginComponent } from './login.component';
@@ -45,11 +45,12 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         AuthenticationModule,
         NoopAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
         CognitoModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),
       ],
       declarations: [LoginComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
