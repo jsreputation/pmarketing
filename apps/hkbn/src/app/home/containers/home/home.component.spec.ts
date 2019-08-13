@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -22,6 +23,7 @@ describe('HomeComponent', () => {
         RewardsModule,
         RouterTestingModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {provide: ProfileService, useValue: {whoAmI: () => of(null)}},

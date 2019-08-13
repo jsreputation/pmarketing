@@ -14,7 +14,7 @@ const routes: Routes = [
     component: NewRewardComponent
   },
   {
-    path: 'detail',
+    path: 'detail/:id',
     component: RewardDetailPageComponent
   }
 ];

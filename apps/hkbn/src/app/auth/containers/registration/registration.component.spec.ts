@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -29,7 +30,8 @@ describe('RegistrationComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         ErrorHandlerModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [RegistrationComponent, RegistrationFormComponent]
     })

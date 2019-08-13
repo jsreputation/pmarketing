@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { OauthService } from './oauth.service';
 import { OauthModule } from './oauth.module';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { ProfileModule } from '../../../profile/profile.module';
@@ -24,7 +23,6 @@ describe('OauthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HttpClientTestingModule,
         ProfileModule.forRoot({ env: environment }),
         OauthModule.forRoot({ env: environment }),

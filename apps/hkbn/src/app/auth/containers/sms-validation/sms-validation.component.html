@@ -3,12 +3,13 @@
 </div>
 <div class="container">
   <div class="validation-description">
-    <p>Thank you for registering as a Home+ member.</p>
+    <p>{{"THANKS_FOR_REGISTER" | translate}}</p>
     <p>
-      The one-time password has been sent to your phone number (******78) in a short message.
-      Please check the SMS to complete the registration process.
+      <ng-container>{{"OTP_SENT" | translate}}</ng-container>
+      (******78)
+      <ng-container>{{"CHECK_SMS" | translate}}</ng-container>
     </p>
   </div>
   <perx-core-pin-input [length]="6" (full)="validate($event)"></perx-core-pin-input>
-  <p class="resend-sms" (click)="resendSms()">Resend authentication SMS</p>
+  <p class="resend-sms" (click)="resendSms()">{{"RESEND_SMS" | translate}}</p>
 </div>

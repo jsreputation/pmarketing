@@ -10,6 +10,7 @@ import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.co
 import { LineComponent } from './line/line.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MetaCardComponent } from './meta-card/meta-card.component';
+import { MatTableModule } from '@angular/material';
 
 const comps: any[] = [
   VerticalBarComponent,
@@ -26,7 +27,8 @@ const comps: any[] = [
 
 @NgModule({
   imports: [
-    NgxChartsModule
+    NgxChartsModule,
+    MatTableModule
   ],
   exports: [
     ...comps

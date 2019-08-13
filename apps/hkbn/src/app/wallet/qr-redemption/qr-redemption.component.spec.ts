@@ -5,6 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QrRedemptionComponent', () => {
   let component: QrRedemptionComponent;
@@ -15,6 +16,7 @@ describe('QrRedemptionComponent', () => {
       imports: [
         NoopAnimationsModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         HttpClientTestingModule,
         VouchersModule.forRoot({env: {apiHost: ''}}),
       ],
