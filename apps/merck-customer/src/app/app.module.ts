@@ -19,6 +19,7 @@ import {
   MatDialogModule,
   MatCardModule,
   MatListModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -92,6 +93,7 @@ import { ConditionComponent } from './account/condition/condition.component';
     MatIconModule,
     MatCardModule,
     MatListModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
