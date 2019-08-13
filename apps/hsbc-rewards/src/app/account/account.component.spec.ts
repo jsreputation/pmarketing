@@ -17,25 +17,28 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
 
 const userInfo = {
   birthDate: null,
-  customProperties: { fname: "warren", lname: "woo", password: "1234" },
+  customProperties: { fname: 'warren', lname: 'woo', password: '1234' },
   email: null,
   firstName: null,
   gender: null,
   id: 59432,
-  joinedDate: "2019-07-01T04:04:34.961Z",
-  lastName: "warren",
+  joinedDate: '2019-07-01T04:04:34.961Z',
+  lastName: 'warren',
   middleName: null,
   passwordExpiryDate: null,
   phone: null,
-  state: "active"
-}
+  state: 'active'
+};
 
 const profileServiceStub = {
   whoAmI: () => of(userInfo)
-}
-const dinamicCreateServiceStub = { createComponent: () => { 
-  console.log('234')
-} };
+};
+
+const dinamicCreateServiceStub = {
+  createComponent: () => {
+  }
+};
+
 const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true), logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -93,11 +96,11 @@ describe('AccountComponent', () => {
     const elem = debugElement.query(By.css('#agreement'));
     elem.triggerEventHandler('click', {});
     expect(createSpy).toHaveBeenCalled();
-  }))
+  }));
 
   it('should call auth service', () => {
     const logout = spyOn(authService, 'logout');
     component.logOut();
     expect(logout).toHaveBeenCalled();
-  })
+  });
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-redeem',
@@ -6,9 +6,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./redeem.component.scss']
 })
 export class RedeemComponent {
-  @Output() closeModal = new EventEmitter();
-  
-  closeRedeem() {
+  @Output() public closeModal: EventEmitter<void> = new EventEmitter();
+
+  public closeRedeem(): void {
     this.closeModal.emit();
   }
 }

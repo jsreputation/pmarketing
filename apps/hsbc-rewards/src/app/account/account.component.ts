@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewRef, ComponentRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { DinamicCreateService } from '../shared/service/dinamic-create.service';
@@ -44,7 +44,7 @@ export class AccountComponent implements OnInit {
     this.closeModal(comp);
   }
 
-  public closeModal(comp) {
+  public closeModal(comp: ComponentRef<any>): void {
     comp.instance.closeModal.subscribe(() => {
       this.dinamicCreateService.removeComponent(comp);
     });
