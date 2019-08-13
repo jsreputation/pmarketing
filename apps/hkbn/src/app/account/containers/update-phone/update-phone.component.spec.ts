@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UpdatePhoneComponent', () => {
   let component: UpdatePhoneComponent;
@@ -22,7 +23,8 @@ describe('UpdatePhoneComponent', () => {
         RouterTestingModule,
         TextMaskModule,
         ErrorHandlerModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [UpdatePhoneComponent]
     })

@@ -72,7 +72,7 @@ import { ConditionComponent } from './account/condition/condition.component';
     ProfileComponent,
     TransactionHistoryComponent,
     PrivacyPolicyComponent,
-    ConditionComponent
+    ConditionComponent,
   ],
   imports: [
     BrowserModule,

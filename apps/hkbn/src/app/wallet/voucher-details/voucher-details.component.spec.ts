@@ -10,6 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { VouchersService } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VoucherDetailsComponent', () => {
   let component: VoucherDetailsComponent;
@@ -23,6 +24,7 @@ describe('VoucherDetailsComponent', () => {
         VouchersModule.forRoot({env: {apiHost: ''}}),
         NoopAnimationsModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         HttpClientTestingModule,
       ],
       providers: [

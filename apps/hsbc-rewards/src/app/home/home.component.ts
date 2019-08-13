@@ -1,11 +1,23 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService } from '@perx/core';
 import { LoyaltySummaryComponent } from '@perx/core';
+import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
-const mockTags = [
-  'Lifestyle', 'Travel', 'Shopping'
-];
+const mockTags: ITabConfig[] = [{
+  filter: null,
+  tabName: 'Lifestyle',
+  tabValue: ''
+}, {
+  filter: null,
+  tabName: 'Travel',
+  tabValue: ''
+}, {
+  filter: null,
+  tabName: 'Shopping',
+  tabValue: ''
+}];
 
 @Component({
   selector: 'app-home',
@@ -13,18 +25,16 @@ const mockTags = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: string[];
+  public tags: ITabConfig[];
   public rewards: Observable<IReward[]>;
-
-  public currentTag: string;
 
   @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private profile: ProfileService,
     private cd: ChangeDetectorRef,
+    private router: Router
   ) {
   }
 
@@ -32,6 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.getRewards();
     this.getTags();
   }
+
   public ngAfterViewInit(): void {
     // @ts-ignore to be verified
     this.loyaltySummary.loyalty$ = new BehaviorSubject({
@@ -39,6 +50,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
     this.cd.detectChanges();
   }
+
   public getRewards(): void {
     this.rewardsService.getAllRewards().subscribe(
       (rewards: IReward[]) => {
@@ -52,10 +64,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public getTags(): void {
     this.rewardsService.getTags();
     this.tags = mockTags;
-    this.currentTag = this.tags[0];
   }
 
-  public changeTage(tag: string): void {
-    this.currentTag = tag;
+  public openRewardDetails(tab: IReward): void {
+    this.router.navigate([`detail/element/${tab.id}`]);
   }
 }
