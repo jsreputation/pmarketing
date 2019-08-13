@@ -7,11 +7,10 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { CampaignModule, CognitoModule, OauthModule, GameModule, VouchersService } from '@perx/core';
+import { CampaignModule, OauthModule, GameModule, VouchersService } from '@perx/core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -26,10 +25,9 @@ describe('GameComponent', () => {
         MatToolbarModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        CampaignModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
-        GameModule.forRoot({ env: environment }),
+        CampaignModule,
+        OauthModule,
+        GameModule,
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceMock }

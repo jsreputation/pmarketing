@@ -3,8 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
 import { VouchersModule, CampaignModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment';
 import { MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -16,9 +14,8 @@ describe('VoucherComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VoucherComponent],
       imports: [
-        HttpClientTestingModule,
-        CampaignModule.forRoot({ env: environment }),
-        VouchersModule.forRoot({ env: environment }),
+        CampaignModule,
+        VouchersModule,
         RouterTestingModule,
         MatProgressBarModule,
         NoopAnimationsModule
