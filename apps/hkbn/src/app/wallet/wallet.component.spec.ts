@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -18,6 +19,7 @@ describe('WalletComponent', () => {
         MatTabsModule,
         NoopAnimationsModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         VouchersModule.forRoot({env: {apiHost: ''}}),
         HttpClientTestingModule,
       ],
