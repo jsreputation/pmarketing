@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Type } from '@angular/core';
 
 import { VouchersService } from './vouchers.service';
-import { HttpClientModule } from '@angular/common/http';
 import { VouchersModule } from './vouchers.module';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 
@@ -139,7 +138,6 @@ describe('VouchersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HttpClientTestingModule,
         VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
       ]

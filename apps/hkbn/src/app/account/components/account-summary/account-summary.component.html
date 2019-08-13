@@ -1,37 +1,36 @@
-<p class="member-ship">Member ID : 12345678</p>
+<p class="member-ship">{{"MY_ID" | translate}} 12345678</p>
 
 <form [formGroup]="accountSummary" class="account-summary">
   <mat-form-field>
-    <mat-label>Last name</mat-label>
+    <mat-label>{{"SURNAME" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="firstName">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>First name</mat-label>
+    <mat-label>{{"FIRST_NAME" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="lastName">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Telephone number</mat-label>
+    <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
     <input type="text" matInput [textMask]="phoneMask" readonly formControlName="phone">
     <mat-icon matSuffix routerLink="phone">edit</mat-icon>
   </mat-form-field>
 
 
   <mat-form-field>
-    <mat-label>E-mail</mat-label>
+    <mat-label>{{"EMAIL" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="email">
     <mat-icon matSuffix routerLink="email">edit</mat-icon>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Original password</mat-label>
+    <mat-label>{{"CURRENT_PASSWORD" | translate}}</mat-label>
     <input type="password" matInput readonly formControlName="pass">
     <mat-icon matSuffix routerLink="password">edit</mat-icon>
   </mat-form-field>
 
   <mat-checkbox formControlName="customProperties">
-    I accept that it is issued by Home+ and its partner companies.
-    Promotion information
+    {{"AGREE_MARKETING" | translate}}
   </mat-checkbox>
 </form>

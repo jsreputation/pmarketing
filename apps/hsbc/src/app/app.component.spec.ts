@@ -1,14 +1,22 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
-import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatSidenavModule } from '@angular/material';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatToolbarModule
+} from '@angular/material';
 import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ProfileComponent } from './profile/profile.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,10 +24,13 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         AuthenticationModule,
         MatDialogModule,
         MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatToolbarModule,
         NoopAnimationsModule,
         SoundModule,
         ProfileModule.forRoot({ env: environment }),
@@ -27,14 +38,14 @@ describe('AppComponent', () => {
         OauthModule.forRoot({ env: environment }),
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ProfileComponent
       ],
       providers: [
         TokenStorage,
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
   }));
 

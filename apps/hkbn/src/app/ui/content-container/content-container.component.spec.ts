@@ -4,6 +4,7 @@ import { ContentContainerComponent } from './content-container.component';
 import { HeaderModule } from '../header/header.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentContainerComponent', () => {
   let component: ContentContainerComponent;
@@ -11,7 +12,7 @@ describe('ContentContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HeaderModule, RouterTestingModule, NoopAnimationsModule],
+      imports: [HeaderModule, RouterTestingModule, NoopAnimationsModule, TranslateModule.forRoot()],
       declarations: [ ContentContainerComponent ]
     })
     .compileComponents();

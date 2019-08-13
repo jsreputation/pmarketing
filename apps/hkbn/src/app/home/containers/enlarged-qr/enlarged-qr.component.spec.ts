@@ -5,6 +5,7 @@ import { EnlargedQrComponent } from './enlarged-qr.component';
 import { MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EnlargedQrComponent', () => {
   let component: EnlargedQrComponent;
@@ -16,7 +17,8 @@ describe('EnlargedQrComponent', () => {
         QRCodeModule,
         MatButtonModule,
         RouterTestingModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [EnlargedQrComponent]
     })

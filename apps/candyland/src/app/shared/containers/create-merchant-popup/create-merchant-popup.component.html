@@ -1,6 +1,9 @@
 <div class="dialog-header-wrap">
   <p class="dialog-content-title">
-    Create Merchant
+    <span *ngIf="data; else creatTitle">Edit Merchant</span>
+    <ng-template #creatTitle>
+      <span>Create Merchant</span>
+    </ng-template>
   </p>
   <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
@@ -28,9 +31,14 @@
              (click)="addMerchant()"
              [disableRipple]="true"
   >
+      <span *ngIf="data; else editBtnText">
+        Save Merchant
+      </span>
+    <ng-template #editBtnText>
       <span>
         Add Merchant
       </span>
+    </ng-template>
   </cl-button>
 </div>
 
