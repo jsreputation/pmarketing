@@ -15,6 +15,7 @@ import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
 import { MetabaseComponent } from './metabase/metabase.component';
+import { DataService } from '@perx/chart/dist/perx-chart/lib/data.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,9 @@ import { MetabaseComponent } from './metabase/metabase.component';
     CalendarHeatmapComponent,
     LineComponent,
     MetabaseComponent
+  ],
+  providers: [
+    DataService
   ],
   imports: [
     CommonModule,
