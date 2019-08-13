@@ -19,19 +19,16 @@
       <cl-button classList="invert">+ Create New Engagement</cl-button>
     </div>
     <!--items-->
-    <ng-container [formGroup]="form">
-      <mat-radio-group class="item-list shadow" formControlName="template">
-        <ng-container *ngIf="(dataSource.connect() | async) as items">
-          <ng-container *ngFor="let item of items">
-            <mat-radio-button [value]="item">
-              <cl-engagement-item [data]="item"></cl-engagement-item>
-            </mat-radio-button>
-          </ng-container>
+    <mat-radio-group class="item-list shadow" [formControl]="form.get('template')">
+      <ng-container *ngIf="(dataSource.connect() | async) as items">
+        <ng-container *ngFor="let item of items">
+          <mat-radio-button [value]="item">
+            <cl-engagement-item [data]="item"></cl-engagement-item>
+          </mat-radio-button>
         </ng-container>
-      </mat-radio-group>
-    </ng-container>
+      </ng-container>
+    </mat-radio-group>
   </div>
-
   <div class="preview">
     <div class="preview-mobile">
     </div>

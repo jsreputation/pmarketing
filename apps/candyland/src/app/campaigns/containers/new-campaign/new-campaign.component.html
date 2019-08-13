@@ -12,22 +12,31 @@
   <div class="btn-group">
     <cl-button classList="invert" routerLink="..">Cancel</cl-button>
     <cl-button classList="third" routerLink="..">Save as a draft</cl-button>
-    <cl-button *ngIf="!isLastStep" classList="primary" (click)="goNext()">Next</cl-button>
+    <cl-button *ngIf="!isLastStep"
+               classList="primary"
+               [disable]="(getStepConditions(stepper.selectedIndex) | async) === 0"
+               (click)="goNext()">Next
+    </cl-button>
     <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>
   </div>
 </div>
 
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step>
+    <mat-step [completed]="getStepConditions(0) | async">
       <ng-template matStepLabel>Select engagement</ng-template>
       <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="getStepConditions(1) | async">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
-      <cl-new-campaign-rewards-page></cl-new-campaign-rewards-page>
+      <ng-container [ngSwitch]="campaign?.template?.type">
+        <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'Stamp'"></cl-new-campaign-rewards-stamps-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Survey'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Instant Reward'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'Game'"></cl-new-campaign-rewards-page>
+      </ng-container>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="getStepConditions(2) | async">
       <ng-template matStepLabel>Campaign Details</ng-template>
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>
