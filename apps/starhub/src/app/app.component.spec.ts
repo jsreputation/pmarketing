@@ -1,16 +1,26 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { MatDialogModule } from '@angular/material';
+import { AuthenticationService, ProfileService } from '@perx/core';
 
 describe('AppComponent', () => {
+  const authenticationServiceStub = {};
+  const profileServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule,
       ],
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub }
+      ]
     }).compileComponents();
   }));
 

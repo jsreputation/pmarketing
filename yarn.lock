@@ -331,15 +331,16 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^8.0.1", "@angular/material@~8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.0.1.tgz#cbb3f7776d2405a1d75b6e7eb6675fd80a8a5cf5"
+"@angular/material@^8.0.0":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.1.2.tgz#0d8b00def93e337f8bc5a6db1e94531894f17229"
+  integrity sha512-c/EYufDPTClr7F2ZFv7KSaPpA/b/Bq+89oU5/AioNzx3KIZWBB24U/GaIsh3NI75mPTeVdJDhXhCcrE5WbsZnQ==
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.1.2.tgz#0d8b00def93e337f8bc5a6db1e94531894f17229"
+"@angular/material@^8.0.1", "@angular/material@~8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.0.1.tgz#cbb3f7776d2405a1d75b6e7eb6675fd80a8a5cf5"
   dependencies:
     tslib "^1.7.1"
 
