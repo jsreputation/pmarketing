@@ -28,8 +28,8 @@ export interface MultipleChartData {
 }
 
 export interface SingleChartData {
-  name: string;
-  value: number;
+  name: string | number;
+  value: string | number;
 }
 
 export type ChartData = MultipleChartData | SingleChartData;
