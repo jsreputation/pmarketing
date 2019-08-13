@@ -294,7 +294,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^\w+-staging-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -313,5 +313,5 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^\w+-production-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+production-\d+\.\d+\.\d+.*/
 
