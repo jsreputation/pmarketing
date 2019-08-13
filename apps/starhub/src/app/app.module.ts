@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileModule } from '@perx/core';
 import { environment } from '../environments/environment';
+import { MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,12 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AppRoutingModule,
     AuthenticationModule,
-    CognitoModule.forRoot({env: environment}),
-    OauthModule.forRoot({env: environment}),
+    MatDialogModule,
+    UtilsModule,
+    BrowserAnimationsModule,
+    CognitoModule.forRoot({ env: environment }),
+    OauthModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment })
   ],
   providers: [],
   bootstrap: [AppComponent]
