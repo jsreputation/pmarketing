@@ -4,10 +4,10 @@ import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
-import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   let router: Router;
@@ -24,7 +24,7 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatIconModule,
         NoopAnimationsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         AuthenticationModule,
         ProfileModule.forRoot({ env: environment }),
         CognitoModule.forRoot({ env: environment }),

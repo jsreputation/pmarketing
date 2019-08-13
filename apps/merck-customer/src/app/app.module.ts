@@ -49,6 +49,7 @@ import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
+import { ConditionComponent } from './account/condition/condition.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.
     AccountComponent,
     ProfileComponent,
     TransactionHistoryComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    ConditionComponent,
   ],
   imports: [
     BrowserModule,

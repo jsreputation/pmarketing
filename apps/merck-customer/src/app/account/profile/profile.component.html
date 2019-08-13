@@ -1,0 +1,37 @@
+<mat-list *ngIf="profile">
+  <mat-list-item>
+    <p matLine class="label">Name</p>
+    <p matLine>{{profile.firstName}} {{profile.lastName}}</p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Mobile</p>
+    <p matLine>{{profile.phone}}</p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Membership Tier</p>
+    <p matLine>{{profile.state}}</p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Password</p>
+    <p matLine>••••••••••</p>
+    <mat-icon (click)="onSubScreenNavigate('reset-password')">edit</mat-icon>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Condition</p>
+    <p matLine class="conditions">{{conditions.join(', ')}}</p>
+    <mat-icon (click)="onSubScreenNavigate('account/condition')">edit</mat-icon>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>
