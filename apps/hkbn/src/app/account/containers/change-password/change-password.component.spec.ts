@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
@@ -23,7 +24,8 @@ describe('ChangePasswordComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         ErrorHandlerModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {provide: AuthenticationService, useValue: {changePassword: () => of(null)}}

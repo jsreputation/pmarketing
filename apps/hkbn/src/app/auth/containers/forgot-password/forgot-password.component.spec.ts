@@ -10,6 +10,7 @@ import { AuthenticationService, UtilsModule } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 class ActivatedRouteMock {
   get queryParams(): Observable<any> {
@@ -32,7 +33,8 @@ describe('ForgotPasswordComponent', () => {
         MatButtonModule,
         ErrorHandlerModule,
         UtilsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [ForgotPasswordComponent],
       providers: [
