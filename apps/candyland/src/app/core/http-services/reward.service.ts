@@ -24,10 +24,10 @@ export class RewardService {
   }
 
   public getReward(): Observable<any> {
-    return this.http.get('assets/mocks/rewards/reward-detail.json');
+    return this.http.get('assets/actives/rewards/reward-detail.json');
   }
 
   public getRewardsOptions(): Observable<OptionConfig[]> {
-    return this.http.get<OptionConfig[]>('assets/mocks/rewards/rewards-options.json');
+    return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 }

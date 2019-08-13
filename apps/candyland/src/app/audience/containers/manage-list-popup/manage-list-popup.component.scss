@@ -66,6 +66,7 @@
     & > * {
       width: 33.2rem;
       box-sizing: content-box;
+
       @media (max-width: 780px) {
         width: 100%;
       }
@@ -115,5 +116,4 @@
     justify-content: flex-end;
     align-items: center;
   }
-
 }

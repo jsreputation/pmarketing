@@ -6,7 +6,7 @@
   &.active {
     border: solid 2px #116fff;
 
-    &:after {
+    &::after {
       content: '';
       display: block;
       height: 4.2rem;
@@ -16,6 +16,5 @@
       right: -1px;
       background: url("/assets/images/engagement-type/active.svg") no-repeat;
     }
-
   }
 }
