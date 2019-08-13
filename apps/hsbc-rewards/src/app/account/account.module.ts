@@ -5,6 +5,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { SharedModule } from '../shared/shared.module';
 import { DetailAgreementModule } from '../details/detail-agreement/detail-agreement.module';
+import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DetailAgreementModule } from '../details/detail-agreement/detail-agreem
     CommonModule,
     AccountRoutingModule,
     SharedModule,
-    DetailAgreementModule
+    DetailAgreementModule,
+    NavigateToolbarModule
   ]
 })
 export class AccountModule { }

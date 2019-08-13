@@ -24,7 +24,7 @@ export class NavigateToolbarComponent implements OnInit {
     activated: false,
     title: 'My Rewards',
     img: 'assets/img/rewards',
-    route: '/rewards'
+    route: '/wallet'
   }, {
     activated: false,
     title: 'Account',

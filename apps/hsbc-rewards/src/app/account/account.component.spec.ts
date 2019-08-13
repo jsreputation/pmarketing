@@ -9,6 +9,7 @@ import { AccountComponent } from './account.component';
 import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { DinamicCreateService } from '../shared/service/dinamic-create.service';
+import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 
 @Component({
   template: '<div>test</div>'
@@ -36,7 +37,7 @@ const dinamicCreateServiceStub = { createComponent: () => {
   console.log('234')
 } };
 const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true), logout: () => { } };
-fdescribe('AccountComponent', () => {
+describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
   let debugElement: DebugElement;
@@ -52,7 +53,8 @@ fdescribe('AccountComponent', () => {
         RouterTestingModule.withRoutes([{
           path: 'login',
           component: MockComponent
-        }])
+        }]),
+        NavigateToolbarModule
       ],
       providers: [{
         provide: AuthenticationService, useValue: authenticationServiceStub

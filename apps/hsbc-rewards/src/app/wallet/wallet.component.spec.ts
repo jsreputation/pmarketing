@@ -4,6 +4,8 @@ import { WalletComponent } from './wallet.component';
 import { VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -16,7 +18,9 @@ describe('WalletComponent', () => {
         VouchersModule.forRoot({
           env: environment
         }),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        NavigateToolbarModule,
+        RouterTestingModule
       ]
     })
     .compileComponents();
