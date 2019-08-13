@@ -1,9 +1,9 @@
 <div class="container">
   <mat-tab-group>
-    <mat-tab label="My reward">
+    <mat-tab [label]="'MY_REWARDS' | translate">
       <perx-core-vouchers filter="issued" [showExpireDate]="true" [showRedeemedDate]="false"></perx-core-vouchers>
     </mat-tab>
-    <mat-tab label="Reward record">
+    <mat-tab [label]="'REWARDS_HISTORY' | translate">
       <perx-core-vouchers filter="redeemed" [showExpireDate]="false" [showRedeemedDate]="true"></perx-core-vouchers>
     </mat-tab>
   </mat-tab-group>

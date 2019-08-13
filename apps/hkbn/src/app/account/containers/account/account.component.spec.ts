@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -29,7 +30,8 @@ describe('AccountComponent', () => {
         TextMaskModule,
         MatButtonModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [AccountComponent, AccountSummaryComponent],
       providers: [{provide: ProfileService, useValue: {whoAmI: () => of(null)}}]
