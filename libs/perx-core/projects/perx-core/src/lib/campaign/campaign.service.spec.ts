@@ -3,7 +3,6 @@ import { Type } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { CampaignService } from './campaign.service';
-import { HttpClientModule } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
@@ -15,7 +14,7 @@ describe('CampaignService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [HttpClientTestingModule, HttpClientTestingModule],
       providers: [
         EnvConfig,
         { provide: VouchersService, useValue: vouchersServiceMock }
