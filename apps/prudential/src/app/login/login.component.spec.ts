@@ -6,10 +6,10 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule, CognitoModule, OauthModule, ProfileModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,7 +20,7 @@ describe('LoginComponent', () => {
       imports: [MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         AuthenticationModule,
         NoopAnimationsModule,
         ProfileModule.forRoot({ env: environment }),

@@ -12,7 +12,7 @@
     </cl-table-filters>
     <!--table-->
     <cl-list-merchant-view [dataSource]="dataSource"
-
+                           (itemAction)="handlerAction($event)"
     >
     </cl-list-merchant-view>
     <!--paginator-->

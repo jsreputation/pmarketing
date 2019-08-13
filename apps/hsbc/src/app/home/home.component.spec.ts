@@ -3,10 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { CampaignModule, VouchersModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatCardModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 describe('HomeComponent', () => {
@@ -21,13 +20,13 @@ describe('HomeComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule,
         MatTabsModule,
+        MatIconModule,
         MatCardModule,
         VouchersModule.forRoot({ env: environment }),
         CampaignModule.forRoot({ env: environment }),
       ],
       providers: [
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
   }));
