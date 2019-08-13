@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { AbstractStepWithForm } from '../../step-page-with-form';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -8,21 +8,14 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   styleUrls: ['./new-campaign-review-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignReviewPageComponent implements OnInit, OnDestroy {
-  public campaign;
-
-  constructor(private store: CampaignCreationStoreService,
-              private cd: ChangeDetectorRef
-  ) {
+export class NewCampaignReviewPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  constructor(public store: CampaignCreationStoreService,
+              public cd: ChangeDetectorRef) {
+    super(0, store, null, cd);
   }
 
   public ngOnInit(): void {
-    this.store.currentCampaign$.asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-      this.campaign = data;
-      this.cd.detectChanges();
-    });
+    super.ngOnInit();
   }
 
   public ngOnDestroy(): void {
