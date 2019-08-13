@@ -57,7 +57,8 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(() => {
+      .subscribe((value) => {
+        console.log(value);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
