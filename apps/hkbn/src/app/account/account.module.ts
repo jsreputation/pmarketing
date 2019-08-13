@@ -17,6 +17,7 @@ import { UpdatePhoneComponent } from './containers/update-phone/update-phone.com
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
     MatButtonModule,
     MatIconModule,
     ErrorHandlerModule,
+    TranslateModule,
   ]
 })
 export class AccountModule {
