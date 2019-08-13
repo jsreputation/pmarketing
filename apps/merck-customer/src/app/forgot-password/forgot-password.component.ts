@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent implements PageProperties {
+export class ForgotPasswordComponent implements PageAppearence {
 
   public selectedCountry: string = '+852';
   public resetPasswordForm: FormGroup;
@@ -37,12 +37,13 @@ export class ForgotPasswordComponent implements PageProperties {
     });
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public onSubmit(): void {

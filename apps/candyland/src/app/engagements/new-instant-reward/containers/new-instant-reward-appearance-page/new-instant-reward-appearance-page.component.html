@@ -1,4 +1,4 @@
-<section class="reward-wrap" [formGroup]="formReward">
+<section class="reward-wrap" *ngIf="rewardData$ | async as rewardData" [formGroup]="formReward">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -92,10 +92,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardsCardBackground$ | async as backgrounds"
+                *ngIf="rewardData.cardBackground"
                 formControlName="cardBackground"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="rewardData.cardBackground"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -107,10 +107,10 @@
             </p>
             <div class="game-gift-box_field">
               <cl-select-graphic-wrap
-                *ngIf="rewardsBackground$ | async as backgrounds"
+                *ngIf="rewardData.background"
                 formControlName="background"
                 class="game-selected-graphic"
-                [graphicList]="backgrounds"
+                [graphicList]="rewardData.background"
               >
               </cl-select-graphic-wrap>
             </div>
@@ -138,6 +138,57 @@
       </mat-card>
     </div>
     <cl-game-mobile-preview>
+      <cl-simple-mobile-view class="firs-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
+          >
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="reward$"
+            ></perx-core-rewards-collection>
+          </div>
+        </div>
+
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
+
+      <cl-simple-mobile-view class="second-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')">
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
+          >
+            <div class="mobile-preview-header-nested">
+              <p class="mobile-preview-headline">
+                {{headlineMessage.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage.value}}
+              </p>
+            </div>
+            <perx-core-rewards-collection [rewardsList]="rewards$"
+            ></perx-core-rewards-collection>
+          </div>
+        </div>
+
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
     </cl-game-mobile-preview>
   </section>
 </section>
+
+

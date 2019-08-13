@@ -5,6 +5,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/ma
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ChangePasswordFormComponent', () => {
   let component: ChangePasswordFormComponent;
@@ -19,6 +20,7 @@ describe('ChangePasswordFormComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ChangePasswordFormComponent]
     })
@@ -33,5 +35,23 @@ describe('ChangePasswordFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not emit event when form invalid', () => {
+    const passwordChangeSpy = spyOn(component.passwordChange, 'emit');
+    component.submit();
+    expect(passwordChangeSpy.calls.count()).toBe(0);
+  });
+
+  it('should emit event when form valid', () => {
+    spyOn(component.passwordChange, 'emit');
+    component.changePasswordForm.setValue({
+      oldPassword: 'qwerty123',
+      newPassword: '123qwerty',
+      confirmPassword: '123qwerty'
+    });
+    fixture.detectChanges();
+    component.submit();
+    expect(component.passwordChange.emit).toHaveBeenCalled();
   });
 });

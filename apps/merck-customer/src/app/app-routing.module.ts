@@ -7,7 +7,15 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { RedeemComponent } from './redeem/redeem.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
+import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
+import { ConditionComponent } from './account/condition/condition.component';
 
 const routes: Routes = [
   {
@@ -15,7 +23,15 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'user-info', component: UserInfoComponent },
-      { path: 'home', component: HomeComponent }
+      { path: 'home', component: HomeComponent },
+      { path: 'reward-detail/:rewardId', component: RewardDetailComponent },
+      { path: 'redeem/:rewardId', component: RedeemComponent },
+      { path: 'find-pharmacy', component: FindPharmacyComponent },
+      { path: 'account', component: AccountComponent },
+      { path: 'account/profile', component: ProfileComponent },
+      { path: 'account/transaction-history', component: TransactionHistoryComponent },
+      { path: 'account/privacy-policy', component: PrivacyPolicyComponent },
+      { path: 'account/condition', component: ConditionComponent }
     ],
     canActivate: [ProtectedGuard]
   },

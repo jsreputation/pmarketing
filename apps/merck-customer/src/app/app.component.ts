@@ -1,11 +1,15 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { PageProperties, BarSelectedItem } from './page-properties';
+import { AuthenticationService, NotificationService } from '@perx/core';
+import {
+  PageProperties,
+  BarSelectedItem,
+  PageAppearence } from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'mc-root',
@@ -13,18 +17,26 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public showHeader: boolean = false;
-  public showBottomBar: boolean = false;
-  public isHomeComponent: boolean = false;
+  public leftIconToShow: string = '';
+  public rightIconToShow: string = '';
+
+  // Default Values
+  public pageProperties: PageProperties = {
+    header: false,
+    backButtonEnabled: false,
+    bottomSelectedItem: BarSelectedItem.HOME,
+    pageTitle: ''
+  };
+
   private preAuth: boolean;
-  public currentSelectedItem: BarSelectedItem = BarSelectedItem.NONE;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
       this.preAuth = environment.preAuth;
       this.notificationService.$snack.subscribe((message: string) => {
@@ -72,8 +84,16 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    const activeComponent = ref as PageProperties;
-    this.showHeader = activeComponent.showHeader();
-    this.currentSelectedItem = activeComponent.bottomSelectedItem();
+    const activeComponent = ref as PageAppearence;
+    this.pageProperties = activeComponent.getPageProperties();
+    this.leftIconToShow =  this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
+  }
+
+  public onLeftActionClick(): void {
+    this.location.back();
+  }
+
+  public onTabNavigate(path: string): void {
+    this.router.navigate([path]);
   }
 }

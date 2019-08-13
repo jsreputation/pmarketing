@@ -1,18 +1,33 @@
-<mat-toolbar *ngIf="showHeader" class="toolbar">
-	<img src="assets/header_logo.png">
+<mat-toolbar *ngIf="pageProperties.header" class="toolbar">
+	<button [disabled]="!pageProperties.backButtonEnabled" mat-icon-button (click)="onLeftActionClick()">
+		<mat-icon *ngIf="pageProperties.backButtonEnabled">
+			{{leftIconToShow}}
+		</mat-icon>
+	</button>
+	<img *ngIf="pageProperties.pageTitle === '' else title" src="assets/header_logo.png">
+	<ng-container *ngIf="pageProperties.pageTitle !== ''" #title>{{pageProperties.pageTitle}}</ng-container>
+	<button [disabled]="rightIconToShow === ''" mat-icon-button>
+		<mat-icon *ngIf="rightIconToShow !== ''">
+			{{rightIconToShow}}
+		</mat-icon>
+	</button>
 </mat-toolbar>
-<div *ngIf="currentSelectedItem !== 'none'" class="bottom-bar">
-	<div class="bottom-bar-item">
-		<img [src]="currentSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
-		<span [ngClass]="currentSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
+<div *ngIf="pageProperties.bottomSelectedItem !== 'none'" class="bottom-bar">
+	<div class="bottom-bar-item" (click)="onTabNavigate('home')">
+		<img
+			[src]="pageProperties.bottomSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
+		<span [ngClass]="pageProperties.bottomSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
 	</div>
-	<div class="bottom-bar-item">
-		<img [src]="currentSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
-		<span [ngClass]="currentSelectedItem === 'search' ? 'selected' : 'unselected'">Find a pharmacy</span>
+	<div class="bottom-bar-item" (click)="onTabNavigate('find-pharmacy')">
+		<img
+			[src]="pageProperties.bottomSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
+		<span [ngClass]="pageProperties.bottomSelectedItem === 'search' ? 'selected' : 'unselected'">Find a
+			pharmacy</span>
 	</div>
-	<div class="bottom-bar-item">
-		<img [src]="currentSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
-		<span [ngClass]="currentSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
+	<div class="bottom-bar-item" (click)="onTabNavigate('account')">
+		<img
+			[src]="pageProperties.bottomSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
+		<span [ngClass]="pageProperties.bottomSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
 	</div>
 </div>
 <router-outlet (activate)="onActivate($event)"></router-outlet>

@@ -1,14 +1,8 @@
 <div class="main-container">
 	<img src="assets/logo.png">
-	<div *ngIf="!errorMessage else error_message" class="logo-title">
+	<div class="logo-title">
 		<ng-container i18n="@@login-subtitle">Diabetes Loyality Program</ng-container>
 	</div>
-	<ng-template #error_message>
-		<div class="error-message-container">
-			<span>{{errorMessage}}</span>
-			<div><img src="assets/cross.png" (click)="onCrossClicked()"></div>
-		</div>
-	</ng-template>
 	<div class="content-container">
 		<div i18n="@@sign-up" class="main-heading">Sign up</div>
 		<div class="subtitle"><ng-container i18n="@@static-have-account">Have an account? </ng-container><span i18n="@@static-login" class="link" (click)="goToLogin()">Sign in</span></div>
@@ -16,7 +10,7 @@
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-name">Name</mat-label>
 				<input matInput i18n-placeholder="@@static-name" placeholder="Name" formControlName="name" required>
-				<mat-error *ngIf="signupForm.hasError('name')">
+				<mat-error *ngIf="signupForm.get('name').hasError('required')">
 					Name is <strong>required</strong>
 				</mat-error>
 			</mat-form-field>
@@ -29,23 +23,29 @@
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-mobile-no">Mobile No</mat-label>
-				<input matInput i18n-placeholder="@@static-mobile-no" placeholder="Mobile No" formControlName="mobileNo" required>
-				<mat-error *ngIf="signupForm.hasError('mobileNo')">
+				<input matInput i18n-placeholder="@@static-mobile-no" placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+				<mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
 					Mobile No is <strong>required</strong>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Password</mat-label>
 				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" type="password" required>
-				<mat-error *ngIf="signupForm.hasError('password')">
+				<mat-error *ngIf="signupForm.get('password').hasError('required')">
 					Password is <strong>required</strong>
+				</mat-error>
+				<mat-error *ngIf="signupForm.get('password').hasError('minlength')">
+					Password should be atleast 6 characters long
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Confirm Password</mat-label>
 				<input matInput i18n-placeholder="@@static-confirm-password" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
-				<mat-error *ngIf="signupForm.hasError('confirmPassword')">
-					Password is <strong>required</strong>
+				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
+					Confirm Password is <strong>required</strong>
+				</mat-error>
+				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
+					Password should be atleast 6 characters long
 				</mat-error>
 			</mat-form-field>
 			<div class="accept-terms">
