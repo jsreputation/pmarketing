@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardItemComponent } from './reward-item.component';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RewardItemComponent', () => {
@@ -21,8 +21,11 @@ describe('RewardItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardItemComponent);
     component = fixture.componentInstance;
-    group = new FormGroup({}, []);
-    component.group = group;
+    group = new FormGroup({
+      test: new FormControl(),
+      test2: new FormGroup({probability: new FormControl(null)}, [])
+    });
+    component.group = (group.get('test2') as FormGroup);
     fixture.detectChanges();
   });
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-item',
@@ -17,11 +17,11 @@ export class RewardItemComponent implements OnInit {
     return this.group.value.value;
   }
 
-  get probability() {
+  public get probability(): AbstractControl {
     return this.group.get('probability');
   }
 
-  get isInvalid() {
+  public get isInvalid() {
     return this.group.parent.invalid;
   }
 
