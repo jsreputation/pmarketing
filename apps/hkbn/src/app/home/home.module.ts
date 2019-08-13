@@ -9,6 +9,7 @@ import {
 } from '@perx/core';
 import { EnlargedQrComponent } from './containers/enlarged-qr/enlarged-qr.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HomeComponent, EnlargedQrComponent],
@@ -18,7 +19,8 @@ import { RouterModule } from '@angular/router';
     QRCodeModule,
     MatButtonModule,
     RewardsModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   exports: [HomeComponent]
 })

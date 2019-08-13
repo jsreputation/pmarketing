@@ -12,6 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -29,6 +30,7 @@ describe('LoginFormComponent', () => {
         RouterTestingModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [LoginFormComponent]
     })
