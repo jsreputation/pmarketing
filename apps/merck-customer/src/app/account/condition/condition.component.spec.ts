@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubscreenToolbarComponent } from './subscreen-toolbar.component';
+import { ConditionComponent } from './condition.component';
 import {
-  MatToolbarModule,
-  MatIconModule
+  MatIconModule,
+  MatToolbarModule
 } from '@angular/material';
 import { Location } from '@angular/common';
 
-describe('SubscreenToolbarComponent', () => {
-  let component: SubscreenToolbarComponent;
-  let fixture: ComponentFixture<SubscreenToolbarComponent>;
+describe('ConditionComponent', () => {
+  let component: ConditionComponent;
+  let fixture: ComponentFixture<ConditionComponent>;
   const locationStub = {
     goBack: () => {}
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubscreenToolbarComponent ],
-      imports: [ MatToolbarModule, MatIconModule ],
+      declarations: [ ConditionComponent ],
+      imports: [ MatIconModule, MatToolbarModule ],
       providers: [
         { provide: Location, useValue: locationStub }
       ]
@@ -26,7 +26,7 @@ describe('SubscreenToolbarComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubscreenToolbarComponent);
+    fixture = TestBed.createComponent(ConditionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
