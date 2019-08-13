@@ -15,6 +15,7 @@ import { AuthenticationService } from '@perx/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -33,6 +34,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {
