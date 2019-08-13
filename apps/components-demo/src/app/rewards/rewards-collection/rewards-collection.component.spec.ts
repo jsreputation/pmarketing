@@ -18,7 +18,6 @@ describe('RewardsCollectionComponent', () => {
       declarations: [RewardsCollectionComponent],
       imports: [
         PerxRewardsModule.forRoot({ env: environment }),
-        // HttpClientTestingModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub }
