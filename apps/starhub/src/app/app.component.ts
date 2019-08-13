@@ -4,8 +4,6 @@ import {
   NotificationService,
   PopupComponent,
   IPopupConfig,
-  // CampaignService,
-  // ICampaign,
   ProfileService,
   IProfile
 } from '@perx/core';
