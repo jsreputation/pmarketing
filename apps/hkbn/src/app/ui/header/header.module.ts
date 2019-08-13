@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -11,7 +12,8 @@ import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToo
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   exports: [HeaderComponent]
 })
