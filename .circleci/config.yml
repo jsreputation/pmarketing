@@ -21,7 +21,7 @@ commands:
             SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             CUT=-$TARGET_ENV-$SEM_VER
-            APP=${CIRCLE_TAG%"$cut"}
+            APP=${CIRCLE_TAG%"$CUT"}
             echo "export APP=$APP" >> $BASH_ENV
   get_env_from_tag:
     description: cuts destination environment out of git tag
