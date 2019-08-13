@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [WalletComponent],
@@ -16,8 +16,7 @@ import { RouterTestingModule } from '@angular/router/testing';
     WalletRoutingModule,
     SharedModule,
     VouchersModule.forRoot({env: environment}),
-    NavigateToolbarModule,
-    RouterTestingModule
+    NavigateToolbarModule
   ]
 })
 export class WalletModule { }

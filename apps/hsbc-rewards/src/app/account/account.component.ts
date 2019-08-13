@@ -4,6 +4,7 @@ import { ProfileService, AuthenticationService } from '@perx/core';
 import { DinamicCreateService } from '../shared/service/dinamic-create.service';
 import { DetailAgreementComponent } from '../details/detail-agreement/detail-agreement.component';
 import { Router } from '@angular/router';
+import { RedeemComponent } from './redeem/redeem.component';
 
 @Component({
   selector: 'app-account',
@@ -31,10 +32,19 @@ export class AccountComponent implements OnInit {
         password: result.customProperties.password
       });
     });
-
   }
+
   public displayAgreement(): void {
     const comp = this.dinamicCreateService.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
+    this.closeModal(comp);
+  }
+
+  public displayReedemReward(): void {
+    const comp = this.dinamicCreateService.createComponent<RedeemComponent>(RedeemComponent);
+    this.closeModal(comp);
+  }
+
+  public closeModal(comp) {
     comp.instance.closeModal.subscribe(() => {
       this.dinamicCreateService.removeComponent(comp);
     });
