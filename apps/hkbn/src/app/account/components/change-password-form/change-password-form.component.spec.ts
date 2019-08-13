@@ -5,6 +5,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/ma
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ChangePasswordFormComponent', () => {
   let component: ChangePasswordFormComponent;
@@ -19,6 +20,7 @@ describe('ChangePasswordFormComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ChangePasswordFormComponent]
     })
