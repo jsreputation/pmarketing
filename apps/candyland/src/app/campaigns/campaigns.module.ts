@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
+import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
@@ -21,7 +23,7 @@ import {
   MatMenuModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatSelectModule,
+  MatSelectModule, MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule
@@ -56,10 +58,24 @@ import {
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import {
+  NewCampaignRewardsStampsPageComponent
+} from 'src/app/campaigns/containers/new-campaign-rewards-stamps-page/new-campaign-rewards-stamps-page.component';
+import {
+  NewCampaignRewardsFormGroupComponent
+} from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import {
+  NewCampaignStampRuleFormGroupComponent
+} from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 
 @NgModule({
   providers: [
-    NewCampaignDetailFormService
+    CampaignCreationStoreService,
+    StepConditionService,
+    NewCampaignDetailFormService,
+    NewCampaignRewardsStampsFormService
   ],
   declarations: [
     CampaignsListPageComponent,
@@ -71,9 +87,12 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
     CampaignsComponent,
     NewCampaignComponent,
     NewCampaignRewardsPageComponent,
+    NewCampaignRewardsStampsPageComponent,
     NewCampaignSelectEngagementPageComponent,
     RewardItemComponent,
-    RewardItemPreviewComponent
+    RewardItemPreviewComponent,
+    NewCampaignRewardsFormGroupComponent,
+    NewCampaignStampRuleFormGroupComponent
   ],
   imports: [
     CommonModule,
@@ -114,7 +133,9 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
     DownloadLinkModule,
     UploadFileModule,
     ChipListModule,
-    CheckboxGroupModule
+    CheckboxGroupModule,
+    SelectRewardPopupModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
