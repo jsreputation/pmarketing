@@ -67,9 +67,11 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
               map((campaigns: ICampaign[]) => campaigns[0])
             )
             .subscribe(
-              (campaign: ICampaign) => {
-                this.campaignId = campaign.id;
-                this.fetchGame();
+              (campaign: ICampaign | null) => {
+                if (campaign !== undefined && campaign !== null) {
+                  this.campaignId = campaign.id;
+                  this.fetchGame();
+                }
               },
               () => { }
             );
@@ -132,7 +134,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public onComplete(): void {
-    if (this.game) {
+    if (this.game !== undefined && this.game !== null) {
       this.gameService.play(this.game.id)
         .pipe(
           take(1)
