@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsCardsComponent } from './rewards-cards.component';
+import { MatIconModule, MatCardModule } from '@angular/material';
 
 describe('RewardsCardsComponent', () => {
   let component: RewardsCardsComponent;
@@ -8,7 +9,11 @@ describe('RewardsCardsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsCardsComponent ]
+      declarations: [ RewardsCardsComponent ],
+      imports: [
+        MatIconModule,
+        MatCardModule
+      ]
     })
     .compileComponents();
   }));

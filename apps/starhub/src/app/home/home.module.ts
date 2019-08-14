@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { DiscoverComponent } from './discover/discover.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { HomeComponent } from './home/home.component';
-import { MatToolbarModule, MatTabsModule, MatCardModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatTabsModule, MatCardModule, MatButtonModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
@@ -29,6 +29,8 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     MatTabsModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
     HomeRoutingModule
   ],
   bootstrap: [

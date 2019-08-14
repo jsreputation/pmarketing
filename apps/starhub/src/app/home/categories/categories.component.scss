@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #eef9e4;
+    color: #6dc00e;
+  }
+}

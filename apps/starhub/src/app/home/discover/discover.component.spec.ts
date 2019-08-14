@@ -6,7 +6,8 @@ import { CategoriesComponent } from '../categories/categories.component';
 import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatIconModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -23,7 +24,9 @@ describe('DiscoverComponent', () => {
         CampaignsComponent
       ],
       imports: [
-        MatCardModule
+        MatCardModule,
+        MatIconModule,
+        RouterTestingModule
       ]
     })
       .compileComponents();

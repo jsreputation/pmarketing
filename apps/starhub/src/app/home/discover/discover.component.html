@@ -1,8 +1,8 @@
 <app-news-feed></app-news-feed>
-<app-categories></app-categories>
+<app-categories (tapped)="categorySelected($event)"></app-categories>
 <h1>Rewards For You</h1>
-<app-rewards-cards></app-rewards-cards>
+<app-rewards-cards (tapped)="rewardSelected($event)"></app-rewards-cards>
 <h1>Special Rewards</h1>
-<app-catalogs></app-catalogs>
+<app-catalogs (tapped)="catalogSelected($event)"></app-catalogs>
 <h1>Games For You</h1>
-<app-campaigns></app-campaigns>
+<app-campaigns (tapped)="campaignSelected($event)"></app-campaigns>
