@@ -24,7 +24,7 @@
   }
 
   &-nested-1 {
-    background-color: #f4f4f5;;
+    background-color: #f4f4f5;
   }
 
   &-form-header {
@@ -51,7 +51,6 @@
 
   &-btn-actions {
     display: flex;
-
   }
 
   &-btn-section {
@@ -87,7 +86,8 @@ cl-question-form-field {
   padding: 0;
   margin: 0;
 }
+
 .control-input, .nested-form-group {
-  transition: 0.4s cubic-bezier(.35, 0, .25, 1);
+  transition: 0.4s cubic-bezier(0.35, 0, 0.25, 1);
 }
 

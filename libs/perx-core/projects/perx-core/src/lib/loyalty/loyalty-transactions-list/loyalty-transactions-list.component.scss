@@ -6,12 +6,39 @@ cdk-virtual-scroll-viewport {
   display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   height: 10rem;
-}
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 1.6rem;
+  position: relative;
 
-.transaction-point {
-  flex: 2 1 0;
-}
+  &-info {
+    flex: 2 1 0;
+  }
 
-.transaction-date {
-  flex: 1 1 0;
+  &-name {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    font-weight: 900;
+  }
+
+  &-description {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+  }
+
+  &-point {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    letter-spacing: 0.2px;
+    color: #ddac28;
+    margin-top: 1.6rem;
+  }
+
+  &-date {
+    flex: 1 1 0;
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+    text-align: right;
+  }
 }

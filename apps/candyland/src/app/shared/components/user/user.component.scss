@@ -1,8 +1,8 @@
 @import "../../../../styles/variables";
-.user {
 
+.user {
   &-info {
-    transition: .5s;
+    transition: 0.5s;
   }
 
   &-wrap {
@@ -10,7 +10,7 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 1.7rem;
-    border-bottom: .2rem solid rgba(255, 255, 255, 0.2)
+    border-bottom: 0.2rem solid rgba(255, 255, 255, 0.2);
   }
 
   &-preview {
@@ -27,7 +27,7 @@
   }
 
   &-name {
-    padding-top: .4rem;
+    padding-top: 0.4rem;
     font-family: $primary-font;
     font-size: 1.6rem;
     font-weight: 500;
@@ -56,8 +56,8 @@
 }
 
 .notification {
-  width: .4rem;
-  height: .4rem;
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
   position: absolute;
   top: 0.2rem;

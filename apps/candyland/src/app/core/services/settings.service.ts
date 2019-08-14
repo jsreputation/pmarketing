@@ -20,11 +20,8 @@ export class SettingsService {
       );
   }
 
-  public getCurrency(): Observable<ISimpleValue[]> {
-    return this.settingsHttpService.getCurrency()
-      .pipe(
-        map((res: ISimpleValue[]) => res)
-      );
+  public getCurrency(): Observable<Currency[]> {
+    return this.settingsHttpService.getCurrency();
   }
 
   public getRoles(): Observable<any[]> {
