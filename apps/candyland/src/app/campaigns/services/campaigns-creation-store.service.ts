@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CampaignCreationStoreService {
   public currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public config = {
@@ -61,6 +59,7 @@ export class CampaignCreationStoreService {
       this.currentCampaign.rewards = value.rewards;
     }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
+    console.log('currentCampaign', this.currentCampaign);
   }
 
 }

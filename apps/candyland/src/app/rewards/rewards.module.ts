@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import { RewardsListPageComponent } from './containers/rewards-list-page/rewards-list-page.component';
-import { RewardsListComponent } from './components/rewards-list/rewards-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -59,7 +59,6 @@ import { NewRewardFormService } from './services/new-reward-form.service';
   ],
   declarations: [
     RewardsListPageComponent,
-    RewardsListComponent,
     NewRewardComponent,
     RewardInfoFormGroupComponent,
     RewardMerchantCardComponent,
@@ -77,6 +76,7 @@ import { NewRewardFormService } from './services/new-reward-form.service';
   imports: [
     CommonModule,
     RewardsRoutingModule,
+    RewardsListModule,
     ReactiveFormsModule,
     MatSortModule,
     MatTableModule,
