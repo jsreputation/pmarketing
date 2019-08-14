@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
 import { CognitoService } from '../whistler/cognito/cognito.service';
 import { OauthService } from '../v4/oauth/oauth.service';
@@ -226,17 +226,20 @@ export class AuthenticationService implements AuthService {
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.v4OauthService.resendOTP(phone);
+    return throwError('Temporarily disabled');
+    // return this.v4OauthService.resendOTP(phone);
   }
 
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
-    return this.v4OauthService.signup(profile);
+    return throwError('Temporarily disabled');
+    // return this.v4OauthService.signup(profile);
   }
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.v4OauthService.verifyOTP(phone, otp);
+    return throwError('Temporarily disabled');
+    // return this.v4OauthService.verifyOTP(phone, otp);
   }
 
   // @ts-ignore

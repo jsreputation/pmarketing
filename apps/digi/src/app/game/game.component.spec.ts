@@ -1,4 +1,3 @@
-// tslint:disable: typedef
 import {
   async,
   ComponentFixture,
@@ -7,17 +6,19 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { CampaignModule, CognitoModule, OauthModule, GameModule, VouchersService } from '@perx/core';
+import { CampaignModule, GameModule, GameService, CampaignService } from '@perx/core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment';
+import { of } from 'rxjs';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let spy: any;
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const gameServiceStub = {};
+  const campaignServiceStub = {
+    getCampaigns: () => of([])
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,14 +26,12 @@ describe('GameComponent', () => {
       imports: [
         MatToolbarModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        CampaignModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
-        GameModule.forRoot({ env: environment }),
+        CampaignModule,
+        GameModule,
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: GameService, useValue: gameServiceStub },
+        { provide: CampaignService, useValue: campaignServiceStub }
       ]
     }).compileComponents();
   }));

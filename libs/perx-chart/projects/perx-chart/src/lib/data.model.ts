@@ -18,13 +18,13 @@ export interface IData {
 
 export interface MultipleChartData {
   series: {
-    extra: {
+    extra?: {
       code: string
     };
-    name: string;
-    value: number;
+    name: string | number;
+    value: string | number;
   }[];
-  name: string;
+  name: string | number;
 }
 
 export interface SingleChartData {

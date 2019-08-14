@@ -3,7 +3,12 @@
     <mat-list-item>
       <h3 matLine>{{location.name}}</h3>
       <small matLine>{{location.address}}</small>
-      <p matLine class="links"><a href="tel:{{location.phone}}">{{location.phone}}</a><a target="_blank" [href]="gMapUrl(location)">View location</a></p>
+      <div matLine>
+        <div class="links">
+          <a class="links-phone" href="tel:{{location.phone}}">{{location.phone}}</a>
+          <a class="links-location" target="_blank" [href]="gMapUrl(location)">View location</a>
+        </div>
+      </div>
     </mat-list-item>
     <mat-divider></mat-divider>
   </div>

@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
 import { RewardsModule as PerxRewardsModule } from '@perx/core';
-import { environment } from '../../../environments/environment';
 import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 
@@ -17,8 +16,7 @@ describe('RewardsCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RewardsCollectionComponent],
       imports: [
-        PerxRewardsModule.forRoot({ env: environment }),
-        // HttpClientTestingModule
+        PerxRewardsModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub }

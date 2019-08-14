@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class GeneralComponent implements OnInit {
   public timeZones$: Observable<ISimpleValue[]>;
-  public currency$: Observable<ISimpleValue[]>;
+  public currency$: Observable<Currency[]>;
   public formGeneral: FormGroup;
   constructor(private settingsService: SettingsService,
               private fb: FormBuilder) { }

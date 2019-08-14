@@ -1,19 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatTableDataSource } from '@angular/material';
 import { EngagementsService } from '@cl-core/services/engagements.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
   templateUrl: './new-campaign-select-engagement-page.component.html',
   styleUrls: ['./new-campaign-select-engagement-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignSelectEngagementPageComponent implements OnInit, OnDestroy {
+export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public dataSource = new MatTableDataSource<Engagement>();
   public typeFilterConfig: OptionConfig[];
@@ -23,16 +23,18 @@ export class NewCampaignSelectEngagementPageComponent implements OnInit, OnDestr
   }
 
   constructor(private engagementsService: EngagementsService,
-              private store: CampaignCreationStoreService,
+              public store: CampaignCreationStoreService,
+              public stepConditionService: StepConditionService,
               private fb: FormBuilder,
               public cd: ChangeDetectorRef) {
+    super(0, store, stepConditionService, cd);
     this.initForm();
   }
 
   public ngOnInit(): void {
+    super.ngOnInit();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(value => this.store.updateCampaign(value));
   }
 
   public ngOnDestroy(): void {
