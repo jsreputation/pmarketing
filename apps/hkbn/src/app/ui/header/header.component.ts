@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { AuthenticationService } from '@perx/core';
 
 @Component({
   selector: 'hkbn-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private currentRoute: ActivatedRoute;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
 
   }
 
@@ -45,6 +46,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const url = this.routeData.backUrl ? this.routeData.backUrl : '';
       this.router.navigate([url], {relativeTo: this.currentRoute});
     }
+  }
+
+  public logout(): void {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 
   public ngOnDestroy(): void {

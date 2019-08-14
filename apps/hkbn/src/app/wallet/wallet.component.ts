@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { IVoucher } from '../../../../../libs/perx-core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 
 @Component({
   selector: 'hkbn-wallet',
@@ -11,7 +12,11 @@ export class WalletComponent {
   constructor(private router: Router) {
   }
 
-  public onRoute(id: string): void {
-    this.router.navigate([`/wallet/${id}`]);
+  public onRoute(voucher: IVoucher): void {
+    this.router.navigate([`/wallet/${voucher.id}`]);
+  }
+
+  public onRedeemedRoute(voucher: IVoucher): void {
+    this.router.navigate([`/reward/${voucher.id}`]);
   }
 }
