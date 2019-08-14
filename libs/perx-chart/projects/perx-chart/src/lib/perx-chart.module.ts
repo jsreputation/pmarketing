@@ -11,6 +11,7 @@ import { LineComponent } from './line/line.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MetaCardComponent } from './meta-card/meta-card.component';
 import { MatTableModule } from '@angular/material';
+import { DataService } from './data.service';
 
 const comps: any[] = [
   VerticalBarComponent,
@@ -35,6 +36,9 @@ const comps: any[] = [
   ],
   declarations: [
     ...comps,
+  ],
+  providers: [
+    DataService
   ]
 })
 export class PerxChartModule { }

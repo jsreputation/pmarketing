@@ -1,0 +1,141 @@
+<div class="tab-content">
+  <div class="forms-container" [formGroup]="form">
+    <!--Rewards-->
+    <mat-card class="card">
+      <ng-container *ngFor="let rewardGroup of rewardsList?.controls; let i = index">
+        <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')"
+                                            [title]="'Rewards for slot ' + rewardGroup.get('stampSlotNumber').value">
+        </cl-new-campaign-rewards-form-group>
+      </ng-container>
+    </mat-card>
+    <!--/ Rewards-->
+    <!-- Stamps Rule-->
+    <mat-card class="card">
+      <div class="card-header">
+        <p class="card-title">Stamps Rule</p>
+      </div>
+      <div class="card-content" formGroupName="stampsRule">
+        <div class="card-row">
+          <mat-checkbox formControlName="sequence">Sequence</mat-checkbox>
+        </div>
+        <div class="flex flex-end" *ngIf="!isSequence">
+          <cl-button classList="invert no-padding" (click)="addStampRule()">+ Add Rule</cl-button>
+        </div>
+        <div class="card-section" *ngFor="let rule of stampRule?.controls; let i = index; let first = first">
+          <div class="card-content">
+            <div class="stamp-rule">
+              <div class="stamp-rule-label-block" *ngIf="isSequence">
+                <label class="stamp-rule-label">Slot {{i + 1}}:</label>
+              </div>
+              <cl-new-campaign-stamp-rule-form-group class="stamp-rule-form-group" [formControl]="rule">
+              </cl-new-campaign-stamp-rule-form-group>
+              <div class="stamp-rule-action" *ngIf="!isSequence && !first">
+                <button mat-icon-button (click)="removeStampRule(i)">
+                  <i class="icon full-with delete-action"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <!--/ Stamps Rule-->
+    <!--    limits-->
+    <mat-card class="card" formGroupName="limits">
+      <div class="card-header">
+        <p class="card-title">Limits</p>
+      </div>
+      <div class="card-content">
+        <div class="card-section">
+          <div class="card-header">
+            <div class="row">
+              <p class="card-title">Stamp Card Limits</p>
+              <mat-slide-toggle formControlName="enableStampCard"></mat-slide-toggle>
+            </div>
+          </div>
+          <div class="card-content" formGroupName="stampCard">
+            <label class="card-label">Stamp cards per campaign</label>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perCampaign">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <div></div>
+            </div>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <span>per</span>
+              <mat-form-field>
+                <mat-select formControlName="duration">
+                  <mat-option value="day">Day</mat-option>
+                  <mat-option value="week">Week</mat-option>
+                  <mat-option value="month">Month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card-section">
+          <div class="card-header">
+            <div class="row">
+              <p class="card-title">Stamp Limits</p>
+              <mat-slide-toggle formControlName="enableStamp"></mat-slide-toggle>
+            </div>
+          </div>
+          <div class="card-content" formGroupName="stamp">
+            <label class="card-label">Limit per user</label>
+            <div class="card-row input-group">
+              <mat-form-field>
+                <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
+                <span matSuffix>stamp cards</span>
+              </mat-form-field>
+              <span>per</span>
+              <mat-form-field>
+                <mat-select formControlName="duration">
+                  <mat-option value="day">Day</mat-option>
+                  <mat-option value="week">Week</mat-option>
+                  <mat-option value="month">Month</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <!--/    limits-->
+    <!--  Stamp Cards Validity-->
+    <mat-card class="card">
+      <div class="card-header">
+        <div class="row">
+          <p class="card-title">Stamp Cards Validity</p>
+          <mat-slide-toggle formControlName="enableStampCardsValidity"></mat-slide-toggle>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-row input-group" formGroupName="stampCardsValidity">
+          <span class="row">Valid for</span>
+          <mat-form-field>
+            <input matInput type="number" [min]="1" formControlName="times">
+            <span matSuffix>Play</span>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="duration">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span class="row"> After 1st stamp earned</span>
+        </div>
+      </div>
+    </mat-card>
+    <!--/  Stamp Cards Validity-->
+  </div>
+  <div class="preview">
+    <div class="preview-mobile">
+    </div>
+  </div>
+</div>
