@@ -2,8 +2,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
-import { environment } from '../environments/environment';
 import {
   MatDialogModule,
   MatDialogRef,
@@ -15,17 +13,17 @@ import {
 } from '@angular/material';
 import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthenticationService } from '@perx/core';
 
 describe('AppComponent', () => {
+  const authenticationServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
-        AuthenticationModule,
         MatDialogModule,
         MatSidenavModule,
         MatIconModule,
@@ -33,16 +31,13 @@ describe('AppComponent', () => {
         MatToolbarModule,
         NoopAnimationsModule,
         SoundModule,
-        ProfileModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
       ],
       declarations: [
         AppComponent,
         ProfileComponent
       ],
       providers: [
-        TokenStorage,
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ],
