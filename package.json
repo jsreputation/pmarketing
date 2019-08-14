@@ -12,7 +12,7 @@
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
     "build:components-demo:prod": "echo nothing here",
-    "build:hkbn:prod": "echo nothing here",
+    "build:hkbn:prod": "lerna run build:lib && lerna run build:hkbn:prod --",
     "build:hsbc-rewards:prod": "echo nothing here",
     "build:merck-customer:prod": "lerna run build:lib && lerna run build:merck-customer:prod --",
     "build:merck-merchant:prod": "echo nothing here",
