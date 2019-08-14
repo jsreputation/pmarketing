@@ -43,6 +43,14 @@ export class LoginComponent implements OnInit, PageAppearence {
     (err) => {
       console.log('Error' + err);
     });
+
+    this.authService.isAuthorized().subscribe(
+        authed => {
+          if (authed) {
+            this.router.navigateByUrl('home');
+          }
+        }
+    );
   }
 
   public getPageProperties(): PageProperties {
