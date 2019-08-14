@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DiscoverComponent } from './discover.component';
+import { NewsFeedComponent } from '../news-feed/news-feed.component';
+import { CategoriesComponent } from '../categories/categories.component';
+import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
+import { CatalogsComponent } from '../catalogs/catalogs.component';
+import { CampaignsComponent } from '../campaigns/campaigns.component';
+import { MatCardModule } from '@angular/material';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -8,9 +14,19 @@ describe('DiscoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscoverComponent ]
+      declarations: [
+        DiscoverComponent,
+        NewsFeedComponent,
+        CategoriesComponent,
+        RewardsCardsComponent,
+        CatalogsComponent,
+        CampaignsComponent
+      ],
+      imports: [
+        MatCardModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
