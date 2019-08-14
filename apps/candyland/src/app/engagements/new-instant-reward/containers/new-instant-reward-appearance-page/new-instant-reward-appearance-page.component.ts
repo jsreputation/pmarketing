@@ -34,7 +34,6 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public ngOnInit(): void {
     this.createRewardForm();
     this.getRewardData();
-    console.log(MockRewardsMobilePreview);
     this.reward$ = of([MockRewardsMobilePreview[0]]);
     this.rewards$ = of(MockRewardsMobilePreview);
   }

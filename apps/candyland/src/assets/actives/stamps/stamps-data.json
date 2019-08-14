@@ -81,6 +81,7 @@
       "type": "card-bg-1",
       "title": "icon",
       "img": "assets/images/stamps/card-background/card-bg-1.png",
+      "fullImg": "assets/images/reward/card-background/card-bg-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -89,6 +90,7 @@
       "type": "card-bg-2",
       "title": "icon",
       "img": "assets/images/stamps/card-background/card-bg-2.png",
+      "fullImg": "assets/images/reward/card-background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -97,6 +99,7 @@
       "type": "card-bg-3",
       "title": "icon",
       "img": "assets/images/stamps/card-background/card-bg-3.png",
+      "fullImg": "assets/images/reward/card-background/full_bg_3.jpg",
       "format": ".png",
       "active": "false"
     }
@@ -211,6 +214,7 @@
       "type": "bg-1",
       "title": "icon",
       "img": "assets/images/stamps/background/stamp-bg-1.png",
+      "fullImg": "assets/images/stamps/background/full_bg_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -219,6 +223,7 @@
       "type": "bg-2",
       "title": "icon",
       "img": "assets/images/stamps/background/stamp-bg-2.png",
+      "fullImg": "assets/images/stamps/background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -227,6 +232,7 @@
       "type": "bg-3",
       "title": "icon",
       "img": "assets/images/stamps/background/stamp-bg-3.png",
+      "fullImg": "assets/images/stamps/background/full_bg_3.jpg",
       "format": ".png",
       "active": "false"
     }
