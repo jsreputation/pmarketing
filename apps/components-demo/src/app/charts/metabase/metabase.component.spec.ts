@@ -2,23 +2,35 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetabaseComponent } from './metabase.component';
 import { PerxChartModule } from '@perx/chart';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DataService, IData } from '@perx/chart';
+import { of } from 'rxjs';
 
 describe('MetabaseComponent', () => {
   let component: MetabaseComponent;
   let fixture: ComponentFixture<MetabaseComponent>;
+  const mockData: IData = {
+    columns: [],
+    cols: [],
+    rows: [],
+    insights: null
+  };
+  const dataServiceStub = {
+    getData: () => of(mockData)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MetabaseComponent ],
+      declarations: [MetabaseComponent],
       imports: [
         PerxChartModule,
-        HttpClientTestingModule,
         NoopAnimationsModule
+      ],
+      providers: [
+        { provide: DataService, useValue: dataServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

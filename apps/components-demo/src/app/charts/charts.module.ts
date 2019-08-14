@@ -28,6 +28,8 @@ import { MetabaseComponent } from './metabase/metabase.component';
     LineComponent,
     MetabaseComponent
   ],
+  providers: [
+  ],
   imports: [
     CommonModule,
     ChartsRoutingModule,

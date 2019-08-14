@@ -61,10 +61,15 @@ export const mockLoyalty: ILoyalty = {
     ]
 };
 
-export const mockTransactions: ITransaction[] = [
+interface ITransactionWithDescription extends ITransaction {
+    description?: string;
+}
+
+export const mockTransactions: ITransactionWithDescription[] = [
     {
         id: 92213,
-        name: null,
+        name: 'Reward Name',
+        description: 'Reward Description',
         earnedDate: '2019-05-30T10:24:01.738Z',
         points: 10,
         pointsBalance: 10,
@@ -73,7 +78,8 @@ export const mockTransactions: ITransaction[] = [
     },
     {
         id: 92188,
-        name: null,
+        name: 'Reward Name',
+        description: 'Reward Description',
         earnedDate: '2019-04-24T07:53:28.310Z',
         points: 100000000,
         pointsBalance: 100000000,
@@ -82,7 +88,8 @@ export const mockTransactions: ITransaction[] = [
     },
     {
         id: 92187,
-        name: null,
+        name: 'Reward Name',
+        description: 'Reward Description',
         earnedDate: '2019-04-24T07:53:18.047Z',
         points: 1000,
         pointsBalance: 1000,
@@ -91,7 +98,8 @@ export const mockTransactions: ITransaction[] = [
     },
     {
         id: 92186,
-        name: null,
+        name: 'Reward Name',
+        description: 'Reward Description',
         earnedDate: '2019-04-22T10:43:44.642Z',
         points: 260,
         pointsBalance: 260,
@@ -100,7 +108,7 @@ export const mockTransactions: ITransaction[] = [
     },
     {
         id: 92185,
-        name: null,
+        name: 'Reward Name',
         earnedDate: '2019-04-22T10:43:07.455Z',
         points: 200,
         pointsBalance: 200,
@@ -109,7 +117,7 @@ export const mockTransactions: ITransaction[] = [
     },
     {
         id: 92184,
-        name: null,
+        name: 'Reward Name',
         earnedDate: '2019-04-22T10:42:43.539Z',
         points: 100,
         pointsBalance: 100,

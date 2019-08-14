@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AbstractControl, FormGroup} from '@angular/forms';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -12,9 +14,10 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
   styleUrls: ['./new-campaign-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
+  public campaign;
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
@@ -37,16 +40,21 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private store: CampaignCreationStoreService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService
   ) {
+    super(2, store, stepConditionService, cd);
+    this.initForm();
   }
 
   public ngOnInit(): void {
-    this.config = this.store.config;
-    this.initForm();
+   super.ngOnInit();
+  }
+
+  public ngOnDestroy(): void {
   }
 
   private initForm(): void {
@@ -70,9 +78,5 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
-  }
-
-  public ngOnDestroy(): void {
-    this.cd.detach();
   }
 }
