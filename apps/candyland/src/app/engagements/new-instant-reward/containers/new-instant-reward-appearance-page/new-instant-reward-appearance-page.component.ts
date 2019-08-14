@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RewardService } from '@cl-core/http-services/reward.service';
 import { Observable, of } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
@@ -9,6 +8,7 @@ import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import { ControlValueService } from '@cl-core/services/control-value.service';
+import { RewardsService } from '@cl-core/services/rewards.service';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -26,7 +26,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
   constructor(private fb: FormBuilder,
-              private rewardService: RewardService,
+              private rewardService: RewardsService,
               private routingState: RoutingStateService,
               private router: Router,
               private controlValueService: ControlValueService) { }
@@ -34,7 +34,6 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public ngOnInit(): void {
     this.createRewardForm();
     this.getRewardData();
-    console.log(MockRewardsMobilePreview);
     this.reward$ = of([MockRewardsMobilePreview[0]]);
     this.rewards$ = of(MockRewardsMobilePreview);
   }
