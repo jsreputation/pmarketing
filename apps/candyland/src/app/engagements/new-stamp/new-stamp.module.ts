@@ -14,6 +14,8 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-preview-stamp/game-mobile-preview-stamp.module';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { PuzzlesModule } from '@perx/core';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-
     SelectGraphicWrapModule,
     InfoHintModule,
     GameMobilePreviewStampModule,
+    SimpleMobileViewModule,
+    PuzzlesModule,
 
     MatTabsModule,
     MatCardModule,
