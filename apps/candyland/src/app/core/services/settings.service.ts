@@ -13,15 +13,21 @@ export class SettingsService {
               private fb: FormBuilder) {
   }
 
-  public getTimeZone(): Observable<ISimpleValue[]> {
-    return this.settingsHttpService.getTimeZone()
-      .pipe(
-        map((res: ISimpleValue[]) => res)
-      );
+  public getTimeZone(): Observable<ITimeZone[]> {
+    return this.settingsHttpService.getTimeZone();
   }
 
   public getCurrency(): Observable<Currency[]> {
-    return this.settingsHttpService.getCurrency();
+    return this.settingsHttpService.getCurrency()
+      .pipe(
+        map((data: Currency[]) => {
+          return data.sort((a, b) => {
+            const nameA = a.country.toLowerCase();
+            const nameB = b.country.toLowerCase();
+            return (nameA < nameB) ? -1 : 1;
+          });
+        })
+      );
   }
 
   public getRoles(): Observable<any[]> {
