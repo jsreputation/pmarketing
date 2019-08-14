@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HistoryComponent } from './history.component';
 import { VouchersModule, VouchersService } from '@perx/core';
-import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 
 describe('HistoryComponent', () => {
@@ -17,7 +16,7 @@ describe('HistoryComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HistoryComponent],
       imports: [
-        VouchersModule.forRoot({ env: environment }),
+        VouchersModule,
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub }
