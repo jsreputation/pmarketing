@@ -176,6 +176,10 @@ jobs:
             then
               echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
             fi
+            if [ $APP == 'merck-merchant' ]
+            then
+              echo 'export HELM_APP="$APP-scanner"' >> $BASH_ENV
+            fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
           helm_repo_name: perx
