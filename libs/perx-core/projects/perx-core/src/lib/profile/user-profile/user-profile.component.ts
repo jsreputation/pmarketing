@@ -11,9 +11,7 @@ export class UserProfileComponent implements OnInit {
   @Input()
   public profile: IProfile;
 
-  constructor() { }
-
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
