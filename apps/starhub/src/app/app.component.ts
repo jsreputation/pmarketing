@@ -5,7 +5,9 @@ import {
   PopupComponent,
   IPopupConfig,
   ProfileService,
-  IProfile
+  IProfile,
+  CampaignService,
+  ICampaign
 } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -16,11 +18,13 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  public username: string = 'I do not know who you are!';
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private profileService: ProfileService,
     private activeRoute: ActivatedRoute,
+    private campaignService: CampaignService,
     private dialog: MatDialog
   ) { }
 
@@ -41,17 +45,27 @@ export class AppComponent implements OnInit {
     this.profileService.whoAmI()
       .subscribe(
         (profile: IProfile) => {
-          this.notificationService.addPopup({
-            title: `Hi ${profile.firstName} ${profile.lastName}`,
-            text: `Your user id is ${profile.id}`
-          });
+          this.username = `Hi ${profile.firstName} ${profile.lastName} (id #${profile.id})`;
+          this.fetchCampaign();
         },
-        () => {
+        () => { }
+      );
+  }
+
+  private fetchCampaign(): void {
+    this.campaignService.getCampaigns()
+      .subscribe((campaigns: ICampaign[]) => {
+        if (campaigns.length > 0) {
           this.notificationService.addPopup({
-            title: 'Aouch!!!!!',
-            text: 'We could not fetch user data, token is wrong or missing'
+            title: 'Got some campaign',
+            text: campaigns[0].name
+          });
+        } else {
+          this.notificationService.addPopup({
+            title: 'Got no campaign',
+            text: 'Try again another day'
           });
         }
-      );
+      });
   }
 }
