@@ -9,6 +9,7 @@
     <p>Card Last 4 Digit</p>
     <p class="text-field">{{profile.customProperties['last_4']}}</p>
   </ng-container>
+  <perx-core-user-profile [profile]="profile"></perx-core-user-profile>
   <a mat-list-item (click)="onClick('/tnc')"><mat-icon>description</mat-icon>TERMS AND CONDITIONS</a>
   <a mat-list-item (click)="onClick('/faq')"><mat-icon>help</mat-icon>FAQ</a>
   <button mat-flat-button color="primary" class="sign-out" (click)="onSignout()">SIGN OUT</button>
