@@ -16,7 +16,12 @@ export class RegistrationFormComponent {
   public registrationForm: FormGroup = new FormGroup({
     firstName: new FormControl(null, [HkbnValidators.required]),
     lastName: new FormControl(null, [HkbnValidators.required]),
-    phone: new FormControl(null, [HkbnValidators.required]),
+    phone: new FormControl(null, [
+      HkbnValidators.required,
+      HkbnValidators.pattern('^[0-9]+$'),
+      HkbnValidators.minLength(8),
+      HkbnValidators.maxLength(8)
+      ]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required]),
     confirmPassword: new FormControl(null, [HkbnValidators.required]),

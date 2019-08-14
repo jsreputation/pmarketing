@@ -6,6 +6,9 @@
       <mat-error *hkbnErrorHandler="'required'">
         {{"REQUIRED" | translate}}
       </mat-error>
+      <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
+        {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary">{{"UPDATE" | translate}}</button>
