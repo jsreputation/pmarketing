@@ -9,7 +9,6 @@ import {
 import { ProfileModule, ProfileService } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -30,7 +29,6 @@ describe('UserInfoComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule,
         MatButtonModule,
         MatCheckboxModule,
         MatRadioModule,
