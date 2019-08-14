@@ -4,7 +4,8 @@
 }
 
 .sidenav-dropdown-indicator {
-  transition: transform .25s;
+  transition: transform 0.25s;
+
   &.indicateOpen {
     transform: rotate(180deg);
   }
@@ -13,14 +14,15 @@
 mat-nav-list {
   overflow: hidden;
   padding-top: 0;
-
 }
-.primary{
-  transition: max-height .4s cubic-bezier(.35, 0, .25, 1);
+
+.primary {
+  transition: max-height 0.4s cubic-bezier(0.35, 0, 0.25, 1);
   padding-top: 0;
 }
+
 .secondaryMenu {
-  transition: max-height .4s cubic-bezier(.35, 0, .25, 1);
+  transition: max-height 0.4s cubic-bezier(0.35, 0, 0.25, 1);
   padding-top: 0;
 }
 
@@ -29,7 +31,6 @@ mat-nav-list {
 }
 
 .mat-list-item {
-
   height: 3rem !important;
 
   mat-icon {
@@ -50,7 +51,7 @@ mat-nav-list {
 .active {
   position: relative;
 
-  &:before {
+  &::before {
     content: '';
     display: block;
     position: absolute;
