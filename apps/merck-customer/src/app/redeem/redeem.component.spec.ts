@@ -30,7 +30,10 @@ describe('RedeemComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of(convertToParamMap({ rewardId: 1 }))
+            snapshot:
+            {
+              paramMap: convertToParamMap({ rewardId: 1 })
+            }
           }
         },
         { provide: Location, useValue: locationStub }
