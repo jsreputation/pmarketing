@@ -7,10 +7,24 @@ import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileM
 import { environment } from '../environments/environment';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryComponent } from './category/category.component';
+import { RewardComponent } from './reward/reward.component';
+import { LocationsComponent } from './locations/locations.component';
+import { TncComponent } from './tnc/tnc.component';
+import { VoucherComponent } from './voucher/voucher.component';
+import { MerchantPinComponent } from './merchant-pin/merchant-pin.component';
+import { PromoCodeComponent } from './promo-code/promo-code.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CategoryComponent,
+    RewardComponent,
+    LocationsComponent,
+    TncComponent,
+    VoucherComponent,
+    MerchantPinComponent,
+    PromoCodeComponent
   ],
   imports: [
     BrowserModule,
