@@ -14,7 +14,7 @@ import {
 import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ProfileModule } from '@perx/core';
 
 describe('AppComponent', () => {
   const authenticationServiceStub = {};
@@ -31,6 +31,7 @@ describe('AppComponent', () => {
         MatToolbarModule,
         NoopAnimationsModule,
         SoundModule,
+        ProfileModule
       ],
       declarations: [
         AppComponent,
