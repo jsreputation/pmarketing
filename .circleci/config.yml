@@ -166,7 +166,9 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
-            if [ $APP == 'bpi'  ] || [ $APP == 'merck-customer' ]
+            if [ $APP == 'bpi'  ] || \
+               [ $APP == 'merck-customer' ] || \
+               [ $APP == 'hkbn' ]
             then
               echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
             fi
