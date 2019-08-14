@@ -1,0 +1,10 @@
+<ng-container *ngIf="profile">
+    <div class="user">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <p class="name">{{profile.lastName}}</p>
+    </div>
+    <p>Player Code</p>
+    <p class="text-field">{{profile.customProperties['code']}}</p>
+    <p>Card Last 4 Digit</p>
+    <p class="text-field">{{profile.customProperties['last_4']}}</p>
+</ng-container>
