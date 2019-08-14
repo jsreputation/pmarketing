@@ -29,6 +29,7 @@ import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemptio
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
+import { SnackbarModule } from './ui/snackbar/snackbar.module';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
   return () => authenticationService.v4GetAppAccessToken().toPromise();
@@ -85,6 +86,7 @@ const PROVIDERS = [
     BrowserAnimationsModule,
     MatTabsModule,
     MatButtonModule,
+    SnackbarModule,
   ],
   providers: [
     ...PROVIDERS

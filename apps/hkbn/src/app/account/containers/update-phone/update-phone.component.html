@@ -2,7 +2,7 @@
   <form [formGroup]="updatePhoneGroup" class="update-phone-form">
     <mat-form-field appearance="fill">
       <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
-      <input type="text" [textMask]="phoneMask" matInput formControlName="phone">
+      <input type="text" matInput formControlName="phone">
       <mat-error *hkbnErrorHandler="'required'">
         {{"REQUIRED" | translate}}
       </mat-error>

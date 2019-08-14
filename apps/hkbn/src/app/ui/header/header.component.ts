@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
 
 @Component({
   selector: 'hkbn-header',
@@ -12,15 +12,22 @@ import { AuthenticationService } from '@perx/core';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public routeData: any = null;
+  public user: IProfile;
 
   private currentRoute: ActivatedRoute;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private profileService: ProfileService) {
 
   }
 
   public ngOnInit(): void {
+    this.profileService.whoAmI().subscribe((profile) => {
+      this.user = profile;
+    });
 
     this.router.events.pipe(
       startWith(new NavigationEnd(0, '/', '/')),

@@ -1,0 +1,8 @@
+@import "~src/assets/styles/variables";
+:host {
+  display: flex;
+  font-size: 1.4rem;
+  color: $black;
+  justify-content: space-between;
+  align-items: center;
+}
