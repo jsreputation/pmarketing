@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, ProfileModule } from '@perx/core';
+import { GameModule, RewardsModule } from '@perx/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -14,7 +14,6 @@ describe('RewardComponent', () => {
         RouterTestingModule,
         GameModule,
         RewardsModule,
-        ProfileModule,
       ]
     })
       .compileComponents();

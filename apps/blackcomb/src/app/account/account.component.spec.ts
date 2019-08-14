@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationModule, AuthenticationService, GameService } from '@perx/core';
+import { AuthenticationService, GameService } from '@perx/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -15,7 +15,6 @@ describe('AccountComponent', () => {
       declarations: [AccountComponent],
       imports: [
         RouterTestingModule,
-        AuthenticationModule,
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
