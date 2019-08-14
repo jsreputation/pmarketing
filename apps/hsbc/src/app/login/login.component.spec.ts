@@ -10,7 +10,7 @@ import { AuthenticationService, UtilsModule } from '@perx/core';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authenticationServiceStub = {}
+  const authenticationServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

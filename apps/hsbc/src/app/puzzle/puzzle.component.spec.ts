@@ -2,14 +2,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PuzzleComponent } from './puzzle.component';
-import { CampaignModule, VouchersModule, PuzzlesModule, StampModule, CampaignService, StampService, IStampCard, StampCardState } from '@perx/core';
+import {
+  CampaignModule,
+  VouchersModule,
+  PuzzlesModule,
+  StampModule,
+  CampaignService,
+  StampService,
+  IStampCard,
+  StampCardState
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
 import { of } from 'rxjs';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
-  let fixture: ComponentFixture< PuzzleComponent>;
+  let fixture: ComponentFixture<PuzzleComponent>;
   const campaignServiceStub = {
     getCampaigns: () => of([])
   };
@@ -36,7 +45,8 @@ describe('PuzzleComponent', () => {
   };
   const stampServiceStub = {
     getStamps: () => of([]),
-    getCurrentCard: () => of(mockCard)
+    getCurrentCard: () => of(mockCard),
+    getCards: () => of([mockCard])
   };
 
   beforeEach(async(() => {
