@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'reward-detail/:rewardId', component: RewardDetailComponent },
       { path: 'redeem/:rewardId', component: RedeemComponent },
+      { path: 'redeem', component: RedeemComponent },
       { path: 'find-pharmacy', component: FindPharmacyComponent },
       { path: 'account', component: AccountComponent },
       { path: 'account/profile', component: ProfileComponent },
