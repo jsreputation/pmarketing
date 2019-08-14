@@ -95,8 +95,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         this.card = card;
         this.cols = card.displayProperties.numberOfCols;
         this.rows = card.displayProperties.numberOfRows;
-        this.playedPieces = card.stamps.filter(stamp => stamp.state === StampState.redeemed).length;
-        const availablePieces = card.stamps.filter(stamp => stamp.state === StampState.issued).length;
+        this.playedPieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.redeemed).length : 0;
+        const availablePieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.issued).length : 0;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         this.image = card.displayProperties.cardImage.value.imageUrl;
         if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
