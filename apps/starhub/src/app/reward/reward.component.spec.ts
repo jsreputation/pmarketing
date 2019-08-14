@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
+import { MatIconModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -8,7 +10,11 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardComponent ]
+      declarations: [ RewardComponent ],
+      imports: [
+        MatIconModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

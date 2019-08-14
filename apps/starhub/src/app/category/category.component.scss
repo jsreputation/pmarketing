@@ -1,0 +1,19 @@
+@import "../icon.scss";
+
+.icon {
+  @include icon;
+}
+
+mat-toolbar {
+  background: white;
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin: 0.5rem;
+  }
+
+  .spacer {
+    flex-grow: 1;
+  }
+}

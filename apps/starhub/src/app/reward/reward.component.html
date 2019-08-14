@@ -1,1 +1,26 @@
-<p>reward works!</p>
+<button class="icon" (click)="back()">
+    <mat-icon>arrow_backward</mat-icon>
+</button>
+<img class="banner" [src]="reward.rewardBanner">
+<img class="badge" [src]="reward.merchantImg">
+<h1>{{reward.name}}</h1>
+<h2>{{reward.merchantName}}</h2>
+<h1>How to use</h1>
+{{reward.howToRedeem}}
+<h1>Location</h1>
+<a mat-button color="primary" [routerLink]="['/locations']">See All 5 Locations</a>
+<h1>Terms & Condition</h1>
+{{reward.termsAndConditions}}
+<a mat-button color="primary" [routerLink]="['/tnc']">Read More</a>
+<h1>About {{reward.merchantName}}</h1>
+<a>
+    <span class="icon">
+        <mat-icon>phone</mat-icon>
+    </span>Call to {{reward.merchantName}}
+</a>
+<a>
+    <span class="icon">
+        <mat-icon>email</mat-icon>
+    </span>Email to {{reward.merchantName}}
+</a>
+<button mat-flat-button color="primary" (click)="save()">Save to my rewards</button>

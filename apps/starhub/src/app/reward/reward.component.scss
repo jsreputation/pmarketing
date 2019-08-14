@@ -1,0 +1,9 @@
+@import "../icon.scss";
+
+.icon {
+  @include icon;
+}
+
+.banner {
+  width: 100%;
+}

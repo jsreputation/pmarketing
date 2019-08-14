@@ -1,3 +1,5 @@
+@import '../icon.scss';
+
 :host {
   display: flex;
   flex-direction: row;
@@ -15,15 +17,7 @@ mat-card-content {
   width: 100%;
 
   .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    background: #eef9e4;
-    color: #6dc00e;
+    @include icon;
   }
 
   h1 {

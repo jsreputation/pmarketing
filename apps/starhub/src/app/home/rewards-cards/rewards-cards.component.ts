@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { IReward } from '@perx/core';
+import { rewards } from '../../rewards.mock';
 
 @Component({
   selector: 'app-rewards-cards',
@@ -12,36 +13,7 @@ export class RewardsCardsComponent {
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor() {
-    this.rewards = [
-      {
-        id: 1,
-        name: 'Get a Free Coke',
-        description: 'string',
-        subtitle: 'string',
-        validFrom: new Date(),
-        validTo: new Date(),
-        rewardThumbnail: 'https://picsum.photos/300/200?random=1',
-        rewardBanner: 'https://picsum.photos/300/200?random=1',
-        merchantImg: 'https://picsum.photos/300/200?random=1',
-        merchantName: 'Pizza Hut',
-        termsAndConditions: 'string',
-        howToRedeem: 'string',
-      },
-      {
-        id: 1,
-        name: '1 for 1',
-        description: 'string',
-        subtitle: 'string',
-        validFrom: new Date(),
-        validTo: new Date(),
-        rewardThumbnail: 'https://picsum.photos/300/200?random=2',
-        rewardBanner: 'https://picsum.photos/300/200?random=2',
-        merchantImg: 'https://picsum.photos/300/200?random=2',
-        merchantName: 'Starbucks',
-        termsAndConditions: 'string',
-        howToRedeem: 'string',
-      }
-    ];
+    this.rewards = rewards;
   }
 
   public selected(reward: IReward): void {

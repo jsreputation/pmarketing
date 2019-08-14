@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileModule } from '@perx/core';
 import { environment } from '../environments/environment';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatIconModule, MatCardModule, MatToolbarModule, MatRippleModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryComponent } from './category/category.component';
 import { RewardComponent } from './reward/reward.component';
@@ -31,6 +31,11 @@ import { PromoCodeComponent } from './promo-code/promo-code.component';
     AppRoutingModule,
     AuthenticationModule,
     MatDialogModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatRippleModule,
+    MatButtonModule,
     UtilsModule,
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),

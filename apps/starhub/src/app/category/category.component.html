@@ -1,1 +1,22 @@
-<p>category works!</p>
+<mat-toolbar>
+    <button [routerLink]="[ '/home/discover']" class="icon">
+        <mat-icon>arrow_backward</mat-icon>
+    </button>
+    <div class="spacer"></div>
+    <button class="icon">
+        <mat-icon>apps</mat-icon>
+    </button>
+    <button class="icon">
+        <mat-icon>sort</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-card *ngFor="let reward of rewards" (click)="selected(reward)" matRipple>
+    <img mat-card-image [src]="reward.rewardBanner">
+    <mat-card-header>
+        <mat-card-title>{{reward.name}}</mat-card-title>
+        <mat-card-subtitle>{{reward.merchantName}}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="icon">
+        <mat-icon>arrow_forward</mat-icon>
+    </div>
+</mat-card>
