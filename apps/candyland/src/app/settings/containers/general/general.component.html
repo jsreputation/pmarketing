@@ -23,7 +23,7 @@
         <mat-label>Select Currency</mat-label>
         <mat-select formControlName="currency">
           <mat-option *ngFor="let currency of currency$ | async" [value]="currency.id">
-            {{currency.value}}
+            {{currency.country + ' ' + currency.currency}}
           </mat-option>
         </mat-select>
       </mat-form-field>

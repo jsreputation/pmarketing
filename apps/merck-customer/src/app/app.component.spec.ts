@@ -1,34 +1,109 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
-import { MatSnackBarModule } from '@angular/material';
+import {
+  MatSnackBarModule,
+  MatIconModule,
+  MatToolbarModule
+} from '@angular/material';
+import { of } from 'rxjs';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  const authenticationStub = {
+    v4AutoLogin: () => of(),
+    isAuthorized: () => of()
+  };
+
+  const routerStub = {
+    navigateByUrl: () => {},
+    navigate: () => {},
+  };
+
+  const locationStub = {
+    back: () => {}
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatIconModule,
+        MatToolbarModule
       ],
       declarations: [
         AppComponent
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [
-        {
-          provide: AuthenticationService,
-          useValue: {v4AutoLogin: () => {} }
-        }
+        { provide: AuthenticationService, useValue: authenticationStub },
+        { provide: Router, useValue: routerStub },
+        { provide: Location, useValue: locationStub }
       ]
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
+  });
+
+  it('should navigate to home if preAuth is true onInit', fakeAsync(() => {
+    (component as any).preAuth = true;
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
+      (AuthenticationService as Type<AuthenticationService>);
+    const authenticationServiceSpy = spyOn(authenticationService, 'isAuthorized').and.returnValue(of(true));
+
+    const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+    const routerSpy = spyOn(router, 'navigateByUrl');
+
+    component.ngOnInit();
+    tick();
+    expect(authenticationServiceSpy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith('/home');
+  }));
+
+  it('should go back on onLeftActionClick', () => {
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    const locationSpy = spyOn(location, 'back');
+    component.onLeftActionClick();
+    expect(locationSpy).toHaveBeenCalled();
+  });
+
+  describe('onTabNavigate', () => {
+
+    it('should navigate to tab home', () => {
+      const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+      const routerSpy = spyOn(router, 'navigate');
+      component.onTabNavigate('home');
+      expect(routerSpy).toHaveBeenCalledWith(['home']);
+    });
+
+    it('should navigate to tab find-pharmacy', () => {
+      const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+      const routerSpy = spyOn(router, 'navigate');
+      component.onTabNavigate('find-pharmacy');
+      expect(routerSpy).toHaveBeenCalledWith(['find-pharmacy']);
+    });
+
+    it('should navigate to tab account', () => {
+      const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+      const routerSpy = spyOn(router, 'navigate');
+      component.onTabNavigate('account');
+      expect(routerSpy).toHaveBeenCalledWith(['account']);
+    });
+
   });
 
 });
