@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import {
+  // LOCALE_ID,
+  NgModule
+} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -109,7 +112,8 @@ import { TransactionPipe } from './account/transaction-history/transaction-pipe/
     QRCodeModule,
     LocationModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
+  // TODO: Uncomment the following for 'zh-Hans' support
+  // providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
