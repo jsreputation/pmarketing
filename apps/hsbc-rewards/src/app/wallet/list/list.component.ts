@@ -4,15 +4,17 @@ import { Voucher, VouchersService, VoucherComponent, VoucherState } from '@perx/
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { IParam } from 'src/app/shared/interfaces/i-param';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  filtered: Observable<Voucher[]>
-  @ViewChild('voucher', { static: false }) vouch: VoucherComponent;
-  filter = "issued";
+  public filtered: Observable<Voucher[]>;
+  @ViewChild('voucher', { static: false }) public vouch: VoucherComponent;
+  public filter: string = 'issued';
   constructor(
     private vouchersService: VouchersService,
     private route: ActivatedRoute,
@@ -21,25 +23,25 @@ export class ListComponent implements OnInit {
     this.routeChanged = this.routeChanged.bind(this);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.filtered = this.route.params.pipe(
       switchMap(this.routeChanged)).pipe(
         map(
           (res) => {
             if (!res.length) {
-              return this.filter ? voucher.filter((el) => el.state === this.filter) : voucher
+              return this.filter ? voucher.filter((el) => el.state === this.filter) : voucher;
             }
-            return res && res.length ? res : voucher
+            return res && res.length ? res : voucher;
           }
         ), catchError(() => of(voucher)));
   }
 
-  routeChanged(param) {
+  public routeChanged(param: IParam): Observable<IVoucher[]> {
     this.filter = param.id === 'history' ? VoucherState.redeemed : VoucherState.issued;
-    return this.vouchersService.getAll()
+    return this.vouchersService.getAll();
   }
 
-  routeNavigate(route) {
+  public routeNavigate(route: string): void {
     this.router.navigate([`voucher/${route}`]);
   }
 }

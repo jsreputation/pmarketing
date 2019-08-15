@@ -16,7 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
     canActivate: [ProtectedGuard]
   }
-  
 ];
 
 @NgModule({

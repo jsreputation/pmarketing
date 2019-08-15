@@ -7,7 +7,7 @@ import { INavLink } from '../shared/i-nav-link';
   styleUrls: ['./wallet.component.scss']
 })
 export class WalletComponent {
-  navLinks: INavLink[] = [
+  public navLinks: INavLink[] = [
     { path: 'my-reward/list', label: 'List' },
     { path: 'my-reward/history', label: 'History' }
   ];

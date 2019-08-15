@@ -3,8 +3,9 @@ import { VouchersService } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 @Component({
   selector: 'app-voucher-detail',
@@ -12,7 +13,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./voucher-detail.component.scss']
 })
 export class VoucherDetailComponent implements OnInit {
-  voucher;
+  public voucher: Observable<IVoucher>;
 
   constructor(
     private voucherServe: VouchersService,
@@ -20,15 +21,15 @@ export class VoucherDetailComponent implements OnInit {
     private location: Location
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.voucher = this.route.params.pipe(switchMap((param) => {
       return this.voucherServe.get(param.id);
     })).pipe(catchError(() => {
       return of(voucher[0]);
-    }))
+    }));
   }
 
-  reedEm() {
+  public reedEm(): void {
     this.location.back();
   }
 }
