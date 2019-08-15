@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-locations',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent {
+  constructor(private location: Location) {
+  }
+
+  public back(): void {
+    this.location.back();
+  }
 }

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LocationsComponent } from './locations.component';
+import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -8,7 +10,12 @@ describe('LocationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationsComponent ]
+      declarations: [ LocationsComponent ],
+      imports: [
+        MatIconModule,
+        MatToolbarModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

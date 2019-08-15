@@ -8,10 +8,10 @@
 <h1>How to use</h1>
 {{reward.howToRedeem}}
 <h1>Location</h1>
-<a mat-button color="primary" [routerLink]="['/locations']">See All 5 Locations</a>
+<a mat-button color="primary" [routerLink]="['/locations']" [queryParams]="{mid:reward.merchantId}">See All 5 Locations</a>
 <h1>Terms & Condition</h1>
 {{reward.termsAndConditions}}
-<a mat-button color="primary" [routerLink]="['/tnc']">Read More</a>
+<a mat-button color="primary" [routerLink]="['/tnc']" [queryParams]="{mid:reward.merchantId}">Read More</a>
 <h1>About {{reward.merchantName}}</h1>
 <a>
     <span class="icon">
