@@ -22,6 +22,7 @@ import {
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CampaignsListPageComponent', () => {
   let component: CampaignsListPageComponent;
@@ -30,6 +31,7 @@ describe('CampaignsListPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         BrowserAnimationsModule,
         HttpClientTestingModule,
         ReactiveFormsModule,

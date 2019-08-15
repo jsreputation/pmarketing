@@ -10,7 +10,7 @@ export class RewardService {
   constructor(private http: HttpClient) { }
 
   public getRewards(): Observable<any> {
-    return this.http.get('assets/mocks/rewards/rewards.json');
+    return this.http.get('assets/actives/rewards/rewards.json');
   }
 
   public getRewardData(): Observable<{
