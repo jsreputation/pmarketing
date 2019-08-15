@@ -31,6 +31,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
     this.data.subscribe((data: IData) => {
       this.dataTable = data.rows.map((row: (string | number)[]) => {
+        // data conversion to markers mode format
         return [
           +row[1], +row[2], row[0], row[3]
         ];
@@ -53,6 +54,13 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private loadScript(): Promise<void> {
+    // don't load it more than once.
+    if (typeof google !== 'undefined' &&
+      typeof google.charts !== 'undefined' &&
+      typeof google.visualization !== 'undefined') {
+      return Promise.resolve();
+    }
+
     const body: HTMLBodyElement = document.body as HTMLBodyElement;
     const script: HTMLScriptElement = document.createElement('script');
     const p = new Promise<void>((resolve) => {
