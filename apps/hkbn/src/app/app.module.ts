@@ -11,7 +11,6 @@ import {
   CognitoModule,
   LoyaltyModule,
   OauthModule,
-  PopupComponent,
   ProfileModule,
   RewardsModule,
   UtilsModule,
