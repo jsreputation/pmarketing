@@ -3,7 +3,7 @@
 		<qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
 		<h4>Present this QR code to the cashier to complete your transaction.</h4>
 	</div>
-	<button *ngIf="rewardId" mat-stroked-button color="primary" class="redeem-btn" (click)="onCancel()">
+	<button mat-stroked-button color="primary" class="redeem-btn" (click)="onCancel()">
 		Cancel
 	</button>
 </div>
