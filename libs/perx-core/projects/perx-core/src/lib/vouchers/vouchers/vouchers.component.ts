@@ -29,17 +29,12 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input('data')
   public vouchers$: Observable<IVoucher[]>;
 
+  @Input()
+  public mapping: StatusLabelMapping;
+
   public repeatGhostCount: number = 10;
 
   constructor(private vouchersService: VouchersService) { }
-
-  public mapping: StatusLabelMapping = {
-    issued: 'Approved',
-    redeemed: 'Redeemed',
-    expired: 'Expired',
-    reserved: 'Pending',
-    released: 'Declined',
-  };
 
   public ngOnInit(): void {
     if (!this.vouchers$) {
