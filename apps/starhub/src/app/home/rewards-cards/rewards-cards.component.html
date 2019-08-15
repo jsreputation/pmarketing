@@ -1,0 +1,12 @@
+<mat-card *ngFor="let reward of rewards" matRipple (click)="selected(reward)">
+    <img mat-card-image [src]="reward.rewardBanner">
+    <mat-card-content>
+        <div>
+            <h1>{{reward.name}}</h1>
+            <h2>{{reward.merchantName}}</h2>
+        </div>
+        <div class="icon">
+            <mat-icon>arrow_forward</mat-icon>
+        </div>
+    </mat-card-content>
+</mat-card>

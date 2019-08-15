@@ -11,7 +11,7 @@
 				<mat-label i18n="@@static-name">Name</mat-label>
 				<input matInput i18n-placeholder="@@static-name" placeholder="Name" formControlName="name" required>
 				<mat-error *ngIf="signupForm.get('name').hasError('required')">
-					Name is <strong>required</strong>
+					<span i18n="@@static-name-is">	Name is </span><strong i18n="@@required">required</strong>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field class="full-width__input">
@@ -25,27 +25,27 @@
 				<mat-label i18n="@@static-mobile-no">Mobile No</mat-label>
 				<input matInput i18n-placeholder="@@static-mobile-no" placeholder="Mobile No" formControlName="mobileNo" type="number" required>
 				<mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
-					Mobile No is <strong>required</strong>
+					<span i18n="@@static-mobile-no-is">	Mobile No is </span><strong i18n="@@required">required</strong>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Password</mat-label>
 				<input matInput i18n-placeholder="@@static-password" placeholder="Password" formControlName="password" type="password" required>
 				<mat-error *ngIf="signupForm.get('password').hasError('required')">
-					Password is <strong>required</strong>
+					<span i18n="@@password-is">Password is </span><strong i18n="@@required">required</strong>
 				</mat-error>
 				<mat-error *ngIf="signupForm.get('password').hasError('minlength')">
-					Password should be atleast 6 characters long
+					<span i18n="@@password-six-chars">Password should be atleast 6 characters long </span>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label i18n="@@static-password">Confirm Password</mat-label>
 				<input matInput i18n-placeholder="@@static-confirm-password" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
 				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
-					Confirm Password is <strong>required</strong>
+					<span i18n="@@confirm-password-is">Confirm Password is </span><strong i18n="@@required">required</strong>
 				</mat-error>
 				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
-					Password should be atleast 6 characters long
+					<span i18n="@@password-six-chars">Password should be atleast 6 characters long </span>
 				</mat-error>
 			</mat-form-field>
 			<div class="accept-terms">

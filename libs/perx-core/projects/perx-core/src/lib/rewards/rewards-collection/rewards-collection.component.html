@@ -23,7 +23,7 @@
           <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0 &&
                   reward.rewardPrice[0] as rewardPrice">
-            <span class="points overline">Price/Points</span>
+            <span class="points overline">{{rewardPrice.rewardAmount}} {{rewardPrice.rewardCurrency}}</span>
           </div>
         </mat-card-content>
       </mat-card>
