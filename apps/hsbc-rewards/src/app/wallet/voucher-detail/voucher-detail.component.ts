@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { VouchersService } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
+import { voucher } from 'src/assets/mock/vouchers';
+import { of } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-voucher-detail',
@@ -9,19 +12,23 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./voucher-detail.component.scss']
 })
 export class VoucherDetailComponent implements OnInit {
-  voucherDetail;
+  voucher;
+
   constructor(
     private voucherServe: VouchersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
-    this.route.params.pipe(switchMap((param)=>{
-      console.log(param);
+    this.voucher = this.route.params.pipe(switchMap((param) => {
       return this.voucherServe.get(param.id);
-    })).subscribe((val)=>{
-      console.log(val);
-    })
+    })).pipe(catchError(() => {
+      return of(voucher[0]);
+    }))
   }
 
+  reedEm() {
+    this.location.back();
+  }
 }

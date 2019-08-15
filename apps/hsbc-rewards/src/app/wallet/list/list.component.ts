@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Voucher, VouchersService, VoucherComponent, VoucherState } from '@perx/core';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -15,7 +15,8 @@ export class ListComponent implements OnInit {
   filter = "issued";
   constructor(
     private vouchersService: VouchersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.routeChanged = this.routeChanged.bind(this);
   }
@@ -36,5 +37,9 @@ export class ListComponent implements OnInit {
   routeChanged(param) {
     this.filter = param.id === 'history' ? VoucherState.redeemed : VoucherState.issued;
     return this.vouchersService.getAll()
+  }
+
+  routeNavigate(route) {
+    this.router.navigate([`voucher/${route}`]);
   }
 }
