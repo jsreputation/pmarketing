@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'voucher', component: VoucherComponent },
   { path: 'locations', component: LocationsComponent },
   { path: 'tnc', component: TncComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'home' }
+  // { path: '', pathMatch: 'full', redirectTo: 'home' }
 ];
 
 @NgModule({
