@@ -1,9 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { RewardService } from '@cl-core/http-services/reward.service';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
+import { RewardsService } from '@cl-core/services/rewards.service';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -17,7 +17,7 @@ export class RewardDetailPageComponent implements  AfterViewInit {
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
-  constructor(private rewardsService: RewardService,
+  constructor(private rewardsService: RewardsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
   }
