@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
+.card {
+  border: 2rem;
+}
