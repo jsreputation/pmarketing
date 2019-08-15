@@ -123,7 +123,7 @@ export class NewRewardFormService {
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       rewardInfo: {
         redemptionType: 'QR Code'

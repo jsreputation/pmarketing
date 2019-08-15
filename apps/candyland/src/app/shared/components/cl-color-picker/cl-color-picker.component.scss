@@ -1,4 +1,5 @@
 @import "variables";
+
 .picker {
   &-wrap {
     border: 1px solid $border-color;
@@ -7,15 +8,14 @@
     padding: 1.4rem;
     display: flex;
     cursor: pointer;
+
     &:hover {
       border-color: transparent;
-
-
     }
+
     &:hover .picker-border {
       visibility: visible;
     }
-
   }
 
   &-border {
@@ -27,7 +27,7 @@
     border: 2px solid #000000;
     border-radius: 5px;
     visibility: hidden;
-    transition: .3s cubic-bezier(.35,0,.25,1);
+    transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
     z-index: 1;
   }
 

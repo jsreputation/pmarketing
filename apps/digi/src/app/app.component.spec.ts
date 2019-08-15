@@ -2,25 +2,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
-import { environment } from '../environments/environment';
+import { AuthenticationModule, UtilsModule, AuthenticationService } from '@perx/core';
 import { MatDialogModule } from '@angular/material';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
+  const authServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule,
         AuthenticationModule,
         MatDialogModule,
-        ProfileModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+        UtilsModule
       ],
       declarations: [AppComponent],
-      providers: [TokenStorage]
+      providers: [
+        {provide: AuthenticationService, useValue: authServiceStub}
+      ]
     }).compileComponents();
   }));
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { combineLatest } from 'rxjs';
 import { ProfileService } from '@perx/core';
 
 @Component({
@@ -22,21 +21,25 @@ export class RedeemComponent implements OnInit, PageAppearence {
   ) {}
 
   public ngOnInit(): void {
-    combineLatest([
-      this.profileService.whoAmI() ,
-      this.route.paramMap
-    ]).subscribe(
-        ([profile, params]) => {
-          const rewarIdParam = params.get('rewardId');
-          if (!rewarIdParam) {
-            return;
-          }
-          this.rewardId = +rewarIdParam;
-          this.rewardDetails = JSON.stringify(
-            { id: profile.id,
-              name: profile.lastName,
-              rewardId: this.rewardId
+
+    this.rewardId = +this.route.snapshot.paramMap.get('rewardId');
+
+    this.profileService.whoAmI().subscribe(
+        (profile) => {
+          if (this.rewardId) {
+            this.rewardDetails = JSON.stringify(
+              {
+                id: profile.id,
+                name: profile.lastName,
+                rewardId: this.rewardId
+              });
+          } else {
+            this.rewardDetails = JSON.stringify(
+            {
+              id: profile.id,
+              name: profile.lastName
             });
+          }
         }
     );
   }
