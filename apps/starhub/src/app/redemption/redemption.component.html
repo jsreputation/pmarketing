@@ -12,7 +12,7 @@
         <h1>Ask cashier to enter PIN</h1>
         <button mat-flat-button color="primary">Enter PIN</button>
     </div>
-    <div *ngIf="voucher.state === 'redeemed' || voucher.state === 'ecpired'" class="unavailable">
+    <div *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'" class="unavailable">
         <h1>Promo code</h1>
         <span class="code">{{voucher.code}}</span>
         <button mat-button color="primary">Copy the code</button>
