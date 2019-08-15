@@ -4,13 +4,14 @@ import {
   Component,
   forwardRef,
   Input,
+  OnChanges,
   OnDestroy,
-  OnInit
+  OnInit,
+  SimpleChanges
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DateAdapter } from '@angular/material';
 
 @Component({
   selector: 'cl-date-picker',
@@ -25,14 +26,16 @@ import { DateAdapter } from '@angular/material';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
+
   @Input() set value(obj) {
     if (obj) {
       const newDate = new Date(obj);
       this.writeValue(newDate);
     }
   }
+
   @Input() public placeholder = 'Choose date';
   @Input() public max: Date | null = null;
   @Input() public min: Date | null = null;
@@ -47,8 +50,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor(private dateAdapter: DateAdapter<Date>,
-              private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef) {
   }
 
   public ngOnInit(): void {
@@ -61,17 +63,24 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
       });
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.max && changes.max.currentValue && (changes.max.currentValue !== changes.max.previousValue)) {
+      this.max = changes.max.currentValue;
+    }
+    if (changes && changes.min && changes.min.currentValue && (changes.min.currentValue !== changes.min.previousValue)) {
+      this.min = changes.min.currentValue;
+    }
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  public get maxDate(): Date | null {
-    return this.max ? this.getPreviousDay(this.max) : null;
-  }
-
-  public get minDate(): Date | null {
-    return this.min ? this.getNextDay(this.min) : null;
+  public minMaxFilter(d: Date): boolean {
+    const from = this.min;
+    const to = this.max;
+    return !((!!from && (d <= from)) || (!!to && (d >= to)));
   }
 
   public registerOnChange(fn: any): void {
@@ -93,6 +102,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   public writeValue(obj: Date | null): void {
+    console.log(obj);
     if (obj) {
       this.control.patchValue(obj);
     } else {
@@ -100,13 +110,5 @@ export class DatePickerComponent implements OnInit, OnDestroy, ControlValueAcces
     }
     this.onChange(obj);
     this.cd.detectChanges();
-  }
-
-  private getNextDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), 1);
-  }
-
-  private getPreviousDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), -1);
   }
 }

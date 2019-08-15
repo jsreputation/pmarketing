@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
@@ -73,7 +73,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
-  private getDialogData(campaign): {title: string, subTitle: string, type?: string} {
+  private getDialogData(campaign): { title: string, subTitle: string, type?: string } {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     switch (type) {
       case 'sms':
