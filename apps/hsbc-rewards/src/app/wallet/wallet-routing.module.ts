@@ -6,11 +6,11 @@ const routes: Routes = [{
   path: '',
   component: WalletComponent,
   children: [{
-    path: ':id',
+    path: 'my-reward/:id',
     loadChildren: () => import('./list/list.module').then(mod => mod.ListModule)
   }, {
     path: '',
-    redirectTo: 'list',
+    redirectTo: 'my-reward/list',
     pathMatch: 'full'
   }]
 }];
