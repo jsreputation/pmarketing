@@ -2,10 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialog, MatDialogModule, MatSnackBar } from '@angular/material';
-import { NotificationService, PopupComponent } from '@perx/core';
+import { NotificationService, PopupComponent, UtilsModule } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
 import { SnackbarComponent } from './ui/snackbar/snackbar.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class MockNotificationService {
   get $popup(): Observable<any> {
@@ -27,6 +28,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MatDialogModule,
         SnackbarModule,
+        UtilsModule,
+        NoopAnimationsModule,
       ],
       declarations: [
         AppComponent

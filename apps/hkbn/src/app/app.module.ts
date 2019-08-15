@@ -91,10 +91,7 @@ const PROVIDERS = [
   providers: [
     ...PROVIDERS
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
