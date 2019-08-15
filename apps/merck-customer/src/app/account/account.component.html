@@ -5,8 +5,8 @@
       <div mat-card-avatar class="example-header-image">
         <img src="assets/avatar.png" alt="">
       </div>
-      <mat-card-title>{{profile.firstName}} {{profile.lastName}}</mat-card-title>
-      <mat-card-subtitle>{{profile.state}}</mat-card-subtitle>
+      <mat-card-title *ngIf="profile">{{profile.firstName}} {{profile.lastName}}</mat-card-title>
+      <mat-card-subtitle *ngIf="profile">{{profile.state}}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 

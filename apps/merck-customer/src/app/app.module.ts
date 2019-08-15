@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
   // LOCALE_ID,
-  NgModule } from '@angular/core';
+  NgModule
+} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
