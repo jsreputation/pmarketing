@@ -13,7 +13,7 @@ const routes: Routes = [{
     loadChildren: () => import('./redemption-booking/redemption-booking.module').then(mod => mod.RedemptionBookingModule)
   }, {
     path: 'success',
-    loadChildren: () => import('./susscessfull-redemption/susscessfull-redemption.module').then(mod => mod.SusscessfullRedemptionModule)
+    loadChildren: () => import('./successful-redemption/successful-redemption.module').then(mod => mod.SuccessfulRedemptionModule)
   }]
 }];
 

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SusscessfullRedemptionComponent } from './susscessfull-redemption.component';
+import { SuccessfulRedemptionComponent } from './successful-redemption.component';
 
 const routes: Routes = [{
   path: '',
-  component: SusscessfullRedemptionComponent
+  component: SuccessfulRedemptionComponent
 }];
 
 @NgModule({

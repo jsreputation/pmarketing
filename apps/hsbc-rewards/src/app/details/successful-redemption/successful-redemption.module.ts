@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SusscessfullRedemptionRoutingModule } from './susscessfull-redemption-routing.module';
-import { SusscessfullRedemptionComponent } from './susscessfull-redemption.component';
+import { SusscessfullRedemptionRoutingModule } from './successful-redemption-routing.module';
+import { SuccessfulRedemptionComponent } from './successful-redemption.component';
 import { HeaderModule } from '../../header/header.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [SusscessfullRedemptionComponent],
+  declarations: [SuccessfulRedemptionComponent],
   imports: [
     CommonModule,
     SusscessfullRedemptionRoutingModule,
@@ -15,4 +15,4 @@ import { SharedModule } from '../../shared/shared.module';
     SharedModule
   ]
 })
-export class SusscessfullRedemptionModule { }
+export class SuccessfulRedemptionModule { }
