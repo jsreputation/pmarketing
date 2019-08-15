@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { CreateEngagementPopupComponent } from '@cl-shared';
 export enum DashboardGameCardName {
-  engagement = 'engagement',
-  campaign = 'campaign',
-  reward = 'reward'
+  ENGAGEMENT = 'engagement',
+  CAMPAIGN = 'campaign',
+  REWARD = 'reward'
 }
 @Component({
   selector: 'cl-dashboard-game-card',
@@ -18,13 +18,16 @@ export class DashboardGameCardComponent {
               private router: Router) { }
 
   public clickToLink(name: string): void {
-    const listActions = {
-      [DashboardGameCardName.engagement]: this.openDialogCreate.bind(this),
-      [DashboardGameCardName.campaign]: this.goToCampaign.bind(this),
-      [DashboardGameCardName.reward]: this.goToRewardNew.bind(this),
-    };
-    // tslint:disable
-    (typeof listActions[name] === 'function') && listActions[name]();
+    switch (name) {
+      case `${DashboardGameCardName.ENGAGEMENT}`:
+        return this.openDialogCreate();
+      case `${DashboardGameCardName.CAMPAIGN}`:
+        return this.goToCampaign();
+      case `${DashboardGameCardName.REWARD}`:
+        return this.goToRewardNew();
+      default:
+        return console.error(`unknown name: ${name}`);
+    }
   }
 
   private goToRewardNew(): void {
