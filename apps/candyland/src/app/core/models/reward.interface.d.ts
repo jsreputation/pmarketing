@@ -6,4 +6,5 @@ declare interface Reward {
   current: number;
   total: number;
   prprobability?: number;
+  category: string;
 }
