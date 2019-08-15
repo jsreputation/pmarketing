@@ -77,7 +77,11 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       },
       err =>  {
         console.error('ResetPassword: ' + err);
-        this.notificationService.addSnack(err.code);
+        if (err instanceof HttpErrorResponse) {
+           this.notificationService.addSnack(err.statusText);
+        } else {
+          this.notificationService.addSnack(err.code);
+        }
       });
   }
   private sendLoginCall(password: string): void {
