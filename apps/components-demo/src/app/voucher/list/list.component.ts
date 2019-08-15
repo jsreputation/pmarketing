@@ -3,7 +3,6 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Voucher, VouchersService } from '@perx/core';
 import { mock } from '../mock';
 
@@ -18,6 +17,9 @@ export class ListComponent implements OnInit {
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
-    this.data = this.vouchersService.getAll().pipe(catchError(() => of(mock)));
+    this.vouchersService.getAll().subscribe(
+      (vouchers) => this.data = of(vouchers),
+      () => this.data = of(mock)
+    );
   }
 }
