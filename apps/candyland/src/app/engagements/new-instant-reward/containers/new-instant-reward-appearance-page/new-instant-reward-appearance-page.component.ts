@@ -1,14 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
-import { ControlValueService } from '@cl-core/services/control-value.service';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { ControlValueService, RewardsService, RoutingStateService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',

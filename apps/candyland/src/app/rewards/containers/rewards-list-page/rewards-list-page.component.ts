@@ -5,6 +5,7 @@ import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engag
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 
 @Component({
   selector: 'cl-rewards-list-page',
@@ -37,15 +38,14 @@ export class RewardsListPageComponent implements AfterViewInit {
     });
   }
   // tslint:disable
-  public actionHandler(action: {action: 'edit' | 'duplicate' | 'delete' | 'useAsCaption', data: Reward}): void {
+  public actionHandler(action: {action: RewardsTableMenuActions, data: Reward}): void {
     const listActions = {
-      edit: this.editReward.bind(this)
+      [RewardsTableMenuActions.edit]: this.editReward.bind(this)
     };
     (typeof listActions[action.action] === 'function') && listActions[action.action](action.data);
   }
 
   private editReward(reward: Reward): void {
-    console.log(reward);
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
   }
 

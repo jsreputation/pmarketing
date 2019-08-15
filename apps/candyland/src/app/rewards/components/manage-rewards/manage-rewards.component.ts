@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
@@ -7,15 +7,16 @@ import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merch
 import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsService } from '@cl-core/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-manage-rewards',
   templateUrl: './manage-rewards.component.html',
   styleUrls: ['./manage-rewards.component.scss']
 })
-export class ManageRewardsComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() public reward: Reward;
+export class ManageRewardsComponent implements OnInit, OnDestroy {
+  @Input() public reward$: Observable<Reward>;
   @Output() public actionCancel = new EventEmitter();
   @Output() public actionSave = new EventEmitter();
   public form: FormGroup;
@@ -30,6 +31,7 @@ export class ManageRewardsComponent implements OnInit, OnChanges, OnDestroy {
     this.rewardService.getRewardsOptions()
       .subscribe((config: OptionConfig[]) => this.config = config);
     this.initForm();
+    this.patchValue();
   }
 
   public ngOnDestroy(): void {
@@ -79,7 +81,7 @@ export class ManageRewardsComponent implements OnInit, OnChanges, OnDestroy {
           this.updateForm();
         }
       });
-    if (!this.reward) {
+    if (!this.reward$) {
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
     }
   }
@@ -89,17 +91,20 @@ export class ManageRewardsComponent implements OnInit, OnChanges, OnDestroy {
     this.cd.detectChanges();
   }
 
-  public ngOnChanges(): void {
-    this.patchValue();
-  }
-
   private patchValue(): void {
-    if (this.reward) {
-      this.form.patchValue({
-        name: this.reward.name, rewardInfo: {
-          image: this.reward.image, category: this.reward.category, rewardType: this.reward.type,
-        }
-      });
+    if (this.reward$) {
+      this.reward$
+        .pipe(
+          untilDestroyed(this)
+        )
+        .subscribe((reward) => {
+          this.form.patchValue({
+            name: reward.name, rewardInfo: {
+              image: reward.image, category: reward.category, rewardType: reward.type,
+            }
+          });
+        });
+
     }
   }
 }
