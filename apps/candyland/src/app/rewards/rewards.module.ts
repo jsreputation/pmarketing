@@ -52,6 +52,8 @@ import {
 } from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
 import { VouchersProgressBarModule } from '@cl-shared/components/vouchers-progress-bar/vouchers-progress-bar.module';
 import { NewRewardFormService } from './services/new-reward-form.service';
+import { ManageRewardsComponent } from './components/manage-rewards/manage-rewards.component';
+import { EditRewardComponent } from './containers/edit-reward/edit-reward.component';
 
 @NgModule({
   providers: [
@@ -71,7 +73,9 @@ import { NewRewardFormService } from './services/new-reward-form.service';
     RewardLimitsPreviewComponent,
     RewardVouchersPreviewComponent,
     RewardReplenishPopupComponent,
-    RewardVoucherCodeFormGroupComponent
+    RewardVoucherCodeFormGroupComponent,
+    ManageRewardsComponent,
+    EditRewardComponent
   ],
   imports: [
     CommonModule,
