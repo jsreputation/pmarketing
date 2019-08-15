@@ -1,0 +1,21 @@
+<h1>Saved rewards</h1>
+<mat-card *ngFor="let voucher of vouchers | async" (click)="voucherSelected(voucher)" matRipple>
+    <mat-card-header>
+        <img mat-card-avatar [src]="voucher.thumbnailImg">
+        <mat-card-title>{{voucher.name}}</mat-card-title>
+    </mat-card-header>
+    <div class="icon">
+        <mat-icon>arrow_forward</mat-icon>
+    </div>
+</mat-card>
+<button>See more</button>
+<h1>Past rewards</h1>
+<mat-card *ngFor="let voucher of redeemedVouchers | async">
+    <mat-card-header>
+        <img mat-card-avatar [src]="voucher.thumbnailImg">
+        <mat-card-title>{{voucher.name}}</mat-card-title>
+    </mat-card-header>
+    <div class="disabled-icon">
+        <mat-icon>arrow_forward</mat-icon>
+    </div>
+</mat-card>
