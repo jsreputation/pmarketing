@@ -1,7 +1,9 @@
 export enum VoucherState {
   issued = 'issued',
   redeemed = 'redeemed',
-  expired = 'expired'
+  expired = 'expired',
+  reserved = 'reserved',
+  released = 'released',
 }
 
 export enum RedemptionType {
@@ -18,9 +20,9 @@ interface IVoucherDescription {
   tag: string[];
 }
 
-export interface StatusLabelMapping {
-  [index: string]: string;
-}
+export type StatusLabelMapping = {
+  [key in VoucherState]: string;
+};
 
 /*
  * Model from Whistler data model

@@ -83,11 +83,14 @@ mat-icon {
 .ribbon {
   position: absolute;
   font-size: 1rem;
+  font-style: normal;
+  font-weight: normal;
   width: 5.7rem;
-  top: 8rem;
-  right: 1.2rem;
+  bottom: 1.2rem;
+  right: 1.6rem;
   text-align: center;
   line-height: 1.6rem;
+  letter-spacing: 0.02rem;
 }
 
 .ribbon.redeemed {
