@@ -33,6 +33,7 @@ export interface IVoucher {
   rewardBanner: string;
   merchantImg: string;
   merchantName: string;
+  merchantId?: number;
   expiry: Date | null;
   redemptionDate?: Date | null;
   description: IVoucherDescription[];
