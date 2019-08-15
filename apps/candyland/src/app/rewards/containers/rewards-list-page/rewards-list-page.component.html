@@ -12,7 +12,9 @@
       </ng-container>
     </cl-table-filters>
     <!--table-->
-    <cl-rewards-list [dataSource]="dataSource"></cl-rewards-list>
+    <cl-rewards-list [dataSource]="dataSource"
+                     (itemAction)="actionHandler($event)"
+    ></cl-rewards-list>
     <!--paginator-->
     <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>
