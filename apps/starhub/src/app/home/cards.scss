@@ -1,0 +1,33 @@
+@import '../icon.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+}
+
+mat-card {
+  max-width: 31.5rem;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .icon {
+    @include icon;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

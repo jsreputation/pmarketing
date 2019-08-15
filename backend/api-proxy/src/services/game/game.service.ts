@@ -28,7 +28,7 @@ export interface IUpdateGame extends IEngagement {
 
 @Injectable()
 export class GameService implements IEngagementService {
-    private baseUrl: string = 'https://api-games.whistler.perxtech.org/game';
+    private baseUrl: string = 'https://api.whistler.perxtech.org/game';
     constructor(private http: HttpService) { }
 
     public getEngagements(): Observable<IListResponse<IGame>> {
@@ -59,7 +59,7 @@ export class GameService implements IEngagementService {
 
     private get headers(): { [key: string]: string } {
         return {
-            Authorization: 'Basic ADMHKPOTOGMOGZHNHTJY:tAP1jAJm_lCVPuwfOScHHW8ZvwYkiusrXeoQm2MAYSS4QHCRqAIsaQ',
+            Authorization: 'Basic AALZIKJPKJHGIRETLLHV:8Rvq88InMaB3-Or_6U_pKsiTgjLf3kTo-E7xL3kmTvXGVIDrP8hF2A',
             'Content-Type': 'application/vnd.api+json',
         };
     }
