@@ -1,0 +1,16 @@
+<mat-toolbar class="mat-elevation-z4">
+    <mat-toolbar-row class="top-row">
+        <div class="stars">★ ★</div>
+        <div class="reward">
+            <h2>My Membership,</h2>
+            <h1>Gold</h1>
+        </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row mat-tab-nav-bar>
+        <a mat-tab-link routerLink="discover">Discover</a>
+        <a mat-tab-link routerLink="vouchers">My Rewards</a>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>
