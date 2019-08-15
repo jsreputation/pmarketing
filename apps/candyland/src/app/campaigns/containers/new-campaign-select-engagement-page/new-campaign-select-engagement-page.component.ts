@@ -42,7 +42,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public ngOnDestroy(): void {
   }
 
-  public createNewEngagement() {
+  public createNewEngagement(): void {
     this.dialog.open(CreateEngagementPopupComponent);
   }
 
