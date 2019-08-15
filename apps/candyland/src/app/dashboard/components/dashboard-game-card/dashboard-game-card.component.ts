@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { CreateEngagementPopupComponent } from '@cl-shared';
 export enum DashboardGameCardName {
   engagement = 'engagement',
   campaign = 'campaign',
