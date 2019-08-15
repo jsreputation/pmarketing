@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-bottom: 6rem;
 
   a {
     min-width: 16rem;
@@ -9,3 +10,26 @@
     text-decoration: none;
   }
 }
+
+.actions-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: #202c46;
+  width: 100%;
+  height: 6rem;
+  padding: 1rem 1.2rem;
+  box-sizing: border-box;
+  text-align: center;
+
+  button {
+    width: 100%;
+    max-width: 60rem;
+    margin: auto;
+    height: 100%;
+    padding: 0;
+    color: #fff;
+    text-transform: uppercase;
+  }
+}
+

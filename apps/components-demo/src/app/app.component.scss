@@ -22,24 +22,3 @@
   width: 100%;
   overflow: scroll;
 }
-
-.actions-container {
-  display: flex;
-  background: #202c46;
-  position: relative;
-  width: 100%;
-  height: 6rem;
-  padding: 1rem 1.2rem;
-  box-sizing: border-box;
-  text-align: center;
-
-  button {
-    width: 100%;
-    max-width: 60rem;
-    margin: auto;
-    height: 100%;
-    padding: 0;
-    color: #fff;
-    text-transform: uppercase;
-  }
-}
