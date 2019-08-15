@@ -33,12 +33,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe(data => {
         this.campaign = data;
-        console.log('campaign', this.campaign);
       });
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
-        console.log('form', value);
         this.store.updateCampaign(value);
     });
   }
