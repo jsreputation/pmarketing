@@ -51,7 +51,7 @@ describe('RegistrationFormComponent', () => {
     component.registrationForm.setValue({
       firstName: 'John',
       lastName: 'Doe',
-      phone: '88005553535',
+      phone: '123456',
       email: 'email@gmail.com',
       password: 'qwerty123',
       confirmPassword: 'qwerty123',

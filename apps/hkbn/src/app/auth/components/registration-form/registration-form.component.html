@@ -43,6 +43,9 @@
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
     </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -50,6 +53,9 @@
     <input type="password" matInput formControlName="confirmPassword">
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
+    </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'notEqual'">
       {{"PASSWORD_NOT_MATCH" | translate}}
