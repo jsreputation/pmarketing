@@ -11,7 +11,7 @@
     "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
-    "build:components-demo:prod": "echo nothing here",
+    "build:components-demo:prod": "lerna run build:lib && lerna run build:components-demo:prod --",
     "build:hkbn:prod": "lerna run build:lib && lerna run build:hkbn:prod --",
     "build:hsbc-rewards:prod": "echo nothing here",
     "build:merck-customer:prod": "lerna run build:lib && lerna run build:merck-customer:prod --",

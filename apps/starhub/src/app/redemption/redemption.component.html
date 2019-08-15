@@ -1,0 +1,31 @@
+<button class="icon" routerLink="/voucher" [queryParams]="{id: voucher.id}">
+    <mat-icon>arrow_backward</mat-icon>
+</button>
+<img [src]="voucher.rewardBanner" lcass="banner">
+<div class="redeem-block">
+    <div *ngIf="voucher.redemptionType === 'txtCode'" class="code-redemption">
+        <h1>Promo code</h1>
+        <span class="code">{{voucher.code}}</span>
+        <button mat-button color="primary">Copy the code</button>
+    </div>
+    <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
+        <h1>Ask cashier to enter PIN</h1>
+        <button mat-flat-button color="primary">Enter PIN</button>
+    </div>
+    <div *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'" class="unavailable">
+        <h1>Promo code</h1>
+        <span class="code">{{voucher.code}}</span>
+        <button mat-button color="primary">Copy the code</button>
+    </div>
+</div>
+<div class="detail">
+    <img [src]="voucher.merchantImg">
+    <h1>{{voucher.name}}</h1>
+    <h2>Expires on {{voucher.expiry | date: 'shortDate'}}</h2>
+</div>
+<div class="action">
+    <button mat-button color="primary">Terms & Conditions</button>
+    <button mat-button color="primary">CANCEL</button>
+    <button mat-flat-button color="primary">Try Again</button>
+    <button mat-flat-button color="primary">BACK TO MY LIST</button>
+</div>
