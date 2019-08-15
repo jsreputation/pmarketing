@@ -5,6 +5,7 @@ import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToo
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -22,6 +23,7 @@ describe('HeaderComponent', () => {
         MatButtonModule,
         NoopAnimationsModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [HeaderComponent]
     })

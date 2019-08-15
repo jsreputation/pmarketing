@@ -16,13 +16,38 @@
   z-index: 2;
 
   .loc-card {
-    background-color: #FFF;
+    background-color: #fff;
     margin: 0 2rem 2rem;
   }
 }
 
-mat-card-actions {
+mat-card-content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 1.6rem;
+
+  a {
+    color: #0f69af;
+    align-self: baseline;
+    text-decoration: none;
+  }
+
+  .phone {
+    display: flex;
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+
+    mat-icon {
+      font-size: 1.4rem;
+      height: 1.4rem;
+      width: 1.4rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  .location {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+  }
 }

@@ -5,8 +5,8 @@
   </header>
 
   <mat-card>
-    <h2 class="sign-up">Registered account</h2>
-    <a class="register-message" [routerLink]="'/login'">Already have an account? Click here to login</a>
+    <h2 class="sign-up">{{"REGISTER" | translate}}</h2>
+    <a class="register-message" [routerLink]="'/login'">{{"ALREADY_HAVE_ACCOUNT" | translate}}</a>
 
     <hkbn-registration-form (formSubmit)="submitHandler($event)"></hkbn-registration-form>
   </mat-card>

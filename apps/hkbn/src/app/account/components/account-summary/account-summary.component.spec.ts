@@ -11,6 +11,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AccountSummaryComponent', () => {
   let component: AccountSummaryComponent;
@@ -27,6 +28,7 @@ describe('AccountSummaryComponent', () => {
         MatButtonModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [AccountSummaryComponent]
     })

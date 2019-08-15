@@ -10,7 +10,8 @@ import {
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
-  StampModule
+  StampModule,
+  UtilsModule
 } from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -37,6 +38,7 @@ import { LandingComponent } from './landing/landing.component';
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
+    UtilsModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,

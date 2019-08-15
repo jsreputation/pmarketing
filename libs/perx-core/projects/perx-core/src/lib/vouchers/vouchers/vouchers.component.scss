@@ -114,3 +114,36 @@ mat-icon {
   background: #FEAD9A;
   color: #330101;
 }
+
+.card-list-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+  }
+
+  .voucher-content {
+    .voucher-img__wrapper {
+      .img-placeholder {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .voucher-details {
+      .voucher-name {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .voucher-merchantName {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .voucher-date-details {
+        height: 1.6rem;
+      }
+    }
+  }
+}

@@ -47,7 +47,7 @@
     padding: 0;
 
     &-icon {
-      margin-right: .48rem;
+      margin-right: 0.48rem;
     }
 
     &-text {
@@ -85,16 +85,16 @@
     background: $white-color;
     border: dashed 1px rgba(62, 78, 115, 0.7);
     border-radius: 4px;
-    transition: .5s cubic-bezier(.35, 0, .25, 1);
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
     cursor: pointer;
     font-size: 1.4rem;
     font-weight: 500;
     color: $primary-color;
 
-    &:after {
+    &::after {
       content: '';
       opacity: 0;
-      transition: .5s cubic-bezier(.35, 0, .25, 1);
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
     }
   }
 
@@ -158,5 +158,4 @@
     margin-top: 1rem;
     padding: 0.8rem;
   }
-
 }

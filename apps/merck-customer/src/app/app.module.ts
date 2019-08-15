@@ -19,6 +19,7 @@ import {
   MatDialogModule,
   MatCardModule,
   MatListModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -49,7 +50,7 @@ import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
-import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen-toolbar.component';
+import { ConditionComponent } from './account/condition/condition.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,7 @@ import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen
     ProfileComponent,
     TransactionHistoryComponent,
     PrivacyPolicyComponent,
-    SubscreenToolbarComponent,
+    ConditionComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +93,7 @@ import { SubscreenToolbarComponent } from './account/subscreen-toolbar/subscreen
     MatIconModule,
     MatCardModule,
     MatListModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,

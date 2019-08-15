@@ -29,6 +29,8 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input('data')
   public vouchers$: Observable<IVoucher[]>;
 
+  public repeatGhostCount: number = 10;
+
   constructor(private vouchersService: VouchersService) { }
 
   public mapping: StatusLabelMapping = {
@@ -42,7 +44,7 @@ export class VouchersComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers =>  (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
+        map(vouchers => (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
       );
     }
   }

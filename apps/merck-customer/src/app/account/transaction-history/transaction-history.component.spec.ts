@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
-import { SubscreenToolbarComponent } from '../subscreen-toolbar/subscreen-toolbar.component';
 import {
   MatIconModule,
   MatToolbarModule
@@ -17,7 +16,7 @@ describe('TransactionHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionHistoryComponent, SubscreenToolbarComponent ],
+      declarations: [ TransactionHistoryComponent ],
       imports: [ MatIconModule, MatToolbarModule ],
       providers: [
         { provide: Location, useValue: locationStub }

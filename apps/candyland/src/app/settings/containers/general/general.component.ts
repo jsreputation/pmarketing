@@ -9,8 +9,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
-  public timeZones$: Observable<ISimpleValue[]>;
-  public currency$: Observable<ISimpleValue[]>;
+  public timeZones$: Observable<ITimeZone[]>;
+  public currency$: Observable<Currency[]>;
   public formGeneral: FormGroup;
   constructor(private settingsService: SettingsService,
               private fb: FormBuilder) { }

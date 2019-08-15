@@ -2,13 +2,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PuzzlesComponent } from './puzzles.component';
 import { MatListModule } from '@angular/material';
-import { CampaignModule, VouchersModule, PuzzlesModule, StampModule } from '@perx/core';
+import { CampaignModule, VouchersModule, PuzzlesModule, StampModule, StampService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from '../../environments/environment';
+import { of } from 'rxjs';
 
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
   let fixture: ComponentFixture<PuzzlesComponent>;
+  const stampsServiceStub = {
+    getCards: () => of([])
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,12 +20,13 @@ describe('PuzzlesComponent', () => {
         MatListModule,
         PuzzlesModule,
         NoopAnimationsModule,
-        CampaignModule.forRoot({ env: environment }),
-        VouchersModule.forRoot({ env: environment }),
-        StampModule.forRoot({ env: environment }),
+        CampaignModule,
+        VouchersModule,
+        StampModule,
         RouterTestingModule,
       ],
       providers: [
+        {provide: StampService, useValue: stampsServiceStub}
       ]
     })
       .compileComponents();
