@@ -59,7 +59,7 @@ export class GameService implements IEngagementService {
 
     private get headers(): { [key: string]: string } {
         return {
-            Authorization: 'Basic AGKIMUMPIOJKJTKOQHQD:SnZNkMLFMyLfWw-OTfdmvb-ijNrtH3-cbdv4PYwHdyMeeIZdxyZwCw',
+            Authorization: 'Basic AALZIKJPKJHGIRETLLHV:8Rvq88InMaB3-Or_6U_pKsiTgjLf3kTo-E7xL3kmTvXGVIDrP8hF2A',
             'Content-Type': 'application/vnd.api+json',
         };
     }
