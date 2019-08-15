@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '@perx/core';
+import { IProfile, ProfileService } from '@perx/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'hkbn-account',
@@ -7,14 +8,14 @@ import { ProfileService } from '@perx/core';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public accountData: any;
+  public accountData: BehaviorSubject<IProfile> = new BehaviorSubject<IProfile>(null);
 
   constructor(private profileService: ProfileService) {
   }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe((profile) => {
-      this.accountData = profile || {};
+      this.accountData.next(profile);
     });
   }
 }

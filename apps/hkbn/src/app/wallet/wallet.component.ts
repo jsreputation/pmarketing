@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { IVoucher } from '../../../../../libs/perx-core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 
 @Component({
   selector: 'hkbn-wallet',
