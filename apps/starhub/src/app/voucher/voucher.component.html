@@ -1,0 +1,12 @@
+<button class="icon" routerLink="/home/vouchers">
+    <mat-icon>arrow_backward</mat-icon>
+</button>
+<img [src]="voucher.rewardBanner" class="banner">
+<img [src]="voucher.merchantImg" class="badge">
+<h1>{{voucher.name}}</h1>
+<h2>{{voucher.merchantName}}</h2>
+<h1>How to use</h1>
+{{howToUse}}
+<h1>Location</h1>
+<a mat-button color="primary" [routerLink]="[ '/locations' ]" [queryParams]="{mid:voucher.merchantId}">See all 5 locations</a>
+<button mat-flat-button color="primary" [routerLink]="[ '/redemption' ]" [queryParams]="{id:voucher.id}">Redeem now</button>
