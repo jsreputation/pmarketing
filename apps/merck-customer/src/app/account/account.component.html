@@ -12,18 +12,21 @@
 
   <mat-action-list class="btn-container">
     <button
+      i18n="@@static-profile"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/profile')"
     >Profile</button>
 
     <button
+      i18n="@@static-transaction-history"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/transaction-history')"
     >Transaction History</button>
 
     <button
+      i18n="@@static-privacy-policy"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/privacy-policy')"
@@ -33,6 +36,7 @@
 
   <mat-action-list class="btn-container">
     <button
+      i18n="@@static-logout"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onLogout()"
