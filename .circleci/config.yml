@@ -166,13 +166,19 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
-            if [ $APP == 'bpi'  ] || [ $APP == 'merck-customer' ]
+            if [ $APP == 'bpi'  ] || \
+               [ $APP == 'merck-customer' ] || \
+               [ $APP == 'hkbn' ]
             then
               echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
             fi
             if [ $APP == 'candyland' ]
             then
               echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
+            fi
+            if [ $APP == 'merck-merchant' ]
+            then
+              echo 'export HELM_APP="$APP-scanner"' >> $BASH_ENV
             fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
