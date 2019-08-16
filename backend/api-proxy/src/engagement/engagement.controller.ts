@@ -1,17 +1,26 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { EngagementDto, EngagementType, UpdateEngagementDto } from './engagement.dto';
-import { Observable, OperatorFunction, merge } from 'rxjs';
+import { Observable, OperatorFunction, merge, of } from 'rxjs';
 import { IListResponse, ISingleResponse } from '../services/response.model';
 import { GameService, IGame } from '../services/game/game.service';
-import { map, scan } from 'rxjs/operators';
-import { IEntity } from 'src/services/entity.model';
-import { IEngagementService } from 'src/services/iengagement.service';
-import { IPostRequest, IPatchRequest } from 'src/services/request.model';
-import { IEngagement } from 'src/services/engagement.model';
+import { map, scan, catchError } from 'rxjs/operators';
+import { IEntity } from '../services/entity.model';
+import { IEngagementService } from '../services/iengagement.service';
+import { IPostRequest, IPatchRequest } from '../services/request.model';
+import { IEngagement } from '../services/engagement.model';
+import { SurveyService } from '../services/survey/survey.service';
+import { LoyaltyService } from '../services/loyalty/loyalty.service';
+import { AxiosError } from 'axios';
+import { InstantOutcomeService } from '../services/instant-outcome/instant-outcome.service';
 
 @Controller('engagements')
 export class EngagementController {
-    constructor(private gameService: GameService) { }
+    constructor(
+        private gameService: GameService,
+        private surveyService: SurveyService,
+        private loyaltyService: LoyaltyService,
+        private irService: InstantOutcomeService
+    ) { }
 
     @Get()
     public getAll(): Observable<IListResponse<EngagementDto>> {
@@ -34,6 +43,7 @@ export class EngagementController {
                             }),
                         };
                     }),
+                    catchError((err: AxiosError) => of(null))
                 ));
         }
         return merge<IListResponse<EngagementDto>>(...queries)
@@ -98,7 +108,10 @@ export class EngagementController {
 
     private get services(): { [key in EngagementType]: IEngagementService } {
         return {
-            game: this.gameService
+            game: this.gameService,
+            survey: this.surveyService,
+            stamps: this.loyaltyService,
+            instant_reward: this.irService
         };
     }
 
