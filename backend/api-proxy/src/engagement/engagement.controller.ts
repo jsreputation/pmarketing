@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpStatus, Headers } from '@nestjs/common';
 import { EngagementDto, EngagementType, UpdateEngagementDto } from './engagement.dto';
 import { Observable, OperatorFunction, merge, of } from 'rxjs';
 import { IListResponse, ISingleResponse } from '../services/response.model';
@@ -11,6 +11,7 @@ import { IEngagement } from '../services/engagement.model';
 import { SurveyService } from '../services/survey/survey.service';
 import { LoyaltyService } from '../services/loyalty/loyalty.service';
 import { InstantOutcomeService } from '../services/instant-outcome/instant-outcome.service';
+import { IncomingHttpHeaders } from 'http';
 
 @Controller('engagements')
 export class EngagementController {
@@ -22,7 +23,7 @@ export class EngagementController {
     ) { }
 
     @Get()
-    public getAll(): Observable<IListResponse<EngagementDto>> {
+    public getAll(@Headers() headers: IncomingHttpHeaders): Observable<IListResponse<EngagementDto>> {
         // list of queries (one per underlying service)
         const queries: Observable<IListResponse<EngagementDto>>[] = [];
 
@@ -30,7 +31,7 @@ export class EngagementController {
         // tslint:disable-next-line: forin
         for (const t in this.services) {
             const service: IEngagementService = this.services[t];
-            queries.push(service.getEngagements()
+            queries.push(service.getEngagements(headers)
                 .pipe(
                     // update each engagement with its type
                     map((res: IListResponse<IEngagement>): IListResponse<EngagementDto> => {
@@ -62,19 +63,26 @@ export class EngagementController {
     }
 
     @Post()
-    public postOne(@Body() request: IPostRequest<UpdateEngagementDto>): Observable<ISingleResponse<EngagementDto>> {
+    public postOne(
+        @Body() request: IPostRequest<UpdateEngagementDto>,
+        @Headers() headers: IncomingHttpHeaders
+    ): Observable<ISingleResponse<EngagementDto>> {
         const type: EngagementType = request.data.attributes.type;
         const service = this.getService(type);
         request.data.attributes.type = undefined;
-        return service.postEngagement(request)
+        return service.postEngagement(request, headers)
             .pipe(this.mappingFn(type));
     }
 
     @Get(':type/:id')
-    public getOne(@Param('type') type: string, @Param('id') id: number): Observable<ISingleResponse<EngagementDto>> {
+    public getOne(
+        @Param('type') type: string,
+        @Param('id') id: number,
+        @Headers() headers: IncomingHttpHeaders
+    ): Observable<ISingleResponse<EngagementDto>> {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
-        return service.getEngagement(id)
+        return service.getEngagement(id, headers)
             .pipe(this.mappingFn(typ));
     }
 
@@ -83,18 +91,23 @@ export class EngagementController {
         @Param('type') type: string,
         @Param('id') id: number,
         @Body() request: IPatchRequest<UpdateEngagementDto>,
+        @Headers() headers: IncomingHttpHeaders
     ): Observable<ISingleResponse<EngagementDto>> {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
         request.data.attributes.type = undefined;
-        return service.patchEngagement(id, request).pipe(this.mappingFn(typ));
+        return service.patchEngagement(id, request, headers).pipe(this.mappingFn(typ));
     }
 
     @Delete(':type/:id')
-    public deleteOne(@Param('type') type: string, @Param('id') id: number): Observable<void> {
+    public deleteOne(
+        @Param('type') type: string,
+        @Param('id') id: number,
+        @Headers() headers: IncomingHttpHeaders
+    ): Observable<void> {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
-        return service.deleteEngagement(id);
+        return service.deleteEngagement(id, headers);
     }
 
     private getService(type: EngagementType): IEngagementService {
