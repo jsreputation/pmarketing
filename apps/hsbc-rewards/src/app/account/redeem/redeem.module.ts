@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RedeemComponent } from './redeem.component';
-import { DinamicCreateService } from 'src/app/shared/service/dinamic-create.service';
+import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
 
 @NgModule({
   declarations: [RedeemComponent],
@@ -10,7 +10,7 @@ import { DinamicCreateService } from 'src/app/shared/service/dinamic-create.serv
   ],
   entryComponents: [RedeemComponent],
   providers: [
-    DinamicCreateService
+    DynamicCreateService
   ]
 })
 export class RedeemModule { }
