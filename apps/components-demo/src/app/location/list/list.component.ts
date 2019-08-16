@@ -13,7 +13,6 @@ export class ListComponent implements OnInit {
 
   private position: Observable<Position>;
   public sorting: boolean = true;
-  public currentList: string = 'list1';
 
   constructor(private geoLocationService: GeoLocationService) {}
 
