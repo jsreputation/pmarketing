@@ -18,3 +18,13 @@ export interface IReward {
   termsAndConditions: string;
   howToRedeem: string;
 }
+
+export interface ICatalog {
+  id: number;
+  name: string;
+  description: string;
+  catalogThumbnail: string;
+  catalogBanner: string;
+  rewardCount: number;
+  rewards?: IReward[];
+}
