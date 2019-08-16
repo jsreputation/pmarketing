@@ -2,8 +2,10 @@
   <mat-list-item class="diabetes-section">
     <p matLine class="label">Diabetes Condition</p>
     <mat-slide-toggle
+      *ngIf="profile"
       [checked]="isChecked('diabetes')"
       (change)="toggleDiabetesButtonGroupVisibilty($event)"
+      color="primary"
     ></mat-slide-toggle>
   </mat-list-item>
 
@@ -13,12 +15,14 @@
         [checked]="isDiabetesState('diabetes')"
         value="diabetes"
         (change)="onDiabetesConditionChanged($event)"
+        color="primary"
       >Diabetes</mat-radio-button>
 
       <mat-radio-button
         [checked]="isDiabetesState('pre_diabetes')"
         value="pre_diabetes"
         (change)="onDiabetesConditionChanged($event)"
+        color="primary"
       >Pre-Diabetes</mat-radio-button>
     </mat-radio-group>
   </mat-list-item>
@@ -28,8 +32,10 @@
   <mat-list-item>
     <p matLine class="label">Hypertension</p>
     <mat-slide-toggle
+      *ngIf="profile"
       [checked]="isChecked('hypertension')"
       (change)="onHypertensionConditionChanged($event)"
+      color="primary"
     ></mat-slide-toggle>
   </mat-list-item>
 

@@ -69,6 +69,7 @@ import {
 import {
   NewCampaignStampRuleFormGroupComponent
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 @NgModule({
   providers: [
@@ -96,6 +97,7 @@ import {
   ],
   imports: [
     CommonModule,
+    CreateEngagementPopupModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
