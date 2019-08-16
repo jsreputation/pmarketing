@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewRef, ComponentRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService, AuthenticationService } from '@perx/core';
-import { DinamicCreateService } from '../shared/service/dinamic-create.service';
+import { DynamicCreateService } from '../shared/service/dynamic-create.service';
 import { DetailAgreementComponent } from '../details/detail-agreement/detail-agreement.component';
 import { Router } from '@angular/router';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -16,7 +16,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private buildForm: FormBuilder,
     private personalProfile: ProfileService,
-    private dinamicCreateService: DinamicCreateService,
+    private dynamicCreateService: DynamicCreateService,
     private auth: AuthenticationService,
     private router: Router
   ) { }
@@ -35,18 +35,18 @@ export class AccountComponent implements OnInit {
   }
 
   public displayAgreement(): void {
-    const comp = this.dinamicCreateService.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
+    const comp = this.dynamicCreateService.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
     this.closeModal(comp);
   }
 
   public displayReedemReward(): void {
-    const comp = this.dinamicCreateService.createComponent<RedeemComponent>(RedeemComponent);
+    const comp = this.dynamicCreateService.createComponent<RedeemComponent>(RedeemComponent);
     this.closeModal(comp);
   }
 
   public closeModal(comp: ComponentRef<any>): void {
     comp.instance.closeModal.subscribe(() => {
-      this.dinamicCreateService.removeComponent(comp);
+      this.dynamicCreateService.removeComponent(comp);
     });
   }
 

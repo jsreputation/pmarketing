@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import {
+  // LOCALE_ID,
+  NgModule
+} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +54,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
+import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 
 @NgModule({
   declarations: [
@@ -73,6 +77,7 @@ import { ConditionComponent } from './account/condition/condition.component';
     TransactionHistoryComponent,
     PrivacyPolicyComponent,
     ConditionComponent,
+    TransactionPipe,
   ],
   imports: [
     BrowserModule,
@@ -107,7 +112,8 @@ import { ConditionComponent } from './account/condition/condition.component';
     QRCodeModule,
     LocationModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
+  // TODO: Uncomment the following for 'zh-Hans' support
+  // providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })

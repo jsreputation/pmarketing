@@ -8,6 +8,7 @@ import { NumericCharacterDirective } from './directives/numeric-character.direct
 import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { RepeatTimesDirective } from './directives/repeat-times.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
+import { FeedReaderService } from './feed-reader.service';
 
 const directives = [
   NumericCharacterDirective,
@@ -39,7 +40,8 @@ const components = [
     ...components,
   ],
   providers: [
-    NotificationService
+    NotificationService,
+    FeedReaderService
   ]
 })
 export class UtilsModule {

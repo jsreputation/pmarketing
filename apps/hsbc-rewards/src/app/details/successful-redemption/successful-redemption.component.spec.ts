@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SusscessfullRedemptionComponent } from './susscessfull-redemption.component';
+import { SuccessfulRedemptionComponent } from './successful-redemption.component';
 import { HeaderModule } from '../../header/header.module';
 
 describe('SusscessfullRedemptionComponent', () => {
-  let component: SusscessfullRedemptionComponent;
-  let fixture: ComponentFixture<SusscessfullRedemptionComponent>;
+  let component: SuccessfulRedemptionComponent;
+  let fixture: ComponentFixture<SuccessfulRedemptionComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SusscessfullRedemptionComponent
+        SuccessfulRedemptionComponent
       ],
       imports: [
         RouterTestingModule,
@@ -21,7 +21,7 @@ describe('SusscessfullRedemptionComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SusscessfullRedemptionComponent);
+    fixture = TestBed.createComponent(SuccessfulRedemptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

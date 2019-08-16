@@ -47,7 +47,10 @@ export class ForgotPasswordComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-    const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
+    // TODO: Country code append disbaled for now. Uncomment following line if API supports it.
+    // const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
+    const mobileNumber = (this.resetPasswordForm.get('mobileNo').value as string);
+
     try {
       this.authService.forgotPassword(mobileNumber).subscribe(
         () => {
