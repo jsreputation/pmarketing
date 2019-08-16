@@ -3,18 +3,21 @@
     "img": "assets/images/dashboard-game-card/rewards-icon.png",
     "title": "Rewards",
     "description": "Create reward items to giveaway for your campaigns or display in your catalogue",
-    "link": "Create a Reward"
+    "link": "Create a Reward",
+    "name": "reward"
   },
   {
     "img": "assets/images/dashboard-game-card/engagement-icon.png",
     "title": "Engagements",
     "description": "Use Stamps, Games, Survey and more to reach out to your customers in more exciting and interactive ways",
-    "link": "Create an Engagement"
+    "link": "Create an Engagement",
+    "name": "engagement"
   },
   {
     "img": "assets/images/dashboard-game-card/campaign-icon.png",
     "title": "Campaigns",
     "description": "Share a Facebook or Instagram post and track its performance alongside all your other marketing",
-    "link": "Create a Campaign"
+    "link": "Create a Campaign",
+    "name": "campaign"
   }
 ]
