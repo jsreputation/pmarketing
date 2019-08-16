@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
+import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -28,6 +28,9 @@ export class VouchersComponent implements OnInit, OnChanges {
 
   @Input('data')
   public vouchers$: Observable<IVoucher[]>;
+
+  @Input()
+  public mapping: StatusLabelMapping;
 
   public repeatGhostCount: number = 10;
 
