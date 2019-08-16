@@ -102,7 +102,7 @@ export class OauthService {
   }
 
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<{ message: string }>(
+    return this.http.get<IMessageResponse>(
       this.customersEndPoint + '/forget_password', { params: { phone } }).pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -112,7 +112,7 @@ export class OauthService {
   }
 
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.http.patch<{ message: string, code: number }>(
+    return this.http.patch<IMessageResponse>(
       this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -122,7 +122,7 @@ export class OauthService {
   }
 
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.http.get<{ message: string }>(
+    return this.http.get<IMessageResponse>(
       this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -132,7 +132,7 @@ export class OauthService {
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return this.http.patch<{ message: string }>(
+    return this.http.patch<IMessageResponse>(
       this.customersEndPoint + '/reset_password',
       {
         phone: resetPasswordInfo.phone,

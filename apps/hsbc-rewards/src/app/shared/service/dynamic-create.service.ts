@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-export class DinamicCreateService {
+export class DynamicCreateService {
   public opendComponent: ComponentRef<any>[] = [];
   constructor(
     private resolve: ComponentFactoryResolver,

@@ -8,6 +8,9 @@ import { HeaderRoutingModule } from './header-routing.module';
   imports: [
     CommonModule,
     HeaderRoutingModule
+  ],
+  exports: [
+    HeaderComponent
   ]
 })
 export class HeaderModule { }
