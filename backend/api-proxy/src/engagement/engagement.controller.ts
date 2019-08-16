@@ -2,7 +2,7 @@ import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpS
 import { EngagementDto, EngagementType, UpdateEngagementDto } from './engagement.dto';
 import { Observable, OperatorFunction, merge, of } from 'rxjs';
 import { IListResponse, ISingleResponse } from '../services/response.model';
-import { GameService, IGame } from '../services/game/game.service';
+import { GameService } from '../services/game/game.service';
 import { map, scan, catchError } from 'rxjs/operators';
 import { IEntity } from '../services/entity.model';
 import { IEngagementService } from '../services/iengagement.service';
@@ -10,7 +10,6 @@ import { IPostRequest, IPatchRequest } from '../services/request.model';
 import { IEngagement } from '../services/engagement.model';
 import { SurveyService } from '../services/survey/survey.service';
 import { LoyaltyService } from '../services/loyalty/loyalty.service';
-import { AxiosError } from 'axios';
 import { InstantOutcomeService } from '../services/instant-outcome/instant-outcome.service';
 
 @Controller('engagements')
@@ -43,7 +42,7 @@ export class EngagementController {
                             }),
                         };
                     }),
-                    catchError((err: AxiosError) => of(null))
+                    catchError(() => of(null))
                 ));
         }
         return merge<IListResponse<EngagementDto>>(...queries)
@@ -117,7 +116,7 @@ export class EngagementController {
 
     private mappingFn(type: EngagementType): OperatorFunction<ISingleResponse<IEngagement>, ISingleResponse<EngagementDto>> {
         return map((res: ISingleResponse<IEngagement>) => {
-            const dto: EngagementDto = { ...res.data.attributes, type: EngagementType.game };
+            const dto: EngagementDto = { ...res.data.attributes, type };
             return {
                 ...res,
                 data: { ...res.data, attributes: dto },

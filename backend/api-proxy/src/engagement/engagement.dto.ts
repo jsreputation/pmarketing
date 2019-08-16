@@ -1,5 +1,4 @@
 import { IEngagement, IUpdateEngagement } from '../services/engagement.model';
-import { IGame } from 'src/services/game/game.service';
 
 export enum EngagementType {
     game = 'game',
