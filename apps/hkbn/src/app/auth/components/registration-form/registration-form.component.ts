@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 
 @Component({
@@ -16,10 +16,15 @@ export class RegistrationFormComponent {
   public registrationForm: FormGroup = new FormGroup({
     firstName: new FormControl(null, [HkbnValidators.required]),
     lastName: new FormControl(null, [HkbnValidators.required]),
-    phone: new FormControl(null, [HkbnValidators.required]),
+    phone: new FormControl(null, [
+      HkbnValidators.required,
+      HkbnValidators.pattern('^[0-9]+$'),
+      HkbnValidators.minLength(6),
+      HkbnValidators.maxLength(6)
+      ]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
-    password: new FormControl(null, [HkbnValidators.required]),
-    confirmPassword: new FormControl(null, [HkbnValidators.required]),
+    password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     terms: new FormControl(null, [HkbnValidators.requiredTrue]),
     promo: new FormControl(null)
   }, [HkbnValidators.equalityValidator('password', 'confirmPassword')]);

@@ -14,6 +14,9 @@ const routes: Routes = [
       path: 'wallet',
       loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule)
     }, {
+      path: 'voucher',
+      loadChildren: () => import('../wallet/voucher-detail/voucher-detail.module').then(mod => mod.VoucherDetailModule)
+    }, {
       path: 'account',
       loadChildren: () => import('../account/account.module').then(mod => mod.AccountModule)
     }, {

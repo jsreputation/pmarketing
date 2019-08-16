@@ -7,6 +7,7 @@ import {CampaignsListPageComponent} from './containers/campaigns-list-page/campa
 // import {NewChannelPageComponent} from './containers/new-channel-page/new-channel-page.component';
 // import {NewCampaignReviewPageComponent} from './containers/new-review-page/new-review-page.component';
 import { NewCampaignComponent } from './containers/new-campaign/new-campaign.component';
+import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 
 const routes: Routes = [
   {path: '',
@@ -20,6 +21,10 @@ const routes: Routes = [
         path: 'new-campaign',
         component: NewCampaignComponent
       },
+      {
+        path: 'review/:id',
+        component: ReviewCampaignComponent
+      }
       // {
       //   path: 'new-info',
       //   component: NewCampaignDetailPageComponent

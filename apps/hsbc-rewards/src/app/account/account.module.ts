@@ -6,6 +6,7 @@ import { AccountComponent } from './account.component';
 import { SharedModule } from '../shared/shared.module';
 import { DetailAgreementModule } from '../details/detail-agreement/detail-agreement.module';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import { RedeemModule } from './redeem/redeem.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
     AccountRoutingModule,
     SharedModule,
     DetailAgreementModule,
-    NavigateToolbarModule
+    NavigateToolbarModule,
+    RedeemModule
   ]
 })
 export class AccountModule { }
