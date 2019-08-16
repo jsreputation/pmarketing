@@ -19,7 +19,7 @@
   "REQUIRED": "這是必填欄",
   "EMAIL_ALREADY_EXISTS": "電郵地址已登記。",
   "ENTER_VALID_EMAIL": "請輸入有效之電郵。",
-  "PASSWORD_8_CHAR": "密碼必須由8位或以上字元組成。",
+  "PASSWORD_6_CHAR": "密碼必須由6位或以上字元組成。",
   "CONFIRM_PASSWORD": "確定密碼",
   "PASSWORD_NOT_MATCH": "密碼不相符。",
   "I_ACCEPT_TERMS": "本人明白及同意Home+之條款及細則。",
