@@ -102,7 +102,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   }
 
   public writeValue(obj: Date | null): void {
-    console.log(obj);
     if (obj) {
       this.control.patchValue(obj);
     } else {
