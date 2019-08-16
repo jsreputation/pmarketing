@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
 import { IReward, ICatalog } from './models/reward.model';
 
