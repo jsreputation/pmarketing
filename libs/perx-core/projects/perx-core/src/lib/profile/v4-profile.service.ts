@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IProfile, ICustomProperties, IMessageResponse } from './profile.model';
+import { IProfile, ICustomProperties } from './profile.model';
 import { ProfileService } from './profile.service';
 import { EnvConfig } from '../shared/env-config';
 
@@ -64,11 +64,11 @@ export class V4ProfileService extends ProfileService {
       );
   }
 
-  public setCustomProperties(data: ICustomProperties): Observable<IMessageResponse> {
+  public setCustomProperties(data: ICustomProperties): Observable<void> {
     return this.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => {
-          return this.http.patch<IMessageResponse>(
+          return this.http.patch<void>(
             `${this.apiHost}/v4/customers/${profile.id}`,
             {
               personal_properties: {
