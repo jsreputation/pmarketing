@@ -6,6 +6,7 @@ import { WalletComponent } from './wallet.component';
 import { SharedModule } from '../shared/shared.module';
 
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [WalletComponent],
@@ -13,6 +14,7 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
     CommonModule,
     WalletRoutingModule,
     SharedModule,
+    VouchersModule.forRoot({env: environment}),
     NavigateToolbarModule
   ]
 })
