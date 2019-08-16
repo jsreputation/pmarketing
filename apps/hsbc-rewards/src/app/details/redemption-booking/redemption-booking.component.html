@@ -11,7 +11,7 @@
       <div class="select-wrap no-content">
         <select formControlName="merchant">
           <option disabled [value]="null">Merchant</option>
-          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.address}}</option>
+          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.firstName}} {{merchant.lastName}}</option>
         </select>
       </div>
       <div class="select-wrap">
