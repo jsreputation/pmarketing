@@ -1,11 +1,11 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { IEngagement } from '../engagement.model';
 import { EngagementService } from '../engagement.service';
+import { IEngagement } from '../engagement.model';
 import { IEngagementService } from '../iengagement.service';
 
 @Injectable()
-export class SurveyService extends EngagementService<IEngagement> implements IEngagementService {
-    protected service: string = 'survey';
+export class InstantOutcomeService extends EngagementService<IEngagement> implements IEngagementService {
+    protected service: string = 'instant_outcome';
 
     // important so, that parent abstract class get HttpService injected
     constructor(protected http: HttpService) {
