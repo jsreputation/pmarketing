@@ -1,0 +1,12 @@
+<div class="main-container">
+	 <mat-tab-group mat-stretch-tabs class="tabs">
+		<mat-tab label="Purchases">
+			<perx-core-loyalty-transactions-list *ngIf="transactions" [transactions]="transactions | transactionHistory: true">
+			</perx-core-loyalty-transactions-list>
+		</mat-tab>
+		<mat-tab label="Rewards">
+			<perx-core-loyalty-transactions-list *ngIf="transactions" [transactions]="transactions | transactionHistory: false">
+			</perx-core-loyalty-transactions-list>
+		</mat-tab>
+	</mat-tab-group>
+</div>

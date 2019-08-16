@@ -20,7 +20,7 @@
              loyalty.expiringPoints[0] as expiring"
       class="expiring-points"
     >
-      {{expiring.points || 'Some'}} points expiring {{expiring.expireDate ? 'on' + (expiring.expireDate | date: 'dd MMM yyyy') : 'soon'}}
+      {{expiring.points || 'Some'}} points expiring {{expiring.expireDate ? 'on ' + (expiring.expireDate | date: 'dd MMM yyyy') : 'soon'}}
     </div>
   </ng-container>
 </div>
