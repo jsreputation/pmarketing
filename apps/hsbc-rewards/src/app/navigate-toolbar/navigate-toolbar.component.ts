@@ -13,6 +13,7 @@ interface IRoute {
   templateUrl: './navigate-toolbar.component.html',
   styleUrls: ['./navigate-toolbar.component.scss']
 })
+
 export class NavigateToolbarComponent implements OnInit {
   public navigatePanel: IRoute[] = [{
     activated: false,
@@ -23,7 +24,7 @@ export class NavigateToolbarComponent implements OnInit {
     activated: false,
     title: 'My Rewards',
     img: 'assets/img/rewards',
-    route: '/rewards'
+    route: '/wallet'
   }, {
     activated: false,
     title: 'Account',

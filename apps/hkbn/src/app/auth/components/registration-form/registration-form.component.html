@@ -17,9 +17,12 @@
 
   <mat-form-field appearance="fill">
     <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
-    <input type="text" matInput formControlName="phone">
+    <input type="tel" matInput formControlName="phone">
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
+    </mat-error>
+    <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
+      {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
     </mat-error>
   </mat-form-field>
 
@@ -40,6 +43,9 @@
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
     </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -47,6 +53,9 @@
     <input type="password" matInput formControlName="confirmPassword">
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
+    </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'notEqual'">
       {{"PASSWORD_NOT_MATCH" | translate}}

@@ -68,15 +68,18 @@ describe('ForgotPasswordComponent', () => {
 
   it('should init identifier from queryParams, if it exist', () => {
     const activatedRoute = TestBed.get(ActivatedRoute);
-    spyOnProperty(activatedRoute, 'queryParams', 'get').and.returnValue(of({identifier: '639876543210'}));
+    spyOnProperty(activatedRoute, 'queryParams', 'get').and.returnValue(of({identifier: '63987654'}));
     fixture.detectChanges();
-    expect(component.phoneStepForm.value).toEqual({phone: '639876543210'});
+    expect(component.phoneStepForm.value).toEqual({phone: '63987654'});
   });
 
   it('phoneHandler should move to step 2', () => {
     fixture.detectChanges();
-    component.phoneStepForm.setValue({phone: '639876543210'});
+    component.phoneStepForm.setValue({phone: '63987654'});
     component.phoneHandler();
+    console.log(component.phoneStepForm.value);
+    console.log(component.phoneStepForm.valid);
+    fixture.detectChanges();
     expect(component.currentStep).toEqual(2);
   });
 
@@ -114,17 +117,18 @@ describe('ForgotPasswordComponent', () => {
     const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
     const v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
 
-    component.phoneStepForm.setValue({phone: '639876543210'});
+    component.phoneStepForm.setValue({phone: '63987654'});
     component.phoneHandler();
+    fixture.detectChanges();
 
     component.handlePin('334245');
 
     component.newPasswordForm.setValue({newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'});
     component.changePassword();
     expect(resetPasswordSpy).toHaveBeenCalledWith(
-      {phone: '639876543210', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'}
+      {phone: '63987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'}
     );
 
-    expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
+    expect(v4GameOauthSpy).toHaveBeenCalledWith('63987654', 'qwerty123');
   });
 });
