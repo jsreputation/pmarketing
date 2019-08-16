@@ -6,6 +6,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService, ProfileService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -24,6 +26,15 @@ describe('HeaderComponent', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
+      ],
+      providers: [
+        {provide: ProfileService, useValue: {whoAmI: () => of(true)}},
+        {
+          provide: AuthenticationService, useValue: {
+            logout: () => {
+            }
+          }
+        }
       ],
       declarations: [HeaderComponent]
     })

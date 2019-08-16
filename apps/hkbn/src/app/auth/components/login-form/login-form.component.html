@@ -13,6 +13,9 @@
     <mat-error *hkbnErrorHandler="'required'">
       {{"REQUIRED" | translate}}
     </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
+    </mat-error>
   </mat-form-field>
 
   <a class="forget-password" (click)="forgot()">{{"FORGOT_PASSWORD" | translate}}</a>

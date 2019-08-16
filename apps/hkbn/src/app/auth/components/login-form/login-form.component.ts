@@ -22,7 +22,7 @@ export class LoginFormComponent {
 
   public loginForm: FormGroup = new FormGroup({
     user: new FormControl(null, [Validators.required]),
-    pass: new FormControl(null, [Validators.required]),
+    pass: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     stayLoggedIn: new FormControl(null)
   });
 
