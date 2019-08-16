@@ -121,3 +121,5 @@ export {
 export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
+export { sortByDistance } from  './lib/location/sort-by-distance';
+export { GeoLocationService } from './lib/location/geolocation.service';
