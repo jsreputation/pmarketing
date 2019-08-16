@@ -11,13 +11,12 @@ import {
   CognitoModule,
   LoyaltyModule,
   OauthModule,
-  PopupComponent,
   ProfileModule,
   RewardsModule,
   UtilsModule,
   VouchersModule,
 } from '@perx/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatButtonModule, MatDialogModule, MatTabsModule } from '@angular/material';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
@@ -28,6 +27,8 @@ import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.comp
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
+import { SnackbarModule } from './ui/snackbar/snackbar.module';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
   return () => authenticationService.v4GetAppAccessToken().toPromise();
@@ -43,6 +44,12 @@ const setLanguage = (translateService: TranslateService) => {
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
+
+const PROVIDERS = [
+  {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
+  {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true},
+  {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true}
+];
 
 @NgModule({
   declarations: [
@@ -78,15 +85,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserAnimationsModule,
     MatTabsModule,
     MatButtonModule,
+    SnackbarModule,
   ],
   providers: [
-    {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true},
-    {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true}
+    ...PROVIDERS
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    PopupComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

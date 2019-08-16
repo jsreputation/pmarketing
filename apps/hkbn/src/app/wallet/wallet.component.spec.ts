@@ -41,7 +41,7 @@ describe('WalletComponent', () => {
   it('should navigate to specific wallet page by id when call onRoute method', () => {
     const router = TestBed.get(Router);
     const routerSpy = spyOn(router, 'navigate');
-    component.onRoute('1');
+    component.onRoute({id: 1} as any);
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1']);
   });
 });

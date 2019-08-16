@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
@@ -13,6 +13,7 @@ describe('HomeComponent', () => {
       declarations: [ HomeComponent ],
       imports: [
         MatToolbarModule,
+        MatTabsModule,
         RouterTestingModule
       ]
     })

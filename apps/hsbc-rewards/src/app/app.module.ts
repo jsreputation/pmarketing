@@ -10,12 +10,14 @@ import {
   ProfileModule,
   LoyaltyModule,
   LocationModule,
+  VouchersModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AccountComponent } from './account/account.component';
 @NgModule({
   declarations: [
     AppComponent

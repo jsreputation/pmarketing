@@ -23,7 +23,8 @@ import {
   MatMenuModule,
   MatPaginatorModule,
   MatRadioModule,
-  MatSelectModule, MatSlideToggleModule,
+  MatSelectModule,
+  MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule
@@ -69,6 +70,8 @@ import {
 import {
   NewCampaignStampRuleFormGroupComponent
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
+import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 @NgModule({
   providers: [
@@ -92,10 +95,12 @@ import {
     RewardItemComponent,
     RewardItemPreviewComponent,
     NewCampaignRewardsFormGroupComponent,
-    NewCampaignStampRuleFormGroupComponent
+    NewCampaignStampRuleFormGroupComponent,
+    ReviewCampaignComponent,
   ],
   imports: [
     CommonModule,
+    CreateEngagementPopupModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
