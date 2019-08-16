@@ -4,8 +4,8 @@ import { EngagementService } from '../engagement.service';
 import { IEngagementService } from '../iengagement.service';
 
 @Injectable()
-export class SurveyService extends EngagementService<IEngagement> implements IEngagementService {
-    protected service: string = 'survey';
+export class LoyaltyService extends EngagementService<IEngagement> implements IEngagementService {
+    protected service: string = 'loyalty';
 
     // important so, that parent abstract class get HttpService injected
     constructor(protected http: HttpService) {
