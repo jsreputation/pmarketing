@@ -54,6 +54,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
+import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ConditionComponent } from './account/condition/condition.component';
     TransactionHistoryComponent,
     PrivacyPolicyComponent,
     ConditionComponent,
+    TransactionPipe,
   ],
   imports: [
     BrowserModule,
