@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard } from 'ngx-auth';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
@@ -10,8 +11,10 @@ const routes: Routes = [
   {
     path: 'detail',
     loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
-  },
-  {
+  }, {
+    path: 'reedem',
+    loadChildren: ()=> import('./account/redeem/redeem.module').then(mod=>mod.RedeemModule),
+  },{
     path: '',
     loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
     canActivate: [ProtectedGuard]
