@@ -2,97 +2,26 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="zh-Hans" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="static-reset-password" datatype="html">
-        <source>Reset your password</source>
+      <trans-unit id="static-home" datatype="html">
+        <source>Home</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="static-enter-number" datatype="html">
-        <source>Enter your mobile number</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="country-hongkong" datatype="html">
-        <source>Hong Kong</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="country-macau" datatype="html">
-        <source>Macau</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="country-china" datatype="html">
-        <source>China</source>
+      <trans-unit id="static-find-pharmacy" datatype="html">
+        <source>Find a
+			pharmacy</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="static-mobile-no" datatype="html">
-        <source>Mobile No</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="static-get-opt" datatype="html">
-        <source>Get OTP</source>
+      <trans-unit id="static-account" datatype="html">
+        <source>Account</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="login-subtitle" datatype="html">
@@ -114,15 +43,15 @@
         <source>Log in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
@@ -133,123 +62,292 @@
         <source>Not a memeber? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="sign-up" datatype="html">
         <source>Sign up</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="country-hongkong" datatype="html">
+        <source>Hong Kong</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="country-macau" datatype="html">
+        <source>Macau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="country-china" datatype="html">
+        <source>China</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-mobile-no" datatype="html">
+        <source>Mobile No</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-password" datatype="html">
         <source>Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-forgot-password" datatype="html">
         <source>Forgot password?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-learn-more" datatype="html">
         <source>Learn more about the program</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-thankyou-participating" datatype="html">
-        <source>Thank you for participating in this loyality program.</source>
+        <source>Thank you for participating in this loyality
+			program.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-current-condition" datatype="html">
-        <source>To better the experience for you, please indicate the current condition you&apos;re taking
+        <source>To better the experience for you, please indicate the
+			current condition you&apos;re taking
 			treatment for</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-diabetes-condition" datatype="html">
+        <source>
+					Diabetes condition
+				</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-diabetes" datatype="html">
         <source>Diabetes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-pre-diabetes" datatype="html">
-        <source>Pre-Diabetes</source>
+        <source>Pre-Diabetes
+				</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-hypertension" datatype="html">
-        <source>Hypertension</source>
+        <source>Hypertension
+			</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="next-btn" datatype="html">
         <source>Next</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-my-qr" datatype="html">
+        <source>MY QR</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-featured-rewards" datatype="html">
+        <source>Featured Rewards</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-have-account" datatype="html">
         <source>Have an account? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-name" datatype="html">
         <source>Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-name-is" datatype="html">
+        <source>	Name is </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="required" datatype="html">
+        <source>required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-mobile-no-is" datatype="html">
+        <source>	Mobile No is </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password-is" datatype="html">
+        <source>Password is </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password-six-chars" datatype="html">
+        <source>Password should be atleast 6 characters long </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-confirm-password" datatype="html">
         <source>Confirm Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirm-password-is" datatype="html">
+        <source>Confirm Password is </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="static-accept-terms" datatype="html">
@@ -264,6 +362,142 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-reset-password" datatype="html">
+        <source>Reset your password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-enter-number" datatype="html">
+        <source>Enter your mobile number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-get-opt" datatype="html">
+        <source>Get OTP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-new-register" datatype="html">
+        <source>Thank you for registering</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-resend-otp" datatype="html">
+        <source>Resend OTP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-filter" datatype="html">
+        <source>Filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d2a2915d79ff31439a174fc3a147004542291e29" datatype="html">
+        <source>Map</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6490b3960cc7c4a789cdbd29575d93abad081e07" datatype="html">
+        <source>List</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-new-password" datatype="html">
+        <source>New password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-redeem" datatype="html">
+        <source>
+		Redeem
+	</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reward-detail/reward-detail.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-present-qr" datatype="html">
+        <source>Present this QR code to the cashier to complete your transaction.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/redeem/redeem.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-cancel" datatype="html">
+        <source>
+		Cancel
+	</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/redeem/redeem.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-profile" datatype="html">
+        <source>Profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-transaction-history" datatype="html">
+        <source>Transaction History</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-privacy-policy" datatype="html">
+        <source>Privacy Policy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="static-logout" datatype="html">
+        <source>Log Out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account.component.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
     </body>

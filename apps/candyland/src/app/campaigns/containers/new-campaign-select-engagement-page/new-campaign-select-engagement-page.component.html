@@ -16,7 +16,7 @@
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button classList="invert">+ Create New Engagement</cl-button>
+      <cl-button classList="invert" (click)="createNewEngagement()">+ Create New Engagement</cl-button>
     </div>
     <!--items-->
     <mat-radio-group class="item-list shadow" [formControl]="form.get('template')">
