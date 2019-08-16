@@ -5,7 +5,11 @@ import { ProtectedGuard } from 'ngx-auth';
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule),
+    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
   },
   {
     path: '',

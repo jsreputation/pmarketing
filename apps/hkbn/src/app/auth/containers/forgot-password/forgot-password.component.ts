@@ -17,12 +17,16 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public usersPhone: string;
 
   public phoneStepForm: FormGroup = new FormGroup({
-    phone: new FormControl(null, [HkbnValidators.required])
+    phone: new FormControl(null, [
+      HkbnValidators.required,
+      HkbnValidators.pattern('^[0-9]+$'),
+      HkbnValidators.minLength(8),
+      HkbnValidators.maxLength(8)])
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
-    newPassword: new FormControl(null, [HkbnValidators.required]),
-    passwordConfirmation: new FormControl(null, [HkbnValidators.required])
+    newPassword: new FormControl(null, [HkbnValidators.required, HkbnValidators.minLength(6)]),
+    passwordConfirmation: new FormControl(null, [HkbnValidators.required, HkbnValidators.minLength(6)])
   }, [HkbnValidators.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   private otp: string;
@@ -68,7 +72,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   public handlePin(otp: string): void {
-    // TODO: remove when verifyOTP method will be implemented
     this.currentStep = 3;
     this.otp = otp;
   }

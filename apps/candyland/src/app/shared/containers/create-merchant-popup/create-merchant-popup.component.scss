@@ -1,7 +1,6 @@
 @import "variables";
 
 .dialog {
-
   &-header-wrap {
     height: 6.2rem;
     position: relative;
@@ -45,7 +44,7 @@
   &-actions {
     display: flex;
     justify-content: flex-end;
-    padding: 3.4rem 4rem;
+    padding: 1rem 3.2rem 3rem;
 
     &.type-survey {
       padding: 0 4rem 3rem 4rem;

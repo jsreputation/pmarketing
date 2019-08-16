@@ -5,6 +5,18 @@
   overflow-x: auto;
   overflow-y: hidden;
 
+  &-row {
+    cursor: pointer;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &.active {
+      background: rgba(102, 149, 187, 0.3);
+    }
+  }
+
   &-link {
     font-family: $primary-font;
     font-weight: normal;
@@ -38,6 +50,7 @@
   }
 
   .image-cell {
+    display: inline-flex;
     height: 4.2rem;
     width: 4.2rem;
     margin: 1.2rem 0;

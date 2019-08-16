@@ -1,4 +1,5 @@
 @import "variables";
+
 :host {
   display: flex;
   border-radius: 4px;
@@ -13,7 +14,6 @@
   width: 100%;
 
   &-title {
-
     &__first {
       font-size: 1.8rem;
       font-weight: 500;
@@ -22,7 +22,7 @@
     }
 
     &__second {
-      margin-top: .9rem;
+      margin-top: 0.9rem;
       font-size: 1.4rem;
       color: $there-color;
     }

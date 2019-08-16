@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit, PageProperties {
+export class ResetPasswordComponent implements OnInit, PageAppearence {
 
   public resetPasswordForm: FormGroup;
   public mobileNumber: string = '';
@@ -47,16 +47,13 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     });
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public onUpdatePassword(): void {
@@ -80,7 +77,11 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
       },
       err =>  {
         console.error('ResetPassword: ' + err);
-        this.notificationService.addSnack(err.code);
+        if (err instanceof HttpErrorResponse) {
+           this.notificationService.addSnack(err.statusText);
+        } else {
+          this.notificationService.addSnack(err.code);
+        }
       });
   }
   private sendLoginCall(password: string): void {

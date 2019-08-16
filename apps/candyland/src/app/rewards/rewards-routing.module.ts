@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RewardsListPageComponent} from './containers/rewards-list-page/rewards-list-page.component';
 import {NewRewardComponent} from 'src/app/rewards/containers/new-reward/new-reward.component';
 import {RewardDetailPageComponent} from 'src/app/rewards/containers/reward-detail-page/reward-detail-page.component';
+import { EditRewardComponent } from './containers/edit-reward/edit-reward.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     component: NewRewardComponent
   },
   {
-    path: 'detail',
+    path: 'detail/:id',
     component: RewardDetailPageComponent
+  },
+  {
+    path: 'edit/:id',
+    component: EditRewardComponent
   }
 ];
 

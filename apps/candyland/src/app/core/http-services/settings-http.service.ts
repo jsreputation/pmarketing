@@ -9,12 +9,12 @@ export class SettingsHttpService {
 
   constructor(private http: HttpClient) { }
 
-  public getTimeZone(): Observable<any> {
-    return this.http.get('assets/actives/settings/time-zone.json');
+  public getTimeZone(): Observable<ITimeZone[]> {
+    return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json');
   }
 
-  public getCurrency(): Observable<any> {
-    return this.http.get('assets/actives/settings/currency.json');
+  public getCurrency(): Observable<Currency[]> {
+    return this.http.get<Currency[]>('assets/actives/settings/currency.json');
   }
 
   public getRoles(): Observable<any> {

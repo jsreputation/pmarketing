@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-enter-pin',
   templateUrl: './enter-pin.component.html',
   styleUrls: ['./enter-pin.component.scss']
 })
-export class EnterPinComponent implements OnInit, PageProperties {
+export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
   public pinMode: string = 'password'; // || 'register'
@@ -32,16 +32,13 @@ export class EnterPinComponent implements OnInit, PageProperties {
       }
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   private encodeMobileNo(mobileNo: string): string {

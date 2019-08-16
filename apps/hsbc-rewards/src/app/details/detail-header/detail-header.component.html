@@ -1,0 +1,14 @@
+<div class="reward-header">
+  <button class="back" (click)="back()">
+    <ng-template #name [ngIf]="customBackButton" [ngIfElse]="defaltImage">
+        <img [src]="customBackButton">
+    </ng-template>
+    <ng-template #defaltImage>
+        <img src="assets/img/back.svg">
+    </ng-template>
+    
+   
+  </button>
+
+  <img src="assets/img/header-log.png" class="logo" />
+</div>

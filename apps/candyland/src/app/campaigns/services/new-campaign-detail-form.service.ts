@@ -6,16 +6,17 @@ import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.i
 export class NewCampaignDetailFormService {
   constructor(private fb: FormBuilder) {
   }
-
+//tslint:disable
+  //TODO: need use momentJs for date handler
   public getForm(): FormGroup {
     return this.fb.group({
       campaignInfo: this.fb.group({
-        goal: [],
+        goal: ['Acquire customers'],
         startDate: [],
         startTime: [],
         endDate: [],
         endTime: [],
-        disabledEndDate: [],
+        disabledEndDate: [true],
         labels: []
       }),
       channel: this.fb.group({
@@ -66,10 +67,13 @@ export class NewCampaignDetailFormService {
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       campaignInfo: {
-        disabledEndDate: false
+        startTime: `${(new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        startDate: new Date(),
+        goal: 'Acquire customers',
+        disabledEndDate: true
       },
       channel: {
         type: 'weblink',

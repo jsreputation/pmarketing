@@ -18,7 +18,10 @@ commands:
       - run:
           name: Setup env vars
           command: |
-            APP=$(echo ${CIRCLE_TAG} | cut -d'-' -f 1)
+            SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
+            CUT=-$TARGET_ENV-$SEM_VER
+            APP=${CIRCLE_TAG%"$CUT"}
             echo "export APP=$APP" >> $BASH_ENV
   get_env_from_tag:
     description: cuts destination environment out of git tag
@@ -26,7 +29,7 @@ commands:
       - run:
           name: Setup env vars
           command: |
-            TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
   set_apihost:
     description: based on environment set the APIHOST
@@ -102,8 +105,8 @@ jobs:
     steps:
       - checkout
       - docker_login
-      - get_app_name
       - get_env_from_tag
+      - get_app_name
       - set_apihost
       - set_preauth
       - set_basehref
@@ -163,13 +166,19 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
-            if [ $APP == 'bpi'  ] || [ $APP == 'merck-customer' ]
+            if [ $APP == 'bpi'  ] || \
+               [ $APP == 'merck-customer' ] || \
+               [ $APP == 'hkbn' ]
             then
               echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
             fi
             if [ $APP == 'candyland' ]
             then
               echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
+            fi
+            if [ $APP == 'merck-merchant' ]
+            then
+              echo 'export HELM_APP="$APP-scanner"' >> $BASH_ENV
             fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
@@ -227,7 +236,7 @@ jobs:
   build-prod:
     machine:
       image: ubuntu-1604:201903-01
-    parallelism: 10
+    parallelism: 12
     steps:
       - run:
           name: Install yarn
@@ -291,7 +300,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^\w+-staging-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -310,5 +319,5 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^\w+-production-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+production-\d+\.\d+\.\d+.*/
 

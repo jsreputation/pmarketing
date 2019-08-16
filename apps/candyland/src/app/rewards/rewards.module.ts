@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import { RewardsListPageComponent } from './containers/rewards-list-page/rewards-list-page.component';
-import { RewardsListComponent } from './components/rewards-list/rewards-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -52,6 +52,8 @@ import {
 } from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
 import { VouchersProgressBarModule } from '@cl-shared/components/vouchers-progress-bar/vouchers-progress-bar.module';
 import { NewRewardFormService } from './services/new-reward-form.service';
+import { ManageRewardsComponent } from './components/manage-rewards/manage-rewards.component';
+import { EditRewardComponent } from './containers/edit-reward/edit-reward.component';
 
 @NgModule({
   providers: [
@@ -59,7 +61,6 @@ import { NewRewardFormService } from './services/new-reward-form.service';
   ],
   declarations: [
     RewardsListPageComponent,
-    RewardsListComponent,
     NewRewardComponent,
     RewardInfoFormGroupComponent,
     RewardMerchantCardComponent,
@@ -72,11 +73,14 @@ import { NewRewardFormService } from './services/new-reward-form.service';
     RewardLimitsPreviewComponent,
     RewardVouchersPreviewComponent,
     RewardReplenishPopupComponent,
-    RewardVoucherCodeFormGroupComponent
+    RewardVoucherCodeFormGroupComponent,
+    ManageRewardsComponent,
+    EditRewardComponent
   ],
   imports: [
     CommonModule,
     RewardsRoutingModule,
+    RewardsListModule,
     ReactiveFormsModule,
     MatSortModule,
     MatTableModule,

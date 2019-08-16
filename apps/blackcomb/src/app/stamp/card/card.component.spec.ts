@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule } from '@perx/core';
+import { PuzzlesModule } from '@perx/core';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -10,7 +10,7 @@ describe('CardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CardComponent ],
-      imports: [RouterTestingModule, PerxCoreModule, GameModule]
+      imports: [RouterTestingModule, PuzzlesModule]
     })
     .compileComponents();
   }));

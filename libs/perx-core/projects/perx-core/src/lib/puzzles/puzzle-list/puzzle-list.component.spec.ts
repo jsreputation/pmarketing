@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleListComponent } from './puzzle-list.component';
-import { MatCardModule, MatRippleModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { EnvConfig } from '../../shared/env-config';
 import { StampService } from '../../stamp/stamp.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
@@ -18,13 +17,13 @@ describe('PuzzleListComponent', () => {
       imports: [
         MatCardModule,
         MatRippleModule,
-        HttpClientModule
+        MatIconModule,
+        HttpClientTestingModule
       ],
       providers: [
         EnvConfig,
         { provide: StampService, useValue: stampServiceMock }
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));

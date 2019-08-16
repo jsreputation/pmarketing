@@ -1,12 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { LoyaltyModule, LoyaltyService, ProfileService, RewardsModule } from '@perx/core';
+import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -21,6 +23,7 @@ describe('HomeComponent', () => {
         RewardsModule,
         RouterTestingModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {provide: ProfileService, useValue: {whoAmI: () => of(null)}},
@@ -39,5 +42,12 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should redirect to reward specific, when calling goToReward method', () => {
+    const router = TestBed.get(Router);
+    const routerSpy = spyOn(router, 'navigate');
+    component.goToReward({id: 1} as IReward);
+    expect(routerSpy).toHaveBeenCalledWith(['/reward', 1]);
   });
 });

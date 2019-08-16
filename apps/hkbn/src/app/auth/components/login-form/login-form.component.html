@@ -1,23 +1,26 @@
 <form [formGroup]="loginForm" class="login-form" (submit)="submit()">
   <mat-form-field appearance="fill">
-    <mat-label>Phone number or email address</mat-label>
+    <mat-label>{{"MOBILE_NUMBER_OR_EMAIL" | translate}}</mat-label>
     <input type="text" matInput formControlName="user">
     <mat-error *hkbnErrorHandler="'required'">
-      This field is required
+      {{"REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Password</mat-label>
+    <mat-label>{{"PASSWORD" | translate}}</mat-label>
     <input type="password" matInput formControlName="pass">
     <mat-error *hkbnErrorHandler="'required'">
-      This field is required
+      {{"REQUIRED" | translate}}
+    </mat-error>
+    <mat-error *hkbnErrorHandler="'minlength'">
+      {{"PASSWORD_6_CHAR" | translate}}
     </mat-error>
   </mat-form-field>
 
-  <a class="forget-password" (click)="forgot()">forget password</a>
-  <mat-checkbox formControlName="stayLoggedIn">Stay logged in</mat-checkbox>
+  <a class="forget-password" (click)="forgot()">{{"FORGOT_PASSWORD" | translate}}</a>
+  <mat-checkbox formControlName="stayLoggedIn">{{"KEEP_LOGGED_IN" | translate}}</mat-checkbox>
 
-  <button mat-raised-button color="primary" class="submit-button">Sign in</button>
-  <button mat-button type="button" class="additional-button">Understand More</button>
+  <button mat-raised-button color="primary" class="submit-button">{{"LOGIN" | translate}}</button>
+  <button mat-button type="button" class="additional-button">{{"FIND_OUT_MORE" | translate}}</button>
 </form>

@@ -3,8 +3,7 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Voucher, VouchersService } from '@perx/core';
+import { Voucher, VouchersService, StatusLabelMapping } from '@perx/core';
 import { mock } from '../mock';
 
 @Component({
@@ -15,9 +14,20 @@ import { mock } from '../mock';
 export class ListComponent implements OnInit {
   public data: Observable<Voucher[]>;
 
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
+
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
-    this.data = this.vouchersService.getAll().pipe(catchError(() => of(mock)));
+    this.vouchersService.getAll().subscribe(
+      (vouchers) => this.data = of(vouchers),
+      () => this.data = of(mock)
+    );
   }
 }

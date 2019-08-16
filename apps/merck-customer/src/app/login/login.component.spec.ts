@@ -3,33 +3,47 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import {
+  MatSelectModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-    const routerStub = { navigateByUrl: () => ({}),
-                         navigate: () => ({})};
+    const routerStub = {
+      navigateByUrl: () => ({}),
+      navigate: () => ({})
+    };
+
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
-        ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null, v4GetAppAccessToken: () => of({})}
+          useValue: {
+            isAuthorized: () => of({}),
+            v4GameOauth: () => {},
+            getInterruptedUrl: () => null,
+            v4GetAppAccessToken: () => of({})
+          }
         }
       ]
     })

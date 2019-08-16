@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Mask } from '../../../helpers/mask';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -12,8 +11,6 @@ export class AccountSummaryComponent implements OnChanges {
 
   @Input() public accountData: any;
 
-  public phoneMask: any = Mask.PHONE_WITHOUT_EXT;
-
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
@@ -24,7 +21,9 @@ export class AccountSummaryComponent implements OnChanges {
   });
 
   public ngOnChanges(): void {
-    this.accountSummary.patchValue(this.accountData);
+    if (this.accountData) {
+      this.accountSummary.patchValue(this.accountData);
+    }
   }
 
 }

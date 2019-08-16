@@ -8,13 +8,7 @@
     </div>
     <perx-core-rewards-collection [rewardsList]="rewards"></perx-core-rewards-collection>
   </div>
-  <div class="reward-list-container">
-    <div class="flex">
-      <ng-container *ngFor="let tag of tags">
-        <div [ngClass]="{'current': tag === currentTag }" (click)="changeTage(tag)">{{tag}}</div>
-      </ng-container>
-    </div>
-    <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed>
-  </div>
-  <app-navigate-toolbar></app-navigate-toolbar>
+  <perx-core-rewards-list-tabbed [rewards]="rewards" [tabs]="tags" (tapped)="openRewardDetails($event)"></perx-core-rewards-list-tabbed>
+    <app-navigate-toolbar></app-navigate-toolbar>
+ 
 </div>

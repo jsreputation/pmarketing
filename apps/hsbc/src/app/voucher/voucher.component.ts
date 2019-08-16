@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VouchersService } from '@perx/core';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { VouchersService, Voucher } from '@perx/core';
 
 @Component({
   selector: 'app-voucher',
@@ -12,7 +11,7 @@ export class VoucherComponent implements OnInit {
   public firstTime: boolean = false;
   public id: number;
   public redeeming: boolean = false;
-  public voucher: IVoucher;
+  public voucher: Voucher;
   public btnTxt: string = 'Redeem now';
 
   constructor(

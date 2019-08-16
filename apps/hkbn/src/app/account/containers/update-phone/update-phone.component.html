@@ -1,13 +1,16 @@
 <div class="container">
   <form [formGroup]="updatePhoneGroup" class="update-phone-form">
     <mat-form-field appearance="fill">
-      <mat-label>Telephone number</mat-label>
-      <input type="text" [textMask]="phoneMask" matInput formControlName="phone">
+      <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
+      <input type="text" matInput formControlName="phone">
       <mat-error *hkbnErrorHandler="'required'">
-        This field is required
+        {{"REQUIRED" | translate}}
+      </mat-error>
+      <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
+        {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="primary">{{"UPDATE" | translate}}</button>
   </form>
 </div>

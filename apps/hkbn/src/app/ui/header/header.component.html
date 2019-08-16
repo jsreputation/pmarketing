@@ -30,16 +30,16 @@
       <mat-nav-list>
         <div class="nav_header">
           <img class="nav_logo" src="assets/images/logo.png" alt="">
-          <p>Chen Haonan</p>
+          <p>{{user?.firstName}} {{user?.lastName}}</p>
         </div>
 
         <mat-nav-list class="nav_links">
-          <mat-list-item><a href="">Reward</a></mat-list-item>
-          <mat-list-item><a href="">My Reward</a></mat-list-item>
-          <mat-list-item><a href="">My Account</a></mat-list-item>
-          <mat-list-item><a href="">About Us</a></mat-list-item>
-          <mat-list-item><a href="">Contact Us</a></mat-list-item>
-          <mat-list-item>Sign out</mat-list-item>
+          <mat-list-item><a routerLink="/">{{"REWARDS" | translate}}</a></mat-list-item>
+          <mat-list-item><a routerLink="/wallet">{{"MY_REWARDS" | translate}}</a></mat-list-item>
+          <mat-list-item><a routerLink="/account">{{"MY_ACCOUNT" | translate}}</a></mat-list-item>
+          <mat-list-item><a href="">{{"ABOUT_US" | translate}}</a></mat-list-item>
+          <mat-list-item><a href="">{{"CONTACT_US" | translate}}</a></mat-list-item>
+          <mat-list-item (click)="logout()">{{"LOGOUT" | translate}}</mat-list-item>
         </mat-nav-list>
       </mat-nav-list>
     </mat-sidenav>

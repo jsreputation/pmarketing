@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements PageProperties {
+export class SignupComponent implements PageAppearence {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
@@ -34,16 +34,13 @@ export class SignupComponent implements PageProperties {
     });
   }
 
-  public showHeader(): boolean {
-    return false;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
-  }
-
-  public backButtonEnabled(): boolean {
-    return false;
+  public getPageProperties(): PageProperties {
+    return {
+      header: false,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public onSubmit(): void {

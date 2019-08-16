@@ -1,0 +1,19 @@
+@import "variables";
+
+:host {
+  font-size: 1.4rem;
+  background-color: $simple-light-gray;
+}
+
+.campaign-detail-content {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
+
+
+
+

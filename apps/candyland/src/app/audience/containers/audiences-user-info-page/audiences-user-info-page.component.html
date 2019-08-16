@@ -4,7 +4,15 @@
   <!--filters-->
   <cl-table-filters [dataSource]="dataSource" classList="block">
     <ng-container *clTableFilter="'rewardName'; let filter">
-      <cl-search-filter class="search-block" [control]="filter" placeholder="Search vouchers"></cl-search-filter>
+      <div class="actions-row flex justify-content-between align-items-center">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="Search vouchers"></cl-search-filter>
+        <cl-button [classList]="'primary'"
+         (click)="openSelectRewardPopup()">
+        <span>
+          Issue Voucher
+        </span>
+        </cl-button>
+      </div>
     </ng-container>
     <ng-container *clTableFilter="'status'; let filter">
       <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>

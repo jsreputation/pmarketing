@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router } from '@angular/router';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -13,10 +15,12 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper', {static: false}) public stepper: MatStepper;
   public form: FormGroup;
+  public campaign;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
   constructor(private store: CampaignCreationStoreService,
+              private campaignCreationStepConditionService: StepConditionService,
               private router: Router,
               public dialog: MatDialog,
               private fb: FormBuilder) {
@@ -24,9 +28,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        this.campaign = data;
+      });
     this.form.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe(value => this.store.updateCampaign(value));
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+    });
   }
 
   public ngOnDestroy(): void {
@@ -47,6 +59,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
+  public getStepConditions(key: number): Observable<boolean> {
+    return this.campaignCreationStepConditionService.stepCondition$(key);
+  }
+
   public goBack(): void {
     this.stepper.previous();
   }
@@ -59,7 +75,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
-  private getDialogData(campaign): any {
+  private getDialogData(campaign): {title: string, subTitle: string, type?: string} {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     switch (type) {
       case 'sms':
@@ -77,7 +93,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       default:
         return {
           title: 'Yay! you just created a campaign',
-          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.',
+          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
         };
     }
   }
