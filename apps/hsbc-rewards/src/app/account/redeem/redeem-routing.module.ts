@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {RedeemComponent} from './redeem.component'
+import {RedeemComponent} from './redeem.component';
 
 const routes: Routes = [{
   path: '',

@@ -13,8 +13,8 @@ const routes: Routes = [
     loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
   }, {
     path: 'reedem',
-    loadChildren: ()=> import('./account/redeem/redeem.module').then(mod=>mod.RedeemModule),
-  },{
+    loadChildren: () => import('./account/redeem/redeem.module').then(mod => mod.RedeemModule),
+  }, {
     path: '',
     loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
     canActivate: [ProtectedGuard]

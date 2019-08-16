@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewRef } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RewardsService, IReward, ProfileService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./reward-detail.component.scss']
 })
 export class RewardDetailComponent implements OnInit {
-  @ViewChild('coreReward', { static: false }) comp: ViewRef;
   public reward: Observable<IReward>;
   public loyalty: ILoyalty;
   public pointsBalance: any;
@@ -31,7 +30,7 @@ export class RewardDetailComponent implements OnInit {
       return this.rewardService.getReward(this.id);
     })).pipe(map((val) => {
       if (val.description) {
-        val.description = val.description + '<div><a href="reedem">how to redem</a></div>'
+        val.description = val.description + '<div><a href="reedem">how to redem</a></div>';
       }
       return val;
     }));
