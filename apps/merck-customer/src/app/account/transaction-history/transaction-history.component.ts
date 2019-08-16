@@ -18,6 +18,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   public ngOnInit(): void {
     this.loyaltyService.getAllTransactions(mockLoyalty.id).subscribe(
         (transactions) => this.transactions = of(transactions),
+        (err) => console.log(err),
         () => this.transactions = of(mockTransactions)
       );
   }
