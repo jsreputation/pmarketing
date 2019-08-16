@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -20,7 +22,8 @@ describe('WalletComponent', () => {
         }),
         HttpClientTestingModule,
         NavigateToolbarModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatTabsModule
       ]
     })
     .compileComponents();
