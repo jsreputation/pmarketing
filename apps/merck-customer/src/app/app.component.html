@@ -16,18 +16,18 @@
 	<div class="bottom-bar-item" (click)="onTabNavigate('home')">
 		<img
 			[src]="pageProperties.bottomSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
-		<span [ngClass]="pageProperties.bottomSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
+		<span i18n="@@static-home" [ngClass]="pageProperties.bottomSelectedItem === 'home' ? 'selected' : 'unselected'">Home</span>
 	</div>
 	<div class="bottom-bar-item" (click)="onTabNavigate('find-pharmacy')">
 		<img
 			[src]="pageProperties.bottomSelectedItem === 'search' ? 'assets/tabs/search_selected.png' : 'assets/tabs/search_unselected.png'">
-		<span [ngClass]="pageProperties.bottomSelectedItem === 'search' ? 'selected' : 'unselected'">Find a
+		<span i18n="@@static-find-pharmacy" [ngClass]="pageProperties.bottomSelectedItem === 'search' ? 'selected' : 'unselected'">Find a
 			pharmacy</span>
 	</div>
 	<div class="bottom-bar-item" (click)="onTabNavigate('account')">
 		<img
 			[src]="pageProperties.bottomSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
-		<span [ngClass]="pageProperties.bottomSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
+		<span i18n="@@static-account" [ngClass]="pageProperties.bottomSelectedItem === 'account' ? 'selected' : 'unselected'">Account</span>
 	</div>
 </div>
 <router-outlet (activate)="onActivate($event)"></router-outlet>
