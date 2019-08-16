@@ -1,0 +1,21 @@
+<div class="page-header full-with" [formGroup]="form">
+  <div class="game-title-wrap">
+    <div class="control-input name-control name-control-title">
+      <mat-form-field class="messages-input">
+        <input type="text" matInput formControlName="name">
+        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="btn-group">
+    <cl-button classList="primary"
+               (click)="comeBack()"> Come Back
+    </cl-button>
+  </div>
+</div>
+<section class="content">
+  <cl-new-campaign-review-page></cl-new-campaign-review-page>
+</section>
+

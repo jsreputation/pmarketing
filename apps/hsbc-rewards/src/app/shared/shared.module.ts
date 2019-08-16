@@ -16,8 +16,7 @@ import {
   MatRadioModule,
   MatCheckboxModule
 } from '@angular/material';
-import { VouchersModule } from '@perx/core';
-import { environment } from 'src/environments/environment';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [],
@@ -37,7 +36,8 @@ import { environment } from 'src/environments/environment';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    UtilsModule
   ],
   exports: [
     ReactiveFormsModule,
