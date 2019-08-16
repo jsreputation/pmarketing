@@ -11,6 +11,8 @@ import { CategoriesComponent } from './categories/categories.component';
 import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    NgxMultiLineEllipsisModule,
+    UtilsModule
   ],
   bootstrap: [
   ]

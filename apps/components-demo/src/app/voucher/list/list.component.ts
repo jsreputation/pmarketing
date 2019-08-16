@@ -3,7 +3,7 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { Voucher, VouchersService } from '@perx/core';
+import { Voucher, VouchersService, StatusLabelMapping } from '@perx/core';
 import { mock } from '../mock';
 
 @Component({
@@ -13,6 +13,14 @@ import { mock } from '../mock';
 })
 export class ListComponent implements OnInit {
   public data: Observable<Voucher[]>;
+
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
 
   constructor(private vouchersService: VouchersService) { }
 
