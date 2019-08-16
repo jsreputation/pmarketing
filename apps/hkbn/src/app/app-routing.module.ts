@@ -11,10 +11,11 @@ import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.comp
 import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 
 const routes: Routes = [
   {
-    path: '', component: ContentContainerComponent, children: [
+    path: '', canActivate: [ProtectedGuard], component: ContentContainerComponent, children: [
       {path: '', component: HomeComponent},
       {
         path: 'qr', component: EnlargedQrComponent, data: {
@@ -54,10 +55,26 @@ const routes: Routes = [
       }
     ]
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent},
-  {path: 'sms-validation', component: SmsValidationComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {
+    path: 'login',
+    canActivate: [PublicGuard],
+    component: LoginComponent
+  },
+  {
+    path: 'registration',
+    canActivate: [PublicGuard],
+    component: RegistrationComponent
+  },
+  {
+    path: 'sms-validation',
+    canActivate: [PublicGuard],
+    component: SmsValidationComponent
+  },
+  {
+    path: 'forgot-password',
+    canActivate: [PublicGuard],
+    component: ForgotPasswordComponent
+  },
   {path: '**', redirectTo: '/'}
 ];
 
