@@ -1,12 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EngagementsService } from '@cl-core/services/engagements.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -26,6 +27,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
               public store: CampaignCreationStoreService,
               public stepConditionService: StepConditionService,
               private fb: FormBuilder,
+              private dialog: MatDialog,
               public cd: ChangeDetectorRef) {
     super(0, store, stepConditionService, cd);
     this.initForm();
@@ -38,6 +40,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   public ngOnDestroy(): void {
+  }
+
+  public createNewEngagement(): void {
+    this.dialog.open(CreateEngagementPopupComponent);
   }
 
   private initForm(): void {

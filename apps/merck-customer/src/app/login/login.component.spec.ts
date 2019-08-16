@@ -39,6 +39,7 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
+            isAuthorized: () => of({}),
             v4GameOauth: () => {},
             getInterruptedUrl: () => null,
             v4GetAppAccessToken: () => of({})
