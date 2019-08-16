@@ -71,8 +71,10 @@ export class V4ProfileService extends ProfileService {
           return this.http.patch<IMessageResponse>(
             `${this.apiHost}/v4/customers/${profile.id}`,
             {
-              ...profile.customProperties,
-              ...data
+              personal_properties: {
+                ...profile.customProperties,
+                ...data
+              }
             });
         }
       )
