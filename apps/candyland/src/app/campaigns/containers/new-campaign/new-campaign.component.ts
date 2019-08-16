@@ -36,7 +36,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       });
     this.form.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe(value => this.store.updateCampaign(value));
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+    });
   }
 
   public ngOnDestroy(): void {
