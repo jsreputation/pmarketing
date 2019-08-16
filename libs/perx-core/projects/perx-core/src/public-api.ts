@@ -103,6 +103,7 @@ export {
 } from './lib/utils/popup/popup.component';
 export { NotificationService } from './lib/utils/notification/notification.service';
 export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
+export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
 
 /**
  * Puzzles
