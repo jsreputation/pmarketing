@@ -11,8 +11,10 @@ export abstract class RewardsService {
 
   public abstract getReward(id: number): Observable<IReward>;
 
+  public abstract getAllCatalogs(): Observable<ICatalog[]>;
+
   public abstract getCatalogs(page: number, pageSize: number): Observable<ICatalog[]>;
 
-  public abstract getCatalog(id: number): Observable<IReward>;
+  public abstract getCatalog(id: number): Observable<ICatalog>;
 
 }
