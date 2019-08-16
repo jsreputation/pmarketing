@@ -4,7 +4,7 @@ import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
-import { IReward } from './models/reward.model';
+import { IReward, ICatalog } from './models/reward.model';
 
 interface IV4Meta {
   count?: number;
@@ -55,6 +55,30 @@ interface IV4GetRewardResponse {
   data: IV4Reward;
 }
 
+interface IV4GetCatalogsResponse {
+  data: IV4Catalog[];
+  meta?: IV4Meta;
+}
+
+interface IV4GetCatalogResponse {
+  data: IV4Catalog;
+}
+
+interface IV4Catalog {
+  id: number;
+  name: string;
+  description: string;
+  terms_and_conditions: string;
+  images?: IV4Image[];
+  catalog_results: IV4CatalogResults;
+  rewards: IV4Reward[];
+}
+
+interface IV4CatalogResults {
+  count: number;
+  first_result_id?: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,6 +86,7 @@ export class V4RewardsService extends RewardsService {
 
   private apiHost: string;
   private rewardMeta: IV4Meta = {};
+  private catalogMeta: IV4Meta = {};
 
   constructor(private http: HttpClient, config: EnvConfig) {
     super();
@@ -101,6 +126,27 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
+  public static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
+    const images = catalog.images || [];
+    let thumbnail = images.find((image: IV4Image) => image.type === 'catalog_thumbnail');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: IV4Image) => image.type === 'catalog_logo');
+    }
+    const thumbnailImg = thumbnail && thumbnail.url;
+    const banner = images.find((image: IV4Image) => image.type === 'catalog_banner');
+    const catalogBanner = banner && banner.url;
+    const rewards = catalog.rewards && catalog.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
+    return {
+      id: catalog.id,
+      name: catalog.name,
+      description: catalog.description,
+      catalogThumbnail: thumbnailImg,
+      catalogBanner,
+      rewardCount: catalog.catalog_results.count,
+      rewards
+    };
+  }
+
   public getTags(): void {
     // todo: api not implemented yet
   }
@@ -125,11 +171,11 @@ export class V4RewardsService extends RewardsService {
 
   public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
-      `${ this.apiHost }/v4/rewards`,
+      `${this.apiHost}/v4/rewards`,
       {
         params: {
-          page: `${ page }`,
-          size: `${ pageSize }`
+          page: `${page}`,
+          size: `${pageSize}`
         }
       }
     ).pipe(
@@ -150,11 +196,62 @@ export class V4RewardsService extends RewardsService {
 
   public getReward(id: number): Observable<IReward> {
     return this.http.get<IV4GetRewardResponse>(
-      `${ this.apiHost }/v4/rewards/${ id }`
+      `${this.apiHost}/v4/rewards/${id}`
     ).pipe(
       map(res => res.data),
       map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
     );
   }
 
+  public getAllCatalogs(): Observable<ICatalog[]> {
+    const pageSize = 100;
+    return this.getCatalogs(1, pageSize).pipe(
+      mergeMap(catalog => {
+        const streams = [
+          of(catalog)
+        ];
+        for (let i = 2; i <= this.catalogMeta.total_pages; i++) {
+          const stream = this.getCatalogs(i, pageSize);
+          streams.push(stream);
+        }
+        return streams;
+      }),
+      concatAll(),
+      reduce((acc: ICatalog[], curr: ICatalog[]) => acc.concat(curr), [])
+    );
+  }
+
+  public getCatalogs(page: number = 1, pageSize: number = 25): Observable<ICatalog[]> {
+    return this.http.get<IV4GetCatalogsResponse>(
+      `${this.apiHost}/v4/catalogs`,
+      {
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }
+    ).pipe(
+      map((res: IV4GetCatalogsResponse) => {
+        if (res.meta) {
+          this.catalogMeta = {
+            ...this.catalogMeta,
+            ...res.meta
+          };
+        }
+        return res.data;
+      }),
+      map((catalogs: IV4Catalog[]) => catalogs.map(
+        (catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog)
+      ))
+    );
+  }
+
+  public getCatalog(id: number): Observable<ICatalog> {
+    return this.http.get<IV4GetCatalogResponse>(
+      `${this.apiHost}/v4/catalogs/${id}`
+    ).pipe(
+      map(res => res.data),
+      map((catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog))
+    );
+  }
 }
