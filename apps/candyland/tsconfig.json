@@ -25,7 +25,8 @@
       "@cl-helpers/*": ["src/app/helpers/*"],
       "@cl-shared/*": ["src/app/shared/*"],
       "@cl-shared": ["src/app/shared"],
-      "@cl-environments/*": ["src/environments/*"]
+      "@cl-environments/*": ["src/environments/*"],
+      "@cl-core-services": ["src/app/core/services"]
     }
   }
 }

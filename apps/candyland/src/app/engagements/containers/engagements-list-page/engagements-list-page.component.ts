@@ -40,7 +40,9 @@ export class EngagementsListPageComponent implements AfterViewInit {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
-        map((response: any) => response.results),
+        map((response: any) => {
+          return response.data;
+        }),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);

@@ -6,7 +6,11 @@ import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
-import { ControlValueService, RewardsService, RoutingStateService } from '@cl-core/services';
+import {
+  ControlValueService, EngagementTransformDataService,
+  RewardsService,
+  RoutingStateService
+} from '@cl-core/services';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -26,8 +30,9 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private rewardService: RewardsService,
               private routingState: RoutingStateService,
-              private router: Router,
-              private controlValueService: ControlValueService) { }
+              // private router: Router,
+              private controlValueService: ControlValueService,
+              private engagementTransformDataService: EngagementTransformDataService) { }
 
   public ngOnInit(): void {
     this.createRewardForm();
@@ -37,7 +42,13 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    const sendData = this.engagementTransformDataService.transformReward(this.formReward.value);
+    console.log(sendData);
+    this.rewardService.createRewardGame(sendData)
+      .subscribe(res => {
+        console.log(res);
+      });
+    // this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {
