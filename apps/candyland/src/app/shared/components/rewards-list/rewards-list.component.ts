@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/rewards-table-menu-actions';
 
 @Component({
   selector: 'cl-rewards-list',
@@ -12,7 +13,7 @@ export class RewardsListComponent implements AfterViewInit {
   @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: Reward}>();
   @Output() public selectReward = new EventEmitter<Reward>();
   public selected;
 
@@ -29,20 +30,20 @@ export class RewardsListComponent implements AfterViewInit {
     return this.selected && item.id === this.selected.id;
   }
 
-  public editItem(id: number): void {
-    this.itemAction.emit(id);
+  public editItem(reward: Reward): void {
+    this.itemAction.emit({action: RewardsTableMenuActions.edit, data: reward});
   }
 
-  public duplicateItem(id: number): void {
-    this.itemAction.emit(id);
+  public duplicateItem(reward: Reward): void {
+    this.itemAction.emit({action: RewardsTableMenuActions.duplicate, data: reward});
   }
 
-  public deleteItem(id: number): void {
-    this.itemAction.emit(id);
+  public deleteItem(reward: Reward): void {
+    this.itemAction.emit({action: RewardsTableMenuActions.delete, data: reward});
   }
 
-  public useAsCaptionItem(id: number): void {
-    this.itemAction.emit(id);
+  public useAsCaptionItem(reward: Reward): void {
+    this.itemAction.emit({action: RewardsTableMenuActions.useAsCaption, data: reward});
   }
 
 }
