@@ -16,6 +16,8 @@ import {
   MatRadioModule,
   MatCheckboxModule
 } from '@angular/material';
+import { VouchersModule } from '@perx/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [],
