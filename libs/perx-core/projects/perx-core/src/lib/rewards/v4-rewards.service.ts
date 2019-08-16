@@ -71,7 +71,7 @@ interface IV4Catalog {
   terms_and_conditions: string;
   images?: IV4Image[];
   catalog_results: IV4CatalogResults;
-  rewards: IReward[];
+  rewards: IV4Reward[];
 }
 
 interface IV4CatalogResults {
@@ -135,7 +135,7 @@ export class V4RewardsService extends RewardsService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'catalog_banner');
     const catalogBanner = banner && banner.url;
-
+    const rewards = catalog.rewards && catalog.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
       id: catalog.id,
       name: catalog.name,
@@ -143,7 +143,7 @@ export class V4RewardsService extends RewardsService {
       catalogThumbnail: thumbnailImg,
       catalogBanner,
       rewardCount: catalog.catalog_results.count,
-      rewards: catalog.rewards
+      rewards
     };
   }
 
