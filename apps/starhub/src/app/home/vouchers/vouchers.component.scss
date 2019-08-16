@@ -9,6 +9,7 @@ button {
   font-size: 1.8rem;
   height: 5rem;
   width: 100%;
+  color: #666666;
 }
 
 .icon {
@@ -26,13 +27,19 @@ h1 {
 .mat-card {
   margin-bottom: 1rem;
   display: flex;
+  align-items: center;
 }
 
 .mat-card-header {
   vertical-align: middle;
   align-items: center;
+  flex: 1;
 
   .mat-card-title {
     margin-bottom: 0;
   }
+}
+
+.past-rewards {
+  margin-top: 3rem;
 }
