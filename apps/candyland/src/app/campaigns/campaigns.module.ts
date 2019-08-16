@@ -71,6 +71,7 @@ import {
   NewCampaignStampRuleFormGroupComponent
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 
 @NgModule({
   providers: [
@@ -99,6 +100,7 @@ import { ReviewCampaignComponent } from './containers/review-campaign/review-cam
   ],
   imports: [
     CommonModule,
+    CreateEngagementPopupModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
