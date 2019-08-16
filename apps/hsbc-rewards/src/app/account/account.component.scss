@@ -1,0 +1,62 @@
+.page {
+  height: 100%;
+  background-color: #E5E5E5;
+}
+
+.block {
+  margin-bottom: 1.6rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  button {
+    font-size: 1.6rem;
+    border: none;
+    background: none;
+
+    &:not(:last-child) {
+      margin-bottom: 1.6rem;
+    }
+  }
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  background: #EBEBEB;
+  padding: 0.2rem 1.6rem;
+  margin-bottom: 1.6rem;
+
+  &:last-child {
+    margin-bottom: 0.6rem;
+  }
+
+  label {
+    font-size: 1.2rem;
+    color: #7D7D89;
+  }
+
+  input {
+    background-color: inherit;
+    border: none;
+    font-size: 1.4rem;
+    color: #1b1b25;
+  }
+}
+
+.profile {
+  padding: 1.6rem 0.8rem;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 1.6rem;
+  }
+}
+
+.acc-name {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
