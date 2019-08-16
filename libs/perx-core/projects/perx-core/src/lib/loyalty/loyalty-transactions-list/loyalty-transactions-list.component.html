@@ -1,5 +1,7 @@
 <ng-container *ngIf="transactions$ | async as transactions">
-  <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="onScrolledIndexChange()">
+  <!-- Added minBufferPx to fix incorrect list size rendering with 'mat-tab' -->
+  <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="onScrolledIndexChange()"
+    minBufferPx="1200" maxBufferPx="1200">
     <div *cdkVirtualFor="let transaction of transactions; trackBy: trackById" class="transaction">
       <div class="transaction-info">
         <div *ngIf="transaction.name" class="transaction-name">
