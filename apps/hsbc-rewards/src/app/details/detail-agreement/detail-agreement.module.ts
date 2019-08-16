@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetailAgreementComponent } from './detail-agreement.component';
-import { DinamicCreateService } from 'src/app/shared/service/dinamic-create.service';
+import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { DinamicCreateService } from 'src/app/shared/service/dinamic-create.serv
     DetailAgreementComponent
   ],
   providers: [
-    DinamicCreateService
+    DynamicCreateService
   ],
   exports: [
     DetailAgreementComponent
