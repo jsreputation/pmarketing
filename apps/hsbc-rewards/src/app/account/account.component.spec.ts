@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AccountComponent } from './account.component';
 import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { DinamicCreateService } from '../shared/service/dinamic-create.service';
+import { DynamicCreateService } from '../shared/service/dynamic-create.service';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 
 @Component({
@@ -33,12 +33,10 @@ const userInfo = {
 const profileServiceStub = {
   whoAmI: () => of(userInfo)
 };
-
-const dinamicCreateServiceStub = {
+const dynamicCreateServiceStub = {
   createComponent: () => {
   }
 };
-
 const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true), logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -64,7 +62,7 @@ describe('AccountComponent', () => {
       }, {
         provide: ProfileService, useValue: profileServiceStub
       }, {
-        provide: DinamicCreateService, useValue: dinamicCreateServiceStub
+        provide: DynamicCreateService, useValue: dynamicCreateServiceStub
       }
       ]
     })
