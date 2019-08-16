@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { RewardsService } from './rewards.service';
-import { IReward } from './models/reward.model';
+import { IReward, ICatalog } from './models/reward.model';
 
 interface IV4Meta {
   count?: number;
@@ -55,6 +55,21 @@ interface IV4GetRewardResponse {
   data: IV4Reward;
 }
 
+interface IV4Catalog {
+  id: number;
+  name: string;
+  description: string;
+  terms_and_conditions: string;
+  images?: IV4Image[];
+  catalog_results: IV4CatalogResults;
+  rewards: IReward[];
+}
+
+interface IV4CatalogResults {
+  count: number;
+  first_result_id?: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -101,6 +116,27 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
+  public static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
+    const images = catalog.images || [];
+    let thumbnail = images.find((image: IV4Image) => image.type === 'category_icon_new');
+    if (thumbnail === undefined) {
+      thumbnail = images.find((image: IV4Image) => image.type === 'category_icon_old');
+    }
+    const thumbnailImg = thumbnail && thumbnail.url;
+    const banner = images.find((image: IV4Image) => image.type === 'sub_banner_new');
+    const catalogBanner = banner && banner.url;
+
+    return {
+      id: catalog.id,
+      name: catalog.name,
+      description: catalog.description,
+      catalogThumbnail: thumbnailImg,
+      catalogBanner,
+      rewardCount: catalog.catalog_results.count,
+      rewards: catalog.rewards
+    };
+  }
+
   public getTags(): void {
     // todo: api not implemented yet
   }
@@ -125,11 +161,11 @@ export class V4RewardsService extends RewardsService {
 
   public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
-      `${ this.apiHost }/v4/rewards`,
+      `${this.apiHost}/v4/rewards`,
       {
         params: {
-          page: `${ page }`,
-          size: `${ pageSize }`
+          page: `${page}`,
+          size: `${pageSize}`
         }
       }
     ).pipe(
@@ -150,11 +186,18 @@ export class V4RewardsService extends RewardsService {
 
   public getReward(id: number): Observable<IReward> {
     return this.http.get<IV4GetRewardResponse>(
-      `${ this.apiHost }/v4/rewards/${ id }`
+      `${this.apiHost}/v4/rewards/${id}`
     ).pipe(
       map(res => res.data),
       map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
     );
   }
 
+  public getCatalogs(page: number = 1, pageSize: number = 25): Observable<ICatalog[]> {
+    return throwError('Not implemented yet');
+  }
+
+  public getCatalog(id: number): Observable<ICatalog> {
+    return throwError('Not implemented yet');
+  }
 }
