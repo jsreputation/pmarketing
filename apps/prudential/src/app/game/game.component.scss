@@ -18,6 +18,18 @@ button {
   text-transform: uppercase;
 }
 
+.game-wrapper {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-wrapper__right {
+  max-height: 70%;
+}
+
 @media (orientation: landscape) {
   .game-wrapper {
     display: flex;
@@ -34,6 +46,7 @@ button {
   .game-wrapper__right {
     display: block;
     width: 60%;
+    max-height: 100%;
   }
 }
 
