@@ -16,3 +16,8 @@ export interface IProfile {
 export interface ICustomProperties {
   [key: string]: string | number;
 }
+
+export interface IMessageResponse {
+  message: string;
+  code?: number;
+}
