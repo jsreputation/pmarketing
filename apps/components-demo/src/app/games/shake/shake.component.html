@@ -14,9 +14,16 @@
     <button (click)="reset()" mat-flat-button color="primary">Reset</button>
 </div>
 <div>
-    <perx-core-shake-tree #shake [treeImg]="'assets/games/tree.png'" [giftImg]="'assets/games/gift.png'"
-        [waitingManImg]="'assets/games/person.png'" [waitingManCelebrateImg]="'assets/games/person-celebrate.png'"
-        [nbHangedGifts]="nbGifts.value" [nbFallingGifts]="nbFallingGifts.value" [nbShakes]="nbShakes.value"
-        [distanceFromTree]="26" [bottomDistance]="1">
+    <perx-core-shake-tree
+        #shake
+        [treeImg]="'assets/games/tree.png'"
+        [giftImg]="'assets/games/gift.png'"
+        [waitingManImg]="'assets/games/person.png'"
+        [waitingManCelebrateImg]="'assets/games/person-celebrate.png'"
+        [nbHangedGifts]="nbGifts.value"
+        [nbFallingGifts]="nbFallingGifts.value"
+        [nbShakes]="nbShakes.value"
+        [distanceFromTree]="26"
+        [bottomDistance]="1">
     </perx-core-shake-tree>
 </div>
