@@ -12,8 +12,7 @@ import { RewardComponent } from './reward/reward.component';
 import { LocationsComponent } from './locations/locations.component';
 import { TncComponent } from './tnc/tnc.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { MerchantPinComponent } from './merchant-pin/merchant-pin.component';
-import { PromoCodeComponent } from './promo-code/promo-code.component';
+import { RedemptionComponent } from './redemption/redemption.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { PromoCodeComponent } from './promo-code/promo-code.component';
     LocationsComponent,
     TncComponent,
     VoucherComponent,
-    MerchantPinComponent,
-    PromoCodeComponent
+    RedemptionComponent,
   ],
   imports: [
     BrowserModule,

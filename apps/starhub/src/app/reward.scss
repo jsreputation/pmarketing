@@ -1,3 +1,13 @@
+@import "./icon.scss";
+
+.icon {
+  @include icon;
+}
+
+.banner {
+  width: 100%;
+}
+
 .app-header {
   position: relative;
 
@@ -78,11 +88,11 @@
         margin-right: 0.5rem;
       }
     }
+  }
 
-    button {
-      width: 100%;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
+  button.full-width {
+    width: 100%;
+    text-transform: uppercase;
+    color: #ffffff;
   }
 }
