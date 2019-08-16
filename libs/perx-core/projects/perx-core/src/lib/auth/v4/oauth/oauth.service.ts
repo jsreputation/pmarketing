@@ -113,7 +113,7 @@ export class OauthService {
 
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return this.http.patch<{ message: string, code: number }>(
-      this.customersEndPoint + '/confirm', { params: { phone, confirmation_token: otp } }).pipe(
+      this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
         tap( // Log the result or error
           data => console.log(data),
           error => console.log(error)
@@ -135,13 +135,10 @@ export class OauthService {
     return this.http.patch<{ message: string }>(
       this.customersEndPoint + '/reset_password',
       {
-        params:
-        {
-          phone: resetPasswordInfo.phone,
-          password: resetPasswordInfo.newPassword,
-          password_confirmation: resetPasswordInfo.passwordConfirmation,
-          confirmation_token: resetPasswordInfo.otp
-        }
+        phone: resetPasswordInfo.phone,
+        password: resetPasswordInfo.newPassword,
+        password_confirmation: resetPasswordInfo.passwordConfirmation,
+        confirmation_token: resetPasswordInfo.otp
       }).pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -169,12 +166,9 @@ export class OauthService {
           return this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
-              params:
-              {
-                password: changePasswordData.newPassword,
-                password_confirmation: changePasswordData.passwordConfirmation,
-                confirmation_token: changePasswordData.otp
-              }
+              password: changePasswordData.newPassword,
+              password_confirmation: changePasswordData.passwordConfirmation,
+              confirmation_token: changePasswordData.otp
             });
         }
       )

@@ -8,6 +8,7 @@ import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -26,7 +27,8 @@ describe('DiscoverComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        NgxMultiLineEllipsisModule
       ]
     })
       .compileComponents();
