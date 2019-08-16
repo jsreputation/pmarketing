@@ -4,7 +4,15 @@ import { WalletComponent } from './wallet.component';
 
 const routes: Routes = [{
   path: '',
-  component: WalletComponent
+  component: WalletComponent,
+  children: [{
+    path: 'my-reward/:id',
+    loadChildren: () => import('./list/list.module').then(mod => mod.ListModule)
+  }, {
+    path: '',
+    redirectTo: 'my-reward/list',
+    pathMatch: 'full'
+  }]
 }];
 
 @NgModule({
