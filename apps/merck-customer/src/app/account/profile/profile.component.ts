@@ -51,7 +51,6 @@ export class ProfileComponent implements OnInit, PageAppearence {
   }
 
   public onEditPasswordClicked(): void {
-    console.log(this.profile);
     // TODO: Currently sending empty 'otp'. There should be enter-pin step
     this.router.navigate(['reset-password'], { state: { mobileNo: this.profile.phone, otp: '' } });
   }
