@@ -4,7 +4,7 @@ import { ProfileComponent } from './profile.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileService, AuthenticationService, IProfile } from '@perx/core';
+import { ProfileService, AuthenticationService, IProfile, ProfileModule } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('ProfileComponent', () => {
@@ -30,7 +30,8 @@ describe('ProfileComponent', () => {
       imports: [
         MatIconModule,
         RouterTestingModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        ProfileModule
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },

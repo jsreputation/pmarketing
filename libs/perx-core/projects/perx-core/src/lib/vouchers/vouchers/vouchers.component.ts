@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
+import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -29,12 +29,17 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input('data')
   public vouchers$: Observable<IVoucher[]>;
 
+  @Input()
+  public mapping: StatusLabelMapping;
+
+  public repeatGhostCount: number = 10;
+
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers =>  (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
+        map(vouchers => (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
       );
     }
   }

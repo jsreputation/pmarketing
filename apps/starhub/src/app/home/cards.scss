@@ -1,0 +1,54 @@
+@import '../icon.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
+mat-card {
+  max-width: 31.5rem;
+}
+
+.mat-card {
+  flex: 0 0 0;
+  flex-grow: 1;
+  flex-basis: 70%;
+  margin: 0 1rem 1rem 0;
+
+  mat-card-actions {
+    a {
+      color: #6dc00e;
+    }
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .icon {
+    @include icon;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    color: #666666;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    text-overflow: ellipsis;
+    color: #666666;
+    font-weight: normal;
+  }
+
+  h3 {
+    margin-top: 0;
+    font-weight: normal;
+    color: #666666;
+  }
+}

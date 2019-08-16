@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MatPaginator, MatTableDataSource } from '@angular/material';
-import { RewardService } from '@cl-core/http-services/reward.service';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
+import { RewardsService } from '@cl-core/services/rewards.service';
 
 @Component({
   selector: 'cl-select-reward-popup',
@@ -16,7 +16,7 @@ export class SelectRewardPopupComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(public dialogRef: MatDialogRef<SelectRewardPopupComponent>,
-              private rewardsService: RewardService,
+              private rewardsService: RewardsService,
               public cd: ChangeDetectorRef) {
   }
 

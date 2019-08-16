@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DashboardService } from '@cl-core/services/dashboard.service';
 import { map, tap } from 'rxjs/operators';
+import { DashboardService } from '@cl-core/services/dashboard.service';
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
   revenue = 'revenue',
