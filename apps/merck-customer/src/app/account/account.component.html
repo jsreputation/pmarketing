@@ -5,25 +5,28 @@
       <div mat-card-avatar class="example-header-image">
         <img src="assets/avatar.png" alt="">
       </div>
-      <mat-card-title>{{profile.firstName}} {{profile.lastName}}</mat-card-title>
-      <mat-card-subtitle>{{profile.state}}</mat-card-subtitle>
+      <mat-card-title *ngIf="profile">{{profile.firstName}} {{profile.lastName}}</mat-card-title>
+      <mat-card-subtitle *ngIf="profile">{{profile.state}}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 
   <mat-action-list class="btn-container">
     <button
+      i18n="@@static-profile"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/profile')"
     >Profile</button>
 
     <button
+      i18n="@@static-transaction-history"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/transaction-history')"
     >Transaction History</button>
 
     <button
+      i18n="@@static-privacy-policy"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/privacy-policy')"
@@ -33,6 +36,7 @@
 
   <mat-action-list class="btn-container">
     <button
+      i18n="@@static-logout"
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onLogout()"
