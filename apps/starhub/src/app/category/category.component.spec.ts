@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule, MatToolbarModule, MatCardModule } from '@angular/material';
+import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule } from '@angular/material';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -15,6 +15,7 @@ describe('CategoryComponent', () => {
         RouterTestingModule,
         MatIconModule,
         MatToolbarModule,
+        MatBottomSheetModule,
         MatCardModule
       ]
     })

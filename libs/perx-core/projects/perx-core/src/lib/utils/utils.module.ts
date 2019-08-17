@@ -9,6 +9,7 @@ import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { RepeatTimesDirective } from './directives/repeat-times.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
 import { FeedReaderService } from './feed-reader.service';
+import { DistancePipe } from './directives/distance-pipe';
 
 const directives = [
   NumericCharacterDirective,
@@ -25,6 +26,7 @@ const components = [
   declarations: [
     ...directives,
     ...components,
+    DistancePipe
   ],
   entryComponents: [
     ...components,
@@ -38,6 +40,7 @@ const components = [
   exports: [
     ...directives,
     ...components,
+    DistancePipe
   ],
   providers: [
     NotificationService,
