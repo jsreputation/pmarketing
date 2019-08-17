@@ -1,0 +1,13 @@
+<div class="header">
+  <h1>Sort by</h1>
+  <button class="icon" (click)="dismiss($event)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-card class="mat-elevation-z2">
+  <label *ngFor="let criteria of sortingCriterias" class="choice">
+    {{criteria}}
+    <input type="radio" name="criteria">
+  </label>
+</mat-card>
+<button mat-flat-button color="primary" (click)="apply($event)">Apply</button>

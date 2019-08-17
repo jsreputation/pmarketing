@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ICategory } from '../categories/categories.component';
+import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
 import { IReward, ICampaign } from '@perx/core';
 import { Catalog } from '../catalogs/catalogs.component';
