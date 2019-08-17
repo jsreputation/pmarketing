@@ -15,7 +15,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
-import {APP_BASE_HREF} from "@angular/common";
+import {APP_BASE_HREF} from '@angular/common';
 
 @NgModule({
   declarations: [
