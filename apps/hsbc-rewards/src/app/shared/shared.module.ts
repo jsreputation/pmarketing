@@ -16,6 +16,7 @@ import {
   MatRadioModule,
   MatCheckboxModule
 } from '@angular/material';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,8 @@ import {
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    UtilsModule
   ],
   exports: [
     ReactiveFormsModule,

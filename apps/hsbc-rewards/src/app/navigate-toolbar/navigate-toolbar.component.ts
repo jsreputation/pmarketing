@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 
 interface IRoute {
   activated: boolean;
@@ -13,6 +13,7 @@ interface IRoute {
   templateUrl: './navigate-toolbar.component.html',
   styleUrls: ['./navigate-toolbar.component.scss']
 })
+
 export class NavigateToolbarComponent implements OnInit {
   public navigatePanel: IRoute[] = [{
     activated: false,
@@ -23,7 +24,7 @@ export class NavigateToolbarComponent implements OnInit {
     activated: false,
     title: 'My Rewards',
     img: 'assets/img/rewards',
-    route: '/rewards'
+    route: '/wallet'
   }, {
     activated: false,
     title: 'Account',
@@ -32,18 +33,12 @@ export class NavigateToolbarComponent implements OnInit {
   }];
 
   constructor(
-    private router: Router
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
-    const url = this.router.url;
+    const url = `/${this.router.url.split('/')[1]}`;
     this.navigatePanel.forEach((nav) => nav.route === url ? nav.activated = true : nav.activated = false);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        const nextUrl = event.url;
-        this.navigatePanel.forEach((nav) => nav.route === nextUrl ? nav.activated = true : nav.activated = false);
-      }
-    });
   }
 
 }

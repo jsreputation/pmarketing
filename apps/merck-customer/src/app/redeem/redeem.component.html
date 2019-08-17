@@ -1,9 +1,9 @@
 <div class="main-container">
 	<div class="top-section" *ngIf="rewardDetails">
 		<qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
-		<h4>Present this QR code to the cashier to complete your transaction.</h4>
+		<h4 i18n="@@static-present-qr">Present this QR code to the cashier to complete your transaction.</h4>
 	</div>
-	<button *ngIf="rewardId" mat-stroked-button color="primary" class="redeem-btn" (click)="onCancel()">
+	<button i18n="@@static-cancel" mat-stroked-button color="primary" class="redeem-btn" (click)="onCancel()">
 		Cancel
 	</button>
 </div>

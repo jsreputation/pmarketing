@@ -54,6 +54,10 @@ button {
   justify-content: space-between !important;
 }
 
+.flex-end {
+  justify-content: flex-end;
+}
+
 .align-items-center {
   -webkit-box-align: center !important;
   -ms-flex-align: center !important;
@@ -192,24 +196,24 @@ button {
     background: #ff1c1c;
     color: $white-color;
     font-size: 1.4rem;
-    max-width: 215px;
-    width: 215px;
-    min-height: 40px;
+    max-width: 21.5rem;
+    width: 21.5rem;
+    min-height: 4rem;
     z-index: 4;
   }
 
   &-preview-background {
-    width: 24.1rem;
-    height: 457px;
+    width: 24rem;
+    height: 45.7rem;
     display: block;
     margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
-    top: 112px;
+    top: 11.2rem;
     left: 5.4rem;
-    border-bottom-right-radius: 24px;
-    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 2.4rem;
+    border-bottom-left-radius: 2.4rem;
     z-index: 2;
   }
 
@@ -218,7 +222,7 @@ button {
     top: 19rem;
     left: 5.4rem;
     width: 24.1rem;
-    height: 45.2rem;
+    height: 32rem;
     display: block;
     z-index: 3;
   }
@@ -245,7 +249,7 @@ button {
   }
 }
 
-cl-game-mobile-preview {
+cl-game-mobile-preview, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
   }

@@ -1,0 +1,47 @@
+@import '../icon.scss';
+
+.icon {
+  @include icon(1.9rem);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  background: #F6F7F9;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  color: #6DC00E;
+  font-size: 1.2rem;
+}
+
+.choice {
+  border: 1px solid #F1F2F4;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+mat-card {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  text-transform: uppercase;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

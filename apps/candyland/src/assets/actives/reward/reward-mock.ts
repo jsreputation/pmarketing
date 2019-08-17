@@ -3,9 +3,9 @@ import { IReward } from '@perx/core';
 export const MockRewardsMobilePreview: IReward[] = [
     {
         id: 1,
-        name: 'Starbucks venti $5',
+        name: 'Reward Name',
         subtitle: 'So yummy',
-        description: 'One bought, one offered',
+        description: 'Merchant Name',
         validFrom: null,
         validTo: null,
         rewardThumbnail: 'https://picsum.photos/300/300',
@@ -20,9 +20,9 @@ export const MockRewardsMobilePreview: IReward[] = [
     },
     {
         id: 2,
-        name: 'Guru naru $5',
+        name: 'Reward Name',
         subtitle: 'So yummy',
-        description: 'Better than anything',
+        description: 'Merchant Name',
         validFrom: null,
         validTo: null,
         rewardThumbnail: 'https://picsum.photos/600/300?random=2',
@@ -37,9 +37,9 @@ export const MockRewardsMobilePreview: IReward[] = [
     },
     {
         id: 3,
-        name: 'Coffee bean venti $5',
+        name: 'Reward Name',
         subtitle: 'So yummy',
-        description: 'One bought, one offered',
+        description: 'Merchant Name',
         validFrom: null,
         validTo: null,
         rewardThumbnail: 'https://picsum.photos/600/300?random=3',

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public myQrClicked(): void {
-    console.log('My Qr clicked');
+    this.router.navigateByUrl('redeem');
   }
 
   public rewardClicked(reward: IReward): void {

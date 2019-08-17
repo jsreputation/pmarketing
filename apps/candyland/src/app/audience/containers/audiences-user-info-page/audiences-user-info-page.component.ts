@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
 } from '@angular/core';
 import { AudiencesService } from '@cl-core/services/audiences.service';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -80,6 +81,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       if (result) {
       }
     });
+  }
+
+  public openSelectRewardPopup(): void {
+    this.dialog.open(SelectRewardPopupComponent);
   }
 
 }

@@ -1,11 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
+import {
+  MatSelectModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { Type } from '@angular/core';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -17,13 +23,33 @@ describe('ForgotPasswordComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {forgotPassword: () => {}, v4GetAppAccessToken: () => of({})}
+          useValue: {
+            forgotPassword: () => of(),
+            v4GetAppAccessToken: () => of()
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: () => {},
+            getCurrentNavigation: () =>  (
+              {
+                extras: {
+                  state: {
+                    mobileNo: '1234', country: ''
+                  }
+                }
+              }
+            )
+          }
         }
       ]
     })
@@ -39,4 +65,20 @@ describe('ForgotPasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should redirect to enter-pin/password on fogrot password submit', fakeAsync(() => {
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
+    (AuthenticationService as Type<AuthenticationService>);
+    const authSpy = spyOn(authenticationService, 'forgotPassword').and.returnValue(
+      of({
+        message: 'success'
+      })
+    );
+    const router: Router = fixture.debugElement.injector.get(Router);
+    const routerSpy = spyOn(router, 'navigate');
+    component.onSubmit();
+    tick();
+    expect(authSpy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['enter-pin/password'], { state: { mobileNo: '1234' } });
+  }));
 });

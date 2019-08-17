@@ -6,6 +6,8 @@
     "start": "npm run config && ng serve",
     "start-zh": "DEFAULT_LANG=zh npm run config && ng serve",
     "build": "npm run config && ng build",
+    "build:hkbn:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "clean": "rm -rf ./dist ./node_modules",
     "build-zh": "DEFAULT_LANG=zh npm run config && ng build",
     "test": "ng test",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
