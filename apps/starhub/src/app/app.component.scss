@@ -1,11 +1,5 @@
-.app {
+:host, .app {
   width: 100%;
   height: 100%;
   display: block;
-}
-
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
