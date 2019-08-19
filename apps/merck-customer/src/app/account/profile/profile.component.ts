@@ -28,11 +28,13 @@ export class ProfileComponent implements OnInit, PageAppearence {
   private getConditionsFromProfile(profile: IProfile): string[] {
     const filteredConditions: string[] = [];
     Object.keys(profile.customProperties).forEach(property => {
-        if (property && property === 'diabetesState') {
+        if (property === 'diabetesState') {
           const diabetesState = profile.customProperties[property];
-          filteredConditions.push(String (diabetesState).replace('_', '-'));
+          if (typeof diabetesState === 'string') {
+            filteredConditions.push(diabetesState.replace('_', '-'));
+          }
         }
-        if (profile.customProperties[property] === 'true' && property === 'hypertension') {
+        if (property === 'hypertension' && profile.customProperties[property] === 'true') {
           filteredConditions.push('Hypertension');
         }
       });

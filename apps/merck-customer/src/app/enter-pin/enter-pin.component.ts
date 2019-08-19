@@ -3,6 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
+export enum PinMode {
+  PASSWORD = 'password',
+  REGISTER = 'register'
+}
+
 @Component({
   selector: 'mc-enter-pin',
   templateUrl: './enter-pin.component.html',
@@ -11,7 +16,7 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../page-propert
 export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
-  public pinMode: string = 'password'; // || 'register'
+  public pinMode: PinMode = PinMode.PASSWORD;
   private mobileNo: string = null;
   public visibleNo: string = '';
 
@@ -25,8 +30,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
         return;
       }
 
-      if (currentNavigation.extras.hasOwnProperty('state')) {
-
+      if (currentNavigation.extras.state) {
         this.mobileNo = currentNavigation.extras.state.mobileNo;
         this.visibleNo = this.encodeMobileNo(this.mobileNo);
       }
@@ -56,26 +60,27 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if (params.get('type') !== null) {
-        this.pinMode = params.get('type');
-      }
+          this.pinMode = params.get('type') as PinMode;
+          console.log(this.pinMode);
+        }
     });
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === 'register') {
+    if (this.pinMode === PinMode.REGISTER) {
       this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
         (response) => {
           console.log(`Response: ${response.message}`);
         }
       );
-    } else if (this.pinMode === 'password') {
+    } else if (this.pinMode === PinMode.PASSWORD) {
       this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
 
   }
 
   public resendOtp(): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === PinMode.PASSWORD) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
         () => {
           console.log('Forgot password api called again');
