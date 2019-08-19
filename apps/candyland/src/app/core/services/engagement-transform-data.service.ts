@@ -19,7 +19,24 @@ export class EngagementTransformDataService {
           subHeadlineText: data.subHeadlineMessage,
           cardBackground: this.controlValueService.getImagePath(data.cardBackground),
           background: this.controlValueService.getImagePath(data.background),
-          buttonText: data.buttonText
+          callToActionText: data.buttonText
+        }
+      }
+    };
+  }
+
+  public transformShakeTheTree(data: any): any {
+    return {
+      type: 'engagements',
+      attributes: {
+        title: data.name,
+        game_type: 'shake',
+        image_url: 'i do not know what',
+        display_properties: {
+          headlineText: data.headlineMessage,
+          subHeadlineText: data.subHeadlineMessage,
+          background: this.controlValueService.getImagePath(data.background),
+          callToActionText: data.buttonText
         }
       }
     };

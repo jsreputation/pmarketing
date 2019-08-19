@@ -43,6 +43,6 @@ export class RewardHttpService {
   }
 
   public createRewardGame(data: any): Observable<any> {
-    return this.http.post(ConfigPathService.engagementsPath, data);
+    return this.http.post(ConfigPathService.createGamePath, data);
   }
 }

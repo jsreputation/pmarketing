@@ -30,7 +30,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private rewardService: RewardsService,
               private routingState: RoutingStateService,
-              // private router: Router,
+              private router: Router,
               private controlValueService: ControlValueService,
               private engagementTransformDataService: EngagementTransformDataService) { }
 
@@ -48,7 +48,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
       });
-    // this.router.navigateByUrl('/engagements');
+    this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {

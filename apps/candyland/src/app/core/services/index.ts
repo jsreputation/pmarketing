@@ -10,3 +10,5 @@ export * from './merchant.service';
 export * from './settings.service';
 export * from './survey.service';
 export * from './engagement-transform-data.service';
+export * from './config-path.service';
+export * from './shake-tree.service';
