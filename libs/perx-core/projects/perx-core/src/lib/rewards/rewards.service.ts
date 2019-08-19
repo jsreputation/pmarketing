@@ -7,7 +7,7 @@ export abstract class RewardsService {
 
   public abstract getAllRewards(): Observable<IReward[]>;
 
-  public abstract getRewards(page: number, pageSize: number): Observable<IReward[]>;
+  public abstract getRewards(page: number, pageSize: number, tags?: string[]): Observable<IReward[]>;
 
   public abstract getReward(id: number): Observable<IReward>;
 
