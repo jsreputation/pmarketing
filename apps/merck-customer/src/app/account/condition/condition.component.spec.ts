@@ -99,17 +99,17 @@ describe('ConditionComponent', () => {
   });
 
   describe('isDiabetesState', () => {
-    it('should return true and checked pre-diabetes radiobox ', fakeAsync(() => {
+    it('should return true and checked pre-diabetes radiobox ', () => {
+      component.profile.customProperties.diabetesState = 'pre_diabetes';
       const isDiabetesState = component.isDiabetesState('pre_diabetes');
-      tick();
       expect(isDiabetesState).toBe(true);
-    }));
+    });
 
-    it('should return false and NOT check diabetes radiobox ', fakeAsync(() => {
+    it('should return false and NOT check diabetes radiobox ', () => {
+      component.profile.customProperties.diabetesState = 'pre_diabetes';
       const isDiabetesState = component.isDiabetesState('diabetes');
-      tick();
       expect(isDiabetesState).toBe(false);
-    }));
+    });
   });
 
   describe('onDiabetesConditionChanged', () => {
