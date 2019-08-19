@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
-import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { RewardsService } from './rewards.service';
-import { IReward, ICatalog } from './models/reward.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {EnvConfig} from '../shared/env-config';
+import {concatAll, map, mergeMap, reduce} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {RewardsService} from './rewards.service';
+import {IReward, ICatalog} from './models/reward.model';
 
 interface IV4Meta {
   count?: number;
@@ -176,7 +176,7 @@ export class V4RewardsService extends RewardsService {
         params: {
           page: `${page}`,
           size: `${pageSize}`,
-          tags: `${tags? tags.join() : ''}`
+          tags: `${tags ? tags.join() : ''}`
         }
       }
     ).pipe(
