@@ -6,4 +6,5 @@ export interface IVoucherService {
   get(id: number): Observable<IVoucher>;
   redeemVoucher(id: number): Observable<any>;
   reset(vouchers?: IVoucher[]): void;
+  newVouchersCreatedForReward(rewardId: number, intervalPeriod?: number): Observable<IVoucher[]>;
 }
