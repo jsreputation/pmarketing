@@ -12,7 +12,7 @@ import { RedeemComponent } from './redeem/redeem.component';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  private personalData: FormGroup;
+  public personalData: FormGroup;
   constructor(
     private buildForm: FormBuilder,
     private personalProfile: ProfileService,
