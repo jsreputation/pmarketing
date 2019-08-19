@@ -4,6 +4,7 @@ import { ProfileService } from './profile.service';
 import { V4ProfileService } from './v4-profile.service';
 import { EnvConfig } from '../shared/env-config';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MicroProfileComponent } from './micro-profile/micro-profile.component';
 import { MatIconModule } from '@angular/material';
 
 @NgModule({
@@ -11,8 +12,8 @@ import { MatIconModule } from '@angular/material';
     CommonModule,
     MatIconModule
   ],
-  declarations: [UserProfileComponent],
-  exports: [UserProfileComponent]
+  declarations: [UserProfileComponent, MicroProfileComponent],
+  exports: [UserProfileComponent, MicroProfileComponent]
 })
 export class ProfileModule {
   public static forRoot(config: EnvConfig): ModuleWithProviders {
