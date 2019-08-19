@@ -1,5 +1,5 @@
-import { IReward, ICatalog } from './models/reward.model';
-import { Observable } from 'rxjs';
+import {IReward, ICatalog, IPrice} from './models/reward.model';
+import {Observable, throwError} from 'rxjs';
 
 export abstract class RewardsService {
 
@@ -7,9 +7,14 @@ export abstract class RewardsService {
 
   public abstract getAllRewards(): Observable<IReward[]>;
 
-  public abstract getRewards(page: number, pageSize: number): Observable<IReward[]>;
+  public abstract getRewards(page: number, pageSize: number, tags?: string[]): Observable<IReward[]>;
 
   public abstract getReward(id: number): Observable<IReward>;
+
+  // @ts-ignore
+  public abstract getRewardPricesOptions(id: number): Observable<IPrice[]> {
+    return throwError('Not implemented yet');
+  }
 
   public abstract getAllCatalogs(): Observable<ICatalog[]>;
 
