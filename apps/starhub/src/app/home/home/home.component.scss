@@ -21,6 +21,7 @@ mat-toolbar {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-right: 1rem;
   }
 
   .top-row {
@@ -32,6 +33,7 @@ mat-toolbar {
 
     h1 {
       font-size: 3rem;
+      font-weight: bold;
     }
   }
 

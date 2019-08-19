@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RewardsService, IReward, ProfileService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-reward-detail',
   templateUrl: './reward-detail.component.html',
@@ -27,6 +28,11 @@ export class RewardDetailComponent implements OnInit {
     this.reward = this.route.params.pipe(switchMap((param) => {
       this.id = param.id;
       return this.rewardService.getReward(this.id);
+    })).pipe(map((val: IReward) => {
+      if (val.description) {
+        val.description = val.description + '<div><a href="reedem">how to redem</a></div>';
+      }
+      return val;
     }));
     this.profService.whoAmI().subscribe((res) => {
       this.userData = res;
@@ -44,4 +50,5 @@ export class RewardDetailComponent implements OnInit {
   public moveToBooking(): void {
     this.router.navigate([`/detail/booking/${this.id}`]);
   }
+
 }

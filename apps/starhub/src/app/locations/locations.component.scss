@@ -2,6 +2,10 @@
 
 mat-toolbar {
   @include toolbar;
+
+  .title {
+    justify-content: center;
+  }
 }
 
 :host {
@@ -20,10 +24,12 @@ mat-toolbar {
 }
 
 .loc {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1.5rem;
+  color: #666666;
+  margin-bottom: 2rem;
 
   address {
     flex: 1;
@@ -36,5 +42,6 @@ mat-toolbar {
 
   p {
     font-size: 1.4rem;
+    margin: 0;
   }
 }

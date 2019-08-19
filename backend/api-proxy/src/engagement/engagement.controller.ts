@@ -12,6 +12,7 @@ import { SurveyService } from '../services/survey/survey.service';
 import { LoyaltyService } from '../services/loyalty/loyalty.service';
 import { InstantOutcomeService } from '../services/instant-outcome/instant-outcome.service';
 import { IncomingHttpHeaders } from 'http';
+import { AxiosError } from 'axios';
 
 @Controller('engagements')
 export class EngagementController {
@@ -71,7 +72,10 @@ export class EngagementController {
         const service = this.getService(type);
         request.data.attributes.type = undefined;
         return service.postEngagement(request, headers)
-            .pipe(this.mappingFn(type));
+            .pipe(
+                this.mappingFn(type),
+                catchError(this.handleError)
+            );
     }
 
     @Get(':type/:id')
@@ -83,7 +87,10 @@ export class EngagementController {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
         return service.getEngagement(id, headers)
-            .pipe(this.mappingFn(typ));
+            .pipe(
+                this.mappingFn(typ),
+                catchError(this.handleError)
+            );
     }
 
     @Patch(':type/:id')
@@ -96,7 +103,11 @@ export class EngagementController {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
         request.data.attributes.type = undefined;
-        return service.patchEngagement(id, request, headers).pipe(this.mappingFn(typ));
+        return service.patchEngagement(id, request, headers)
+            .pipe(
+                this.mappingFn(typ),
+                catchError(this.handleError)
+            );
     }
 
     @Delete(':type/:id')
@@ -107,7 +118,14 @@ export class EngagementController {
     ): Observable<void> {
         const typ: EngagementType = type as EngagementType;
         const service: IEngagementService = this.getService(typ);
-        return service.deleteEngagement(id, headers);
+        return service.deleteEngagement(id, headers)
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    private handleError(err: AxiosError): Observable<any> {
+        throw new HttpException(err.response.data, err.response.status);
     }
 
     private getService(type: EngagementType): IEngagementService {
