@@ -176,7 +176,7 @@ export class V4RewardsService extends RewardsService {
         params: {
           page: `${page}`,
           size: `${pageSize}`,
-          tags: `${tags.join()}`
+          tags: `${tags? tags.join() : ''}`
         }
       }
     ).pipe(
