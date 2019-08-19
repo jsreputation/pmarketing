@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class="block">
-      <button (click)="displayAgreement()" id="agreement">Terms and Conditions</button>
-      <button (click)="displayReedemReward()">How To Redeem Your Rewards</button>
+      <button id="agreement" [routerLink]="[ '/term-and-condition' ]">Terms and Conditions</button>
+      <button id="reedem" [routerLink]="['/reedem']">How To Redeem Your Rewards</button>
     </div>
     <div class="block" >
       <button (click)="logOut()" id="logout">Log Out</button>

@@ -15,10 +15,13 @@ const routes: Routes = [
     path: 'reedem',
     loadChildren: () => import('./account/redeem/redeem.module').then(mod => mod.RedeemModule),
   }, {
+    path: 'term-and-condition',
+    loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then(mod => mod.TermsAndConditionsModule)
+  }, {
     path: '',
     loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
     canActivate: [ProtectedGuard]
-  }
+  },
 ];
 
 @NgModule({

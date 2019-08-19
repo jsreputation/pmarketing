@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DetailAgreementModule } from '../detail-agreement/detail-agreement.module';
 
 describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
@@ -26,8 +25,7 @@ describe('RedemptionBookingComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule,
-        DetailAgreementModule
+        FormsModule
       ]
     })
       .compileComponents();
