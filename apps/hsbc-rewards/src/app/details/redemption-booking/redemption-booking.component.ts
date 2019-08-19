@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
 import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.component';
+import { MerchantService } from 'src/app/shared/service/merchant.service';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -24,7 +25,8 @@ export class RedemptionBookingComponent implements OnInit {
     private route: ActivatedRoute,
     private build: FormBuilder,
     private compCreate: DynamicCreateService,
-    private router: Router
+    private router: Router,
+    private merchantService: MerchantService
   ) { }
 
   public ngOnInit(): void {
@@ -36,15 +38,18 @@ export class RedemptionBookingComponent implements OnInit {
     this.locationService.getFromMerchant(1).subscribe((result) => {
       this.locationData = result;
     });
+    this.merchantService.getMerchants().subscribe((res) => {
+      this.merchants = res;
+    });
     this.buildForm();
   }
   public buildForm(): void {
     this.bookingForm = this.build.group({
-      quantity: [null],
-      merchant: [null],
+      quantity: [null, [Validators.required]],
+      merchant: [null, [Validators.required]],
       location: [null],
       pointsBalance: [null],
-      aggriement: [false, [Validators.requiredTrue]]
+      agreement: [false, [Validators.requiredTrue]]
     });
   }
   public openAgreement(): void {
