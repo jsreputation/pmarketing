@@ -12,11 +12,11 @@
     width: 10.5rem;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 
     .reward-img {
       margin: auto;
       max-height: 10.5rem;
-      max-width: 10.5rem;
     }
   }
 
