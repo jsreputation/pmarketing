@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
-    const username = this.loginForm.get('playerCode').value as string;
+    const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
     try {

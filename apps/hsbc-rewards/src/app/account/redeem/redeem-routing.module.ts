@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RewardDetailComponent } from './reward-detail.component';
+
+import {RedeemComponent} from './redeem.component';
 
 const routes: Routes = [{
-  path: '**',
-  component: RewardDetailComponent,
+  path: '',
+  component: RedeemComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RewardDetailRoutingModule { }
+export class RedeemRoutingModule { }
