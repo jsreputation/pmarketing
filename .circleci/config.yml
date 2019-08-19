@@ -79,7 +79,7 @@ commands:
             fi
             if [ $APP == 'hsbc-rewards' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/rewards/"' >> $BASH_ENV
+              echo 'export BASE_HREF="/site/hsbc/rewardscatalogue/"' >> $BASH_ENV
             fi
 
   set_iswhistler:
