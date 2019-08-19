@@ -10,7 +10,6 @@ import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
-import {VouchersModule} from '../vouchers/vouchers.module';
 
 const components = [
   RewardsCollectionComponent,
@@ -27,8 +26,7 @@ const components = [
     CommonModule,
     MaterialModule,
     NgxMultiLineEllipsisModule,
-    UtilsModule,
-    VouchersModule
+    UtilsModule
   ],
   exports: [
     ...components,
