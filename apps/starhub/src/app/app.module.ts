@@ -12,7 +12,8 @@ import {
   MatToolbarModule,
   MatRippleModule,
   MatButtonModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatDividerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryComponent } from './category/category.component';
@@ -47,6 +48,7 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
     MatRippleModule,
     MatButtonModule,
     MatBottomSheetModule,
+    MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
