@@ -169,13 +169,14 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
       `${this.apiHost}/v4/rewards`,
       {
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          tags: `${tags.join()}`
         }
       }
     ).pipe(
