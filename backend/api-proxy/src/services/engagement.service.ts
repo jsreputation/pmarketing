@@ -55,10 +55,18 @@ export abstract class EngagementService<T extends IEngagement> implements IEngag
 
     private getHeaders(headers?: IncomingHttpHeaders): { [key: string]: string | string[] } {
         const res: { [key: string]: string | string[] } = headers ? headers : {};
+        // tslint:disable-next-line: forin
+        for (const k in res) {
+            const lowK = k.toLowerCase();
+            if (k !== lowK) {
+                res[lowK] = res[k];
+                delete res[k];
+            }
+        }
 
         // if there is no token attach it
-        if (!res.Authorization) {
-            res.Authorization = 'Basic AALZIKJPKJHGIRETLLHV:8Rvq88InMaB3-Or_6U_pKsiTgjLf3kTo-E7xL3kmTvXGVIDrP8hF2A';
+        if (!res.authorization) {
+            res.authorization = 'Basic AALZIKJPKJHGIRETLLHV:8Rvq88InMaB3-Or_6U_pKsiTgjLf3kTo-E7xL3kmTvXGVIDrP8hF2A';
         }
         // remove the host header as it messes things up
         if (res.host) {
@@ -66,7 +74,7 @@ export abstract class EngagementService<T extends IEngagement> implements IEngag
         }
 
         // force the content-type
-        res['Content-Type'] = 'application/vnd.api+json';
+        res['content-type'] = 'application/vnd.api+json';
 
         return res;
     }
