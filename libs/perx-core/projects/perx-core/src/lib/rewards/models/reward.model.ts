@@ -28,3 +28,11 @@ export interface ICatalog {
   rewardCount: number;
   rewards?: IReward[];
 }
+
+export interface IPrice {
+  id: number;
+  rewardCampaignId: number;
+  price: number;
+  currencyCode: string;
+  points: number;
+}
