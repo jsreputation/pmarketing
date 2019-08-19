@@ -10,7 +10,7 @@ export class TermsAndConditionsComponent {
 
   constructor(private location: Location) { }
 
-  back() {
+  public back(): void {
     this.location.back();
   }
 }

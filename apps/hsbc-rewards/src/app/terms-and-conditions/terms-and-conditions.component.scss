@@ -61,7 +61,7 @@ h4 {
   display: inline-block;
 }
 
-ol.general-level>li {
+ol.general-level > li {
   display: block;
 
   &:first-child h4 {
@@ -69,7 +69,7 @@ ol.general-level>li {
   }
 }
 
-ol.general-level>li::before {
+ol.general-level > li::before {
   content: counter(item) ". ";
   counter-increment: item;
   font-weight: bold;

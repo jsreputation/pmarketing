@@ -49,7 +49,7 @@ export class RedemptionBookingComponent implements OnInit {
       agreement: [false, [Validators.requiredTrue]]
     });
   }
-  
+
   public submitForm(): void {
     this.router.navigate(['detail/success']);
   }
