@@ -18,10 +18,8 @@ export class ListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.locations = of(test1);
-    this.geoLocationService.positions().subscribe((position: Position) => {
-      this.position = of(position);
-      this.locations = sortByDistance(this.position, this.locations, this.sorting);
-    });
+    this.position = this.geoLocationService.positions();
+    this.locations = sortByDistance(this.position, this.locations, this.sorting);
   }
 
   public setValue(event: any): void {
