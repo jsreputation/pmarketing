@@ -18,14 +18,12 @@ $primary: mat-palette($mat-indigo);
   z-index: 800;
   font-size: 2rem;
   line-height: 1.9rem;
-  box-shadow: 0 4px 4px rgba(131, 126, 126, 0.24), 0 0 4px rgba(0, 0, 0, 0.12);
 }
 
 .main-app-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  position: relative;
 }
 
 .game-container {
