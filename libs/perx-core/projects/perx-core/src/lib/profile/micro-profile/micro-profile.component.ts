@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IProfile } from '../profile.model';
 
 @Component({
   selector: 'perx-core-micro-profile',
@@ -9,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MicroProfileComponent implements OnInit {
 
   @Input()
-  public name: string;
+  public profile: IProfile;
 
   public ngOnInit(): void {
   }
