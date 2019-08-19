@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IProfile } from '../profile.model';
 
 @Component({
@@ -7,12 +7,9 @@ import { IProfile } from '../profile.model';
   styleUrls: ['./micro-profile.component.scss']
 })
 
-export class MicroProfileComponent implements OnInit {
+export class MicroProfileComponent {
 
   @Input()
   public profile: IProfile;
-
-  public ngOnInit(): void {
-  }
 
 }
