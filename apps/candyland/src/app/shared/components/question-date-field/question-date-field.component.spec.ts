@@ -2,8 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionDateFieldComponent } from './question-date-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatSlideToggleModule
+} from '@angular/material';
 
 describe('QuestionDateFieldComponent', () => {
   let component: QuestionDateFieldComponent;
@@ -13,16 +16,13 @@ describe('QuestionDateFieldComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-
-        MatDatepickerModule,
         MatInputModule,
         MatFormFieldModule,
-        DatePickerModule,
-        MatCheckboxModule,
+        MatSlideToggleModule
       ],
-      declarations: [ QuestionDateFieldComponent ]
+      declarations: [QuestionDateFieldComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
