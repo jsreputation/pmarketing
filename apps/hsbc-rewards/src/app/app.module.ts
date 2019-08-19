@@ -13,9 +13,10 @@ import {
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
 import {APP_BASE_HREF} from '@angular/common';
+import {UnauthorizedInterceptor} from './login/unauthorized.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,10 @@ import {APP_BASE_HREF} from '@angular/common';
     LoyaltyModule.forRoot({env: environment}),
     LocationModule.forRoot({env: environment})
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: environment.baseHref}],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: environment.baseHref},
+    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
