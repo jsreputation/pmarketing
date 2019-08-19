@@ -1,25 +1,29 @@
-.user {
-  display: flex;
-  align-items: center;
-}
-
-.user-icon {
-  font-size: 4.4rem;
+.profile-item {
+  display: block;
+  width: 100%;
   height: 4.4rem;
-  width: 4.4rem;
-}
+  margin: 0 0 1.6rem;
+  padding: 0 1.6rem;
+  background-color: #ebebeb;
+  overflow: hidden;
 
-.name {
-  flex-grow: 1;
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 500;
-}
+  &_label {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+    color: #7d7d89;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
 
-.text-field {
-  border: 1px solid #ced4da;
-  padding: 1.2rem;
-  border-radius: 0.2rem;
-  margin-bottom: 1.6rem;
-  min-height: 1rem;
+  &_detail {
+    font-size: 1.4rem;
+    line-height: 2.3rem;
+    color: #1b1b25;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
 }

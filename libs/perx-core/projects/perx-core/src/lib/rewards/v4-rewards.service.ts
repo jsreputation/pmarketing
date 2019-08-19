@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
-import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { RewardsService } from './rewards.service';
-import { IReward, ICatalog } from './models/reward.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {EnvConfig} from '../shared/env-config';
+import {concatAll, map, mergeMap, reduce} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {RewardsService} from './rewards.service';
+import {IReward, ICatalog, IPrice} from './models/reward.model';
 
 interface IV4Meta {
   count?: number;
@@ -46,6 +46,14 @@ interface IV4Reward {
   tags?: IV4Tag[];
 }
 
+interface IV4Price {
+  id: number;
+  reward_campaign_id: number;
+  price?: number;
+  currency_code?: string;
+  points?: number;
+}
+
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
   meta?: IV4Meta;
@@ -53,6 +61,11 @@ interface IV4GetRewardsResponse {
 
 interface IV4GetRewardResponse {
   data: IV4Reward;
+}
+
+interface IV4GetRewardPricesResponse {
+  data: IV4Price[];
+  meta?: IV4Meta;
 }
 
 interface IV4GetCatalogsResponse {
@@ -147,6 +160,16 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
+  public static v4PriceToPrice(price: IV4Price): IPrice {
+    return {
+      id: price.id,
+      rewardCampaignId: price.reward_campaign_id,
+      price: price.price,
+      currencyCode: price.currency_code,
+      points: price.points
+    };
+  }
+
   public getTags(): void {
     // todo: api not implemented yet
   }
@@ -169,13 +192,14 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
       `${this.apiHost}/v4/rewards`,
       {
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          tags: `${tags ? tags.join() : ''}`
         }
       }
     ).pipe(
@@ -252,6 +276,17 @@ export class V4RewardsService extends RewardsService {
     ).pipe(
       map(res => res.data),
       map((catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog))
+    );
+  }
+
+  public getRewardPricesOptions(id: number): Observable<IPrice[]> {
+    return this.http.get<IV4GetRewardPricesResponse>(
+      `${this.apiHost}/v4/rewards/${id}/prices`
+    ).pipe(
+      map(res => res.data),
+      map((prices: IV4Price[]) => prices.map(
+        (price: IV4Price) => V4RewardsService.v4PriceToPrice(price)
+      ))
     );
   }
 }
