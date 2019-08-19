@@ -66,6 +66,7 @@ describe('ConditionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ConditionComponent);
     component = fixture.componentInstance;
+    component.profile = userInfo;
     fixture.detectChanges();
   });
 
