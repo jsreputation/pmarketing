@@ -4,7 +4,6 @@ import { map, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services/dashboard.service';
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
-  revenue = 'revenue',
   issuedRewards = 'issuedRewards',
   activeCampaigns = 'activeCampaigns',
 }
@@ -20,9 +19,8 @@ export class DashboardPageComponent implements OnInit {
   public activeTab: any;
   public mapTotal = {
     activeCustomers: 'Total Active Customers',
-    revenue: 'Total Revenue',
     issuedRewards: 'Total Issued Rewards',
-    activeCampaigns: 'Total Active Campaigns'
+    activeCampaigns: 'Total Running Campaigns'
   };
   public dictionaryTotal = DictionaryTotal;
   constructor(private dashboardService: DashboardService) {
