@@ -6,7 +6,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
 import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.component';
 import { MerchantService } from 'src/app/shared/service/merchant.service';
-import { V4RewardsService } from '@perx/core/dist/perx-core/lib/rewards/v4-rewards.service';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -28,11 +27,10 @@ export class RedemptionBookingComponent implements OnInit {
     private compCreate: DynamicCreateService,
     private router: Router,
     private merchantService: MerchantService,
-    private v4RewardsService: V4RewardsService
   ) { }
 
   public ngOnInit(): void {
-    this.v4RewardsService.getRewardPricesOptions(149).subscribe((val)=>{
+    this.rewardsService.getRewardPricesOptions(149).subscribe((val)=>{
 
     })
     this.route.params.pipe(switchMap((param) => {
