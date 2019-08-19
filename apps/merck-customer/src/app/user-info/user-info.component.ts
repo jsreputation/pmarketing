@@ -54,12 +54,10 @@ export class UserInfoComponent implements PageAppearence {
     this.profileService.setCustomProperties(customProperties).subscribe(
       () => {
         this.router.navigateByUrl('/home');
+        this.notificationService.addSnack('Condition saved.');
       },
       err => {
-        console.error('ProfileService::SetCustomProperties : ' + err);
         this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
-        this.router.navigateByUrl('/home'); // TODO: ProfileService is not set yet.
-                                              // Remove this line once done.
       });
   }
 }

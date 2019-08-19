@@ -22,13 +22,6 @@ export class ConditionComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
-      // customProperties test data
-      res.customProperties = {
-        ...res.customProperties,
-        diabetes: 'true',
-        diabetesState: 'pre_diabetes', // diabetes, pre_diabetes, ""
-        hypertension: 'true'
-      };
       this.profile = res;
       Object.keys(res.customProperties).forEach((key) => {
         if (key === 'diabetes' && res.customProperties[key] === 'true') {
