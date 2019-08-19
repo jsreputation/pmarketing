@@ -11,7 +11,7 @@
       <div class="select-wrap no-content">
         <select formControlName="merchant">
           <option disabled [value]="null">Merchant</option>
-          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.address}}</option>
+          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.firstName}} {{merchant.lastName}}</option>
         </select>
       </div>
       <div class="select-wrap">
@@ -28,8 +28,8 @@
           Use 15 points + PHP 680.00 (Code HAC11F)
         </mat-radio-button>
       </mat-radio-group>
-      <div class="aggriement">
-        <mat-checkbox formControlName="aggriement"></mat-checkbox>
+      <div class="agreement">
+        <mat-checkbox formControlName="agreement"></mat-checkbox>
         <p>
           I have read, understood the <a (click)="openAgreement()">HSBC’s Rewards Terms & Conditions </a>
           and agree to all clauses stated therein*

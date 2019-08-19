@@ -17,13 +17,13 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
 
 const userInfo = {
   birthDate: null,
-  customProperties: { fname: 'warren', lname: 'woo', password: '1234' },
+  customProperties: { fname: 'warren', lname: 'woo', last_4: '1234' },
   email: null,
   firstName: null,
   gender: null,
   id: 59432,
   joinedDate: '2019-07-01T04:04:34.961Z',
-  lastName: 'warren',
+  lastName: 'perx',
   middleName: null,
   passwordExpiryDate: null,
   phone: null,
