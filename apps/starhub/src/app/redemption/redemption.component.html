@@ -7,7 +7,7 @@
       <img [src]="voucher.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
-      <div class="inner mat-elevation-z2">
+      <div class="inner">
         <div class="upper-section">
           <div class="code-redemption unavailable" *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
             <h1>No longer available</h1>
@@ -25,7 +25,10 @@
             </div>
           </ng-template>
         </div>
-        <div [ngClass]="'lower-section ' + voucher.state">
+        <div class="middle-section">
+          <img src="assets/cutout.png" alt="">
+        </div>
+        <div [ngClass]="'lower-section mat-elevation-z2 ' + voucher.state">
           <div class="detail-container">
             <div class="detail">
               <img [src]="voucher.merchantImg">
