@@ -15,14 +15,14 @@
     overflow-y: scroll;
     flex-direction: row;
     flex-wrap: wrap;
-  
+
     a {
       min-width: 16rem;
       margin: 2rem;
       text-decoration: none;
     }
   }
-  
+
   .actions-container {
     display: flex;
     background: #202c46;
@@ -31,7 +31,7 @@
     padding: 1rem 1.2rem;
     box-sizing: border-box;
     text-align: center;
-  
+
     button {
       width: 100%;
       max-width: 60rem;
