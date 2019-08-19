@@ -49,7 +49,7 @@ export class RedemptionBookingComponent implements OnInit {
       merchant: [null, [Validators.required]],
       location: [null],
       pointsBalance: [null],
-      aggriement: [false, [Validators.requiredTrue]]
+      agreement: [false, [Validators.requiredTrue]]
     });
   }
   public openAgreement(): void {
