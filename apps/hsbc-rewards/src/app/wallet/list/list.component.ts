@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Voucher, VouchersService, VoucherComponent, VoucherState } from '@perx/core';
+import {Voucher, VouchersService, VoucherComponent, VoucherState, StatusLabelMapping} from '@perx/core';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,13 @@ export class ListComponent implements OnInit {
   public filtered: Observable<Voucher[]>;
   @ViewChild('voucher', { static: false }) public vouch: VoucherComponent;
   public filter: string = 'issued';
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
   constructor(
     private vouchersService: VouchersService,
     private route: ActivatedRoute,

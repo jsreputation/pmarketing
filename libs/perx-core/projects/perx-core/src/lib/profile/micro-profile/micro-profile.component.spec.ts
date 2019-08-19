@@ -1,23 +1,22 @@
 import { MatIconModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserProfileComponent } from './user-profile.component';
-import { MicroProfileComponent } from './../micro-profile/micro-profile.component';
+import { MicroProfileComponent } from './micro-profile.component';
 
-describe('UserProfileComponent', () => {
-  let component: UserProfileComponent;
-  let fixture: ComponentFixture<UserProfileComponent>;
+describe('MicroProfileComponent', () => {
+  let component: MicroProfileComponent;
+  let fixture: ComponentFixture<MicroProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent, MicroProfileComponent ],
+      declarations: [ MicroProfileComponent ],
       imports: [ MatIconModule ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserProfileComponent);
+    fixture = TestBed.createComponent(MicroProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

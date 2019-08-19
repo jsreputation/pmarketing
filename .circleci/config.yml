@@ -71,12 +71,17 @@ commands:
       - run:
           name: Setup BASE_HREF vars
           command: |
+            echo 'export BASE_HREF="/"' >> $BASH_ENV
+
             if [ $APP == 'hsbc' ]
             then
               echo 'export BASE_HREF="/site/hsbc/collect2/"' >> $BASH_ENV
-            else
-              echo 'export BASE_HREF="/"' >> $BASH_ENV
             fi
+            if [ $APP == 'hsbc-rewards' ]
+            then
+              echo 'export BASE_HREF="/site/hsbc/rewardscatalogue/"' >> $BASH_ENV
+            fi
+
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:

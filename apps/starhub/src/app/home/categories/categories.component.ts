@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
-export interface ICategory {
-  name: string;
-  icon: string;
-}
+import { ICategory } from '../../category.model';
+import { categories } from '../../category.mock';
 
 @Component({
   selector: 'app-categories',
@@ -17,20 +14,7 @@ export class CategoriesComponent {
   public tapped: EventEmitter<ICategory> = new EventEmitter<ICategory>();
 
   constructor() {
-    this.categories = [
-      {
-        name: 'All',
-        icon: 'apps'
-      },
-      {
-        name: 'Food & Beverage',
-        icon: 'local_dining'
-      },
-      {
-        name: 'Shopping',
-        icon: 'shopping_cart'
-      }
-    ];
+    this.categories = categories;
   }
 
   public selected(category: ICategory): void {
