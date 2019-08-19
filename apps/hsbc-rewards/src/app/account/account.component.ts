@@ -5,6 +5,7 @@ import { DynamicCreateService } from '../shared/service/dynamic-create.service';
 import { DetailAgreementComponent } from '../details/detail-agreement/detail-agreement.component';
 import { Router } from '@angular/router';
 import { RedeemComponent } from './redeem/redeem.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -13,6 +14,7 @@ import { RedeemComponent } from './redeem/redeem.component';
 })
 export class AccountComponent implements OnInit {
   public personalData: FormGroup;
+
   constructor(
     private buildForm: FormBuilder,
     private personalProfile: ProfileService,
@@ -26,12 +28,16 @@ export class AccountComponent implements OnInit {
       name: '',
       password: ''
     });
-    this.personalProfile.whoAmI().subscribe((result) => {
-      this.personalData.setValue({
-        name: result.customProperties.fname,
-        password: result.customProperties.password
+    this.personalProfile.whoAmI()
+      .pipe(
+        take(1)
+      )
+      .subscribe(profile => {
+        this.personalData.setValue({
+          name: profile.lastName,
+          password: profile.customProperties.last_4
+        });
       });
-    });
   }
 
   public displayAgreement(): void {
