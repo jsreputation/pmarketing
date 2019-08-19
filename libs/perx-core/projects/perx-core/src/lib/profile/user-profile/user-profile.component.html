@@ -1,8 +1,5 @@
 <ng-container *ngIf="profile">
-    <div class="user">
-        <mat-icon class="user-icon">account_circle</mat-icon>
-        <p class="name">{{profile.lastName}}</p>
-    </div>
+    <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
     <p>Player Code</p>
     <p class="text-field">{{profile.customProperties['code']}}</p>
     <p>Card Last 4 Digit</p>

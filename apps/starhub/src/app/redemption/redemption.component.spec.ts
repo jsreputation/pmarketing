@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatDividerModule } from '@angular/material';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -13,7 +13,8 @@ describe('RedemptionComponent', () => {
       declarations: [ RedemptionComponent ],
       imports: [
         RouterTestingModule,
-        MatIconModule
+        MatIconModule,
+        MatDividerModule
       ]
     })
     .compileComponents();
