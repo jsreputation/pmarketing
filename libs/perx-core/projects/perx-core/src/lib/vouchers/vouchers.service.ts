@@ -45,7 +45,6 @@ interface IV4Voucher {
     timer: any;
     type: RedemptionType;
   };
-  reserved_expires_at: any; // reserve api somehow has a different named duplicate param
   reservation_expires_at: any;
   reward?: IV4Reward;
   state: VoucherState;
