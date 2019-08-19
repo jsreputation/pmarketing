@@ -50,7 +50,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   public getPageProperties(): PageProperties {
     return {
       header: true,
-      backButtonEnabled: false,
+      backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.NONE,
       pageTitle: ''
     };
