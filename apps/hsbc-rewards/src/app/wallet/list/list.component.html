@@ -1,6 +1,7 @@
 <div class="page">
   <perx-core-vouchers #voucher (route)="routeNavigate($event)"
-                      [data]="filtered"
+                      [data]="vouchers"
                       [mapping]="mapping"
+                      [filter]="filter"
   ></perx-core-vouchers>
 </div>

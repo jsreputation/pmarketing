@@ -12,10 +12,7 @@
   <p class="dashboard-title">Explore Perx </p>
 
   <div class="game-card-wrap">
-    <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async"
-                            [gameCard]="gameCard"
-                            class="game-card"
-    >
+    <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
     </cl-dashboard-game-card>
   </div>
   <p class="dashboard-title dashboard-title__indent">Business Insight</p>
@@ -28,7 +25,7 @@
       <div class="dashboard-group-bloc">
 
         <div class="tabs-list-wrap">
-          <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event)" >
+          <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event)">
             <ng-container *ngFor="let item of dashboardData;">
               <mat-radio-button [value]="item.name">
                 <cl-tab-item-view [data]="item"></cl-tab-item-view>
@@ -50,20 +47,10 @@
               </div>
             </ng-container>
 
-            <ng-container *ngSwitchCase="dictionaryTotal.revenue">
-              <div class="chart-block-separate">
-                <p class="chart-title">
-                  Total Revenue
-                </p>
-                <cl-linear-chart>
-                </cl-linear-chart>
-              </div>
-            </ng-container>
-
             <ng-container *ngSwitchCase="dictionaryTotal.issuedRewards">
               <div class="chart-block-separate">
                 <p class="chart-title">
-                  Total Active Customers
+                  Rewards
                 </p>
                 <div class="chart-wrap-img">
                   <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">
@@ -74,7 +61,7 @@
             <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">
               <div class="chart-block-separate">
                 <p class="chart-title">
-                  Total Campaigns
+                  Campaigns
                 </p>
                 <div class="chart-wrap-img">
                   <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">
@@ -88,14 +75,14 @@
 
       <!--group that contain all graphics-->
       <div class="dashboard-group-graphics">
-        <ng-container  [ngSwitch]="activeTab">
+        <ng-container [ngSwitch]="activeTab">
 
           <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">
             <div class="justify-content-between">
               <div class="flex">
                 <div class="chart-block">
                   <p class="chart-title">
-                    Total Active Customers
+                    Demographics
                   </p>
                   <div class="chart-wrap-img">
                     <img src="assets/images/dashboard-business/column-chart.jpg" alt="chart">
@@ -103,64 +90,19 @@
                 </div>
                 <div class="chart-block">
                   <p class="chart-title">
-                    Gender
-                  </p>
-                  <cl-circle-pie-chart>
-                  </cl-circle-pie-chart>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Race
-                  </p>
-                  <cl-pie-chart>
-                  </cl-pie-chart>
-                </div>
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Popular Transaction Days
+                    Popular Redemption Days
                   </p>
                   <cl-calendar-chart>
                   </cl-calendar-chart>
                 </div>
               </div>
-            </div>
-            </ng-container>
-
-          <ng-container *ngSwitchCase="dictionaryTotal.revenue">
-            <div class="justify-content-between">
               <div class="flex">
                 <div class="chart-block">
                   <p class="chart-title">
-                    Average Revenue per User
+                    Popular Engagement Days
                   </p>
-                  <div class="chart-wrap-img">
-                    <img src="assets/images/dashboard-business/vertical-chart-2.png" alt="chart">
-                  </div>
-                </div>
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Revenue by Location
-                  </p>
-                  <cl-map-chart>
-                  </cl-map-chart>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Top 5 Rewards by Revenue
-                  </p>
-                  <cl-top-five-chart>
-                  </cl-top-five-chart>
-                </div>
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Top 5 Campaigns by Revenue
-                  </p>
-                  <cl-top-five-chart>
-                  </cl-top-five-chart>
+                  <cl-calendar-chart>
+                  </cl-calendar-chart>
                 </div>
               </div>
             </div>
@@ -170,37 +112,34 @@
             <div class="flex">
               <div class="chart-block">
                 <p class="chart-title">
-                  Top 5 Rewards by Redemption
+                  Top 5 Categories
                 </p>
                 <cl-horizontal-bar-chart>
                 </cl-horizontal-bar-chart>
               </div>
               <div class="chart-block">
                 <p class="chart-title">
-                  Redeemed Rewards by Reward Types
+                  Top 3 Redeemed Rewards by Reward Type
                 </p>
                 <cl-circle-pie-chart>
                 </cl-circle-pie-chart>
               </div>
             </div>
+
             <div class="flex">
               <div class="chart-block">
                 <p class="chart-title">
-                  Popular Transaction Days
+                  Top 5 Merchants
                 </p>
                 <cl-calendar-chart>
                 </cl-calendar-chart>
               </div>
               <div class="chart-block">
                 <p class="chart-title">
-                  Redemption Rate by Campaign Types
+                  Top 3 Merchants by Reward Cost
                 </p>
-                <div class="flex justify-content-between">
-                  <cl-radius-circle-chart>
-                  </cl-radius-circle-chart>
-                  <cl-radius-circle-chart [imgPath]="'radius-circle-chart-stamp.png'">
-                  </cl-radius-circle-chart>
-                </div>
+                <cl-circle-pie-chart>
+                </cl-circle-pie-chart>
               </div>
             </div>
           </ng-container>
@@ -208,7 +147,7 @@
           <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">
             <div class="chart-block w-100 m-w-100">
               <p class="chart-title">
-                Engagement Rate by Campaign Types
+                Engagement Rate
               </p>
               <div class="flex justify-content-between">
                 <cl-radius-circle-chart>
@@ -224,17 +163,17 @@
             <div class="flex">
               <div class="chart-block">
                 <p class="chart-title">
-                  Top 5 Campaigns by Redemption
+                  Top 5 Rewards
                 </p>
                 <cl-horizontal-bar-chart [imgPath]="'total-reward.png'">
                 </cl-horizontal-bar-chart>
               </div>
               <div class="chart-block">
                 <p class="chart-title">
-                  Top 5 Campaigns by Issuance
+                  Reward Cost by Engagement Type
                 </p>
-                <cl-horizontal-bar-chart [imgPath]="'reward-issued.png'">
-                </cl-horizontal-bar-chart>
+                <cl-circle-pie-chart>
+                </cl-circle-pie-chart>
               </div>
             </div>
           </ng-container>

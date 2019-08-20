@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { MatButtonModule, MatDialog, MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationService, RewardsModule, RewardsService } from '@perx/core';
+import { NotificationService, RewardsModule, RewardsService, VouchersModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -35,6 +35,7 @@ describe('RewardComponent', () => {
       imports: [
         MatDialogModule,
         RewardsModule.forRoot({env: {apiHost: ''}}),
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
         MatButtonModule,
         NoopAnimationsModule,
         RouterTestingModule,

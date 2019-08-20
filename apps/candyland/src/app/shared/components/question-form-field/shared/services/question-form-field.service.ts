@@ -77,8 +77,7 @@ export class QuestionFormFieldService {
       name: [null, [Validators.required,
       Validators.minLength(1),
       Validators.maxLength(60)]],
-      startDate: [null, [Validators.required]],
-      endDate: [null],
+      enabledDuration: [false],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
     });

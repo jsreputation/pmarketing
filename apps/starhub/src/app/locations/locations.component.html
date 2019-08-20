@@ -9,14 +9,14 @@
 </mat-toolbar>
 
 <div class="content">
-  <div class="loc" *ngFor="let loc of locations">
+  <div class="loc" *ngFor="let loc of locations | async">
     <div class="address">
       <h1>{{loc.name}}</h1>
       <p>{{loc.address}}</p>
       <p>{{loc.address2}}</p>
     </div>
-    <div class="distance">
-      <h1>{{7523 | distance}}</h1>
+    <div class="distance" *ngIf="loc.distance">
+      <h1>{{loc.distance | distance}}</h1>
     </div>
   </div>
 </div>

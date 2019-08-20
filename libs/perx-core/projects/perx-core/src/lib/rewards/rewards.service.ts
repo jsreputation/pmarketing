@@ -1,5 +1,6 @@
 import {IReward, ICatalog, IPrice} from './models/reward.model';
 import {Observable, throwError} from 'rxjs';
+import {IVoucher} from '../vouchers/models/voucher.model';
 
 export abstract class RewardsService {
 
@@ -7,7 +8,9 @@ export abstract class RewardsService {
 
   public abstract getAllRewards(): Observable<IReward[]>;
 
-  public abstract getRewards(page: number, pageSize: number): Observable<IReward[]>;
+  public abstract getRewards(page: number, pageSize: number, tags?: string[]): Observable<IReward[]>;
+
+  public abstract reserveReward(rewardId: number, priceId: number): Observable<IVoucher>;
 
   public abstract getReward(id: number): Observable<IReward>;
 

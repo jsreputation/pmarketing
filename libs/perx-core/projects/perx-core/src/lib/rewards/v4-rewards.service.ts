@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EnvConfig} from '../shared/env-config';
-import {concatAll, map, mergeMap, reduce} from 'rxjs/operators';
+import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {RewardsService} from './rewards.service';
 import {IReward, ICatalog, IPrice} from './models/reward.model';
+import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
+import {VouchersService} from '../vouchers/vouchers.service';
 
 interface IV4Meta {
   count?: number;
@@ -54,6 +56,15 @@ interface IV4Price {
   points?: number;
 }
 
+interface IV4MinifiedVoucher {
+  id: number;
+  voucher_code: string;
+  voucher_key: string;
+  state: VoucherState;
+  custom_fields: any;
+  reserved_expires_at: Date;
+}
+
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
   meta?: IV4Meta;
@@ -75,6 +86,11 @@ interface IV4GetCatalogsResponse {
 
 interface IV4GetCatalogResponse {
   data: IV4Catalog;
+}
+
+interface IV4ReserveRewardResponse {
+  data: IV4MinifiedVoucher;
+  meta?: IV4Meta;
 }
 
 interface IV4Catalog {
@@ -101,7 +117,9 @@ export class V4RewardsService extends RewardsService {
   private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
 
-  constructor(private http: HttpClient, config: EnvConfig) {
+  constructor(private http: HttpClient,
+              private voucherService: VouchersService,
+              config: EnvConfig) {
     super();
     this.apiHost = config.env.apiHost as string;
   }
@@ -192,13 +210,28 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25): Observable<IReward[]> {
+  public reserveReward(rewardId: number, priceId?: number): Observable<IVoucher> {
+    return this.http.get<IV4ReserveRewardResponse>(
+      `${this.apiHost}/v4/rewards/${rewardId}/reserve`,
+      {
+        params: {
+          priceId: `${priceId ? priceId : ''}`
+        }
+      }
+    ).pipe(
+      map(res => res.data),
+      switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
+    );
+  }
+
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
     return this.http.get<IV4GetRewardsResponse>(
       `${this.apiHost}/v4/rewards`,
       {
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          tags: `${tags ? tags.join() : ''}`
         }
       }
     ).pipe(
