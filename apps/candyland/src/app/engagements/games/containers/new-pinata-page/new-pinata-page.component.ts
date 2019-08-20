@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-
-import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ControlValueService } from '@cl-core/services/control-value.service';
 import { ControlsName } from '../../../../models/controls-name';
+import { EngagementTransformDataService, PinataService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -22,10 +21,11 @@ export class NewPinataPageComponent implements OnInit {
     background: IGraphic[]
   }>;
   constructor(private fb: FormBuilder,
-              private pinataHttpService: PinataHttpService,
+              private pinataService: PinataService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService) { }
+              private controlValueService: ControlValueService,
+              private engagementTransformDataService: EngagementTransformDataService) { }
 
   public ngOnInit(): void {
     this.createPinataForm();
@@ -33,7 +33,15 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    console.log(this.formPinata.value);
+    const sendData = this.engagementTransformDataService.transformPinata(this.formPinata.value);
+    console.log('sendData', sendData);
+    this.pinataService.createPinata({ data: sendData })
+      .subscribe((res) => {
+        console.log('pinata', res);
+      });
+    console.log(this.router);
+    // this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {
@@ -95,7 +103,7 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   private getPinataData(): void {
-    this.pinataData$ = this.pinataHttpService.getPinataData()
+    this.pinataData$ = this.pinataService.getPinataData()
       .pipe(
         tap((res) => {
           this.formPinata.patchValue({
