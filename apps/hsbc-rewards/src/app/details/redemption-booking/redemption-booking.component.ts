@@ -6,7 +6,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
 import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.component';
 import { MerchantService } from 'src/app/shared/service/merchant.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -14,9 +15,10 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
-  public rewardId;
+  public rewardId: number;
+  public prices: IPrice[];
   public customBackButton: string = 'assets/img/close.svg';
-  public locationData: ILocation[];
+  public locationData: Observable<ILocation[]>;
   public reward: IReward;
   public merchants: IMerchant[] = [];
   public quantityes: number[] = [];
@@ -32,16 +34,22 @@ export class RedemptionBookingComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.rewardsService.getRewardPricesOptions(149).subscribe((val)=>{
-    })
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-        this.rewardsService.getRewardPricesOptions(this.rewardId)
+      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+    })).subscribe((result) => {
+      [this.reward, this.prices] = result;
+    });
+    this.route.params.pipe(switchMap((param) => {
+      this.rewardId = param.id;
+      return forkJoin([this.rewardsService.getReward(this.rewardId),
+      this.rewardsService.getRewardPricesOptions(this.rewardId)
       ]);
-    })).subscribe((val)=>{
+    })).subscribe((val) => {
       this.reward = val[0];
-    })
+    });
+    this.locationData = this.locationService.getAll();
     this.merchantService.getMerchants().subscribe((res) => {
       this.merchants = res;
     });

@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment';
     DetailHeaderModule,
     SharedModule,
     DetailAgreementModule,
-    RewardsModule.forRoot({env:environment}),
-    VouchersModule.forRoot({env:environment})
+    RewardsModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment })
   ]
 })
 export class RedemptionBookingModule { }
