@@ -121,7 +121,7 @@ describe('SignupComponent', () => {
       component.onSubmit();
       tick();
       expect(authenticationSpy).toHaveBeenCalled();
-      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'], { state: { mobileNo: 1234 } });
+      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'], { state: { mobileNo: '1234' } });
     }));
 
   });

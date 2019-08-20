@@ -20,21 +20,25 @@ export class ProfileComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
-      // customProperties test data
-      res.customProperties = {...res.customProperties, diabetes: 'true', diabetesState: 'pre_diabetes', hypertension: 'true'};
       this.profile = res;
-      const filteredConditions: string[] = [];
-      Object.keys(res.customProperties).forEach(property => {
-        if (property && property === 'diabetesState') {
-          const diabetesState = res.customProperties[property];
-          filteredConditions.push(String (diabetesState).replace('_', '-'));
+      this.conditions = this.getConditionsFromProfile(res);
+    });
+  }
+
+  private getConditionsFromProfile(profile: IProfile): string[] {
+    const filteredConditions: string[] = [];
+    Object.keys(profile.customProperties).forEach(property => {
+        if (property === 'diabetesState') {
+          const diabetesState = profile.customProperties[property];
+          if (typeof diabetesState === 'string') {
+            filteredConditions.push(diabetesState.replace('_', '-'));
+          }
         }
-        if (res.customProperties[property] === 'true' && property === 'hypertension') {
+        if (property === 'hypertension' && profile.customProperties[property] === 'true') {
           filteredConditions.push('Hypertension');
         }
       });
-      this.conditions = filteredConditions;
-    });
+    return filteredConditions;
   }
 
   public getPageProperties(): PageProperties {

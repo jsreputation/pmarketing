@@ -32,7 +32,8 @@ import {
   UtilsModule,
   LoyaltyModule,
   RewardsModule,
-  LocationModule
+  LocationModule,
+  VouchersModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -109,6 +110,7 @@ import { TransactionPipe } from './account/transaction-history/transaction.pipe'
     UtilsModule,
     LoyaltyModule.forRoot({env: environment}),
     RewardsModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment }),
     QRCodeModule,
     LocationModule
   ],
