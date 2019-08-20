@@ -5,7 +5,8 @@ import { LoyaltyModule } from '@perx/core';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MatButtonModule } from '@angular/material';
 import {
-  RewardsModule
+  RewardsModule,
+  VouchersModule
 } from '@perx/core';
 import { EnlargedQrComponent } from './containers/enlarged-qr/enlarged-qr.component';
 import { RouterModule } from '@angular/router';
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     QRCodeModule,
     MatButtonModule,
     RewardsModule,
+    VouchersModule,
     RouterModule,
     TranslateModule
   ],

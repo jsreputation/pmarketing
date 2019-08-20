@@ -27,7 +27,45 @@ yarn test-ci
 * Components in libs should not use any router feature.
 * Components in libs should instead trigger events, that should be caught by the parent app to update the routing if necessary.
 
+# Module Dependencies
+When importing the following Modules you will also have to include sister modules with `forRoot()` declarations (Until a config service is made):
 
+### AuthenticationModule
+```typescript
+import {
+  CognitoModule,
+  OauthModule,
+  AuthenticationModule,
+} from '@perx/core';
+import { environment } from '../environments/environment';
+
+@NgModule({
+...
+imports: [
+  AuthenticationModule,
+  OauthModule.forRoot({env: environment}),
+  CognitoModule.forRoot({env: environment}),
+]
+})
+
+```
+### RewardsModule
+```typescript
+import {
+  RewardsModule,
+  VouchersModule,
+} from '@perx/core';
+import { environment } from '../environments/environment';
+
+@NgModule({
+...
+imports: [
+  RewardsModule.forRoot({env: environment}),
+  VouchersModule.forRoot({env: environment}),
+]
+})
+
+```
 # Enabling login functionality
 
  * Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
