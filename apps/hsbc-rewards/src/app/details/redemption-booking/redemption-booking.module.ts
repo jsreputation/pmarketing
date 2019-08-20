@@ -6,6 +6,7 @@ import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DetailAgreementModule } from '../detail-agreement/detail-agreement.module';
 import { RewardsModule, VouchersModule } from '@perx/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [RedemptionBookingComponent],
@@ -15,8 +16,8 @@ import { RewardsModule, VouchersModule } from '@perx/core';
     DetailHeaderModule,
     SharedModule,
     DetailAgreementModule,
-    RewardsModule,
-    VouchersModule
+    RewardsModule.forRoot({env:environment}),
+    VouchersModule.forRoot({env:environment})
   ]
 })
 export class RedemptionBookingModule { }
