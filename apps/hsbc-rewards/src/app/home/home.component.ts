@@ -33,7 +33,7 @@ const mockTags: ITabConfig[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: ITabConfig[];
+  public tabs: ITabConfig[];
   public rewards: Observable<IReward[]>;
 
   @ViewChild('loyaltySummary', {static: false}) public loyaltySummary: LoyaltySummaryComponent;
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   public getTags(): void {
     this.rewardsService.getTags();
-    this.tags = mockTags;
+    this.tabs = mockTags;
   }
 
   public openRewardDetails(tab: IReward): void {
