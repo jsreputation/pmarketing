@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {EnvConfig} from '../shared/env-config';
 import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
@@ -225,15 +225,17 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    if (tags) {
+      params = params.set('tags', tags.join());
+    }
+
     return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`,
-      {
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`,
-          tags: `${tags ? tags.join() : ''}`
-        }
-      }
+      `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
         if (res.meta) {
