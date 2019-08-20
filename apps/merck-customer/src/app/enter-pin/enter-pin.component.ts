@@ -4,8 +4,8 @@ import { AuthenticationService } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 export enum PinMode {
-  PASSWORD = 'password',
-  REGISTER = 'register'
+  password = 'password',
+  register = 'register'
 }
 
 @Component({
@@ -16,7 +16,7 @@ export enum PinMode {
 export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
-  public pinMode: PinMode = PinMode.PASSWORD;
+  public pinMode: PinMode = PinMode.password;
   private mobileNo: string = null;
   public visibleNo: string = '';
 
@@ -67,20 +67,20 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === PinMode.REGISTER) {
+    if (this.pinMode === PinMode.register) {
       this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
         (response) => {
           console.log(`Response: ${response.message}`);
         }
       );
-    } else if (this.pinMode === PinMode.PASSWORD) {
+    } else if (this.pinMode === PinMode.password) {
       this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
 
   }
 
   public resendOtp(): void {
-    if (this.pinMode === PinMode.PASSWORD) {
+    if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
         () => {
           console.log('Forgot password api called again');
