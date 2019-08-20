@@ -34,7 +34,6 @@ export class MetaCardComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.parameters || changes.id) {
-      console.log(this);
       this.data = this.dataService.getData(this.id, this.parameters);
     }
   }
