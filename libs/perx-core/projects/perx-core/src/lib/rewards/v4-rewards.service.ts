@@ -192,7 +192,7 @@ export class V4RewardsService extends RewardsService {
     // todo: api not implemented yet
   }
 
-  public getAllRewards(tags?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     const pageSize = 100;
     return this.getRewards(1, pageSize, tags).pipe(
       mergeMap(reward => {
@@ -200,7 +200,7 @@ export class V4RewardsService extends RewardsService {
           of(reward)
         ];
         for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
-          const stream = this.getRewards(i, pageSize, tags);
+          const stream = this.getRewards(i, pageSize, tags, categories);
           streams.push(stream);
         }
         return streams;
@@ -224,7 +224,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
 
     let params = new HttpParams()
       .set('page', page.toString())
@@ -232,6 +232,10 @@ export class V4RewardsService extends RewardsService {
 
     if (tags) {
       params = params.set('tags', tags.join());
+    }
+
+    if (categories) {
+      params = params.set('categories', categories.join());
     }
 
     return this.http.get<IV4GetRewardsResponse>(
