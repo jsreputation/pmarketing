@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {IReward} from '../models/reward.model';
 import {map} from 'rxjs/operators';
 
@@ -20,14 +20,14 @@ export class RewardsListTabbedComponent implements OnInit {
   public rewards?: Observable<IReward[]>;
 
   @Input()
-  public tabs: ITabConfig[] = [
+  public tabs$: Observable<ITabConfig[]> = of([
     {
       filterKey: null,
       filterValue: null,
       tabName: 'All Rewards',
       rewardsList: null
     }
-  ];
+  ]);
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -43,7 +43,6 @@ export class RewardsListTabbedComponent implements OnInit {
 
   public filterRewards(tab: ITabConfig): Observable<IReward[]> {
     const rewardsList = tab.rewardsList || this.rewards;
-
     if (!rewardsList) {
       throw new Error('Rewards list is empty. Provide a list using [rewards] or [tabs]');
     }
