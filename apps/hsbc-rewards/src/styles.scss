@@ -115,3 +115,8 @@ button.back {
   border: none;
   background: none;
 }
+
+.mat-tab-labels .mat-tab-label-active, .mat-tab-links  .mat-tab-label-active{
+  color: #E42713;
+  opacity: 1;
+}
