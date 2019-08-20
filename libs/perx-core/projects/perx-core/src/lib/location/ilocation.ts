@@ -9,4 +9,5 @@ export interface ILocation {
     latitude: number;
     longitude: number;
     phone?: string;
+    distance?: number;
 }

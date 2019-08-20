@@ -11,6 +11,9 @@ export abstract class LoyaltyService {
 
   public abstract getTransactions(loyaltyId: number, page?: number, pageSize?: number): Observable<ITransaction[]>;
 
+  /**
+   *  @deprecated Use `RewardsService.reserveReward()` instead.
+   */
   // @ts-ignore
   public exchangePoints(loyaltyId: number, rewardId: number, quantity: number = 1): Observable<IVoucher[]> {
     return throwError('Not implemented yet');

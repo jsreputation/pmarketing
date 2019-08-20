@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocationsMapComponent} from './locations-map/locations-map.component';
 import { LocationModule as PerxCoreLocationModule, } from '@perx/core';
-import { MatRadioModule, MatTabsModule } from '@angular/material';
+import { MatRadioModule, MatTabsModule, MatSlideToggleModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LocationRoutingModule } from './location-routing.module';
@@ -18,7 +18,8 @@ import { ListComponent } from './list/list.component';
     LocationRoutingModule,
     MatRadioModule,
     MatTabsModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule
   ]
 })
 export class LocationModule { }

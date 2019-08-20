@@ -5,6 +5,7 @@ import { RedemptionBookingRoutingModule } from './redemption-booking-routing.mod
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DetailAgreementModule } from '../detail-agreement/detail-agreement.module';
+import { RewardsModule, VouchersModule } from '@perx/core';
 
 @NgModule({
   declarations: [RedemptionBookingComponent],
@@ -13,7 +14,9 @@ import { DetailAgreementModule } from '../detail-agreement/detail-agreement.modu
     RedemptionBookingRoutingModule,
     DetailHeaderModule,
     SharedModule,
-    DetailAgreementModule
+    DetailAgreementModule,
+    RewardsModule,
+    VouchersModule
   ]
 })
 export class RedemptionBookingModule { }
