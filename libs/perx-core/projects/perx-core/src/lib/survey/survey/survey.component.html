@@ -1,1 +1,8 @@
-<p>survey works!</p>
+<div class="survey-container">
+    <div *ngFor="let question of data.question">
+        <question [question]="question"></question>
+    </div>
+    <button mat-button (click)="completeSurvey()">
+        Complete
+    </button>
+</div>

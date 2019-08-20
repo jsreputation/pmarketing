@@ -1,10 +1,9 @@
-import { Observable } from 'rxjs';
-import { IAnswer } from './models/survey.model';
+import { Injectable } from '@angular/core';
 
-export abstract class SurveyService {
-  public abstract getSurvey(id: number): Observable<any>;
+@Injectable({
+  providedIn: 'root'
+})
+export class SurveyService {
 
-  public abstract postResponse(campaignId: string): Observable<void>;
-
-  public abstract postAnswers(answer: IAnswer[]): Observable<void>;
+  constructor() { }
 }

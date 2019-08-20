@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IAnswer } from '../models/survey.model';
+import { IAnswer, ISurvey } from '../models/survey.model';
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
@@ -7,7 +7,7 @@ import { IAnswer } from '../models/survey.model';
 })
 export class SurveyComponent implements OnInit {
   @Input()
-  public config: any;
+  public data: ISurvey;
 
   @Output()
   public totalLength: EventEmitter<number> = new EventEmitter();
@@ -16,11 +16,14 @@ export class SurveyComponent implements OnInit {
   public currentPointer: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  public surveyComplete: EventEmitter<IAnswer[]> = new EventEmitter();
+  public surveyDone: EventEmitter<IAnswer[]> = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
+  public completeSurvey(): void {
+    this.surveyDone.emit();
+  }
 }
