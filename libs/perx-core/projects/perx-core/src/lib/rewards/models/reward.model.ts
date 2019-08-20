@@ -17,7 +17,7 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
-  categoryTags: ICategoryTags[];
+  categoryTags?: ICategoryTags[];
 }
 
 export interface ICatalog {
