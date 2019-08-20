@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {EnvConfig} from '../shared/env-config';
 import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
@@ -192,15 +192,15 @@ export class V4RewardsService extends RewardsService {
     // todo: api not implemented yet
   }
 
-  public getAllRewards(): Observable<IReward[]> {
+  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     const pageSize = 100;
-    return this.getRewards(1, pageSize).pipe(
+    return this.getRewards(1, pageSize, tags).pipe(
       mergeMap(reward => {
         const streams = [
           of(reward)
         ];
         for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
-          const stream = this.getRewards(i, pageSize);
+          const stream = this.getRewards(i, pageSize, tags, categories);
           streams.push(stream);
         }
         return streams;
@@ -224,16 +224,22 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    if (tags) {
+      params = params.set('tags', tags.join());
+    }
+
+    if (categories) {
+      params = params.set('categories', categories.join());
+    }
+
     return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`,
-      {
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`,
-          tags: `${tags ? tags.join() : ''}`
-        }
-      }
+      `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
         if (res.meta) {
