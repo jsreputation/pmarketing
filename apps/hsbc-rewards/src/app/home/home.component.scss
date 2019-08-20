@@ -43,3 +43,8 @@
   padding: 1.5rem;
   background: inherit;
 }
+
+:host ::ng-deep .mat-tab-label-active {
+  color: #E42713;
+  opacity: 1;
+}
