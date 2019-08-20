@@ -90,7 +90,7 @@ export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-s
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
-export { IReward, ICatalog } from './lib/rewards/models/reward.model';
+export { IReward, ICatalog, ICategoryTags } from './lib/rewards/models/reward.model';
 
 /**
  * Utils

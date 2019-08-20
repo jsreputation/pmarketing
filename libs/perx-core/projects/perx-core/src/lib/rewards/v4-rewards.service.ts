@@ -4,7 +4,7 @@ import {EnvConfig} from '../shared/env-config';
 import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {RewardsService} from './rewards.service';
-import {IReward, ICatalog, IPrice} from './models/reward.model';
+import {IReward, ICatalog, IPrice, ICategoryTags} from './models/reward.model';
 import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
 import {VouchersService} from '../vouchers/vouchers.service';
 
@@ -46,6 +46,7 @@ interface IV4Reward {
   terms_and_conditions?: string;
   how_to_redeem?: string;
   tags?: IV4Tag[];
+  category_tags?: ICategoryTags[];
 }
 
 interface IV4Price {
@@ -153,7 +154,8 @@ export class V4RewardsService extends RewardsService {
       merchantImg,
       merchantWebsite: reward.merchant_website,
       termsAndConditions: reward.terms_and_conditions,
-      howToRedeem: reward.how_to_redeem
+      howToRedeem: reward.how_to_redeem,
+      categoryTags: reward.category_tags
     };
   }
 
