@@ -2,20 +2,29 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsCardsComponent } from './rewards-cards.component';
 import { MatIconModule, MatCardModule } from '@angular/material';
+import { RewardsService } from '@perx/core';
+import { of } from 'rxjs';
+import { rewards } from 'src/app/rewards.mock';
 
 describe('RewardsCardsComponent', () => {
   let component: RewardsCardsComponent;
   let fixture: ComponentFixture<RewardsCardsComponent>;
+  const rewardsServiceStub = {
+    getAllRewards: () => of(rewards)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsCardsComponent ],
+      declarations: [RewardsCardsComponent],
       imports: [
         MatIconModule,
         MatCardModule
+      ],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,9 +14,10 @@ export const rewards: IReward[] = [
         merchantName: 'Pizza Hut',
         termsAndConditions: 'string',
         howToRedeem: 'string',
+        merchantId: 2
     },
     {
-        id: 1,
+        id: 2,
         name: '1 for 1',
         description: 'string',
         subtitle: 'string',
@@ -28,5 +29,6 @@ export const rewards: IReward[] = [
         merchantName: 'Starbucks',
         termsAndConditions: 'string',
         howToRedeem: 'string',
+        merchantId: 3
     }
 ];

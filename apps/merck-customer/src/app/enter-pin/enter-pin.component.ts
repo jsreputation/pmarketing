@@ -3,6 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
+export enum PinMode {
+  password = 'password',
+  register = 'register'
+}
+
 @Component({
   selector: 'mc-enter-pin',
   templateUrl: './enter-pin.component.html',
@@ -11,7 +16,7 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../page-propert
 export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
-  public pinMode: string = 'password'; // || 'register'
+  public pinMode: PinMode = PinMode.password;
   private mobileNo: string = null;
   public visibleNo: string = '';
 
@@ -20,11 +25,15 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     private route: ActivatedRoute,
     private authService: AuthenticationService
   ) {
-    if (this.router.getCurrentNavigation() !== null
-      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-      this.mobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
-      this.visibleNo = this.encodeMobileNo(this.mobileNo);
-    }
+      const currentNavigation = this.router.getCurrentNavigation();
+      if (!currentNavigation) {
+        return;
+      }
+
+      if (currentNavigation.extras.state) {
+        this.mobileNo = currentNavigation.extras.state.mobileNo;
+        this.visibleNo = this.encodeMobileNo(this.mobileNo);
+      }
   }
 
   public getPageProperties(): PageProperties {
@@ -51,19 +60,26 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if (params.get('type') !== null) {
-        this.pinMode = params.get('type');
-      }
+          this.pinMode = params.get('type') as PinMode;
+        }
     });
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === PinMode.register) {
+      this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
+        (response) => {
+          console.log(`Response: ${response.message}`);
+        }
+      );
+    } else if (this.pinMode === PinMode.password) {
       this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
+
   }
 
   public resendOtp(): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
         () => {
           console.log('Forgot password api called again');
