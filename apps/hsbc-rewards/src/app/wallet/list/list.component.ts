@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Voucher, VouchersService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -30,7 +31,7 @@ export class ListComponent implements OnInit {
     this.route.params.subscribe((param) => {
       this.filter = param.id === 'history' ? VoucherState.redeemed : VoucherState.issued;
     });
-    this.vouchers = this.vouchersService.getAll();
+    this.vouchers = this.vouchersService.getAll().pipe(map((val) => val));
   }
 
   public routeNavigate(route: string): void {
