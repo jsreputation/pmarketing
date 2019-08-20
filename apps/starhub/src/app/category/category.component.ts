@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit{
+export class CategoryComponent implements OnInit {
   public rewards: Observable<IReward[]>;
 
   constructor(

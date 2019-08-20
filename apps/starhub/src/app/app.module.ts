@@ -3,7 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileModule, LocationsService, RewardsService, VouchersService } from '@perx/core';
+import {
+  AuthenticationModule,
+  CognitoModule,
+  OauthModule,
+  UtilsModule,
+  ProfileModule,
+  LocationsService,
+  RewardsService,
+  VouchersService
+} from '@perx/core';
 import { environment } from '../environments/environment';
 import {
   MatDialogModule,

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   templateUrl: './rewards-cards.component.html',
   styleUrls: ['./rewards-cards.component.scss']
 })
-export class RewardsCardsComponent implements OnInit{
+export class RewardsCardsComponent implements OnInit {
   public rewards: Observable<IReward[]>;
 
   @Output()
