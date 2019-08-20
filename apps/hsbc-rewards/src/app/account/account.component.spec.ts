@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfileService, TokenStorage, ProfileModule, AuthenticationService } from '@perx/core';
+import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -55,7 +55,8 @@ describe('AccountComponent', () => {
           path: 'login',
           component: MockComponent
         }]),
-        NavigateToolbarModule
+        NavigateToolbarModule,
+        ProfileModule
       ],
       providers: [{
         provide: AuthenticationService, useValue: authenticationServiceStub
