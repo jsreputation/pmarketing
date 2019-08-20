@@ -1,12 +1,12 @@
-export interface Answer {
-    response_id: string;
-    question_id: string;
+export interface IAnswer {
+    response_id: number;
+    question_id: number;
     content: number | string[];
 }
 
-export interface Resource {
+export interface IResource {
     data: {
-        id: string;
+        id: number;
         type: string;
         attributes: any;
     };
