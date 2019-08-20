@@ -12,3 +12,13 @@ body {
   font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
   background: #f6f7f9;
 }
+
+.app {
+  .mat-tab-links {
+    width: 100%;
+  }
+
+  .mat-tab-link {
+    width: 50%;
+  }
+}

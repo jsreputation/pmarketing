@@ -4,7 +4,7 @@ import { RewardComponent } from './containers/reward/reward.component';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { RewardRoutingModule } from './reward-routing.module';
 import { RewardConfirmComponent } from './components/reward-confirm/reward-confirm.component';
-import { RewardsModule } from '@perx/core';
+import { RewardsModule, VouchersModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     RewardRoutingModule,
     RewardsModule,
+    VouchersModule,
     MatButtonModule,
     MatDialogModule,
     TranslateModule,

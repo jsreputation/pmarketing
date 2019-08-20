@@ -9,10 +9,16 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { RewardsService } from '@perx/core';
+import { of } from 'rxjs';
+import { rewards } from 'src/app/rewards.mock';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
+  const rewardsServiceStub = {
+    getAllRewards: () => of(rewards)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,6 +35,9 @@ describe('DiscoverComponent', () => {
         MatIconModule,
         RouterTestingModule,
         NgxMultiLineEllipsisModule
+      ],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();

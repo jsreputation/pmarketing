@@ -16,7 +16,7 @@
 					Diabetes condition
 				</mat-checkbox>
 			</div>
-			<mat-radio-group class="diabetes-selection" formControlName="diabetes">
+			<mat-radio-group *ngIf="surveyForm.controls.diabetesCondition.value" class="diabetes-selection" formControlName="diabetes">
 				<mat-radio-button i18n="@@static-diabetes" color="primary" value="diabetes">Diabetes</mat-radio-button>
 				<mat-radio-button i18n="@@static-pre-diabetes" color="primary" value="pre_diabetes">Pre-Diabetes
 				</mat-radio-button>
