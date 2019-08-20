@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileModule } from '@perx/core';
+import { AuthenticationModule, CognitoModule, OauthModule, UtilsModule, ProfileModule, LocationsService, RewardsService, VouchersService } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
   MatDialogModule,
@@ -24,6 +24,24 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { CategorySelectComponent } from './category/category-select/category-select.component';
 import { CategorySortComponent } from './category/category-sort/category-sort.component';
+import { locations } from './locations.mock';
+import { of } from 'rxjs';
+import { rewards } from './rewards.mock';
+import { vouchers } from './vouchers.mock';
+
+const locationServiceStub = {
+  getFromMerchant: () => of(locations)
+};
+
+const rewardsServiceStub = {
+  getReward: () => of(rewards[0]),
+  getAllRewards: () => of(rewards)
+};
+
+const vouchersServiceStub = {
+  getAll: () => of(vouchers),
+  get: () => of(vouchers[0])
+};
 
 @NgModule({
   declarations: [
@@ -59,7 +77,11 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
     CategorySelectComponent,
     CategorySortComponent
   ],
-  providers: [],
+  providers: [
+    { provide: LocationsService, useValue: locationServiceStub },
+    { provide: RewardsService, useValue: rewardsServiceStub },
+    { provide: VouchersService, useValue: vouchersServiceStub }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

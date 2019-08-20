@@ -11,7 +11,7 @@
   </button>
 </mat-toolbar>
 <div class="content">
-  <mat-card *ngFor="let reward of rewards" (click)="selected(reward)" matRipple>
+  <mat-card *ngFor="let reward of rewards | async" (click)="selected(reward)" matRipple>
     <img mat-card-image [src]="reward.rewardBanner">
     <mat-card-header>
       <mat-card-title>{{reward.name}}</mat-card-title>
