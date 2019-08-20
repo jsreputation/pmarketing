@@ -192,15 +192,15 @@ export class V4RewardsService extends RewardsService {
     // todo: api not implemented yet
   }
 
-  public getAllRewards(): Observable<IReward[]> {
+  public getAllRewards(tags?: string[]): Observable<IReward[]> {
     const pageSize = 100;
-    return this.getRewards(1, pageSize).pipe(
+    return this.getRewards(1, pageSize, tags).pipe(
       mergeMap(reward => {
         const streams = [
           of(reward)
         ];
         for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
-          const stream = this.getRewards(i, pageSize);
+          const stream = this.getRewards(i, pageSize, tags);
           streams.push(stream);
         }
         return streams;
