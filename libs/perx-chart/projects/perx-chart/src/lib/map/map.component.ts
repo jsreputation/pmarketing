@@ -13,7 +13,7 @@ export class MapComponent implements OnInit, OnChanges {
   @Input()
   public data: Observable<IData>;
 
-  public dataTable: (string | number)[][];
+  private dataTable: (string | number)[][];
 
   public ngOnInit(): void {
     this.loadScript()
@@ -48,9 +48,11 @@ export class MapComponent implements OnInit, OnChanges {
       displayMode: 'markers',
     };
 
-    const data = google.visualization.arrayToDataTable(this.dataTable);
     const chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
+    if (this.dataTable && this.dataTable.length > 1) {
+      const data = google.visualization.arrayToDataTable(this.dataTable);
+      chart.draw(data, options);
+    }
   }
 
   private loadScript(): Promise<void> {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IData } from './data.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, switchMap, retry } from 'rxjs/operators';
 
 interface ITokenResponse {
   token: string;
@@ -19,6 +19,9 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   public getData(id: number, params: { [key: string]: string }): Observable<IData> {
+    if (id === undefined) {
+      return throwError('card id cannot be undefined');
+    }
     return this.getToken(id)
       .pipe(
         switchMap((token: string) => {
@@ -35,7 +38,13 @@ export class DataService {
   }
 
   private getToken(id: number): Observable<string> {
-    return this.http.get<ITokenResponse>(`http://localhost:3000/token/${id}`)
-      .pipe(map((res: ITokenResponse) => res.token));
+    return this.http.get<ITokenResponse>(
+      `https://api.whistler.perxtech.org/cognito/metabase_token/${id}`,
+      { headers: { Authorization: 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg' } }
+    )
+      .pipe(
+        retry(2),
+        map((res: ITokenResponse) => res.token)
+      );
   }
 }
