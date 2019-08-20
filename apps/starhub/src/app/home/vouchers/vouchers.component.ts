@@ -1,16 +1,15 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { Voucher, VoucherState } from '@perx/core';
-import { Observable, of } from 'rxjs';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Voucher, VoucherState, VouchersService } from '@perx/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { vouchers } from '../../vouchers.mock';
 
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss']
 })
-export class VouchersComponent {
+export class VouchersComponent implements OnInit {
   public vouchers: Observable<Voucher[]>;
 
   public redeemedVouchers: Observable<Voucher[]>;
@@ -18,12 +17,16 @@ export class VouchersComponent {
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
-  constructor(private router: Router) {
-    this.vouchers = of(vouchers)
+  constructor(private router: Router, private vouchersService: VouchersService) {
+  }
+
+  public ngOnInit(): void {
+    const feed = this.vouchersService.getAll();
+    this.vouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued))
       );
-    this.redeemedVouchers = of(vouchers)
+    this.redeemedVouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued))
       );

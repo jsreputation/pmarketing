@@ -5,19 +5,24 @@ import { IReward, RewardsService, LoyaltyService } from '@perx/core';
 import { LoyaltySummaryComponent } from '@perx/core';
 import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
-const mockTags: ITabConfig[] = [{
-  filter: null,
-  tabName: 'Lifestyle',
-  tabValue: ''
-}, {
-  filter: null,
-  tabName: 'Travel',
-  tabValue: ''
-}, {
-  filter: null,
-  tabName: 'Shopping',
-  tabValue: ''
-}];
+const mockTags: ITabConfig[] = [
+  {
+    filter: null,
+    tabName: 'All Rewards',
+    tabValue: null
+  }, {
+    filter: null,
+    tabName: 'Lifestyle',
+    tabValue: ''
+  }, {
+    filter: null,
+    tabName: 'Travel',
+    tabValue: ''
+  }, {
+    filter: null,
+    tabName: 'Shopping',
+    tabValue: ''
+  }];
 
 @Component({
   selector: 'app-home',

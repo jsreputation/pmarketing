@@ -15,7 +15,7 @@ import {
   MatRadioModule
 } from '@angular/material';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('UserInfoComponent', () => {
   let component: UserInfoComponent;
@@ -38,7 +38,7 @@ describe('UserInfoComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: ProfileService,
-          useValue: {setCustomProperties: () => {}}
+          useValue: {setCustomProperties: () => of()}
         }
       ]
     })
@@ -58,8 +58,7 @@ describe('UserInfoComponent', () => {
   it('should navigate to home once user info is set', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
 
-  // TODO: The following test condition should be changed when service is implemented in ProfileService
-    const profileServiceSpy = spyOn(profileService, 'setCustomProperties').and.returnValue(throwError('Not implemented yet'));
+    const profileServiceSpy = spyOn(profileService, 'setCustomProperties').and.returnValue(of(null));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 
