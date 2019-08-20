@@ -65,7 +65,6 @@ export class ConditionComponent implements OnInit, PageAppearence {
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
       () => this.notificationService.addSnack('Condition Updated.'),
       err => {
-        console.error('ProfileService::SetCustomProperties : ' + err);
         this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
     });
   }

@@ -61,7 +61,6 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     this.route.paramMap.subscribe(params => {
       if (params.get('type') !== null) {
           this.pinMode = params.get('type') as PinMode;
-          console.log(this.pinMode);
         }
     });
   }
