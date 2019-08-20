@@ -7,21 +7,25 @@ import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-t
 
 const mockTags: ITabConfig[] = [
   {
-    filter: null,
+    filterKey: null,
     tabName: 'All Rewards',
-    tabValue: null
+    filterValue: null,
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: null,
     tabName: 'Lifestyle',
-    tabValue: ''
+    filterValue: '',
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: null,
     tabName: 'Travel',
-    tabValue: ''
+    filterValue: '',
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: null,
     tabName: 'Shopping',
-    tabValue: ''
+    filterValue: '',
+    rewardsList: null
   }];
 
 @Component({
