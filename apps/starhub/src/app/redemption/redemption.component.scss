@@ -25,11 +25,13 @@
   img {
     display: block;
     width: 100%;
+    height: 25rem;
+    object-fit: cover;
   }
 
   button {
     position: absolute;
-    top: 20%;
+    top: 23%;
     transform: translateY(-50%);
     margin-left: 1rem;
   }
@@ -41,9 +43,31 @@
 
 .redeem-block {
   padding: 0 1.5rem;
-  margin-top: -13rem;
+  margin-top: -15.5rem;
   z-index: 1;
   position: relative;
+}
+
+.upper-section {
+  border-radius: 1rem 1rem 0 0;
+  background-color: #ffffff;
+}
+
+.middle-section {
+  height: 3.5rem;
+  margin-top: -0.1rem;
+
+  img {
+    width: 100%;
+    object-fit: fill;
+    height: 3.5rem;
+  }
+}
+
+.lower-section {
+  border-radius: 0 0 1rem 1rem;
+  background-color: #ffffff;
+  overflow: hidden;
 }
 
 .lower-section.expired, .lower-section.redeemed {
@@ -58,8 +82,6 @@
 
 .inner {
   border-radius: 1rem;
-  background-color: #ffffff;
-  overflow: hidden;
 }
 
 .code-redemption {

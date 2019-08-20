@@ -212,4 +212,30 @@ export class VouchersService implements IVoucherService {
       })
     );
   }
+
+  public stateChangedForVoucher(voucherId: number, intervalPeriod: number = 1000): Observable<IVoucher> {
+    let current = 0;
+    let previousState: string;
+    return interval(intervalPeriod).pipe(
+      map(val => {
+        current = val;
+        return this.get(voucherId);
+      }),
+      mergeAll(1),
+      filter((voucher: IVoucher) => {
+        if (current === 0) {
+          previousState = voucher.state;
+          return false;
+        }
+
+        if (previousState === voucher.state) {
+          return false;
+        }
+
+        previousState = voucher.state;
+
+        return true;
+      })
+    );
+  }
 }
