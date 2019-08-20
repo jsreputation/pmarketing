@@ -45,9 +45,12 @@
   }
 
   &-group-bloc {
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 6rem 4rem 0;
+    box-sizing: border-box;
   }
 
   &-group-graphics {
@@ -70,6 +73,8 @@
 }
 
 .tabs-list-wrap {
+  background: yellow;
+  min-width: 27rem;
   margin-right: 4rem;
 }
 
