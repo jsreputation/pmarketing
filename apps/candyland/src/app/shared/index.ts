@@ -101,7 +101,7 @@ export * from './charts/pie-chart/pie-chart.module';
 export * from './charts/radius-circle-chart/radius-circle-chart.module';
 export * from './charts/top-five-chart/top-five-chart.module';
 export * from './charts/vertical-bar-chart/vertical-bar-chart.module';
-
+export * from './charts/chart-card/chart-card.module';
 export * from './charts/calendar-chart/calendar-chart.component';
 export * from './charts/circle-pie-chart/circle-pie-chart.component';
 export * from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
@@ -111,3 +111,4 @@ export * from './charts/pie-chart/pie-chart.component';
 export * from './charts/radius-circle-chart/radius-circle-chart.component';
 export * from './charts/top-five-chart/top-five-chart.component';
 export * from './charts/vertical-bar-chart/vertical-bar-chart.component';
+export * from './charts/chart-card/chart-card.component';

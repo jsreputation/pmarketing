@@ -14,11 +14,12 @@ import { VerticalBarChartModule } from '@cl-shared/charts/vertical-bar-chart/ver
 import { CirclePieChartModule } from '@cl-shared/charts/circle-pie-chart/circle-pie-chart.module';
 import { CalendarChartModule } from '@cl-shared/charts/calendar-chart/calendar-chart.module';
 import { PieChartModule } from '@cl-shared/charts/pie-chart/pie-chart.module';
-import { LinearChartModule } from '@cl-shared/charts/linear-chart/linear-chart.module';
+
 import { MapChartModule } from '@cl-shared/charts/map-chart/map-chart.module';
 import { TopFiveChartModule } from '@cl-shared/charts/top-five-chart/top-five-chart.module';
 import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart/horizontal-bar-chart.module';
 import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/radius-circle-chart.module';
+import { LinearChartModule, ChartCardModule } from '@cl-shared';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/r
     HorizontalBarChartModule,
     RadiusCircleChartModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    ChartCardModule
   ]
 })
 export class DashboardModule { }
