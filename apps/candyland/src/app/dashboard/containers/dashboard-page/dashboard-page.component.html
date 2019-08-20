@@ -16,175 +16,186 @@
     </cl-dashboard-game-card>
   </div>
   <p class="dashboard-title dashboard-title__indent">Business Insight</p>
-  <ng-container *ngIf="dashboardData; else noData">
+<!--  <ng-container *ngIf="dashboardData; else noData">-->
     <section class="dashboard-content">
       <div class="dashboard-content-header">
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link
+             *ngFor="let link of navLinks;"
+             [routerLink]="link.path"
+             routerLinkActive #rla="routerLinkActive"
+             [routerLinkActiveOptions]="{exact: true}"
+             [active]="rla.isActive">
+            {{link.label}}
+          </a>
+        </nav>
         <cl-range-date-picker-filter></cl-range-date-picker-filter>
       </div>
+      <router-outlet></router-outlet>
       <!--group block contain tabs and one graphic-->
-      <div class="dashboard-group-bloc">
+<!--      <div class="dashboard-group-bloc">-->
 
-        <div class="tabs-list-wrap">
-          <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event)">
-            <ng-container *ngFor="let item of dashboardData;">
-              <mat-radio-button [value]="item.name">
-                <cl-tab-item-view [data]="item"></cl-tab-item-view>
-              </mat-radio-button>
-            </ng-container>
-          </mat-radio-group>
-        </div>
+<!--        <div class="tabs-list-wrap">-->
+<!--          <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event)">-->
+<!--            <ng-container *ngFor="let item of dashboardData;">-->
+<!--              <mat-radio-button [value]="item.name">-->
+<!--                <cl-tab-item-view [data]="item"></cl-tab-item-view>-->
+<!--              </mat-radio-button>-->
+<!--            </ng-container>-->
+<!--          </mat-radio-group>-->
+<!--        </div>-->
 
-        <div class="time-line-block">
-          <ng-container [ngSwitch]="activeTab">
+<!--        <div class="time-line-block">-->
+<!--          <ng-container [ngSwitch]="activeTab">-->
 
-            <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">
-              <div class="chart-block-separate">
-                <p class="chart-title">
-                  Total Active Customers
-                </p>
-                <cl-vertical-bar-chart>
-                </cl-vertical-bar-chart>
-              </div>
-            </ng-container>
+<!--            <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">-->
+<!--              <div class="chart-block-separate">-->
+<!--                <p class="chart-title">-->
+<!--                  Total Active Customers-->
+<!--                </p>-->
+<!--                <cl-vertical-bar-chart>-->
+<!--                </cl-vertical-bar-chart>-->
+<!--              </div>-->
+<!--            </ng-container>-->
 
-            <ng-container *ngSwitchCase="dictionaryTotal.issuedRewards">
-              <div class="chart-block-separate">
-                <p class="chart-title">
-                  Rewards
-                </p>
-                <div class="chart-wrap-img">
-                  <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">
-                </div>
-              </div>
-            </ng-container>
+<!--            <ng-container *ngSwitchCase="dictionaryTotal.issuedRewards">-->
+<!--              <div class="chart-block-separate">-->
+<!--                <p class="chart-title">-->
+<!--                  Rewards-->
+<!--                </p>-->
+<!--                <div class="chart-wrap-img">-->
+<!--                  <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-container>-->
 
-            <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">
-              <div class="chart-block-separate">
-                <p class="chart-title">
-                  Campaigns
-                </p>
-                <div class="chart-wrap-img">
-                  <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">
-                </div>
-              </div>
-            </ng-container>
-          </ng-container>
-        </div>
-      </div>
+<!--            <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">-->
+<!--              <div class="chart-block-separate">-->
+<!--                <p class="chart-title">-->
+<!--                  Campaigns-->
+<!--                </p>-->
+<!--                <div class="chart-wrap-img">-->
+<!--                  <img src="assets/images/dashboard-business/rewards-total.png" alt="chart">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-container>-->
+<!--          </ng-container>-->
+<!--        </div>-->
+<!--      </div>-->
       <!--end group block contain tabs and one graphic-->
 
       <!--group that contain all graphics-->
-      <div class="dashboard-group-graphics">
-        <ng-container [ngSwitch]="activeTab">
+<!--      <div class="dashboard-group-graphics">-->
+<!--        <ng-container [ngSwitch]="activeTab">-->
 
-          <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">
-            <div class="justify-content-between">
-              <div class="flex">
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Demographics
-                  </p>
-                  <div class="chart-wrap-img">
-                    <img src="assets/images/dashboard-business/column-chart.jpg" alt="chart">
-                  </div>
-                </div>
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Popular Redemption Days
-                  </p>
-                  <cl-calendar-chart>
-                  </cl-calendar-chart>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="chart-block">
-                  <p class="chart-title">
-                    Popular Engagement Days
-                  </p>
-                  <cl-calendar-chart>
-                  </cl-calendar-chart>
-                </div>
-              </div>
-            </div>
-          </ng-container>
+<!--          <ng-container *ngSwitchCase="dictionaryTotal.activeCustomers">-->
+<!--            <div class="justify-content-between">-->
+<!--              <div class="flex">-->
+<!--                <div class="chart-block">-->
+<!--                  <p class="chart-title">-->
+<!--                    Demographics-->
+<!--                  </p>-->
+<!--                  <div class="chart-wrap-img">-->
+<!--                    <img src="assets/images/dashboard-business/column-chart.jpg" alt="chart">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="chart-block">-->
+<!--                  <p class="chart-title">-->
+<!--                    Popular Redemption Days-->
+<!--                  </p>-->
+<!--                  <cl-calendar-chart>-->
+<!--                  </cl-calendar-chart>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="flex">-->
+<!--                <div class="chart-block">-->
+<!--                  <p class="chart-title">-->
+<!--                    Popular Engagement Days-->
+<!--                  </p>-->
+<!--                  <cl-calendar-chart>-->
+<!--                  </cl-calendar-chart>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
 
-          <ng-container *ngSwitchCase="dictionaryTotal.issuedRewards">
-            <div class="flex">
-              <div class="chart-block">
-                <p class="chart-title">
-                  Top 5 Categories
-                </p>
-                <cl-horizontal-bar-chart>
-                </cl-horizontal-bar-chart>
-              </div>
-              <div class="chart-block">
-                <p class="chart-title">
-                  Top 3 Redeemed Rewards by Reward Type
-                </p>
-                <cl-circle-pie-chart>
-                </cl-circle-pie-chart>
-              </div>
-            </div>
+<!--          <ng-container *ngSwitchCase="dictionaryTotal.issuedRewards">-->
+<!--            <div class="flex">-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Top 5 Categories-->
+<!--                </p>-->
+<!--                <cl-horizontal-bar-chart>-->
+<!--                </cl-horizontal-bar-chart>-->
+<!--              </div>-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Top 3 Redeemed Rewards by Reward Type-->
+<!--                </p>-->
+<!--                <cl-circle-pie-chart>-->
+<!--                </cl-circle-pie-chart>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="flex">
-              <div class="chart-block">
-                <p class="chart-title">
-                  Top 5 Merchants
-                </p>
-                <cl-calendar-chart>
-                </cl-calendar-chart>
-              </div>
-              <div class="chart-block">
-                <p class="chart-title">
-                  Top 3 Merchants by Reward Cost
-                </p>
-                <cl-circle-pie-chart>
-                </cl-circle-pie-chart>
-              </div>
-            </div>
-          </ng-container>
+<!--            <div class="flex">-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Top 5 Merchants-->
+<!--                </p>-->
+<!--                <cl-calendar-chart>-->
+<!--                </cl-calendar-chart>-->
+<!--              </div>-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Top 3 Merchants by Reward Cost-->
+<!--                </p>-->
+<!--                <cl-circle-pie-chart>-->
+<!--                </cl-circle-pie-chart>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
 
-          <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">
-            <div class="chart-block w-100 m-w-100">
-              <p class="chart-title">
-                Engagement Rate
-              </p>
-              <div class="flex justify-content-between">
-                <cl-radius-circle-chart>
-                </cl-radius-circle-chart>
-                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-stamp.png'">
-                </cl-radius-circle-chart>
-                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-tree.png'">
-                </cl-radius-circle-chart>
-                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-reward.png'">
-                </cl-radius-circle-chart>
-              </div>
-            </div>
-            <div class="flex">
-              <div class="chart-block">
-                <p class="chart-title">
-                  Top 5 Rewards
-                </p>
-                <cl-horizontal-bar-chart [imgPath]="'total-reward.png'">
-                </cl-horizontal-bar-chart>
-              </div>
-              <div class="chart-block">
-                <p class="chart-title">
-                  Reward Cost by Engagement Type
-                </p>
-                <cl-circle-pie-chart>
-                </cl-circle-pie-chart>
-              </div>
-            </div>
-          </ng-container>
+<!--          <ng-container *ngSwitchCase="dictionaryTotal.activeCampaigns">-->
+<!--            <div class="chart-block w-100 m-w-100">-->
+<!--              <p class="chart-title">-->
+<!--                Engagement Rate-->
+<!--              </p>-->
+<!--              <div class="flex justify-content-between">-->
+<!--                <cl-radius-circle-chart>-->
+<!--                </cl-radius-circle-chart>-->
+<!--                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-stamp.png'">-->
+<!--                </cl-radius-circle-chart>-->
+<!--                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-tree.png'">-->
+<!--                </cl-radius-circle-chart>-->
+<!--                <cl-radius-circle-chart [imgPath]="'radius-circle-chart-reward.png'">-->
+<!--                </cl-radius-circle-chart>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="flex">-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Top 5 Rewards-->
+<!--                </p>-->
+<!--                <cl-horizontal-bar-chart [imgPath]="'total-reward.png'">-->
+<!--                </cl-horizontal-bar-chart>-->
+<!--              </div>-->
+<!--              <div class="chart-block">-->
+<!--                <p class="chart-title">-->
+<!--                  Reward Cost by Engagement Type-->
+<!--                </p>-->
+<!--                <cl-circle-pie-chart>-->
+<!--                </cl-circle-pie-chart>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
 
-        </ng-container>
-      </div>
+<!--        </ng-container>-->
+<!--      </div>-->
       <!--end group that contain all graphics-->
     </section>
-  </ng-container>
-  <ng-template #noData>
-    <cl-business-insight>
-    </cl-business-insight>
-  </ng-template>
+<!--  </ng-container>-->
+<!--  <ng-template #noData>-->
+<!--    <cl-business-insight>-->
+<!--    </cl-business-insight>-->
+<!--  </ng-template>-->
 </section>
