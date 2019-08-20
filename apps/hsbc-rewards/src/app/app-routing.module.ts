@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'reedem',
     loadChildren: () => import('./account/redeem/redeem.module').then(mod => mod.RedeemModule),
   }, {
-    path: 'term-and-condition',
+    path: 'terms-and-conditions',
     loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then(mod => mod.TermsAndConditionsModule)
   }, {
     path: '',
