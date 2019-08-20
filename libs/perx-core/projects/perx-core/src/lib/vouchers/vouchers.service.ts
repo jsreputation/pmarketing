@@ -142,12 +142,14 @@ export class VouchersService implements IVoucherService {
     return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  public get(id: number): Observable<IVoucher> {
-    const found = this.vouchers.find(v => {
-      return `${v.id}` === `${id}`;
-    });
-    if (found) {
-      return of(found);
+  public get(id: number, useCache: boolean = true): Observable<IVoucher> {
+    if (useCache) {
+      const found = this.vouchers.find(v => {
+        return `${v.id}` === `${id}`;
+      });
+      if (found) {
+        return of(found);
+      }
     }
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
@@ -219,7 +221,7 @@ export class VouchersService implements IVoucherService {
     return interval(intervalPeriod).pipe(
       map(val => {
         current = val;
-        return this.get(voucherId);
+        return this.get(voucherId, false);
       }),
       mergeAll(1),
       filter((voucher: IVoucher) => {
