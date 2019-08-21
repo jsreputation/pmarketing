@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
     this.route.params.subscribe((param) => {
       this.filter = param.id === 'history' ? VoucherState.redeemed : VoucherState.issued;
     });
-    this.vouchers = this.vouchersService.getAll().pipe(map((val) => val));
+    this.vouchers = this.vouchersService.getAll();
   }
 
   public routeNavigate(route: string): void {
