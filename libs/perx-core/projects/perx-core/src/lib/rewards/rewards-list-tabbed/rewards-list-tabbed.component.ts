@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {IReward} from '../models/reward.model';
 import {map} from 'rxjs/operators';
+import {MatTabChangeEvent} from '@angular/material';
 
 export interface ITabConfig {
   filterKey?: string;
@@ -31,6 +32,8 @@ export class RewardsListTabbedComponent implements OnInit {
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
+  @Output()
+  public tabChanged: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
 
   public selectedIndex: number = 0;
 
@@ -57,9 +60,9 @@ export class RewardsListTabbedComponent implements OnInit {
     );
   }
 
-  // public tabChanged(event: any): void {
-  //   console.log(event);
-  // }
+  public tabChangedHandler(event: MatTabChangeEvent): void {
+   this.tabChanged.emit(event);
+  }
 
   public rewardTappedHandler(reward: IReward): void {
     // forward the tapped event
