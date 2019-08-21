@@ -18,6 +18,9 @@ const routes: Routes = [
     path: 'terms-and-conditions',
     loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then(mod => mod.TermsAndConditionsModule)
   }, {
+    path: 'voucher',
+    loadChildren: () => import('./wallet/voucher-detail/voucher-detail.module').then(mod => mod.VoucherDetailModule)
+  }, {
     path: '',
     loadChildren: () => import('./header/header.module').then(mod => mod.HeaderModule),
     canActivate: [ProtectedGuard]

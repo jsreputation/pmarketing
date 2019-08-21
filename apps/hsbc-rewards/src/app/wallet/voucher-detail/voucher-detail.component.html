@@ -1,1 +1,10 @@
-<perx-core-voucher [voucher]="voucher" (redeem)="reedEm()"></perx-core-voucher>
+<div class="reward-page">
+  <app-detail-header></app-detail-header>
+  <div class="reward-body">
+    <perx-core-voucher [voucher]="voucher" (redeem)="reedEm()"></perx-core-voucher>
+  </div>
+  <div class="redeem-container" *ngIf="pointsBalance">
+    <button mat-flat-button type="submit" color="primary" [disabled]="pointsBalance.insufficientPoints"
+      (click)="moveToBooking()">Redeem</button>
+  </div>
+</div>
