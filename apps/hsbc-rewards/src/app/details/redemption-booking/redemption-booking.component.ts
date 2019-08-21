@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
-  public rewardId;
+  public rewardId: number;
   public customBackButton: string = 'assets/img/close.svg';
   public locationData: ILocation[];
   public reward: IReward;
@@ -33,11 +33,11 @@ export class RedemptionBookingComponent implements OnInit {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-        this.rewardsService.getRewardPricesOptions(this.rewardId)
+      this.rewardsService.getRewardPricesOptions(this.rewardId)
       ]);
-    })).subscribe((val)=>{
+    })).subscribe((val) => {
       this.reward = val[0];
-    })
+    });
     this.merchantService.getMerchants().subscribe((res) => {
       this.merchants = res;
     });
