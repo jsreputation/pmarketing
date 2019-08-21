@@ -10,7 +10,6 @@ import {
   RewardsModule as PerxRewardsModule,
   UtilsModule as PerxCoreUtilsModule
 } from '@perx/core';
-import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
 import { MatButtonModule, MatTabsModule } from '@angular/material';
@@ -28,7 +27,7 @@ import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-t
     RouterModule,
     CommonModule,
     HttpClientModule,
-    PerxRewardsModule.forRoot({ env: environment }),
+    PerxRewardsModule,
     AuthenticationModule,
     RewardsRoutingModule,
     MatButtonModule,
