@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SurveyQuestionType } from '../../models/survey.model';
 
 interface IPayloadRating {
-  type: SurveyQuestionType;
+  type: string;
   color?: string;
   'left_label'?: string;
   'right_label'?: string;

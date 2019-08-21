@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SurveyQuestionType } from '../../models/survey.model';
 
 interface IPayloadDate {
-  type: SurveyQuestionType;
+  type: string;
   period?: boolean;
 }
 

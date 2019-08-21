@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SurveyQuestionType } from '../../models/survey.model';
 
 interface IPayloadPhone {
-  type: SurveyQuestionType;
+  type: string;
   'default_country_code': string;
 }
 

@@ -1,8 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { SurveyQuestionType } from '../../models/survey.model';
 
 interface IPayloadSelect {
-  type: SurveyQuestionType;
+  type: string;
   choices: string[];
 }
 

@@ -36,6 +36,6 @@ export enum SurveyQuestionType {
     phone = 'phone'
 }
 export interface IPayload {
-    type: SurveyQuestionType;
+    type: string;
     [key: string]: any;
 }

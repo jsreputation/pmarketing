@@ -1,8 +1,8 @@
-import { IQuestion, SurveyQuestionType, IAnswer, IPoints, ITracker } from './../../models/survey.model';
+import { IQuestion, IAnswer, IPoints, ITracker } from './../../models/survey.model';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 interface IPayloadGroup {
-  type: SurveyQuestionType;
+  type: string;
   questions: IQuestion[];
 }
 @Component({
