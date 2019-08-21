@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { VouchersModule, PuzzlesModule, VouchersService } from '@perx/core';
+import { PuzzlesModule, VouchersService } from '@perx/core';
+import { VouchersModule as PerxVouchersModule } from '@perx/core';
 
 const vouchersServiceStub = {};
 
@@ -15,7 +16,7 @@ const vouchersServiceStub = {};
   imports: [
     BrowserModule,
     AppRoutingModule,
-    VouchersModule,
+    PerxVouchersModule,
     PuzzlesModule
   ],
   providers: [
