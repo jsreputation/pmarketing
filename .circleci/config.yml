@@ -241,7 +241,7 @@ jobs:
   build-prod:
     machine:
       image: ubuntu-1604:201903-01
-    parallelism: 12
+    parallelism: 13
     steps:
       - run:
           name: Install yarn
