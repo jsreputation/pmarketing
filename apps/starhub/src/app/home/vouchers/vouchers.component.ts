@@ -16,7 +16,7 @@ export class VouchersComponent implements OnInit {
 
   public defaultNbVouchers: number = 3;
 
-  public showSeeMoreBtn: boolean = false;
+  public filtersCount: number;
 
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
@@ -31,7 +31,7 @@ export class VouchersComponent implements OnInit {
         map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued)));
 
     this.vouchers.subscribe(
-      (vouchs: Voucher[]) => this.showSeeMoreBtn = vouchs.length <= this.defaultNbVouchers ? false : true);
+      (vouchs: Voucher[]) => this.filtersCount = vouchs.length);
 
     this.redeemedVouchers = feed
       .pipe(
@@ -44,6 +44,10 @@ export class VouchersComponent implements OnInit {
   }
 
   public seeMoreClicked(): void {
-    this.showSeeMoreBtn = false;
+    this.defaultNbVouchers = this.filtersCount;
+  }
+
+  public isSeeMoreVisible(): boolean {
+    return this.filtersCount <= this.defaultNbVouchers ? false : true;
   }
 }

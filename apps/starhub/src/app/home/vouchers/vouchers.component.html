@@ -1,18 +1,17 @@
 <div class="rewards-container" *ngIf="vouchers || redeemedVouchers; else noRewards">
   <div class="saved-rewards" *ngIf="vouchers">
     <h1>Saved rewards</h1>
-    <ng-container *ngFor="let voucher of vouchers | async; let i = index">
-      <mat-card *ngIf="i <= (defaultNbVouchers-1) || !showSeeMoreBtn" (click)="voucherSelected(voucher)" matRipple>
-        <mat-card-header>
-          <img mat-card-avatar [src]="voucher.thumbnailImg">
-          <mat-card-title>{{voucher.name}}</mat-card-title>
-        </mat-card-header>
-        <div class="icon">
-          <mat-icon>arrow_forward</mat-icon>
-        </div>
-      </mat-card>
-    </ng-container>
-    <button *ngIf="showSeeMoreBtn && !showAllMode" (click)="seeMoreClicked()">See more</button>
+
+    <mat-card *ngFor="let voucher of vouchers | async | slice:0:defaultNbVouchers" (click)="voucherSelected(voucher)" matRipple>
+      <mat-card-header>
+        <img mat-card-avatar [src]="voucher.thumbnailImg">
+        <mat-card-title>{{voucher.name}}</mat-card-title>
+      </mat-card-header>
+      <div class="icon">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+    </mat-card>
+    <button *ngIf="isSeeMoreVisible()" (click)="seeMoreClicked()">See more</button>
   </div>
 
   <div class="past-rewards" *ngIf="redeemedVouchers">
