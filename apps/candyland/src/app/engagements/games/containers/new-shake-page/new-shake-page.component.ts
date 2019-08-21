@@ -79,13 +79,11 @@ export class NewShakePageComponent implements OnInit {
 
   public save(): void {
     const sendData = this.engagementTransformDataService.transformShakeTheTree(this.shakeTree.value);
-    console.log('sendData', sendData);
     this.shakeDataService.createShakeTree({ data: sendData })
       .subscribe((res) => {
         console.log(res);
+        this.router.navigateByUrl('/engagements');
       });
-    console.log(this.router);
-    // this.router.navigateByUrl('/engagements');
   }
 
   public comeBack(): void {

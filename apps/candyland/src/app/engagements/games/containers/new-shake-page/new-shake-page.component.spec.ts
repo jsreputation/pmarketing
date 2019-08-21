@@ -8,12 +8,12 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
-import { ShakeDataService } from './shared/services/shake-data.service';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { EngagementTransformDataService, ShakeTreeService } from '@cl-core-services';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -41,12 +41,13 @@ describe('NewShakePageComponent', () => {
       declarations: [ NewShakePageComponent ],
       providers: [
         {
-          provide: ShakeDataService, useValue: {
-            getBackground: () => of([]),
-            getGiftBox: () => of([]),
-            getGamesTree: () => of([]),
-            getGameNumberGifts: () => of([]),
+          provide: ShakeTreeService, useValue: {
+            getData: () => of([]),
           }
+        },
+        {
+          provide: EngagementTransformDataService,
+          useValue: {}
         }
       ]
     })

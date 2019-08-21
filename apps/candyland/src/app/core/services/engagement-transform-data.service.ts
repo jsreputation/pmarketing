@@ -7,12 +7,13 @@ import { ControlValueService } from '@cl-core-services';
 export class EngagementTransformDataService {
   constructor(private controlValueService: ControlValueService) {
   }
-
+// tslint:disable
   public transformReward(data: any): any {
     return {
       type: 'engagements', attributes: {
         title: data.name, game_type: 'reward',
-        image_url: 'i do not know what',
+        image_url:
+          'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
           headlineText: data.headlineMessage,
           subHeadlineText: data.subHeadlineMessage,
@@ -23,7 +24,7 @@ export class EngagementTransformDataService {
       }
     };
   }
-// tslint:disable
+
   public transformShakeTheTree(data: any): any {
     return {
       type: 'engagements',
