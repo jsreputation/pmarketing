@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {Observable, of, BehaviorSubject} from 'rxjs';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ProfileService, ILoyalty} from '@perx/core';
-import {LoyaltySummaryComponent, ITabConfig} from '@perx/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ITabConfig } from '@perx/core';
+import { map } from 'rxjs/operators';
 
 const mockTags: ITabConfig[] = [
   {
@@ -35,22 +36,24 @@ const mockTags: ITabConfig[] = [
 export class HomeComponent implements OnInit {
   public tabs: Observable<ITabConfig[]>;
   public rewards: Observable<IReward[]>;
-  public loyaltyId: number;
   public loyalty$: Observable<ILoyalty>;
-  @ViewChild('loyaltySummary', {static: false}) public loyaltySummary: LoyaltySummaryComponent;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.getRewards();
     this.getTags();
-    this.loyalty$ = this.loyaltyService.getLoyalty(100);
-    this.loyaltyId=100
+    this.loyalty$ = this.loyaltyService.getLoyalty(100)
+      .pipe(map((loyalty: ILoyalty) => {
+        loyalty.pointsBalance = 10000;
+        loyalty.expiringPoints[0].expireDate = new Date().toString();
+        loyalty.expiringPoints[0].points = 100;
+        return loyalty;
+      }));
   }
 
   public getRewards(): void {
