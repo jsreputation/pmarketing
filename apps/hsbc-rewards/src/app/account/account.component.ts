@@ -15,7 +15,6 @@ export class AccountComponent implements OnInit {
   public profile: IProfile;
   constructor(
     private personalProfile: ProfileService,
-    private dynamicCreateService: DynamicCreateService,
     private auth: AuthenticationService,
     private router: Router
   ) { }
