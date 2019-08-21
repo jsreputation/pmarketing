@@ -8,7 +8,7 @@ import { INavLink } from '../shared/i-nav-link';
 })
 export class WalletComponent {
   public navLinks: INavLink[] = [
-    { path: 'my-reward/list', label: 'List' },
+    { path: 'my-reward/list', label: 'My Wallet' },
     { path: 'my-reward/history', label: 'History' }
   ];
 }
