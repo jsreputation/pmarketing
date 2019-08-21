@@ -10,6 +10,7 @@ import { categories } from '../../category.mock';
 })
 export class CategorySelectComponent {
   public categories: ICategory[];
+  public selectedCategory: string;
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<CategorySelectComponent>
@@ -20,6 +21,10 @@ export class CategorySelectComponent {
   public apply(event: MouseEvent): void {
     this.bottomSheetRef.dismiss();
     event.preventDefault();
+  }
+
+  public onCategorySelected(category: ICategory): void {
+    this.selectedCategory = category.name;
   }
 
   public dismiss(event: MouseEvent): void {
