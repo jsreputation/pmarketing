@@ -3,12 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run config && ng serve --host 0.0.0.0",
+    "build": "npm run config && ng build",
+    "build:oracle-pay:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "config": "ts-node --project tsconfig.node.json set-env.ts",
+    "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && stylelint \"src/**/*.*css\"",
+    "lint": "ng lint && stylelint src/**/*.*css",
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
-    "e2e": "ng e2e"
+    "styleLint": "stylelint src/**/*.*css",
+    "e2e~": "ng e2e"
   },
   "private": true,
   "dependencies": {
