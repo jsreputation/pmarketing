@@ -1,12 +1,17 @@
-<div class="header">
-  <h1>Pick a category</h1>
-  <button class="icon" (click)="dismiss($event)">
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="main-container">
+  <div class="popup-header">
+    <h1>Pick a category</h1>
+    <button class="icon" (click)="dismiss($event)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-card class="mat-elevation-z2">
+    <div *ngFor="let category of categories">
+      <label [ngClass] = "{'label-selected': selectedCategory === category.name}" (click)="onCategorySelected(category)">
+        {{category.name}}
+        <mat-icon *ngIf="selectedCategory === category.name">done</mat-icon>
+      </label>
+    </div>
+  </mat-card>
+  <button mat-flat-button color="primary" (click)="apply($event)">Apply</button>
 </div>
-<mat-card class="mat-elevation-z2">
-  <label *ngFor="let category of categories" class="choice">
-      {{category.name}}<input type="checkbox">
-  </label>
-</mat-card>
-<button mat-flat-button color="primary" (click)="apply($event)">Apply</button>
