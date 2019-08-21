@@ -9,38 +9,38 @@
         <perx-core-select 
             *ngIf="question.type === SurveyQuestionType.multipleChoice"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"
+            (updateAnswers)="updateAnswer($event)"
         ></perx-core-select>
         <perx-core-rating 
             *ngIf="question.type === SurveyQuestionType.rating"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"    
+            (updateAnswers)="updateAnswer($event)"    
         ></perx-core-rating>
         <perx-core-picture-select 
             *ngIf="question.type === SurveyQuestionType.pictureChoice"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"   
+            (updateAnswers)="updateAnswer($event)"   
         ></perx-core-picture-select>
         <perx-core-long-text 
             *ngIf="question.type === SurveyQuestionType.longText"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"   
+            (updateAnswers)="updateAnswer($event)"   
         ></perx-core-long-text>
         <perx-core-group 
             *ngIf="question.type === SurveyQuestionType.questionGroup"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"   
+            (updateAnswers)="updateAnswer($event)"   
             (updatePoint)="updatePoint($event)"   
         ></perx-core-group>
         <perx-core-date 
             *ngIf="question.type === SurveyQuestionType.date"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"    
+            (updateAnswers)="updateAnswer($event)"    
         ></perx-core-date>
         <perx-core-phone 
             *ngIf="question.type === SurveyQuestionType.phone"
             [payload]="question.payload"
-            (updateAnswer)="updateAnswer($event)"   
+            (updateAnswers)="updateAnswer($event)"   
         ></perx-core-phone>
     </div>
 </div>

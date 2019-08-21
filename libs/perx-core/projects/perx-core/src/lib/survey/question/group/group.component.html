@@ -1,1 +1,7 @@
-<p>group works!</p>
+<div *ngFor="let question of payload.questions">
+    <question 
+        [question]="question"
+        (updateAnswers)="updateAnswer($event)"
+        (updatePoints)="updatePoint($event)"
+    ></question>
+</div>

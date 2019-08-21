@@ -1,5 +1,5 @@
 <div class="survey-container">
-    <div *ngFor="let question of data.question; let i = index">
+    <div *ngFor="let question of data.questions">
         <question 
             [question]="question"
             (updateAnswers)="updateAnswers($event)"

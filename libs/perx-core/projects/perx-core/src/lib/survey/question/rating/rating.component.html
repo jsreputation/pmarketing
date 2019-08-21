@@ -1,1 +1,13 @@
-<p>rating works!</p>
+<div class="rating" fxLayout>
+    <div *ngFor="let rating of range(payload.scale); index as i" fxFlex fxLayout="column" fxLayoutAlign="start center">
+      <button
+        mat-icon-button
+        type="button"
+        (click)="onSelect(i)">
+        {{payload.shape}}
+      </button>
+    </div>
+    <div class="left-label">{{payload['left_label']}}</div>
+    <div class="right-label">{{payload['right_label']}}</div>
+  </div>
+  

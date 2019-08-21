@@ -1,36 +1,31 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IQuestion, SurveyQuestionType } from '../models/survey.model';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { IQuestion, SurveyQuestionType, IAnswer, IPoints } from '../models/survey.model';
 
 @Component({
   selector: 'perx-core-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
 
   @Input()
   public question: IQuestion;
 
   @Output()
-  public updateAnswers: EventEmitter<string | number> = new EventEmitter<string | number>();
+  public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   @Output()
-  public updatePoints: EventEmitter<number> = new EventEmitter<number>();
+  public updatePoints: EventEmitter<IPoints> = new EventEmitter<IPoints>();
 
-  constructor() { }
-
-  public ngOnInit(): void {
-  }
-
-  public updateAnswer(answer: string | number): void {
-    this.updateAnswers.emit(answer);
+  public updateAnswer(answer: string | number | boolean): void {
+    this.updateAnswers.emit({ question_id: this.question.id, content: answer });
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
       const point = this.question.required ? (answer ? 1 : 0) : 1;
-      this.updatePoints.emit(point);
+      this.updatePoints.emit({ question_id: this.question.id, point });
     }
   }
 
   public updatePoint(point: number): void {
-    this.updatePoints.emit(point);
+    this.updatePoints.emit({ question_id: this.question.id, point });
   }
 }

@@ -22,13 +22,13 @@ export class PictureSelectComponent {
   public payload: IPayloadPictureSelect;
 
   @Output()
-  public updateAnswer: EventEmitter<number> = new EventEmitter<number>();
+  public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
 
   public selectedChoice: number;
 
-  public select(index: number): void {
+  public onSelect(index: number): void {
     this.selectedChoice = index;
-    this.updateAnswer.emit(index);
+    this.updateAnswers.emit(index);
   }
 
   public isSelected(index: number): boolean {

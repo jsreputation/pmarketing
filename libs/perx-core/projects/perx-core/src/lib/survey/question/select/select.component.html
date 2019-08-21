@@ -3,7 +3,7 @@
         <div 
             class="choice-value"
             [ngClass]="isSelected(i) ? 'selected' : ''"
-            (click)="select(i)">
+            (click)="onSelect(i)">
             {{choice}}
         </div>
     </div>

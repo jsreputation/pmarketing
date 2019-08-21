@@ -17,9 +17,9 @@ export class LongTextComponent {
   public payload: IPayloadLongText;
 
   @Output()
-  public updateAnswer: EventEmitter<string> = new EventEmitter<string>();
+  public updateAnswers: EventEmitter<string> = new EventEmitter<string>();
 
   public updateInput(value: string): void {
-    this.updateAnswer.emit(value);
+    this.updateAnswers.emit(value);
   }
 }

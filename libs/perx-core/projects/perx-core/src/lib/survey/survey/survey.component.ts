@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IAnswer, ISurvey, IPoints, ITracker } from '../models/survey.model';
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit {
+export class SurveyComponent {
   @Input()
   public data: ISurvey;
 
@@ -22,12 +22,6 @@ export class SurveyComponent implements OnInit {
 
   public answersTracker: ITracker = {};
 
-  constructor() { }
-
-  public ngOnInit(): void {
-
-  }
-
   public completeSurvey(): void {
     this.surveyDone.emit();
   }
@@ -36,8 +30,8 @@ export class SurveyComponent implements OnInit {
     this.answersTracker[`answer.question_id`] = answer.content;
   }
 
-  public updatePoints(points: IPoints): void {
-    this.pointsTracker[`points.question_id`] = points.point;
+  public updatePoints(point: IPoints): void {
+    this.pointsTracker[`point.question_id`] = point.point;
     this.updateParent();
   }
 
