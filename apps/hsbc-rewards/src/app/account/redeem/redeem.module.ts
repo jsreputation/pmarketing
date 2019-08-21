@@ -9,6 +9,9 @@ import { RedeemRoutingModule } from './redeem-routing.module';
   imports: [
     CommonModule,
     RedeemRoutingModule
+  ],
+  providers: [
+    DynamicCreateService
   ]
 })
 export class RedeemModule { }
