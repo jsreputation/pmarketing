@@ -1,5 +1,9 @@
 <div class="survey-container">
-    <div *ngFor="let question of data.question">
-        <question [question]="question"></question>
+    <div *ngFor="let question of data.question; let i = index">
+        <question 
+            [question]="question"
+            (updateAnswers)="updateAnswers($event)"
+            (updatePoints)="updatePoints($event)"
+        ></question>
     </div>
 </div>

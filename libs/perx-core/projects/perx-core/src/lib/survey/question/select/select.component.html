@@ -1,9 +1,10 @@
 <div class="choice-container">
-    <div *ngFor="let choice of payload.choices; let i = index">
+    <div class="choice-content" *ngFor="let choice of payload.choices; let i = index">
         <div 
             class="choice-value"
-            [ngClass]="isSelected(index) ? 'selected' : ''"
-            (click)="select(index)"
-        >{{choice}}</div>
+            [ngClass]="isSelected(i) ? 'selected' : ''"
+            (click)="select(i)">
+            {{choice}}
+        </div>
     </div>
 </div>

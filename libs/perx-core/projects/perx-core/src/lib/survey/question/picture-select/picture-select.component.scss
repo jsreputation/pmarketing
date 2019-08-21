@@ -1,0 +1,55 @@
+.choice-container {
+  display: flex;
+
+  .choice-content {
+    display: block;
+    margin-right: 1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      border-radius: 5px;
+
+      &-wrap {
+        width: 10.8rem;
+        height: 12.7rem;
+        background: $simple-light-gray;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::after {
+          content: "";
+          opacity: 0;
+          transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+        }
+      }
+    }
+
+    .selected {
+      border: 1px solid $dark-color;
+      position: relative;
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+
+      &::after {
+        content: "";
+        opacity: 1;
+        display: block;
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        height: 4.2rem;
+        width: 4.2rem;
+        background: url("/assets/images/preview/triangle.png") no-repeat;
+      }
+    }
+  }
+}

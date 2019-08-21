@@ -1,1 +1,10 @@
-<p>picture-select works!</p>
+<div class="choice-container">
+    <div class="choice-content" *ngFor="let choice of payload.choices; let i = index">
+        <div 
+            class="choice-value"
+            [ngClass]="isSelected(i) ? 'selected' : ''"
+            (click)="select(i)">
+            <img class="image" [src]="choice?.img_url" [alt]="choice?.text">
+        </div>
+    </div>
+</div>

@@ -1,5 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { SurveyQuestionType } from '../../models/survey.model';
+
+interface IPayloadSelect {
+  type: SurveyQuestionType;
+  choices: string[];
+}
 
 @Component({
   selector: 'perx-core-select',
@@ -7,25 +12,19 @@ import { SurveyQuestionType } from '../../models/survey.model';
   styleUrls: ['./select.component.scss']
 })
 
-interface IPayloadSelect {
-  type: SurveyQuestionType;
-  choices: string[];
-}
-
-export class SelectComponent implements OnInit {
+export class SelectComponent {
 
   @Input()
   public payload: IPayloadSelect;
 
+  @Output()
+  public updateAnswer: EventEmitter<number> = new EventEmitter<number>();
+
   public selectedChoice: number;
-
-  constructor() { }
-
-  public ngOnInit(): void {
-  }
 
   public select(index: number): void {
     this.selectedChoice = index;
+    this.updateAnswer.emit(index);
   }
 
   public isSelected(index: number): boolean {

@@ -1,7 +1,15 @@
 export interface IAnswer {
-    response_id: string;
     question_id: string;
-    content: number | string[];
+    content: number | string | boolean;
+}
+
+export interface IPoints {
+    question_id: string;
+    point: number;
+}
+
+export interface ITracker {
+    [key: string]: any;
 }
 
 export interface IQuestion {
@@ -10,6 +18,7 @@ export interface IQuestion {
     description?: string;
     required: boolean;
     payload: IPayload;
+    answer?: string | number | boolean;
 }
 
 export interface ISurvey {
