@@ -30,7 +30,7 @@
             *ngIf="question.payload.type === surveyQuestionType.questionGroup"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
-            (updatePoint)="updatePoint($event)"   
+            (updatePoints)="updatePoint($event)"   
         ></perx-core-group>
         <perx-core-date 
             *ngIf="question.payload.type === surveyQuestionType.date"

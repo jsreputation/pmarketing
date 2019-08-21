@@ -29,14 +29,14 @@ export class GroupComponent {
   }
 
   public updatePoint(point: IPoints): void {
-    this.pointsTracker[`points.question_id`] = point.point;
+    this.pointsTracker[point.question_id] = point.point;
     const currentPoint = this.calculatePoints();
     this.updatePoints.emit(currentPoint);
   }
 
   public calculatePoints(): number {
     const pointsTrackerValues = Object.values(this.pointsTracker);
-    const subQuestionLength = pointsTrackerValues.length;
+    const subQuestionLength = this.payload.questions.length;
     const totalPoint = pointsTrackerValues.reduce((previous, value) => {
       return previous + value;
     }, 0);

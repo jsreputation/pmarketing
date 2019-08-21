@@ -37,11 +37,11 @@ export class SurveyComponent implements OnInit {
   }
 
   public updateAnswers(answer: IAnswer): void {
-    this.answersTracker[`answer.question_id`] = answer.content;
+    this.answersTracker[answer.question_id] = answer.content;
   }
 
   public updatePoints(point: IPoints): void {
-    this.pointsTracker[`point.question_id`] = point.point;
+    this.pointsTracker[point.question_id] = point.point;
     this.updateParent();
   }
 
@@ -50,6 +50,11 @@ export class SurveyComponent implements OnInit {
     const totalQuestion = this.data.questions.length;
     this.totalLength.emit(totalQuestion);
     this.currentPointer.emit(currentPoint);
+    console.log('====================');
+    console.log(this.pointsTracker);
+    console.log('totalQuestion: ' + totalQuestion);
+    console.log('currentPoint: ' + currentPoint);
+    console.log('====================');
     if (currentPoint >= totalQuestion) {
       const answers = Object.entries(this.answersTracker).map(([id, answer]) => {
         return {
@@ -58,6 +63,7 @@ export class SurveyComponent implements OnInit {
         };
       });
       this.surveyDone.emit(answers);
+      console.log(answers);
     }
   }
   public calculatePoints(): number {
