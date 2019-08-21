@@ -42,7 +42,37 @@ describe('NewShakePageComponent', () => {
       providers: [
         {
           provide: ShakeTreeService, useValue: {
-            getData: () => of([]),
+            getData: () => of({
+              gameNumberGift: [{
+                value: '3',
+                viewValue: '3 gifts'
+              }],
+              gamesTree: [{
+                id: 1,
+                type: 'simple-tree',
+                active: 'false',
+                img: 'assets/images/tree/simple-tree.png',
+                fullImg: 'assets/images/tree/full_tree_1.png',
+                title: 'tree'
+              }],
+              giftBox: [{
+                id: 1,
+                type: 'state1',
+                title: 'icon',
+                img: 'assets/images/gifts/state1.png',
+                format: '.png',
+                active: 'false'
+              }],
+              background: [ {
+                id: 1,
+                type: 'background1',
+                title: 'icon',
+                img: 'assets/images/background/background1.png',
+                fullImg: 'assets/images/background/full_bg_1.jpg',
+                format: '.png',
+                active: 'false'
+              }]
+            }),
           }
         },
         {
