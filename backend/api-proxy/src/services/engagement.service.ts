@@ -10,7 +10,7 @@ import { IEngagement } from './engagement.model';
 import { IncomingHttpHeaders } from 'http2';
 
 export abstract class EngagementService<T extends IEngagement> implements IEngagementService {
-    private baseUrl: string = 'https://api.whistler.perxtech.org';
+    private baseUrl: string = process.env.BASE_URL ? process.env.BASE_URL : 'https://api.whistler.perxtech.org';
     protected service: string;
 
     constructor(protected http: HttpService) { }
