@@ -1,28 +1,34 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService } from '@perx/core';
-import { LoyaltySummaryComponent } from '@perx/core';
-import { ITabConfig } from '@perx/core/dist/perx-core/lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+import { LoyaltySummaryComponent, ITabConfig } from '@perx/core';
+import { switchMap } from 'rxjs/operators';
 
 const mockTags: ITabConfig[] = [
   {
-    filter: null,
+    filterKey: null,
+    filterValue: null,
     tabName: 'All Rewards',
-    tabValue: null
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: 'Lifestyle',
+    filterValue: null,
     tabName: 'Lifestyle',
-    tabValue: ''
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: null,
     tabName: 'Travel',
-    tabValue: ''
+    filterValue: '',
+    rewardsList: null
   }, {
-    filter: null,
+    filterKey: 'Shopping',
     tabName: 'Shopping',
-    tabValue: ''
-  }];
+    filterValue: '',
+    rewardsList: null
+  }
+
+];
 
 @Component({
   selector: 'app-home',
@@ -30,8 +36,9 @@ const mockTags: ITabConfig[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: ITabConfig[];
-  public rewards: Observable<IReward[]>;
+  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public staticTab: ITabConfig[];
+  public rewardsCollection: Observable<IReward[]>;
 
   @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
 
@@ -44,34 +51,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
+    this.getRewardsCollection();
     this.getRewards();
-    this.getTags();
   }
 
   public ngAfterViewInit(): void {
     // @ts-ignore to be verified
     this.loyaltySummary.loyalty$ = new BehaviorSubject({
-      pointsBalance: '100,000', expiringPoints: [{ expireDate: new Date('Jul 17 2017') }], points: 1000, expireDate: new Date('Jul 17 2017')
+      pointsBalance: '100,000',
+      expiringPoints: [{ expireDate: new Date('Jul 17 2017') }],
+      points: 1000,
+      expireDate: new Date('Jul 17 2017')
     });
     this.cd.detectChanges();
   }
 
-  public getRewards(): void {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
-      }
-    );
+  public getRewardsCollection(): void {
+    this.rewardsCollection = this.rewardsService.getAllRewards();
   }
 
-  public getTags(): void {
+  public getRewards(): void {
+    this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
+      return forkJoin(tags.map((tab) => {
+        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+      }));
+    })).subscribe((result) => {
+      result.forEach((rewards: IReward[], index) => {
+        this.staticTab[index].rewardsList = of(rewards);
+        this.tabs.next(this.staticTab);
+      });
+    });
+  }
+
+  public getTags(): Observable<ITabConfig[]> {
     this.rewardsService.getTags();
-    this.tags = mockTags;
+    this.staticTab = mockTags;
+    return of(mockTags);
   }
 
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
+
 }
