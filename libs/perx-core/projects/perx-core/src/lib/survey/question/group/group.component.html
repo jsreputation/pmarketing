@@ -1,7 +1,7 @@
 <div *ngFor="let question of payload.questions">
-    <question 
+    <perx-core-question 
         [question]="question"
         (updateAnswers)="updateAnswer($event)"
         (updatePoints)="updatePoint($event)"
-    ></question>
+    ></perx-core-question>
 </div>

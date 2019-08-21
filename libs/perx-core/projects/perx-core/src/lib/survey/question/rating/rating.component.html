@@ -1,5 +1,5 @@
 <div class="rating" fxLayout>
-    <div *ngFor="let rating of range(payload.scale); index as i" fxFlex fxLayout="column" fxLayoutAlign="start center">
+    <div *ngFor="let item of [].constructor(payload.scale); let i = index" fxFlex fxLayout="column" fxLayoutAlign="start center">
       <button
         mat-icon-button
         type="button"

@@ -7,38 +7,38 @@
     </div>
     <div class="content">
         <perx-core-select 
-            *ngIf="question.type === SurveyQuestionType.multipleChoice"
+            *ngIf="question.payload.type === surveyQuestionType.multipleChoice"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"
         ></perx-core-select>
         <perx-core-rating 
-            *ngIf="question.type === SurveyQuestionType.rating"
+            *ngIf="question.payload.type === surveyQuestionType.rating"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"    
         ></perx-core-rating>
         <perx-core-picture-select 
-            *ngIf="question.type === SurveyQuestionType.pictureChoice"
+            *ngIf="question.payload.type === surveyQuestionType.pictureChoice"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
         ></perx-core-picture-select>
         <perx-core-long-text 
-            *ngIf="question.type === SurveyQuestionType.longText"
+            *ngIf="question.payload.type === surveyQuestionType.longText"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
         ></perx-core-long-text>
         <perx-core-group 
-            *ngIf="question.type === SurveyQuestionType.questionGroup"
+            *ngIf="question.payload.type === surveyQuestionType.questionGroup"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
             (updatePoint)="updatePoint($event)"   
         ></perx-core-group>
         <perx-core-date 
-            *ngIf="question.type === SurveyQuestionType.date"
+            *ngIf="question.payload.type === surveyQuestionType.date"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"    
         ></perx-core-date>
         <perx-core-phone 
-            *ngIf="question.type === SurveyQuestionType.phone"
+            *ngIf="question.payload.type === surveyQuestionType.phone"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
         ></perx-core-phone>

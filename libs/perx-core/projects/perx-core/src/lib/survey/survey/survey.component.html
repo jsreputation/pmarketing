@@ -1,9 +1,9 @@
 <div class="survey-container">
     <div *ngFor="let question of data.questions">
-        <question 
+        <perx-core-question 
             [question]="question"
             (updateAnswers)="updateAnswers($event)"
             (updatePoints)="updatePoints($event)"
-        ></question>
+        ></perx-core-question>
     </div>
 </div>

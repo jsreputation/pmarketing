@@ -17,6 +17,8 @@ export class QuestionComponent {
   @Output()
   public updatePoints: EventEmitter<IPoints> = new EventEmitter<IPoints>();
 
+  public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
+
   public updateAnswer(answer: string | number | boolean): void {
     this.updateAnswers.emit({ question_id: this.question.id, content: answer });
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {

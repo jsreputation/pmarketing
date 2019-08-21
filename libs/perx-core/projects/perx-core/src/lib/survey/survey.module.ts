@@ -1,3 +1,4 @@
+import { MatFormFieldModule } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,15 +15,12 @@ import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
 
 const components = [
-];
-const directives = [
+  SurveyComponent
 ];
 
 @NgModule({
   declarations: [
     ...components,
-    ...directives,
-    SurveyComponent,
     QuestionComponent,
     RatingComponent,
     PictureSelectComponent,
@@ -35,10 +33,10 @@ const directives = [
   imports: [
     CommonModule,
     FormsModule,
+    MatFormFieldModule
   ],
   exports: [
-    ...components,
-    ...directives
+    ...components
   ]
 })
 export class SurveyModule {

@@ -124,3 +124,9 @@ export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
 export { sortByDistance } from  './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
+
+/**
+ * Survey
+ */
+export { SurveyModule } from './lib/survey/survey.module';
+export { ISurvey } from './lib/survey/models/survey.model';
