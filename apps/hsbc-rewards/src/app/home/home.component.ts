@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {Observable, of, BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService} from '@perx/core';
+import {IReward, RewardsService, LoyaltyService, ProfileService, ILoyalty} from '@perx/core';
 import {LoyaltySummaryComponent, ITabConfig} from '@perx/core';
 
 const mockTags: ITabConfig[] = [
@@ -32,16 +32,16 @@ const mockTags: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
   public tabs: Observable<ITabConfig[]>;
   public rewards: Observable<IReward[]>;
-
+  public loyaltyId: number;
+  public loyalty$: Observable<ILoyalty>;
   @ViewChild('loyaltySummary', {static: false}) public loyaltySummary: LoyaltySummaryComponent;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private cd: ChangeDetectorRef,
     private router: Router
   ) {
   }
@@ -49,17 +49,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.getRewards();
     this.getTags();
-  }
-
-  public ngAfterViewInit(): void {
-    // @ts-ignore to be verified
-    this.loyaltySummary.loyalty$ = new BehaviorSubject({
-      pointsBalance: '100,000',
-      expiringPoints: [{expireDate: new Date('Jul 17 2017')}],
-      points: 1000,
-      expireDate: new Date('Jul 17 2017')
-    });
-    this.cd.detectChanges();
+    this.loyalty$ = this.loyaltyService.getLoyalty(100);
+    this.loyaltyId=100
   }
 
   public getRewards(): void {
