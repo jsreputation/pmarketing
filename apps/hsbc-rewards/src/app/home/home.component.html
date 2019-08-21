@@ -1,14 +1,14 @@
 <div class="home-body">
   <div class="loyalty-summer">
-    <perx-core-loyalty-summary #loyaltySummary></perx-core-loyalty-summary>
+    <perx-core-loyalty-summary  [loyalty]="loyalty$" ></perx-core-loyalty-summary>
   </div>
   <div class="reward-collection">
     <div class="reward-title">
       Featured Rewards
     </div>
-    <perx-core-rewards-collection [rewardsList]="rewards" (tapped)="openRewardDetails($event)"></perx-core-rewards-collection>
+    <perx-core-rewards-collection [rewardsList]="rewardsCollection" (tapped)="openRewardDetails($event)"></perx-core-rewards-collection>
   </div>
-  <perx-core-rewards-list-tabbed [rewards]="rewards" [tabs$]="tabs" (tapped)="openRewardDetails($event)"></perx-core-rewards-list-tabbed>
+  <perx-core-rewards-list-tabbed [tabs$]="tabs" (tapped)="openRewardDetails($event)"></perx-core-rewards-list-tabbed>
     <app-navigate-toolbar></app-navigate-toolbar>
 
 </div>
