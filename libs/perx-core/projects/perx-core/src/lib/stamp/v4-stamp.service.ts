@@ -17,8 +17,9 @@ import {
   StampCardState,
   StampState,
   IReward,
-  IVoucher
 } from './models/stamp.model';
+
+import { IVoucher } from '../vouchers/models/voucher.model';
 
 import { VouchersService } from '../vouchers/vouchers.service';
 import { StampService } from './stamp.service';
