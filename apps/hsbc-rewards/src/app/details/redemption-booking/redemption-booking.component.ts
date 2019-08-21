@@ -38,14 +38,6 @@ export class RedemptionBookingComponent implements OnInit {
     })).subscribe((result) => {
       [this.reward, this.prices] = result;
     });
-    this.route.params.pipe(switchMap((param) => {
-      this.rewardId = param.id;
-      return forkJoin([this.rewardsService.getReward(this.rewardId),
-      this.rewardsService.getRewardPricesOptions(this.rewardId)
-      ]);
-    })).subscribe((val) => {
-      this.reward = val[0];
-    });
     this.locationData = this.locationService.getAll();
     this.merchantService.getMerchants().subscribe((res) => {
       this.merchants = res;
