@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DashboardCampaignPageComponent } from 'src/app/dashboard/containers/dashboard-campaign-page/dashboard-campaign-page.component';
 import { DashboardOverviewPageComponent } from 'src/app/dashboard/containers/dashboard-overview-page/dashboard-overview-page.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardPageComponent } from './containers/dashboard-page/dashboard-page.component';
@@ -20,6 +21,7 @@ import { TopFiveChartModule } from '@cl-shared/charts/top-five-chart/top-five-ch
 import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart/horizontal-bar-chart.module';
 import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/radius-circle-chart.module';
 import { LinearChartModule, ChartCardModule } from '@cl-shared';
+import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-page/dashboard-rewards-page.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { LinearChartModule, ChartCardModule } from '@cl-shared';
     DashboardOverviewPageComponent,
     DashboardGameCardComponent,
     BusinessInsightComponent,
-    TabItemViewComponent
+    TabItemViewComponent,
+    DashboardRewardsPageComponent,
+    DashboardCampaignPageComponent
   ],
   imports: [
     CommonModule,

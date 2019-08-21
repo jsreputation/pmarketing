@@ -7,12 +7,12 @@ export enum DictionaryTotal {
   activeCampaigns = 'activeCampaigns',
 }
 @Component({
-  selector: 'cl-dashboard-overview-page',
-  templateUrl: './dashboard-overview-page.component.html',
-  styleUrls: ['./dashboard-overview-page.component.scss'],
+  selector: 'cl-dashboard-campaign-page',
+  templateUrl: './dashboard-campaign-page.component.html',
+  styleUrls: ['./dashboard-campaign-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardOverviewPageComponent implements OnInit {
+export class DashboardCampaignPageComponent implements OnInit {
   // public gameCard$: Observable<DashboardGameCard[]>;
   public dashboardData: ITotal[];
   public activeTab: any = 'activeCustomers';
