@@ -3,8 +3,6 @@ import { LocationsService, RewardsService, ILocation, IReward } from '@perx/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
-import { DetailAgreementComponent } from '../detail-agreement/detail-agreement.component';
 import { MerchantService } from 'src/app/shared/service/merchant.service';
 import { forkJoin } from 'rxjs';
 
@@ -26,7 +24,6 @@ export class RedemptionBookingComponent implements OnInit {
     private rewardsService: RewardsService,
     private route: ActivatedRoute,
     private build: FormBuilder,
-    private compCreate: DynamicCreateService,
     private router: Router,
     private merchantService: MerchantService
   ) { }
@@ -55,10 +52,7 @@ export class RedemptionBookingComponent implements OnInit {
       agreement: [false, [Validators.requiredTrue]]
     });
   }
-  public openAgreement(): void {
-    const comp = this.compCreate.createComponent<DetailAgreementComponent>(DetailAgreementComponent);
-    comp.instance.closeModal.subscribe(() => this.compCreate.removeComponent(comp));
-  }
+
   public submitForm(): void {
     this.router.navigate(['detail/success']);
   }

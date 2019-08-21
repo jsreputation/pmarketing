@@ -4,7 +4,7 @@ import {EnvConfig} from '../shared/env-config';
 import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {RewardsService} from './rewards.service';
-import {IReward, ICatalog, IPrice} from './models/reward.model';
+import {IReward, ICatalog, IPrice, ICategoryTags} from './models/reward.model';
 import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
 import {VouchersService} from '../vouchers/vouchers.service';
 
@@ -46,6 +46,7 @@ interface IV4Reward {
   terms_and_conditions?: string;
   how_to_redeem?: string;
   tags?: IV4Tag[];
+  category_tags?: ICategoryTags[];
 }
 
 interface IV4Price {
@@ -153,7 +154,8 @@ export class V4RewardsService extends RewardsService {
       merchantImg,
       merchantWebsite: reward.merchant_website,
       termsAndConditions: reward.terms_and_conditions,
-      howToRedeem: reward.how_to_redeem
+      howToRedeem: reward.how_to_redeem,
+      categoryTags: reward.category_tags
     };
   }
 
@@ -192,15 +194,15 @@ export class V4RewardsService extends RewardsService {
     // todo: api not implemented yet
   }
 
-  public getAllRewards(tags?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     const pageSize = 100;
-    return this.getRewards(1, pageSize, tags).pipe(
+    return this.getRewards(1, pageSize, tags, categories).pipe(
       mergeMap(reward => {
         const streams = [
           of(reward)
         ];
         for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
-          const stream = this.getRewards(i, pageSize, tags);
+          const stream = this.getRewards(i, pageSize, tags, categories);
           streams.push(stream);
         }
         return streams;
@@ -224,7 +226,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[]): Observable<IReward[]> {
+  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
 
     let params = new HttpParams()
       .set('page', page.toString())
@@ -232,6 +234,10 @@ export class V4RewardsService extends RewardsService {
 
     if (tags) {
       params = params.set('tags', tags.join());
+    }
+
+    if (categories) {
+      params = params.set('categories', categories.join());
     }
 
     return this.http.get<IV4GetRewardsResponse>(
