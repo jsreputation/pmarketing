@@ -1,7 +1,7 @@
 <mat-tab-group [selectedIndex]="selectedIndex">
 <!--               (selectedIndexChange)="tabChanged($event)">-->
-  <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.tabName">
-    <div *ngIf="rewards; then showRewards; else ghostRewards"></div>
+  <mat-tab *ngFor="let tab of tabs$ | async; let index = index" [label]="tab.tabName">
+    <div *ngIf="tab.rewardsList || rewards; then showRewards; else ghostRewards"></div>
     <ng-template #showRewards>
     <perx-core-rewards-list
         [rewardsList]="filterRewards(tab)"

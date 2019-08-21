@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IReward, NotificationService, RewardsService } from '@perx/core';
-import { Observable, of } from 'rxjs';
-import { mock } from '../reward-mock';
+import {Component, OnInit} from '@angular/core';
+import {IReward, NotificationService, RewardsService, ITabConfig} from '@perx/core';
+import {of, Subject} from 'rxjs';
+import {mock} from '../reward-mock';
 
 @Component({
   selector: 'app-rewards-list-tabbed',
@@ -9,11 +9,8 @@ import { mock } from '../reward-mock';
   styleUrls: ['./rewards-list-tabbed.component.scss']
 })
 export class RewardsListTabbedComponent implements OnInit {
-  // public navLinks = [
-  //   { path: 'hsbc', label: 'HSBC' },
-  //   { path: 'others', label: 'others' },
-  // ];
-  public rewards: Observable<IReward[]>;
+  public tabs$: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public tabs: ITabConfig[];
 
   constructor(private rewardsService: RewardsService,
               private notificationService: NotificationService) {
@@ -21,16 +18,48 @@ export class RewardsListTabbedComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getRewards();
+    this.tabs = [{
+      filterKey: null,
+      filterValue: null,
+      tabName: 'All Rewards',
+      rewardsList: null
+    }, {
+      filterKey: null,
+      filterValue: null,
+      tabName: 'Lifestyle',
+      rewardsList: null
+    }
+    ];
   }
 
   public getRewards(): void {
     this.rewardsService.getAllRewards()
       .subscribe(
         (rewards: IReward[]) => {
-
-          this.rewards = of(rewards);
+          this.tabs[0].rewardsList = of(rewards);
+          this.tabs$.next(this.tabs);
         },
-        () => this.rewards = of(mock)
+        () => this.tabs.push({
+          filterKey: null,
+          filterValue: null,
+          tabName: 'All Rewards',
+          rewardsList: of(mock)
+        })
+      );
+
+    this.rewardsService.getAllRewards(null, ['Lifestyle'])
+      .subscribe(
+        (rewards: IReward[]) => {
+          this.tabs[1].rewardsList = of(rewards);
+          this.tabs$.next(this.tabs);
+
+        },
+        () => this.tabs.push({
+          filterKey: null,
+          filterValue: null,
+          tabName: 'Lifestyle',
+          rewardsList: of(mock)
+        })
       );
   }
 

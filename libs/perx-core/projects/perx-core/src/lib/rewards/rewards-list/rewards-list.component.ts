@@ -14,6 +14,9 @@ export class RewardsListComponent implements OnInit {
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
 
+  @Input()
+  public defaultImg: string;
+
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
