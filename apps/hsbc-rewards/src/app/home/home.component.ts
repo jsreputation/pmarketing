@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private router: Router
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.getRewards();
@@ -50,8 +50,10 @@ export class HomeComponent implements OnInit {
     this.loyalty$ = this.loyaltyService.getLoyalty(100)
       .pipe(map((loyalty: ILoyalty) => {
         loyalty.pointsBalance = 10000;
-        loyalty.expiringPoints[0].expireDate = new Date().toString();
-        loyalty.expiringPoints[0].points = 100;
+        if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
+          loyalty.expiringPoints[0].expireDate = new Date().toString();
+          loyalty.expiringPoints[0].points = 100;
+        }
         return loyalty;
       }));
   }
