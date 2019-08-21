@@ -5,7 +5,7 @@ import { IData } from '../data.model';
 
 export enum CardType {
   pie = 'pie',
-  advancedPi = 'advancedPie',
+  advancedPie = 'advancedPie',
   gridPie = 'gridPie',
   horizontalBar = 'horizontalBar',
   verticalBar = 'verticalBar',
