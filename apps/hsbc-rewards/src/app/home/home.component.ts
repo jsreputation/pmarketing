@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
 import { map } from 'rxjs/operators';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 const mockTags: ITabConfig[] = [
   {
     filterKey: null,
-    tabName: 'All Rewards',
     filterValue: null,
+    tabName: 'All Rewards',
     rewardsList: null
   }, {
-    filterKey: null,
+    filterKey: 'Lifestyle',
+    filterValue: null,
     tabName: 'Lifestyle',
-    filterValue: '',
     rewardsList: null
   }, {
     filterKey: null,
@@ -22,11 +23,13 @@ const mockTags: ITabConfig[] = [
     filterValue: '',
     rewardsList: null
   }, {
-    filterKey: null,
+    filterKey: 'Shopping',
     tabName: 'Shopping',
     filterValue: '',
     rewardsList: null
-  }];
+  }
+
+];
 
 @Component({
   selector: 'app-home',
@@ -34,9 +37,11 @@ const mockTags: ITabConfig[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public tabs: Observable<ITabConfig[]>;
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
+  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public staticTab: ITabConfig[];
+  public rewardsCollection: Observable<IReward[]>;
 
   constructor(
     private rewardsService: RewardsService,
@@ -45,6 +50,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.getRewardsCollection();
     this.getRewards();
     this.getTags();
     this.loyalty$ = this.loyaltyService.getLoyalty(100)
@@ -58,22 +64,31 @@ export class HomeComponent implements OnInit {
       }));
   }
 
-  public getRewards(): void {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
-      }
-    );
+  public getRewardsCollection(): void {
+    this.rewardsCollection = this.rewardsService.getAllRewards();
   }
 
-  public getTags(): void {
+  public getRewards(): void {
+    this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
+      return forkJoin(tags.map((tab) => {
+        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+      }));
+    })).subscribe((result) => {
+      result.forEach((rewards: IReward[], index) => {
+        this.staticTab[index].rewardsList = of(rewards);
+        this.tabs.next(this.staticTab);
+      });
+    });
+  }
+
+  public getTags(): Observable<ITabConfig[]> {
     this.rewardsService.getTags();
-    this.tabs = of(mockTags);
+    this.staticTab = mockTags;
+    return of(mockTags);
   }
 
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
+
 }
