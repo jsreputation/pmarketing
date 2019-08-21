@@ -37,6 +37,7 @@ import { locations } from './locations.mock';
 import { of } from 'rxjs';
 import { rewards } from './rewards.mock';
 import { vouchers } from './vouchers.mock';
+import { catalogs } from './catalogs.mock';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -44,7 +45,8 @@ const locationServiceStub = {
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
-  getAllRewards: () => of(rewards)
+  getAllRewards: () => of(rewards),
+  getAllCatalogs: () => of(catalogs)
 };
 
 const vouchersServiceStub = {
