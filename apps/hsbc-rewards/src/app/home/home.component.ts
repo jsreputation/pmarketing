@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, of, BehaviorSubject, Subject, forkJoin } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService } from '@perx/core';
-import { LoyaltySummaryComponent, ITabConfig } from '@perx/core';
-import { switchMap } from 'rxjs/operators';
+import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ITabConfig } from '@perx/core';
+import { map, switchMap } from 'rxjs/operators';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
 
 const mockTags: ITabConfig[] = [
   {
@@ -35,35 +35,32 @@ const mockTags: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
+  public rewards: Observable<IReward[]>;
+  public loyalty$: Observable<ILoyalty>;
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
   public rewardsCollection: Observable<IReward[]>;
 
-  @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
-
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private cd: ChangeDetectorRef,
     private router: Router
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.getRewardsCollection();
     this.getRewards();
-  }
-
-  public ngAfterViewInit(): void {
-    // @ts-ignore to be verified
-    this.loyaltySummary.loyalty$ = new BehaviorSubject({
-      pointsBalance: '100,000',
-      expiringPoints: [{ expireDate: new Date('Jul 17 2017') }],
-      points: 1000,
-      expireDate: new Date('Jul 17 2017')
-    });
-    this.cd.detectChanges();
+    this.getTags();
+    this.loyalty$ = this.loyaltyService.getLoyalty(100)
+      .pipe(map((loyalty: ILoyalty) => {
+        loyalty.pointsBalance = 10000;
+        if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
+          loyalty.expiringPoints[0].expireDate = new Date().toString();
+          loyalty.expiringPoints[0].points = 100;
+        }
+        return loyalty;
+      }));
   }
 
   public getRewardsCollection(): void {
