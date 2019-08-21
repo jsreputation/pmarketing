@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { IAnswer, ISurvey, IPoints, ITracker } from '../models/survey.model';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent {
+export class SurveyComponent implements OnInit {
   @Input()
   public data: ISurvey;
 
@@ -21,6 +22,15 @@ export class SurveyComponent {
   public pointsTracker: ITracker = {};
 
   public answersTracker: ITracker = {};
+
+  constructor(private http: HttpClient) {
+  }
+
+  public ngOnInit(): void {
+    if (!this.data) {
+      this.http.get('../mocks/survey.json').subscribe((res: ISurvey) => this.data = res);
+    }
+  }
 
   public completeSurvey(): void {
     this.surveyDone.emit();
