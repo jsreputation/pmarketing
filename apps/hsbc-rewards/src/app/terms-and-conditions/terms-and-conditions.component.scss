@@ -20,7 +20,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  box-sizing: border-box;
+  
   .back {
     position: absolute;
     left: 2rem;
