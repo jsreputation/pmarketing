@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MerchantService } from 'src/app/shared/service/merchant.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -11,6 +12,7 @@ import { MerchantService } from 'src/app/shared/service/merchant.service';
   styleUrls: ['./redemption-booking.component.scss']
 })
 export class RedemptionBookingComponent implements OnInit {
+  public rewardId: number;
   public customBackButton: string = 'assets/img/close.svg';
   public locationData: ILocation[];
   public reward: IReward;
@@ -27,13 +29,14 @@ export class RedemptionBookingComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+
     this.route.params.pipe(switchMap((param) => {
-      return this.rewardsService.getReward(param.id);
-    })).subscribe((reward) => {
-      this.reward = reward;
-    });
-    this.locationService.getFromMerchant(1).subscribe((result) => {
-      this.locationData = result;
+      this.rewardId = param.id;
+      return forkJoin([this.rewardsService.getReward(this.rewardId),
+      this.rewardsService.getRewardPricesOptions(this.rewardId)
+      ]);
+    })).subscribe((val) => {
+      this.reward = val[0];
     });
     this.merchantService.getMerchants().subscribe((res) => {
       this.merchants = res;
