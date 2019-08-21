@@ -2,7 +2,7 @@
   <div class="saved-rewards" *ngIf="vouchers">
     <h1>Saved rewards</h1>
 
-    <mat-card *ngFor="let voucher of vouchers | async | slice:0:defaultNbVouchers" (click)="voucherSelected(voucher)" matRipple>
+    <mat-card *ngFor="let voucher of (hideSeeMore ? (vouchers | async) : (vouchers | async | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
@@ -11,7 +11,7 @@
         <mat-icon>arrow_forward</mat-icon>
       </div>
     </mat-card>
-    <button *ngIf="isSeeMoreVisible()" (click)="seeMoreClicked()">See more</button>
+    <button *ngIf="!hideSeeMore" (click)="seeMoreClicked()">See more</button>
   </div>
 
   <div class="past-rewards" *ngIf="redeemedVouchers">
