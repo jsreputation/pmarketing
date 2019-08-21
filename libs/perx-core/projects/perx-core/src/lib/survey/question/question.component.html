@@ -1,28 +1,38 @@
-<perx-core-select 
-    *ngIf="question.type === SurveyQuestionType.multipleChoice"
-    [payload]="question.payload"    
-></perx-core-select>
-<perx-core-rating 
-    *ngIf="question.type === SurveyQuestionType.rating"
-    [payload]="question.payload"    
-></perx-core-rating>
-<perx-core-picture-select 
-    *ngIf="question.type === SurveyQuestionType.pictureChoice"
-    [payload]="question.payload"    
-></perx-core-picture-select>
-<perx-core-long-text 
-    *ngIf="question.type === SurveyQuestionType.longText"
-    [payload]="question.payload"    
-></perx-core-long-text>
-<perx-core-group 
-    *ngIf="question.type === SurveyQuestionType.questionGroup"
-    [payload]="question.payload"    
-></perx-core-group>
-<perx-core-date 
-    *ngIf="question.type === SurveyQuestionType.date"
-    [payload]="question.payload"    
-></perx-core-date>
-<perx-core-phone 
-    *ngIf="question.type === SurveyQuestionType.phone"
-    [payload]="question.payload"    
-></perx-core-phone>
+<div class="question-container">
+    <div class="question">
+        {{question.question}}
+    </div>
+    <div class="description">
+        {{question.description}}
+    </div>
+    <div class="content">
+        <perx-core-select 
+            *ngIf="question.type === SurveyQuestionType.multipleChoice"
+            [payload]="question.payload"    
+        ></perx-core-select>
+        <perx-core-rating 
+            *ngIf="question.type === SurveyQuestionType.rating"
+            [payload]="question.payload"    
+        ></perx-core-rating>
+        <perx-core-picture-select 
+            *ngIf="question.type === SurveyQuestionType.pictureChoice"
+            [payload]="question.payload"    
+        ></perx-core-picture-select>
+        <perx-core-long-text 
+            *ngIf="question.type === SurveyQuestionType.longText"
+            [payload]="question.payload"    
+        ></perx-core-long-text>
+        <perx-core-group 
+            *ngIf="question.type === SurveyQuestionType.questionGroup"
+            [payload]="question.payload"    
+        ></perx-core-group>
+        <perx-core-date 
+            *ngIf="question.type === SurveyQuestionType.date"
+            [payload]="question.payload"    
+        ></perx-core-date>
+        <perx-core-phone 
+            *ngIf="question.type === SurveyQuestionType.phone"
+            [payload]="question.payload"    
+        ></perx-core-phone>
+    </div>
+</div>
