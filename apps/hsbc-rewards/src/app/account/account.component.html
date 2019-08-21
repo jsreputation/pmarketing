@@ -1,26 +1,13 @@
 <div class="page">
-  <form class="personalData" [formGroup]="personalData">
-    <div class="block">
-      <div class="profile">
-        <img src="assets/img/account_img.svg">
-        <span class="acc-name">Pear</span>
-      </div>
-      <div class="form-input">
-        <label>Player Code</label>
-        <input type="password" formControlName="name">
-      </div>
-      <div class="form-input">
-        <label>Card Last 4 Digit</label>
-        <input type="password" formControlName="password">
-      </div>
-    </div>
-    <div class="block">
-      <button id="agreement" [routerLink]="['/terms-and-conditions']">Terms and Conditions</button>
-      <button id="reedem" [routerLink]="['/reedem']">How To Redeem Your Rewards</button>
-    </div>
-    <div class="block" >
-      <button (click)="logOut()" id="logout">Log Out</button>
-    </div>
-  </form>
+  <div class="block">
+    <perx-core-user-profile [profile]="profile"></perx-core-user-profile>
+  </div>
+  <div class="block">
+    <button [routerLink]="[ '/reedem' ]" id="agreement">Terms and Conditions</button>
+    <button [routerLink]="[ '/terms-and-conditions' ]">How To Redeem Your Rewards</button>
+  </div>
+  <div class="block">
+    <button (click)="logOut()" id="logout">Log Out</button>
+  </div>
   <app-navigate-toolbar></app-navigate-toolbar>
 </div>
