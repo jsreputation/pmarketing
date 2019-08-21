@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 const mockTags: ITabConfig[] = [
   {
