@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Voucher, VouchersService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
