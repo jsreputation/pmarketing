@@ -61,8 +61,8 @@ html {
 }
 
 .mat-form-field-label-wrapper {
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
   top: -1.1em;
 }
 
@@ -71,8 +71,8 @@ html {
 }
 
 .mat-form-field {
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
 }
 
 .mat-flat-button.mat-primary,
@@ -80,24 +80,27 @@ html {
 .mat-fab.mat-primary,
 .mat-mini-fab.mat-primary {
   background-color: #eb202f;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
-  border-radius: 2px;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.24), 0 0 0.2rem rgba(0, 0, 0, 0.12);
+  border-radius: 0.2rem;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  height: 4.5rem;
 }
 
 .mat-button.mat-primary,
 .mat-icon-button.mat-primary,
 .mat-stroked-button.mat-primary {
   background: #ffffff;
-  border: 1px solid #db0011;
+  border: 0.1rem solid #db0011;
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 0.2rem;
   color: #e43225;
 }
 
 .wallet-tabs .mat-tab-header {
   position: fixed;
   left: 0;
-  top: 60px;
+  top: 6rem;
   background-color: #fff;
   z-index: 111;
   width: 100%;
