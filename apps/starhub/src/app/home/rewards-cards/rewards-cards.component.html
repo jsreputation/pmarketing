@@ -1,4 +1,4 @@
-<mat-card *ngFor="let reward of rewards" matRipple (click)="selected(reward)">
+<mat-card *ngFor="let reward of rewards | async" matRipple (click)="selected(reward)">
     <img mat-card-image [src]="reward.rewardBanner">
     <mat-card-content>
         <div>

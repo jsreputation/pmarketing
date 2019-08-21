@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, GeoLocationService, sortByDistance } from '@perx/core';
-import { locations } from '../locations.mock';
-import { Observable, of } from 'rxjs';
+import { ILocation, GeoLocationService, sortByDistance, LocationsService } from '@perx/core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-locations',
@@ -12,11 +12,27 @@ import { Observable, of } from 'rxjs';
 export class LocationsComponent implements OnInit {
   public locations: Observable<ILocation[]>;
 
-  constructor(private location: Location, private currentPosition: GeoLocationService) {
+  constructor(
+    private location: Location,
+    private currentPosition: GeoLocationService,
+    private locationService: LocationsService,
+    private activeRoute: ActivatedRoute
+  ) {
   }
 
   public ngOnInit(): void {
-    this.locations = sortByDistance(this.currentPosition.positions(), of(locations), true);
+    this.activeRoute.queryParams.subscribe(
+      ((params: Params) => {
+        if (params.mid) {
+          const mid = params.mid;
+          this.locations = sortByDistance(
+            this.currentPosition.positions(),
+            this.locationService.getFromMerchant(mid),
+            true
+          );
+        }
+      })
+    );
   }
 
   public back(): void {

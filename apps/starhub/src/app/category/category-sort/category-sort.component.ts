@@ -8,6 +8,8 @@ import { MatBottomSheetRef } from '@angular/material';
 })
 export class CategorySortComponent {
   public sortingCriterias: string[] = ['Popularity', 'Latest', 'Ending Soon'];
+  public selectedCriteria: string;
+
   constructor(
     private bottomSheetRef: MatBottomSheetRef<CategorySortComponent>
   ) { }
@@ -20,6 +22,10 @@ export class CategorySortComponent {
   public dismiss(event: MouseEvent): void {
     this.bottomSheetRef.dismiss();
     event.preventDefault();
+  }
+
+  public onSortingOrderSelected(criteria: string): void {
+    this.selectedCriteria = criteria;
   }
 
 }
