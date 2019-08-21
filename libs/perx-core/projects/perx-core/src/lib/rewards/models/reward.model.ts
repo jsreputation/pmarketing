@@ -17,6 +17,7 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
+  categoryTags?: ICategoryTags[];
 }
 
 export interface ICatalog {
@@ -35,4 +36,10 @@ export interface IPrice {
   price: number;
   currencyCode: string;
   points: number;
+}
+
+export interface ICategoryTags {
+  id: number;
+  title: string;
+  parent?: any;
 }
