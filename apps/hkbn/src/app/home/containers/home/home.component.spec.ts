@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule } from '@perx/core';
+import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule, VouchersModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,6 +21,7 @@ describe('HomeComponent', () => {
         QRCodeModule,
         MatButtonModule,
         RewardsModule,
+        VouchersModule.forRoot({ env: { apiHost: '' } }),
         RouterTestingModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),

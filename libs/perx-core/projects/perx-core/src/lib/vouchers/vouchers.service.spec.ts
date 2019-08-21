@@ -245,7 +245,8 @@ describe('VouchersService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&page=2');
+    const req = httpTestingController
+    .expectOne('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&page=2&sort_by=id&order=desc');
 
     expect(req.request.method).toEqual('GET');
 

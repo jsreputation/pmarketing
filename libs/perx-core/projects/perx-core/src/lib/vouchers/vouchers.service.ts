@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
-import { map, tap, flatMap, mergeAll, scan } from 'rxjs/operators';
+import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
 import { IVoucherService } from './ivoucher.service';
 
 interface IV4VouchersResponse {
@@ -132,7 +132,7 @@ export class VouchersService implements IVoucherService {
   }
 
   public getAllFromPage(page: number): Observable<IV4Voucher[]> {
-    return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}`)
+    return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}&sort_by=id&order=desc`)
       .pipe(
         map(res => res.data)
       );
@@ -142,12 +142,14 @@ export class VouchersService implements IVoucherService {
     return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  public get(id: number): Observable<IVoucher> {
-    const found = this.vouchers.find(v => {
-      return `${v.id}` === `${id}`;
-    });
-    if (found) {
-      return of(found);
+  public get(id: number, useCache: boolean = true): Observable<IVoucher> {
+    if (useCache) {
+      const found = this.vouchers.find(v => {
+        return `${v.id}` === `${id}`;
+      });
+      if (found) {
+        return of(found);
+      }
     }
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
@@ -169,5 +171,73 @@ export class VouchersService implements IVoucherService {
   // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
   public reset(vouchers: IVoucher[] = []): void {
     this.vouchers = vouchers;
+  }
+
+  public newVouchersCreatedForReward(rewardId: number, intervalPeriod: number = 1000): Observable<IVoucher[]> {
+    let current = 0;
+    let firstPageVouchers: number[] = [];
+    let newIssued: IVoucher[] = [];
+    return interval(intervalPeriod).pipe(
+      map(val => {
+        current = val;
+        return this.getAllFromPage(1);
+      }),
+      mergeAll(1),
+      map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => VouchersService.voucherToVoucher(v4Voucher))),
+      map((vouchers: IVoucher[]) => vouchers.filter(v => v.rewardId === rewardId && v.state === 'issued')),
+      filter((vouchers: IVoucher[]) => {
+        if (current === 0) {
+          firstPageVouchers = [
+            ...vouchers.map(v => v.id)
+          ];
+          return false;
+        }
+
+        if (vouchers && vouchers.length <= 0) {
+          firstPageVouchers = [];
+          return false;
+        }
+
+        newIssued = vouchers.filter(v => !firstPageVouchers.includes(v.id));
+        if (newIssued && newIssued.length <= 0) {
+          return false;
+        }
+
+        firstPageVouchers = [
+          ...vouchers.map(v => v.id)
+        ];
+
+        return true;
+      }),
+      map((_: IVoucher[]) => {
+        return newIssued;
+      })
+    );
+  }
+
+  public stateChangedForVoucher(voucherId: number, intervalPeriod: number = 1000): Observable<IVoucher> {
+    let current = 0;
+    let previousState: string;
+    return interval(intervalPeriod).pipe(
+      map(val => {
+        current = val;
+        return this.get(voucherId, false);
+      }),
+      mergeAll(1),
+      filter((voucher: IVoucher) => {
+        if (current === 0) {
+          previousState = voucher.state;
+          return false;
+        }
+
+        if (previousState === voucher.state) {
+          return false;
+        }
+
+        previousState = voucher.state;
+
+        return true;
+      })
+    );
   }
 }

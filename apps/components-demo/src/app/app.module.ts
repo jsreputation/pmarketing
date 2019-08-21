@@ -10,6 +10,8 @@ import {
   CognitoModule,
   OauthModule,
   UtilsModule as PerxCoreUtilsModule,
+  RewardsModule as PerxRewardsModule,
+  VouchersModule as PerxVouchersModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +35,8 @@ import { LocationModule } from './location/location.module';
     AuthenticationModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
+    PerxVouchersModule.forRoot({ env: environment }),
+    PerxRewardsModule.forRoot({ env: environment }),
     FormsModule,
     RewardsModule,
     UtilsModule,

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { LoyaltyModule, ProfileModule, RewardsModule } from '@perx/core';
+import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
@@ -18,6 +18,7 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
     LoyaltyModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     RewardsModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment }),
     SharedModule,
     NavigateToolbarModule
   ]

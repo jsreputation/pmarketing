@@ -3,21 +3,30 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { VouchersService } from '@perx/core';
+import { of } from 'rxjs';
+import { vouchers } from 'src/app/vouchers.mock';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
+  const vouchersServiceStub = {
+    getAll: () => of(vouchers)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VouchersComponent ],
+      declarations: [VouchersComponent],
       imports: [
         MatCardModule,
         MatIconModule,
         RouterTestingModule
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

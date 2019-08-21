@@ -3,12 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule } from '@perx/core';
+import { RewardsModule, LocationModule, VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DetailAgreementModule } from '../detail-agreement/detail-agreement.module';
 
 describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
@@ -22,12 +21,12 @@ describe('RedemptionBookingComponent', () => {
         MatRadioModule,
         MatCheckboxModule,
         RewardsModule.forRoot({ env: environment }),
+        VouchersModule.forRoot({ env: environment }),
         LocationModule.forRoot({env: environment}),
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule,
-        DetailAgreementModule
+        FormsModule
       ]
     })
       .compileComponents();
