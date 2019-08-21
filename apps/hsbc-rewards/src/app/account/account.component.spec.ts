@@ -89,13 +89,6 @@ describe('AccountComponent', () => {
     expect(logOut).toHaveBeenCalled();
   }));
 
-  it('should call displayAgreement', fakeAsync(() => {
-    const createSpy = spyOn(component, 'displayAgreement');
-    const elem = debugElement.query(By.css('#agreement'));
-    elem.triggerEventHandler('click', {});
-    expect(createSpy).toHaveBeenCalled();
-  }));
-
   it('should call auth service', () => {
     const logout = spyOn(authService, 'logout');
     component.logOut();
