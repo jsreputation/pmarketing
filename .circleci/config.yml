@@ -114,11 +114,11 @@ jobs:
           name: Build docker image
           command: |
             cd ~/project/backend/api-proxy &&
-            docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG}
+            docker build . -t engagements-proxy:${CIRCLE_TAG}
       - run:
           name: Push docker
           command: |
-            docker push ${DOCKER_REPO}:${CIRCLE_TAG}
+            docker push engagements-proxy:${CIRCLE_TAG}
   build_docker_image:
     working_directory: ~/project
     executor: ubuntu
