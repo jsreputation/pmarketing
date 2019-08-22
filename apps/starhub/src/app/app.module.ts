@@ -46,7 +46,8 @@ const locationServiceStub = {
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
-  getAllCatalogs: () => of(catalogs)
+  getAllCatalogs: () => of(catalogs),
+  getCatalog: (id: number) => of(catalogs[id])
 };
 
 const vouchersServiceStub = {

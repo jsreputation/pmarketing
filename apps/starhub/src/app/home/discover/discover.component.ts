@@ -19,7 +19,7 @@ export class DiscoverComponent {
   }
 
   public catalogSelected(catalog: ICatalog): void {
-    this.router.navigate(['/category'], { queryParams: { catalog: catalog.name } });
+    this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
   // @ts-ignore
