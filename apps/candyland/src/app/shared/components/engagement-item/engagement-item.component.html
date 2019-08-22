@@ -1,10 +1,10 @@
 <div class="engagement-item">
   <div class="engagement-item-img-container">
-    <img class="engagement-item-img" [src]="data?.attributes.image_url">
+    <img class="engagement-item-img" [src]="data?.image_url">
   </div>
   <div class="engagement-item-info">
-    <p class="engagement-item-type">{{data?.type}}</p>
-    <p class="engagement-item-name">{{data?.attributes.title}}</p>
-    <p class="engagement-item-date">{{data?.attributes.created_at | date: 'dd MMM yyyy' }}</p>
+    <p class="engagement-item-type">{{data?.attributes_type}}</p>
+    <p class="engagement-item-name">{{data?.title}}</p>
+    <p class="engagement-item-date">{{data?.created_at | date: 'dd MMM yyyy' }}</p>
   </div>
 </div>

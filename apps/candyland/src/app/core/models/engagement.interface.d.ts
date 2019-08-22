@@ -1,4 +1,4 @@
-declare interface Engagement {
+declare interface IEngagement {
   id: number;
   type: string;
   links: {
