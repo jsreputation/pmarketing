@@ -5,10 +5,9 @@ import {
   NotificationService,
   RewardsService,
   IReward,
-  LoyaltyService,
   VouchersService
 } from '@perx/core';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 import { map, flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
 
@@ -33,7 +32,6 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private loyaltyService: LoyaltyService,
     private vouchersService: VouchersService
   ) {}
 
@@ -56,10 +54,10 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    this.loyaltyService.exchangePoints(this.payload.id, this.payload.rewardId)
+    this.rewardsService.getRewardPricesOptions(this.payload.rewardId)
       .pipe(
         map(res => res[0]),
-        flatMap((res: IVoucher) => this.vouchersService.redeemVoucher(res.id))
+        flatMap((res: IPrice) => this.vouchersService.redeemVoucher(res.id))
       )
       .subscribe(
         () => this.notificationService.addSnack('Transaction completed'),
