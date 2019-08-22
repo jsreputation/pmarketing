@@ -1,7 +1,8 @@
 version: '3.7'
 services:
   web:
-    build: .
-    image: engagements-proxy
+    build: 
+      context: .
+    image: perxtech/engagements-proxy:latest
     ports:
     - "8000:8000"
