@@ -3,6 +3,6 @@ services:
   web:
     build: 
       context: .
-    image: perxtech/engagements-proxy:engagements-proxy-0.0.7
+    image: perxtech/engagements-proxy:latest
     ports:
     - "8000:8000"
