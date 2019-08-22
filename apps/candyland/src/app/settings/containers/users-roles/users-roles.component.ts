@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { map } from 'rxjs/operators';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services/settings.service';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-users-roles',
@@ -11,23 +10,23 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource: CustomDataSource;
   public hasData = true;
   public config: any;
-
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private settingsService: SettingsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
+    this.dataSource = new CustomDataSource(this.settingsService);
+    this.getAllCredential();
   }
 
   public ngAfterViewInit(): void {
     this.settingsService.getRolesOptions()
       .subscribe( config => this.config = config);
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+    // this.getData();
+    // this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    // this.dataSource.paginator = this.paginator;
   }
 
   public openDialogInviteNewUsers(): void {
@@ -44,22 +43,29 @@ export class UsersRolesComponent  implements AfterViewInit {
     });
   }
 
-  private getData(): void {
-    this.settingsService.getRoles()
-      .pipe(
-        map((data: any[]) => (
-            data.map(item => {
-              item.invitedDate = new Date(item.invitedDate);
-              item.name = item.firstName + ' ' + item.lastName;
-              return item;
-            })
-          )
-        )
-      )
-      .subscribe((res: any[]) => {
-        this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
-        this.cd.detectChanges();
+  // private getData(): void {
+  //   this.settingsService.getRoles()
+  //     .pipe(
+  //       map((data: any[]) => (
+  //           data.map(item => {
+  //             item.invitedDate = new Date(item.invitedDate);
+  //             item.name = item.firstName + ' ' + item.lastName;
+  //             return item;
+  //           })
+  //         )
+  //       )
+  //     )
+  //     .subscribe((res: any[]) => {
+  //       // this.dataSource.data = res;
+  //       // this.hasData = !!res && res.length > 0;
+  //       // this.cd.detectChanges();
+  //     });
+  // }
+
+  private getAllCredential(): void {
+    this.settingsService.getAllCredential('test')
+      .subscribe(res => {
+        console.log(res);
       });
   }
 }

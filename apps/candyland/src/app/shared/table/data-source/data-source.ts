@@ -1,7 +1,7 @@
 import { MatTableDataSource } from '@angular/material';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
-export class ClientSideDataSource<T> extends MatTableDataSource<T> {
+export class TableDataSource<T> extends MatTableDataSource<T> {
   public data$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   public prepaginatedata$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   public filtersState$: BehaviorSubject<any> = new BehaviorSubject<any>({

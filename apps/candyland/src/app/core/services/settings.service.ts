@@ -3,11 +3,13 @@ import { SettingsHttpService } from '@cl-core/http-services/settings-http.servic
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService {
+export class SettingsService implements ITableService {
 
   constructor(private settingsHttpService: SettingsHttpService,
               private fb: FormBuilder) {
@@ -42,6 +44,10 @@ export class SettingsService {
     return this.createFormBranding();
   }
 
+  public getAllCredential(data: any): any {
+    return this.settingsHttpService.getAllCredential(data);
+  }
+
   private createFormBranding(): FormGroup {
     return this.fb.group({
       style: [null], font: [null],
@@ -53,4 +59,9 @@ export class SettingsService {
       button: [null]
     });
   }
+
+  public getTableData(params: any): Observable<any> {
+    return this.settingsHttpService.getAllCredential(params);
+  }
+
 }
