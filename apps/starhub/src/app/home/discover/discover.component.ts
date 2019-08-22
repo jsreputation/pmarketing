@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
-import { IReward, ICampaign } from '@perx/core';
-import { Catalog } from '../catalogs/catalogs.component';
+import { IReward, ICampaign, ICatalog } from '@perx/core';
 
 @Component({
   selector: 'app-discover',
@@ -19,8 +18,8 @@ export class DiscoverComponent {
     this.router.navigate(['/reward'], { queryParams: { id: reward.id } });
   }
 
-  public catalogSelected(catalog: Catalog): void {
-    this.router.navigate(['/category'], { queryParams: { catalog: catalog.title } });
+  public catalogSelected(catalog: ICatalog): void {
+    this.router.navigate(['/category'], { queryParams: { catalog: catalog.name } });
   }
 
   // @ts-ignore
