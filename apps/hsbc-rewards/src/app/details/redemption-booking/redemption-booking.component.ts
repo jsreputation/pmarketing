@@ -41,7 +41,7 @@ export class RedemptionBookingComponent implements OnInit {
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      merchant: [null, [Validators.required]],
+      merchant: [{value: null, disabled: true}, [Validators.required]],
       location: [null],
       pointsBalance: [null],
       agreement: [false, [Validators.requiredTrue]]
