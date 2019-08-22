@@ -3,7 +3,7 @@ import { EngagementDto, EngagementType, UpdateEngagementDto } from './engagement
 import { Observable, OperatorFunction, merge, of } from 'rxjs';
 import { IListResponse, ISingleResponse } from '../services/response.model';
 import { GameService } from '../services/game/game.service';
-import { map, scan, catchError } from 'rxjs/operators';
+import { map, scan, catchError, last } from 'rxjs/operators';
 import { IEntity } from '../services/entity.model';
 import { IEngagementService } from '../services/iengagement.service';
 import { IPostRequest, IPatchRequest } from '../services/request.model';
@@ -14,20 +14,18 @@ import { InstantOutcomeService } from '../services/instant-outcome/instant-outco
 import { IncomingHttpHeaders } from 'http';
 import { AxiosError } from 'axios';
 
-@Controller('engagements')
-export class EngagementController {
-    constructor(
-        private gameService: GameService,
-        private surveyService: SurveyService,
-        private loyaltyService: LoyaltyService,
-        private irService: InstantOutcomeService
-    ) { }
+class EngagementControllerImplem {
+    protected gameService: GameService;
+    protected surveyService: SurveyService;
+    protected loyaltyService: LoyaltyService;
+    protected irService: InstantOutcomeService;
 
     @Get()
     public getAll(@Headers() headers: IncomingHttpHeaders): Observable<IListResponse<EngagementDto>> {
         // list of queries (one per underlying service)
         const queries: Observable<IListResponse<EngagementDto>>[] = [];
 
+        let lastError: AxiosError;
         // build a list of query to all underlying services
         // tslint:disable-next-line: forin
         for (const t in this.services) {
@@ -44,7 +42,10 @@ export class EngagementController {
                             }),
                         };
                     }),
-                    catchError(() => of(null))
+                    catchError((err: AxiosError) => {
+                        lastError = err;
+                        return of(null);
+                    })
                 ));
         }
         return merge<IListResponse<EngagementDto>>(...queries)
@@ -59,7 +60,16 @@ export class EngagementController {
                         ...v.data
                     ];
                     return acc;
-                }, null)
+                }, null),
+                last(),
+                map((res: IListResponse<EngagementDto> | null): IListResponse<EngagementDto> => {
+                    // if res is null, it means that all queries failed. We therefore get one of the errors
+                    if (res === null) {
+                        console.error('everything failed 😰');
+                        this.handleError(lastError);
+                    }
+                    return res;
+                })
             );
     }
 
@@ -153,5 +163,31 @@ export class EngagementController {
                 data: { ...res.data, attributes: dto },
             };
         });
+    }
+}
+
+// declaration which presents the controllers on the root
+@Controller('')
+export class EngagementRootController extends EngagementControllerImplem {
+    constructor(
+        protected gameService: GameService,
+        protected surveyService: SurveyService,
+        protected loyaltyService: LoyaltyService,
+        protected irService: InstantOutcomeService
+    ) {
+        super();
+    }
+}
+
+// declaration which presents the controllers on engagements
+@Controller('engagements')
+export class EngagementController extends EngagementControllerImplem {
+    constructor(
+        protected gameService: GameService,
+        protected surveyService: SurveyService,
+        protected loyaltyService: LoyaltyService,
+        protected irService: InstantOutcomeService
+    ) {
+        super();
     }
 }
