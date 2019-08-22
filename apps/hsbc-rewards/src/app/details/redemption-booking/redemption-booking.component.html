@@ -19,7 +19,7 @@
           <option *ngFor="let location of locationData | async" [value]="location.id">{{location.address}}</option>
         </select>
       </div>
-      <mat-radio-group>
+      <mat-radio-group class="radio-group" formControlName="pointsBalance">
         <mat-radio-button *ngFor="let preice of prices" class="radio-button" [value]="preice.rewardCampaignId">
           Use {{preice.price}} (Code {{preice.currencyCode}})
         </mat-radio-button>
