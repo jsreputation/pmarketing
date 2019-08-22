@@ -8,16 +8,12 @@ import { Location } from '@angular/common';
   styleUrls: ['./redeem.component.scss']
 })
 export class RedeemComponent {
-  @Output() public closeModal: EventEmitter<void> = new EventEmitter();
   constructor(
     private router: Router,
     private location: Location
   ) { }
 
   public closeRedeem(): void {
-    if (this.router.url === '/reedem') {
-      return this.location.back();
-    }
-    this.closeModal.emit();
+    return this.location.back();
   }
 }

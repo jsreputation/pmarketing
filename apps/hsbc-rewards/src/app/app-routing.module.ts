@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'detail',
     loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
   }, {
-    path: 'reedem',
+    path: 'faq',
     loadChildren: () => import('./account/redeem/redeem.module').then(mod => mod.RedeemModule),
   }, {
     path: 'terms-and-conditions',
