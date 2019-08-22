@@ -12,17 +12,17 @@ const mockTags: ITabConfig[] = [
     tabName: 'All Rewards',
     rewardsList: null
   }, {
-    filterKey: 'Lifestyle',
+    filterKey: null,
     filterValue: null,
     tabName: 'Lifestyle',
     rewardsList: null
   }, {
-    filterKey: 'Travel',
+    filterKey: null,
     filterValue: null,
     tabName: 'Travel',
     rewardsList: null
   }, {
-    filterKey: 'Shopping',
+    filterKey: null,
     filterValue: null,
     tabName: 'Shopping',
     rewardsList: null
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   public getRewards(): void {
     this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+        return this.rewardsService.getAllRewards(null, tab.tabName === 'All Rewards' ? null : [tab.tabName]);
       }));
     })).subscribe((result) => {
       result.forEach((rewards: IReward[], index) => {
