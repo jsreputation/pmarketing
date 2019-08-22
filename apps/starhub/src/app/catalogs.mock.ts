@@ -2,7 +2,7 @@ import { ICatalog } from '@perx/core';
 
 export const catalogs: ICatalog[] = [
   {
-    id: 1,
+    id: 0,
     name: 'Ramadan Exclusive',
     description: 'Here are deals for ramadan',
     catalogThumbnail: 'https://picsum.photos/50/50?random=1',
@@ -30,7 +30,7 @@ export const catalogs: ICatalog[] = [
     ]
   },
   {
-    id: 2,
+    id: 1,
     name: 'Christmas Specials',
     description: 'Santa-claus latest and greatest',
     catalogThumbnail: 'https://picsum.photos/50/50?random=2',
