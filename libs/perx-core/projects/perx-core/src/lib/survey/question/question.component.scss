@@ -1,0 +1,21 @@
+.question-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.6rem;
+  &.hidden {
+    display: none;
+  }
+
+  .question-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .question {
+        margin-bottom: 2rem;
+    }
+  }
+}

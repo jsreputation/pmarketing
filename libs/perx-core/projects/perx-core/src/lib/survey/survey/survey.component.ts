@@ -23,6 +23,8 @@ export class SurveyComponent implements OnInit {
 
   public answersTracker: ITracker = {};
 
+  public questionPointer: number = 0;
+
   constructor(private http: HttpClient) {
   }
 
@@ -66,6 +68,11 @@ export class SurveyComponent implements OnInit {
       console.log(answers);
     }
   }
+
+  public updateQuestionPointer(questionPointer: number): void {
+    this.questionPointer = questionPointer;
+  }
+
   public calculatePoints(): number {
     return Object.values(this.pointsTracker).reduce((previous, value) => {
       return previous + value;

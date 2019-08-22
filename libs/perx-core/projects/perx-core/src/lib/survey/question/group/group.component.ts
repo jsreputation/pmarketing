@@ -15,6 +15,15 @@ export class GroupComponent {
   @Input()
   public payload: IPayloadGroup;
 
+  @Input()
+  public id: number;
+
+  @Input()
+  public questionPointer: number;
+
+  @Input()
+  public totalQuestions: number;
+
   @Output()
   public updateAnswers: EventEmitter<string | number | boolean> = new EventEmitter<string | number | boolean>();
 

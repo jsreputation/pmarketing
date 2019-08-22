@@ -1,13 +1,19 @@
-<div class="rating" fxLayout>
-    <div *ngFor="let item of [].constructor(payload.scale); let i = index" fxFlex fxLayout="column" fxLayoutAlign="start center">
-      <button
-        mat-icon-button
-        type="button"
+<div class="rating">
+  <div class="icon-container">
+    <div *ngFor="let item of [].constructor(payload.scale); let i = index" class="icon-wrapper">
+        <mat-icon
+        aria-hidden="false"
+        [color]="i <= selectedChoice ? 'warn' : 'primary'"
+        aria-label="Example rating icon"
         (click)="onSelect(i)">
         {{payload.shape}}
-      </button>
+      </mat-icon>
+      <div *ngIf="i === 0" class="left-label">{{payload['left_label']}}</div>
+      <div *ngIf="i === payload.scale - 1" class="right-label">{{payload['right_label']}}</div>
     </div>
+  </div>
+  <!-- <div class="label-container">
     <div class="left-label">{{payload['left_label']}}</div>
     <div class="right-label">{{payload['right_label']}}</div>
-  </div>
-  
+  </div> -->
+</div>
