@@ -69,11 +69,11 @@ export class HomeComponent implements OnInit {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName])
-        .pipe(map((result:IReward[]) => { return { key: tab.tabName, value: result } }));
+          .pipe(map((result: IReward[]) =>  ({ key: tab.tabName, value: result })));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
-        this.staticTab.find((elem)=>rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
         this.tabs.next(this.staticTab);
       });
     });
