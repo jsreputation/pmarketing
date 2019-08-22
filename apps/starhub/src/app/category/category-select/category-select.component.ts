@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
 import { ICategory } from '../../category.model';
 import { categories } from '../../category.mock';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+
+export interface BottomSheetClosedCallBack {
+    categorySelectedCallback(updatedValue: string): void;
+    getCurrentSelectedCategory(): string;
+}
 
 @Component({
   selector: 'app-category-select',
@@ -13,12 +19,19 @@ export class CategorySelectComponent {
   public selectedCategory: string;
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<CategorySelectComponent>
+    private bottomSheetRef: MatBottomSheetRef<CategorySelectComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetClosedCallBack
   ) {
     this.categories = categories;
+    if (this.data.getCurrentSelectedCategory) {
+      this.selectedCategory = this.data.getCurrentSelectedCategory();
+    }
   }
 
   public apply(event: MouseEvent): void {
+    if (this.data.categorySelectedCallback) {
+      this.data.categorySelectedCallback(this.selectedCategory);
+    }
     this.bottomSheetRef.dismiss();
     event.preventDefault();
   }

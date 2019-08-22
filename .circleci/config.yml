@@ -104,6 +104,21 @@ commands:
           command: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
 jobs:
+  build_proxy_docker_image:
+    working_directory: ~/project
+    executor: ubuntu
+    steps:
+      - checkout
+      - docker_login
+      - run:
+          name: Build docker image
+          command: |
+            cd ~/project/backend/api-proxy &&
+            docker build . -t engagements-proxy:${CIRCLE_TAG}
+      - run:
+          name: Push docker
+          command: |
+            docker push engagements-proxy:${CIRCLE_TAG}
   build_docker_image:
     working_directory: ~/project
     executor: ubuntu
@@ -241,7 +256,7 @@ jobs:
   build-prod:
     machine:
       image: ubuntu-1604:201903-01
-    parallelism: 12
+    parallelism: 13
     steps:
       - run:
           name: Install yarn
@@ -290,7 +305,7 @@ workflows:
           filters:
             tags:
               # this enables circleci to trigger on tags
-              only: /^\w+-.*/
+              only: /^\w+-(production|staging)-.*/
             branches:
               ignore: /.*/
       - deploy:
@@ -325,4 +340,11 @@ workflows:
             tags:
               # semver v2
               only: /(\w+-)+production-\d+\.\d+\.\d+.*/
-
+      - build_proxy_docker_image:
+          filters:
+            # need to sepcify this otherwise the job will run even if there's no tag
+            branches:
+              ignore: /.*/
+            tags:
+              # semver v2
+              only: /engagements-proxy-\d+\.\d+\.\d+.*/
