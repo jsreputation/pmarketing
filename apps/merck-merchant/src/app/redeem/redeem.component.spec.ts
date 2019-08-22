@@ -4,7 +4,7 @@ import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
-import { RewardsService, LoyaltyService, VouchersService, VoucherState, RedemptionType, NotificationService } from '@perx/core';
+import { RewardsService, VouchersService, NotificationService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
@@ -50,11 +50,8 @@ describe('RedeemComponent', () => {
   };
 
   const rewardsServiceStub = {
-    getReward: () => of(reward)
-  };
-
-  const loyaltyServiceStub = {
-    exchangePoints: () => of()
+    getReward: () => of(reward),
+    getRewardPricesOptions: () => of()
   };
 
   const vouchersServiceStub = {
@@ -68,7 +65,6 @@ describe('RedeemComponent', () => {
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: VouchersService, useValue: vouchersServiceStub },
         { provide: NotificationService, useValue:
           {
@@ -109,29 +105,21 @@ describe('RedeemComponent', () => {
   });
 
   it('should onProceed', () => {
-    const loyaltyService: LoyaltyService = fixture.debugElement.injector.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
+    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     const vouchersService: VouchersService = fixture.debugElement.injector.get<VouchersService>(VouchersService as Type<VouchersService>);
     const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
 
-    const voucher = {
+    const price = {
       id: 1,
-      rewardId: 1,
-      state: VoucherState.issued,
-      name: '',
-      redemptionType: RedemptionType.qr,
-      thumbnailImg: '',
-      rewardBanner: '',
-      merchantImg: '',
-      merchantName: '',
-      expiry: null,
-      description: [],
-      redemptionSuccessTxt: '',
-      redemptionSuccessImg: '',
+      rewardCampaignId: 1,
+      price: 1,
+      currencyCode: 'SGD',
+      points: 10,
     };
 
-    const loyaltyServiceSpy = spyOn(loyaltyService, 'exchangePoints').and.returnValue(
-      of([voucher])
+    const rewardsServiceSpy = spyOn(rewardsService, 'getRewardPricesOptions').and.returnValue(
+      of([price])
     );
 
     const vouchersServiceSpy = spyOn(vouchersService, 'redeemVoucher').and.returnValue(
@@ -141,7 +129,7 @@ describe('RedeemComponent', () => {
     const notificationSpy = spyOn(notificationService, 'addSnack');
 
     component.onProceed();
-    expect(loyaltyServiceSpy).toHaveBeenCalled();
+    expect(rewardsServiceSpy).toHaveBeenCalled();
     expect(vouchersServiceSpy).toHaveBeenCalled();
     expect(notificationSpy).toHaveBeenCalledWith('Transaction completed');
   });
