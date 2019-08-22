@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
-import { map, switchMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 
 const tabs: ITabConfig[] = [
@@ -39,13 +39,16 @@ export class HomeComponent implements OnInit {
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {
+  }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     this.getRewardsCollection();
+    this.tabs.next(tabs);
+    this.cd.detectChanges();
     this.getRewards();
-    this.getTags();
     this.loyalty$ = this.loyaltyService.getLoyalty(100)
       .pipe(map((loyalty: ILoyalty) => {
         loyalty.pointsBalance = 10000;
@@ -58,11 +61,15 @@ export class HomeComponent implements OnInit {
   }
 
   public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
+    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
+      this.rewardsCollection = of(val);
+    });
   }
 
   public getRewards(): void {
-    this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
+
+    this.getTags().pipe(mergeMap((tags: ITabConfig[]) => {
+      this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName]);
       }));
@@ -78,6 +85,7 @@ export class HomeComponent implements OnInit {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
     this.staticTab = tabs;
+    this.tabs.next(this.staticTab);
     return of(tabs);
   }
 
