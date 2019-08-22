@@ -5,7 +5,7 @@ import { ITabConfig } from '@perx/core';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 
-const mockTags: ITabConfig[] = [
+const tabs: ITabConfig[] = [
   {
     filterKey: 'Lifestyle',
     filterValue: null,
@@ -77,8 +77,8 @@ export class HomeComponent implements OnInit {
 
   public getTags(): Observable<ITabConfig[]> {
     this.rewardsService.getTags();
-    this.staticTab = mockTags;
-    return of(mockTags);
+    this.staticTab = tabs;
+    return of(tabs);
   }
 
   public openRewardDetails(tab: IReward): void {
