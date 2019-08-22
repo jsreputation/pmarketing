@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
   public getRewards(): void {
     this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+        return this.rewardsService.getAllRewards(null, tab.tabName === 'All Rewards' ? null : [tab.tabName]);
       }));
     })).subscribe((result) => {
       result.forEach((rewards: IReward[], index) => {
