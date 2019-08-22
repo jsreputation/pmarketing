@@ -12,12 +12,15 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
+import { catalogs } from 'src/app/catalogs.mock';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
   const rewardsServiceStub = {
-    getAllRewards: () => of(rewards)
+    getAllRewards: () => of(rewards),
+    getAllCatalogs: () => of(catalogs)
+
   };
 
   beforeEach(async(() => {
