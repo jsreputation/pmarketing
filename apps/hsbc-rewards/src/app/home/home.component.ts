@@ -17,14 +17,14 @@ const mockTags: ITabConfig[] = [
     tabName: 'Lifestyle',
     rewardsList: null
   }, {
-    filterKey: null,
+    filterKey: 'Travel',
+    filterValue: null,
     tabName: 'Travel',
-    filterValue: '',
     rewardsList: null
   }, {
     filterKey: 'Shopping',
+    filterValue: null,
     tabName: 'Shopping',
-    filterValue: '',
     rewardsList: null
   }
 
