@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
     this.getTags();
     this.loyalty$ = this.loyaltyService.getLoyalty(100)
       .pipe(map((loyalty: ILoyalty) => {
-        loyalty.pointsBalance = 10000;
         if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
           loyalty.expiringPoints[0].expireDate = new Date().toString();
           loyalty.expiringPoints[0].points = 100;
