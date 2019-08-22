@@ -12,8 +12,8 @@ const routes: Routes = [
     path: 'detail',
     loadChildren: () => import('./details/details.module').then(mod => mod.DetailsModule)
   }, {
-    path: 'reedem',
-    loadChildren: () => import('./account/redeem/redeem.module').then(mod => mod.RedeemModule),
+    path: 'faq',
+    loadChildren: () => import('./account/faq/faq.module').then(mod => mod.FaqModule),
   }, {
     path: 'terms-and-conditions',
     loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then(mod => mod.TermsAndConditionsModule)
