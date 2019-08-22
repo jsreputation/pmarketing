@@ -8,7 +8,7 @@ import { DashboardGameCardComponent } from './components/dashboard-game-card/das
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
-import { MatRadioModule, MatTabsModule } from '@angular/material';
+import { MatRadioModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { TabItemViewComponent } from './components/tab-item-view/tab-item-view.component';
 import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
 import { VerticalBarChartModule } from '@cl-shared/charts/vertical-bar-chart/vertical-bar-chart.module';
@@ -50,6 +50,7 @@ import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-pa
     RadiusCircleChartModule,
     MatRadioModule,
     MatTabsModule,
+    MatSelectModule,
     ChartCardModule
   ]
 })

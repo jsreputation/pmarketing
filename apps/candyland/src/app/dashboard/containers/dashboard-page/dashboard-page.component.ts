@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DashboardService } from '@cl-core/services';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 // import { map, tap } from 'rxjs/operators';
 // import { DashboardService } from '@cl-core/services/dashboard.service';
@@ -15,6 +16,7 @@ export enum DictionaryTotal {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit {
+  public dateRange = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
   // public dashboardData: ITotal[];
   // public activeTab: any;
@@ -45,6 +47,7 @@ export class DashboardPageComponent implements OnInit {
   public ngOnInit(): void {
     this.getGameCard();
     // this.getTotalActive();
+    this.dateRange.valueChanges.subscribe(value => console.log(value));
   }
 
   // public selectedTab(tab): void {
