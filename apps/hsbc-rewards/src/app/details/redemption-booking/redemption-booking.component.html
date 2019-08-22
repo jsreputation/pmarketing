@@ -21,8 +21,8 @@
         </select>
       </div>
       <mat-radio-group class="radio-group" formControlName="pointsBalance">
-        <mat-radio-button *ngFor="let preice of prices" class="radio-button" [value]="preice.rewardCampaignId">
-          Use {{preice.price}} (Code {{preice.currencyCode}})
+        <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.rewardCampaignId">
+          Use {{price.price}} (Code {{price.currencyCode}})
         </mat-radio-button>
       </mat-radio-group>
       <div class="agreement">
