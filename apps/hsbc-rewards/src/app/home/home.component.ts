@@ -45,10 +45,8 @@ export class HomeComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.getRewardsCollection();
-    this.tabs.next(tabs);
-    this.cd.detectChanges();
     this.getRewards();
+    this.getRewardsCollection();
     this.loyalty$ = this.loyaltyService.getLoyalty(100)
       .pipe(map((loyalty: ILoyalty) => {
         loyalty.pointsBalance = 10000;
@@ -67,7 +65,6 @@ export class HomeComponent implements OnInit {
   }
 
   public getRewards(): void {
-
     this.getTags().pipe(mergeMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
@@ -87,6 +84,7 @@ export class HomeComponent implements OnInit {
     // this.rewardsService.getTags();
     this.staticTab = tabs;
     this.tabs.next(this.staticTab);
+    this.cd.detectChanges();
     return of(tabs);
   }
 
