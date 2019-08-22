@@ -13,16 +13,15 @@ const tabs: ITabConfig[] = [
     rewardsList: null
   }, {
     filterKey: null,
-    tabName: 'Travel',
     filterValue: null,
+    tabName: 'Travel',
     rewardsList: null
   }, {
     filterKey: null,
-    tabName: 'Shopping',
     filterValue: null,
+    tabName: 'Shopping',
     rewardsList: null
   }
-
 ];
 
 @Component({
@@ -59,7 +58,7 @@ export class HomeComponent implements OnInit {
   }
 
   public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards();
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
   public getRewards(): void {
