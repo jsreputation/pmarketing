@@ -62,7 +62,6 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateAnswer(answer: string | number | boolean): void {
-    console.log('updateAnswer' + this.question.id);
     this.question.answer = answer;
     this.updateNonGroupPoint();
     this.questionValidation();
@@ -92,7 +91,6 @@ export class QuestionComponent implements OnChanges {
       this.questionPointer++;
       this.updateQuestionPointer.emit(this.questionPointer);
     } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-      console.log('flush');
       this.flushValidation = true;
     }
   }
@@ -104,15 +102,12 @@ export class QuestionComponent implements OnChanges {
 
   public questionValidation(): void {
     this.hasError = false;
-    console.log(this.point);
     if (this.question.required && this.point !== 1) {
       this.hasError = true;
     }
   }
 
   public updateFlushValidation(finish: boolean): void {
-    this.flushValidation = finish;
-    console.log('flush finished' + this.question.id);
     this.updateFlushValidationEmit.emit(finish);
   }
 }

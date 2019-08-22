@@ -53,6 +53,9 @@ export class GroupComponent implements OnChanges {
   public updatePoint(point: IPoints): void {
     this.pointsTracker[point.question_id] = point.point;
     const currentPoint = this.calculatePoints();
+    if (this.allAnswersEmitted()) {
+      this.updateFlushValidationEmit.emit(false);
+    }
     this.updatePoints.emit(currentPoint);
   }
 
@@ -65,11 +68,16 @@ export class GroupComponent implements OnChanges {
     return totalPoint / subQuestionLength;
   }
 
-  public updateFlushValidation(finish: boolean): void {
-    this.flushValidation = finish;
+  public allAnswersEmitted(): boolean {
     const pointsTrackerValues = Object.values(this.pointsTracker);
     const subQuestionLength = this.payload.questions.length;
-    if (pointsTrackerValues.length === subQuestionLength) {
+    return pointsTrackerValues.length === subQuestionLength;
+  }
+
+  public updateFlushValidation(finish: boolean): void {
+    console.log('Group flush checking');
+    if (this.allAnswersEmitted()) {
+      console.log('Group flush finished');
       this.updateFlushValidationEmit.emit(finish);
     }
   }

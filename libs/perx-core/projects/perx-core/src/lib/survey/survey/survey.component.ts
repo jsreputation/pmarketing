@@ -52,11 +52,6 @@ export class SurveyComponent implements OnInit {
     const totalQuestion = this.data.questions.length;
     this.totalLength.emit(totalQuestion);
     this.currentPointer.emit(currentPoint);
-    console.log('====================');
-    console.log(this.pointsTracker);
-    console.log('totalQuestion: ' + totalQuestion);
-    console.log('currentPoint: ' + currentPoint);
-    console.log('====================');
     if (currentPoint >= totalQuestion) {
       const answers = Object.entries(this.answersTracker).map(([id, answer]) => {
         return {
