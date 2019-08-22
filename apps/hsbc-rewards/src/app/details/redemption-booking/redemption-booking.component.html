@@ -10,7 +10,7 @@
       </div>
       <div class="select-wrap no-content">
         <select formControlName="merchant">
-          <option disabled [value]="reward.merchantId">{{reward.merchantName}}</option>
+          <option disabled *ngIf="reward" [value]="reward.merchantId">{{reward.merchantName || 'No Merchant'}}</option>
         </select>
       </div>
       <div class="select-wrap">
@@ -19,7 +19,7 @@
           <option *ngFor="let location of locationData | async" [value]="location.id">{{location.address}}</option>
         </select>
       </div>
-      <mat-radio-group class="radio-group" formControlName="pointsBalance">
+      <mat-radio-group>
         <mat-radio-button *ngFor="let preice of prices" class="radio-button" [value]="preice.rewardCampaignId">
           Use {{preice.price}} (Code {{preice.currencyCode}})
         </mat-radio-button>
