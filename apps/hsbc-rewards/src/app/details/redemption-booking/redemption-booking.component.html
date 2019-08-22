@@ -11,7 +11,8 @@
       <div class="select-wrap no-content">
         <select formControlName="merchant">
           <option disabled [value]="null">Merchant</option>
-          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.firstName}} {{merchant.lastName}}</option>
+          <option *ngFor="let merchant of merchants"
+                  [value]="merchant.id">{{merchant.firstName}} {{merchant.lastName}}</option>
         </select>
       </div>
       <div class="select-wrap">
@@ -28,7 +29,8 @@
       <div class="agreement">
         <mat-checkbox formControlName="agreement"></mat-checkbox>
         <p>
-          I have read, understood the <a [routerLink]="[ '/terms-and-conditions']">HSBC’s Rewards Terms & Conditions </a>
+          I have read, understood the <a [routerLink]="[ '/terms-and-conditions']">HSBC’s Rewards Terms &
+          Conditions </a>
           and agree to all clauses stated therein*
         </p>
       </div>

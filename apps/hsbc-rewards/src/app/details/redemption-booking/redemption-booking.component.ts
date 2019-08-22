@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationsService, RewardsService, ILocation, IReward } from '@perx/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MerchantService } from 'src/app/shared/service/merchant.service';
-import { forkJoin, Observable } from 'rxjs';
-import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
+import {Component, OnInit} from '@angular/core';
+import {LocationsService, RewardsService, ILocation, IReward} from '@perx/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {MerchantService} from 'src/app/shared/service/merchant.service';
+import {forkJoin, Observable} from 'rxjs';
+import {IPrice} from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -21,6 +21,7 @@ export class RedemptionBookingComponent implements OnInit {
   public merchants: IMerchant[] = [];
   public quantities: number[] = [];
   public bookingForm: FormGroup;
+
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
@@ -28,13 +29,14 @@ export class RedemptionBookingComponent implements OnInit {
     private build: FormBuilder,
     private router: Router,
     private merchantService: MerchantService,
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).subscribe((result) => {
       [this.reward, this.prices] = result;
     });
@@ -44,6 +46,7 @@ export class RedemptionBookingComponent implements OnInit {
     });
     this.buildForm();
   }
+
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
