@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards();
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
   public getRewards(): void {
