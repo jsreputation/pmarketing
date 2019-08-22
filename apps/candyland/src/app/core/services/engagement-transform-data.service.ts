@@ -10,8 +10,10 @@ export class EngagementTransformDataService {
 // tslint:disable
   public transformReward(data: any): any {
     return {
-      type: 'engagements', attributes: {
-        title: data.name, game_type: 'reward',
+      type: 'engagements',
+      attributes: {
+        title: data.name,
+        game_type: 'reward',
         image_url:
           'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {

@@ -1,12 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ControlValueService } from '@cl-core/services/control-value.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { EngagementTransformDataService, PinataService } from '@cl-core-services';
+import { ConfirmModalComponent } from '@cl-shared';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -14,18 +16,20 @@ import { EngagementTransformDataService, PinataService } from '@cl-core-services
   styleUrls: ['./new-pinata-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewPinataPageComponent implements OnInit {
+export class NewPinataPageComponent implements OnInit, OnDestroy {
   public formPinata: FormGroup;
   public pinataData$: Observable<{
     pinata: IGraphic[],
     background: IGraphic[]
   }>;
+  private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
               private pinataService: PinataService,
               private routingState: RoutingStateService,
               private router: Router,
               private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService) { }
+              private engagementTransformDataService: EngagementTransformDataService,
+              public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createPinataForm();
@@ -33,15 +37,27 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.formPinata.value);
     const sendData = this.engagementTransformDataService.transformPinata(this.formPinata.value);
-    console.log('sendData', sendData);
     this.pinataService.createPinata({ data: sendData })
-      .subscribe((res) => {
-        console.log('pinata', res);
+      .subscribe(() => {
+        this.showLaunchDialog();
       });
-    console.log(this.router);
-    // this.router.navigateByUrl('/engagements');
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+
+        if (result) {
+          this.router.navigateByUrl('/engagements');
+        }
+      });
   }
 
   public comeBack(): void {
@@ -112,5 +128,10 @@ export class NewPinataPageComponent implements OnInit {
           });
         })
       );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
