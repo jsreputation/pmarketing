@@ -5,29 +5,23 @@ import { ITabConfig } from '@perx/core';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 
-const mockTags: ITabConfig[] = [
+const tabs: ITabConfig[] = [
   {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'All Rewards',
-    rewardsList: null
-  }, {
     filterKey: 'Lifestyle',
     filterValue: null,
     tabName: 'Lifestyle',
     rewardsList: null
   }, {
     filterKey: null,
+    filterValue: null,
     tabName: 'Travel',
-    filterValue: '',
     rewardsList: null
   }, {
-    filterKey: 'Shopping',
+    filterKey: null,
+    filterValue: null,
     tabName: 'Shopping',
-    filterValue: '',
     rewardsList: null
   }
-
 ];
 
 @Component({
@@ -64,13 +58,13 @@ export class HomeComponent implements OnInit {
   }
 
   public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards();
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
   public getRewards(): void {
     this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+        return this.rewardsService.getAllRewards(null, [tab.tabName]);
       }));
     })).subscribe((result) => {
       result.forEach((rewards: IReward[], index) => {
@@ -81,9 +75,10 @@ export class HomeComponent implements OnInit {
   }
 
   public getTags(): Observable<ITabConfig[]> {
-    this.rewardsService.getTags();
-    this.staticTab = mockTags;
-    return of(mockTags);
+    // todo: service not implemented yet
+    // this.rewardsService.getTags();
+    this.staticTab = tabs;
+    return of(tabs);
   }
 
   public openRewardDetails(tab: IReward): void {
