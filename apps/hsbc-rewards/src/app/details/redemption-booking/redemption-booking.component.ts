@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {LocationsService, RewardsService, ILocation, IReward} from '@perx/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {MerchantService} from 'src/app/shared/service/merchant.service';
-import {forkJoin, Observable} from 'rxjs';
-import {IPrice} from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
+import { Component, OnInit } from '@angular/core';
+import { LocationsService, RewardsService, ILocation, IReward } from '@perx/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { forkJoin, Observable } from 'rxjs';
+import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -28,9 +27,7 @@ export class RedemptionBookingComponent implements OnInit {
     private route: ActivatedRoute,
     private build: FormBuilder,
     private router: Router,
-    private merchantService: MerchantService,
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.route.params.pipe(switchMap((param) => {
@@ -41,16 +38,13 @@ export class RedemptionBookingComponent implements OnInit {
       [this.reward, this.prices] = result;
     });
     this.locationData = this.locationService.getAll();
-    this.merchantService.getMerchants().subscribe((res) => {
-      this.merchants = res;
-    });
     this.buildForm();
   }
 
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      merchant: [null, [Validators.required]],
+      merchant: [{value: null, disabled: true}, [Validators.required]],
       location: [null],
       pointsBalance: [null],
       agreement: [false, [Validators.requiredTrue]]
