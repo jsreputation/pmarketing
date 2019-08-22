@@ -105,16 +105,15 @@ commands:
 
 jobs:
   build_proxy_docker_image:
-    working_directory: ~/backend/api-proxy
+    working_directory: ~/project
     executor: ubuntu
     steps:
       - checkout
       - docker_login
-      # - get_env_from_tag
       - run:
           name: Build docker image
           command: |
-            cd ~/backend/api-proxy &&
+            cd ~/project/backend/api-proxy &&
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG}
       - run:
           name: Push docker
