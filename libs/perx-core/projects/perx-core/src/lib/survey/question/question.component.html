@@ -64,7 +64,7 @@
             <button *ngIf="id !== 0" mat-raised-button (click)="back()">
                 Back
             </button>
-            <button *ngIf="id !== totalQuestions" mat-raised-button color="primary" (click)="next()">
+            <button *ngIf="id !== totalQuestions -1" mat-raised-button color="primary" (click)="next()">
                 Next
             </button>
         </div>

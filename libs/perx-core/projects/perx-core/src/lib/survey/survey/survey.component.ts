@@ -39,12 +39,16 @@ export class SurveyComponent implements OnInit {
   }
 
   public updateAnswers(answer: IAnswer): void {
+    console.log('update answer');
     this.answersTracker[answer.question_id] = answer.content;
+    console.log(this.answersTracker);
   }
 
   public updatePoints(point: IPoints): void {
+    console.log('update points');
     this.pointsTracker[point.question_id] = point.point;
     this.updateParent();
+    console.log(this.pointsTracker);
   }
 
   public updateParent(): void {
@@ -61,6 +65,8 @@ export class SurveyComponent implements OnInit {
       });
       this.surveyDone.emit(answers);
       console.log(answers);
+      console.log(currentPoint);
+      console.log(totalQuestion);
     }
   }
 

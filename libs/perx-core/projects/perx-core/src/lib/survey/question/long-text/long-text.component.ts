@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadLongText {
   type: string;
@@ -19,7 +20,7 @@ export class LongTextComponent implements OnChanges {
   public flushValidation: boolean = false;
 
   @Output()
-  public updateAnswers: EventEmitter<string> = new EventEmitter<string>();
+  public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public answer: string;
 
@@ -31,6 +32,6 @@ export class LongTextComponent implements OnChanges {
 
   public updateInput(value: string): void {
     this.answer = value;
-    this.updateAnswers.emit(value);
+    this.updateAnswers.emit({ content: value });
   }
 }

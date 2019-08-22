@@ -28,7 +28,7 @@ export class GroupComponent implements OnChanges {
   public flushValidation: boolean = false;
 
   @Output()
-  public updateAnswers: EventEmitter<string | number | boolean> = new EventEmitter<string | number | boolean>();
+  public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   @Output()
   public updatePoints: EventEmitter<number> = new EventEmitter<number>();
@@ -47,7 +47,7 @@ export class GroupComponent implements OnChanges {
   }
 
   public updateAnswer(answer: IAnswer): void {
-    this.updateAnswers.emit(answer.content);
+    this.updateAnswers.emit(answer);
   }
 
   public updatePoint(point: IPoints): void {
@@ -75,9 +75,7 @@ export class GroupComponent implements OnChanges {
   }
 
   public updateFlushValidation(finish: boolean): void {
-    console.log('Group flush checking');
     if (this.allAnswersEmitted()) {
-      console.log('Group flush finished');
       this.updateFlushValidationEmit.emit(finish);
     }
   }

@@ -61,11 +61,12 @@ export class QuestionComponent implements OnChanges {
     return this.questionPointer === this.id;
   }
 
-  public updateAnswer(answer: string | number | boolean): void {
-    this.question.answer = answer;
+  public updateAnswer(answer: IAnswer): void {
+    this.question.answer = answer.content;
+    const questionId = answer.question_id ? answer.question_id : this.question.id;
+    this.updateAnswers.emit({ question_id: questionId, content: answer.content });
     this.updateNonGroupPoint();
     this.questionValidation();
-    this.updateAnswers.emit({ question_id: this.question.id, content: answer });
     /**
      * Specially for those group type question end leaf, for normal question,
      * will do twice from here and next(), but survey question tracker will handle that

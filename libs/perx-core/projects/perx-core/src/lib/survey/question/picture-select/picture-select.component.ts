@@ -1,3 +1,4 @@
+import { IAnswer } from './../../models/survey.model';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadPictureSelect {
@@ -23,7 +24,7 @@ export class PictureSelectComponent implements OnChanges {
   public flushValidation: boolean = false;
 
   @Output()
-  public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
+  public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public selectedChoice: number;
 
@@ -35,7 +36,7 @@ export class PictureSelectComponent implements OnChanges {
 
   public onSelect(index: number): void {
     this.selectedChoice = index;
-    this.updateAnswers.emit(index);
+    this.updateAnswers.emit({ content: index });
   }
 
   public isSelected(index: number): boolean {

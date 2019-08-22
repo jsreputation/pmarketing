@@ -1,5 +1,5 @@
 export interface IAnswer {
-    question_id: string;
+    question_id?: string;
     content: number | string | boolean;
 }
 
