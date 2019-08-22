@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IData } from 'perx-chart/public-api';
 import { DataService } from '../data.service';
+import { MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 
 class GenericStubComponent { @Input() public data: Observable<IData>; }
 
@@ -51,6 +52,11 @@ describe('MetaCardComponent', () => {
       ],
       providers: [
         { provide: DataService, useValue: dataServiceStub }
+      ],
+      imports: [
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        MatIconModule
       ]
     })
       .compileComponents();
