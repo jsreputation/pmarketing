@@ -15,7 +15,25 @@
     justify-content: flex-start;
 
     .question {
-        margin-bottom: 2rem;
+      margin-bottom: 2rem;
     }
+
+    .error-message {
+      visibility: hidden;
+      color: #eb202f;
+    }
+  }
+  &.error {
+    .question-content {
+      .error-message {
+        visibility: visible;
+      }
+    }
+  }
+
+  .question-action-container {
+      button {
+          margin-right: 1rem;
+      }
   }
 }

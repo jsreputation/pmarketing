@@ -34,6 +34,8 @@ export class QuestionComponent implements OnChanges {
 
   public hasError: boolean;
 
+  public point: number;
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
@@ -47,7 +49,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateAnswer(answer: string | number | boolean): void {
-    this.question.answer = answer;
+    this.questionValidation();
     this.updateAnswers.emit({ question_id: this.question.id, content: answer });
     /**
      * Specially for those group type question end leaf, for normal question,
@@ -57,13 +59,14 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateGroupPoint(point: number): void {
+    this.point = point;
     this.updatePoints.emit({ question_id: this.question.id, point });
   }
 
   public updateNonGroupPoint(): void {
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-      const point = this.question.required ? (this.question.answer ? 1 : 0) : 1;
-      this.updatePoints.emit({ question_id: this.question.id, point });
+      this.point = this.question.required ? (this.question.answer ? 1 : 0) : 1;
+      this.updatePoints.emit({ question_id: this.question.id, point: this.point });
     }
   }
 
@@ -83,7 +86,7 @@ export class QuestionComponent implements OnChanges {
 
   public questionValidation(): void {
     this.hasError = false;
-    if (this.question.required && !this.question.answer) {
+    if (this.question.required && this.point !== 1) {
       this.hasError = true;
     }
   }

@@ -45,12 +45,15 @@
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"   
         ></perx-core-phone>
+        <div class="error-message">
+            question is <strong>required</strong>
+        </div>
     </div>
     <div class="question-action-container" *ngIf="!isSubQuestion">
-            <button *ngIf="id !== 0" mat-button (click)="back()">
+            <button *ngIf="id !== 0" mat-raised-button (click)="back()">
                 Back
             </button>
-            <button *ngIf="id !== totalQuestions" mat-button (click)="next()">
+            <button *ngIf="id !== totalQuestions" mat-raised-button color="primary" (click)="next()">
                 Next
             </button>
         </div>
