@@ -7,11 +7,6 @@ import { Observable, of, Subject, forkJoin } from 'rxjs';
 
 const mockTags: ITabConfig[] = [
   {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'All Rewards',
-    rewardsList: null
-  }, {
     filterKey: 'Lifestyle',
     filterValue: null,
     tabName: 'Lifestyle',
