@@ -341,8 +341,6 @@ workflows:
               # semver v2
               only: /(\w+-)+production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
-          requires:
-            - build_proxy_docker_image
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:
