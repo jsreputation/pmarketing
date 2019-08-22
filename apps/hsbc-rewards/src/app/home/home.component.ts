@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   public getRewards(): void {
     this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.tabName === 'All Rewards' ? null : [tab.tabName]);
+        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
       }));
     })).subscribe((result) => {
       result.forEach((rewards: IReward[], index) => {
