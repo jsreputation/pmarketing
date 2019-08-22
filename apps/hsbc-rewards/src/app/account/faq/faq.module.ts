@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RedeemComponent } from './redeem.component';
+import { FaqComponent } from './faq.component';
 import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
-import { RedeemRoutingModule } from './redeem-routing.module';
+import { FaqRoutingModule } from './faq-routing.module';
 
 @NgModule({
-  declarations: [RedeemComponent],
+  declarations: [FaqComponent],
   imports: [
     CommonModule,
-    RedeemRoutingModule
+    FaqRoutingModule
   ],
   providers: [
     DynamicCreateService
   ]
 })
-export class RedeemModule { }
+export class FaqModule { }
