@@ -17,8 +17,10 @@ export class RedemptionBookingComponent implements OnInit {
   public customBackButton: string = 'assets/img/close.svg';
   public locationData: Observable<ILocation[]>;
   public reward: IReward;
-  public quantityes: number[] = [];
+  public merchants: IMerchant[] = [];
+  public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
+
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
@@ -31,13 +33,14 @@ export class RedemptionBookingComponent implements OnInit {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).subscribe((result) => {
       [this.reward, this.prices] = result;
     });
     this.locationData = this.locationService.getAll();
     this.buildForm();
   }
+
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
