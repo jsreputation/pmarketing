@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CategorySelectComponent } from './category-select.component';
-import { MatIconModule, MatBottomSheetModule, MatCardModule, MatBottomSheetRef } from '@angular/material';
+import { MatIconModule, MatBottomSheetModule, MatCardModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 describe('CategorySelectComponent', () => {
   let component: CategorySelectComponent;
@@ -17,7 +17,8 @@ describe('CategorySelectComponent', () => {
         MatBottomSheetModule
       ],
       providers: [
-        { provide: MatBottomSheetRef, useValue: matBottomSheetRefStub }
+        { provide: MatBottomSheetRef, useValue: matBottomSheetRefStub },
+        { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
       ]
     })
       .compileComponents();
