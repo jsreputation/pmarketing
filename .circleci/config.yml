@@ -114,6 +114,7 @@ jobs:
       - run:
           name: Build docker image
           command: |
+            cd ${CIRCLE_WORKING_DIRECTORY}
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG}
       - run:
           name: Push docker
