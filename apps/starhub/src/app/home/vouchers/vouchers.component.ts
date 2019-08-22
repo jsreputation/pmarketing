@@ -14,6 +14,10 @@ export class VouchersComponent implements OnInit {
 
   public redeemedVouchers: Observable<Voucher[]>;
 
+  public defaultNbVouchers: number = 3;
+
+  public hideSeeMore: boolean = false;
+
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
@@ -24,8 +28,11 @@ export class VouchersComponent implements OnInit {
     const feed = this.vouchersService.getAll();
     this.vouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued))
-      );
+        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued)));
+
+    this.vouchers.subscribe(
+      (vouchs: Voucher[]) => this.hideSeeMore = vouchs.length <= this.defaultNbVouchers ? true : false);
+
     this.redeemedVouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued))
@@ -34,5 +41,9 @@ export class VouchersComponent implements OnInit {
 
   public voucherSelected(voucher: Voucher): void {
     this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
+  }
+
+  public seeMoreClicked(): void {
+    this.hideSeeMore = true;
   }
 }
