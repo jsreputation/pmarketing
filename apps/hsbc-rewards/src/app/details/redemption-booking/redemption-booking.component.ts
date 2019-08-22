@@ -19,7 +19,7 @@ export class RedemptionBookingComponent implements OnInit {
   public locationData: Observable<ILocation[]>;
   public reward: IReward;
   public merchants: IMerchant[] = [];
-  public quantities: number[] = [];
+  public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
 
   constructor(
