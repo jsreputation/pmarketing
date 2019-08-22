@@ -105,7 +105,7 @@ commands:
 
 jobs:
   build_proxy_docker_image:
-    working_directory: ~/project/backend/api-proxy
+    working_directory: ~/backend/api-proxy
     executor: ubuntu
     steps:
       - checkout
