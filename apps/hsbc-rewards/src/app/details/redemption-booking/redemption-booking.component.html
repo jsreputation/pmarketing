@@ -5,7 +5,7 @@
       <div class="select-wrap">
         <select formControlName="quantity">
           <option disabled [value]="null">Quantity</option>
-          <option *ngFor="let quantity of quantityes" [value]="quantity.id">{{quantity.address}}</option>
+          <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
         </select>
       </div>
       <div class="select-wrap no-content">
