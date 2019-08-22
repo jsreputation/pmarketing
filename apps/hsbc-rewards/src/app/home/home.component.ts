@@ -76,7 +76,8 @@ export class HomeComponent implements OnInit {
   }
 
   public getTags(): Observable<ITabConfig[]> {
-    this.rewardsService.getTags();
+    // todo: service not implemented yet
+    // this.rewardsService.getTags();
     this.staticTab = tabs;
     return of(tabs);
   }
