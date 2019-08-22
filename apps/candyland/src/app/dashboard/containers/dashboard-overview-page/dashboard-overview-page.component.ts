@@ -1,19 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services/dashboard.service';
+import { DataService } from '@perx/chart';
+import { combineLatest, Observable } from 'rxjs';
+
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
   issuedRewards = 'issuedRewards',
   activeCampaigns = 'activeCampaigns',
 }
+
 @Component({
   selector: 'cl-dashboard-overview-page',
   templateUrl: './dashboard-overview-page.component.html',
   styleUrls: ['./dashboard-overview-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit {
-  // public gameCard$: Observable<DashboardGameCard[]>;
+  public params: { [key: string]: string };
   public dashboardData: ITotal[];
   public activeTab: any = 'activeCustomers';
   public mapTotal = {
@@ -24,32 +28,48 @@ export class DashboardOverviewPageComponent implements OnInit {
   public dictionaryTotal = DictionaryTotal;
 
   constructor(private dashboardService: DashboardService,
+              private dataService: DataService,
               private cd: ChangeDetectorRef) {
+    this.params = {
+      start_date: '2019-07-01',
+      end_date: '2019-08-31'
+    };
   }
 
   public ngOnInit(): void {
-    // this.getGameCard();
     this.getTotalActive();
+    this.addTabsValue(this.getTabsValue$([106, 147, 106]));
+  }
+
+  private getTabsValue$(idArray: number[]): Observable<number | string>[] {
+    return idArray.map(id =>
+      this.dataService.getData(id, this.params)
+        .pipe(
+          map(response => response.rows[0][0])
+        )
+    );
+  }
+
+  private addTabsValue(requestArray$: Observable<number | string>[]): void {
+    combineLatest(requestArray$).subscribe((data: number[]) => {
+      this.dashboardData.forEach((item, index) => item.value = data[index]);
+    });
   }
 
   public selectedTab(tab): void {
     this.activeTab = tab.value;
   }
 
-  // private getGameCard(): void {
-  //   this.gameCard$ = this.dashboardService.getDashboardGameCard();
-  // }
-
   private getTotalActive(): void {
     this.dashboardService.getTotalActive()
       .pipe(
         tap(res => this.activeTab = res[0].name),
         map((res) => {
-        return res.map(item => {
-          item.title = this.mapTotal[item.name];
-          return item;
-        });
-      }))
+          return res.map(item => {
+            item.title = this.mapTotal[item.name];
+            return item;
+          });
+        }))
       .subscribe((res) => {
         console.log(res);
         this.dashboardData = res;

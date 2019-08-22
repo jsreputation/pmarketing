@@ -3,13 +3,17 @@
 //}
 
 cl-chart-card {
-  width: 100%;
+  //width: 100%;
   //display: flex;
   //background: darkblue;
   //box-sizing: border-box;
 }
 
 .vertical-bar-chart {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
   //position: relative;
   //width: 100%;
   //min-width: 200px;
