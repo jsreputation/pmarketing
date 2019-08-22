@@ -7,11 +7,6 @@ import { Observable, of, Subject, forkJoin } from 'rxjs';
 
 const tabs: ITabConfig[] = [
   {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'All Rewards',
-    rewardsList: null
-  }, {
     filterKey: 'Lifestyle',
     filterValue: null,
     tabName: 'Lifestyle',
@@ -27,7 +22,6 @@ const tabs: ITabConfig[] = [
     tabName: 'Shopping',
     rewardsList: null
   }
-
 ];
 
 @Component({
@@ -70,7 +64,7 @@ export class HomeComponent implements OnInit {
   public getRewards(): void {
     this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+        return this.rewardsService.getAllRewards(null, [tab.tabName]);
       }));
     })).subscribe((result) => {
       result.forEach((rewards: IReward[], index) => {
