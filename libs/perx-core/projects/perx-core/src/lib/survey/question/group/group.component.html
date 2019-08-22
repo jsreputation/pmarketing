@@ -5,7 +5,9 @@
         [totalQuestions]="totalQuestions"
         [isSubQuestion]="true"
         [question]="question"
+        [flushValidation]="flushValidation"
         (updateAnswers)="updateAnswer($event)"
         (updatePoints)="updatePoint($event)"
+        (updateFlushValidationEmit)="updateFlushValidation($event)"
     ></perx-core-question>
 </div>

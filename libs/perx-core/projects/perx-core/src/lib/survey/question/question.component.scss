@@ -21,11 +21,8 @@
     .error-message {
       visibility: hidden;
       color: #eb202f;
-    }
-  }
-  &.error {
-    .question-content {
-      .error-message {
+
+      &.error {
         visibility: visible;
       }
     }

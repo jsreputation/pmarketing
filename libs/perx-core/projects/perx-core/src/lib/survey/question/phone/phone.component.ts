@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadPhone {
   type: string;
@@ -10,14 +10,26 @@ interface IPayloadPhone {
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
-export class PhoneComponent {
+export class PhoneComponent implements OnChanges {
   @Input()
   public payload: IPayloadPhone;
+
+  @Input()
+  public flushValidation: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
 
+  public answer: number;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flushValidation && changes.flushValidation.currentValue) {
+      this.updateInput(this.answer);
+    }
+  }
+
   public updateInput(value: number): void {
+    this.answer = value;
     this.updateAnswers.emit(value);
   }
 }

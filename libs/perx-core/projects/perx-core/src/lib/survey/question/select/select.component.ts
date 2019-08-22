@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadSelect {
   type: string;
@@ -11,15 +11,24 @@ interface IPayloadSelect {
   styleUrls: ['./select.component.scss']
 })
 
-export class SelectComponent {
+export class SelectComponent implements OnChanges {
 
   @Input()
   public payload: IPayloadSelect;
+
+  @Input()
+  public flushValidation: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
 
   public selectedChoice: number;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flushValidation && changes.flushValidation.currentValue) {
+      this.onSelect(this.selectedChoice);
+    }
+  }
 
   public onSelect(index: number): void {
     this.selectedChoice = index;

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadLongText {
   type: string;
@@ -10,15 +10,27 @@ interface IPayloadLongText {
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss']
 })
-export class LongTextComponent {
+export class LongTextComponent implements OnChanges {
 
   @Input()
   public payload: IPayloadLongText;
 
+  @Input()
+  public flushValidation: boolean = false;
+
   @Output()
   public updateAnswers: EventEmitter<string> = new EventEmitter<string>();
 
+  public answer: string;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flushValidation && changes.flushValidation.currentValue) {
+      this.updateInput(this.answer);
+    }
+  }
+
   public updateInput(value: string): void {
+    this.answer = value;
     this.updateAnswers.emit(value);
   }
 }
