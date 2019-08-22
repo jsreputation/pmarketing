@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
-import { ITabConfig } from '@perx/core';
-import { map, switchMap } from 'rxjs/operators';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
+import {ITabConfig} from '@perx/core';
+import {switchMap} from 'rxjs/operators';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
 
 const tabs: ITabConfig[] = [
   {
@@ -47,14 +47,11 @@ export class HomeComponent implements OnInit {
     this.getRewardsCollection();
     this.getRewards();
     this.getTags();
-    this.loyalty$ = this.loyaltyService.getLoyalty(100)
-      .pipe(map((loyalty: ILoyalty) => {
-        if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
-          loyalty.expiringPoints[0].expireDate = new Date().toString();
-          loyalty.expiringPoints[0].points = 100;
-        }
-        return loyalty;
-      }));
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
+      }
+    );
   }
 
   public getRewardsCollection(): void {
