@@ -5,7 +5,7 @@ import { ProfileModule } from '@perx/core';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
-import { RedeemModule } from './redeem/redeem.module';
+import { FaqModule } from './faq/faq.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { RedeemModule } from './redeem/redeem.module';
     CommonModule,
     AccountRoutingModule,
     NavigateToolbarModule,
-    RedeemModule,
+    FaqModule,
     ProfileModule
   ]
 })
