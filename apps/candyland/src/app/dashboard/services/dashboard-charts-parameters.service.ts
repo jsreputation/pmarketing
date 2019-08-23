@@ -3,18 +3,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class DashboardChartsParametersService {
-  private _params$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private paramsSubject$: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   public get params$(): Observable<any> {
-    return this._params$.asObservable();
+    return this.paramsSubject$.asObservable();
   }
 
   public get params(): any {
-    return this._params$.value;
+    return this.paramsSubject$.value;
   }
 
   public set params(newParams: any) {
-    console.log('set', newParams);
-    this._params$.next(newParams);
+    this.paramsSubject$.next(newParams);
   }
 }

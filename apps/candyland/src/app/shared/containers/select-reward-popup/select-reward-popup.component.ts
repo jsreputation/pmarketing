@@ -4,7 +4,6 @@ import { RewardsService } from '@cl-core/services';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 
-
 @Component({
   selector: 'cl-select-reward-popup',
   templateUrl: './select-reward-popup.component.html',

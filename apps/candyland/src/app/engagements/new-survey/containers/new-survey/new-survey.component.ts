@@ -9,15 +9,6 @@ import { ConfirmModalComponent, QuestionFormFieldService } from '@cl-shared';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-export enum SurveyQuestionType {
-  rating = 'rating',
-  pictureChoice = 'pictureChoice',
-  longText = 'longText',
-  multipleChoice = 'multipleChoice',
-  questionGroup = 'questionGroup',
-  date = 'date', phone = 'phone'
-}
-
 @Component({
   selector: 'cl-new-survey',
   templateUrl: './new-survey.component.html',

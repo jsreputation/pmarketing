@@ -38,14 +38,12 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   }
 
   public selectedTab(tab): void {
-    console.log(tab);
     this.activeTab = tab;
   }
 
-  private handelChartsParamsChanges() {
+  private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$.pipe(
-      untilDestroyed(this),
-      tap(value => console.log(value))
+      untilDestroyed(this)
     ).subscribe(value => {
       this.params = value;
       this.cd.detectChanges();
@@ -63,8 +61,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
         ),
         tap(values => this.tabs.forEach((item, index) => item.value = values[index]))
       )
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe(() => {
         this.cd.detectChanges();
       });
   }

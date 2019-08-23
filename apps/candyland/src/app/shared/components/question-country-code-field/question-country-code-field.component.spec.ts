@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { SurveyService } from '@cl-core/services';
 
-
 describe('QuestionCountryCodeFieldComponent', () => {
   let component: QuestionCountryCodeFieldComponent;
   let fixture: ComponentFixture<QuestionCountryCodeFieldComponent>;

@@ -44,10 +44,9 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
   }
 
-  private handelChartsParamsChanges() {
+  private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$.pipe(
-      untilDestroyed(this),
-      tap(value => console.log(value))
+      untilDestroyed(this)
     ).subscribe(value => {
       this.params = value;
       this.cd.detectChanges();
@@ -84,7 +83,6 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
           });
         }))
       .subscribe((res) => {
-        console.log(res);
         this.dashboardData = res;
         this.cd.detectChanges();
       });

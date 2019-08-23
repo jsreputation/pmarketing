@@ -43,10 +43,9 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
     this.activeTab = tab.value;
   }
 
-  private handelChartsParamsChanges() {
+  private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$.pipe(
       untilDestroyed(this),
-      tap(value => console.log(value))
     ).subscribe(value => {
       this.params = value;
       this.cd.detectChanges();
@@ -64,7 +63,6 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
         });
       }))
       .subscribe((res) => {
-        console.log(res);
         this.dashboardData = res;
         this.cd.detectChanges();
       });
