@@ -223,7 +223,7 @@ export class V4RewardsService extends RewardsService {
       params = params.set('price_id', rewardParams.priceId.toString());
     }
 
-    return this.http.get<IV4ReserveRewardResponse>(
+    return this.http.post<IV4ReserveRewardResponse>(
       `${this.apiHost}/v4/rewards/${rewardId}/reserve`, { params }
     ).pipe(
       map(res => res.data),
@@ -245,7 +245,7 @@ export class V4RewardsService extends RewardsService {
       params = params.set('categories', categories.join());
     }
 
-    return this.http.post<IV4GetRewardsResponse>(
+    return this.http.get<IV4GetRewardsResponse>(
       `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
