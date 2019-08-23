@@ -4,7 +4,7 @@ import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
 import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsService } from '@cl-core/services';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 
 @Component({
@@ -14,7 +14,7 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardsListPageComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<any>();
   public hasData = true;
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;

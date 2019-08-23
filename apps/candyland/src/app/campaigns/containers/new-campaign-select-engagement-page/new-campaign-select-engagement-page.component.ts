@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Engagement } from '@cl-core/models/engagement.model';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import { EngagementsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -12,7 +13,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
   templateUrl: './new-campaign-select-engagement-page.component.html',
-  styleUrls: ['./new-campaign-select-engagement-page.component.scss'],
+  styleUrls: ['./new-campaign-select-engagement-page.component.scss']
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
@@ -60,7 +61,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
-        }),
+        })
       )
       .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;

@@ -7,13 +7,16 @@ import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
-import { ShakeDataService } from './shared/services/shake-data.service';
+import {
+  MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule
+} from '@angular/material';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { EngagementTransformDataService, ShakeTreeService } from '@cl-core/services';
+import { ConfirmModalModule } from '@cl-shared';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -37,16 +40,49 @@ describe('NewShakePageComponent', () => {
         MatInputModule,
         MatSelectModule,
         HttpClientTestingModule,
+        MatDialogModule,
+        ConfirmModalModule,
       ],
       declarations: [ NewShakePageComponent ],
       providers: [
         {
-          provide: ShakeDataService, useValue: {
-            getBackground: () => of([]),
-            getGiftBox: () => of([]),
-            getGamesTree: () => of([]),
-            getGameNumberGifts: () => of([]),
+          provide: ShakeTreeService, useValue: {
+            getData: () => of({
+              gameNumberGift: [{
+                value: '3',
+                viewValue: '3 gifts'
+              }],
+              gamesTree: [{
+                id: 1,
+                type: 'simple-tree',
+                active: 'false',
+                img: 'assets/images/tree/simple-tree.png',
+                fullImg: 'assets/images/tree/full_tree_1.png',
+                title: 'tree'
+              }],
+              giftBox: [{
+                id: 1,
+                type: 'state1',
+                title: 'icon',
+                img: 'assets/images/gifts/state1.png',
+                format: '.png',
+                active: 'false'
+              }],
+              background: [ {
+                id: 1,
+                type: 'background1',
+                title: 'icon',
+                img: 'assets/images/background/background1.png',
+                fullImg: 'assets/images/background/full_bg_1.jpg',
+                format: '.png',
+                active: 'false'
+              }]
+            }),
           }
+        },
+        {
+          provide: EngagementTransformDataService,
+          useValue: {}
         }
       ]
     })

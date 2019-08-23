@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ApiConfig } from '@cl-core/api-config';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,9 @@ export class RewardHttpService {
           return res.filter((item) => item.id === id)[0];
         })
       );
+  }
+
+  public createRewardGame(data: any): Observable<any> {
+    return this.http.post(ApiConfig.createGamePath, data);
   }
 }

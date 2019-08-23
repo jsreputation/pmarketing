@@ -1,13 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-
-import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { ControlValueService } from '@cl-core/services/control-value.service';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
+import {
+  ControlValueService,
+  EngagementTransformDataService,
+  PinataService,
+  RoutingStateService
+} from '@cl-core/services';
+import { ConfirmModalComponent } from '@cl-shared';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -15,17 +19,20 @@ import { ControlsName } from '../../../../models/controls-name';
   styleUrls: ['./new-pinata-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewPinataPageComponent implements OnInit {
+export class NewPinataPageComponent implements OnInit, OnDestroy {
   public formPinata: FormGroup;
   public pinataData$: Observable<{
     pinata: IGraphic[],
     background: IGraphic[]
   }>;
+  private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
-              private pinataHttpService: PinataHttpService,
+              private pinataService: PinataService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService) { }
+              private controlValueService: ControlValueService,
+              private engagementTransformDataService: EngagementTransformDataService,
+              public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createPinataForm();
@@ -33,7 +40,27 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    const sendData = this.engagementTransformDataService.transformPinata(this.formPinata.value);
+    this.pinataService.createPinata({ data: sendData })
+      .subscribe(() => {
+        this.showLaunchDialog();
+      });
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+
+        if (result) {
+          this.router.navigateByUrl('/engagements');
+        }
+      });
   }
 
   public comeBack(): void {
@@ -95,7 +122,7 @@ export class NewPinataPageComponent implements OnInit {
   }
 
   private getPinataData(): void {
-    this.pinataData$ = this.pinataHttpService.getPinataData()
+    this.pinataData$ = this.pinataService.getPinataData()
       .pipe(
         tap((res) => {
           this.formPinata.patchValue({
@@ -104,5 +131,10 @@ export class NewPinataPageComponent implements OnInit {
           });
         })
       );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

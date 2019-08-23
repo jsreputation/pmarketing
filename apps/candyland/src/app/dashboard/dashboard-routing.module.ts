@@ -21,7 +21,8 @@ const routes: Routes = [
       {
         path: 'campaigns',
         component: DashboardCampaignPageComponent
-      }
+      },
+      { path: '**', redirectTo: 'overview'}
     ]
   }
 ];

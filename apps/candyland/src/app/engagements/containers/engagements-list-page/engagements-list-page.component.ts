@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import { EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { Engagement } from '@cl-core/models/engagement.model';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -40,9 +41,8 @@ export class EngagementsListPageComponent implements AfterViewInit {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
-        map((response: any) => response.results),
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);
         }),
       )

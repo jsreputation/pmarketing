@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MatPaginator, MatTableDataSource } from '@angular/material';
+import { RewardsService } from '@cl-core/services';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
-import { RewardsService } from '@cl-core/services/rewards.service';
+
 
 @Component({
   selector: 'cl-select-reward-popup',

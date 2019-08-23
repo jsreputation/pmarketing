@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { DashboardService } from '@cl-core/services/dashboard.service';
+import { DashboardService } from '@cl-core/services';
 import { DataService } from '@perx/chart';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';

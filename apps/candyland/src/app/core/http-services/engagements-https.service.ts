@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiConfig } from '@cl-core/api-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -11,7 +12,7 @@ export class EngagementsHttpsService {
   }
 
   public getEngagements(): Observable<any> {
-    return this.http.get('assets/mocks/engagements.json');
+    return this.http.get(ApiConfig.engagementsPath);
   }
 
   public getEngagementType(): Observable<any> {

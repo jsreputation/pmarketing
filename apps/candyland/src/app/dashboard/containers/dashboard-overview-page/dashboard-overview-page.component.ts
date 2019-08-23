@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
-import { DashboardService } from '@cl-core/services/dashboard.service';
+import { DashboardService } from '@cl-core/services';
 import { DataService } from '@perx/chart';
 import { combineLatest, Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';

@@ -2,13 +2,15 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable, Subject } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { RoutingStateService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
-import { ControlValueService } from '@cl-core/services/control-value.service';
+import { ControlValueService } from '@cl-core/services';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
+import { MatDialog } from '@angular/material';
+import { ConfirmModalComponent } from '@cl-shared';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -38,7 +40,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
               private routingState: RoutingStateService,
               private router: Router,
               private stampDataService: StampDataService,
-              private controlValueService: ControlValueService) { }
+              private controlValueService: ControlValueService,
+              public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createStampForm();
@@ -99,7 +102,22 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    this.showLaunchDialog();
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+        if (result) {
+          this.router.navigateByUrl('/engagements');
+        }
+      });
   }
 
   public comeBack(): void {

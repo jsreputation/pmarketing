@@ -43,15 +43,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getGameCard();
     this.handelDateRangeChanges();
+    this.dateRange.patchValue(this.defaultDateRange);
   }
 
   public ngOnDestroy(): void {
   }
 
-  private handelDateRangeChanges() {
+  private handelDateRangeChanges(): void {
     this.dateRange.valueChanges.pipe(
       untilDestroyed(this),
-      map(data => new Object({
+      map((data: DatepickerRangeValue<Date>) => new Object({
           start_date: this.dateToString(data.begin),
           end_date: this.dateToString(data.end)
         })
@@ -59,8 +60,21 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     ).subscribe(value => this.chartsParametersService.params = value);
   }
 
-  private dateToString(date: Date) {
+  private dateToString(date: Date): string {
     return date.toISOString().substring(0, 10);
+  }
+
+  private get defaultDateRange(): DatepickerRangeValue<Date> {
+    return {
+      begin: this.dateMountsAgo,
+      end: new Date()
+    };
+  }
+
+  private get dateMountsAgo(): Date {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date;
   }
 
   private getGameCard(): void {

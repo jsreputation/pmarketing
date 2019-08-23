@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { QuestionCountryCodeFieldComponent } from './question-country-code-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
-import { SurveyService } from '@cl-core/services/survey.service';
+import { SurveyService } from '@cl-core/services';
+
 
 describe('QuestionCountryCodeFieldComponent', () => {
   let component: QuestionCountryCodeFieldComponent;

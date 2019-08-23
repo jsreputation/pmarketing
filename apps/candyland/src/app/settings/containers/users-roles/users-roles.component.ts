@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
-import { SettingsService } from '@cl-core/services/settings.service';
+import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<any>();
   public hasData = true;
   public config: any;
 

@@ -1,5 +1,5 @@
-// import { environment } from '@cl-environments/environment';
-
 export class ApiConfig {
-  // private static readonly base = environment.baseURL;
+  public static basePath: string = 'http://localhost:3000/';
+  public static engagementsPath =  `${ApiConfig.basePath}engagements`;
+  public static createGamePath = `${ApiConfig.basePath}engagements`;
 }

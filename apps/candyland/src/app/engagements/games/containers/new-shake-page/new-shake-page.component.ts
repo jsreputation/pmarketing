@@ -1,23 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { ShakeDataService } from './shared/services/shake-data.service';
-import { Observable } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ControlValueService } from '@cl-core/services/control-value.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
+import {
+  ControlValueService,
+  EngagementTransformDataService,
+  RoutingStateService,
+  ShakeTreeService
+} from '@cl-core/services';
+import { MatDialog } from '@angular/material';
+import { ConfirmModalComponent } from '@cl-shared';
 
 @Component({
   selector: 'cl-new-shake-page',
   templateUrl: './new-shake-page.component.html',
   styleUrls: ['./new-shake-page.component.scss'],
-  providers: [ShakeDataService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewShakePageComponent implements OnInit {
+export class NewShakePageComponent implements OnInit, OnDestroy {
   public shakeTree: FormGroup;
   public shakeTreeData$: Observable<{
     gameNumberGift: IGameGifts[],
@@ -28,12 +31,14 @@ export class NewShakePageComponent implements OnInit {
 
   public selectGiftBox: IGraphic;
   public gameGift: AbstractControl;
-
+  private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
-              private shakeDataService: ShakeDataService,
+              private shakeDataService: ShakeTreeService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService) {
+              private controlValueService: ControlValueService,
+              private engagementTransformDataService: EngagementTransformDataService,
+              public dialog: MatDialog) {
   }
   public get name(): AbstractControl {
     return this.shakeTree.get(ControlsName.name);
@@ -78,7 +83,26 @@ export class NewShakePageComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    const sendData = this.engagementTransformDataService.transformShakeTheTree(this.shakeTree.value);
+    this.shakeDataService.createShakeTree({ data: sendData })
+      .subscribe(() => {
+        this.showLaunchDialog();
+      });
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+      if (result) {
+        this.router.navigateByUrl('/engagements');
+      }
+    });
   }
 
   public comeBack(): void {
@@ -123,7 +147,7 @@ export class NewShakePageComponent implements OnInit {
   private getData(): void {
     this.shakeTreeData$ = this.shakeDataService.getData()
       .pipe(
-        tap((res) => {
+        tap((res: any) => {
           this.shakeTree.patchValue({
             [ControlsName.background]: res.background[0],
             [ControlsName.giftBox]: res.giftBox[0],
@@ -132,5 +156,10 @@ export class NewShakePageComponent implements OnInit {
           });
         })
       );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
