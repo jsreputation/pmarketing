@@ -43,6 +43,8 @@ export class QuestionComponent implements OnChanges {
 
   public point: number;
 
+  public nextActionTrigger: boolean;
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
@@ -63,9 +65,9 @@ export class QuestionComponent implements OnChanges {
 
   public updateAnswer(answer: IAnswer): void {
     this.question.answer = answer.content;
+    this.updateNonGroupPoint();
     const questionId = answer.question_id ? answer.question_id : this.question.id;
     this.updateAnswers.emit({ question_id: questionId, content: answer.content });
-    this.updateNonGroupPoint();
     this.questionValidation();
     /**
      * Specially for those group type question end leaf, for normal question,
@@ -88,12 +90,17 @@ export class QuestionComponent implements OnChanges {
   public next(): void {
     this.questionValidation();
     if (!this.hasError) {
-      this.updateNonGroupPoint();
-      this.questionPointer++;
-      this.updateQuestionPointer.emit(this.questionPointer);
+      this.moveToNextQuestion();
     } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
       this.flush = true;
+      this.nextActionTrigger = true;
     }
+  }
+ 
+  public moveToNextQuestion(): void {
+    this.updateNonGroupPoint();
+    this.questionPointer++;
+    this.updateQuestionPointer.emit(this.questionPointer);
   }
 
   public back(): void {
@@ -108,7 +115,14 @@ export class QuestionComponent implements OnChanges {
     }
   }
 
-  public updateFlush(finish: boolean): void {
-    this.updateFlushEmit.emit(finish);
+  public updateFlush(flush: boolean): void {
+    if (!flush && this.nextActionTrigger) {
+      this.questionValidation();
+      if (!this.hasError) {
+        this.moveToNextQuestion();
+      }
+    }
+    this.updateFlushEmit.emit(flush);
+
   }
 }

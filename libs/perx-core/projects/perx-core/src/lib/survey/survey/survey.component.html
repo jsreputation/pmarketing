@@ -1,11 +1,12 @@
-<div class="survey-container">
-    <div *ngFor="let question of data.questions; let i = index">
+<div class="survey-container" *ngIf="data$ | async as survey">
+    <div *ngFor="let question of survey.questions ; let i = index">
         <perx-core-question 
             [id]="i"
             [questionPointer]="questionPointer"
             [totalQuestions]="data.questions.length"
             [question]="question"
             (updateAnswers)="updateAnswers($event)"
+            (updatePoints)="updatePoints($event)"
             (updateQuestionPointer)="updateQuestionPointer($event)"
         ></perx-core-question>
     </div>

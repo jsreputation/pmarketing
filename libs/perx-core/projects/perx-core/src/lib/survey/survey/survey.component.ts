@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { IAnswer, ISurvey, ITracker } from '../models/survey.model';
 import { Observable } from 'rxjs';
+import { IPoints } from 'perx-core/lib/survey/models/survey.model';
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
@@ -21,6 +22,8 @@ export class SurveyComponent implements OnInit {
 
   public answersTracker: ITracker = {};
 
+  public pointsTracker: ITracker = {};
+
   public data: ISurvey;
 
   public questionPointer: number = 0;
@@ -31,6 +34,10 @@ export class SurveyComponent implements OnInit {
 
   public updateAnswers(answer: IAnswer): void {
     this.answersTracker[answer.question_id] = answer;
+  }
+
+  public updatePoints(points: IPoints): void {
+    this.pointsTracker[points.question_id] = points.point;
     this.updateParent();
   }
 
@@ -60,8 +67,8 @@ export class SurveyComponent implements OnInit {
   }
 
   public calculatePoints(): number {
-    return Object.values(this.answersTracker).reduce((sum, answer) => {
-      return sum + answer.point;
+    return Object.values(this.pointsTracker).reduce((sum, point) => {
+      return sum + point;
     }, 0);
   }
 }
