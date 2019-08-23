@@ -13,7 +13,13 @@
 <div class="content">
   <h1>{{selectedCategory}}</h1>
   <mat-card *ngFor="let reward of rewards | async" (click)="selected(reward)" matRipple>
-    <img mat-card-image [src]="reward.rewardBanner">
+    <div class="featured-image">
+      <img mat-card-image [src]="reward.rewardBanner">
+      <span
+        [ngClass]="'macaron ' + getMacaron(reward.validFrom, reward.validTo)"
+        [innerHTML]="getMacaron(reward.validFrom, reward.validTo).replace('-', ' ')">
+      </span>
+    </div>
     <mat-card-content>
       <div class="details">
         <h1>{{reward.name}}</h1>
