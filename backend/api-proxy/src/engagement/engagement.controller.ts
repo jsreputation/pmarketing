@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpStatus, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, HttpException, HttpStatus, Headers, HttpCode } from '@nestjs/common';
 import { EngagementDto, EngagementType, UpdateEngagementDto } from './engagement.dto';
 import { Observable, OperatorFunction, merge, of } from 'rxjs';
 import { IListResponse, ISingleResponse } from '../services/response.model';
@@ -19,6 +19,10 @@ class EngagementControllerImplem {
     protected surveyService: SurveyService;
     protected loyaltyService: LoyaltyService;
     protected irService: InstantOutcomeService;
+
+    @Get('healthz')
+    @HttpCode(200)
+    public healthCheck(): void {}
 
     @Get()
     public getAll(@Headers() headers: IncomingHttpHeaders): Observable<IListResponse<EngagementDto>> {
