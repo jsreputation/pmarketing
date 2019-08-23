@@ -11,7 +11,7 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<any>();
   public hasData = true;
   public config: any;
 
