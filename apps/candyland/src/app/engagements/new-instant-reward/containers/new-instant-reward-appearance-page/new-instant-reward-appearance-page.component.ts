@@ -1,12 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
-import { ControlValueService, RewardsService, RoutingStateService } from '@cl-core/services';
+import {
+  ControlValueService,
+  EngagementTransformDataService,
+  RewardsService,
+  RoutingStateService
+} from '@cl-core/services';
+import { ConfirmModalComponent } from '@cl-shared';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -14,7 +21,7 @@ import { ControlValueService, RewardsService, RoutingStateService } from '@cl-co
   styleUrls: ['./new-instant-reward-appearance-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewInstantRewardAppearancePageComponent implements OnInit {
+export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestroy {
   public formReward: FormGroup;
   public rewardData$: Observable<{
     background: IGraphic[],
@@ -23,11 +30,14 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   public reward$: Observable<IReward[]>;
   public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
+  private destroy$ = new Subject();
   constructor(private fb: FormBuilder,
               private rewardService: RewardsService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService) { }
+              private controlValueService: ControlValueService,
+              private engagementTransformDataService: EngagementTransformDataService,
+              public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createRewardForm();
@@ -37,7 +47,27 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    const sendData = this.engagementTransformDataService.transformReward(this.formReward.value);
+    console.log(sendData);
+    this.rewardService.createRewardGame(sendData)
+      .subscribe(() => {
+        this.showLaunchDialog();
+      });
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+        if (result) {
+          this.router.navigateByUrl('/engagements');
+        }
+      });
   }
 
   public comeBack(): void {
@@ -107,5 +137,10 @@ export class NewInstantRewardAppearancePageComponent implements OnInit {
           });
         })
       );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

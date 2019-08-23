@@ -11,11 +11,11 @@ mat-toolbar {
   height: 100;
   color: #666666;
 
-  .stars {
+  .badge {
     width: 7.1rem;
     height: 7.1rem;
     border-radius: 50%;
-    background: linear-gradient(181.02deg, #ffdb1b -48.26%, #ddbe1b 144.9%);
+    background-color: #f8f8f8;
     text-align: center;
     color: white;
     display: flex;

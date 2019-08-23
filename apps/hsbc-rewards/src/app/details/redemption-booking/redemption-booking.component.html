@@ -5,13 +5,12 @@
       <div class="select-wrap">
         <select formControlName="quantity">
           <option disabled [value]="null">Quantity</option>
-          <option *ngFor="let quantity of quantityes" [value]="quantity.id">{{quantity.address}}</option>
+          <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
         </select>
       </div>
       <div class="select-wrap no-content">
         <select formControlName="merchant">
-          <option disabled [value]="null">Merchant</option>
-          <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.firstName}} {{merchant.lastName}}</option>
+          <option disabled *ngIf="reward" [value]="reward.merchantId">{{reward.merchantName || 'No Merchant'}}</option>
         </select>
       </div>
       <div class="select-wrap">
@@ -21,14 +20,19 @@
         </select>
       </div>
       <mat-radio-group class="radio-group" formControlName="pointsBalance">
-        <mat-radio-button *ngFor="let preice of prices" class="radio-button" [value]="preice.rewardCampaignId">
-          Use {{preice.price}} (Code {{preice.currencyCode}})
+        <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.rewardCampaignId">
+          Use
+          <span *ngIf="price.points">{{price.points}} points</span>
+          <span *ngIf="price.points && price.price"> + </span>
+          <span *ngIf="price.price">{{price.currencyCode}} {{price.price}}</span>
+<!--        todo: (code: XXXXX)-->
         </mat-radio-button>
       </mat-radio-group>
       <div class="agreement">
         <mat-checkbox formControlName="agreement"></mat-checkbox>
         <p>
-          I have read, understood the <a [routerLink]="[ '/terms-and-conditions']">HSBC’s Rewards Terms & Conditions </a>
+          I have read, understood the <a [routerLink]="[ '/terms-and-conditions']">HSBC’s Rewards Terms &
+          Conditions </a>
           and agree to all clauses stated therein*
         </p>
       </div>
