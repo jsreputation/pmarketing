@@ -9,7 +9,5 @@ import { multipleData } from '../mock';
   styleUrls: ['./line.component.scss']
 })
 export class LineComponent {
-  public view: number[] = [700, 400];
-
   public multipleData: Observable<IData> = of(multipleData);
 }
