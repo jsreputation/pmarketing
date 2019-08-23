@@ -20,9 +20,32 @@ class EngagementControllerImplem {
     protected loyaltyService: LoyaltyService;
     protected irService: InstantOutcomeService;
 
+    private static compare(a: IEntity<EngagementDto>, b: IEntity<EngagementDto>): number {
+        const nameA = a.attributes.created_at;
+        const nameB = b.attributes.created_at;
+        if (nameA < nameB) {
+            return 1;
+        }
+        if (nameA > nameB) {
+            return -1;
+        }
+
+        // names must be equal
+        return 0;
+    }
+
+    private get services(): { [key in EngagementType]: IEngagementService } {
+        return {
+            game: this.gameService,
+            survey: this.surveyService,
+            stamps: this.loyaltyService,
+            instant_reward: this.irService
+        };
+    }
+
     @Get('healthz')
     @HttpCode(200)
-    public healthCheck(): void {}
+    public healthCheck(): void { }
 
     @Get()
     public getAll(@Headers() headers: IncomingHttpHeaders): Observable<IListResponse<EngagementDto>> {
@@ -43,7 +66,7 @@ class EngagementControllerImplem {
                             data: res.data.map((eng: IEntity<IEngagement>): IEntity<EngagementDto> => {
                                 const dto: EngagementDto = { ...eng.attributes, type: t as EngagementType };
                                 return { ...eng, attributes: dto };
-                            }),
+                            }).sort(EngagementControllerImplem.compare),
                         };
                     }),
                     catchError((err: AxiosError) => {
@@ -148,15 +171,6 @@ class EngagementControllerImplem {
             throw new HttpException(`Invalid type: '${type}'`, HttpStatus.BAD_REQUEST);
         }
         return service;
-    }
-
-    private get services(): { [key in EngagementType]: IEngagementService } {
-        return {
-            game: this.gameService,
-            survey: this.surveyService,
-            stamps: this.loyaltyService,
-            instant_reward: this.irService
-        };
     }
 
     private mappingFn(type: EngagementType): OperatorFunction<ISingleResponse<IEngagement>, ISingleResponse<EngagementDto>> {
