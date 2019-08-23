@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
-import {ITabConfig} from '@perx/core';
-import {switchMap} from 'rxjs/operators';
-import {Observable, of, Subject, forkJoin} from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ITabConfig } from '@perx/core';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 const tabs: ITabConfig[] = [
   {
@@ -29,6 +29,7 @@ const tabs: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
@@ -39,8 +40,10 @@ export class HomeComponent implements OnInit {
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {
+  }
 
   public ngOnInit(): void {
     this.getRewardsCollection();
@@ -53,12 +56,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
+  private getRewardsCollection(): void {
+    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
+      this.rewardsCollection = of(val);
+    });
   }
 
-  public getRewards(): void {
-    this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
+  private getRewards(): void {
+
+    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
+      this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName]);
       }));
@@ -70,15 +77,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public getTags(): Observable<ITabConfig[]> {
+  private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
     this.staticTab = tabs;
+    this.tabs.next(this.staticTab);
+    this.cd.detectChanges();
     return of(tabs);
   }
 
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
-
 }
