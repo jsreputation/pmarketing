@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services/dashboard.service';
 import { DataService } from '@perx/chart';
 import { combineLatest, Observable } from 'rxjs';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
@@ -16,7 +18,7 @@ export enum DictionaryTotal {
   styleUrls: ['./dashboard-overview-page.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardOverviewPageComponent implements OnInit {
+export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public dashboardData: ITotal[];
   public activeTab: any = 'activeCustomers';
@@ -29,16 +31,27 @@ export class DashboardOverviewPageComponent implements OnInit {
 
   constructor(private dashboardService: DashboardService,
               private dataService: DataService,
+              private chartsParametersService: DashboardChartsParametersService,
               private cd: ChangeDetectorRef) {
-    this.params = {
-      start_date: '2019-07-01',
-      end_date: '2019-08-31'
-    };
   }
 
   public ngOnInit(): void {
     this.getTotalActive();
     this.addTabsValue(this.getTabsValue$([106, 147, 106]));
+    this.handelChartsParamsChanges();
+  }
+
+  public ngOnDestroy(): void {
+  }
+
+  private handelChartsParamsChanges() {
+    this.chartsParametersService.params$.pipe(
+      untilDestroyed(this),
+      tap(value => console.log(value))
+    ).subscribe(value => {
+      this.params = value;
+      this.cd.detectChanges();
+    });
   }
 
   private getTabsValue$(idArray: number[]): Observable<number | string>[] {

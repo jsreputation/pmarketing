@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services/dashboard.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
   issuedRewards = 'issuedRewards',
@@ -12,8 +14,8 @@ export enum DictionaryTotal {
   styleUrls: ['./dashboard-rewards-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardRewardsPageComponent implements OnInit {
-  // public gameCard$: Observable<DashboardGameCard[]>;
+export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
+  public params: { [key: string]: string };
   public dashboardData: ITotal[];
   public activeTab: any = 'activeCustomers';
   public mapTotal = {
@@ -24,21 +26,32 @@ export class DashboardRewardsPageComponent implements OnInit {
   public dictionaryTotal = DictionaryTotal;
 
   constructor(private dashboardService: DashboardService,
+              private chartsParametersService: DashboardChartsParametersService,
               private cd: ChangeDetectorRef) {
   }
 
   public ngOnInit(): void {
     // this.getGameCard();
     this.getTotalActive();
+    this.handelChartsParamsChanges();
+  }
+
+  public ngOnDestroy(): void {
   }
 
   public selectedTab(tab): void {
     this.activeTab = tab.value;
   }
 
-  // private getGameCard(): void {
-  //   this.gameCard$ = this.dashboardService.getDashboardGameCard();
-  // }
+  private handelChartsParamsChanges() {
+    this.chartsParametersService.params$.pipe(
+      untilDestroyed(this),
+      tap(value => console.log(value))
+    ).subscribe(value => {
+      this.params = value;
+      this.cd.detectChanges();
+    });
+  }
 
   private getTotalActive(): void {
     this.dashboardService.getTotalActive()

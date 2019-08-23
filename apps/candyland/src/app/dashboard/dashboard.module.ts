@@ -22,6 +22,7 @@ import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart
 import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/radius-circle-chart.module';
 import { LinearChartModule, ChartCardModule } from '@cl-shared';
 import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-page/dashboard-rewards-page.component';
+import { DashboardChartsParametersService } from './services/dashboard-charts-parameters.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,10 @@ import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-pa
     MatTabsModule,
     MatSelectModule,
     ChartCardModule
+  ],
+  providers: [
+    DashboardChartsParametersService
   ]
 })
-export class DashboardModule { }
+export class DashboardModule {
+}
