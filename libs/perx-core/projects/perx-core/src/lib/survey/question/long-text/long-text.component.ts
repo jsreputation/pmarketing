@@ -17,12 +17,18 @@ export class LongTextComponent {
   public payload: IPayloadLongText;
 
   @Input()
-  public flushTrigger: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public answer: string;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flush && changes.flush.currentValue) {
+      this.updateInput(this.answer);
+    }
+  }
 
   public updateInput(value: string): void {
     this.answer = value;

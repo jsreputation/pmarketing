@@ -16,12 +16,18 @@ export class PhoneComponent {
   public payload: IPayloadPhone;
 
   @Input()
-  public flushTrigger: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public answer: number;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flush && changes.flush.currentValue) {
+      this.updateInput(this.answer);
+    }
+  }
 
   public updateInput(value: number): void {
     this.answer = value;

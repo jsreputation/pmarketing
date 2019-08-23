@@ -25,26 +25,36 @@ export class GroupComponent implements OnChanges {
   public totalQuestions: number;
 
   @Input()
-  public flushTrigger: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
+
+  @Output()
+  public updatePoints: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output()
+  public updateFlushEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public selectedChoice: number;
 
   public answersTracker: ITracker = {};
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushTrigger && changes.flushTrigger.currentValue !== undefined) {
-      this.flushTrigger = changes.flushTrigger.currentValue;
+    if (changes.flush) {
+      this.flush = changes.flush.currentValue;
     }
   }
 
   public updateAnswer(answer: IAnswer): void {
-    if (this.isNextLevelQuestion(answer)) {
-      this.answersTracker[answer.question_id] = Object.assign( {}, answer);
-      const currentPoint = this.calculatePoints();
-      answer.point = currentPoint;
+    this.updateAnswers.emit(answer);
+  }
+
+  public updatePoint(point: IPoints): void {
+    this.pointsTracker[point.question_id] = point.point;
+    const currentPoint = this.calculatePoints();
+    if (this.allAnswersEmitted()) {
+      this.updateFlushEmit.emit(false);
     }
     this.updateAnswers.emit(answer);
   }
@@ -58,9 +68,15 @@ export class GroupComponent implements OnChanges {
     return totalPoint / subQuestionLength;
   }
 
-  public isNextLevelQuestion(answer: IAnswer): boolean {
-    return this.payload.questions.some((question: IQuestion) => {
-      return question.id === answer.question_id;
-    });
+  public allAnswersEmitted(): boolean {
+    const pointsTrackerValues = Object.values(this.pointsTracker);
+    const subQuestionLength = this.payload.questions.length;
+    return pointsTrackerValues.length === subQuestionLength;
+  }
+
+  public updateFlush(finish: boolean): void {
+    if (this.allAnswersEmitted()) {
+      this.updateFlushEmit.emit(finish);
+    }
   }
 }

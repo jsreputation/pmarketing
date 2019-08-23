@@ -19,12 +19,18 @@ export class RatingComponent {
   public payload: IPayloadRating;
 
   @Input()
-  public flushTrigger: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public selectedChoice: number;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.flush && changes.flush.currentValue) {
+      this.onSelect(this.selectedChoice);
+    }
+  }
 
   public onSelect(index: number): void {
     this.selectedChoice = index;

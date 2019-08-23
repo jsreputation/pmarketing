@@ -5,7 +5,9 @@
         [totalQuestions]="totalQuestions"
         [isSubQuestion]="true"
         [question]="question"
-        [flushTrigger]="flushTrigger"
+        [flush]="flush"
         (updateAnswers)="updateAnswer($event)"
+        (updatePoints)="updatePoint($event)"
+        (updateFlushEmit)="updateFlush($event)"
     ></perx-core-question>
 </div>
