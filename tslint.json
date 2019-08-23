@@ -123,6 +123,7 @@
     "no-unused-expression": true,
     "no-var-before-return": true,
     "prefer-const-enum": true,
+    "no-async-without-await": true,
     "directive-selector": [
       true,
       "attribute",

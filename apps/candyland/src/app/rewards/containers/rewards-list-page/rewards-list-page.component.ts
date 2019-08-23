@@ -14,7 +14,7 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardsListPageComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<any>();
   public hasData = true;
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
