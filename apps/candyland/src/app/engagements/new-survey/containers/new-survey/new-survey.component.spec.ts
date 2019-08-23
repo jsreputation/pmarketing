@@ -10,11 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { QuestionFormFieldModule } from '@cl-shared/components/question-form-field/question-form-field.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { ConfirmModalModule } from '@cl-shared';
 
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
@@ -37,6 +38,8 @@ describe('NewSurveyPageComponent', () => {
         MatInputModule,
         MatSelectModule,
         DragDropModule,
+        MatDialogModule,
+        ConfirmModalModule,
       ],
       declarations: [ NewSurveyComponent ],
       providers: [

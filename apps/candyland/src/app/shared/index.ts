@@ -111,3 +111,6 @@ export * from './charts/pie-chart/pie-chart.component';
 export * from './charts/radius-circle-chart/radius-circle-chart.component';
 export * from './charts/top-five-chart/top-five-chart.component';
 export * from './charts/vertical-bar-chart/vertical-bar-chart.component';
+
+export * from './containers/confirm-modal/confirm-modal.module';
+export * from './containers/confirm-modal/confirm-modal.component';
