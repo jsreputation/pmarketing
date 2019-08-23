@@ -16,7 +16,7 @@ export class DateComponent implements OnChanges {
   public payload: IPayloadDate;
 
   @Input()
-  public flushValidation: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -24,7 +24,7 @@ export class DateComponent implements OnChanges {
   public answer: string;
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushValidation && changes.flushValidation.currentValue) {
+    if (changes.flush && changes.flush.currentValue) {
       this.updateInput(this.answer);
     }
   }

@@ -25,7 +25,7 @@ export class GroupComponent implements OnChanges {
   public totalQuestions: number;
 
   @Input()
-  public flushValidation: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -34,15 +34,15 @@ export class GroupComponent implements OnChanges {
   public updatePoints: EventEmitter<number> = new EventEmitter<number>();
 
   @Output()
-  public updateFlushValidationEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public updateFlushEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public selectedChoice: number;
 
   public pointsTracker: ITracker = {};
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushValidation) {
-      this.flushValidation = changes.flushValidation.currentValue;
+    if (changes.flush) {
+      this.flush = changes.flush.currentValue;
     }
   }
 
@@ -54,7 +54,7 @@ export class GroupComponent implements OnChanges {
     this.pointsTracker[point.question_id] = point.point;
     const currentPoint = this.calculatePoints();
     if (this.allAnswersEmitted()) {
-      this.updateFlushValidationEmit.emit(false);
+      this.updateFlushEmit.emit(false);
     }
     this.updatePoints.emit(currentPoint);
   }
@@ -74,9 +74,9 @@ export class GroupComponent implements OnChanges {
     return pointsTrackerValues.length === subQuestionLength;
   }
 
-  public updateFlushValidation(finish: boolean): void {
+  public updateFlush(finish: boolean): void {
     if (this.allAnswersEmitted()) {
-      this.updateFlushValidationEmit.emit(finish);
+      this.updateFlushEmit.emit(finish);
     }
   }
 }
