@@ -114,11 +114,12 @@ jobs:
           name: Build docker image
           command: |
             cd ~/project/backend/api-proxy &&
-            docker build . -t engagements-proxy:${CIRCLE_TAG} -t engagements-proxy
+            docker build . -t perxtech/engagements-proxy:${CIRCLE_TAG} -t perxtech/engagements-proxy
       - run:
           name: Push docker
           command: |
-            docker push engagements-proxy:${CIRCLE_TAG}
+            docker push perxtech/engagements-proxy:${CIRCLE_TAG}
+            docker push perxtech/engagements-proxy
   build_docker_image:
     working_directory: ~/project
     executor: ubuntu
