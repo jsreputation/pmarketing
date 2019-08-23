@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
-import { mergeMap, flatMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
-const tabs:ITabConfig[] = [
+const tabs: ITabConfig[] = [
   {
     filterKey: 'Lifestyle',
     filterValue: null,
@@ -48,6 +48,12 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.getRewardsCollection();
     this.getRewards();
+    this.getTags();
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
+      }
+    );
   }
 
   private getRewardsCollection(): void {
