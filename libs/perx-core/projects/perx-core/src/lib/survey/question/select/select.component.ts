@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadSelect {
@@ -12,24 +12,18 @@ interface IPayloadSelect {
   styleUrls: ['./select.component.scss']
 })
 
-export class SelectComponent implements OnChanges {
+export class SelectComponent {
 
   @Input()
   public payload: IPayloadSelect;
 
   @Input()
-  public flushValidation: boolean = false;
+  public flushTrigger: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public selectedChoice: number;
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushValidation && changes.flushValidation.currentValue) {
-      this.onSelect(this.selectedChoice);
-    }
-  }
 
   public onSelect(index: number): void {
     this.selectedChoice = index;

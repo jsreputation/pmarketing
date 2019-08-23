@@ -1,5 +1,5 @@
 import { IAnswer } from './../../models/survey.model';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 interface IPayloadPictureSelect {
   type: string;
@@ -15,24 +15,18 @@ interface IPictureChoice {
   templateUrl: './picture-select.component.html',
   styleUrls: ['./picture-select.component.scss']
 })
-export class PictureSelectComponent implements OnChanges {
+export class PictureSelectComponent {
 
   @Input()
   public payload: IPayloadPictureSelect;
 
   @Input()
-  public flushValidation: boolean = false;
+  public flushTrigger: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public selectedChoice: number;
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushValidation && changes.flushValidation.currentValue) {
-      this.onSelect(this.selectedChoice);
-    }
-  }
 
   public onSelect(index: number): void {
     this.selectedChoice = index;
