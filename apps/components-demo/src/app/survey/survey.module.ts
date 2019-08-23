@@ -1,18 +1,20 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SurveyModule as PerxSurveyModule} from '@perx/core'
 
-import { HttpClientModule } from '@angular/common/http';
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey.component';
-import { SurveyModule as PerxSurveyMOdule } from '@perx/core';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [SurveyComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
     SurveyRoutingModule,
-    PerxSurveyMOdule
+    HttpClientModule,
+    PerxSurveyModule,
+    MatButtonModule
   ]
 })
 export class SurveyModule { }
