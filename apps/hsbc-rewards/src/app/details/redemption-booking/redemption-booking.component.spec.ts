@@ -11,7 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-fdescribe('RedemptionBookingComponent', () => {
+describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
   let fixture: ComponentFixture<RedemptionBookingComponent>;
   let debugElem: DebugElement;
