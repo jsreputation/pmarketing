@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadSelect {
@@ -12,7 +12,7 @@ interface IPayloadSelect {
   styleUrls: ['./select.component.scss']
 })
 
-export class SelectComponent {
+export class SelectComponent implements OnChanges{
 
   @Input()
   public payload: IPayloadSelect;

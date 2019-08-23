@@ -1,5 +1,5 @@
 import { IAnswer } from './../../models/survey.model';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadPictureSelect {
   type: string;
@@ -15,7 +15,7 @@ interface IPictureChoice {
   templateUrl: './picture-select.component.html',
   styleUrls: ['./picture-select.component.scss']
 })
-export class PictureSelectComponent {
+export class PictureSelectComponent implements OnChanges{
 
   @Input()
   public payload: IPayloadPictureSelect;

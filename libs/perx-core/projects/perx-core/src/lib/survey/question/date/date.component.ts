@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadDate {
@@ -11,7 +11,7 @@ interface IPayloadDate {
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
 })
-export class DateComponent {
+export class DateComponent implements OnChanges{
   @Input()
   public payload: IPayloadDate;
 

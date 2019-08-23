@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadLongText {
@@ -11,7 +11,7 @@ interface IPayloadLongText {
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss']
 })
-export class LongTextComponent {
+export class LongTextComponent implements OnChanges{
 
   @Input()
   public payload: IPayloadLongText;

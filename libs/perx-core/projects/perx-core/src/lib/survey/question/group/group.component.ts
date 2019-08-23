@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
-import { IQuestion, IAnswer, ITracker } from './../../models/survey.model';
+import { IQuestion, IAnswer, ITracker, IPoints } from './../../models/survey.model';
 
 interface IPayloadGroup {
   type: string;
@@ -40,6 +40,8 @@ export class GroupComponent implements OnChanges {
 
   public answersTracker: ITracker = {};
 
+  public pointsTracker: ITracker = {};
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush) {
       this.flush = changes.flush.currentValue;
@@ -56,7 +58,7 @@ export class GroupComponent implements OnChanges {
     if (this.allAnswersEmitted()) {
       this.updateFlushEmit.emit(false);
     }
-    this.updateAnswers.emit(answer);
+    this.updatePoints.emit(currentPoint);
   }
 
   public calculatePoints(): number {

@@ -1,9 +1,12 @@
 export interface IAnswer {
     question_id?: string;
     content: number | string | boolean;
-    point?: number;
 }
 
+export interface IPoints {
+    question_id?: string;
+    point: number;
+}
 export interface ITracker {
     [key: string]: any;
 }

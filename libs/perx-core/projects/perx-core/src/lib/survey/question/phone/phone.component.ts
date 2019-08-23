@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadPhone {
@@ -11,7 +11,7 @@ interface IPayloadPhone {
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
-export class PhoneComponent {
+export class PhoneComponent implements OnChanges{
   @Input()
   public payload: IPayloadPhone;
 

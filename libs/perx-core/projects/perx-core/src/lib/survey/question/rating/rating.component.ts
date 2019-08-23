@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadRating {
@@ -14,7 +14,7 @@ interface IPayloadRating {
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss']
 })
-export class RatingComponent {
+export class RatingComponent implements OnChanges{
   @Input()
   public payload: IPayloadRating;
 
