@@ -18,9 +18,6 @@ export class LineComponent implements OnChanges {
   @Input()
   public data: Observable<IData>;
 
-  @Input()
-  public view: number[];
-
   public ngxChartData: ChartData[];
 
   public ngOnChanges(changes: SimpleChanges): void {
