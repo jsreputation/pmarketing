@@ -245,7 +245,7 @@ export class V4RewardsService extends RewardsService {
       params = params.set('categories', categories.join());
     }
 
-    return this.http.get<IV4GetRewardsResponse>(
+    return this.http.post<IV4GetRewardsResponse>(
       `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
