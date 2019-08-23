@@ -218,7 +218,7 @@ export class V4RewardsService extends RewardsService {
       {
         params: {
           location_id: `${locationId ? locationId : ''}`,
-          priceId: `${priceId ? priceId : ''}`
+          price_id: `${priceId ? priceId : ''}`
         }
       }
     ).pipe(
