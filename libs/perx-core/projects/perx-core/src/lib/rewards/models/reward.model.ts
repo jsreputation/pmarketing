@@ -43,3 +43,8 @@ export interface ICategoryTags {
   title: string;
   parent?: any;
 }
+
+export interface IRewardParams {
+  priceId?: number;
+  locationId?: number;
+}
