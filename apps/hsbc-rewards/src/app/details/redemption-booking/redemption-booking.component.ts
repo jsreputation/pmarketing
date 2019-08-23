@@ -50,7 +50,7 @@ export class RedemptionBookingComponent implements OnInit {
     });
     this.locationData = this.locationService.getAll();
   }
-  
+
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
@@ -62,15 +62,17 @@ export class RedemptionBookingComponent implements OnInit {
   }
 
   public submitForm(): void {
-    this.rewardsService.reserveReward(this.rewardId, { priceId: this.bookingForm.value.quantity, locationId: this.bookingForm.value.location }).subscribe((val) => {
-      this.router.navigate(['detail/success']);
-    }, (err) => {
-      if (err.code === 40) {
-        this.notificationService.addPopup({
-          title: "Sorry",
-          text: "You do not have enough points for this transaction"
-        })
-      }
-    })
+    this.rewardsService.reserveReward(this.rewardId,
+      { priceId: this.bookingForm.value.quantity, locationId: this.bookingForm.value.location })
+      .subscribe(() => {
+        this.router.navigate(['detail/success']);
+      }, (err) => {
+        if (err.code === 40) {
+          this.notificationService.addPopup({
+            title: 'Sorry',
+            text: 'You do not have enough points for this transaction'
+          });
+        }
+      });
   }
 }
