@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.getRewards();
-    this.getTags();
+    this.getRewardsCollection();
     this.loyaltyService.getLoyalties().subscribe(
       (loyalties: ILoyalty[]) => {
         this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
