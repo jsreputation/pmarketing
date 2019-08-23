@@ -2,6 +2,7 @@ import { ISurvey } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 
 import { mock } from './mock/survey-mock';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-survey',
@@ -10,9 +11,9 @@ import { mock } from './mock/survey-mock';
 })
 export class SurveyComponent implements OnInit {
 
-  public data: ISurvey;
+  public data: Observable<ISurvey>;
 
   public ngOnInit(): void {
-    this.data = mock;
+    this.data = of(mock);
   }
 }
