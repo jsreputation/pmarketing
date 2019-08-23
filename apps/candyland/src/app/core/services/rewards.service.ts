@@ -31,4 +31,8 @@ export class RewardsService {
   public getSingleReward(id: number): Observable<any> {
     return this.rewardHttp.getSingleReward(id);
   }
+
+  public createRewardGame(data): any {
+    return this.rewardHttp.createRewardGame(data);
+  }
 }

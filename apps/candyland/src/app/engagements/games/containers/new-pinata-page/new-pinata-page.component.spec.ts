@@ -8,10 +8,17 @@ import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
+import {
+  MatCardModule, MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTabsModule
+} from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { ConfirmModalModule } from '@cl-shared';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -35,6 +42,8 @@ describe('NewPinataPageComponent', () => {
         MatInputModule,
         MatSelectModule,
         HttpClientTestingModule,
+        MatDialogModule,
+        ConfirmModalModule,
       ],
       declarations: [ NewPinataPageComponent ]
     })

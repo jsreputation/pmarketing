@@ -16,7 +16,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUsersListComponent implements AfterViewInit {
-  @Input() public dataSource: MatTableDataSource<Engagement>;
+  @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns: string[] = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickManageList: EventEmitter<number> = new EventEmitter();

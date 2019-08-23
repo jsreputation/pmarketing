@@ -29,10 +29,10 @@ import { SearchFilterModule } from '../../table/search-filter/search-filter.modu
 import { TabsFilterModule } from '../../table/tabs-filter/tabs-filter.module';
 import { StatusLabelModule } from '../../components/status-label/status-label.module';
 import { NoDataModule } from '../../table/no-data/no-data.module';
-import { ShakeDataService } from '../../../engagements/games/containers/new-shake-page/shared/services/shake-data.service';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ShakeTreeService } from '@cl-core-services';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -77,13 +77,13 @@ describe('CreateEngagementPopupComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] },
-      {
-        provide: ShakeDataService, useValue: {
-          getBackground: () => of([]),
-          getGiftBox: () => of([]),
-          getGamesTree: () => of([]),
-          getGameNumberGifts: () => of([]),
-        }
+        {
+          provide: ShakeTreeService, useValue: {
+            getBackground: () => of([]),
+            getGiftBox: () => of([]),
+            getGamesTree: () => of([]),
+            getGameNumberGifts: () => of([]),
+          }
       }
       ],
       schemas: [ NO_ERRORS_SCHEMA ]

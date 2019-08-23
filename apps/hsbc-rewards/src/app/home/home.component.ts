@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
-import { ITabConfig } from '@perx/core';
-import { map, mergeMap } from 'rxjs/operators';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
+import {ITabConfig} from '@perx/core';
+import {mergeMap} from 'rxjs/operators';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
 
-const tabs: ITabConfig[] = [
+const tabs:ITabConfig[] = [
   {
     filterKey: 'Lifestyle',
     filterValue: null,
@@ -29,6 +29,7 @@ const tabs: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
@@ -49,15 +50,6 @@ export class HomeComponent implements OnInit {
     this.tabs.next(tabs);
     this.cd.detectChanges();
     this.getRewards();
-    this.loyalty$ = this.loyaltyService.getLoyalty(100)
-      .pipe(map((loyalty: ILoyalty) => {
-        loyalty.pointsBalance = 10000;
-        if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
-          loyalty.expiringPoints[0].expireDate = new Date().toString();
-          loyalty.expiringPoints[0].points = 100;
-        }
-        return loyalty;
-      }));
   }
 
   public getRewardsCollection(): void {
@@ -92,5 +84,4 @@ export class HomeComponent implements OnInit {
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
-
 }

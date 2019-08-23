@@ -12,5 +12,9 @@ export const categories: ICategory[] = [
   {
     name: 'Shopping',
     icon: 'shopping_cart'
+  },
+  {
+    name: 'Play',
+    icon: 'gamepad'
   }
 ];

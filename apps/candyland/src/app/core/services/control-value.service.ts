@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 })
 export class ControlValueService {
 
-  public getImgLink(control: FormControl, defaultImg: string): string {
+  public getImgLink(control: FormControl, defaultImg?: string): string {
     if (!(control && control.value)) {
       return defaultImg;
     }
@@ -17,5 +17,9 @@ export class ControlValueService {
       return control.value.img;
     }
     return control.value;
+  }
+
+  public getImagePath(data: IGraphic): string {
+    return data.fullImg ? data.fullImg : data.img;
   }
 }
