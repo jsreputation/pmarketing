@@ -1,9 +1,43 @@
-declare interface Engagement {
+declare interface IEngagement {
   id: number;
-  name: string;
-  status: string;
   type: string;
-  image?: string;
-  begin?: Date;
-  end?: Date;
+  links: {
+    self: string;
+  };
+  attributes: {
+    urn: string;
+    created_at: string;
+    updated_at: string;
+    game_type: string;
+    title: string;
+    description: string;
+    image_url: string;
+    properties: {},
+    display_properties: {
+      fontName: string;
+      fontColor: string;
+      headerColor: string;
+      headerTitle: string;
+      headlineText: string;
+      mainShapeType: string;
+      backgroundColor: string;
+      headerLogoImage: string;
+      subHeadlineText: string;
+      callToActionText: string;
+      loadingHeadlineText: string;
+      loadingSubHeadlineText: string;
+      background: string;
+      cardBackground: string;
+      buttonText?: string;
+    },
+    type: string;
+  };
+  relationships: {
+    campaigns: {
+      links: {
+        self: string;
+        related: string;
+      }
+    }
+  };
 }

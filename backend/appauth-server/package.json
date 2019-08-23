@@ -16,7 +16,7 @@
   "devDependencies": {
     "ts-loader": "^6.0.3",
     "ts-node": "^8.2.0",
-    "tslint": "^5.17.0",
+    "tslint": "~5.19.0",
     "tslint-consistent-codestyle": "^1.15.1",
     "typescript": "^3.5.1",
     "webpack": "^4.35.0",

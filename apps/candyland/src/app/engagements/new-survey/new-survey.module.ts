@@ -12,9 +12,15 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } fr
 import { QuestionFormFieldModule } from '@cl-shared/components/question-form-field/question-form-field.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
+import { ConfirmModalModule } from '@cl-shared';
 
 @NgModule({
-  declarations: [NewSurveyQuestionsPageComponent, NewSurveyAppearancePageComponent, NewSurveyRewardsPageComponent, NewSurveyComponent],
+  declarations: [
+    NewSurveyQuestionsPageComponent,
+    NewSurveyAppearancePageComponent,
+    NewSurveyRewardsPageComponent,
+    NewSurveyComponent
+  ],
   imports: [
     CommonModule,
     NewSurveyRoutingModule,
@@ -29,6 +35,7 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
     MatInputModule,
     MatSelectModule,
     DragDropModule,
+    ConfirmModalModule,
   ]
 })
 export class NewSurveyModule { }

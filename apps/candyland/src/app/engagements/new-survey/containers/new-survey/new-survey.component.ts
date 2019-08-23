@@ -1,11 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { SurveyService } from '@cl-core/services/survey.service';
+import { ConfirmModalComponent } from '@cl-shared';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
 export enum SurveyQuestionType {
   rating = 'rating',
@@ -22,11 +25,12 @@ export enum SurveyQuestionType {
   styleUrls: ['./new-survey.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewSurveyComponent implements OnInit {
+export class NewSurveyComponent implements OnInit, OnDestroy {
   public formSurvey: FormGroup;
   public surveyQuestionType: IEngagementType[];
   public surveyData$: Observable<any>;
   public level = 0;
+  private destroy$ = new Subject();
   // tslint:disable
   private data = {
     name: 'Create Shake the Tree Template',
@@ -91,7 +95,9 @@ export class NewSurveyComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private questionFormFieldService: QuestionFormFieldService,
-              private surveyService: SurveyService) {
+              private surveyService: SurveyService,
+              private router: Router,
+              public dialog: MatDialog) {
   }
 
   public get listId(): string {
@@ -151,6 +157,22 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public save(): void {
+    this.showLaunchDialog();
+  }
+
+  public showLaunchDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(result => {
+        if (result) {
+          this.router.navigateByUrl('/engagements');
+        }
+      });
   }
 
   public deleteQuestion(index: number) {
@@ -196,4 +218,8 @@ export class NewSurveyComponent implements OnInit {
       }));
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
