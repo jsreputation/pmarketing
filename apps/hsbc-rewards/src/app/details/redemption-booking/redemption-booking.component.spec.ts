@@ -24,7 +24,7 @@ fdescribe('RedemptionBookingComponent', () => {
         MatCheckboxModule,
         RewardsModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
-        LocationModule.forRoot({env: environment}),
+        LocationModule.forRoot({ env: environment }),
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
@@ -45,13 +45,14 @@ fdescribe('RedemptionBookingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should populate quantity', ()=>{
+  it('should populate quantity', () => {
     const checkVal = 1;
     component.buildForm();
     fixture.detectChanges();
-    component.bookingForm.patchValue({quantity:checkVal})
+    component.bookingForm.patchValue({ quantity: checkVal });
     fixture.detectChanges();
     const elem = debugElem.query(By.css('select[formcontrolname=quantity]')).nativeElement;
     expect(elem.value).toBe(checkVal.toString());
-  })
+  });
+
 });
