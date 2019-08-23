@@ -212,11 +212,12 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public reserveReward(rewardId: number, priceId?: number): Observable<IVoucher> {
+  public reserveReward(rewardId: number, priceId?: number, locationId?: number): Observable<IVoucher> {
     return this.http.get<IV4ReserveRewardResponse>(
       `${this.apiHost}/v4/rewards/${rewardId}/reserve`,
       {
         params: {
+          location_id: `${locationId ? locationId : ''}`,
           priceId: `${priceId ? priceId : ''}`
         }
       }
