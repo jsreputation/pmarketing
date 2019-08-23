@@ -4,9 +4,10 @@ import {EnvConfig} from '../shared/env-config';
 import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {RewardsService} from './rewards.service';
-import {IReward, ICatalog, IPrice, ICategoryTags} from './models/reward.model';
+import {IReward, ICatalog, IPrice, ICategoryTags, IRewardParams} from './models/reward.model';
 import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
 import {VouchersService} from '../vouchers/vouchers.service';
+import {oc} from 'ts-optchain';
 
 interface IV4Meta {
   count?: number;
@@ -212,14 +213,18 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public reserveReward(rewardId: number, priceId?: number): Observable<IVoucher> {
-    return this.http.get<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`,
-      {
-        params: {
-          priceId: `${priceId ? priceId : ''}`
-        }
-      }
+  public reserveReward(rewardId: number, rewardParams?: IRewardParams): Observable<IVoucher> {
+    let params = new HttpParams();
+
+    if (oc(rewardParams).locationId()) {
+      params = params.set('location_id', rewardParams.locationId.toString());
+    }
+    if (oc(rewardParams).priceId()) {
+      params = params.set('price_id', rewardParams.priceId.toString());
+    }
+
+    return this.http.post<IV4ReserveRewardResponse>(
+      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, { params }
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
