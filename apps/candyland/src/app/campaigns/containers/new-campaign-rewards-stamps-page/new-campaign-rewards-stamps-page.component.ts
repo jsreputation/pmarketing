@@ -29,8 +29,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public ngOnInit(): void {
     super.ngOnInit();
-    const stampsSlotNumber = this.store.currentCampaign.template.payload.stampsSlotNumber;
-    const stampsNumber = +this.store.currentCampaign.template.payload.stampsNumber;
+    const stampsSlotNumber = this.store.currentCampaign.template.attributes.display_properties.slots;
+    const stampsNumber = +this.store.currentCampaign.template.attributes.nb_of_slots;
+    console.log('hey', stampsSlotNumber, stampsNumber);
     for (const slotNumber of stampsSlotNumber) {
       this.addReward(this.createRewardForm(slotNumber));
     }
@@ -44,7 +45,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
         }
       });
 
-    this.form.patchValue(this.formService.getDefaultValue());
+    // this.form.patchValue(this.formService.getDefaultValue());
   }
 
   public ngOnDestroy(): void {
