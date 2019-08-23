@@ -29,7 +29,6 @@ export class SurveyComponent {
   public updateAnswers(answer: IAnswer): void {
     this.answersTracker[answer.question_id] = answer;
     this.updateParent();
-    console.log(this.answersTracker);
   }
 
   public updateParent(): void {
@@ -49,7 +48,7 @@ export class SurveyComponent {
         };
       });
       this.surveyDone.emit(answers);
-      console.log('answers: ' + answers);
+      console.log('answers: ' + JSON.stringify(answers));
     }
   }
 

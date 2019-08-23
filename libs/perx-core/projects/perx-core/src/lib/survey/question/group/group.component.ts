@@ -35,15 +35,17 @@ export class GroupComponent implements OnChanges {
   public answersTracker: ITracker = {};
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flushTrigger) {
+    if (changes.flushTrigger && changes.flushTrigger.currentValue !== undefined) {
       this.flushTrigger = changes.flushTrigger.currentValue;
     }
   }
 
   public updateAnswer(answer: IAnswer): void {
-    this.answersTracker[answer.question_id] = answer;
-    const currentPoint = this.calculatePoints();
-    answer.point = currentPoint;
+    if (this.isNextLevelQuestion(answer)) {
+      this.answersTracker[answer.question_id] = Object.assign( {}, answer);
+      const currentPoint = this.calculatePoints();
+      answer.point = currentPoint;
+    }
     this.updateAnswers.emit(answer);
   }
 
@@ -56,4 +58,9 @@ export class GroupComponent implements OnChanges {
     return totalPoint / subQuestionLength;
   }
 
+  public isNextLevelQuestion(answer: IAnswer): boolean {
+    return this.payload.questions.some((question: IQuestion) => {
+      return question.id === answer.question_id;
+    });
+  }
 }

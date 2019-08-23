@@ -25,7 +25,7 @@ export class QuestionComponent implements OnChanges {
 
   // Used to flush group tree
   @Input()
-  public flushTrigger: boolean = false;
+  public flushTrigger: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -41,9 +41,11 @@ export class QuestionComponent implements OnChanges {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
     }
-    if (changes.flushTrigger) {
+    if (changes.flushTrigger && changes.flushTrigger.currentValue !== undefined) {
       this.flushTrigger = changes.flushTrigger.currentValue;
-      this.updateAnswer();
+      if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
+        this.updateAnswer();
+      }
     }
   }
 
@@ -54,13 +56,20 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateAnswer(answer?: IAnswer): void {
-    this.question.answer = answer.content || this.question.answer;
-    this.point = answer.point || this.point;
-    const questionId = answer.question_id || this.question.id;
+    let questionId = this.question.id;
+    if (answer) {
+      this.question.answer = answer.content;
+      this.point = answer.point;
+      questionId = answer.question_id || questionId;
+    }
 
     this.updatePoint();
     this.updateErrorState();
-    this.updateAnswers.emit({ question_id: questionId, content: this.question.answer, point: this.point });
+    if (this.question.payload.type === SurveyQuestionType.questionGroup) {
+      this.updateAnswers.emit({ question_id: this.question.id, content: undefined, point: this.point });
+    } else {
+      this.updateAnswers.emit({ question_id: questionId, content: this.question.answer, point: this.point });
+    }
   }
 
   public updatePoint(): void {
@@ -70,7 +79,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   public next(): void {
-    this.updateAnswer();
+    this.updateErrorState();
     if (!this.hasError) {
       this.questionPointer++;
       this.updateQuestionPointer.emit(this.questionPointer);
