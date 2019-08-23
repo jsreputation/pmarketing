@@ -16,7 +16,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<IEngagement>();
   public typeFilterConfig: OptionConfig[];
 
   public get template(): AbstractControl {
@@ -62,7 +62,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
         }),
       )
-      .subscribe((res: Engagement[]) => {
+      .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;
         this.cd.detectChanges();
       });

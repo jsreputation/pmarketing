@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ConfigPathService } from '@cl-core-services';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,9 @@ export class PinataHttpService {
       pinata: IGraphic[],
       background: IGraphic[]
     }>('assets/actives/pinata/pinata-data.json');
+  }
+
+  public createPinata(data: any): any {
+    return this.http.post(ConfigPathService.engagementsPath, data);
   }
 }
