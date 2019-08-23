@@ -69,7 +69,7 @@ export const mock: ISurvey = {
             question: 'Tell us more about us',
             description: 'No offence taken',
             id: '7',
-            required: false,
+            required: true,
             payload: {
                 type: 'group',
                 questions: [
@@ -91,7 +91,7 @@ export const mock: ISurvey = {
                         question: 'What\'s your favorite color 2',
                         description: 'We love blue',
                         id: '7.2',
-                        required: false,
+                        required: true,
                         payload: {
                             type: 'select',
                             choices: [
@@ -105,37 +105,40 @@ export const mock: ISurvey = {
                         question: 'What\'s your favorite color 3',
                         description: 'We love blue',
                         id: '7.3',
-                        required: false,
-                        questions: [
-                            {
-                                question: 'What\'s your favorite color 3.1',
-                                description: 'We love blue',
-                                id: '7.3.1',
-                                required: false,
-                                payload: {
-                                    type: 'select',
-                                    choices: [
-                                        'blue',
-                                        'white',
-                                        'red'
-                                    ]
-                                }
-                            },
-                            {
-                                question: 'What\'s your favorite color 3.2',
-                                description: 'We love blue',
-                                id: '7.3.2',
-                                required: false,
-                                payload: {
-                                    type: 'select',
-                                    choices: [
-                                        'blue',
-                                        'white',
-                                        'red'
-                                    ]
-                                }
-                            },
-                        ]
+                        required: true,
+                        payload: {
+                            type: 'group',
+                            questions: [
+                                {
+                                    question: 'What\'s your favorite color 3.1',
+                                    description: 'We love blue',
+                                    id: '7.3.1',
+                                    required: false,
+                                    payload: {
+                                        type: 'select',
+                                        choices: [
+                                            'blue',
+                                            'white',
+                                            'red'
+                                        ]
+                                    }
+                                },
+                                {
+                                    question: 'What\'s your favorite color 3.2',
+                                    description: 'We love blue',
+                                    id: '7.3.2',
+                                    required: true,
+                                    payload: {
+                                        type: 'select',
+                                        choices: [
+                                            'blue',
+                                            'white',
+                                            'red'
+                                        ]
+                                    }
+                                },
+                            ]
+                        }
                     }
                 ]
             }

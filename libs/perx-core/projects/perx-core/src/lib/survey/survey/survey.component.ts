@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { IAnswer, ISurvey, ITracker } from '../models/survey.model';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent {
-  @Input()
-  public data: ISurvey;
+export class SurveyComponent implements OnInit {
+  @Input('data')
+  public data$: Observable<ISurvey>;
 
   @Output()
   public totalLength: EventEmitter<number> = new EventEmitter();
@@ -20,10 +21,12 @@ export class SurveyComponent {
 
   public answersTracker: ITracker = {};
 
+  public data: ISurvey;
+
   public questionPointer: number = 0;
 
-  public completeSurvey(): void {
-    this.surveyDone.emit();
+  public ngOnInit(): void {
+    this.data$.subscribe(data => this.data = data);
   }
 
   public updateAnswers(answer: IAnswer): void {
