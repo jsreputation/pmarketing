@@ -128,5 +128,5 @@ export { GeoLocationService } from './lib/location/geolocation.service';
 /**
  * Config
  */
-export { ConfigModule } from './lib/config/config.module'
-export { Config } from './lib/config/config'
+export { ConfigModule } from './lib/config/config.module';
+export { Config } from './lib/config/config';
