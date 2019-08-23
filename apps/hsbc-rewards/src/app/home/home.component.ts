@@ -1,9 +1,9 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
-import {ITabConfig} from '@perx/core';
-import {Observable, of, Subject, forkJoin} from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ITabConfig } from '@perx/core';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
 const tabs: ITabConfig[] = [
   {
@@ -29,6 +29,7 @@ const tabs: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
@@ -44,9 +45,9 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  public async ngOnInit(): Promise<void> {
-    this.getRewards();
+  public ngOnInit(): void {
     this.getRewardsCollection();
+    this.getRewards();
     this.loyaltyService.getLoyalties().subscribe(
       (loyalties: ILoyalty[]) => {
         this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
@@ -54,14 +55,15 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  public getRewardsCollection(): void {
+  private getRewardsCollection(): void {
     this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
       this.rewardsCollection = of(val);
     });
   }
 
-  public getRewards(): void {
-    this.getTags().pipe(mergeMap((tags: ITabConfig[]) => {
+  private getRewards(): void {
+
+    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName])
@@ -75,7 +77,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public getTags(): Observable<ITabConfig[]> {
+  private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
     this.staticTab = tabs;
@@ -87,5 +89,4 @@ export class HomeComponent implements OnInit {
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
-
 }
