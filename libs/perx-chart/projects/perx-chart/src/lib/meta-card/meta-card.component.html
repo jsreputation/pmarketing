@@ -10,3 +10,12 @@
   <pc-calendar-heatmap *ngSwitchCase="'calendardHeatmap'" [data]="data"></pc-calendar-heatmap>
   <div *ngSwitchDefault>Wrong type selected '{{cardType}}'</div>
 </div>
+<div class="wrapper">
+  <mat-progress-spinner *ngIf="showLoading" color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+  <div *ngIf="showReload" class="button-wrapper">
+    <button mat-button (click)="reload()" color="primary">
+      Oops, the server just took a nap, try again <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</div>

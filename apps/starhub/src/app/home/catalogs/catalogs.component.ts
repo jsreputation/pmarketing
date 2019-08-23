@@ -1,40 +1,23 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { ICatalog, RewardsService } from '@perx/core';
+import { Observable } from 'rxjs';
 
-export interface Catalog {
-  image: string;
-  title: string;
-  description: string;
-  nbRewards: number;
-}
 @Component({
   selector: 'app-catalogs',
   templateUrl: './catalogs.component.html',
   styleUrls: ['./catalogs.component.scss']
 })
 export class CatalogsComponent {
-  public catalogs: Catalog[];
+  public catalogs: Observable<ICatalog[]>;
 
   @Output()
-  public tapped: EventEmitter<Catalog> = new EventEmitter<Catalog>();
+  public tapped: EventEmitter<ICatalog> = new EventEmitter<ICatalog>();
 
-  constructor() {
-    this.catalogs = [
-      {
-        image: 'https://picsum.photos/300/200?random=3',
-        title: 'Ramadan Exclusive',
-        description: 'Here are deals for ramadan',
-        nbRewards: 5
-      },
-      {
-        image: 'https://picsum.photos/300/200?random=4',
-        title: 'Christmas Specials',
-        description: 'Santa-claus latest and greatest',
-        nbRewards: 25
-      }
-    ];
+  constructor( private rewardsService: RewardsService ) {
+    this.catalogs = this.rewardsService.getAllCatalogs();
   }
 
-  public selected(catalog: Catalog): void {
+  public selected(catalog: ICatalog): void {
     this.tapped.emit(catalog);
   }
 }

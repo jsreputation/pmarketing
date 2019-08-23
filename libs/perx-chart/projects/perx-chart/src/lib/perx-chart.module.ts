@@ -10,7 +10,7 @@ import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.co
 import { LineComponent } from './line/line.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MetaCardComponent } from './meta-card/meta-card.component';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { DataService } from './data.service';
 
 const comps: any[] = [
@@ -29,7 +29,10 @@ const comps: any[] = [
 @NgModule({
   imports: [
     NgxChartsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     ...comps

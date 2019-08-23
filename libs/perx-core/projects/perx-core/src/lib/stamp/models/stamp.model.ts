@@ -1,3 +1,5 @@
+import { IVoucher } from '../../vouchers/models/voucher.model';
+
 export interface IReward {
   id: number;
   campaignId: number;
@@ -59,10 +61,4 @@ export interface IStampCard {
     totalSlots: number;
   };
   stamps?: IStamp[];
-}
-
-// TODO: Should move this to voucher
-export interface IVoucher {
-  id: string;
-  name: string;
 }

@@ -30,7 +30,7 @@ export class RewardDetailComponent implements OnInit {
       return this.rewardService.getReward(this.id);
     })).pipe(map((val: IReward) => {
       if (val.description) {
-        val.description = val.description + '<div><a href="reedem">how to redem</a></div>';
+        val.description = val.description + '<div><a href="faq">how to redem</a></div>';
       }
       return val;
     }));
