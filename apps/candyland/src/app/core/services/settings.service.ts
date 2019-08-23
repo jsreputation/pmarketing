@@ -61,7 +61,10 @@ export class SettingsService implements ITableService {
   }
 
   public getTableData(params: any): Observable<any> {
-    return this.settingsHttpService.getAllCredential(params);
+    return this.settingsHttpService.getAllCredential(params)
+      .pipe(
+        map((res: any) => res.data)
+      );
   }
 
 }

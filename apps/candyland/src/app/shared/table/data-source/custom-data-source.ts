@@ -3,30 +3,25 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { HttpParams } from '@angular/common/http';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
 
-export enum SortDictionary {
-  name = 'name',
-  email = 'email',
-  registration = 'registration_time',
-  verification = 'email_verification_time',
-  lastVisit = 'last_activity_time',
-  membership = 'current_plan_name',
-  membershipCost = 'current_plan_cost'
-}
 // tslint:disable
 export class CustomDataSource {
   private dataSubject = new BehaviorSubject<any[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private changeFilterSearch = new BehaviorSubject<number>(0);
-  private lengthData = new BehaviorSubject<number>(0);
-  private _sort: any;
-  private _filter: any;
-
-  // used for setUp pagination index page to 0 when searching
-  public changeSearch$ = this.changeFilterSearch.asObservable();
   // used for toggle spiner loading
   public loading$ = this.loadingSubject.asObservable();
+  private changeFilterSearch = new BehaviorSubject<number>(0);
+  // used for setUp pagination index page to 0 when searching
+  public changeSearch$ = this.changeFilterSearch.asObservable();
+  private lengthData = new BehaviorSubject<number>(0);
   // used for set all length items the pagination component
   public length$ = this.lengthData.asObservable();
+
+  // default items on the page set up pageSize
+  constructor(private dataService: ITableService, private pageSize = 5) {
+    this.loadingData();
+  }
+
+  private _sort: any;
 
   public get sort(): SortModel {
     return this._sort;
@@ -35,16 +30,17 @@ export class CustomDataSource {
   public set sort(val: SortModel) {
     this._sort = val;
     this.changeFilterSearch.next(0);
-
     this.loadingData();
   }
 
-  public get filter() {
+  private _filter: any;
+
+  public get filter(): {[key: string]: string} {
     return this._filter;
   }
 
-  public set filter(value: string) {
-    this._filter = value;
+  public set filter(value: {[key: string]: string}) {
+    this._filter = JSON.parse((value as any));
     this.changeFilterSearch.next(0);
 
     this.loadingData();
@@ -55,15 +51,10 @@ export class CustomDataSource {
     this.loadingData(value);
   }
 
-  // default items on the page set up pageSize
-  constructor(private dataService: ITableService,
-              private pageSize = 5) {
-    this.loadingData();
-  }
-
   public connect(): Observable<any> {
     return this.dataSubject.asObservable();
   }
+
   public disconnect(): void {
     this.dataSubject.complete();
     this.changeFilterSearch.complete();
@@ -71,19 +62,21 @@ export class CustomDataSource {
     this.lengthData.complete();
   }
 
-
   loadingData(pagination?: any) {
-    const dataFilter = {
-      // filter: this.filter,
+    const params = {
+      ...this.prepareFilters(),
+      ...this.sortPrepare(this.sort),
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
-      'page[size]': pagination ? pagination.pageSize : this.pageSize,
-      // ...this.sortPrepare(this.sort)
+      'page[size]': pagination ? pagination.pageSize : this.pageSize
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData({params: this.params(dataFilter)})
+    this.dataService.getTableData({params: this.params(params)})
       .subscribe((res: any) => {
-        this.dataSubject.next(res.users);
-        this.lengthData.next(res.meta.totalCount);
+        console.log(res);
+        this.dataSubject.next(res);
+
+        // add random mock parameter
+        this.lengthData.next(50);
         this.loadingSubject.next(false);
       }, error => {
         this.dataSubject.next([]);
@@ -93,24 +86,11 @@ export class CustomDataSource {
       });
   }
 
-  private sortPrepare(sort: SortModel) {
-    if (sort && sort.direction !== '') {
-      return {
-        order: SortDictionary[sort.active],
-        sort: sort.direction
-      };
-    }
-    return {sort: null};
-  }
-
   public params(filters): HttpParams {
     if (filters) {
       let params: any = new HttpParams();
       for (const property in filters) {
-        if (
-          filters.hasOwnProperty(property) &&
-          (filters[property] !== null && filters[property] !== '' && filters[property] !== undefined )
-        ) {
+        if (filters.hasOwnProperty(property) && (filters[property] !== null && filters[property] !== '' && filters[property] !== undefined)) {
           if (Array.isArray(property)) {
             filters[property].forEach((element) => {
               params = params.append(property, element);
@@ -123,4 +103,29 @@ export class CustomDataSource {
       return params;
     }
   }
+
+  private sortPrepare(sortData: SortModel) {
+    if (sortData && sortData.direction !== '') {
+      const sort = sortData.direction === 'asc'
+        ? `${sortData.active}`
+        : `-${sortData.active}`;
+      return {
+        sort
+      };
+    }
+    return {sort: null};
+  }
+
+  private prepareFilters(): any {
+    if (!this._filter) {
+      return {filter: null};
+    }
+    const result = {};
+    Object.keys(this._filter)
+      .forEach((item) => {
+        result[`filter[${item}]`] = this.filter[item]
+      });
+    return result;
+  }
+
 }

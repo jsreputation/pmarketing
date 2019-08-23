@@ -37,7 +37,8 @@ export class PaginatorComponent implements AfterViewInit, OnDestroy {
       .pipe(takeWhile(() => this.componentActive))
       .subscribe(() => {
         this.dataSource.pagination = {
-          pageIndex: this.paginator.pageIndex, pageSize: this.paginator.pageSize
+          pageIndex: this.paginator.pageIndex,
+          pageSize: this.paginator.pageSize
         };
       });
   }
