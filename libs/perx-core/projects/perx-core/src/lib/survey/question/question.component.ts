@@ -25,7 +25,7 @@ export class QuestionComponent implements OnChanges {
 
   // Used to flush group tree
   @Input()
-  public flushValidation: boolean = false;
+  public flush: boolean = false;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -37,7 +37,7 @@ export class QuestionComponent implements OnChanges {
   public updateQuestionPointer: EventEmitter<number> = new EventEmitter<number>();
 
   @Output()
-  public updateFlushValidationEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public updateFlushEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public hasError: boolean;
 
@@ -47,9 +47,9 @@ export class QuestionComponent implements OnChanges {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
     }
-    if (changes.flushValidation) {
-      this.flushValidation = changes.flushValidation.currentValue;
-      if (this.flushValidation) {
+    if (changes.flush) {
+      this.flush = changes.flush.currentValue;
+      if (this.flush) {
         this.questionValidation();
       }
     }
@@ -92,7 +92,7 @@ export class QuestionComponent implements OnChanges {
       this.questionPointer++;
       this.updateQuestionPointer.emit(this.questionPointer);
     } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-      this.flushValidation = true;
+      this.flush = true;
     }
   }
 
@@ -108,7 +108,7 @@ export class QuestionComponent implements OnChanges {
     }
   }
 
-  public updateFlushValidation(finish: boolean): void {
-    this.updateFlushValidationEmit.emit(finish);
+  public updateFlush(finish: boolean): void {
+    this.updateFlushEmit.emit(finish);
   }
 }
