@@ -7,6 +7,7 @@ import {RewardsService} from './rewards.service';
 import {IReward, ICatalog, IPrice, ICategoryTags, IRewardParams} from './models/reward.model';
 import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
 import {VouchersService} from '../vouchers/vouchers.service';
+import {oc} from 'ts-optchain';
 
 interface IV4Meta {
   count?: number;
@@ -215,10 +216,10 @@ export class V4RewardsService extends RewardsService {
   public reserveReward(rewardId: number, rewardParams?: IRewardParams): Observable<IVoucher> {
     let params = new HttpParams();
 
-    if (rewardParams.locationId) {
+    if (oc(rewardParams).locationId()) {
       params = params.set('location_id', rewardParams.locationId.toString());
     }
-    if (rewardParams.priceId) {
+    if (oc(rewardParams).priceId()) {
       params = params.set('price_id', rewardParams.priceId.toString());
     }
 
