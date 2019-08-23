@@ -62,8 +62,12 @@ export class SurveyComponent implements OnInit {
     }
   }
 
-  public updateQuestionPointer(questionPointer: number): void {
-    this.questionPointer = questionPointer;
+  public updateQuestionPointer(action: string): void {
+    if (action === 'next') {
+      this.questionPointer++;
+    } else {
+      this.questionPointer--;
+    }
   }
 
   public calculatePoints(): number {

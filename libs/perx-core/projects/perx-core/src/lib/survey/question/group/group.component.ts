@@ -55,9 +55,7 @@ export class GroupComponent implements OnChanges {
   public updatePoint(point: IPoints): void {
     this.pointsTracker[point.question_id] = point.point;
     const currentPoint = this.calculatePoints();
-    if (this.allAnswersEmitted()) {
-      this.updateFlushEmit.emit(false);
-    }
+    this.updateFlush(false);
     this.updatePoints.emit(currentPoint);
   }
 

@@ -34,10 +34,7 @@ export class QuestionComponent implements OnChanges {
   public updatePoints: EventEmitter<IPoints> = new EventEmitter<IPoints>();
 
   @Output()
-  public updateQuestionPointer: EventEmitter<number> = new EventEmitter<number>();
-
-  @Output()
-  public updateFlushEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public updateQuestionPointer: EventEmitter<string> = new EventEmitter<string>();
 
   public hasError: boolean;
 
@@ -46,9 +43,6 @@ export class QuestionComponent implements OnChanges {
   public nextActionTrigger: boolean;
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.questionPointer) {
-      this.questionPointer = changes.questionPointer.currentValue;
-    }
     if (changes.flush) {
       this.flush = changes.flush.currentValue;
       if (this.flush) {
@@ -96,16 +90,14 @@ export class QuestionComponent implements OnChanges {
       this.nextActionTrigger = true;
     }
   }
- 
+
   public moveToNextQuestion(): void {
     this.updateNonGroupPoint();
-    this.questionPointer++;
-    this.updateQuestionPointer.emit(this.questionPointer);
+    this.updateQuestionPointer.emit('next');
   }
 
   public back(): void {
-    this.questionPointer--;
-    this.updateQuestionPointer.emit(this.questionPointer);
+    this.updateQuestionPointer.emit('back');
   }
 
   public questionValidation(): void {
@@ -119,10 +111,9 @@ export class QuestionComponent implements OnChanges {
     if (!flush && this.nextActionTrigger) {
       this.questionValidation();
       if (!this.hasError) {
+        this.nextActionTrigger = false;
         this.moveToNextQuestion();
       }
     }
-    this.updateFlushEmit.emit(flush);
-
   }
 }
