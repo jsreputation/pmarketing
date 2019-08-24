@@ -4,7 +4,7 @@ import { ICategory } from '../../category.model';
 import { categories } from '../../category.mock';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
-export interface BottomSheetClosedCallBack {
+export interface CategoryBottomSheetClosedCallBack {
     categorySelectedCallback(updatedValue: string): void;
     getCurrentSelectedCategory(): string;
 }
@@ -20,7 +20,7 @@ export class CategorySelectComponent {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<CategorySelectComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetClosedCallBack
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: CategoryBottomSheetClosedCallBack
   ) {
     this.categories = categories;
     if (this.data.getCurrentSelectedCategory) {

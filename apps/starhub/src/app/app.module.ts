@@ -38,6 +38,7 @@ import { of } from 'rxjs';
 import { rewards } from './rewards.mock';
 import { vouchers } from './vouchers.mock';
 import { catalogs } from './catalogs.mock';
+import { RewardsSortPipe } from './category/rewards-sort.pipe';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -66,6 +67,7 @@ const vouchersServiceStub = {
     RedemptionComponent,
     CategorySelectComponent,
     CategorySortComponent,
+    RewardsSortPipe
   ],
   imports: [
     BrowserModule,
