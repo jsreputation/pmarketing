@@ -1,0 +1,41 @@
+<div class="header-wrap">
+  <!--<h2 mat-dialog-title class="create-engagement-dialog-title">Create Engagement</h2>-->
+  <!--<p class="create-engagement-dialog-content-title">-->
+    <!--Select Engagement Type-->
+  <!--</p>-->
+  <button class="btn-closed btn-transparent" [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="wrap-template-img">
+  <img src="assets/images/engagement-type/engagement-template.png" alt="template">
+</div>
+<div class="wrap-description flex-column center align-items-center">
+  <p class="description-header text-center">
+    Yay! you just created an engagement template!
+  </p>
+  <p class="description-body text-center">
+    One step to go closer to your customers. Now you can launch a campaign with this.
+  </p>
+</div>
+<div class="dialog-actions"
+>
+  <cl-button [classList]="'tertiary'"
+             class="actions-close"
+             (click)="close()"
+             [disableRipple]="true"
+  >
+      <span>
+        Launch later
+      </span>
+  </cl-button>
+
+  <cl-button [classList]="'primary'"
+             (click)="close(true)"
+             [disableRipple]="true"
+  >
+      <span>
+        Launch now
+      </span>
+  </cl-button>
+</div>

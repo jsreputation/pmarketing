@@ -10,5 +10,4 @@ import { data } from '../heatmap-mock';
 })
 export class CalendarHeatmapComponent {
   public data: Observable<IData> = of(data);
-  public view: number[] = [600, 200];
 }

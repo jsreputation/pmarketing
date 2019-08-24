@@ -1,10 +1,12 @@
 <div class="app">
   <mat-toolbar class="mat-elevation-z4">
     <mat-toolbar-row class="top-row">
-      <div class="stars">★ ★</div>
+      <div class="badge">
+        <img [src]="getBadge(loyalty.membershipTierName)" alt="">
+      </div>
       <div class="reward">
-        <h2>Hello,</h2>
-        <h1>Gold Member!</h1>
+        <h2>My Membership,</h2>
+        <h1>{{loyalty.membershipTierName | titlecase}}</h1>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>

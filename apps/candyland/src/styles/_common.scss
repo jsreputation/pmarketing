@@ -48,6 +48,11 @@ button {
   display: flex;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .justify-content-between {
   -webkit-box-pack: justify !important;
   -ms-flex-pack: justify !important;

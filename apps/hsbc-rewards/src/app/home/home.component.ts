@@ -1,33 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
-import { map, switchMap } from 'rxjs/operators';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
-const mockTags: ITabConfig[] = [
+const tabs: ITabConfig[] = [
   {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'All Rewards',
-    rewardsList: null
-  }, {
     filterKey: 'Lifestyle',
     filterValue: null,
     tabName: 'Lifestyle',
     rewardsList: null
   }, {
     filterKey: null,
+    filterValue: null,
     tabName: 'Travel',
-    filterValue: '',
     rewardsList: null
   }, {
-    filterKey: 'Shopping',
+    filterKey: null,
+    filterValue: null,
     tabName: 'Shopping',
-    filterValue: '',
     rewardsList: null
   }
-
 ];
 
 @Component({
@@ -35,6 +29,7 @@ const mockTags: ITabConfig[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
@@ -45,49 +40,53 @@ export class HomeComponent implements OnInit {
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {
+  }
 
   public ngOnInit(): void {
     this.getRewardsCollection();
     this.getRewards();
-    this.getTags();
-    this.loyalty$ = this.loyaltyService.getLoyalty(100)
-      .pipe(map((loyalty: ILoyalty) => {
-        loyalty.pointsBalance = 10000;
-        if (loyalty.expiringPoints[0] && (!loyalty.expiringPoints[0].expireDate || loyalty.expiringPoints[0].points)) {
-          loyalty.expiringPoints[0].expireDate = new Date().toString();
-          loyalty.expiringPoints[0].points = 100;
-        }
-        return loyalty;
-      }));
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
+      }
+    );
   }
 
-  public getRewardsCollection(): void {
-    this.rewardsCollection = this.rewardsService.getAllRewards();
+  private getRewardsCollection(): void {
+    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
+      this.rewardsCollection = of(val);
+    });
   }
 
-  public getRewards(): void {
-    this.getTags().pipe(switchMap((tags: ITabConfig[]) => {
+  private getRewards(): void {
+
+    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
+      this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, tab.filterKey ? [tab.filterKey] : null);
+        return this.rewardsService.getAllRewards(null, [tab.tabName])
+          .pipe(map((result: IReward[]) =>  ({ key: tab.tabName, value: result })));
       }));
     })).subscribe((result) => {
-      result.forEach((rewards: IReward[], index) => {
-        this.staticTab[index].rewardsList = of(rewards);
+      result.forEach((rewards) => {
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
         this.tabs.next(this.staticTab);
       });
     });
   }
 
-  public getTags(): Observable<ITabConfig[]> {
-    this.rewardsService.getTags();
-    this.staticTab = mockTags;
-    return of(mockTags);
+  private getTags(): Observable<ITabConfig[]> {
+    // todo: service not implemented yet
+    // this.rewardsService.getTags();
+    this.staticTab = tabs;
+    this.tabs.next(this.staticTab);
+    this.cd.detectChanges();
+    return of(tabs);
   }
 
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
-
 }

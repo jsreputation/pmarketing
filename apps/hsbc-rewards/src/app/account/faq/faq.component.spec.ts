@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RedeemComponent } from './redeem.component';
+import { FaqComponent } from './faq.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RedeemComponent', () => {
-  let component: RedeemComponent;
-  let fixture: ComponentFixture<RedeemComponent>;
+  let component: FaqComponent;
+  let fixture: ComponentFixture<FaqComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedeemComponent ],
+      declarations: [ FaqComponent ],
       imports: [
         RouterTestingModule
       ]
@@ -18,7 +18,7 @@ describe('RedeemComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RedeemComponent);
+    fixture = TestBed.createComponent(FaqComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
