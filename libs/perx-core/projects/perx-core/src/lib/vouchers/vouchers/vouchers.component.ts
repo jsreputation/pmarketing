@@ -42,13 +42,12 @@ export class VouchersComponent implements OnInit, OnChanges {
       this.vouchers$ = this.vouchersService.getAll().pipe(
         map(vouchers => (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
       );
-    } else {
-      this.originalVouchers$ = this.vouchers$;
     }
+    this.originalVouchers$ = this.vouchers$;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter) {
+    if (changes.filter && this.originalVouchers$) {
       this.vouchers$ = this.originalVouchers$.pipe(
         map(vouchers => {
           return vouchers.filter(v => v.state === this.filter);
