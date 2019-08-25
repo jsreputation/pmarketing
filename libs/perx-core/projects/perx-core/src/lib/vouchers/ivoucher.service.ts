@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { IVoucher } from './models/voucher.model';
+import {IGetVoucherParams, IVoucher} from './models/voucher.model';
 
 export interface IVoucherService {
-  getAll(): Observable<IVoucher[]>;
+  getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]>;
   get(id: number, useCache?: boolean): Observable<IVoucher>;
   redeemVoucher(id: number): Observable<any>;
   reset(vouchers?: IVoucher[]): void;
