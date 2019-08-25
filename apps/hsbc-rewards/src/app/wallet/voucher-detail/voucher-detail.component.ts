@@ -28,8 +28,4 @@ export class VoucherDetailComponent implements OnInit {
       return of(voucher[0]);
     }));
   }
-
-  public reedEm(): void {
-    this.location.back();
-  }
 }

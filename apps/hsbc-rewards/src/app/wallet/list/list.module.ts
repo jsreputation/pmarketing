@@ -24,12 +24,6 @@ export class VoucherStubService {
     VouchersModule.forRoot({ env: environment }),
     SharedModule,
     MatIconModule,
-  ],
-  providers: [
-    {
-      provide: VouchersService,
-      useClass: VoucherStubService
-    }
   ]
 })
 export class ListModule { }
