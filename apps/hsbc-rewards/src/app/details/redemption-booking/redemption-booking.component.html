@@ -16,7 +16,7 @@
       <div class="select-wrap">
         <select formControlName="location">
           <option disabled [value]="null">Location</option>
-          <option *ngFor="let location of locationData | async" [value]="location.id">{{location.address}}</option>
+          <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.address}}</option>
         </select>
       </div>
       <mat-radio-group class="radio-group" formControlName="pointsBalance">
