@@ -110,8 +110,8 @@ export class VouchersService implements IVoucherService {
   }
 
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-
     let params = new HttpParams();
+
     if (oc(voucherParams).type()) {
       params = params.set('type', voucherParams.type);
     }
@@ -127,7 +127,7 @@ export class VouchersService implements IVoucherService {
             of(resp.data)
           ];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i);
+            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i, voucherParams);
             streams.push(stream);
           }
           return streams;
@@ -140,8 +140,17 @@ export class VouchersService implements IVoucherService {
       );
   }
 
-  public getAllFromPage(page: number): Observable<IV4Voucher[]> {
-    return this.http.get<IV4VouchersResponse>(`${this.vouchersUrl}&page=${page}&sort_by=id&order=desc`)
+  public getAllFromPage(page: number, voucherParams?: IGetVoucherParams): Observable<IV4Voucher[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('sort_by', 'id')
+      .set('order', 'desc');
+
+    if (oc(voucherParams).type()) {
+      params = params.set('type', voucherParams.type);
+    }
+
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, {params})
       .pipe(
         map(res => res.data)
       );
