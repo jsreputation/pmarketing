@@ -120,7 +120,10 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id: number): Observable<ILoyalty> {
+  public getLoyalty(id?: number): Observable<ILoyalty> {
+    if (!id) {
+      id = 1;
+    }
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${id}`
     ).pipe(
