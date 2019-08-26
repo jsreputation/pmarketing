@@ -7,6 +7,7 @@
   <pc-line *ngSwitchCase="'line'" [data]="data"></pc-line>
   <pc-map *ngSwitchCase="'map'" [data]="data"></pc-map>
   <pc-trend *ngSwitchCase="'trend'" [data]="data"></pc-trend>
+  <pc-table *ngSwitchCase="'table'" [data]="data"></pc-table>
   <pc-calendar-heatmap *ngSwitchCase="'calendardHeatmap'" [data]="data"></pc-calendar-heatmap>
   <div *ngSwitchDefault>Wrong type selected '{{cardType}}'</div>
 </div>
