@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RewardComponent } from './reward.component';
+import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RewardsService } from '@perx/core';
-import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
-import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 
-describe('RewardComponent', () => {
-  let component: RewardComponent;
-  let fixture: ComponentFixture<RewardComponent>;
+describe('RewardDetailComponent', () => {
+  let component: RewardDetailComponent;
+  let fixture: ComponentFixture<RewardDetailComponent>;
   const rewardsServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent],
+      declarations: [ RewardDetailComponent, LocationShortFormatComponent ],
       imports: [
         MatIconModule,
         RouterTestingModule
@@ -23,11 +22,11 @@ describe('RewardComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RewardComponent);
+    fixture = TestBed.createComponent(RewardDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

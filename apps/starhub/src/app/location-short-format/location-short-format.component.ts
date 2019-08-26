@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ILocation, GeoLocationService, sortByDistance, LocationsService } from '@perx/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-location-short-format',
@@ -10,6 +11,8 @@ import { Observable } from 'rxjs';
 export class LocationShortFormatComponent implements OnInit {
 
   public locations$: Observable<ILocation[]>;
+
+  public displayLocation$: Observable<ILocation>;
 
   @Input()
   public merchantId: number;
@@ -28,6 +31,10 @@ export class LocationShortFormatComponent implements OnInit {
       this.currentPosition.positions(),
       this.locationService.getFromMerchant(this.merchantId),
       true
+    );
+
+    this.displayLocation$ = this.locations$.pipe(
+      map(x => x[0])
     );
   }
 }
