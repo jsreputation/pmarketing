@@ -1,9 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { Observable, of, interval } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
-import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
-import { IVoucherService } from './ivoucher.service';
+import {Injectable, Inject} from '@angular/core';
+import {Observable, of, interval} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {IVoucher, VoucherState, RedemptionType, IGetVoucherParams} from './models/voucher.model';
+import {map, tap, flatMap, mergeAll, scan, filter} from 'rxjs/operators';
+import {IVoucherService} from './ivoucher.service';
+import {oc} from 'ts-optchain';
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -14,9 +15,11 @@ interface IV4VouchersResponse {
     total_pages: number
   };
 }
+
 interface IV4VoucherResponse {
   data: IV4Voucher;
 }
+
 interface IV4Image {
   type: string;
   url: string;
@@ -98,20 +101,26 @@ export class VouchersService implements IVoucherService {
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
       description: [
-        { title: 'Description', content: reward.description, tag: [] },
-        { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
+        {title: 'Description', content: reward.description, tag: []},
+        {title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: []}
       ],
       redemptionSuccessTxt,
       redemptionSuccessImg
     };
   }
 
-  public getAll(): Observable<IVoucher[]> {
+  public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
+
+    let params = new HttpParams();
+    if (oc(voucherParams).type()) {
+      params = params.set('type', voucherParams.type);
+    }
+
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
 
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl)
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, {params})
       .pipe(
         flatMap((resp: IV4VouchersResponse) => {
           const streams = [
