@@ -1,10 +1,10 @@
 .choice-value {
-    display: block;
-    width: 100%;
-    background: #fff;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  background: #fff;
+  cursor: pointer;
 
-    &.selected {
-        background: #ebebeb;
-    }
+  &.selected {
+    background: #ebebeb;
+  }
 }
