@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MerchantService } from '@cl-core/services/merchant.service';
+import { MerchantService } from '@cl-core/services';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { Subject } from 'rxjs';

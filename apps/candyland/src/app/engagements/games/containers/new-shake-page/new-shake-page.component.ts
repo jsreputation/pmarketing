@@ -1,14 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { Observable, Subject } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ControlValueService } from '@cl-core/services/control-value.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
-import { EngagementTransformDataService, ShakeTreeService } from '@cl-core-services';
+import {
+  ControlValueService,
+  EngagementTransformDataService,
+  RoutingStateService,
+  ShakeTreeService
+} from '@cl-core/services';
 import { MatDialog } from '@angular/material';
 import { ConfirmModalComponent } from '@cl-shared';
 

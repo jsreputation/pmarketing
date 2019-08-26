@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SettingsService } from '@cl-core/services/settings.service';
+import { SettingsService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-branding',
