@@ -8,12 +8,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyService, ILoyalty } from '@perx/core';
 import { Observable, of } from 'rxjs';
+import { mockLoyalty } from '../loyalty.mock';
 
 describe('EnlargedQrComponent', () => {
   let component: EnlargedQrComponent;
   let fixture: ComponentFixture<EnlargedQrComponent>;
   const loyaltyServiceStub = {
-    getLoyalties: (): Observable<ILoyalty[]> => of([])
+    getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty)
   };
 
   beforeEach(async(() => {
