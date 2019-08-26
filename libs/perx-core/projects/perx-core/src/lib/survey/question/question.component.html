@@ -1,10 +1,10 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
-        id: {{id}}
-        questionPointer: {{questionPointer}}
-        answer: {{this.question.answer}}
     <div class="question-content">
         <div class="question">
             {{question.question}}
+            <span class="required-star">
+                {{question.required ? '*': ''}}
+            </span>
         </div>
         <div class="description">
             {{question.description}}

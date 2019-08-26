@@ -5,7 +5,6 @@
         aria-hidden="false"
         [color]="i <= selectedChoice ? 'primary' : 'default'"
         aria-label="Example rating icon"
-        [ngClass]="surveyRatingIcons(i)"
         (click)="onSelect(i)">
         {{surveyRatingIcons(i)}}
       </mat-icon>

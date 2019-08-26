@@ -16,16 +16,20 @@
 
     .question {
       margin-bottom: 2rem;
+
+      .required-star {
+        color: #eb202f;
+      }
     }
 
     .error-message {
       height: 1.8rem;
       overflow: hidden;
-      
+
       > div {
         display: none;
         color: #eb202f;
-  
+
         &.error {
           display: block;
         }
@@ -34,8 +38,8 @@
   }
 
   .question-action-container {
-      button {
-          margin-right: 1rem;
-      }
+    button {
+      margin-right: 1rem;
+    }
   }
 }

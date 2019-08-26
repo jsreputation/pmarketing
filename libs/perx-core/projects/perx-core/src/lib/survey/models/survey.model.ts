@@ -53,6 +53,6 @@ export enum SurveyRatingIcons {
     star_selected = 'star',
     heart = 'favorite_border',
     heart_selected = 'favorite',
-    circle = 'circle_border',
-    circle_selected = 'circle',
+    circle = 'panorama_fish_eye',
+    circle_selected = 'brightness_1',
 }
