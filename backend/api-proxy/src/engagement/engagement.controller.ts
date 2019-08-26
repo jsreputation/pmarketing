@@ -66,7 +66,7 @@ class EngagementControllerImplem {
                             data: res.data.map((eng: IEntity<IEngagement>): IEntity<EngagementDto> => {
                                 const dto: EngagementDto = { ...eng.attributes, type: t as EngagementType };
                                 return { ...eng, attributes: dto };
-                            }).sort(EngagementControllerImplem.compare),
+                            })
                         };
                     }),
                     catchError((err: AxiosError) => {
@@ -85,7 +85,7 @@ class EngagementControllerImplem {
                     acc.data = [
                         ...acc.data,
                         ...v.data
-                    ];
+                    ].sort(EngagementControllerImplem.compare);
                     return acc;
                 }, null),
                 last(),
