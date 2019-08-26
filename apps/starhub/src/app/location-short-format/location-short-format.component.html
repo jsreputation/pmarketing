@@ -1,12 +1,10 @@
 <div class="main-container">
-  <div class="loc" *ngFor="let loc of locations$ | async; let i = index">
-    <ng-container *ngIf="i === 0">
-      <div class="address">
-        <h1>{{loc.name}}</h1>
-        <p>{{loc.address}}</p>
-        <p>{{loc.address2}}</p>
-      </div>
-    </ng-container>
+  <div class="loc">
+    <div *ngIf="(displayLocation$ | async)" class="address">
+      <h1>{{(displayLocation$ | async).name }}</h1>
+      <p>{{(displayLocation$ | async).address}}</p>
+      <p>{{(displayLocation$ | async).address2}}</p>
+    </div>
   </div>
   <a mat-button color="primary" [routerLink]="['/locations']" [queryParams]="{mid:merchantId}"
     *ngIf="(locations$ | async)?.length > 1">See All {{(locations$ | async)?.length}} Locations</a>
