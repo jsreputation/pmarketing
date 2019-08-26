@@ -2,7 +2,7 @@
 <ng-template #thenBlock>
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
-      <mat-card *ngIf="filter === undefined || voucher.state === filter" mat-ripple
+      <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
         [matRippleDisabled]="voucher.state === 'redeemed' && !canSelectRedeemed" (click)="onClick(voucher)">
         <div [ngClass]="'voucher-content ' + imageSize">
           <div class="voucher-img__wrapper">

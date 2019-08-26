@@ -1,16 +1,16 @@
-import {Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {VouchersService} from '../vouchers.service';
-import {Observable} from 'rxjs';
-import {IVoucher, StatusLabelMapping} from '../models/voucher.model';
-import {map} from 'rxjs/operators';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { VouchersService } from '../vouchers.service';
+import { Observable } from 'rxjs';
+import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss']
 })
-export class VouchersComponent implements OnInit, OnChanges {
-  @Input() public filter: string;
+export class VouchersComponent implements OnInit {
+  @Input() public filter: string[];
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
   @Input() public showTitle: boolean = true;
@@ -27,7 +27,13 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
   @Input('data')
-  public vouchers$: Observable<IVoucher[]>;
+  public set vouchers$(vouchers: Observable<IVoucher[]>) { 
+    this.originalVouchers$ = this.filter  && this.filter.length && vouchers ? vouchers
+    .pipe(map(voucher=> voucher.filter(v => this.filter.includes(v.state)))): vouchers;
+  };
+  public get vouchers$(): Observable<IVoucher[]> {
+    return this.originalVouchers$;
+  };
   private originalVouchers$: Observable<IVoucher[]>;
 
   @Input()
@@ -40,20 +46,9 @@ export class VouchersComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers => (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
-      );
+        map(vouchers => (this.filter) ? vouchers.filter(v => this.filter.includes(v.state)) : vouchers));
     }
     this.originalVouchers$ = this.vouchers$;
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter && this.originalVouchers$) {
-      this.vouchers$ = this.originalVouchers$.pipe(
-        map(vouchers => {
-          return vouchers.filter(v => v.state === this.filter);
-        })
-      );
-    }
   }
 
   public onClick(voucher: IVoucher): void {
