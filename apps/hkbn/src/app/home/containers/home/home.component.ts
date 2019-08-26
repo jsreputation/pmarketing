@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, ILoyalty, LoyaltyService } from '@perx/core';
+import { IReward, ILoyalty, LoyaltyService, RewardsService } from '@perx/core';
+import { Observable, of } from 'rxjs';
 // import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -10,9 +11,11 @@ import { IReward, ILoyalty, LoyaltyService } from '@perx/core';
 })
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
+  public rewards$: Observable<IReward[]>;
   constructor(
     private router: Router,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private rewardsService: RewardsService
   ) { }
 
   public goToReward(reward: IReward): void {
@@ -20,6 +23,9 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.rewardsService.getAllRewards(['featured']).subscribe((rewards) => {
+      this.rewards$ = of(rewards);
+    });
     this.loyaltyService.getLoyalty()
       .subscribe(
         (loyalty: ILoyalty) => this.loyalty = loyalty

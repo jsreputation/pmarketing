@@ -1,7 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule, VouchersModule, ILoyalty } from '@perx/core';
+import {
+  IReward,
+  LoyaltyModule,
+  LoyaltyService,
+  ProfileService,
+  RewardsModule,
+  VouchersModule,
+  ILoyalty,
+  RewardsService
+} from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,6 +27,9 @@ describe('HomeComponent', () => {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
   };
+  const rewardServiceStub = {
+    getAllRewards: (): Observable<IReward[]> => of([])
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -28,11 +40,12 @@ describe('HomeComponent', () => {
         VouchersModule,
         RouterTestingModule,
         NoopAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ProfileService, useValue: { whoAmI: () => of(null) } },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: RewardsService, useValue: rewardServiceStub }
       ],
       declarations: [HomeComponent]
     })
