@@ -50,7 +50,7 @@ export class UsersRolesComponent  implements AfterViewInit {
       )
       .subscribe((value: any) => {
       if (value) {
-        this.dataSource.loadingData();
+        this.dataSource.updateData();
       }
     });
   }
@@ -74,7 +74,7 @@ export class UsersRolesComponent  implements AfterViewInit {
       )
       .subscribe((value) => {
         if (value) {
-          this.dataSource.loadingData();
+          this.dataSource.updateData();
         }
     });
   }
@@ -83,7 +83,7 @@ export class UsersRolesComponent  implements AfterViewInit {
     console.log(id);
     this.settingsService.deleteUser(id)
       .subscribe(() => {
-        this.dataSource.loadingData();
+        this.dataSource.updateData();
       });
   }
 

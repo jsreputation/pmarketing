@@ -98,6 +98,10 @@ export class CustomDataSource<T> {
       });
   }
 
+  public updateData(): void {
+    this.loadingData({pageIndex: 0})
+  }
+
   private sortPrepare(sortData: SortModel) {
     if (sortData && sortData.direction !== '') {
       const sort = sortData.direction === 'asc'
