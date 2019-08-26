@@ -1,13 +1,13 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
-    <div class="question-content">
+    <div class="question-content" *ngIf="question">
         <div class="question">
-            {{question.question}}
+            {{question?.question}}
             <span class="required-star">
-                {{question.required ? '*': ''}}
+                {{question?.required ? '*': ''}}
             </span>
         </div>
         <div class="description">
-            {{question.description}}
+            {{question?.description}}
         </div>
         <perx-core-group 
             *ngIf="question.payload.type === surveyQuestionType.questionGroup"

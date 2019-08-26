@@ -42,7 +42,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public ngOnInit(): void {
     // Emit non required question in first page, and stop auto emit for last page
-    const isNotRequired = !this.question.required;
+    const isNotRequired = this.question && !this.question.required;
     const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
     if (this.isActive && isNotRequired && isNotLastPage) {
       this.updateAnswer({ content: this.question.answer });
@@ -51,7 +51,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
-      const isNotRequired = !this.question.required;
+      const isNotRequired = this.question && !this.question.required;
       const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
       if (this.isActive && isNotRequired && isNotLastPage) {
         // Emit non required question in current page after questionPointer update, and stop auto emit for last page
@@ -87,7 +87,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public updateNonGroupPoint(): void {
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-      this.point = this.question.required ? (this.question.answer === 0 || this.question.answer ? 1 : 0) : 1;
+      this.point = this.question && this.question.required ? (this.question.answer === 0 || this.question.answer ? 1 : 0) : 1;
       this.updatePoints.emit({ question_id: this.question.id, point: this.point });
     }
   }
@@ -112,7 +112,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public questionValidation(): void {
     this.errorState = {};
-    if (this.question.required && this.point !== 1) {
+    if (this.question && this.question.required && this.point !== 1) {
       this.errorState.isRequired = true;
       this.errorState.hasError = true;
     } else if (this.question.payload['max-length']

@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PhoneComponent } from './phone.component';
 
 describe('PhoneComponent', () => {
@@ -8,7 +9,12 @@ describe('PhoneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhoneComponent ]
+      declarations: [ PhoneComponent ],
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

@@ -1,5 +1,5 @@
 <div class="choice-container">
-    <div class="choice-content" *ngFor="let choice of payload.choices; let i = index">
+    <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
         <div 
             class="choice-value"
             [ngClass]="isSelected(i) ? 'selected' : ''"

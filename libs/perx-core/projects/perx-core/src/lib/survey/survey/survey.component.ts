@@ -29,7 +29,9 @@ export class SurveyComponent implements OnInit {
   public questionPointer: number = 0;
 
   public ngOnInit(): void {
-    this.data$.subscribe(data => this.data = data);
+    if (this.data$) {
+      this.data$.subscribe(data => this.data = data);
+    }
   }
 
   public updateAnswers(answer: IAnswer): void {

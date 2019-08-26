@@ -15,20 +15,20 @@ import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
 
 const components = [
-  SurveyComponent
+  SurveyComponent,
+  QuestionComponent,
+  RatingComponent,
+  PictureSelectComponent,
+  LongTextComponent,
+  SelectComponent,
+  GroupComponent,
+  DateComponent,
+  PhoneComponent
 ];
 
 @NgModule({
   declarations: [
-    ...components,
-    QuestionComponent,
-    RatingComponent,
-    PictureSelectComponent,
-    LongTextComponent,
-    SelectComponent,
-    GroupComponent,
-    DateComponent,
-    PhoneComponent
+    ...components
   ],
   imports: [
     CommonModule,

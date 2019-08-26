@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatIconModule } from '@angular/material';
 import { RatingComponent } from './rating.component';
 
 describe('RatingComponent', () => {
@@ -8,7 +8,10 @@ describe('RatingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RatingComponent ]
+      declarations: [ RatingComponent ],
+      imports: [
+        MatIconModule
+      ]
     })
     .compileComponents();
   }));

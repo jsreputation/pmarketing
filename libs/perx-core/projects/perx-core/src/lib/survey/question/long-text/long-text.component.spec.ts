@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LongTextComponent } from './long-text.component';
 
 describe('LongTextComponent', () => {
@@ -8,7 +9,12 @@ describe('LongTextComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LongTextComponent ]
+      declarations: [ LongTextComponent ],
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));
