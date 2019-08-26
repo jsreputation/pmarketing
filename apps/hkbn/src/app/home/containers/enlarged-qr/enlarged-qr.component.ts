@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoyaltyService, ILoyalty } from '@perx/core';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'hkbn-enlarged-qr',
@@ -13,11 +12,7 @@ export class EnlargedQrComponent implements OnInit {
   constructor(private loyaltyService: LoyaltyService) { }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalties().pipe(
-      filter((loyalties: ILoyalty[]) => loyalties.length > 0),
-      map((loyalties: ILoyalty[]) => loyalties[0])
-    ).subscribe(
-      (loyalty: ILoyalty) => { this.loyalty = loyalty; }
-    );
+    this.loyaltyService.getLoyalty()
+      .subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
   }
 }
