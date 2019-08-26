@@ -59,6 +59,6 @@ export class VouchersComponent implements OnInit {
   }
 
   private filterVoucher(vouchers: Observable<IVoucher[]>): Observable<IVoucher[]> {
-    return vouchers.pipe(map(voucher => voucher.filter((el) => this.filter.includes(el.state))));
+    return vouchers ? vouchers.pipe(map(voucher => voucher.filter((el) => this.filter.includes(el.state)))): vouchers;
   }
 }
