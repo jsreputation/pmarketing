@@ -69,7 +69,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
 
   public get isActive(): boolean {
-    return this.questionPointer === undefined || this.questionPointer === this.id;
+    return this.questionPointer === this.id;
   }
 
   public updateAnswer(answer: IAnswer): void {

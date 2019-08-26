@@ -3,17 +3,14 @@
     <div *ngFor="let item of [].constructor(payload.scale); let i = index" class="icon-wrapper">
         <mat-icon
         aria-hidden="false"
-        [color]="i <= selectedChoice ? 'warn' : 'primary'"
+        [color]="i <= selectedChoice ? 'primary' : 'default'"
         aria-label="Example rating icon"
+        [ngClass]="surveyRatingIcons(i)"
         (click)="onSelect(i)">
-        {{payload.shape}}
+        {{surveyRatingIcons(i)}}
       </mat-icon>
       <div *ngIf="i === 0" class="left-label">{{payload['left_label']}}</div>
       <div *ngIf="i === payload.scale - 1" class="right-label">{{payload['right_label']}}</div>
     </div>
   </div>
-  <!-- <div class="label-container">
-    <div class="left-label">{{payload['left_label']}}</div>
-    <div class="right-label">{{payload['right_label']}}</div>
-  </div> -->
 </div>

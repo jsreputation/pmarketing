@@ -20,8 +20,26 @@
       justify-content: flex-start;
       align-items: center;
    
-      mat-icon {
+      .mat-icon {
         cursor: pointer;
+        &.mat-default {
+          color: rgba(0, 0, 0, 0.38);
+        }
+        &.circle_border {
+          height: 2.2rem;
+          width: 2.2rem;
+          box-sizing: border-box;
+          border-radius: 50%;
+          border: 1px solid currentColor;
+        }
+        &.circle {
+          height: 2.2rem;
+          width: 2.2rem;
+          box-sizing: border-box;
+          border-radius: 50%;
+          border: 1px solid currentColor;
+          background: currentColor;
+        }
       }
     }
   }

@@ -19,6 +19,9 @@
     }
 
     .error-message {
+      height: 1.8rem;
+      overflow: hidden;
+      
       > div {
         display: none;
         color: #eb202f;

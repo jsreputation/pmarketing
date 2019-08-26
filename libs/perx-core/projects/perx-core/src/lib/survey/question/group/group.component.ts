@@ -17,6 +17,9 @@ export class GroupComponent implements OnChanges {
   public id: number;
 
   @Input()
+  public questionPointer: number;
+
+  @Input()
   public payload: IPayloadGroup;
 
   @Input()

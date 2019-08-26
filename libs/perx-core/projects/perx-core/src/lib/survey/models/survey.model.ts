@@ -47,3 +47,12 @@ export interface IPayload {
     type: string;
     [key: string]: any;
 }
+
+export enum SurveyRatingIcons {
+    star = 'star_border',
+    star_selected = 'star',
+    heart = 'favorite_border',
+    heart_selected = 'favorite',
+    circle = 'circle_border',
+    circle_selected = 'circle',
+}

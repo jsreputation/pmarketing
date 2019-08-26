@@ -4,6 +4,48 @@ export const mock: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
         {
+            question: 'How likely are you to recommend our service?',
+            description: 'Please rate us',
+            id: '1',
+            required: false,
+            payload: {
+                type: 'rating',
+                color: 'primary',
+                left_label: 'not much',
+                right_label: 'a lot',
+                scale: 4,
+                shape: 'star'
+            }
+        },
+        {
+            question: 'How likely are you to recommend our service?',
+            description: 'Please rate us',
+            id: '10',
+            required: false,
+            payload: {
+                type: 'rating',
+                color: 'primary',
+                left_label: 'not much',
+                right_label: 'a lot',
+                scale: 5,
+                shape: 'heart'
+            }
+        },
+        {
+            question: 'How likely are you to recommend our service?',
+            description: 'Please rate us',
+            id: '11',
+            required: false,
+            payload: {
+                type: 'rating',
+                color: 'primary',
+                left_label: 'not much',
+                right_label: 'a lot',
+                scale: 6,
+                shape: 'circle'
+            }
+        },
+        {
             question: 'Tell us more about us',
             description: 'No offence taken',
             id: '7',
@@ -79,20 +121,6 @@ export const mock: ISurvey = {
                         }
                     }
                 ]
-            }
-        },
-        {
-            question: 'How likely are you to recommend our service?',
-            description: 'Please rate us',
-            id: '1',
-            required: false,
-            payload: {
-                type: 'rating',
-                color: 'primary',
-                left_label: 'not much',
-                right_label: 'a lot',
-                scale: 5,
-                shape: 'star'
             }
         },
         {
