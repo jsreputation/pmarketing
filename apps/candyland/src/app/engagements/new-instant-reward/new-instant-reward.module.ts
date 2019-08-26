@@ -29,6 +29,7 @@ import {
 } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { ConfirmModalModule } from '@cl-shared';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    ConfirmModalModule,
   ]
 })
 export class NewInstantRewardModule {

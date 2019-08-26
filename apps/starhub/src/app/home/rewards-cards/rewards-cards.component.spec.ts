@@ -36,4 +36,20 @@ describe('RewardsCardsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('getMacaron', () => {
+    it('should return expiring', () => {
+      const currentTime = new Date();
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
+      const macaronText = component.getMacaron(String(validDateTo));
+      expect(macaronText).toBe('expiring');
+    });
+
+    it('should return empty string', () => {
+      const currentTime = new Date();
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
+      const macaronText = component.getMacaron(String(validDateTo));
+      expect(macaronText).toBe('');
+    });
+  });
 });

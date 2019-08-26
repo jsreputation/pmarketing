@@ -9,6 +9,7 @@ import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
 import { MetabaseComponent } from './metabase/metabase.component';
+import { TableComponent } from './table/table.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'horizontal-bar', component: HorizontalBarComponent },
       { path: 'pie', component: PieComponent },
       { path: 'trend', component: TrendComponent },
+      { path: 'table', component: TableComponent },
       { path: 'map', component: MapComponent },
       { path: 'heatmap', component: CalendarHeatmapComponent },
       { path: 'line', component: LineComponent },

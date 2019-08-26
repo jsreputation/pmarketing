@@ -1,10 +1,10 @@
-<mat-card *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
-    <img mat-card-image [src]="catalog.image">
+<mat-card *ngFor="let catalog of catalogs | async" (click)="selected(catalog)" matRipple>
+    <img mat-card-image [src]="catalog.catalogBanner">
     <mat-card-content>
         <div>
-            <h1>{{catalog.title}}</h1>
+            <h1>{{catalog.name}}</h1>
             <h2>{{catalog.description}}</h2>
-            <h3>{{catalog.nbRewards}} Rewards</h3>
+            <h3>{{catalog.rewardCount}} Rewards</h3>
         </div>
         <div class="icon">
             <mat-icon>arrow_forward</mat-icon>

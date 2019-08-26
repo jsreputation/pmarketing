@@ -9,7 +9,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class AudiencesVouchersListComponent implements AfterViewInit {
   public DATE_FORMAT = 'dd MMM yyyy';
   public TIME_FORMAT = 'hh:ssa';
-  @Input() public dataSource: MatTableDataSource<Engagement>;
+  @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign', 'redemptionType', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickChangeExpiryDate = new EventEmitter();

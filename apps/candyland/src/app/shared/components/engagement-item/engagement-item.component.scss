@@ -9,7 +9,7 @@
   border-radius: 8px;
   background-color: $white-color;
 
-  &-img-comtainer {
+  &-img-container {
     position: relative;
     height: 10rem;
     width: 10rem;
@@ -34,6 +34,7 @@
   &-type {
     font-size: 1.4rem;
     color: $secondary-color;
+    text-transform: capitalize;
   }
 
   &-name {

@@ -8,9 +8,10 @@ import { TrendComponent } from './trend/trend.component';
 import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
+import { TableComponent } from './table/table.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MetaCardComponent } from './meta-card/meta-card.component';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { DataService } from './data.service';
 
 const comps: any[] = [
@@ -24,12 +25,16 @@ const comps: any[] = [
   CalendarHeatmapComponent,
   LineComponent,
   MetaCardComponent,
+  TableComponent
 ];
 
 @NgModule({
   imports: [
     NgxChartsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     ...comps

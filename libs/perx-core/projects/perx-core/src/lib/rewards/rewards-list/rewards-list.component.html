@@ -5,7 +5,8 @@
       <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
         <div class="reward-content">
           <div class="reward-img__wrapper">
-            <img class="reward-img" [src]="reward.rewardThumbnail ? reward.rewardThumbnail : defaultImg"/>
+            <img [class.no-image]="!reward.rewardThumbnail"
+                 [src]="reward.rewardThumbnail ? reward.rewardThumbnail : defaultImg"/>
           </div>
           <div class="reward-preview-details">
             <h1>{{ reward.name }}</h1>

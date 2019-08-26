@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: ''
+  baseURL: '',
+  basePath: 'https://api.whistler.perxtech.org/'
 };

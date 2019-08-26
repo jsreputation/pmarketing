@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IData } from 'perx-chart/public-api';
 import { DataService } from '../data.service';
+import { MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 
 class GenericStubComponent { @Input() public data: Observable<IData>; }
 
@@ -24,6 +25,8 @@ class LineStubComponent extends GenericStubComponent { }
 class MapStubComponent extends GenericStubComponent { }
 @Component({ selector: 'pc-trend', template: '' })
 class TrendStubComponent extends GenericStubComponent { }
+@Component({ selector: 'pc-table', template: '' })
+class TableStubComponent extends GenericStubComponent { }
 @Component({ selector: 'pc-calendar-heatmap', template: '' })
 class CalendarHeatMapStubComponent extends GenericStubComponent { }
 
@@ -47,10 +50,16 @@ describe('MetaCardComponent', () => {
         LineStubComponent,
         MapStubComponent,
         TrendStubComponent,
+        TableStubComponent,
         CalendarHeatMapStubComponent
       ],
       providers: [
         { provide: DataService, useValue: dataServiceStub }
+      ],
+      imports: [
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        MatIconModule
       ]
     })
       .compileComponents();

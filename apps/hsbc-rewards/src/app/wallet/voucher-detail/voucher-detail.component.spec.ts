@@ -5,6 +5,7 @@ import { VoucherDetailComponent } from './voucher-detail.component';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.module';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
@@ -16,7 +17,8 @@ describe('VoucherDetailComponent', () => {
       imports: [
         VouchersModule.forRoot({ env: environment }),
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        DetailHeaderModule
       ]
     })
       .compileComponents();

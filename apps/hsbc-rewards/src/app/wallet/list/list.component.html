@@ -1,4 +1,5 @@
 <div class="page">
+  <div class="header" *ngIf="filter==='issued'">My Rewards</div>
   <perx-core-vouchers #voucher (route)="routeNavigate($event)"
                       [data]="vouchers"
                       [mapping]="mapping"

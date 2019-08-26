@@ -1,38 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { IReward, RewardsService, ICatalog } from '@perx/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { CategorySelectComponent } from './category-select/category-select.component';
-import { CategorySortComponent } from './category-sort/category-sort.component';
-import { Observable } from 'rxjs';
+import { CategorySelectComponent, CategoryBottomSheetClosedCallBack } from './category-select/category-select.component';
+import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category-sort/category-sort.component';
+import { Observable, of } from 'rxjs';
+import { CategoryMode, SortingMode } from './category.model';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
+
+  private currentMode: CategoryMode;
   public rewards: Observable<IReward[]>;
-  public catalog: string;
+
+  public selectedCategory: string;
+  public selectedSortingCraeteria: SortingMode = SortingMode.latest;
 
   constructor(
     private router: Router,
     private bottomSheet: MatBottomSheet,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute
-
   ) {}
 
   public ngOnInit(): void {
-    this.rewards = this.rewardsService.getAllRewards();
-    this.activeRoute.queryParams
-      .subscribe((params: Params) => {
-        if (params.catalog) {
-          this.catalog = params.catalog;
-        } else if (params.category) {
-          this.catalog = params.category;
-        }
-      });
+    const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
+    if (categoryName) {
+          this.currentMode = CategoryMode.reward;
+          this.selectedCategory = categoryName;
+          this.rewards = this.rewardsService.getAllRewards([this.selectedCategory]);
+    } else {
+        this.currentMode = CategoryMode.catalog;
+        const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
+        this.rewardsService.getCatalog(catalogId)
+          .subscribe((catalog: ICatalog) => {
+            this.selectedCategory = catalog.name;
+            this.rewards = of(catalog.rewards);
+          });
+    }
   }
 
   public selected(reward: IReward): void {
@@ -40,10 +49,33 @@ export class CategoryComponent implements OnInit {
   }
 
   public selectCategory(): void {
-    this.bottomSheet.open(CategorySelectComponent);
+    this.bottomSheet.open(CategorySelectComponent, { data: this });
   }
 
   public selectSort(): void {
-    this.bottomSheet.open(CategorySortComponent);
+    this.bottomSheet.open(CategorySortComponent, { data: this });
+  }
+
+  // CategoryBottomSheetClosedCallBack methods
+
+  public categorySelectedCallback(updatedValue: string): void {
+    if (this.currentMode === CategoryMode.reward) {
+      this.selectedCategory = updatedValue;
+      this.rewards = this.rewardsService.getAllRewards([this.selectedCategory]);
+    }
+  }
+
+  public getCurrentSelectedCategory(): string {
+    return this.selectedCategory ? this.selectedCategory : 'All';
+  }
+
+  // SortBottomSheetClosedCallBack methods
+
+  public sortOrderSelectedCallback(updatedValue: SortingMode): void {
+    this.selectedSortingCraeteria = updatedValue;
+  }
+
+  public getCurrentSelectedOrder(): SortingMode {
+    return this.selectedSortingCraeteria;
   }
 }

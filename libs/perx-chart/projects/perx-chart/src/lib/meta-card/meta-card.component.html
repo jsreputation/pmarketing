@@ -7,6 +7,16 @@
   <pc-line *ngSwitchCase="'line'" [data]="data"></pc-line>
   <pc-map *ngSwitchCase="'map'" [data]="data"></pc-map>
   <pc-trend *ngSwitchCase="'trend'" [data]="data"></pc-trend>
+  <pc-table *ngSwitchCase="'table'" [data]="data"></pc-table>
   <pc-calendar-heatmap *ngSwitchCase="'calendardHeatmap'" [data]="data"></pc-calendar-heatmap>
   <div *ngSwitchDefault>Wrong type selected '{{cardType}}'</div>
+</div>
+<div class="wrapper">
+  <mat-progress-spinner *ngIf="showLoading" color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+  <div *ngIf="showReload" class="button-wrapper">
+    <button mat-button (click)="reload()" color="primary">
+      Oops, the server just took a nap, try again <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
 </div>

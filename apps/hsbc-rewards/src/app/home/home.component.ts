@@ -1,80 +1,89 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {Observable, of, BehaviorSubject} from 'rxjs';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService} from '@perx/core';
-import {LoyaltySummaryComponent, ITabConfig} from '@perx/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ITabConfig } from '@perx/core';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
-const mockTags: ITabConfig[] = [
+const tabs: ITabConfig[] = [
   {
-    filterKey: null,
-    tabName: 'All Rewards',
+    filterKey: 'Lifestyle',
     filterValue: null,
-    rewardsList: null
-  }, {
-    filterKey: null,
     tabName: 'Lifestyle',
-    filterValue: '',
     rewardsList: null
   }, {
     filterKey: null,
+    filterValue: null,
     tabName: 'Travel',
-    filterValue: '',
     rewardsList: null
   }, {
     filterKey: null,
+    filterValue: null,
     tabName: 'Shopping',
-    filterValue: '',
     rewardsList: null
-  }];
+  }
+];
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  public tabs: Observable<ITabConfig[]>;
-  public rewards: Observable<IReward[]>;
 
-  @ViewChild('loyaltySummary', {static: false}) public loyaltySummary: LoyaltySummaryComponent;
+export class HomeComponent implements OnInit {
+  public rewards: Observable<IReward[]>;
+  public loyalty$: Observable<ILoyalty>;
+  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public staticTab: ITabConfig[];
+  public rewardsCollection: Observable<IReward[]>;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
+    this.getRewardsCollection();
     this.getRewards();
-    this.getTags();
-  }
-
-  public ngAfterViewInit(): void {
-    // @ts-ignore to be verified
-    this.loyaltySummary.loyalty$ = new BehaviorSubject({
-      pointsBalance: '100,000',
-      expiringPoints: [{expireDate: new Date('Jul 17 2017')}],
-      points: 1000,
-      expireDate: new Date('Jul 17 2017')
-    });
-    this.cd.detectChanges();
-  }
-
-  public getRewards(): void {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
       }
     );
   }
 
-  public getTags(): void {
-    this.rewardsService.getTags();
-    this.tabs = of(mockTags);
+  private getRewardsCollection(): void {
+    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
+      this.rewardsCollection = of(val);
+    });
+  }
+
+  private getRewards(): void {
+
+    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
+      this.tabs.next(tags);
+      return forkJoin(tags.map((tab) => {
+        return this.rewardsService.getAllRewards(null, [tab.tabName])
+          .pipe(map((result: IReward[]) =>  ({ key: tab.tabName, value: result })));
+      }));
+    })).subscribe((result) => {
+      result.forEach((rewards) => {
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        this.tabs.next(this.staticTab);
+      });
+    });
+  }
+
+  private getTags(): Observable<ITabConfig[]> {
+    // todo: service not implemented yet
+    // this.rewardsService.getTags();
+    this.staticTab = tabs;
+    this.tabs.next(this.staticTab);
+    this.cd.detectChanges();
+    return of(tabs);
   }
 
   public openRewardDetails(tab: IReward): void {

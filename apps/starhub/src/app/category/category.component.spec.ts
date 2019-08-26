@@ -6,17 +6,20 @@ import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule } 
 import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
+import { catalogs } from '../catalogs.mock';
+import { RewardsSortPipe } from './rewards-sort.pipe';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
   const rewardsServiceStub = {
-    getAllRewards: () => of(rewards)
+    getAllRewards: () => of(rewards),
+    getCatalog: () => of(catalogs[0])
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CategoryComponent],
+      declarations: [CategoryComponent, RewardsSortPipe],
       imports: [
         RouterTestingModule,
         MatIconModule,

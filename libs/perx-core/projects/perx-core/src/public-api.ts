@@ -130,3 +130,9 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { ISurvey } from './lib/survey/models/survey.model';
+
+/**
+ * Config
+ */
+export { ConfigModule } from './lib/config/config.module';
+export { Config } from './lib/config/config';
