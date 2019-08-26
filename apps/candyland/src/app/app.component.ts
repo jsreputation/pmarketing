@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { RoutingStateService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-root',

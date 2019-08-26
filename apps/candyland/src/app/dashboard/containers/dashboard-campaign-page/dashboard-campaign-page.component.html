@@ -1,0 +1,157 @@
+<!--group block contain tabs and one graphic-->
+<div class="dashboard-group-graphics">
+  <div class="chard-card-list">
+
+    <!--    <div class="row"><p>Active Campaigns: 32</p></div>-->
+
+    <div class="tabs-list-wrap">
+      <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+        <ng-container *ngFor="let tab of tabs;">
+          <mat-radio-button [value]="tab">
+            <cl-tab-item-view [data]="tab"></cl-tab-item-view>
+          </mat-radio-button>
+        </ng-container>
+      </mat-radio-group>
+    </div>
+
+    <ng-container [ngSwitch]="activeTab?.name">
+      <!--      survey-->
+      <ng-container *ngSwitchCase="'survey'">
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Survey Engagement Rate
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Top 5 Rewards
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'horizontalBar'"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Channels
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+      </ng-container>
+      <!--      / survey-->
+      <!--      games-->
+      <ng-container *ngSwitchCase="'games'">
+
+        <div class="chart-card">
+          <div class="chart-card-title row">
+            <p>Game Engagement Rate</p>
+            <mat-form-field appearance="outline" style="width: 200px;">
+              <mat-select #selectGame>
+                <mat-option selected [value]="106">Shake the tree</mat-option>
+                <mat-option [value]="107">Hit the pinata</mat-option>
+                <mat-option [value]="109">Instant rewards</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="selectGame.value" [cardType]="'line'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Top 5 Rewards
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Channels
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+      </ng-container>
+      <!--      / games-->
+      <!--      stamps-->
+      <ng-container *ngSwitchCase="'stamps'">
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Stamps Engagement Rate
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Top 5 Rewards
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Channels
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+      </ng-container>
+      <!--      / stamps-->
+      <!--      reward-->
+      <ng-container *ngSwitchCase="'reward'">
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Stamps Engagement Rate
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Top 5 Rewards
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <p class="chart-card-title">
+            Channels
+          </p>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </div>
+
+      </ng-container>
+      <!--      / reward-->
+    </ng-container>
+
+  </div>
+</div>
+<!--end group block contain tabs and one graphic-->

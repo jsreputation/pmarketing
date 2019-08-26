@@ -1,4 +1,4 @@
-<p class="member-ship">{{"MY_ID" | translate}} 12345678</p>
+<p class="member-ship">{{"MY_ID" | translate}}: {{accountData ? accountData.id: ''}}</p>
 
 <form [formGroup]="accountSummary" class="account-summary">
   <mat-form-field>

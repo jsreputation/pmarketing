@@ -4,7 +4,7 @@ import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
 import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsService } from '@cl-core/services';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 
 @Component({

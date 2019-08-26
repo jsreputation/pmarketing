@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { AudiencesService } from '@cl-core/services/audiences.service';
+import { AudiencesService } from '@cl-core/services';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
