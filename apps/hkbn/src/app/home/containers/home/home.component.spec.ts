@@ -21,7 +21,7 @@ describe('HomeComponent', () => {
         QRCodeModule,
         MatButtonModule,
         RewardsModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        VouchersModule,
         RouterTestingModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),

@@ -4,12 +4,17 @@ import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, VouchersService, Voucher } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
+import { mockVoucher } from '../voucher.mock';
 
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
+  const vouchersServiceStub = {
+    get: (): Observable<Voucher> => of(mockVoucher)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +23,10 @@ describe('CodeRedemptionComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot(),
-        VouchersModule.forRoot({env: {apiHost: ''}})
+        VouchersModule
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ],
       declarations: [CodeRedemptionComponent]
     })

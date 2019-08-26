@@ -13,7 +13,11 @@ describe('SmsValidationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [UtilsModule, RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        UtilsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot()
+      ],
       declarations: [SmsValidationComponent],
       providers: [
         {
@@ -25,7 +29,7 @@ describe('SmsValidationComponent', () => {
         },
         {
           provide: ActivatedRoute, useValue: {
-            queryParams: of({identifier: '639876543210'})
+            queryParams: of({ identifier: '639876543210' })
           }
         }
       ]
