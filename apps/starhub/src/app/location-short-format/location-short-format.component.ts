@@ -20,6 +20,9 @@ export class LocationShortFormatComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    if (!this.merchantId) {
+      return;
+    }
 
     this.locations$ = sortByDistance(
       this.currentPosition.positions(),
@@ -27,5 +30,4 @@ export class LocationShortFormatComponent implements OnInit {
       true
     );
   }
-
 }
