@@ -44,7 +44,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
           this.initUnsequenceRules();
         }
       });
-
+    // TODO: will be need for realization edit page
     // this.form.patchValue(this.formService.getDefaultValue());
   }
 
