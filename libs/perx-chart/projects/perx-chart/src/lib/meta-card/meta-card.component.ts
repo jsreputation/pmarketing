@@ -12,6 +12,7 @@ export enum CardType {
   line = 'line',
   map = 'map',
   trend = 'trend',
+  table = 'table',
   calendarHeatmap = 'calendardHeatmap'
 }
 
