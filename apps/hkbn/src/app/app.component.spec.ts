@@ -1,11 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatDialog, MatDialogModule, MatSnackBar } from '@angular/material';
+import {
+  MatDialog,
+  MatDialogModule,
+  // MatSnackBar 
+} from '@angular/material';
 import { NotificationService, PopupComponent, UtilsModule } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
-import { SnackbarComponent } from './ui/snackbar/snackbar.component';
+// import { SnackbarComponent } from './ui/snackbar/snackbar.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class MockNotificationService {
@@ -35,7 +39,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        {provide: NotificationService, useClass: MockNotificationService}
+        { provide: NotificationService, useClass: MockNotificationService }
       ]
     }).compileComponents();
   }));
@@ -54,22 +58,22 @@ describe('AppComponent', () => {
     const dialog = TestBed.get(MatDialog);
 
     spyOnProperty(notificationService, '$popup', 'get')
-      .and.returnValue(of({title: 'Test'}));
+      .and.returnValue(of({ title: 'Test' }));
     const openSpy = spyOn(dialog, 'open');
 
     fixture.detectChanges();
-    expect(openSpy).toHaveBeenCalledWith(PopupComponent, {data: {title: 'Test'}});
+    expect(openSpy).toHaveBeenCalledWith(PopupComponent, { data: { title: 'Test' } });
   });
 
-  it('should open snackbar when $snack emits', () => {
-    const notificationService = TestBed.get(NotificationService);
-    const snackBar = TestBed.get(MatSnackBar);
+  // it('should open snackbar when $snack emits', () => {
+  //   const notificationService = TestBed.get(NotificationService);
+  //   const snackBar = TestBed.get(MatSnackBar);
 
-    spyOnProperty(notificationService, '$snack', 'get')
-      .and.returnValue(of('Test'));
+  //   spyOnProperty(notificationService, '$snack', 'get')
+  //     .and.returnValue(of('Test'));
 
-    const snackBarOpenSpy = spyOn(snackBar, 'openFromComponent');
-    fixture.detectChanges();
-    expect(snackBarOpenSpy).toHaveBeenCalledWith(SnackbarComponent, {data: {message: 'Test'}});
-  });
+  //   const snackBarOpenSpy = spyOn(snackBar, 'openFromComponent');
+  //   fixture.detectChanges();
+  //   expect(snackBarOpenSpy).toHaveBeenCalledWith(SnackbarComponent, { data: { message: 'Test' } });
+  // });
 });
