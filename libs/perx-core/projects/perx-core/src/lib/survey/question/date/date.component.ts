@@ -11,7 +11,7 @@ interface IPayloadDate {
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
 })
-export class DateComponent implements OnChanges{
+export class DateComponent implements OnChanges {
   @Input()
   public payload: IPayloadDate;
 

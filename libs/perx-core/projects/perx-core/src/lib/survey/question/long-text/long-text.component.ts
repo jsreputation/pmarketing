@@ -11,7 +11,7 @@ interface IPayloadLongText {
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss']
 })
-export class LongTextComponent implements OnChanges{
+export class LongTextComponent implements OnChanges {
 
   @Input()
   public payload: IPayloadLongText;

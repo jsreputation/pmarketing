@@ -12,7 +12,7 @@ interface IPayloadSelect {
   styleUrls: ['./select.component.scss']
 })
 
-export class SelectComponent implements OnChanges{
+export class SelectComponent implements OnChanges {
 
   @Input()
   public payload: IPayloadSelect;

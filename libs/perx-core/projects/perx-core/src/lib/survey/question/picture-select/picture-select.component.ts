@@ -15,7 +15,7 @@ interface IPictureChoice {
   templateUrl: './picture-select.component.html',
   styleUrls: ['./picture-select.component.scss']
 })
-export class PictureSelectComponent implements OnChanges{
+export class PictureSelectComponent implements OnChanges {
 
   @Input()
   public payload: IPayloadPictureSelect;

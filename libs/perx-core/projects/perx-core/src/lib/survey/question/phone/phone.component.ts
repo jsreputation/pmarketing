@@ -11,7 +11,7 @@ interface IPayloadPhone {
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
-export class PhoneComponent implements OnChanges{
+export class PhoneComponent implements OnChanges {
   @Input()
   public payload: IPayloadPhone;
 
