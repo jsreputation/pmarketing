@@ -1,8 +1,8 @@
-import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
-import { Observable } from 'rxjs';
-import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
-import { map } from 'rxjs/operators';
+import {Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {VouchersService} from '../vouchers.service';
+import {Observable} from 'rxjs';
+import {IVoucher, StatusLabelMapping} from '../models/voucher.model';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-vouchers',
@@ -28,6 +28,7 @@ export class VouchersComponent implements OnInit, OnChanges {
 
   @Input('data')
   public vouchers$: Observable<IVoucher[]>;
+  private originalVouchers$: Observable<IVoucher[]>;
 
   @Input()
   public mapping: StatusLabelMapping;
@@ -42,11 +43,12 @@ export class VouchersComponent implements OnInit, OnChanges {
         map(vouchers => (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
       );
     }
+    this.originalVouchers$ = this.vouchers$;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter) {
-      this.vouchers$ = this.vouchersService.getAll().pipe(
+    if (changes.filter && this.originalVouchers$) {
+      this.vouchers$ = this.originalVouchers$.pipe(
         map(vouchers => {
           return vouchers.filter(v => v.state === this.filter);
         })
