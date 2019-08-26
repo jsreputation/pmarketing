@@ -34,6 +34,15 @@ export enum SurveyQuestionType {
     date = 'date',
     phone = 'phone'
 }
+
+export interface IErrors {
+    hasError?: boolean;
+    isRequired?: boolean;
+    isValidDate?: boolean;
+    isExceedMaxLength?: boolean;
+    isValidPhoneNumber?: boolean;
+}
+
 export interface IPayload {
     type: string;
     [key: string]: any;

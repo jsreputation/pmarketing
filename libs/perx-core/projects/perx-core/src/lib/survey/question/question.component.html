@@ -1,6 +1,8 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
     id: {{id}}
     questionPointer: {{questionPointer}}
+    answer: {{this.question.answer}}<br />
+    question: {{this.question | json }}
     <div class="question-content">
         <div class="question">
             {{question.question}}
@@ -54,9 +56,13 @@
         ></perx-core-phone>
         <div 
             class="error-message"
-            [ngClass]="{ error: hasError }"
             *ngIf="question.payload.type !== surveyQuestionType.questionGroup">
-            Answer is <strong>required</strong>
+            <div [ngClass]="{ error: errorState?.isRequired }">
+                Answer is <strong>required</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.isExceedMaxLength }">
+                Exceed <strong>max length</strong>
+            </div>
         </div>
     </div>
     <div class="question-action-container" *ngIf="!isSubQuestion">

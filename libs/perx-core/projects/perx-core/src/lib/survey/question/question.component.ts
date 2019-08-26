@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { IQuestion, SurveyQuestionType, IAnswer, IPoints } from '../models/survey.model';
+import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
   selector: 'perx-core-question',
@@ -36,7 +36,7 @@ export class QuestionComponent implements OnInit, OnChanges {
   @Output()
   public updateQuestionPointer: EventEmitter<string> = new EventEmitter<string>();
 
-  public hasError: boolean;
+  public errorState: IErrors = {};
 
   public point: number;
 
@@ -74,10 +74,6 @@ export class QuestionComponent implements OnInit, OnChanges {
     const questionId = answer.question_id ? answer.question_id : this.question.id;
     this.updateAnswers.emit({ question_id: questionId, content: answer.content });
     this.questionValidation();
-    /**
-     * Specially for those group type question end leaf, for normal question,
-     * will do twice from here and next(), but survey question tracker will handle that
-     */
   }
 
   public updateGroupPoint(point: number): void {
@@ -94,7 +90,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public next(): void {
     this.questionValidation();
-    if (!this.hasError) {
+    if (!this.errorState.hasError) {
       this.moveToNextQuestion();
     } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
       this.flush = !this.flush;
@@ -111,9 +107,15 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   public questionValidation(): void {
-    this.hasError = false;
+    this.errorState = {};
     if (this.question.required && this.point !== 1) {
-      this.hasError = true;
+      this.errorState.isRequired = true;
+      this.errorState.hasError = true;
+    } else if (this.question.payload['max-length']
+      && typeof this.question.answer === 'string'
+      && this.question.payload['max-length'] < this.question.answer.length) {
+      this.errorState.isExceedMaxLength = true;
+      this.errorState.hasError = true;
     }
   }
 
