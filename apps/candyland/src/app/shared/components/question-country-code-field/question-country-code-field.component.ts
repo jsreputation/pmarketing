@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SurveyService } from '@cl-core/services/survey.service';
+import { SurveyService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-question-country-code-field',

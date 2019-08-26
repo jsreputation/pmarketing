@@ -5,7 +5,7 @@ import { EngagementType } from './shared/models/EngagementType';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import { EngagementsService } from '@cl-core/services';
 
 export enum GamesRouterLink {
   shakeTheTree = 'engagements/games/new-shake',

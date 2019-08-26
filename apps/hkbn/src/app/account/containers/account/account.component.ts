@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile, ProfileService } from '@perx/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'hkbn-account',
@@ -8,14 +8,12 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public accountData: BehaviorSubject<IProfile> = new BehaviorSubject<IProfile>(null);
+  public accountData: Observable<IProfile>;
 
   constructor(private profileService: ProfileService) {
   }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe((profile) => {
-      this.accountData.next(profile);
-    });
+    this.accountData = this.profileService.whoAmI();
   }
 }

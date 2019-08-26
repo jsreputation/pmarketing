@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatStepper } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SettingsService } from '@cl-core/services/settings.service';
+import { SettingsService } from '@cl-core/services';
 import { ClValidators } from '@cl-helpers/cl-validators';
 
 @Component({

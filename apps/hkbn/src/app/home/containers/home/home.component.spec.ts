@@ -1,19 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule, VouchersModule } from '@perx/core';
+import { IReward, LoyaltyModule, LoyaltyService, ProfileService, RewardsModule, VouchersModule, ILoyalty } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockLoyalty } from '../loyalty.mock';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-
+  const loyaltyServiceStub = {
+    getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
+    getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -21,14 +25,14 @@ describe('HomeComponent', () => {
         QRCodeModule,
         MatButtonModule,
         RewardsModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        VouchersModule,
         RouterTestingModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
       ],
       providers: [
-        {provide: ProfileService, useValue: {whoAmI: () => of(null)}},
-        {provide: LoyaltyService, useValue: {getLoyalties: () => of(null)}}
+        { provide: ProfileService, useValue: { whoAmI: () => of(null) } },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ],
       declarations: [HomeComponent]
     })
@@ -48,7 +52,7 @@ describe('HomeComponent', () => {
   it('should redirect to reward specific, when calling goToReward method', () => {
     const router = TestBed.get(Router);
     const routerSpy = spyOn(router, 'navigate');
-    component.goToReward({id: 1} as IReward);
+    component.goToReward({ id: 1 } as IReward);
     expect(routerSpy).toHaveBeenCalledWith(['/reward', 1]);
   });
 });

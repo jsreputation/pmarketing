@@ -14,10 +14,15 @@ describe('ContentContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HeaderModule, RouterTestingModule, NoopAnimationsModule, TranslateModule.forRoot()],
+      imports: [
+        HeaderModule,
+        RouterTestingModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
-        {provide: AuthenticationService, useValue: {}},
-        {provide: ProfileService, useValue: {whoAmI: () => of(true)}}
+        { provide: AuthenticationService, useValue: {} },
+        { provide: ProfileService, useValue: { whoAmI: () => of(true) } }
       ],
       declarations: [ContentContainerComponent]
     })

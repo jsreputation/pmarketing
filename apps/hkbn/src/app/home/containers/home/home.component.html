@@ -2,9 +2,10 @@
   <div class="container">
     <div class="loyalty-section">
       <perx-core-loyalty-summary class="loyalty-item"></perx-core-loyalty-summary>
-      <div class="loyalty-item loyalty-item-qr">
-        <qrcode [qrdata]="'http://example.com/'" [size]="80"></qrcode>
-        <button mat-raised-button color="primary" class="enlarge" routerLink="qr">{{"MY_QR" | translate}}</button>
+      <div class="loyalty-item loyalty-item-qr" *ngIf="loyalty">
+        <a mat-raised-button color="primary" class="enlarge" routerLink="qr">
+          <img src="assets/images/icons8-qr-code-24.png"><span>{{"MY_QR" | translate}}</span>
+        </a>
       </div>
     </div>
   </div>
