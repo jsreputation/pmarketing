@@ -12,6 +12,7 @@ import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemptio
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
           backUrl: ''
         }
       },
+      { path: 'history', component: HistoryComponent },
       { path: 'wallet', component: WalletComponent },
       {
         path: 'wallet/:id', children: [
