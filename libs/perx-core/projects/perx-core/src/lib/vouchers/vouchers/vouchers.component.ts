@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  @Input() public filter: string[];
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
   @Input() public showTitle: boolean = true;
@@ -27,15 +26,22 @@ export class VouchersComponent implements OnInit {
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
   @Input('data')
-  public set vouchers$(vouchers: Observable<IVoucher[]>) { 
-    this.originalVouchers$ = this.filter  && this.filter.length && vouchers ? vouchers
-    .pipe(map(voucher=> voucher.filter(v => this.filter.includes(v.state)))): vouchers;
+  public set vouchers$(vouchers: Observable<IVoucher[]>) {
+    this.originalVouchers$ = vouchers;
   };
   public get vouchers$(): Observable<IVoucher[]> {
     return this.originalVouchers$;
   };
-  private originalVouchers$: Observable<IVoucher[]>;
 
+  @Input() public set filter(filter: string[]) {
+    this._filter = filter;
+    this.originalVouchers$ = this.filterVoucher(this.originalVouchers$);
+  }
+  public get filter(): string[] {
+    return this._filter;
+  }
+  private _filter: string[];
+  private originalVouchers$: Observable<IVoucher[]>;
   @Input()
   public mapping: StatusLabelMapping;
 
@@ -45,10 +51,8 @@ export class VouchersComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.vouchers$) {
-      this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers => (this.filter) ? vouchers.filter(v => this.filter.includes(v.state)) : vouchers));
+      this.originalVouchers$ = this.vouchersService.getAll();
     }
-    this.originalVouchers$ = this.vouchers$;
   }
 
   public onClick(voucher: IVoucher): void {
@@ -59,5 +63,9 @@ export class VouchersComponent implements OnInit {
     this.route.emit(voucher.id);
 
     this.tapped.emit(voucher);
+  }
+
+  private filterVoucher(vouchers: Observable<IVoucher[]>): Observable<IVoucher[]> {
+    return vouchers.pipe(map(voucher => voucher.filter((el) => this.filter.includes(el.state))));
   }
 }
