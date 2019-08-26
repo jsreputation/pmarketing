@@ -25,7 +25,7 @@ export class RewardDetailComponent implements OnInit {
       return this.rewardService.getReward(this.id);
     })).pipe(map((val: IReward) => {
       if (!val.howToRedeem) {
-        val.howToRedeem = '<div class="how-to-redeem">Please refer to the <a href="faq">How To Redeem</a> for instructions.</div>';
+        val.howToRedeem = '<div class="how-to-redeem">Please refer to the <a href="faq">How To Redeem</a> page for instructions.</div>';
       }
       return val;
     }));
