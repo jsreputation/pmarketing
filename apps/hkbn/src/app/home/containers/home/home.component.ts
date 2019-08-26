@@ -20,11 +20,13 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalties().pipe(
-      filter((loyalties: ILoyalty[]) => loyalties.length > 0),
-      map((loyalties: ILoyalty[]) => loyalties[0])
-    ).subscribe(
-      (loyalty: ILoyalty) => { this.loyalty = loyalty; }
-    );
+    this.loyaltyService.getLoyalties()
+      .pipe(
+        filter((loyalties: ILoyalty[] | null) => loyalties !== null && loyalties.length > 0),
+        map((loyalties: ILoyalty[]) => loyalties[0])
+      )
+      .subscribe(
+        (loyalty: ILoyalty) => { this.loyalty = loyalty; }
+      );
   }
 }

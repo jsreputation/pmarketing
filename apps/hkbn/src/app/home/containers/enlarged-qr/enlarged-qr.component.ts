@@ -9,7 +9,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class EnlargedQrComponent implements OnInit {
   public loyalty: ILoyalty;
-  
+
   constructor(private loyaltyService: LoyaltyService) { }
 
   public ngOnInit(): void {
