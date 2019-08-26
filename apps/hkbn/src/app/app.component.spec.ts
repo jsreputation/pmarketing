@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {
   MatDialog,
   MatDialogModule,
-  // MatSnackBar 
+  // MatSnackBar
 } from '@angular/material';
 import { NotificationService, PopupComponent, UtilsModule } from '@perx/core';
 import { Observable, of } from 'rxjs';
