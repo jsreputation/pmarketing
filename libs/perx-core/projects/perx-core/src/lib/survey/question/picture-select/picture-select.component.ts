@@ -21,7 +21,7 @@ export class PictureSelectComponent implements OnChanges{
   public payload: IPayloadPictureSelect;
 
   @Input()
-  public flush: boolean = false;
+  public flush: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -29,7 +29,7 @@ export class PictureSelectComponent implements OnChanges{
   public selectedChoice: number;
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flush && changes.flush.currentValue) {
+    if (changes.flush && changes.flush.currentValue !== undefined) {
       this.onSelect(this.selectedChoice);
     }
   }

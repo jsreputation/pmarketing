@@ -20,16 +20,13 @@ export class GroupComponent implements OnChanges {
   public payload: IPayloadGroup;
 
   @Input()
-  public flush: boolean = false;
+  public flush: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   @Output()
   public updatePoints: EventEmitter<number> = new EventEmitter<number>();
-
-  @Output()
-  public updateFlushEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public selectedChoice: number;
 
@@ -50,7 +47,6 @@ export class GroupComponent implements OnChanges {
   public updatePoint(point: IPoints): void {
     this.pointsTracker[point.question_id] = point.point;
     const currentPoint = this.calculatePoints();
-    this.updateFlush(false);
     this.updatePoints.emit(currentPoint);
   }
 
@@ -63,15 +59,4 @@ export class GroupComponent implements OnChanges {
     return totalPoint / subQuestionLength;
   }
 
-  public allAnswersEmitted(): boolean {
-    const pointsTrackerValues = Object.values(this.pointsTracker);
-    const subQuestionLength = this.payload.questions.length;
-    return pointsTrackerValues.length === subQuestionLength;
-  }
-
-  public updateFlush(finish: boolean): void {
-    if (this.allAnswersEmitted()) {
-      this.updateFlushEmit.emit(finish);
-    }
-  }
 }

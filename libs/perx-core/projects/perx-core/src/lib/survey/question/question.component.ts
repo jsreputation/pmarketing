@@ -25,7 +25,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   // Used to flush group tree
   @Input()
-  public flush: boolean = false;
+  public flush: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -40,19 +40,17 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public point: number;
 
-  public nextActionTrigger: boolean;
-
   public ngOnInit(): void {
-    // Emit non required question in first page
-    if (this.isActive && !this.question.required) {
+    // Emit non required question in first page, and stop auto emit for last page
+    if (this.isActive && !this.question.required && (this.questionPointer !== this.totalQuestions - 1)) {
       this.updateAnswer({content: undefined});
     }
   }
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
-      if (this.isActive && !this.question.required) {
-        // Emit non required question in current page after questionPointer update
+      if (this.isActive && !this.question.required && (this.questionPointer !== this.totalQuestions - 1)) {
+        // Emit non required question in current page after questionPointer update, and stop auto emit for last page
         this.updateAnswer({content: undefined});
       }
     }
@@ -99,8 +97,7 @@ export class QuestionComponent implements OnInit, OnChanges {
     if (!this.hasError) {
       this.moveToNextQuestion();
     } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-      this.flush = true;
-      this.nextActionTrigger = true;
+      this.flush = !this.flush;
     }
   }
 
@@ -120,13 +117,4 @@ export class QuestionComponent implements OnInit, OnChanges {
     }
   }
 
-  public updateFlush(flush: boolean): void {
-    if (!flush && this.nextActionTrigger) {
-      this.questionValidation();
-      if (!this.hasError) {
-        this.nextActionTrigger = false;
-        this.moveToNextQuestion();
-      }
-    }
-  }
 }

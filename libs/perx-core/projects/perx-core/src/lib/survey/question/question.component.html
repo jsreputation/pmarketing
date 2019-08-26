@@ -15,7 +15,6 @@
             [flush]="flush"
             (updateAnswers)="updateAnswer($event)" 
             (updatePoints)="updateGroupPoint($event)"
-            (updateFlushEmit)="updateFlush($event)"  
         ></perx-core-group>
         <perx-core-select 
             *ngIf="question.payload.type === surveyQuestionType.multipleChoice"
