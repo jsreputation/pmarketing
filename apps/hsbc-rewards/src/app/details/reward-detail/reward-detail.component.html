@@ -3,7 +3,7 @@
   <div class="reward-body">
     <perx-core-reward #coreReward [reward]="reward"></perx-core-reward>
   </div>
-  <div class="redeem-container" *ngIf="loyalty$ | async as loyalty">
-    <button mat-flat-button type="submit" color="primary" [disabled]="!loyalty.pointsBalance" (click)="moveToBooking()">Redeem</button>
+  <div class="redeem-container">
+    <button mat-flat-button type="submit" color="primary" (click)="moveToBooking()">Redeem</button>
   </div>
 </div>

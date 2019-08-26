@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RewardsService, IReward, ProfileService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
+import { RewardsService, IReward } from '@perx/core';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -12,17 +12,11 @@ import { Observable } from 'rxjs';
 export class RewardDetailComponent implements OnInit {
   public reward: Observable<IReward>;
 
-  public loyalty$: Observable<ILoyalty>;
-  public pointsBalance: any;
-  public userData: IProfile;
   public id: number;
-  public loyaltyId: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private rewardService: RewardsService,
-    private profService: ProfileService,
-    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
@@ -35,12 +29,6 @@ export class RewardDetailComponent implements OnInit {
       }
       return val;
     }));
-    this.profService.whoAmI().subscribe((res) => {
-      this.userData = res;
-    });
-    this.loyaltyService.getLoyalties().subscribe((loyalties: ILoyalty[])=>{
-      this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
-    });
   }
   public moveToBooking(): void {
     this.router.navigate([`/detail/booking/${this.id}`]);
