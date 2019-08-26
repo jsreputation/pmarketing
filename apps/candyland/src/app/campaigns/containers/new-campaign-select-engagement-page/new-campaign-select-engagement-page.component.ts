@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Engagement } from '@cl-core/models/engagement.model';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EngagementsService } from '@cl-core/services/engagements.service';
@@ -58,12 +58,13 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.engagementsService.getEngagements()
       .pipe(
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
         }),
       )
       .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
+        console.log('list', res);
         this.cd.detectChanges();
       });
   }
