@@ -110,7 +110,9 @@ export class VouchersService implements IVoucherService {
   }
 
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-    let params = new HttpParams();
+    let params = new HttpParams()
+      .set('sort_by', 'id')
+      .set('order', 'desc');
 
     if (oc(voucherParams).type()) {
       params = params.set('type', voucherParams.type);

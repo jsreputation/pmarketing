@@ -7,7 +7,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
@@ -40,10 +39,4 @@ describe('RewardDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have the disabled button', () => {
-    component.pointsBalance = { insufficientPoints: 100 };
-    fixture.detectChanges();
-    const button = debugElement.query(By.css('.redeem-container button')).nativeElement;
-    expect(button.disabled).toBeTruthy();
-  });
 });
