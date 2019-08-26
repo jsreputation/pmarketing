@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ITabConfig } from '@perx/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 
 const tabs: ITabConfig[] = [
   {
@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.getRewardsCollection();
     this.getRewards();
-    this.getTags();
     this.loyaltyService.getLoyalties().subscribe(
       (loyalties: ILoyalty[]) => {
         this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
@@ -67,11 +66,12 @@ export class HomeComponent implements OnInit {
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, [tab.tabName]);
+        return this.rewardsService.getAllRewards(null, [tab.tabName])
+          .pipe(map((result: IReward[]) =>  ({ key: tab.tabName, value: result })));
       }));
     })).subscribe((result) => {
-      result.forEach((rewards: IReward[], index) => {
-        this.staticTab[index].rewardsList = of(rewards);
+      result.forEach((rewards) => {
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
         this.tabs.next(this.staticTab);
       });
     });
