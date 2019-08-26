@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { RoutingStateService } from '@cl-core/services';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
 @Component({

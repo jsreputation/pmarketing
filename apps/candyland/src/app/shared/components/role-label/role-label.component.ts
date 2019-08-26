@@ -30,6 +30,5 @@ export class RoleLabelComponent implements OnChanges {
 
   public ngOnChanges(): void {
     this.roleConfig = this.config[this.role];
-    console.log(this.role);
   }
 }

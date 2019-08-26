@@ -4,14 +4,18 @@ import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, VouchersService, Voucher } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
+  const vouchersServiceStub = {
+    getAll: (): Observable<Voucher[]> => of([])
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,8 +24,11 @@ describe('WalletComponent', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
-        VouchersModule.forRoot({env: {apiHost: ''}}),
+        VouchersModule,
         HttpClientTestingModule,
+      ],
+      providers: [
+        { provide: VouchersService, useValue: vouchersServiceStub }
       ],
       declarations: [WalletComponent]
     })
@@ -41,7 +48,7 @@ describe('WalletComponent', () => {
   it('should navigate to specific wallet page by id when call onRoute method', () => {
     const router = TestBed.get(Router);
     const routerSpy = spyOn(router, 'navigate');
-    component.onRoute({id: 1} as any);
+    component.onRoute({ id: 1 } as any);
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1']);
   });
 });

@@ -8,12 +8,13 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardService {
 
-  constructor(private dashboardHttpService: DashboardHttpService) { }
+  constructor(private dashboardHttpService: DashboardHttpService) {
+  }
 
   public getDashboardGameCard(): Observable<any> {
     return this.dashboardHttpService.getDashboardGameCard()
       .pipe(
-        map((res: DashboardGameCard[]) => res )
+        map((res: DashboardGameCard[]) => res)
       );
   }
 
@@ -22,5 +23,9 @@ export class DashboardService {
       .pipe(
         map((res: ITotal[]) => res)
       );
+  }
+
+  public getDashboardCampaignsTabs(): Observable<ITotal[]> {
+    return this.dashboardHttpService.getDashboardCampaignsTabs();
   }
 }

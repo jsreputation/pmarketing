@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlValueService } from '@cl-core-services';
+import { ControlValueService } from '@cl-core/services/control-value.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,7 @@ import { ControlValueService } from '@cl-core-services';
 export class EngagementTransformDataService {
   constructor(private controlValueService: ControlValueService) {
   }
+
 // tslint:disable
   public transformReward(data: any): any {
     return {
@@ -36,14 +37,14 @@ export class EngagementTransformDataService {
         description: 'Spin and win',
         game_type: 'shake',
         image_url:
-        'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
+          'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
-          tree_img_url:  this.controlValueService.getImagePath(data.treeType),
-          gift_box_img_url:  this.controlValueService.getImagePath(data.giftBox),
-          background_img_url:  this.controlValueService.getImagePath(data.background),
+          tree_img_url: this.controlValueService.getImagePath(data.treeType),
+          gift_box_img_url: this.controlValueService.getImagePath(data.giftBox),
+          background_img_url: this.controlValueService.getImagePath(data.background),
           nb_hanged_gifts: +data.gameGift
         }
       }
@@ -64,7 +65,7 @@ export class EngagementTransformDataService {
           sub_title: data.subHeadlineMessage,
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
-          closed_pinata_img_url:  this.controlValueService.getImagePath(data.pinata),
+          closed_pinata_img_url: this.controlValueService.getImagePath(data.pinata)
           // background_img_url:  this.controlValueService.getImagePath(data.background),
         }
       }
