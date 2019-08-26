@@ -12,17 +12,12 @@ interface IPayloadGroup {
 })
 
 export class GroupComponent implements OnChanges {
-  @Input()
-  public payload: IPayloadGroup;
 
   @Input()
   public id: number;
 
   @Input()
-  public questionPointer: number;
-
-  @Input()
-  public totalQuestions: number;
+  public payload: IPayloadGroup;
 
   @Input()
   public flush: boolean = false;

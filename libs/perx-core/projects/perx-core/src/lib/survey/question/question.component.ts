@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints } from '../models/survey.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { IQuestion, SurveyQuestionType, IAnswer, IPoints } from '../models/surve
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnChanges {
+export class QuestionComponent implements OnInit, OnChanges {
 
   @Input()
   public id: number;
@@ -42,7 +42,20 @@ export class QuestionComponent implements OnChanges {
 
   public nextActionTrigger: boolean;
 
+  public ngOnInit(): void {
+    // Emit non required question in first page
+    if (this.isActive && !this.question.required) {
+      this.updateAnswer({content: undefined});
+    }
+  }
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.questionPointer) {
+      this.questionPointer = changes.questionPointer.currentValue;
+      if (this.isActive && !this.question.required) {
+        // Emit non required question in current page after questionPointer update
+        this.updateAnswer({content: undefined});
+      }
+    }
     if (changes.flush) {
       this.flush = changes.flush.currentValue;
       if (this.flush) {
@@ -54,7 +67,7 @@ export class QuestionComponent implements OnChanges {
   public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
 
   public get isActive(): boolean {
-    return this.questionPointer === this.id;
+    return this.questionPointer === undefined || this.questionPointer === this.id;
   }
 
   public updateAnswer(answer: IAnswer): void {

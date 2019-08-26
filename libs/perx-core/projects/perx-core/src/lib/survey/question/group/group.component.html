@@ -1,8 +1,6 @@
 <div *ngFor="let question of payload.questions">
     <perx-core-question 
         [id]="id"
-        [questionPointer]="questionPointer"
-        [totalQuestions]="totalQuestions"
         [isSubQuestion]="true"
         [question]="question"
         [flush]="flush"

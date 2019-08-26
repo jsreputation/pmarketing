@@ -1,4 +1,6 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
+    id: {{id}}
+    questionPointer: {{questionPointer}}
     <div class="question-content">
         <div class="question">
             {{question.question}}
@@ -9,8 +11,6 @@
         <perx-core-group 
             *ngIf="question.payload.type === surveyQuestionType.questionGroup"
             [id]="id"
-            [questionPointer]="questionPointer"
-            [totalQuestions]="totalQuestions"
             [payload]="question.payload"
             [flush]="flush"
             (updateAnswers)="updateAnswer($event)" 
