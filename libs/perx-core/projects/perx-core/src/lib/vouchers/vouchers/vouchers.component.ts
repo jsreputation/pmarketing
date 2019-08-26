@@ -25,23 +25,16 @@ export class VouchersComponent implements OnInit {
   @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
-  @Input('data')
-  public set vouchers$(vouchers: Observable<IVoucher[]>) {
-    this.originalVouchers$ = vouchers;
-  };
-  public get vouchers$(): Observable<IVoucher[]> {
-    return this.originalVouchers$;
-  };
+  @Input('data') vouchers$: Observable<IVoucher[]>;
 
   @Input() public set filter(filter: string[]) {
     this._filter = filter;
-    this.originalVouchers$ = this.filterVoucher(this.originalVouchers$);
+    this.vouchers$ = this.filterVoucher(this.vouchers$);
   }
   public get filter(): string[] {
     return this._filter;
   }
   private _filter: string[];
-  private originalVouchers$: Observable<IVoucher[]>;
   @Input()
   public mapping: StatusLabelMapping;
 
@@ -51,7 +44,7 @@ export class VouchersComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.vouchers$) {
-      this.originalVouchers$ = this.vouchersService.getAll();
+      this.vouchers$ = this.vouchersService.getAll();
     }
   }
 
