@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ConfigPathService } from '@cl-core/services';
 
@@ -29,5 +29,25 @@ export class SettingsHttpService {
   public getAllCredential(params: any): Observable<any> {
     console.log('http params', params);
     return this.http.get(ConfigPathService.getAllCredentialPath, params);
+  }
+
+  public getAllIMAUsers(params: HttpParams): Observable<any> {
+    return this.http.get(ConfigPathService.IAMUsersPath, {params});
+  }
+
+  public inviteNewUser(body): Observable<any> {
+    return this.http.post(ConfigPathService.IAMUsersPath, {data: body});
+  }
+
+  public patchUser(patchValue, id: string): Observable<any> {
+    return this.http.patch(`${ConfigPathService.IAMUsersPath}/${id}`, {data: patchValue});
+  }
+
+  public deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${ConfigPathService.IAMUsersPath}/${id}`);
+  }
+
+  public getAllGroups(): Observable<any> {
+    return this.http.get(ConfigPathService.IAMGroupsPath);
   }
 }

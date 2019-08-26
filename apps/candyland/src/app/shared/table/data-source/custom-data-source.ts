@@ -1,11 +1,11 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { HttpParams } from '@angular/common/http';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
+import { HttpParamsService } from '@cl-core/services/http-params.service';
 
 // tslint:disable
-export class CustomDataSource {
-  private dataSubject = new BehaviorSubject<any[]>([]);
+export class CustomDataSource<T> {
+  private dataSubject = new BehaviorSubject<T[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   // used for toggle spiner loading
   public loading$ = this.loadingSubject.asObservable();
@@ -15,9 +15,19 @@ export class CustomDataSource {
   private lengthData = new BehaviorSubject<number>(0);
   // used for set all length items the pagination component
   public length$ = this.lengthData.asObservable();
+  // use for set included params
+  private _included: string;
+
+  public set included(value: any) {
+    this._included = value;
+  }
+
+  public get included() {
+    return { include: this._included };
+  }
 
   // default items on the page set up pageSize
-  constructor(private dataService: ITableService, private pageSize = 5) {
+  constructor(public dataService: ITableService, public pageSize = 5) {
     this.loadingData();
   }
 
@@ -40,7 +50,8 @@ export class CustomDataSource {
   }
 
   public set filter(value: {[key: string]: string}) {
-    this._filter = JSON.parse((value as any));
+    const filter = JSON.parse((value as any));
+    this._filter = filter;
     this.changeFilterSearch.next(0);
 
     this.loadingData();
@@ -66,11 +77,12 @@ export class CustomDataSource {
     const params = {
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
+      ...this.included,
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
-      'page[size]': pagination ? pagination.pageSize : this.pageSize
+      'page[size]': pagination ? pagination.pageSize : this.pageSize,
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData({params: this.params(params)})
+    this.dataService.getTableData( HttpParamsService.createHttpParams(params))
       .subscribe((res: any) => {
         console.log(res);
         this.dataSubject.next(res);
@@ -84,24 +96,6 @@ export class CustomDataSource {
         this.loadingSubject.next(false);
         console.warn('error', error);
       });
-  }
-
-  public params(filters): HttpParams {
-    if (filters) {
-      let params: any = new HttpParams();
-      for (const property in filters) {
-        if (filters.hasOwnProperty(property) && (filters[property] !== null && filters[property] !== '' && filters[property] !== undefined)) {
-          if (Array.isArray(property)) {
-            filters[property].forEach((element) => {
-              params = params.append(property, element);
-            });
-          } else {
-            params = params.append(property, filters[property]);
-          }
-        }
-      }
-      return params;
-    }
   }
 
   private sortPrepare(sortData: SortModel) {
