@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { IAnswer, ISurvey, ITracker } from '../models/survey.model';
+import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
 import { Observable } from 'rxjs';
-import { IPoints } from 'perx-core/lib/survey/models/survey.model';
+
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',

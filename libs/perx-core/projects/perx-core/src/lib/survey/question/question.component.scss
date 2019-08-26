@@ -19,11 +19,13 @@
     }
 
     .error-message {
-      visibility: hidden;
-      color: #eb202f;
-
-      & .error {
-        visibility: visible;
+      > div {
+        display: none;
+        color: #eb202f;
+  
+        &.error {
+          display: block;
+        }
       }
     }
   }

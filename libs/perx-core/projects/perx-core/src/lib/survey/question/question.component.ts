@@ -42,16 +42,20 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public ngOnInit(): void {
     // Emit non required question in first page, and stop auto emit for last page
-    if (this.isActive && !this.question.required && (this.questionPointer !== this.totalQuestions - 1)) {
-      this.updateAnswer({content: undefined});
+    const isNotRequired = !this.question.required;
+    const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
+    if (this.isActive && isNotRequired && isNotLastPage) {
+      this.updateAnswer({ content: this.question.answer });
     }
   }
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.questionPointer) {
       this.questionPointer = changes.questionPointer.currentValue;
-      if (this.isActive && !this.question.required && (this.questionPointer !== this.totalQuestions - 1)) {
+      const isNotRequired = !this.question.required;
+      const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
+      if (this.isActive && isNotRequired && isNotLastPage) {
         // Emit non required question in current page after questionPointer update, and stop auto emit for last page
-        this.updateAnswer({content: undefined});
+        this.updateAnswer({ content: this.question.answer });
       }
     }
     if (changes.flush) {
