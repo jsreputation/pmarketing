@@ -29,8 +29,9 @@ export class ListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe((param) => {
-      this.filter = param.id === 'history' ? [VoucherState.redeemed, VoucherState.expired] : [ VoucherState.issued, VoucherState.reserved, VoucherState.released ];
-      this.vouchers = this.vouchersService.getAll({type: 'all'});
+      this.filter = param.id === 'history' ? [VoucherState.redeemed, VoucherState.expired] :
+        [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+      this.vouchers = this.vouchersService.getAll({ type: 'all' });
     });
   }
 
