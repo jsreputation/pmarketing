@@ -25,6 +25,8 @@ class LineStubComponent extends GenericStubComponent { }
 class MapStubComponent extends GenericStubComponent { }
 @Component({ selector: 'pc-trend', template: '' })
 class TrendStubComponent extends GenericStubComponent { }
+@Component({ selector: 'pc-table', template: '' })
+class TableStubComponent extends GenericStubComponent { }
 @Component({ selector: 'pc-calendar-heatmap', template: '' })
 class CalendarHeatMapStubComponent extends GenericStubComponent { }
 
@@ -48,6 +50,7 @@ describe('MetaCardComponent', () => {
         LineStubComponent,
         MapStubComponent,
         TrendStubComponent,
+        TableStubComponent,
         CalendarHeatMapStubComponent
       ],
       providers: [
