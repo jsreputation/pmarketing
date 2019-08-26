@@ -3,7 +3,7 @@ import { Engagement } from '@cl-core/models/engagement.model';
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import { EngagementsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -60,7 +60,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
-        }),
+        })
       )
       .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
