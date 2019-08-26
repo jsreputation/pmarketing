@@ -55,12 +55,10 @@ export class CampaignCreationStoreService {
   }
 
   public updateCampaign(value: any): void {
-    console.log(value);
     if ('rewards' in value) {
       this.currentCampaign.rewards = value.rewards;
     }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
-    // console.log('currentCampaign', this.currentCampaign);
   }
 
 }

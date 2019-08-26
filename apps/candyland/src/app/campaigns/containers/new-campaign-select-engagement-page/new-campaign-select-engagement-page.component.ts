@@ -64,7 +64,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       )
       .subscribe((res: Engagement[]) => {
         this.dataSource.data = res;
-        console.log('list', res);
         this.cd.detectChanges();
       });
   }

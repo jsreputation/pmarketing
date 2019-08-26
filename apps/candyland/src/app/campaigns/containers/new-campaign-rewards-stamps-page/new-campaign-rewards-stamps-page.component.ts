@@ -31,7 +31,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     super.ngOnInit();
     const stampsSlotNumber = this.store.currentCampaign.template.slots;
     const stampsNumber = +this.store.currentCampaign.template.nb_of_slots;
-    console.log('hey', stampsSlotNumber, stampsNumber);
     for (const slotNumber of stampsSlotNumber) {
       this.addReward(this.createRewardForm(slotNumber));
     }
