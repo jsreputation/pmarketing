@@ -4,6 +4,7 @@ import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersService } from '@perx/core';
+import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -12,7 +13,7 @@ describe('VoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [VoucherComponent],
+      declarations: [VoucherComponent, LocationShortFormatComponent],
       imports: [
         MatIconModule,
         RouterTestingModule
