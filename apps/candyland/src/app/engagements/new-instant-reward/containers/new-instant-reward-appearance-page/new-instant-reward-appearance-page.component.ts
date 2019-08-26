@@ -48,7 +48,6 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
 
   public save(): void {
     const sendData = this.engagementTransformDataService.transformReward(this.formReward.value);
-    console.log(sendData);
     this.rewardService.createRewardGame(sendData)
       .subscribe(() => {
         this.showLaunchDialog();
