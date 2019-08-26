@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, ILoyalty, LoyaltyService } from '@perx/core';
-import { filter, map } from 'rxjs/operators';
+// import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'hkbn-home',
@@ -20,13 +20,9 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalties()
-      .pipe(
-        filter((loyalties: ILoyalty[] | null) => loyalties !== null && loyalties.length > 0),
-        map((loyalties: ILoyalty[]) => loyalties[0])
-      )
+    this.loyaltyService.getLoyalty()
       .subscribe(
-        (loyalty: ILoyalty) => { this.loyalty = loyalty; }
+        (loyalty: ILoyalty) => this.loyalty = loyalty
       );
   }
 }
