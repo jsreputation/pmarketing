@@ -4,7 +4,7 @@ import { RedemptionBookingComponent } from './redemption-booking.component';
 import { RedemptionBookingRoutingModule } from './redemption-booking-routing.module';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { RewardsModule, VouchersModule } from '@perx/core';
+import { RewardsModule, VouchersModule, UtilsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -15,7 +15,8 @@ import { environment } from 'src/environments/environment';
     DetailHeaderModule,
     SharedModule,
     RewardsModule.forRoot({ env: environment }),
-    VouchersModule.forRoot({ env: environment })
+    VouchersModule.forRoot({ env: environment }),
+    UtilsModule
   ]
 })
 export class RedemptionBookingModule { }
