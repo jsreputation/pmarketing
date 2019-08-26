@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class RewardDetailComponent implements OnInit {
   public reward: Observable<IReward>;
-  public loyalty: ILoyalty;
+
+  public loyalty$: Observable<ILoyalty>;
   public pointsBalance: any;
   public userData: IProfile;
   public id: number;
@@ -37,14 +38,8 @@ export class RewardDetailComponent implements OnInit {
     this.profService.whoAmI().subscribe((res) => {
       this.userData = res;
     });
-    this.loyaltyService.getLoyalty(this.loyaltyId).subscribe((res) => {
-      this.loyalty = res;
-    }, (err) => {
-      this.pointsBalance = Math.random() > 0.5 ? {
-        sufficientPoints: 100
-      } : {
-          insufficientPoints: 100
-        };
+    this.loyaltyService.getLoyalties().subscribe((loyalties: ILoyalty[])=>{
+      this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
     });
   }
   public moveToBooking(): void {
