@@ -25,16 +25,16 @@ export class VouchersComponent implements OnInit {
   @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
-  @Input('data') vouchers$: Observable<IVoucher[]>;
+  @Input('data') public vouchers$: Observable<IVoucher[]>;
 
   @Input() public set filter(filter: string[]) {
-    this._filter = filter;
+    this.privateFilter = filter;
     this.vouchers$ = this.filterVoucher(this.vouchers$);
   }
   public get filter(): string[] {
-    return this._filter;
+    return this.privateFilter;
   }
-  private _filter: string[];
+  private privateFilter: string[];
   @Input()
   public mapping: StatusLabelMapping;
 
