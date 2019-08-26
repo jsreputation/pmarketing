@@ -4,7 +4,7 @@
     <perx-core-reward #coreReward [reward]="reward"></perx-core-reward>
   </div>
   <div class="redeem-container" *ngIf="pointsBalance">
-    <button mat-flat-button type="submit" color="primary" [disabled]="pointsBalance.insufficientPoints"
+    <button mat-flat-button type="submit" color="primary" 
       (click)="moveToBooking()">Redeem</button>
   </div>
 </div>
