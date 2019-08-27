@@ -8,10 +8,7 @@ export interface IReward {
   rewardThumbnail?: string;
   rewardBanner: string;
   merchantImg: string;
-  rewardPrice?: {
-    rewardCurrency: string,
-    rewardAmount: string
-  }[];
+  rewardPrice?: IPrice[];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
