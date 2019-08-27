@@ -7,6 +7,7 @@ import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
+import { RewardsSortPipe } from './rewards-sort.pipe';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -18,7 +19,7 @@ describe('CategoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CategoryComponent],
+      declarations: [CategoryComponent, RewardsSortPipe],
       imports: [
         RouterTestingModule,
         MatIconModule,

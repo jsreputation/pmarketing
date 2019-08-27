@@ -1,0 +1,11 @@
+<div class="main-container">
+  <div class="loc">
+    <div *ngIf="(displayLocation$ | async)" class="address">
+      <h1>{{(displayLocation$ | async).name }}</h1>
+      <p>{{(displayLocation$ | async).address}}</p>
+      <p>{{(displayLocation$ | async).address2}}</p>
+    </div>
+  </div>
+  <a mat-button color="primary" [routerLink]="['/locations']" [queryParams]="{mid:merchantId}"
+    *ngIf="(locations$ | async)?.length > 1">See All {{(locations$ | async)?.length}} Locations</a>
+</div>

@@ -16,4 +16,8 @@ export class DashboardHttpService {
   public getDashboardDataTotal(): Observable<any> {
     return this.http.get('assets/actives/dashboard/total-active.json');
   }
+
+  public getDashboardCampaignsTabs(): Observable<any> {
+    return this.http.get<ITotal[]>('assets/actives/dashboard/dashboard-campaigns-tabs.json');
+  }
 }

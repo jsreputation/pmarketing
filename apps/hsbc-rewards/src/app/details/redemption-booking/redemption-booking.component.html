@@ -16,11 +16,11 @@
       <div class="select-wrap">
         <select formControlName="location">
           <option disabled [value]="null">Location</option>
-          <option *ngFor="let location of locationData | async" [value]="location.id">{{location.address}}</option>
+          <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.address}}</option>
         </select>
       </div>
       <mat-radio-group class="radio-group" formControlName="pointsBalance">
-        <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.rewardCampaignId">
+        <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
           Use
           <span *ngIf="price.points">{{price.points}} points</span>
           <span *ngIf="price.points && price.price"> + </span>

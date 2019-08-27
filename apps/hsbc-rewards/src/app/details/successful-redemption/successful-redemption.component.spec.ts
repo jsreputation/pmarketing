@@ -3,10 +3,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { SuccessfulRedemptionComponent } from './successful-redemption.component';
 import { HeaderModule } from '../../header/header.module';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('SusscessfullRedemptionComponent', () => {
   let component: SuccessfulRedemptionComponent;
   let fixture: ComponentFixture<SuccessfulRedemptionComponent>;
+  let debugElem: DebugElement;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -23,6 +26,7 @@ describe('SusscessfullRedemptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SuccessfulRedemptionComponent);
     component = fixture.componentInstance;
+    debugElem = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -30,4 +34,8 @@ describe('SusscessfullRedemptionComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should have a success label', () => {
+    const label = debugElem.query(By.css('.img-label')).nativeElement;
+    expect(label.textContent).toBe('Request successfully being processed');
+  });
 });

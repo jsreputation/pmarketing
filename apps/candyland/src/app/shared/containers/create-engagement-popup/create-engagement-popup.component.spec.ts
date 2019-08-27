@@ -32,7 +32,7 @@ import { NoDataModule } from '../../table/no-data/no-data.module';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ShakeTreeService } from '@cl-core-services';
+import { ShakeTreeService } from '@cl-core/services';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;

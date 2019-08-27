@@ -29,6 +29,8 @@ declare interface IEngagement {
       background: string;
       cardBackground: string;
       buttonText?: string;
+      nb_of_slots?: number;
+      slots?: number[];
     },
     type: string;
   };

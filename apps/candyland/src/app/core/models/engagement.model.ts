@@ -25,6 +25,9 @@ export class Engagement {
   public background: string;
   public cardBackground: string;
   public buttonText?: string;
+  public nb_of_slots?: number;
+  public slots?: number[];
+
   constructor(data: IEngagement) {
     this.id = data.id;
     this.current_type = data.type;
@@ -51,5 +54,7 @@ export class Engagement {
     this.background = data.attributes.display_properties.background;
     this.cardBackground = data.attributes.display_properties.cardBackground;
     this.buttonText = data.attributes.display_properties.buttonText;
+    this.nb_of_slots = data.attributes.display_properties.nb_of_slots;
+    this.slots = data.attributes.display_properties.slots;
   }
 }
