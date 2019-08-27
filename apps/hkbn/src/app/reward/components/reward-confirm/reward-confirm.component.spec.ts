@@ -3,10 +3,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardConfirmComponent } from './reward-confirm.component';
 import { MAT_DIALOG_DATA, MatButtonModule, MatDialogModule, MatDialogRef } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RewardsModule } from '@perx/core';
+import { RewardsModule, LoyaltyService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
-describe('RewardConfirmComponent', () => {
+const loyaltyServiceStub = {
+  getLoyalties: () => of([]),
+  getLoyalty: () => of({})
+};
+
+fdescribe('RewardConfirmComponent', () => {
   let component: RewardConfirmComponent;
   let fixture: ComponentFixture<RewardConfirmComponent>;
   let dialogRef: MatDialogRef<any>;
@@ -25,9 +31,10 @@ describe('RewardConfirmComponent', () => {
           provide: MatDialogRef, useValue: {
             close: () => {
             }
-          }
+          },
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}}
+        {provide: MAT_DIALOG_DATA, useValue: {}},
+        {provide: LoyaltyService, useValue: loyaltyServiceStub}
       ],
       declarations: [RewardConfirmComponent]
     })
