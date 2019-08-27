@@ -81,5 +81,6 @@
   "NEW_PASSWORD": "New password",
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "PASSWORD_SUCCESS_UPDATE": "Your password has been successfully updated",
-  "OK": "OK"
+  "OK": "OK",
+  "DISCLAMAIR": "disclamair {{value}}"
 }
