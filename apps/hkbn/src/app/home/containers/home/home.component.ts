@@ -1,9 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile } from '@perx/core';
+import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfig } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 // import { filter, map } from 'rxjs/operators';
+
+const staticTabs: ITabConfig[] = [
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'All',
+    rewardsList: null
+  }
+  , {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Home+',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'HKBN',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Hung Fook Tong',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'big big shop',
+    rewardsList: null
+  }
+];
+
+const keysTranslate = {
+  All: 'ALL',
+  'Home+': 'HOME+',
+  HKBN: 'HKBN',
+  'Hung Fook Tong': 'HUNG_FOOK_TONG',
+  'big big shop': 'BIG_BIG_SHOP'
+}
 
 @Component({
   selector: 'hkbn-home',
@@ -15,7 +54,8 @@ export class HomeComponent implements OnInit {
   public subTitleFn: (loyalty: ILoyalty) => string;
   public titleFn: (profile: IProfile) => string;
   public rewards$: Observable<IReward[]>;
-
+  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public staticTab: ITabConfig[];
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
@@ -28,6 +68,7 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.getRewards();
     this.rewardsService.getAllRewards(['featured']).subscribe((rewards) => {
       this.rewards$ = of(rewards);
     });
@@ -44,5 +85,26 @@ export class HomeComponent implements OnInit {
       .subscribe((res: string) => {
         this.titleFn = () => res;
       });
+  }
+
+  private getRewards(): void {
+    this.getTags().pipe(flatMap(() => {
+      return forkJoin(this.staticTab.map((tab) => this.rewardsService
+        .getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null).pipe(map((value) => ({ value: value, key: tab.tabName })))))
+    })).pipe(flatMap((reward) => {
+      this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
+      return forkJoin(this.staticTab.map((tab) => this.translate.get(keysTranslate[tab.tabName]).pipe(map((value) => ({ value: value, key: tab.tabName })))))
+    })).subscribe((names) => {
+      this.staticTab.forEach((tab) => tab.tabName = names.find((rew) => rew.key === tab.tabName).value);
+      this.tabs.next(this.staticTab)
+    });
+  }
+
+  private getTags(): Observable<ITabConfig[]> {
+    // todo: service not implemented yet
+    // this.rewardsService.getTags()
+    this.staticTab = staticTabs;
+    this.tabs.next(this.staticTab);
+    return of(staticTabs);
   }
 }
