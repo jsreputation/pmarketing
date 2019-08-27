@@ -1,6 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { EnvConfig } from '../shared/env-config';
 import { V4LoyaltyService } from './v4-loyalty.service';
@@ -16,8 +15,7 @@ import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
     LoyaltyTransactionsListComponent
   ],
   imports: [
-    CommonModule,
-    ScrollingModule
+    CommonModule
   ],
   exports: [
     LoyaltySummaryComponent,
