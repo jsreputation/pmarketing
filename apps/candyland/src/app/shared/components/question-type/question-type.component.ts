@@ -2,7 +2,7 @@ import {
   ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SurveyService } from '@cl-core/services/survey.service';
+import { SurveyService } from '@cl-core/services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 // tslint:disable

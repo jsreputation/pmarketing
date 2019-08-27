@@ -30,11 +30,11 @@
     box-sizing: border-box;
 
     &-header {
-      height: 6rem;
+      //height: 6rem;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
+      justify-content: space-between;
+      align-items: flex-end;
 
       cl-range-date-picker-filter {
         display: block;
@@ -70,6 +70,7 @@
 }
 
 .tabs-list-wrap {
+  width: 27rem;
   margin-right: 4rem;
 }
 

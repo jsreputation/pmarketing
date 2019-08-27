@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsService } from '@cl-core/services';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

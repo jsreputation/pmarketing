@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SurveyQuestionType } from '@cl-shared/components/question-form-field/survey-question-type.enum';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SurveyQuestionType } from '../../../engagements/new-survey/containers/new-survey/new-survey.component';
 
 @Component({
   selector: 'cl-question-form-field',

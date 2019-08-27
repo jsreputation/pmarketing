@@ -1,0 +1,46 @@
+.question-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.6rem;
+
+  &.hidden {
+    display: none;
+  }
+
+  .question-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .question {
+      margin-bottom: 2rem;
+
+      .required-star {
+        color: #eb202f;
+      }
+    }
+
+    .error-message {
+      height: 1.8rem;
+      overflow: hidden;
+
+      > div {
+        display: none;
+        color: #eb202f;
+
+        &.error {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .question-action-container {
+    button {
+      margin-right: 1rem;
+    }
+  }
+}
