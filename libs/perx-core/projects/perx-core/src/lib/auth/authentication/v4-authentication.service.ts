@@ -1,8 +1,8 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, map, mergeMap, switchMap } from 'rxjs/operators';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
-import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { tap, mergeMap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { EnvConfig } from '../../shared/env-config';
@@ -14,19 +14,19 @@ import {
   IAppAccessTokenResponse,
   IChangePasswordData
 } from '../authentication/models/authentication.model';
-import { V4ProfileService, IV4ProfileResponse } from '../../profile/v4-profile.service';
+import { V4ProfileService } from '../../profile/v4-profile.service';
 
-interface IV4SignUpData {
-  first_name?: string;
-  last_name: string;
-  middle_name?: string;
-  phone: string;
-  email?: string;
-  birthday?: string;
-  gender?: string;
-  password: string;
-  password_confirmation: string;
-}
+// interface IV4SignUpData {
+//   first_name?: string;
+//   last_name: string;
+//   middle_name?: string;
+//   phone: string;
+//   email?: string;
+//   birthday?: string;
+//   gender?: string;
+//   password: string;
+//   password_confirmation: string;
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private appAuthEndPoint: string;
   private userAuthEndPoint: string;
   private customersEndPoint: string;
-  private apiHost: string;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
@@ -47,7 +46,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     private profileService: V4ProfileService
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
     if (!config.env.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
@@ -58,7 +56,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     this.customersEndPoint = config.env.apiHost + '/v4/customers';
   }
 
-  // Done
   public isAuthorized(): Observable<boolean> {
     const token = this.tokenStorage
       .getAppInfoProperty('userAccessToken');
@@ -72,17 +69,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return of(true);
   }
 
-  // Done
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
     return this.retries < this.maxRetries && response.status === 401;
   }
 
-  // Done
   public verifyTokenRequest(url: string): boolean {
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  // Done
   public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean> {
     let success = false;
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
@@ -99,7 +93,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  // Done
   public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     let httpParams = new HttpParams()
       .append('url', location.host)
@@ -116,7 +109,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       params: httpParams
     });
   }
-  // Done
+
   public autoLogin(): Observable<boolean> {
     let success = false;
     const user = (window as any).primaryIdentifier;
@@ -134,7 +127,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  // Done
   public authenticateUserWithPI(user: string): Observable<any> {
     const httpParams = new HttpParams()
       .append('url', location.host)
@@ -145,7 +137,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  // Done
   public getAppToken(): Observable<IAppAccessTokenResponse> {
     const httpParams = new HttpParams()
       .append('url', location.host);
@@ -158,19 +149,19 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       })
     );
   }
-  // Done
+
   public setInterruptedUrl(url: string): void {
     this.lastURL = url;
   }
-  // Done
+
   public getInterruptedUrl(): string {
     return this.lastURL;
   }
-  // Done
+
   public logout(): void {
     this.tokenStorage.clearAppInfoProperty('userAccessToken');
   }
-  // Done
+
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
     return this.http.get<IMessageResponse>(
@@ -181,7 +172,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         )
       );
   }
-  // Done
+
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return this.http.patch<IMessageResponse>(
       this.customersEndPoint + '/reset_password',
@@ -197,7 +188,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         )
       );
   }
-  // Done
+
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
     return throwError('Temporarily disabled');
@@ -221,7 +212,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   //   res.firstName = undefined;
   //   return res;
   // }
-  // Done
+
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Temporarily disabled');
@@ -235,7 +226,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     //     map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
     //   );
   }
-  // Done
+
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return throwError('Temporarily disabled');
@@ -248,7 +239,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     //   );
   }
 
-  // Done
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
@@ -270,8 +260,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should return user access token in Observable from e.g.
    * localStorage
    */
-
-  // Done
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
     const appAccessToken = this.getAppAccessToken();
@@ -283,8 +271,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should return user access token in Observable from e.g.
    * localStorage
    */
-
-  // Done
   public getUserAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('userAccessToken');
   }
@@ -294,8 +280,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should set user access token in Observable from e.g.
    * localStorage
    */
-
-  // Done
   public saveUserAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
   }
@@ -305,8 +289,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should return user access token in Observable from e.g.
    * localStorage
    */
-
-  // Done
   public getAppAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('appAccessToken');
   }
@@ -316,7 +298,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should set user access token in Observable from e.g.
    * localStorage
    */
-  // Done
   public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
   }

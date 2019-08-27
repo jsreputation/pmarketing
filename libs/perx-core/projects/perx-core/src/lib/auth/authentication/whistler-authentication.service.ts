@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, mergeMap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
@@ -12,7 +12,7 @@ import {
   IMessageResponse,
   IResetPasswordData,
   ISignUpData,
-  IChangePasswordData 
+  IChangePasswordData
 } from './models/authentication.model';
 
 @Injectable({
@@ -24,6 +24,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
+  private preAuthJWT: string;
   private didFailAuth: boolean = false;
   private failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
@@ -48,64 +49,78 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return of(!!token);
   }
 
-  public refreshToken(): Observable<any> {
-    return this.setPreAuthJWT().pipe(
+  // Need to review whistler auth process
+  public setPreAuthJWT(): Observable<any> {
+    return this.http.get(this.preAuthEndpoint, {
+      params: {
+        url: location.host
+      },
+      observe: 'response'
+    }).pipe(
       tap((resp) => {
-        /* check if valid auth  */
-        this.retries++;
-        if (resp) {
-          this.getUserWithJWT(this.preAuthJWT).toPromise().then(
-            () => {
-              // @ts-ignore
-              const userBearer = resp.headers.get('Authorization');
-              if (userBearer) {
-                this.saveUserAccessToken(userBearer.split(' ')[1]);
-              }
-            },
-            () => {
-              if (this.retries === this.maxRetries) {
-                this.authing = false;
-                this.didFailAuth = true;
-                this.failedAuthObservable.next(this.didFailAuth);
-                this.failedAuthObservable.complete();
-                return of(this.logout());
-              }
-
-              return of();
-            }
-          );
-        }
-      }),
+        this.preAuthJWT = resp.headers.get('Authorization');
+        return resp;
+      })
     );
   }
 
-  // Done
-  public refreshShouldHappen(response: HttpErrorResponse): boolean {
-    return this.retries < this.maxRetries && response.status === 401;
-  }
-
-  // Done
-  public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
-  }
-
-  public autoLogin(): Observable<boolean> {
+  public refreshToken(): Observable<any> {
     let success = false;
-    return this.getUserWithJWT(this.preAuthJWT).pipe(
-      tap(
-        (res) => {
-          const userBearer = res.body.data[0].attributes.jwt || undefined;
-          if (userBearer) {
-            this.saveUserAccessToken(userBearer);
-            success = true;
-          }
-          return success;
+    this.retries++;
+    return this.setPreAuthJWT().pipe(
+      mergeMap(
+        () => {
+          /* check if valid auth  */
+          return this.getUserWithJWT(this.preAuthJWT).pipe(
+            tap(
+              () => {
+                // @ts-ignore
+                const userBearer = resp.headers.get('Authorization');
+                if (userBearer) {
+                  this.saveUserAccessToken(userBearer.split(' ')[1]);
+                  success = true;
+                }
+                return success;
+              },
+              () => {
+                if (this.retries >= this.maxRetries) {
+                  this.didFailAuth = true;
+                  this.failedAuthObservable.next(this.didFailAuth);
+                  this.failedAuthObservable.complete();
+                  this.logout();
+                  return false;
+                }
+              }
+            )
+          );
         }
       )
     );
   }
 
-  // Done
+  public autoLogin(): Observable<boolean> {
+    let success = false;
+    return this.setPreAuthJWT().pipe(
+      mergeMap(
+        () => {
+          return this.getUserWithJWT(this.preAuthJWT).pipe(
+            tap(
+              (res) => {
+                const userBearer = res.body.data[0].attributes.jwt || undefined;
+                if (userBearer) {
+                  this.saveUserAccessToken(userBearer);
+                  success = true;
+                }
+                return success;
+              }
+            )
+          );
+        }
+      )
+    );
+
+  }
+
   public getUserWithJWT(bearer: string): Observable<any> {
     const user = (window as any).primaryIdentifier;
     const payload = {
@@ -129,18 +144,12 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     });
   }
 
-  public setPreAuthJWT(): Observable<any> {
-    return this.http.get(this.preAuthEndpoint, {
-      params: {
-        url: location.host
-      },
-      observe: 'response'
-    }).pipe(
-      tap((resp) => {
-        this.preAuthJWT = resp.headers.get('Authorization');
-        return resp;
-      })
-    );
+  public refreshShouldHappen(response: HttpErrorResponse): boolean {
+    return this.retries < this.maxRetries && response.status === 401;
+  }
+
+  public verifyTokenRequest(url: string): boolean {
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
   // @ts-ignore
@@ -155,12 +164,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public setInterruptedUrl(url: string): void {
     this.lastURL = url;
   }
-  // Done
+
   public getInterruptedUrl(): string {
     return this.lastURL;
   }
 
-  // Done
   public logout(): void {
     this.tokenStorage.clearAppInfoProperty('userAccessToken');
   }
