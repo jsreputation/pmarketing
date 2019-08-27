@@ -1,20 +1,20 @@
+import { AuthService } from 'ngx-auth';
+import { Injectable } from '@angular/core';
+import { tap, map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { EnvConfig } from '../../shared/env-config';
-import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
-import { tap, map, mergeMap } from 'rxjs/operators';
-import { IProfile } from '../../../profile/profile.model';
+import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
   IResetPasswordData,
   IMessageResponse,
   IAppAccessTokenResponse,
   IChangePasswordData
-} from '../../authentication/models/authentication.model';
-import { V4ProfileService, IV4ProfileResponse } from '../../../profile/v4-profile.service';
-import { TokenStorage, OauthService } from 'perx-core/perx-core';
-import { AuthService } from 'ngx-auth';
+} from '../authentication/models/authentication.model';
+import { V4ProfileService, IV4ProfileResponse } from '../../profile/v4-profile.service';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -35,15 +35,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private appAuthEndPoint: string;
   private userAuthEndPoint: string;
   private customersEndPoint: string;
-  private preAuthEndpoint: string;
   private apiHost: string;
   private lastURL: string;
-  private authing: boolean;
   private retries: number = 0;
   private maxRetries: number = 2;
-  private preAuthJWT: string;
-  private didFailAuth: boolean = false;
-  private failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     config: EnvConfig,
@@ -56,15 +51,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     if (!config.env.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
-      this.preAuthEndpoint = 'http://localhost:4000/preauth';
     } else {
       this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
-      this.preAuthEndpoint = config.env.baseHref + 'preauth';
     }
     this.customersEndPoint = config.env.apiHost + '/v4/customers';
   }
 
+  // Done
   public isAuthorized(): Observable<boolean> {
     const token = this.tokenStorage
       .getAppInfoProperty('userAccessToken');
@@ -72,121 +66,41 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return of(!!token);
   }
 
-  // To be refactor, current not in use 
+  // To be refactor, current not in use
   public refreshToken(): Observable<any> {
-    return this.preAuth().pipe(
-      tap((resp) => {
-        /* check if valid auth  */
-        this.retries++;
-        if (resp) {
-          this.authing = true;
-          this.userAuth(this.preAuthJWT).toPromise().then(
-            () => {
-              // @ts-ignore
-              const userBearer = resp.headers.get('Authorization');
-              if (userBearer) {
-                this.saveUserAccessToken(userBearer.split(' ')[1]);
-              }
-            },
-            () => {
-              if (this.retries === this.maxRetries) {
-                this.authing = false;
-                this.didFailAuth = true;
-                this.failedAuthObservable.next(this.didFailAuth);
-                this.failedAuthObservable.complete();
-                return of(this.logout());
-              }
-
-              return of();
-            }
-          );
-        }
-      }),
-    );
+    console.log('No refresh token function required for v*, always pass true to ngx-auth');
+    return of(true);
   }
 
+  // Done
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
     return this.retries < this.maxRetries && response.status === 401;
   }
 
+  // Done
   public verifyTokenRequest(url: string): boolean {
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  // To be refactor to observable
-  public async autoLogin(): Promise<boolean> {
-    this.authing = true;
+  // Done
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean> {
     let success = false;
-
-    const userAuthData = await this.userAuth(this.preAuthJWT).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
-    );
-    // @ts-ignore
-    const userBearer = userAuthData.body.data[0].attributes.jwt;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
-  }
-
-  // To be test
-  public userAuth(bearer: string): Observable<any> {
-    const user = (window as any).primaryIdentifier;
-    const payload = {
-      data: {
-        type: 'login',
-        attributes: {
-          primary_identifier: user,
+    return this.authenticateUser(user, pass, mechId, campaignId).pipe(
+      tap(
+        (res) => {
+          const userBearer = res && res.bearer_token;
+          if (userBearer) {
+            this.saveUserAccessToken(userBearer);
+            success = true;
+          }
+          return success;
         }
-      }
-    };
-    const httpOptions = {
-      headers: new HttpHeaders(
-        {
-          'Content-Type': 'application/vnd.api+json',
-          Authorization: bearer
-        })
-    };
-    return this.http.post(this.apiHost + '/cognito/login', payload, {
-      headers: httpOptions.headers,
-      observe: 'response'
-    });
+      )
+    );
   }
 
-  // To be refactor
-  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string): Promise<boolean> {
-    this.authing = true;
-    let success = false;
-
-    const v4AuthData = await this.authenticateV4Oauth(user, pass, mechId, campaignId)
-      .toPromise();
-    // .catch(() => {
-    //   console.log('login failed!');
-    //   this.authing = false;
-    // });
-
-    if (v4AuthData === undefined) {
-      return false;
-    }
-
-    const userBearer = v4AuthData.bearer_token;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
-  }
-
-  // To be check
-  public authenticateV4Oauth(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
+  // Done
+  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     let httpParams = new HttpParams()
       .append('url', location.host)
       .append('username', user)
@@ -202,30 +116,26 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       params: httpParams
     });
   }
-
-  public async v4AutoLogin(): Promise<boolean> {
-    this.authing = true;
+  // Done
+  public autoLogin(): Observable<boolean> {
     let success = false;
-
-    const userId = (window as any).primaryIdentifier;
-    const v4AuthData = await this.authenticateUserIdWithAppBearer(userId).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
+    const user = (window as any).primaryIdentifier;
+    return this.authenticateUserWithPI(user).pipe(
+      tap(
+        (res) => {
+          const userBearer = res && res.bearer_token;
+          if (userBearer) {
+            this.saveUserAccessToken(userBearer);
+            success = true;
+          }
+          return success;
+        }
+      )
     );
-    // @ts-ignore
-    const userBearer = v4AuthData.bearer_token;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
   }
 
-  public authenticateUserIdWithAppBearer(user: string): Observable<any> {
+  // Done
+  public authenticateUserWithPI(user: string): Observable<any> {
     const httpParams = new HttpParams()
       .append('url', location.host)
       .append('identifier', user);
@@ -235,26 +145,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  public preAuth(): Observable<any> {
-    return this.authenticateAppWithPreAuth(location.host).pipe(
-      tap((resp) => {
-        // @ts-ignore
-        this.preAuthJWT = resp.headers.get('Authorization');
-        return resp;
-      })
-    );
-  }
-
-  public authenticateAppWithPreAuth(referrer: string): Observable<any> {
-
-    return this.http.get(this.preAuthEndpoint, {
-      params: {
-        url: referrer
-      },
-      observe: 'response'
-    });
-  }
-
+  // Done
   public getAppToken(): Observable<IAppAccessTokenResponse> {
     const httpParams = new HttpParams()
       .append('url', location.host);
@@ -267,19 +158,19 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       })
     );
   }
-
+  // Done
   public setInterruptedUrl(url: string): void {
     this.lastURL = url;
   }
-
+  // Done
   public getInterruptedUrl(): string {
     return this.lastURL;
   }
-
+  // Done
   public logout(): void {
     this.tokenStorage.clearAppInfoProperty('userAccessToken');
   }
-
+  // Done
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
     return this.http.get<IMessageResponse>(
@@ -290,8 +181,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         )
       );
   }
-
-  // @ts-ignore
+  // Done
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return this.http.patch<IMessageResponse>(
       this.customersEndPoint + '/reset_password',
@@ -307,7 +197,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         )
       );
   }
-
+  // Done
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
     return throwError('Temporarily disabled');
@@ -319,7 +209,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     //     )
     //   );
   }
-
+  // used for signup function, don't remove
   // private static signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
   //   const res = {
   //     last_name: data.lastName,
@@ -331,7 +221,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   //   res.firstName = undefined;
   //   return res;
   // }
-
+  // Done
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Temporarily disabled');
@@ -345,7 +235,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     //     map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
     //   );
   }
-
+  // Done
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return throwError('Temporarily disabled');
@@ -358,7 +248,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     //   );
   }
 
-  // @ts-ignore
+  // Done
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
@@ -381,6 +271,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
 
+  // Done
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
     const appAccessToken = this.getAppAccessToken();
@@ -393,6 +284,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
 
+  // Done
   public getUserAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('userAccessToken');
   }
@@ -403,6 +295,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
 
+  // Done
   public saveUserAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
   }
@@ -413,6 +306,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
 
+  // Done
   public getAppAccessToken(): string {
     return this.tokenStorage.getAppInfoProperty('appAccessToken');
   }
@@ -422,7 +316,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * @description Should set user access token in Observable from e.g.
    * localStorage
    */
-
+  // Done
   public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
   }

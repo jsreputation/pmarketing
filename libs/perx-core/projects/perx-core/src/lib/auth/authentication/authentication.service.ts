@@ -41,15 +41,9 @@ export abstract class AuthenticationService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public abstract async autoLogin(): Promise<boolean>;
+  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean>;
 
-  public abstract userAuth(bearer: string): Observable<any>;
-
-  public abstract async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string): Promise<boolean>;
-
-  public abstract async v4AutoLogin(): Promise<boolean>;
-
-  public abstract preAuth(): Observable<any>;
+  public abstract autoLogin(): Observable<boolean>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
