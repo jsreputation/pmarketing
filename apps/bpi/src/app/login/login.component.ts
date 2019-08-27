@@ -15,14 +15,14 @@ export class LoginComponent implements OnInit {
   public isHidden: boolean = true;
 
   protected preAuth: boolean;
-  protected failedAuth: boolean;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {
     this.preAuth = environment.preAuth;
-    this.failedAuth = false;
   }
 
   public ngOnInit(): void {
@@ -34,17 +34,12 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-      this.authService.v4AutoLogin().then(
-        () => {
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('bpi/landing');
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        (isAuthed: boolean) => {
+          if (isAuthed) {
+            this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'bpi/landing');
           }
-        },
-        (_) => {
-          this.failedAuth = true;
         }
       );
     }

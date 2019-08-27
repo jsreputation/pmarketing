@@ -12,7 +12,6 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  public authed: boolean;
   public preAuth: boolean;
   public failedAuth: boolean;
 
@@ -27,32 +26,23 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.authing) {
-
-      this.authService.isAuthorized().subscribe(
-        authed => {
-          if (!authed) {
-            this.authService.v4AutoLogin().then(
-              (isAuthed: boolean) => {
-                this.authed = isAuthed;
-                if (this.authed) {
-                  this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                } else {
-                  this.router.navigateByUrl('game');
-                }
-              },
-              (err) => {
-                this.failedAuth = true;
-                this.authed = false;
-              }
-            );
-          } else {
-            this.authed = authed;
-          }
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        (isAuthed: boolean) => {
+          this.redirectAfterLogin(isAuthed);
         },
+        () => {
+          this.failedAuth = true;
+        }
       );
     }
+  }
 
+  public redirectAfterLogin(isAuthed: boolean): void {
+    this.failedAuth = !isAuthed;
+    if (isAuthed) {
+      this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'game');
+    }
   }
 
   // TODO: error states
@@ -61,18 +51,12 @@ export class LoginComponent implements OnInit {
     const password = loginForm.value.password;
     const mechId = '2';
 
-    this.authService.v4GameOauth(username, password, mechId).then(
+    this.authService.login(username, password, mechId).subscribe(
       (isAuthed: boolean) => {
-        this.authed = isAuthed;
-        if (this.authed) {
-          this.router.navigateByUrl(this.authService.getInterruptedUrl());
-        } else {
-          this.router.navigateByUrl('game');
-        }
+        this.redirectAfterLogin(isAuthed);
       },
-      (err) => {
+      () => {
         this.failedAuth = true;
-        this.authed = false;
       }
     );
   }

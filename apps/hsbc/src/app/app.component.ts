@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   public leftIconToShow: string = '';
   public rightIconToShow: string = '';
   public currentPage: string;
-  public failedAuthSubscriber: Subscription;
   private soundToggleSubscription: Subscription;
   @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
 
@@ -52,13 +51,10 @@ export class AppComponent implements OnInit {
 
     }
 
-    this.authService.failedAuthObservable.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
+    if (!this.authService.getUserAccessToken()) {
+      this.router.navigateByUrl('login');
+    }
+
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });

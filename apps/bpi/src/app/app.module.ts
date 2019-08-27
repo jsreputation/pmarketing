@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   PerxCoreModule,
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
@@ -46,11 +44,9 @@ import { LandingComponent } from './landing/landing.component';
     MatInputModule,
     MatButtonModule,
     VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
     StampModule.forRoot({ env: environment }),
-    AuthenticationModule,
     BrowserAnimationsModule
   ],
   providers: [],

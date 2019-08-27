@@ -17,10 +17,7 @@ export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping }
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
-export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
-export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 
 /**

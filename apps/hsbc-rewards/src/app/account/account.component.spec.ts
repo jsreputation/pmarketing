@@ -37,7 +37,7 @@ const dynamicCreateServiceStub = {
   createComponent: () => {
   }
 };
-const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true), logout: () => { } };
+const authenticationServiceStub = { logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;

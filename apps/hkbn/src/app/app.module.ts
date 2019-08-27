@@ -32,7 +32,7 @@ import { SnackbarModule } from './ui/snackbar/snackbar.module';
 import { HistoryComponent } from './history/history.component';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
-  return () => authenticationService.v4GetAppAccessToken().toPromise();
+  return () => authenticationService.getAppToken().toPromise();
 };
 
 const setLanguage = (translateService: TranslateService) => {

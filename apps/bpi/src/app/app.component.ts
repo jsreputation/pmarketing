@@ -20,13 +20,10 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.failedAuthObservable.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
+    if (!this.authService.getUserAccessToken()) {
+      this.router.navigateByUrl('login');
+    }
+
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });

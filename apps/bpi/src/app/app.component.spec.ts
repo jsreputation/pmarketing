@@ -16,7 +16,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true) };
+    const authenticationServiceStub = {};
     const routerStub = { navigateByUrl: () => ({}) };
     TestBed.configureTestingModule({
       imports: [
@@ -68,14 +68,7 @@ describe('AppComponent', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
-      expect(authenticationService.failedAuthObservable.value).toBe(true);
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('login');
-    });
-
-    it('should failed auth login', () => {
-      authenticationService.failedAuthObservable = new BehaviorSubject(false);
-      component.ngOnInit();
-      expect(authenticationService.failedAuthObservable.value).toBe(false);
     });
 
     it('should call notificationService', () => {

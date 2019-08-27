@@ -25,8 +25,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   private retries: number = 0;
   private maxRetries: number = 2;
   private preAuthJWT: string;
-  private didFailAuth: boolean = false;
-  private failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
 
   constructor(
     config: EnvConfig,
@@ -84,9 +82,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
               },
               () => {
                 if (this.retries >= this.maxRetries) {
-                  this.didFailAuth = true;
-                  this.failedAuthObservable.next(this.didFailAuth);
-                  this.failedAuthObservable.complete();
                   this.logout();
                   return false;
                 }
