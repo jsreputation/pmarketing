@@ -1,23 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
-import { SurveyService } from '@cl-core/services/survey.service';
-import { ConfirmModalComponent } from '@cl-shared';
+import { SurveyService } from '@cl-core/services';
+import { ConfirmModalComponent, QuestionFormFieldService } from '@cl-shared';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-
-export enum SurveyQuestionType {
-  rating = 'rating',
-  pictureChoice = 'pictureChoice',
-  longText = 'longText',
-  multipleChoice = 'multipleChoice',
-  questionGroup = 'questionGroup',
-  date = 'date', phone = 'phone'
-}
 
 @Component({
   selector: 'cl-new-survey',

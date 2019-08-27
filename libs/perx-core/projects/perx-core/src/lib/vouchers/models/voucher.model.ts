@@ -46,3 +46,7 @@ export interface IVoucher {
   redemptionSuccessTxt: string;
   redemptionSuccessImg: string;
 }
+
+export interface IGetVoucherParams {
+  type: string;
+}

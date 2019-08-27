@@ -16,14 +16,14 @@ import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 const routes: Routes = [
   {
     path: '', canActivate: [ProtectedGuard], component: ContentContainerComponent, children: [
-      {path: '', component: HomeComponent},
+      { path: '', component: HomeComponent },
       {
         path: 'qr', component: EnlargedQrComponent, data: {
           cross: true,
           backUrl: ''
         }
       },
-      {path: 'wallet', component: WalletComponent},
+      { path: 'wallet', component: WalletComponent },
       {
         path: 'wallet/:id', children: [
           {
@@ -75,7 +75,7 @@ const routes: Routes = [
     canActivate: [PublicGuard],
     component: ForgotPasswordComponent
   },
-  {path: '**', redirectTo: '/'}
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { IProfile } from '@perx/core';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -9,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class AccountSummaryComponent implements OnChanges {
 
-  @Input() public accountData: any;
+  @Input() public accountData: IProfile;
 
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
@@ -25,5 +26,4 @@ export class AccountSummaryComponent implements OnChanges {
       this.accountSummary.patchValue(this.accountData);
     }
   }
-
 }

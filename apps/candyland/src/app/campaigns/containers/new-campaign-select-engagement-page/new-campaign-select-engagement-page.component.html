@@ -3,10 +3,10 @@
     <!--  filters-->
     <div class="template-filters">
       <cl-table-filters [dataSource]="dataSource">
-        <ng-container *clTableFilter="'name'; let filter">
+        <ng-container *clTableFilter="'title'; let filter">
           <cl-search-filter class="name-filter" [control]="filter"></cl-search-filter>
         </ng-container>
-        <ng-container *clTableFilter="'type'; let filter">
+        <ng-container *clTableFilter="'attributes_type'; let filter">
           <mat-form-field appearance="outline">
             <mat-select [formControl]="filter" placeholder="Filter by">
               <ng-container *ngFor="let option of typeFilterConfig">

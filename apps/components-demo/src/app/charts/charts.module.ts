@@ -15,6 +15,7 @@ import { MapComponent } from './map/map.component';
 import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
 import { LineComponent } from './line/line.component';
 import { MetabaseComponent } from './metabase/metabase.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MetabaseComponent } from './metabase/metabase.component';
     MapComponent,
     CalendarHeatmapComponent,
     LineComponent,
-    MetabaseComponent
+    MetabaseComponent,
+    TableComponent
   ],
   providers: [
   ],

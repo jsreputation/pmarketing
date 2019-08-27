@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { SurveyService } from '@cl-core/services/survey.service';
+import { SurveyService } from '@cl-core/services';
 import { Observable } from 'rxjs';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
