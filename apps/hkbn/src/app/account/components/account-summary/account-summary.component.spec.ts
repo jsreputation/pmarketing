@@ -6,7 +6,8 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +29,7 @@ describe('AccountSummaryComponent', () => {
         MatButtonModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        MatSlideToggleModule,
         TranslateModule.forRoot(),
       ],
       declarations: [AccountSummaryComponent]

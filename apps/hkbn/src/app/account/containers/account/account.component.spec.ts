@@ -8,7 +8,8 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +31,7 @@ describe('AccountComponent', () => {
         TextMaskModule,
         MatButtonModule,
         ReactiveFormsModule,
+        MatSlideToggleModule,
         NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
