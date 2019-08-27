@@ -42,7 +42,7 @@ const keysTranslate = {
   HKBN: 'HKBN',
   'Hung Fook Tong': 'HUNG_FOOK_TONG',
   'big big shop': 'BIG_BIG_SHOP'
-}
+};
 
 @Component({
   selector: 'hkbn-home',
@@ -90,13 +90,14 @@ export class HomeComponent implements OnInit {
   private getRewards(): void {
     this.getTags().pipe(flatMap(() => {
       return forkJoin(this.staticTab.map((tab) => this.rewardsService
-        .getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null).pipe(map((value) => ({ value: value, key: tab.tabName })))))
+        .getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null).pipe(map((value) => ({ value , key: tab.tabName })))));
     })).pipe(flatMap((reward) => {
       this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
-      return forkJoin(this.staticTab.map((tab) => this.translate.get(keysTranslate[tab.tabName]).pipe(map((value) => ({ value: value, key: tab.tabName })))))
+      return forkJoin(this.staticTab.map((tab) => this.translate.get(keysTranslate[tab.tabName])
+      .pipe(map((value) => ({ value , key: tab.tabName })))));
     })).subscribe((names) => {
       this.staticTab.forEach((tab) => tab.tabName = names.find((rew) => rew.key === tab.tabName).value);
-      this.tabs.next(this.staticTab)
+      this.tabs.next(this.staticTab);
     });
   }
 
