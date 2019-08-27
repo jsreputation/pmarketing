@@ -292,11 +292,11 @@ workflows:
             tags:
               # this enables circleci to trigger on tags
               only: /.*/
-      - build:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         # this enables circleci to trigger on tags
+      #         only: /.*/
       - build-prod:
           filters:
             tags:
@@ -330,7 +330,7 @@ workflows:
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
           requires:
             - build_docker_image
-            - build
+            # - build
             - test
             - lint
             - build-prod
