@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ConfigPathService } from '@cl-core-services';
+import { ApiConfig } from '@cl-core/api-config';
 import { IGameGifts } from '../../engagements/games/containers/new-shake-page/shared/models/game-gifts.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,6 @@ export class ShakeHttpService {
   }
 
   public createShakeTree(data: any): Observable<any> {
-    return this.http.post(ConfigPathService.createGamePath, data);
+    return this.http.post(ApiConfig.createGamePath, data);
   }
 }

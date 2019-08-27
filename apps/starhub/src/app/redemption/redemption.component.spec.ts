@@ -4,6 +4,8 @@ import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
 import { VouchersService } from '@perx/core';
+import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
+import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -12,7 +14,7 @@ describe('RedemptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RedemptionComponent],
+      declarations: [RedemptionComponent, RewardDetailComponent, LocationShortFormatComponent],
       imports: [
         RouterTestingModule,
         MatIconModule,

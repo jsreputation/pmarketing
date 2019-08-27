@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { SettingsService } from '@cl-core/services/settings.service';
+import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { IAMUser } from '@cl-core/models/sttings/IAMUser.model';
 import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-source/settings-users-roles-data-source.service';

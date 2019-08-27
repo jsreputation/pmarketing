@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiConfig } from '@cl-core/api-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ConfigPathService } from '@cl-core/services/config-path.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class EngagementsHttpsService {
   }
 
   public getEngagements(): Observable<any> {
-    return this.http.get(ConfigPathService.engagementsPath);
+    return this.http.get(ApiConfig.engagementsPath);
   }
 
   public getEngagementType(): Observable<any> {

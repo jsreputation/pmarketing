@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './containers/home/home.component';
 import { LoyaltyModule } from '@perx/core';
 import { QRCodeModule } from 'angularx-qrcode';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import {
   RewardsModule,
   VouchersModule
@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardsModule,
     VouchersModule,
     RouterModule,
+    MatIconModule,
     TranslateModule
   ],
   exports: [HomeComponent]

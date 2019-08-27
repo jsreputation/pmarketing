@@ -1,0 +1,28 @@
+.main-container {
+  width: 100%;
+
+  .loc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #666666;
+
+    address {
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: normal;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+  }
+
+  .mat-button {
+    padding: 0;
+  }
+}

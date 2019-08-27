@@ -3,7 +3,7 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { map, tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import { RewardsService } from '@cl-core/services/rewards.service';
+import { RewardsService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-reward-detail-page',
