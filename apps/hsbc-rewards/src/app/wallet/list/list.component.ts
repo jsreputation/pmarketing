@@ -11,8 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit {
   public vouchers: Observable<Voucher[]>;
+  public paramId: string;
   @ViewChild('voucher', { static: false }) public vouch: VoucherComponent;
-  public filter: string;
+  public filter: string[];
   public mapping: StatusLabelMapping = {
     issued: 'Approved',
     redeemed: 'Redeemed',
@@ -29,9 +30,11 @@ export class ListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe((param) => {
-      this.filter = param.id === 'history' ? VoucherState.redeemed : VoucherState.issued;
+      this.paramId = param.id;
+      this.filter = this.paramId === 'history' ? [VoucherState.redeemed, VoucherState.expired] :
+        [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+      this.vouchers = this.vouchersService.getAll({ type: 'all' });
     });
-    this.vouchers = this.vouchersService.getAll({type: 'all'});
   }
 
   public routeNavigate(route: string): void {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, ILoyalty, LoyaltyService } from '@perx/core';
+import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Profile } from 'selenium-webdriver/firefox';
+import { Observable, of } from 'rxjs';
 // import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -13,12 +13,14 @@ import { Profile } from 'selenium-webdriver/firefox';
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
   public subTitleFn: (loyalty: ILoyalty) => string;
-  public titleFn: (profile: Profile) => string;
+  public titleFn: (profile: IProfile) => string;
+  public rewards$: Observable<IReward[]>;
 
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private rewardsService: RewardsService
   ) { }
 
   public goToReward(reward: IReward): void {
@@ -26,6 +28,9 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.rewardsService.getAllRewards(['featured']).subscribe((rewards) => {
+      this.rewards$ = of(rewards);
+    });
     this.loyaltyService.getLoyalty()
       .subscribe(
         (loyalty: ILoyalty) => this.loyalty = loyalty
