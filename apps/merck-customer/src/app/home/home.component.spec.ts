@@ -29,8 +29,9 @@ describe('HomeComponent', () => {
     merchantImg: null,
     rewardPrice: [
       {
-        rewardCurrency: 'MYR',
-        rewardAmount: '0.0'
+        id: 23,
+        currencyCode: 'MYR',
+        price: 0
       }
     ],
     merchantId: null,
