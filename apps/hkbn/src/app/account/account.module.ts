@@ -18,6 +18,7 @@ import { ChangePasswordComponent } from './containers/change-password/change-pas
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSlideToggleModule,
     MatCheckboxModule,
     ReactiveFormsModule,
     AccountRoutingModule,

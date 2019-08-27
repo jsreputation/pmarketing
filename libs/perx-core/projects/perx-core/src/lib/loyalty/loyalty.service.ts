@@ -6,7 +6,7 @@ export abstract class LoyaltyService {
 
   public abstract getLoyalty(id?: number): Observable<ILoyalty>;
 
-  public abstract getAllTransactions(loyaltyId: number): Observable<ITransaction[]>;
+  public abstract getAllTransactions(loyaltyId?: number): Observable<ITransaction[]>;
 
   public abstract getTransactions(loyaltyId: number, page?: number, pageSize?: number): Observable<ITransaction[]>;
 }
