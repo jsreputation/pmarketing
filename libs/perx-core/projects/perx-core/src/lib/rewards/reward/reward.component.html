@@ -17,7 +17,10 @@
         {{reward.subtitle}}
       </div>
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
-        {{reward.rewardPrice[0].rewardAmount}} {{reward.rewardPrice[0].rewardCurrency}}
+        <div *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
+          <div *ngIf="i > 0" class="or-label">or</div>
+          {{displayPrice(rewardPrice)}}
+        </div>
       </div>
       <div class="reward-expiry" *ngIf="reward.validTo !== null">
         Expiry: {{reward.validTo | date: 'dd/MM/yyyy'}}
