@@ -32,10 +32,10 @@ export interface ICatalog {
 
 export interface IPrice {
   id: number;
-  rewardCampaignId: number;
-  price: number;
-  currencyCode: string;
-  points: number;
+  rewardCampaignId?: number;
+  price?: number;
+  currencyCode?: string;
+  points?: number;
 }
 
 export interface ICategoryTags {
