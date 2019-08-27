@@ -1,5 +1,5 @@
 <div class="rewards-container" *ngIf="vouchers || redeemedVouchers; else noRewards">
-  <div class="saved-rewards" *ngIf="vouchers">
+  <div class="saved-rewards" *ngIf="(vouchers | async)?.length">
     <h1>Saved rewards</h1>
 
     <mat-card *ngFor="let voucher of (hideSeeMore ? (vouchers | async) : (vouchers | async | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
@@ -14,7 +14,7 @@
     <button *ngIf="!hideSeeMore" (click)="seeMoreClicked()">See more</button>
   </div>
 
-  <div class="past-rewards" *ngIf="redeemedVouchers">
+  <div class="past-rewards" *ngIf="(redeemedVouchers | async)?.length">
     <h1>Past rewards</h1>
     <mat-card *ngFor="let voucher of redeemedVouchers | async">
       <mat-card-header>
@@ -25,6 +25,11 @@
         <mat-icon>arrow_forward</mat-icon>
       </div>
     </mat-card>
+  </div>
+  <div class="empty-wallet" *ngIf="!(vouchers | async)?.length && !(redeemedVouchers | async)?.length">
+    <img src="assets/search.png">
+    <h1>It’s empty here</h1>
+    <p>Take your pick from our list of rewards. After you’ve saved them, they will appear here.</p>
   </div>
 </div>
 
