@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
-import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-source/settings-users-roles-data-source.service';
+import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
 import { SettingsTransformDataService } from '@cl-core/services/settings-transform-data.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -14,7 +14,7 @@ import { of } from 'rxjs';
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource: SettingsUsersRolesDataSourceService<IAMUser>;
+  public dataSource: SettingsUsersRolesDataSource<IAMUser>;
   public hasData = true;
   public config: any;
   private groups: any;
@@ -23,7 +23,7 @@ export class UsersRolesComponent  implements AfterViewInit {
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private settingsTransformDataService: SettingsTransformDataService) {
-    this.dataSource = new SettingsUsersRolesDataSourceService(this.settingsService);
+    this.dataSource = new SettingsUsersRolesDataSource<IAMUser>(this.settingsService);
   }
 
   public ngAfterViewInit(): void {

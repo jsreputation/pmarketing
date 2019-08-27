@@ -3,7 +3,7 @@ import { MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
-import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-source/settings-users-roles-data-source.service';
+import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
 
 @Component({
   selector: 'cl-users-roles-list',
@@ -12,7 +12,7 @@ import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-sourc
 })
 export class UsersRolesListComponent implements AfterViewInit, OnDestroy {
   public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: SettingsUsersRolesDataSourceService<IAMUser>;
+  @Input() public dataSource: SettingsUsersRolesDataSource<IAMUser>;
   @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

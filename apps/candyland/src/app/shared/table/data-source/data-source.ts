@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 
 export class TableDataSource<T> extends MatTableDataSource<T> {
   public data$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
-  public prepaginatedata$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
+  public prepaginateData$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   public filtersState$: BehaviorSubject<any> = new BehaviorSubject<any>({
     filters: null
   });
@@ -39,7 +39,7 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
         if (sortState.sort) {
           data = this.dataSort(data, sortState.sort);
         }
-        this.prepaginatedata$.next(data.slice());
+        this.prepaginateData$.next(data.slice());
         if (paginatorState.paginator) {
           data = this.dataPaginator(data, paginatorState.paginator);
         }
