@@ -26,7 +26,7 @@ export class RewardConfirmComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.loyalty = this.loyaltyService.getLoyalties().pipe(switchMap((loyaltyes) => {
       return this.loyaltyService.getLoyalty(loyaltyes[0].id);
     })).pipe(map((loyalty) => {
