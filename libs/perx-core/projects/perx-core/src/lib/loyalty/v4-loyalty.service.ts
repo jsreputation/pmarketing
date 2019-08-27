@@ -131,7 +131,11 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getAllTransactions(loyaltyId: number): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId?: number): Observable<ITransaction[]> {
+    if (!loyaltyId) {
+      loyaltyId = 1;
+    }
+
     const pageSize = 100;
     return this.getTransactions(loyaltyId, 1, pageSize).pipe(
       mergeMap((histories: ITransaction[]) => {
@@ -170,7 +174,7 @@ export class V4LoyaltyService extends LoyaltyService {
         return res.data;
       }),
       map((loyalty: IV4Loyalty) => loyalty.points_history.map(
-       (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
+        (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
       ))
     );
   }
