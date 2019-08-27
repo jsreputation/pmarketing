@@ -17,7 +17,7 @@
         {{reward.subtitle}}
       </div>
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
-        <div *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
+        <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
           <div *ngIf="i > 0" class="or-label">or</div>
           {{displayPrice(rewardPrice)}}
         </div>
