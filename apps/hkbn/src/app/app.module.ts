@@ -29,6 +29,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
+import { HistoryComponent } from './history/history.component';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
   return () => authenticationService.v4GetAppAccessToken().toPromise();
@@ -58,6 +59,7 @@ const PROVIDERS = [
     VoucherDetailsComponent,
     QrRedemptionComponent,
     CodeRedemptionComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ConfirmModalComponent } from './confirm-modal.component';
 import { MatDialogModule, MatIconModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared';
 
 @NgModule({
   declarations: [ConfirmModalComponent],
   exports: [
-    ConfirmModalComponent,
+    ConfirmModalComponent
   ],
   entryComponents: [
     ConfirmModalComponent
@@ -16,7 +16,8 @@ import { ButtonModule } from '@cl-shared';
     CommonModule,
     MatDialogModule,
     MatIconModule,
-    ButtonModule,
+    ButtonModule
   ]
 })
-export class ConfirmModalModule { }
+export class ConfirmModalModule {
+}

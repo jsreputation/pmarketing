@@ -2,12 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable, Subject } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { RoutingStateService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
-import { ControlValueService } from '@cl-core/services/control-value.service';
+import { ControlValueService } from '@cl-core/services';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmModalComponent } from '@cl-shared';

@@ -83,4 +83,14 @@ $card-actual-height: 200px;
   .no-image {
     background-color: #4E4E4E;
   }
+
+  .no-default-img {
+    display: flex;
+    margin-bottom: 0.8rem;
+
+    svg {
+      height: 10rem;
+      background: #4E4E4E;
+    }
+  }
 }

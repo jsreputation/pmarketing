@@ -1,0 +1,10 @@
+<div class="container">
+    <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="現有積分">
+            <perx-core-loyalty-transactions-list [transactions]="accrued"></perx-core-loyalty-transactions-list>
+        </mat-tab>
+        <mat-tab label="積分紀錄">
+            <perx-core-loyalty-transactions-list [transactions]="redeemed"></perx-core-loyalty-transactions-list>
+        </mat-tab>
+    </mat-tab-group>
+</div>

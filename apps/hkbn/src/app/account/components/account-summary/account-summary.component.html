@@ -1,4 +1,4 @@
-<p class="member-ship">{{"MY_ID" | translate}} 12345678</p>
+<p class="member-ship">{{"MY_ID" | translate}}: {{accountData ? accountData.id: ''}}</p>
 
 <form [formGroup]="accountSummary" class="account-summary">
   <mat-form-field>
@@ -14,23 +14,28 @@
   <mat-form-field>
     <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="phone">
-    <mat-icon matSuffix routerLink="phone">edit</mat-icon>
+    <a routerLink="phone" matSuffix>
+      <mat-icon>edit</mat-icon>
+    </a>
   </mat-form-field>
-
 
   <mat-form-field>
     <mat-label>{{"EMAIL" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="email">
-    <mat-icon matSuffix routerLink="email">edit</mat-icon>
+    <a routerLink="email" matSuffix>
+      <mat-icon>edit</mat-icon>
+    </a>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>{{"CURRENT_PASSWORD" | translate}}</mat-label>
     <input type="password" matInput readonly formControlName="pass">
-    <mat-icon matSuffix routerLink="password">edit</mat-icon>
+    <a routerLink="password" matSuffix>
+      <mat-icon>edit</mat-icon>
+    </a>
   </mat-form-field>
 
-  <mat-checkbox formControlName="customProperties">
+  <mat-slide-toggle formControlName="customProperties" labelPosition="before">
     {{"AGREE_MARKETING" | translate}}
-  </mat-checkbox>
+  </mat-slide-toggle>
 </form>
