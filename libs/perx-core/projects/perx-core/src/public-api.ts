@@ -21,7 +21,6 @@ export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
 export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
-export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 
 /**

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OauthService } from './oauth.service';
+import { OauthService } from './v4-authentication.service';
 import { OauthModule } from './oauth.module';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
