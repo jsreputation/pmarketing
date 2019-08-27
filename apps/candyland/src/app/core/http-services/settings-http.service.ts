@@ -27,7 +27,6 @@ export class SettingsHttpService {
   }
 
   public getAllCredential(params: any): Observable<any> {
-    console.log('http params', params);
     return this.http.get(ApiConfig.getAllCredentialPath, params);
   }
 

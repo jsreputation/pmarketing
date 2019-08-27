@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
-import { IAMUser } from '@cl-core/models/sttings/IAMUser.model';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-source/settings-users-roles-data-source.service';
 import { SettingsTransformDataService } from '@cl-core/services/settings-transform-data.service';
 import { switchMap } from 'rxjs/operators';
@@ -80,7 +80,6 @@ export class UsersRolesComponent  implements AfterViewInit {
   }
 
   public deleteUser(id: string): void {
-    console.log(id);
     this.settingsService.deleteUser(id)
       .subscribe(() => {
         this.dataSource.updateData();
@@ -90,7 +89,6 @@ export class UsersRolesComponent  implements AfterViewInit {
   private getAllGroups(): void {
     this.settingsService.getAllGroups()
       .subscribe((res) => {
-        console.log(res);
         this.groups = res;
       });
   }

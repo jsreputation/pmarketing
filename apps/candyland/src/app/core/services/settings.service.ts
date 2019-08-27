@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { IAMUser } from '@cl-core/models/sttings/IAMUser.model';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 
 @Injectable({
   providedIn: 'root'

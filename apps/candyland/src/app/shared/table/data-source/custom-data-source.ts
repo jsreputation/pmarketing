@@ -84,7 +84,6 @@ export class CustomDataSource<T> {
     this.loadingSubject.next(true);
     this.dataService.getTableData( HttpParamsService.createHttpParams(params))
       .subscribe((res: any) => {
-        console.log(res);
         this.dataSubject.next(res);
 
         // add random mock parameter

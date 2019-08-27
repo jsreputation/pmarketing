@@ -47,39 +47,3 @@ export class IAMUser {
       });
   }
 }
-
-const test = {
-  id: '1',
-  type: 'users',
-  links: {self: 'http://api.whistler.perxtech.org/iam/users/1'},
-  attributes: {
-    urn: 'urn:perx:iam::222222222:user/Admin_2',
-    created_at: '2019-08-19T12:31:10.350Z',
-    updated_at: '2019-08-19T12:31:10.659Z',
-    username: 'Admin_2',
-    api: true,
-    console: true,
-    time_zone: 'Asia/Singapore',
-    properties: {},
-    display_properties: {},
-    jwt_payload: {iss: 'http://iam', sub: 'urn:perx:iam::222222222:user/Admin_2', scope: '*'},
-    attached_policies: {AdministratorAccess: 1},
-    attached_actions: {}
-  },
-  relationships: {
-    groups: {
-      links: {
-        self: 'http://api.whistler.perxtech.org/iam/users/1/relationships/groups',
-        related: 'http://api.whistler.perxtech.org/iam/users/1/groups'
-      }
-    },
-    credentials: {
-      links: {
-        self: 'http://api.whistler.perxtech.org/iam/users/1/relationships/credentials',
-        related: 'http://api.whistler.perxtech.org/iam/users/1/credentials'
-      }
-    }
-  }
-};
-
-console.log(test);

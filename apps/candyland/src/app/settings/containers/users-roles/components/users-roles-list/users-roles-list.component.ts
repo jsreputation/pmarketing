@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewC
 import { MatSort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { IAMUser } from '@cl-core/models/sttings/IAMUser.model';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 import { SettingsUsersRolesDataSourceService } from '@cl-shared/table/data-source/settings-users-roles-data-source.service';
 
 @Component({

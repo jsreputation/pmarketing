@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatStepper } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from '@cl-core/services';
 import { ClValidators } from '@cl-helpers/cl-validators';
-import { IAMUser } from '@cl-core/models/sttings/IAMUser.model';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 
 @Component({
   selector: 'cl-invite-new-users-popup',
@@ -26,7 +26,6 @@ export class InviteNewUsersPopupComponent implements OnInit {
     this.settingsService.getRolesOptions().subscribe(config => this.config = config);
     this.initForm();
     this.doPatchForm(this.data.user);
-    console.log(this.data);
   }
 
   public get isFirstStep(): boolean {
