@@ -82,6 +82,9 @@ class EngagementControllerImplem {
                     if (acc === null) {
                         return v;
                     }
+                    if (v === null) {
+                        return acc;
+                    }
                     acc.data = [
                         ...acc.data,
                         ...v.data
@@ -162,6 +165,7 @@ class EngagementControllerImplem {
     }
 
     private handleError(err: AxiosError): Observable<any> {
+        console.error(err);
         throw new HttpException(err.response.data, err.response.status);
     }
 
