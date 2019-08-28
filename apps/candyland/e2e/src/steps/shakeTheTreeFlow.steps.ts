@@ -241,22 +241,36 @@ Then(/^13_that selected background design design is reflected in the preview ele
   expect(await BkgrdElement.getAttribute('style')).to.contain('assets/images/background/full_bg_3.jpg');
 });
 
-/*Given('that I am on the {string} creation page.', function (string) {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
+// Verifying the choice of gift amount is reflected in the preview element
+Given(/^14_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
 
+When(/^14_you select one of the options for the gift amount$/, async () => {
+  // selecting the dropdown list and clicking it
+  await element(by.className('mat-select-trigger')).click();
+  // selecting the 4 gifts option
+  await element.all(by.className('mat-option ng-star-inserted')).get(1).click();
+});
 
+Then(/^14_the selected amount would be present in the preview element.$/, async () => {
+    expect(await element.all(by.css('img.gift-img')).count()).to.be.equal(4);
+});
 
-When('you select one of the options for the gift amount', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
+// Verifying the choice of gift design is reflected in the preview element
+Given(/^15_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+  });
 
+When(/^15_I click on the gift design of my choics$/, async () => {
+    // selecting the second option for gift design
+    await element.all(by.className('image-wrap')).get(4).click();
+});
 
-
-Then('the selected amount would be present in the preview element.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-*/
+Then(/^15_The preview element should reflect my choice.$/, async () => {
+   const giftElement = element(by.className('gift-img gift-img__1 ng-star-inserted'));
+   // doing an asssertion base on the url in src
+   expect(await giftElement.getAttribute('src')).to.contain('assets/images/gifts/state2.png');
+  });
