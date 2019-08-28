@@ -23,8 +23,15 @@ export class DashboardAppPage {
 export class EngagementAppPage {
 
    navigateToEngagement() {
-     // const engagementURL = browser.baseURL + 'engagements';
      return browser.get('engagements') as Promise<any> ;
   }
+
+}
+
+export class CreateShakeTheTreeAppPage {
+
+  navigateToShakeTheTree() {
+    return browser.get('engagements/games/new-shake') as Promise<any> ;
+ }
 
 }
