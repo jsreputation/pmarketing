@@ -33,7 +33,7 @@
           <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0" class="points overline">
             <div *ngFor="let rewardPrice of reward.rewardPrice">
-              {{displayPrice(rewardPrice)}}</div>
+              {{displayPriceFn(rewardPrice)}}</div>
           </div>
         </mat-card-content>
       </mat-card>

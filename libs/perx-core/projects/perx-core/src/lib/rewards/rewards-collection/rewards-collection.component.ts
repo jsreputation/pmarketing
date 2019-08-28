@@ -17,6 +17,9 @@ export class RewardsCollectionComponent implements OnInit {
   @Input()
   public defaultImg: string;
 
+  @Input()
+  public displayPriceFn: (rewardPrice: IPrice) => string;
+
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
@@ -24,24 +27,21 @@ export class RewardsCollectionComponent implements OnInit {
   // }
 
   public ngOnInit(): void {
+    if (!this.displayPriceFn) {
+      this.displayPriceFn = (rewardPrice: IPrice) => {
+        if (rewardPrice.price > 0) {
+          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        }
+
+        if (rewardPrice.points > 0) {
+          return `${rewardPrice.points} points`;
+        }
+        return '0 points'; // is actually 0 or invalid value default
+      };
+    }
   }
 
   public rewardClickedHandler(reward: IReward): void {
     this.tapped.emit(reward);
-  }
-
-  public displayPrice(rewardPrice: IPrice): string {
-    if (rewardPrice.points > 0 && rewardPrice.price > 0) {
-      return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
-    }
-
-    if (rewardPrice.price > 0) {
-      return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-    }
-
-    if (rewardPrice.points > 0) {
-      return `${rewardPrice.points} points`;
-    }
-    return '0 points'; // is actually 0 or invalid value default
   }
 }
