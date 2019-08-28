@@ -1,0 +1,11 @@
+<div *ngFor="let question of payload?.questions">
+    <perx-core-question 
+        [id]="id"
+        [questionPointer]="questionPointer"
+        [isSubQuestion]="true"
+        [question]="question"
+        [flush]="flush"
+        (updateAnswers)="updateAnswer($event)"
+        (updatePoints)="updatePoint($event)"
+    ></perx-core-question>
+</div>
