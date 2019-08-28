@@ -59,10 +59,6 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-
-    if (!this.authService.getUserAccessToken()) {
-      this.router.navigateByUrl('login');
-    }
   }
 
   public onActivate(ref: any): void {

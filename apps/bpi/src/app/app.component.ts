@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, AuthenticationService, NotificationService } from '@perx/core';
-import { Router } from '@angular/router';
+import { PopupComponent, NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-root',
@@ -12,18 +11,12 @@ export class AppComponent implements OnInit {
   public title: string = 'bpi';
 
   constructor(
-    private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private router: Router,
     private dialog: MatDialog
   ) {
   }
 
   public ngOnInit(): void {
-    if (!this.authService.getUserAccessToken()) {
-      this.router.navigateByUrl('login');
-    }
-
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });

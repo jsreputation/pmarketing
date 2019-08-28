@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { AuthenticationService, PopupComponent, NotificationService } from '@perx/core';
+import { PopupComponent, NotificationService } from '@perx/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
     private location: Location,
     private notificationService: NotificationService,
     private dialog: MatDialog,
@@ -49,10 +48,6 @@ export class AppComponent implements OnInit {
     if (bases.length > 0) {
       bases[0].setAttribute('href', environment.baseHref);
 
-    }
-
-    if (!this.authService.getUserAccessToken()) {
-      this.router.navigateByUrl('login');
     }
 
     this.notificationService.$popup.subscribe(data => {
