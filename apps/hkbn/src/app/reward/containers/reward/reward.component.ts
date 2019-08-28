@@ -41,7 +41,7 @@ export class RewardComponent implements OnInit, OnDestroy {
       );
 
     this.loyaltyService.getLoyalties().pipe(switchMap((loyalyes: ILoyalty[]) => {
-      return this.loyaltyService.getLoyalty(loyalyes[0].id);
+      return loyalyes && loyalyes.length ? this.loyaltyService.getLoyalty(loyalyes[0].id) : of(null);
     })).subscribe((loyalty) => this.loyalty = loyalty);
   }
 
@@ -53,8 +53,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     const dialog = this.dialog.open(RewardConfirmComponent, {
       data: {
-        title: this.rewardData.name,
-        existingPoints: this.loyalty.expiringPoints
+        title: this.rewardData ? this.rewardData.name : null,
+        existingPoints: this.loyalty && this.loyalty.expiringPoints
           && this.loyalty.expiringPoints.length ? this.loyalty.expiringPoints[0].points : null,
         requiredPoints: 20
       }
