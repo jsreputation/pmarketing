@@ -33,10 +33,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(
+    private authenticationService: AuthenticationService,
     private router: Router,
-    private route: ActivatedRoute) {
-  }
+    private route: ActivatedRoute
+  ) { }
 
   public ngOnInit(): void {
     this.route.queryParams

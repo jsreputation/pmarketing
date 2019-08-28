@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
-import { ProfileModule } from '../../../profile/profile.module';
+import { ProfileModule } from '../../profile/profile.module';
 
 describe('OauthService', () => {
   const environment = {

@@ -1,6 +1,6 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { of, Observable, throwError, BehaviorSubject } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { tap, mergeMap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
