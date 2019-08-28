@@ -5,6 +5,7 @@
     <ng-template #showRewards>
     <perx-core-rewards-list
         [rewardsList]="filterRewards(tab)"
+        [displayPriceFn]="displayPriceFn"
         (tapped)="rewardTappedHandler($event)"
     >
     </perx-core-rewards-list>

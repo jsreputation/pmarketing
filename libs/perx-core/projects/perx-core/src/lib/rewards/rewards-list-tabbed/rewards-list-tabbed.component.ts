@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {IReward} from '../models/reward.model';
+import {IPrice, IReward} from '../models/reward.model';
 import {map} from 'rxjs/operators';
 import {MatTabChangeEvent} from '@angular/material';
 
@@ -30,6 +30,9 @@ export class RewardsListTabbedComponent implements OnInit {
     }
   ]);
 
+  @Input()
+  public displayPriceFn: (rewardPrice: IPrice) => string;
+
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
   @Output()
@@ -42,6 +45,18 @@ export class RewardsListTabbedComponent implements OnInit {
      * todo: check if list exists in this.tabs, and if this.rewards also has an input,
      * throw warning that this.rewards is ignored
      */
+    if (!this.displayPriceFn) {
+      this.displayPriceFn = (rewardPrice: IPrice) => {
+        if (rewardPrice.price > 0) {
+          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        }
+
+        if (rewardPrice.points > 0) {
+          return `${rewardPrice.points} points`;
+        }
+        return '0 points'; // is actually 0 or invalid value default
+      };
+    }
   }
 
   public filterRewards(tab: ITabConfig): Observable<IReward[]> {
@@ -61,7 +76,7 @@ export class RewardsListTabbedComponent implements OnInit {
   }
 
   public tabChangedHandler(event: MatTabChangeEvent): void {
-   this.tabChanged.emit(event);
+    this.tabChanged.emit(event);
   }
 
   public rewardTappedHandler(reward: IReward): void {
