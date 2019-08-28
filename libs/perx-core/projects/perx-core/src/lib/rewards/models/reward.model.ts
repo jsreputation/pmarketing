@@ -8,10 +8,7 @@ export interface IReward {
   rewardThumbnail?: string;
   rewardBanner: string;
   merchantImg: string;
-  rewardPrice?: {
-    rewardCurrency: string,
-    rewardAmount: string
-  }[];
+  rewardPrice?: IPrice[];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
@@ -32,10 +29,10 @@ export interface ICatalog {
 
 export interface IPrice {
   id: number;
-  rewardCampaignId: number;
-  price: number;
-  currencyCode: string;
-  points: number;
+  rewardCampaignId?: number;
+  price?: number;
+  currencyCode?: string;
+  points?: number;
 }
 
 export interface ICategoryTags {
