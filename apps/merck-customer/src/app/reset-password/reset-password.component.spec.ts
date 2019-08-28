@@ -76,7 +76,7 @@ describe('ResetPasswordComponent', () => {
           code: 1234,
         })
       );
-      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(Promise.resolve(true));
+      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of(true));
       component.onUpdatePassword();
       tick();
       expect(authenticationServiceSpy).toHaveBeenCalled();

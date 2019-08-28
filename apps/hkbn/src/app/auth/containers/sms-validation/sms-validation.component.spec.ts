@@ -23,7 +23,7 @@ describe('SmsValidationComponent', () => {
         {
           provide: AuthenticationService, useValue: {
             verifyOTP: () => of(true),
-            login: () => Promise.resolve(true),
+            login: () => of(true),
             resendOTP: () => of(true)
           }
         },

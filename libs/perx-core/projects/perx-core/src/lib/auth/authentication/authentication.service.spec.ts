@@ -1,30 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AuthenticationService } from './authentication.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { TokenStorage } from './token-storage.service';
-import { V4AuthenticationService } from './v4-authentication.service';
-import { ProfileModule } from './../../profile/profile.module';
+import { Type } from '@angular/core';
 
 describe('AuthenticationService', () => {
 
-  const environment = {
-    apiHost: 'localhost:4000',
-    production: false,
-    isWhistler: false,
-    preAuth: false,
-    baseHref: '/'
-  };
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      ProfileModule.forRoot({ env: environment }),
-      V4AuthenticationService
-    ],
-    providers: [HttpClient, HttpHandler, TokenStorage]
+    providers: [AuthenticationService]
   }));
 
   it('should be created', () => {
-    const service: AuthenticationService = TestBed.get(AuthenticationService);
+    const service: AuthenticationService = TestBed.get(AuthenticationService as Type<AuthenticationService>);
     expect(service).toBeTruthy();
   });
 });

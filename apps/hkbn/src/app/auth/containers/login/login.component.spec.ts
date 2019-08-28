@@ -16,6 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -40,7 +41,7 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
-            login: () => Promise.resolve(true),
+            login: () => of(true),
             getInterruptedUrl: () => null
           }
         }
@@ -82,7 +83,7 @@ describe('LoginComponent', () => {
     });
 
     it('should call login method, authorize and redirect to root page', async () => {
-      loginSpy = loginSpy.and.returnValue(Promise.resolve(true));
+      loginSpy = loginSpy.and.returnValue(of(true));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
@@ -93,7 +94,7 @@ describe('LoginComponent', () => {
     });
 
     it('should call login method, authorize and redirect to InterruptedUrl page', async () => {
-      loginSpy = loginSpy.and.returnValue(Promise.resolve(true));
+      loginSpy = loginSpy.and.returnValue(of(true));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
