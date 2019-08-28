@@ -36,3 +36,9 @@
     color: #989797;
   }
 }
+
+:host ::ng-deep {
+  .points-cost {
+    color: #E42713 !important;
+  }
+}

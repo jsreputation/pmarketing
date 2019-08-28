@@ -1,0 +1,76 @@
+<div class="question-container" [ngClass]="{ hidden : !isActive }">
+    <div class="question-content" *ngIf="question">
+        <div class="question">
+            {{question?.question}}
+            <span class="required-star">
+                {{question?.required ? '*': ''}}
+            </span>
+        </div>
+        <div class="description">
+            {{question?.description}}
+        </div>
+        <perx-core-group 
+            *ngIf="question.payload.type === surveyQuestionType.questionGroup"
+            [id]="id"
+            [questionPointer]="questionPointer"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)" 
+            (updatePoints)="updateGroupPoint($event)"
+        ></perx-core-group>
+        <perx-core-select 
+            *ngIf="question.payload.type === surveyQuestionType.multipleChoice"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"
+        ></perx-core-select>
+        <perx-core-rating 
+            *ngIf="question.payload.type === surveyQuestionType.rating"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"    
+        ></perx-core-rating>
+        <perx-core-picture-select 
+            *ngIf="question.payload.type === surveyQuestionType.pictureChoice"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"   
+        ></perx-core-picture-select>
+        <perx-core-long-text 
+            *ngIf="question.payload.type === surveyQuestionType.longText"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"   
+        ></perx-core-long-text>
+        <perx-core-date 
+            *ngIf="question.payload.type === surveyQuestionType.date"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"    
+        ></perx-core-date>
+        <perx-core-phone 
+            *ngIf="question.payload.type === surveyQuestionType.phone"
+            [payload]="question.payload"
+            [flush]="flush"
+            (updateAnswers)="updateAnswer($event)"   
+        ></perx-core-phone>
+        <div 
+            class="error-message"
+            *ngIf="question.payload.type !== surveyQuestionType.questionGroup">
+            <div [ngClass]="{ error: errorState?.isRequired }">
+                Answer is <strong>required</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.isExceedMaxLength }">
+                Exceed <strong>max length</strong>
+            </div>
+        </div>
+    </div>
+    <div class="question-action-container" *ngIf="!isSubQuestion">
+            <button *ngIf="id !== 0" mat-raised-button (click)="back()">
+                Back
+            </button>
+            <button *ngIf="id !== totalQuestions -1" mat-raised-button color="primary" (click)="next()">
+                Next
+            </button>
+        </div>
+</div>

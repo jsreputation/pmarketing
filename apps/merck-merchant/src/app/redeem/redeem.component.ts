@@ -66,6 +66,6 @@ export class RedeemComponent implements OnInit {
   }
 
   public getPrice(): number {
-    return parseInt(this.reward.rewardPrice[0].rewardAmount, 10);
+    return this.reward.rewardPrice[0].price;
   }
 }

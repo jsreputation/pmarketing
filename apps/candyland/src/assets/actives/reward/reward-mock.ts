@@ -14,8 +14,9 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
         rewardPrice: [{
-          rewardCurrency: '44',
-          rewardAmount: '3'
+          id: 23,
+          currencyCode: '44',
+          price: 3
         }]
     },
     {
@@ -31,8 +32,9 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
       rewardPrice: [{
-        rewardCurrency: '44',
-        rewardAmount: '3'
+        id: 23,
+        currencyCode: '44',
+        price: 3
       }]
     },
     {
@@ -48,8 +50,9 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
       rewardPrice: [{
-        rewardCurrency: '44',
-        rewardAmount: '3'
+        id: 23,
+        currencyCode: '44',
+        price: 3
       }]
     }
 ];

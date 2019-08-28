@@ -10,7 +10,6 @@ import { filter, map, switchMap } from 'rxjs/operators';
 })
 export class VoucherComponent implements OnInit {
   public voucher: Voucher;
-  public howToUse: string | undefined;
   public locations: ILocation[];
 
   constructor(private vouchersService: VouchersService, private activeRoute: ActivatedRoute) {
@@ -25,7 +24,6 @@ export class VoucherComponent implements OnInit {
       )
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
-        this.howToUse = this.voucher.description[0].content;
       });
   }
 }

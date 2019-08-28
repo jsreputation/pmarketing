@@ -69,6 +69,25 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     return this.selectedCategory ? this.selectedCategory : 'All';
   }
 
+  public getMacaron(validDateFrom: string, validDateTo: string): string {
+    const currentDate = new Date().getTime();
+    const validTo = new Date(validDateTo);
+    const validToTimeDifference = validTo.valueOf() - currentDate.valueOf();
+    const validToDifferenceInHours = Math.abs(validToTimeDifference / 1000 / 60 / 60);
+
+    const validFrom = new Date(validDateFrom);
+    const validDateFromTimeDifference = validFrom.valueOf() - currentDate.valueOf();
+    const validDateFromDifferenceInHours = Math.abs(validDateFromTimeDifference / 1000 / 60 / 60);
+
+    let macaronText: string = '';
+    if (validToDifferenceInHours <= 36) {
+      macaronText = 'expiring';
+    } else if (validDateFromDifferenceInHours <= 72) {
+      macaronText = 'just-added';
+    }
+    return macaronText;
+  }
+
   // SortBottomSheetClosedCallBack methods
 
   public sortOrderSelectedCallback(updatedValue: SortingMode): void {
