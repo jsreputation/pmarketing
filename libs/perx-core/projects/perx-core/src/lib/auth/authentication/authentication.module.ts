@@ -29,7 +29,7 @@ export class AuthenticationModule {
           provide: EnvConfig,
           useValue: config
         },
-        { provide: V4AuthenticationService, useClass: V4AuthenticationService },
+        { provide: AuthenticationService, useClass: V4AuthenticationService },
         { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
         { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
         {
