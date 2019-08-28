@@ -16,6 +16,8 @@ import { SettingsService } from '@cl-core-services';
 import { map, switchMap } from 'rxjs/operators';
 import { User } from '@cl-core/models/audiences/user.model';
 import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
+import { AudiencesTransformDataService } from '@cl-core/services/audiences-transform-data.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -40,7 +42,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(private settingsService: SettingsService,
               private audiencesService: AudiencesService,
               public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private audiencesTransformDataService: AudiencesTransformDataService) {
     this.dataSource = new AudiencesUsersListDataSource<User>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
@@ -65,11 +68,16 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public openAddUserDialog(): void {
     const dialogRef = this.dialog.open(AddUserPopupComponent, { panelClass: 'audience-dialog' });
 
-    dialogRef.afterClosed().pipe(
-      untilDestroyed(this),
-      map(data => new User(data),
-        switchMap((user: User) => this.audiencesService.createUser(user))
-      ))
+    dialogRef.afterClosed()
+    .pipe(
+      switchMap((value: any) => {
+        if (value) {
+          const newUser = this.audiencesTransformDataService.transformCreateUser(value);
+          return this.audiencesService.createUser(newUser);
+        }
+        return of(null);
+      })
+    )
       .subscribe(res => {
         if (res) {
           this.dataSource.updateData();
