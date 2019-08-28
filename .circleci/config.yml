@@ -257,7 +257,7 @@ jobs:
   build-prod:
     docker:
       - image: circleci/node:10-browsers
-      resource_class: xlarge
+    resource_class: xlarge
     parallelism: 13
     steps:
       - checkout
