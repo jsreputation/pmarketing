@@ -3,17 +3,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, TokenStorage, ProfileModule } from '@perx/core';
+import { AuthenticationModule, TokenStorage, ProfileModule, AuthenticationService } from '@perx/core';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let router: Router;
   let location: Location;
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  const authServiceStub = {
+    getUserAccessToken: () => 'mock string'
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +35,13 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      providers: [TokenStorage]
+      providers: [
+        TokenStorage,
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        }
+      ]
     }).compileComponents();
     router = TestBed.get(Router);
     location = TestBed.get(Location);
