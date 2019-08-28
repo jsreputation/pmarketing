@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
@@ -30,6 +31,7 @@ describe('ActivationCodeComponent', () => {
         MatCardModule,
         MatCardModule,
         NoopAnimationsModule,
+        HttpClientTestingModule,
         ProfileModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
         AuthenticationModule.forRoot({ env: environment })
