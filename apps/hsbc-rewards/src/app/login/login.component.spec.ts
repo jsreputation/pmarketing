@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
   const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
   const routerSub = { navigateByUrl: (url) => { } };
   const authenticationServiceStub = {
-    v4GameOauth: new BehaviorSubject(true),
+    login: new BehaviorSubject(true),
     getInterruptedUrl: () => null
   };
   let debugElement: DebugElement;
@@ -62,7 +62,7 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    authSpy = spyOn(authService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    authSpy = spyOn(authService, 'login').and.returnValue(Promise.resolve(true));
   });
   it('should create', () => {
     expect(component).toBeTruthy();

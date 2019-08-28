@@ -48,7 +48,7 @@ describe('ForgotPasswordComponent', () => {
             verifyOTP: () => of(true),
             changePassword: () => of(true),
             resetPassword: () => of(true),
-            v4GameOauth: () => of(true)
+            login: () => of(true)
           }
         }
       ]
@@ -115,7 +115,7 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get(AuthenticationService);
     const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
-    const v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(Promise.resolve(true));
 
     component.phoneStepForm.setValue({phone: '63987654'});
     component.phoneHandler();
@@ -129,6 +129,6 @@ describe('ForgotPasswordComponent', () => {
       {phone: '63987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'}
     );
 
-    expect(v4GameOauthSpy).toHaveBeenCalledWith('63987654', 'qwerty123');
+    expect(loginSpy).toHaveBeenCalledWith('63987654', 'qwerty123');
   });
 });

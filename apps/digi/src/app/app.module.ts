@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   AuthenticationModule,
-  OauthModule, CognitoModule,
-  CampaignModule, GameModule,
+  CampaignModule,
+  GameModule,
   VouchersModule,
   UtilsModule
 } from '@perx/core';
@@ -37,15 +37,13 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     UtilsModule,
     MatDialogModule,
     VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
-    AuthenticationModule,
+    GameModule.forRoot({ env: environment })
   ],
   providers: [
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

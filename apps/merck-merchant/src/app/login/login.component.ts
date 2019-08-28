@@ -12,7 +12,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-  private authenticated: boolean;
 
   constructor(
     private router: Router,
@@ -30,29 +29,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void { }
 
   public onSubmit(): void {
     const email = (this.loginForm.get('email').value as string);
     const password: string = this.loginForm.get('password').value;
 
-    this.authService.v4GameOauth(email, password)
-      .then((isAuthed: boolean) => {
-        this.authenticated = isAuthed;
-        if (this.authenticated) {
+    this.authService.login(email, password).subscribe(
+      (isAuthed: boolean) => {
+        if (isAuthed) {
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = email;
           }
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('/home');
-          }
+          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
         }
-      })
-      .catch((err) => {
-        this.authenticated = false;
+      },
+      (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
@@ -64,7 +57,8 @@ export class LoginComponent implements OnInit {
             this.notificationService.addSnack('Invalid credentials');
           }
         }
-      });
+      }
+    );
   }
 
   public onForgotPassword(): void {

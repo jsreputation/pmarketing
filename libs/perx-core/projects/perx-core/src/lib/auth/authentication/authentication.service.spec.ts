@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
-import { CognitoModule } from '../whistler/cognito/cognito.module';
+import { V4AuthenticationService } from './v4-authentication.service';
 import { ProfileModule } from './../../profile/profile.module';
 
 describe('AuthenticationService', () => {
@@ -18,7 +18,7 @@ describe('AuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       ProfileModule.forRoot({ env: environment }),
-      CognitoModule.forRoot({ env: environment })
+      V4AuthenticationService
     ],
     providers: [HttpClient, HttpHandler, TokenStorage]
   }));

@@ -16,9 +16,7 @@ import { environment } from '../../environments/environment';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
-  public authed: boolean;
   public preAuth: boolean;
-  public failedAuth: boolean;
 
   public errorMessage: string;
 
@@ -30,7 +28,6 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService
   ) {
     this.preAuth = environment.preAuth;
-    this.failedAuth = false;
     this.initForm();
   }
 
@@ -42,72 +39,45 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (!this.preAuth) {
-      return;
-    }
-
-    if (!isPlatformBrowser(this.platformId) || this.authService.authing) {
-      return;
-    }
-
-    this.authService.isAuthorized().subscribe(
-      authed => {
-        if (!authed) {
-          this.authService.autoLogin().then(
-            (isAuthed: boolean) => {
-              this.authed = isAuthed;
-              if (this.authed) {
-                this.router.navigateByUrl(this.authService.getInterruptedUrl());
-              }
-            },
-            () => {
-              this.failedAuth = true;
-              this.authed = false;
-            }
-          );
-        } else {
-          this.authed = authed;
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        (isAuthed: boolean) => {
+          this.redirectAfterLogin(isAuthed);
         }
-      },
-    );
+      );
+    }
   }
 
-  public async onSubmit(): Promise<void> {
+  public redirectAfterLogin(isAuthed: boolean): void {
+    if (isAuthed) {
+      this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
+    }
+  }
+
+  public onSubmit(): void {
     const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
-    try {
-      const isAuthed = await this.authService.v4GameOauth(username, password);
-      this.authed = isAuthed;
-
-      if (this.authed) {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          (window as any).primaryIdentifier = username;
-        }
-        if (this.authService.getInterruptedUrl()) {
-          this.router.navigateByUrl(this.authService.getInterruptedUrl());
-        } else {
-          this.router.navigateByUrl('home');
-        }
-      }
-    } catch (err) {
-      this.failedAuth = true;
-      this.authed = false;
-      if (err instanceof HttpErrorResponse) {
-        if (err.status === 0) {
-          this.notificationService.addPopup({
-            title: 'We could not reach the server',
-            text: 'Please try again soon'
-          });
-        } else if (err.status === 401) {
-          [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
-            .forEach(c => c.setErrors({
-              invalid: true
-            }));
-          this.errorMessage = 'Invalid credentials';
+    this.authService.login(username, password).subscribe(
+      (isAuthed: boolean) => {
+        this.redirectAfterLogin(isAuthed);
+      },
+      (err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 0) {
+            this.notificationService.addPopup({
+              title: 'We could not reach the server',
+              text: 'Please try again soon'
+            });
+          } else if (err.status === 401) {
+            [this.loginForm.controls.playerCode, this.loginForm.controls.hsbcCardLastFourDigits]
+              .forEach(c => c.setErrors({
+                invalid: true
+              }));
+            this.errorMessage = 'Invalid credentials';
+          }
         }
       }
-    }
+    );
   }
 }

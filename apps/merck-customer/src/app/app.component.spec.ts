@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
 
   const authenticationStub = {
-    v4AutoLogin: () => of(),
+    autoLogin: () => of(),
     isAuthorized: () => of()
   };
 

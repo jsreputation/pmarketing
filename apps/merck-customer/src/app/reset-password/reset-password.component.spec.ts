@@ -31,7 +31,7 @@ describe('ResetPasswordComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
-            v4GameOauth: () => {},
+            login: () => {},
             resetPassword: () => of()
           }
         },
@@ -67,7 +67,7 @@ describe('ResetPasswordComponent', () => {
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
     });
 
-    it('should reset password and call v4GameOauth', fakeAsync(() => {
+    it('should reset password and call login', fakeAsync(() => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
         (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(
@@ -76,11 +76,11 @@ describe('ResetPasswordComponent', () => {
           code: 1234,
         })
       );
-      const v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(Promise.resolve(true));
       component.onUpdatePassword();
       tick();
       expect(authenticationServiceSpy).toHaveBeenCalled();
-      expect(v4GameOauthSpy).toHaveBeenCalled();
+      expect(loginSpy).toHaveBeenCalled();
     }));
   });
 

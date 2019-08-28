@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   AuthenticationModule,
-  CognitoModule,
-  OauthModule,
   UtilsModule,
   ProfileModule,
   LocationsService,
@@ -76,7 +74,6 @@ const vouchersServiceStub = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthenticationModule,
     MatDialogModule,
     MatIconModule,
     MatCardModule,
@@ -87,8 +84,7 @@ const vouchersServiceStub = {
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment })
   ],
   entryComponents: [

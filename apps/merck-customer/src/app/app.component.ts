@@ -60,26 +60,8 @@ export class AppComponent implements OnInit {
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
 
-    if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-
-      this.authService.isAuthorized().subscribe(
-        authed => {
-          if (!authed) {
-            this.authService.v4AutoLogin().then(
-              (isAuthed: boolean) => {
-                if (isAuthed) {
-                  this.router.navigateByUrl('/home');
-                }
-              },
-              () => {
-                console.log('Error failed to authenticate.');
-              }
-            );
-          } else {
-            this.router.navigateByUrl('/home');
-          }
-        },
-      );
+    if (!this.authService.getUserAccessToken()) {
+      this.router.navigateByUrl('login');
     }
   }
 

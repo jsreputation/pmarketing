@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OauthService } from './v4-authentication.service';
-import { OauthModule } from './oauth.module';
+import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { ProfileModule } from '../../../profile/profile.module';
@@ -18,18 +17,20 @@ describe('OauthService', () => {
   const baseUrl = 'https://api.perxtech.io/';
   const baseUrlForAppAccessToken = 'http://localhost:4000/';
   let httpTestingController: HttpTestingController;
-  let service: OauthService;
+  let service: V4AuthenticationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         ProfileModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+      ],
+      providers: [
+        V4AuthenticationService
       ]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-    service = TestBed.get(OauthService);
+    service = TestBed.get(service);
   });
 
   it('should be created', () => {
@@ -38,7 +39,7 @@ describe('OauthService', () => {
   });
 
   it('should get app acccess token', (done: DoneFn) => {
-    service.getAppAccessToken()
+    service.getAppToken()
       .subscribe(() => {
         expect(true).toBeTruthy();
         done();

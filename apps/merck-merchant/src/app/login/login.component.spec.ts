@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { AuthenticationService } from '@perx/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationModule, CognitoModule, OauthModule } from '@perx/core';
+import { AuthenticationModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -26,21 +26,19 @@ describe('LoginComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        AuthenticationModule,
         MatButtonModule,
         MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
         BrowserAnimationsModule,
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+        AuthenticationModule.forRoot({ env: environment }),
       ],
       providers: [
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null}
+          useValue: {login: () => {}, getInterruptedUrl: () => null}
         }
       ]
     }).compileComponents();
@@ -67,7 +65,7 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
       AuthenticationService
     );
-    const authSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(Promise.resolve(true));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

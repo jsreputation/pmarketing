@@ -38,7 +38,7 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
     // TODO: Remove when methods will be implemented, and we have an ability to get user and password data
     const mockUser = {user: 'John', pass: 'qwerty123'};
     this.authenticationService.verifyOTP(this.identifier, code).subscribe(() => {
-      const authorized = this.authenticationService.v4GameOauth(mockUser.user, mockUser.pass);
+      const authorized = this.authenticationService.login(mockUser.user, mockUser.pass);
       if (authorized) {
         this.router.navigate(['/']);
       }

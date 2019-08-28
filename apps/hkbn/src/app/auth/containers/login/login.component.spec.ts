@@ -40,7 +40,7 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
-            v4GameOauth: () => Promise.resolve(true),
+            login: () => Promise.resolve(true),
             getInterruptedUrl: () => null
           }
         }
@@ -70,35 +70,35 @@ describe('LoginComponent', () => {
   describe('login method', () => {
 
     let authenticationService;
-    let v4GameOauthSpy;
+    let loginSpy;
     let getInterruptedUrlSpy;
     let navigateSpy;
 
     beforeEach(() => {
       authenticationService = TestBed.get(AuthenticationService);
-      v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth');
+      loginSpy = spyOn(authenticationService, 'login');
       getInterruptedUrlSpy = spyOn(authenticationService, 'getInterruptedUrl');
       navigateSpy = spyOn(router, 'navigate');
     });
 
-    it('should call v4GameOauth method, authorize and redirect to root page', async () => {
-      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+    it('should call login method, authorize and redirect to root page', async () => {
+      loginSpy = loginSpy.and.returnValue(Promise.resolve(true));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
-      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
+      expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(component.authed).toBeTruthy();
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
 
-    it('should call v4GameOauth method, authorize and redirect to InterruptedUrl page', async () => {
-      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+    it('should call login method, authorize and redirect to InterruptedUrl page', async () => {
+      loginSpy = loginSpy.and.returnValue(Promise.resolve(true));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
-      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
+      expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(component.authed).toBeTruthy();
       expect(navigateSpy).toHaveBeenCalledWith(['/wallet']);
     });

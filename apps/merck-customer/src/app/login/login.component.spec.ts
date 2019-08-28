@@ -40,9 +40,9 @@ describe('LoginComponent', () => {
           provide: AuthenticationService,
           useValue: {
             isAuthorized: () => of({}),
-            v4GameOauth: () => {},
+            login: () => {},
             getInterruptedUrl: () => null,
-            v4GetAppAccessToken: () => of({})
+            getAppGame: () => of({})
           }
         }
       ]
@@ -78,7 +78,7 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
       AuthenticationService
     );
-    const authSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(Promise.resolve(true));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

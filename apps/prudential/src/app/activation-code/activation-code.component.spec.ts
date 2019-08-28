@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, CognitoModule, OauthModule, VouchersModule, ProfileModule } from '@perx/core';
+import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 
@@ -28,13 +28,11 @@ describe('ActivationCodeComponent', () => {
         MatDialogModule,
         NoopAnimationsModule,
         MatCardModule,
-        AuthenticationModule,
         MatCardModule,
         NoopAnimationsModule,
         ProfileModule.forRoot({ env: environment }),
         VouchersModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment })
+        AuthenticationModule.forRoot({ env: environment })
       ],
       providers: [
         {
