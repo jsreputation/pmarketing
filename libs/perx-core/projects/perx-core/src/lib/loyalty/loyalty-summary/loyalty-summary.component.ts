@@ -31,7 +31,6 @@ export class LoyaltySummaryComponent implements OnInit {
 
   @Input()
   public expiringString: string;
-  
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
