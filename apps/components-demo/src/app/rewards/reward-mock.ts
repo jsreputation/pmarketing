@@ -32,8 +32,9 @@ export const mock: IReward[] = [
     termsAndConditions: '',
     howToRedeem: '',
     rewardPrice: [{
-      rewardCurrency: '44',
-      rewardAmount: '3'
+      id: 23,
+      currencyCode: '44',
+      price: 3
     }],
     categoryTags: lifestyleCategory,
   },
@@ -50,8 +51,9 @@ export const mock: IReward[] = [
     termsAndConditions: '',
     howToRedeem: '',
     rewardPrice: [{
-      rewardCurrency: '44',
-      rewardAmount: '3'
+      id: 23,
+      currencyCode: '44',
+      price: 3
     }],
     categoryTags: travelCategory,
   },
@@ -68,8 +70,9 @@ export const mock: IReward[] = [
     termsAndConditions: '',
     howToRedeem: '',
     rewardPrice: [{
-      rewardCurrency: '44',
-      rewardAmount: '3'
+      id: 23,
+      currencyCode: '44',
+      price: 3
     }],
     categoryTags: shoppingCategory,
   },
@@ -86,8 +89,9 @@ export const mock: IReward[] = [
     termsAndConditions: '',
     howToRedeem: '',
     rewardPrice: [{
-      rewardCurrency: '44',
-      rewardAmount: '3'
+      id: 23,
+      currencyCode: '44',
+      price: 3
     }],
   }
 ];
