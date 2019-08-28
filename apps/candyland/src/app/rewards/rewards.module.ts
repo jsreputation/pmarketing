@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import { RewardsListPageComponent } from './containers/rewards-list-page/rewards-list-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -111,7 +112,8 @@ import { EditRewardComponent } from './containers/edit-reward/edit-reward.compon
     DownloadButtonModule,
     CreateMerchantPopupModule,
     SelectMerchantModule,
-    VouchersProgressBarModule
+    VouchersProgressBarModule,
+    PaginationModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent

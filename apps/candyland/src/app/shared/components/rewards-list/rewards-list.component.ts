@@ -10,7 +10,7 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
 export class RewardsListComponent implements AfterViewInit {
   public DATE_FORMAT = 'dd MMM yyyy';
   @Input() public dataSource: MatTableDataSource<Reward[]>;
-  @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
+  @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: Reward}>();

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiConfig } from '@cl-core/api-config';
@@ -11,8 +11,9 @@ export class RewardHttpService {
 
   constructor(private http: HttpClient) { }
 
-  public getRewards(): Observable<any> {
-    return this.http.get('assets/actives/rewards/rewards.json');
+  public getRewards(params: HttpParams): Observable<any> {
+    // return this.http.get('assets/actives/rewards/rewards.json');
+    return this.http.get(ApiConfig.rewardsPath, {params});
   }
 
   public getRewardData(): Observable<{

@@ -3,6 +3,7 @@ declare interface Reward {
   image: string;
   name: string;
   type: string;
+  rewardType: string;
   current: number;
   total: number;
   prprobability?: number;

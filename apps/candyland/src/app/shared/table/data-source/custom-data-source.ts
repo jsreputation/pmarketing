@@ -84,10 +84,10 @@ export class CustomDataSource<T> {
     this.loadingSubject.next(true);
     this.dataService.getTableData( HttpParamsService.createHttpParams(params))
       .subscribe((res: any) => {
-        this.dataSubject.next(res);
+        this.dataSubject.next(res.data);
 
         // add random mock parameter
-        this.lengthData.next(50);
+        this.lengthData.next(res.meta.page_count);
         this.loadingSubject.next(false);
       }, error => {
         this.dataSubject.next([]);

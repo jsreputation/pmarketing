@@ -16,7 +16,10 @@
                      (itemAction)="actionHandler($event)"
     ></cl-rewards-list>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <cl-paginator [dataSource]="dataSource"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+    ></cl-paginator>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

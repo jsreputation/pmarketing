@@ -1,8 +1,7 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
-import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
-import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-import {map} from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
@@ -13,22 +12,15 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
   styleUrls: ['./rewards-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RewardsListPageComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<any>();
+export class RewardsListPageComponent {
+  public dataSource: CustomDataSource<Reward>;
   public hasData = true;
-
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private rewardsService: RewardsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private router: Router) {
-  }
-
-  public ngAfterViewInit(): void {
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = new CustomDataSource<Reward>(this.rewardsService);
   }
 
   public openDialogCreate(): void {
@@ -37,8 +29,9 @@ export class RewardsListPageComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(() => {
     });
   }
+
   // tslint:disable
-  public actionHandler(action: {action: RewardsTableMenuActions, data: Reward}): void {
+  public actionHandler(action: { action: RewardsTableMenuActions, data: Reward }): void {
     const listActions = {
       [RewardsTableMenuActions.edit]: this.editReward.bind(this)
     };
@@ -47,24 +40,5 @@ export class RewardsListPageComponent implements AfterViewInit {
 
   private editReward(reward: Reward): void {
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
-  }
-
-  private getData(): void {
-    this.rewardsService.getRewards()
-      .pipe(
-        map((data: any[]) => (
-            data.map(item => {
-              item.begin = new Date(item.begin);
-              item.end = new Date(item.end);
-              return item;
-            })
-          )
-        )
-      )
-      .subscribe((res: any[]) => {
-        this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
-        this.cd.detectChanges();
-      });
   }
 }
