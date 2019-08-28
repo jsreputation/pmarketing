@@ -1,7 +1,7 @@
 <div class="main" *ngIf="voucher">
   <div class="contents">
     <div class="app-header">
-      <button class="icon" routerLink="/voucher" [queryParams]="{id: voucher.id}">
+      <button class="icon" (click)="back()">
         <mat-icon>arrow_backward</mat-icon>
       </button>
       <img [src]="voucher.rewardBanner" class="banner">
@@ -10,7 +10,7 @@
       <div class="inner">
         <div class="upper-section">
           <div class="code-redemption unavailable" *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
-            <h1>No longer available</h1>
+            <p>Your reward is</p>
             <span class="code">{{voucher.state}}</span>
           </div>
           <ng-template #available>
@@ -20,8 +20,17 @@
               <button mat-button color="primary">Copy the code</button>
             </div>
             <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
-              <h1>Ask cashier to enter PIN</h1>
-              <button mat-flat-button color="primary">Enter PIN</button>
+              <p>Please ask cashier to enter PIN</p>
+              <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
+              <ng-template #pinComponent>
+                <div class="pin-input-container">
+		              <perx-core-pin-input #pinInput
+		                [length]="4"
+		                (full)="onPinEntered($event)">
+		              </perx-core-pin-input>
+                  <p *ngIf="isPinEntered && !isPinCorrect" class="incorrect-pin">Incorrect PIN</p>
+	              </div>
+              </ng-template>
             </div>
           </ng-template>
         </div>
@@ -33,8 +42,8 @@
           <mat-divider></mat-divider>
           <div class="action">
             <button class="full-width" mat-button color="primary">Terms & Conditions</button>
-            <button mat-button color="primary">CANCEL</button>
-            <button mat-flat-button color="primary">Try Again</button>
+            <button mat-button color="primary" (click)="cancelClicked()">CANCEL</button>
+            <button mat-flat-button color="primary" (click)="tryAgainClicked()">Try Again</button>
             <button mat-flat-button color="primary">BACK TO MY LIST</button>
           </div>
         </div>

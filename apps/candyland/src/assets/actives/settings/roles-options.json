@@ -2,7 +2,7 @@
   "roleTypes": [
     {
       "title": "Admin",
-      "value": "admin",
+      "value": "Administrators",
       "description": "Has full access to the internal group settings provided by the Super Admin, can invite users to the group"
     },
     {
