@@ -89,7 +89,6 @@ describe('LoginComponent', () => {
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
       expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
-      expect(component.authed).toBeTruthy();
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
 
@@ -100,7 +99,6 @@ describe('LoginComponent', () => {
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
       expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
-      expect(component.authed).toBeTruthy();
       expect(navigateSpy).toHaveBeenCalledWith(['/wallet']);
     });
   });

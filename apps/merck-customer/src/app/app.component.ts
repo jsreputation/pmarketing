@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { NotificationService } from '@perx/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,

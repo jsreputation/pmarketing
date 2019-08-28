@@ -42,7 +42,7 @@ describe('LoginComponent', () => {
             isAuthorized: () => of({}),
             login: () => {},
             getInterruptedUrl: () => null,
-            getAppGame: () => of({})
+            getAppToken: () => of({})
           }
         }
       ]

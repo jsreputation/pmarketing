@@ -40,12 +40,14 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe(() => {
-      this.appAccessTokenFetched = true;
-    },
+    this.authService.getAppToken().subscribe(
+      () => {
+        this.appAccessTokenFetched = true;
+      },
       (err) => {
         console.log('Error' + err);
-      });
+      }
+    );
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
