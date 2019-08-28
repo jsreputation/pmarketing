@@ -41,7 +41,7 @@ Given(/^2_I am on the engagement creation dialog box$/, async () => {
       });
 
 When(/^2_I click the next button$/, async () => {
-  const ec = protractor.ExpectedConditions;
+  let ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(element(by.className('btn mat-flat-button primary'))), 5000);
   // clicking on the create new button
   await element(by.className('btn mat-flat-button primary')).click();
@@ -58,12 +58,20 @@ Then(/^2_the page should be redirected to the correct url.$/, async () => {
 // Verifying that the relevant input text fields are present.
 Given(/^3_that I am on the shake the tree creation page$/, async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
   });
 
 When(/^3_I do nothing$/, () => {});
 
-Then(/$3_The relevant text input fields are present.$/, async() => {
-
+Then('3_The relevant text input fields are present.', async () => {
+  // Verifying whether engagement title text input exists
+  expect(await element(by.css('input#mat-input-0')).isPresent()).to.equal(true);
+  // Verifying whether headline message text input exists
+  expect(await element(by.css('input#mat-input-1')).isPresent()).to.equal(true);
+  // Verifying whether sub-headline message text input exists
+  expect(await element(by.css('input#mat-input-2')).isPresent()).to.equal(true);
+  // Verifying whether button text input exists
+  expect(await element(by.css('input#mat-input-3')).isPresent()).to.equal(true);
 });
 
 /*Given('that I am on the {string} creation page', function (string) {
