@@ -3,10 +3,10 @@
     <!--filters-->
     <div class="row">
       <cl-table-filters [dataSource]="dataSource" classList="row input-group">
-        <ng-container *clTableFilter="'name'; let filter">
+        <ng-container *clTableFilter="'username'; let filter">
           <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
         </ng-container>
-        <ng-container *clTableFilter="'role'; value: ''; let filter">
+        <ng-container *clTableFilter="'name'; value: ''; let filter">
           <mat-form-field appearance="outline" class="type-block">
             <mat-select [formControl]="filter" placeholder="All">
               <mat-option value="">All</mat-option>
@@ -23,9 +23,14 @@
     <cl-users-roles-list [dataSource]="dataSource"
                          [config]="config"
                          (edit)="openDialogEditUsers($event)"
+                         (delete)="deleteUser($event)"
     ></cl-users-roles-list>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <cl-paginator [dataSource]="dataSource"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+    ></cl-paginator>
+    <!--<mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

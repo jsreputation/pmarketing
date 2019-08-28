@@ -13,6 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const authToken = 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg';
     const authReq = req.clone({
       setHeaders: {
+        'Content-Type': 'application/vnd.api+json',
         'Access-Control-Allow-Origin': '*',
         Authorization: authToken,
       }
