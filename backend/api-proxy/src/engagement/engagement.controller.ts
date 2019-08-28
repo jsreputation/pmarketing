@@ -82,6 +82,9 @@ class EngagementControllerImplem {
                     if (acc === null) {
                         return v;
                     }
+                    if (v === null) {
+                        return acc;
+                    }
                     acc.data = [
                         ...acc.data,
                         ...v.data
