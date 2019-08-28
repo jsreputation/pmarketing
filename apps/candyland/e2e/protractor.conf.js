@@ -7,7 +7,7 @@
  * @type { import("protractor").Config }
  */
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 20000,
   specs: [
     './src/features/**/*.feature'
   ],
@@ -29,7 +29,7 @@ exports.config = {
     reporter: 'dot',
     strict: true,
     format: [],
-    timeout: 30000,
+    timeout: 35000,
     bail:true,
     dryRun: false,
     compiler: []

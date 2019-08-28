@@ -2,12 +2,12 @@ import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by, protractor } from 'protractor';
 import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/shakeTheTreeFlow.po';
-
+// initializing page objects variables
 let PageEngagement: EngagementAppPage;
 let PageShakeTheTree: CreateShakeTheTreeAppPage;
 
-
 Before( () => {
+  // initializing page objects instances
   PageEngagement = new EngagementAppPage();
   PageShakeTheTree = new CreateShakeTheTreeAppPage();
 
@@ -74,67 +74,54 @@ Then('3_The relevant text input fields are present.', async () => {
   expect(await element(by.css('input#mat-input-3')).isPresent()).to.equal(true);
 });
 
-/*Given('that I am on the {string} creation page', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
+// Verifying the presence of the preview element.
+Given(/^4_that I am on the shake the tree creation page$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+When(/^4_I do nothing$/, () => {});
+
+Then(/^4_the preview section element is present.$/, async () => {
+  // checking whether mobile preview exist
+  expect(await element(by.className('mobile-preview-mobile')).isPresent()).to.equal(true);
+
+});
+
+// Verifiying that headline message field takes null value
+Given(/^5_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
 
 
+When(/^5_I entered a empty text string in the headline text box.$/, async () => {
+  await element(by.css('input#mat-input-1')).clear();
+  await element(by.css('input#mat-input-1')).sendKeys(' ');
 
-When('I do nothing', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
+});
 
+Then(/^5_the empty string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('');
+});
 
+// Verifiying that headline message is reflected in the preview element
 
-Then('the preview section element is present.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
+Given(/^6_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
 
+When(/^6_I entered a pseudo random text string in the headline text box.$/, async () => {
+  await element(by.css('input#mat-input-1')).clear();
+  await element(by.css('input#mat-input-1')).sendKeys('This is a test string!');
+});
 
+Then(/^6_the random string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('This is a test string!');
+});
 
-Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-When('I entered a empty text string in the headline text box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Then('the empty string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-When('I entered a pseudo random text string in the headline text box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Then('the random string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Given('that I am on the {string} creation page.', function (string) {
+/*Given('that I am on the {string} creation page.', function (string) {
         // Write code here that turns the phrase above into concrete actions
         return 'pending';
       });
