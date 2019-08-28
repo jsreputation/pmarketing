@@ -228,7 +228,7 @@ jobs:
   lint:
     docker:
       - image: circleci/node:10-browsers
-    resource_class: small
+    resource_class: xlarge
     steps:
       - checkout
       - run: yarn install
