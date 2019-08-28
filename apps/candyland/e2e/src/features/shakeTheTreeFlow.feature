@@ -57,9 +57,9 @@ Scenario: Verifiying that button text message is reflected in the preview elemen
   When  10_I entered a pseudo random text string in the button text box.
   Then  10_the random string entered is reflected in the preview element.
 
-Scenario: Verifiying that header message is not reflected in the preview element
+Scenario: Verifiying that engagement title text is not reflected in the preview element
   Given 11_that I am on the shake the tree creation page.
-  When  11_I entered a pseudo random text string in the header message text box.
+  When  11_I entered a pseudo random text string in the engagement title text box.
   Then  11_the random string entered is not reflected in the preview element.
 
 Scenario: Verifying that the tree design choice is reflected in the preview element

@@ -182,68 +182,66 @@ Then(/^10_the random string entered is reflected in the preview element.$/, asyn
   expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('This is a test string!');
 });
 
+// Verifiying that header message is not reflected in the preview element
+Given(/^11_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+When(/^11_I entered a pseudo random text string in the engagement title text box.$/, async () => {
+  await element(by.css('input#mat-input-0')).clear();
+  await element(by.css('input#mat-input-0')).sendKeys('This is a test string!');
+});
+
+Then(/^11_the random string entered is not reflected in the preview element.$/, async () => {
+  // verifying that string is not present in the headline
+  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.not.equal('This is a test string!');
+  // verifying that string is not present in the sub-headline
+  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.not.equal('This is a test string!');
+  // verifying that string is not present in the button text
+  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.not.equal('This is a test string!');
+});
+
+// Verifying that the tree design choice is reflected in the preview element
+Given('12_that I am on the shake the tree creation page.', async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+
+});
+
+When(/^12_you select one of the the tree design.$/, async () => {
+// clicking the second tree
+ await element.all(by.tagName('cl-images-preview')).get(1).click();
+ });
+
+Then(/^12_that selected tree design is reflected in the preview element.$/, async () => {
+  const TreeElement = element(by.className('tree__img ng-star-inserted'));
+  // Doing an assertion on the src attribute
+  expect(await TreeElement.getAttribute('src')).to.contain('assets/images/tree/full_tree_2.png');
+
+  });
+
+// Verifying that the background design choice is reflected in the preview element
+
+Given(/^13_that I am on the shake the tree creation page.$/, async () =>  {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+
+
+When(/^13_you select one of the the background design.$/, async () => {
+  // clicking on the third option for the background image
+  await element.all(by.tagName('cl-images-preview')).last().click();
+});
+
+Then(/^13_that selected background design design is reflected in the preview element.$/, async () =>{
+  const BkgrdElement = element(by.className('mobile-preview-background'));
+  // Doing an assertion on the src attribute
+  expect(await BkgrdElement.getAttribute('style')).to.contain('assets/images/background/full_bg_3.jpg');
+});
+
 /*Given('that I am on the {string} creation page.', function (string) {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-When('I entered a pseudo random text string in the header message text box.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-Then('the random string entered is not reflected in the preview element.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-When('you select one of the the tree design.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-Then('that selected tree design is reflected in the preview element.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-When('you select one of the the background design.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-Then('that selected background design design is reflected in the preview element.', function () {
-         // Write code here that turns the phrase above into concrete actions
-         return 'pending';
-       });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
          // Write code here that turns the phrase above into concrete actions
          return 'pending';
        });
