@@ -12,7 +12,7 @@ const loyaltyServiceStub = {
   getLoyalty: () => of({})
 };
 
-fdescribe('RewardConfirmComponent', () => {
+describe('RewardConfirmComponent', () => {
   let component: RewardConfirmComponent;
   let fixture: ComponentFixture<RewardConfirmComponent>;
   let dialogRef: MatDialogRef<any>;
