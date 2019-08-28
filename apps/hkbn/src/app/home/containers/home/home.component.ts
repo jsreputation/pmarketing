@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
     private loyaltyService: LoyaltyService,
     private translate: TranslateService,
     private rewardsService: RewardsService
-  ) { 
+  ) {
     this.getRewardsForTags = this.getRewardsForTags.bind(this);
   }
 
@@ -95,29 +95,23 @@ export class HomeComponent implements OnInit {
     })).pipe(flatMap((reward) => {
       this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
       return this.getTranslatedTabsName();
-      // return forkJoin(this.staticTab.filter((el) => keysTranslate[el.tabName]).map((tab) => this.translate.get(keysTranslate[tab.tabName])
-      //   .pipe(map((value) => ({ value, key: tab.tabName })))));
     })).subscribe((names) => {
-      // this.staticTab.forEach((tab) => tab.tabName = names
-      //   .find((rew) => rew.key === tab.tabName) ? names.find((rew) => rew.key === tab.tabName).value :
-      //   tab.tabName);
-      console.log(names);
-      this.staticTab.forEach((tab)=>tab.tabName=names[tab.tabName]);
+      this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
       this.tabs.next(this.staticTab);
     });
   }
-  private getRewardsForTags(tab): Observable<{key:string, value: IReward[]}> {
-    return this.rewardsService.getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null).pipe(map((value) => ({ value, key: tab.tabName })));
+  private getRewardsForTags(tab: ITabConfig): Observable<{ key: string, value: IReward[] }> {
+    return this.rewardsService.getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null)
+    .pipe(map((value) => ({ value, key: tab.tabName })));
   }
-
   private getTranslatedTabsName(): Observable<any> {
-    return this.translate.get(this.staticTab.map(el=>keysTranslate[el.tabName]))
-    .pipe(map((dictioniry)=>{
-      return Object.entries(keysTranslate).reduce((newObj,[key,val])=>{
-        newObj[key]=dictioniry[val];
-        return newObj;
-      }, {});
-    }));
+    return this.translate.get(this.staticTab.map(el => keysTranslate[el.tabName]))
+      .pipe(map((dictioniry) => {
+        return Object.entries(keysTranslate).reduce((newObj, [key, val]) => {
+          newObj[key] = dictioniry[val];
+          return newObj;
+        }, {});
+      }));
   }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
