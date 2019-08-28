@@ -162,6 +162,7 @@ class EngagementControllerImplem {
     }
 
     private handleError(err: AxiosError): Observable<any> {
+        console.error(err);
         throw new HttpException(err.response.data, err.response.status);
     }
 
