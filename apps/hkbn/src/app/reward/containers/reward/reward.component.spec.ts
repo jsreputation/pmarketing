@@ -36,8 +36,8 @@ describe('RewardComponent', () => {
 
   const loyaltyServiceStub = {
     getLoyalties: (): Observable<ILoyalty[]> => of(mockLoyalty),
-    getLoyalty: (id): Observable<ILoyalty> => of([].find((el)=>el.id===id))
-  }
+    getLoyalty: (id): Observable<ILoyalty> => of([].find((el) => el.id === id))
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
