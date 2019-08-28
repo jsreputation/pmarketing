@@ -27,8 +27,10 @@ interface IV4Image {
 }
 
 interface IV4RewardPrice {
-  reward_currency: string;
-  reward_amount: string;
+  id: number;
+  currency_code: string;
+  price: number;
+  points: number;
 }
 
 interface IV4Reward {
@@ -143,8 +145,10 @@ export class V4RewardsService extends RewardsService {
       subtitle: reward.subtitle,
       description: reward.description,
       rewardPrice: reward.reward_price.map(price => ({
-        rewardCurrency: price.reward_currency,
-        rewardAmount: price.reward_amount
+        id: price.id,
+        currencyCode: price.currency_code,
+        price: price.price,
+        points: price.points
       })),
       rewardThumbnail: thumbnailImg,
       rewardBanner,
@@ -224,7 +228,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, { params }
+      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, {params}
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
