@@ -22,7 +22,7 @@
               <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0">
                 <div *ngFor="let rewardPrice of reward.rewardPrice">
-                  {{displayPrice(rewardPrice)}}
+                  {{displayPriceFn(rewardPrice)}}
                 </div>
               </div>
             </div>
