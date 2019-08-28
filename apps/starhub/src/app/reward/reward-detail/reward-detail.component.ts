@@ -63,21 +63,23 @@ export class RewardDetailComponent implements OnInit {
     const dateNow = new Date();
 
     const differenceTime = validTo.valueOf() - dateNow.valueOf();
-    const differenceInHours = differenceTime / 1000 / 60 / 60;
+    const differenceInSeconds = differenceTime / 1000;
+    const differenceInHours = differenceInSeconds / 60 / 60;
     let convertedtoSeconds = differenceInHours * 3600;
+    const thirtySixHoursInSeconds = 129600;
 
     if (Math.round(convertedtoSeconds) <= 0) {
       this.setToExpired();
       return;
     }
 
-    if (convertedtoSeconds <= 129600) {
+    if (convertedtoSeconds <= thirtySixHoursInSeconds) {
       this.showMacaron = true;
       this.macaronText = 'Expiring';
       this.dateTime$ = timer(0, 1000).pipe(
-        take(129600),
+        take(thirtySixHoursInSeconds),
         map(() => {
-          const time = Date.parse(String(validTo)) - Date.parse(String(new Date()));
+          const time = Date.parse(String(validTo)) - (new Date()).getTime();
           const seconds = Math.floor( (time / 1000) % 60 );
           const minutes = Math.floor( (time / 1000 / 60) % 60 );
           const hours = Math.floor( (time / (1000 * 60 * 60)) % 24 );
