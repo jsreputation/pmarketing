@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ConfigPathService } from '@cl-core/services';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,9 @@ export class SettingsHttpService {
 
   public getRolesOptions(): Observable<any> {
     return this.http.get<OptionConfig[]>('assets/actives/settings/roles-options.json');
+  }
+
+  public getAllCredential(params: any): Observable<any> {
+    return this.http.get(ConfigPathService.getAllCredentialPath, params);
   }
 }

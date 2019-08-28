@@ -1,20 +1,21 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ViewChild,
   ChangeDetectorRef,
   AfterViewInit,
   OnInit,
   OnDestroy
 } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { MatDialog } from '@angular/material';
 import { AudiencesService } from '@cl-core/services/audiences.service';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { SettingsService } from '@cl-core-services';
+import { map, switchMap } from 'rxjs/operators';
+import { User } from '@cl-core/models/audiences/user.model';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -26,20 +27,21 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public currentTab;
   public tabs: FormControl;
   public search: FormControl;
-  public searchKey = 'firstName';
-  public dataSource = new MatTableDataSource<any>();
+  public searchKey = 'primary_identifier';
+  public dataSource: CustomDataSource;
   public users;
   public audiences;
   public tabsFilterConfig: OptionConfig[] = [
-    {title: 'Users(340)', value: 'users'},
-    {title: 'Audience List(3)', value: 'audience'}
+    { title: 'Users(340)', value: 'users' },
+    { title: 'Audience List(3)', value: 'audience' }
   ];
+  public config: any;
 
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-
-  constructor(private audiencesService: AudiencesService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+  constructor(private settingsService: SettingsService,
+    private audiencesService: AudiencesService,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog) {
+    this.dataSource = new CustomDataSource(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
   }
@@ -48,44 +50,35 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.tabs.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(tab => this.changeList(tab));
-    this.search.valueChanges.pipe(
-      untilDestroyed(this),
-      distinctUntilChanged(),
-      debounceTime(500)
-    )
-      .subscribe(query => {
-          const searchTerm = JSON.stringify({[this.searchKey]: query});
-          this.dataSource.filter = searchTerm;
-        }
-      );
   }
 
   public ngAfterViewInit(): void {
-    this.getUsers();
     this.getAudiences();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+    this.settingsService.getRolesOptions()
+      .subscribe(config => this.config = config);
+
   }
 
   public ngOnDestroy(): void {
   }
 
-  private updateDataSource(data): void {
-    this.dataSource.data = data;
-  }
-
   public openAddUserDialog(): void {
-    const dialogRef = this.dialog.open(AddUserPopupComponent, {panelClass: 'audience-dialog'});
+    const dialogRef = this.dialog.open(AddUserPopupComponent, { panelClass: 'audience-dialog' });
 
-    dialogRef.afterClosed().subscribe(user => {
-      if (user) {
-        this.users.push(user);
-      }
-    });
+    dialogRef.afterClosed().pipe(
+      untilDestroyed(this),
+      map(data => new User(data),
+      switchMap((user: User) => this.audiencesService.createUser(user))
+      ))
+      .subscribe(res => {
+        if (res) {
+          // this.dataSource.updateData();
+        }
+      });
   }
 
   public openManageListDialog(item): void {
-    const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
+    const dialogRef = this.dialog.open(ManageListPopupComponent, { panelClass: 'manage-list-dialog', data: item });
 
     dialogRef.afterClosed().pipe(untilDestroyed(this)).subscribe(user => {
       if (user) {
@@ -97,13 +90,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public changeList(tab): void {
     switch (tab) {
       case 'audience':
-        this.updateDataSource(this.audiences);
-        this.searchKey = 'listName';
+        this.searchKey = 'list_name';
+        this.dataSource = new CustomDataSource(this.settingsService);
         break;
       case 'users':
       default:
-        this.updateDataSource(this.users);
-        this.searchKey = 'firstName';
+        this.searchKey = 'primary_identifier';
+        this.dataSource = new CustomDataSource(this.audiencesService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();
@@ -113,22 +106,14 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     return true;
   }
 
-  private getUsers(): void {
-    this.audiencesService.getUsers()
-      .subscribe((res: any[]) => {
-        this.users = res;
-        this.dataSource.data = res;
-      });
-  }
-
   private getAudiences(): void {
     this.audiencesService.getAudiences().pipe(
       map((data: any[]) => (
-          data.map(item => {
-            item.updated = new Date(item.updated);
-            return item;
-          })
-        )
+        data.map(item => {
+          item.updated = new Date(item.updated);
+          return item;
+        })
+      )
       )
     )
       .subscribe((res: any[]) => {

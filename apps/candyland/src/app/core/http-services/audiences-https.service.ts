@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ConfigPathService } from '@cl-core-services';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +15,7 @@ export class AudiencesHttpsService {
   }
 
   public getUser(id: number): Observable<any> {
-    return this.http.get('assets/mocks/users.json')
-      .pipe(
-        map((users: any[]) => {
-          return users.find(user => user.id === +id);
-        })
-      );
+    return this.http.get(ConfigPathService.getAllUsers + '/' + id);
   }
 
   public getAudiences(): Observable<any> {
@@ -29,5 +24,13 @@ export class AudiencesHttpsService {
 
   public getVouchers(): Observable<any> {
     return this.http.get('assets/mocks/vouchers.json');
+  }
+
+  public getAllUsers(params: any): Observable<any> {
+    return this.http.get(ConfigPathService.getAllUsers, params);
+  }
+
+  public createUser(body): Observable<any> {
+    return this.http.post(ConfigPathService.getAllUsers, {data: body});
   }
 }
