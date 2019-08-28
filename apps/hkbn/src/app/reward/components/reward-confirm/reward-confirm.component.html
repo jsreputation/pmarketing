@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="reward-confirm-title">{{data.title}}</h2>
 <div mat-dialog-content class="reward-confirm-content">
-  <p>{{"YOU_CURRENTLY_HAVE" | translate}} {{(loyalty | async)}} {{"POINTS" | translate}}</p>
+  <p>{{"YOU_CURRENTLY_HAVE" | translate}} {{(data.existingPoints)}} {{"POINTS" | translate}}</p>
   <p>{{"USE_POINTS" | translate}} {{data.requiredPoints}} {{"POINTS" | translate}}</p>
   <p>{{"PROCEED" | translate}}</p>
 </div>

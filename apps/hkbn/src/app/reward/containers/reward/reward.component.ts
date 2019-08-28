@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, switchMap, take, takeUntil, tap, filter } from 'rxjs/operators';
-import { IReward, NotificationService, RewardsService } from '@perx/core';
+import { IReward, NotificationService, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,8 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class RewardComponent implements OnInit, OnDestroy {
 
   public rewardState$: Observable<IReward>;
+  public loyalty: ILoyalty;
+  public rewardData: IReward;
   private destroy$: Subject<void> = new Subject<void>();
-
   constructor(
     private dialog: MatDialog,
     private notificationService: NotificationService,
@@ -24,6 +25,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private rewardsService: RewardsService,
     private translateService: TranslateService,
+    private loyaltyService: LoyaltyService
     // TODO Uncomment when loyaltyService.exchangePoints will be implemented
     // private loyaltyService: LoyaltyService
   ) {
@@ -34,9 +36,13 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => parseInt(params.get('id'), 10)),
-        switchMap((id: number) => this.rewardsService.getReward(id)),
+        switchMap((id: number) => this.rewardsService.getReward(id).pipe(map((reward) => this.rewardData = reward))),
         takeUntil(this.destroy$)
       );
+
+    this.loyaltyService.getLoyalties().pipe(switchMap((loyalyes: ILoyalty[]) => {
+      return this.loyaltyService.getLoyalty(loyalyes[0].id);
+    })).subscribe((loyalty) => this.loyalty = loyalty);
   }
 
   public ngOnDestroy(): void {
@@ -47,8 +53,9 @@ export class RewardComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     const dialog = this.dialog.open(RewardConfirmComponent, {
       data: {
-        title: '[Reward Title]',
-        existingPoints: 49,
+        title: this.rewardData.name,
+        existingPoints: this.loyalty.expiringPoints
+          && this.loyalty.expiringPoints.length ? this.loyalty.expiringPoints[0].points : null,
         requiredPoints: 20
       }
     });
