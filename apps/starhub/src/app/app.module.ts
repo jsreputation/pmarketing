@@ -9,7 +9,8 @@ import {
   ProfileModule,
   LocationsService,
   RewardsService,
-  VouchersService
+  VouchersService,
+  PinService
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -53,7 +54,11 @@ const rewardsServiceStub = {
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
-  get: () => of(vouchers[0])
+  get: () => of(vouchers[1])
+};
+
+const pinServiceStub = {
+  getPin: () => of('2222')
 };
 
 @NgModule({
@@ -94,7 +99,8 @@ const vouchersServiceStub = {
   providers: [
     { provide: LocationsService, useValue: locationServiceStub },
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub }
+    { provide: VouchersService, useValue: vouchersServiceStub },
+    { provide: PinService, useValue: pinServiceStub }
   ],
   bootstrap: [AppComponent]
 })
