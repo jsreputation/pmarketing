@@ -2,36 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService, ICatalog } from '@perx/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { CategorySelectComponent, BottomSheetClosedCallBack } from './category-select/category-select.component';
-import { CategorySortComponent } from './category-sort/category-sort.component';
+import { CategorySelectComponent, CategoryBottomSheetClosedCallBack } from './category-select/category-select.component';
+import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category-sort/category-sort.component';
 import { Observable, of } from 'rxjs';
-
-export enum CategoryMode {
-  reward = 'reward',
-  catalog = 'catalog'
-}
+import { CategoryMode, SortingMode } from './category.model';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit, BottomSheetClosedCallBack {
-  public rewards: Observable<IReward[]>;
-  public selectedCategory: string;
+export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
+
   private currentMode: CategoryMode;
+  public rewards: Observable<IReward[]>;
+
+  public selectedCategory: string;
+  public selectedSortingCraeteria: SortingMode = SortingMode.latest;
 
   constructor(
     private router: Router,
     private bottomSheet: MatBottomSheet,
     private rewardsService: RewardsService,
-    private activeRoute: ActivatedRoute,
+    private activeRoute: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
           this.currentMode = CategoryMode.reward;
+          this.selectedCategory = categoryName;
           this.rewards = this.rewardsService.getAllRewards([this.selectedCategory]);
     } else {
         this.currentMode = CategoryMode.catalog;
@@ -49,14 +49,14 @@ export class CategoryComponent implements OnInit, BottomSheetClosedCallBack {
   }
 
   public selectCategory(): void {
-    this.bottomSheet.open(CategorySelectComponent, {
-      data: this
-    });
+    this.bottomSheet.open(CategorySelectComponent, { data: this });
   }
 
   public selectSort(): void {
-    this.bottomSheet.open(CategorySortComponent);
+    this.bottomSheet.open(CategorySortComponent, { data: this });
   }
+
+  // CategoryBottomSheetClosedCallBack methods
 
   public categorySelectedCallback(updatedValue: string): void {
     if (this.currentMode === CategoryMode.reward) {
@@ -67,5 +67,34 @@ export class CategoryComponent implements OnInit, BottomSheetClosedCallBack {
 
   public getCurrentSelectedCategory(): string {
     return this.selectedCategory ? this.selectedCategory : 'All';
+  }
+
+  public getMacaron(validDateFrom: string, validDateTo: string): string {
+    const currentDate = new Date().getTime();
+    const validTo = new Date(validDateTo);
+    const validToTimeDifference = validTo.valueOf() - currentDate.valueOf();
+    const validToDifferenceInHours = Math.abs(validToTimeDifference / 1000 / 60 / 60);
+
+    const validFrom = new Date(validDateFrom);
+    const validDateFromTimeDifference = validFrom.valueOf() - currentDate.valueOf();
+    const validDateFromDifferenceInHours = Math.abs(validDateFromTimeDifference / 1000 / 60 / 60);
+
+    let macaronText: string = '';
+    if (validToDifferenceInHours <= 36) {
+      macaronText = 'expiring';
+    } else if (validDateFromDifferenceInHours <= 72) {
+      macaronText = 'just-added';
+    }
+    return macaronText;
+  }
+
+  // SortBottomSheetClosedCallBack methods
+
+  public sortOrderSelectedCallback(updatedValue: SortingMode): void {
+    this.selectedSortingCraeteria = updatedValue;
+  }
+
+  public getCurrentSelectedOrder(): SortingMode {
+    return this.selectedSortingCraeteria;
   }
 }

@@ -215,7 +215,8 @@ describe('VouchersService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1');
+    // tslint:disable-next-line:max-line-length
+    const req = httpTestingController.expectOne('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&sort_by=id&order=desc');
 
     expect(req.request.method).toEqual('GET');
 
@@ -232,7 +233,7 @@ describe('VouchersService', () => {
         done();
       });
 
-    httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1');
+    httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&sort_by=id&order=desc');
 
     httpTestingController.verify();
   });

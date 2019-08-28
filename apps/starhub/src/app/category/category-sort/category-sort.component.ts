@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { SortingMode } from '../category.model';
+
+export interface SortBottomSheetClosedCallBack {
+    sortOrderSelectedCallback(updatedValue: string): void;
+    getCurrentSelectedOrder(): SortingMode;
+}
 
 @Component({
   selector: 'app-category-sort',
@@ -7,14 +14,22 @@ import { MatBottomSheetRef } from '@angular/material';
   styleUrls: ['./category-sort.component.scss']
 })
 export class CategorySortComponent {
-  public sortingCriterias: string[] = ['Popularity', 'Latest', 'Ending Soon'];
+  public sortingCriterias: string[] = [SortingMode.latest, SortingMode.ending_soon];
   public selectedCriteria: string;
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<CategorySortComponent>
-  ) { }
+    private bottomSheetRef: MatBottomSheetRef<CategorySortComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: SortBottomSheetClosedCallBack
+  ) {
+      if (this.data.getCurrentSelectedOrder) {
+        this.selectedCriteria = this.data.getCurrentSelectedOrder();
+      }
+   }
 
   public apply(event: MouseEvent): void {
+    if (this.data.sortOrderSelectedCallback) {
+      this.data.sortOrderSelectedCallback(this.selectedCriteria);
+    }
     this.bottomSheetRef.dismiss();
     event.preventDefault();
   }

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDet
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { CampaignsService } from '@cl-core/services/campaigns.service';
+import { CampaignsService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-campaigns-list-page',

@@ -7,6 +7,7 @@ import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
+import { RewardsSortPipe } from './rewards-sort.pipe';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -18,7 +19,7 @@ describe('CategoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CategoryComponent],
+      declarations: [CategoryComponent, RewardsSortPipe],
       imports: [
         RouterTestingModule,
         MatIconModule,
@@ -41,5 +42,31 @@ describe('CategoryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('getMacaron', () => {
+    it('should return expiring', () => {
+      const currentTime = new Date();
+      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
+      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
+      const macaronText = component.getMacaron(String(validFrom), String(validTo));
+      expect(macaronText).toBe('expiring');
+    });
+
+    it('should return just-added', () => {
+      const currentTime = new Date();
+      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
+      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
+      const macaronText = component.getMacaron(String(validFrom), String(validTo));
+      expect(macaronText).toBe('just-added');
+    });
+
+    it('should return empty string', () => {
+      const currentTime = new Date();
+      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
+      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
+      const macaronText = component.getMacaron(String(validFrom), String(validTo));
+      expect(macaronText).toBe('');
+    });
   });
 });

@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { AudiencesService } from '@cl-core/services/audiences.service';
+import { AudiencesService } from '@cl-core/services';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { ActivatedRoute } from '@angular/router';

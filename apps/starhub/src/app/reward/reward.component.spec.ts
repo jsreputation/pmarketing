@@ -4,6 +4,8 @@ import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RewardsService } from '@perx/core';
+import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -12,7 +14,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent],
+      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent],
       imports: [
         MatIconModule,
         RouterTestingModule
@@ -32,5 +34,10 @@ describe('RewardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set save reward button to disabled', () => {
+    component.setToExpired(true);
+    expect(component.isButtonDisabled).toBe(true);
   });
 });

@@ -50,6 +50,12 @@ $max-width: 60rem;
     text-align: center;
   }
 
+  .reward-subtitle {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #858585;
+  }
+
   .merchant-name {
     margin-top: 1.5rem;
     font-size: 1.8rem;
@@ -62,6 +68,11 @@ $max-width: 60rem;
     font-size: 1.6rem;
     text-align: center;
     color: #858585;
+
+    .points-cost {
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+    }
   }
 
   .reward-expiry {

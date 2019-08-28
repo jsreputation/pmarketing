@@ -1,5 +1,12 @@
-// import { environment } from '@cl-environments/environment';
-
 export class ApiConfig {
-  // private static readonly base = environment.baseURL;
+  public static test = 'localhost:3000/';
+  public static basePath: string = 'https://api.whistler.perxtech.org/';
+  public static baseAPIPath: string = `${ApiConfig.basePath}iam/`;
+  public static engagementsPath =  `${ApiConfig.basePath}engagements/`;
+  public static createGamePath = `${ApiConfig.basePath}engagements/`;
+  public static getAllCredentialPath = `${ApiConfig.baseAPIPath}credentials`;
+  public static IAMUsersPath = `${ApiConfig.baseAPIPath}users`;
+  public static IAMGroupsPath = `${ApiConfig.baseAPIPath}groups`;
+  public static baseAPIUserPath: string = `${ApiConfig.basePath}cognito/`;
+  public static getAllUsers = `${ApiConfig.baseAPIUserPath}users`;
 }

@@ -7,15 +7,15 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { AudiencesService } from '@cl-core/services/audiences.service';
+import { AudiencesService } from '@cl-core/services';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { SettingsService } from '@cl-core-services';
 import { map, switchMap } from 'rxjs/operators';
 import { User } from '@cl-core/models/audiences/user.model';
+import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -28,7 +28,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public tabs: FormControl;
   public search: FormControl;
   public searchKey = 'primary_identifier';
-  public dataSource: CustomDataSource;
+  public dataSource: AudiencesUsersListDataSource<User>;
   public users;
   public audiences;
   public tabsFilterConfig: OptionConfig[] = [
@@ -38,10 +38,10 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public config: any;
 
   constructor(private settingsService: SettingsService,
-    private audiencesService: AudiencesService,
-    public cd: ChangeDetectorRef,
-    public dialog: MatDialog) {
-    this.dataSource = new CustomDataSource(this.audiencesService);
+              private audiencesService: AudiencesService,
+              public cd: ChangeDetectorRef,
+              public dialog: MatDialog) {
+    this.dataSource = new AudiencesUsersListDataSource<User>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
   }
@@ -68,11 +68,11 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     dialogRef.afterClosed().pipe(
       untilDestroyed(this),
       map(data => new User(data),
-      switchMap((user: User) => this.audiencesService.createUser(user))
+        switchMap((user: User) => this.audiencesService.createUser(user))
       ))
       .subscribe(res => {
         if (res) {
-          // this.dataSource.updateData();
+          this.dataSource.updateData();
         }
       });
   }
@@ -91,12 +91,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     switch (tab) {
       case 'audience':
         this.searchKey = 'list_name';
-        this.dataSource = new CustomDataSource(this.settingsService);
+        // this.dataSource = new CustomDataSource(this.audiencesService);
+        this.getAudiences();
         break;
       case 'users':
       default:
         this.searchKey = 'primary_identifier';
-        this.dataSource = new CustomDataSource(this.audiencesService);
+        this.dataSource = new AudiencesUsersListDataSource<User>(this.audiencesService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();

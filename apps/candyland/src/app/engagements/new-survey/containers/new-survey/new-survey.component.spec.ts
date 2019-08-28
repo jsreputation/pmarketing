@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewSurveyComponent } from './new-survey.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
+import { RoutingStateService } from '@cl-core/services';
 import { StampDataService } from '../../../new-stamp/shared/stamp-data.service';
 import { QuestionTypeModule } from '@cl-shared/components/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';

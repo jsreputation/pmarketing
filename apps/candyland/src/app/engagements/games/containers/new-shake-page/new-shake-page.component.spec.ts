@@ -15,7 +15,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
-import { EngagementTransformDataService, ShakeTreeService } from '@cl-core-services';
+import { EngagementTransformDataService, ShakeTreeService } from '@cl-core/services';
 import { ConfirmModalModule } from '@cl-shared';
 
 describe('NewShakePageComponent', () => {

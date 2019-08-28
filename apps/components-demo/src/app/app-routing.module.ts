@@ -35,6 +35,9 @@ const routes: Routes = [
   {
     path: 'loyalty', loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
   },
+  {
+    path: 'survey', loadChildren: () => import('./survey/survey.module').then(mod => mod.SurveyModule)
+  },
   { path: 'login', component: LoginComponent }
 ];
 

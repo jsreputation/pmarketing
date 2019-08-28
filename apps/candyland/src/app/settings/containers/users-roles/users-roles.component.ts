@@ -1,9 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { map } from 'rxjs/operators';
-import { SettingsService } from '@cl-core/services/settings.service';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
+import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
+import { SettingsTransformDataService } from '@cl-core/services/settings-transform-data.service';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-users-roles',
@@ -11,55 +14,83 @@ import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popu
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource = new MatTableDataSource<any>();
+  public dataSource: SettingsUsersRolesDataSource<IAMUser>;
   public hasData = true;
   public config: any;
-
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  private groups: any;
 
   constructor(private settingsService: SettingsService,
               public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private settingsTransformDataService: SettingsTransformDataService) {
+    this.dataSource = new SettingsUsersRolesDataSource<IAMUser>(this.settingsService);
   }
 
   public ngAfterViewInit(): void {
     this.settingsService.getRolesOptions()
       .subscribe( config => this.config = config);
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+    this.getAllGroups();
   }
 
   public openDialogInviteNewUsers(): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog'});
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog',
+      data: {
+        groups: this.groups
+    }});
 
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  public openDialogEditUsers(id: number): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog', data: id});
-
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  private getData(): void {
-    this.settingsService.getRoles()
+    dialogRef.afterClosed()
       .pipe(
-        map((data: any[]) => (
-            data.map(item => {
-              item.invitedDate = new Date(item.invitedDate);
-              item.name = item.firstName + ' ' + item.lastName;
-              return item;
-            })
-          )
-        )
+        switchMap((value: any) => {
+          if (value) {
+            const newUser = this.settingsTransformDataService.transformInviteUser(value);
+            return this.settingsService.inviteNewUser(newUser);
+          }
+          return of(null);
+        })
       )
-      .subscribe((res: any[]) => {
-        this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
-        this.cd.detectChanges();
+      .subscribe((value: any) => {
+      if (value) {
+        this.dataSource.updateData();
+      }
+    });
+  }
+
+  public openDialogEditUsers(user: IAMUser): void {
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog',
+      data: {
+      user,
+        groups: this.groups
+      }});
+
+    dialogRef.afterClosed()
+      .pipe(
+        switchMap((value: any) => {
+          if (value) {
+            const newUser = this.settingsTransformDataService.transformInviteUser({...user, ...value});
+            return this.settingsService.patchUser(newUser, user.id);
+          }
+          return of(null);
+        })
+      )
+      .subscribe((value) => {
+        if (value) {
+          this.dataSource.updateData();
+        }
+    });
+  }
+
+  public deleteUser(id: string): void {
+    this.settingsService.deleteUser(id)
+      .subscribe(() => {
+        this.dataSource.updateData();
       });
   }
+
+  private getAllGroups(): void {
+    this.settingsService.getAllGroups()
+      .subscribe((res) => {
+        this.groups = res;
+      });
+  }
+
 }
