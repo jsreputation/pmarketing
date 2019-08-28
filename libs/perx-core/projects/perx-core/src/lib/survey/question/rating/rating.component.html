@@ -1,0 +1,15 @@
+<div class="rating">
+  <div class="icon-container" *ngIf="payload">
+    <div *ngFor="let item of [].constructor(payload?.scale); let i = index" class="icon-wrapper">
+        <mat-icon
+        aria-hidden="false"
+        [color]="i <= selectedChoice ? 'primary' : 'default'"
+        aria-label="Example rating icon"
+        (click)="onSelect(i)">
+        {{surveyRatingIcons(i)}}
+      </mat-icon>
+      <div *ngIf="i === 0" class="left-label">{{payload['left_label']}}</div>
+      <div *ngIf="i === payload?.scale - 1" class="right-label">{{payload['right_label']}}</div>
+    </div>
+  </div>
+</div>

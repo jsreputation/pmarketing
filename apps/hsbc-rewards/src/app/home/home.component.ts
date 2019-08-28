@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty } from '@perx/core';
-import { ITabConfig } from '@perx/core';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
+import {ITabConfig} from '@perx/core';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
+import {IPrice} from '../../../../../libs/perx-core/projects/perx-core/src/lib/rewards/models/reward.model';
 
 const tabs: ITabConfig[] = [
   {
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
   public rewardsCollection: Observable<IReward[]>;
+  public displayPriceFn: (price: IPrice) => string;
 
   constructor(
     private rewardsService: RewardsService,
@@ -53,6 +55,21 @@ export class HomeComponent implements OnInit {
         this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
       }
     );
+
+    this.displayPriceFn = (rewardPrice: IPrice) => {
+      if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
+      }
+
+      if (rewardPrice.price > 0) {
+        return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+      }
+
+      if (rewardPrice.points > 0) {
+        return `${rewardPrice.points} points`;
+      }
+      return '0 points'; // is actually 0 or invalid value default
+    };
   }
 
   private getRewardsCollection(): void {
@@ -67,7 +84,7 @@ export class HomeComponent implements OnInit {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName])
-          .pipe(map((result: IReward[]) =>  ({ key: tab.tabName, value: result })));
+          .pipe(map((result: IReward[]) => ({key: tab.tabName, value: result})));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
