@@ -121,85 +121,68 @@ Then(/^6_the random string entered is reflected in the preview element.$/, async
   expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('This is a test string!');
 });
 
+// Verifiying that sub-headline message field takes null value
+Given(/^7_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+
+});
+
+When(/^7_I entered a empty text string in the sub-headline text box.$/, async () => {
+  await element(by.css('input#mat-input-2')).clear();
+  await element(by.css('input#mat-input-2')).sendKeys(' ');
+});
+
+Then(/^7_the empty string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.equal('');
+});
+
+// Verifiying that sub-headline message is reflected in the preview element
+Given(/^8_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+When(/^8_I entered a pseudo random text string in the sub-headline text box.$/, async () => {
+  await element(by.css('input#mat-input-2')).clear();
+  await element(by.css('input#mat-input-2')).sendKeys('This is a test string!');
+});
+
+Then(/^8_the random string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.equal('This is a test string!');
+});
+
+//  Verifiying that button text message message field takes null value
+Given(/^9_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+When(/^9_I entered a empty text string in the button text message box.$/, async () => {
+  await element(by.css('input#mat-input-3')).clear();
+  await element(by.css('input#mat-input-3')).sendKeys(' ');
+});
+
+Then(/^9_the empty string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('');
+});
+
+// Verifiying that button text message is reflected in the preview element
+Given(/^10_that I am on the shake the tree creation page.$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+  await browser.sleep(3000);
+});
+
+When(/^10_I entered a pseudo random text string in the button text box.$/, async () => {
+  await element(by.css('input#mat-input-3')).clear();
+  await element(by.css('input#mat-input-3')).sendKeys('This is a test string!');
+});
+
+Then(/^10_the random string entered is reflected in the preview element.$/, async () => {
+  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('This is a test string!');
+});
+
 /*Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-When('I entered a empty text string in the sub-headline text box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Then('the empty string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-When('I entered a pseudo random text string in the sub-headline text box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Then('the random string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-When('I entered a empty text string in the button text message box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Then('the empty string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Given('that I am on the {string} creation page.', function (string) {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-When('I entered a pseudo random text string in the button text box.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-Then('the random string entered is reflected in the preview element.', function () {
-        // Write code here that turns the phrase above into concrete actions
-        return 'pending';
-      });
-
-
-
-Given('that I am on the {string} creation page.', function (string) {
          // Write code here that turns the phrase above into concrete actions
          return 'pending';
        });
