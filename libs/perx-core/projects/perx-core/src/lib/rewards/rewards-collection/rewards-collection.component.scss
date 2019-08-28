@@ -17,9 +17,9 @@ $card-actual-height: 200px;
     flex: 0 auto;
     position: absolute;
     bottom: 0.5rem;
-    font-size: 1.4rem;
-    line-height: 1.6rem;
-    min-height: 1.6rem;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    min-height: 1.2rem;
     color: #ddac27;
     white-space: nowrap;
   }
@@ -43,8 +43,8 @@ $card-actual-height: 200px;
   }
 
   .points {
-    height: 1.6rem;
-    margin-top: 0.5rem;
+    height: 1.2rem;
+    margin-top: 0.9rem;
   }
 }
 
