@@ -15,13 +15,14 @@ export class HomeComponent implements OnInit {
   public subTitleFn: (loyalty: ILoyalty) => string;
   public titleFn: (profile: IProfile) => string;
   public rewards$: Observable<IReward[]>;
-
+  public summaryExpiring: string;
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService,
     private rewardsService: RewardsService
-  ) { }
+  ) {
+  }
 
   public goToReward(reward: IReward): void {
     this.router.navigate(['/reward', reward.id]);
@@ -33,9 +34,10 @@ export class HomeComponent implements OnInit {
     });
     this.loyaltyService.getLoyalty()
       .subscribe(
-        (loyalty: ILoyalty) => this.loyalty = loyalty
-      );
-
+        (loyalty: ILoyalty) => {
+          this.loyalty = loyalty;
+          this.expiringPointsString(loyalty);
+        });
     this.translate.get('YOU_HAVE')
       .subscribe((res: string) => {
         this.subTitleFn = () => res;
@@ -44,5 +46,19 @@ export class HomeComponent implements OnInit {
       .subscribe((res: string) => {
         this.titleFn = () => res;
       });
+
+  }
+
+  private expiringPointsString(loyalty: ILoyalty): void {
+    if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length || !loyalty.expiringPoints[0]) {
+      return;
+    }
+    const { points, expireDate } = loyalty.expiringPoints[0];
+    if (!points || !expireDate) {
+      return;
+    }
+    this.translate.get('POINTS_EXPITING', { points, date: expireDate }).subscribe((val) => {
+      this.summaryExpiring = val;
+    });
   }
 }

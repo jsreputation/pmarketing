@@ -14,12 +14,10 @@
       {{subTitleFn(loyalty)}}
     </div>
     <div 
-      *ngIf="loyalty.expiringPoints && 
-             loyalty.expiringPoints.length > 0 &&
-             loyalty.expiringPoints[0] as expiring"
+      *ngIf="expiringString"
       class="expiring-points"
     >
-      {{expiring.points || 'Some'}} points expiring {{expiring.expireDate ? 'on ' + (expiring.expireDate | date: 'dd MMM yyyy') : 'soon'}}
+      {{expiringString}}
     </div>
   </ng-container>
 </div>

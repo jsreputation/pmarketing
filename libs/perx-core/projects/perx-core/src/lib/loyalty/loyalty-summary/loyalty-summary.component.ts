@@ -29,6 +29,9 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public titleFn: (profile: IProfile) => string;
 
+  @Input()
+  public expiringString: string;
+  
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
