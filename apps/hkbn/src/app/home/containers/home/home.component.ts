@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
       this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
       return this.getTranslatedTabsName();
     })).subscribe((names) => {
-      if(names) {
+      if (names) {
         this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
       }
       this.tabs.next(this.staticTab);
