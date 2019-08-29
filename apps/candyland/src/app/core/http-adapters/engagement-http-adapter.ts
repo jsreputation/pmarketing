@@ -1,15 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ControlValueService } from '@cl-core/services/control-value.service';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class EngagementTransformDataService {
-  constructor(private controlValueService: ControlValueService) {
-  }
+export class EngagementHttpAdapter {
 
 // tslint:disable
-  public transformReward(data: any): any {
+  public static transformReward(data: any): any {
     return {
       type: 'engagements',
       attributes: {
@@ -20,15 +14,15 @@ export class EngagementTransformDataService {
         display_properties: {
           headlineText: data.headlineMessage,
           subHeadlineText: data.subHeadlineMessage,
-          cardBackground: this.controlValueService.getImagePath(data.cardBackground),
-          background: this.controlValueService.getImagePath(data.background),
+          cardBackground: ImageControlValue.getImagePath(data.cardBackground),
+          background: ImageControlValue.getImagePath(data.background),
           callToActionText: data.buttonText
         }
       }
     };
   }
 
-  public transformShakeTheTree(data: any): any {
+  public static transformShakeTheTree(data: any): any {
     return {
       type: 'engagements',
       attributes: {
@@ -42,16 +36,16 @@ export class EngagementTransformDataService {
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
-          tree_img_url: this.controlValueService.getImagePath(data.treeType),
-          gift_box_img_url: this.controlValueService.getImagePath(data.giftBox),
-          background_img_url: this.controlValueService.getImagePath(data.background),
+          tree_img_url: ImageControlValue.getImagePath(data.treeType),
+          gift_box_img_url: ImageControlValue.getImagePath(data.giftBox),
+          background_img_url: ImageControlValue.getImagePath(data.background),
           nb_hanged_gifts: +data.gameGift
         }
       }
     };
   }
 
-  public transformPinata(data: any): any {
+  public static transformPinata(data: any): any {
     return {
       type: 'engagements',
       attributes: {
@@ -65,8 +59,8 @@ export class EngagementTransformDataService {
           sub_title: data.subHeadlineMessage,
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
-          closed_pinata_img_url: this.controlValueService.getImagePath(data.pinata)
-          // background_img_url:  this.controlValueService.getImagePath(data.background),
+          closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata)
+          // background_img_url:  ImageControlValue.getImagePath(data.background),
         }
       }
     };

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SettingsHttpService } from '@cl-core/http-services/settings-http.service';
+import Utils from '@cl-helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,32 +61,23 @@ export class SettingsService implements ITableService {
     });
   }
 
-  public getTableData(params: any): Observable<any> {
+  public getTableData(params: any): Observable<ITableData<IAMUser>> {
     return this.settingsHttpService.getAllIMAUsers(params)
       .pipe(
-        map((res: any) => {
-          return res.data.map((item) => {
-            const user = new IAMUser(item);
-            if (res.included && res.included.length) {
-              for (let i = 0; i <= res.included.length - 1; i++) {
-                if (user.relationships_groups_id === res.included[i].id) {
-                  user.role = res.included[i].attributes.name;
-                  break;
-                }
-              }
-            }
-            return user;
-          });
-        }
-      ));
+        map((res: any) => SettingsHttpAdapter.transformToTableData(res))
+      );
   }
 
-  public inviteNewUser(data: any): Observable<any> {
-    return this.settingsHttpService.inviteNewUser(data);
+  public inviteNewUser(newUser: any): Observable<any> {
+    const formattedNewUser = SettingsHttpAdapter.transformInviteUser(newUser);
+    return this.settingsHttpService.inviteNewUser(formattedNewUser);
   }
 
-  public patchUser(data: any, id: string): Observable<any> {
-    return this.settingsHttpService.patchUser(data, id);
+  public patchUser(currentUser: any, updatedUser: any): Observable<any> {
+    const id = currentUser.id;
+    const userChanges = Utils.nestedObjectAssign(currentUser, updatedUser);
+    const formattedUserChanges = SettingsHttpAdapter.transformInviteUser(userChanges);
+    return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 
   public deleteUser(id: string): Observable<any> {

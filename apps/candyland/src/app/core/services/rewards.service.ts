@@ -5,6 +5,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,7 @@ export class RewardsService implements ITableService {
   }
 
   public createRewardGame(data): any {
-    return this.rewardHttp.createRewardGame(data);
+    const sendData = EngagementHttpAdapter.transformReward(data);
+    return this.rewardHttp.createRewardGame(sendData);
   }
 }

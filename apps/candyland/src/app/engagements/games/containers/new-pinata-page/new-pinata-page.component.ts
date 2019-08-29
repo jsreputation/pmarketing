@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
-  ControlValueService,
-  EngagementTransformDataService,
   PinataService,
   RoutingStateService
 } from '@cl-core/services';
 import { ConfirmModalComponent } from '@cl-shared';
 import { MatDialog } from '@angular/material';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -26,13 +25,13 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     background: IGraphic[]
   }>;
   private destroy$ = new Subject();
+
   constructor(private fb: FormBuilder,
               private pinataService: PinataService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   public ngOnInit(): void {
     this.createPinataForm();
@@ -40,16 +39,14 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const sendData = this.engagementTransformDataService.transformPinata(this.formPinata.value);
-    this.pinataService.createPinata({ data: sendData })
+    this.pinataService.createPinata(this.formPinata.value)
       .subscribe(() => {
         this.showLaunchDialog();
       });
   }
 
   public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {});
 
     dialogRef.afterClosed()
       .pipe(
@@ -92,7 +89,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createPinataForm(): void {

@@ -38,7 +38,7 @@ export class SettingsHttpService {
     return this.http.post(ApiConfig.IAMUsersPath, {data: body});
   }
 
-  public patchUser(patchValue, id: string): Observable<any> {
+  public patchUser(id: string, patchValue): Observable<any> {
     return this.http.patch(`${ApiConfig.IAMUsersPath}/${id}`, {data: patchValue});
   }
 

@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
 import {
-  ControlValueService,
-  EngagementTransformDataService,
   RoutingStateService,
   ShakeTreeService
 } from '@cl-core/services';
 import { MatDialog } from '@angular/material';
 import { ConfirmModalComponent } from '@cl-shared';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -36,8 +35,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
               private shakeDataService: ShakeTreeService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService,
               public dialog: MatDialog) {
   }
   public get name(): AbstractControl {
@@ -69,7 +66,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   public get gameGiftView(): AbstractControl {
@@ -83,8 +80,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const sendData = this.engagementTransformDataService.transformShakeTheTree(this.shakeTree.value);
-    this.shakeDataService.createShakeTree({ data: sendData })
+    this.shakeDataService.createShakeTree(this.shakeTree.value)
       .subscribe(() => {
         this.showLaunchDialog();
       });
