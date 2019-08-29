@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { ParamMap } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
 import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services';
 import { Observable } from 'rxjs';
 
@@ -28,6 +29,14 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
               private toggleControlService: ToggleControlService) {
   }
   public ngOnInit(): void {
+    // this.route.params.pipe(
+    //   map((params: ParamMap) => params.get('id')),
+    //   distinctUntilChanged(),
+    //   tap((id) => this.id = +id),
+    //   filter(Boolean),
+    //   switchMap(id => this.rewardsService.getSingleReward(id))
+    // ).subscribe(() => {
+    // });
     this.rewardService.getRewardsOptions()
       .subscribe((config: OptionConfig[]) => this.config = config);
     this.initForm();
