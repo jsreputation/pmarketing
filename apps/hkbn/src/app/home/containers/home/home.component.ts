@@ -115,7 +115,9 @@ export class HomeComponent implements OnInit {
       this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
       return this.getTranslatedTabsName();
     })).subscribe((names) => {
-      this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
+      if(names) {
+        this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
+      }
       this.tabs.next(this.staticTab);
     });
   }
@@ -124,13 +126,14 @@ export class HomeComponent implements OnInit {
       .pipe(map((value) => ({ value, key: tab.tabName })));
   }
   private getTranslatedTabsName(): Observable<any> {
-    return this.translate.get(this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el))
+    const searchWords = this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el);
+    return searchWords ? this.translate.get(searchWords)
       .pipe(map((dictioniry) => {
         return Object.entries(keysTranslate).reduce((newObj, [key, val]) => {
           newObj[key] = dictioniry[val];
           return newObj;
         }, {});
-      }));
+      })) : of(null);
   }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
