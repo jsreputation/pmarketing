@@ -8,10 +8,9 @@
           <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
         </select>
       </div>
-      <div class="select-wrap no-content">
-        <select formControlName="merchant">
-          <option disabled *ngIf="reward" [value]="reward.merchantId">{{reward.merchantName || 'No Merchant'}}</option>
-        </select>
+      <div class="input-wrap no-content">
+        <input disabled type="text" [value]="reward && reward.merchantName || ''">
+        <input hidden type="text" formControlName="merchant" [value]="reward && reward.merchantId">
       </div>
       <div class="select-wrap">
         <select formControlName="location">
