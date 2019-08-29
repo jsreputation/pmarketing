@@ -4,7 +4,7 @@ import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfig
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
-// import { filter, map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 const studTabs: ITabConfig[] = [
   {
@@ -53,15 +53,17 @@ export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
   public subTitleFn: (loyalty: ILoyalty) => string;
   public titleFn: (profile: IProfile) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
   public rewards$: Observable<IReward[]>;
-  public summaryExpiring: string;
+
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private datePipe: DatePipe
   ) {
     this.getRewardsForTags = this.getRewardsForTags.bind(this);
   }
@@ -77,7 +79,6 @@ export class HomeComponent implements OnInit {
       .subscribe(
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
-          this.expiringPointsString(loyalty);
         });
     this.translate.get('YOU_HAVE')
       .subscribe((res: string) => {
@@ -88,19 +89,23 @@ export class HomeComponent implements OnInit {
         this.titleFn = () => res;
       });
 
-  }
+    this.translate.get('POINTS_EXPITING')
+      .subscribe((res: string) => {
+        this.summaryExpiringFn = (loyalty: ILoyalty) => {
 
-  private expiringPointsString(loyalty: ILoyalty): void {
-    if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length || !loyalty.expiringPoints[0]) {
-      return;
-    }
-    const { points, expireDate } = loyalty.expiringPoints[0];
-    if (!points || !expireDate) {
-      return;
-    }
-    this.translate.get('POINTS_EXPITING', { points, date: expireDate }).subscribe((val) => {
-      this.summaryExpiring = val;
-    });
+          if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length) {
+            return '';
+          }
+          const expiringPoints = loyalty.expiringPoints[0];
+          if (!expiringPoints.expireDate || !expiringPoints.points) {
+            return '';
+          }
+          return loyalty ? res
+            .replace('{{points}}', expiringPoints.points.toString())
+            .replace('{{date}}', this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')) : null;
+        };
+      });
+
   }
 
   private getRewards(): void {

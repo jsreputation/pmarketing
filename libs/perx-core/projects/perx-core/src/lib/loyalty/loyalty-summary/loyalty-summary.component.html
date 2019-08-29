@@ -14,10 +14,9 @@
       {{subTitleFn(loyalty)}}
     </div>
     <div 
-      *ngIf="expiringString"
       class="expiring-points"
     >
-      {{expiringString}}
+      {{summaryExpiringFn(loyalty)}}
     </div>
   </ng-container>
 </div>

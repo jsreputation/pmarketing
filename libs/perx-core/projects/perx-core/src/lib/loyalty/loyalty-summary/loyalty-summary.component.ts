@@ -30,7 +30,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public titleFn: (profile: IProfile) => string;
 
   @Input()
-  public expiringString: string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
@@ -56,6 +56,13 @@ export class LoyaltySummaryComponent implements OnInit {
       };
     }
 
+    if(!this.summaryExpiringFn) {
+      this.summaryExpiringFn = (loyalty: ILoyalty): string => {
+        const expiringPoints = loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? loyalty.expiringPoints[0] : null;
+        return expiringPoints && expiringPoints.expireDate && expiringPoints.points ?
+        `${expiringPoints.points} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')}` : '';
+      };
+    }
     if (!this.profile$) {
       this.profile$ = this.profileService.whoAmI();
     }
