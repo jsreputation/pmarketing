@@ -3,6 +3,38 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 export class EngagementHttpAdapter {
 
 // tslint:disable
+  public static transformEngagement(data: IEngagementApi): IEngagement {
+    return {
+      id: data.id,
+      current_type: data.type,
+      urn: data.attributes.urn,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      title: data.attributes.title,
+      game_type: data.attributes.game_type,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      attributes_type: data.attributes.type,
+      fontName: data.attributes.display_properties.fontName,
+      fontColor: data.attributes.display_properties.fontColor,
+      headerColor: data.attributes.display_properties.headerColor,
+      headerTitle: data.attributes.display_properties.headerTitle,
+      headlineText: data.attributes.display_properties.headlineText,
+      mainShapeType: data.attributes.display_properties.mainShapeType,
+      backgroundColor: data.attributes.display_properties.backgroundColor,
+      headerLogoImage: data.attributes.display_properties.headerLogoImage,
+      subHeadlineText: data.attributes.display_properties.subHeadlineText,
+      callToActionText: data.attributes.display_properties.callToActionText,
+      loadingHeadlineText: data.attributes.display_properties.loadingHeadlineText,
+      loadingSubHeadlineText: data.attributes.display_properties.loadingSubHeadlineText,
+      background: data.attributes.display_properties.background,
+      cardBackground: data.attributes.display_properties.cardBackground,
+      buttonText: data.attributes.display_properties.buttonText,
+      nb_of_slots: data.attributes.display_properties.nb_of_slots,
+      slots: data.attributes.display_properties.slots
+    };
+  }
+
   public static transformReward(data: any): any {
     return {
       type: 'engagements',

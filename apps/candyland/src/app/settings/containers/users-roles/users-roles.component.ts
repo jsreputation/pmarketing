@@ -42,18 +42,9 @@ export class UsersRolesComponent  implements AfterViewInit {
       .pipe(
         filter(Boolean),
         switchMap((newUser: any) => this.settingsService.inviteNewUser(newUser))
-        // switchMap((value: any) => {
-        //   if (value) {
-        //     const newUser = this.settingsTransformDataService.transformInviteUser(value);
-        //     return this.settingsService.inviteNewUser(newUser);
-        //   }
-        //   return of(null);
-        // })
       )
       .subscribe(() => {
-      // if (value) {
         this.dataSource.updateData();
-      // }
     });
   }
 
