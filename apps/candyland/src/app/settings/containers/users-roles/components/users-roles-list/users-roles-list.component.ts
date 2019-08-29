@@ -1,30 +1,47 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
+import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
 
 @Component({
   selector: 'cl-users-roles-list',
   templateUrl: './users-roles-list.component.html',
   styleUrls: ['./users-roles-list.component.scss']
 })
-export class UsersRolesListComponent implements AfterViewInit {
+export class UsersRolesListComponent implements AfterViewInit, OnDestroy {
   public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<any>;
-  @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
+  @Input() public dataSource: SettingsUsersRolesDataSource<IAMUser>;
+  @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public delete = new EventEmitter<number>();
-  @Output() public edit = new EventEmitter<number>();
+  @Output() public delete = new EventEmitter<string>();
+  @Output() public edit = new EventEmitter<IAMUser>();
+  private destroy$ = new Subject();
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    this.handleSorting();
   }
 
-  public editItem(id: number): void {
-    this.edit.emit(id);
+  public editItem(item: IAMUser): void {
+    this.edit.emit(item);
   }
 
-  public deleteItem(id: number): void {
+  public deleteItem(id: string): void {
     this.delete.emit(id);
+  }
+
+  public handleSorting(): void {
+    if (this.sort) {
+      this.sort.sortChange.pipe(takeUntil(this.destroy$))
+        .subscribe((val) => this.dataSource.sort = val);
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

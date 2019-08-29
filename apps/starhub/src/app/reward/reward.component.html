@@ -1,6 +1,6 @@
 <div class="main">
-  <app-reward-detail [rewardId]="rewardId"></app-reward-detail>
+  <app-reward-detail [rewardId]="rewardId" (hasExpired)="setToExpired($event)"></app-reward-detail>
   <div class="button-area">
-    <button class="full-width" mat-flat-button color="primary" (click)="save()">Save to my rewards</button>
+    <button [disabled]="isButtonDisabled" class="full-width" mat-flat-button color="primary" (click)="save()">Save to my rewards</button>
   </div>
 </div>

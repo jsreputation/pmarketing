@@ -35,4 +35,9 @@ describe('RewardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set save reward button to disabled', () => {
+    component.setToExpired(true);
+    expect(component.isButtonDisabled).toBe(true);
+  });
 });

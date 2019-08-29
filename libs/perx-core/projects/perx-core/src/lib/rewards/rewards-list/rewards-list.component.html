@@ -20,9 +20,10 @@
             <p [innerHtml]="reward.subtitle"></p>
             <div class="reward-price-details">
               <div *ngIf="reward.rewardPrice &&
-                  reward.rewardPrice.length > 0 &&
-                  reward.rewardPrice[0] as rewardPrice">
-                <span>{{rewardPrice.rewardAmount}} {{rewardPrice.rewardCurrency}}</span>
+                  reward.rewardPrice.length > 0">
+                <div *ngFor="let rewardPrice of reward.rewardPrice">
+                  {{displayPriceFn(rewardPrice)}}
+                </div>
               </div>
             </div>
           </div>
