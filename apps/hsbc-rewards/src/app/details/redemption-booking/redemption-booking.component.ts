@@ -3,7 +3,7 @@ import { LocationsService, RewardsService, ILocation, IReward, NotificationServi
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { forkJoin, Observable } from 'rxjs';
+import {forkJoin, Observable, of} from 'rxjs';
 import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 import { MatDialog } from '@angular/material';
 
@@ -47,15 +47,28 @@ export class RedemptionBookingComponent implements OnInit {
       this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).subscribe((result) => {
       [this.reward, this.prices] = result;
+      const merchantId = this.reward.merchantId;
+      // merchantId can be null if reward is set up incorrectly on dashboard
+      this.locationService.getFromMerchant(merchantId).subscribe(
+        (merchantLocations) => {
+          this.locationData = of(merchantLocations);
+        },
+        () => {
+          // validators will prevent form submission
+          this.notificationService.addPopup({
+            title: 'Sorry',
+            text: 'We\'re unable to perform this transaction at this time'
+          });
+        }
+      );
     });
-    this.locationData = this.locationService.getAll();
   }
 
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
       merchant: [{ value: null, disabled: true }, [Validators.required]],
-      location: [null],
+      location: [null, [Validators.required]],
       pointsBalance: [null],
       agreement: [false, [Validators.requiredTrue]]
     });
