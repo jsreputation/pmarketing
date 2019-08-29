@@ -1,22 +1,22 @@
 import { BaseType, IData } from '@perx/chart';
 
 export const data: IData = {
-  columns: [
-    'rewards_name',
-    'revenue',
-    'month1',
-    'month2',
-    'month3',
-    'month4',
-    'month5',
-    'month6',
-    'month7',
-    'month8',
-    'month9',
-    'month10',
-    'month11',
-    'month12'
-  ],
+  // columns: [
+  //   'rewards_name',
+  //   'revenue',
+  //   'month1',
+  //   'month2',
+  //   'month3',
+  //   'month4',
+  //   'month5',
+  //   'month6',
+  //   'month7',
+  //   'month8',
+  //   'month9',
+  //   'month10',
+  //   'month11',
+  //   'month12'
+  // ],
   cols: [
     {
       name: 'rewards_name',

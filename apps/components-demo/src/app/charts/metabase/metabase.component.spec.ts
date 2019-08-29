@@ -10,7 +10,7 @@ describe('MetabaseComponent', () => {
   let component: MetabaseComponent;
   let fixture: ComponentFixture<MetabaseComponent>;
   const mockData: IData = {
-    columns: [],
+    // columns: [],
     cols: [],
     rows: [],
     insights: null
