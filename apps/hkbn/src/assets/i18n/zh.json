@@ -81,5 +81,8 @@
   "NEW_PASSWORD": "新密碼",
   "CONFIRM_NEW_PASSWORD": "確認新密碼",
   "PASSWORD_SUCCESS_UPDATE": "密碼已成功更新。",
-  "OK": "完成"
+  "OK": "完成",
+  "ALL": "所有",
+  "HUNG_FOOK_TONG": "鴻福堂",
+  "BIG_BIG_SHOP": "big big shop"
 }
