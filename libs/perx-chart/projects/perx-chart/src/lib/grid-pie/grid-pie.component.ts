@@ -14,15 +14,20 @@ export class GridPieComponent implements OnChanges {
   public ngxChartData: ChartData[];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data) {
-      this.data.subscribe((data: IData) => {
-        this.ngxChartData = data.rows.map((row: any[]) => {
-          return {
-            name: row[0],
-            value: row[1]
-          };
-        });
-      });
+    if (!changes.data) {
+      return;
     }
+    this.ngxChartData = [];
+    if (this.data === undefined || this.data === null) {
+      return;
+    }
+    this.data.subscribe((data: IData) => {
+      this.ngxChartData = data.rows.map((row: any[]) => {
+        return {
+          name: row[0],
+          value: row[1]
+        };
+      });
+    });
   }
 }
