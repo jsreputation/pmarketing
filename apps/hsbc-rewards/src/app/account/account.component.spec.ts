@@ -10,6 +10,8 @@ import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { DynamicCreateService } from '../shared/service/dynamic-create.service';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import {MatListModule} from '@angular/material/list';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @Component({
   template: '<div>test</div>'
@@ -56,7 +58,9 @@ describe('AccountComponent', () => {
           component: MockComponent
         }]),
         NavigateToolbarModule,
-        ProfileModule
+        ProfileModule,
+        MatListModule,
+        NoopAnimationsModule
       ],
       providers: [{
         provide: AuthenticationService, useValue: authenticationServiceStub
