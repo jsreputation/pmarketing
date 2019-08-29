@@ -25,6 +25,7 @@ import { InviteNewUsersCampaignComponent } from './components/invite-new-users-c
 import { InviteNewUsersLoyaltyComponent } from './components/invite-new-users-loyalty/invite-new-users-loyalty.component';
 import { InviteNewUsersInsightComponent } from './components/invite-new-users-insight/invite-new-users-insight.component';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
     MatSlideToggleModule,
     MatDividerModule,
     MatCheckboxModule,
-    CheckboxGroupModule
+    CheckboxGroupModule,
+    PaginationModule
   ],
   entryComponents: [
     InviteNewUsersPopupComponent

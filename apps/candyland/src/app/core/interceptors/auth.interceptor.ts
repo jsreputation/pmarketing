@@ -10,9 +10,10 @@ export class AuthInterceptor implements HttpInterceptor {
   // }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authToken = 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg';
+    const authToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2lhbS5hcGkud2hpc3RsZXIucGVyeHRlY2gub3JnIiwic3ViIjoidXJuOnBlcng6aWFtOjoyMjIyMjIyMjI6dXNlci9BZG1pbl8yIiwic2NvcGUiOiIqIiwiYXVkIjpbImh0dHBzOi8vYXBpLndoaXN0bGVyLnBlcnh0ZWNoLm9yZyJdLCJpYXQiOjE1NjY5NzY4MTl9.OinGl02k0CVn1fiTdPpCDTpi1TzyLp9tPJHvH4c2oR0';
     const authReq = req.clone({
       setHeaders: {
+        'Content-Type': 'application/vnd.api+json',
         'Access-Control-Allow-Origin': '*',
         Authorization: authToken,
       }

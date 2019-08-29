@@ -87,4 +87,10 @@ export class PinInputComponent implements OnInit {
   public onFocus(): void {
     this.pinFocused.emit(true);
   }
+
+  public resetAll(): void {
+    this.controls.forEach(ctrl => {
+      ctrl.setValue('');
+    });
+  }
 }

@@ -17,22 +17,3 @@ app-rewards-cards, app-catalogs, app-campaigns {
 app-categories {
   margin-left: 0.9rem;
 }
-
-.dots {
-  text-align: center;
-  padding-bottom: 1rem;
-
-  span {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 5rem;
-    background-color: #d2d8e2;
-    display: inline-block;
-    margin: 0 0.4rem;
-  }
-
-  span.active {
-    width: 2.8rem;
-    background-color: #6dc00e;
-  }
-}

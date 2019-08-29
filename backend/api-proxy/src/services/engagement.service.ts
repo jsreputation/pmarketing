@@ -74,9 +74,9 @@ export abstract class EngagementService<T extends IEngagement> implements IEngag
         }
 
         // if there is no token attach it
-        if (!res.authorization) {
-            res.authorization = 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg';
-        }
+        // if (!res.authorization) {
+        //     res.authorization = 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg';
+        // }
         // remove the host header as it messes things up
         if (res.host) {
             delete res.host;
