@@ -1,8 +1,8 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 
 export class DashboardAppPage {
-  public navigateToDashboard(): Promise<any> {
-    return browser.get(browser.baseUrl) as Promise<any>;
+  public navigateToDashboard(): Promise<string> {
+    return browser.get('dashboard') as Promise<string>;
   }
 
   public getH1Text(): Promise<string> {
