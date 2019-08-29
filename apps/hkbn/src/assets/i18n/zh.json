@@ -82,5 +82,8 @@
   "CONFIRM_NEW_PASSWORD": "確認新密碼",
   "PASSWORD_SUCCESS_UPDATE": "密碼已成功更新。",
   "OK": "完成",
-  "POINTS_EXPITING": "積分餘額為{{point}}，有效日期至 {{date}}"
+  "POINTS_EXPITING": "積分餘額為{{point}}，有效日期至 {{date}}",
+  "ALL": "所有",
+  "HUNG_FOOK_TONG": "鴻福堂",
+  "BIG_BIG_SHOP": "big big shop"
 }
