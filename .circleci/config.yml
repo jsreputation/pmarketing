@@ -224,6 +224,8 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
+      - run: yarn run pree2e
+      - run: yarn run e2e-ci-pro
 #      - run: yarn run e2e-ci
   lint:
     docker:
@@ -336,3 +338,26 @@ workflows:
             tags:
               # semver v2
               only: /engagements-proxy-\d+\.\d+\.\d+.*/
+
+daily_e2e_run_morning:
+    triggers:
+      - schedule:
+          # 12 noon SGT
+          cron: "0 4 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      -test
+daily_e2e_run_evening:
+    triggers:
+      - schedule:
+          # 5.30 pm SGT
+          cron: "30 9 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      -test
