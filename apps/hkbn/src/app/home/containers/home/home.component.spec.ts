@@ -18,6 +18,7 @@ import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { mockLoyalty } from '../loyalty.mock';
+import { Type } from '@angular/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -55,7 +56,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    rewardsService = fixture.debugElement.injector.get(RewardsService);
+    rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     fixture.detectChanges();
   });
 
@@ -70,8 +71,8 @@ describe('HomeComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/reward', 1]);
   });
 
-  it('should call rewardsService', ()=>{
-    const spy = spyOn(rewardsService,'getAllRewards');
+  it('should call rewardsService', () => {
+    const spy = spyOn(rewardsService, 'getAllRewards');
     spyOn(fixture.debugElement.injector.get(TranslateService), 'get').and.returnValue(of());
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
