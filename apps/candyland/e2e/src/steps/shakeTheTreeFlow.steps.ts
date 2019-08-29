@@ -94,7 +94,6 @@ Given(/^5_that I am on the shake the tree creation page.$/, async () => {
   await browser.sleep(3000);
 });
 
-
 When(/^5_I entered a empty text string in the headline text box.$/, async () => {
   await element(by.css('input#mat-input-1')).clear();
   await element(by.css('input#mat-input-1')).sendKeys(' ');
@@ -228,14 +227,12 @@ Given(/^13_that I am on the shake the tree creation page.$/, async () =>  {
   await browser.sleep(3000);
 });
 
-
-
 When(/^13_you select one of the the background design.$/, async () => {
   // clicking on the third option for the background image
   await element.all(by.tagName('cl-images-preview')).last().click();
 });
 
-Then(/^13_that selected background design design is reflected in the preview element.$/, async () =>{
+Then(/^13_that selected background design design is reflected in the preview element.$/, async () => {
   const BkgrdElement = element(by.className('mobile-preview-background'));
   // Doing an assertion on the src attribute
   expect(await BkgrdElement.getAttribute('style')).to.contain('assets/images/background/full_bg_3.jpg');
