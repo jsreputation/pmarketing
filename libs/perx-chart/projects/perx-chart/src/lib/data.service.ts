@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { IData } from './data.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, switchMap, retry } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  retry,
+  // tap
+} from 'rxjs/operators';
 
 interface ITokenResponse {
   token: string;
@@ -25,22 +30,23 @@ export class DataService {
     return this.getToken(id)
       .pipe(
         switchMap((token: string) => {
-          const query: string = Object.keys(params)
+          const query: string = params ? Object.keys(params)
             .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
-            .join('&');
+            .join('&') : '';
 
           return this.http.get<IMetabaseResponse>(
             `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
           );
         }),
         map((res: IMetabaseResponse) => res.data)
+        // tap((data) => { console.log(data); })
       );
   }
 
   private getToken(id: number): Observable<string> {
     return this.http.get<ITokenResponse>(
-      `https://api.whistler.perxtech.org/cognito/metabase_token/${id}`,
-      { headers: { Authorization: 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg' } }
+      `https://api.whistler.perxtech.org/cognito/metabase_token/${id}`
+      // { headers: { Authorization: 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg' } }
     )
       .pipe(
         retry(2),

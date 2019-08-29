@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IData } from '../data.model';
+// import { tap, catchError } from 'rxjs/operators';
 
 export enum CardType {
   pie = 'pie',
@@ -31,25 +32,27 @@ export class MetaCardComponent implements OnChanges {
 
   public data: Observable<IData>;
 
+  @Input()
   public showLoading: boolean = true;
+  @Input()
   public showReload: boolean = false;
 
   constructor(private dataService: DataService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.parameters || changes.id) {
-      this.data = this.dataService.getData(this.id, this.parameters);
       this.loadData();
     }
   }
 
-  public loadData(): void {
-    this.data.toPromise().then(() => {
-      this.showLoading = false;
-    }, () => {
-      this.showLoading = false;
-      this.showReload = true;
-    });
+  private loadData(): void {
+    this.showLoading = true;
+    this.dataService.getData(this.id, this.parameters)
+      .subscribe(
+        (data) => this.data = of(data),
+        () => this.showReload = true,
+        () => this.showLoading = false
+      );
   }
 
   public reload(): void {
