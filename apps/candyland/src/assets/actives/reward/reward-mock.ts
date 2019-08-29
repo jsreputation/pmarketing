@@ -14,7 +14,7 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
         rewardPrice: [{
-          id: 23,
+          id: 1,
           currencyCode: '44',
           price: 3
         }]
@@ -32,7 +32,7 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
       rewardPrice: [{
-        id: 23,
+        id: 21,
         currencyCode: '44',
         price: 3
       }]
@@ -50,7 +50,7 @@ export const MockRewardsMobilePreview: IReward[] = [
         termsAndConditions: '',
         howToRedeem: '',
       rewardPrice: [{
-        id: 23,
+        id: 22,
         currencyCode: '44',
         price: 3
       }]

@@ -7,9 +7,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./reward-confirm.component.scss']
 })
 export class RewardConfirmComponent {
-
-  constructor(private dialogRef: MatDialogRef<RewardConfirmComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any
+  constructor(
+    private dialogRef: MatDialogRef<RewardConfirmComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
