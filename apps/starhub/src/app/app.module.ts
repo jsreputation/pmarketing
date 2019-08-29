@@ -49,7 +49,8 @@ const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => of(catalogs[id])
+  getCatalog: (id: number) => of(catalogs[id]),
+  reserveReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {

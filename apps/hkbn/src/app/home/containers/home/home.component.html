@@ -13,9 +13,9 @@
 <div class="container">
   <div class="rewards-section">
     <p class="promotion">{{"FEATURED_REWARDS" | translate}}</p>
-    <perx-core-rewards-collection [rewardsList]="rewards$" class="rewards-carousel" (tapped)="goToReward($event)">
+    <perx-core-rewards-collection  [rewardsList]="rewards$" class="rewards-carousel" (tapped)="goToReward($event)">
     </perx-core-rewards-collection>
 
-    <perx-core-rewards-list-tabbed></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs"></perx-core-rewards-list-tabbed>
   </div>
 </div>
