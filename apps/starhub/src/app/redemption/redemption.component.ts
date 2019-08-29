@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Voucher, VoucherState, VouchersService, PinService, PinInputComponent } from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
@@ -25,7 +25,8 @@ export class RedemptionComponent implements OnInit {
     private vouchersService: VouchersService,
     private pinService: PinService,
     private activeRoute: ActivatedRoute,
-    private location: Location) {
+    private location: Location,
+    private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -57,7 +58,16 @@ export class RedemptionComponent implements OnInit {
     this.isPinEntered = true;
     this.isPinCorrect = enteredPin === this.generatedPin;
 
-    // TODO: Added following condition for UI cases demo.
+    // TODO: The following service is not exposed from perxcore
+    // if (this.isPinCorrect) {
+    //   this.vouchersService.redeemVoucher(this.voucher.id).subscribe(
+    //     (res) => {
+    //       console.log(res);
+    //       this.voucher.state = VoucherState.redeemed;
+    //     }
+    //   );
+    // }
+
     if (this.isPinCorrect) {
       this.voucher.state = VoucherState.redeemed;
     }
@@ -70,5 +80,9 @@ export class RedemptionComponent implements OnInit {
 
   public cancelClicked(): void {
     this.location.back();
+  }
+
+  public backMyRewardsClicked(): void {
+    this.router.navigateByUrl('home/vouchers');
   }
 }
