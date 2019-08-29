@@ -102,10 +102,10 @@ export class HomeComponent implements OnInit {
   }
   private getRewardsForTags(tab: ITabConfig): Observable<{ key: string, value: IReward[] }> {
     return this.rewardsService.getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null)
-    .pipe(map((value) => ({ value, key: tab.tabName })));
+      .pipe(map((value) => ({ value, key: tab.tabName })));
   }
   private getTranslatedTabsName(): Observable<any> {
-    return this.translate.get(this.staticTab.map(el => keysTranslate[el.tabName]).filter((el)=>el))
+    return this.translate.get(this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el))
       .pipe(map((dictioniry) => {
         return Object.entries(keysTranslate).reduce((newObj, [key, val]) => {
           newObj[key] = dictioniry[val];
