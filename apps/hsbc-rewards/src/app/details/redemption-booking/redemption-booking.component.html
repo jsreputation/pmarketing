@@ -18,7 +18,7 @@
           <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</option>
         </select>
       </div>
-      <mat-radio-group class="radio-group" formControlName="pointsBalance">
+      <mat-radio-group class="radio-group" formControlName="priceId">
         <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
           Use
           <span *ngIf="price.points">{{price.points}} points</span>

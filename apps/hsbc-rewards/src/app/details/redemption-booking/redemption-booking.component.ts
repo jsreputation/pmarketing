@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   LocationsService,
   RewardsService,
@@ -9,12 +9,12 @@ import {
   LoyaltyService,
   ILoyalty
 } from '@perx/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {switchMap, map, flatMap} from 'rxjs/operators';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {forkJoin, Observable, of} from 'rxjs';
-import {IPrice} from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
-import {MatDialog} from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, map, flatMap } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { forkJoin, Observable, of } from 'rxjs';
+import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -46,7 +46,7 @@ export class RedemptionBookingComponent implements OnInit {
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, {data});
+      this.dialog.open(PopupComponent, { data });
     });
     this.getData();
     this.getLoyalty();
@@ -57,7 +57,7 @@ export class RedemptionBookingComponent implements OnInit {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
       const merchantId = this.reward.merchantId;
@@ -80,15 +80,15 @@ export class RedemptionBookingComponent implements OnInit {
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      merchant: [{value: null, disabled: true}, [Validators.required]],
+      merchant: [{ value: null, disabled: true }, [Validators.required]],
       location: [null, [Validators.required]],
-      pointsBalance: [null],
+      priceId: [null],
       agreement: [false, [Validators.requiredTrue]]
     });
   }
 
   public submitForm(): void {
-    const totalCost = this.prices.find((price) => price.id === this.bookingForm.value.pointsBalance)
+    const totalCost = this.prices.find((price) => price.id === this.bookingForm.value.priceId)
       .points * this.bookingForm.value.quantity;
     if (totalCost > this.loyalty.pointsBalance) {
       this.notificationService.addPopup({
@@ -97,18 +97,20 @@ export class RedemptionBookingComponent implements OnInit {
       });
       return;
     }
-    this.rewardsService.reserveReward(this.rewardId,
-      {priceId: this.bookingForm.value.quantity, locationId: this.bookingForm.value.location})
-      .subscribe(() => {
-        this.router.navigate(['detail/success']);
-      }, (err) => {
-        if (err.code === 40) {
-          this.notificationService.addPopup({
-            title: 'Sorry',
-            text: 'You do not have enough points for this transaction'
-          });
-        }
-      });
+
+    forkJoin([... new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => {
+      return this.rewardsService.reserveReward(this.rewardId,
+        { priceId: this.bookingForm.value.priceId, locationId: this.bookingForm.value.location });
+    })).subscribe((result) => {
+      this.router.navigate(['detail/success']);
+    }, (err) => {
+      if (err.code === 40) {
+        this.notificationService.addPopup({
+          title: 'Sorry',
+          text: 'You do not have enough points for this transaction'
+        });
+      }
+    });
   }
 
   private getLoyalty(): void {
