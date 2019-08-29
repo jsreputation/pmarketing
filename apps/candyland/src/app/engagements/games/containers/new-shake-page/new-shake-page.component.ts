@@ -115,7 +115,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   private createShakeTreeForm(): void {
     this.shakeTree = this.fb.group({
-      name: ['Create Shake the Tree Template', [Validators.required,
+      name: ['Shake the Tree Template', [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],

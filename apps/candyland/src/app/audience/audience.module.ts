@@ -29,6 +29,7 @@ import { AudiencesUserInfoPageComponent } from './containers/audiences-user-info
 import { AudiencesVouchersListComponent } from './components/audiences-vouchers-list/audiences-vouchers-list.component';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-pop
     MatTabsModule,
     DatePickerModule,
     SelectRewardPopupModule,
+    PaginationModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

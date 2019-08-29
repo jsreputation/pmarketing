@@ -100,7 +100,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
 
   private createRewardForm(): void {
     this.formReward = this.fb.group({
-      name: ['Instant Reward 1', [Validators.required,
+      name: ['Instant Reward Template', [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
