@@ -13,6 +13,7 @@ import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -37,7 +38,8 @@ describe('DiscoverComponent', () => {
         MatCardModule,
         MatIconModule,
         RouterTestingModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        ScrollingModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub }
