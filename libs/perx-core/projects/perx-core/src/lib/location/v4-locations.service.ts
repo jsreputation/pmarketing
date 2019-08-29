@@ -123,6 +123,7 @@ export class V4LocationsService extends LocationsService {
       map((merchant: IV4Merchant) => {
         return merchant.outlets.map((outlet: IV4Outlet) => ({
           merchantId: merchant.id,
+          merchantName: merchant.name,
           locationId: outlet.outlet_id,
           name: outlet.outlet_name,
           tags: outlet.tags && outlet.tags.map(tag => tag.name),

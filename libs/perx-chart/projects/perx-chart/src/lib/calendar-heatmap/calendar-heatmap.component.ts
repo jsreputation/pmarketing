@@ -17,6 +17,10 @@ export class CalendarHeatmapComponent implements OnChanges {
     if (!changes.data) {
       return;
     }
+    this.ngxChartData = [];
+    if (this.data === undefined || this.data === null) {
+      return;
+    }
     this.data.subscribe((data: IData) => {
       this.ngxChartData = data.rows.map((row: (string | number)[]) => {
         return {

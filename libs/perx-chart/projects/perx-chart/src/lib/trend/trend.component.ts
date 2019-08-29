@@ -41,7 +41,7 @@ export class TrendComponent implements OnChanges {
               name: data.cols[i + 2].display_name,
               value: v,
               extra: {
-                code: data.columns[i]
+                code: data.cols[i].name
               }
             };
           });

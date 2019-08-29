@@ -22,3 +22,8 @@ body {
     width: 50%;
   }
 }
+
+.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  flex-direction: row;
+}

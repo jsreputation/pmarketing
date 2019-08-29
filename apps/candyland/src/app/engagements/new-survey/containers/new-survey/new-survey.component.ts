@@ -188,7 +188,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   private createSurveyForm(): void {
     this.formSurvey = this.fb.group({
-      name: ['Create Shake the Tree Template', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
+      name: ['Survey Template', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
       headlineMessage: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
       subHeadlineMessage: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
       questions: this.fb.array([]),
