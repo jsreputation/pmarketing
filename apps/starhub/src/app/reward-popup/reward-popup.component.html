@@ -2,7 +2,8 @@
 	<img [src]="'assets/popup-close.png'" (click)="onClose()" />
 </div>
 <div class="content">
-	<app-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()"></app-expire-timer>
+	<app-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()">
+	</app-expire-timer>
 	<div *ngIf="imageUrl" class="img-wrapper">
 		<img [src]="imageUrl" />
 	</div>
