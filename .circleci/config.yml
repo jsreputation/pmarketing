@@ -224,7 +224,7 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
-      - run: yarn run pree2e
+      - run: yarn run pree2e-ci ## need to run webdriver-manager update before protractor e2e runs
       - run: yarn run e2e-ci-pro
 #      - run: yarn run e2e-ci
   lint:
