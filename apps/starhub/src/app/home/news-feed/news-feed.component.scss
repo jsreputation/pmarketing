@@ -1,8 +1,53 @@
 :host {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  padding: 2rem 0.5rem;
+  // display: flex;
+  // flex-direction: row;
+  // overflow-x: scroll;
+  // padding: 2rem 0.5rem;
+}
+
+.dots {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .container {
+    width: 90px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  span {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 5rem;
+    background-color: #d2d8e2;
+    display: inline-block;
+    margin: 0 0.4rem;
+  }
+
+  span.active {
+    width: 2.8rem;
+    background-color: #6dc00e;
+    position: absolute;
+    left: 0;
+    margin: 0;
+  }
+
+  span.scroller {
+    width: 5.4rem;
+    position: absolute;
+    background-color: transparent;
+    left: 0;
+    margin: 0 0 0 0.4rem;
+  }
+}
+
+cdk-virtual-scroll-viewport {
+  height: 30rem;
+  margin-top: 3rem;
+}
+
+.cdk-virtual-scroll-data-source .mat-item {
+  height: 100%;
 }
 
 .card {
@@ -10,10 +55,7 @@
 }
 
 .mat-card {
-  flex: 1 0 100%;
-  padding: 0;
-  margin-right: 1rem;
-  padding-bottom: 2rem;
+  margin: 0 1rem;
 
   .mat-card-content {
     padding: 1rem;
