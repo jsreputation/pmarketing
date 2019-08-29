@@ -13,6 +13,7 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '@perx/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UtilsModule } from '@perx/core';
     MatRippleModule,
     HomeRoutingModule,
     NgxMultiLineEllipsisModule,
-    UtilsModule
+    UtilsModule,
+    ScrollingModule
   ],
   bootstrap: [
   ]

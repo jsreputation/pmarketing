@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { MatButtonModule, MatDialog, MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationService, RewardsModule, RewardsService, VouchersModule, IReward } from '@perx/core';
+import { NotificationService, RewardsModule, RewardsService, VouchersModule, IReward, LoyaltyService, ILoyalty } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -32,6 +32,13 @@ describe('RewardComponent', () => {
     getReward: (): Observable<IReward> => of(mockReward)
   };
 
+  const mockLoyalty: ILoyalty[] = [];
+
+  const loyaltyServiceStub = {
+    getLoyalties: (): Observable<ILoyalty[]> => of(mockLoyalty),
+    getLoyalty: (id): Observable<ILoyalty> => of([].find((el) => el.id === id))
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -48,7 +55,8 @@ describe('RewardComponent', () => {
         {
           provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) }
         },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ],
       declarations: [RewardComponent],
     })
@@ -84,7 +92,6 @@ describe('RewardComponent', () => {
     let notificationService;
     let dialogSpy;
     let notificationServiceSpy;
-
     beforeEach(() => {
       dialog = TestBed.get(MatDialog);
       notificationService = TestBed.get(NotificationService);
@@ -93,14 +100,16 @@ describe('RewardComponent', () => {
     });
 
     it('should show success popup, when buying confirmed', () => {
+      component.ngOnInit();
+      fixture.detectChanges();
       const translateService = TestBed.get(TranslateService);
       spyOn(translateService, 'get').and.returnValues(of('Your points balance is'), of('points'));
       dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
       component.buyReward();
       expect(dialogSpy).toHaveBeenCalledWith(RewardConfirmComponent, {
         data: {
-          title: '[Reward Title]',
-          existingPoints: 49,
+          title: 'Test Reward',
+          existingPoints: null,
           requiredPoints: 20
         }
       });
