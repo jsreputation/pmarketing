@@ -6,6 +6,8 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 import { FaqModule } from './faq/faq.module';
+import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FaqModule } from './faq/faq.module';
     AccountRoutingModule,
     NavigateToolbarModule,
     FaqModule,
-    ProfileModule
+    ProfileModule,
+    MatListModule,
+    MatRippleModule
   ]
 })
 export class AccountModule { }
