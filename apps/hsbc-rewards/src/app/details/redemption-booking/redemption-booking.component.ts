@@ -50,7 +50,7 @@ export class RedemptionBookingComponent implements OnInit {
       const merchantId = this.reward.merchantId;
       // merchantId can be null if reward is set up incorrectly on dashboard
       this.locationService.getFromMerchant(merchantId).subscribe(
-        (merchantLocations) => {
+        (merchantLocations: ILocation[]) => {
           this.locationData = of(merchantLocations);
         },
         () => {
