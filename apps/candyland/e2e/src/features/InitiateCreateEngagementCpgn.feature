@@ -7,26 +7,26 @@ The acceptance criteria:
 4. Engagment options are clickable.
 
 Scenario: Engagements tab is visible to customer.
-Given I am on the dashboard page.
-When I take no action.
-Then I should see the engagment tab.
+  Given 1_I am on the dashboard page.
+  When  1_I take no action.
+  Then  1_I should see the engagment tab.
 
 Scenario: Clicking on the Engagment tabs leads to the engagment page.
-Given that I am on the dashboard page.
-When I click on the engagement tab.
-Then I will be redirected to the the engagment page.
+  Given 2_that I am on the dashboard page.
+  When  2_I click on the engagement tab.
+  Then  2_I will be redirected to the the engagment page.
 
 Scenario: Dialog present when customer clicks on create new button.
-Given that i am at the engagement page.
-When I click on the create new button.
-Then the dialg box is present.
+  Given 3_that i am at the engagement page.
+  When  3_I click on the create new button.
+  Then  3_the dialg box is present.
 
 Scenario: The four engagment options are present.
-Given I am on the create engagement option dialog
-When I do nothing.
-Then There are 4 engagement options available.
+  Given 4_I am on the create engagement option dialog
+  When  4_I do nothing.
+  Then  4_There are 4 engagement options available.
 
 Scenario: Client is able interact with the engagement campaign options
-Given I am on the create option dialog box
-When i click on the stamps option.
-Then  The stamp option is highlighted.
+  Given 5_I am on the create option dialog box.
+  When  5_I click on the stamps option.
+  Then  5_The stamp option is highlighted.

@@ -41,7 +41,7 @@ Given(/^2_I am on the engagement creation dialog box$/, async () => {
       });
 
 When(/^2_I click the next button$/, async () => {
-  let ec = protractor.ExpectedConditions;
+  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(element(by.className('btn mat-flat-button primary'))), 5000);
   // clicking on the create new button
   await element(by.className('btn mat-flat-button primary')).click();

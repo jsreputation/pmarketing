@@ -1,38 +1,37 @@
 import { browser, by, element } from 'protractor';
 
 export class DashboardAppPage {
-  navigateToDashboard() {
+  public navigateToDashboard(): any {
     return browser.get(browser.baseUrl) as Promise<any>;
   }
 
-  getH1Text() {
+  public getH1Text(): any {
     return element(by.css('h1')).getText() as Promise<string>;
   }
-  getTitleText() {
+  public getTitleText(): any {
     return browser.getTitle() as Promise<string>;
 }
-  getSubHeaderText() {
+  public getSubHeaderText(): any {
     return element(by.css('p')).getText() as Promise<string>;
   }
 
-  getStartGameButton()  {
+  public getStartGameButton(): any  {
     return element(by.css('button'));
   }
 }
 
 export class EngagementAppPage {
 
-   navigateToEngagement() {
-     return browser.get('engagements') as Promise<any> ;
+   public navigateToEngagement(): any {
+    return browser.get('engagements') as Promise<any> ;
   }
 
 }
 
 export class CreateShakeTheTreeAppPage {
 
-  navigateToShakeTheTree() {
+  public navigateToShakeTheTree(): any {
     return browser.get('engagements/games/new-shake') as Promise<any> ;
  }
-
 
 }
