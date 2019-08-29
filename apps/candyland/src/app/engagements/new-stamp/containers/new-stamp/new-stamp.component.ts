@@ -126,7 +126,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   private createStampForm(): void {
     this.formStamp = this.fb.group({
-      name: ['Stamps 1', [Validators.required,
+      name: ['Stamp Card Template', [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],

@@ -3,13 +3,19 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule, VouchersModule } from '@perx/core';
+import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+
+const loyaltyServiceStub = {
+  getLoyalty: (): Observable<ILoyalty> => of(null),
+  getLoyalties: (): Observable<ILoyalty[]> => of([])
+};
 
 describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
@@ -29,7 +35,11 @@ describe('RedemptionBookingComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule
-      ]
+      ],
+      providers: [{
+        provide: LoyaltyService,
+        useValue: loyaltyServiceStub
+      }]
     })
       .compileComponents();
   }));
