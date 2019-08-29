@@ -12,15 +12,20 @@
   padding: 3.5rem 1.5rem 4.5rem;
 }
 
-.booking-form select {
-  appearance: none;
-  width: 100%;
-  background: #F8F8FC;
-  color: #7D7D89;
-  padding: 1rem 1.5rem;
-  border: none;
-  border-bottom: 1px solid #E9E9ED;
-  font-size: 1.4rem;
+.booking-form {
+  select, input {
+    appearance: none;
+    width: 100%;
+    background: #F8F8FC;
+    color: #7D7D89;
+    border: none;
+    font-size: 1.4rem;
+  }
+
+  select {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #E9E9ED;
+  }
 }
 
 .radio-button {
@@ -59,10 +64,12 @@ button {
   }
 }
 
-.select-wrap {
+.select-wrap, .input-wrap {
   position: relative;
   margin-bottom: 1.6rem;
+}
 
+.select-wrap {
   &::after {
     content: url('/assets/img/arrow.svg');
     position: absolute;
@@ -72,6 +79,12 @@ button {
     height: 100%;
     align-items: center;
   }
+}
+
+.input-wrap {
+  background: #F8F8FC;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #E9E9ED;
 }
 
 .no-content {
