@@ -1,4 +1,4 @@
-<div *ngIf="(vouchers$ | async)?.length; then thenBlock else elseBlock"></div>
+<div *ngIf="(vouchers$ | async); then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
