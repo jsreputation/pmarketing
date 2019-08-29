@@ -1,11 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationsService, RewardsService, ILocation, IReward, NotificationService, PopupComponent, LoyaltyService, ILoyalty } from '@perx/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map, flatMap } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { forkJoin, Observable, of } from 'rxjs';
-import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
-import { MatDialog } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {
+  LocationsService,
+  RewardsService,
+  ILocation,
+  IReward,
+  NotificationService,
+  PopupComponent,
+  LoyaltyService,
+  ILoyalty
+} from '@perx/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {switchMap, map, flatMap} from 'rxjs/operators';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {forkJoin, Observable, of} from 'rxjs';
+import {IPrice} from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -22,6 +31,7 @@ export class RedemptionBookingComponent implements OnInit {
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
   private loyalty: ILoyalty;
+
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
@@ -31,11 +41,12 @@ export class RedemptionBookingComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
+      this.dialog.open(PopupComponent, {data});
     });
     this.getData();
     this.getLoyalty();
@@ -46,13 +57,12 @@ export class RedemptionBookingComponent implements OnInit {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
       const merchantId = this.reward.merchantId;
       // merchantId can be null if reward is set up incorrectly on dashboard
       return this.locationService.getFromMerchant(merchantId);
-
     })).subscribe(
       (merchantLocations) => {
         this.locationData = of(merchantLocations);
@@ -70,7 +80,7 @@ export class RedemptionBookingComponent implements OnInit {
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      merchant: [{ value: null, disabled: true }, [Validators.required]],
+      merchant: [{value: null, disabled: true}, [Validators.required]],
       location: [null, [Validators.required]],
       pointsBalance: [null],
       agreement: [false, [Validators.requiredTrue]]
@@ -88,7 +98,7 @@ export class RedemptionBookingComponent implements OnInit {
       return;
     }
     this.rewardsService.reserveReward(this.rewardId,
-      { priceId: this.bookingForm.value.quantity, locationId: this.bookingForm.value.location })
+      {priceId: this.bookingForm.value.quantity, locationId: this.bookingForm.value.location})
       .subscribe(() => {
         this.router.navigate(['detail/success']);
       }, (err) => {
