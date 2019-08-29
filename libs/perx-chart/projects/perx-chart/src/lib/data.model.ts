@@ -5,7 +5,7 @@ export enum BaseType {
 }
 
 export interface IData {
-  columns: string[];
+  // columns: string[];
   cols: {
     name: string;
     display_name: string;
