@@ -1,5 +1,4 @@
 export class ApiConfig {
-  public static test = 'localhost:3000/';
   public static basePath: string = 'https://api.whistler.perxtech.org/';
   public static baseAPIPath: string = `${ApiConfig.basePath}iam/`;
   public static engagementsPath =  `${ApiConfig.basePath}engagements/`;

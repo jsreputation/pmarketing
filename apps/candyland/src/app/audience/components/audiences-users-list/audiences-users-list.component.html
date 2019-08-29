@@ -10,30 +10,39 @@
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="firstName">Name</th>
-    <!--    <th mat-header-cell *matHeaderCellDef>Name</th>-->
+    <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">
       <a class="table-link" [routerLink]="'/audience/'+ element?.id">
-        <span>{{element?.firstName}} {{element?.lastName}}</span>
+        <span>{{element?.first_name}} {{element?.last_name}}</span>
       </a>
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let element">{{element?.email_address}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="primary_identifier">
+    <th mat-header-cell *matHeaderCellDef>Primary Identifier</th>
+    <td mat-cell *matCellDef="let element">{{element?.primary_identifier}}</td>
+  </ng-container>
+
   <ng-container matColumnDef="state">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="state">State</th>
+    <th mat-header-cell *matHeaderCellDef>State</th>
     <td mat-cell *matCellDef="let element">
       <cl-status-label [status]="element?.state"></cl-status-label>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="phone">Contact No.</th>
-    <td mat-cell *matCellDef="let element"> {{element?.phone}}</td>
+    <th mat-header-cell *matHeaderCellDef>Contact No.</th>
+    <td mat-cell *matCellDef="let element"> {{element?.phone_number}}</td>
   </ng-container>
 
   <ng-container matColumnDef="audienceList">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="audienceList">Audience List</th>
-    <td mat-cell *matCellDef="let element"> {{joinList(element?.audienceList)}}</td>
+    <th mat-header-cell *matHeaderCellDef>Audience List</th>
+    <td mat-cell *matCellDef="let element"> {{element?.audienceList}}</td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
