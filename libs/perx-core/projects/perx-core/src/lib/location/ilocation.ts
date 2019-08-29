@@ -1,5 +1,6 @@
 export interface ILocation {
     merchantId?: number;
+    merchantName?: string;
     locationId?: number;
     name: string;
     tags?: string[];
