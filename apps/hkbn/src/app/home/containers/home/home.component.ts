@@ -6,7 +6,7 @@ import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 // import { filter, map } from 'rxjs/operators';
 
-const staticTabs: ITabConfig[] = [
+const studTabs: ITabConfig[] = [
   {
     filterKey: null,
     filterValue: null,
@@ -72,9 +72,7 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getRewards();
-    this.rewardsService.getAllRewards(['featured']).subscribe((rewards) => {
-      this.rewards$ = of(rewards);
-    });
+    this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.loyaltyService.getLoyalty()
       .subscribe(
         (loyalty: ILoyalty) => {
@@ -132,8 +130,9 @@ export class HomeComponent implements OnInit {
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags()
-    this.staticTab = staticTabs;
+    // JSON parese and stringify for creating complitly new object - important for test
+    this.staticTab = JSON.parse(JSON.stringify(studTabs));
     this.tabs.next(this.staticTab);
-    return of(staticTabs);
+    return of(this.staticTab);
   }
 }
