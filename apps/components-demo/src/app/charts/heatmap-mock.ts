@@ -1,11 +1,11 @@
 import { BaseType, IData } from '@perx/chart';
 
 export const data: IData = {
-  columns: [
-    'dayname',
-    'time',
-    'count'
-  ],
+  // columns: [
+  //   'dayname',
+  //   'time',
+  //   'count'
+  // ],
   cols: [
     {
       name: 'dayname',
