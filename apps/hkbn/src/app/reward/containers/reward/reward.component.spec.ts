@@ -3,7 +3,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { MatButtonModule, MatDialog, MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationService, RewardsModule, RewardsService, VouchersModule, IReward, LoyaltyService, ILoyalty } from '@perx/core';
+import {
+  NotificationService,
+  RewardsModule,
+  RewardsService,
+  VouchersModule,
+  IReward,
+  LoyaltyService,
+  ILoyalty,
+  Voucher,
+  VoucherState,
+  RedemptionType
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -11,32 +22,60 @@ import { of, Observable } from 'rxjs';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-const mockReward: IReward = {
-  id: 1,
-  name: 'Test Reward',
-  description: 'Some description',
-  subtitle: 'Subtitle',
-  validFrom: new Date(),
-  validTo: new Date(),
-  rewardThumbnail: 'someurl',
-  rewardBanner: 'banner',
-  merchantImg: 'image',
-  termsAndConditions: 'terms and conditions',
-  howToRedeem: 'string'
-};
-
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
-  const rewardsServiceStub = {
-    getReward: (): Observable<IReward> => of(mockReward)
+
+  const mockReward: IReward = {
+    id: 1,
+    name: 'Test Reward',
+    description: 'Some description',
+    subtitle: 'Subtitle',
+    validFrom: new Date(),
+    validTo: new Date(),
+    rewardThumbnail: 'someurl',
+    rewardBanner: 'banner',
+    merchantImg: 'image',
+    termsAndConditions: 'terms and conditions',
+    howToRedeem: 'string'
   };
 
-  const mockLoyalty: ILoyalty[] = [];
+  const mockVoucher: Voucher = {
+    id: 1,
+    rewardId: 1,
+    state: VoucherState.issued,
+    name: '',
+    redemptionType: RedemptionType.qr,
+    thumbnailImg: '',
+    rewardBanner: '',
+    merchantImg: '',
+    merchantName: '',
+    expiry: null,
+    description: [],
+    redemptionSuccessTxt: '',
+    redemptionSuccessImg: '',
+  };
+
+  const rewardsServiceStub = {
+    getReward: (): Observable<IReward> => of(mockReward),
+    issueReward: (): Observable<Voucher> => of(mockVoucher)
+  };
+
+  const mockLoyalty: ILoyalty = {
+    id: 2,
+    name: '',
+    description: '',
+    beginDate: '',
+    membershipTierName: '',
+    membershipIdentifier: '',
+    pointsBalance: 2,
+    currencyBalance: 2,
+    currency: '',
+  };
 
   const loyaltyServiceStub = {
-    getLoyalties: (): Observable<ILoyalty[]> => of(mockLoyalty),
-    getLoyalty: (id): Observable<ILoyalty> => of([].find((el) => el.id === id))
+    getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty]),
+    getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty)
   };
 
   beforeEach(async(() => {
@@ -84,7 +123,7 @@ describe('RewardComponent', () => {
     const router = TestBed.get(Router);
     const routerSpy = spyOn(router, 'navigate');
     component.dialogClosed();
-    expect(routerSpy).toHaveBeenCalledWith(['']);
+    expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
   });
 
   describe('should open reward confirm dialog, when calling buyReward method', () => {
@@ -109,8 +148,8 @@ describe('RewardComponent', () => {
       expect(dialogSpy).toHaveBeenCalledWith(RewardConfirmComponent, {
         data: {
           title: 'Test Reward',
-          existingPoints: null,
-          requiredPoints: 20
+          existingPoints: 2,
+          requiredPoints: 0
         }
       });
       expect(notificationServiceSpy).toHaveBeenCalledWith({

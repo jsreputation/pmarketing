@@ -39,7 +39,7 @@
   "UPDATE_PASSWORD": "Update password",
   "PASSWORD_UPDATED": "Your password has been updated. Please use your new password to login.",
   "HELLO": "Hello",
-  "YOU_HAVE": "You have 48 points",
+  "YOU_HAVE": "You have points",
   "POINTS_WILL_EXPIRE": "points will expire on",
   "MY_QR": "My Membership QR",
   "FEATURED_REWARDS": "Featured Rewards",
@@ -82,6 +82,7 @@
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "PASSWORD_SUCCESS_UPDATE": "Your password has been successfully updated",
   "OK": "OK",
+  "POINTS_EXPITING": "{{points}} points will expire on {{date}}",
   "ALL": "All",
   "HUNG_FOOK_TONG": "Hung Fook Tong",
   "BIG_BIG_SHOP": "big big shop"
