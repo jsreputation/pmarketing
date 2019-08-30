@@ -16,8 +16,6 @@ import {
 } from '@angular/material';
 import {
   AuthenticationModule,
-  OauthModule,
-  CognitoModule,
   RewardsModule,
   LoyaltyModule,
   VouchersModule
@@ -63,9 +61,7 @@ import { RedeemComponent } from './redeem/redeem.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    AuthenticationModule,
+    AuthenticationModule.forRoot({ env: environment }),
     ZXingScannerModule,
     MatSnackBarModule,
     RewardsModule.forRoot({ env: environment }),
