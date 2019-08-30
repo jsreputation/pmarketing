@@ -42,6 +42,8 @@ import { catalogs } from './catalogs.mock';
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -73,7 +75,9 @@ const vouchersServiceStub = {
     CategorySortComponent,
     RewardsSortPipe,
     LocationShortFormatComponent,
-    RewardDetailComponent
+    RewardDetailComponent,
+    RewardPopupComponent,
+    ExpireTimerComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +101,8 @@ const vouchersServiceStub = {
   ],
   entryComponents: [
     CategorySelectComponent,
-    CategorySortComponent
+    CategorySortComponent,
+    RewardPopupComponent
   ],
   providers: [
     { provide: LocationsService, useValue: locationServiceStub },
