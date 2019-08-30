@@ -12,7 +12,7 @@ import {
   LocationsService,
   RewardsService,
   VouchersService,
-  PinService
+  VouchersModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -60,10 +60,6 @@ const vouchersServiceStub = {
   get: () => of(vouchers[1])
 };
 
-const pinServiceStub = {
-  getPin: () => of('2222')
-};
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,7 +91,9 @@ const pinServiceStub = {
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment })
+    ProfileModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment })
+
   ],
   entryComponents: [
     CategorySelectComponent,
@@ -104,8 +102,7 @@ const pinServiceStub = {
   providers: [
     { provide: LocationsService, useValue: locationServiceStub },
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
-    { provide: PinService, useValue: pinServiceStub }
+    { provide: VouchersService, useValue: vouchersServiceStub }
   ],
   bootstrap: [AppComponent]
 })

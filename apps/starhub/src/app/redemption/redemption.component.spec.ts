@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersService, UtilsModule } from '@perx/core';
+import { VouchersModule, VouchersService } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 
@@ -19,7 +19,7 @@ describe('RedemptionComponent', () => {
         RouterTestingModule,
         MatIconModule,
         MatDividerModule,
-        UtilsModule
+        VouchersModule
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub }
