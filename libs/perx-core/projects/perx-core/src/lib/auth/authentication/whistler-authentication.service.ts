@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError } from 'rxjs';
-import { tap, mergeMap, catchError } from 'rxjs/operators';
+import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
@@ -12,7 +12,8 @@ import {
   IMessageResponse,
   IResetPasswordData,
   ISignUpData,
-  IChangePasswordData
+  IChangePasswordData,
+  ILoginResponse
 } from './models/authentication.model';
 
 @Injectable({
@@ -25,6 +26,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   private retries: number = 0;
   private maxRetries: number = 2;
   private preAuthJWT: string;
+  public $failedAuthObservable: Observable<boolean>;
 
   constructor(
     config: EnvConfig,
@@ -38,6 +40,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     } else {
       this.preAuthEndpoint = config.env.baseHref + 'preauth';
     }
+    this.$failedAuthObservable = new Observable();
+  }
+
+  public get $failedAuth(): Observable<boolean> {
+    return this.$failedAuthObservable;
   }
 
   public isAuthorized(): Observable<boolean> {
@@ -62,8 +69,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public refreshToken(): Observable<any> {
-    let success = false;
+  public refreshToken(): Observable<ILoginResponse> {
     this.retries++;
     return this.setPreAuthJWT().pipe(
       mergeMap(
@@ -74,37 +80,41 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
               () => {
                 // @ts-ignore
                 const userBearer = resp.headers.get('Authorization');
-                if (userBearer) {
-                  this.saveUserAccessToken(userBearer.split(' ')[1]);
-                  success = true;
+                if (!userBearer) {
+                  throw new Error('Get authentication token failed!');
                 }
-                return success;
+                this.saveUserAccessToken(userBearer.split(' ')[1]);
               },
               () => {
                 if (this.retries >= this.maxRetries) {
+                  this.$failedAuthObservable = of(true);
                   this.logout();
                   return false;
                 }
               }
-            )
+            ),
+            catchError(err => throwError(err))
           );
         }
       )
     );
   }
 
-  public autoLogin(): Observable<void> {
+  public autoLogin(): Observable<ILoginResponse> {
     return this.setPreAuthJWT().pipe(
       mergeMap(
         () => {
           return this.getUserWithJWT(this.preAuthJWT).pipe(
             tap(
-              (res) => {
-                const userBearer = res.body.data[0].attributes.jwt || undefined;
+              (res: ILoginResponse) => {
+                const userBearer = res && res.bearer_token;
                 if (!userBearer) {
                   throw new Error('Get authentication token failed!');
                 }
                 this.saveUserAccessToken(userBearer);
+              },
+              () => {
+                this.$failedAuthObservable = of(true);
               }
             ),
             catchError(err => throwError(err))
@@ -115,8 +125,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   }
 
-  // Don't know real return format yet, put `any` now 
-  public getUserWithJWT(bearer: string): Observable<any> {
+  // Don't know real return format yet, put `ILoginResponse` now, later will refactor map transform
+  public getUserWithJWT(bearer: string): Observable<ILoginResponse> {
     const user = (window as any).primaryIdentifier;
     const payload = {
       data: {
@@ -133,10 +143,18 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           Authorization: bearer
         })
     };
-    return this.http.post(this.apiHost + '/cognito/login', payload, {
+    return this.http.post<ILoginResponse>(this.apiHost + '/cognito/login', payload, {
       headers: httpOptions.headers,
       observe: 'response'
-    });
+    }).pipe(
+      map(
+        (res: any) => {
+          return {
+            bearer_token: res.body.data[0].attributes.jwt || undefined
+          };
+        }
+      )
+    );
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {

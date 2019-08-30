@@ -12,7 +12,8 @@ import {
   IResetPasswordData,
   IMessageResponse,
   IAppAccessTokenResponse,
-  IChangePasswordData
+  IChangePasswordData,
+  ILoginResponse
 } from '../authentication/models/authentication.model';
 import { V4ProfileService } from '../../profile/v4-profile.service';
 
@@ -38,6 +39,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
+  public $failedAuthObservable: Observable<boolean>;
 
   constructor(
     config: EnvConfig,
@@ -54,6 +56,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
     }
     this.customersEndPoint = config.env.apiHost + '/v4/customers';
+    this.$failedAuthObservable = new Observable();
+  }
+
+  public get $failedAuth(): Observable<boolean>  {
+    return this.$failedAuthObservable;
   }
 
   public isAuthorized(): Observable<boolean> {
@@ -77,22 +84,25 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
       tap(
-        (res) => {
+        (res: ILoginResponse) => {
           const userBearer = res && res.bearer_token;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
           this.saveUserAccessToken(userBearer);
+        },
+        () => {
+          this.$failedAuthObservable = of(true);
         }
       ),
       catchError(err => throwError(err))
     );
   }
 
-  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
+  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
     let httpParams = new HttpParams()
       .append('url', location.host)
       .append('username', user)
@@ -104,33 +114,36 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       httpParams = httpParams.append('campaign_id', campaignId);
     }
 
-    return this.http.post(this.userAuthEndPoint + '/token', null, {
+    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', null, {
       params: httpParams
     });
   }
 
-  public autoLogin(): Observable<void> {
+  public autoLogin(): Observable<ILoginResponse> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
-        (res) => {
+        (res: ILoginResponse) => {
           const userBearer = res && res.bearer_token;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
           this.saveUserAccessToken(userBearer);
+        },
+        () => {
+          this.$failedAuthObservable = of(true);
         }
       ),
       catchError(err => throwError(err))
     );
   }
 
-  public authenticateUserWithPI(user: string): Observable<any> {
+  public authenticateUserWithPI(user: string): Observable<ILoginResponse> {
     const httpParams = new HttpParams()
       .append('url', location.host)
       .append('identifier', user);
 
-    return this.http.post(this.userAuthEndPoint + '/token', null, {
+    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', null, {
       params: httpParams
     });
   }

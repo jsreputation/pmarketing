@@ -10,7 +10,7 @@ import { AuthenticationModule, AuthenticationService, NotificationService } from
 import { LoginComponent } from './login.component';
 
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
   const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
   const routerSub = { navigateByUrl: (url) => { } };
   const authenticationServiceStub = {
-    login: new BehaviorSubject(true),
+    $failedAuth: new Observable(true),
     getInterruptedUrl: () => null
   };
   let debugElement: DebugElement;

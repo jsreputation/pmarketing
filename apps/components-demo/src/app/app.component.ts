@@ -33,9 +33,13 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    if (!this.authService.getUserAccessToken()) {
-      this.router.navigateByUrl('login');
-    }
+    this.authService.$failedAuth.subscribe(
+      (didFailAuth) => {
+        if (didFailAuth) {
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
   }
 
   get loggedIn(): boolean {

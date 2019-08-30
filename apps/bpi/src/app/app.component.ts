@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService } from '@perx/core';
+import { PopupComponent, NotificationService, AuthenticationService } from '@perx/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
+    private authService: AuthenticationService,
+    private router: Router,
     private dialog: MatDialog
   ) {
   }
@@ -20,5 +23,13 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });
+
+    this.authService.$failedAuth.subscribe(
+      (didFailAuth: boolean) => {
+        if (didFailAuth) {
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
   }
 }

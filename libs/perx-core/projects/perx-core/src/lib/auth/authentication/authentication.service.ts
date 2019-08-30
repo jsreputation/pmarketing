@@ -1,15 +1,18 @@
-import { Observable  } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   ISignUpData,
   IMessageResponse,
   IResetPasswordData,
   IAppAccessTokenResponse,
-  IChangePasswordData
+  IChangePasswordData,
+  ILoginResponse
 } from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
 
 export abstract class AuthenticationService {
+  public abstract get $failedAuth(): Observable<boolean>;
+
   /**
    * Check, if user already authorized.
    * @description Should return Observable with true or false values
@@ -41,9 +44,9 @@ export abstract class AuthenticationService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void>;
+  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse>;
 
-  public abstract autoLogin(): Observable<void>;
+  public abstract autoLogin(): Observable<ILoginResponse>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
