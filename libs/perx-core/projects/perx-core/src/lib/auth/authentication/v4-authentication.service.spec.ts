@@ -40,7 +40,7 @@ describe('V4AuthenticationService', () => {
   it('should get app access token', (done: DoneFn) => {
     service.getAppToken()
       .subscribe((res) => {
-        expect(res.access_token).toBe('874c27af228898f5a55e7d304578aa2758e2e6677321019891d25fa7a2b8795f');
+        expect(res.access_token).toBe('test-token');
         done();
       });
     const url = location.host;
@@ -49,7 +49,7 @@ describe('V4AuthenticationService', () => {
     expect(req.request.method).toEqual('POST');
 
     req.flush({
-      access_token: '874c27af228898f5a55e7d304578aa2758e2e6677321019891d25fa7a2b8795f',
+      access_token: 'test-token',
       token_type: 'bearer',
       expires_in: 2629746,
       created_at: 1566975901
