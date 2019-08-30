@@ -33,7 +33,7 @@ describe('ForgotPasswordComponent', () => {
           provide: AuthenticationService,
           useValue: {
             forgotPassword: () => of(),
-            v4GetAppAccessToken: () => of()
+            getAppToken: () => of()
           }
         },
         {

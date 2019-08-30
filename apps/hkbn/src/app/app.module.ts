@@ -8,9 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
   AuthenticationService,
-  CognitoModule,
   LoyaltyModule,
-  OauthModule,
   ProfileModule,
   RewardsModule,
   UtilsModule,
@@ -32,7 +30,7 @@ import { SnackbarModule } from './ui/snackbar/snackbar.module';
 import { HistoryComponent } from './history/history.component';
 
 const getAppAccessToken = (authenticationService: AuthenticationService) => {
-  return () => authenticationService.v4GetAppAccessToken().toPromise();
+  return () => authenticationService.getAppToken().toPromise();
 };
 
 const setLanguage = (translateService: TranslateService) => {
@@ -64,9 +62,7 @@ const PROVIDERS = [
   imports: [
     BrowserModule,
     AuthModule,
-    AuthenticationModule,
-    OauthModule.forRoot({env: environment}),
-    CognitoModule.forRoot({env: environment}),
+    AuthenticationModule.forRoot({env: environment}),
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule.forRoot({env: environment}),
     VouchersModule.forRoot({env: environment}),

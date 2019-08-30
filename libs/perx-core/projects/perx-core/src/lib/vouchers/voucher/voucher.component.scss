@@ -77,3 +77,39 @@ $max-width: 60rem;
   background-color: white;
   border-top: 0.1rem solid darkgray;
 }
+
+.ribbon {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: normal;
+  width: 5.7rem;
+  text-align: center;
+  line-height: 1.6rem;
+  letter-spacing: 0.02rem;
+  margin: 1rem auto;
+
+  &.redeemed {
+    background: #BBE5B3;
+    color: #173630;
+  }
+
+  &.expired {
+    background: #919EAB;
+    color: #212121;
+  }
+
+  &.issued {
+    background: #BBE5B3;
+    color: #173630;
+  }
+
+  &.reserved {
+    background: #FFC58B;
+    color: #4A1504;
+  }
+
+  &.released {
+    background: #FEAD9A;
+    color: #330101;
+  }
+}

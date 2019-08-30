@@ -7,8 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { RewardsModule } from './rewards/rewards.module';
 import {
   AuthenticationModule,
-  CognitoModule,
-  OauthModule,
   UtilsModule as PerxCoreUtilsModule,
   RewardsModule as PerxRewardsModule,
   VouchersModule as PerxVouchersModule,
@@ -33,9 +31,7 @@ import { LocationModule } from './location/location.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthenticationModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     PerxVouchersModule.forRoot({ env: environment }),
     PerxRewardsModule.forRoot({ env: environment }),
     PerxSurveyModule.forRoot({ env: environment }),

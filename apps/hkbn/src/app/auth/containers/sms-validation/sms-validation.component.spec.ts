@@ -23,7 +23,7 @@ describe('SmsValidationComponent', () => {
         {
           provide: AuthenticationService, useValue: {
             verifyOTP: () => of(true),
-            v4GameOauth: () => Promise.resolve(true),
+            login: () => of(true),
             resendOTP: () => of(true)
           }
         },
@@ -55,7 +55,7 @@ describe('SmsValidationComponent', () => {
 
     beforeEach(() => {
       authenticationService = TestBed.get(AuthenticationService);
-      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of(true));
+      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of({message: 'OTP verified'}));
       router = TestBed.get(Router);
       navigateSpy = spyOn(router, 'navigate');
     });
@@ -67,7 +67,7 @@ describe('SmsValidationComponent', () => {
     });
 
     it('should validate otp, but not authorized', () => {
-      spyOn(authenticationService, 'v4GameOauth').and.returnValue(false);
+      spyOn(authenticationService, 'login').and.returnValue(of());
       component.validate('888888');
       expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
       expect(navigateSpy.calls.count()).toBe(0);

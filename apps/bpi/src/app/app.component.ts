@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, AuthenticationService, NotificationService } from '@perx/core';
+import { PopupComponent, NotificationService, AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,23 +12,24 @@ export class AppComponent implements OnInit {
   public title: string = 'bpi';
 
   constructor(
-    private authService: AuthenticationService,
     private notificationService: NotificationService,
+    private authService: AuthenticationService,
     private router: Router,
     private dialog: MatDialog
   ) {
   }
 
   public ngOnInit(): void {
-    this.authService.failedAuthObservable.subscribe(
-      (didFailAuth) => {
+    this.notificationService.$popup.subscribe(data => {
+      this.dialog.open(PopupComponent, { data });
+    });
+
+    this.authService.$failedAuth.subscribe(
+      (didFailAuth: boolean) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
         }
       }
     );
-    this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
-    });
   }
 }

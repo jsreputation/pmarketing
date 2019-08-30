@@ -52,13 +52,14 @@ export class AppComponent implements OnInit {
 
     }
 
-    this.authService.failedAuthObservable.subscribe(
+    this.authService.$failedAuth.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
         }
       }
     );
+
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });
