@@ -121,9 +121,11 @@ export class V4RewardsService extends RewardsService {
   private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private voucherService: VouchersService,
-    config: EnvConfig) {
+    config: EnvConfig
+  ) {
     super();
     this.apiHost = config.env.apiHost as string;
   }
