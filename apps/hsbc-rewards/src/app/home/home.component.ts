@@ -49,13 +49,7 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getRewardsCollection();
-    this.getRewards();
-    this.loyaltyService.getLoyalties().subscribe(
-      (loyalties: ILoyalty[]) => {
-        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
-      }
-    );
-
+    this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
       if (rewardPrice.points > 0 && rewardPrice.price > 0) {
         return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
@@ -70,12 +64,11 @@ export class HomeComponent implements OnInit {
       }
       return '0 points'; // is actually 0 or invalid value default
     };
+    this.getRewards();
   }
 
   private getRewardsCollection(): void {
-    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
-      this.rewardsCollection = of(val);
-    });
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
   private getRewards(): void {
@@ -93,7 +86,13 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
+  private getLoyalty(): void {
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
+      }
+    );
+  }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
