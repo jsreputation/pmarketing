@@ -5,7 +5,7 @@ import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
 describe('AppComponent', () => {
@@ -69,7 +69,6 @@ describe('AppComponent', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
-      expect(authenticationService.$failedAuth.value).toBe(true);
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('login');
     });
 
