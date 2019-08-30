@@ -26,8 +26,9 @@ export class RewardHttpService {
     }>('assets/actives/reward/reward-data.json');
   }
 
-  public getReward(): Observable<any> {
-    return this.http.get('assets/actives/rewards/reward-detail.json');
+  public getReward(id: number): Observable<any> {
+    // return this.http.get('assets/actives/rewards/reward-detail.json');
+    return this.http.get(ApiConfig.rewardsPath + id);
   }
 
   public getRewardsOptions(): Observable<OptionConfig[]> {
@@ -45,5 +46,14 @@ export class RewardHttpService {
 
   public createRewardGame(data: any): Observable<any> {
     return this.http.post(ApiConfig.createGamePath, data);
+  }
+
+  public createReward(data: any): Observable<any> {
+    console.log('createReward', data);
+    return this.http.post(ApiConfig.rewardsPath, data);
+  }
+
+  public updateReward(id: number, data: any): Observable<any> {
+    return this.http.patch(ApiConfig.rewardsPath + id, data);
   }
 }

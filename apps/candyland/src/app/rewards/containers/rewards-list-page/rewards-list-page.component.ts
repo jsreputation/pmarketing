@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services';
+import { filter } from 'rxjs/operators';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 
 @Component({
@@ -24,22 +24,27 @@ export class RewardsListPageComponent {
     this.dataSource = new CustomDataSource<Reward>(this.rewardsService);
   }
 
-  public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  // tslint:disable
   public actionHandler(action: { action: RewardsTableMenuActions, data: Reward }): void {
-    const listActions = {
-      [RewardsTableMenuActions.edit]: this.editReward.bind(this)
-    };
-    (typeof listActions[action.action] === 'function') && listActions[action.action](action.data);
+    switch (action.action) {
+      case RewardsTableMenuActions.edit: {
+        this.editReward(action.data);
+        break;
+      }
+      case RewardsTableMenuActions.duplicate: {
+        this.duplicateReward(action.data);
+        break;
+      }
+    }
   }
 
   private editReward(reward: Reward): void {
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
+  }
+
+  private duplicateReward(reward: Reward): void {
+    console.log('duplicateReward');
+    this.rewardsService.duplicateReward(reward)
+      .pipe(filter(Boolean))
+      .subscribe(() => this.dataSource.updateData());
   }
 }

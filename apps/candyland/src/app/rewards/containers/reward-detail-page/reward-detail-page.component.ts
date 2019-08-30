@@ -48,7 +48,7 @@ export class RewardDetailPageComponent implements  AfterViewInit {
   }
 
   private getData(): void {
-    this.rewardsService.getReward()
+    this.rewardsService.getReward(1)
       .pipe(
         map((data: any) => {
             data.campaigns.map(item => {

@@ -23,7 +23,7 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-info-form-group [formGroup]="form.get('rewardInfo')" [config]="config"></cl-reward-info-form-group>
+      <cl-reward-info-form-group [formGroup]="form.get('rewardInfo')" [config]="config" [currency]="reward?.currency"></cl-reward-info-form-group>
     </div>
   </mat-expansion-panel>
 

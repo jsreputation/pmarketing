@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnDestroy, ViewChild } from '@angular/core';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { takeWhile } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material';
 
@@ -10,7 +11,7 @@ import { MatPaginator } from '@angular/material';
 export class PaginatorComponent implements AfterViewInit, OnDestroy {
   @Input() public pageSizeOptions: number[];
   @Input() public pageSize: number;
-  @Input() public dataSource: any;
+  @Input() public dataSource: CustomDataSource<any>;
 
   @ViewChild(MatPaginator, {static: false}) public paginator: MatPaginator;
 
@@ -61,7 +62,7 @@ export class PaginatorComponent implements AfterViewInit, OnDestroy {
     this.dataSource
       .length$
       .subscribe((val: number) => {
-        this.itemCount = val;
+        this.paginator.length = val;
       });
   }
 

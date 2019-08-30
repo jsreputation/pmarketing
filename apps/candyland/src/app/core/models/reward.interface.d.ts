@@ -4,8 +4,9 @@ declare interface Reward {
   name: string;
   type: string;
   rewardType: string;
+  redemptionType?: string;
   current: number;
   total: number;
-  prprobability?: number;
+  prprobability?: number | null;
   category: string;
 }

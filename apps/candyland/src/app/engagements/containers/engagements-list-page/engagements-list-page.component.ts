@@ -45,7 +45,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);
         }),
       )
-      .subscribe((res: Engagement[]) => {
+      .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
