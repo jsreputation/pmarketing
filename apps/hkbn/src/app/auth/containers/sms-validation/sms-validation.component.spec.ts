@@ -67,7 +67,7 @@ describe('SmsValidationComponent', () => {
     });
 
     it('should validate otp, but not authorized', () => {
-      spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: ''}));
+      spyOn(authenticationService, 'login').and.returnValue(of());
       component.validate('888888');
       expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
       expect(navigateSpy.calls.count()).toBe(0);
