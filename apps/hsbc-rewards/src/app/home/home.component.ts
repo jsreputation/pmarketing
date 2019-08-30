@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-  private getLoyalty() {
+  private getLoyalty(): void {
     this.loyaltyService.getLoyalties().subscribe(
       (loyalties: ILoyalty[]) => {
         this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
