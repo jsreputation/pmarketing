@@ -115,7 +115,7 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get(AuthenticationService);
     const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
-    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of(true));
+    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
 
     component.phoneStepForm.setValue({phone: '63987654'});
     component.phoneHandler();

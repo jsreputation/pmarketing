@@ -66,7 +66,7 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
       AuthenticationService
     );
-    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of(true));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 
