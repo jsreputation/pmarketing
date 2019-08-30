@@ -37,7 +37,7 @@ const dynamicCreateServiceStub = {
   createComponent: () => {
   }
 };
-const authenticationServiceStub = { $failedAuth: new Observable(true), logout: () => { } };
+const authenticationServiceStub = { $failedAuth: of(true), logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;

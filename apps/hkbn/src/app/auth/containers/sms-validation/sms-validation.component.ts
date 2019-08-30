@@ -14,9 +14,11 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(
+    private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   public ngOnInit(): void {

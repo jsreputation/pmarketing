@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
   const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
   const routerSub = { navigateByUrl: (url) => { } };
   const authenticationServiceStub = {
-    $failedAuth: new Observable(true),
+    $failedAuth: of(true),
     getInterruptedUrl: () => null
   };
   let debugElement: DebugElement;
