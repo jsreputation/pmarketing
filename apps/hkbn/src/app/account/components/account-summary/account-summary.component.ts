@@ -9,7 +9,6 @@ import { IProfile } from '@perx/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AccountSummaryComponent implements OnChanges {
-  param = {value : 'hi'}
   @Input() public accountData: IProfile;
 
   public accountSummary: FormGroup = new FormGroup({
