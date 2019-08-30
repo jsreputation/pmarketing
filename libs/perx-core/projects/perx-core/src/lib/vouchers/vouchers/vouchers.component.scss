@@ -91,31 +91,27 @@ mat-icon {
   text-align: center;
   line-height: 1.6rem;
   letter-spacing: 0.02rem;
-}
 
-.ribbon.redeemed {
-  background: #BBE5B3;
-  color: #173630;
-}
-
-.ribbon.expired {
-  background: #919EAB;
-  color: #212121;
-}
-
-.ribbon.issued {
-  background: #BBE5B3;
-  color: #173630;
-}
-
-.ribbon.reserved {
-  background: #FFC58B;
-  color: #4A1504;
-}
-
-.ribbon.released {
-  background: #FEAD9A;
-  color: #330101;
+  &.redeemed {
+    background: #BBE5B3;
+    color: #173630;
+  }
+  &.expired {
+    background: #919EAB;
+    color: #212121;
+  }
+  &.issued {
+    background: #BBE5B3;
+    color: #173630;
+  }
+  &.reserved {
+    background: #FFC58B;
+    color: #4A1504;
+  }
+  &.released {
+    background: #FEAD9A;
+    color: #330101;
+  }
 }
 
 .card-list-container {
