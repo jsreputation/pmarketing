@@ -7,6 +7,7 @@ import { RewardsService } from '@perx/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
@@ -21,7 +22,7 @@ describe('RewardDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardDetailComponent, LocationShortFormatComponent ],
+      declarations: [ RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent ],
       imports: [
         MatIconModule,
         RouterTestingModule
@@ -75,15 +76,14 @@ describe('RewardDetailComponent', () => {
 
     it('should show macaron text and it should be Expiring', fakeAsync(() => {
       component.rewardId = 1;
-      const rewardValidFrom = new Date();
       const rewardValidTo = new Date();
       const expiringReward = {
         id: 2,
         name: 'Get a Free Coke',
         description: '',
         subtitle: '',
-        validFrom: new Date(rewardValidFrom.setHours(rewardValidFrom.getHours() + 96)),
-        validTo: new Date(rewardValidTo.setHours(rewardValidTo.getHours() + 36)),
+        validFrom: new Date(),
+        validTo: new Date(rewardValidTo.setHours(rewardValidTo.getHours() + 35)),
         rewardThumbnail: '',
         rewardBanner: '',
         merchantImg: '',
@@ -96,6 +96,7 @@ describe('RewardDetailComponent', () => {
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(of(expiringReward));
 
       component.ngOnInit();
+      component.onExpiring();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(component.reward).toBe(expiringReward);
@@ -126,6 +127,7 @@ describe('RewardDetailComponent', () => {
       const emitSpy = spyOn(component.hasExpired, 'emit');
 
       component.ngOnInit();
+      component.setToExpired();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(component.reward).toBe(expiringReward);

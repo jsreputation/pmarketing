@@ -12,7 +12,7 @@ import {
   LocationsService,
   RewardsService,
   VouchersService,
-  PinService
+  VouchersModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -42,6 +42,8 @@ import { catalogs } from './catalogs.mock';
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -51,16 +53,13 @@ const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => of(catalogs[id])
+  getCatalog: (id: number) => of(catalogs[id]),
+  reserveReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
   get: () => of(vouchers[1])
-};
-
-const pinServiceStub = {
-  getPin: () => of('2222')
 };
 
 @NgModule({
@@ -76,7 +75,9 @@ const pinServiceStub = {
     CategorySortComponent,
     RewardsSortPipe,
     LocationShortFormatComponent,
-    RewardDetailComponent
+    RewardDetailComponent,
+    RewardPopupComponent,
+    ExpireTimerComponent
   ],
   imports: [
     BrowserModule,
@@ -94,17 +95,19 @@ const pinServiceStub = {
     BrowserAnimationsModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment })
+    ProfileModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment })
+
   ],
   entryComponents: [
     CategorySelectComponent,
-    CategorySortComponent
+    CategorySortComponent,
+    RewardPopupComponent
   ],
   providers: [
     { provide: LocationsService, useValue: locationServiceStub },
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
-    { provide: PinService, useValue: pinServiceStub }
+    { provide: VouchersService, useValue: vouchersServiceStub }
   ],
   bootstrap: [AppComponent]
 })

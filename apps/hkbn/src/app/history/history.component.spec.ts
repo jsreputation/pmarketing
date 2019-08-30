@@ -5,6 +5,7 @@ import { LoyaltyModule, LoyaltyService } from '@perx/core';
 import { MatTabsModule } from '@angular/material';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
@@ -19,7 +20,8 @@ describe('HistoryComponent', () => {
       imports: [
         LoyaltyModule,
         MatTabsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub }

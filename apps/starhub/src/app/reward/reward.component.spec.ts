@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RewardsService } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -14,7 +15,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent],
+      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
         RouterTestingModule

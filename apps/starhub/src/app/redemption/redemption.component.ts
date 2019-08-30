@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, VouchersService, PinService, PinInputComponent } from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit,
+ ViewChild
+  } from '@angular/core';
+import { Voucher, VoucherState, VouchersService, PinRedemptionComponent } from '@perx/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
@@ -17,15 +19,13 @@ export class RedemptionComponent implements OnInit {
   public isPinCorrect: boolean;
 
  @ViewChild('pinInput', {static: false})
-  private pinInputComponent: PinInputComponent;
-
-  private generatedPin: string;
+  private pinInputComponent: PinRedemptionComponent;
 
   constructor(
     private vouchersService: VouchersService,
-    private pinService: PinService,
     private activeRoute: ActivatedRoute,
-    private location: Location) {
+    private location: Location,
+    private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -45,21 +45,18 @@ export class RedemptionComponent implements OnInit {
   }
 
   public showPinComponent(): void {
-    this.pinService.getPin(this.voucher.id).subscribe(
-      (pin: string) => {
-        this.generatedPin = pin;
-        this.showEnterPinComponent = true;
-      }
-    );
+    this.showEnterPinComponent = true;
   }
 
-  public onPinEntered(enteredPin: string): void {
+  public onVoucherRedeemed(): void {
     this.isPinEntered = true;
-    this.isPinCorrect = enteredPin === this.generatedPin;
+    this.voucher.state = VoucherState.redeemed;
+  }
 
-    // TODO: Added following condition for UI cases demo.
-    if (this.isPinCorrect) {
-      this.voucher.state = VoucherState.redeemed;
+  public onUpdate(): void {
+    if (this.pinInputComponent.hasError === 'error') {
+      this.isPinCorrect = false;
+      this.isPinEntered = true;
     }
   }
 
@@ -70,5 +67,9 @@ export class RedemptionComponent implements OnInit {
 
   public cancelClicked(): void {
     this.location.back();
+  }
+
+  public backMyRewardsClicked(): void {
+    this.router.navigateByUrl('home/vouchers');
   }
 }
