@@ -17,10 +17,10 @@ export class TableComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       this.data.subscribe((data: IData) => {
-        this.displayedColumns = data.columns;
-        data.rows.map((row: (string|number)[]) => {
+        this.displayedColumns = data.cols.map((col) => col.display_name);
+        data.rows.map((row: (string | number)[]) => {
           const tableElement = {};
-          this.displayedColumns.map( (item: string|number, j: number) => {
+          this.displayedColumns.map((item: string | number, j: number) => {
             tableElement[item] = typeof (row[j]) === 'number' ? Math.round(+row[j]) : row[j];
           });
           this.tableData.push(tableElement);

@@ -63,7 +63,7 @@ export class CampaignService implements ICampaignService {
   }
 
   public getCampaign(id: number): Observable <ICampaign> {
-    return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaign/${id}`)
+    return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
         map(resp => resp.data),
         map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign))

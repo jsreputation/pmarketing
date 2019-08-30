@@ -11,9 +11,15 @@
     </div>
 
     <div class="container">
-      <div class="reward-merchant">
+      <div *ngIf="reward" class="reward-merchant">
         <h1>{{reward.name}}</h1>
         <h2>{{reward.merchantName}}</h2>
+        <div *ngIf="showMacaron" class="macaron">
+          <span class="expiring">{{macaronText}}</span>
+        </div>
+        <div *ngIf="!isExpired">
+			<app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()"></app-expire-timer>
+        </div>
       </div>
 
       <div class="content">

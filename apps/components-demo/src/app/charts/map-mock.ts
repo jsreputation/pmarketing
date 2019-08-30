@@ -1,12 +1,12 @@
 import { BaseType, IData } from '@perx/chart';
 
 export const data: IData = {
-  columns: [
-  'city',
-  'latitude',
-  'longitude',
-  'revenue'
-],
+//   columns: [
+//   'city',
+//   'latitude',
+//   'longitude',
+//   'revenue'
+// ],
   cols: [
   {
     name: 'city',

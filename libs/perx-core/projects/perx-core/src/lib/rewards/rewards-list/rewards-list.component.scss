@@ -32,7 +32,7 @@
   .reward-preview-details {
     font-size: 1.4rem;
     display: flex;
-    margin: auto 1.6rem;
+    margin: 1.6rem 1.6rem 0.8rem;
     padding-left: 0;
     flex-direction: column;
     flex: 1;
@@ -42,7 +42,7 @@
     }
 
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       line-height: 1.6rem;
       padding: 0;
       font-weight: 500;
@@ -50,7 +50,7 @@
     }
 
     p {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       line-height: 1.6rem;
       min-height: 1.6rem;
       //color: #e42713;
@@ -59,10 +59,12 @@
     }
 
     .reward-price-details {
-      font-size: 1.4rem;
-      line-height: 1.6rem;
-      min-height: 1.6rem;
+      font-size: 1rem;
+      line-height: 1.4rem;
+      min-height: 1.4rem;
       color: #ddac27;
+      align-content: flex-end;
+      margin-top: auto;
     }
   }
 }
@@ -98,7 +100,7 @@
       }
 
       .reward-price-details {
-        height: 1.6rem;
+        height: 1.4rem;
       }
     }
   }

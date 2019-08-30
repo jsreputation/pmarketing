@@ -9,10 +9,11 @@ export { PerxCoreModule } from './lib/perx-core.module';
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
 export { VouchersService } from './lib/vouchers/vouchers.service';
+export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
 export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
-
+export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 /**
  * Authentication
  */

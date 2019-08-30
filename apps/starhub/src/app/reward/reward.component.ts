@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { IReward } from '@perx/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { RewardsService } from '@perx/core';
 
 @Component({
   selector: 'app-reward',
@@ -9,23 +9,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-  public reward: IReward;
   public rewardId: number;
+  public isButtonDisabled: boolean = false;
 
   constructor(
     private location: Location,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private rewardsService: RewardsService
   ) {}
 
   public ngOnInit(): void {
-
     this.activeRoute.queryParams.subscribe(
-        ((params: Params) => {
-        if (params.id) {
-          this.rewardId = params.id;
-        }
-      }));
+      ((params: Params) => {
+      if (params.id) {
+        this.rewardId = params.id;
+      }
+    }));
   }
 
   public back(): void {
@@ -33,6 +33,12 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.router.navigate(['/home/vouchers']);
+    this.rewardsService.issueReward(this.rewardId)
+      .subscribe(() => this.router.navigate(['/home/vouchers'])
+    );
+  }
+
+  public setToExpired(isExpired: boolean): void {
+    this.isButtonDisabled = isExpired;
   }
 }

@@ -5,9 +5,14 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnDestroy
 } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { User } from '@cl-core/models/audiences/user.model';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -15,18 +20,15 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./audiences-users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AudiencesUsersListComponent implements AfterViewInit {
-  @Input() public dataSource: MatTableDataSource<any>;
-  @Input() public displayedColumns: string[] = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
+export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
+  @Input() public dataSource: CustomDataSource<User>;
+  @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'state', 'phone', 'audienceList', 'actions'];
+  @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickManageList: EventEmitter<number> = new EventEmitter();
-
+  private destroy$ = new Subject();
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
-  public joinList(list: string[]): string {
-    return list.join(', ');
+    this.handleSorting();
   }
 
   public manageList(id: number): void {
@@ -35,5 +37,18 @@ export class AudiencesUsersListComponent implements AfterViewInit {
 
   public deactivateItem(id: number): void {
     this.clickManageList.emit(id);
+  }
+
+  public handleSorting(): void {
+    if (this.sort) {
+      this.sort.sortChange
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(val => this.dataSource.sort = val);
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

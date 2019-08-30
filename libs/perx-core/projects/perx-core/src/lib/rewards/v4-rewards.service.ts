@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {EnvConfig} from '../shared/env-config';
-import {concatAll, map, mergeMap, reduce, switchMap} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
-import {RewardsService} from './rewards.service';
-import {IReward, ICatalog, IPrice, ICategoryTags, IRewardParams} from './models/reward.model';
-import {IVoucher, VoucherState} from '../vouchers/models/voucher.model';
-import {VouchersService} from '../vouchers/vouchers.service';
-import {oc} from 'ts-optchain';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { EnvConfig } from '../shared/env-config';
+import { concatAll, map, mergeMap, reduce, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { RewardsService } from './rewards.service';
+import { IReward, ICatalog, IPrice, ICategoryTags, IRewardParams } from './models/reward.model';
+import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
+import { VouchersService } from '../vouchers/vouchers.service';
+import { oc } from 'ts-optchain';
 
 interface IV4Meta {
   count?: number;
@@ -27,8 +27,10 @@ interface IV4Image {
 }
 
 interface IV4RewardPrice {
-  reward_currency: string;
-  reward_amount: string;
+  id: number;
+  currency_code: string;
+  price: number;
+  points: number;
 }
 
 interface IV4Reward {
@@ -119,9 +121,11 @@ export class V4RewardsService extends RewardsService {
   private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
 
-  constructor(private http: HttpClient,
-              private voucherService: VouchersService,
-              config: EnvConfig) {
+  constructor(
+    private http: HttpClient,
+    private voucherService: VouchersService,
+    config: EnvConfig
+  ) {
     super();
     this.apiHost = config.env.apiHost as string;
   }
@@ -143,8 +147,10 @@ export class V4RewardsService extends RewardsService {
       subtitle: reward.subtitle,
       description: reward.description,
       rewardPrice: reward.reward_price.map(price => ({
-        rewardCurrency: price.reward_currency,
-        rewardAmount: price.reward_amount
+        id: price.id,
+        currencyCode: price.currency_code,
+        price: price.price,
+        points: price.points
       })),
       rewardThumbnail: thumbnailImg,
       rewardBanner,
@@ -231,6 +237,15 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
+  public issueReward(rewardId: number): Observable<IVoucher> {
+    return this.http.post<IV4ReserveRewardResponse>(
+      `${this.apiHost}/v4/rewards/${rewardId}/issue`, {}
+    ).pipe(
+      map(res => res.data),
+      switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
+    );
+  }
+
   public getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
 
     let params = new HttpParams()
@@ -246,7 +261,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`, {params}
+      `${this.apiHost}/v4/rewards`, { params }
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
         if (res.meta) {

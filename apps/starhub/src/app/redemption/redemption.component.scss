@@ -68,6 +68,7 @@
   border-radius: 0 0 1rem 1rem;
   background-color: #ffffff;
   overflow: hidden;
+  margin-bottom: 4rem;
 }
 
 .lower-section.expired, .lower-section.redeemed {
@@ -91,7 +92,7 @@
   justify-content: center;
   min-height: 14rem;
 
-  h1 {
+  h1, p {
     font-size: 2rem;
     color: #666666;
   }
@@ -101,7 +102,7 @@
     border-radius: 0.5rem;
     text-align: center;
     color: #666666;
-    padding: 1rem 3rem;
+    padding: 1.5rem 3.5rem;
     font-size: 1.8rem;
   }
 }
@@ -116,6 +117,23 @@
 .button-container {
   button {
     padding: 1rem;
+  }
+}
+
+.enter-pin {
+  color: #ffffff;
+  padding: 0.5rem 3rem;
+}
+
+.pin-input-container {
+  width: 100%;
+  margin: 0.1rem auto;
+  float: none;
+
+  .incorrect-pin {
+    text-align: center;
+    color: #D8127D;
+    font-size: 1.6rem;
   }
 }
 
