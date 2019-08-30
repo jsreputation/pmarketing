@@ -12,6 +12,8 @@ export abstract class RewardsService {
 
   public abstract reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher>;
 
+  public abstract issueReward(rewardId: number): Observable<IVoucher>;
+
   public abstract getReward(id: number): Observable<IReward>;
 
   // @ts-ignore
