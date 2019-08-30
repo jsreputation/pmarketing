@@ -1,8 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
+import { IVoucher, VoucherState } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
+
+export type StatusLabelMapping = {
+  [key in VoucherState]: string;
+};
 
 @Component({
   selector: 'perx-core-vouchers',
