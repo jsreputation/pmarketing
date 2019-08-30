@@ -92,18 +92,22 @@ $max-width: 60rem;
     background: #BBE5B3;
     color: #173630;
   }
+
   &.expired {
     background: #919EAB;
     color: #212121;
   }
+
   &.issued {
     background: #BBE5B3;
     color: #173630;
   }
+
   &.reserved {
     background: #FFC58B;
     color: #4A1504;
   }
+
   &.released {
     background: #FEAD9A;
     color: #330101;
