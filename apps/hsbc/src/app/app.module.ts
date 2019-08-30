@@ -12,8 +12,6 @@ import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
@@ -77,9 +75,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatSidenavModule,
     UtilsModule,
     VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    AuthenticationModule,
+    AuthenticationModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     StampModule.forRoot({ env: environment }),

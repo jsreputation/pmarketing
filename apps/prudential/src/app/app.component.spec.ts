@@ -3,17 +3,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
+import { ProfileModule, AuthenticationService } from '@perx/core';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
   let router: Router;
   let location: Location;
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  const authServiceStub = {
+    $failedAuth: of(true)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,15 +29,17 @@ describe('AppComponent', () => {
         MatIconModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        AuthenticationModule,
-        ProfileModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+        ProfileModule.forRoot({ env: environment })
       ],
       declarations: [
         AppComponent
       ],
-      providers: [TokenStorage]
+      providers: [
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        }
+      ]
     }).compileComponents();
     router = TestBed.get(Router);
     location = TestBed.get(Location);
@@ -54,21 +60,21 @@ describe('AppComponent', () => {
   });
 
   it('should redirect to tnc page with replaceUrl props ', () => {
-    spyOn(router, 'navigateByUrl').and.stub();
+    spyOn(router, 'navigateByUrl').and.callThrough();
     const url = 'tnc';
     appComponent.redirectTo(url);
     expect(router.navigateByUrl).toHaveBeenCalledWith('tnc', Object({ replaceUrl: true }));
   });
 
   it('should redirect to contact us page with replaceUrl props ', () => {
-    spyOn(router, 'navigateByUrl').and.stub();
+    spyOn(router, 'navigateByUrl').and.callThrough();
     const url = 'contact-us';
     appComponent.redirectTo(url);
     expect(router.navigateByUrl).toHaveBeenCalledWith('contact-us', Object({ replaceUrl: true }));
   });
 
   it('should not redirect to any page if url is not tnc or contact us', () => {
-    spyOn(router, 'navigateByUrl').and.stub();
+    spyOn(router, 'navigateByUrl').and.callThrough();
     const url = 'test';
     appComponent.redirectTo(url);
     expect(router.navigateByUrl).not.toHaveBeenCalledWith('test');

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VouchersService } from '@perx/core';
+import { StatusLabelMapping, VouchersService } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
@@ -14,6 +14,14 @@ import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.
 })
 export class VoucherDetailComponent implements OnInit {
   public voucher: Observable<IVoucher>;
+
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
 
   constructor(
     private voucherServe: VouchersService,
