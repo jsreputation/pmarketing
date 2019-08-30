@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    this.authService.failedAuthObservable.subscribe(
+    this.authService.$failedAuth.subscribe(
       (didFailAuth) => {
         if (didFailAuth) {
           this.router.navigateByUrl('login');
@@ -47,8 +47,8 @@ export class AppComponent implements OnInit {
 
   public onActivate(ref: any): void {
     this.showBack = ref instanceof VoucherComponent ||
-                    ref instanceof TncComponent ||
-                    ref instanceof ContactUsComponent;
+      ref instanceof TncComponent ||
+      ref instanceof ContactUsComponent;
   }
 
   public redirectTo(url: string): void {

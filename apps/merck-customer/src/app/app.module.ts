@@ -26,8 +26,6 @@ import {
 } from '@angular/material';
 import {
   AuthenticationModule,
-  OauthModule,
-  CognitoModule,
   ProfileModule,
   UtilsModule,
   LoyaltyModule,
@@ -103,9 +101,7 @@ import { TransactionPipe } from './account/transaction-history/transaction.pipe'
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    AuthenticationModule,
+    AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     UtilsModule,
     LoyaltyModule.forRoot({env: environment}),

@@ -16,8 +16,9 @@ import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/materia
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../../environments/environment';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -47,6 +48,7 @@ describe('GameComponent', () => {
         GameModule.forRoot({ env: environment }),
         MatProgressBarModule,
         MatProgressSpinnerModule,
+        RouterTestingModule,
         NoopAnimationsModule
       ],
       providers: [

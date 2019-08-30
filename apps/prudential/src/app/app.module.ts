@@ -6,9 +6,7 @@ import { AppComponent } from './app.component';
 import {
   VouchersModule,
   PerxCoreModule,
-  CognitoModule,
   AuthenticationModule,
-  OauthModule,
   CampaignModule,
   GameModule,
   UtilsModule
@@ -66,11 +64,9 @@ import { ResultComponent } from './result/result.component';
     MatProgressBarModule,
     BrowserAnimationsModule,
     PerxCoreModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
     CampaignModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
-    AuthenticationModule,
+    AuthenticationModule.forRoot({ env: environment }),
     FormsModule,
     UtilsModule
   ],

@@ -34,3 +34,7 @@ export interface IChangePasswordData {
     passwordConfirmation: string;
     otp: string;
 }
+
+export interface ILoginResponse {
+    bearer_token?: string;
+}

@@ -4,7 +4,7 @@ import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { AuthenticationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'hkbn-forgot-password',
@@ -33,10 +33,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router,
-              private route: ActivatedRoute) {
-  }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   public ngOnInit(): void {
     this.route.queryParams
@@ -45,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((params) => {
-        this.phoneStepForm.setValue({phone: params.identifier});
+        this.phoneStepForm.setValue({ phone: params.identifier });
       });
   }
 
@@ -81,15 +82,16 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       return;
     }
     const value = this.newPasswordForm.value;
-
-    this.authenticationService.resetPassword({phone: this.identifier, otp: this.otp, ...value})
-      .subscribe(() => {
-
-        const authorized = this.authenticationService.v4GameOauth(this.identifier, value.newPassword);
-        if (authorized) {
+    this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value }).pipe(
+      mergeMap(
+        () => {
+          return this.authenticationService.login(this.identifier, value.newPassword);
+        }
+      )).subscribe(
+        () => {
           this.router.navigate(['/']);
         }
-      });
+      );
   }
 
 }
