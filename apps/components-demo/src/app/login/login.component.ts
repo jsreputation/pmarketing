@@ -11,7 +11,6 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public authed: boolean;
   public preAuth: boolean;
   public failedAuth: boolean;
 
@@ -27,8 +26,8 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          this.redirectAfterLogin(isAuthed);
+        () => {
+          this.redirectAfterLogin();
         },
         () => {
           this.failedAuth = true;
@@ -37,12 +36,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public redirectAfterLogin(isAuthed: boolean): void {
-    this.failedAuth = !isAuthed;
-    if (isAuthed) {
-      this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'rewards/list');
-    }
-
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'rewards/list');
   }
   // TODO: error states
   public onSubmit(loginForm: NgForm): void {
@@ -51,8 +46,8 @@ export class LoginComponent implements OnInit {
     const mechId = '2';
 
     this.authService.login(username, password, mechId).subscribe(
-      (isAuthed: boolean) => {
-        this.redirectAfterLogin(isAuthed);
+      () => {
+        this.redirectAfterLogin();
       },
       () => {
         this.failedAuth = true;

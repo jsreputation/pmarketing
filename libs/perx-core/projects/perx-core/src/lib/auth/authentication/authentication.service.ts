@@ -41,9 +41,9 @@ export abstract class AuthenticationService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean>;
+  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void>;
 
-  public abstract autoLogin(): Observable<boolean>;
+  public abstract autoLogin(): Observable<void>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works

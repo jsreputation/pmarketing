@@ -36,10 +36,8 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          if (isAuthed) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'bpi/landing');
-          }
+        () => {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'bpi/landing');
         }
       );
     }

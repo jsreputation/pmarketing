@@ -88,10 +88,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           return this.authenticationService.login(this.identifier, value.newPassword);
         }
       )).subscribe(
-        (authorized: boolean) => {
-          if (authorized) {
-            this.router.navigate(['/']);
-          }
+        () => {
+          this.router.navigate(['/']);
         }
       );
   }

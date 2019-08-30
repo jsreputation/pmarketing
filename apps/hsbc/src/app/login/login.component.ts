@@ -39,10 +39,8 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          if (isAuthed) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
-          }
+        () => {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
         }
       );
     }
@@ -54,15 +52,13 @@ export class LoginComponent implements OnInit {
     this.errorMessage = null;
 
     this.authService.login(username, password).subscribe(
-      (isAuthed: boolean) => {
-        if (isAuthed) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = username;
-          }
-
-          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = username;
         }
+
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
@@ -78,6 +74,8 @@ export class LoginComponent implements OnInit {
               }));
             this.errorMessage = 'Invalid credentials';
           }
+        } else {
+          this.errorMessage = err;
         }
       }
     );

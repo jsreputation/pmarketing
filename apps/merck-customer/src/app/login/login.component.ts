@@ -51,10 +51,8 @@ export class LoginComponent implements OnInit, PageAppearence {
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          if (isAuthed) {
-            this.router.navigateByUrl('home');
-          }
+        () => {
+          this.router.navigateByUrl('home');
         }
       );
     }
@@ -78,14 +76,12 @@ export class LoginComponent implements OnInit, PageAppearence {
     const password: string = this.loginForm.get('password').value;
 
     this.authService.login(mobileNo, password).subscribe(
-      (isAuthed: boolean) => {
-        if (isAuthed) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = mobileNo;
-          }
-          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/user-info');
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = mobileNo;
         }
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/user-info');
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

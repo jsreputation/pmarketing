@@ -41,17 +41,15 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          this.redirectAfterLogin(isAuthed);
+        () => {
+          this.redirectAfterLogin();
         }
       );
     }
   }
 
-  public redirectAfterLogin(isAuthed: boolean): void {
-    if (isAuthed) {
-      this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
-    }
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
   }
 
   public onSubmit(): void {
@@ -59,8 +57,8 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
     this.authService.login(username, password).subscribe(
-      (isAuthed: boolean) => {
-        this.redirectAfterLogin(isAuthed);
+      () => {
+        this.redirectAfterLogin();
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
@@ -76,6 +74,8 @@ export class LoginComponent implements OnInit {
               }));
             this.errorMessage = 'Invalid credentials';
           }
+        } else {
+          this.errorMessage = err;
         }
       }
     );

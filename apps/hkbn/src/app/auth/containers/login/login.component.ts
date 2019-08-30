@@ -15,10 +15,8 @@ export class LoginComponent {
 
   public login(data: LoginFormValue): void {
     this.authService.login(data.user, data.pass).subscribe(
-      (isAuthed: boolean) => {
-        if (isAuthed) {
-          this.router.navigate([this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/']);
-        }
+      () => {
+        this.router.navigate([this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/']);
       },
       (err) => {
         this.nofifcationService.addSnack(err.error.message);

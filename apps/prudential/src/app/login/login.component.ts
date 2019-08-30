@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
-        (isAuthed: boolean) => {
-          this.redirectAfterLogin(isAuthed);
+        () => {
+          this.redirectAfterLogin();
         },
         () => {
           this.failedAuth = true;
@@ -38,11 +38,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public redirectAfterLogin(isAuthed: boolean): void {
-    this.failedAuth = !isAuthed;
-    if (isAuthed) {
-      this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'game');
-    }
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'game');
   }
 
   // TODO: error states
@@ -52,8 +49,8 @@ export class LoginComponent implements OnInit {
     const mechId = '2';
 
     this.authService.login(username, password, mechId).subscribe(
-      (isAuthed: boolean) => {
-        this.redirectAfterLogin(isAuthed);
+      () => {
+        this.redirectAfterLogin();
       },
       () => {
         this.failedAuth = true;

@@ -1,6 +1,6 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap, catchError } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
@@ -77,19 +77,18 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean> {
-    let success = false;
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void> {
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
       tap(
         (res) => {
           const userBearer = res && res.bearer_token;
-          if (userBearer) {
-            this.saveUserAccessToken(userBearer);
-            success = true;
+          if (!userBearer) {
+            throw new Error('Get authentication token failed!');
           }
-          return success;
+          this.saveUserAccessToken(userBearer);
         }
-      )
+      ),
+      catchError(err => throwError(err))
     );
   }
 
@@ -110,20 +109,19 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  public autoLogin(): Observable<boolean> {
-    let success = false;
+  public autoLogin(): Observable<void> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
         (res) => {
           const userBearer = res && res.bearer_token;
-          if (userBearer) {
-            this.saveUserAccessToken(userBearer);
-            success = true;
+          if (!userBearer) {
+            throw new Error('Get authentication token failed!');
           }
-          return success;
+          this.saveUserAccessToken(userBearer);
         }
-      )
+      ),
+      catchError(err => throwError(err))
     );
   }
 

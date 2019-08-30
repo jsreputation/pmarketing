@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError } from 'rxjs';
-import { tap, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
@@ -93,8 +93,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public autoLogin(): Observable<boolean> {
-    let success = false;
+  public autoLogin(): Observable<void> {
     return this.setPreAuthJWT().pipe(
       mergeMap(
         () => {
@@ -102,13 +101,13 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
             tap(
               (res) => {
                 const userBearer = res.body.data[0].attributes.jwt || undefined;
-                if (userBearer) {
-                  this.saveUserAccessToken(userBearer);
-                  success = true;
+                if (!userBearer) {
+                  throw new Error('Get authentication token failed!');
                 }
-                return success;
+                this.saveUserAccessToken(userBearer);
               }
-            )
+            ),
+            catchError(err => throwError(err))
           );
         }
       )
@@ -116,6 +115,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   }
 
+  // Don't know real return format yet, put `any` now 
   public getUserWithJWT(bearer: string): Observable<any> {
     const user = (window as any).primaryIdentifier;
     const payload = {
@@ -148,7 +148,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<boolean> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void> {
     return throwError('Not implement yet');
   }
 

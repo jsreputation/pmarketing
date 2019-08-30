@@ -86,14 +86,12 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   }
   private sendLoginCall(password: string): void {
     this.authService.login(this.mobileNumber, password).subscribe(
-      (isAuthed: boolean) => {
-        if (isAuthed) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = this.mobileNumber;
-          }
-          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = this.mobileNumber;
         }
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

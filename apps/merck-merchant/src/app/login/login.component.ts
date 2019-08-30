@@ -36,14 +36,12 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.get('password').value;
 
     this.authService.login(email, password).subscribe(
-      (isAuthed: boolean) => {
-        if (isAuthed) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = email;
-          }
-          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = email;
         }
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
