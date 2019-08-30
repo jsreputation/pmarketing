@@ -82,6 +82,7 @@
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "PASSWORD_SUCCESS_UPDATE": "Your password has been successfully updated",
   "OK": "OK",
+  "POINTS_EXPITING": "{{points}} points will expire on {{date}}",
   "ALL": "All",
   "HUNG_FOOK_TONG": "Hung Fook Tong",
   "BIG_BIG_SHOP": "big big shop"
