@@ -34,12 +34,8 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.rewardsService.reserveReward(this.rewardId)
-      .subscribe(
-        (voucher: IVoucher) => {
-          console.log(voucher);
-          this.router.navigate(['/home/vouchers']);
-        }
+    this.rewardsService.issueReward(this.rewardId)
+      .subscribe(() => this.router.navigate(['/home/vouchers'])
     );
   }
 

@@ -51,22 +51,24 @@ export class RewardComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     const data: IRewardConfirmComponentParam = {
       title: this.rewardData ? this.rewardData.name : '',
-      existingPoints: this.loyalty.pointsBalance,
-      requiredPoints: this.rewardData.rewardPrice[0].points
+      existingPoints: this.loyalty ? this.loyalty.pointsBalance : 0,
+      requiredPoints: this.rewardData &&
+        this.rewardData.rewardPrice &&
+        this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points : 0
     };
-    this.dialog.open(RewardConfirmComponent, { data }
-    ).afterClosed().pipe(
-      takeUntil(this.destroy$),
-      switchMap((result) => result ? this.exchangePoints() : of(null))
-    ).subscribe(() => { });
+    this.dialog.open(RewardConfirmComponent, { data })
+      .afterClosed().pipe(
+        takeUntil(this.destroy$),
+        switchMap((result) => result ? this.exchangePoints() : of(null))
+      ).subscribe(() => { });
   }
 
   public dialogClosed(): void {
     this.router.navigate(['/wallet']);
   }
 
-  private exchangePoints(): Observable<any> {
-    return this.rewardsService.reserveReward(this.rewardData.id)
+  private exchangePoints(): Observable<void> {
+    return this.rewardsService.issueReward(this.rewardData.id)
       .pipe(
         switchMap(() => combineLatest([this.translateService.get('YOUR_BALANCE_IS'), this.translateService.get('POINTS')])
           .pipe(
@@ -75,7 +77,8 @@ export class RewardComponent implements OnInit, OnDestroy {
               title: '[Reward Title]',
               text: `${balance} ${29} ${points}`,
               afterClosedCallBack: this
-            }))
+            })),
+            map(() => { })
           )
         )
       );
