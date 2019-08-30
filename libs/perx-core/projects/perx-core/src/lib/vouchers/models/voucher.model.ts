@@ -14,6 +14,10 @@ export enum RedemptionType {
   offline = 'offline'
 }
 
+export type StatusLabelMapping = {
+  [key in VoucherState]: string;
+};
+
 interface IVoucherDescription {
   title: string;
   content: string;
