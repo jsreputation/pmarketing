@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
   }
   private getTranslatedTabsName(): Observable<any> {
     const searchWords = this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el);
-    return searchWords ? this.translate.get(searchWords)
+    return searchWords && searchWords.length ? this.translate.get(searchWords)
       .pipe(map((dictioniry) => {
         return Object.entries(keysTranslate).reduce((newObj, [key, val]) => {
           newObj[key] = dictioniry[val];
