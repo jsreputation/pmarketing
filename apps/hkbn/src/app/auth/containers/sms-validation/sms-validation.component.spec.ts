@@ -55,7 +55,7 @@ describe('SmsValidationComponent', () => {
 
     beforeEach(() => {
       authenticationService = TestBed.get(AuthenticationService);
-      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of(true));
+      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of({message: 'OTP verified'}));
       router = TestBed.get(Router);
       navigateSpy = spyOn(router, 'navigate');
     });

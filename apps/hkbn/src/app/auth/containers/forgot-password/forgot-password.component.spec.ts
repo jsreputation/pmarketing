@@ -106,7 +106,7 @@ describe('ForgotPasswordComponent', () => {
   it('should do nothing if password form invalid', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get(AuthenticationService);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
     component.changePassword();
     expect(resetPasswordSpy.calls.count()).toBe(0);
   });
@@ -114,7 +114,7 @@ describe('ForgotPasswordComponent', () => {
   it('should reset user password, when call changePassword method and data is valid', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get(AuthenticationService);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
     const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
 
     component.phoneStepForm.setValue({phone: '63987654'});

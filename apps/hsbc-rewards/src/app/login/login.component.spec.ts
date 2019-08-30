@@ -62,20 +62,20 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    authSpy = spyOn(authService, 'login').and.returnValue(of(true));
+    authSpy = spyOn(authService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
   });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should call authService', () => {
-    authSpy.and.returnValue(of(true));
+    authSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
     component.onSubmit();
     expect(authSpy).toHaveBeenCalled();
   });
 
   it('should redirect to home', fakeAsync(() => {
-    authSpy.and.returnValue(of(true));
+    authSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
     spyOn(router, 'navigateByUrl').and.stub();
     fixture.detectChanges();
     component.onSubmit();

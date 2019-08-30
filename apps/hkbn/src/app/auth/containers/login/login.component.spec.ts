@@ -83,7 +83,7 @@ describe('LoginComponent', () => {
     });
 
     it('should call login method, authorize and redirect to root page', async () => {
-      loginSpy = loginSpy.and.returnValue(of(true));
+      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
@@ -93,7 +93,7 @@ describe('LoginComponent', () => {
     });
 
     it('should call login method, authorize and redirect to InterruptedUrl page', async () => {
-      loginSpy = loginSpy.and.returnValue(of(true));
+      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
