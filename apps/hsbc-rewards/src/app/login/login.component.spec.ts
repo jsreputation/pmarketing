@@ -22,7 +22,8 @@ describe('LoginComponent', () => {
   const routerSub = { navigateByUrl: (url) => { } };
   const authenticationServiceStub = {
     $failedAuth: of(true),
-    getInterruptedUrl: () => null
+    getInterruptedUrl: () => null,
+    login: of({bearer_token: 'SWWERW'})
   };
   let debugElement: DebugElement;
   let authService: AuthenticationService;
