@@ -214,6 +214,16 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
+  test-e2e-protractor:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run build:candyland:prod
+      - run: yarn run pree2e-ci ## need to run webdriver-manager update before protractor e2e runs
+      - run: yarn run e2e-ci-pro
   test:
     docker:
       - image: circleci/node:10-browsers
@@ -224,8 +234,7 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
-      - run: yarn run pree2e-ci ## need to run webdriver-manager update before protractor e2e runs
-      - run: yarn run e2e-ci-pro
+ 
 #      - run: yarn run e2e-ci
   lint:
     docker:
@@ -349,7 +358,7 @@ daily_e2e_run_morning:
               only:
                 - master
     jobs:
-      -test
+      - test-e2e-protractor
 daily_e2e_run_evening:
     triggers:
       - schedule:
@@ -360,4 +369,4 @@ daily_e2e_run_evening:
               only:
                 - master
     jobs:
-      -test
+      - test-e2e-protractor
