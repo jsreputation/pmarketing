@@ -6,11 +6,9 @@ import { MatDialog } from '@angular/material';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { Type } from '@angular/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
-  let authenticationService: AuthenticationService;
   let fixture: ComponentFixture<AppComponent>;
   let notificationService: NotificationService;
 
@@ -47,7 +45,6 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    authenticationService = TestBed.get(AuthenticationService as Type<AuthenticationService>);
     notificationService = TestBed.get(NotificationService);
     fixture.detectChanges();
   });
