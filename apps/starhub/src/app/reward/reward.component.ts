@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RewardsService } from '@perx/core';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 @Component({
   selector: 'app-reward',
@@ -34,12 +33,8 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.rewardsService.reserveReward(this.rewardId)
-      .subscribe(
-        (voucher: IVoucher) => {
-          console.log(voucher);
-          this.router.navigate(['/home/vouchers']);
-        }
+    this.rewardsService.issueReward(this.rewardId)
+      .subscribe(() => this.router.navigate(['/home/vouchers'])
     );
   }
 
