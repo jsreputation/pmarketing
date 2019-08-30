@@ -6,6 +6,7 @@ import { MatIconModule, MatDividerModule } from '@angular/material';
 import { VouchersService, UtilsModule } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
+import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -14,7 +15,7 @@ describe('RedemptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RedemptionComponent, RewardDetailComponent, LocationShortFormatComponent],
+      declarations: [RedemptionComponent, RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent],
       imports: [
         RouterTestingModule,
         MatIconModule,
