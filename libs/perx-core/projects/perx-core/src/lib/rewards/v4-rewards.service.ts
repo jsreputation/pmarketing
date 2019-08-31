@@ -230,7 +230,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, { params }
+      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, {params}
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
@@ -261,7 +261,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`, { params }
+      `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
         if (res.meta) {
