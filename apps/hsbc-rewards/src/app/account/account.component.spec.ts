@@ -1,9 +1,9 @@
-import {async, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ProfileService, ProfileModule, AuthenticationService} from '@perx/core';
-import {of, BehaviorSubject} from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
+import { of, Observable } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import {AccountComponent} from './account.component';
 import {DebugElement, Component} from '@angular/core';
@@ -41,10 +41,7 @@ const dynamicCreateServiceStub = {
   createComponent: () => {
   }
 };
-const authenticationServiceStub = {
-  failedAuthObservable: new BehaviorSubject(true), logout: () => {
-  }
-};
+const authenticationServiceStub = { $failedAuth: of(true), logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;

@@ -5,18 +5,17 @@ import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let authenticationService: AuthenticationService;
   let notificationService: NotificationService;
 
   beforeEach(async(() => {
     const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true) };
+    const authenticationServiceStub = { $failedAuth: of(true) };
     const routerStub = { navigateByUrl: () => ({}) };
     TestBed.configureTestingModule({
       imports: [
@@ -46,7 +45,6 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    authenticationService = TestBed.get(AuthenticationService);
     notificationService = TestBed.get(NotificationService);
     fixture.detectChanges();
   });
@@ -68,19 +66,12 @@ describe('AppComponent', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
-      expect(authenticationService.failedAuthObservable.value).toBe(true);
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('login');
-    });
-
-    it('should failed auth login', () => {
-      authenticationService.failedAuthObservable = new BehaviorSubject(false);
-      component.ngOnInit();
-      expect(authenticationService.failedAuthObservable.value).toBe(false);
     });
 
     it('should call notificationService', () => {
       notificationService.$popup.subscribe(res => {
-        expect(res).toEqual({title: 'Title', text: 'Body', buttonTxt: 'Button'});
+        expect(res).toEqual({ title: 'Title', text: 'Body', buttonTxt: 'Button' });
       });
     });
   });

@@ -40,15 +40,10 @@ export class AppComponent implements OnInit {
         localStorage.setItem('user-id', pi);
 
         (window as any).primaryIdentifier = searchParams.get('pi');
-      } else {
-        this.authService.getAccessToken()
-          .subscribe((tok: string) => {
-            if (tok === null) {
-              this.notificationService.addPopup({
-                text: 'Missing authentication information'
-              });
-            }
-          });
+      } else if (this.authService.getUserAccessToken() === null) {
+        this.notificationService.addPopup({
+          text: 'Missing authentication information'
+        });
       }
     }
   }
