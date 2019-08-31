@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let router: Router;
   let location: Location;
   let appComponent: AppComponent;
