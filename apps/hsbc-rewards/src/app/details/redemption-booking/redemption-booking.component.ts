@@ -87,7 +87,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       quantity: [null, [Validators.required]],
       merchant: [{value: null, disabled: true}, [Validators.required]],
       location: [null, [Validators.required]],
-      priceId: [null],
+      priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
     });
   }
