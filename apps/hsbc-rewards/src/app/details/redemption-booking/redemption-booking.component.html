@@ -24,7 +24,7 @@
           <span *ngIf="price.points">{{price.points}} points</span>
           <span *ngIf="price.points && price.price"> + </span>
           <span *ngIf="price.price">{{price.currencyCode}} {{price.price}}</span>
-<!--        todo: (code: XXXXX)-->
+          <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
         </mat-radio-button>
       </mat-radio-group>
       <div class="agreement">
