@@ -5,23 +5,22 @@ import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileModule, AuthenticationService } from '@perx/core';
 import { environment } from '../environments/environment';
-import { Type } from '@angular/core';
+import { DebugElement, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let debugElement: DebugElement;
+  let router: Router;
+
   const authServiceStub = {
     $failedAuth: of(true)
   };
-  const routerStub = {
-    navigateByUrl: () => {}
-  };
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
 
   beforeEach(async(() => {
@@ -33,7 +32,6 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatIconModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         ProfileModule.forRoot({ env: environment })
       ],
       declarations: [
@@ -44,7 +42,6 @@ describe('AppComponent', () => {
           provide: AuthenticationService,
           useValue: authServiceStub
         },
-        { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub }
       ]
     }).compileComponents();
@@ -53,6 +50,8 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     appComponent = fixture.componentInstance;
+    debugElement = fixture.debugElement;
+    router = debugElement.injector.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
@@ -65,33 +64,29 @@ describe('AppComponent', () => {
   });
 
   it('should redirect to tnc page with replaceUrl props ', () => {
-    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    spyOn(router, 'navigateByUrl').and.stub();
     const url = 'tnc';
     appComponent.redirectTo(url);
-    expect(routerSpy).toHaveBeenCalledWith('tnc', Object({ replaceUrl: true }));
+    expect(router.navigateByUrl).toHaveBeenCalledWith('tnc', Object({ replaceUrl: true }));
   });
 
   it('should redirect to contact us page with replaceUrl props ', () => {
-    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    spyOn(router, 'navigateByUrl').and.stub();
     const url = 'contact-us';
     appComponent.redirectTo(url);
-    expect(routerSpy).toHaveBeenCalledWith('contact-us', Object({ replaceUrl: true }));
+    expect(router.navigateByUrl).toHaveBeenCalledWith('contact-us', Object({ replaceUrl: true }));
   });
 
   it('should not redirect to any page if url is not tnc or contact us', () => {
-    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    spyOn(router, 'navigateByUrl').and.stub();
     const url = 'test';
     appComponent.redirectTo(url);
-    expect(routerSpy).not.toHaveBeenCalledWith('test');
+    expect(router.navigateByUrl).not.toHaveBeenCalledWith('test');
   });
 
   it('show goBack to have been called once', () => {
     const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
-    const locationSpy = spyOn(location, 'back');
-    spyOn(location, 'back');
+    const locationSpy = spyOn(location, 'back').and.stub();
     appComponent.goBack();
     expect(locationSpy).toHaveBeenCalled();
   });
