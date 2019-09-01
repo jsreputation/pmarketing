@@ -10,9 +10,8 @@ import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let router: Router;
-  let location: Location;
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   const authServiceStub = {
@@ -21,6 +20,10 @@ fdescribe('AppComponent', () => {
   const routerStub = {
     navigateByUrl: () => {}
   };
+  const locationStub = {
+    back: () => {}
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -41,13 +44,11 @@ fdescribe('AppComponent', () => {
           provide: AuthenticationService,
           useValue: authServiceStub
         },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: Location, useValue: locationStub }
       ]
     }).compileComponents();
-    router = TestBed.get(Router);
-    location = TestBed.get(Location);
-    const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
   }));
 
   beforeEach(() => {
@@ -65,27 +66,32 @@ fdescribe('AppComponent', () => {
   });
 
   it('should redirect to tnc page with replaceUrl props ', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'tnc';
     appComponent.redirectTo(url);
     expect(routerSpy).toHaveBeenCalledWith('tnc', Object({ replaceUrl: true }));
   });
 
   it('should redirect to contact us page with replaceUrl props ', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'contact-us';
     appComponent.redirectTo(url);
     expect(routerSpy).toHaveBeenCalledWith('contact-us', Object({ replaceUrl: true }));
   });
 
   it('should not redirect to any page if url is not tnc or contact us', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'test';
     appComponent.redirectTo(url);
     expect(routerSpy).not.toHaveBeenCalledWith('test');
   });
 
   it('show goBack to have been called once', () => {
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    const locationSpy = spyOn(location, 'back');
     spyOn(location, 'back');
     appComponent.goBack();
-    expect(location.back).toHaveBeenCalledTimes(1);
+    expect(locationSpy).toHaveBeenCalled();
   });
 
 });
