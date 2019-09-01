@@ -5,9 +5,9 @@ import {
   NotificationService,
   RewardsService,
   IReward,
-  VouchersService
+  VouchersService,
+  IPrice
 } from '@perx/core';
-import { IPrice } from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 import { map, flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
 

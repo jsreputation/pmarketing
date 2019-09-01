@@ -1,10 +1,9 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
-import {ITabConfig} from '@perx/core';
+import {ITabConfig, IPrice} from '@perx/core';
 import {Observable, of, Subject, forkJoin} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
-import {IPrice} from '../../../../../libs/perx-core/projects/perx-core/src/lib/rewards/models/reward.model';
 
 const tabs: ITabConfig[] = [
   {

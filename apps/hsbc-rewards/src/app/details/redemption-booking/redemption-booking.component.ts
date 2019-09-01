@@ -7,13 +7,13 @@ import {
   NotificationService,
   PopupComponent,
   LoyaltyService,
-  ILoyalty
+  ILoyalty,
+  IPrice
 } from '@perx/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {switchMap, map, flatMap} from 'rxjs/operators';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {forkJoin, Observable, of, SubscriptionLike} from 'rxjs';
-import {IPrice} from '@perx/core/dist/perx-core/lib/rewards/models/reward.model';
 import {MatDialog} from '@angular/material';
 
 @Component({
