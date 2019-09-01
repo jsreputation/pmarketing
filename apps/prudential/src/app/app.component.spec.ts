@@ -5,6 +5,7 @@ import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileModule, AuthenticationService } from '@perx/core';
 import { environment } from '../environments/environment';
+import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -48,7 +49,7 @@ describe('AppComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     }).compileComponents();
-    router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+    router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
   }));
 
   beforeEach(() => {
