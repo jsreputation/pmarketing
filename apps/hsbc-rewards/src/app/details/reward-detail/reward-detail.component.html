@@ -1,7 +1,7 @@
 <div class="reward-page">
   <app-detail-header></app-detail-header>
   <div class="reward-body">
-    <perx-core-reward #coreReward [reward]="reward" [showRewardIdentifier]="true"></perx-core-reward>
+    <perx-core-reward #coreReward [reward]="reward" [showRewardIdentifier]="true" [displayPriceFn]="displayPriceFn"></perx-core-reward>
   </div>
   <div class="redeem-container">
     <button mat-flat-button type="submit" color="primary" (click)="moveToBooking()">Redeem</button>
