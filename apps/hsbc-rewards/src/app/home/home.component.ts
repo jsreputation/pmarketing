@@ -22,6 +22,21 @@ const tabs: ITabConfig[] = [
     filterValue: null,
     tabName: 'Shopping',
     rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Mileage',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Charity Donation',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Annual Fee',
+    rewardsList: null
   }
 ];
 
