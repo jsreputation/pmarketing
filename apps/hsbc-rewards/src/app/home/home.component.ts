@@ -30,12 +30,12 @@ const tabs: ITabConfig[] = [
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'Charity Donation',
+    tabName: 'Charity donation',
     rewardsList: null
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'Annual Fee',
+    tabName: 'Annual fee',
     rewardsList: null
   }
 ];
