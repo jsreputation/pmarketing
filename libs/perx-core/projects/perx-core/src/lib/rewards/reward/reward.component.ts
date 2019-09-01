@@ -12,6 +12,9 @@ export class RewardComponent implements OnInit {
   @Input('reward')
   public reward$: Observable<IReward>;
 
+  @Input()
+  public showRewardIdentifier: boolean = false;
+
   public ngOnInit(): void {
   }
 

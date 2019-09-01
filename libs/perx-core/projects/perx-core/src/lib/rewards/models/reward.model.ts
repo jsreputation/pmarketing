@@ -33,6 +33,7 @@ export interface IPrice {
   price?: number;
   currencyCode?: string;
   points?: number;
+  identifier?: string;
 }
 
 export interface ICategoryTags {
