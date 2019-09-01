@@ -19,7 +19,7 @@
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
         <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
           <div *ngIf="i > 0" class="or-label">or</div>
-          <span>{{displayPrice(rewardPrice)}}</span><span class="points-code" *ngIf="rewardPrice.identifier"> (code: {{rewardPrice.identifier}})</span>
+          <span>{{displayPrice(rewardPrice)}}</span><span class="points-code" *ngIf="showRewardIdentifier && rewardPrice.identifier"> (code: {{rewardPrice.identifier}})</span>
         </div>
       </div>
       <div class="reward-expiry" *ngIf="reward.validTo !== null">
