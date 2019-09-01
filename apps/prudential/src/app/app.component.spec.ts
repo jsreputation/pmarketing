@@ -12,7 +12,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  let router: Router;
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   const authServiceStub = {
@@ -49,7 +48,6 @@ describe('AppComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     }).compileComponents();
-    router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
   }));
 
   beforeEach(() => {
@@ -67,6 +65,7 @@ describe('AppComponent', () => {
   });
 
   it('should redirect to tnc page with replaceUrl props ', () => {
+    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'tnc';
     appComponent.redirectTo(url);
@@ -74,6 +73,7 @@ describe('AppComponent', () => {
   });
 
   it('should redirect to contact us page with replaceUrl props ', () => {
+    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'contact-us';
     appComponent.redirectTo(url);
@@ -81,6 +81,7 @@ describe('AppComponent', () => {
   });
 
   it('should not redirect to any page if url is not tnc or contact us', () => {
+    const router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigateByUrl');
     const url = 'test';
     appComponent.redirectTo(url);
