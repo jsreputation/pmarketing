@@ -12,7 +12,7 @@ import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
