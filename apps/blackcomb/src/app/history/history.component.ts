@@ -10,13 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class HistoryComponent implements OnInit {
   public vouchers$: Observable<Voucher[]>;
+  public filter: string[];
 
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
-    this.vouchers$ = this.vouchersService.getAll()
-      .pipe(map((vouchers: Voucher[]) => vouchers.filter((voucher: Voucher) => {
-        return voucher.state !== VoucherState.issued;
-      })));
+    this.vouchers$ = this.vouchersService.getAll();
+    this.filter = [VoucherState.redeemed, VoucherState.expired];
   }
 }
