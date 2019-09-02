@@ -82,6 +82,7 @@
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "PASSWORD_SUCCESS_UPDATE": "Your password has been successfully updated",
   "OK": "OK",
+  "DISCLAMAIR_ACCOUNT": "<div>For more information and support, please send an email to <a href='mailto:contact@home-plus.hk'>contact@home-plus.hk</a></div>",
   "POINTS_EXPITING": "{{points}} points will expire on {{date}}",
   "ALL": "All",
   "HUNG_FOOK_TONG": "Hung Fook Tong",

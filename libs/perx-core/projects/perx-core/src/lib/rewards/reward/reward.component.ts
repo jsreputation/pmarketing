@@ -12,22 +12,24 @@ export class RewardComponent implements OnInit {
   @Input('reward')
   public reward$: Observable<IReward>;
 
+  @Input()
+  public displayPriceFn: (rewardPrice: IPrice) => string;
+
+  @Input()
+  public showRewardIdentifier: boolean = false;
+
   public ngOnInit(): void {
-  }
+    if (!this.displayPriceFn) {
+      this.displayPriceFn = (rewardPrice: IPrice) => {
+        if (rewardPrice.price > 0) {
+          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        }
 
-  public displayPrice(rewardPrice: IPrice): string {
-    if (rewardPrice.points > 0 && rewardPrice.price > 0) {
-      return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        if (rewardPrice.points > 0) {
+          return `${rewardPrice.points} points`;
+        }
+        return '0 points'; // is actually 0 or invalid value default
+      };
     }
-
-    if (rewardPrice.price > 0) {
-      return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-    }
-
-    if (rewardPrice.points > 0) {
-      return `${rewardPrice.points} points`;
-    }
-
-    return '0 points'; // is actually 0 or invalid value default
   }
 }

@@ -11,10 +11,12 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
+  let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,7 +34,8 @@ describe('ResetPasswordComponent', () => {
           provide: AuthenticationService,
           useValue: {
             login: () => {},
-            resetPassword: () => of()
+            resetPassword: () => of(),
+            getInterruptedUrl: () => ''
           }
         },
         {
@@ -49,6 +52,7 @@ describe('ResetPasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
+    router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
@@ -77,10 +81,12 @@ describe('ResetPasswordComponent', () => {
         })
       );
       const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+      spyOn(router, 'navigateByUrl').and.stub();
       component.onUpdatePassword();
       tick();
       expect(authenticationServiceSpy).toHaveBeenCalled();
       expect(loginSpy).toHaveBeenCalled();
+      expect(router.navigateByUrl).toHaveBeenCalledWith('home');
     }));
   });
 
