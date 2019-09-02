@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SettingsHttpService } from '@cl-core/http-services/settings-http.service';
+import { TimeZoneSort } from '@cl-helpers/time-zone-sort';
 import Utils from '@cl-helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,7 +18,10 @@ export class SettingsService implements ITableService {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
-    return this.settingsHttpService.getTimeZone();
+    return this.settingsHttpService.getTimeZone()
+      .pipe(
+        map((zones: ITimeZone[]) => zones.sort(TimeZoneSort.compareTimeZone))
+      );
   }
 
   public getCurrency(): Observable<Currency[]> {
