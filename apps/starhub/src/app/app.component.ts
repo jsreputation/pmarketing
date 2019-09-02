@@ -7,10 +7,10 @@ import {
   ProfileService,
   IProfile,
   CampaignService,
-  ICampaign
+  ICampaign,
 } from '@perx/core';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,13 +19,16 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public username: string = 'I do not know who you are!';
+  private selectedCampaign: ICampaign;
+
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private profileService: ProfileService,
     private activeRoute: ActivatedRoute,
     private campaignService: CampaignService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -55,10 +58,13 @@ export class AppComponent implements OnInit {
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
-        if (campaigns.length > 0) {
+        if (campaigns.length > 0 && campaigns[0].type === 'game') {
+          this.selectedCampaign = campaigns[0];
           this.notificationService.addPopup({
-            title: 'Got some campaign',
-            text: campaigns[0].name
+            imageUrl: './assets/shake.png',
+            text: campaigns[0].name, // You’ve got a “Shake the Tree” reward!
+            buttonTxt: 'Play now',
+            afterClosedCallBack: this,
           });
         } else {
           this.notificationService.addPopup({
@@ -67,5 +73,10 @@ export class AppComponent implements OnInit {
           });
         }
       });
+  }
+
+  dialogClosed(): void {
+    console.log(this.selectedCampaign);
+    this.router.navigate(['/game'], { queryParams: { id: this.selectedCampaign.id } });
   }
 }

@@ -12,7 +12,10 @@ import {
   LocationsService,
   RewardsService,
   VouchersService,
-  PinService
+  PinService,
+  GameModule,
+  CampaignService,
+  GameService
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -42,6 +45,10 @@ import { catalogs } from './catalogs.mock';
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
+import { GameComponent } from './game/game.component';
+import { campaigns } from './campaigns.mock';
+import { CongratsComponent } from './congrats/congrats.component';
+import { game } from './game.mock';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -63,6 +70,14 @@ const pinServiceStub = {
   getPin: () => of('2222')
 };
 
+const campaignServiceStub = {
+  getCampaigns: () => of(campaigns)
+};
+
+const gameServiceStub = {
+  get: () => of(game)
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +91,9 @@ const pinServiceStub = {
     CategorySortComponent,
     RewardsSortPipe,
     LocationShortFormatComponent,
-    RewardDetailComponent
+    RewardDetailComponent,
+    GameComponent,
+    CongratsComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +109,7 @@ const pinServiceStub = {
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
+    GameModule,
     CognitoModule.forRoot({ env: environment }),
     OauthModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment })
@@ -104,7 +122,9 @@ const pinServiceStub = {
     { provide: LocationsService, useValue: locationServiceStub },
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: VouchersService, useValue: vouchersServiceStub },
-    { provide: PinService, useValue: pinServiceStub }
+    { provide: PinService, useValue: pinServiceStub },
+    { provide: CampaignService, useValue: campaignServiceStub },
+    { provide: GameService, useValue: gameServiceStub }
   ],
   bootstrap: [AppComponent]
 })
