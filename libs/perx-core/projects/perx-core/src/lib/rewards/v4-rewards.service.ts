@@ -31,6 +31,7 @@ interface IV4RewardPrice {
   currency_code: string;
   price: number;
   points: number;
+  identifier?: string;
 }
 
 interface IV4Reward {
@@ -58,6 +59,7 @@ interface IV4Price {
   price?: number;
   currency_code?: string;
   points?: number;
+  identifier?: string;
 }
 
 interface IV4MinifiedVoucher {
@@ -150,8 +152,9 @@ export class V4RewardsService extends RewardsService {
         id: price.id,
         currencyCode: price.currency_code,
         price: price.price,
-        points: price.points
-      })),
+        points: price.points,
+        identifier: price.identifier
+  })),
       rewardThumbnail: thumbnailImg,
       rewardBanner,
       validFrom: reward.valid_from,
@@ -193,7 +196,8 @@ export class V4RewardsService extends RewardsService {
       rewardCampaignId: price.reward_campaign_id,
       price: price.price,
       currencyCode: price.currency_code,
-      points: price.points
+      points: price.points,
+      identifier: price.identifier
     };
   }
 
@@ -230,7 +234,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, { params }
+      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, {params}
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
@@ -261,7 +265,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`, { params }
+      `${this.apiHost}/v4/rewards`, {params}
     ).pipe(
       map((res: IV4GetRewardsResponse) => {
         if (res.meta) {
