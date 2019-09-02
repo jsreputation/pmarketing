@@ -53,7 +53,7 @@ const rewardsServiceStub = {
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
-  get: () => of(vouchers[1])
+  get: (id: number) => of(vouchers[id])
 };
 
 // const stampServiceStub = {

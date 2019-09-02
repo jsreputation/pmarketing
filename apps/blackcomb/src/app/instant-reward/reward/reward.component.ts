@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RewardsService, NotificationService, IReward, PopupComponent } from '@perx/core';
+import { RewardsService, IReward, PopupComponent } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -16,16 +16,12 @@ export class RewardComponent implements OnInit {
 
   constructor(
     private rewardsService: RewardsService,
-    private notificationService: NotificationService,
     private dialog: MatDialog,
   ) {
   }
 
   public ngOnInit(): void {
     this.getRewards();
-    this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
-    });
   }
 
   public getRewards(): void {
@@ -33,10 +29,11 @@ export class RewardComponent implements OnInit {
   }
 
   public rewardClickedHandler(reward: IReward): void {
-    this.notificationService.addPopup({
+    const data = {
       title: 'Clicked!',
       text: 'ID: ' + reward.id + '\n' +
         'Reward Name: ' + reward.name,
-    });
+    };
+    this.dialog.open(PopupComponent, { data });
   }
 }
