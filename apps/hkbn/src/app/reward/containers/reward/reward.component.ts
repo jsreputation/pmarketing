@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
+import { RewardConfirmComponent, IRewardConfirmComponentParam } from '../../components/reward-confirm/reward-confirm.component';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { map, switchMap, take, takeUntil, tap, filter } from 'rxjs/operators';
-import { IReward, NotificationService, RewardsService } from '@perx/core';
+import { map, switchMap, takeUntil, tap, filter, last } from 'rxjs/operators';
+import { IReward, NotificationService, RewardsService, LoyaltyService, ILoyalty, IPopupConfig, PopupComponent } from '@perx/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,8 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class RewardComponent implements OnInit, OnDestroy {
 
   public rewardState$: Observable<IReward>;
+  public loyalty: ILoyalty;
+  public rewardData: IReward;
   private destroy$: Subject<void> = new Subject<void>();
-
   constructor(
     private dialog: MatDialog,
     private notificationService: NotificationService,
@@ -24,8 +25,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private rewardsService: RewardsService,
     private translateService: TranslateService,
-    // TODO Uncomment when loyaltyService.exchangePoints will be implemented
-    // private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService
   ) {
   }
 
@@ -34,9 +34,13 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => parseInt(params.get('id'), 10)),
-        switchMap((id: number) => this.rewardsService.getReward(id)),
+        switchMap((id: number) => this.rewardsService.getReward(id).pipe(tap((reward) => this.rewardData = reward))),
         takeUntil(this.destroy$)
       );
+
+    this.loyaltyService.getLoyalty().subscribe((loyalty) => this.loyalty = loyalty);
+
+    this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
   }
 
   public ngOnDestroy(): void {
@@ -45,44 +49,38 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    const dialog = this.dialog.open(RewardConfirmComponent, {
-      data: {
-        title: '[Reward Title]',
-        existingPoints: 49,
-        requiredPoints: 20
-      }
-    });
-
-    dialog.afterClosed()
-      .pipe(
+    const data: IRewardConfirmComponentParam = {
+      title: this.rewardData ? this.rewardData.name : '',
+      existingPoints: this.loyalty ? this.loyalty.pointsBalance : 0,
+      requiredPoints: this.rewardData &&
+        this.rewardData.rewardPrice &&
+        this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points : 0
+    };
+    this.dialog.open(RewardConfirmComponent, { data })
+      .afterClosed().pipe(
         takeUntil(this.destroy$),
         switchMap((result) => result ? this.exchangePoints() : of(null))
-      )
-      .subscribe(() => {
-      });
+      ).subscribe(() => { });
   }
 
   public dialogClosed(): void {
-    this.router.navigate(['']);
+    this.router.navigate(['/wallet']);
   }
 
-  private exchangePoints(): Observable<any> {
-    // TODO integrate this method, when it will be ready
-    // return this.loyaltyService.exchangePoints(1, 1, 1);
-    return of(true)
+  private exchangePoints(): Observable<void> {
+    return this.rewardsService.issueReward(this.rewardData.id)
       .pipe(
-        switchMap(() => combineLatest(
-          [this.translateService.get('YOUR_BALANCE_IS'),
-          this.translateService.get('POINTS')]
-        ).pipe(
-          take(1),
-          tap(([balance, points]) => this.notificationService.addPopup({
-            title: '[Reward Title]',
-            text: `${balance} ${29} ${points}`,
-            afterClosedCallBack: this
-          }))
+        switchMap(() => combineLatest([this.translateService.get('YOUR_BALANCE_IS'), this.translateService.get('POINTS')])
+          .pipe(
+            last(),
+            tap(([balance, points]) => this.notificationService.addPopup({
+              title: '[Reward Title]',
+              text: `${balance} ${29} ${points}`,
+              afterClosedCallBack: this
+            })),
+            map(() => { })
+          )
         )
-        ),
       );
   }
 }

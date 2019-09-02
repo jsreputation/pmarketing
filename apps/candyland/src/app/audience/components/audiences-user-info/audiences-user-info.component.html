@@ -1,7 +1,7 @@
 <div class="user-info">
   <div class="user-info-name-container">
     <p class="user-info-name">
-      {{user?.firstName}} {{user?.lastName}}
+      {{user?.first_name}} {{user?.last_name}}
     </p>
   </div>
   <div class="user-info-list">
@@ -19,8 +19,8 @@
       <p class="user-info-item-title">
         Contact no.
       </p>
-      <a class="user-info-item-value" [href]="'tel:' + user?.phone">
-        {{user?.phone || '-' }}
+      <a class="user-info-item-value" [href]="'tel:' + user?.phone_number">
+        {{user?.phone_number || '-' }}
       </a>
     </div>
 
@@ -55,8 +55,8 @@
       <p class="user-info-item-title">
         Email
       </p>
-      <a class="user-info-item-value" [href]="'mailto:' + user?.email">
-        {{user?.email || '-'}}
+      <a class="user-info-item-value" [href]="'mailto:' + user?.email_address">
+        {{user?.email_address || '-'}}
       </a>
     </div>
 

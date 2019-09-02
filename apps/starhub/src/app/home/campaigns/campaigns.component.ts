@@ -16,12 +16,12 @@ export class CampaignsComponent implements OnInit {
     private campaignService: CampaignService
   ) {}
 
-  public ngOnInit (): void {
+  public ngOnInit(): void {
     this.campaignService.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
         if (campaigns.length > 0) {
           this.campaigns = campaigns.filter((campaign) => campaign.type === CampaignType.game);
-        };
+        }
       });
   }
 

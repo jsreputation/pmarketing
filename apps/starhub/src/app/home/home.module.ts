@@ -13,6 +13,8 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '@perx/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { UtilsModule } from '@perx/core';
     CategoriesComponent,
     RewardsCardsComponent,
     CatalogsComponent,
-    CampaignsComponent
+    CampaignsComponent,
+    NoRenewaleInNamePipe
   ],
   imports: [
     CommonModule,
@@ -35,9 +38,13 @@ import { UtilsModule } from '@perx/core';
     MatRippleModule,
     HomeRoutingModule,
     NgxMultiLineEllipsisModule,
-    UtilsModule
+    UtilsModule,
+    ScrollingModule
   ],
   bootstrap: [
+  ],
+  providers: [
+    NoRenewaleInNamePipe
   ]
 })
 export class HomeModule { }

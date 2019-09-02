@@ -10,10 +10,10 @@ export class CongratsComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
   public viewReward(id: number): void {
-    this.router.navigate(['/reward'], { queryParams: { id: id } });
+    this.router.navigate(['/reward'], { queryParams: { id } });
   }
 }

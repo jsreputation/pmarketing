@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   AuthenticationModule,
-  CognitoModule,
-  OauthModule,
   UtilsModule,
   ProfileModule,
   LocationsService,
@@ -15,7 +13,8 @@ import {
   PinService,
   GameModule,
   CampaignService,
-  GameService
+  GameService,
+  VouchersModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -49,6 +48,9 @@ import { GameComponent } from './game/game.component';
 import { campaigns } from './campaigns.mock';
 import { CongratsComponent } from './congrats/congrats.component';
 import { game } from './game.mock';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -58,7 +60,9 @@ const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => of(catalogs[id])
+  getCatalog: (id: number) => of(catalogs[id]),
+  reserveReward: () => of(vouchers[1]),
+  issueReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {
@@ -76,7 +80,7 @@ const campaignServiceStub = {
 
 const gameServiceStub = {
   get: () => of(game)
-}
+};
 
 @NgModule({
   declarations: [
@@ -93,12 +97,13 @@ const gameServiceStub = {
     LocationShortFormatComponent,
     RewardDetailComponent,
     GameComponent,
-    CongratsComponent
+    CongratsComponent,
+    RewardPopupComponent,
+    ExpireTimerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthenticationModule,
     MatDialogModule,
     MatIconModule,
     MatCardModule,
@@ -110,13 +115,17 @@ const gameServiceStub = {
     UtilsModule,
     BrowserAnimationsModule,
     GameModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment })
+    ProfileModule.forRoot({ env: environment }),
+    HttpClientModule,
+    AuthenticationModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
+    VouchersModule.forRoot({ env: environment })
+
   ],
   entryComponents: [
     CategorySelectComponent,
-    CategorySortComponent
+    CategorySortComponent,
+    RewardPopupComponent
   ],
   providers: [
     { provide: LocationsService, useValue: locationServiceStub },
@@ -124,7 +133,8 @@ const gameServiceStub = {
     { provide: VouchersService, useValue: vouchersServiceStub },
     { provide: PinService, useValue: pinServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
-    { provide: GameService, useValue: gameServiceStub }
+    { provide: GameService, useValue: gameServiceStub },
+    { provide: VouchersService, useValue: vouchersServiceStub }
   ],
   bootstrap: [AppComponent]
 })

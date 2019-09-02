@@ -27,12 +27,13 @@ export class GameComponent implements OnInit {
     this.activeRoute.queryParams.subscribe(
       ((params: Params) => {
       if (params.id) {
+        console.log('have params id', params.id);
         this.getGame(params.id);
       }
     }));
   }
 
-  private getGame(gameId: number) {
+  private getGame(gameId: number): void {
     this.gameService.get(gameId).subscribe((game) => {
       if (game && game.type === GameType.pinata) {
         this.buttonText = game.texts.button ? game.texts.button : 'Start playing';
@@ -61,7 +62,7 @@ export class GameComponent implements OnInit {
     this.location.back();
   }
 
-  public gameCompleted() {
+  public gameCompleted(): void {
     setTimeout(() => {
       this.router.navigate(['/congrats']);
     }, 2000);

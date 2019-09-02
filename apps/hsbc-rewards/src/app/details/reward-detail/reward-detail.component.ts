@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RewardsService, IReward } from '@perx/core';
+import { RewardsService, IReward, IPrice } from '@perx/core';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class RewardDetailComponent implements OnInit {
   public reward: Observable<IReward>;
+  public displayPriceFn: (price: IPrice) => string;
 
   public id: number;
   constructor(
@@ -29,9 +30,39 @@ export class RewardDetailComponent implements OnInit {
       }
       return val;
     }));
+
+    this.displayPriceFn = (rewardPrice: IPrice) => {
+      if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
+      }
+
+      if (rewardPrice.price > 0) {
+        return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
+      }
+
+      if (rewardPrice.points > 0) {
+        return `${rewardPrice.points} points`;
+      }
+      return '0 points'; // is actually 0 or invalid value default
+    };
   }
   public moveToBooking(): void {
     this.router.navigate([`/detail/booking/${this.id}`]);
   }
 
+  public displayPrice(rewardPrice: IPrice): string {
+    if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+      return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
+    }
+
+    if (rewardPrice.price > 0) {
+      return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+    }
+
+    if (rewardPrice.points > 0) {
+      return `${rewardPrice.points} points`;
+    }
+
+    return '0 points'; // is actually 0 or invalid value default
+  }
 }

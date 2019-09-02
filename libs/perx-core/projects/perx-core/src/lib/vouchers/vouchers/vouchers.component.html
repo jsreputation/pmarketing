@@ -1,4 +1,4 @@
-<div *ngIf="(vouchers$ | async)?.length; then thenBlock else elseBlock"></div>
+<div *ngIf="(vouchers$ | async); then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
@@ -21,7 +21,7 @@
             <p *ngIf="showRedeemedDate && voucher.redemptionDate">
               Redeemed on {{voucher.redemptionDate | date: 'dd/MM/yyyy'}}
             </p>
-            <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping[voucher.state]" >{{mapping[voucher.state]}}</div>
+            <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]" >{{mapping[voucher.state]}}</div>
           </div>
         </div>
         <mat-icon *ngIf="iconDisplay && voucher.state !== 'redeemed'">

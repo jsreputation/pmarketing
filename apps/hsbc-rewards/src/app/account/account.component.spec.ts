@@ -1,23 +1,27 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
-import { of, BehaviorSubject } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AccountComponent } from './account.component';
-import { DebugElement, Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { DynamicCreateService } from '../shared/service/dynamic-create.service';
-import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import {AccountComponent} from './account.component';
+import {DebugElement, Component} from '@angular/core';
+import {By} from '@angular/platform-browser';
+import {DynamicCreateService} from '../shared/service/dynamic-create.service';
+import {NavigateToolbarModule} from '../navigate-toolbar/navigate-toolbar.module';
+import {MatListModule} from '@angular/material/list';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @Component({
   template: '<div>test</div>'
-}) class MockComponent { }
+})
+class MockComponent {
+}
 
 const userInfo = {
   birthDate: null,
-  customProperties: { fname: 'warren', lname: 'woo', last_4: '1234' },
+  customProperties: {fname: 'warren', lname: 'woo', last_4: '1234'},
   email: null,
   firstName: null,
   gender: null,
@@ -37,7 +41,7 @@ const dynamicCreateServiceStub = {
   createComponent: () => {
   }
 };
-const authenticationServiceStub = { failedAuthObservable: new BehaviorSubject(true), logout: () => { } };
+const authenticationServiceStub = { $failedAuth: of(true), logout: () => { } };
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
@@ -56,7 +60,9 @@ describe('AccountComponent', () => {
           component: MockComponent
         }]),
         NavigateToolbarModule,
-        ProfileModule
+        ProfileModule,
+        MatListModule,
+        NoopAnimationsModule
       ],
       providers: [{
         provide: AuthenticationService, useValue: authenticationServiceStub

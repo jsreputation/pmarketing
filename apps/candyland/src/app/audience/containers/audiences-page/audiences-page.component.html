@@ -6,7 +6,12 @@
 <section class="content">
   <ng-container *ngIf="hasData">
     <!--filters-->
-    <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter>
+    <!-- <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter> -->
+    <cl-table-filters [dataSource]="dataSource" classList="row input-group">
+      <ng-container *clTableFilter="searchKey ; let filter">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
+      </ng-container>
+    </cl-table-filters>
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
@@ -21,7 +26,11 @@
       </cl-audiences-list>
     </ng-container>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <!-- <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+    <cl-paginator [dataSource]="dataSource"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 20]"
+    ></cl-paginator>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">
@@ -33,4 +42,3 @@
     </p>
   </cl-no-data>
 </section>
-

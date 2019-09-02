@@ -8,24 +8,23 @@
           <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
         </select>
       </div>
-      <div class="select-wrap no-content">
-        <select formControlName="merchant">
-          <option disabled *ngIf="reward" [value]="reward.merchantId">{{reward.merchantName || 'No Merchant'}}</option>
-        </select>
+      <div class="input-wrap no-content">
+        <input disabled type="text" [value]="reward && reward.merchantName || ''">
+        <input hidden type="text" formControlName="merchant" [value]="reward && reward.merchantId">
       </div>
       <div class="select-wrap">
         <select formControlName="location">
           <option disabled [value]="null">Location</option>
-          <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.address}}</option>
+          <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</option>
         </select>
       </div>
-      <mat-radio-group class="radio-group" formControlName="pointsBalance">
+      <mat-radio-group class="radio-group" formControlName="priceId">
         <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
           Use
           <span *ngIf="price.points">{{price.points}} points</span>
           <span *ngIf="price.points && price.price"> + </span>
           <span *ngIf="price.price">{{price.currencyCode}} {{price.price}}</span>
-<!--        todo: (code: XXXXX)-->
+          <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
         </mat-radio-button>
       </mat-radio-group>
       <div class="agreement">
