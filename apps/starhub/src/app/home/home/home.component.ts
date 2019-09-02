@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ILoyalty } from '@perx/core';
 
 import { loyalty } from '../../loyalty.mock';
+import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,17 @@ import { loyalty } from '../../loyalty.mock';
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
 
+  constructor(
+    private noRenewalePipe: NoRenewaleInNamePipe
+  ) { }
+
   public ngOnInit(): void {
     this.loyalty = loyalty;
   }
 
   public getBadge(tier: string): string {
     let badge = 'assets/green-badge.png';
+    tier = this.noRenewalePipe.transform(tier.toLowerCase());
 
     switch (tier) {
       case 'green':

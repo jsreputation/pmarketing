@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   AuthenticationModule,
-  CognitoModule,
-  OauthModule,
   UtilsModule,
   ProfileModule,
   RewardsModule,
@@ -37,6 +35,7 @@ import { LocationShortFormatComponent } from './location-short-format/location-s
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,6 @@ import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.compone
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthenticationModule,
     MatDialogModule,
     MatIconModule,
     MatCardModule,
@@ -69,9 +67,9 @@ import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.compone
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RewardsModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment })
 

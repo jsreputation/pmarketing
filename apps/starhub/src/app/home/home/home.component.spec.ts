@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -10,14 +11,17 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
+      declarations: [HomeComponent, NoRenewaleInNamePipe],
       imports: [
         MatToolbarModule,
         MatTabsModule,
         RouterTestingModule
+      ],
+      providers: [
+        NoRenewaleInNamePipe
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { NotificationService } from '@perx/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
@@ -58,28 +57,6 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-    }
-
-    if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-
-      this.authService.isAuthorized().subscribe(
-        authed => {
-          if (!authed) {
-            this.authService.v4AutoLogin().then(
-              (isAuthed: boolean) => {
-                if (isAuthed) {
-                  this.router.navigateByUrl('/home');
-                }
-              },
-              () => {
-                console.log('Error failed to authenticate.');
-              }
-            );
-          } else {
-            this.router.navigateByUrl('/home');
-          }
-        },
-      );
     }
   }
 

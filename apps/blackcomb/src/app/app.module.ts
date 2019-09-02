@@ -4,8 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
   VouchersModule,
-  CognitoModule,
-  OauthModule,
+  AuthenticationModule,
   GameModule,
   UtilsModule
 } from '@perx/core';
@@ -50,8 +49,7 @@ import { HistoryComponent } from './history/history.component';
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
     BrowserAnimationsModule,
     MatToolbarModule,

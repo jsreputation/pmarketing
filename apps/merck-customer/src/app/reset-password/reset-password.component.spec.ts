@@ -11,10 +11,12 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
+  let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,8 +33,9 @@ describe('ResetPasswordComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
-            v4GameOauth: () => {},
-            resetPassword: () => of()
+            login: () => {},
+            resetPassword: () => of(),
+            getInterruptedUrl: () => ''
           }
         },
         {
@@ -49,6 +52,7 @@ describe('ResetPasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
+    router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
@@ -67,7 +71,7 @@ describe('ResetPasswordComponent', () => {
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
     });
 
-    it('should reset password and call v4GameOauth', fakeAsync(() => {
+    it('should reset password and call login', fakeAsync(() => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
         (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(
@@ -76,11 +80,13 @@ describe('ResetPasswordComponent', () => {
           code: 1234,
         })
       );
-      const v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+      spyOn(router, 'navigateByUrl').and.stub();
       component.onUpdatePassword();
       tick();
       expect(authenticationServiceSpy).toHaveBeenCalled();
-      expect(v4GameOauthSpy).toHaveBeenCalled();
+      expect(loginSpy).toHaveBeenCalled();
+      expect(router.navigateByUrl).toHaveBeenCalledWith('home');
     }));
   });
 

@@ -31,7 +31,7 @@ interface IV4Outlet {
   outlet_address3: string;
   postal_code: string;
   tel: string;
-  coordinates: {lat: number, lng: number, distance?: number, unit_of_measure: string};
+  coordinates: { lat: number, lng: number, distance?: number, unit_of_measure: string };
   tags?: IV4Tag[];
 }
 
@@ -68,7 +68,10 @@ export class V4LocationsService extends LocationsService {
     this.apiHost = config.env.apiHost as string;
   }
 
-  public getAll(tags: string[] = []): Observable<ILocation[]> {
+  public getAll(tags?: string[]): Observable<ILocation[]> {
+    if (tags === undefined) {
+      tags = [];
+    }
     return this.getAllMerchants().pipe(
       mergeMap((merchants: IV4Merchant[]) => {
         let filteredMerchants: IV4Merchant[];
@@ -91,7 +94,16 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getLocations(page: number = 1, pageSize: number = 25, tags: string[] = []): Observable<ILocation[]> {
+  public getLocations(page?: number, pageSize?: number, tags?: string[]): Observable<ILocation[]> {
+    if (page === undefined) {
+      page = 1;
+    }
+    if (pageSize === undefined) {
+      pageSize = 25;
+    }
+    if (tags) {
+      tags = [];
+    }
     return this.getMerchants(page, pageSize).pipe(
       mergeMap((merchants: IV4Merchant[]) => {
         let filteredMerchants: IV4Merchant[];
