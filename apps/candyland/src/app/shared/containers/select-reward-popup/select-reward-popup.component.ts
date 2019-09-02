@@ -9,16 +9,16 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   styleUrls: ['./select-reward-popup.component.scss']
 })
 export class SelectRewardPopupComponent {
-  public dataSource: CustomDataSource<Reward>;
+  public dataSource: CustomDataSource<IReward>;
   public displayedColumns = ['image', 'rewardType', 'category', 'balance'];
-  public selectedReward: Reward;
+  public selectedReward: IReward;
 
   // @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(public dialogRef: MatDialogRef<SelectRewardPopupComponent>,
               private rewardsService: RewardsService,
               public cd: ChangeDetectorRef) {
-    this.dataSource = new CustomDataSource<Reward>(this.rewardsService);
+    this.dataSource = new CustomDataSource<IReward>(this.rewardsService);
   }
 
   // public ngOnInit(): void {
@@ -32,7 +32,7 @@ export class SelectRewardPopupComponent {
   //   }
   // }
 
-  public selectReward(reward: Reward): void {
+  public selectReward(reward: IReward): void {
     this.selectedReward = reward;
   }
 

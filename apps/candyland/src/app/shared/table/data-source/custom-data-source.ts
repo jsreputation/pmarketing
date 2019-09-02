@@ -58,7 +58,10 @@ export class CustomDataSource<T> {
   }
 
   public set pagination(value: any) {
-    this.pageSize = value.pageSize;
+    if (this.pageSize !== value.pageSize) {
+      this.pageSize = value.pageSize;
+      this.changeFilterSearch.next(0);
+    }
     this.loadingData(value);
   }
 
@@ -85,9 +88,7 @@ export class CustomDataSource<T> {
     this.dataService.getTableData( HttpParamsService.createHttpParams(params))
       .subscribe((res: any) => {
         this.dataSubject.next(res.data);
-
-        // add random mock parameter
-        this.lengthData.next(res.meta.page_count);
+        this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
       }, error => {
         this.dataSubject.next([]);
@@ -98,7 +99,7 @@ export class CustomDataSource<T> {
   }
 
   public updateData(): void {
-    this.loadingData({pageIndex: 0})
+    this.loadingData({pageIndex: 0, pageSize: this.pageSize})
   }
 
   private sortPrepare(sortData: SortModel) {

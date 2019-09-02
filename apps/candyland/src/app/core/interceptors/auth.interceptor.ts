@@ -11,8 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   // }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const authToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2lhbS5hcGkud2hpc3RsZXIucGVyeHRlY2gub3JnIiwic3ViIjoidXJuOnBlcng6aWFtOjoyMjIyMjIyMjI6dXNlci9BZG1pbl8yIiwic2NvcGUiOiIqIiwiYXVkIjpbImh0dHBzOi8vYXBpLndoaXN0bGVyLnBlcnh0ZWNoLm9yZyJdLCJpYXQiOjE1NjY5NzY4MTl9.OinGl02k0CVn1fiTdPpCDTpi1TzyLp9tPJHvH4c2oR0';
-    const authToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vaWFtOjMwMDAiLCJzdWIiOiJ1cm46cGVyeDppYW06OjIyMjIyMjIyMjp1c2VyL0FkbWluXzIiLCJzY29wZSI6IioiLCJhdWQiOlsidW5kZWZpbmVkIl0sImlhdCI6MTU2NzE3MDIyN30.rtSKoE8X5A51B2GjBgZi8zLsgjpG0PMr5mOECijB9BM';
+    const authToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2lhbS5hcGkud2hpc3RsZXIucGVyeHRlY2gub3JnIiwic3ViIjoidXJuOnBlcng6aWFtOjoyMjIyMjIyMjI6dXNlci9BZG1pbl8yIiwic2NvcGUiOiIqIiwiYXVkIjpbImh0dHBzOi8vYXBpLndoaXN0bGVyLnBlcnh0ZWNoLm9yZyJdLCJpYXQiOjE1Njc0MjQ4NDF9.2Mb9gxoGD14-GqarqENlW1ZWtXyfrJHInqs7FdQ607Q';
     const authReq = req.clone({
       setHeaders: {
         'Content-Type': 'application/vnd.api+json',

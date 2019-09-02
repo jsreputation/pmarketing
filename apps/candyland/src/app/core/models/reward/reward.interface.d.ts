@@ -1,5 +1,5 @@
-declare interface Reward {
-  id: number;
+declare interface IReward {
+  id: string;
   image: string;
   name: string;
   type: string;

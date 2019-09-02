@@ -17,7 +17,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
   styleUrls: ['./manage-rewards.component.scss']
 })
 export class ManageRewardsComponent implements OnInit, OnDestroy {
-  public id: number;
+  public id: string;
   public reward: any;
   public form: FormGroup;
   public config: OptionConfig[];
@@ -88,7 +88,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.form.get('merchantInfo').patchValue(null);
   }
 
-  private initConfig() {
+  private initConfig(): void {
     this.rewardsService.getRewardsOptions()
       .subscribe((config: OptionConfig[]) => this.config = config);
   }
@@ -137,7 +137,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
   private updateId(id): void {
     if (id) {
-      this.id = +id;
+      this.id = id;
     } else {
       this.id = null;
       this.form.patchValue(this.newRewardFormService.getDefaultValue());

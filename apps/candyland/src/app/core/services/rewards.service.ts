@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { RewardHttpService } from '@cl-core/http-services/reward-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
@@ -15,7 +15,7 @@ export class RewardsService implements ITableService {
   constructor(private rewardHttp: RewardHttpService) {
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<Reward>> {
+  public getTableData(params: HttpParams): Observable<ITableData<IReward>> {
     return this.getRewards(params).pipe(
       map(response => ({
           data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
@@ -36,40 +36,38 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewardData();
   }
 
-  // public getReward(): Observable<any> {
-  //   return this.rewardHttp.getReward();
-  // }
-
   public getRewardsOptions(): Observable<OptionConfig[]> {
     return this.rewardHttp.getRewardsOptions();
   }
 
-  public getReward(id: number): Observable<any> {
+  public getReward(id: string): Observable<IRewardForm> {
     return this.rewardHttp.getReward(id).pipe(
-      tap(response => console.log('response', response)),
-      map( response => RewardHttpAdapter.transformToRewardForm(response.data))
+      map(response => RewardHttpAdapter.transformToRewardForm(response.data))
     );
   }
 
-  public createReward(data): Observable<any> {
-    const sendData = RewardHttpAdapter.transformFromRewardForm(data);
-    return this.rewardHttp.createReward(sendData);
+  public getMocksRewardDetail(): Observable<any> {
+    return this.rewardHttp.getMockRewardDetail();
   }
 
-  public duplicateReward(data): Observable<any> {
+  public createReward(data: IRewardForm): Observable<IResponseApi<IRewardApi>> {
+    const sendData = RewardHttpAdapter.transformFromRewardForm(data);
+    return this.rewardHttp.createReward({data: sendData});
+  }
+
+  public duplicateReward(data: IReward): Observable<IResponseApi<IRewardApi>> {
     const sendData = RewardHttpAdapter.transformFromReward(data);
-    console.log('duplicateReward', data, sendData);
-    return this.rewardHttp.createReward(sendData);
+    return this.rewardHttp.createReward({data: sendData});
   }
 
-  public updateReward(id: number, data: any): Observable<any>  {
+  public updateReward(id: string, data: any): Observable<IResponseApi<IRewardApi>> {
     const sendData = RewardHttpAdapter.transformFromRewardForm(data);
-    sendData.data.id = id;
-    return this.rewardHttp.updateReward(id, sendData);
+    sendData.id = id;
+    return this.rewardHttp.updateReward(id, {data: sendData});
   }
 
   public createRewardGame(data): Observable<any> {
     const sendData = EngagementHttpAdapter.transformReward(data);
-    return this.rewardHttp.createRewardGame(sendData);
+    return this.rewardHttp.createRewardGame({data: sendData});
   }
 }

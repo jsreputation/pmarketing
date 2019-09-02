@@ -1,8 +1,8 @@
 export class RewardHttpAdapter {
   // tslint:disable
-  public static transformToReward(data: any): Reward {
+  public static transformToReward(data: IRewardApi): IReward {
     return {
-      id: +data.id,
+      id: data.id,
       image: data.attributes.image_url,
       name: data.attributes.name,
       type: data.type,
@@ -15,10 +15,10 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformToRewardForm(data: any): any {
+  public static transformToRewardForm(data: IRewardApi): IRewardForm {
     return {
       name: data.attributes.name,
-      id: +data.id,
+      id: data.id,
       currency: data.attributes.currency,
       rewardInfo: {
         image: data.attributes.image_url,
@@ -32,9 +32,8 @@ export class RewardHttpAdapter {
     };
   };
 
-  public static transformFromRewardForm(data: any): any {
+  public static transformFromRewardForm(data: IRewardForm): IRewardApi {
     return {
-      data: {
         type: 'entities',
         attributes: {
           name: data.name,
@@ -46,13 +45,11 @@ export class RewardHttpAdapter {
           description: data.rewardInfo.description,
           terms_conditions: data.rewardInfo.termsAndCondition
         }
-      }
     };
   }
 
-  public static transformFromReward(data: any): any {
+  public static transformFromReward(data: IReward): IRewardApi {
     return {
-      data: {
         type: 'entities',
         attributes: {
           name: data.name,
@@ -62,7 +59,6 @@ export class RewardHttpAdapter {
           redemption_type: data.redemptionType,
           cost_of_reward: data.current,
         }
-      }
     };
   }
 }
