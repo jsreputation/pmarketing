@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
     private rewardsService: RewardsService,
     private datePipe: DatePipe
   ) {
-    this.getRewardsForTags = this.getRewardsForTags.bind(this);
   }
 
   public goToReward(reward: IReward): void {
@@ -105,11 +104,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  private getRewardsForTags(tab: ITabConfigExtended): Observable<{ key: string, value: IReward[] }> {
-    return this.rewardsService.getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null)
-      .pipe(map((value) => ({ value, key: tab.tabName })));
-  }
-
   private getTags(): Observable<ITabConfigExtended[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags()
@@ -124,7 +118,7 @@ export class HomeComponent implements OnInit {
       return forkJoin(tabs.map((tab: ITabConfigExtended) => {
         return this.translate.get(tab.tabName).pipe(flatMap((name) => {
           tab.tabName = name;
-          return this.rewardsService.getAllRewards();
+          return this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null);
         }), map((rewardsList) => tab.rewardsList = of(rewardsList)),
           finalize(() => {
             this.tabs$.next(this.staticTab);
