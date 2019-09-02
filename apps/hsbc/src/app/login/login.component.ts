@@ -14,9 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
-  public authed: boolean;
   public preAuth: boolean;
-  public failedAuth: boolean;
 
   public errorMessage: string;
 
@@ -28,7 +26,6 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService
   ) {
     this.preAuth = environment.preAuth;
-    this.failedAuth = false;
     this.initForm();
   }
 
@@ -40,27 +37,11 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.authing) {
-      this.authService.isAuthorized().subscribe(
-        authed => {
-          if (!authed) {
-            this.authService.autoLogin().then(
-              (isAuthed: boolean) => {
-                this.authed = isAuthed;
-                if (this.authed) {
-                  this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                }
-              },
-              () => {
-                this.failedAuth = true;
-                this.authed = false;
-              }
-            );
-          } else {
-            this.authed = authed;
-          }
-
-        },
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        () => {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+        }
       );
     }
   }
@@ -70,27 +51,16 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
 
-    this.authService.v4GameOauth(username, password)
-      .then((isAuthed: boolean) => {
-        this.authed = isAuthed;
-        if (this.authed) {
-
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = username;
-          }
-
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('puzzle');
-          }
+    this.authService.login(username, password).subscribe(
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = username;
         }
-      })
-      .catch((err) => {
-        this.failedAuth = true;
-        this.authed = false;
 
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+      },
+      (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addPopup({
@@ -104,7 +74,10 @@ export class LoginComponent implements OnInit {
               }));
             this.errorMessage = 'Invalid credentials';
           }
+        } else {
+          this.errorMessage = err;
         }
-      });
+      }
+    );
   }
 }

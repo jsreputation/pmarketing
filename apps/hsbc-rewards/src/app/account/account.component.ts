@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ProfileService, AuthenticationService, IProfile } from '@perx/core';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {ProfileService, AuthenticationService, IProfile} from '@perx/core';
+import {Router} from '@angular/router';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -12,11 +12,13 @@ import { take } from 'rxjs/operators';
 export class AccountComponent implements OnInit {
   public personalData: FormGroup;
   public profile: IProfile;
+
   constructor(
     private personalProfile: ProfileService,
     private auth: AuthenticationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.personalProfile.whoAmI()

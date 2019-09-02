@@ -42,7 +42,7 @@ $max-width: 60rem;
 }
 
 .details {
-  padding: 0 1.2rem;
+  padding: 0 1.2rem 1.5rem;
 
   .reward-name {
     margin-top: 1.5rem;
@@ -72,6 +72,10 @@ $max-width: 60rem;
     .points-cost {
       font-size: 1.2rem;
       line-height: 1.4rem;
+
+      .points-code {
+        color: #858585;
+      }
     }
   }
 

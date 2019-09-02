@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
-import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
+import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {VouchersService} from '../vouchers.service';
+import {Observable} from 'rxjs';
+import {IVoucher, StatusLabelMapping} from '../models/voucher.model';
 
 @Component({
   selector: 'perx-core-voucher',
@@ -29,7 +29,14 @@ export class VoucherComponent implements OnChanges {
   @Input('voucher')
   public voucher$: Observable<IVoucher>;
 
-  constructor(private vouchersService: VouchersService) { }
+  @Input()
+  public showRedeemedIcon: boolean = false;
+
+  @Input()
+  public mapping: StatusLabelMapping;
+
+  constructor(private vouchersService: VouchersService) {
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {

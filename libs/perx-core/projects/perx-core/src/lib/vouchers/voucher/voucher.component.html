@@ -16,6 +16,7 @@
       <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
         {{voucher.expiry | date: 'dd/MM/yyyy'}}
       </div>
+      <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping[voucher.state]" >{{mapping[voucher.state]}}</div>
       <div *ngFor="let description of voucher.description">
           <div class="section-heading">
               {{description.title}}

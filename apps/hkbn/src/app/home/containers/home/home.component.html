@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="container">
     <div class="loyalty-section">
-      <perx-core-loyalty-summary class="loyalty-item" [subTitleFn]="subTitleFn" [titleFn]="titleFn"></perx-core-loyalty-summary>
+      <perx-core-loyalty-summary class="loyalty-item" [subTitleFn]="subTitleFn" [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn"></perx-core-loyalty-summary>
       <div class="loyalty-item loyalty-item-qr" *ngIf="loyalty">
         <a mat-raised-button color="primary" class="enlarge" routerLink="qr">
           <img src="assets/images/icons8-qr-code-24.png"><span>{{"MY_QR" | translate}}</span>
@@ -16,6 +16,6 @@
     <perx-core-rewards-collection  [rewardsList]="rewards$" class="rewards-carousel" (tapped)="goToReward($event)">
     </perx-core-rewards-collection>
 
-    <perx-core-rewards-list-tabbed [tabs$]="tabs"></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>

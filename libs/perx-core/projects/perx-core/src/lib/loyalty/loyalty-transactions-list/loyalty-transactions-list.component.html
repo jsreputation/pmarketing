@@ -2,17 +2,17 @@
   <div *ngFor="let transaction of transactions" class="transaction">
     <div class="transaction-info">
       <div *ngIf="transaction.name" class="transaction-name">
-        {{transaction.name}}
+        {{titleFn(transaction)}}
       </div>
       <div *ngIf="transaction.description" class="transaction-description">
         {{transaction.description}}
       </div>
       <div class="transaction-point">
-        {{transaction.points | transaction}}
+       {{transaction.points}} {{priceLabelFn(transaction)}}
       </div>
     </div>
     <div class="transaction-date">
-      {{transaction.earnedDate | date:"dd/MM/yyyy"}}
+      {{subTitleFn(transaction)}}
     </div>
   </div>
 </ng-container>

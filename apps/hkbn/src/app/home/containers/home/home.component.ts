@@ -4,7 +4,7 @@ import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfig
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
-// import { filter, map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 const studTabs: ITabConfig[] = [
   {
@@ -53,14 +53,17 @@ export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
   public subTitleFn: (loyalty: ILoyalty) => string;
   public titleFn: (profile: IProfile) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
   public rewards$: Observable<IReward[]>;
+
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private datePipe: DatePipe
   ) {
     this.getRewardsForTags = this.getRewardsForTags.bind(this);
   }
@@ -74,9 +77,9 @@ export class HomeComponent implements OnInit {
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.loyaltyService.getLoyalty()
       .subscribe(
-        (loyalty: ILoyalty) => this.loyalty = loyalty
-      );
-
+        (loyalty: ILoyalty) => {
+          this.loyalty = loyalty;
+        });
     this.translate.get('YOU_HAVE')
       .subscribe((res: string) => {
         this.subTitleFn = () => res;
@@ -85,6 +88,24 @@ export class HomeComponent implements OnInit {
       .subscribe((res: string) => {
         this.titleFn = () => res;
       });
+
+    this.translate.get('POINTS_EXPITING')
+      .subscribe((res: string) => {
+        this.summaryExpiringFn = (loyalty: ILoyalty) => {
+
+          if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length) {
+            return '';
+          }
+          const expiringPoints = loyalty.expiringPoints[0];
+          if (!expiringPoints.expireDate || !expiringPoints.points) {
+            return '';
+          }
+          return loyalty ? res
+            .replace('{{points}}', expiringPoints.points.toString())
+            .replace('{{date}}', this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')) : null;
+        };
+      });
+
   }
 
   private getRewards(): void {
@@ -94,7 +115,9 @@ export class HomeComponent implements OnInit {
       this.staticTab.forEach((tab) => tab.rewardsList = of(reward.find((rew) => rew.key === tab.tabName).value));
       return this.getTranslatedTabsName();
     })).subscribe((names) => {
-      this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
+      if (names) {
+        this.staticTab.forEach((tab) => tab.tabName = names[tab.tabName]);
+      }
       this.tabs.next(this.staticTab);
     });
   }
@@ -103,13 +126,14 @@ export class HomeComponent implements OnInit {
       .pipe(map((value) => ({ value, key: tab.tabName })));
   }
   private getTranslatedTabsName(): Observable<any> {
-    return this.translate.get(this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el))
+    const searchWords = this.staticTab.map(el => keysTranslate[el.tabName]).filter((el) => el);
+    return searchWords && searchWords.length ? this.translate.get(searchWords)
       .pipe(map((dictioniry) => {
         return Object.entries(keysTranslate).reduce((newObj, [key, val]) => {
           newObj[key] = dictioniry[val];
           return newObj;
         }, {});
-      }));
+      })) : of(null);
   }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet

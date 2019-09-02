@@ -24,11 +24,12 @@
               <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
               <ng-template #pinComponent>
                 <div class="pin-input-container">
-		              <perx-core-pin-input #pinInput
-		                [length]="4"
-		                (full)="onPinEntered($event)">
-		              </perx-core-pin-input>
-                  <p *ngIf="isPinEntered && !isPinCorrect" class="incorrect-pin">Incorrect PIN</p>
+                  <perx-core-pin-redemption #pinInput
+                  [length]="4"
+                  [voucherId]="voucher.id"
+                  (full)="onVoucherRedeemed()"
+                  (update)="onUpdate()">
+                  </perx-core-pin-redemption>
 	              </div>
               </ng-template>
             </div>

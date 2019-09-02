@@ -33,8 +33,6 @@ When importing the following Modules you will also have to include sister module
 ### AuthenticationModule
 ```typescript
 import {
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
@@ -42,9 +40,7 @@ import { environment } from '../environments/environment';
 @NgModule({
 ...
 imports: [
-  AuthenticationModule,
-  OauthModule.forRoot({env: environment}),
-  CognitoModule.forRoot({env: environment}),
+  AuthenticationModule.forRoot({env: environment}),
 ]
 })
 
@@ -108,9 +104,7 @@ imports: [
     @NgModule({
     imports: [
         ...
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
-        AuthenticationModule,
+        AuthenticationModule.forRoot({ env: environment }),
         ],
     ...
     })
