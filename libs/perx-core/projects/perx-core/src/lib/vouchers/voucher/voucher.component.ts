@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnInit} from '@angular/core';
 import {VouchersService} from '../vouchers.service';
 import {Observable} from 'rxjs';
 import {IVoucher, StatusLabelMapping} from '../models/voucher.model';
@@ -8,7 +8,7 @@ import {IVoucher, StatusLabelMapping} from '../models/voucher.model';
   templateUrl: './voucher.component.html',
   styleUrls: ['./voucher.component.scss']
 })
-export class VoucherComponent implements OnChanges {
+export class VoucherComponent implements OnChanges, OnInit {
   @Output() public redeem: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
@@ -35,6 +35,8 @@ export class VoucherComponent implements OnChanges {
   @Input()
   public mapping: StatusLabelMapping;
 
+  @Input()
+  public redeemLabel: () => string;
   constructor(private vouchersService: VouchersService) {
   }
 
@@ -46,5 +48,11 @@ export class VoucherComponent implements OnChanges {
 
   public onClick(): void {
     this.redeem.emit(this.voucherId);
+  }
+
+  public ngOnInit(): void {
+    if (!this.redeemLabel) {
+      this.redeemLabel = () => 'REDEEM NOW';
+    }
   }
 }

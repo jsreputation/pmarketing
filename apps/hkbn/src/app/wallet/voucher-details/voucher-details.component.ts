@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { VouchersService, RedemptionType, Voucher } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'hkbn-voucher-details',
@@ -12,17 +13,19 @@ import { VouchersService, RedemptionType, Voucher } from '@perx/core';
 export class VoucherDetailsComponent implements OnInit, OnDestroy {
 
   public voucherId: number;
-
+  public redeemLabel: () => string;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private vouchersService: VouchersService
+    private vouchersService: VouchersService,
+    private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.translate.get('REDEEM_NOW').subscribe((redeem) => this.redeemLabel = () => redeem);
     this.activeRoute.paramMap
       .pipe(
         takeUntil(this.destroy$)

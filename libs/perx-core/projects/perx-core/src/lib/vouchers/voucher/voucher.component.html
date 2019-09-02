@@ -47,7 +47,7 @@
   </div>
   <div class="actions-container" *ngIf="!hideActions">
     <button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
-      REDEEM NOW
+      {{ redeemLabel() }}
     </button>
   </div>
 </ng-container>
