@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,8 +10,8 @@ import {
   UtilsModule,
   RewardsService,
   VouchersService,
+  CampaignService,
   // StampService,
-  // GameService,
   // LoyaltyService,
   // SurveyService
 } from '@perx/core';
@@ -41,7 +42,7 @@ import { HistoryComponent } from './history/history.component';
 import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
-import { of } from 'rxjs';
+import { campaigns } from './mock/campaigns.mock';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -56,12 +57,12 @@ const vouchersServiceStub = {
   get: (id: number) => of(vouchers[id])
 };
 
+const campaignServiceStub = {
+  getCampaigns: () => of(campaigns)
+};
+
 // const stampServiceStub = {
 //   getStamps: () => of(stamps)
-// };
-
-// const gameServiceStub = {
-//   get: () => of(games[1])
 // };
 
 // const loyaltyServiceStub = {
@@ -108,8 +109,8 @@ const vouchersServiceStub = {
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: VouchersService, useValue: vouchersServiceStub },
+    { provide: CampaignService, useValue: campaignServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
-    // { provide: GameService, useValue: gameServiceStub },
     // { provide: LoyaltyService, useValue: loyaltyServiceStub },
     // { provide: SurveyService, useValue: surveyServiceStub },
   ],
