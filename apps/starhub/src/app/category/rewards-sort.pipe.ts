@@ -11,11 +11,16 @@ export class RewardsSortPipe implements PipeTransform {
   public transform(allrewards: Observable<IReward[]>, mode?: SortingMode): Observable<IReward[]> {
       return allrewards.pipe(
           map(rewards => rewards.sort((a, b) => {
+
               if (mode === SortingMode.latest) {
-                return (b.validFrom.getTime() - a.validFrom.getTime());
+                const dateTimeFirst = new Date(a.validFrom).getTime();
+                const dateTimeSecond = new Date(b.validFrom).getTime();
+                return (dateTimeSecond - dateTimeFirst);
               }
               if (mode === SortingMode.ending_soon) {
-                return (a.validTo.getTime() - b.validTo.getTime());
+                const dateTimeFirst = new Date(a.validTo).getTime();
+                const dateTimeSecond = new Date(b.validTo).getTime();
+                return (dateTimeFirst - dateTimeSecond);
               }
           }))
       );
