@@ -6,7 +6,13 @@ import {
   VouchersModule,
   AuthenticationModule,
   GameModule,
-  UtilsModule
+  UtilsModule,
+  RewardsService,
+  VouchersService,
+  // StampService,
+  // GameService,
+  // LoyaltyService,
+  // SurveyService
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -32,7 +38,40 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
+import { rewards } from './mock/rewards.mock';
+import { vouchers } from './mock/vouchers.mock';
+import { catalogs } from './mock/catalogs.mock';
+import { of } from 'rxjs';
 
+const rewardsServiceStub = {
+  getReward: () => of(rewards[0]),
+  getAllRewards: () => of(rewards),
+  getAllCatalogs: () => of(catalogs),
+  getCatalog: (id: number) => of(catalogs[id]),
+  reserveReward: () => of(vouchers[1])
+};
+
+const vouchersServiceStub = {
+  getAll: () => of(vouchers),
+  get: () => of(vouchers[1])
+};
+
+// const stampServiceStub = {
+//   getStamps: () => of(stamps)
+// };
+
+// const gameServiceStub = {
+//   get: () => of(games[1])
+// };
+
+// const loyaltyServiceStub = {
+//   getLoyalties: () => of(loyalties),
+//   getLoyalty: () =>  of(loyalties[1])
+// };
+
+// const surveyServiceStub = {
+//   getSurvey: () => of(survey)
+// };
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +105,14 @@ import { HistoryComponent } from './history/history.component';
     FormsModule,
     UtilsModule
   ],
-  providers: [],
+  providers: [
+    { provide: RewardsService, useValue: rewardsServiceStub },
+    { provide: VouchersService, useValue: vouchersServiceStub },
+    // { provide: StampService, useValue: stampServiceStub },
+    // { provide: GameService, useValue: gameServiceStub },
+    // { provide: LoyaltyService, useValue: loyaltyServiceStub },
+    // { provide: SurveyService, useValue: surveyServiceStub },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
