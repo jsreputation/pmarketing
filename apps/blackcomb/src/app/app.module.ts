@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,17 +48,18 @@ const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => of(catalogs[id]),
+  getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
   reserveReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
-  get: (id: number) => of(vouchers[id])
+  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
 };
 
 const campaignServiceStub = {
-  getCampaigns: () => of(campaigns)
+  getCampaigns: () => of(campaigns),
+  getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
 };
 
 // const stampServiceStub = {
