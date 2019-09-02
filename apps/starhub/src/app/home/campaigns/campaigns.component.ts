@@ -1,27 +1,28 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { ICampaign, CampaignType, CampaignState } from '@perx/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { ICampaign, CampaignType, CampaignService } from '@perx/core';
 
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
-export class CampaignsComponent {
+export class CampaignsComponent implements OnInit {
   public campaigns: ICampaign[];
 
   @Output()
   public tapped: EventEmitter<ICampaign> = new EventEmitter();
 
-  constructor() {
-    this.campaigns = [
-      {
-        id: 1,
-        name: 'Shake the tree',
-        description: '....',
-        type: CampaignType.game,
-        state: CampaignState.active
-      }
-    ];
+  constructor(
+    private campaignService: CampaignService
+  ) {}
+
+  public ngOnInit (): void {
+    this.campaignService.getCampaigns()
+      .subscribe((campaigns: ICampaign[]) => {
+        if (campaigns.length > 0) {
+          this.campaigns = campaigns.filter((campaign) => campaign.type === CampaignType.game);
+        };
+      });
   }
 
   public selected(campaign: ICampaign): void {

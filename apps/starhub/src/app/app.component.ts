@@ -76,7 +76,6 @@ export class AppComponent implements OnInit {
   }
 
   dialogClosed(): void {
-    console.log(this.selectedCampaign);
     this.router.navigate(['/game'], { queryParams: { id: this.selectedCampaign.id } });
   }
 }
