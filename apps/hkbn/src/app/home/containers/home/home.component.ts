@@ -105,12 +105,11 @@ export class HomeComponent implements OnInit {
 
   }
 
-
   private getRewardsForTags(tab: ITabConfigExtended): Observable<{ key: string, value: IReward[] }> {
     return this.rewardsService.getAllRewards(null, tab.tabName !== 'All' ? [tab.tabName] : null)
       .pipe(map((value) => ({ value, key: tab.tabName })));
   }
-  
+
   private getTags(): Observable<ITabConfigExtended[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags()
@@ -120,19 +119,19 @@ export class HomeComponent implements OnInit {
     return of(this.staticTab);
   }
 
-  getTabedRewards() {
-    this.getTags().pipe(flatMap((tabs: ITabConfigExtended[])=>{
-      return forkJoin(tabs.map((tab: ITabConfigExtended)=>{
-        return this.translate.get(tab.tabName).pipe(flatMap((name)=> {
-          tab.tabName=name;
+  private getTabedRewards(): void {
+    this.getTags().pipe(flatMap((tabs: ITabConfigExtended[]) => {
+      return forkJoin(tabs.map((tab: ITabConfigExtended) => {
+        return this.translate.get(tab.tabName).pipe(flatMap((name) => {
+          tab.tabName = name;
           return this.rewardsService.getAllRewards();
-        }), map((rewardsList)=> tab.rewardsList = of(rewardsList)),
-        finalize(()=>{
-          this.tabs$.next(this.staticTab);
-        }) 
-       );
-      }))
-    })).subscribe(()=>{
+        }), map((rewardsList) => tab.rewardsList = of(rewardsList)),
+          finalize(() => {
+            this.tabs$.next(this.staticTab);
+          })
+        );
+      }));
+    })).subscribe(() => {
       this.tabs$.next(this.staticTab);
     });
   }
