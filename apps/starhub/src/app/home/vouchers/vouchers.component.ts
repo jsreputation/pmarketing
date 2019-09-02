@@ -46,4 +46,25 @@ export class VouchersComponent implements OnInit {
   public seeMoreClicked(): void {
     this.hideSeeMore = true;
   }
+
+  private getDifferenceWithCurrentInDays(inputDate: Date): number {
+    if (!inputDate) {
+      // TODO: not sure about vouchers with null expiry
+      return 0;
+    }
+
+    const oneDay = 24 * 60 * 60 * 1000;
+    const currentDate = new Date();
+    return (inputDate.getTime() - currentDate.getTime()) / oneDay;
+  }
+
+  public getTextColorClass(voucher: Voucher): string {
+    const days = this.getDifferenceWithCurrentInDays(voucher.expiry);
+    return days >= 3 ? 'greater-three-days' : 'less-three-days';
+  }
+
+  public getNumberOfDays(voucher: Voucher): string {
+    const daysDifference = Math.floor(this.getDifferenceWithCurrentInDays(voucher.expiry));
+    return daysDifference < 0 ? '' : `Expires in ${daysDifference} days`;
+  }
 }
