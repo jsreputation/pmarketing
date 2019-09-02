@@ -9,7 +9,7 @@ export const loyalty: ILoyalty = {
   expiringPoints: null,
   id: 100,
   membershipIdentifier: '8221151080374196',
-  membershipTierName: 'gold',
+  membershipTierName: 'Gold (Renewal)',
   name: 'Starhub Loyalty',
   pointsBalance: 80,
 };
