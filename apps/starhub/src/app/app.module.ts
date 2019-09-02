@@ -42,6 +42,7 @@ import { LocationShortFormatComponent } from './location-short-format/location-s
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const locationServiceStub = {
   getFromMerchant: () => of(locations)
@@ -52,7 +53,8 @@ const rewardsServiceStub = {
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
   getCatalog: (id: number) => of(catalogs[id]),
-  reserveReward: () => of(vouchers[1])
+  reserveReward: () => of(vouchers[1]),
+  issueReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {
@@ -90,6 +92,7 @@ const vouchersServiceStub = {
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment })
