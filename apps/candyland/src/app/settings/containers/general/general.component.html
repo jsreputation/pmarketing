@@ -8,7 +8,7 @@
         <mat-label>Select Time Zone</mat-label>
         <mat-select formControlName="timeZone">
           <mat-option *ngFor="let zone of timeZones$ | async" [value]="zone.id">
-            {{zone.country + ' ' + zone.zone}}
+            ({{zone.zone}}) {{zone.country}}
           </mat-option>
         </mat-select>
       </mat-form-field>

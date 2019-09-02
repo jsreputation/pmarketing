@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { VouchersService } from '@perx/core';
-import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { VouchersService, RedemptionType, Voucher } from '@perx/core';
 
 @Component({
   selector: 'hkbn-voucher-details',
@@ -39,9 +38,9 @@ export class VoucherDetailsComponent implements OnInit, OnDestroy {
   }
 
   public onRedeem(id: number): void {
-    this.vouchersService.get(id).subscribe((voucher: IVoucher) => {
+    this.vouchersService.get(id).subscribe((voucher: Voucher) => {
       let url = `/wallet/${id}`;
-      if (voucher.redemptionType === 'qrcode') {
+      if (voucher.redemptionType === RedemptionType.qr) {
         url = `${url}/qrcode`;
       } else {
         url = `${url}/code`;
