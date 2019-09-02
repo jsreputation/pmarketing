@@ -7,10 +7,8 @@ import {
   IGame,
   GameService,
   CampaignService,
-  GameType,
-  defaultTree
 } from '@perx/core';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
