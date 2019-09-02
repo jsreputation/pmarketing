@@ -6,7 +6,6 @@ import {
   IPopupConfig,
   PopUpClosedCallBack,
   ProfileService,
-  IProfile,
   CampaignService,
   ICampaign
 } from '@perx/core';
@@ -20,7 +19,6 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
-  public username: string = 'I do not know who you are!';
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
@@ -47,10 +45,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   private getCurrent(): void {
     this.profileService.whoAmI()
       .subscribe(
-        (profile: IProfile) => {
-          this.username = `Hi ${profile.firstName} ${profile.lastName} (id #${profile.id})`;
-          this.fetchCampaign();
-        },
+        () => this.fetchCampaign(),
         () => { }
       );
   }
