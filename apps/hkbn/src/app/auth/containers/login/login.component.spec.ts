@@ -17,6 +17,7 @@ import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.modu
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -76,7 +77,7 @@ describe('LoginComponent', () => {
     let navigateSpy;
 
     beforeEach(() => {
-      authenticationService = TestBed.get(AuthenticationService);
+      authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
       loginSpy = spyOn(authenticationService, 'login');
       getInterruptedUrlSpy = spyOn(authenticationService, 'getInterruptedUrl');
       navigateSpy = spyOn(router, 'navigate');
