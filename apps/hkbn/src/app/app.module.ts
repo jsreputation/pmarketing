@@ -22,7 +22,6 @@ import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
-import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -56,7 +55,6 @@ const PROVIDERS = [
     WalletComponent,
     VoucherDetailsComponent,
     QrRedemptionComponent,
-    CodeRedemptionComponent,
     HistoryComponent,
   ],
   imports: [
@@ -83,7 +81,7 @@ const PROVIDERS = [
     BrowserAnimationsModule,
     MatTabsModule,
     MatButtonModule,
-    SnackbarModule,
+    SnackbarModule
   ],
   providers: [
     ...PROVIDERS
