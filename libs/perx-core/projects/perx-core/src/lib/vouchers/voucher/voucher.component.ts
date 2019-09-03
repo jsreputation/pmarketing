@@ -36,7 +36,7 @@ export class VoucherComponent implements OnChanges, OnInit {
   public mapping: StatusLabelMapping;
 
   @Input()
-  public redeemLabel: () => string;
+  public redeemLabelFn: () => string;
   constructor(private vouchersService: VouchersService) {
   }
 
@@ -51,8 +51,8 @@ export class VoucherComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
-    if (!this.redeemLabel) {
-      this.redeemLabel = () => 'REDEEM NOW';
+    if (!this.redeemLabelFn) {
+      this.redeemLabelFn = () => 'REDEEM NOW';
     }
   }
 }

@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class VoucherDetailsComponent implements OnInit, OnDestroy {
 
   public voucherId: number;
-  public redeemLabel: () => string;
+  public redeemLabelFn: () => string;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -25,7 +25,7 @@ export class VoucherDetailsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.translate.get('REDEEM_NOW').subscribe((redeem) => this.redeemLabel = () => redeem);
+    this.translate.get('REDEEM_NOW').subscribe((redeem) => this.redeemLabelFn = () => redeem);
     this.activeRoute.paramMap
       .pipe(
         takeUntil(this.destroy$)
