@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 import { Observable } from 'rxjs';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class PinataService {
   }
 
   public createPinata(data: any): any {
-    return this.pinataHttpService.createPinata(data);
+    const sendData = EngagementHttpAdapter.transformPinata(data);
+    return this.pinataHttpService.createPinata({ data: sendData });
   }
 }

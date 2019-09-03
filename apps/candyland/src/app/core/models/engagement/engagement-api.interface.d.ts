@@ -1,4 +1,4 @@
-declare interface IEngagement {
+declare interface IEngagementApi {
   id: number;
   type: string;
   links: {

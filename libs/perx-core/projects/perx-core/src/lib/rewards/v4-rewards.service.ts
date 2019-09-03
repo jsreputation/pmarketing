@@ -34,7 +34,7 @@ interface IV4RewardPrice {
   identifier?: string;
 }
 
-interface IV4Reward {
+export interface IV4Reward {
   id: number;
   name: string;
   description: string;

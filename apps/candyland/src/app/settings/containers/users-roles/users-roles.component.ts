@@ -2,11 +2,10 @@ import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
-import { IAMUser } from '@cl-core/models/settings/IAMUser.model';
 import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
-import { SettingsTransformDataService } from '@cl-core/services/settings-transform-data.service';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+// import { SettingsHttpAdapter } from '@cl-core/services/settings-transform-data.service';
+import { filter, switchMap } from 'rxjs/operators';
+// import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-users-roles',
@@ -22,7 +21,8 @@ export class UsersRolesComponent  implements AfterViewInit {
   constructor(private settingsService: SettingsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
-              private settingsTransformDataService: SettingsTransformDataService) {
+              // private settingsTransformDataService: SettingsHttpAdapter
+  ) {
     this.dataSource = new SettingsUsersRolesDataSource<IAMUser>(this.settingsService);
   }
 
@@ -40,18 +40,11 @@ export class UsersRolesComponent  implements AfterViewInit {
 
     dialogRef.afterClosed()
       .pipe(
-        switchMap((value: any) => {
-          if (value) {
-            const newUser = this.settingsTransformDataService.transformInviteUser(value);
-            return this.settingsService.inviteNewUser(newUser);
-          }
-          return of(null);
-        })
+        filter(Boolean),
+        switchMap((newUser: any) => this.settingsService.inviteNewUser(newUser))
       )
-      .subscribe((value: any) => {
-      if (value) {
+      .subscribe(() => {
         this.dataSource.updateData();
-      }
     });
   }
 
@@ -64,18 +57,20 @@ export class UsersRolesComponent  implements AfterViewInit {
 
     dialogRef.afterClosed()
       .pipe(
-        switchMap((value: any) => {
-          if (value) {
-            const newUser = this.settingsTransformDataService.transformInviteUser({...user, ...value});
-            return this.settingsService.patchUser(newUser, user.id);
-          }
-          return of(null);
-        })
+        filter(Boolean),
+        switchMap((updatedUser: any) => this.settingsService.patchUser(user, updatedUser))
+        // switchMap((value: any) => {
+        //   if (value) {
+        //     const newUser = this.settingsTransformDataService.transformInviteUser({...user, ...value});
+        //     return this.settingsService.patchUser(newUser, user.id);
+        //   }
+        //   return of(null);
+        // })
       )
-      .subscribe((value) => {
-        if (value) {
+      .subscribe(() => {
+        // if (value) {
           this.dataSource.updateData();
-        }
+        // }
     });
   }
 

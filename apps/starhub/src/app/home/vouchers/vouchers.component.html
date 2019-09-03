@@ -1,11 +1,11 @@
-<div class="rewards-container" *ngIf="vouchers || redeemedVouchers; else noRewards">
-  <div class="saved-rewards" *ngIf="(vouchers | async)?.length">
-    <h1>Saved rewards</h1>
-
-    <mat-card *ngFor="let voucher of (hideSeeMore ? (vouchers | async) : (vouchers | async | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
+<div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers; else noRewards">
+  <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
+    <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
+    <mat-card *ngFor="let voucher of (hideSeeMore ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
+        <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
         <mat-icon>arrow_forward</mat-icon>
@@ -14,9 +14,9 @@
     <button *ngIf="!hideSeeMore" (click)="seeMoreClicked()">See more</button>
   </div>
 
-  <div class="past-rewards" *ngIf="(redeemedVouchers | async)?.length">
-    <h1>Past rewards</h1>
-    <mat-card *ngFor="let voucher of redeemedVouchers | async">
+  <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
+    <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
+    <mat-card *ngFor="let voucher of vouchers">
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
@@ -26,7 +26,7 @@
       </div>
     </mat-card>
   </div>
-  <div class="empty-wallet" *ngIf="!(vouchers | async)?.length && !(redeemedVouchers | async)?.length">
+  <div class="empty-wallet" *ngIf="!(savedVouchers | async)?.length && !(redeemedVouchers | async)?.length">
     <img src="assets/search.png">
     <h1>It’s empty here</h1>
     <p>Take your pick from our list of rewards. After you’ve saved them, they will appear here.</p>

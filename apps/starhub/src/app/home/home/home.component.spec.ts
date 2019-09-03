@@ -4,10 +4,16 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
+import { LoyaltyService } from '@perx/core';
+import { of } from 'rxjs';
+import { loyalty } from 'src/app/loyalty.mock';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  const loyaltyServiceStub = {
+    getLoyalty: () => of(loyalty)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +24,8 @@ describe('HomeComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        NoRenewaleInNamePipe
+        NoRenewaleInNamePipe,
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
       .compileComponents();

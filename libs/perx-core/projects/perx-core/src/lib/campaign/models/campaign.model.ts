@@ -1,3 +1,5 @@
+import { IReward } from '../../rewards/models/reward.model';
+
 export enum CampaignType {
   give_reward = 'give_reward',
   stamp = 'stamp',
@@ -15,4 +17,6 @@ export interface ICampaign {
   description: string;
   type: CampaignType;
   state: CampaignState;
+  endsAt: string;
+  rewards?: IReward[];
 }
