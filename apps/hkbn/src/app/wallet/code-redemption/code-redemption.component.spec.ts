@@ -8,12 +8,19 @@ import { VouchersModule, VouchersService, Voucher } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { mockVoucher } from '../voucher.mock';
+import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+
+const NotificationWrapperServiceStud = {
+  addPopup: () => {}
+}
 
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
   const vouchersServiceStub = {
-    get: (): Observable<Voucher> => of(mockVoucher)
+    state: mockVoucher,
+    get: (): Observable<Voucher> => of(mockVoucher),
+    stateChangedForVoucher: (): Observable<Voucher> => of(vouchersServiceStub.state)
   };
 
   beforeEach(async(() => {
@@ -26,7 +33,8 @@ describe('CodeRedemptionComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStud }
       ],
       declarations: [CodeRedemptionComponent]
     })
