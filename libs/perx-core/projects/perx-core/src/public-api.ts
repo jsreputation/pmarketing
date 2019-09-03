@@ -13,16 +13,12 @@ export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
 export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
-
+export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 /**
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
-export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
-export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
-export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 
 /**
@@ -91,8 +87,8 @@ export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-s
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
-export { IReward, ICatalog, ICategoryTags } from './lib/rewards/models/reward.model';
-export { ITabConfig } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
+export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 /**
  * Utils

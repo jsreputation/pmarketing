@@ -1,15 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Location } from '@angular/common';
-import { Observable, timer } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-
-interface ITime {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
 
 @Component({
   selector: 'app-reward-detail',
@@ -17,7 +8,6 @@ interface ITime {
   styleUrls: ['./reward-detail.component.scss']
 })
 export class RewardDetailComponent implements OnInit {
-  public dateTime$: Observable<ITime[]>;
   public showMacaron: boolean = false;
   public isExpired: boolean = false;
   public macaronText: string = '';
@@ -42,70 +32,34 @@ export class RewardDetailComponent implements OnInit {
     ) {}
 
   public ngOnInit(): void {
+    if (!this.rewardId) {
+      return;
+    }
 
-    if (this.rewardId) {
-      this.rewardsService.getReward(this.rewardId)
+    this.rewardsService.getReward(this.rewardId)
       .subscribe((reward: IReward) => {
         this.reward = reward;
-      });
-    }
-
-    if (!this.reward) {
-      return;
-    }
-    const validTo = this.reward.validTo;
-
-    // set date 36 hours
-    // const mockDate = new Date(validTo.setHours(validTo.getHours() + 36));
-
-    // set date 10 seconds
-    // const mockDate = new Date(validTo.setSeconds(validTo.getSeconds() + 15));
-    const dateNow = new Date();
-
-    const differenceTime = validTo.valueOf() - dateNow.valueOf();
-    const differenceInSeconds = differenceTime / 1000;
-    const differenceInHours = differenceInSeconds / 60 / 60;
-    let convertedtoSeconds = differenceInHours * 3600;
-    const thirtySixHoursInSeconds = 129600;
-
-    if (Math.round(convertedtoSeconds) <= 0) {
-      this.setToExpired();
-      return;
-    }
-
-    if (convertedtoSeconds <= thirtySixHoursInSeconds) {
-      this.showMacaron = true;
-      this.macaronText = 'Expiring';
-      this.dateTime$ = timer(0, 1000).pipe(
-        take(thirtySixHoursInSeconds),
-        map(() => {
-          const time = Date.parse(String(validTo)) - (new Date()).getTime();
-          const seconds = Math.floor( (time / 1000) % 60 );
-          const minutes = Math.floor( (time / 1000 / 60) % 60 );
-          const hours = Math.floor( (time / (1000 * 60 * 60)) % 24 );
-          const days = Math.floor( time / ( 1000 * 60 * 60 * 24) );
-
-          if (Math.round(convertedtoSeconds) <= 0) {
-            this.setToExpired();
-            return;
-          }
-          convertedtoSeconds--;
-          return [{
-            days,
-            hours,
-            minutes,
-            seconds
-          }];
-        })
-      );
-    }
+    });
   }
 
-  private setToExpired(): void {
-    this.showMacaron = true;
-    this.hasExpired.emit(true);
-    this.isExpired = true;
-    this.macaronText = 'Expired';
+  public setToExpired(): void {
+    setTimeout(
+      () => {
+        this.showMacaron = true;
+        this.hasExpired.emit(true);
+        this.isExpired = true;
+        this.macaronText = 'Expired';
+      }
+    );
+  }
+
+  public onExpiring(): void {
+    setTimeout(
+      () => {
+        this.showMacaron = true;
+        this.macaronText = 'Expiring';
+      }
+    );
   }
 
   public back(): void {

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Engagement } from '@cl-core/models/engagement.model';
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -17,7 +16,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<IEngagement>();
   public typeFilterConfig: OptionConfig[];
 
   public get template(): AbstractControl {
@@ -62,7 +61,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
         })
       )
-      .subscribe((res: Engagement[]) => {
+      .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;
         this.cd.detectChanges();
       });

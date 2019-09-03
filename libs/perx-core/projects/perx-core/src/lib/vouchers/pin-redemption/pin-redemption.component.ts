@@ -134,4 +134,11 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   public onFocus(): void {
     this.pinFocused.emit(true);
   }
+
+  public resetAll(): void {
+    this.hasError = '';
+    this.controls.forEach(ctrl => {
+      ctrl.setValue('');
+    });
+  }
 }

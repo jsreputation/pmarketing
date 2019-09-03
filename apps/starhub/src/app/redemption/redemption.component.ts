@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, VouchersService, PinService, PinInputComponent } from '@perx/core';
+import { Voucher, VoucherState, VouchersService, PinRedemptionComponent } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -17,13 +17,10 @@ export class RedemptionComponent implements OnInit {
   public isPinCorrect: boolean;
 
  @ViewChild('pinInput', {static: false})
-  private pinInputComponent: PinInputComponent;
-
-  private generatedPin: string;
+  private pinInputComponent: PinRedemptionComponent;
 
   constructor(
     private vouchersService: VouchersService,
-    private pinService: PinService,
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router) {
@@ -46,30 +43,18 @@ export class RedemptionComponent implements OnInit {
   }
 
   public showPinComponent(): void {
-    this.pinService.getPin(this.voucher.id).subscribe(
-      (pin: string) => {
-        this.generatedPin = pin;
-        this.showEnterPinComponent = true;
-      }
-    );
+    this.showEnterPinComponent = true;
   }
 
-  public onPinEntered(enteredPin: string): void {
+  public onVoucherRedeemed(): void {
     this.isPinEntered = true;
-    this.isPinCorrect = enteredPin === this.generatedPin;
+    this.voucher.state = VoucherState.redeemed;
+  }
 
-    // TODO: The following service is not exposed from perxcore
-    // if (this.isPinCorrect) {
-    //   this.vouchersService.redeemVoucher(this.voucher.id).subscribe(
-    //     (res) => {
-    //       console.log(res);
-    //       this.voucher.state = VoucherState.redeemed;
-    //     }
-    //   );
-    // }
-
-    if (this.isPinCorrect) {
-      this.voucher.state = VoucherState.redeemed;
+  public onUpdate(): void {
+    if (this.pinInputComponent.hasError === 'error') {
+      this.isPinCorrect = false;
+      this.isPinEntered = true;
     }
   }
 
@@ -85,4 +70,10 @@ export class RedemptionComponent implements OnInit {
   public backMyRewardsClicked(): void {
     this.router.navigateByUrl('home/vouchers');
   }
+
+  public copyCode(inputElement: HTMLInputElement): void {
+    inputElement.select();
+    document.execCommand('copy');
+  }
+
 }

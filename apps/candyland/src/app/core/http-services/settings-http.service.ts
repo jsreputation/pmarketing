@@ -8,7 +8,8 @@ import { ApiConfig } from '@cl-core/api-config';
 })
 export class SettingsHttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getTimeZone(): Observable<ITimeZone[]> {
     return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json');
@@ -38,7 +39,7 @@ export class SettingsHttpService {
     return this.http.post(ApiConfig.IAMUsersPath, {data: body});
   }
 
-  public patchUser(patchValue, id: string): Observable<any> {
+  public patchUser(id: string, patchValue): Observable<any> {
     return this.http.patch(`${ApiConfig.IAMUsersPath}/${id}`, {data: patchValue});
   }
 

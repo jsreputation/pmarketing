@@ -14,15 +14,15 @@ export enum RedemptionType {
   offline = 'offline'
 }
 
+export type StatusLabelMapping = {
+  [key in VoucherState]: string;
+};
+
 interface IVoucherDescription {
   title: string;
   content: string;
   tag: string[];
 }
-
-export type StatusLabelMapping = {
-  [key in VoucherState]: string;
-};
 
 /*
  * Model from Whistler data model

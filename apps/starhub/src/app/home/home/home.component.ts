@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ILoyalty } from '@perx/core';
+import { ILoyalty, LoyaltyService } from '@perx/core';
 
-import { loyalty } from '../../loyalty.mock';
+import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 
 @Component({
   selector: 'app-home',
@@ -11,30 +11,30 @@ import { loyalty } from '../../loyalty.mock';
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
 
+  constructor(
+    private noRenewalePipe: NoRenewaleInNamePipe,
+    private loyaltyService: LoyaltyService
+  ) { }
+
   public ngOnInit(): void {
-    this.loyalty = loyalty;
+    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
   }
 
-  public getBadge(tier: string): string {
-    let badge = 'assets/green-badge.png';
+  public getBadge(tier: string | null): string {
+    tier = tier !== null ? this.noRenewalePipe.transform(tier.toLowerCase()) : null;
 
     switch (tier) {
-      case 'green':
-        badge = 'assets/green-badge.png';
-        break;
-
       case 'gold':
-        badge = 'assets/gold-badge.png';
-        break;
+        return 'assets/gold-badge.png';
 
       case 'platinum':
-        badge = 'assets/platinum-badge.png';
+        return 'assets/platinum-badge.png';
         break;
 
+      case 'green':
       default:
-        break;
+        return 'assets/green-badge.png';
     }
-    return badge;
   }
 
 }

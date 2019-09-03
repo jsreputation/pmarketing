@@ -1,10 +1,10 @@
-import {Injectable, Inject} from '@angular/core';
-import {Observable, of, interval} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {IVoucher, VoucherState, RedemptionType, IGetVoucherParams} from './models/voucher.model';
-import {map, tap, flatMap, mergeAll, scan, filter} from 'rxjs/operators';
-import {IVoucherService} from './ivoucher.service';
-import {oc} from 'ts-optchain';
+import { Injectable, Inject } from '@angular/core';
+import { Observable, of, interval } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams } from './models/voucher.model';
+import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
+import { IVoucherService } from './ivoucher.service';
+import { oc } from 'ts-optchain';
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -46,7 +46,7 @@ interface IV4Voucher {
   redemption_type: {
     call_to_action: any;
     timer: any;
-    type: RedemptionType;
+    type: RedemptionType | null;
   };
   reservation_expires_at: any;
   reward?: IV4Reward;
@@ -55,7 +55,7 @@ interface IV4Voucher {
   valid_to: string;
   voucher_code: any;
   voucher_key: any;
-  voucher_type: string;
+  voucher_type: RedemptionType;
   redemption_image?: any;
   redemption_text?: any;
   merchantImg?: any;
@@ -86,6 +86,7 @@ export class VouchersService implements IVoucherService {
     const merchantImg = v.merchantImg ? v.merchantImg : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
+    const redemptionTypeFinal = v.voucher_type in RedemptionType ? v.voucher_type : RedemptionType.txtCode;
 
     return {
       id: v.id,
@@ -93,7 +94,7 @@ export class VouchersService implements IVoucherService {
       state: v.state,
       name: v.name,
       code: v.voucher_code,
-      redemptionType: v.redemption_type.type,
+      redemptionType: redemptionTypeFinal,
       thumbnailImg,
       rewardBanner,
       merchantImg,
@@ -101,8 +102,8 @@ export class VouchersService implements IVoucherService {
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
       description: [
-        {title: 'Description', content: reward.description, tag: []},
-        {title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: []}
+        { title: 'Description', content: reward.description, tag: [] },
+        { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
       ],
       redemptionSuccessTxt,
       redemptionSuccessImg
@@ -122,7 +123,7 @@ export class VouchersService implements IVoucherService {
       return of(this.vouchers);
     }
 
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, {params})
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
         flatMap((resp: IV4VouchersResponse) => {
           const streams = [
@@ -152,7 +153,7 @@ export class VouchersService implements IVoucherService {
       params = params.set('type', voucherParams.type);
     }
 
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, {params})
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
         map(res => res.data)
       );

@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Type } from '@angular/core';
 
 class ActivatedRouteMock {
   get queryParams(): Observable<any> {
@@ -48,7 +49,7 @@ describe('ForgotPasswordComponent', () => {
             verifyOTP: () => of(true),
             changePassword: () => of(true),
             resetPassword: () => of(true),
-            v4GameOauth: () => of(true)
+            login: () => of(true)
           }
         }
       ]
@@ -97,7 +98,7 @@ describe('ForgotPasswordComponent', () => {
 
   it('should call resendOTP of authenticationService when call resend method', () => {
     fixture.detectChanges();
-    const authenticationService = TestBed.get(AuthenticationService);
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const resendOTPSpy = spyOn(authenticationService, 'resendOTP').and.callThrough();
     component.resend();
     expect(resendOTPSpy).toHaveBeenCalled();
@@ -105,17 +106,17 @@ describe('ForgotPasswordComponent', () => {
 
   it('should do nothing if password form invalid', () => {
     fixture.detectChanges();
-    const authenticationService = TestBed.get(AuthenticationService);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
     component.changePassword();
     expect(resetPasswordSpy.calls.count()).toBe(0);
   });
 
   it('should reset user password, when call changePassword method and data is valid', () => {
     fixture.detectChanges();
-    const authenticationService = TestBed.get(AuthenticationService);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of(true));
-    const v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
+    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
 
     component.phoneStepForm.setValue({phone: '63987654'});
     component.phoneHandler();
@@ -129,6 +130,6 @@ describe('ForgotPasswordComponent', () => {
       {phone: '63987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'}
     );
 
-    expect(v4GameOauthSpy).toHaveBeenCalledWith('63987654', 'qwerty123');
+    expect(loginSpy).toHaveBeenCalledWith('63987654', 'qwerty123');
   });
 });

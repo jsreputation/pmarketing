@@ -40,7 +40,7 @@ describe('VouchersService', () => {
     valid_from: '2019-06-30T16:00:00.000Z',
     voucher_code: null,
     voucher_key: null,
-    voucher_type: 'code',
+    voucher_type: RedemptionType.txtCode,
     state: VoucherState.issued,
     given_by: null,
     given_to: null,

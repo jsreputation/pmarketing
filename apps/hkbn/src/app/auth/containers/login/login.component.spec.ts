@@ -16,6 +16,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -40,7 +42,7 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {
-            v4GameOauth: () => Promise.resolve(true),
+            login: () => of(true),
             getInterruptedUrl: () => null
           }
         }
@@ -70,36 +72,34 @@ describe('LoginComponent', () => {
   describe('login method', () => {
 
     let authenticationService;
-    let v4GameOauthSpy;
+    let loginSpy;
     let getInterruptedUrlSpy;
     let navigateSpy;
 
     beforeEach(() => {
-      authenticationService = TestBed.get(AuthenticationService);
-      v4GameOauthSpy = spyOn(authenticationService, 'v4GameOauth');
+      authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+      loginSpy = spyOn(authenticationService, 'login');
       getInterruptedUrlSpy = spyOn(authenticationService, 'getInterruptedUrl');
       navigateSpy = spyOn(router, 'navigate');
     });
 
-    it('should call v4GameOauth method, authorize and redirect to root page', async () => {
-      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+    it('should call login method, authorize and redirect to root page', async () => {
+      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
-      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
-      expect(component.authed).toBeTruthy();
+      expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
 
-    it('should call v4GameOauth method, authorize and redirect to InterruptedUrl page', async () => {
-      v4GameOauthSpy = v4GameOauthSpy.and.returnValue(Promise.resolve(true));
+    it('should call login method, authorize and redirect to InterruptedUrl page', async () => {
+      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
 
       await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
 
-      expect(v4GameOauthSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
-      expect(component.authed).toBeTruthy();
+      expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(navigateSpy).toHaveBeenCalledWith(['/wallet']);
     });
   });

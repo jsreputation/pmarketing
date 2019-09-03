@@ -1,10 +1,9 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
-import {ITabConfig} from '@perx/core';
+import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
+import {ITabConfig, IPrice} from '@perx/core';
 import {Observable, of, Subject, forkJoin} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
-import {IPrice} from '../../../../../libs/perx-core/projects/perx-core/src/lib/rewards/models/reward.model';
 
 const tabs: ITabConfig[] = [
   {
@@ -22,6 +21,21 @@ const tabs: ITabConfig[] = [
     filterValue: null,
     tabName: 'Shopping',
     rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Mileage',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Charity donation',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Annual fee',
+    rewardsList: null
   }
 ];
 
@@ -38,6 +52,7 @@ export class HomeComponent implements OnInit {
   public staticTab: ITabConfig[];
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
+  public titleFn: (profile: IProfile) => string;
 
   constructor(
     private rewardsService: RewardsService,
@@ -49,20 +64,14 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getRewardsCollection();
-    this.getRewards();
-    this.loyaltyService.getLoyalties().subscribe(
-      (loyalties: ILoyalty[]) => {
-        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
-      }
-    );
-
+    this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
       if (rewardPrice.points > 0 && rewardPrice.price > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseFloat((rewardPrice.price).toString()).toFixed(2)}`;
       }
 
       if (rewardPrice.price > 0) {
-        return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+        return `${rewardPrice.currencyCode} ${parseFloat((rewardPrice.price).toString()).toFixed(2)}`;
       }
 
       if (rewardPrice.points > 0) {
@@ -70,12 +79,17 @@ export class HomeComponent implements OnInit {
       }
       return '0 points'; // is actually 0 or invalid value default
     };
+    this.titleFn = (profile: IProfile) => {
+      if (profile && profile.lastName) {
+        return `Welcome ${profile.lastName},`;
+      }
+      return `Welcome`;
+    };
+    this.getRewards();
   }
 
   private getRewardsCollection(): void {
-    this.rewardsService.getAllRewards(['featured']).subscribe((val) => {
-      this.rewardsCollection = of(val);
-    });
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
   private getRewards(): void {
@@ -93,7 +107,13 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
+  private getLoyalty(): void {
+    this.loyaltyService.getLoyalties().subscribe(
+      (loyalties: ILoyalty[]) => {
+        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
+      }
+    );
+  }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();

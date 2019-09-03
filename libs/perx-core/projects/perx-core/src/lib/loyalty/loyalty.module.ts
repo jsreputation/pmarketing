@@ -22,7 +22,8 @@ import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
     LoyaltyTransactionsListComponent
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    TransactionPipe
   ]
 })
 export class LoyaltyModule {

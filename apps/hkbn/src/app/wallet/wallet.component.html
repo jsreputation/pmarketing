@@ -1,14 +1,14 @@
 <div class="container">
   <mat-tab-group>
     <mat-tab [label]="'MY_REWARDS' | translate">
-      <perx-core-vouchers filter="issued"
+      <perx-core-vouchers [data]="issuedVouchers"
                           [showExpireDate]="true"
                           [showRedeemedDate]="false"
                           (tapped)="onRoute($event)">
       </perx-core-vouchers>
     </mat-tab>
     <mat-tab [label]="'REWARDS_HISTORY' | translate">
-      <perx-core-vouchers filter="redeemed"
+      <perx-core-vouchers [data]="redeemedVouchers"
                           [showExpireDate]="false"
                           [showRedeemedDate]="true"
                           (tapped)="onRedeemedRoute($event)">

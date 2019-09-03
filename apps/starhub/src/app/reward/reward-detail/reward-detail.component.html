@@ -11,16 +11,14 @@
     </div>
 
     <div class="container">
-      <div class="reward-merchant">
+      <div *ngIf="reward" class="reward-merchant">
         <h1>{{reward.name}}</h1>
         <h2>{{reward.merchantName}}</h2>
         <div *ngIf="showMacaron" class="macaron">
           <span class="expiring">{{macaronText}}</span>
         </div>
         <div *ngIf="!isExpired">
-          <div *ngFor="let time of dateTime$ | async">
-            <span>{{time.days}}:{{time.hours | number:'2.0'}}:{{time.minutes | number:'2.0'}}:{{time.seconds | number:'2.0'}}</span>
-          </div>
+			<app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()"></app-expire-timer>
         </div>
       </div>
 
@@ -29,10 +27,7 @@
         <p>{{reward.howToRedeem}}</p>
       </div>
 
-      <div class="content">
-        <h1>Location</h1>
-        <app-location-short-format [merchantId]="reward.merchantId"></app-location-short-format>
-      </div>
+      <app-location-short-format [merchantId]="reward.merchantId"></app-location-short-format>
 
       <div class="content">
         <h1>Terms & Condition</h1>

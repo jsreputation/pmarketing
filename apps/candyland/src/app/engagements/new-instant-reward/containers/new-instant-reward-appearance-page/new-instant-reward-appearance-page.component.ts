@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -7,8 +8,6 @@ import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
-  ControlValueService,
-  EngagementTransformDataService,
   RewardsService,
   RoutingStateService
 } from '@cl-core/services';
@@ -31,13 +30,13 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
   private destroy$ = new Subject();
+
   constructor(private fb: FormBuilder,
               private rewardService: RewardsService,
               private routingState: RoutingStateService,
               private router: Router,
-              private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   public ngOnInit(): void {
     this.createRewardForm();
@@ -47,16 +46,14 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   }
 
   public save(): void {
-    const sendData = this.engagementTransformDataService.transformReward(this.formReward.value);
-    this.rewardService.createRewardGame(sendData)
+    this.rewardService.createRewardGame(this.formReward.value)
       .subscribe(() => {
         this.showLaunchDialog();
       });
   }
 
   public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {});
 
     dialogRef.afterClosed()
       .pipe(
@@ -72,6 +69,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
+
   public get name(): AbstractControl {
     return this.formReward.get(ControlsName.name);
   }
@@ -97,7 +95,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createRewardForm(): void {
