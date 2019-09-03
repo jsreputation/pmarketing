@@ -6,11 +6,11 @@ export const categories: ICategory[] = [
     icon: 'apps'
   },
   {
-    name: 'Food & Beverage',
+    name: 'Eat',
     icon: 'local_dining'
   },
   {
-    name: 'Shopping',
+    name: 'Shop',
     icon: 'shopping_cart'
   },
   {
