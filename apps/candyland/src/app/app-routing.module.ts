@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {AuthGuard} from '@cl-core/guards/auth.guard';
 import {MainContainerComponent} from './main-container/main-container.component';
 import { LoginComponent } from './auth/containers/login/login.component';
+import { NoAuthGuard } from '@cl-core/guards/noauth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard'},
@@ -40,7 +41,7 @@ const routes: Routes = [
       },
     ]
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: '**', redirectTo: '/dashboard'}
 ];
 
