@@ -4,7 +4,8 @@
       <h1>{{this.title}}</h1>
       <h3>{{this.subTitle}}</h3>
     </div>
-    <perx-core-rewards-collection></perx-core-rewards-collection>
+    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="rewardClickedHandler($event)">
+    </perx-core-rewards-collection>
   </div>
   <button mat-flat-button color="primary" routerLink="['/wallet']">
     View wallet
