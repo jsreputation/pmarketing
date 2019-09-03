@@ -7,8 +7,8 @@ export interface ILocation {
     address?: string;
     address2?: string;
     address3?: string;
-    latitude: number;
-    longitude: number;
+    latitude: number | null;
+    longitude: number | null;
     phone?: string;
     distance?: number;
 }
