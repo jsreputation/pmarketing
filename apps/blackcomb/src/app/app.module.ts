@@ -14,9 +14,6 @@ import {
   CampaignService,
   AuthenticationService,
   ProfileService,
-  // StampService,
-  // LoyaltyService,
-  // SurveyService
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -81,18 +78,6 @@ const profileServiceStub = {
   whoAmI: () => of(profile)
 };
 
-// const stampServiceStub = {
-//   getStamps: () => of(stamps)
-// };
-
-// const loyaltyServiceStub = {
-//   getLoyalties: () => of(loyalties),
-//   getLoyalty: () =>  of(loyalties[1])
-// };
-
-// const surveyServiceStub = {
-//   getSurvey: () => of(survey)
-// };
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,10 +117,7 @@ const profileServiceStub = {
     { provide: VouchersService, useValue: vouchersServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
     { provide: AuthenticationService, useValue: authenticationServiceStub },
-    { provide: ProfileService, useValue: profileServiceStub },
-    // { provide: StampService, useValue: stampServiceStub },
-    // { provide: LoyaltyService, useValue: loyaltyServiceStub },
-    // { provide: SurveyService, useValue: surveyServiceStub },
+    { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]
 })
