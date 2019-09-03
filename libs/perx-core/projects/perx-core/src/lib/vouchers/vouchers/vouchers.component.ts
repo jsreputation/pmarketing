@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { VouchersService } from '../vouchers.service';
 import { Observable } from 'rxjs';
-import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
+import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -48,8 +48,12 @@ export class VouchersComponent implements OnInit {
     }
   }
 
+  public notClickable(voucher: IVoucher): boolean {
+    return !this.canSelectRedeemed && [VoucherState.redeemed, VoucherState.expired].includes(voucher.state);
+  }
+
   public onClick(voucher: IVoucher): void {
-    if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
+    if (this.notClickable(voucher)) {
       return;
     }
     // tslint:disable-next-line: deprecation

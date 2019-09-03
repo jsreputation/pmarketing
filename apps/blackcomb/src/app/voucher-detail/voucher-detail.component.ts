@@ -16,16 +16,10 @@ export class VoucherDetailComponent implements OnInit {
     private vouchersService: VouchersService
   ) { }
 
-  public voucher: Observable<Voucher>;
-
-  public onRedeem(): void {
-    this.voucher.subscribe((v: Voucher) => {
-      this.router.navigate(['redeem'], { queryParams: { id: v.id } });
-    });
-  }
+  public voucher$: Observable<Voucher>;
 
   public ngOnInit(): void {
-    this.voucher = this.activeRoute.paramMap
+    this.voucher$ = this.activeRoute.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
@@ -34,5 +28,11 @@ export class VoucherDetailComponent implements OnInit {
           return this.vouchersService.get(idN);
         })
       );
+  }
+
+  public onRedeem(): void {
+    this.voucher$.subscribe((v: Voucher) => {
+      this.router.navigate(['redeem', v.id]);
+    });
   }
 }
