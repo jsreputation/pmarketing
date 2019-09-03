@@ -52,7 +52,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       return;
     }
 
-    this.rewards = this.rewardsService.getAllRewards([this.selectedCategory]);
+    this.rewards = this.rewardsService.getAllRewards(null, [this.selectedCategory]);
   }
 
   public selected(reward: IReward): void {

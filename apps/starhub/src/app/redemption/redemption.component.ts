@@ -1,6 +1,4 @@
-import { Component, OnInit,
- ViewChild
-  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Voucher, VoucherState, VouchersService, PinRedemptionComponent } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -72,4 +70,10 @@ export class RedemptionComponent implements OnInit {
   public backMyRewardsClicked(): void {
     this.router.navigateByUrl('home/vouchers');
   }
+
+  public copyCode(inputElement: HTMLInputElement): void {
+    inputElement.select();
+    document.execCommand('copy');
+  }
+
 }
