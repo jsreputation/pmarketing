@@ -8,7 +8,6 @@ import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { RegistrationComponent } from './auth/containers/registration/registration.component';
 import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
-// import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
@@ -43,7 +42,7 @@ const routes: Routes = [
           },
           {
             path: 'code',
-            loadChildren: () => import('./wallet/code-redemption/code-redemption.module').then(mod=>mod.CodeRedemptionModule),
+            loadChildren: () => import('./wallet/code-redemption/code-redemption.module').then(mod => mod.CodeRedemptionModule),
             data: {
               back: true,
               backUrl: '../'
