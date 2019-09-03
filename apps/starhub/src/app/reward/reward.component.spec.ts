@@ -72,8 +72,8 @@ describe('RewardComponent', () => {
     const rewardsServiceSpy = spyOn(rewardsService, 'issueReward').and.returnValue(
       of()
     );
-    const routerStub: Router = fixture.debugElement.injector.get(Router);
-    spyOn(routerStub, 'navigate');
+    const router: Router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigate');
     component.save();
     expect(rewardsServiceSpy).toHaveBeenCalled();
   });

@@ -5,6 +5,15 @@ import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.compon
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IPopupConfig } from '@perx/core';
 
+interface IRewardPopupConfig extends IPopupConfig {
+  validTo?: Date;
+  timerCallbacks?: TimerCallBack;
+}
+interface TimerCallBack {
+  timerExpired(): void;
+  timerExpiring(): void;
+}
+
 describe('RewardPopupComponent', () => {
   let component: RewardPopupComponent;
   let fixture: ComponentFixture<RewardPopupComponent>;
@@ -13,16 +22,7 @@ describe('RewardPopupComponent', () => {
       timerExpired: () => {},
       timerExpiring: () => {}
     }
-  }
-
-  interface IRewardPopupConfig extends IPopupConfig {
-    validTo?: Date;
-    timerCallbacks?: TimerCallBack;
-  }
-  interface TimerCallBack {
-    timerExpired(): void;
-    timerExpiring(): void;
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
