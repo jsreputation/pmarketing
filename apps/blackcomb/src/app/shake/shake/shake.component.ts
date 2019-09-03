@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
   NotificationService,
-  ICampaign,
-  CampaignType,
   IGame,
-  GameService,
-  CampaignService,
+  GameService
 } from '@perx/core';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -26,15 +23,18 @@ export class ShakeComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private gameService: GameService,
-    private campaignService: CampaignService
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
-    this.game$ = this.campaignService.getCampaigns()
+    this.game$ = this.route.paramMap
       .pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.game)),
-        map(campaigns => campaigns[0]),
-        switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
+        filter((params: ParamMap) => params.has('id')),
+        switchMap((params: ParamMap) => {
+          const id: string = params.get('id');
+          const idN = Number.parseInt(id, 10);
+          return this.gameService.getGamesFromCampaign(idN);
+        }),
         map(game => game[0])
       );
     this.actionOnGameStatus();

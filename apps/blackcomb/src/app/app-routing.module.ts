@@ -18,8 +18,8 @@ const routes: Routes = [
       { path: 'account', component: AccountComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'tap', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
-      { path: 'shake', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
+      { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
+      { path: 'shake/:id', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
       { path: 'stamp', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
       { path: 'survey', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
       {
