@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { RewardsRoutingModule } from './rewards-routing.module';
 import { RewardsListPageComponent } from './containers/rewards-list-page/rewards-list-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +28,6 @@ import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
-import { NewRewardComponent } from './containers/new-reward/new-reward.component';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
@@ -52,8 +52,7 @@ import {
 } from 'src/app/rewards/components/reward-voucher-code-form-group/reward-voucher-code-form-group.component';
 import { VouchersProgressBarModule } from '@cl-shared/components/vouchers-progress-bar/vouchers-progress-bar.module';
 import { NewRewardFormService } from './services/new-reward-form.service';
-import { ManageRewardsComponent } from './components/manage-rewards/manage-rewards.component';
-import { EditRewardComponent } from './containers/edit-reward/edit-reward.component';
+import { ManageRewardsComponent } from './containers/manage-rewards/manage-rewards.component';
 
 @NgModule({
   providers: [
@@ -61,7 +60,6 @@ import { EditRewardComponent } from './containers/edit-reward/edit-reward.compon
   ],
   declarations: [
     RewardsListPageComponent,
-    NewRewardComponent,
     RewardInfoFormGroupComponent,
     RewardMerchantCardComponent,
     LimitFormGroupComponent,
@@ -75,7 +73,6 @@ import { EditRewardComponent } from './containers/edit-reward/edit-reward.compon
     RewardReplenishPopupComponent,
     RewardVoucherCodeFormGroupComponent,
     ManageRewardsComponent,
-    EditRewardComponent
   ],
   imports: [
     CommonModule,
@@ -111,7 +108,8 @@ import { EditRewardComponent } from './containers/edit-reward/edit-reward.compon
     DownloadButtonModule,
     CreateMerchantPopupModule,
     SelectMerchantModule,
-    VouchersProgressBarModule
+    VouchersProgressBarModule,
+    PaginationModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent

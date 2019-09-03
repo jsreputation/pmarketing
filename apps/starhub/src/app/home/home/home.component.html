@@ -2,11 +2,11 @@
   <mat-toolbar class="mat-elevation-z4">
     <mat-toolbar-row class="top-row">
       <a class="badge" href="https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html">
-        <img [src]="getBadge(loyalty.membershipTierName)" alt="">
+        <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
       </a>
       <div class="reward">
         <h2>Explore your rewards,</h2>
-        <h1>{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h1>
+        <h1 *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h1>
         <span class="subtitle">+ Hub Club</span>
       </div>
     </mat-toolbar-row>

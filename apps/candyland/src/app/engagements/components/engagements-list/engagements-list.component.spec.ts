@@ -21,7 +21,6 @@ import {TabsFilterModule} from '../../../shared/table/tabs-filter/tabs-filter.mo
 import {ButtonModule} from '../../../shared/components/button/button.module';
 import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import { Engagement } from '@cl-core/models/engagement.model';
 
 describe('RewardsCampaignsListComponent', () => {
   let component: EngagementsListComponent;
@@ -56,7 +55,7 @@ describe('RewardsCampaignsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EngagementsListComponent);
     component = fixture.componentInstance;
-    component.dataSource = new MatTableDataSource<Engagement>();
+    component.dataSource = new MatTableDataSource<IEngagement>();
     fixture.detectChanges();
   });
 

@@ -1,10 +1,11 @@
 <div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers; else noRewards">
   <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
-    <h1>Saved rewards</h1>
+    <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
     <mat-card *ngFor="let voucher of (hideSeeMore ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
+        <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
         <mat-icon>arrow_forward</mat-icon>
@@ -14,7 +15,7 @@
   </div>
 
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
-    <h1>Past rewards</h1>
+    <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
     <mat-card *ngFor="let voucher of vouchers">
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">

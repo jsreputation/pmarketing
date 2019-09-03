@@ -9,7 +9,8 @@ import {
   ProfileModule,
   RewardsModule,
   VouchersModule,
-  GameModule
+  GameModule,
+  LocationModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -78,7 +79,8 @@ import { HttpClientModule } from '@angular/common/http';
     AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment }),
-    GameModule
+    GameModule,
+    LocationModule.forRoot({ env: environment })
   ],
   entryComponents: [
     CategorySelectComponent,
