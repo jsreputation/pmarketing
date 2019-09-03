@@ -1,4 +1,4 @@
-import { of, from } from 'rxjs';
+import { of, from, throwError } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +11,7 @@ import {
   RewardsService,
   VouchersService,
   CampaignService,
+  AuthenticationService,
   // StampService,
   // LoyaltyService,
   // SurveyService
@@ -43,6 +44,7 @@ import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -60,6 +62,15 @@ const vouchersServiceStub = {
 const campaignServiceStub = {
   getCampaigns: () => of(campaigns),
   getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
+};
+
+const authenticationServiceStub = {
+  login: (username, password) => {
+    if (username === 'perx' && password === '1234') {
+      return of(true);
+    }
+    return throwError(new HttpErrorResponse({ status: 401 }));
+  },
 };
 
 // const stampServiceStub = {
@@ -111,6 +122,7 @@ const campaignServiceStub = {
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: VouchersService, useValue: vouchersServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
+    { provide: AuthenticationService, useValue: authenticationServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
     // { provide: LoyaltyService, useValue: loyaltyServiceStub },
     // { provide: SurveyService, useValue: surveyServiceStub },
