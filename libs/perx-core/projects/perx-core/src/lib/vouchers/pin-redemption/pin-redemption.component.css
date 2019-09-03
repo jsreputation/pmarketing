@@ -50,3 +50,11 @@ input:focus {
 .error .error-label {
   display: block;
 }
+
+input.correct {
+  background: #EEF9E4;
+}
+
+input.wrong {
+  background: #FFF3F9;
+}

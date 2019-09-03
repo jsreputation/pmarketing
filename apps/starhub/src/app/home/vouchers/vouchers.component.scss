@@ -36,8 +36,12 @@ h1 {
   align-items: center;
   flex: 1;
 
-  .mat-card-title {
-    margin-bottom: 0;
+  .mat-card-subtitle.less-three-days {
+    color: #D8127D;
+  }
+
+  .mat-card-subtitle.greater-three-days {
+    color: #666666;
   }
 }
 

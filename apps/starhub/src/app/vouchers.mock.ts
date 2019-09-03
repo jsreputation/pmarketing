@@ -12,7 +12,7 @@ export const vouchers: Voucher[] = [
     rewardBanner: 'https://picsum.photos/400/200?random=20',
     merchantImg: 'https://picsum.photos/100/100?random=21',
     merchantName: 'Starbucks',
-    expiry: new Date(),
+    expiry: new Date('2019-09-05T03:24:00'),
     merchantId: 2,
     description: [
       {
@@ -51,7 +51,7 @@ export const vouchers: Voucher[] = [
     rewardBanner: 'https://picsum.photos/400/200?random=20',
     merchantImg: 'https://picsum.photos/100/100?random=21',
     merchantName: 'Starbucks',
-    expiry: new Date(),
+    expiry: new Date('2019-09-10T03:24:00'),
     merchantId: 2,
     description: [
       {
@@ -74,7 +74,7 @@ export const vouchers: Voucher[] = [
     rewardBanner: 'https://picsum.photos/400/200?random=20',
     merchantImg: '',
     merchantName: '',
-    expiry: null,
+    expiry: new Date(),
     description: [],
     redemptionSuccessTxt: '',
     redemptionSuccessImg: '',
