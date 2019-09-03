@@ -100,10 +100,13 @@
   .code {
     background: #eef9e4;
     border-radius: 0.5rem;
+    border-color: #eef9e4;
+    border-style: solid;
     text-align: center;
     color: #666666;
     padding: 1.5rem 3.5rem;
     font-size: 1.8rem;
+    outline: none;
   }
 }
 
