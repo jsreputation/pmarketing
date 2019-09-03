@@ -34,7 +34,6 @@ export const sortByDistance =
     return combineLatest(position, locations)
       .pipe(
         map(([latestPosition, latestLocations]: [Position, ILocation[]]) => {
-          console.log(latestPosition);
           const locationsList = countDistance(latestPosition, latestLocations);
 
           return locationsList.sort((loc1, loc2) => inc ? loc1.distance - loc2.distance : loc2.distance - loc1.distance);
