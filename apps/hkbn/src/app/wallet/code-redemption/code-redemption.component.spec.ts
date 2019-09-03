@@ -9,6 +9,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { mockVoucher } from '../voucher.mock';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { VoucherState } from '@perx/core';
+import { Location } from '@angular/common';
 
 const NotificationWrapperServiceStud = {
   addPopup: () => { }
@@ -17,10 +18,12 @@ const NotificationWrapperServiceStud = {
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
+  let location: Location;
   const vouchersServiceStub = {
     state: new BehaviorSubject(mockVoucher),
     get: (): Observable<Voucher> => of(mockVoucher),
-    stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state
+    stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+    redeemVoucher: (): Observable<any> => of({})
   };
 
   beforeEach(async(() => {
@@ -28,7 +31,7 @@ describe('CodeRedemptionComponent', () => {
       imports: [
         MatButtonModule,
         RouterTestingModule.withRoutes([{
-          path: 'home',
+          path: 'wallet',
           component: CodeRedemptionComponent
         }]),
         HttpClientTestingModule,
@@ -46,6 +49,7 @@ describe('CodeRedemptionComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CodeRedemptionComponent);
+    location = TestBed.get(Location);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -59,4 +63,16 @@ describe('CodeRedemptionComponent', () => {
     tick();
     expect(component.previousStatus).toBe(VoucherState.issued);
   }));
+
+  it('should navigate to wallet', fakeAsync(()=>{
+    vouchersServiceStub.state.next({... mockVoucher, state: VoucherState.redeemed});
+    tick();
+    expect(location.path(false)).toBe('/wallet')
+  }));
+
+  // it('should call redeemVoucher', ()=>{
+  //   const spy = spyOn(vouchersService, 'redeemVoucher');
+  //   component.redeem();
+  //   expect(spy).toHaveBeenCalled();
+  // })
 });
