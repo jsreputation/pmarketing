@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-login-form',
@@ -11,7 +12,9 @@ export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
   public hide = true;
   constructor(private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService
+              ) { }
 
   public ngOnInit(): void {
     this.createForm();
@@ -19,30 +22,37 @@ export class LoginFormComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.formLogin.valid) {
-      this.router.navigateByUrl('/dashboard');
+      this.authService.signIn(this.formLogin.value)
+      .subscribe((res: Response) => {
+          if (res.status === 200) {
+            this.router.navigateByUrl('/dashboard');
+          }
+        },
+        error => {
+          alert('The email or password is incorrect! ' + error);
+        });
     }
   }
 
-  get email(): AbstractControl | null { return this.formLogin.get('email'); }
+  get username(): AbstractControl | null { return this.formLogin.get('username'); }
   get password(): AbstractControl | null { return this.formLogin.get('password'); }
-  get accountId(): AbstractControl | null { return this.formLogin.get('accountId'); }
+  get accountId(): AbstractControl | null { return this.formLogin.get('tenant_id'); }
 
   private createForm(): void {
     this.formLogin = this.fb.group({
-      accountId: [null, [
+      tenant_id: [null, [
         Validators.required,
-        Validators.minLength(15),
+        Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+        Validators.minLength(1),
         Validators.maxLength(50)
       ]],
-      email: [null, [
+      username: [null, [
         Validators.required,
-        Validators.minLength(15),
-        Validators.maxLength(50)
+        Validators.minLength(1),
+        Validators.maxLength(100)
       ]],
       password: [null, [
-        Validators.required,
-        Validators.minLength(15),
-        Validators.maxLength(50)
+        Validators.required
       ]]
     });
   }
