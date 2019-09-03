@@ -37,7 +37,7 @@ export class VouchersComponent implements OnInit {
 
     this.redeemedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued))
+        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued && this.daysSince(voucher.expiry)))
       );
   }
 
@@ -68,5 +68,11 @@ export class VouchersComponent implements OnInit {
   public getNumberOfDays(voucher: Voucher): string {
     const daysDifference = Math.floor(this.getDifferenceWithCurrentInDays(voucher.expiry));
     return daysDifference < 0 ? '' : `Expires in ${daysDifference} days`;
+  }
+
+  private daysSince(expiryDate: Date): boolean {
+    const daysElapsed = Math.abs(this.getDifferenceWithCurrentInDays(expiryDate));
+    const daysToDisplay = 30;
+    return daysToDisplay > daysElapsed;
   }
 }
