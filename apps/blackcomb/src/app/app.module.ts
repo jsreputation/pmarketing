@@ -8,10 +8,12 @@ import {
   AuthenticationModule,
   GameModule,
   UtilsModule,
+  ProfileModule,
   RewardsService,
   VouchersService,
   CampaignService,
   AuthenticationService,
+  ProfileService,
   // StampService,
   // LoyaltyService,
   // SurveyService
@@ -29,6 +31,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -44,7 +47,7 @@ import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
-import { HttpErrorResponse } from '@angular/common/http';
+import { profile } from './mock/profile.mock';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -71,6 +74,11 @@ const authenticationServiceStub = {
     }
     return throwError(new HttpErrorResponse({ status: 401 }));
   },
+  logout: () => {}
+};
+
+const profileServiceStub = {
+  whoAmI: () => of(profile)
 };
 
 // const stampServiceStub = {
@@ -103,6 +111,7 @@ const authenticationServiceStub = {
     VouchersModule.forRoot({ env: environment }),
     AuthenticationModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -123,6 +132,7 @@ const authenticationServiceStub = {
     { provide: VouchersService, useValue: vouchersServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
     { provide: AuthenticationService, useValue: authenticationServiceStub },
+    { provide: ProfileService, useValue: profileServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
     // { provide: LoyaltyService, useValue: loyaltyServiceStub },
     // { provide: SurveyService, useValue: surveyServiceStub },
