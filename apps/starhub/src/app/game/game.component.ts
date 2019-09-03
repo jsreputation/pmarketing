@@ -36,9 +36,9 @@ export class GameComponent implements OnInit {
   private getGame(gameId: number): void {
     this.gameService.get(gameId).subscribe((game) => {
       if (game && game.type === GameType.pinata) {
-        this.buttonText = game.texts.button ? game.texts.button : 'Start playing';
-        this.title = game.texts.title ? game.texts.title : 'Shake the Pinata';
-        this.subtitle = game.texts.subTitle ? game.texts.subTitle : 'Shake the Pinata and Win!';
+        this.buttonText = game.texts.button || 'Start playing';
+        this.title = game.texts.title || 'Shake the Pinata';
+        this.subtitle = game.texts.subTitle || 'Shake the Pinata and Win!';
         this.nbTaps = game.config.nbTaps;
       }
     });

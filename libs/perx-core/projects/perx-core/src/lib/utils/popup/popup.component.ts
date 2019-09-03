@@ -24,11 +24,11 @@ export interface PopUpClosedCallBack {
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  public title: string = null;
-  public text: string = null;
-  public imageUrl: string = null;
+  public title: string|null = null;
+  public text: string|null = null;
+  public imageUrl: string|null = null;
   public buttonTxt: string = 'close';
-  public buttonTxt2: string = null;
+  public buttonTxt2: string|null = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,

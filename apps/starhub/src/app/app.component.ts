@@ -8,6 +8,7 @@ import {
   ProfileService,
   CampaignService,
   ICampaign,
+  CampaignType
 } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -73,7 +74,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             }
           );
 
-          if (campaigns[0].type === 'game') {
+          if (campaigns[0].type === CampaignType.game) {
             this.selectedCampaign = campaigns[0];
             this.notificationService.addPopup({
               imageUrl: './assets/shake.png',
