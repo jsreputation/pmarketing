@@ -40,8 +40,7 @@ export class CodeRedemptionComponent implements OnInit {
         if (this.previousStatus === VoucherState.issued && voucher.state === VoucherState.redeemed ) {
           this.notificationWrapperService.addPopup({
             title: 'Success',
-            buttonTxt: 'Wallet',
-            afterClosedCallBack: this
+            buttonTxt: 'Wallet'
           });
           this.router.navigate(['/wallet']);
         }
