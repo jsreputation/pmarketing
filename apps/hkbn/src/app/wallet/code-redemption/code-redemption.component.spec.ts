@@ -1,36 +1,39 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule, VouchersService, Voucher } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { mockVoucher } from '../voucher.mock';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { VoucherState } from '@perx/core';
 
 const NotificationWrapperServiceStud = {
-  addPopup: () => {}
+  addPopup: () => { }
 }
 
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
   const vouchersServiceStub = {
-    state: mockVoucher,
+    state: new BehaviorSubject(mockVoucher),
     get: (): Observable<Voucher> => of(mockVoucher),
-    stateChangedForVoucher: (): Observable<Voucher> => of(vouchersServiceStub.state)
+    stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         MatButtonModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'home',
+          component: CodeRedemptionComponent
+        }]),
         HttpClientTestingModule,
         TranslateModule.forRoot(),
-        VouchersModule
+        VouchersModule,
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub },
@@ -50,4 +53,10 @@ describe('CodeRedemptionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('expect change status', fakeAsync(() => {
+    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.issued });
+    tick();
+    expect(component.previousStatus).toBe(VoucherState.issued);
+  }));
 });

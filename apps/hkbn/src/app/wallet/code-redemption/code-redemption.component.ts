@@ -12,7 +12,7 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
   styleUrls: ['./code-redemption.component.scss']
 })
 export class CodeRedemptionComponent implements OnInit {
-  private previousStatus: VoucherState;
+  public previousStatus: VoucherState;
   public voucherId: number;
 
   private destroy$: Subject<void> = new Subject<void>();
