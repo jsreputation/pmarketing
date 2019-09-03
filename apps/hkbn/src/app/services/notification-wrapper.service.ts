@@ -1,4 +1,4 @@
-import { NotificationService } from '@perx/core';
+import { NotificationService, IPopupConfig } from '@perx/core';
 import { Injectable } from '@angular/core';
 import { AppModule } from '../app.module';
 @Injectable({
@@ -8,7 +8,7 @@ export class NotificationWrapperService {
 
   constructor(private notificationService: NotificationService) { }
 
-  addPopup(config) {
+  public addPopup(config: IPopupConfig): void {
     this.notificationService.addPopup(config);
   }
 
