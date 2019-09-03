@@ -16,10 +16,13 @@ Before( () => {
 Given(/^1_I am on the dashboard page.$/, async () => {
   const ec = protractor.ExpectedConditions;
   await DashboardPage.navigateToDashboard();
-  // work around the walk me button presence , run this for the first tc propogated
+  // work around the first walk me button presence , run this for the first tc propogated
   await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
   await element(by.className('walkme-custom-balloon-button-text')).click();
   await DashboardPage.navigateToDashboard();
+  // work around for the second walk me button
+  await browser.wait(ec.elementToBeClickable(element(by.css('span.walkme-custom-balloon-button-text'))), 5000);
+  await element(by.css('span.walkme-custom-balloon-button-text')).click();
 });
 
 When(/^1_I take no action.$/, () => {});
