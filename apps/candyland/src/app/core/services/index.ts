@@ -10,3 +10,5 @@ export * from './settings.service';
 export * from './survey.service';
 export * from './shake-tree.service';
 export * from './pinata.service';
+export * from './available-new-engagement.service';
+export * from './instant-rewards.service';

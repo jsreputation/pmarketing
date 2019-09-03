@@ -16,16 +16,6 @@ export class RewardHttpService {
     return this.http.get(ApiConfig.rewardsPath, {params});
   }
 
-  public getRewardData(): Observable<{
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  }> {
-    return this.http.get<{
-      background: IGraphic[],
-      cardBackground: IGraphic[]
-    }>('assets/actives/reward/reward-data.json');
-  }
-
   public getReward(id: string): Observable<IResponseApi<IRewardApi>> {
     return this.http.get<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath + id);
   }
@@ -45,10 +35,6 @@ export class RewardHttpService {
           return res.filter((item) => item.id === id)[0];
         })
       );
-  }
-
-  public createRewardGame(data: any): Observable<any> {
-    return this.http.post(ApiConfig.createGamePath, data);
   }
 
   public createReward(data: IResponseApi<IRewardApi> ): Observable<IResponseApi<IRewardApi>> {

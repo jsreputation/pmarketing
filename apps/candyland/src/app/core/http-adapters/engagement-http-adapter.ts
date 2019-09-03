@@ -35,10 +35,11 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformReward(data: any): any {
+  public static transformInstantReward(data: any): any {
     return {
       type: 'engagements',
       attributes: {
+        type: 'game',
         title: data.name,
         game_type: 'reward',
         image_url:

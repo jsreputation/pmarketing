@@ -29,13 +29,6 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewards(params);
   }
 
-  public getRewardData(): Observable<{
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  }> {
-    return this.rewardHttp.getRewardData();
-  }
-
   public getRewardsOptions(): Observable<OptionConfig[]> {
     return this.rewardHttp.getRewardsOptions();
   }
@@ -64,10 +57,5 @@ export class RewardsService implements ITableService {
     const sendData = RewardHttpAdapter.transformFromRewardForm(data);
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});
-  }
-
-  public createRewardGame(data): Observable<any> {
-    const sendData = EngagementHttpAdapter.transformReward(data);
-    return this.rewardHttp.createRewardGame({data: sendData});
   }
 }
