@@ -9,7 +9,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { RewardsService } from '@perx/core';
+import { RewardsService, FeedReaderService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -22,6 +22,9 @@ describe('DiscoverComponent', () => {
     getAllRewards: () => of(rewards),
     getAllCatalogs: () => of(catalogs)
 
+  };
+  const feedReaderServiceStub = {
+    getFromUrl: () => of([])
   };
 
   beforeEach(async(() => {
@@ -42,7 +45,8 @@ describe('DiscoverComponent', () => {
         ScrollingModule
       ],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: FeedReaderService, useValue: feedReaderServiceStub }
       ]
     })
       .compileComponents();
