@@ -141,7 +141,7 @@ jobs:
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             if [ $APP == 'candyland-uat' ]
             then
-              echo 'export APP="candyland"'
+              export APP="candyland"
             fi
             echo "after second set APP: ${APP}"
 
