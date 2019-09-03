@@ -12,7 +12,7 @@ import { VoucherState } from '@perx/core';
 
 const NotificationWrapperServiceStud = {
   addPopup: () => { }
-}
+};
 
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;

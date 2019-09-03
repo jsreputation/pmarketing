@@ -7,7 +7,7 @@ describe('NotificationWrapperService', () => {
   let notification: NotificationService;
   const notificationServiceStub = {
     $popup: { subscribe: () => ({}) },
-    addPopup: (val) => { val }
+    addPopup: (val) => val
   };
   beforeEach(() => TestBed.configureTestingModule({
     providers: [{

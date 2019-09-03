@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { QrRedemptionComponent } from './qr-redemption.component'
+import { QrRedemptionComponent } from './qr-redemption.component';
 
 const routes: Routes = [{
   path: '',
