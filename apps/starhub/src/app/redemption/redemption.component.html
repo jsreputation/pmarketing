@@ -16,8 +16,8 @@
           <ng-template #available>
             <div *ngIf="voucher.redemptionType === 'txtCode'" class="code-redemption">
               <h1>Promo code</h1>
-              <span class="code">{{voucher.code}}</span>
-              <button mat-button color="primary">Copy the code</button>
+              <input class="code" #codeInput matInput type="text" [value]="voucher.code" readonly>
+              <button mat-button color="primary" (click)="copyCode(codeInput)">Copy the code</button>
             </div>
             <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
               <p>Please ask cashier to enter PIN</p>
