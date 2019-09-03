@@ -1,5 +1,4 @@
 export * from './rewards.service';
-export * from './control-value.service';
 export * from './routing-state.service';
 export * from './audiences.service';
 export * from './auth.service';
@@ -9,6 +8,5 @@ export * from './engagements.service';
 export * from './merchant.service';
 export * from './settings.service';
 export * from './survey.service';
-export * from './engagement-transform-data.service';
 export * from './shake-tree.service';
 export * from './pinata.service';

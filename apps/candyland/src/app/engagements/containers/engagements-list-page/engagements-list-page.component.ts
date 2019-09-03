@@ -4,7 +4,6 @@ import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-import { Engagement } from '@cl-core/models/engagement.model';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -13,7 +12,7 @@ import { Engagement } from '@cl-core/models/engagement.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementsListPageComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<IEngagement>();
   public tabsFilterConfig;
   public hasData = true;
   public isGridMode = true;
@@ -46,7 +45,7 @@ export class EngagementsListPageComponent implements AfterViewInit {
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);
         }),
       )
-      .subscribe((res: Engagement[]) => {
+      .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();

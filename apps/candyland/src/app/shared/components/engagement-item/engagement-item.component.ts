@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Engagement } from '@cl-core/models/engagement.model';
 
 @Component({
   selector: 'cl-engagement-item',
@@ -8,6 +7,6 @@ import { Engagement } from '@cl-core/models/engagement.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementItemComponent {
-  @Input() public data: Engagement;
+  @Input() public data: IEngagement;
 
 }

@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
-import { ControlValueService } from '@cl-core/services';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmModalComponent } from '@cl-shared';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -40,7 +40,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
               private routingState: RoutingStateService,
               private router: Router,
               private stampDataService: StampDataService,
-              private controlValueService: ControlValueService,
               public dialog: MatDialog) { }
 
   public ngOnInit(): void {
@@ -98,7 +97,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   public save(): void {

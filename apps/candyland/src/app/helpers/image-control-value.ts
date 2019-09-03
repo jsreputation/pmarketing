@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ControlValueService {
+export class ImageControlValue {
 
-  public getImgLink(control: FormControl, defaultImg?: string): string {
+  public static getImgLink(control: FormControl, defaultImg?: string): string {
     if (!(control && control.value)) {
       return defaultImg;
     }
@@ -19,7 +15,7 @@ export class ControlValueService {
     return control.value;
   }
 
-  public getImagePath(data: IGraphic): string {
+  public static getImagePath(data: IGraphic): string {
     return data.fullImg ? data.fullImg : data.img;
   }
 }
