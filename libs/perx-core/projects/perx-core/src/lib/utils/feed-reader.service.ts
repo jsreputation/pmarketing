@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs/operators';
 
 export interface FeedItem {
   title: string;
@@ -14,9 +16,15 @@ export interface FeedItem {
   providedIn: 'root'
 })
 export class FeedReaderService {
-  // @ts-ignore
+  constructor(private http: HttpClient) { }
+
   public getFromUrl(url: string): Observable<FeedItem[]> {
-    throwError('not implemented yet');
+    return this.http.get(url, { responseType: 'text' })
+      .pipe(
+        tap(content => console.log(content)),
+        map((content: string) => this.getFromText(content)),
+        tap(items => console.log(items)),
+      );
   }
 
   public getFromText(feed: string): FeedItem[] {
@@ -35,7 +43,7 @@ export class FeedReaderService {
     const items = Array.from(channel.querySelectorAll('item'));
     return items.map((item: Element) => {
       const imageTag = item.getElementsByTagName('image')[0];
-      return {
+      const it: FeedItem = {
         title: item.getElementsByTagName('title')[0].textContent,
         description: item.getElementsByTagName('description')[0].textContent,
         link: item.getElementsByTagName('link')[0].textContent,
@@ -43,6 +51,13 @@ export class FeedReaderService {
         guid: item.getElementsByTagName('guid')[0].textContent,
         pubDate: new Date(item.getElementsByTagName('pubDate')[0].textContent)
       };
+      // cure the content
+      for (const k in it) {
+        if ((typeof it[k]) === 'string') {
+          it[k] = it[k].trim();
+        }
+      }
+      return it;
     });
   }
 }
