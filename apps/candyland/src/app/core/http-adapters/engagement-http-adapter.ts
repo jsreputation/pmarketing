@@ -41,10 +41,12 @@ export class EngagementHttpAdapter {
       attributes: {
         type: 'game',
         title: data.name,
+        description: 'Instant Reward',
         game_type: 'reward',
         image_url:
           'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
+          title: data.headlineMessage,
           headlineText: data.headlineMessage,
           subHeadlineText: data.subHeadlineMessage,
           cardBackground: ImageControlValue.getImagePath(data.cardBackground),

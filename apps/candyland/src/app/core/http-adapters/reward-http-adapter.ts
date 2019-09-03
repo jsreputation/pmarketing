@@ -1,6 +1,6 @@
 export class RewardHttpAdapter {
   // tslint:disable
-  public static transformToReward(data: IRewardApi): IReward {
+  public static transformToReward(data: IRewardEntityApi): IRewardEntity {
     return {
       id: data.id,
       image: data.attributes.image_url,
@@ -15,7 +15,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformToRewardForm(data: IRewardApi): IRewardForm {
+  public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
     return {
       name: data.attributes.name,
       id: data.id,
@@ -32,7 +32,7 @@ export class RewardHttpAdapter {
     };
   };
 
-  public static transformFromRewardForm(data: IRewardForm): IRewardApi {
+  public static transformFromRewardForm(data: IRewardEntityForm): IRewardEntityApi {
     return {
         type: 'entities',
         attributes: {
@@ -48,7 +48,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromReward(data: IReward): IRewardApi {
+  public static transformFromReward(data: IRewardEntity): IRewardEntityApi {
     return {
         type: 'entities',
         attributes: {

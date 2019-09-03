@@ -16,8 +16,8 @@ export class RewardHttpService {
     return this.http.get(ApiConfig.rewardsPath, {params});
   }
 
-  public getReward(id: string): Observable<IResponseApi<IRewardApi>> {
-    return this.http.get<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath + id);
+  public getReward(id: string): Observable<IResponseApi<IRewardEntityApi>> {
+    return this.http.get<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath + id);
   }
 
   public getMockRewardDetail(): Observable<any> {
@@ -37,11 +37,11 @@ export class RewardHttpService {
       );
   }
 
-  public createReward(data: IResponseApi<IRewardApi> ): Observable<IResponseApi<IRewardApi>> {
-    return this.http.post<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath,  data);
+  public createReward(data: IResponseApi<IRewardEntityApi> ): Observable<IResponseApi<IRewardEntityApi>> {
+    return this.http.post<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath,  data);
   }
 
-  public updateReward(id: string, data: IResponseApi<IRewardApi>): Observable<IResponseApi<IRewardApi>> {
-    return this.http.patch<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath + id, data);
+  public updateReward(id: string, data: IResponseApi<IRewardEntityApi>): Observable<IResponseApi<IRewardEntityApi>> {
+    return this.http.patch<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath + id, data);
   }
 }
