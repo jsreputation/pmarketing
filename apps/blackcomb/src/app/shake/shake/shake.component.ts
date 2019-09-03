@@ -3,9 +3,10 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
   NotificationService,
   IGame,
-  GameService
+  GameService,
+  GameType
 } from '@perx/core';
-import { map, switchMap, filter } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -35,10 +36,9 @@ export class ShakeComponent implements OnInit {
           const idN = Number.parseInt(id, 10);
           return this.gameService.getGamesFromCampaign(idN);
         }),
-        map(game => game[0])
+        map((games: IGame[]) => games.filter(game => game.type === GameType.shakeTheTree)[0])
       );
     this.actionOnGameStatus();
-
   }
 
   public actionOnGameStatus(): void {

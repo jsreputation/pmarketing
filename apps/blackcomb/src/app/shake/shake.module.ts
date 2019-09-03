@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material';
 import { of } from 'rxjs';
 import { games } from '../mock/games.mock';
 
-
 const gameServiceStub = {
   get: (id: number) => of(games[id]),
   getGamesFromCampaign: (id: number) => of(games.filter(game => game.campaignId === id))
