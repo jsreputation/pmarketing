@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiConfig } from '@cl-core/api-config';
 
@@ -9,10 +9,11 @@ import { ApiConfig } from '@cl-core/api-config';
 })
 export class RewardHttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  public getRewards(): Observable<any> {
-    return this.http.get('assets/actives/rewards/rewards.json');
+  public getRewards(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.rewardsPath, {params});
   }
 
   public getRewardData(): Observable<{
@@ -25,7 +26,11 @@ export class RewardHttpService {
     }>('assets/actives/reward/reward-data.json');
   }
 
-  public getReward(): Observable<any> {
+  public getReward(id: string): Observable<IResponseApi<IRewardApi>> {
+    return this.http.get<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath + id);
+  }
+
+  public getMockRewardDetail(): Observable<any> {
     return this.http.get('assets/actives/rewards/reward-detail.json');
   }
 
@@ -33,7 +38,7 @@ export class RewardHttpService {
     return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 
-  public getSingleReward(id: number): Observable<any> {
+  public getSingleReward(id: string): Observable<any> {
     return this.http.get('assets/actives/rewards/rewards.json')
       .pipe(
         map((res: any[]) => {
@@ -44,5 +49,13 @@ export class RewardHttpService {
 
   public createRewardGame(data: any): Observable<any> {
     return this.http.post(ApiConfig.createGamePath, data);
+  }
+
+  public createReward(data: IResponseApi<IRewardApi> ): Observable<IResponseApi<IRewardApi>> {
+    return this.http.post<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath,  data);
+  }
+
+  public updateReward(id: string, data: IResponseApi<IRewardApi>): Observable<IResponseApi<IRewardApi>> {
+    return this.http.patch<IResponseApi<IRewardApi>>(ApiConfig.rewardsPath + id, data);
   }
 }

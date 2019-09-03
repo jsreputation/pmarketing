@@ -86,6 +86,7 @@ export class VouchersService implements IVoucherService {
     const merchantImg = v.merchantImg ? v.merchantImg : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
+    const redemptionTypeFinal = v.voucher_type in RedemptionType ? v.voucher_type : RedemptionType.txtCode;
 
     return {
       id: v.id,
@@ -93,7 +94,7 @@ export class VouchersService implements IVoucherService {
       state: v.state,
       name: v.name,
       code: v.voucher_code,
-      redemptionType: v.voucher_type,
+      redemptionType: redemptionTypeFinal,
       thumbnailImg,
       rewardBanner,
       merchantImg,
