@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  public vouchers: Observable<Voucher[]>;
+  public savedVouchers: Observable<Voucher[]>;
 
   public redeemedVouchers: Observable<Voucher[]>;
 
-  public defaultNbVouchers: number = 3;
+  public defaultNbVouchers: number = 5;
 
   public hideSeeMore: boolean = false;
 
@@ -26,12 +26,14 @@ export class VouchersComponent implements OnInit {
 
   public ngOnInit(): void {
     const feed = this.vouchersService.getAll();
-    this.vouchers = feed
+    this.savedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued)));
-
-    this.vouchers.subscribe(
-      (vouchs: Voucher[]) => this.hideSeeMore = vouchs.length <= this.defaultNbVouchers ? true : false);
+        map((vouchs: Voucher[]) => {
+          if (!this.hideSeeMore) {
+            this.hideSeeMore = vouchs.length <= this.defaultNbVouchers;
+          }
+          return vouchs.filter(voucher => voucher.state === VoucherState.issued);
+        }));
 
     this.redeemedVouchers = feed
       .pipe(
@@ -45,5 +47,26 @@ export class VouchersComponent implements OnInit {
 
   public seeMoreClicked(): void {
     this.hideSeeMore = true;
+  }
+
+  private getDifferenceWithCurrentInDays(inputDate: Date): number {
+    if (!inputDate) {
+      // TODO: not sure about vouchers with null expiry
+      return 0;
+    }
+
+    const oneDay = 24 * 60 * 60 * 1000;
+    const currentDate = new Date();
+    return (inputDate.getTime() - currentDate.getTime()) / oneDay;
+  }
+
+  public getTextColorClass(voucher: Voucher): string {
+    const days = this.getDifferenceWithCurrentInDays(voucher.expiry);
+    return days >= 3 ? 'greater-three-days' : 'less-three-days';
+  }
+
+  public getNumberOfDays(voucher: Voucher): string {
+    const daysDifference = Math.floor(this.getDifferenceWithCurrentInDays(voucher.expiry));
+    return daysDifference < 0 ? '' : `Expires in ${daysDifference} days`;
   }
 }

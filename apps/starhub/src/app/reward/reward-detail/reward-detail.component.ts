@@ -39,9 +39,6 @@ export class RewardDetailComponent implements OnInit {
     this.rewardsService.getReward(this.rewardId)
       .subscribe((reward: IReward) => {
         this.reward = reward;
-        // TODO: following date is being set for macron testing
-        const currentDate = new Date();
-        this.reward.validTo = new Date(currentDate.setHours(currentDate.getHours() + 35));
     });
   }
 
