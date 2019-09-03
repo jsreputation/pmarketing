@@ -13,7 +13,7 @@ export class RewardItemComponent implements OnInit {
   });
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
-  public get data(): Reward | null {
+  public get data(): IReward | null {
     return this.group.value.value;
   }
 

@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
       name: 'Smash that Pinata',
       description: '',
       type: CampaignType.stamp,
-      state: CampaignState.active
+      state: CampaignState.active,
+      endsAt: '2017-12-17T03:24:00'
     }
   ];  // test Array
 
