@@ -70,9 +70,6 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
           Validators.required,
           Validators.min(1),
           Validators.max(60)
-        ]],
-        duration: [null, [
-          Validators.required
         ]]
       })
     });
