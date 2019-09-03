@@ -87,19 +87,11 @@ export class HomeComponent implements OnInit {
 
     this.translate.get('POINTS_EXPITING')
       .subscribe((res: string) => {
-        this.summaryExpiringFn = (loyalty: ILoyalty) => {
-
-          if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length) {
-            return '';
-          }
-          const expiringPoints = loyalty.expiringPoints[0];
-          if (!expiringPoints.expireDate || !expiringPoints.points) {
-            return '';
-          }
-          return loyalty ? res
-            .replace('{{points}}', expiringPoints.points.toString())
-            .replace('{{date}}', this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')) : null;
-        };
+        this.summaryExpiringFn = (loyalty: ILoyalty) =>
+          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length > 0 ?
+            res
+              .replace('{{points}}', loyalty.expiringPoints[0].points.toString())
+              .replace('{{date}}', this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y')) : '';
       });
 
   }
