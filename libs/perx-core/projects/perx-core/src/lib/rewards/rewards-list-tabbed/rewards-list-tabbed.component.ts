@@ -11,6 +11,10 @@ export interface ITabConfig {
   rewardsList?: Observable<IReward[]>;
 }
 
+export interface ITabConfigExtended extends ITabConfig {
+  rewardsType: string;
+}
+
 @Component({
   selector: 'perx-core-rewards-list-tabbed',
   templateUrl: './rewards-list-tabbed.component.html',

@@ -8,12 +8,12 @@
   </ng-container>
   <ng-container *ngIf="loyalty$ | async as loyalty">
     <div class="points">
-      {{loyalty.pointsBalance}}
+      {{loyalty.pointsBalance.toLocaleString('en-sg')}}
     </div>
     <div>
       {{subTitleFn(loyalty)}}
     </div>
-    <div 
+    <div
       class="expiring-points"
     >
       {{summaryExpiringFn(loyalty)}}
