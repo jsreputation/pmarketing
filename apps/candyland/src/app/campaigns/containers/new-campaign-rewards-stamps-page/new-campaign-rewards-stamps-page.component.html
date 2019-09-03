@@ -4,7 +4,7 @@
     <mat-card class="card">
       <ng-container *ngFor="let rewardGroup of rewardsList?.controls; let i = index">
         <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')"
-                                            [title]="'Rewards for slot ' + rewardGroup.get('stampSlotNumber').value">
+          [title]="'Rewards for slot ' + rewardGroup.get('stampSlotNumber').value">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
     </mat-card>
@@ -62,6 +62,7 @@
               </mat-form-field>
               <div></div>
             </div>
+            <label class="card-label">Stamp cards per user</label>
             <div class="card-row input-group">
               <mat-form-field>
                 <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
@@ -90,7 +91,7 @@
             <div class="card-row input-group">
               <mat-form-field>
                 <input matInput type="number" [min]="1" [max]="1000" formControlName="perUser">
-                <span matSuffix>stamp cards</span>
+                <span matSuffix>stamps</span>
               </mat-form-field>
               <span>per</span>
               <mat-form-field>
