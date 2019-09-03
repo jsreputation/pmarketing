@@ -18,8 +18,8 @@ export class SettingsHttpService {
   }
 
   private static zone2Number(z: string): number {
-    const sign: string = z.substr(3, 1);
-    const time: string = z.substr(4);
+    const sign: string = z.substring(3, 4);
+    const time: string = z.substring(4);
     const times: string[] = time.split(':');
     if (times.length !== 2) {
       throw new Error(`Invalid time zone ${z}`);

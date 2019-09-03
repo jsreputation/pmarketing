@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  public vouchers: Observable<Voucher[]>;
+  public savedVouchers: Observable<Voucher[]>;
 
   public redeemedVouchers: Observable<Voucher[]>;
 
-  public defaultNbVouchers: number = 3;
+  public defaultNbVouchers: number = 5;
 
   public hideSeeMore: boolean = false;
 
@@ -26,12 +26,14 @@ export class VouchersComponent implements OnInit {
 
   public ngOnInit(): void {
     const feed = this.vouchersService.getAll();
-    this.vouchers = feed
+    this.savedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state === VoucherState.issued)));
-
-    this.vouchers.subscribe(
-      (vouchs: Voucher[]) => this.hideSeeMore = vouchs.length <= this.defaultNbVouchers ? true : false);
+        map((vouchs: Voucher[]) => {
+          if (!this.hideSeeMore) {
+            this.hideSeeMore = vouchs.length <= this.defaultNbVouchers;
+          }
+          return vouchs.filter(voucher => voucher.state === VoucherState.issued);
+        }));
 
     this.redeemedVouchers = feed
       .pipe(
