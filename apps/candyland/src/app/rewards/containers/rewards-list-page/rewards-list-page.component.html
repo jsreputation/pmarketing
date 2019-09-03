@@ -7,16 +7,20 @@
   <ng-container *ngIf="hasData">
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'type'; let filter">
+      <ng-container *clTableFilter="'name'; let filter">
         <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
       </ng-container>
     </cl-table-filters>
     <!--table-->
     <cl-rewards-list [dataSource]="dataSource"
+                     [displayedColumns] = "displayedColumns"
                      (itemAction)="actionHandler($event)"
     ></cl-rewards-list>
     <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <cl-paginator [dataSource]="dataSource"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 20]"
+    ></cl-paginator>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

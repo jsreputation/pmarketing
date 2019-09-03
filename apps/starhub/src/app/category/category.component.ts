@@ -47,7 +47,6 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   }
 
   private fetchRewards(): void {
-    console.log(this.selectedCategory);
     if (this.selectedCategory === 'All') {
       this.rewards = this.rewardsService.getAllRewards();
       return;

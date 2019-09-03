@@ -19,7 +19,8 @@ export class CampaignsComponent {
         name: 'Shake the tree',
         description: '....',
         type: CampaignType.game,
-        state: CampaignState.active
+        state: CampaignState.active,
+        endsAt: '2017-12-17T03:24:00'
       }
     ];
   }
