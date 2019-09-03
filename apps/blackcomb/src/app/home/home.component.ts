@@ -10,6 +10,17 @@ import { Observable } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   public campaigns$: Observable<ICampaign[]>;
+  public campaigns: ICampaign[] = [
+    {
+      id: 1,
+      name: 'Smash that Pinata',
+      description: '',
+      type: CampaignType.stamp,
+      state: CampaignState.active,
+      endsAt: '2017-12-17T03:24:00'
+    }
+  ];  // test Array
+
   public vouchers$: Observable<Voucher[]>;
 
   public filter: string[];

@@ -10,8 +10,7 @@ export class CampaignsHttpsService {
   }
 
   public getCampaigns(): Observable<any> {
-    return this.http.get('assets/mocks/campaigns.json').pipe(
-    );
+    return this.http.get('assets/mocks/campaigns.json');
   }
 
   public getCampaign(id: number): void {

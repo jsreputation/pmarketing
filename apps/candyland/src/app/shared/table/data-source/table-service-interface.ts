@@ -1,5 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface ITableService {
-  getTableData(params: any): Observable<any>;
+  getTableData(params: HttpParams): Observable<ITableData<any>>;
 }
