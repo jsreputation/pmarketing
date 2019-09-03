@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Type } from '@angular/core';
 
 describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;
@@ -54,7 +55,7 @@ describe('SmsValidationComponent', () => {
     let navigateSpy;
 
     beforeEach(() => {
-      authenticationService = TestBed.get(AuthenticationService);
+      authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
       verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of({message: 'OTP verified'}));
       router = TestBed.get(Router);
       navigateSpy = spyOn(router, 'navigate');
@@ -75,7 +76,7 @@ describe('SmsValidationComponent', () => {
   });
 
   it('should make request for send otp, when call resendSms method', () => {
-    const authenticationService = TestBed.get(AuthenticationService);
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const resendSpy = spyOn(authenticationService, 'resendOTP').and.returnValue(of(null));
     component.resendSms();
     expect(resendSpy).toHaveBeenCalledWith('639876543210');
