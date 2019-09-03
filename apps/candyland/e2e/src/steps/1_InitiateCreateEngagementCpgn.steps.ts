@@ -23,6 +23,11 @@ Given(/^1_I am on the dashboard page.$/, async () => {
   // work around for the second walk me button
   await browser.wait(ec.elementToBeClickable(element(by.css('span.walkme-custom-balloon-button-text'))), 5000);
   await element(by.css('span.walkme-custom-balloon-button-text')).click();
+  // work around for the configure settings walk me
+  await browser.wait(ec.elementToBeClickable(element(
+    by.className('walkme-click-and-hover walkme-custom-balloon-close-button walkme-action-close walkme-inspect-ignore'))), 5000);
+  await element(
+    by.className('walkme-click-and-hover walkme-custom-balloon-close-button walkme-action-close walkme-inspect-ignore')).click();
 });
 
 When(/^1_I take no action.$/, () => {});
