@@ -20,6 +20,7 @@
       <mat-card-header>
         <img mat-card-avatar [src]="voucher.thumbnailImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
+        <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">
         <mat-icon>arrow_forward</mat-icon>
