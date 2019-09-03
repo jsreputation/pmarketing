@@ -5,8 +5,8 @@
     </div>
   </div>
   <div class="btn-group">
-    <cl-button classList="invert" routerLink="..">Close</cl-button>
-    <cl-button classList="primary" routerLink="..">Edit</cl-button>
+    <cl-button classList="invert" routerLink="/rewards/">Close</cl-button>
+    <cl-button classList="primary" [routerLink]="'/rewards/edit/'+ id">Edit</cl-button>
   </div>
 </div>
 
@@ -68,7 +68,7 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-info-preview [data]="data?.rewardInfo"></cl-reward-info-preview>
+      <cl-reward-info-preview [data]="data?.rewardInfo" (updateRewardImage)="updateRewardImage($event)"></cl-reward-info-preview>
     </div>
   </mat-expansion-panel>
   <!--/ Reward Info-->
