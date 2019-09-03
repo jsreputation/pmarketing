@@ -25,4 +25,4 @@ export const campaigns: ICampaign[] = [
         state: CampaignState.active,
         endsAt: '2017-10-17T03:24:00'
     }
-]
+];

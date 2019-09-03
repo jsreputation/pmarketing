@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Voucher, VouchersService, VoucherState } from '@perx/core';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
