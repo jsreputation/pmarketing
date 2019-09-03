@@ -7,7 +7,6 @@ import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.c
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { RegistrationComponent } from './auth/containers/registration/registration.component';
-import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
@@ -35,9 +34,11 @@ const routes: Routes = [
             }
           },
           {
-            path: 'qrcode', component: QrRedemptionComponent, data: {
-              cross: true,
-              backUrl: '../',
+            path: 'qrcode',
+            loadChildren: () => import('./wallet/qr-redemption/qr-redemption.module').then(mod => mod.QrRedemptionModule),
+            data: {
+              back: true,
+              backUrl: '../'
             }
           },
           {
@@ -47,7 +48,7 @@ const routes: Routes = [
               back: true,
               backUrl: '../'
             }
-          }
+          },
         ]
       },
       {

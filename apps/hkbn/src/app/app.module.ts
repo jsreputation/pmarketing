@@ -21,7 +21,6 @@ import { ContentContainerModule } from './ui/content-container/content-container
 import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
-import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -54,7 +53,6 @@ const PROVIDERS = [
     AppComponent,
     WalletComponent,
     VoucherDetailsComponent,
-    QrRedemptionComponent,
     HistoryComponent,
   ],
   imports: [

@@ -86,14 +86,14 @@ export class HomeComponent implements OnInit {
       });
 
     this.translate.get('POINTS_EXPITING')
-      .subscribe((res: string) => {
-        this.summaryExpiringFn = (loyalty: ILoyalty) =>
-          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length > 0 ?
-            res
-              .replace('{{points}}', loyalty.expiringPoints[0].points.toString())
-              .replace('{{date}}', this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y')) : '';
-      });
-
+      .subscribe((res: string) => 
+        this.summaryExpiringFn = (loyalty: ILoyalty) => 
+          loyalty && loyalty.expiringPoints &&  loyalty.expiringPoints.length ?  res
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points: '')
+            .toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ? 
+            this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y'): '') : ''
+      );
   }
 
   private getTags(): Observable<ITabConfigExtended[]> {
