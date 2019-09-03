@@ -143,6 +143,8 @@ jobs:
             then
               echo 'export APP="candyland"'
             fi
+            echo "after second set APP: ${APP}"
+
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
             --no-cache \
             --build-arg app=$APP \
