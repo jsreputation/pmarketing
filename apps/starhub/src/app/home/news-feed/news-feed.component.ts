@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { espn } from './mockData';
 import { FeedItem, FeedReaderService } from '@perx/core';
 
 @Component({
@@ -16,7 +15,8 @@ export class NewsFeedComponent implements OnInit {
   constructor(private reader: FeedReaderService) { }
 
   public ngOnInit(): void {
-    this.items = this.reader.getFromText(espn);
+    this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
+      .subscribe(items => this.items = items);
     this.itemSize = window.innerWidth;
   }
 
