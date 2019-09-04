@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import {
   IReward,
@@ -24,6 +24,7 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let rewardsService: RewardsService;
+  let translateService: TranslateService;
   const loyaltyServiceStub = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
@@ -56,6 +57,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+    translateService = TestBed.get(TranslateService);
     rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     fixture.detectChanges();
   });
@@ -77,4 +79,13 @@ describe('HomeComponent', () => {
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call translate service', fakeAsync(()=>{
+    const spy = spyOn(translateService, 'get');
+    spy.and.returnValue(of({'YOU_HAVE': 'YOU_HAVE', 'HELLO': 'HELLO', 'POINTS_EXPITING': 'POINTS_EXPITING'}))
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalledWith(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']);
+    tick();
+    expect(component.titleFn(null)).toBe('HELLO')
+  }))
 });
