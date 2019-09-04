@@ -31,7 +31,7 @@ const getAppAccessToken = (authenticationService: AuthenticationService) => {
   return () => authenticationService.getAppToken().toPromise();
 };
 
-const setLanguage = (translateService: TranslateService) => {
+export const setLanguage = (translateService: TranslateService) => {
   return () => new Promise((resolve) => {
     translateService.setDefaultLang(environment.defaultLang);
     resolve();
