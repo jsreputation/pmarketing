@@ -9,6 +9,7 @@ import {
   ProfileModule,
   RewardsModule,
   VouchersModule,
+  GameModule,
   LocationModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
@@ -34,6 +35,8 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
+import { GameComponent } from './game/game.component';
+import { CongratsComponent } from './congrats/congrats.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -52,6 +55,8 @@ import { HttpClientModule } from '@angular/common/http';
     RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
+    GameComponent,
+    CongratsComponent,
     RewardPopupComponent,
     ExpireTimerComponent
   ],
@@ -68,11 +73,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
+    ProfileModule.forRoot({ env: environment }),
     HttpClientModule,
     RewardsModule.forRoot({ env: environment }),
     AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment }),
+    GameModule,
     LocationModule.forRoot({ env: environment })
   ],
   entryComponents: [

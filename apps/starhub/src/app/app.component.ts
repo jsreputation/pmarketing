@@ -22,6 +22,7 @@ import { map, switchMap } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
+  public selectedCampaign: ICampaign;
   private reward: IReward;
 
   constructor(
@@ -58,15 +59,15 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.give_reward)),
-        map(campaigns => campaigns[0]),
+        map((campaigns: ICampaign[]) => campaigns[0]),
         switchMap((campaign: ICampaign) => this.campaignService.getCampaign(campaign.id))
       )
       .subscribe(
         (campaign: ICampaign) => {
-          if (campaign.rewards.length > 0) {
+          this.selectedCampaign = campaign;
+          if (campaign.type === 'give_reward') {
             this.reward = campaign.rewards[0];
-            if (campaign.type === 'give_reward') {
+            if (campaign.rewards.length > 0) {
                 const data = {
                   text: campaign.name,
                   imageUrl: 'assets/reward.png',
@@ -78,11 +79,37 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
                 this.dialog.open(RewardPopupComponent, { data });
               }
           }
+
+          if (campaign.type === CampaignType.game) {
+            this.selectedCampaign = campaign;
+            const data = {
+              imageUrl: './assets/shake.png',
+              text: campaign.name, // You’ve got a “Shake the Tree” reward!
+              buttonTxt: 'Play now',
+              afterClosedCallBack: this,
+            };
+            this.dialog.open(RewardPopupComponent, { data });
+          }
         }
       );
   }
 
   public dialogClosed(): void {
-    this.router.navigate(['/reward'], { queryParams: { id: this.reward.id } });
+    const campaignType = this.selectedCampaign.type;
+    let page: string;
+    switch (campaignType) {
+      case 'give_reward':
+        page = 'reward';
+        break;
+
+      case 'game':
+        page = 'game';
+        break;
+
+      default:
+        break;
+    }
+    this.router.navigate([`/${page}`], { queryParams: { id: this.selectedCampaign.id } });
   }
+
 }
