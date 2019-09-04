@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
-import { SurveyService } from '@cl-core/services';
+import { AvailableNewEngagementService, SurveyService } from '@cl-core/services';
 import { QuestionFormFieldService } from '@cl-shared';
 import { Router } from '@angular/router';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-survey',
@@ -15,11 +16,11 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
+  [x: string]: any;
   public formSurvey: FormGroup;
   public surveyQuestionType: IEngagementType[];
   public surveyData$: Observable<any>;
   public level = 0;
-  private destroy$ = new Subject();
   // tslint:disable
   private data = {
     name: 'Create Shake the Tree Template',
@@ -94,6 +95,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private questionFormFieldService: QuestionFormFieldService,
+              private availableNewEngagementService: AvailableNewEngagementService,
               private surveyService: SurveyService,
               private router: Router) {
   }
@@ -137,6 +139,9 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     this.getSurveyData();
   }
 
+  public ngOnDestroy(): void {
+  }
+
   public patchForm(): void {
     this.formSurvey.patchValue(this.data);
     this.data.questions.forEach((item) => {
@@ -155,14 +160,12 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
-    // TODO: uncomment when exist Api service for Survey
-    // this.surveyService.createSurvay(this.formSurvey.value)
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe((data: IResponseApi<IEngagementApi>) => {
-    //     this.availableNewEngagementService.setNewEngagement(data);
-    //     this.router.navigateByUrl('/engagements');
-    //   });
+    this.surveyService.createSurvey(this.formSurvey.value)
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
+        this.router.navigateByUrl('/engagements');
+      });
   }
 
   public deleteQuestion(index: number) {
@@ -206,10 +209,5 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
           cardBackground: res.cardBackground[0]
         });
       }));
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
