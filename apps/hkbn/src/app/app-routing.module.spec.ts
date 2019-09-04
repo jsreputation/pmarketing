@@ -65,9 +65,10 @@ describe('AppRoutingModule', () => {
 
     it('navigate to "lazy', fakeAsync(() => {
         let url = '/wallet/15/qrcode';
-        // eslint-disable-next-line no-use-before-define
+
+        // tslint:disable-next-line
         const loader = TestBed.get(NgModuleFactoryLoader as Type<NgModuleFactoryLoader>);
-        
+
         loader.stubbedModules = { lazyModule: QrRedemptionModule };
         router.navigateByUrl(url);
         tick();
