@@ -57,20 +57,6 @@ export const survey: ISurvey = {
         {
             question: 'How likely are you to recommend our service?',
             description: 'Please rate us',
-            id: '10',
-            required: false,
-            payload: {
-                type: 'rating',
-                color: 'primary',
-                left_label: 'not much',
-                right_label: 'a lot',
-                scale: 5,
-                shape: 'heart'
-            }
-        },
-        {
-            question: 'How likely are you to recommend our service?',
-            description: 'Please rate us',
             id: '11',
             required: false,
             payload: {
