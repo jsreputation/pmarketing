@@ -19,13 +19,26 @@
     align-items: center;
     flex-direction: column;
   }
-
-  .activated {
-    color: red;
-  }
 }
 
 a {
   text-decoration: none;
   color: #000;
+}
+
+.nav-bar .active {
+  display: none;
+}
+
+.nav-bar .no-active {
+  display: block;
+}
+
+.active-link .active {
+  display: block;
+  color: red;
+}
+
+.active-link .no-active {
+  display: none;
 }

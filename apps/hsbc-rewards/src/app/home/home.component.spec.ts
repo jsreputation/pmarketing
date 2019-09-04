@@ -4,7 +4,6 @@ import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,7 +16,6 @@ describe('HomeComponent', () => {
       declarations: [HomeComponent],
       imports: [
         HttpClientTestingModule,
-        NavigateToolbarModule,
         NoopAnimationsModule,
         RouterTestingModule,
         LoyaltyModule.forRoot({ env: environment }),
