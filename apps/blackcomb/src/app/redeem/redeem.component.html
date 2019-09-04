@@ -1,21 +1,26 @@
-<div class="parent-container">
+<div class="parent-container" *ngIf="voucher$ | async as voucher">
   <div class="full-page-container-white">
     RedemptionType: {{redemptionType}}
-    <div *ngIf="redemptionType === 'pin'">
+    <div *ngIf="voucher.redemptionType === 'pin'">
       <p>
         The merchant will enter the redemption code when you are ready to redeem at the venue.
       </p>
       <h1>
         Merchant to enter the code
       </h1>
-      <perx-core-pin-redemption length="4" [voucher]="voucher">
+      <perx-core-pin-redemption 
+        length="4"
+        [voucherId]="voucherId"
+        (full)="pinInputSuccess()"
+        (hasErrorEmit)="errorHandler($event)"
+      >
       </perx-core-pin-redemption>
     </div>
-    <div *ngIf="redemptionType === 'txtCode' || redemptionType === 'offline'">
-      <perx-core-bcode-redemption [voucher]="voucher"></perx-core-bcode-redemption>
+    <div *ngIf="voucher.redemptionType === 'txtCode' || voucher.redemptionType === 'offline'">
+      <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
     </div>
-    <div *ngIf="redemptionType === 'qrcode'" class="qrcode-container" >
-      <perx-core-qrcode-redemption [voucher]="voucher"></perx-core-qrcode-redemption>
+    <div *ngIf="voucher.redemptionType === 'qrcode'" class="qrcode-container" >
+      <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
     </div>
   </div>
 </div>

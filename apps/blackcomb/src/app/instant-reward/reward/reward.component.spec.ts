@@ -1,11 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule } from '@perx/core';
+import { GameModule, RewardsModule, RewardsService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+
+  const rewardsServiceStub = {
+    getAllRewards: () => of(),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -14,6 +19,9 @@ describe('RewardComponent', () => {
         RouterTestingModule,
         GameModule,
         RewardsModule,
+      ],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub },
       ]
     })
       .compileComponents();

@@ -1,7 +1,7 @@
 <div class="reward-container" *ngIf="voucher$ | async as voucher">
   <div class="reward-detail-container">
     <div class="reward-image-container">
-      <img class="reward-image" src="{{voucher.bannerUrl}}">
+      <img class="reward-image" src="{{voucher.rewardBanner}}">
     </div>
     <h1>{{voucher.name}}</h1>
     <pre class="bcode">{{voucher.code}}</pre>

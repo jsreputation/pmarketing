@@ -3,7 +3,7 @@
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
     <mat-card *ngFor="let voucher of (hideSeeMore ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <mat-card-header>
-        <img mat-card-avatar [src]="voucher.thumbnailImg">
+        <img mat-card-avatar [src]="voucher.merchantImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
@@ -18,7 +18,7 @@
     <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
     <mat-card *ngFor="let voucher of vouchers">
       <mat-card-header>
-        <img mat-card-avatar [src]="voucher.thumbnailImg">
+        <img mat-card-avatar [src]="voucher.merchantImg">
         <mat-card-title>{{voucher.name}}</mat-card-title>
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>

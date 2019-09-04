@@ -5,12 +5,13 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { FeedReaderService } from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { of } from 'rxjs';
 
 describe('NewsFeedComponent', () => {
   let component: NewsFeedComponent;
   let fixture: ComponentFixture<NewsFeedComponent>;
   const feedReaderServiceStub = {
-    getFromText: () => []
+    getFromUrl: () => of([])
   };
 
   beforeEach(async(() => {

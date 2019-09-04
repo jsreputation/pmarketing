@@ -1,9 +1,9 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { VouchersService, VouchersModule } from '@perx/core';
+import { VouchersService, VouchersModule, CampaignService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
@@ -15,7 +15,11 @@ describe('HomeComponent', () => {
   };
 
   const vouchersServiceStub = {
-    getAll: () => of([])
+    getAll: () => of()
+  };
+
+  const campaignServiceStub = {
+    getCampaigns: () => of()
   };
 
   beforeEach(async(() => {
@@ -24,11 +28,13 @@ describe('HomeComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatCardModule,
-        VouchersModule
+        VouchersModule,
+        HttpClientTestingModule
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: CampaignService, useValue: campaignServiceStub },
       ]
     })
       .compileComponents();

@@ -126,6 +126,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  * Survey
  */
 export { SurveyModule } from './lib/survey/survey.module';
+export { SurveyService } from './lib/survey/survey.service';
 export { ISurvey } from './lib/survey/models/survey.model';
 
 /**

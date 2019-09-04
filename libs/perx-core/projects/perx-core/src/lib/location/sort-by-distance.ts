@@ -3,19 +3,22 @@ import { map } from 'rxjs/operators';
 import { ILocation } from './ilocation';
 
 const countDistance = (latestPosition: Position, latestLocations: ILocation[]): ILocation[] => {
-  const R = 6371e3; // radius of the earth
-  const pi = Math.PI;
+  console.log(latestLocations);
+  const R: number = 6371e3; // radius of the earth
+  const pi: number = Math.PI;
 
-  const currentPos = {
-    lat: latestPosition.coords.latitude,
-    lng: latestPosition.coords.longitude
-  };
+  const lat: number = latestPosition.coords.latitude;
+  const lng: number = latestPosition.coords.longitude;
+
+  const posLatToRad: number = (lat * (pi / 180));
 
   return latestLocations.map((row: ILocation) => {
-    const posLatToRad = (currentPos.lat * (pi / 180));
+    if (row.latitude === null || row.longitude === null) {
+      return row;
+    }
     const locLatToRad = (row.latitude * (pi / 180));
-    const dLat = (row.latitude - currentPos.lat) * (pi / 180);
-    const dLon = (row.longitude - currentPos.lng) * (pi / 180);
+    const dLat = (row.latitude - lat) * (pi / 180);
+    const dLon = (row.longitude - lng) * (pi / 180);
     // use haversine formula
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(posLatToRad) * Math.cos(locLatToRad) *
@@ -30,18 +33,10 @@ export const sortByDistance =
   (position: Observable<Position>, locations: Observable<ILocation[]>, inc: boolean): Observable<ILocation[]> => {
     return combineLatest(position, locations)
       .pipe(
-        map((stuffs: [Position, ILocation[]]) => {
-          const latestPosition = stuffs[0];
-          const latestLocations = stuffs[1];
+        map(([latestPosition, latestLocations]: [Position, ILocation[]]) => {
           const locationsList = countDistance(latestPosition, latestLocations);
 
-          locationsList.sort((loc1, loc2) => {
-            if (inc) {
-              return loc1.distance - loc2.distance;
-            }
-            return loc2.distance - loc1.distance;
-          });
-          return locationsList;
+          return locationsList.sort((loc1, loc2) => inc ? loc1.distance - loc2.distance : loc2.distance - loc1.distance);
         })
       );
   };

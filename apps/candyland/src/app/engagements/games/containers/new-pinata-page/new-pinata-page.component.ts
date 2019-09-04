@@ -1,15 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { takeUntil, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
+  AvailableNewEngagementService,
   PinataService,
   RoutingStateService
 } from '@cl-core/services';
-import { ConfirmModalComponent } from '@cl-shared';
-import { MatDialog } from '@angular/material';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
@@ -29,8 +29,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private pinataService: PinataService,
               private routingState: RoutingStateService,
-              private router: Router,
-              public dialog: MatDialog) {
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private router: Router) {
   }
 
   public ngOnInit(): void {
@@ -40,23 +40,10 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.pinataService.createPinata(this.formPinata.value)
-      .subscribe(() => {
-        this.showLaunchDialog();
-      });
-  }
-
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {});
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-
-        if (result) {
-          this.router.navigateByUrl('/engagements');
-        }
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
+        this.router.navigateByUrl('/engagements');
       });
   }
 

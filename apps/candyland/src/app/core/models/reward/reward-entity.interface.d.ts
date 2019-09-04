@@ -1,4 +1,4 @@
-declare interface IReward {
+declare interface IRewardEntity {
   id: string;
   image: string;
   name: string;
