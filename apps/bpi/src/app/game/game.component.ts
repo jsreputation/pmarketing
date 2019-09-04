@@ -22,6 +22,7 @@ export class GameComponent implements OnInit {
   public subTitles: string[] = ['Unlock your Netflix rebate.'];
   public subsubTitles: string[] = null;
   public title: string = null;
+  public isLoading: boolean;
 
   private campaignId: number;
 
@@ -53,57 +54,68 @@ export class GameComponent implements OnInit {
   }
 
   private fetchCampaign(): void {
+    this.isLoading = true;
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
       )
-      .subscribe((campaigns: ICampaign[]) => {
-        this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
-        this.fetchCards();
-      });
+      .subscribe(
+        (campaigns: ICampaign[]) => {
+          this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
+          this.fetchCards();
+        },
+        () => {
+          this.isLoading = false;
+        });
   }
 
   private fetchCards(): void {
+    this.isLoading = true;
     this.stampService.getCards(this.campaignId)
       // .pipe(
       // map(cards => cards.filter(card => card.state === StampCardState.active))
       // )
-      .subscribe(cards => {
-        const lockedCards = cards.filter(card => {
-          this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
-          const totalSlots = card.displayProperties.totalSlots || 0;
-          // return card.state === StampCardState.active &&
-          return card.stamps &&
-            card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
-        });
+      .subscribe(
+        cards => {
+          const lockedCards = cards.filter(card => {
+            this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
+            const totalSlots = card.displayProperties.totalSlots || 0;
+            // return card.state === StampCardState.active &&
+            return card.stamps &&
+              card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
+          });
 
-        const unlockedCards = cards.filter(card => {
-          const totalSlots = card.displayProperties.totalSlots || 0;
-          return card.state === StampCardState.active &&
-            card.stamps &&
-            card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
-        });
+          const unlockedCards = cards.filter(card => {
+            const totalSlots = card.displayProperties.totalSlots || 0;
+            return card.state === StampCardState.active &&
+              card.stamps &&
+              card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
+          });
 
-        this.cards = [
-          ...lockedCards,
-          ...unlockedCards
-        ];
-
-        if (lockedCards.length === 0) {
-          this.title = 'CONGRATULATIONS!';
-          this.subTitles = [
-            // `You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`
-            `You have unlocked ${this.cards.length} out of ${this.cards.length} months of Netflix rebate!`
+          this.cards = [
+            ...lockedCards,
+            ...unlockedCards
           ];
 
-          this.subsubTitles = [
-            // `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
-            `You have reached the maximum Netflix rebate of ${this.cards.length} months allowed per customer for this promo.`
-          ];
-        }
+          if (lockedCards.length === 0) {
+            this.title = 'CONGRATULATIONS!';
+            this.subTitles = [
+              // `You have now unlocked ${this.cards.length} out of ${this.cards.length} Netflix rebates!`
+              `You have unlocked ${this.cards.length} out of ${this.cards.length} months of Netflix rebate!`
+            ];
 
-        this.checkKeys();
-      });
+            this.subsubTitles = [
+              // `You have reached the maximum of ${this.cards.length} months of Netflix rebate allowed per customer for this promo.`
+              `You have reached the maximum Netflix rebate of ${this.cards.length} months allowed per customer for this promo.`
+            ];
+          }
+
+          this.checkKeys();
+          this.isLoading = false;
+        },
+        () => {
+          this.isLoading = false;
+        });
   }
 
   public getPlayedPieces(card: IStampCard): number {
