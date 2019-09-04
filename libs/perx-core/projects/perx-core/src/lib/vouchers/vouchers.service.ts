@@ -32,6 +32,7 @@ interface IV4Reward {
   merchant_name: string;
   id: number;
   images?: IV4Image[];
+  merchant_logo_url?: string;
 }
 
 interface IV4Voucher {
@@ -58,7 +59,6 @@ interface IV4Voucher {
   voucher_type: RedemptionType;
   redemption_image?: any;
   redemption_text?: any;
-  merchantImg?: any;
 }
 
 @Injectable({
@@ -83,7 +83,7 @@ export class VouchersService implements IVoucherService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner: IV4Image = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
-    const merchantImg = v.merchantImg ? v.merchantImg : null;
+    const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
     const redemptionTypeFinal = v.voucher_type in RedemptionType ? v.voucher_type : RedemptionType.txtCode;
