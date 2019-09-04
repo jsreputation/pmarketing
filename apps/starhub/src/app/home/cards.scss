@@ -7,14 +7,19 @@
 }
 
 mat-card {
-  max-width: 15rem;
+  max-width: 28rem;
 }
 
 .mat-card {
   flex: 0 0 0;
   flex-grow: 1;
-  flex-basis: 70%;
+  flex-basis: 75%;
   margin: 0 0.5rem 1rem 0.5rem;
+
+  .mat-card-image {
+    height: 150px;
+    object-fit: cover;
+  }
 
   mat-card-actions {
     a {
