@@ -1,4 +1,12 @@
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { 
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatIconModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
+ } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +46,7 @@ const components = [
     MatButtonModule,
     MatIconModule,
     MatDatepickerModule,
+    MatSelectModule,
     MatNativeDateModule
   ],
   exports: [

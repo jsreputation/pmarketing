@@ -24,6 +24,7 @@ export class PhoneComponent implements OnChanges, OnInit {
 
   public countriesList$: Observable<any[]>;
   public answer: number;
+  public countryCode: string;
 
   public ngOnInit(): void {
     this.countriesList$ = of([
@@ -48,6 +49,10 @@ export class PhoneComponent implements OnChanges, OnInit {
 
   public updateInput(value: number): void {
     this.answer = value;
-    this.updateAnswers.emit({ content: value });
+    this.updateAnswers.emit({ content: this.countryCode + ' ' + value });
+  }
+
+  public updateCoutryCode(value: string): void {
+    this.countryCode = value;
   }
 }
