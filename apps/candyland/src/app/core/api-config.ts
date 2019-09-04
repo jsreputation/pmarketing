@@ -10,4 +10,5 @@ export class ApiConfig {
   public static IAMGroupsPath = `${ApiConfig.baseAPIPath}groups`;
   public static baseAPIUserPath: string = `${ApiConfig.basePath}cognito/`;
   public static getAllUsers = `${ApiConfig.baseAPIUserPath}users`;
+  public static signIn = `${ApiConfig.IAMUsersPath}/sign_in`;
 }
