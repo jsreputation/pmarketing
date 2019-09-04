@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
+import { Observable, of } from 'rxjs';
 
 interface IPayloadPhone {
   type: string;
@@ -11,7 +12,7 @@ interface IPayloadPhone {
   templateUrl: './phone.component.html',
   styleUrls: ['./phone.component.scss']
 })
-export class PhoneComponent implements OnChanges {
+export class PhoneComponent implements OnChanges, OnInit {
   @Input()
   public payload: IPayloadPhone;
 
@@ -21,7 +22,23 @@ export class PhoneComponent implements OnChanges {
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
+  public countriesList$: Observable<any[]>;
   public answer: number;
+
+  public ngOnInit(): void {
+    this.countriesList$ = of([
+      {
+        id: 3,
+        name: 'Azerbaijan',
+        phone: '+994'
+      },
+      {
+        id: 4,
+        name: 'Bahrain',
+        phone: '+973'
+      }
+    ]);
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
