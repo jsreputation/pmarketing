@@ -97,7 +97,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         return;
 
       case CampaignType.game:
-        this.router.navigate([`/game`], { queryParams: { id: this.selectedCampaign.id } });
+        this.router.navigate([`/game`], { queryParams: { campaignId: this.selectedCampaign.id } });
         return;
     }
   }

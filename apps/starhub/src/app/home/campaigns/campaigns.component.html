@@ -1,14 +1,14 @@
-<mat-card *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple>
-    <img mat-card-image src="https://picsum.photos/300/200?random=1">
-    <mat-card-content>
-        <div>
-            <h1>{{campaign.name}}</h1>
-        </div>
-        <div class="icon">
-            <mat-icon>arrow_forward</mat-icon>
-        </div>
-    </mat-card-content>
-</mat-card>
-<div *ngIf="!campaigns || campaigns.length === 0">
-    No campaign
+<div *ngIf="campaigns && campaigns.length > 0">
+  <h1>Games for you</h1>
+    <mat-card *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple>
+        <img mat-card-image src="https://picsum.photos/300/200?random=1">
+        <mat-card-content>
+            <div>
+                <h1>{{campaign.name}}</h1>
+            </div>
+            <div class="icon">
+                <mat-icon>arrow_forward</mat-icon>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>
