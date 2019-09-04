@@ -1,3 +1,8 @@
+:host {
+  width: 100%;
+  display: block;
+}
+
 .question-container {
   height: 100%;
   display: flex;
@@ -26,7 +31,7 @@
       }
     }
 
-    .description{
+    .description {
       margin-bottom: 1rem;
       font-size: 1.2rem;
       line-height: 1.6rem;

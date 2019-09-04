@@ -1,3 +1,13 @@
-<mat-form-field class="example-full-width">
-    <input matInput (change)="updateInput($event.target.value)">
+<mat-form-field class="full-width">
+    <mat-label>Default Country Code</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let country of countriesList$ | async" [value]="country.phone">
+            <span>{{country.name}}&nbsp;</span>
+            <span>{{country.phone}}</span>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-form-field class="full-width">
+    <input matInput type="text" [placeholder]="'Mobile number'" (change)="
+        updateInput($event.target.value)">
 </mat-form-field>

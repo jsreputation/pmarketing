@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { MatDatepicker } from '@angular/material';
 import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadDate {
@@ -12,6 +13,8 @@ interface IPayloadDate {
   styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnChanges {
+  @ViewChild('dateInputToFocus', { static: false }) private dateInputToFocus: ElementRef;
+
   @Input()
   public payload: IPayloadDate;
 
@@ -27,6 +30,15 @@ export class DateComponent implements OnChanges {
     if (changes.flush && changes.flush.currentValue !== undefined) {
       this.updateInput(this.answer);
     }
+  }
+
+  public openCalendar(picker: MatDatepicker<Date>): void {
+    picker.open();
+    setTimeout(() => this.dateInputToFocus.nativeElement.focus());
+  }
+
+  public eventCloseHandler(): void {
+    setTimeout(() => this.dateInputToFocus.nativeElement.blur());
   }
 
   public updateInput(value: string): void {

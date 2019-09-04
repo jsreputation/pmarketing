@@ -1,8 +1,19 @@
 <div class="survey-page">
-    <mat-card class="survey-card mat-elevation-z2">
+    <div class="progress-bar" *ngIf="progressBarValue">
+        <mat-progress-bar mode="determinate" color="warn" [value]="progressBarValue"></mat-progress-bar>
+        <div class="progress-bar-label">
+            {{ progressBarValue }}% Complete
+        </div>
+    </div>
+    <mat-card class="survey-card mat-elevation-z2" *ngIf="data$ | async as data">
         <h1>Headline</h1>
         <h2>Sub-headline</h2>
-
-        <button mat-flat-button color="primary" (click)="onSubmit()">Submit</button>
+        <perx-core-survey 
+            [data]="data$"
+            (surveyDone)="updateSurveyStatus($event)"
+            (totalLength)="setTotalLength($event)"
+            (currentPointer)="setCurrentPointer($event)"
+            ></perx-core-survey>
+        <button *ngIf="surveyComplete" mat-flat-button color="primary" (click)="onSubmit()">Submit</button>
     </mat-card>
 </div>

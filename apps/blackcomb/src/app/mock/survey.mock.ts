@@ -1,8 +1,45 @@
 import { ISurvey } from '@perx/core';
 
-export const mock: ISurvey = {
+export const survey: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
+        {
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '8',
+            required: false,
+            payload: {
+                type: 'phone',
+                default_country_code: 'SG'
+            }
+        },
+        {
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '9',
+            required: false,
+            payload: {
+                type: 'picture-select',
+                choices: [
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The first'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    }
+                ]
+            }
+        },
         {
             question: 'How likely are you to recommend our service?',
             description: 'Please rate us',
@@ -80,45 +117,6 @@ export const mock: ISurvey = {
                                 'red'
                             ]
                         }
-                    },
-                    {
-                        question: 'What\'s your favorite color 3',
-                        description: 'We love blue',
-                        id: '7.3',
-                        required: true,
-                        payload: {
-                            type: 'group',
-                            questions: [
-                                {
-                                    question: 'What\'s your favorite color 3.1',
-                                    description: 'We love blue',
-                                    id: '7.3.1',
-                                    required: false,
-                                    payload: {
-                                        type: 'select',
-                                        choices: [
-                                            'blue',
-                                            'white',
-                                            'red'
-                                        ]
-                                    }
-                                },
-                                {
-                                    question: 'What\'s your favorite color 3.2',
-                                    description: 'We love blue',
-                                    id: '7.3.2',
-                                    required: true,
-                                    payload: {
-                                        type: 'select',
-                                        choices: [
-                                            'blue',
-                                            'white',
-                                            'red'
-                                        ]
-                                    }
-                                },
-                            ]
-                        }
                     }
                 ]
             }
@@ -169,35 +167,6 @@ export const mock: ISurvey = {
             required: false,
             payload: {
                 type: 'long-text'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '8',
-            required: false,
-            payload: {
-                type: 'phone',
-                default_country_code: 'SG'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '9',
-            required: false,
-            payload: {
-                type: 'picture-select',
-                choices: [
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The first'
-                    },
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The second'
-                    }
-                ]
             }
         }
     ]

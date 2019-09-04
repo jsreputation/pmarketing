@@ -8,7 +8,7 @@ import { ISurvey } from './models/survey.model';
 export class SurveyService {
 
   // @ts-ignore
-  public getSurvey(id: string): Observable<ISurvey> {
+  public getSurvey(id: number): Observable<ISurvey> {
     return throwError('Not implement yet');
   }
 }
