@@ -19,7 +19,7 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewards = this.rewardsService.getAllRewards();
+    this.rewards = this.rewardsService.getAllRewards(['featured']);
   }
 
   public selected(reward: IReward): void {
