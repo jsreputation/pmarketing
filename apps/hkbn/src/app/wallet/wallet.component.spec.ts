@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
@@ -9,12 +9,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
+import { vouchers } from 'src/assets/mock/vouchers.mock';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
   const vouchersServiceStub = {
-    getAll: (): Observable<Voucher[]> => of([])
+    getAll: (): Observable<Voucher[]> => of(vouchers)
   };
 
   beforeEach(async(() => {
@@ -51,4 +52,8 @@ describe('WalletComponent', () => {
     component.onRoute({ id: 1 } as any);
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1']);
   });
+
+  it('should filter voucher', fakeAsync(()=>{
+
+  }));
 });
