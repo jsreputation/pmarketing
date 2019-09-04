@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 import { ILocation } from './ilocation';
 
 const countDistance = (latestPosition: Position, latestLocations: ILocation[]): ILocation[] => {
-  console.log(latestLocations);
   const R: number = 6371e3; // radius of the earth
   const pi: number = Math.PI;
 
