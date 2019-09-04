@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
-
+  /* istanbul ignore next */
   public submitHandler(data: any): void {
     console.log(data);
   }
