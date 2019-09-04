@@ -33,7 +33,9 @@ describe('AppComponent', () => {
   const profileServiceStub = {
     whoAmI: () => of()
   };
-  const campaignServiceStub = {};
+  const campaignServiceStub = {
+    getCampaigns: () => of([])
+  };
 
   beforeEach(async(() => {
 
