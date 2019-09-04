@@ -43,5 +43,24 @@ export class AudiencesHttpAdapter {
     }
   }
 
+  // Audiences List 
+  public static transformAudiences(data: any): IAudiences {
+    return {
+      id: data.id,
+      type: data.type,
+      self: data.links.self,
+      urn: data.attributes.urn,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      name: data.attributes.name,
+      properties: data.attributes.properties
+    };
+  }
 
+  public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
+    return {
+      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
+      meta: data.meta
+    }
+  }
 }

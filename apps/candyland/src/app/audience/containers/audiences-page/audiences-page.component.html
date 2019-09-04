@@ -7,11 +7,25 @@
   <ng-container *ngIf="hasData">
     <!--filters-->
     <!-- <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter> -->
-    <cl-table-filters [dataSource]="dataSource" classList="row input-group">
+    <ng-container [ngSwitch]="currentTab">
+      <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
+        <ng-container *clTableFilter="searchKey ; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+
+      <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource" classList="row input-group">
+        <ng-container *clTableFilter="searchKey ; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for audience"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+    </ng-container>
+    
+    <!-- <cl-table-filters [dataSource]="dataSource" classList="row input-group">
       <ng-container *clTableFilter="searchKey ; let filter">
         <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
       </ng-container>
-    </cl-table-filters>
+    </cl-table-filters> -->
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
@@ -21,7 +35,7 @@
 
       </cl-audiences-users-list>
       <cl-audiences-list *ngSwitchCase="'audience'"
-                         [dataSource]="dataSource">
+                         [dataSource]="audiencesDataSource">
 
       </cl-audiences-list>
     </ng-container>

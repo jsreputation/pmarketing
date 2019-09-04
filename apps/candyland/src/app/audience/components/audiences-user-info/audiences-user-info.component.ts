@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { AudiencesService } from '@cl-core-services';
 import { ActivatedRoute } from '@angular/router';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 
 @Component({
   selector: 'cl-audiences-user-info',
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AudiencesUserInfoComponent implements OnInit {
 
   public user: any;
-  constructor( private audiencesService: AudiencesService,
+  constructor( private audiencesUserService: AudiencesUserService,
                public activateRoute: ActivatedRoute,
                private cd: ChangeDetectorRef) { }
 
@@ -22,7 +22,7 @@ export class AudiencesUserInfoComponent implements OnInit {
 
   public getUserInfo(): void {
     const id = this.activateRoute.snapshot.params.id;
-    this.audiencesService.getUser(id).subscribe((res: any[]) => {
+    this.audiencesUserService.getUser(id).subscribe((res: any[]) => {
       this.user = res;
       this.cd.detectChanges();
     });

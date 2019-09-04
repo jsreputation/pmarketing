@@ -10,16 +10,12 @@ export class AudiencesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getUsers(): Observable<any> {
-    return this.http.get('assets/mocks/users.json');
-  }
-
   public getUser(id: number): Observable<any> {
     return this.http.get(ApiConfig.getAllUsers + '/' + id);
   }
 
-  public getAudiences(): Observable<any> {
-    return this.http.get('assets/mocks/audiences.json');
+  public getAudiences(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, {params});
   }
 
   public getVouchers(): Observable<any> {
