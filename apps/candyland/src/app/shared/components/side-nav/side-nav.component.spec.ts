@@ -7,6 +7,10 @@ import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthService } from '@cl-core-services';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TokenService } from '@cl-core/services/token.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -23,7 +27,9 @@ describe('SideNavComponent', () => {
         MatSidenavModule,
         MatIconModule,
         BrowserAnimationsModule,
+        HttpClientModule
       ],
+      providers: [ AuthService, LocalStorageService, TokenService ],
       declarations: [ SideNavComponent ]
     })
     .compileComponents();

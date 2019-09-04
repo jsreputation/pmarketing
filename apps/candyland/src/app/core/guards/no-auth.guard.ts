@@ -7,7 +7,7 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
 
   private isAuthenticated: boolean;
 
@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate {
   }
 
   public canActivate(): boolean {
-    if (!this.isAuthenticated) {
-      this.router.navigate(['/login']);
+    if (this.isAuthenticated) {
+      this.router.navigate(['/dashboard/overview']);
       return false;
     }
     return true;
