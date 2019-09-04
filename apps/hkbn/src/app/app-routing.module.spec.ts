@@ -11,6 +11,11 @@ import { NotificationWrapperService } from './services/notification-wrapper.serv
 import { TranslateService } from '@ngx-translate/core';
 import { of, BehaviorSubject, Observable } from 'rxjs';
 import { mockVoucher } from './wallet/voucher.mock';
+import { routes } from './app-routing.module';
+import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
+import { CodeRedemptionModule } from './wallet/code-redemption/code-redemption.module';
+import { RewardModule } from './reward/reward.module';
+import { AccountModule } from './account/account.module';
 
 const NotificationWrapperServiceStud = {
     addPopup: () => { }
@@ -28,23 +33,24 @@ const vouchersServiceStub = {
     get: (): Observable<Voucher> => of(mockVoucher),
     stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
     redeemVoucher: (): Observable<any> => of({})
-  };
-fdescribe('AppRoutingModule', () => {
+};
+describe('AppRoutingModule', () => {
     let router: Router;
     let location: Location;
     beforeEach(() => {
         TestBed.configureTestingModule({
+            declarations: [
+                VoucherDetailsComponent
+            ],
             imports: [
+                CodeRedemptionModule,
                 HttpClientTestingModule,
                 QrRedemptionModule,
                 VouchersModule.forRoot({ env: environment }),
                 RouterTestingModule.withRoutes([
-                    {
-                        path: 'wallet/:id', children: [{
-                            path: 'qrcode',
-                            loadChildren: () => import('./wallet/qr-redemption/qr-redemption.module').then(mod => mod.QrRedemptionModule)
-                        }]
-                    }
+                    routes.find(el=>el.path==='').children.find(el=>el.path === 'wallet/:id'),
+                    routes.find(el=>el.path==='').children.find(el=>el.path === 'reward/:id'),
+                    routes.find(el=>el.path==='').children.find(el=>el.path === 'account'),
                 ])
             ],
             providers: [
@@ -58,14 +64,30 @@ fdescribe('AppRoutingModule', () => {
     });
 
     it('navigate to "lazy', fakeAsync(() => {
-        const url = '/wallet/15/qrcode';
+        let url = '/wallet/15/qrcode';
         const loader = TestBed.get(NgModuleFactoryLoader);
         loader.stubbedModules = { lazyModule: QrRedemptionModule };
-        router.resetConfig([
-            { path: 'wallet/:id/qrcode', loadChildren: () => import('./wallet/qr-redemption/qr-redemption.module').then(mod => mod.QrRedemptionModule) },
-        ]);
         router.navigateByUrl(url)
         tick();
         expect(location.path()).toBe(url);
+
+        url = '/wallet/15/code';
+        loader.stubbedModules = { lazyModule: CodeRedemptionModule };
+        router.navigateByUrl(url)
+        tick(); 
+        expect(location.path()).toBe(url);
+
+        url = '/reward/15';
+        loader.stubbedModules = { lazyModule: RewardModule };
+        router.navigateByUrl(url)
+        tick(); 
+        expect(location.path()).toBe(url);
+
+        url = '/account';
+        loader.stubbedModules = { lazyModule: AccountModule };
+        router.navigateByUrl(url)
+        tick(); 
+        expect(location.path()).toBe(url);
     }));
+
 })

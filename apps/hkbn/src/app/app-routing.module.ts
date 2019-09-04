@@ -12,7 +12,7 @@ import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgo
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { HistoryComponent } from './history/history.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '', canActivate: [ProtectedGuard], component: ContentContainerComponent, children: [
       { path: '', component: HomeComponent },
