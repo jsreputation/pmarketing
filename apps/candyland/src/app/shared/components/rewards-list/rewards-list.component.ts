@@ -9,40 +9,40 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
 })
 export class RewardsListComponent implements AfterViewInit {
   public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<Reward[]>;
-  @Input() public displayedColumns = ['image', 'type', 'category', 'validity', 'balance', 'actions'];
+  @Input() public dataSource: MatTableDataSource<IRewardEntity[]>;
+  @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: Reward}>();
-  @Output() public selectReward = new EventEmitter<Reward>();
+  @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: IRewardEntity}>();
+  @Output() public selectReward = new EventEmitter<IRewardEntity>();
   public selected;
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  public selectItem(item: Reward): void {
+  public selectItem(item: IRewardEntity): void {
     this.selected = item;
     this.selectReward.emit(item);
   }
 
-  public isSelected(item: Reward): boolean {
+  public isSelected(item: IRewardEntity): boolean {
     return this.selected && item.id === this.selected.id;
   }
 
-  public editItem(reward: Reward): void {
+  public editItem(reward: IRewardEntity): void {
     this.itemAction.emit({action: RewardsTableMenuActions.edit, data: reward});
   }
 
-  public duplicateItem(reward: Reward): void {
+  public duplicateItem(reward: IRewardEntity): void {
     this.itemAction.emit({action: RewardsTableMenuActions.duplicate, data: reward});
   }
 
-  public deleteItem(reward: Reward): void {
+  public deleteItem(reward: IRewardEntity): void {
     this.itemAction.emit({action: RewardsTableMenuActions.delete, data: reward});
   }
 
-  public useAsCaptionItem(reward: Reward): void {
+  public useAsCaptionItem(reward: IRewardEntity): void {
     this.itemAction.emit({action: RewardsTableMenuActions.useAsCaption, data: reward});
   }
 

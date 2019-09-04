@@ -5,14 +5,16 @@ import {
   PopupComponent,
   IPopupConfig,
   PopUpClosedCallBack,
-  ProfileService,
-  IProfile,
   CampaignService,
-  ICampaign
+  ICampaign,
+  CampaignType,
+  IReward
 } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { switchMap } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,11 +22,12 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
-  public username: string = 'I do not know who you are!';
+  public selectedCampaign: ICampaign;
+  private reward: IReward;
+
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
-    private profileService: ProfileService,
     private activeRoute: ActivatedRoute,
     private campaignService: CampaignService,
     private dialog: MatDialog,
@@ -39,54 +42,63 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       if (params.token) {
         this.authenticationService.saveUserAccessToken(params.token);
-        this.getCurrent();
+        this.fetchCampaigns();
       }
     });
   }
 
-  private getCurrent(): void {
-    this.profileService.whoAmI()
+  private fetchCampaigns(): void {
+    this.campaignService.getCampaigns()
+      .pipe(
+        // for each campaign, get detailed version
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))
+      )
       .subscribe(
-        (profile: IProfile) => {
-          this.username = `Hi ${profile.firstName} ${profile.lastName} (id #${profile.id})`;
-          this.fetchCampaign();
-        },
-        () => { }
+        (campaigns: ICampaign[]) => {
+          const firstComeFirstServed: ICampaign[] = campaigns.filter(campaign => campaign.type === CampaignType.give_reward)
+            .filter(campaign => campaign.rewards && campaign.rewards.length > 0);
+          // if there is a 1st come 1st served campaign and it has rewards, display the popup
+          if (firstComeFirstServed.length > 0) {
+            this.selectedCampaign = firstComeFirstServed[0];
+            this.reward = this.selectedCampaign.rewards[0];
+            const data = {
+              text: this.selectedCampaign.name,
+              imageUrl: 'assets/reward.png',
+              buttonTxt: 'Claim!',
+              rewardId: this.reward.id,
+              afterClosedCallBack: this,
+              validTo: new Date(this.selectedCampaign.endsAt)
+            };
+            this.dialog.open(RewardPopupComponent, { data });
+            return;
+          }
+
+          // else if there is a game campaign, display the popup
+          const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
+          if (gameCampaign) {
+            this.selectedCampaign = gameCampaign;
+            const data = {
+              imageUrl: './assets/shake.png',
+              text: gameCampaign.name, // You’ve got a “Shake the Tree” reward!
+              buttonTxt: 'Play now',
+              afterClosedCallBack: this,
+            };
+            this.dialog.open(RewardPopupComponent, { data });
+          }
+        }
       );
   }
 
-  private fetchCampaign(): void {
-    this.campaignService.getCampaigns()
-      .subscribe((campaigns: ICampaign[]) => {
-        if (campaigns.length > 0) {
-          campaigns.map(
-            (campaign: ICampaign) => {
-              if (campaign.type === 'give_reward') {
-                // TODO : Use rewardService to fetch reward first.
-                const data = {
-                  text: campaign.name,
-                  imageUrl: 'assets/reward.png',
-                  buttonTxt: 'Claim!',
-                  rewardId: 1, // TODO: To be replaced with actual 'rewardId'
-                  afterClosedCallBack: this,
-                  validTo: new Date('2019-08-30T03:24:00')  // TODO: replace this date with reward.validTo
-                };
-                this.dialog.open(RewardPopupComponent, { data });
-              }
-            }
-          );
-        } else {
-          this.notificationService.addPopup({
-            title: 'Got no campaign',
-            text: 'Try again another day'
-          });
-        }
-      });
-  }
-
   public dialogClosed(): void {
+    const campaignType = this.selectedCampaign.type;
+    switch (campaignType) {
+      case CampaignType.give_reward:
+        this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
+        return;
 
-    // TODO: replace the dummy id with actual 'rewardId'
-    this.router.navigate(['/reward'], { queryParams: { id: 1 } });
+      case CampaignType.game:
+        this.router.navigate([`/game`], { queryParams: { id: this.selectedCampaign.id } });
+        return;
+    }
   }
 }

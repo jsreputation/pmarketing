@@ -95,7 +95,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     });
   }
 
-  public addReward(value: Reward): void {
+  public addReward(value: IRewardEntity): void {
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
@@ -136,7 +136,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     }
   }
 
-  private createRewardFormGroup(value: Reward, isEnableProbability: boolean = false): FormGroup {
+  private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
       value: [value],
       probability: {value: 0, disabled: !isEnableProbability}

@@ -1,17 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { takeUntil, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
-  ControlValueService,
-  EngagementTransformDataService,
+  AvailableNewEngagementService,
   PinataService,
   RoutingStateService
 } from '@cl-core/services';
-import { ConfirmModalComponent } from '@cl-shared';
-import { MatDialog } from '@angular/material';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -26,13 +25,13 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     background: IGraphic[]
   }>;
   private destroy$ = new Subject();
+
   constructor(private fb: FormBuilder,
               private pinataService: PinataService,
               private routingState: RoutingStateService,
-              private router: Router,
-              private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService,
-              public dialog: MatDialog) { }
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private router: Router) {
+  }
 
   public ngOnInit(): void {
     this.createPinataForm();
@@ -40,26 +39,11 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const sendData = this.engagementTransformDataService.transformPinata(this.formPinata.value);
-    this.pinataService.createPinata({ data: sendData })
-      .subscribe(() => {
-        this.showLaunchDialog();
-      });
-  }
-
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-
-        if (result) {
-          this.router.navigateByUrl('/engagements');
-        }
+    this.pinataService.createPinata(this.formPinata.value)
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
+        this.router.navigateByUrl('/engagements');
       });
   }
 
@@ -92,7 +76,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createPinataForm(): void {

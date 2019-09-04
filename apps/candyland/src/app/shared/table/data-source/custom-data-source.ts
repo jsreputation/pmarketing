@@ -1,7 +1,7 @@
+import { ClHttpParams } from '@cl-helpers/http-params';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
-import { HttpParamsService } from '@cl-core/services/http-params.service';
 
 // tslint:disable
 export class CustomDataSource<T> {
@@ -58,7 +58,10 @@ export class CustomDataSource<T> {
   }
 
   public set pagination(value: any) {
-    this.pageSize = value.pageSize;
+    if (this.pageSize !== value.pageSize) {
+      this.pageSize = value.pageSize;
+      this.changeFilterSearch.next(0);
+    }
     this.loadingData(value);
   }
 
@@ -82,12 +85,10 @@ export class CustomDataSource<T> {
       'page[size]': pagination ? pagination.pageSize : this.pageSize,
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData( HttpParamsService.createHttpParams(params))
+    this.dataService.getTableData( ClHttpParams.createHttpParams(params))
       .subscribe((res: any) => {
-        this.dataSubject.next(res);
-
-        // add random mock parameter
-        this.lengthData.next(50);
+        this.dataSubject.next(res.data);
+        this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
       }, error => {
         this.dataSubject.next([]);
@@ -98,7 +99,7 @@ export class CustomDataSource<T> {
   }
 
   public updateData(): void {
-    this.loadingData({pageIndex: 0})
+    this.loadingData({pageIndex: 0, pageSize: this.pageSize})
   }
 
   private sortPrepare(sortData: SortModel) {

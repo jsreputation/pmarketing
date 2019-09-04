@@ -3,7 +3,7 @@
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
       <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
-        [matRippleDisabled]="voucher.state === 'redeemed' && !canSelectRedeemed" (click)="onClick(voucher)">
+        [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
         <div [ngClass]="'voucher-content ' + imageSize">
           <div class="voucher-img__wrapper">
             <img class="voucher-thumbnail" src="{{voucher.thumbnailImg}}">
@@ -21,7 +21,7 @@
             <p *ngIf="showRedeemedDate && voucher.redemptionDate">
               Redeemed on {{voucher.redemptionDate | date: 'dd/MM/yyyy'}}
             </p>
-            <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping[voucher.state]" >{{mapping[voucher.state]}}</div>
+            <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]" >{{mapping[voucher.state]}}</div>
           </div>
         </div>
         <mat-icon *ngIf="iconDisplay && voucher.state !== 'redeemed'">

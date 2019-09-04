@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty} from '@perx/core';
+import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
 import {ITabConfig, IPrice} from '@perx/core';
 import {Observable, of, Subject, forkJoin} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
   public staticTab: ITabConfig[];
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
+  public titleFn: (profile: IProfile) => string;
 
   constructor(
     private rewardsService: RewardsService,
@@ -77,6 +78,12 @@ export class HomeComponent implements OnInit {
         return `${rewardPrice.points} points`;
       }
       return '0 points'; // is actually 0 or invalid value default
+    };
+    this.titleFn = (profile: IProfile) => {
+      if (profile && profile.lastName) {
+        return `Welcome ${profile.lastName},`;
+      }
+      return `Welcome`;
     };
     this.getRewards();
   }

@@ -23,6 +23,10 @@ body {
   }
 }
 
+.mat-flat-button.mat-primary {
+  color: #fff;
+}
+
 .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
   display: flex;
   flex-direction: row;

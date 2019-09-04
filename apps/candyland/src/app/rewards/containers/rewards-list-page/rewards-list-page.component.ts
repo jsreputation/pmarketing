@@ -1,10 +1,9 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
-import {PrepareTableFilers} from '@cl-helpers/prepare-table-filers';
-import {CreateEngagementPopupComponent} from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-import {map} from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services';
+import { switchMap } from 'rxjs/operators';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 
 @Component({
@@ -13,58 +12,38 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
   styleUrls: ['./rewards-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RewardsListPageComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<any>();
+export class RewardsListPageComponent {
+  public dataSource: CustomDataSource<IRewardEntity>;
+  public displayedColumns = ['name', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   public hasData = true;
-
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private rewardsService: RewardsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private router: Router) {
+    this.dataSource = new CustomDataSource<IRewardEntity>(this.rewardsService);
   }
 
-  public ngAfterViewInit(): void {
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+  public actionHandler(action: { action: RewardsTableMenuActions, data: IRewardEntity }): void {
+    switch (action.action) {
+      case RewardsTableMenuActions.edit: {
+        this.editReward(action.data);
+        break;
+      }
+      case RewardsTableMenuActions.duplicate: {
+        this.duplicateReward(action.data);
+        break;
+      }
+    }
   }
 
-  public openDialogCreate(): void {
-    const dialogRef = this.dialog.open(CreateEngagementPopupComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-  // tslint:disable
-  public actionHandler(action: {action: RewardsTableMenuActions, data: Reward}): void {
-    const listActions = {
-      [RewardsTableMenuActions.edit]: this.editReward.bind(this)
-    };
-    (typeof listActions[action.action] === 'function') && listActions[action.action](action.data);
-  }
-
-  private editReward(reward: Reward): void {
+  private editReward(reward: IRewardEntity): void {
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
   }
 
-  private getData(): void {
-    this.rewardsService.getRewards()
-      .pipe(
-        map((data: any[]) => (
-            data.map(item => {
-              item.begin = new Date(item.begin);
-              item.end = new Date(item.end);
-              return item;
-            })
-          )
-        )
-      )
-      .subscribe((res: any[]) => {
-        this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
-        this.cd.detectChanges();
-      });
+  private duplicateReward(reward: IRewardEntity): void {
+    this.rewardsService.getReward(reward.id).pipe(
+      switchMap(responseReward => this.rewardsService.createReward(responseReward))
+    ).subscribe(() => this.dataSource.updateData());
   }
 }

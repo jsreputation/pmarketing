@@ -12,7 +12,6 @@ import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { User } from '@cl-core/models/audiences/user.model';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -21,7 +20,7 @@ import { User } from '@cl-core/models/audiences/user.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
-  @Input() public dataSource: CustomDataSource<User>;
+  @Input() public dataSource: CustomDataSource<IUser>;
   @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'state', 'phone', 'audienceList', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

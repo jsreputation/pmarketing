@@ -7,10 +7,10 @@ import {
   AuthenticationModule,
   UtilsModule,
   ProfileModule,
-  LocationsService,
-  RewardsService,
-  VouchersService,
-  VouchersModule
+  RewardsModule,
+  VouchersModule,
+  GameModule,
+  LocationModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -32,33 +32,14 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { CategorySelectComponent } from './category/category-select/category-select.component';
 import { CategorySortComponent } from './category/category-sort/category-sort.component';
-import { locations } from './locations.mock';
-import { of } from 'rxjs';
-import { rewards } from './rewards.mock';
-import { vouchers } from './vouchers.mock';
-import { catalogs } from './catalogs.mock';
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
+import { GameComponent } from './game/game.component';
+import { CongratsComponent } from './congrats/congrats.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
-
-const locationServiceStub = {
-  getFromMerchant: () => of(locations)
-};
-
-const rewardsServiceStub = {
-  getReward: () => of(rewards[0]),
-  getAllRewards: () => of(rewards),
-  getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => of(catalogs[id]),
-  reserveReward: () => of(vouchers[1])
-};
-
-const vouchersServiceStub = {
-  getAll: () => of(vouchers),
-  get: () => of(vouchers[1])
-};
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -74,6 +55,8 @@ const vouchersServiceStub = {
     RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
+    GameComponent,
+    CongratsComponent,
     RewardPopupComponent,
     ExpireTimerComponent
   ],
@@ -90,21 +73,21 @@ const vouchersServiceStub = {
     MatDividerModule,
     UtilsModule,
     BrowserAnimationsModule,
+    ProfileModule.forRoot({ env: environment }),
+    HttpClientModule,
+    RewardsModule.forRoot({ env: environment }),
     AuthenticationModule.forRoot({ env: environment }),
     ProfileModule.forRoot({ env: environment }),
-    VouchersModule.forRoot({ env: environment })
-
+    VouchersModule.forRoot({ env: environment }),
+    GameModule,
+    LocationModule.forRoot({ env: environment })
   ],
   entryComponents: [
     CategorySelectComponent,
     CategorySortComponent,
     RewardPopupComponent
   ],
-  providers: [
-    { provide: LocationsService, useValue: locationServiceStub },
-    { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,11 +18,14 @@
       <!--table-->
       <cl-rewards-list [dataSource]="dataSource"
                        [selectable]="true"
-                       [displayedColumns]="['image', 'type', 'category', 'balance']"
+                       [displayedColumns]="displayedColumns"
                        (selectReward)="selectReward($event)">
       </cl-rewards-list>
       <!--paginator-->
-      <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+      ></cl-paginator>
     </div>
   </section>
 </mat-dialog-content>

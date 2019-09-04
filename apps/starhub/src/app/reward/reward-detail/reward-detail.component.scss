@@ -1,4 +1,4 @@
-@import '../../reward.scss';
+@import "../../reward.scss";
 
 .macaron {
   text-align: center;
@@ -13,6 +13,12 @@
   color: #ffffff;
 }
 
-app-expire-timer {
-  font-size: 1rem;
+app-expire-timer,
+.phone-contact,
+.email-contact {
+  font-size: 1.5rem;
+}
+
+.about {
+  display: none;
 }

@@ -1,3 +1,4 @@
+import { of, from, throwError } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -6,7 +7,13 @@ import {
   VouchersModule,
   AuthenticationModule,
   GameModule,
-  UtilsModule
+  UtilsModule,
+  ProfileModule,
+  RewardsService,
+  VouchersService,
+  CampaignService,
+  AuthenticationService,
+  ProfileService,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -21,6 +28,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -32,6 +40,43 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
+import { rewards } from './mock/rewards.mock';
+import { vouchers } from './mock/vouchers.mock';
+import { catalogs } from './mock/catalogs.mock';
+import { campaigns } from './mock/campaigns.mock';
+import { profile } from './mock/profile.mock';
+
+const rewardsServiceStub = {
+  getReward: () => of(rewards[0]),
+  getAllRewards: () => of(rewards),
+  getAllCatalogs: () => of(catalogs),
+  getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
+  reserveReward: () => of(vouchers[1])
+};
+
+const vouchersServiceStub = {
+  getAll: () => of(vouchers),
+  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
+};
+
+const campaignServiceStub = {
+  getCampaigns: () => of(campaigns),
+  getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
+};
+
+const authenticationServiceStub = {
+  login: (username, password) => {
+    if (username === 'perx' && password === '1234') {
+      return of(true);
+    }
+    return throwError(new HttpErrorResponse({ status: 401 }));
+  },
+  logout: () => {}
+};
+
+const profileServiceStub = {
+  whoAmI: () => of(profile)
+};
 
 @NgModule({
   declarations: [
@@ -51,6 +96,7 @@ import { HistoryComponent } from './history/history.component';
     VouchersModule.forRoot({ env: environment }),
     AuthenticationModule.forRoot({ env: environment }),
     GameModule.forRoot({ env: environment }),
+    ProfileModule.forRoot({ env: environment }),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -66,7 +112,13 @@ import { HistoryComponent } from './history/history.component';
     FormsModule,
     UtilsModule
   ],
-  providers: [],
+  providers: [
+    { provide: RewardsService, useValue: rewardsServiceStub },
+    { provide: VouchersService, useValue: vouchersServiceStub },
+    { provide: CampaignService, useValue: campaignServiceStub },
+    { provide: AuthenticationService, useValue: authenticationServiceStub },
+    { provide: ProfileService, useValue: profileServiceStub }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

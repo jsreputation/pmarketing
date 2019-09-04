@@ -10,7 +10,7 @@ import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-
 import { GameComponent } from './containers/game/game.component';
 import { CreateShakeTreeComponent } from './components/create-shake-tree/create-shake-tree.component';
 import {
-  MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSliderModule, MatTabsModule
+  MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSliderModule, MatTabsModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +20,6 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { GameModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
-import { ConfirmModalModule } from '@cl-shared';
 
 @NgModule({
   declarations: [
@@ -50,9 +49,6 @@ import { ConfirmModalModule } from '@cl-shared';
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
-    MatDialogModule,
-
-    ConfirmModalModule,
   ]
 })
 export class GamesModule {

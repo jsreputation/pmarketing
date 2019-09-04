@@ -1,29 +1,20 @@
 <div class="app">
   <mat-toolbar class="mat-elevation-z4">
     <mat-toolbar-row class="top-row">
-      <div class="badge">
-        <img [src]="getBadge(loyalty.membershipTierName)" alt="">
-      </div>
+      <a class="badge" href="https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html">
+        <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
+      </a>
       <div class="reward">
-        <h2>My Membership,</h2>
-        <h1>{{loyalty.membershipTierName | titlecase}}</h1>
+        <h2>Explore your rewards,</h2>
+        <h1 *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h1>
+        <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'HubClub'">+ Hub Club</span>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
-      <a
-        mat-tab-link
-        routerLink="discover"
-        routerLinkActive
-        #disco="routerLinkActive"
-        [active]="disco.isActive"
-      >Discover</a>
-      <a
-        mat-tab-link
-        routerLink="vouchers"
-        routerLinkActive
-        #vouch="routerLinkActive"
-        [active]="vouch.isActive"
-      >My Rewards</a>
+      <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"
+        [active]="disco.isActive">Discover</a>
+      <a mat-tab-link routerLink="vouchers" routerLinkActive #vouch="routerLinkActive" [active]="vouch.isActive">My
+        Rewards</a>
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="content">

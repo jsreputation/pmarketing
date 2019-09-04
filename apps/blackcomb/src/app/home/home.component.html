@@ -1,6 +1,6 @@
 <div class="tab-group__content">
     <h1>My Stamp Card</h1>
-    <mat-card *ngFor="let campaign of campaigns" routerLink="" matRipple (click)="onCampaignSelect(campaign)">
+    <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple (click)="onCampaignSelect(campaign)">
         <div class="puzzle-content">
             <div class="puzzle-img__wrapper">
                 <img class="puzzle-img" src="assets/static_image.png">
@@ -14,5 +14,10 @@
         </div>
     </mat-card>
     <h1>My Rewards</h1>
-    <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$"></perx-core-vouchers>
+    <perx-core-vouchers 
+        (tapped)="voucherSelected($event)" 
+        [data]="vouchers$"
+        [filter]="filter"
+        [showRedeemedIcon]="false">
+    </perx-core-vouchers>
 </div>

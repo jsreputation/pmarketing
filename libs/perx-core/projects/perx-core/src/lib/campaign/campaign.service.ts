@@ -5,6 +5,7 @@ import { EnvConfig } from '../shared/env-config';
 import { map } from 'rxjs/operators';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
+import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 
 interface IV4Campaign {
   id: number;
@@ -20,6 +21,7 @@ interface IV4Campaign {
   category_tags: any[];
   tags: any[];
   state: CampaignState;
+  rewards?: IV4Reward[];
 }
 
 interface IV4CampaignResponse {
@@ -45,12 +47,15 @@ export class CampaignService implements ICampaignService {
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
+    const rewards = campaign.rewards && campaign.rewards.map( (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
       id: campaign.id,
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
       state: campaign.state,
+      endsAt: campaign.ends_at,
+      rewards
     };
   }
 

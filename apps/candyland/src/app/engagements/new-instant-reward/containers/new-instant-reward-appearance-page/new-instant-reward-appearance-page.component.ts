@@ -1,19 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of, Subject } from 'rxjs';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { takeUntil, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
-  ControlValueService,
-  EngagementTransformDataService,
-  RewardsService,
+  AvailableNewEngagementService,
+  InstantRewardsService,
   RoutingStateService
 } from '@cl-core/services';
-import { ConfirmModalComponent } from '@cl-shared';
-import { MatDialog } from '@angular/material';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -30,14 +29,13 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   public reward$: Observable<IReward[]>;
   public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
-  private destroy$ = new Subject();
+
   constructor(private fb: FormBuilder,
-              private rewardService: RewardsService,
+              private instantRewardsService: InstantRewardsService,
               private routingState: RoutingStateService,
-              private router: Router,
-              private controlValueService: ControlValueService,
-              private engagementTransformDataService: EngagementTransformDataService,
-              public dialog: MatDialog) { }
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private router: Router) {
+  }
 
   public ngOnInit(): void {
     this.createRewardForm();
@@ -46,32 +44,22 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
     this.rewards$ = of(MockRewardsMobilePreview);
   }
 
-  public save(): void {
-    const sendData = this.engagementTransformDataService.transformReward(this.formReward.value);
-    this.rewardService.createRewardGame(sendData)
-      .subscribe(() => {
-        this.showLaunchDialog();
-      });
+  public ngOnDestroy(): void {
   }
 
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-        if (result) {
-          this.router.navigateByUrl('/engagements');
-        }
+  public save(): void {
+    this.instantRewardsService.createRewardGame(this.formReward.value)
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
+        this.router.navigateByUrl('/engagements');
       });
   }
 
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
+
   public get name(): AbstractControl {
     return this.formReward.get(ControlsName.name);
   }
@@ -97,7 +85,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
-    return this.controlValueService.getImgLink(control, defaultImg);
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createRewardForm(): void {
@@ -127,7 +115,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   }
 
   private getRewardData(): void {
-    this.rewardData$ = this.rewardService.getRewardData()
+    this.rewardData$ = this.instantRewardsService.getRewardData()
       .pipe(
         tap((res) => {
           this.formReward.patchValue({
@@ -136,10 +124,5 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
           });
         })
       );
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

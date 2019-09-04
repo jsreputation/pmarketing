@@ -1,0 +1,31 @@
+<div class="tab-content">
+    <div class="forms-container" [formGroup]="form">
+      <!--Rewards-->
+      <mat-card class="card">
+        <cl-new-campaign-rewards-form-group
+          [formControl]="form.get('rewardsOptions')"></cl-new-campaign-rewards-form-group>
+      </mat-card>
+      <!--/ Rewards-->
+      <!--limits-->
+      <mat-card class="card" formGroupName="limits">
+        <div class="card-header">
+          <p class="card-title">Response Limits</p>
+        </div>
+        <div class="card-content">
+          <div class="card-row stretch">
+            <div>
+              <mat-form-field>
+                <mat-label>Per User</mat-label>
+                <input matInput type="number" [min]="1" formControlName="times">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="preview">
+      <div class="preview-mobile">
+      </div>
+    </div>
+  </div>
+  

@@ -88,7 +88,7 @@ export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-s
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
-export { ITabConfig } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 /**
  * Utils
@@ -126,6 +126,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  * Survey
  */
 export { SurveyModule } from './lib/survey/survey.module';
+export { SurveyService } from './lib/survey/survey.service';
 export { ISurvey } from './lib/survey/models/survey.model';
 
 /**

@@ -35,11 +35,11 @@
       <input
         type="number"
         min="0"
-        step="1"
+        step="0.01"
         matInput
         placeholder="Cost of Reward"
         [formControl]="formGroup.get('cost')">
-      <span matSuffix>SGD</span>
+      <span matSuffix>{{currency}}</span>
     </mat-form-field>
   </div>
 </div>

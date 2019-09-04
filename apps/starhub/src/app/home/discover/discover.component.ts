@@ -22,8 +22,7 @@ export class DiscoverComponent {
     this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
-  // @ts-ignore
   public campaignSelected(campaign: ICampaign): void {
-    // todo
+    this.router.navigate(['/game'], { queryParams: {id: campaign.id} });
   }
 }

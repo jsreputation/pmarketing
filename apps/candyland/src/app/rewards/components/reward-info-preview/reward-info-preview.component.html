@@ -1,6 +1,6 @@
 <!--image-->
 <div *ngIf="data?.image" class="card-row">
-  <cl-upload-graphic></cl-upload-graphic>
+  <cl-upload-graphic [formControl]="imageControl"></cl-upload-graphic>
 </div>
 <div class="new-reward-margin-top">
   <div class="card-row stretch input-group new-reward-margin-top">
