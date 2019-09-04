@@ -4,21 +4,24 @@ import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class TokenService {
-    private userToken$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-    constructor(private localStorage: LocalStorageService) {
-        this.userToken$ = new BehaviorSubject(this.localStorage.get('authToken')) || null;
-        // console.log(this.userToken$);
-    }
+  private userToken$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    public get(): string {
-        return this.userToken$.getValue();
+  constructor(private localStorage: LocalStorageService) {
+    const localToken = this.localStorage.get('authToken') || null;
+    if (!!localToken) {
+      this.userToken$.next(localToken);
     }
+  }
 
-    public set(value: string): void {
-        this.userToken$.next(value);
-    }
+  public get token(): string {
+    return this.userToken$.getValue();
+  }
 
-    public remove(): void {
-        this.userToken$.complete();
-    }
+  public set token(value: string) {
+    this.userToken$.next(value);
+  }
+
+  public remove(): void {
+    this.userToken$.complete();
+  }
 }
