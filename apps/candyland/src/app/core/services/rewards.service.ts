@@ -5,7 +5,6 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class RewardsService implements ITableService {
   constructor(private rewardHttp: RewardHttpService) {
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<IReward>> {
+  public getTableData(params: HttpParams): Observable<ITableData<IRewardEntity>> {
     return this.getRewards(params).pipe(
       map(response => ({
           data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
@@ -29,18 +28,11 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewards(params);
   }
 
-  public getRewardData(): Observable<{
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  }> {
-    return this.rewardHttp.getRewardData();
-  }
-
   public getRewardsOptions(): Observable<OptionConfig[]> {
     return this.rewardHttp.getRewardsOptions();
   }
 
-  public getReward(id: string): Observable<IRewardForm> {
+  public getReward(id: string): Observable<IRewardEntityForm> {
     return this.rewardHttp.getReward(id).pipe(
       map(response => RewardHttpAdapter.transformToRewardForm(response.data))
     );
@@ -50,24 +42,19 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getMockRewardDetail();
   }
 
-  public createReward(data: IRewardForm): Observable<IResponseApi<IRewardApi>> {
+  public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData = RewardHttpAdapter.transformFromRewardForm(data);
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public duplicateReward(data: IReward): Observable<IResponseApi<IRewardApi>> {
+  public duplicateReward(data: IRewardEntity): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData = RewardHttpAdapter.transformFromReward(data);
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public updateReward(id: string, data: any): Observable<IResponseApi<IRewardApi>> {
+  public updateReward(id: string, data: any): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData = RewardHttpAdapter.transformFromRewardForm(data);
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});
-  }
-
-  public createRewardGame(data): Observable<any> {
-    const sendData = EngagementHttpAdapter.transformReward(data);
-    return this.rewardHttp.createRewardGame({data: sendData});
   }
 }

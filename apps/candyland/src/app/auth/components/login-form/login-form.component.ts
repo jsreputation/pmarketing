@@ -25,7 +25,7 @@ export class LoginFormComponent implements OnInit {
       this.authService.signIn(this.formLogin.value)
       .subscribe((res: Response) => {
           if (res.status === 200) {
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigate(['/dashboard']);
           }
         },
         error => {

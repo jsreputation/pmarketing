@@ -1,7 +1,7 @@
+import { ClHttpParams } from '@cl-helpers/http-params';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
-import { HttpParamsService } from '@cl-core/services/http-params.service';
 
 // tslint:disable
 export class CustomDataSource<T> {
@@ -85,7 +85,7 @@ export class CustomDataSource<T> {
       'page[size]': pagination ? pagination.pageSize : this.pageSize,
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData( HttpParamsService.createHttpParams(params))
+    this.dataService.getTableData( ClHttpParams.createHttpParams(params))
       .subscribe((res: any) => {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);

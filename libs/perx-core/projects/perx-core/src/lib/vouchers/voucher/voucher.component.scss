@@ -1,5 +1,10 @@
 $max-width: 60rem;
 
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
 .voucher-container {
   margin: 0 auto;
   background: white;
@@ -7,6 +12,7 @@ $max-width: 60rem;
   flex-direction: column;
   height: 100%;
   max-width: $max-width;
+  flex-grow: 1;
 }
 
 .reward-image-container {
@@ -75,7 +81,13 @@ $max-width: 60rem;
 
 .actions-container {
   background-color: white;
-  border-top: 0.1rem solid darkgray;
+  width: 100%;
+  padding: 2rem 0 8.5rem;
+
+  button {
+    color: white;
+    width: 100%;
+  }
 }
 
 .ribbon {

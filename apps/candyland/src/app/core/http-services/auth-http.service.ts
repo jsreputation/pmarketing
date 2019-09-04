@@ -28,9 +28,9 @@ export class AuthHttpService {
   }
 
   public logout(): void {
+    this.tokenService.remove();
     this.localStorage.remove('authToken');
     this.localStorage.remove('userId');
-    this.tokenService.remove();
   }
 
 }

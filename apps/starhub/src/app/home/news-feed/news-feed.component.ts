@@ -21,9 +21,11 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public getIndex(index: number): void {
-    const adjustedIndex = index + 1;
-    const percent = (adjustedIndex / this.items.length) * 100;
-    this.scrolledValue = percent;
+    if (!this.items || this.items.length === 0) {
+      this.scrolledValue = 50;
+      return;
+    }
+    this.scrolledValue = (index + 1 / this.items.length) * 100;
   }
 
   @HostListener('window:resize', ['$event'])

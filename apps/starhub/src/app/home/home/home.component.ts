@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ILoyalty, LoyaltyService } from '@perx/core';
+import { ILoyalty, LoyaltyService, ProfileService, IProfile } from '@perx/core';
 
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 
@@ -10,14 +10,17 @@ import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 })
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
+  public profile: IProfile;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private profileService: ProfileService
   ) { }
 
   public ngOnInit(): void {
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+    this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
   }
 
   public getBadge(tier: string | null): string {

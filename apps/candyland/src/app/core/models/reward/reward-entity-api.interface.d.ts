@@ -1,4 +1,4 @@
-declare interface IRewardApi {
+declare interface IRewardEntityApi {
   id?: string;
   type: string;
   links?: {

@@ -3,10 +3,9 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TokenService } from '@cl-core/services/token.service';
-import { AuthService } from '@cl-core-services';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private tokenService: TokenService, private authService: AuthService) { }
+  constructor(private tokenService: TokenService) { }
   private authToken$ = this.tokenService.get();
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
@@ -21,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401(err: any): Observable<any> {
     if (err instanceof HttpErrorResponse && err.status === 401) {
-      this.authService.logOut();
       return throwError ('error 401');
     }
     return throwError(err);

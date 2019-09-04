@@ -4,14 +4,17 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticationService } from '@perx/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
+  const authenticationServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       imports: [
         RouterTestingModule,
         FormsModule,
@@ -20,8 +23,11 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         NoopAnimationsModule
       ],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
