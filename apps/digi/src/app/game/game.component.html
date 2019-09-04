@@ -1,8 +1,8 @@
 <div class="game-container">
   <app-header [title]="title" [subTitle]="subTitle">
     <div class="caption-container">
-      <p class="mat-caption" *ngIf="!isEnabled">Click on <strong>{{buttonTxt}}</strong> to get started!</p>
-      <p class="mat-caption" *ngIf="!isEnabled" [ngPlural]="game.remainingNumberOfTries">
+      <p class="mat-caption" [ngClass]="{hidden: isEnabled}">Click on <strong>{{buttonTxt}}</strong> to get started!</p>
+      <p class="mat-caption" [ngClass]="{hidden: isEnabled || !game?.remainingNumberOfTries}" [ngPlural]="game.remainingNumberOfTries">
         <ng-template ngPluralCase="=1">You have {{ game.remainingNumberOfTries }} try.</ng-template>
         <ng-template ngPluralCase="other">You have {{ game.remainingNumberOfTries }} tries.</ng-template>
       </p>
