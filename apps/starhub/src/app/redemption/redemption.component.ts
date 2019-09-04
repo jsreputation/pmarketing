@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, VouchersService, PinRedemptionComponent } from '@perx/core';
+import { Voucher, VoucherState, VouchersService, PinInputComponent } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -16,14 +16,15 @@ export class RedemptionComponent implements OnInit {
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
 
- @ViewChild('pinInput', {static: false})
-  private pinInputComponent: PinRedemptionComponent;
+  @ViewChild('pinInput', { static: false })
+  private pinInputComponent: PinInputComponent;
 
   constructor(
     private vouchersService: VouchersService,
     private activeRoute: ActivatedRoute,
     private location: Location,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   public ngOnInit(): void {
@@ -46,16 +47,12 @@ export class RedemptionComponent implements OnInit {
     this.showEnterPinComponent = true;
   }
 
-  public onVoucherRedeemed(): void {
-    this.isPinEntered = true;
-    this.voucher.state = VoucherState.redeemed;
-  }
-
-  public onUpdate(): void {
-    if (this.pinInputComponent.hasError === 'error') {
-      this.isPinCorrect = false;
-      this.isPinEntered = true;
-    }
+  public full(pin: string): void {
+    this.vouchersService.redeemVoucher(this.voucher.id, { pin })
+      .subscribe(
+        () => this.voucher.state = VoucherState.redeemed,
+        () => this.pinInputComponent.error = true
+      );
   }
 
   public tryAgainClicked(): void {
@@ -76,4 +73,7 @@ export class RedemptionComponent implements OnInit {
     document.execCommand('copy');
   }
 
+  public updatePin(): void {
+    this.pinInputComponent.error = false;
+  }
 }

@@ -7,6 +7,10 @@ import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/mate
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthService } from '@cl-core-services';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TokenService } from '@cl-core/services/token.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -23,7 +27,9 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
+        HttpClientModule
       ],
+      providers: [ AuthService, LocalStorageService, TokenService ],
       declarations: [
         LoginComponent,
         LoginFormComponent

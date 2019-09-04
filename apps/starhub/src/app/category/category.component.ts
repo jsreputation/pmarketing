@@ -5,7 +5,7 @@ import { MatBottomSheet } from '@angular/material';
 import { CategorySelectComponent, CategoryBottomSheetClosedCallBack } from './category-select/category-select.component';
 import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category-sort/category-sort.component';
 import { Observable } from 'rxjs';
-import { CategoryMode, SortingMode } from './category.model';
+import { SortingMode } from './category.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -15,7 +15,6 @@ import { map } from 'rxjs/operators';
 })
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
 
-  private currentMode: CategoryMode;
   public rewards: Observable<IReward[]>;
 
   public selectedCategory: string;
@@ -31,11 +30,9 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
-          this.currentMode = CategoryMode.reward;
           this.selectedCategory = categoryName;
           this.fetchRewards();
     } else {
-        this.currentMode = CategoryMode.catalog;
         const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
         this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
           map((catalog: ICatalog) => {
@@ -70,10 +67,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   // CategoryBottomSheetClosedCallBack methods
 
   public categorySelectedCallback(updatedValue: string): void {
-    if (this.currentMode === CategoryMode.reward) {
-      this.selectedCategory = updatedValue;
-      this.fetchRewards();
-    }
+    this.selectedCategory = updatedValue;
+    this.fetchRewards();
   }
 
   public getCurrentSelectedCategory(): string {

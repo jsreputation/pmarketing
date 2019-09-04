@@ -6,6 +6,7 @@ import { DashboardRewardsPageComponent } from 'src/app/dashboard/containers/dash
 import { DashboardPageComponent } from './containers/dashboard-page/dashboard-page.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'overview'},
   {
     path: '',
     component: DashboardPageComponent,

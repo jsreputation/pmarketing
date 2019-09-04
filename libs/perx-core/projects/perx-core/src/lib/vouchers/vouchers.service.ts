@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, interval } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams } from './models/voucher.model';
+import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams, IRedeemOptions } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
 import { IVoucherService } from './ivoucher.service';
 import { oc } from 'ts-optchain';
@@ -32,6 +32,7 @@ interface IV4Reward {
   merchant_name: string;
   id: number;
   images?: IV4Image[];
+  merchant_logo_url?: string;
 }
 
 interface IV4Voucher {
@@ -58,7 +59,6 @@ interface IV4Voucher {
   voucher_type: RedemptionType;
   redemption_image?: any;
   redemption_text?: any;
-  merchantImg?: any;
 }
 
 @Injectable({
@@ -83,10 +83,14 @@ export class VouchersService implements IVoucherService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner: IV4Image = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
-    const merchantImg = v.merchantImg ? v.merchantImg : null;
+    const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
-    const redemptionTypeFinal = v.voucher_type in RedemptionType ? v.voucher_type : RedemptionType.txtCode;
+    let redemptionTypeFinal: RedemptionType = v.redemption_type ? v.redemption_type.type : null;
+    redemptionTypeFinal = redemptionTypeFinal || v.voucher_type;
+    if (!(redemptionTypeFinal in RedemptionType)) {
+      redemptionTypeFinal = RedemptionType.txtCode;
+    }
 
     return {
       id: v.id,
@@ -179,14 +183,16 @@ export class VouchersService implements IVoucherService {
     );
   }
 
-  public redeemVoucher(id: number): Observable<any> {
+  public redeemVoucher(id: number, options?: IRedeemOptions): Observable<any> {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
+    if (!options) {
+      options = null;
+    }
 
-    return this.http.post(url, null, {}).pipe(
-      tap(_ => {
-        this.vouchers = [];
-      })
-    );
+    return this.http.post(url, options, {})
+      .pipe(
+        tap(_ => this.reset())
+      );
   }
 
   // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll

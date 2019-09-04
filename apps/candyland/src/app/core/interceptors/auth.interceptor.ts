@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { AuthService } from '@cl-core-services';
+import { ApiConfig } from '@cl-core/api-config';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-// import { Router } from '@angular/router';
+import { TokenService } from '@cl-core/services/token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  // constructor(private router: Router) {
-  // }
+  constructor(private tokenService: TokenService, private authService: AuthService) {
+  }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authToken = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2lhbS5hcGkud2hpc3RsZXIucGVyeHRlY2gub3JnIiwic3ViIjoidXJuOnBlcng6aWFtOjoyMjIyMjIyMjI6dXNlci9BZG1pbl8yIiwic2NvcGUiOiIqIiwiYXVkIjpbImh0dHBzOi8vYXBpLndoaXN0bGVyLnBlcnh0ZWNoLm9yZyJdLCJpYXQiOjE1Njc0OTE1MDd9.dXK2O0NpYxe1sEtlrCyZl5W0lPnGy1evudEVQEFv8Wc';
-
+    if (req.url.includes(ApiConfig.signIn)) {
+      return next.handle(req);
+    }
     const authReq = req.clone({
       setHeaders: {
         'Content-Type': 'application/vnd.api+json',
         'Access-Control-Allow-Origin': '*',
-        Authorization: authToken
+        Authorization: this.tokenService.token || ''
       }
     });
     return next.handle(authReq).pipe(catchError(this.handle401.bind(this)));
@@ -25,6 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401(err: any): Observable<any> {
     if (err instanceof HttpErrorResponse && err.status === 401) {
+      this.authService.logout();
       return throwError('error 401');
     }
     return throwError(err);
