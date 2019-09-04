@@ -4,16 +4,16 @@
   </div>
   <div class="key-display">
     <img src="assets/key-white.png" alt="">
-    <span [ngPlural]="keys">
+    <span *ngIf="isLoading">Calculating your earned keys!</span>
+    <span [ngPlural]="keys" *ngIf="!isLoading">
       <ng-template ngPluralCase="=0">
-        <span *ngIf="isLoading">Calculating your earned keys!</span>
-        <span *ngIf="!isLoading">You have earned {{keys}} key</span>
+        <span>You have earned {{keys}} key</span>
       </ng-template>
       <ng-template ngPluralCase="=1">
-        <span *ngIf="!isLoading">You have earned {{keys}} key</span>
+        <span>You have earned {{keys}} key</span>
       </ng-template>
       <ng-template ngPluralCase="other">
-        <span *ngIf="!isLoading">You have earned {{keys}} keys</span>
+        <span>You have earned {{keys}} keys</span>
       </ng-template>
     </span>
   </div>
