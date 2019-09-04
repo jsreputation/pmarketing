@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -139,4 +139,30 @@ describe('CategoryComponent', () => {
     expect(sortingMode).toBe('Latest');
   });
 
+  it('should create pipe', () => {
+    const sortPipe = new RewardsSortPipe();
+    expect(sortPipe).toBeTruthy();
+  });
+
+  it('should sort rewards on SortingMode.latest using valid from', fakeAsync(() => {
+    const sortPipe = new RewardsSortPipe();
+    const returnValue = sortPipe.transform(of(rewards), SortingMode.latest);
+    tick();
+    returnValue.subscribe(
+      (values) => {
+        expect(values[0].id).toBe(2);
+      }
+    );
+  }));
+
+  it('should sort rewards on SortingMode.ending_soon using valid from', fakeAsync(() => {
+    const sortPipe = new RewardsSortPipe();
+    const returnValue = sortPipe.transform(of(rewards), SortingMode.ending_soon);
+    tick();
+    returnValue.subscribe(
+      (values) => {
+        expect(values[0].id).toBe(1);
+      }
+    );
+  }));
 });
