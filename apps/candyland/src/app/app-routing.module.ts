@@ -5,7 +5,7 @@ import {MainContainerComponent} from './main-container/main-container.component'
 import { LoginComponent } from './auth/containers/login/login.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/dashboard'},
+  { path: '', pathMatch: 'full', redirectTo: '/dashboard/overview'},
   { path: '',
     component: MainContainerComponent,
     canActivate: [AuthGuard],
