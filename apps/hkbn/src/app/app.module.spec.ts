@@ -8,9 +8,8 @@ import { setLanguage } from './app.module';
 
 const translateServiceStud = {
     defaultLang: null,
-    setDefaultLang: function (leng) { this.defaultLang = leng }
+    setDefaultLang(leng: string): void { this.defaultLang = leng; }
 };
-
 
 describe('AppModule', () => {
     beforeEach(async(() => {

@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { QrRedemptionModule } from './wallet/qr-redemption/qr-redemption.module';
-import { NgModuleFactoryLoader } from '@angular/core';
+import { NgModuleFactoryLoader, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,10 +22,10 @@ const NotificationWrapperServiceStud = {
 };
 const translateServiceStud = {
     defaultLang: null,
-    setDefaultLang: function (leng) { this.defaultLang = leng },
+    setDefaultLang(leng: string): void { this.defaultLang = leng; },
     get: (str) => of(str instanceof Array ? str.reduce((ac, next) => {
         ac[next] = next;
-        return ac
+        return ac;
     }, {}) : str)
 };
 const vouchersServiceStub = {
@@ -48,9 +48,9 @@ describe('AppRoutingModule', () => {
                 QrRedemptionModule,
                 VouchersModule.forRoot({ env: environment }),
                 RouterTestingModule.withRoutes([
-                    routes.find(el=>el.path==='').children.find(el=>el.path === 'wallet/:id'),
-                    routes.find(el=>el.path==='').children.find(el=>el.path === 'reward/:id'),
-                    routes.find(el=>el.path==='').children.find(el=>el.path === 'account'),
+                    routes.find(el => el.path === '').children.find(el => el.path === 'wallet/:id'),
+                    routes.find(el => el.path === '').children.find(el => el.path === 'reward/:id'),
+                    routes.find(el => el.path === '').children.find(el => el.path === 'account'),
                 ])
             ],
             providers: [
@@ -65,29 +65,30 @@ describe('AppRoutingModule', () => {
 
     it('navigate to "lazy', fakeAsync(() => {
         let url = '/wallet/15/qrcode';
-        const loader = TestBed.get(NgModuleFactoryLoader);
+        // eslint-disable-next-line no-use-before-define
+        const loader = TestBed.get(NgModuleFactoryLoader as Type<NgModuleFactoryLoader>);
+        
         loader.stubbedModules = { lazyModule: QrRedemptionModule };
-        router.navigateByUrl(url)
+        router.navigateByUrl(url);
         tick();
         expect(location.path()).toBe(url);
 
         url = '/wallet/15/code';
         loader.stubbedModules = { lazyModule: CodeRedemptionModule };
-        router.navigateByUrl(url)
-        tick(); 
+        router.navigateByUrl(url);
+        tick();
         expect(location.path()).toBe(url);
 
         url = '/reward/15';
         loader.stubbedModules = { lazyModule: RewardModule };
-        router.navigateByUrl(url)
-        tick(); 
+        router.navigateByUrl(url);
+        tick();
         expect(location.path()).toBe(url);
 
         url = '/account';
         loader.stubbedModules = { lazyModule: AccountModule };
-        router.navigateByUrl(url)
-        tick(); 
+        router.navigateByUrl(url);
+        tick();
         expect(location.path()).toBe(url);
     }));
-
-})
+});

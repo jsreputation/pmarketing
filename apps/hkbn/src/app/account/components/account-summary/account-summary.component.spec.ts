@@ -54,8 +54,8 @@ describe('AccountSummaryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should path accountsummary', fakeAsync(()=>{
-    const spy = spyOn(component.accountSummary, 'patchValue') ;
+  it('should path accountsummary', fakeAsync(() => {
+    const spy = spyOn(component.accountSummary, 'patchValue');
     component.accountData = accountDataStud;
     component.ngOnChanges();
     tick();
