@@ -24,14 +24,14 @@
 
       <div class="content">
         <h1>How to use</h1>
-        <p>{{reward.howToRedeem}}</p>
+        <div [innerHtml]="reward.howToRedeem"></div>
       </div>
 
       <app-location-short-format [merchantId]="reward.merchantId"></app-location-short-format>
 
       <div class="content">
         <h1>Terms & Condition</h1>
-        <p>{{reward.termsAndConditions}}</p>
+        <div [innerHtml]="reward.termsAndConditions"></div>
       </div>
 
       <div class="content about">

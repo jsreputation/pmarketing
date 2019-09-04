@@ -1,4 +1,4 @@
-declare interface IRewardForm {
+declare interface IRewardEntityForm {
   id?: string;
   name: string;
   currency?: string;

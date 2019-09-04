@@ -4,7 +4,7 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { LoyaltyService } from '@perx/core';
+import { LoyaltyService, IProfile, ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 
@@ -13,6 +13,16 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   const loyaltyServiceStub = {
     getLoyalty: () => of(loyalty)
+  };
+  const mockProfile: IProfile = {
+    id: 1,
+    state: 'active',
+    firstName: '',
+    lastName: ''
+  };
+
+  const profileServiceStub = {
+    whoAmI: () => of(mockProfile)
   };
 
   beforeEach(async(() => {
@@ -25,7 +35,8 @@ describe('HomeComponent', () => {
       ],
       providers: [
         NoRenewaleInNamePipe,
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
       .compileComponents();

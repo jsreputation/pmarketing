@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { SurveyService } from '@cl-core/services';
-import { ConfirmModalComponent, QuestionFormFieldService } from '@cl-shared';
-import { MatDialog } from '@angular/material';
+import { QuestionFormFieldService } from '@cl-shared';
 import { Router } from '@angular/router';
 
 @Component({
@@ -36,34 +35,44 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       'right': 'Very much',
       required: true
     },
-      {"selectedType":"rating","name":null,"scale":"3","selectShape":"circle","selectColor":"warn","left":"66666666","right":"647+9879+/797*/79/","required":false,"description":"sersgtsdfgsdfgsdfgsdfg  a'psdjf;asdjf'[pasdj 'asodoj'apsdjf 'apsdojf"},
+      {
+        'selectedType': 'rating',
+        'name': null,
+        'scale': '3',
+        'selectShape': 'circle',
+        'selectColor': 'warn',
+        'left': '66666666',
+        'right': '647+9879+/797*/79/',
+        'required': false,
+        'description': 'sersgtsdfgsdfgsdfgsdfg  a\'psdjf;asdjf\'[pasdj \'asodoj\'apsdjf \'apsdojf'
+      },
       {selectedType: 'pictureChoice', name: null, picture: [], required: true}, {
-      selectedType: 'longText',
-      name: null,
-      'text': null,
-      required: true
-    }, {
-      selectedType: 'questionGroup',
-      name: null,
-      questionGroup: [{
-        selectedType: 'rating',
+        selectedType: 'longText',
         name: null,
-        scale: '5',
-        selectShape: 'star',
-        selectColor: 'primary',
-        left: 'Not Very',
-        right: 'Very much',
+        'text': null,
         required: true
-      }
-      , {selectedType: 'longText', name: null, text: null, required: true}, {
-        selectedType: 'date',
+      }, {
+        selectedType: 'questionGroup',
         name: null,
-        startDate: null,
-        endDate: null,
+        questionGroup: [{
+          selectedType: 'rating',
+          name: null,
+          scale: '5',
+          selectShape: 'star',
+          selectColor: 'primary',
+          left: 'Not Very',
+          right: 'Very much',
+          required: true
+        }
+          , {selectedType: 'longText', name: null, text: null, required: true}, {
+            selectedType: 'date',
+            name: null,
+            startDate: null,
+            endDate: null,
+            required: true
+          }],
         required: true
       }],
-      required: true
-    }],
     'color': 'primary',
     'cardBackground': {
       'id': 1,
@@ -86,8 +95,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private questionFormFieldService: QuestionFormFieldService,
               private surveyService: SurveyService,
-              private router: Router,
-              public dialog: MatDialog) {
+              private router: Router) {
   }
 
   public get listId(): string {
@@ -147,22 +155,14 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.showLaunchDialog();
-  }
-
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-        if (result) {
-          this.router.navigateByUrl('/engagements');
-        }
-      });
+    this.router.navigateByUrl('/engagements');
+    // TODO: uncomment when exist Api service for Survey
+    // this.surveyService.createSurvay(this.formSurvey.value)
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe((data: IResponseApi<IEngagementApi>) => {
+    //     this.availableNewEngagementService.setNewEngagement(data);
+    //     this.router.navigateByUrl('/engagements');
+    //   });
   }
 
   public deleteQuestion(index: number) {
@@ -194,7 +194,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       questions: this.fb.array([]),
       color: ['primary', [Validators.required]],
       cardBackground: [null, [Validators.required]],
-      background: [null, [Validators.required]],
+      background: [null, [Validators.required]]
     });
   }
 
@@ -203,7 +203,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       .pipe(tap((res) => {
         this.formSurvey.patchValue({
           background: res.background[0],
-          cardBackground: res.cardBackground[0],
+          cardBackground: res.cardBackground[0]
         });
       }));
   }

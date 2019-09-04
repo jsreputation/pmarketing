@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class HttpParamsService {
+export class ClHttpParams {
 
   public static createHttpParams(filters): HttpParams {
     if (filters) {

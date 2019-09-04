@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfirmModalModule } from '@cl-shared/containers/confirm-modal/confirm-modal.module';
 import { EngagementsRoutingModule } from './engagements-routing.module';
 import { EngagementsListPageComponent } from './containers/engagements-list-page/engagements-list-page.component';
 import { EngagementsComponent } from './containers/engagements/engagements.component';
@@ -52,7 +53,8 @@ import { EngagementsGridComponent } from './components/engagements-grid/engageme
     MatSelectModule,
     MatRadioModule,
     CreateEngagementPopupModule,
-    EngagementItemModule
+    EngagementItemModule,
+    ConfirmModalModule
   ],
   entryComponents: [
     EngagementsListPageComponent,
