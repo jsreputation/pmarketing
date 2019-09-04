@@ -18,8 +18,8 @@ Given(/^1_I am on the shake a tree game creation page$/, async () => {
 
 When(/^1_I upload a file$/, async () => {
   // creating var for url path
- const FileToUpload = './Downloads/testimg.png';
- const absolutePath = path.resolve('/Users/perx', FileToUpload); // __dirname when inplementing circle ci later
+ const FileToUpload = './testArtifacts/testimg.png';
+ const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
  // upload the file to the gift img upload section
  await element.all(by.css('input[type="file"]')).get(0).sendKeys(absolutePath);
 
@@ -38,8 +38,8 @@ Given(/^2_I am on the shake a tree game creation page$/, async () => {
 
 When(/^2_I upload a file$/, async () => {
   // creating var for url path
-  const FileToUpload = './Downloads/testimg.png';
-  const absolutePath = path.resolve('/Users/perx', FileToUpload); // __dirname when inplementing circle ci later
+  const FileToUpload = './testArtifacts/testimg.png';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
   await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
 });
@@ -57,8 +57,8 @@ Given(/^3_I am on the shake a tree game creation page$/, async () => {
 
 When(/^3_I upload a file with wrong format$/, async () => {
   // creating var for url path
-  const FileToUpload = './Downloads/testfile.xyz';
-  const absolutePath = path.resolve('/Users/perx', FileToUpload); // __dirname when inplementing circle ci later
+  const FileToUpload = './testArtifacts/testfile.xyz';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
   await element.all(by.css('input[type="file"]')).get(0).sendKeys(absolutePath);
 });
@@ -77,8 +77,8 @@ Given(/^4_I am on the shake a tree game creation page$/, async () => {
 });
 
 When(/^4_I upload a file with wrong format$/, async () => {
-  const FileToUpload = './Downloads/testfile.xyz';
-  const absolutePath = path.resolve('/Users/perx', FileToUpload); // __dirname when inplementing circle ci later
+  const FileToUpload = './testArtifacts/testfile.xyz';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
   await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
 });
@@ -90,7 +90,7 @@ Then(/^4_my file should not be successfully uploaded.$/, async () => {
 });
 
 // Successful file upload for gift box reflected in preview image
-Given(/^5_that I am on the shake the tree creation page$/, async () => {
+/*Given(/^5_that I am on the shake the tree creation page$/, async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
   await browser.sleep(3000);
 });

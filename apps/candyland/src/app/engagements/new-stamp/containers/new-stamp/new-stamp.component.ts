@@ -8,8 +8,6 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
-import { MatDialog } from '@angular/material';
-import { ConfirmModalComponent } from '@cl-shared';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
@@ -35,12 +33,13 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public stamps: PuzzleCollectStamp[] = [];
   public stampsSlotNumberData = [];
   private destroy$ = new Subject();
+
   constructor(private fb: FormBuilder,
               private stampService: StampHttpService,
               private routingState: RoutingStateService,
               private router: Router,
-              private stampDataService: StampDataService,
-              public dialog: MatDialog) { }
+              private stampDataService: StampDataService) {
+  }
 
   public ngOnInit(): void {
     this.createStampForm();
@@ -48,6 +47,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     this.subscribeStampsSlotChanges();
     this.getStampData();
   }
+
   public get name(): AbstractControl {
     return this.formStamp.get(ControlsName.name);
   }
@@ -93,7 +93,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public get stampsSlotNumber(): any[] {
-    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value.map((item: string) => ({ id: +item }));
+    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value.map((item: string) => ({id: +item}));
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -101,22 +101,14 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.showLaunchDialog();
-  }
-
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-        if (result) {
-          this.router.navigateByUrl('/engagements');
-        }
-      });
+    this.router.navigateByUrl('/engagements');
+    // TODO: uncomment when exist Api service for Stamps
+    // this.stampService.createStamp(this.formSurvey.value)
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe((data: IResponseApi<IEngagementApi>) => {
+    //     this.availableNewEngagementService.setNewEngagement(data);
+    //     this.router.navigateByUrl('/engagements');
+    //   });
   }
 
   public comeBack(): void {
@@ -172,7 +164,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
           for (let i = 0; i <= value; i++) {
             this.stamps.push({
               id: 1,
-              state: PuzzleCollectStampState.redeemed,
+              state: PuzzleCollectStampState.redeemed
             });
           }
           this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
@@ -189,7 +181,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       )
       .subscribe((value: string[]) => {
         this.stampsSlotNumberData = value.map((item: string) => {
-          return { rewardPosition: +item - 1};
+          return {rewardPosition: +item - 1};
         });
       });
   }

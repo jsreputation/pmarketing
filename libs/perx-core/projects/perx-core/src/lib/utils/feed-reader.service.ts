@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export interface FeedItem {
   title: string;
@@ -21,9 +21,7 @@ export class FeedReaderService {
   public getFromUrl(url: string): Observable<FeedItem[]> {
     return this.http.get(url, { responseType: 'text' })
       .pipe(
-        tap(content => console.log(content)),
         map((content: string) => this.getFromText(content)),
-        tap(items => console.log(items)),
       );
   }
 

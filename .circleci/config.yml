@@ -139,6 +139,12 @@ jobs:
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            if [ $APP == 'candyland-uat' ]
+            then
+              export APP="candyland"
+            fi
+            echo "after second set APP: ${APP}"
+
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
             --no-cache \
             --build-arg app=$APP \
@@ -193,7 +199,8 @@ jobs:
             then
               echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
             fi
-            if [ $APP == 'candyland' ]
+            if [ $APP == 'candyland' ] || \
+               [ $APP == 'candyland-uat' ]
             then
               echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
             fi
@@ -362,8 +369,8 @@ daily_e2e_run_morning:
 daily_e2e_run_evening:
     triggers:
       - schedule:
-          # 5.30 pm SGT
-          cron: "30 9 * * *"
+          # 5.00 pm SGT
+          cron: "0 9 * * *"
           filters:
             branches:
               only:

@@ -13,7 +13,7 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardsListPageComponent {
-  public dataSource: CustomDataSource<IReward>;
+  public dataSource: CustomDataSource<IRewardEntity>;
   public displayedColumns = ['name', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   public hasData = true;
 
@@ -21,10 +21,10 @@ export class RewardsListPageComponent {
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private router: Router) {
-    this.dataSource = new CustomDataSource<IReward>(this.rewardsService);
+    this.dataSource = new CustomDataSource<IRewardEntity>(this.rewardsService);
   }
 
-  public actionHandler(action: { action: RewardsTableMenuActions, data: IReward }): void {
+  public actionHandler(action: { action: RewardsTableMenuActions, data: IRewardEntity }): void {
     switch (action.action) {
       case RewardsTableMenuActions.edit: {
         this.editReward(action.data);
@@ -37,11 +37,11 @@ export class RewardsListPageComponent {
     }
   }
 
-  private editReward(reward: IReward): void {
+  private editReward(reward: IRewardEntity): void {
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
   }
 
-  private duplicateReward(reward: IReward): void {
+  private duplicateReward(reward: IRewardEntity): void {
     this.rewardsService.getReward(reward.id).pipe(
       switchMap(responseReward => this.rewardsService.createReward(responseReward))
     ).subscribe(() => this.dataSource.updateData());

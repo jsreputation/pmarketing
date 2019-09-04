@@ -1,4 +1,5 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
+import { PuzzleCollectReward, PuzzleCollectStamp } from '../../puzzles/models/puzzle-stamp.model';
 
 export interface IReward {
   id: number;
@@ -49,6 +50,7 @@ export interface IStampCard {
   campaignConfig: {
     totalSlots: number;
     rewards: IReward[];
+    collectionRewards?: PuzzleCollectReward[];
   };
   displayProperties: {
     numberOfCols: number;
@@ -58,7 +60,12 @@ export interface IStampCard {
         imageUrl: string;
       }
     };
+    preStampImg?: string;
+    postStampImg?: string;
+    rewardPreStamp?: string;
+    rewardPostStamp?: string;
     totalSlots: number;
   };
   stamps?: IStamp[];
+  collectionStamps?: PuzzleCollectStamp[];
 }

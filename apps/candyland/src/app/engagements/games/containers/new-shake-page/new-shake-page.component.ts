@@ -1,16 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
 import {
+  AvailableNewEngagementService,
   RoutingStateService,
   ShakeTreeService
 } from '@cl-core/services';
-import { MatDialog } from '@angular/material';
-import { ConfirmModalComponent } from '@cl-shared';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
@@ -35,7 +35,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
               private shakeDataService: ShakeTreeService,
               private routingState: RoutingStateService,
               private router: Router,
-              public dialog: MatDialog) {
+              private availableNewEngagementService: AvailableNewEngagementService) {
   }
   public get name(): AbstractControl {
     return this.shakeTree.get(ControlsName.name);
@@ -81,24 +81,11 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.shakeDataService.createShakeTree(this.shakeTree.value)
-      .subscribe(() => {
-        this.showLaunchDialog();
-      });
-  }
-
-  public showLaunchDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-      if (result) {
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
-      }
-    });
+      });
   }
 
   public comeBack(): void {

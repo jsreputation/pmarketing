@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core';
+import { IReward, RewardsService, NotificationService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
-import { NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-rewards-collection',
@@ -13,8 +12,10 @@ export class RewardsCollectionComponent implements OnInit {
 
   public rewards: Observable<IReward[]>;
 
-  constructor(private rewardsService: RewardsService,
-              private notificationService: NotificationService) {
+  constructor(
+    private rewardsService: RewardsService,
+    private notificationService: NotificationService
+  ) {
   }
 
   public ngOnInit(): void {
