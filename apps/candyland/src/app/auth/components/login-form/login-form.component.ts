@@ -25,7 +25,7 @@ export class LoginFormComponent implements OnInit {
       this.authService.signIn(this.formLogin.value)
       .subscribe(
         () => this.router.navigate(['/dashboard/overview']),
-        error => alert('The email or password is incorrect! ' + error));
+        (error: Error) => alert('The email or password is incorrect! ' + error.message));
     }
   }
 

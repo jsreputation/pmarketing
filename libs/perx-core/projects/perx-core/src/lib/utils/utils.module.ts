@@ -10,6 +10,7 @@ import { RepeatTimesDirective } from './directives/repeat-times.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
 import { FeedReaderService } from './feed-reader.service';
 import { DistancePipe } from './directives/distance-pipe';
+import { GeneralStaticDataService } from './general-static-data/general-static-data.service';
 
 const directives = [
   NumericCharacterDirective,
@@ -44,7 +45,8 @@ const components = [
   ],
   providers: [
     NotificationService,
-    FeedReaderService
+    FeedReaderService,
+    GeneralStaticDataService
   ]
 })
 export class UtilsModule {
