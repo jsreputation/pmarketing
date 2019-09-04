@@ -72,6 +72,7 @@ import {
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
+import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
 
 @NgModule({
   providers: [
@@ -97,6 +98,7 @@ import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engage
     NewCampaignRewardsFormGroupComponent,
     NewCampaignStampRuleFormGroupComponent,
     ReviewCampaignComponent,
+    NewCampaignRewardsSurveyPageComponent,
   ],
   imports: [
     CommonModule,
