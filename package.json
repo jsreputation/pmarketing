@@ -1,7 +1,6 @@
 {
   "name": "perx-microsites",
   "scripts": {
-    "qwerty": "lerna run build:lib && lerna run build:hsbc-rewards --",
     "build": "lerna run build:lib && lerna run build -- ",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
     "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
