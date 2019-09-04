@@ -31,7 +31,7 @@
       <ng-template matStepLabel>Rewards & Limits</ng-template>
       <ng-container [ngSwitch]="campaign?.template?.attributes_type">
         <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"></cl-new-campaign-rewards-stamps-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'survey'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"></cl-new-campaign-rewards-survey-page>
         <cl-new-campaign-rewards-page *ngSwitchCase="'Instant Reward'"></cl-new-campaign-rewards-page>
         <cl-new-campaign-rewards-page *ngSwitchCase="'game'"></cl-new-campaign-rewards-page>
       </ng-container>
