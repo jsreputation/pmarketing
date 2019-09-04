@@ -68,6 +68,6 @@ describe('QrRedemptionComponent', () => {
   it('should navigate to wallet', fakeAsync(() => {
     vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.redeemed });
     tick();
-    expect(location.path(false)).toBe('/wallet')
-  }));  
+    expect(location.path(false)).toBe('/wallet');
+  }));
 });

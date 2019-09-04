@@ -80,12 +80,12 @@ describe('HomeComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should call translate service', fakeAsync(()=>{
+  it('should call translate service', fakeAsync(() => {
     const spy = spyOn(translateService, 'get');
-    spy.and.returnValue(of({'YOU_HAVE': 'YOU_HAVE', 'HELLO': 'HELLO', 'POINTS_EXPITING': 'POINTS_EXPITING'}))
+    spy.and.returnValue(of({ YOU_HAVE: 'YOU_HAVE', HELLO: 'HELLO', POINTS_EXPITING: 'POINTS_EXPITING' }));
     component.ngOnInit();
     expect(spy).toHaveBeenCalledWith(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']);
     tick();
-    expect(component.titleFn(null)).toBe('HELLO')
-  }))
+    expect(component.titleFn(null)).toBe('HELLO');
+  }));
 });

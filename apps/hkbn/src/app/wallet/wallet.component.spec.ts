@@ -53,7 +53,7 @@ describe('WalletComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1']);
   });
 
-  it('should filter voucher', fakeAsync(()=>{
+  it('should filter voucher', fakeAsync(() => {
 
   }));
 });

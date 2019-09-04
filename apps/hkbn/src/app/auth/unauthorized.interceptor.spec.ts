@@ -8,13 +8,14 @@ import { AppComponent } from '../app.component';
 
 const authenticationServiceStud = {
     logout: (): void => { }
-}
+};
 
-const mockRequest = new HttpRequest("GET", "")
+const mockRequest = new HttpRequest('GET', '');
 
 const mockHandle: HttpHandler = {
     handle: () => throwError(new HttpResponse<HttpErrorResponse>({ status: 401 }))
-}
+};
+
 describe('UnauthorizedInterceptor', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -34,10 +35,11 @@ describe('UnauthorizedInterceptor', () => {
     it('should handle unauthorized call', fakeAsync(inject([UnauthorizedInterceptor, AuthenticationService],
         (unauthInterceptor: UnauthorizedInterceptor, authenticationService: AuthenticationService) => {
             const spy = spyOn(authenticationService, 'logout');
-            unauthInterceptor.intercept(mockRequest, mockHandle).toPromise().catch((err)=>{
-               expect(err.status).toBe(401);
+            unauthInterceptor.intercept(mockRequest, mockHandle).toPromise().catch((err) => {
+                expect(err.status).toBe(401);
             });
             tick();
             expect(spy).toHaveBeenCalled();
-        })));
+        })
+    ));
 });
