@@ -1,0 +1,32 @@
+<mat-toolbar class="mat-elevation-z4">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="goBack()">
+      <span class="icon">
+        <mat-icon>arrow_backward</mat-icon>
+      </span>
+    </button>
+    <span class="title">{{title}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="main">
+  <div class="game-wrapper">
+    <h1 class="sub-title">{{subtitle}}</h1>
+    <div class="pinata-wrapper">
+      <perx-core-pinata
+        [stillImg]="'assets/pinata/still-img.png'"
+        [openedImg]="'assets/pinata/opened-img.png'"
+        (broken)="gameCompleted()"
+        [nbTaps]="nbTaps"
+        [enabled]="isEnabled">
+      </perx-core-pinata>
+    </div>
+  </div>
+
+  <div class="button-area">
+    <button mat-flat-button color="primary" (click)="isEnabled = true"
+      [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+      {{buttonText}}
+    </button>
+  </div>
+</div>

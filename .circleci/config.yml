@@ -369,8 +369,8 @@ daily_e2e_run_morning:
 daily_e2e_run_evening:
     triggers:
       - schedule:
-          # 5.30 pm SGT
-          cron: "30 9 * * *"
+          # 5.00 pm SGT
+          cron: "0 9 * * *"
           filters:
             branches:
               only:

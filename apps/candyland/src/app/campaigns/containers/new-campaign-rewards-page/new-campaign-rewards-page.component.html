@@ -14,15 +14,15 @@
       <div class="card-content">
         <div class="card-row stretch">
           <div>
-            <label class="card-label">Limit per user</label>
             <mat-form-field>
+              <mat-label class="card-label">Per user</mat-label>
               <input matInput type="number" [min]="1" formControlName="times">
               <span matSuffix>Play</span>
             </mat-form-field>
           </div>
           <div>
-            <label class="card-label">Limit per duration</label>
             <mat-form-field>
+              <mat-label class="card-label">Per duration</mat-label>
               <mat-select formControlName="duration">
                 <mat-option *ngFor="let option of config?.durationLimits"
                             [value]="option?.value">
