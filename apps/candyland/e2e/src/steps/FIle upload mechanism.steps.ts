@@ -90,37 +90,57 @@ Then(/^4_my file should not be successfully uploaded.$/, async () => {
 });
 
 // Successful file upload for gift box reflected in preview image
-/*Given(/^5_that I am on the shake the tree creation page$/, async () => {
+Given(/^5_that I am on the shake the tree creation page$/, async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
-  await browser.sleep(3000);
+  // await browser.sleep(2000);
 });
 
 When(/^5_I upload a file with the appropriate format for gift box$/, async () => {
    // creating var for url path
-  const FileToUpload = './Downloads/testimg.png';
-  const absolutePath = path.resolve('/Users/perx', FileToUpload); // __dirname when inplementing circle ci later
+  const FileToUpload = './testArtifacts/testimg.png';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift img upload section
   await element.all(by.css('input[type="file"]')).get(0).sendKeys(absolutePath);
+  await browser.sleep(3000);
 });
 
 Then(/^5_gift box design reflects the file upload.$/, async () => {
-  // do an assertion based on the src attr of upload png.
-  expect(await element(by.className('gift-img gift-img__1 ng-star-inserted')).getAttribute('src')).to.contain
-  (element(by.css('div.image-wrap.ng-star-inserted>img')).getAttribute('src'));
+  // initializing variables for attributes src
+  const srcUploadField = await element(by.css('div.image-wrap.ng-star-inserted>img')).getAttribute('src');
+  const srcElementPreview = await element(by.css('div.gift-wrapper.gift-wrapper__1.hang.ng-star-inserted>img')).getAttribute('src');
+  // initializing regex looking for ','
+  const regex = /,/;
+  // doing a substring matching the first 6 characters of src attr
+  const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex), srcUploadField.search(regex) + 5);
+  const srcElementPreviewSubstr = srcElementPreview.substring(srcElementPreview.search(regex), srcElementPreview.search(regex) + 5);
+  // doing an assertion matching the src substring
+  expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
+
 });
 
-/*Given('that I am on the shake the tree creation page', function() {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+//  Successful file upload for background reflected in preview image
+Given(/^6_that I am on the shake the tree creation page$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+});
 
-When('I upload a file with the appropriate format for background', function() {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^6_I upload a file with the appropriate format for background$/, async () => {
+  // creating var for url path
+  const FileToUpload = './testArtifacts/testimg.png';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
+  // upload the file to the background img upload section
+  await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
+  await browser.sleep(3000);
+});
 
-Then('background reflects the file upload.', function() {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-*/
+Then(/^6_background reflects the file upload.$/, async () => {
+  // initializing variables for attributes src
+  const srcUploadField = await element(by.css('div.image-wrap.ng-star-inserted>img')).getAttribute('src');
+  const srcElementPreview = await element(by.css('div.mobile-preview-background')).getAttribute('style');
+  // initializing regex looking for ','
+  const regex = /,/;
+  // doing a substring matching the first 6 characters of src attr
+  const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex), srcUploadField.search(regex) + 5);
+  const srcElementPreviewSubstr = srcElementPreview.substring(srcElementPreview.search(regex), srcElementPreview.search(regex) + 5);
+  // doing an assertion matching the src substring
+  expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
+});
