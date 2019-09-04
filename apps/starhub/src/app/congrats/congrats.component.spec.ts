@@ -5,12 +5,17 @@ import {
 } from '@angular/material';
 
 import { CongratsComponent } from './congrats.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { GameService } from '@perx/core';
 
 describe('CongratsComponent', () => {
   let component: CongratsComponent;
   let fixture: ComponentFixture<CongratsComponent>;
   const routerStub = { navigate: () => ({}) };
+  const gameServiceStub = {
+    play: () => {}
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,6 +23,8 @@ describe('CongratsComponent', () => {
       imports: [ MatToolbarModule, MatCardModule ],
       providers: [
         { provide: Router, useValue: routerStub },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ id: '1' }) } },
+        { provide: GameService, useValue: gameServiceStub }
       ]
     })
     .compileComponents();

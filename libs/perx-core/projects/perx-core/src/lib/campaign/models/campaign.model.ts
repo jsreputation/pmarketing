@@ -19,4 +19,5 @@ export interface ICampaign {
   state: CampaignState;
   endsAt: string;
   rewards?: IReward[];
+  thumbnailUrl?: string;
 }
