@@ -15,16 +15,18 @@ const NotificationWrapperServiceStud = {
   addPopup: () => { }
 };
 
+const vouchersServiceStub = {
+  state: new BehaviorSubject(mockVoucher),
+  get: (): Observable<Voucher> => of(mockVoucher),
+  stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+  redeemVoucher: (): Observable<any> => of({})
+};
+
 describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
   let location: Location;
-  const vouchersServiceStub = {
-    state: new BehaviorSubject(mockVoucher),
-    get: (): Observable<Voucher> => of(mockVoucher),
-    stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
-    redeemVoucher: (): Observable<any> => of({})
-  };
+  let vouchersService: VouchersService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -50,6 +52,7 @@ describe('CodeRedemptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CodeRedemptionComponent);
     location = TestBed.get(Location);
+    vouchersService = TestBed.get(VouchersService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -64,15 +67,16 @@ describe('CodeRedemptionComponent', () => {
     expect(component.previousStatus).toBe(VoucherState.issued);
   }));
 
-  it('should navigate to wallet', fakeAsync(()=>{
-    vouchersServiceStub.state.next({... mockVoucher, state: VoucherState.redeemed});
+  it('should navigate to wallet', fakeAsync(() => {
+    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.redeemed });
     tick();
     expect(location.path(false)).toBe('/wallet')
   }));
 
-  // it('should call redeemVoucher', ()=>{
-  //   const spy = spyOn(vouchersService, 'redeemVoucher');
-  //   component.redeem();
-  //   expect(spy).toHaveBeenCalled();
-  // })
+  it('should call redeemVoucher', fakeAsync(() => {
+    const spy = spyOn(vouchersService, 'redeemVoucher').and.returnValue(of(null));
+    component.redeem();
+    tick();
+    expect(spy).toHaveBeenCalled();
+  }));
 });
