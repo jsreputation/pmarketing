@@ -43,7 +43,7 @@ commands:
             fi
             if [ $TARGET_ENV == 'production' ]
             then
-              if [ $APP == 'hsbc' ]
+              if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards']
               then
                 echo 'export APIHOST="https://api-hsbc.perxtech.net"' >> $BASH_ENV
               else
