@@ -36,13 +36,13 @@ export class RewardsCardsComponent implements OnInit {
 
   public isComingSoon(validFromDate: Date): boolean {
     const currentDate = new Date();
-    const timeDifference = validFromDate.valueOf() - currentDate.valueOf();
+    const timeDifference = validFromDate.getTime() - currentDate.getTime();
     return timeDifference > 0;
   }
 
   public isExpiring(validToDate: Date): boolean {
     const currentDate = new Date();
-    const timeDifference = validToDate.valueOf() - currentDate.valueOf();
+    const timeDifference = validToDate.getTime() - currentDate.getTime();
     const differenceInHours = Math.abs(timeDifference / 1000 / 60 / 60);
 
     return differenceInHours <= 36;
