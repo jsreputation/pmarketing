@@ -8,7 +8,7 @@ Scenario: Successful creation of engagement game shake the tree - launch now
   And   27_I click on games button.
   And   27_I click on shake the tree.
   And   27_I click on the next button.
-  And   27_I type the string "Test - launch now"
+  And   27_I type the test string
   And   27_I press save button
   When  27_I press launch now button
   Then  27_Game is present under the engagment category .
