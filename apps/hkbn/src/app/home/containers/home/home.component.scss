@@ -2,6 +2,12 @@
 
 :host {
   background: $bg-color;
+
+  ::ng-deep {
+    .points {
+      color: #70A078;
+    }
+  }
 }
 
 .loyalty-section {
