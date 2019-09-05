@@ -43,6 +43,10 @@ export class VouchersComponent implements OnInit {
   constructor(private vouchersService: VouchersService) { }
 
   public ngOnInit(): void {
+    if (this.showRedeemedIcon && !this.mapping) {
+      console.error(`Error: 'mapping' is not defined`);
+    }
+
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll();
     }

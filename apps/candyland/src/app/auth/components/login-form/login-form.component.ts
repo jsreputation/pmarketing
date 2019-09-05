@@ -23,14 +23,9 @@ export class LoginFormComponent implements OnInit {
   public onSubmit(): void {
     if (this.formLogin.valid) {
       this.authService.signIn(this.formLogin.value)
-      .subscribe((res: Response) => {
-          if (res.status === 200) {
-            this.router.navigate(['/dashboard']);
-          }
-        },
-        error => {
-          alert('The email or password is incorrect! ' + error);
-        });
+      .subscribe(
+        () => this.router.navigate(['/dashboard/overview']),
+        (error: Error) => alert('The email or password is incorrect! ' + error.message));
     }
   }
 

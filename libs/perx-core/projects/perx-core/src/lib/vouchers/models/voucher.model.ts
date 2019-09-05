@@ -50,3 +50,7 @@ export interface IVoucher {
 export interface IGetVoucherParams {
   type: string;
 }
+
+export interface IRedeemOptions {
+  pin?: string;
+}

@@ -49,6 +49,6 @@ export class SideNavComponent {
   }
 
   public logout(): void {
-    this.authService.logOut();
+    this.authService.logout();
   }
 }

@@ -33,7 +33,7 @@ describe('CampaignService', () => {
   it('should get campaigns', (done: DoneFn) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
-        expect(campaigns.length).toBe(2);
+        expect(campaigns.length).toBe(0);
         done();
       });
 
@@ -41,7 +41,7 @@ describe('CampaignService', () => {
 
     expect(req.request.method).toEqual('GET');
 
-    req.flush({ data: [{}, {}], meta: {} });
+    req.flush({ data: [], meta: {} });
 
     httpTestingController.verify();
   });

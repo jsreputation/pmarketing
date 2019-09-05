@@ -26,16 +26,19 @@ export class RewardsCardsComponent implements OnInit {
     this.tapped.emit(reward);
   }
 
-  public getMacaron(validDateTo: string): string {
+  public isComingSoon(validFromDate: string): boolean {
     const currentDate = new Date().getTime();
-    const validTo = new Date(validDateTo);
+    const validFrom = new Date(validFromDate);
+    const timeDifference = validFrom.valueOf() - currentDate.valueOf();
+    return timeDifference > 0;
+  }
+
+  public isExpiring(validToDate: string): boolean {
+    const currentDate = new Date().getTime();
+    const validTo = new Date(validToDate);
     const timeDifference = validTo.valueOf() - currentDate.valueOf();
     const differenceInHours = Math.abs(timeDifference / 1000 / 60 / 60);
 
-    if (differenceInHours <= 36) {
-      return 'expiring';
-    }
-
-    return '';
+    return differenceInHours <= 36;
   }
 }

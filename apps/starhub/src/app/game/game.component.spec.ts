@@ -16,7 +16,7 @@ describe('GameComponent', () => {
   const routerStub = { navigate: () => ({}) };
 
   const gameServiceStub = {
-    get: () => of()
+    getGamesFromCampaign: () => of()
   };
   const locationStub = {
     back: () => {}
@@ -29,7 +29,7 @@ describe('GameComponent', () => {
       imports: [ MatIconModule, MatToolbarModule, GameModule ],
       providers: [
         { provide: Router, useValue: routerStub },
-        { provide: ActivatedRoute, useValue: { queryParams: of({ id: '1' }) } },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ campaignId: '1' }) } },
         { provide: GameService, useValue: gameServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
@@ -50,29 +50,31 @@ describe('GameComponent', () => {
 
   it('should get game id from route, call gameService onInit', fakeAsync(() => {
     const gameService = TestBed.get<GameService>(GameService as Type<GameService>);
-    const gameServiceSpy = spyOn(gameService, 'get').and.returnValue(
-      of({
-        id: 1,
-        campaignId: 1,
-        type: GameType.pinata,
-        remainingNumberOfTries: 3,
-        config: {
-          stillImg: null,
-          breakingImg: null,
-          brokenImg: null,
-          nbTaps: 3,
-        },
-        backgroundImg: null,
-        texts: {
-          title: null,
-          subTitle: null,
-          button: null,
-        },
-        results: {
-          outcome: null,
-          noOutcome: null
+    const gameServiceSpy = spyOn(gameService, 'getGamesFromCampaign').and.returnValue(
+      of([
+        {
+          id: 1,
+          campaignId: 1,
+          type: GameType.pinata,
+          remainingNumberOfTries: 3,
+          config: {
+            stillImg: null,
+            breakingImg: null,
+            brokenImg: null,
+            nbTaps: 3,
+          },
+          backgroundImg: null,
+          texts: {
+            title: null,
+            subTitle: null,
+            button: null,
+          },
+          results: {
+            outcome: null,
+            noOutcome: null
+          }
         }
-      })
+      ])
     );
     component.ngOnInit();
     tick();
@@ -109,6 +111,6 @@ describe('GameComponent', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.gameCompleted();
     tick(2000);
-    expect(routerSpy).toHaveBeenCalledWith(['/congrats']);
+    expect(routerSpy).toHaveBeenCalledWith([ '/congrats' ], { queryParams: Object({ gameId: undefined }) });
   }));
 });

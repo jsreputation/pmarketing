@@ -1,6 +1,6 @@
 <div class="main">
-  <app-reward-detail [rewardId]="rewardId" (hasExpired)="setToExpired($event)"></app-reward-detail>
-  <div class="button-area">
+  <app-reward-detail [rewardId]="rewardId" (hasExpired)="setToExpired($event)" (isRewardComingSoon)="setToComingSoon($event)"></app-reward-detail>
+  <div *ngIf="!isComingSoon && isRewardLoaded" class="button-area">
     <button [disabled]="isButtonDisabled" class="full-width" mat-flat-button color="primary" (click)="save()">Save to my rewards</button>
   </div>
 </div>
