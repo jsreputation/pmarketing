@@ -4,11 +4,11 @@ import { AuthService } from '@cl-core-services';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TokenService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private tokenService: TokenService, private authService: AuthService) {
+  constructor(private sessionService: SessionService, private authService: AuthService) {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
       setHeaders: {
         'Content-Type': 'application/vnd.api+json',
         'Access-Control-Allow-Origin': '*',
-        Authorization: this.tokenService.token || ''
+        Authorization: this.sessionService.token || ''
       }
     });
     return next.handle(authReq).pipe(catchError(this.handle401.bind(this)));
