@@ -66,6 +66,15 @@ app-header {
 
     p {
       text-align: center;
+      visibility: visible;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      &.hidden {
+        visibility: hidden;
+      }
     }
   }
 }
