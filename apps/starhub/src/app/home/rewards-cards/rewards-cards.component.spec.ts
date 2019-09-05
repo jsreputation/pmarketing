@@ -40,14 +40,14 @@ describe('RewardsCardsComponent', () => {
   describe('isComingSoon & expiring values', () => {
     it('should return true with isComingSoon', () => {
       const currentTime = new Date();
-      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 24hrs
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
       const comingSoonValue = component.isComingSoon(String(validDateTo));
       expect(comingSoonValue).toBe(true);
     });
 
     it('should return true with isExpiring', () => {
       const currentTime = new Date();
-      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 48hrs
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
       const result = component.isExpiring(String(validDateTo));
       expect(result).toBe(true);
     });

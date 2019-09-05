@@ -3,7 +3,7 @@
 		<img mat-card-image [src]="reward.rewardBanner">
 		<span *ngIf="isComingSoon(reward.validFrom) else expiringMacron" class="macaron coming-soon">Coming soon</span>
 		<ng-template #expiringMacron>
-			<span *ngIf="isExpiring(reward.validTo)" class="macaron expiring">expiring</span>		
+			<span *ngIf="isExpiring(reward.validTo)" class="macaron expiring">Expiring</span>		
 		</ng-template>
 	</div>
 	<mat-card-content>
