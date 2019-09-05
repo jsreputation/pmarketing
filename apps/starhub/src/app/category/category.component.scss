@@ -63,7 +63,8 @@ mat-toolbar {
     position: absolute;
     left: 0;
     bottom: 0;
-    overflow: hidden;
+    width: 100%;
+    text-align: center;
 
     img {
       max-width: 4rem;
