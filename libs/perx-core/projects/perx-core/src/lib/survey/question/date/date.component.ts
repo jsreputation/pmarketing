@@ -14,7 +14,9 @@ interface IPayloadDate {
   styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnChanges {
-  @ViewChild('dateInputToFocus', { static: false }) private dateInputToFocus: ElementRef;
+  @ViewChild('pickerInput', { static: false }) private pickerInput: ElementRef;
+  @ViewChild('pickerToInput', { static: false }) private pickerToInput: ElementRef;
+  @ViewChild('pickerFromInput', { static: false }) private pickerFromInput: ElementRef;
 
   @Input()
   public payload: IPayloadDate;
@@ -27,6 +29,10 @@ export class DateComponent implements OnChanges {
 
   public answer: string | IDateRange;
 
+  public ngOnInit(): void {
+    this.answer = this.answer || this.payload.duration ? { from: '', to: '' } : '';
+  }
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
       this.updateInput(this.answer);
@@ -35,11 +41,29 @@ export class DateComponent implements OnChanges {
 
   public openCalendar(picker: MatDatepicker<Date>): void {
     picker.open();
-    setTimeout(() => this.dateInputToFocus.nativeElement.focus());
+    setTimeout(() => this.pickerInput.nativeElement.focus());
   }
 
   public eventCloseHandler(): void {
-    setTimeout(() => this.dateInputToFocus.nativeElement.blur());
+    setTimeout(() => this.pickerInput.nativeElement.blur());
+  }
+
+  public openCalendarTo(picker: MatDatepicker<Date>): void {
+    picker.open();
+    setTimeout(() => this.pickerToInput.nativeElement.focus());
+  }
+
+  public eventCloseHandlerTo(): void {
+    setTimeout(() => this.pickerToInput.nativeElement.blur());
+  }
+
+  public openCalendarFrom(picker: MatDatepicker<Date>): void {
+    picker.open();
+    setTimeout(() => this.pickerFromInput.nativeElement.focus());
+  }
+
+  public eventCloseHandlerFrom(): void {
+    setTimeout(() => this.pickerFromInput.nativeElement.blur());
   }
 
   public updateInput(value: string | IDateRange): void {

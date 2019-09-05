@@ -22,7 +22,7 @@ export interface IQuestion {
     description?: string;
     required: boolean;
     payload: IPayload;
-    answer?: string | number | boolean;
+    answer?: string | number | boolean | IDateRange;
 }
 
 export interface ISurvey {
