@@ -41,6 +41,6 @@ export class UpdateEmailComponent implements OnInit {
           this.router.navigate(['/account']);
         }, (err) => {
           this.notification.addSnack(err);
-        })
+        });
   }
 }
