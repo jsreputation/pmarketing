@@ -1,19 +1,11 @@
 <mat-card
 	*ngFor="let reward of rewards | async"
-	matRipple (click)="selected(reward)"
-	perxLoopDirective
-	(loopItems)="getMacaron(reward)"
->
+	matRipple (click)="selected(reward)">
 	<div class="featured-image">
 		<img mat-card-image [src]="reward.rewardBanner">
-		<div *ngIf="showMacaron" class="macaron-container">
-			<span [ngClass]="macaronClass">{{macaronText}}</span>
+		<div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
+			<span [ngClass]="macaron.class">{{macaron.label}}</span>
 		</div>
-
-		<!-- <span *ngIf="reward.sellingFrom && isComingSoon(reward.sellingFrom) else expiringMacron" class="macaron coming-soon">Coming soon</span>
-		<ng-template #expiringMacron>
-			<span *ngIf="reward.validTo && isExpiring(reward.validTo)" class="macaron expiring">Expiring</span>
-		</ng-template> -->
 	</div>
 	<mat-card-content>
 		<div>

@@ -1,22 +1,12 @@
 @import "../../reward.scss";
-@import "../../mixins.scss";
+@import "../../macaron.scss";
 
 .macaron-container {
   text-align: center;
   padding: 1rem;
 }
 
-.just-added, .coming-soon {
-  @include macaron(#73c20e, #ffffff);
-}
-
-.expiring, .running-out {
-  @include macaron(#FFDB1B, #4d4d4c);
-}
-
-.expired, .fully-redeemed {
-  @include macaron(#ffffff, #4d4d4c);
-}
+@include macaronStyles();
 
 app-expire-timer,
 .phone-contact,

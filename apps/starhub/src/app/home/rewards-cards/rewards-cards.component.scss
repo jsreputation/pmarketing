@@ -1,5 +1,5 @@
-@import '../cards';
-@import '../../mixins.scss';
+@import "../cards";
+@import "../../macaron.scss";
 
 .featured-image {
   position: relative;
@@ -14,15 +14,5 @@
     text-transform: capitalize;
   }
 
-  .just-added, .coming-soon {
-    @include macaron(#73c20e, #ffffff);
-  }
-
-  .expiring, .running-out {
-    @include macaron(#FFDB1B, #4d4d4c);
-  }
-
-  .expired, .fully-redeemed {
-    @include macaron(#ffffff, #4d4d4c);
-  }
+  @include macaronStyles();
 }

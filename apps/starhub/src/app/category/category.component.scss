@@ -1,4 +1,5 @@
-@import '../toolbar.scss';
+@import "../toolbar.scss";
+@import "../macaron.scss";
 
 mat-toolbar {
   @include toolbar;
@@ -27,7 +28,7 @@ mat-toolbar {
 .content {
   height: 100%;
   overflow-y: scroll;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding: 0 1.5rem;
 
   h1.catergory-title {
@@ -91,7 +92,7 @@ mat-toolbar {
     }
   }
 
-  span.macaron {
+  .macaron-container {
     position: absolute;
     top: 0;
     right: 0;
@@ -99,15 +100,7 @@ mat-toolbar {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
     text-transform: capitalize;
-  }
 
-  .expiring {
-    background-color: #ffdb1b;
-    color: #4d4d4c;
-  }
-
-  .just-added {
-    background-color: #73c20e;
-    color: #ffffff;
+    @include macaronStyles();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
-import { MacaronService } from '../../services/macaron.service';
+import { MacaronService, IMacaron } from '../../services/macaron.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -11,10 +11,6 @@ import { map } from 'rxjs/operators';
 })
 export class RewardsCardsComponent implements OnInit {
   public rewards: Observable<IReward[]>;
-  public macaronText: string;
-  public macaronClass: string;
-  public rewardBalance: number | null;
-  public showMacaron: boolean = false;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -36,15 +32,8 @@ export class RewardsCardsComponent implements OnInit {
       );
   }
 
-  public getMacaron(reward: IReward): void {
-    const macaron = this.macaronService.getMacaron(reward);
-    if (macaron === null) {
-      return;
-    }
-    this.macaronText = macaron.label;
-    this.macaronClass = macaron.class;
-    this.rewardBalance = macaron.rewardBalance || null;
-    this.showMacaron = true;
+  public getMacaron(reward: IReward): IMacaron | null {
+    return this.macaronService.getMacaron(reward);
   }
 
   public selected(reward: IReward): void {
