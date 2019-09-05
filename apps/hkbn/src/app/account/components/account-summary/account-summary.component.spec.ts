@@ -14,7 +14,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { IProfile } from '@perx/core';
 
-const accountDataStud: IProfile = {
+const accountDataStub: IProfile = {
   id: 0,
   firstName: 'Temp',
   state: 'issued',
@@ -56,9 +56,9 @@ describe('AccountSummaryComponent', () => {
 
   it('should path accountsummary', fakeAsync(() => {
     const spy = spyOn(component.accountSummary, 'patchValue');
-    component.accountData = accountDataStud;
+    component.accountData = accountDataStub;
     component.ngOnChanges();
     tick();
-    expect(spy).toHaveBeenCalledWith(accountDataStud);
+    expect(spy).toHaveBeenCalledWith(accountDataStub);
   }));
 });

@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
 import { HttpRequest, HttpHandler, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppComponent } from '../app.component';
 
-const authenticationServiceStud = {
+const authenticationServiceStub = {
     logout: (): void => { }
 };
 
@@ -27,7 +27,7 @@ describe('UnauthorizedInterceptor', () => {
             ],
             providers: [
                 UnauthorizedInterceptor,
-                { provide: AuthenticationService, useValue: authenticationServiceStud }
+                { provide: AuthenticationService, useValue: authenticationServiceStub }
             ]
         });
     }));

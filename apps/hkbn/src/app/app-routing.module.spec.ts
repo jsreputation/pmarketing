@@ -17,10 +17,10 @@ import { CodeRedemptionModule } from './wallet/code-redemption/code-redemption.m
 import { RewardModule } from './reward/reward.module';
 import { AccountModule } from './account/account.module';
 
-const NotificationWrapperServiceStud = {
+const NotificationWrapperServiceStub = {
     addPopup: () => { }
 };
-const translateServiceStud = {
+const translateServiceStub = {
     defaultLang: null,
     setDefaultLang(leng: string): void { this.defaultLang = leng; },
     get: (str) => of(str instanceof Array ? str.reduce((ac, next) => {
@@ -54,8 +54,8 @@ describe('AppRoutingModule', () => {
                 ])
             ],
             providers: [
-                { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStud },
-                { provide: TranslateService, useValue: translateServiceStud },
+                { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub },
+                { provide: TranslateService, useValue: translateServiceStub },
                 { provide: VouchersService, useValue: vouchersServiceStub }
             ]
         });

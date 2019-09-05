@@ -11,7 +11,7 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
 import { VoucherState } from '@perx/core';
 import { Location } from '@angular/common';
 
-const NotificationWrapperServiceStud = {
+const NotificationWrapperServiceStub = {
   addPopup: () => { }
 };
 
@@ -42,7 +42,7 @@ describe('CodeRedemptionComponent', () => {
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub },
-        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStud }
+        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub }
       ],
       declarations: [CodeRedemptionComponent]
     })

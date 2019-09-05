@@ -6,7 +6,7 @@ import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, flatMap, finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
-const studTabs: ITabConfigExtended[] = [
+const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
     // todo: service not implemented yet
     // this.rewardsService.getTags()
     // JSON parese and stringify for creating complitly new object - important for test
-    this.staticTab = JSON.parse(JSON.stringify(studTabs));
+    this.staticTab = JSON.parse(JSON.stringify(stubTabs));
     this.tabs$.next(this.staticTab);
     return of(this.staticTab);
   }

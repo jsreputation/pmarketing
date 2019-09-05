@@ -11,7 +11,7 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-const NotificationWrapperServiceStud = {
+const NotificationWrapperServiceStub = {
   addPopup: () => { }
 };
 
@@ -41,7 +41,7 @@ describe('QrRedemptionComponent', () => {
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub },
-        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStud }
+        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub }
       ],
       declarations: [QrRedemptionComponent]
     })

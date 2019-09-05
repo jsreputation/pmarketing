@@ -6,7 +6,7 @@ import { ApplicationInitStatus, APP_INITIALIZER } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
 
-const translateServiceStud = {
+const translateServiceStub = {
     defaultLang: null,
     setDefaultLang(leng: string): void { this.defaultLang = leng; }
 };
@@ -15,7 +15,7 @@ describe('AppModule', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                { provide: TranslateService, useValue: translateServiceStud },
+                { provide: TranslateService, useValue: translateServiceStub },
                 AppComponent,
                 { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
             ],
