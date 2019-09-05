@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { IReward, RewardsService, ICatalog } from '@perx/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
@@ -7,6 +7,7 @@ import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category
 import { Observable } from 'rxjs';
 import { SortingMode } from './category.model';
 import { map } from 'rxjs/operators';
+import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-category',
@@ -19,13 +20,16 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
   public selectedCategory: string;
   public selectedSortingCraeteria: SortingMode = SortingMode.latest;
+  public showToolbarTitle: boolean = false;
 
   constructor(
     private router: Router,
     private bottomSheet: MatBottomSheet,
     private rewardsService: RewardsService,
-    private activeRoute: ActivatedRoute
-  ) {}
+    private activeRoute: ActivatedRoute,
+    private scrollDispatcher: ScrollDispatcher,
+    private zone: NgZone
+  ) { }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
@@ -41,6 +45,19 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
           })
         );
     }
+    this.scrollDispatcher.scrolled().subscribe((cdkScrollable: CdkScrollable) => {
+      this.checkScrolledPosition(cdkScrollable.getElementRef().nativeElement.scrollTop);
+    });
+  }
+
+  private checkScrolledPosition(scrollValue: number): void {
+    this.zone.run(() => {
+      if (scrollValue >= 50) {
+        this.showToolbarTitle = true;
+      } else {
+        this.showToolbarTitle = false;
+      }
+    });
   }
 
   private fetchRewards(): void {
