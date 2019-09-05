@@ -14,34 +14,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
-      enableProbability: true,
+      enableProbability: false,
       rewards: [
-        {
-          value: null,
-          probability: 5
-        },
-        {
-          value: {
-            id: 1,
-            image: 'assets/images/mask-group.png',
-            name: 'Free Coffee',
-            type: 'Starbucks',
-            current: 500,
-            total: 1000
-          },
-          probability: 20
-        },
-        {
-          value: {
-            id: 2,
-            image: 'assets/images/mask-group.png',
-            name: 'Free Coffee 2',
-            type: 'Starbucks',
-            current: 500,
-            total: 800
-          },
-          probability: 43
-        }
       ]
     }
   };

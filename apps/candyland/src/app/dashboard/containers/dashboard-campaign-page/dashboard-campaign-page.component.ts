@@ -42,17 +42,18 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   }
 
   private handelChartsParamsChanges(): void {
-    this.chartsParametersService.params$.pipe(
-      untilDestroyed(this)
-    ).subscribe(value => {
-      this.params = value;
-      this.cd.detectChanges();
-    });
+    this.chartsParametersService.params$
+      .pipe(untilDestroyed(this))
+      .subscribe(value => {
+        this.params = value;
+        this.cd.detectChanges();
+      });
   }
 
   private initTabs(): void {
     this.dashboardService.getDashboardCampaignsTabs()
       .pipe(
+        untilDestroyed(this),
         tap(res => this.activeTab = res[0]),
         tap(res => this.tabs = res),
         map(res => res.map(item => item.id)),
@@ -70,6 +71,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
     return idArray.map(id =>
       this.dataService.getData(id, this.params)
         .pipe(
+          untilDestroyed(this),
           map(response => response.rows[0][0])
         )
     );

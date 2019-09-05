@@ -36,7 +36,8 @@ export class NewCampaignDetailFormService {
       }),
       audience: this.fb.group({
         type: ['none'],
-        file: []
+        file: [],
+        select: []
       })
     });
   }
@@ -63,6 +64,10 @@ export class NewCampaignDetailFormService {
       {
         condition: form.get('audience.type').value === 'upload',
         controls: [form.get('audience.file')]
+      },
+      {
+        condition: form.get('audience.type').value === 'select',
+        controls: [form.get('audience.select')]
       }
     ];
   }

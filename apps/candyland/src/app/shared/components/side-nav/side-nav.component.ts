@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
+import { AuthService } from '@cl-core-services';
 
 export function fnTransition(stateChangeExpr, time): any {
   return transition(stateChangeExpr, [
@@ -36,6 +37,7 @@ export function fnTransition(stateChangeExpr, time): any {
   ]
 })
 export class SideNavComponent {
+  constructor(private authService: AuthService) { }
   @Input() public isVisible = true;
   public isOpen = true;
   public visibility = 'shown';
@@ -46,4 +48,7 @@ export class SideNavComponent {
     this.isOpen = !this.isOpen;
   }
 
+  public logout(): void {
+    this.authService.logout();
+  }
 }

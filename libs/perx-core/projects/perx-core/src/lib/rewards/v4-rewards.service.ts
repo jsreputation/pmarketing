@@ -141,7 +141,7 @@ export class V4RewardsService extends RewardsService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
-    const merchantImg = reward[`merchantImg`] ? reward[`merchantImg`] : null;
+    const merchantImg = reward[`merchant_logo_url`] ? reward[`merchant_logo_url`] : null;
 
     return {
       id: reward.id,

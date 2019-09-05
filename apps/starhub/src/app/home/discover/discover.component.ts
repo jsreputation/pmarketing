@@ -23,6 +23,6 @@ export class DiscoverComponent {
   }
 
   public campaignSelected(campaign: ICampaign): void {
-    this.router.navigate(['/game'], { queryParams: {id: campaign.id} });
+    this.router.navigate(['/game'], { queryParams: {campaignId: campaign.id} });
   }
 }

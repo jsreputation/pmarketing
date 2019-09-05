@@ -11,7 +11,8 @@ import { MainContainerComponent } from './main-container/main-container.componen
 import { SideNavModule } from './shared/components/side-nav/side-nav.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
-
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { SessionService } from '@cl-core/services/token.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,8 @@ import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
     MatNativeDateModule,
   ],
   providers: [
+    LocalStorageService,
+    SessionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { IReward, RewardsService, ICatalog } from '@perx/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { CategorySelectComponent, CategoryBottomSheetClosedCallBack } from './category-select/category-select.component';
 import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category-sort/category-sort.component';
 import { Observable } from 'rxjs';
-import { CategoryMode, SortingMode } from './category.model';
+import { SortingMode } from './category.model';
 import { map } from 'rxjs/operators';
+import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-category',
@@ -15,27 +16,27 @@ import { map } from 'rxjs/operators';
 })
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
 
-  private currentMode: CategoryMode;
   public rewards: Observable<IReward[]>;
 
   public selectedCategory: string;
   public selectedSortingCraeteria: SortingMode = SortingMode.latest;
+  public showToolbarTitle: boolean = false;
 
   constructor(
     private router: Router,
     private bottomSheet: MatBottomSheet,
     private rewardsService: RewardsService,
-    private activeRoute: ActivatedRoute
-  ) {}
+    private activeRoute: ActivatedRoute,
+    private scrollDispatcher: ScrollDispatcher,
+    private zone: NgZone
+  ) { }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
-          this.currentMode = CategoryMode.reward;
           this.selectedCategory = categoryName;
           this.fetchRewards();
     } else {
-        this.currentMode = CategoryMode.catalog;
         const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
         this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
           map((catalog: ICatalog) => {
@@ -44,6 +45,19 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
           })
         );
     }
+    this.scrollDispatcher.scrolled().subscribe((cdkScrollable: CdkScrollable) => {
+      this.checkScrolledPosition(cdkScrollable.getElementRef().nativeElement.scrollTop);
+    });
+  }
+
+  private checkScrolledPosition(scrollValue: number): void {
+    this.zone.run(() => {
+      if (scrollValue >= 50) {
+        this.showToolbarTitle = true;
+      } else {
+        this.showToolbarTitle = false;
+      }
+    });
   }
 
   private fetchRewards(): void {
@@ -70,10 +84,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   // CategoryBottomSheetClosedCallBack methods
 
   public categorySelectedCallback(updatedValue: string): void {
-    if (this.currentMode === CategoryMode.reward) {
-      this.selectedCategory = updatedValue;
-      this.fetchRewards();
-    }
+    this.selectedCategory = updatedValue;
+    this.fetchRewards();
   }
 
   public getCurrentSelectedCategory(): string {

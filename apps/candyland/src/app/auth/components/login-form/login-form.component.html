@@ -10,26 +10,22 @@
   >
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="accountId" placeholder="Account ID">
+        <input matInput formControlName="tenant_id" placeholder="Account ID">
         <mat-error *ngIf="accountId.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="accountId.hasError('minlength')">Min length 15</mat-error>
-        <mat-error *ngIf="accountId.hasError('maxlength')">Max length 50</mat-error>
+        <mat-error *ngIf="accountId.hasError('minlength')">Min length 1</mat-error>
+        <mat-error *ngIf="accountId.hasError('pattern')">Only numbers</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="email" placeholder="Email Address">
-        <mat-error *ngIf="email.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="email.hasError('minlength')">Min length 15</mat-error>
-        <mat-error *ngIf="email.hasError('maxlength')">Max length 50</mat-error>
+        <input matInput formControlName="username" placeholder="Username">
+        <mat-error *ngIf="username.hasError('required')">Required field</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="password" placeholder="Password" [type]="hide ? 'password' : 'text'">
         <mat-error *ngIf="password.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="password.hasError('minlength')">Min length 15</mat-error>
-        <mat-error *ngIf="password.hasError('maxlength')">Max length 50</mat-error>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
     </div>

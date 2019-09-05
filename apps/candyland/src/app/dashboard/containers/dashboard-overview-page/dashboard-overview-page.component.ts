@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services';
 import { DataService } from '@perx/chart';
@@ -16,7 +16,7 @@ export enum DictionaryTotal {
   selector: 'cl-dashboard-overview-page',
   templateUrl: './dashboard-overview-page.component.html',
   styleUrls: ['./dashboard-overview-page.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
@@ -63,9 +63,11 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   }
 
   private addTabsValue(requestArray$: Observable<number | string>[]): void {
-    combineLatest(requestArray$).subscribe((data: number[]) => {
-      this.dashboardData.forEach((item, index) => item.value = data[index]);
-    });
+    combineLatest(requestArray$)
+      .pipe(untilDestroyed(this))
+      .subscribe((data: number[]) => {
+        this.dashboardData.forEach((item, index) => item.value = data[index]);
+      });
   }
 
   public selectedTab(tab): void {
@@ -75,6 +77,7 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   private getTotalActive(): void {
     this.dashboardService.getTotalActive()
       .pipe(
+        untilDestroyed(this),
         tap(res => this.activeTab = res[0].name),
         map((res) => {
           return res.map(item => {
