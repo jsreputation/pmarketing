@@ -1,12 +1,12 @@
 <div class="container">
-  <ng-container *ngIf="profile$ | async as profile">
+  <ng-container *ngIf="profile$ | async as profile; else elseBlockProfile">
     <div class="welcome-text">
       <ng-container>
         {{titleFn(profile)}}
       </ng-container>
     </div>
   </ng-container>
-  <ng-container *ngIf="loyalty$ | async as loyalty">
+  <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
     <div class="points">
       {{loyalty.pointsBalance.toLocaleString('en-sg')}}
     </div>
@@ -19,4 +19,13 @@
       {{summaryExpiringFn(loyalty)}}
     </div>
   </ng-container>
+
+  <ng-template #elseBlockProfile>
+    <div class="welcome-text ghost"></div>
+  </ng-template>
+
+  <ng-template #elseBlockLoyalty>
+    <div class="points ghost"></div>
+    <div class="expiring-points ghost"></div>
+  </ng-template>
 </div>

@@ -38,9 +38,17 @@ mat-toolbar {
       .details {
         flex: 1;
 
-        h1, h2 {
+        h1 {
+          font-size: 2rem;
+          font-weight: normal;
           margin: 0;
+          color: #666666;
+        }
+
+        h2 {
           font-size: 1.6rem;
+          font-weight: normal;
+          margin: 0;
           color: #666666;
         }
       }
