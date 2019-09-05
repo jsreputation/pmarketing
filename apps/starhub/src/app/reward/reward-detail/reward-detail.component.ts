@@ -35,11 +35,11 @@ export class RewardDetailComponent implements OnInit {
 
   public reward: IReward;
 
- constructor(
+  constructor(
     private location: Location,
     private rewardsService: RewardsService,
     private macaronService: MacaronService
-    ) {}
+  ) { }
 
   public ngOnInit(): void {
     if (!this.rewardId) {
@@ -57,7 +57,7 @@ export class RewardDetailComponent implements OnInit {
         }
 
         this.isButtonEnabled.emit(this.macaron.isButtonEnabled);
-    });
+      });
   }
 
   public setToExpired(): void {
@@ -66,6 +66,9 @@ export class RewardDetailComponent implements OnInit {
         this.showMacaron = true;
         this.hasExpired.emit(true);
         this.isExpired = true;
+        if (this.macaron === null) {
+          this.macaron = { label: '', class: '', isButtonEnabled: false };
+        }
         this.macaron.label = 'Expired';
       }
     );
@@ -75,6 +78,9 @@ export class RewardDetailComponent implements OnInit {
     setTimeout(
       () => {
         this.showMacaron = true;
+        if (this.macaron === null) {
+          this.macaron = { label: '', class: '', isButtonEnabled: false };
+        }
         this.macaron.label = 'Expiring';
       }
     );

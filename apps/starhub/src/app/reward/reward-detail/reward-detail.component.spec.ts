@@ -108,7 +108,7 @@ describe('RewardDetailComponent', () => {
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(component.reward).toBe(expiringReward);
-      expect(component.macaronText).toBe('Expiring');
+      expect(component.macaron.label).toBe('Expiring');
       expect(component.isExpired).toBe(false);
       expect(component.showMacaron).toBe(true);
     }));
@@ -143,7 +143,7 @@ describe('RewardDetailComponent', () => {
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(component.reward).toBe(expiringReward);
-      expect(component.macaronText).toBe('Expired');
+      expect(component.macaron.label).toBe('Expired');
       expect(component.isExpired).toBe(true);
       expect(emitSpy).toHaveBeenCalledWith(true);
     }));
