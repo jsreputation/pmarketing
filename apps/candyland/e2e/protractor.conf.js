@@ -7,6 +7,10 @@
  * @type { import("protractor").Config }
  */
 exports.config = {
+  plugins: [{
+    path: require.resolve('protractor-console'),
+    logLevels: ['debug','info']
+  }],
   allScriptsTimeout: 30000,
   specs: [
     './src/features/**/*.feature'
