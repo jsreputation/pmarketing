@@ -34,7 +34,7 @@ describe('AppModule', () => {
     }));
 
     it('should set default laguage', inject([TranslateService], (translateService: TranslateService) => {
-        const defLang = environment.defaultLang || 'en'
+        const defLang = environment.defaultLang || 'en';
         expect(translateService.defaultLang).toBe(defLang);
     }));
 });
