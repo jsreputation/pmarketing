@@ -32,9 +32,10 @@ h1 {
 }
 
 .mat-card-header {
-  vertical-align: middle;
   align-items: center;
   flex: 1;
+  width: 18rem;
+  display: block;
 
   .mat-card-subtitle.less-three-days {
     color: #D8127D;
