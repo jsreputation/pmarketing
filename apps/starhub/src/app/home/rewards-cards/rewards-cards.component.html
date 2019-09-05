@@ -1,9 +1,9 @@
 <mat-card *ngFor="let reward of rewards | async" matRipple (click)="selected(reward)">
 	<div class="featured-image">
 		<img mat-card-image [src]="reward.rewardBanner">
-		<span *ngIf="isComingSoon(reward.validFrom) else expiringMacron" class="macaron coming-soon">Coming soon</span>
+		<span *ngIf="reward.sellingFrom && isComingSoon(reward.sellingFrom) else expiringMacron" class="macaron coming-soon">Coming soon</span>
 		<ng-template #expiringMacron>
-			<span *ngIf="isExpiring(reward.validTo)" class="macaron expiring">Expiring</span>		
+			<span *ngIf="reward.validTo && isExpiring(reward.validTo)" class="macaron expiring">Expiring</span>		
 		</ng-template>
 	</div>
 	<mat-card-content>
