@@ -5,9 +5,9 @@
         <mat-icon>arrow_backward</mat-icon>
       </button>
       <img *ngIf="showBannerImage" class="banner" [src]="reward.rewardBanner">
-      <div class="badge">
-          <img [src]="reward.merchantImg">
-        </div>
+      <div class="badge" *ngIf="reward.merchantImg">
+        <img [src]="reward.merchantImg">
+      </div>
     </div>
 
     <div class="container">
@@ -18,7 +18,8 @@
           <span class="expiring">{{macaronText}}</span>
         </div>
         <div *ngIf="!isExpired">
-			<app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()"></app-expire-timer>
+          <app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()">
+          </app-expire-timer>
         </div>
       </div>
 
