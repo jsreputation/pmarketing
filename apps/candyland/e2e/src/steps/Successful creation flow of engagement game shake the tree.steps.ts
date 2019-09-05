@@ -8,7 +8,7 @@ import * as moment from 'moment';
 let PageEngagement: EngagementAppPage;
 
 // Getting the current day, month , year
-const now = moment().format('LLLL');
+const now = moment().format();
 
 Before( () => {
   // initializing page objects instances
@@ -16,6 +16,7 @@ Before( () => {
   // PageShakeTheTree = new CreateShakeTheTreeAppPage();
 
 });
+
 // Successful creation of engagement game shake the tree - launch now
 Given(/^27_I am on the engagment page.$/, async () => {
   await PageEngagement.navigateToEngagement();
@@ -47,13 +48,11 @@ Given(/^27_I type the test string$/, async () => {
 Given(/^27_I press save button$/, async () => {
   // clicking on the save button
   await element(by.css('button.btn.mat-flat-button.primary')).click();
-  // await browser.sleep(10000);
 });
 
 When(/^27_I press launch now button$/, async () => {
   // clicking on the launch now button
   await element.all(by.css('button.btn.mat-flat-button.primary')).last().click();
-  // await browser.sleep(30000);
 });
 
 Then(/^27_Game is present under the engagment category .$/, async () => {
@@ -65,55 +64,53 @@ Then(/^27_Game is present under the engagment category .$/, async () => {
   await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
   expect(await element.all(by.css('p.engagement-item-date')).first().
   getText()).to.equal(moment(now).format('DD MMM YYYY'));
-  // moment(now).format('DD MMM YYYY');
 });
 
-/*Given('{int}_I am on the engagment page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
+// Successful creation of engagement game shake the tree - launch later
+Given(/^28_I am on the engagment page.$/, async () => {
+  await PageEngagement.navigateToEngagement();
+  await browser.sleep(3000);
+});
+
+Given(/^28_I click on create new button.$/, async () => {
+  await element.all(by.css('button')).get(2).click();
+});
+
+Given(/^28_I click on games button.$/, async () => {
+  await element.all(by.tagName('cl-type-item')).get(1).click();
+});
+
+Given(/^28_I click on shake the tree.$/, () => {});
+
+Given(/^28_I click on the next button.$/, async () => {
+  await element.all(by.className('btn mat-flat-button primary')).get(1).click();
+});
+
+Given(/^28_I type the test string$/, async () => {
+  await element(by.css('input#mat-input-1')).clear();
+  await element(by.css('input#mat-input-1')).sendKeys('Test - launch later');
+});
+
+Given(/^28_I press save button$/, async () => {
+  await element(by.css('button.btn.mat-flat-button.primary')).click();
          });
 
-Given('{int}_I click on create new button.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^28_I press launch later button$/, async () => {
+  await element(by.css('cl-button.actions-close')).click();
+});
 
-Given('{int}_I click on games button.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^28_Game is present under the engagment category .$/, async () => {
+  // Verifying that the latest card has the correct item name
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-name')).first()), 5000);
+  expect(await element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first().getText()).to.contain('Test - launch later');
+  // Verifying the current date of transaction
+  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
+  expect(await element.all(by.css('p.engagement-item-date')).first().
+  getText()).to.equal(moment(now).format('DD MMM YYYY'));
+});
 
-Given('{int}_I click on shake the tree.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Given('{int}_I click on the next button.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Given('{int}_I type the string {string}', function(int, string) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Given('{int}_I press save button', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-When('{int}_I press launch later button', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Then('{int}_Game is present under the engagment category .', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-When('{int}_I press the save button', function(int) {
+/*When('{int}_I press the save button', function(int) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });

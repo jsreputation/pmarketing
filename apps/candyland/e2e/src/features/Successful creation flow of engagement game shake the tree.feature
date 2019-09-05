@@ -19,7 +19,7 @@ Scenario: Successful creation of engagement game shake the tree - launch later
   And   28_I click on games button.
   And   28_I click on shake the tree.
   And   28_I click on the next button.
-  And   28_I type the string "Test - launch later"
+  And   28_I type the test string
   And   28_I press save button
   When  28_I press launch later button
   Then  28_Game is present under the engagment category .
