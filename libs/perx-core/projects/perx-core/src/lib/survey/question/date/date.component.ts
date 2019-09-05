@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { MatDatepicker } from '@angular/material';
-import { IAnswer } from '../../models/survey.model';
+import { IAnswer, IDateRange } from '../../models/survey.model';
 
 interface IPayloadDate {
   type: string;
+  duration: boolean;
   period?: boolean;
 }
 
@@ -24,7 +25,7 @@ export class DateComponent implements OnChanges {
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
-  public answer: string;
+  public answer: string | IDateRange;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
@@ -41,8 +42,20 @@ export class DateComponent implements OnChanges {
     setTimeout(() => this.dateInputToFocus.nativeElement.blur());
   }
 
-  public updateInput(value: string): void {
+  public updateInput(value: string | IDateRange): void {
     this.answer = value;
     this.updateAnswers.emit({ content: value });
+  }
+
+  public updateInputFrom(value: string): void {
+    const newAnswer = Object.assign(this.answer, { from: value });
+    this.answer = newAnswer;
+    this.updateAnswers.emit({ content: this.answer });
+  }
+
+  public updateInputTo(value: string): void {
+    const newAnswer = Object.assign(this.answer, { to: value });
+    this.answer = newAnswer;
+    this.updateAnswers.emit({ content: this.answer });
   }
 }

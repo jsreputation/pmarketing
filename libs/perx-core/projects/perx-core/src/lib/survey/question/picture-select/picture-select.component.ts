@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 
 interface IPayloadPictureSelect {
   type: string;
+  multiple: boolean;
   choices: IPictureChoice[];
 }
 

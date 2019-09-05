@@ -3,6 +3,7 @@ import { IAnswer } from '../../models/survey.model';
 
 interface IPayloadSelect {
   type: string;
+  multiple: boolean;
   choices: string[];
 }
 

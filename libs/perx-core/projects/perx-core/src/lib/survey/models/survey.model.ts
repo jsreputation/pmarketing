@@ -1,11 +1,16 @@
 export interface IAnswer {
     question_id?: string;
-    content: number | string | boolean;
+    content: number | string | boolean | IDateRange;
 }
 
 export interface IPoints {
     question_id?: string;
     point: number;
+}
+
+export interface IDateRange {
+    from: string;
+    to: string;
 }
 export interface ITracker {
     [key: string]: any;
