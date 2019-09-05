@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rewards-cards',
@@ -19,24 +20,29 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewards = this.rewardsService.getAllRewards(['featured']);
+    this.rewards = this.rewardsService.getAllRewards(['featured'])
+      .pipe(
+        map((rewards: IReward[]) => rewards.sort((a: IReward, b: IReward) => {
+          if (!a.sellingFrom) { return 1; }
+          if (!b.sellingFrom) { return -1; }
+          return a.sellingFrom.getTime() - b.sellingFrom.getTime();
+        }))
+      );
   }
 
   public selected(reward: IReward): void {
     this.tapped.emit(reward);
   }
 
-  public isComingSoon(validFromDate: string): boolean {
-    const currentDate = new Date().getTime();
-    const validFrom = new Date(validFromDate);
-    const timeDifference = validFrom.valueOf() - currentDate.valueOf();
+  public isComingSoon(validFromDate: Date): boolean {
+    const currentDate = new Date();
+    const timeDifference = validFromDate.valueOf() - currentDate.valueOf();
     return timeDifference > 0;
   }
 
-  public isExpiring(validToDate: string): boolean {
-    const currentDate = new Date().getTime();
-    const validTo = new Date(validToDate);
-    const timeDifference = validTo.valueOf() - currentDate.valueOf();
+  public isExpiring(validToDate: Date): boolean {
+    const currentDate = new Date();
+    const timeDifference = validToDate.valueOf() - currentDate.valueOf();
     const differenceInHours = Math.abs(timeDifference / 1000 / 60 / 60);
 
     return differenceInHours <= 36;
