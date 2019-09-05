@@ -39,7 +39,12 @@
         </div>
         <div class="lower-section mat-elevation-z2">
           <div [ngClass]="'lower-section ' + voucher.state">
-            <app-reward-detail [rewardId]="voucher.rewardId" [showBackButton]="false" [showBannerImage]="false"></app-reward-detail>
+            <app-reward-detail
+              [rewardId]="voucher.rewardId"
+              [showBackButton]="false"
+              [showBannerImage]="false"
+              [className]="'voucher'"
+            ></app-reward-detail>
           </div>
           <mat-divider></mat-divider>
           <div class="action">
