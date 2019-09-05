@@ -28,6 +28,7 @@ export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject();
   public ngAfterViewInit(): void {
     this.handleSorting();
+    console.log(this.dataSource);
   }
 
   public manageList(id: number): void {
@@ -35,7 +36,7 @@ export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
   }
 
   public deactivateItem(id: number): void {
-    this.clickManageList.emit(id);
+    console.log('Deactivate user with id: ', id);
   }
 
   public handleSorting(): void {
