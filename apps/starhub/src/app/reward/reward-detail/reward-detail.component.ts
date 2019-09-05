@@ -15,6 +15,9 @@ export class RewardDetailComponent implements OnInit {
   @Output()
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Output()
+  public isRewardComingSoon: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   @Input()
   public rewardId: number;
 
@@ -42,6 +45,9 @@ export class RewardDetailComponent implements OnInit {
     this.rewardsService.getReward(this.rewardId)
       .subscribe((reward: IReward) => {
         this.reward = reward;
+        this.showMacaron = this.isComingSoon(reward.validFrom);
+        this.macaronText = 'Coming soon';
+        this.isRewardComingSoon.emit(this.showMacaron);
     });
   }
 
@@ -67,5 +73,12 @@ export class RewardDetailComponent implements OnInit {
 
   public back(): void {
     this.location.back();
+  }
+
+  public isComingSoon(validFromDate: Date): boolean {
+    const currentDate = new Date().getTime();
+    const validFrom = new Date(validFromDate);
+    const timeDifference = validFrom.valueOf() - currentDate.valueOf();
+    return timeDifference > 0;
   }
 }
