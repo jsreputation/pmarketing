@@ -36,9 +36,12 @@ a {
 
 .active-link .active {
   display: block;
-  color: red;
 }
 
 .active-link .no-active {
   display: none;
+}
+
+.active-link .title {
+  color: red;
 }
