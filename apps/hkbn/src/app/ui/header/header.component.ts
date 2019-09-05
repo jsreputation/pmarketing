@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
 import { MatSidenavContainer } from '@angular/material';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hkbn-header',
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private location: Location
   ) {
   }
 
@@ -53,10 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.events.subscribe(() => this.navContainer.close());
   }
   public goBack(): void {
-    if (this.routeData && (this.routeData.back || this.routeData.cross)) {
-      const url = this.routeData.backUrl ? this.routeData.backUrl : '';
-      this.router.navigate([url], { relativeTo: this.currentRoute });
-    }
+    this.location.back();
   }
 
   public logout(): void {
