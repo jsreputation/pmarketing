@@ -13,9 +13,13 @@
 
   &-redeem {
     width: calc(100% - 3.2rem);
-    margin: auto 0 4.5rem;
-    border-color: $primary;
+    border: 1px solid $primary;
     color: $primary;
     height: 4.4rem;
+    position: absolute;
+    bottom: 4.5rem;
+    font-size: 1.4rem;
+    border-radius: 0.4rem;
+    background: $white;
   }
 }

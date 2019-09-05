@@ -13,11 +13,13 @@
 
   &-cancel {
     width: calc(100% - 3.2rem);
-    margin: auto 0 8.5rem;
-    border-color: $text-green;
+    border: 1px solid $text-green;
     color: $text-green;
     height: 4.4rem;
     position: absolute;
-    bottom: 0;
+    bottom: 8.5rem;
+    font-size: 1.4rem;
+    border-radius: 0.4rem;
+    background: $white;
   }
 }
