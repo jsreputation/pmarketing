@@ -72,14 +72,16 @@ export class DateComponent implements OnChanges {
   }
 
   public updateInputFrom(value: string): void {
-    const newAnswer = Object.assign(this.answer, { from: value });
-    this.answer = newAnswer;
-    this.updateAnswers.emit({ content: this.answer });
+    this.answer = Object.assign(this.answer, { from: value });
+    if (this.answer[`from`] && this.answer[`to`]) {
+      this.updateAnswers.emit({ content: this.answer });
+    }
   }
 
   public updateInputTo(value: string): void {
-    const newAnswer = Object.assign(this.answer, { to: value });
-    this.answer = newAnswer;
-    this.updateAnswers.emit({ content: this.answer });
+    this.answer = Object.assign(this.answer, { to: value });
+    if (this.answer[`from`] && this.answer[`to`]) {
+      this.updateAnswers.emit({ content: this.answer });
+    }
   }
 }
