@@ -57,6 +57,8 @@ export interface IV4Reward {
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
+  selling_from?: string;
+  merchant_logo_url?: string;
 }
 
 interface IV4Price {
@@ -147,7 +149,8 @@ export class V4RewardsService extends RewardsService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
-    const merchantImg = reward[`merchant_logo_url`] ? reward[`merchant_logo_url`] : null;
+    const merchantImg = reward.merchant_logo_url ? reward.merchant_logo_url : null;
+    const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
 
     return {
       id: reward.id,
@@ -163,8 +166,9 @@ export class V4RewardsService extends RewardsService {
       })),
       rewardThumbnail: thumbnailImg,
       rewardBanner,
-      validFrom: reward.valid_from,
-      validTo: reward.valid_to,
+      validFrom: new Date(reward.valid_from),
+      validTo: new Date(reward.valid_to),
+      sellingFrom,
       merchantId: reward.merchant_id,
       merchantName: reward.merchant_name,
       merchantImg,

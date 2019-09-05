@@ -6,7 +6,7 @@ import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, flatMap, finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
-const studTabs: ITabConfigExtended[] = [
+const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
@@ -76,30 +76,16 @@ export class HomeComponent implements OnInit {
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
         });
-    this.translate.get('YOU_HAVE')
-      .subscribe((res: string) => {
-        this.subTitleFn = () => res;
-      });
-    this.translate.get('HELLO')
-      .subscribe((res: string) => {
-        this.titleFn = () => res;
-      });
-
-    this.translate.get('POINTS_EXPITING')
-      .subscribe((res: string) => {
-        this.summaryExpiringFn = (loyalty: ILoyalty) => {
-
-          if (!loyalty || !loyalty.expiringPoints || !loyalty.expiringPoints.length) {
-            return '';
-          }
-          const expiringPoints = loyalty.expiringPoints[0];
-          if (!expiringPoints.expireDate || !expiringPoints.points) {
-            return '';
-          }
-          return loyalty ? res
-            .replace('{{points}}', expiringPoints.points.toString())
-            .replace('{{date}}', this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')) : null;
-        };
+    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
+      .subscribe((res: any) => {
+        this.subTitleFn = () => res.YOU_HAVE;
+        this.titleFn = () => res.HELLO;
+        this.summaryExpiringFn = (loyalty: ILoyalty) =>
+          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? res.POINTS_EXPITING
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : '')
+              .toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
       });
 
   }
@@ -108,7 +94,7 @@ export class HomeComponent implements OnInit {
     // todo: service not implemented yet
     // this.rewardsService.getTags()
     // JSON parese and stringify for creating complitly new object - important for test
-    this.staticTab = JSON.parse(JSON.stringify(studTabs));
+    this.staticTab = JSON.parse(JSON.stringify(stubTabs));
     this.tabs$.next(this.staticTab);
     return of(this.staticTab);
   }

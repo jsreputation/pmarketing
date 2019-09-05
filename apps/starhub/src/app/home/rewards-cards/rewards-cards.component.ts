@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
 import { MacaronService } from '../../services/macaron.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rewards-cards',
@@ -25,7 +26,14 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewards = this.rewardsService.getAllRewards(['featured']);
+    this.rewards = this.rewardsService.getAllRewards(['featured'])
+      .pipe(
+        map((rewards: IReward[]) => rewards.sort((a: IReward, b: IReward) => {
+          if (!a.sellingFrom) { return 1; }
+          if (!b.sellingFrom) { return -1; }
+          return a.sellingFrom.getTime() - b.sellingFrom.getTime();
+        }))
+      );
   }
 
   public getMacaron(reward: IReward): void {

@@ -50,8 +50,6 @@ export class RewardDetailComponent implements OnInit {
       .subscribe((reward: IReward) => {
         this.reward = reward;
 
-        reward.inventory.rewardTotalBalance = 100;
-        reward.inventory.rewardTotalLimit = 5000;
         const macaron = this.macaronService.getMacaron(reward);
         if (macaron === null) {
           this.isButtonEnabled.emit(true);

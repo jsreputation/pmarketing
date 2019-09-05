@@ -10,6 +10,10 @@
 			<span [ngClass]="macaronClass">{{macaronText}}</span>
 		</div>
 
+		<!-- <span *ngIf="reward.sellingFrom && isComingSoon(reward.sellingFrom) else expiringMacron" class="macaron coming-soon">Coming soon</span>
+		<ng-template #expiringMacron>
+			<span *ngIf="reward.validTo && isExpiring(reward.validTo)" class="macaron expiring">Expiring</span>
+		</ng-template> -->
 	</div>
 	<mat-card-content>
 		<div>

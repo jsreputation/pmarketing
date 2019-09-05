@@ -129,6 +129,7 @@ export class VouchersService implements IVoucherService {
 
     return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
+        // todo change to a combination of switchMap and combineLatest
         flatMap((resp: IV4VouchersResponse) => {
           const streams = [
             of(resp.data)
@@ -179,7 +180,9 @@ export class VouchersService implements IVoucherService {
     const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
       map(resp => resp.data),
-      map((v: IV4Voucher) => VouchersService.voucherToVoucher(v))
+      map((v: IV4Voucher) => VouchersService.voucherToVoucher(v)),
+      // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
+      tap((v: IVoucher) => { if (this.vouchers.length > 0) { this.vouchers.unshift(v); } })
     );
   }
 

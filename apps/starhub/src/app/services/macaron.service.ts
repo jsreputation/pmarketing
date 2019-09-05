@@ -14,11 +14,11 @@ export interface IMacaron {
 export class MacaronService {
 
   public getMacaron(reward: IReward): IMacaron | null {
-    const validFromDate = (new Date(reward.validFrom));
+    const sellingFrom = (new Date(reward.sellingFrom));
     const validToDate = (new Date(reward.validTo));
 
     const nowTime: number = (new Date()).getTime();
-    if (reward.validFrom && (validFromDate).getTime() < nowTime) {
+    if (reward.validFrom && (sellingFrom).getTime() < nowTime) {
       return {
         label: 'Coming Soon',
         class: 'coming-soon',
@@ -66,7 +66,7 @@ export class MacaronService {
     }
 
     const seventyTwoHours = 72 * 60 * 1000;
-    if (reward.validFrom && (seventyTwoHours - (validFromDate).getTime())) {
+    if (reward.validFrom && (seventyTwoHours - (sellingFrom).getTime())) {
 
       return {
         label: 'Just Added',
