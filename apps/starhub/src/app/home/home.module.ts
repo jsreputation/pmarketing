@@ -16,6 +16,7 @@ import { UtilsModule, LoyaltyModule } from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { environment } from 'src/environments/environment';
+import { OnLoopDirective } from './rewards-cards/get-macaron.directive';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { environment } from 'src/environments/environment';
     RewardsCardsComponent,
     CatalogsComponent,
     CampaignsComponent,
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
+    OnLoopDirective
   ],
   imports: [
     CommonModule,

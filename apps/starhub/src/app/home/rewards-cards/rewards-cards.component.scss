@@ -1,9 +1,10 @@
 @import '../cards';
+@import '../../mixins.scss';
 
 .featured-image {
   position: relative;
 
-  span.macaron {
+  .macaron-container {
     position: absolute;
     top: 0;
     right: 0;
@@ -13,8 +14,15 @@
     text-transform: capitalize;
   }
 
-  .expiring, .coming-soon {
-    background-color: #FFDB1B;
-    color: #4D4D4C;
+  .just-added, .coming-soon {
+    @include macaron(#73c20e, #ffffff);
+  }
+
+  .expiring, .running-out {
+    @include macaron(#FFDB1B, #4d4d4c);
+  }
+
+  .expired, .fully-redeemed {
+    @include macaron(#ffffff, #4d4d4c);
   }
 }

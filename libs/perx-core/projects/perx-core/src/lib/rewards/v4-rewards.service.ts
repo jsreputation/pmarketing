@@ -34,6 +34,11 @@ interface IV4RewardPrice {
   identifier?: string;
 }
 
+interface IV4Inventory {
+  reward_total_balance?: number;
+  reward_total_limit?: number;
+}
+
 export interface IV4Reward {
   id: number;
   name: string;
@@ -51,6 +56,7 @@ export interface IV4Reward {
   how_to_redeem?: string;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
+  inventory?: IV4Inventory;
 }
 
 interface IV4Price {
@@ -165,7 +171,11 @@ export class V4RewardsService extends RewardsService {
       merchantWebsite: reward.merchant_website,
       termsAndConditions: reward.terms_and_conditions,
       howToRedeem: reward.how_to_redeem,
-      categoryTags: reward.category_tags
+      categoryTags: reward.category_tags,
+      inventory: {
+        rewardTotalBalance: reward.inventory.reward_total_balance || null,
+        rewardTotalLimit: reward.inventory.reward_total_limit || null,
+      },
     };
   }
 

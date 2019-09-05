@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
+import { MacaronService } from '../../services/macaron.service';
 
 @Component({
   selector: 'app-rewards-cards',
@@ -9,12 +10,17 @@ import { Observable } from 'rxjs';
 })
 export class RewardsCardsComponent implements OnInit {
   public rewards: Observable<IReward[]>;
+  public macaronText: string;
+  public macaronClass: string;
+  public rewardBalance: number | null;
+  public showMacaron: boolean = false;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor(
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private macaronService: MacaronService
   ) {
   }
 
@@ -22,23 +28,18 @@ export class RewardsCardsComponent implements OnInit {
     this.rewards = this.rewardsService.getAllRewards(['featured']);
   }
 
+  public getMacaron(reward: IReward): void {
+    const macaron = this.macaronService.getMacaron(reward);
+    if (macaron === null) {
+      return;
+    }
+    this.macaronText = macaron.label;
+    this.macaronClass = macaron.class;
+    this.rewardBalance = macaron.rewardBalance || null;
+    this.showMacaron = true;
+  }
+
   public selected(reward: IReward): void {
     this.tapped.emit(reward);
-  }
-
-  public isComingSoon(validFromDate: string): boolean {
-    const currentDate = new Date().getTime();
-    const validFrom = new Date(validFromDate);
-    const timeDifference = validFrom.valueOf() - currentDate.valueOf();
-    return timeDifference > 0;
-  }
-
-  public isExpiring(validToDate: string): boolean {
-    const currentDate = new Date().getTime();
-    const validTo = new Date(validToDate);
-    const timeDifference = validTo.valueOf() - currentDate.valueOf();
-    const differenceInHours = Math.abs(timeDifference / 1000 / 60 / 60);
-
-    return differenceInHours <= 36;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Location } from '@angular/common';
+import { MacaronService } from '../../services/macaron.service';
 
 @Component({
   selector: 'app-reward-detail',
@@ -11,12 +12,14 @@ export class RewardDetailComponent implements OnInit {
   public showMacaron: boolean = false;
   public isExpired: boolean = false;
   public macaronText: string = '';
+  public macaronClass: string;
+  public rewardBalance: number | null;
 
   @Output()
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
-  public isRewardComingSoon: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
   public rewardId: number;
@@ -34,7 +37,8 @@ export class RewardDetailComponent implements OnInit {
 
  constructor(
     private location: Location,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private macaronService: MacaronService
     ) {}
 
   public ngOnInit(): void {
@@ -45,9 +49,19 @@ export class RewardDetailComponent implements OnInit {
     this.rewardsService.getReward(this.rewardId)
       .subscribe((reward: IReward) => {
         this.reward = reward;
-        this.showMacaron = this.isComingSoon(reward.validFrom);
-        this.macaronText = 'Coming soon';
-        this.isRewardComingSoon.emit(this.showMacaron);
+
+        reward.inventory.rewardTotalBalance = 100;
+        reward.inventory.rewardTotalLimit = 5000;
+        const macaron = this.macaronService.getMacaron(reward);
+        if (macaron === null) {
+          this.isButtonEnabled.emit(true);
+          return;
+        }
+        this.macaronText = macaron.label;
+        this.macaronClass = macaron.class;
+        this.rewardBalance = macaron.rewardBalance || null;
+        this.showMacaron = true;
+        this.isButtonEnabled.emit(macaron.isButtonEnabled);
     });
   }
 
@@ -73,12 +87,5 @@ export class RewardDetailComponent implements OnInit {
 
   public back(): void {
     this.location.back();
-  }
-
-  public isComingSoon(validFromDate: Date): boolean {
-    const currentDate = new Date().getTime();
-    const validFrom = new Date(validFromDate);
-    const timeDifference = validFrom.valueOf() - currentDate.valueOf();
-    return timeDifference > 0;
   }
 }
