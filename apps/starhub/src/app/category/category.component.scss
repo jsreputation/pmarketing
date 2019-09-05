@@ -56,11 +56,19 @@ mat-toolbar {
   position: relative;
 
   .badge {
+    max-width: 8rem;
+    height: 4.8rem;
     background-color: #ffffff;
     border-radius: 0.5rem;
     position: absolute;
     left: 0;
-    bottom: 1.6rem;
+    bottom: 0;
+    overflow: hidden;
+
+    img {
+      max-width: 4rem;
+      position: relative;
+    }
   }
 
   span.macaron {
