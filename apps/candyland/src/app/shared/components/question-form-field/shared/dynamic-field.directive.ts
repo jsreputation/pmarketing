@@ -12,15 +12,17 @@ import {
 import {
   QuestionMultipleChoiceFieldComponent
 } from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.component';
+
 const componentMapper = {
-  rating: QuestionRatingFieldComponent,
-  date: QuestionDateFieldComponent,
-  phone: QuestionCountryCodeFieldComponent,
-  questionGroup: QuestionGroupFieldComponent,
-  longText: QuestionLongTextFieldComponent,
-  pictureChoice: QuestionPictureChoiceFieldComponent,
-  multipleChoice: QuestionMultipleChoiceFieldComponent
+  [SurveyQuestionType.rating]: QuestionRatingFieldComponent,
+  [SurveyQuestionType.date]: QuestionDateFieldComponent,
+  [SurveyQuestionType.phone]: QuestionCountryCodeFieldComponent,
+  [SurveyQuestionType.questionGroup]: QuestionGroupFieldComponent,
+  [SurveyQuestionType.longText]: QuestionLongTextFieldComponent,
+  [SurveyQuestionType.pictureChoice]: QuestionPictureChoiceFieldComponent,
+  [SurveyQuestionType.multipleChoice]: QuestionMultipleChoiceFieldComponent
 };
+
 @Directive({
   // tslint:disable-next-line
   selector: '[clDynamicField]'
@@ -31,8 +33,10 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
   @Input() public level: number;
   @Input() public currentIndex: number;
   public componentRef: any;
+
   constructor(private resolver: ComponentFactoryResolver,
-              private container: ViewContainerRef) { }
+              private container: ViewContainerRef) {
+  }
 
   public ngOnInit(): void {
     this.createComponentFactory();
@@ -45,10 +49,13 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     this.clear();
     const factory = this.resolver.resolveComponentFactory(componentMapper[this.type]);
     this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.group = this.group;
 
     if (this.type === SurveyQuestionType.questionGroup) {
+      this.componentRef.instance.group = this.group;
+      console.log('group');
       this.setSettingsForGroup();
+    } else {
+      this.componentRef.instance.group = this.group.get('payload');
     }
   }
 

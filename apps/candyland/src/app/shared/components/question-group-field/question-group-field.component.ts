@@ -49,7 +49,7 @@ export class QuestionGroupFieldComponent {
   }
 
   public get surveyQuestionGroup(): FormArray {
-    return (this.group.get('questionGroup') as FormArray);
+    return (this.group.get('payload.questions') as FormArray);
   }
 
   private createControlQuestion(questionType: string): FormGroup {

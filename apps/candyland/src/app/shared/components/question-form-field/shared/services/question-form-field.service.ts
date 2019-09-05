@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SurveyQuestionType } from '../../survey-question-type.enum';
 
 @Injectable()
 export class QuestionFormFieldService {
@@ -8,16 +9,18 @@ export class QuestionFormFieldService {
   public listIdDrag = [];
 
   private formControls = {
-    rating: (type) => this.ratingGroup(type),
-    date: (type) => this.dateGroup(type),
-    phone: (type) => this.phoneGroup(type),
-    questionGroup: (type) => this.questionGroup(type),
-    longText: (type) => this.questionLongText(type),
-    pictureChoice: (type) => this.questionPictureChoice(type),
-    multipleChoice: (type) => this.questionMultipleChoice(type),
+    [SurveyQuestionType.rating]: (type) => this.ratingGroup(type),
+    [SurveyQuestionType.date]: (type) => this.dateGroup(type),
+    [SurveyQuestionType.phone]: (type) => this.phoneGroup(type),
+    [SurveyQuestionType.questionGroup]: (type) => this.questionGroup(type),
+    [SurveyQuestionType.longText]: (type) => this.questionLongText(type),
+    [SurveyQuestionType.pictureChoice]: (type) => this.questionPictureChoice(type),
+    [SurveyQuestionType.multipleChoice]: (type) => this.questionMultipleChoice(type)
   };
   private idCounter = 0;
-  constructor(private fb: FormBuilder) { }
+
+  constructor(private fb: FormBuilder) {
+  }
 
   public get listId(): string {
     return `drag-list-id-${this.idCounter++}`;
@@ -57,91 +60,120 @@ export class QuestionFormFieldService {
 
   private ratingGroup(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      scale: ['5', []],
-      selectShape: ['star', []],
-      selectColor: ['primary', []],
-      left: ['Not Very', [Validators.maxLength(10)]],
-      right: ['Very much', [Validators.maxLength(10)]],
+      question: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: ['rating', [Validators.required]],
+        scale: ['5', []],
+        shape: ['star', []],
+        color: ['primary', []],
+        left_label: ['Not Very', [Validators.maxLength(10)]],
+        right_label: ['Very much', [Validators.maxLength(10)]]
+      })
     });
   }
 
   private dateGroup(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      enabledDuration: [false],
+      question: [null, [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type, [Validators.required]],
+        period: [false]
+      })
     });
   }
 
   private phoneGroup(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      phone: [null, [Validators.required]],
+      question: ['', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type, [Validators.required]],
+        'default_country_code': [null, [Validators.minLength(2), Validators.maxLength(4)]]
+      })
     });
   }
 
   private questionGroup(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
+      question: ['', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       questionGroup: this.fb.array([]),
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type, [Validators.required]],
+        questions: this.fb.array([]),
+      })
     });
   }
 
   private questionLongText(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      text: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(200)]],
+      question: ['', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type],
+        'max-length': [null, [Validators.required,
+          Validators.minLength(0),
+          Validators.maxLength(1024)]]
+      })
     });
   }
 
   private questionPictureChoice(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      picture: this.fb.array([]),
+      question: ['', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type],
+        choices: this.fb.array([]),
+      })
     });
   }
 
   private questionMultipleChoice(type: string): FormGroup {
     return this.fb.group({
+      id: [this.listId],
       selectedType: [type, [Validators.required]],
-      name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]],
-      choice: this.fb.array([]),
+      question: ['', [Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(60)]],
       required: [true, []],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(120)]]
+      description: [{value: '', disabled: true}, [Validators.maxLength(120)]],
+      payload: this.fb.group({
+        type: [type],
+        choices: this.fb.array([]),
+      })
     });
   }
 }

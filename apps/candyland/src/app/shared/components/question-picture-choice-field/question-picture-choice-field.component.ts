@@ -11,26 +11,27 @@ export class QuestionPictureChoiceFieldComponent {
   @Input() public group: FormGroup;
   constructor(private fb: FormBuilder) { }
 
-  public get choice(): FormArray {
-    return (this.group.get('picture') as FormArray);
+  public get choices(): FormArray {
+    return (this.group.get('choices') as FormArray);
   }
 
   public removeControl(index: number): void {
-    this.choice.removeAt(index);
+    this.choices.removeAt(index);
   }
 
   public selectUploadGraphic(img: any, uploadImage: UploadImageComponent): void {
-    this.choice.push(this.fb.group({
+    this.choices.push(this.fb.group({
       text: [null, [Validators.required]],
-      image: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
+      img_url: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
+      // img_url: ['https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f', [Validators.required]]
     }));
     uploadImage.clear();
   }
 
   public addedField(input: HTMLInputElement): void {
-    this.choice.push(this.fb.group({
+    this.choices.push(this.fb.group({
       text: [input.value, [Validators.required]],
-      image: [null, [Validators.required]]
+      img_url: [null, [Validators.required]]
     }));
     input.value = '';
   }

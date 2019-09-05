@@ -15,11 +15,15 @@ export class QuestionRatingFieldComponent implements OnInit {
   }
 
   public get left(): AbstractControl {
-    return this.group.get('left');
+    return this.group.get('left_label');
   }
 
   public get right(): AbstractControl {
-    return this.group.get('right');
+    return this.group.get('right_label');
+  }
+
+  public get color(): AbstractControl {
+    return this.group.get('color');
   }
 
   private setScales(): void {
@@ -31,10 +35,6 @@ export class QuestionRatingFieldComponent implements OnInit {
         }
       );
     }
-  }
-
-  public get color(): AbstractControl {
-   return this.group.get('selectColor');
   }
 
 }

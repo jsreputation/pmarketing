@@ -1,8 +1,9 @@
 export enum SurveyQuestionType {
   rating = 'rating',
-  pictureChoice = 'pictureChoice',
-  longText = 'longText',
-  multipleChoice = 'multipleChoice',
-  questionGroup = 'questionGroup',
-  date = 'date', phone = 'phone'
+  pictureChoice = 'picture-select',
+  longText = 'long-text',
+  multipleChoice = 'select',
+  questionGroup = 'group',
+  date = 'date',
+  phone = 'phone'
 }

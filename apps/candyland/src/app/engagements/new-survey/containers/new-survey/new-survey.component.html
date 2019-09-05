@@ -1,4 +1,6 @@
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->
+
+<pre>{{formSurvey.value | json}}</pre>
 
 <div class="survey-wrap" [formGroup]="formSurvey" *ngIf="surveyData$ |async as surveyData">
   <div class="full-with page-header">

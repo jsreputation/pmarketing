@@ -13,11 +13,11 @@
       <div class="question-text-field__wrap">
         <div class="control-input">
           <mat-form-field class="messages-input" >
-            <input type="text" matInput [formControlName]="'name'">
-            <mat-hint align="end">{{name.value?.length || 0}}/60</mat-hint>
-            <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-            <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-            <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+            <input type="text" matInput formControlName="question">
+            <mat-hint align="end">{{question.value?.length || 0}}/60</mat-hint>
+            <mat-error *ngIf="question.hasError('required')">Required field</mat-error>
+            <mat-error *ngIf="question.hasError('minlength')">Min length 1</mat-error>
+            <mat-error *ngIf="question.hasError('maxlength')">Max length 60</mat-error>
           </mat-form-field>
         </div>
         <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">

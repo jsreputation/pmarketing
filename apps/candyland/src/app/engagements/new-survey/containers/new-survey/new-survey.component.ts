@@ -16,7 +16,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
-  [x: string]: any;
   public formSurvey: FormGroup;
   public surveyQuestionType: IEngagementType[];
   public surveyData$: Observable<any>;
@@ -47,8 +46,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         'required': false,
         'description': 'sersgtsdfgsdfgsdfgsdfg  a\'psdjf;asdjf\'[pasdj \'asodoj\'apsdjf \'apsdojf'
       },
-      {selectedType: 'pictureChoice', name: null, picture: [], required: true}, {
-        selectedType: 'longText',
+      {selectedType: 'picture-select', name: null, picture: [], required: true}, {
+        selectedType: 'long-text',
         name: null,
         'text': null,
         required: true
@@ -65,7 +64,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
           right: 'Very much',
           required: true
         }
-          , {selectedType: 'longText', name: null, text: null, required: true}, {
+          , {selectedType: 'long-text', name: null, text: null, required: true}, {
             selectedType: 'date',
             name: null,
             startDate: null,

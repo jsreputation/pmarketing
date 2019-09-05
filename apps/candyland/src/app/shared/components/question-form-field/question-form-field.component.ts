@@ -44,8 +44,8 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     return this.group.get('selectedType');
   }
 
-  public get name(): AbstractControl {
-    return this.group.get('name');
+  public get question(): AbstractControl {
+    return this.group.get('question');
   }
 
   public get description(): AbstractControl {
