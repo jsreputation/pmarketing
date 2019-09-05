@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { SortingMode } from './category.model';
 import { map } from 'rxjs/operators';
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
+import { MacaronService, IMacaron } from '../services/macaron.service';
 
 @Component({
   selector: 'app-category',
@@ -28,22 +29,23 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
-    private zone: NgZone
+    private zone: NgZone,
+    private macaronService: MacaronService
   ) { }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
-          this.selectedCategory = categoryName;
-          this.fetchRewards();
+      this.selectedCategory = categoryName;
+      this.fetchRewards();
     } else {
-        const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
-        this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
-          map((catalog: ICatalog) => {
-            this.selectedCategory = catalog.name;
-            return catalog.rewards;
-          })
-        );
+      const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
+      this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
+        map((catalog: ICatalog) => {
+          this.selectedCategory = catalog.name;
+          return catalog.rewards;
+        })
+      );
     }
     this.scrollDispatcher.scrolled().subscribe((cdkScrollable: CdkScrollable) => {
       this.checkScrolledPosition(cdkScrollable.getElementRef().nativeElement.scrollTop);
@@ -92,23 +94,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     return this.selectedCategory ? this.selectedCategory : 'All';
   }
 
-  public getMacaron(validDateFrom: string, validDateTo: string): string {
-    const currentDate = new Date();
-    const validTo = new Date(validDateTo);
-    const validToTimeDifference = validTo.getTime() - currentDate.getTime();
-    const validToDifferenceInHours = Math.abs(validToTimeDifference / 1000 / 60 / 60);
-
-    const validFrom = new Date(validDateFrom);
-    const validDateFromTimeDifference = validFrom.getTime() - currentDate.getTime();
-    const validDateFromDifferenceInHours = Math.abs(validDateFromTimeDifference / 1000 / 60 / 60);
-
-    let macaronText: string = '';
-    if (validToDifferenceInHours <= 36) {
-      macaronText = 'expiring';
-    } else if (validDateFromDifferenceInHours <= 72) {
-      macaronText = 'just-added';
-    }
-    return macaronText;
+  public getMacaron(reward: IReward): IMacaron | null {
+    return this.macaronService.getMacaron(reward);
   }
 
   // SortBottomSheetClosedCallBack methods

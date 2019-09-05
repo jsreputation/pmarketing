@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Observable } from 'rxjs';
+import { MacaronService, IMacaron } from '../../services/macaron.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -15,7 +16,8 @@ export class RewardsCardsComponent implements OnInit {
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor(
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private macaronService: MacaronService
   ) {
   }
 
@@ -30,21 +32,11 @@ export class RewardsCardsComponent implements OnInit {
       );
   }
 
+  public getMacaron(reward: IReward): IMacaron | null {
+    return this.macaronService.getMacaron(reward);
+  }
+
   public selected(reward: IReward): void {
     this.tapped.emit(reward);
-  }
-
-  public isComingSoon(validFromDate: Date): boolean {
-    const currentDate = new Date();
-    const timeDifference = validFromDate.getTime() - currentDate.getTime();
-    return timeDifference > 0;
-  }
-
-  public isExpiring(validToDate: Date): boolean {
-    const currentDate = new Date();
-    const timeDifference = validToDate.getTime() - currentDate.getTime();
-    const differenceInHours = Math.abs(timeDifference / 1000 / 60 / 60);
-
-    return differenceInHours <= 36;
   }
 }
