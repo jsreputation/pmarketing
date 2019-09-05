@@ -55,6 +55,14 @@ mat-toolbar {
 .featured-image {
   position: relative;
 
+  .badge {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    position: absolute;
+    left: 0;
+    bottom: 1.6rem;
+  }
+
   span.macaron {
     position: absolute;
     top: 0;
