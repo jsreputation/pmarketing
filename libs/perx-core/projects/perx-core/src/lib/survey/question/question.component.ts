@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../mod
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit, OnChanges {
+export class QuestionComponent implements OnChanges {
 
   @Input()
   public id: number;
@@ -40,24 +40,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   public point: number;
 
-  public ngOnInit(): void {
-    // Emit non required question in first page, and stop auto emit for last page
-    const isNotRequired = this.question && !this.question.required;
-    const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
-    if (this.isActive && isNotRequired && isNotLastPage) {
-      this.updateAnswer({ content: this.question.answer });
-    }
-  }
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.questionPointer) {
-      this.questionPointer = changes.questionPointer.currentValue;
-      const isNotRequired = this.question && !this.question.required;
-      const isNotLastPage = (this.questionPointer !== this.totalQuestions - 1);
-      if (this.isActive && isNotRequired && isNotLastPage) {
-        // Emit non required question in current page after questionPointer update, and stop auto emit for last page
-        this.updateAnswer({ content: this.question.answer });
-      }
-    }
     if (changes.flush) {
       this.flush = changes.flush.currentValue;
       if (this.flush) {

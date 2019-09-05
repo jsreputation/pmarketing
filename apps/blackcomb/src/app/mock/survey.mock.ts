@@ -4,23 +4,18 @@ export const survey: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
         {
-            question: 'When were you born?',
-            description: 'It\'s between us',
-            id: '2',
-            required: true,
-            payload: {
-                duration: true,
-                type: 'date'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '8',
+            question: 'Which color you like?',
+            description: 'Please select',
+            id: '1',
             required: false,
             payload: {
-                type: 'phone',
-                default_country_code: 'SG'
+                type: 'select',
+                multiple: false,
+                choices: [
+                    'blue',
+                    'white',
+                    'red'
+                ]
             }
         },
         {
@@ -52,18 +47,23 @@ export const survey: ISurvey = {
             }
         },
         {
-            question: 'Which color you like?',
-            description: 'Please select',
-            id: '1',
+            question: 'When were you born?',
+            description: 'It\'s between us',
+            id: '2',
+            required: true,
+            payload: {
+                duration: true,
+                type: 'date'
+            }
+        },
+        {
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '8',
             required: false,
             payload: {
-                type: 'select',
-                multiple: true,
-                choices: [
-                    'blue',
-                    'white',
-                    'red'
-                ]
+                type: 'phone',
+                default_country_code: 'SG'
             }
         },
         {

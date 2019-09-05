@@ -42,12 +42,17 @@ export class PhoneComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    console.log('======================');
+    console.log(changes.flush);
+    console.log(changes.flush.currentValue);
+    console.log('======================');
     if (changes.flush && changes.flush.currentValue !== undefined) {
       this.updateInput(this.answer);
     }
   }
 
   public updateInput(value: number): void {
+    console.log('updateInput');
     this.answer = value;
     this.updateAnswers.emit({ content: this.countryCode + ' ' + value });
   }

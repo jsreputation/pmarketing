@@ -4,7 +4,7 @@ import { SurveyModule as PerxSurveyModule, SurveyService } from '@perx/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey/survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule, MatDatepickerModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressBarModule, MatDatepickerModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { of } from 'rxjs';
 import { survey } from '../mock/survey.mock';
 
@@ -21,6 +21,8 @@ const surveyServiceStub = {
     MatButtonModule,
     MatProgressBarModule,
     MatDatepickerModule,
+    MatRadioModule,
+    MatCheckboxModule,
     SurveyRoutingModule,
     PerxSurveyModule
   ],

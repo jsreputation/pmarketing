@@ -1,6 +1,6 @@
 export interface IAnswer {
     question_id?: string;
-    content: number | string | boolean | IDateRange;
+    content: any;
 }
 
 export interface IPoints {
@@ -22,7 +22,7 @@ export interface IQuestion {
     description?: string;
     required: boolean;
     payload: IPayload;
-    answer?: string | number | boolean | IDateRange;
+    answer?: any;
 }
 
 export interface ISurvey {

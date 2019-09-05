@@ -30,11 +30,16 @@ export class SurveyComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.data$) {
-      this.data$.subscribe(data => this.data = data);
+      this.data$.subscribe(data => {
+        this.data = data;
+        this.totalLength.emit(this.data.questions.length);
+        this.currentPointer.emit(0);
+      });
     }
   }
 
   public updateAnswers(answer: IAnswer): void {
+    console.log(answer);
     this.answersTracker[answer.question_id] = answer;
   }
 

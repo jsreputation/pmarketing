@@ -5,7 +5,9 @@ import {
   MatIconModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCheckboxModule,
+  MatRadioModule
  } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -47,7 +49,9 @@ const components = [
     MatIconModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   exports: [
     ...components
