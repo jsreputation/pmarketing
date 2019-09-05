@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
 import { MatSidenavContainer } from '@angular/material';
 import { Location } from '@angular/common';
@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   public routeData: any = null;
   public user: IProfile;
 
-  private currentRoute: ActivatedRoute;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -44,7 +43,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         return route;
       }),
       filter((route: ActivatedRoute) => route.outlet === 'primary'),
-      tap((route) => this.currentRoute = route),
       switchMap((route: ActivatedRoute) => route.data),
       takeUntil(this.destroy$)
     ).subscribe((routeData) => {
