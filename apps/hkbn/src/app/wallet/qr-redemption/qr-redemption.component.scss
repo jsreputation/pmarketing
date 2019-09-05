@@ -9,13 +9,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  margin-top: 5.1rem;
+  padding-top: 5.1rem;
 
   &-cancel {
-    width: 100%;
+    width: calc(100% - 3.2rem);
     margin: auto 0 8.5rem;
     border-color: $text-green;
     color: $text-green;
+    height: 4.4rem;
+    position: absolute;
+    bottom: 0;
   }
 }
