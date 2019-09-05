@@ -37,19 +37,19 @@ describe('RewardsCardsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('getMacaron', () => {
-    it('should return expiring', () => {
+  describe('isComingSoon & expiring values', () => {
+    it('should return true with isComingSoon', () => {
       const currentTime = new Date();
-      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
-      const macaronText = component.getMacaron(String(validDateTo));
-      expect(macaronText).toBe('expiring');
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 24hrs
+      const comingSoonValue = component.isComingSoon(String(validDateTo));
+      expect(comingSoonValue).toBe(true);
     });
 
-    it('should return empty string', () => {
+    it('should return true with isExpiring', () => {
       const currentTime = new Date();
-      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
-      const macaronText = component.getMacaron(String(validDateTo));
-      expect(macaronText).toBe('');
+      const validDateTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 48hrs
+      const result = component.isExpiring(String(validDateTo));
+      expect(result).toBe(true);
     });
   });
 });
