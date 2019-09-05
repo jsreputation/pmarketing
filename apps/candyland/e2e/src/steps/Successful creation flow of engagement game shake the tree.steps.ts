@@ -1,4 +1,4 @@
-/*import { Before, Given, Then, When } from 'cucumber';
+import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
 import { EngagementAppPage } from '../pages/shakeTheTreeFlow.po';
@@ -47,22 +47,23 @@ Given(/^27_I type the test string$/, async () => {
 Given(/^27_I press save button$/, async () => {
   // clicking on the save button
   await element(by.css('button.btn.mat-flat-button.primary')).click();
-  await browser.sleep(10000);
+  // await browser.sleep(10000);
 });
 
 When(/^27_I press launch now button$/, async () => {
   // clicking on the launch now button
   await element.all(by.css('button.btn.mat-flat-button.primary')).last().click();
-  await browser.sleep(30000);
+  // await browser.sleep(30000);
 });
 
 Then(/^27_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first()), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-name')).first()), 5000);
   expect(await element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first().getText()).to.contain('Test - launch now');
   // Verifying the current date of transaction
-  expect(await element.all(by.css('div.engagement-item-info>engagement-item-date')).first().
+  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
+  expect(await element.all(by.css('p.engagement-item-date')).first().
   getText()).to.equal(moment(now).format('DD MMM YYYY'));
   // moment(now).format('DD MMM YYYY');
 });
