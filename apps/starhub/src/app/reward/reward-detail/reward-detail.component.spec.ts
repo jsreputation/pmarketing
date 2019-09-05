@@ -163,9 +163,9 @@ describe('RewardDetailComponent', () => {
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(component.reward).toBe(expiringReward);
 
-      expect(component.macaronText).toBe('');
+      expect(component.macaronText).toBe('Coming soon');
       expect(component.isExpired).toBe(false);
-      expect(component.showMacaron).toBe(false);
+      expect(component.showMacaron).toBe(true);
     }));
   });
 });
