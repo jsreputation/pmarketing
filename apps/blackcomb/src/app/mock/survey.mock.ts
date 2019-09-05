@@ -4,6 +4,16 @@ export const survey: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
         {
+            question: 'When were you born?',
+            description: 'It\'s between us',
+            id: '2',
+            required: true,
+            payload: {
+                duration: true,
+                type: 'date'
+            }
+        },
+        {
             question: 'How can we reach you?',
             description: 'No offence taken',
             id: '8',
@@ -20,6 +30,7 @@ export const survey: ISurvey = {
             required: false,
             payload: {
                 type: 'picture-select',
+                multiple: true,
                 choices: [
                     {
                         img_url: 'https://picsum.photos/600/900',
@@ -41,17 +52,18 @@ export const survey: ISurvey = {
             }
         },
         {
-            question: 'How likely are you to recommend our service?',
-            description: 'Please rate us',
+            question: 'Which color you like?',
+            description: 'Please select',
             id: '1',
             required: false,
             payload: {
-                type: 'rating',
-                color: 'primary',
-                left_label: 'not much',
-                right_label: 'a lot',
-                scale: 4,
-                shape: 'star'
+                type: 'select',
+                multiple: true,
+                choices: [
+                    'blue',
+                    'white',
+                    'red'
+                ]
             }
         },
         {
@@ -105,15 +117,6 @@ export const survey: ISurvey = {
                         }
                     }
                 ]
-            }
-        },
-        {
-            question: 'When were you born?',
-            description: 'It\'s between us',
-            id: '2',
-            required: true,
-            payload: {
-                type: 'date'
             }
         },
         {
