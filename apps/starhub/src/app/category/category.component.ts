@@ -93,13 +93,13 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   }
 
   public getMacaron(validDateFrom: string, validDateTo: string): string {
-    const currentDate = new Date().getTime();
+    const currentDate = new Date();
     const validTo = new Date(validDateTo);
-    const validToTimeDifference = validTo.valueOf() - currentDate.valueOf();
+    const validToTimeDifference = validTo.getTime() - currentDate.getTime();
     const validToDifferenceInHours = Math.abs(validToTimeDifference / 1000 / 60 / 60);
 
     const validFrom = new Date(validDateFrom);
-    const validDateFromTimeDifference = validFrom.valueOf() - currentDate.valueOf();
+    const validDateFromTimeDifference = validFrom.getTime() - currentDate.getTime();
     const validDateFromDifferenceInHours = Math.abs(validDateFromTimeDifference / 1000 / 60 / 60);
 
     let macaronText: string = '';
