@@ -1,5 +1,5 @@
 <div class="main" *ngIf="reward">
-  <div class="contents">
+  <div [ngClass]="'contents ' + className">
     <div class="app-header">
       <button *ngIf="showBackButton" class="icon" (click)="back()">
         <mat-icon>arrow_backward</mat-icon>

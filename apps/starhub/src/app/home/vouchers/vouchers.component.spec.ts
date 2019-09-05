@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersService } from '@perx/core';
 import { of } from 'rxjs';
 import { vouchers } from 'src/app/vouchers.mock';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -20,7 +21,8 @@ describe('VouchersComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        NgxMultiLineEllipsisModule
       ],
       providers: [
         { provide: VouchersService, useValue: vouchersServiceStub }
