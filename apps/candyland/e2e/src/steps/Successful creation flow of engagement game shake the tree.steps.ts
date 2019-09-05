@@ -1,11 +1,12 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
-import { EngagementAppPage } from '../pages/shakeTheTreeFlow.po';
+import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/shakeTheTreeFlow.po';
 import * as moment from 'moment';
 // initializing instances of the pages
 
 let PageEngagement: EngagementAppPage;
+let PageShakeTheTree: CreateShakeTheTreeAppPage;
 
 // Getting the current day, month , year
 const now = moment().format();
@@ -13,7 +14,7 @@ const now = moment().format();
 Before( () => {
   // initializing page objects instances
   PageEngagement = new EngagementAppPage();
-  // PageShakeTheTree = new CreateShakeTheTreeAppPage();
+  PageShakeTheTree = new CreateShakeTheTreeAppPage();
 
 });
 
@@ -63,7 +64,7 @@ Then(/^27_Game is present under the engagment category .$/, async () => {
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
   expect(await element.all(by.css('p.engagement-item-date')).first().
-  getText()).to.equal(moment(now).format('DD MMM YYYY'));
+    getText()).to.equal(moment(now).format('DD MMM YYYY'));
 });
 
 // Successful creation of engagement game shake the tree - launch later
@@ -107,40 +108,38 @@ Then(/^28_Game is present under the engagment category .$/, async () => {
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
   expect(await element.all(by.css('p.engagement-item-date')).first().
-  getText()).to.equal(moment(now).format('DD MMM YYYY'));
+    getText()).to.equal(moment(now).format('DD MMM YYYY'));
 });
 
-/*When('{int}_I press the save button', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+// Dialog box present when save button is pressed
+Given(/^29_I am on the shake a tree game creation page$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+});
 
-Then('{int}_The file dialog box is present.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^29_I press the save button$/, async () => {
+  await element(by.css('button.btn.mat-flat-button.primary')).click();
+});
 
-When('{int}_I press the save button', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^29_The file dialog box is present.$/, async () => {
+  expect(await element(by.css('cl-confirm-modal')).isPresent()).to.equal(true);
+});
 
-Then('{int}_Both options are present.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+// Dialog box has 2 options present when save button is pressed.
+Given(/^30_I am on the shake a tree game creation page$/, async () => {
+  await PageShakeTheTree.navigateToShakeTheTree();
+});
 
-Given('{int}_I am on the shake a tree game creation page', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^30_I press the save button$/, async () => {
+  await element(by.css('button.btn.mat-flat-button.primary')).click();
+});
 
-Given('{int}_I entered text string {string}', function(int, string) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^30_Both options are present.$/, async () => {
+  // doing an assertion on the presence of both elements in the dialog
+  expect(await element.all(by.css('cl-button')).get(1).isPresent()).to.equal(true);
+  expect(await element.all(by.css('cl-button')).get(2).isPresent()).to.equal(true);
+});
 
-Given('{int}_I press the save button.', function(int) {
+/*Given('{int}_I press the save button.', function(int) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
