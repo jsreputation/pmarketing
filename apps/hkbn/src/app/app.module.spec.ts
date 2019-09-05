@@ -5,6 +5,7 @@ import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { ApplicationInitStatus, APP_INITIALIZER } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
+import { environment } from 'src/environments/environment';
 
 const translateServiceStub = {
     defaultLang: null,
@@ -33,6 +34,7 @@ describe('AppModule', () => {
     }));
 
     it('should set default laguage', inject([TranslateService], (translateService: TranslateService) => {
-        expect(translateService.defaultLang).toBe('en');
+        const defLang = environment.defaultLang || 'en'
+        expect(translateService.defaultLang).toBe(defLang);
     }));
 });
