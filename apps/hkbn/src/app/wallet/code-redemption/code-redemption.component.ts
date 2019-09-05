@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { VouchersService } from '@perx/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hkbn-code-redemption',
@@ -15,7 +16,11 @@ export class CodeRedemptionComponent implements OnInit {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private vouchersService: VouchersService) {
+  constructor(
+    private route: ActivatedRoute,
+    private vouchersService: VouchersService,
+    private location: Location
+  ) {
   }
 
   public ngOnInit(): void {
@@ -29,8 +34,10 @@ export class CodeRedemptionComponent implements OnInit {
   }
 
   public redeem(): void {
-    this.vouchersService.redeemVoucher(this.voucherId).subscribe(() => {
-    });
+    this.vouchersService.redeemVoucher(this.voucherId).subscribe(() =>
+      this.location.back(),
+      () => this.location.back()
+    );
   }
 
 }
