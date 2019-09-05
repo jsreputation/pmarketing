@@ -27,6 +27,9 @@ export class RewardDetailComponent implements OnInit {
   @Input()
   public showBannerImage: boolean = true;
 
+  @Input()
+  public className: string = 'reward';
+
   public reward: IReward;
 
  constructor(

@@ -34,24 +34,26 @@
   }
 }
 
-.badge {
-  max-width: 7rem;
-  height: 4.8rem;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  position: absolute;
-  width: 100%;
-  margin-top: -2.5rem;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  text-align: center;
+.reward {
+  .badge {
+    max-width: 7rem;
+    height: 4.8rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    position: absolute;
+    width: 100%;
+    margin-top: -2.5rem;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    text-align: center;
 
-  img {
-    max-width: 3.5rem;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    img {
+      max-width: 3.5rem;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }
 
@@ -66,6 +68,20 @@
   h2 {
     font-weight: normal;
     color: #666666;
+  }
+}
+
+.voucher {
+  .badge {
+    text-align: center;
+
+    img {
+      max-width: 3.5rem;
+    }
+  }
+
+  .reward-merchant {
+    margin-top: 2rem;
   }
 }
 
