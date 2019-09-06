@@ -1,25 +1,29 @@
 import {
   CanActivate,
-  Router} from '@angular/router';
+  Router, UrlTree
+} from '@angular/router';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { SessionService } from '@cl-core/services/token.service';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NoAuthGuard implements CanActivate {
 
-  private isAuthenticated: boolean;
-
-  constructor(private router: Router, private localStorage: LocalStorageService) {
-    this.isAuthenticated = !!this.localStorage.get('authToken');
+  constructor(private router: Router, private sessionService: SessionService) {
   }
 
-  public canActivate(): boolean {
-    if (this.isAuthenticated) {
-      this.router.navigate(['/dashboard/overview']);
-      return false;
-    }
-    return true;
+  public canActivate(): Observable<UrlTree | boolean> {
+    return this.sessionService.isActiveSession$.pipe(
+      take(1),
+      map(isActiveSession => {
+        if (isActiveSession) {
+          return this.router.parseUrl('/dashboard');
+        }
+        return true;
+      })
+    );
   }
 }

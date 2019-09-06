@@ -6,7 +6,6 @@ import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
-import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.modu
     RewardsModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment }),
     SharedModule,
-    NavigateToolbarModule
   ]
 })
 export class HomeModule { }
