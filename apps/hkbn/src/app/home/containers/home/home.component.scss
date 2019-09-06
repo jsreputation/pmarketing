@@ -23,12 +23,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    padding: 0 1.6rem 1.6rem 0;
   }
 }
 
 .enlarge {
   color: $white;
-  margin: 1.6rem 0;
+  display: flex;
+  align-items: center;
 }
 
 .rewards-carousel {
