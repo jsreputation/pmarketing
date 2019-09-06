@@ -34,4 +34,9 @@ export class AudiencesUserService implements ITableService {
     const formattedUser = AudiencesHttpAdapter.transformCreateUser(user);
     return this.http.createUser(formattedUser);
   }
+
+  public updateUserPools(user: any): Observable<any> {
+    const formattedData = AudiencesHttpAdapter.transformUpdateUserPools(user);
+    return this.http.updateUserPools(formattedData);
+  }
 }

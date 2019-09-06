@@ -10,12 +10,30 @@ export class AudiencesHttpAdapter {
         phone_number: data.phone,
         email_address: data.email,
         primary_identifier: data.firstName + 'identifier',
-        properties: ''
+        properties: '',
+      },
+      relationships: {
+        pools: {
+          data: data.audienceList
+        }
       }
     };
     if (data.id) {
       res['id'] = data.id;
     }
+    return res;
+  }
+
+  public static transformUpdateUserPools(data: any): any {
+    const res = {
+      type: data.type,
+      id: data.id,
+      relationships: {
+        pools: {
+          data: data.pools
+        }
+      }
+    };
     return res;
   }
 
@@ -32,7 +50,8 @@ export class AudiencesHttpAdapter {
       last_name: data.attributes.last_name,
       phone_number: data.attributes.phone_number,
       email_address: data.attributes.email_address,
-      primary_identifier: data.attributes.primary_identifier
+      primary_identifier: data.attributes.primary_identifier,
+      pools: data.relationships.pools.data
     };
   }
 
@@ -53,7 +72,8 @@ export class AudiencesHttpAdapter {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       name: data.attributes.name,
-      properties: data.attributes.properties
+      properties: data.attributes.properties,
+      users: data.relationships.users.data
     };
   }
 

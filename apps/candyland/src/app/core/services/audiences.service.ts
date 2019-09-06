@@ -17,6 +17,17 @@ export class AudiencesService implements ITableService {
     return this.http.getAudiences(data);
   }
 
+  public getAudiencesList(data: HttpParams): Observable<any> {
+    return this.http.getAudiencesList(data)
+      .pipe(
+        map((res: any) => {
+        const poolsList = res.data;
+        return poolsList.map((pool: any) => {
+          return {name: pool.attributes.name, value: {id: pool.id, type: pool.type}};
+        });
+    }));
+  }
+
   public getVouchers(): Observable<any> {
     return this.http.getVouchers();
   }

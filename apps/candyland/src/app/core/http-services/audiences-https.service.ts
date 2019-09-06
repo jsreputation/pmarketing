@@ -18,6 +18,10 @@ export class AudiencesHttpsService {
     return this.http.get(ApiConfig.getAudiences, {params});
   }
 
+  public getAudiencesList(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, {params});
+  }
+
   public getVouchers(): Observable<any> {
     return this.http.get('assets/mocks/vouchers.json');
   }
@@ -28,5 +32,9 @@ export class AudiencesHttpsService {
 
   public createUser(body): Observable<any> {
     return this.http.post(ApiConfig.getAllUsers, {data: body});
+  }
+
+  public updateUserPools(body): Observable<any> {
+    return this.http.patch(ApiConfig.getAllUsers + '/' + body.id, {data: body});
   }
 }

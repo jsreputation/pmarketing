@@ -8,5 +8,6 @@ declare interface IAudiences {
     updated_at: string;
     name: string;
     properties: string;
+    users: any;
 }
   

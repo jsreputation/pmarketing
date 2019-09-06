@@ -3,7 +3,7 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="name">List Name</th>
     <td mat-cell *matCellDef="let element">
-      <span class="name-cell_id">{{element?.name}}</span>
+      <span>{{element?.name}}</span>
     </td>
   </ng-container>
 
@@ -13,15 +13,15 @@
   </ng-container>
 
   <ng-container matColumnDef="updated">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at" class="date-column">Last Updated</th>
-    <td mat-cell *matCellDef="let element" class="date-column">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">Last Updated</th>
+    <td mat-cell *matCellDef="let element">
       {{element?.updated_at | date: DATE_FORMAT}}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="numberUsers">
     <th mat-header-cell *matHeaderCellDef>No. of users</th>
-    <td mat-cell *matCellDef="let element" class="date-column"> {{element?.numberUsers || 0}}</td>
+    <td mat-cell *matCellDef="let element"> {{ element?.users?.length || 0 }}</td>
   </ng-container>
 
   <ng-container matColumnDef="status">

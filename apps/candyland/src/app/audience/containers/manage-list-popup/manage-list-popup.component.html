@@ -2,13 +2,15 @@
   <div class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
     <h3 class="dialog-title">Manage List</h3>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </div>
   <mat-dialog-content class="dialog-content">
-
       <label class="dialog-content-title">Audience lists</label>
+      <!-- <div *ngFor="let pool of pools">
+        <mat-checkbox class="dialog-row">{{pool.name}}</mat-checkbox>
+      </div> -->
       <mat-checkbox class="dialog-row">Gold_Users</mat-checkbox>
       <mat-checkbox class="dialog-row">Silver tier</mat-checkbox>
       <mat-checkbox class="dialog-row">Bronze tier</mat-checkbox>
