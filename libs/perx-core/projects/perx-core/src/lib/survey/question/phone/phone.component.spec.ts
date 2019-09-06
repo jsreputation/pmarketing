@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PhoneComponent } from './phone.component';
 
@@ -13,6 +13,7 @@ describe('PhoneComponent', () => {
       imports: [
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         NoopAnimationsModule
       ]
     })
