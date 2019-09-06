@@ -3,6 +3,7 @@
     <mat-icon>arrow_backward</mat-icon>
   </button>
   <div class="spacer"></div>
+  <span *ngIf="showToolbarTitle" class="toolbar-title">{{selectedCategory}}</span>
   <button class="icon" (click)="selectCategory()">
     <mat-icon>apps</mat-icon>
   </button>
@@ -10,18 +11,17 @@
     <mat-icon>sort</mat-icon>
   </button>
 </mat-toolbar>
-<div *ngIf="rewards" class="content">
-  <h1>{{selectedCategory}}</h1>
+<div *ngIf="rewards" class="content" cdkScrollable>
+  <h1 class="catergory-title">{{selectedCategory}}</h1>
   <mat-card *ngFor="let reward of rewards | rewardsSort: selectedSortingCraeteria | async" (click)="selected(reward)" matRipple>
     <div class="featured-image">
       <img mat-card-image [src]="reward.rewardBanner">
         <div *ngIf="reward.merchantImg" class="badge">
           <img [src]="reward.merchantImg">
         </div>
-      <span
-        [ngClass]="'macaron ' + getMacaron(reward.validFrom, reward.validTo)"
-        [innerHTML]="getMacaron(reward.validFrom, reward.validTo).replace('-', ' ')">
-      </span>
+        <div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+        </div>
     </div>
     <mat-card-content>
       <div class="details">

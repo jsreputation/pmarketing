@@ -5,6 +5,7 @@ export interface IReward {
   subtitle: string;
   validFrom: Date;
   validTo: Date;
+  sellingFrom?: Date;
   rewardThumbnail?: string;
   rewardBanner: string;
   merchantImg: string;
@@ -15,6 +16,7 @@ export interface IReward {
   termsAndConditions: string;
   howToRedeem: string;
   categoryTags?: ICategoryTags[];
+  inventory?: Inventory;
 }
 
 export interface ICatalog {
@@ -45,4 +47,9 @@ export interface ICategoryTags {
 export interface IRewardParams {
   priceId?: number;
   locationId?: number;
+}
+
+export interface Inventory {
+  rewardTotalBalance?: number;
+  rewardTotalLimit?: number;
 }

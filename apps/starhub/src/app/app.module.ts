@@ -40,6 +40,7 @@ import { CongratsComponent } from './congrats/congrats.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProfileModule.forRoot({ env: environment }),
     VouchersModule.forRoot({ env: environment }),
     GameModule,
-    LocationModule.forRoot({ env: environment })
+    LocationModule.forRoot({ env: environment }),
+    ScrollingModule
   ],
   entryComponents: [
     CategorySelectComponent,
