@@ -60,8 +60,11 @@
             <div [ngClass]="{ error: errorState?.isRequired }">
                 Answer is <strong>required</strong>
             </div>
-            <div [ngClass]="{ error: errorState?.isExceedMaxLength }">
+            <div [ngClass]="{ error: errorState?.exceedMaxLength }">
                 Exceed <strong>max length</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.isV }">
+                Date Range is <strong>invalid</strong>
             </div>
         </div>
     </div>

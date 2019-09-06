@@ -44,8 +44,9 @@ export interface IErrors {
     hasError?: boolean;
     isRequired?: boolean;
     isValidDate?: boolean;
-    isExceedMaxLength?: boolean;
+    exceedMaxLength?: boolean;
     isValidPhoneNumber?: boolean;
+    isValidDateRange?: boolean;
 }
 
 export interface IPayload {

@@ -101,7 +101,7 @@ export class QuestionComponent implements OnChanges {
     } else if (this.question.payload['max-length']
       && typeof this.question.answer === 'string'
       && this.question.payload['max-length'] < this.question.answer.length) {
-      this.errorState.isExceedMaxLength = true;
+      this.errorState.exceedMaxLength = true;
       this.errorState.hasError = true;
     }
   }
