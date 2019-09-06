@@ -28,6 +28,7 @@ export class PhoneComponent implements OnChanges, OnInit {
   public countryCode: string;
 
   constructor(private generalStaticDataService: GeneralStaticDataService) { }
+
   public ngOnInit(): void {
     this.countriesList$ = this.generalStaticDataService.getCountriesList();
   }
