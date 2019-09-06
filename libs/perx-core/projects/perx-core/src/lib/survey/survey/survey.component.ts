@@ -39,7 +39,6 @@ export class SurveyComponent implements OnInit {
   }
 
   public updateAnswers(answer: IAnswer): void {
-    console.log(answer);
     this.answersTracker[answer.question_id] = answer;
   }
 
@@ -61,7 +60,6 @@ export class SurveyComponent implements OnInit {
         };
       });
       this.surveyDone.emit(answers);
-      console.log('answers: ' + JSON.stringify(answers));
     }
   }
 
