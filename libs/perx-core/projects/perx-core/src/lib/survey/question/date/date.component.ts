@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MatDatepicker } from '@angular/material';
 import { IAnswer, IDateRange } from '../../models/survey.model';
 
@@ -13,7 +13,7 @@ interface IPayloadDate {
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
 })
-export class DateComponent implements OnChanges {
+export class DateComponent implements OnChanges, OnInit {
   @ViewChild('pickerInput', { static: false }) private pickerInput: ElementRef;
   @ViewChild('pickerToInput', { static: false }) private pickerToInput: ElementRef;
   @ViewChild('pickerFromInput', { static: false }) private pickerFromInput: ElementRef;
