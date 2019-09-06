@@ -26,7 +26,6 @@ describe('CodeRedemptionComponent', () => {
   let component: CodeRedemptionComponent;
   let fixture: ComponentFixture<CodeRedemptionComponent>;
   let location: Location;
-  let vouchersService: VouchersService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,7 +51,6 @@ describe('CodeRedemptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CodeRedemptionComponent);
     location = TestBed.get(Location);
-    vouchersService = TestBed.get(VouchersService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -73,8 +71,8 @@ describe('CodeRedemptionComponent', () => {
     expect(location.path(false)).toBe('/wallet');
   }));
 
-  it('should call redeemVoucher', fakeAsync(() => {
-    const spy = spyOn(vouchersService, 'redeemVoucher').and.returnValue(of(null));
+  it('should call location back', fakeAsync(() => {
+    const spy = spyOn(location, 'back');
     component.redeem();
     tick();
     expect(spy).toHaveBeenCalled();
