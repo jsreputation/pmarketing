@@ -61,31 +61,31 @@ describe('CategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('getMacaron', () => {
-    it('should return expiring', () => {
-      const currentTime = new Date();
-      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
-      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
-      const macaronText = component.getMacaron(String(validFrom), String(validTo));
-      expect(macaronText).toBe('expiring');
-    });
+  // describe('getMacaron', () => {
+  //   it('should return expiring', () => {
+  //     const currentTime = new Date();
+  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
+  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
+  //     const macaronText = component.getMacaron((validFrom), String(validTo));
+  //     expect(macaronText).toBe('expiring');
+  //   });
 
-    it('should return just-added', () => {
-      const currentTime = new Date();
-      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
-      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
-      const macaronText = component.getMacaron(String(validFrom), String(validTo));
-      expect(macaronText).toBe('just-added');
-    });
+  //   it('should return just-added', () => {
+  //     const currentTime = new Date();
+  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
+  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
+  //     const macaronText = component.getMacaron(String(validFrom), String(validTo));
+  //     expect(macaronText).toBe('just-added');
+  //   });
 
-    it('should return empty string', () => {
-      const currentTime = new Date();
-      const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
-      const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
-      const macaronText = component.getMacaron(String(validFrom), String(validTo));
-      expect(macaronText).toBe('');
-    });
-  });
+  //   it('should return empty string', () => {
+  //     const currentTime = new Date();
+  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
+  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
+  //     const macaronText = component.getMacaron(String(validFrom), String(validTo));
+  //     expect(macaronText).toBe('');
+  //   });
+  // });
 
   describe('onInit', () => {
     it('should get category name', fakeAsync(() => {

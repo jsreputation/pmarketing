@@ -1,9 +1,10 @@
-@import '../cards';
+@import "../cards";
+@import "../../macaron.scss";
 
 .featured-image {
   position: relative;
 
-  span.macaron {
+  .macaron-container {
     position: absolute;
     top: 0;
     right: 0;
@@ -13,8 +14,5 @@
     text-transform: capitalize;
   }
 
-  .expiring, .coming-soon {
-    background-color: #FFDB1B;
-    color: #4D4D4C;
-  }
+  @include macaronStyles();
 }
