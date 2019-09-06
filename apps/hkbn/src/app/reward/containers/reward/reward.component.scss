@@ -1,5 +1,17 @@
 @import "~src/assets/styles/variables";
 
+:host {
+  ::ng-deep {
+    .details {
+      padding: 0 1.6rem 1.5rem!important;
+    }
+
+    .reward-container {
+      width: 100%;
+    }
+  }
+}
+
 .reward {
   display: flex;
   flex-direction: column;
