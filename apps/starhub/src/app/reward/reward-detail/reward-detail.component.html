@@ -17,7 +17,7 @@
         <div *ngIf="showMacaron && macaron" class="macaron-container">
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
-        <div *ngIf="!isExpired">
+        <div *ngIf="!isExpired && macaron">
           <app-expire-timer
             *ngIf="macaron.class === 'expiring'"
             [timerEndDate]="reward.validTo"
@@ -25,7 +25,7 @@
             (isExpiring)="onExpiring()">
           </app-expire-timer>
         </div>
-        <span *ngIf="macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}} left</span>
+        <span *ngIf="macaron && macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}} left</span>
       </div>
 
       <div class="content">

@@ -50,6 +50,6 @@ export interface IRewardParams {
 }
 
 export interface Inventory {
-  rewardTotalBalance?: number;
-  rewardTotalLimit?: number;
+  rewardTotalBalance?: number | null;
+  rewardTotalLimit?: number | null;
 }
