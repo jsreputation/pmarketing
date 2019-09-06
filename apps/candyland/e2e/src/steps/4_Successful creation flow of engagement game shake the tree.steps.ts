@@ -138,19 +138,3 @@ Then(/^30_Both options are present.$/, async () => {
   expect(await element.all(by.css('cl-button')).get(1).isPresent()).to.equal(true);
   expect(await element.all(by.css('cl-button')).get(2).isPresent()).to.equal(true);
 });
-
-/*Given('{int}_I press the save button.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-When('{int}_I press the button launch now', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Then('{int}_Latest card has the correct game title and date.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-*/

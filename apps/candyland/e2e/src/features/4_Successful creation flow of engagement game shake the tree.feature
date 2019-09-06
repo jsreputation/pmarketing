@@ -34,9 +34,4 @@ Scenario: Dialog box has 2 options present when save button is pressed.
   When  30_I press the save button
   Then  30_Both options are present.
 
-Scenario: Card of the latest game shake the tree created reflects the correct details.
-  Given 31_I am on the shake a tree game creation page
-  And   31_I entered text string 'This is a test game'
-  And   31_I press the save button.
-  When  31_I press the button launch now
-  Then  31_Latest card has the correct game title and date.
+
