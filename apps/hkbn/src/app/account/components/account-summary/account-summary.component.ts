@@ -25,4 +25,8 @@ export class AccountSummaryComponent implements OnChanges {
       this.accountSummary.patchValue(this.accountData);
     }
   }
+
+  public agreement(): void {
+
+  }
 }
