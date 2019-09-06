@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IProfile, ICustomProperties } from './profile.model';
+import { IProfile, ICustomProperties, IProfileProperty } from './profile.model';
 import { ProfileService } from './profile.service';
 import { EnvConfig } from '../shared/env-config';
 
@@ -48,7 +48,7 @@ export class V4ProfileService extends ProfileService {
       middleName: profile.middle_name,
       phone: profile.phone,
       email: profile.email,
-      birthDate: profile.birthday,
+      birthDate: profile.birthday ? new Date(profile.birthday) : undefined,
       gender: profile.gender,
       joinedDate: profile.joined_at,
       passwordExpiryDate: profile.password_expires_at,
@@ -85,6 +85,21 @@ export class V4ProfileService extends ProfileService {
     return this.whoAmI().pipe(
       map(
         (profile: IProfile) => profile.customProperties
+      )
+    );
+  }
+
+  public updateUserInfo(data: IProfileProperty): Observable<void> {
+    return this.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => {
+          return this.http.patch<void>(
+            `${this.apiHost}/v4/customers/${profile.id}`,
+            {
+              ...profile,
+              ...data
+            });
+        }
       )
     );
   }
