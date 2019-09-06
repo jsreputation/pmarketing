@@ -9,7 +9,7 @@ import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/mate
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '@cl-core-services';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { TokenService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/token.service';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('SideNavComponent', () => {
@@ -29,7 +29,7 @@ describe('SideNavComponent', () => {
         BrowserAnimationsModule,
         HttpClientModule
       ],
-      providers: [ AuthService, LocalStorageService, TokenService ],
+      providers: [ AuthService, LocalStorageService, SessionService ],
       declarations: [ SideNavComponent ]
     })
     .compileComponents();

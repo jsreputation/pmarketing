@@ -9,7 +9,6 @@ import {AccountComponent} from './account.component';
 import {DebugElement, Component} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {DynamicCreateService} from '../shared/service/dynamic-create.service';
-import {NavigateToolbarModule} from '../navigate-toolbar/navigate-toolbar.module';
 import {MatListModule} from '@angular/material/list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -59,7 +58,6 @@ describe('AccountComponent', () => {
           path: 'login',
           component: MockComponent
         }]),
-        NavigateToolbarModule,
         ProfileModule,
         MatListModule,
         NoopAnimationsModule

@@ -6,6 +6,8 @@ The acceptance criteria:
 3. Engagements tab visible to customer
 4. Engagment options are clickable.
 
+
+
 Scenario: Engagements tab is visible to customer.
   Given 1_I am on the dashboard page.
   When  1_I take no action.
