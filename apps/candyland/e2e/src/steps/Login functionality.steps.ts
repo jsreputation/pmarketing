@@ -129,18 +129,27 @@ Then(/^34_I am not able to login.$/, async () => {
 });
 
 // Verifying presence of message prompt to user.
-/*Given('{int}_I am on the login page.', function(int) {
-            // Write code here that turns the phrase above into concrete actions
-            return 'pending';
-          });
-
-When('{int}_I entered the correct email and invalid p\/w', function(int) {
-            // Write code here that turns the phrase above into concrete actions
-            return 'pending';
-          });
-
-Then('{int}_I see the message prompt for invalid login', function(int) {
-            // Write code here that turns the phrase above into concrete actions
-            return 'pending';
+Given(/^35_I am on the login page.$/, async () => {
+  await DashboardPage.navigateToDashboard();
+  // clearing session token in local storage
+  await browser.executeScript('window.localStorage.clear();');
+  await LoginApp.navigateToLogin();
 });
-*/
+
+When(/^35_I entered the correct email and invalid p\/w$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('input')).get(0)), 5000);
+  // entering correct account id
+  await element.all(by.css('input')).get(0).sendKeys(testAccountId);
+  // entering correct testUserAccount
+  await element.all(by.css('input')).get(1).sendKeys(testUserAccount);
+  // entering incorrect pw
+  await element.all(by.css('input')).get(2).sendKeys('test0101');
+  // clicking on the login button
+  await element.all(by.css('cl-button')).get(0).click();
+});
+
+Then(/^35_I see the message prompt for invalid login$/, async () => {
+  // asserting for the message prompt
+  await logs.expect('The email or password is incorrect! Http failure response for https://api.whistler.perxtech.org/iam/users/sign_in: 401 OK');
+});
