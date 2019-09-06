@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { TokenService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/token.service';
 import { Observable } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
 import { map, tap } from 'rxjs/operators';
@@ -13,8 +13,9 @@ import { map, tap } from 'rxjs/operators';
 export class AuthService {
   constructor(private http: AuthHttpService,
               private localStorage: LocalStorageService,
-              private tokenService: TokenService,
-              private router: Router) {
+              private sessionService: SessionService,
+              private router: Router
+  ) {
 
   }
 
@@ -33,14 +34,12 @@ export class AuthService {
   }
 
   public login(token: string, userId: string): void {
-    this.tokenService.token = token;
-    this.localStorage.set('authToken', token);
+    this.sessionService.token = token;
     this.localStorage.set('userId', userId);
   }
 
   public logout(): void {
-    this.tokenService.remove();
-    this.localStorage.remove('authToken');
+    this.sessionService.remove();
     this.localStorage.remove('userId');
     this.router.navigate(['/login']);
   }

@@ -55,11 +55,6 @@ describe('RewardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set save reward button to disabled', () => {
-    component.setToExpired(true);
-    expect(component.isButtonDisabled).toBe(true);
-  });
-
   it('should go back', () => {
     const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
     const locationSpy = spyOn(location, 'back');
