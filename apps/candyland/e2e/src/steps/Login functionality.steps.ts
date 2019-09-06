@@ -76,7 +76,7 @@ Then(/^32_I am not able to login.$/, async () => {
 });
 
 // Login with incorrect p/w
-Given(/^33_I am on the login page.$/, async() => {
+Given(/^33_I am on the login page.$/, async () => {
   await DashboardPage.navigateToDashboard();
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
