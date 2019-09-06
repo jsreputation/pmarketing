@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
 
 interface IPayloadPhone {
   type: string;
@@ -26,23 +27,13 @@ export class PhoneComponent implements OnChanges, OnInit {
   public answer: number;
   public countryCode: string;
 
+  constructor(private generalStaticDataService: GeneralStaticDataService) { }
   public ngOnInit(): void {
-    this.countriesList$ = of([
-      {
-        id: 3,
-        name: 'Azerbaijan',
-        phone: '+994'
-      },
-      {
-        id: 4,
-        name: 'Bahrain',
-        phone: '+973'
-      }
-    ]);
+    this.countriesList$ = this.generalStaticDataService.getCountriesList();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flush && changes.flush.currentValue !== undefined) {\
+    if (changes.flush && changes.flush.currentValue !== undefined) {
       this.updateInput(this.answer);
     }
   }
