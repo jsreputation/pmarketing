@@ -1,4 +1,4 @@
-import { 
+import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
@@ -8,7 +8,7 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatRadioModule
- } from '@angular/material';
+} from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
