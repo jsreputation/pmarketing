@@ -34,7 +34,7 @@ export class UpdateEmailComponent implements OnInit {
   }
 
   public updateEmail(): void {
-    this.profileService.setCustomProperties(null)
+    this.profileService.updateUserInfo(this.updateEmailGroup.value)
       .pipe(flatMap(() => this.translateService.get('EMAIL_SUCCESS_UPDATE')),
         catchError(() => this.translateService.get('EMAIL_ALREADY_EXISTS'))).subscribe((message) => {
           this.notification.addSnack(message);
