@@ -1,4 +1,14 @@
-import { MatInputModule, MatFormFieldModule, MatIconModule, MatCheckboxModule, MatRadioModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule } from '@angular/material';
+import {
+  MatInputModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatButtonModule,
+  MatDatepickerModule,
+  MatSelectModule,
+  MatNativeDateModule
+} from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
