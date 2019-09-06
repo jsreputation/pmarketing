@@ -5,6 +5,21 @@
   flex-direction: column;
   align-items: center;
   background: linear-gradient(180deg, #3a6186 0%, #89243e 100%);
+  padding: 1rem;
+  box-sizing: border-box;
+
+  .progress-bar {
+    width: 100%;
+
+    .progress-bar-label {
+      width: 100%;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      color: #fff;
+      letter-spacing: 0.4px;
+      text-align: left;
+    }
+  }
 
   .survey-card {
     display: flex;
