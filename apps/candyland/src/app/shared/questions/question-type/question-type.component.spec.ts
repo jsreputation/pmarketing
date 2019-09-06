@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuestionTypeComponent } from './question-type.component';
+import { QuestionTypeComponent } from 'src/app/shared/questions/question-type/question-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatIconModule, MatSelectModule } from '@angular/material';

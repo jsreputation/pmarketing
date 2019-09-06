@@ -14,19 +14,19 @@
         <div class="control-input">
           <mat-form-field class="messages-input" >
             <input type="text" matInput formControlName="question">
-            <mat-hint align="end">{{question.value?.length || 0}}/60</mat-hint>
+            <mat-hint align="end">{{question.value?.length || 0}}/128</mat-hint>
             <mat-error *ngIf="question.hasError('required')">Required field</mat-error>
             <mat-error *ngIf="question.hasError('minlength')">Min length 1</mat-error>
-            <mat-error *ngIf="question.hasError('maxlength')">Max length 60</mat-error>
+            <mat-error *ngIf="question.hasError('maxlength')">Max length 128</mat-error>
           </mat-form-field>
         </div>
         <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">
           <mat-form-field class="messages-input">
             <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
-            <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
+            <mat-hint align="end">{{description.value?.length || 0}}/512</mat-hint>
             <mat-error *ngIf="description.hasError('required')">Required field</mat-error>
             <mat-error *ngIf="description.hasError('minlength')">Min length 1</mat-error>
-            <mat-error *ngIf="description.hasError('maxlength')">Max length 120</mat-error>
+            <mat-error *ngIf="description.hasError('maxlength')">Max length 512</mat-error>
           </mat-form-field>
         </div>
 

@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { QuestionFormFieldService } from './services/question-form-field.service';
+import { QuestionFormFieldService } from 'src/app/shared/questions/question-form-field/shared/services/question-form-field.service';
 
 @Directive({
   selector: '[clOpenClose]'

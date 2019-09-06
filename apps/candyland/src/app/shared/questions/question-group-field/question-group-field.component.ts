@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
+import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({

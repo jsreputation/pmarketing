@@ -2,14 +2,15 @@ import {
   ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SurveyService } from '@cl-core/services';
+import { SurveyService } from '@cl-core-services';
+import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 // tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => QuestionTypeComponent),
-  multi: true,
+  multi: true
 };
 
 @Component({
@@ -33,10 +34,14 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   private destroy$ = new Subject();
 
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => {
+  };
+  public onTouch: any = () => {
+  };
+
   constructor(private surveyService: SurveyService,
-              private cd: ChangeDetectorRef) { }
+              private cd: ChangeDetectorRef) {
+  }
 
   public closed(): void {
     this.selectTypeQuestion.emit(this.type.value);
@@ -59,9 +64,9 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   public hideQuestionGroup(type: string): boolean {
     if (this.addQuestionType) {
-      return !(this.level >= 0 && type === 'questionGroup');
+      return !(this.level >= 0 && type === SurveyQuestionType.questionGroup);
     }
-    return !(this.level > 0 && type === 'questionGroup');
+    return !(this.level > 0 && type === SurveyQuestionType.questionGroup);
   }
 
   ngOnInit() {

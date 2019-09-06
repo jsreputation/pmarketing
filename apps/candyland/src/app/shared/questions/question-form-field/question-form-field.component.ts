@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output
+import {
+  Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges
 } from '@angular/core';
-import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
+import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SurveyQuestionType } from '@cl-shared/components/question-form-field/survey-question-type.enum';
+import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -11,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './question-form-field.component.html',
   styleUrls: ['./question-form-field.component.scss'],
 })
-export class QuestionFormFieldComponent implements OnInit, OnDestroy {
+export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public group: FormGroup;
   @Input() public formGroup: FormGroup;
   @Input() public level: number;
@@ -40,6 +41,13 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     this.subscribeDescriptionControl();
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.currentIndex.currentValue !== changes.currentIndex.previousValue) {
+      const updatedFormId = changes.currentIndex.currentValue.toString().replace('-', '.');
+      this.id.patchValue(updatedFormId);
+    }
+  }
+
   public getTypeField(): AbstractControl {
     return this.group.get('selectedType');
   }
@@ -52,12 +60,16 @@ export class QuestionFormFieldComponent implements OnInit, OnDestroy {
     return this.group.get('description');
   }
 
+  public get id(): AbstractControl {
+    return this.group.get('id');
+  }
+
   public remove(): void {
     this.removed.emit(this.currentIndex);
   }
 
   public choseTypeQuestion(selectedTypeQuestion: string): void {
-    this.changeControl.emit({index: this.currentIndex, selectedTypeQuestion});
+    this.changeControl.emit({index: this.currentIndex, selectedTypeQuestion, level: this.level });
   }
 
   private updateStatusDescriptionField(): void {

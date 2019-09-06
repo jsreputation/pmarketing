@@ -3,9 +3,9 @@
     <mat-form-field>
       <mat-label>Default Country Code</mat-label>
       <mat-select formControlName="default_country_code">
-        <mat-option *ngFor="let country of countriesList$ | async as countries" [value]="country.phone">
+        <mat-option *ngFor="let country of countriesList$ | async as countries" [value]="country.code">
           <span>{{country.name}}&nbsp;</span>
-          <span>{{country.phone}}</span>
+          <span>{{country.code}}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>

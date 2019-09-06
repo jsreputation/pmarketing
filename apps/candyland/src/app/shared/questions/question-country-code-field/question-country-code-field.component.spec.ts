@@ -21,7 +21,7 @@ describe('QuestionCountryCodeFieldComponent', () => {
       declarations: [ QuestionCountryCodeFieldComponent ],
       providers: [
         {
-          provide: SurveyService, useValue: {getCountriesList: () => []}
+          provide: SurveyService, useValue: {getDefaultCountryCode: () => []}
         }
       ]
     })

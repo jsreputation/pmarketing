@@ -1,17 +1,17 @@
 import { ComponentFactoryResolver, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SurveyQuestionType } from '@cl-shared/components/question-form-field/survey-question-type.enum';
-import { QuestionRatingFieldComponent } from '@cl-shared/components/question-rating-field/question-rating-field.component';
-import { QuestionDateFieldComponent } from '@cl-shared/components/question-date-field/question-date-field.component';
-import { QuestionCountryCodeFieldComponent } from '@cl-shared/components/question-country-code-field/question-country-code-field.component';
-import { QuestionGroupFieldComponent } from '@cl-shared/components/question-group-field/question-group-field.component';
-import { QuestionLongTextFieldComponent } from '@cl-shared/components/question-long-text-field/question-long-text-field.component';
+import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
+import { QuestionRatingFieldComponent } from '@cl-shared/questions/question-rating-field/question-rating-field.component';
+import { QuestionDateFieldComponent } from '@cl-shared/questions/question-date-field/question-date-field.component';
+import { QuestionCountryCodeFieldComponent } from '@cl-shared/questions/question-country-code-field/question-country-code-field.component';
+import { QuestionGroupFieldComponent } from '@cl-shared/questions/question-group-field/question-group-field.component';
+import { QuestionLongTextFieldComponent } from '@cl-shared/questions/question-long-text-field/question-long-text-field.component';
 import {
   QuestionPictureChoiceFieldComponent
-} from '@cl-shared/components/question-picture-choice-field/question-picture-choice-field.component';
+} from '@cl-shared/questions/question-picture-choice-field/question-picture-choice-field.component';
 import {
   QuestionMultipleChoiceFieldComponent
-} from '@cl-shared/components/question-multiple-choice-field/question-multiple-choice-field.component';
+} from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.component';
 
 const componentMapper = {
   [SurveyQuestionType.rating]: QuestionRatingFieldComponent,

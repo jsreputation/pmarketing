@@ -5,7 +5,7 @@
         <mat-form-field>
           <mat-label>Scale</mat-label>
           <mat-select [formControlName]="'scale'">
-            <mat-option *ngFor="let item of scales" [value]="item.value">{{item.viewValue}}</mat-option>
+            <mat-option *ngFor="let item of scales" [value]="item.value">{{item.title}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

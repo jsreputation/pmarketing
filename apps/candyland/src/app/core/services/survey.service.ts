@@ -26,6 +26,10 @@ export class SurveyService {
       );
   }
 
+  public getDefaultCountryCode(): Observable<any> {
+    return this.surveyHttp.getDefaultCountryCode();
+  }
+
   public getSurveyData(): Observable<{
     background: IGraphic[],
     cardBackground: IGraphic[]

@@ -23,6 +23,11 @@ export class SurveyHttpService {
     return this.generalStaticDataService.getCountriesList();
   }
 
+  public getDefaultCountryCode(): Observable<any> {
+    return this.http.get('assets/actives/common/default-coutry-code.json');
+    // return this.generalStaticDataService.getCountriesList();
+  }
+
   public getSurveyData(): Observable<{
     background: IGraphic[],
     cardBackground: IGraphic[]
