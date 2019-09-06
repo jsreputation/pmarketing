@@ -1,7 +1,11 @@
-<mat-card *ngFor="let reward of rewards | async" matRipple (click)="selected(reward)">
+<mat-card
+	*ngFor="let reward of rewards | async"
+	matRipple (click)="selected(reward)">
 	<div class="featured-image">
 		<img mat-card-image [src]="reward.rewardBanner">
-		<span [ngClass]="'macaron ' + getMacaron(reward.validTo)" [innerHTML]="getMacaron(reward.validTo)"></span>
+		<div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
+			<span [ngClass]="macaron.class">{{macaron.label}}</span>
+		</div>
 	</div>
 	<mat-card-content>
 		<div>

@@ -24,12 +24,11 @@
               <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
               <ng-template #pinComponent>
                 <div class="pin-input-container">
-                  <perx-core-pin-redemption #pinInput
+                  <perx-core-pin-input #pinInput
                   [length]="4"
-                  [voucherId]="voucher.id"
-                  (full)="onVoucherRedeemed()"
-                  (update)="onUpdate()">
-                  </perx-core-pin-redemption>
+                  (full)="full($event)"
+                  (update)="updatePin()">
+                  </perx-core-pin-input>
 	              </div>
               </ng-template>
             </div>
@@ -40,7 +39,13 @@
         </div>
         <div class="lower-section mat-elevation-z2">
           <div [ngClass]="'lower-section ' + voucher.state">
-            <app-reward-detail [rewardId]="voucher.rewardId" [showBackButton]="false" [showBannerImage]="false"></app-reward-detail>
+            <app-reward-detail
+              [rewardId]="voucher.rewardId"
+              [showBackButton]="false"
+              [showBannerImage]="false"
+              [showMacaron]="false"
+              [className]="'voucher'"
+            ></app-reward-detail>
           </div>
           <mat-divider></mat-divider>
           <div class="action">

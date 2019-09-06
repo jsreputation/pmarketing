@@ -71,7 +71,8 @@
   margin-bottom: 4rem;
 }
 
-.lower-section.expired, .lower-section.redeemed {
+.lower-section.expired,
+.lower-section.redeemed {
   opacity: 0.2;
 }
 
@@ -92,7 +93,8 @@
   justify-content: center;
   min-height: 14rem;
 
-  h1, p {
+  h1,
+  p {
     font-size: 2rem;
     color: #666666;
   }
@@ -135,7 +137,7 @@
 
   .incorrect-pin {
     text-align: center;
-    color: #D8127D;
+    color: #d8127d;
     font-size: 1.6rem;
   }
 }
@@ -153,4 +155,21 @@
   button.mat-flat-button {
     color: #ffffff;
   }
+}
+
+// out of time to find something better at this stage
+::ng-deep input {
+  background: #eef9e4;
+  border: 0 !important;
+  font-size: 1.8rem !important;
+  height: 6rem !important;
+}
+
+::ng-deep.error input {
+  border-color: #eb202f;
+  background: #fff3f9;
+}
+
+::ng-deep .error :focus {
+  outline-color: #eb202f;
 }

@@ -10,7 +10,9 @@ import { RewardsService } from '@perx/core';
 })
 export class RewardComponent implements OnInit {
   public rewardId: number;
-  public isButtonDisabled: boolean = false;
+  public isButtonEnable: boolean = false;
+  public isComingSoon: boolean = false;
+  public isRewardLoaded: boolean = false;
 
   constructor(
     private location: Location,
@@ -38,7 +40,7 @@ export class RewardComponent implements OnInit {
     );
   }
 
-  public setToExpired(isExpired: boolean): void {
-    this.isButtonDisabled = isExpired;
+  public setButton(isEnable: boolean): void {
+    this.isButtonEnable = isEnable;
   }
 }

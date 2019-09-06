@@ -1,25 +1,31 @@
 <div class="main" *ngIf="reward">
-  <div class="contents">
+  <div [ngClass]="'contents ' + className">
     <div class="app-header">
       <button *ngIf="showBackButton" class="icon" (click)="back()">
         <mat-icon>arrow_backward</mat-icon>
       </button>
       <img *ngIf="showBannerImage" class="banner" [src]="reward.rewardBanner">
-      <div class="badge">
-          <img [src]="reward.merchantImg">
-        </div>
+      <div class="badge" *ngIf="reward.merchantImg">
+        <img [src]="reward.merchantImg">
+      </div>
     </div>
 
     <div class="container">
       <div *ngIf="reward" class="reward-merchant">
         <h1>{{reward.name}}</h1>
         <h2>{{reward.merchantName}}</h2>
-        <div *ngIf="showMacaron" class="macaron">
-          <span class="expiring">{{macaronText}}</span>
+        <div *ngIf="showMacaron && macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
-        <div *ngIf="!isExpired">
-			<app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()"></app-expire-timer>
+        <div *ngIf="!isExpired && macaron">
+          <app-expire-timer
+            *ngIf="macaron.class === 'expiring'"
+            [timerEndDate]="reward.validTo"
+            (hasExpired)="setToExpired()"
+            (isExpiring)="onExpiring()">
+          </app-expire-timer>
         </div>
+        <span *ngIf="macaron && macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}} left</span>
       </div>
 
       <div class="content">

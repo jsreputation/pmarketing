@@ -7,6 +7,11 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import { ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
 interface IV4Campaign {
   id: number;
   name: string;
@@ -15,7 +20,7 @@ interface IV4Campaign {
   ends_at?: string;
   enrolled: boolean;
   campaign_type: CampaignType;
-  images: any[];
+  images: IV4Image[];
   favourite: boolean;
   custom_fields: any;
   category_tags: any[];
@@ -47,7 +52,9 @@ export class CampaignService implements ICampaignService {
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
-    const rewards = campaign.rewards && campaign.rewards.map( (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
+    const thumbnail = campaign.images.find(image => image.type === 'catalog_thumbnail');
+    const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
+    const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
       id: campaign.id,
       name: campaign.name,
@@ -55,7 +62,8 @@ export class CampaignService implements ICampaignService {
       type: campaign.campaign_type,
       state: campaign.state,
       endsAt: campaign.ends_at,
-      rewards
+      rewards,
+      thumbnailUrl
     };
   }
 
@@ -67,7 +75,7 @@ export class CampaignService implements ICampaignService {
       );
   }
 
-  public getCampaign(id: number): Observable <ICampaign> {
+  public getCampaign(id: number): Observable<ICampaign> {
     return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
         map(resp => resp.data),

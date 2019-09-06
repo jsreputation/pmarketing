@@ -2,6 +2,12 @@
 
 :host {
   background: $bg-color;
+
+  ::ng-deep {
+    .points {
+      color: #70A078;
+    }
+  }
 }
 
 .loyalty-section {
@@ -16,14 +22,13 @@
   &-qr {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
   }
 }
 
 .enlarge {
   color: $white;
-  margin: 1.5rem 0 1rem;
+  margin: 1.6rem 0;
 }
 
 .rewards-carousel {

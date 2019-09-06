@@ -12,7 +12,7 @@ import { SideNavModule } from './shared/components/side-nav/side-nav.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { TokenService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/token.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,7 @@ import { TokenService } from '@cl-core/services/token.service';
   ],
   providers: [
     LocalStorageService,
-    TokenService,
+    SessionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

@@ -1,11 +1,16 @@
 export interface IAnswer {
     question_id?: string;
-    content: number | string | boolean;
+    content: any;
 }
 
 export interface IPoints {
     question_id?: string;
     point: number;
+}
+
+export interface IDateRange {
+    from: string;
+    to: string;
 }
 export interface ITracker {
     [key: string]: any;
@@ -17,7 +22,7 @@ export interface IQuestion {
     description?: string;
     required: boolean;
     payload: IPayload;
-    answer?: string | number | boolean;
+    answer?: any;
 }
 
 export interface ISurvey {
@@ -39,8 +44,9 @@ export interface IErrors {
     hasError?: boolean;
     isRequired?: boolean;
     isValidDate?: boolean;
-    isExceedMaxLength?: boolean;
+    exceedMaxLength?: boolean;
     isValidPhoneNumber?: boolean;
+    isValidDateRange?: boolean;
 }
 
 export interface IPayload {
