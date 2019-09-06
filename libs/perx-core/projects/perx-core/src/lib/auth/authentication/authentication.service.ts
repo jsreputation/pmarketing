@@ -6,7 +6,8 @@ import {
   IResetPasswordData,
   IAppAccessTokenResponse,
   IChangePasswordData,
-  ILoginResponse
+  ILoginResponse,
+  IChangePhoneData
 } from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
 
@@ -72,6 +73,10 @@ export abstract class AuthenticationService {
   public abstract signup(profile: ISignUpData): Observable<IProfile>;
 
   public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
+
+  public abstract requestVerificationToken(): Observable<void>;
+
+  public abstract changePhone(changePhoneData: IChangePhoneData): Observable<void>;
 
   public abstract changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse>;
 

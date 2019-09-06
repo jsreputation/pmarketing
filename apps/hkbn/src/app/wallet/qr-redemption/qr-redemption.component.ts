@@ -1,32 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, switchMap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { VouchersService, VoucherState } from '@perx/core';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hkbn-qr-redemption',
   templateUrl: './qr-redemption.component.html',
   styleUrls: ['./qr-redemption.component.scss']
 })
-export class QrRedemptionComponent implements OnInit {
+export class QrRedemptionComponent implements OnInit, OnDestroy {
 
   public voucherId: number;
   public status: VoucherState;
   private destroy$: Subject<void> = new Subject<void>();
-
+  private subscriptionVoucher: Subscription;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private voucherService: VouchersService,
-    private notificationWrapperService: NotificationWrapperService
+    private notificationWrapperService: NotificationWrapperService,
+    private location: Location
   ) {
   }
 
   public ngOnInit(): void {
-    this.route.paramMap
+    this.subscriptionVoucher = this.route.paramMap
       .pipe(
         takeUntil(this.destroy$),
         switchMap((params: ParamMap) => {
@@ -47,9 +49,11 @@ export class QrRedemptionComponent implements OnInit {
         }
       });
   }
-
+  public ngOnDestroy(): void {
+    this.subscriptionVoucher.unsubscribe();
+  }
   public cancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.location.back();
   }
 
 }
