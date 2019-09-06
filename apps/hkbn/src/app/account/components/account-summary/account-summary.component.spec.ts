@@ -12,13 +12,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
-import { IProfile } from '@perx/core';
+import { IProfile, ProfileService } from '@perx/core';
+import { of } from 'rxjs';
 
 const accountDataStub: IProfile = {
   id: 0,
   firstName: 'Temp',
   state: 'issued',
   lastName: 'Temp'
+};
+
+const profileServiceStub = {
+  setCustomProperties: () => of(null)
 };
 
 describe('AccountSummaryComponent', () => {
@@ -39,7 +44,10 @@ describe('AccountSummaryComponent', () => {
         MatSlideToggleModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [AccountSummaryComponent]
+      declarations: [AccountSummaryComponent],
+      providers: [
+        { provide: ProfileService, useValue: profileServiceStub }
+      ]
     })
       .compileComponents();
   }));
