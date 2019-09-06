@@ -27,7 +27,7 @@ import { environment } from 'src/environments/environment';
     RewardsCardsComponent,
     CatalogsComponent,
     CampaignsComponent,
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
   ],
   imports: [
     CommonModule,

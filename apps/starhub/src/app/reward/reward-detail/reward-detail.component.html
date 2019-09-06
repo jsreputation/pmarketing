@@ -14,13 +14,18 @@
       <div *ngIf="reward" class="reward-merchant">
         <h1>{{reward.name}}</h1>
         <h2>{{reward.merchantName}}</h2>
-        <div *ngIf="showMacaron" class="macaron">
-          <span class="expiring">{{macaronText}}</span>
+        <div *ngIf="showMacaron && macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
         <div *ngIf="!isExpired">
-          <app-expire-timer [timerEndDate]="reward.validTo" (hasExpired)="setToExpired()" (isExpiring)="onExpiring()">
+          <app-expire-timer
+            *ngIf="macaron.class === 'expiring'"
+            [timerEndDate]="reward.validTo"
+            (hasExpired)="setToExpired()"
+            (isExpiring)="onExpiring()">
           </app-expire-timer>
         </div>
+        <span *ngIf="macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}} left</span>
       </div>
 
       <div class="content">

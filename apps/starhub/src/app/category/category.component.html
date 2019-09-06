@@ -19,10 +19,9 @@
         <div *ngIf="reward.merchantImg" class="badge">
           <img [src]="reward.merchantImg">
         </div>
-      <span
-        [ngClass]="'macaron ' + getMacaron(reward.validFrom, reward.validTo)"
-        [innerHTML]="getMacaron(reward.validFrom, reward.validTo).replace('-', ' ')">
-      </span>
+        <div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+        </div>
     </div>
     <mat-card-content>
       <div class="details">
