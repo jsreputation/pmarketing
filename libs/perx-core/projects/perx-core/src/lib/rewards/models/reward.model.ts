@@ -16,6 +16,7 @@ export interface IReward {
   termsAndConditions: string;
   howToRedeem: string;
   categoryTags?: ICategoryTags[];
+  inventory?: Inventory;
 }
 
 export interface ICatalog {
@@ -46,4 +47,9 @@ export interface ICategoryTags {
 export interface IRewardParams {
   priceId?: number;
   locationId?: number;
+}
+
+export interface Inventory {
+  rewardTotalBalance?: number | null;
+  rewardTotalLimit?: number | null;
 }
