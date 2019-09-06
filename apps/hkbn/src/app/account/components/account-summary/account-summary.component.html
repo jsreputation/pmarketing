@@ -34,10 +34,10 @@
       <mat-icon>edit</mat-icon>
     </a>
   </mat-form-field>
-  <mat-slide-toggle formControlName="customProperties" labelPosition="before">
-    {{"AGREE_MARKETING" | translate}}
-  </mat-slide-toggle>
+  <form formGroupName="customProperties">
+    <mat-slide-toggle (change)="agreement($event)" formControlName="subscribe_notification" labelPosition="before">
+      {{"AGREE_MARKETING" | translate}}
+    </mat-slide-toggle>
+  </form>
   <div class="form-field-border"></div>
-  
 </form>
-
