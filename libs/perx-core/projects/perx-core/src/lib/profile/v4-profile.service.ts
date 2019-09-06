@@ -48,7 +48,7 @@ export class V4ProfileService extends ProfileService {
       middleName: profile.middle_name,
       phone: profile.phone,
       email: profile.email,
-      birthDate: profile.birthday,
+      birthDate: profile.birthday ? new Date(profile.birthday) : undefined,
       gender: profile.gender,
       joinedDate: profile.joined_at,
       passwordExpiryDate: profile.password_expires_at,

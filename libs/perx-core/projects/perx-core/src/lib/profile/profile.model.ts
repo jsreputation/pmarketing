@@ -6,7 +6,7 @@ export interface IProfile {
   middleName?: string;
   phone?: string;
   email?: string;
-  birthDate?: string;
+  birthDate?: Date;
   gender?: string;
   joinedDate?: string;
   passwordExpiryDate?: string;
@@ -23,8 +23,6 @@ export interface IProfileProperty {
   lastName?: string;
   middleName?: string;
   email?: string;
-  birthDate?: string;
+  birthDate?: Date;
   gender?: string;
-  joinedDate?: string;
-  passwordExpiryDate?: string;
 }
