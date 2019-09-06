@@ -1,5 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatInputModule, MatFormFieldModule, MatIconModule } from '@angular/material';
+import {
+  MatInputModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+} from '@angular/material';
 
 import { QuestionComponent } from './question.component';
 import { GroupComponent } from './group/group.component';
@@ -9,6 +19,7 @@ import { RatingComponent } from './rating/rating.component';
 import { LongTextComponent } from './long-text/long-text.component';
 import { DateComponent } from './date/date.component';
 import { PhoneComponent } from './phone/phone.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('QuestionComponent', () => {
   let component: QuestionComponent;
@@ -27,12 +38,20 @@ describe('QuestionComponent', () => {
         PhoneComponent
       ],
       imports: [
-        MatInputModule,
         MatFormFieldModule,
-        MatIconModule
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        FormsModule,
+        ReactiveFormsModule,
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

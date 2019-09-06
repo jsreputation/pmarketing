@@ -35,3 +35,10 @@ export class CreateShakeTheTreeAppPage {
  }
 
 }
+export class LoginAppPage {
+
+  public navigateToLogin(): Promise<string> {
+    return browser.get('login') as Promise<string> ;
+ }
+
+}
