@@ -30,7 +30,7 @@ export class DateComponent implements OnChanges, OnInit {
   public answer: string | IDateRange;
 
   public ngOnInit(): void {
-    this.answer = this.answer || this.payload.duration ? { from: '', to: '' } : '';
+    this.answer = this.answer || (this.payload && this.payload.duration) ? { from: '', to: '' } : '';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

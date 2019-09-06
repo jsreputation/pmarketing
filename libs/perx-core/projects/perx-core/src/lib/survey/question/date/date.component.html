@@ -1,5 +1,5 @@
 <div class="date-wrapper" *ngIf="payload">
-  <ng-container *ngIf="payload.duration; else elseBlock">
+  <ng-container *ngIf="payload?.duration; else elseBlock">
     <mat-form-field class="full-width">
       <input
         matInput 

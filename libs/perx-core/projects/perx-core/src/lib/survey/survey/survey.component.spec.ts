@@ -1,4 +1,4 @@
-import { MatInputModule, MatFormFieldModule, MatIconModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatIconModule, MatCheckboxModule, MatRadioModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -10,6 +10,7 @@ import { PictureSelectComponent } from './../question/picture-select/picture-sel
 import { LongTextComponent } from './../question/long-text/long-text.component';
 import { DateComponent } from './../question/date/date.component';
 import { PhoneComponent } from './../question/phone/phone.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -29,9 +30,17 @@ describe('SurveyComponent', () => {
         PhoneComponent
       ],
       imports: [
-        MatInputModule,
         MatFormFieldModule,
-        MatIconModule
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        FormsModule,
+        ReactiveFormsModule,
       ]
     })
       .compileComponents();
