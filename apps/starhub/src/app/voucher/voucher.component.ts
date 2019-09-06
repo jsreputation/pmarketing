@@ -11,6 +11,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 export class VoucherComponent implements OnInit {
   public voucher: Voucher;
   public locations: ILocation[];
+  public isButtonEnable: boolean = false;
 
   constructor(private vouchersService: VouchersService, private activeRoute: ActivatedRoute) {
   }
@@ -25,5 +26,9 @@ export class VoucherComponent implements OnInit {
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
       });
+  }
+
+  public setButton(isEnable: boolean): void {
+    this.isButtonEnable = isEnable;
   }
 }
