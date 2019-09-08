@@ -18,7 +18,7 @@ export class MacaronService {
     const validToDate = reward.validTo;
 
     const nowTime: number = (new Date()).getTime();
-    if (reward.sellingFrom && sellingFrom.getTime() < nowTime) {
+    if (reward.sellingFrom && sellingFrom.getTime() > nowTime) {
       return {
         label: 'Coming Soon',
         class: 'coming-soon',
@@ -29,8 +29,10 @@ export class MacaronService {
     // some of the reward balance is negative value
     let ratio: number | null = null;
     if (reward.inventory &&
-      reward.inventory.rewardTotalBalance &&
-      reward.inventory.rewardTotalLimit &&
+      reward.inventory.rewardTotalBalance !== undefined &&
+      reward.inventory.rewardTotalBalance !== null &&
+      reward.inventory.rewardTotalLimit !== undefined &&
+      reward.inventory.rewardTotalLimit !== null &&
       reward.inventory.rewardTotalLimit !== 0) {
       ratio = reward.inventory.rewardTotalBalance / reward.inventory.rewardTotalLimit;
     }
@@ -52,7 +54,7 @@ export class MacaronService {
     }
 
     // Low inventory (<10%)
-    if (ratio !== null && ratio < 0.1) {
+    if (ratio !== null && ratio <= 0.1) {
       return {
         label: 'Running Out',
         class: 'running-out',
@@ -61,7 +63,7 @@ export class MacaronService {
       };
     }
 
-    const thirtySixHours = 36 * 60 * 1000;
+    const thirtySixHours = 36 * 60 * 60 * 1000;
     if (reward.validTo && (validToDate.getTime() - nowTime) < thirtySixHours) {
       return {
         label: 'Expiring Soon',
@@ -70,7 +72,7 @@ export class MacaronService {
       };
     }
 
-    const seventyTwoHours = 72 * 60 * 1000;
+    const seventyTwoHours = 72 * 60 * 60 * 1000;
     if (reward.sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
       return {
         label: 'Just Added',

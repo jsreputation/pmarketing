@@ -1,32 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, flatMap } from 'rxjs/operators';
 import { VouchersService, VoucherState } from '@perx/core';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hkbn-code-redemption',
   templateUrl: './code-redemption.component.html',
   styleUrls: ['./code-redemption.component.scss']
 })
-export class CodeRedemptionComponent implements OnInit {
+export class CodeRedemptionComponent implements OnInit, OnDestroy {
   public previousStatus: VoucherState;
   public voucherId: number;
-
+  public subscriptionVoucher: Subscription;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private vouchersService: VouchersService,
     private notificationWrapperService: NotificationWrapperService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
   }
 
   public ngOnInit(): void {
-    this.route.paramMap
+    this.subscriptionVoucher = this.route.paramMap
       .pipe(
         takeUntil(this.destroy$)
       )
@@ -37,7 +39,7 @@ export class CodeRedemptionComponent implements OnInit {
         if (voucher.state === VoucherState.issued) {
           this.previousStatus = VoucherState.issued;
         }
-        if (this.previousStatus === VoucherState.issued && voucher.state === VoucherState.redeemed ) {
+        if (this.previousStatus === VoucherState.issued && voucher.state === VoucherState.redeemed) {
           this.notificationWrapperService.addPopup({
             title: 'Success',
             buttonTxt: 'Wallet'
@@ -46,9 +48,10 @@ export class CodeRedemptionComponent implements OnInit {
         }
       });
   }
-
+  public ngOnDestroy(): void {
+    this.subscriptionVoucher.unsubscribe();
+  }
   public redeem(): void {
-    this.vouchersService.redeemVoucher(this.voucherId).subscribe(() => {
-    });
+    this.location.back();
   }
 }

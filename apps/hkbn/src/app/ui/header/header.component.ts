@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, map, mapTo, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
 import { MatSidenavContainer } from '@angular/material';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hkbn-header',
@@ -15,14 +16,14 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   public routeData: any = null;
   public user: IProfile;
 
-  private currentRoute: ActivatedRoute;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private location: Location
   ) {
   }
 
@@ -42,7 +43,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         return route;
       }),
       filter((route: ActivatedRoute) => route.outlet === 'primary'),
-      tap((route) => this.currentRoute = route),
       switchMap((route: ActivatedRoute) => route.data),
       takeUntil(this.destroy$)
     ).subscribe((routeData) => {
@@ -53,10 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.events.subscribe(() => this.navContainer.close());
   }
   public goBack(): void {
-    if (this.routeData && (this.routeData.back || this.routeData.cross)) {
-      const url = this.routeData.backUrl ? this.routeData.backUrl : '';
-      this.router.navigate([url], { relativeTo: this.currentRoute });
-    }
+    this.location.back();
   }
 
   public logout(): void {

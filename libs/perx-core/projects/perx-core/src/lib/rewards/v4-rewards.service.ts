@@ -177,8 +177,8 @@ export class V4RewardsService extends RewardsService {
       howToRedeem: reward.how_to_redeem,
       categoryTags: reward.category_tags,
       inventory: {
-        rewardTotalBalance: reward.inventory.reward_total_balance || null,
-        rewardTotalLimit: reward.inventory.reward_total_limit || null,
+        rewardTotalBalance: reward.inventory.reward_total_balance !== undefined ? reward.inventory.reward_total_balance : null,
+        rewardTotalLimit: reward.inventory.reward_total_limit !== undefined ? reward.inventory.reward_total_limit : null,
       },
     };
   }

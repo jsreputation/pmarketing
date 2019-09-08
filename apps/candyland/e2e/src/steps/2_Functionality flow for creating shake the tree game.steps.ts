@@ -45,7 +45,7 @@ When(/^7_I click the next button$/, async () => {
   await browser.wait(ec.elementToBeClickable(element(by.className('btn mat-flat-button primary'))), 5000);
   // clicking on the create new button
   await element(by.className('btn mat-flat-button primary')).click();
-  // clicking on the create engagements
+  // clicking on the games option
   await element.all(by.tagName('cl-type-item')).get(1).click();
   // clicking on the next button
   await element.all(by.className('btn mat-flat-button primary')).get(1).click();
@@ -58,20 +58,26 @@ Then(/^7_the page should be redirected to the correct url.$/, async () => {
 // Verifying that the relevant input text fields are present.
 Given(/^8_that I am on the shake the tree creation page$/, async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
-  await browser.sleep(3000);
-  });
+  // await browser.sleep(3000);
+});
 
 When(/^8_I do nothing$/, () => {});
 
 Then('8_The relevant text input fields are present.', async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for element to load
+  await browser.wait(ec.presenceOf(element.all(by.css('input')).first()), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('input')).get(1)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('input')).get(2)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('input')).last()), 5000);
   // Verifying whether engagement title text input exists
-  expect(await element(by.css('input#mat-input-0')).isPresent()).to.equal(true);
+  expect(await element.all(by.css('input')).first().isPresent()).to.equal(true);
   // Verifying whether headline message text input exists
-  expect(await element(by.css('input#mat-input-1')).isPresent()).to.equal(true);
+  expect(await element.all(by.css('input')).get(1).isPresent()).to.equal(true);
   // Verifying whether sub-headline message text input exists
-  expect(await element(by.css('input#mat-input-2')).isPresent()).to.equal(true);
+  expect(await element.all(by.css('input')).get(2).isPresent()).to.equal(true);
   // Verifying whether button text input exists
-  expect(await element(by.css('input#mat-input-3')).isPresent()).to.equal(true);
+  expect(await element.all(by.css('input')).last().isPresent()).to.equal(true);
 });
 
 // Verifying the presence of the preview element.

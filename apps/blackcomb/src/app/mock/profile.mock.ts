@@ -8,7 +8,7 @@ export const profile: IProfile = {
     middleName: 'Catherine',
     phone: '1111111111',
     email: 'lucas@perxtech.com',
-    birthDate: '',
+    birthDate: undefined,
     gender: 'male',
     joinedDate: '2018-10-31T00:00:00.000Z',
     passwordExpiryDate: '2019-09-01T08:35:13.801Z',

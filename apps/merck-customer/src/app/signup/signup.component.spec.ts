@@ -109,7 +109,7 @@ describe('SignupComponent', () => {
           middleName: '',
           phone: '1234',
           email: '',
-          birthDate: '',
+          birthDate: undefined,
           gender: '',
           joinedDate: '',
           passwordExpiryDate: '',
