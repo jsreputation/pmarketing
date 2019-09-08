@@ -1,14 +1,8 @@
 <div class="cdk-virtual-scroll-data-source" (window:resize)="onResize()">
-  <cdk-virtual-scroll-viewport
-    (scrolledIndexChange)="getIndex($event)"
-    [itemSize]="itemSize"
-    orientation="horizontal"
-  >
-    <mat-card
-      *cdkVirtualFor="let item of items"
-      class="mat-item mat-elevation-z2"
-      [ngStyle]="{'width': (itemSize-50)+'px'}"
-    >
+  <cdk-virtual-scroll-viewport (scrolledIndexChange)="updateScrollIndex($event)" [itemSize]="itemSize"
+    orientation="horizontal">
+    <mat-card *cdkVirtualFor="let item of items" class="mat-item mat-elevation-z2"
+      [ngStyle]="{'width': (itemSize-50)+'px'}">
       <img mat-card-image [src]="item.image" *ngIf="item.image">
       <mat-card-content>
         <p>{{ (item.description.length > 120) ? (item.description | slice:0:120)+'...':(item.description) }}</p>
@@ -22,11 +16,8 @@
 
 <div class="dots">
   <div class="container">
-    <span class="scroller" [ngStyle]="{'transform': 'translateX(' + scrolledValue + '%)'}">
-      <span class="active"></span>
-    </span>
-    <span></span>
-    <span></span>
-    <span></span>
+    <span class="gray-dot" *ngFor="let i of newsBeforeScroll"></span>
+    <span class="green-bar"></span>
+    <span class="gray-dot" *ngFor="let i of newsAfterScroll"></span>
   </div>
 </div>
