@@ -14,7 +14,7 @@
         <p>{{ (item.description.length > 120) ? (item.description | slice:0:120)+'...':(item.description) }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <a mat-button target="__blank" [href]="item.link" color="primary">Read More</a>
+        <button mat-button target="__blank" color="primary" (click)="readMore(item)">Read More</button>
       </mat-card-actions>
     </mat-card>
   </cdk-virtual-scroll-viewport>
