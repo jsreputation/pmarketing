@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatDialogModule, MatDialog } from '@angular/material';
+import { MatDialogModule, MatDialog, MatSnackBar } from '@angular/material';
 import {
   AuthenticationService,
   ProfileService,
@@ -33,7 +33,7 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   const authenticationServiceStub = {
-    saveUserAccessToken: () => {}
+    saveUserAccessToken: () => { }
   };
   const profileServiceStub = {
     whoAmI: () => of()
@@ -87,7 +87,10 @@ describe('AppComponent', () => {
     getCampaign: () => of()
   };
   const routerStub = {
-    navigate: () => {}
+    navigate: () => { }
+  };
+  const matSnackBarStub = {
+    open: () => { }
   };
 
   beforeEach(async(() => {
@@ -114,7 +117,8 @@ describe('AppComponent', () => {
             queryParams: of({ token: 'starhub' })
           }
         },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: MatSnackBar, useValue: matSnackBarStub }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
