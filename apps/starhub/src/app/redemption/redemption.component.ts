@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, VouchersService, PinInputComponent } from '@perx/core';
+import { Voucher, VoucherState, VouchersService, PinInputComponent, NotificationService } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -23,7 +23,8 @@ export class RedemptionComponent implements OnInit {
     private vouchersService: VouchersService,
     private activeRoute: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private notficationService: NotificationService
   ) {
   }
 
@@ -51,7 +52,10 @@ export class RedemptionComponent implements OnInit {
     this.vouchersService.redeemVoucher(this.voucher.id, { pin })
       .subscribe(
         () => this.voucher.state = VoucherState.redeemed,
-        () => this.pinInputComponent.error = true
+        () => {
+          this.pinInputComponent.error = true;
+          this.notficationService.addSnack('Sorry! Voucher redemption failed.');
+        }
       );
   }
 
