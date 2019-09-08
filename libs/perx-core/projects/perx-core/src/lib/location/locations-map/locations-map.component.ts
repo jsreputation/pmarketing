@@ -78,7 +78,10 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     return p;
   }
 
-  private updateUserPosition(position: Position): void {
+  private updateUserPosition(position: Position | null): void {
+    if (position === null) {
+      return;
+    }
     const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     this.map.panTo(location);
     this.userLocation.next(position);

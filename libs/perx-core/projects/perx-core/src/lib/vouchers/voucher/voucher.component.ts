@@ -33,7 +33,7 @@ export class VoucherComponent implements OnChanges, OnInit {
   public showRedeemedIcon: boolean = false;
 
   @Input()
-  public mapping: StatusLabelMapping;
+  public mapping?: StatusLabelMapping;
 
   @Input()
   public redeemLabelFn: () => string;
