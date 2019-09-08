@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RewardsService } from '@perx/core';
+import { RewardsService, NotificationService } from '@perx/core';
 
 @Component({
   selector: 'app-reward',
@@ -18,7 +18,8 @@ export class RewardComponent implements OnInit {
     private location: Location,
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private notificationService: NotificationService
   ) {}
 
   public ngOnInit(): void {
@@ -36,7 +37,9 @@ export class RewardComponent implements OnInit {
 
   public save(): void {
     this.rewardsService.issueReward(this.rewardId)
-      .subscribe(() => this.router.navigate(['/home/vouchers'])
+      .subscribe(
+        () => this.router.navigate(['/home/vouchers']),
+        () => this.notificationService.addSnack('Sorry! Could not save reward.')
     );
   }
 
