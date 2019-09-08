@@ -189,22 +189,36 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public forgotPassword(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Not implement yet');
   }
+
+  public requestVerificationToken(): Observable<void> {
+    return throwError('Not implement yet');
+  }
+
+  // @ts-ignore
+  public changePhone(changePhoneData: IChangePhoneData): Observable<void> {
+    return throwError('Not implement yet');
+  }
+
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');

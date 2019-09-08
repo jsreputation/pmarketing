@@ -35,6 +35,11 @@ export interface IChangePasswordData {
     otp: string;
 }
 
+export interface IChangePhoneData {
+    phone: string;
+    otp: string;
+}
+
 export interface ILoginResponse {
     bearer_token?: string;
 }

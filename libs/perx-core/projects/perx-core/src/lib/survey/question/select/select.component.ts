@@ -1,8 +1,9 @@
 import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { IAnswer } from '../../models/survey.model';
+import { IAnswer, ITracker } from '../../models/survey.model';
 
 interface IPayloadSelect {
   type: string;
+  multiple: boolean;
   choices: string[];
 }
 
@@ -23,17 +24,27 @@ export class SelectComponent implements OnChanges {
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
+  public selectedChoices: ITracker = {};
   public selectedChoice: number;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
-      this.onSelect(this.selectedChoice);
+      this.emitValue();
     }
   }
 
-  public onSelect(index: number): void {
-    this.selectedChoice = index;
-    this.updateAnswers.emit({ content: index });
+  public emitValue(): void {
+    let result = [];
+    if (this.payload.multiple) {
+      result = Object.entries(this.selectedChoices).map(data => {
+        if (data[1]) {
+          return data[0];
+        }
+      }).filter(data => data);
+    } else {
+      result[0] = this.selectedChoice.toString();
+    }
+    this.updateAnswers.emit({ content: result });
   }
 
   public isSelected(index: number): boolean {

@@ -4,6 +4,33 @@ export const mock: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
         {
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '9',
+            required: false,
+            payload: {
+                type: 'picture-select',
+                choices: [
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The first'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    }
+                ]
+            }
+        },
+        {
             question: 'How likely are you to recommend our service?',
             description: 'Please rate us',
             id: '1',
@@ -179,25 +206,6 @@ export const mock: ISurvey = {
             payload: {
                 type: 'phone',
                 default_country_code: 'SG'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '9',
-            required: false,
-            payload: {
-                type: 'picture-select',
-                choices: [
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The first'
-                    },
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The second'
-                    }
-                ]
             }
         }
     ]

@@ -1,34 +1,69 @@
 import { ISurvey } from '@perx/core';
 
-export const mock: ISurvey = {
+export const survey: ISurvey = {
     title: 'Please help us knowing you better',
     questions: [
         {
-            question: 'How likely are you to recommend our service?',
-            description: 'Please rate us',
+            question: 'Which color you like?',
+            description: 'Please select',
             id: '1',
             required: false,
             payload: {
-                type: 'rating',
-                color: 'primary',
-                left_label: 'not much',
-                right_label: 'a lot',
-                scale: 4,
-                shape: 'star'
+                type: 'select',
+                multiple: false,
+                choices: [
+                    'blue',
+                    'white',
+                    'red'
+                ]
             }
         },
         {
-            question: 'How likely are you to recommend our service?',
-            description: 'Please rate us',
-            id: '10',
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '9',
             required: false,
             payload: {
-                type: 'rating',
-                color: 'primary',
-                left_label: 'not much',
-                right_label: 'a lot',
-                scale: 5,
-                shape: 'heart'
+                type: 'picture-select',
+                multiple: true,
+                choices: [
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The first'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    },
+                    {
+                        img_url: 'https://picsum.photos/600/900',
+                        text: 'The second'
+                    }
+                ]
+            }
+        },
+        {
+            question: 'When were you born?',
+            description: 'It\'s between us',
+            id: '2',
+            required: true,
+            payload: {
+                duration: true,
+                type: 'date'
+            }
+        },
+        {
+            question: 'How can we reach you?',
+            description: 'No offence taken',
+            id: '8',
+            required: false,
+            payload: {
+                type: 'phone',
+                default_country_code: 'SG'
             }
         },
         {
@@ -80,56 +115,8 @@ export const mock: ISurvey = {
                                 'red'
                             ]
                         }
-                    },
-                    {
-                        question: 'What\'s your favorite color 3',
-                        description: 'We love blue',
-                        id: '7.3',
-                        required: true,
-                        payload: {
-                            type: 'group',
-                            questions: [
-                                {
-                                    question: 'What\'s your favorite color 3.1',
-                                    description: 'We love blue',
-                                    id: '7.3.1',
-                                    required: false,
-                                    payload: {
-                                        type: 'select',
-                                        choices: [
-                                            'blue',
-                                            'white',
-                                            'red'
-                                        ]
-                                    }
-                                },
-                                {
-                                    question: 'What\'s your favorite color 3.2',
-                                    description: 'We love blue',
-                                    id: '7.3.2',
-                                    required: true,
-                                    payload: {
-                                        type: 'select',
-                                        choices: [
-                                            'blue',
-                                            'white',
-                                            'red'
-                                        ]
-                                    }
-                                },
-                            ]
-                        }
                     }
                 ]
-            }
-        },
-        {
-            question: 'When were you born?',
-            description: 'It\'s between us',
-            id: '2',
-            required: true,
-            payload: {
-                type: 'date'
             }
         },
         {
@@ -169,35 +156,6 @@ export const mock: ISurvey = {
             required: false,
             payload: {
                 type: 'long-text'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '8',
-            required: false,
-            payload: {
-                type: 'phone',
-                default_country_code: 'SG'
-            }
-        },
-        {
-            question: 'How can we reach you?',
-            description: 'No offence taken',
-            id: '9',
-            required: false,
-            payload: {
-                type: 'picture-select',
-                choices: [
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The first'
-                    },
-                    {
-                        img_url: 'https://picsum.photos/200/300',
-                        text: 'The second'
-                    }
-                ]
             }
         }
     ]
