@@ -57,7 +57,8 @@
 
 .game-card {
   margin-right: 2rem;
-  width: 100%;
+  flex: auto;
+  width: 0;
 
   &:last-child {
     margin-right: 0;
