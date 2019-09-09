@@ -1,4 +1,4 @@
-<div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers; else noRewards">
+<div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers;">
   <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
     <mat-card *ngFor="let voucher of (hideSeeMore ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
@@ -16,7 +16,7 @@
 
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
-    <mat-card *ngFor="let voucher of vouchers">
+    <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
       <mat-card-header>
         <mat-card-title ngxEllipsis [lines]="2">{{voucher.name}}</mat-card-title>
@@ -33,13 +33,3 @@
     <p>Take your pick from our list of rewards. After you’ve saved them, they will appear here.</p>
   </div>
 </div>
-
-<ng-template #noRewards>
-  <div class="no-rewards">
-    <div class="container">
-      <img src="assets/no-reward.png" alt="">
-      <p class="title">No Reward yet!</p>
-      <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo.</p>
-    </div>
-  </div>
-</ng-template>

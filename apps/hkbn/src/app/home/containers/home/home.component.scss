@@ -7,6 +7,10 @@
     .points {
       color: #70A078;
     }
+
+    .card-list-container {
+      padding: 0 1.6rem !important;
+    }
   }
 }
 
@@ -14,6 +18,13 @@
   width: 100%;
   height: 17rem;
   display: flex;
+  padding: 1.6rem;
+
+  ::ng-deep {
+    .container {
+      padding: 0;
+    }
+  }
 }
 
 .loyalty-item {
@@ -28,16 +39,18 @@
 
 .enlarge {
   color: $white;
-  margin: 1.6rem 0;
+  display: flex;
+  align-items: center;
 }
 
 .rewards-carousel {
   display: block;
   margin-bottom: 2rem;
+  margin-left: 0.6rem;
 }
 
 .promotion {
-  margin: 3.2rem 0 1.6rem 1rem;
+  margin: 3.2rem 1.6rem 1.6rem;
   font-size: 1.8rem;
   color: $text-green;
 }
