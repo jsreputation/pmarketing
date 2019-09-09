@@ -75,11 +75,6 @@ button {
   }
 }
 
-.mat-toolbar-single-row,
-.page-header {
-  min-height: $header-height-base;
-}
-
 .page-header {
   display: flex;
   flex-flow: row nowrap;
@@ -98,7 +93,6 @@ button {
 
 .title {
   font-size: 2.6rem;
-  margin: 0.7em 0;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
