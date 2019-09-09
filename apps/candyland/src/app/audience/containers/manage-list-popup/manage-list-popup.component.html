@@ -8,12 +8,9 @@
   </div>
   <mat-dialog-content class="dialog-content">
       <label class="dialog-content-title">Audience lists</label>
-      <!-- <div *ngFor="let pool of pools">
-        <mat-checkbox class="dialog-row">{{pool.name}}</mat-checkbox>
-      </div> -->
-      <mat-checkbox class="dialog-row">Gold_Users</mat-checkbox>
-      <mat-checkbox class="dialog-row">Silver tier</mat-checkbox>
-      <mat-checkbox class="dialog-row">Bronze tier</mat-checkbox>
+      <div *ngFor="let pool of pools">
+        <mat-checkbox (change)="changePools(pool.value, $event)" class="dialog-row">{{pool.name}}</mat-checkbox>
+      </div>
   </mat-dialog-content>
   <div class="dialog-actions">
     <cl-button classList="invert"

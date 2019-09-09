@@ -17,7 +17,6 @@ import { filter, switchMap } from 'rxjs/operators';
 import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { AudiencesListDataSource } from '@cl-shared/table/data-source/audiences-list-data-source';
-import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -40,7 +39,6 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     {title: 'Audience List(3)', value: 'audience'}
   ];
   public config: any;
-  public pools: any;
 
   constructor(private settingsService: SettingsService,
               private audiencesService: AudiencesService,
@@ -57,7 +55,6 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.tabs.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(tab => this.changeList(tab));
-    this.getPools();
   }
 
   public ngAfterViewInit(): void {
@@ -67,17 +64,6 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public ngOnDestroy(): void {
-  }
-
-  private getPools(): any {
-    const params = {
-      'page[number]': 1,
-      'page[size]': 20,
-    };
-    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
-      .subscribe((data: any) => {
-        this.pools = data;
-      });
   }
 
   public openAddUserDialog(): void {
@@ -95,7 +81,6 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public openManageListDialog(item): void {
-    console.log(item, this.pools);
     const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
     dialogRef.afterClosed()
       .pipe(

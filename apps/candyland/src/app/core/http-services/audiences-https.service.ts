@@ -11,7 +11,7 @@ export class AudiencesHttpsService {
   }
 
   public getUser(id: number): Observable<any> {
-    return this.http.get(ApiConfig.getAllUsers + '/' + id);
+    return this.http.get(ApiConfig.getAllUsers + '/' + id + '?include=pools');
   }
 
   public getAudiences(params: HttpParams): Observable<any> {

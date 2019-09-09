@@ -92,7 +92,9 @@
         Audience list
       </p>
       <p class="user-info-item-value">
-        {{user?.audienceList || '-' }}
+        <span *ngFor="let item of user?.pools">
+            {{ item.id }}
+        </span>
       </p>
     </div>
   </div>

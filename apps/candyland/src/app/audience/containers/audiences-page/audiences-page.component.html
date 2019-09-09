@@ -38,8 +38,7 @@
     <ng-container [ngSwitch]="currentTab">
       <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5" 
         [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
-      <cl-paginator *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource" [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+      <span *ngSwitchCase="'audience'"></span>
     </ng-container>
   </ng-container>
 
