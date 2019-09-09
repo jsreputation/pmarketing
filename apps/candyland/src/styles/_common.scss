@@ -78,12 +78,10 @@ button {
 .mat-toolbar-log.mat-toolbar-single-row {
   height: $header-height-base;
 }
-.page-header {
-  min-height: $header-height-base;
-}
 
 .page-header {
   display: flex;
+  min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
