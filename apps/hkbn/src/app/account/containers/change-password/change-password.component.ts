@@ -30,8 +30,8 @@ export class ChangePasswordComponent implements OnInit {
     this.authService.changePassword(data).subscribe(() => {
       this.ntfc.addSnack(this.messageSuccess);
       this.router.navigate(['/account']);
-    }, () => 
-      this.ntfc.addSnack(this.messageError)
+    }, () =>
+        this.ntfc.addSnack(this.messageError)
     );
   }
 }
