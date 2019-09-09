@@ -39,10 +39,10 @@ export class EngagementHttpAdapter {
     return {
       type: 'engagements',
       attributes: {
-        type: 'game',
+        type: 'instant_reward',
         title: data.name,
         description: 'Instant Reward',
-        game_type: 'reward',
+        // game_type: 'reward',
         image_url:
           'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {

@@ -6,7 +6,7 @@ import { CategoriesComponent } from '../categories/categories.component';
 import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { RewardsService, CampaignService, FeedReaderService } from '@perx/core';
@@ -43,6 +43,7 @@ describe('DiscoverComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
+        MatDialogModule,
         RouterTestingModule,
         NgxMultiLineEllipsisModule,
         ScrollingModule
