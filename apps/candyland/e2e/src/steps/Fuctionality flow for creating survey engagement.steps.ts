@@ -88,11 +88,13 @@ Then(/^4_There is an error message present.$/, async () => {
 // Verifiying that sub-headline message field generates error message when having null value.
 Given(/^5_that I am on the survey creation page$/, async () => {
   await CreateSurveyPage.navigateToSurvey();
+  browser.sleep(3000);
 });
 
 When(/^5_I entered a empty text string in the sub-headline text box.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element(by.id('mat-input-2'))), 6000);
+  await browser.wait(ec.elementToBeClickable(element(by.css('input#mat-input-2'))), 6000);
+  await browser.wait(ec.elementToBeClickable(element(by.css('input#mat-input-1'))), 6000);
   // to elicit the required field message , i click on the sub-headline box first then headline box
   await element(by.id('mat-input-2')).click();
   await element(by.id('mat-input-1')).click();
@@ -100,42 +102,40 @@ When(/^5_I entered a empty text string in the sub-headline text box.$/, async ()
 
 Then(/^5_There is an error message present.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element(by.id('mat-error-0'))), 6000 );
-  expect(await element(by.id('mat-error-0')).getText()).to.contain('Required field');
+  await browser.wait(ec.presenceOf(element(by.css('mat-error'))), 6000 );
+  expect(await element(by.css('mat-error')).getText()).to.contain('Required field');
 });
 
 // Verifiying that add question button element exists.
-/*Given('{int}_that I am on the survey creation page', function (int) {
+Given(/^6_that I am on the survey creation page$/, async () => {
+  await CreateSurveyPage.navigateToSurvey();
+});
+
+When(/^6_I do nothing$/, () => {});
+
+Then(/^6_The Add question button is present.$/, async () => {
+   // verifying add question button element
+   expect(await element.all(by.css('cl-button>button')).last().isPresent()).to.equal(true);
+});
+
+// Verifiying that when clicking add question button element generates a list of five options.
+/*Given(/^7_that I am on the survey creation page$/, async () => {
+    await CreateSurveyPage.navigateToSurvey();
+});
+
+When(/^7_I click on the add question button.$/, async () => {
+    const ec = protractor.ExpectedConditions;
+    // waiting for the add question button to be loaded
+    await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
+    element.all(by.css('cl-button>button')).last().click();
+});
+
+Then(/^7_There are five options.$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
 
-When('{int}_I do nothing', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Then('{int}_The Add question button is present.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Given('{int}_that I am on the survey creation page', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-When('{int}_I click on the add question button.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Then('{int}_There are five options.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Given('{int}_that I am on list of options for the add question elements', function (int) {
+/*Given('{int}_that I am on list of options for the add question elements', function (int) {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
