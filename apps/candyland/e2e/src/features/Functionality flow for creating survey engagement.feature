@@ -52,3 +52,8 @@ Scenario: Verifiying that the image is uploaded in the picture choice form succe
   Given 10_that I am on the picture choice form
   When  10_I upload a file
   Then  10_File is uploaded successfully.
+
+Scenario: Verifiying that header message field generates error message when having null value.
+  Given 11_that I am on the survey creation page
+  When  11_I entered a empty text string in the header text box.
+  Then  11_There is an error message present.
