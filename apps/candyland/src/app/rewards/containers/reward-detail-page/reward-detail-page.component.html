@@ -1,7 +1,7 @@
 <div class="page-header full-with">
   <div class="game-title-wrap">
     <div class="control-input name-control name-control-title">
-      Reward 1
+      {{data?.name}}
     </div>
   </div>
   <div class="btn-group">
@@ -68,7 +68,8 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-info-preview [data]="data?.rewardInfo" (updateRewardImage)="updateRewardImage($event)"></cl-reward-info-preview>
+      <cl-reward-info-preview [data]="data?.rewardInfo"
+                              (updateRewardImage)="updateRewardImage($event)"></cl-reward-info-preview>
     </div>
   </mat-expansion-panel>
   <!--/ Reward Info-->
