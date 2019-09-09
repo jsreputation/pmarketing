@@ -330,6 +330,11 @@ cl-game-mobile-preview, .tabs-component {
       margin-right: 0;
     }
   }
+
+  & > .mat-form-field {
+    width: 0;
+    flex: auto;
+  }
 }
 
 .error {
