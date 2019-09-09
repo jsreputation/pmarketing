@@ -36,7 +36,7 @@ export class VouchersComponent implements OnInit {
   }
   private privateFilter: string[];
   @Input()
-  public mapping: StatusLabelMapping;
+  public mapping?: StatusLabelMapping;
 
   public repeatGhostCount: number = 10;
 

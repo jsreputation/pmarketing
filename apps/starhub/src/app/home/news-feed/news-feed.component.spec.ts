@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsFeedComponent } from './news-feed.component';
-import { MatCardModule, MatButtonModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { FeedReaderService } from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -21,6 +21,7 @@ describe('NewsFeedComponent', () => {
         MatCardModule,
         MatButtonModule,
         NgxMultiLineEllipsisModule,
+        MatDialogModule,
         ScrollingModule
       ],
       providers: [

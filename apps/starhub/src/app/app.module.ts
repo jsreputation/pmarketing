@@ -21,7 +21,8 @@ import {
   MatRippleModule,
   MatButtonModule,
   MatBottomSheetModule,
-  MatDividerModule
+  MatDividerModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryComponent } from './category/category.component';
@@ -72,6 +73,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatButtonModule,
     MatBottomSheetModule,
     MatDividerModule,
+    MatSnackBarModule,
     UtilsModule,
     BrowserAnimationsModule,
     ProfileModule.forRoot({ env: environment }),
