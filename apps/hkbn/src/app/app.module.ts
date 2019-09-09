@@ -53,7 +53,7 @@ const PROVIDERS = [
     AppComponent,
     WalletComponent,
     VoucherDetailsComponent,
-    HistoryComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
