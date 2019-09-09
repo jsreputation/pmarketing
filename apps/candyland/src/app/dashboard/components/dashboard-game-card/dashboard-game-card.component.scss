@@ -26,6 +26,7 @@
     width: 75%;
     flex: 1;
     min-width: 8rem;
+    min-height: calc(100% - 8rem);
   }
 
   &-title {
