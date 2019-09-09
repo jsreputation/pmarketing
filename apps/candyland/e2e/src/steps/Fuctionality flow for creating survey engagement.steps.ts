@@ -68,13 +68,15 @@ Then(/^3_the preview section element is present.$/, async () => {
 // Verifiying that headline message field generates error message when having null value.
 Given(/^4_that I am on the survey creation page$/, async () => {
     await CreateSurveyPage.navigateToSurvey();
+    browser.sleep(3000);
   });
 
 When(/^4_I entered a empty text string in the headline text box.$/, async () => {
     const ec = protractor.ExpectedConditions;
     await browser.wait(ec.presenceOf(element(by.id('mat-input-1'))), 6000);
-    await element(by.id('mat-input-1')).clear();
-    await element(by.id('mat-input-1')).sendKeys(' ');
+    // to elicit the required field message , i click on the headline box first then sub headline box
+    await element(by.id('mat-input-1')).click();
+    await element(by.id('mat-input-2')).click();
   });
 
 Then(/^4_There is an error message present.$/, async () => {
@@ -91,11 +93,14 @@ Given(/^5_that I am on the survey creation page$/, async () => {
 When(/^5_I entered a empty text string in the sub-headline text box.$/, async () => {
   const ec = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(element(by.id('mat-input-2'))), 6000);
-  await element(by.id('mat-input-2')).clear();
-  await element(by.id('mat-input-2')).sendKeys(' ');
+  // to elicit the required field message , i click on the sub-headline box first then headline box
+  await element(by.id('mat-input-2')).click();
+  await element(by.id('mat-input-1')).click();
 });
 
 Then(/^5_There is an error message present.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.presenceOf(element(by.id('mat-error-0'))), 6000 );
   expect(await element(by.id('mat-error-0')).getText()).to.contain('Required field');
 });
 
