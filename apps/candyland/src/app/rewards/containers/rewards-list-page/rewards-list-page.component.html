@@ -13,7 +13,7 @@
     </cl-table-filters>
     <!--table-->
     <cl-rewards-list [dataSource]="dataSource"
-                     [displayedColumns] = "displayedColumns"
+                     [displayedColumns]="displayedColumns"
                      (itemAction)="actionHandler($event)"
     ></cl-rewards-list>
     <!--paginator-->
@@ -21,6 +21,7 @@
                   [pageSize]="5"
                   [pageSizeOptions]="[5, 10, 20]"
     ></cl-paginator>
+    <!--/ paginator-->
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">
