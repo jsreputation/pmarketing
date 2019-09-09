@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IProfile, ProfileService } from '@perx/core';
+import { IProfile, ProfileService, NotificationService } from '@perx/core';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
@@ -11,7 +11,7 @@ import { MatSlideToggleChange } from '@angular/material';
 })
 export class AccountSummaryComponent implements OnChanges {
   @Input() public accountData: IProfile;
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private ntfs: NotificationService) {
   }
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
@@ -31,6 +31,11 @@ export class AccountSummaryComponent implements OnChanges {
   }
 
   public agreement(event: MatSlideToggleChange): void {
-    this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => { });
+    this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
+
+    },
+      (err) => {
+        this.ntfs.addSnack(err);
+      });
   }
 }
