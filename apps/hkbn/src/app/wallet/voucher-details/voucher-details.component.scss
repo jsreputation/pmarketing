@@ -2,6 +2,16 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+
+  ::ng-deep {
+    .details {
+      padding: 0 !important;
+    }
+
+    .voucher-container {
+      width: 100%;
+    }
+  }
 }
 
 .container {
