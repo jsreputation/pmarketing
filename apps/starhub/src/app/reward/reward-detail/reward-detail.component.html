@@ -29,7 +29,7 @@
       </div>
 
       <div class="content">
-        <div class="description">{{reward.description}}</div>
+        <div class="description" [innerHtml]="reward.description"></div>
       </div>
 
       <app-location-short-format [merchantId]="reward.merchantId"></app-location-short-format>

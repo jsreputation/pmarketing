@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
+import { MatDialog } from '@angular/material';
+import { PopupComponent } from './popup/popup.component';
 
 @Component({
   selector: 'app-news-feed',
@@ -9,10 +11,10 @@ import { FeedItem, FeedReaderService } from '@perx/core';
 export class NewsFeedComponent implements OnInit {
   public items: FeedItem[];
   public itemSize: number;
-  public activeDot: string = 'first';
-  public scrolledValue: number;
+  public newsBeforeScroll: number[];
+  public newsAfterScroll: number[];
 
-  constructor(private reader: FeedReaderService) { }
+  constructor(private reader: FeedReaderService, private dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
@@ -20,16 +22,21 @@ export class NewsFeedComponent implements OnInit {
     this.itemSize = window.innerWidth;
   }
 
-  public getIndex(index: number): void {
-    if (!this.items || this.items.length === 0) {
-      this.scrolledValue = 50;
-      return;
+  public updateScrollIndex(index: number): void {
+    this.newsBeforeScroll = Array(index);
+    if (this.items) {
+      this.newsAfterScroll = Array(this.items.length - index - 1);
+    } else {
+      this.newsAfterScroll = [];
     }
-    this.scrolledValue = (index + 1 / this.items.length) * 100;
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(): void {
     this.itemSize = window.innerWidth;
+  }
+
+  public readMore(item: FeedItem): void {
+    this.dialog.open(PopupComponent, { data: item });
   }
 }

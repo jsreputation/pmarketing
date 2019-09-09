@@ -52,4 +52,5 @@ export interface IRewardParams {
 export interface Inventory {
   rewardTotalBalance?: number | null;
   rewardTotalLimit?: number | null;
+  rewardLimitPerUserBalance?: number | null;
 }
