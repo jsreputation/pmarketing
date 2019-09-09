@@ -5,22 +5,22 @@
     "img": "assets/images/engagement-question/question-type-icon/rating.svg"
   },
   {
-    "value": "pictureChoice",
+    "value": "picture-select",
     "viewValue": "Picture Choice",
     "img": "assets/images/engagement-question/question-type-icon/picture-choice.svg"
   },
   {
-    "value": "longText",
+    "value": "long-text",
     "viewValue": "Long Text",
     "img": "assets/images/engagement-question/question-type-icon/long-text.svg"
   },
   {
-    "value": "multipleChoice",
+    "value": "select",
     "viewValue": "Multiple Choice",
     "img": "assets/images/engagement-question/question-type-icon/multiple-choice.svg"
   },
   {
-    "value": "questionGroup",
+    "value": "group",
     "viewValue": "Question Group",
     "img": "assets/images/engagement-question/question-type-icon/question-group.svg"
   },

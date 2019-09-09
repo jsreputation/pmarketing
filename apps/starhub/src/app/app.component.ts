@@ -10,10 +10,10 @@ import {
   CampaignType,
   IReward
 } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -31,20 +31,21 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private activeRoute: ActivatedRoute,
     private campaignService: CampaignService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   public ngOnInit(): void {
-    this.notificationService.$popup.subscribe((data: IPopupConfig) => {
-      this.dialog.open(PopupComponent, { data });
-    });
+    this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
 
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      if (params.token) {
+    this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
+
+    this.activeRoute.queryParams
+      .pipe(filter((params: Params) => params.token))
+      .subscribe((params: Params) => {
         this.authenticationService.saveUserAccessToken(params.token);
         this.fetchCampaigns();
-      }
-    });
+      });
   }
 
   private fetchCampaigns(): void {

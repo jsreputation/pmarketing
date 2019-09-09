@@ -1,0 +1,28 @@
+@import "../../../icon.scss";
+
+.header {
+  img {
+    width: 100%;
+    max-height: 20.7rem;
+    object-fit: cover;
+  }
+
+  button {
+    position: absolute;
+  }
+
+  .icon {
+    @include icon();
+  }
+}
+
+.mat-dialog-actions {
+  a {
+    flex: 1;
+  }
+}
+
+.mat-dialog-content {
+  font-size: 1.6rem;
+  white-space: pre-line;
+}
