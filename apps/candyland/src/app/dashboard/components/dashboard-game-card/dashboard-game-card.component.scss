@@ -14,7 +14,8 @@
   &-content {
     position: relative;
     padding-left: 8rem;
-    padding-bottom: 4rem;
+    display: flex;
+    flex-flow: column;
   }
 
   &-title {
@@ -26,6 +27,7 @@
   &-description {
     color: $there-color;
     margin-top: 0.8rem;
+    margin-bottom: 2rem;
     font-size: 1.4rem;
   }
 
@@ -37,5 +39,6 @@
 
   &-actions {
     position: relative;
+    margin-top: auto;
   }
 }
