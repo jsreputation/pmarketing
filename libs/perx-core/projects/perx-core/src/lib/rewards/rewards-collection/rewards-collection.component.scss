@@ -93,4 +93,10 @@ $card-actual-height: 200px;
       background: #4E4E4E;
     }
   }
+
+  .overflow-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
