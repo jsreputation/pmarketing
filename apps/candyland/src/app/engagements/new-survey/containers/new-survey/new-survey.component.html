@@ -1,6 +1,8 @@
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->
 
-<div class="survey-wrap" [formGroup]="formSurvey" *ngIf="surveyData$ |async as surveyData">
+<pre>{{form.value | json}}</pre>
+
+<div class="survey-wrap" [formGroup]="form" *ngIf="surveyData$ |async as surveyData">
   <div class="full-with page-header">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -22,6 +24,7 @@
       </span>
       </cl-button>
       <cl-button [classList]="'primary'"
+                 [disable]="form.invalid"
                  (click)="save()"
       >
       <span>
