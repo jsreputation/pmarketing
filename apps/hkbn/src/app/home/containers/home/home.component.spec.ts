@@ -20,6 +20,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { mockLoyalty } from '../loyalty.mock';
 import { Type } from '@angular/core';
 
+const user = {
+  id: 5,
+  state: 'active',
+  firstName: 'test',
+  lastName: 'test'
+};
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -86,6 +93,6 @@ describe('HomeComponent', () => {
     component.ngOnInit();
     expect(spy).toHaveBeenCalledWith(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']);
     tick();
-    expect(component.titleFn(null)).toBe('HELLO');
+    expect(component.titleFn(user)).toBe('HELLO' + ` ${user.lastName},`);
   }));
 });
