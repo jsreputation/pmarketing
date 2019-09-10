@@ -14,6 +14,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { IProfile, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of, throwError } from 'rxjs';
 
 const accountDataStub: IProfile = {
   id: 0,
@@ -22,10 +23,14 @@ const accountDataStub: IProfile = {
   lastName: 'Temp'
 };
 
+const authenticationServiceStub = {
+  requestVerificationToken: () => of(null)
+};
+
 describe('AccountSummaryComponent', () => {
   let component: AccountSummaryComponent;
   let fixture: ComponentFixture<AccountSummaryComponent>;
-
+  let authService: AuthenticationService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -39,11 +44,14 @@ describe('AccountSummaryComponent', () => {
         NoopAnimationsModule,
         MatSlideToggleModule,
         TranslateModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule.withRoutes([{
+          path: 'account/verify_token',
+          component: AccountSummaryComponent
+        }])
       ],
       declarations: [AccountSummaryComponent],
       providers: [
-        { provide: AuthenticationService, useValue: {} }
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
       .compileComponents();
@@ -51,6 +59,7 @@ describe('AccountSummaryComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountSummaryComponent);
+    authService = TestBed.get(AuthenticationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -65,5 +74,12 @@ describe('AccountSummaryComponent', () => {
     component.ngOnChanges();
     tick();
     expect(spy).toHaveBeenCalledWith(accountDataStub);
+  }));
+
+  it('should navigate to account/verify_token', fakeAsync(() => {
+    const spy = spyOn(authService, 'requestVerificationToken').and.returnValue(throwError(null));
+    component.updateMobileVerification(new Event('click'));
+    tick();
+    expect(spy).toHaveBeenCalled();
   }));
 });
