@@ -12,7 +12,7 @@ import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.modu
 import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
-import { IChangePasswordData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { IChangePasswordData } from '@perx/core';
 
 const password = 'password';
 

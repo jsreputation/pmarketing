@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { IChangePasswordData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { IChangePasswordData } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

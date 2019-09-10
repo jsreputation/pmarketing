@@ -39,17 +39,16 @@ export class AccountSummaryComponent implements OnChanges {
     }
   }
 
-  public updateMobileVerification(event: Event): void {
+  public updateMobileVerification(event: Event, type: string): void {
     event.preventDefault();
     this.authService.requestVerificationToken().pipe(catchError(() => {
       return of(null);
     })).subscribe(() => {
-      this.router.navigate(['account/verify_token']);
+      this.router.navigate(['account/verify_token', type]);
     });
   }
   public agreement(event: MatSlideToggleChange): void {
     this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
-
     },
       (err) => {
         this.ntfs.addSnack(err);

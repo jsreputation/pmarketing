@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'hkbn-verification-otp',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./verification-otp.component.scss']
 })
 export class VerificationOtpComponent implements OnInit {
-
+  private type: string;
   private number: string;
   public get numberDisplay(): string {
     return this.number && this.number.substr(0, this.number.length - 3)
@@ -19,17 +19,19 @@ export class VerificationOtpComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
+    this.route.params.subscribe((param: Params) => this.type = param.id);
     this.profileService.whoAmI().subscribe((profile) =>
       this.number = profile && profile.phone
     );
   }
   public validate(otp: string): void {
     this.authService.verifyOTP(this.number, otp).pipe(catchError(() => of(null))).subscribe(() => {
-      this.router.navigate(['account/phone'], { queryParams: { otp } });
+      this.router.navigate(['account', this.type], { queryParams: { otp } });
     });
   }
   public resendSms(): void {

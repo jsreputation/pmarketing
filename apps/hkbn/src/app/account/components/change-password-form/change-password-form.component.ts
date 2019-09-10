@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { IChangePasswordData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { IChangePasswordData } from '@perx/core';
 
 const mockOtp = '8888';
 
