@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { AudiencesService } from '@cl-core-services';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Component({
   selector: 'cl-manage-list-popup',
@@ -7,10 +9,37 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./manage-list-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageListPopupComponent {
-
+export class ManageListPopupComponent implements OnInit {
+  public pools = new Array<any>();
+  public poolsArray = [];
   constructor(public dialogRef: MatDialogRef<ManageListPopupComponent>,
+              public audiencesService: AudiencesService,
+              private ref: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  public ngOnInit(): void {
+    this.getPools();
+  }
+
+  private getPools(): any {
+    const params = {
+      'page[number]': 1,
+      'page[size]': 20,
+    };
+    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
+      .subscribe((data: any) => {
+        this.pools = data;
+        this.ref.markForCheck();
+      });
+  }
+
+  public changePools(value, event): any {
+    if (event.checked) {
+      this.poolsArray.push(value);
+    } else {
+      this.poolsArray.splice(this.poolsArray.indexOf(value), 1);
+    }
   }
 
   public close(): void {
@@ -18,6 +47,11 @@ export class ManageListPopupComponent {
   }
 
   public save(): void {
-    this.dialogRef.close();
+    const requestData = {
+      id: this.data.id,
+      type: this.data.type,
+      pools: this.poolsArray
+    };
+    this.dialogRef.close(requestData);
   }
 }

@@ -8,12 +8,14 @@ import {
   CampaignService,
   ICampaign,
   CampaignType,
-  IReward
+  IReward,
+  GameService,
+  IGame
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { switchMap, filter } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -22,8 +24,9 @@ import { combineLatest } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
-  public selectedCampaign: ICampaign;
-  private reward: IReward;
+  // public selectedCampaign: ICampaign;
+  private reward: IReward = null;
+  private game: IGame = null;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -32,7 +35,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private campaignService: CampaignService,
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private gameService: GameService
   ) { }
 
   public ngOnInit(): void {
@@ -56,19 +60,20 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns.filter(campaign => campaign.type === CampaignType.give_reward)
+          const firstComeFirstServed: ICampaign[] = campaigns
+            .filter(campaign => campaign.type === CampaignType.give_reward)
             .filter(campaign => campaign.rewards && campaign.rewards.length > 0);
           // if there is a 1st come 1st served campaign and it has rewards, display the popup
           if (firstComeFirstServed.length > 0) {
-            this.selectedCampaign = firstComeFirstServed[0];
-            this.reward = this.selectedCampaign.rewards[0];
+            const campaign = firstComeFirstServed[0];
+            this.reward = campaign.rewards[0];
             const data = {
-              text: this.selectedCampaign.name,
+              text: campaign.name,
               imageUrl: 'assets/reward.png',
               buttonTxt: 'Claim!',
               rewardId: this.reward.id,
               afterClosedCallBack: this,
-              validTo: new Date(this.selectedCampaign.endsAt)
+              validTo: new Date(campaign.endsAt)
             };
             this.dialog.open(RewardPopupComponent, { data });
             return;
@@ -77,29 +82,40 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           // else if there is a game campaign, display the popup
           const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
           if (gameCampaign) {
-            this.selectedCampaign = gameCampaign;
-            const data = {
-              imageUrl: './assets/shake.png',
-              text: gameCampaign.name, // You’ve got a “Shake the Tree” reward!
-              buttonTxt: 'Play now',
-              afterClosedCallBack: this,
-            };
-            this.dialog.open(RewardPopupComponent, { data });
+            this.checkGame(gameCampaign);
           }
         }
       );
   }
 
-  public dialogClosed(): void {
-    const campaignType = this.selectedCampaign.type;
-    switch (campaignType) {
-      case CampaignType.give_reward:
-        this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
-        return;
+  private checkGame(campaign: ICampaign): void {
+    this.gameService.getGamesFromCampaign(campaign.id)
+      .pipe(
+        filter(games => games.length > 0),
+        map(games => games[0])
+      )
+      .subscribe(
+        (game: IGame) => {
+          this.game = game;
+          const data = {
+            imageUrl: './assets/shake.png',
+            text: campaign.name, // You’ve got a “Shake the Tree” reward!
+            buttonTxt: 'Play now',
+            afterClosedCallBack: this,
+          };
+          this.dialog.open(RewardPopupComponent, { data });
+        },
+        () => { /* nothing to do here, just fail silently */ }
+      );
+  }
 
-      case CampaignType.game:
-        this.router.navigate([`/game`], { queryParams: { campaignId: this.selectedCampaign.id } });
-        return;
+  public dialogClosed(): void {
+    if (this.reward !== null) {
+      this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
+    } else if (this.game !== null) {
+      this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
+    } else {
+      console.error('Something fishy, we should not be here, without any reward or game');
     }
   }
 }

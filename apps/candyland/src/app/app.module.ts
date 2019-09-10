@@ -13,6 +13,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/token.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,7 @@ import { SessionService } from '@cl-core/services/token.service';
     SideNavModule,
     HttpClientModule,
     MatNativeDateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     LocalStorageService,
