@@ -17,7 +17,7 @@ export class AccountSummaryComponent implements OnChanges {
   constructor(
     public authService: AuthenticationService,
     public router: Router
-  ) {}
+  ) { }
 
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
@@ -36,11 +36,10 @@ export class AccountSummaryComponent implements OnChanges {
 
   public updateMobileVerification(event: Event): void {
     event.preventDefault();
-    this.authService.requestVerificationToken().pipe(catchError(()=>{ 
+    this.authService.requestVerificationToken().pipe(catchError(() => {
       return of(null);
-    })).subscribe(()=>{
+    })).subscribe(() => {
       this.router.navigate(['account/verify_token']);
     });
   }
-
 }
