@@ -3,20 +3,28 @@ import { Type } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { CampaignService } from './campaign.service';
-import { EnvConfig } from '../shared/env-config';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { VouchersService } from '../vouchers/vouchers.service';
+import { ConfigModule } from './../config/config.module';
 
 describe('CampaignService', () => {
   let httpTestingController: HttpTestingController;
   let service: CampaignService;
   const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
 
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
+
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientTestingModule],
+      imports: [HttpClientTestingModule, HttpClientTestingModule, ConfigModule.forRoot({...environment})],
       providers: [
-        EnvConfig,
         { provide: VouchersService, useValue: vouchersServiceMock }
       ]
     });

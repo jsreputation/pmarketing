@@ -4,7 +4,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { GameService } from './game.service';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PinataComponent } from './pinata/pinata.component';
-import { Config } from 'perx-core/perx-core';
+import { Config } from '../config/config';
 
 export function gameServiceFactory(http: HttpClient, config: Config): GameService {
   // Make decision on what to instantiate base on config

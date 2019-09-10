@@ -4,6 +4,7 @@ import { VoucherComponent } from './voucher.component';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -14,7 +15,8 @@ describe('VoucherComponent', () => {
       imports: [
         MatCardModule,
         HttpClientTestingModule,
-        VouchersModule
+        VouchersModule,
+        ConfigModule.forRoot({})
       ]
     })
       .compileComponents();

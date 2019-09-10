@@ -5,8 +5,17 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Type } from '@angular/core';
 import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('V4AuthenticationService', () => {
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
+
   const baseUrl = 'https://api.perxtech.io/';
   const baseUrlForAppAccessToken = 'http://localhost:4000/';
   let httpTestingController: HttpTestingController;
@@ -17,6 +26,7 @@ describe('V4AuthenticationService', () => {
       imports: [
         HttpClientTestingModule,
         ProfileModule,
+        ConfigModule.forRoot({...environment})
       ],
       providers: [TokenStorage]
     });

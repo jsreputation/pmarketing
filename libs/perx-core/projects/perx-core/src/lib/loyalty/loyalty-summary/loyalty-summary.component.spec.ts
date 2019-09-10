@@ -5,6 +5,7 @@ import { LoyaltySummaryComponent } from './loyalty-summary.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileModule } from '../../profile/profile.module';
 import { LoyaltyModule } from '../loyalty.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -15,7 +16,8 @@ describe('LoyaltySummaryComponent', () => {
       imports: [
         HttpClientTestingModule,
         ProfileModule,
-        LoyaltyModule
+        LoyaltyModule,
+        ConfigModule.forRoot({})
       ]
     })
       .compileComponents();

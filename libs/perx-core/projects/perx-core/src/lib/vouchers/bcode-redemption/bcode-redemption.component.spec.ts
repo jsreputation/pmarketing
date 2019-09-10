@@ -4,6 +4,7 @@ import { BcodeRedemptionComponent } from './bcode-redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
@@ -15,6 +16,7 @@ describe('BcodeRedemptionComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         VouchersModule,
+        ConfigModule.forRoot({})
       ]
     })
     .compileComponents();
