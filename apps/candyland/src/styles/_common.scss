@@ -75,8 +75,13 @@ button {
   }
 }
 
+.mat-toolbar-log.mat-toolbar-single-row {
+  height: $header-height-base;
+}
+
 .page-header {
   display: flex;
+  min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
@@ -87,12 +92,13 @@ button {
 
   &.full-with {
     background: $white-color;
-    min-height: 6.6rem;
+    min-height: $header-height-base;
   }
 }
 
 .title {
   font-size: 2.6rem;
+  margin: auto 0;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -329,6 +335,11 @@ cl-game-mobile-preview, .tabs-component {
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  & > .mat-form-field {
+    width: 0;
+    flex: auto;
   }
 }
 
