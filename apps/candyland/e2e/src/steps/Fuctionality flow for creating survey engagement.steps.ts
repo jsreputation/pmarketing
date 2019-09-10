@@ -2,6 +2,7 @@ import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
 import { EngagementAppPage, CreateSurveyAppPage } from '../pages/shakeTheTreeFlow.po';
+import * as path from 'path' ;
 
 let PageEngagement: EngagementAppPage;
 let CreateSurveyPage: CreateSurveyAppPage;
@@ -137,42 +138,86 @@ Then(/^7_There are seven options.$/, async () => {
 });
 
 // Verifiying that when clicking add picture choice list element generates a form.
-/*Given(/^8_that I am on list of options for the add question elements$/, async () => {
+Given(/^8_that I am on list of options for the add question elements$/, async () => {
+    const ec = protractor.ExpectedConditions;
     await CreateSurveyPage.navigateToSurvey();
+    // waiting for the add question button to be loaded
+    await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
+    // clicking the add question button.
+    element.all(by.css('cl-button')).last().click();
 });
 
 When(/^8_I select the option for picture choice.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+    // clicking the picture option
+    const ec = protractor.ExpectedConditions;
+    await browser.wait(ec.presenceOf(element.all(by.css('mat-option.mat-option.ng-star-inserted')).get(1)), 6000 );
+    await element.all(by.css('div.view-text')).get(1).click();
+});
 
 Then(/^8_There is a form present.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+    // checking whether the question form is displayed.
+    expect(await element(by.css('div.question-form-header')).isDisplayed()).to.be.equal(true);
+});
 
-/*Given('{int}_that I have selected added question picture choice', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+// Verifiying that picture choice form has relevant text fields
+Given(/^9_that I have selected added question picture choice$/, async () => {
+    const ec = protractor.ExpectedConditions;
+    await CreateSurveyPage.navigateToSurvey();
+    // waiting for the add question button to be loaded
+    await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
+    // clicking the add question button.
+    element.all(by.css('cl-button')).last().click();
+    await browser.wait(ec.presenceOf(element.all(by.css('mat-option.mat-option.ng-star-inserted')).get(1)), 6000 );
+    // clicking on the picture choice option
+    await element.all(by.css('div.view-text')).get(1).click();
+});
 
-Then('{int}_The relevant text fields are present.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Then(/^9_The relevant text fields are present.$/, async () => {
+    // ensuring that the relevant text input field is present
+    expect(await element(by.css('input#mat-input-3')).isPresent()).to.be.equal(true);
+});
 
-Given('{int}_that I am on the picture choice form', function (int) {
-     // Write code here that turns the phrase above into concrete actions
-     return 'pending';
-   });
+// Verifiying that the image is uploaded in the picture choice form successfully
+Given(/^10_that I am on the picture choice form$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await CreateSurveyPage.navigateToSurvey();
+  // waiting for the add question button to be loaded
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
+  // clicking the add question button.
+  element.all(by.css('cl-button')).last().click();
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-option.mat-option.ng-star-inserted')).get(1)), 6000 );
+  // clicking on the picture choice option
+  await element.all(by.css('div.view-text')).get(1).click();
+  // clicking on the text field to get the upload field
+  await element(by.css('input#mat-input-3')).click();
+});
 
-When('{int}_I upload a file', function (int) {
-     // Write code here that turns the phrase above into concrete actions
-     return 'pending';
-   });
+When(/^10_I upload a file$/, async () => {
+  const FileToUpload = './testArtifacts/testimg.png';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
+  // upload the file to the picture choice option field
+  await element.all(by.css('input[type="file"]')).get(0).sendKeys(absolutePath);
+});
 
-Then('{int}_File is uploaded successfully.', function (int) {
-     // Write code here that turns the phrase above into concrete actions
-     return 'pending';
-   });
+Then(/^10_File is uploaded successfully.$/, async () => {
+  // making an assertion based on the alt tag
+  expect(await element(by.css('div.image-wrap.ng-star-inserted>img')).getAttribute('alt')).to.contain('upload');
+
+});
+
+// Verifiying that header message field generates error message when having null value.
+/*Given('{int}_that I am on the survey creation page', function(int) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+When('{int}_I entered a empty text string in the header text box.', function(int) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+Then('{int}_There is an error message present.', function(int) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
 */
