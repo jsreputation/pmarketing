@@ -37,7 +37,8 @@ export class VouchersComponent implements OnInit {
 
     this.redeemedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued && this.daysSince(voucher.expiry)))
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => this.daysSince(voucher.redemptionDate)))
       );
   }
 
