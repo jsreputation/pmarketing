@@ -16,7 +16,7 @@
 
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
-    <mat-card *ngFor="let voucher of vouchers" (click)="pastVoucherSelected(voucher)" matRipple>
+    <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
       <mat-card-header>
         <mat-card-title ngxEllipsis [lines]="2">{{voucher.name}}</mat-card-title>
