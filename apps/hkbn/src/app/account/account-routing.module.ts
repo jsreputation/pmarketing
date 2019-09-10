@@ -4,6 +4,7 @@ import { AccountComponent } from './containers/account/account.component';
 import { UpdateEmailComponent } from './containers/update-email/update-email.component';
 import { UpdatePhoneComponent } from './containers/update-phone/update-phone.component';
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
+import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
 
 const routes: Route[] = [
   {
@@ -15,6 +16,12 @@ const routes: Route[] = [
     path: 'email', component: UpdateEmailComponent, data: {
       title: 'My Account',
       back: true,
+      backUrl: '/account'
+    }
+  },
+  {
+    path: 'verify_token',
+    component: VerificationOtpComponent, data: {
       backUrl: '/account'
     }
   },

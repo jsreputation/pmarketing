@@ -1,6 +1,9 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IProfile } from '@perx/core';
+import { IProfile, AuthenticationService } from '@perx/core';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -10,6 +13,11 @@ import { IProfile } from '@perx/core';
 })
 export class AccountSummaryComponent implements OnChanges {
   @Input() public accountData: IProfile;
+
+  constructor(
+    public authService: AuthenticationService,
+    public router: Router
+  ) {}
 
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
@@ -26,7 +34,13 @@ export class AccountSummaryComponent implements OnChanges {
     }
   }
 
-  public agreement(): void {
-
+  public updateMobileVerification(event: Event): void {
+    event.preventDefault();
+    this.authService.requestVerificationToken().pipe(catchError(()=>{ 
+      return of(null);
+    })).subscribe(()=>{
+      this.router.navigate(['account/verify_token']);
+    });
   }
+
 }
