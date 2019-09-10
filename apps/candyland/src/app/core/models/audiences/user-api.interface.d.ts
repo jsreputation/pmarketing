@@ -16,4 +16,7 @@ declare interface IUserApi {
         primary_identifier: string;
         properties: {},
     };
+    relationships: {
+        pools: any;
+    };
 }
