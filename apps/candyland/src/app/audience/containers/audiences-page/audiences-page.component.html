@@ -6,7 +6,7 @@
 <section class="content">
   <ng-container *ngIf="hasData">
     <!--filters-->
-    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs" class="tab-filter"></cl-tabs-filter>
+    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs" class="tabs-filter"></cl-tabs-filter>
     <!-- <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter> -->
     <cl-table-filters [dataSource]="dataSource" classList="row input-group" class="table-filter">
       <ng-container *clTableFilter="searchKey ; let filter">
