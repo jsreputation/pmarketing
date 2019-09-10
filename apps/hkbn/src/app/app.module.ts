@@ -61,9 +61,9 @@ const PROVIDERS = [
     BrowserModule,
     AuthModule,
     AuthenticationModule,
-    ProfileModule.forRoot({env: environment}),
+    ProfileModule,
     LoyaltyModule,
-    VouchersModule.forRoot({env: environment}),
+    VouchersModule,
     RewardsModule.forRoot({env: environment}),
     TranslateModule.forRoot({
       loader: {
