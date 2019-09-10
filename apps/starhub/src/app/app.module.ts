@@ -11,6 +11,7 @@ import {
   VouchersModule,
   GameModule,
   LocationModule,
+  ConfigModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -63,6 +64,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ExpireTimerComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     MatDialogModule,
@@ -76,14 +78,14 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatSnackBarModule,
     UtilsModule,
     BrowserAnimationsModule,
-    ProfileModule.forRoot({ env: environment }),
+    ProfileModule,
     HttpClientModule,
-    RewardsModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
-    VouchersModule.forRoot({ env: environment }),
+    RewardsModule,
+    AuthenticationModule,
+    ProfileModule,
+    VouchersModule,
     GameModule,
-    LocationModule.forRoot({ env: environment }),
+    LocationModule,
     ScrollingModule
   ],
   entryComponents: [

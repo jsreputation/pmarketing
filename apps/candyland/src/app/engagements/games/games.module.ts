@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import { GameModule } from '@perx/core';
+import { GameModule, ConfigModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
@@ -33,6 +33,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
     CreateShakeTreeComponent,
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     CommonModule,
     ReactiveFormsModule,
     GamesRoutingModule,
@@ -40,7 +41,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
     ButtonModule,
     SelectGraphicModule,
     SelectGraphicWrapModule,
-    GameModule.forRoot({ env: environment }),
+    GameModule,
     SimpleMobileViewModule,
 
     MatTabsModule,

@@ -10,18 +10,20 @@ import { environment } from 'src/environments/environment';
 import {
   AuthenticationModule,
   ProfileModule,
-  LoyaltyModule as PerxLoyaltyModule
+  LoyaltyModule as PerxLoyaltyModule,
+  ConfigModule
 } from '@perx/core';
 @NgModule({
   declarations: [LoyaltyComponent, LoyaltySummaryComponent, LoyaltyTransactionsListComponent],
   imports: [
+    ConfigModule.forRoot({...environment}),
     CommonModule,
     LoyaltyRoutingModule,
     MatTabsModule,
     MatButtonModule,
     AuthenticationModule,
-    ProfileModule.forRoot({ env: environment }),
-    PerxLoyaltyModule.forRoot({ env: environment })
+    ProfileModule,
+    PerxLoyaltyModule
   ]
 })
 export class LoyaltyModule { }
