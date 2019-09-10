@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IProfile, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
+import { Type } from '@angular/core';
 
 const accountDataStub: IProfile = {
   id: 0,
@@ -59,7 +60,7 @@ describe('AccountSummaryComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountSummaryComponent);
-    authService = TestBed.get(AuthenticationService);
+    authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

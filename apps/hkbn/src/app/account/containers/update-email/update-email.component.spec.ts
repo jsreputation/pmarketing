@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '@perx/core';
 import { of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Type } from '@angular/core';
 
 const profileServiceStub = {
   whoAmI: () => of({ email: 'test@gmail.com' }),
@@ -42,7 +43,7 @@ describe('UpdateEmailComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UpdateEmailComponent);
-    profileService = TestBed.get(ProfileService);
+    profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

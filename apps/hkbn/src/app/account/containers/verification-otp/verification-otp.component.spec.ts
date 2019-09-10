@@ -6,6 +6,7 @@ import { UtilsModule, ProfileService, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { Type } from '@angular/core';
 // import 'jasmine';
 const mockProfile = {
   phone: '999'
@@ -47,7 +48,7 @@ describe('VerificationOtpComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VerificationOtpComponent);
     component = fixture.componentInstance;
-    authService = TestBed.get(AuthenticationService);
+    authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     router = TestBed.get(Router);
     fixture.detectChanges();
   });
@@ -63,7 +64,7 @@ describe('VerificationOtpComponent', () => {
 
   it('should navigate to account/phone', fakeAsync(() => {
     const spy = spyOn(authService, 'verifyOTP');
-    const nav = spyOn(router, 'navigate')
+    const nav = spyOn(router, 'navigate');
     spy.and.returnValue(throwError(null));
     const otp = '123456';
     component.validate(otp);
