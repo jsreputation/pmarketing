@@ -6,13 +6,13 @@
 <section class="content">
   <ng-container *ngIf="hasData">
     <!--filters-->
+    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!-- <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter> -->
     <cl-table-filters [dataSource]="dataSource" classList="row input-group">
       <ng-container *clTableFilter="searchKey ; let filter">
         <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
       </ng-container>
     </cl-table-filters>
-    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
       <cl-audiences-users-list *ngSwitchDefault
