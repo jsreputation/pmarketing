@@ -1,17 +1,12 @@
 @import "../../reward.scss";
+@import "../../macaron.scss";
 
-.macaron {
+.macaron-container {
   text-align: center;
   padding: 1rem;
 }
 
-.expiring {
-  border-radius: 5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.2rem;
-  background-color: #73c20e;
-  color: #ffffff;
-}
+@include macaronStyles();
 
 app-expire-timer,
 .phone-contact,
@@ -26,4 +21,5 @@ app-expire-timer,
 .description, .terms-conditions {
   font-size: 1.4rem;
   color: #666666;
+  white-space: pre-line;
 }

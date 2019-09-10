@@ -75,8 +75,13 @@ button {
   }
 }
 
+.mat-toolbar-log.mat-toolbar-single-row {
+  height: $header-height-base;
+}
+
 .page-header {
   display: flex;
+  min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
@@ -87,12 +92,13 @@ button {
 
   &.full-with {
     background: $white-color;
-    min-height: 6.6rem;
+    min-height: $header-height-base;
   }
 }
 
 .title {
   font-size: 2.6rem;
+  margin: auto 0;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -294,6 +300,8 @@ cl-game-mobile-preview, .tabs-component {
 }
 
 .name-control-title {
+  font-weight: 500;
+
   input {
     font-size: 2.2rem;
     color: $there-color;
@@ -329,6 +337,11 @@ cl-game-mobile-preview, .tabs-component {
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  & > .mat-form-field {
+    width: 0;
+    flex: auto;
   }
 }
 
@@ -375,4 +388,13 @@ cl-game-mobile-preview, .tabs-component {
   .mat-form-field-wrapper {
     padding-bottom: 0;
   }
+}
+
+.tabs-filter:first-child .tabs {
+  margin-bottom: 3.2rem;
+}
+
+.tabs-filter + .table-filter .mat-form-field-wrapper {
+  margin: 0 0 2.4rem !important;
+  padding-bottom: 0;
 }

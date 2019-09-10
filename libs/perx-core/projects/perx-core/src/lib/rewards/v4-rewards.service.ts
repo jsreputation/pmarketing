@@ -34,6 +34,17 @@ interface IV4RewardPrice {
   identifier?: string;
 }
 
+interface IV4Inventory {
+  reward_total_balance?: number | null;
+  reward_total_limit?: number | null;
+  reward_limit_per_user: number | null;
+  reward_limit_per_user_balance: {
+    available_amount: number;
+    limit_error_klass: null;
+    limit_type: string;
+  };
+}
+
 export interface IV4Reward {
   id: number;
   name: string;
@@ -51,6 +62,9 @@ export interface IV4Reward {
   how_to_redeem?: string;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
+  inventory?: IV4Inventory;
+  selling_from?: string;
+  merchant_logo_url?: string;
 }
 
 interface IV4Price {
@@ -141,7 +155,16 @@ export class V4RewardsService extends RewardsService {
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
     const rewardBanner = banner && banner.url;
-    const merchantImg = reward[`merchant_logo_url`] ? reward[`merchant_logo_url`] : null;
+    const merchantImg = reward.merchant_logo_url ? reward.merchant_logo_url : null;
+    const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
+
+    const v4Invent = reward.inventory;
+    const inventory = {
+      rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
+      rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
+      rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
+        v4Invent.reward_limit_per_user_balance.available_amount : null
+    };
 
     return {
       id: reward.id,
@@ -157,15 +180,17 @@ export class V4RewardsService extends RewardsService {
       })),
       rewardThumbnail: thumbnailImg,
       rewardBanner,
-      validFrom: reward.valid_from,
-      validTo: reward.valid_to,
+      validFrom: new Date(reward.valid_from),
+      validTo: new Date(reward.valid_to),
+      sellingFrom,
       merchantId: reward.merchant_id,
       merchantName: reward.merchant_name,
       merchantImg,
       merchantWebsite: reward.merchant_website,
       termsAndConditions: reward.terms_and_conditions,
       howToRedeem: reward.how_to_redeem,
-      categoryTags: reward.category_tags
+      categoryTags: reward.category_tags,
+      inventory,
     };
   }
 
