@@ -287,6 +287,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           return this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
+              old_password: changePasswordData.oldPassword,
               password: changePasswordData.newPassword,
               password_confirmation: changePasswordData.passwordConfirmation,
               confirmation_token: changePasswordData.otp

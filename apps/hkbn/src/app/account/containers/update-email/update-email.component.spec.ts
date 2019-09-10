@@ -8,6 +8,7 @@ import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.modu
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('UpdateEmailComponent', () => {
   let component: UpdateEmailComponent;
@@ -22,7 +23,11 @@ describe('UpdateEmailComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([{
+          path: 'account',
+          component: UpdateEmailComponent
+        }])
       ],
       providers: [{provide: ProfileService, useValue: {whoAmI: () => of({email: 'test@gmail.com'})}}],
       declarations: [UpdateEmailComponent]
