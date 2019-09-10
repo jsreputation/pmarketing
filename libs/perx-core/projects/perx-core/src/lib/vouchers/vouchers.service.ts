@@ -44,7 +44,7 @@ interface IV4Voucher {
   issued_date: string;
   name: string;
   redemption_date: any;
-  redemption_type: {
+  redemption_type: RedemptionType | {
     call_to_action: any;
     timer: any;
     type: RedemptionType | null;
@@ -86,7 +86,17 @@ export class VouchersService implements IVoucherService {
     const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
-    let redemptionTypeFinal: RedemptionType = v.redemption_type ? v.redemption_type.type : null;
+    let redemptionTypeFinal: RedemptionType = null;
+    if (v.redemption_type) {
+      if ((typeof v.redemption_type) === 'string') {
+        // @ts-ignore
+        redemptionTypeFinal = v.redemption_type;
+        // @ts-ignore
+      } else if (v.redemption_type.type) {
+        // @ts-ignore
+        redemptionTypeFinal = v.redemption_type.type;
+      }
+    }
     redemptionTypeFinal = redemptionTypeFinal || v.voucher_type;
     if (!(redemptionTypeFinal in RedemptionType)) {
       redemptionTypeFinal = RedemptionType.txtCode;

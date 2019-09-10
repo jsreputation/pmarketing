@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { DiscoverComponent } from './discover/discover.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { HomeComponent } from './home/home.component';
-import { MatToolbarModule, MatTabsModule, MatCardModule, MatButtonModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { MatToolbarModule, MatTabsModule, MatCardModule, MatButtonModule, MatIconModule, MatRippleModule, MatDialogModule } from '@angular/material';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
@@ -16,6 +16,7 @@ import { UtilsModule, LoyaltyModule } from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { environment } from 'src/environments/environment';
+import { PopupComponent } from './news-feed/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { environment } from 'src/environments/environment';
     RewardsCardsComponent,
     CatalogsComponent,
     CampaignsComponent,
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
+    PopupComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { environment } from 'src/environments/environment';
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
+    MatDialogModule,
     HomeRoutingModule,
     NgxMultiLineEllipsisModule,
     UtilsModule,
@@ -46,7 +49,10 @@ import { environment } from 'src/environments/environment';
   bootstrap: [
   ],
   providers: [
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
+  ],
+  entryComponents: [
+    PopupComponent
   ]
 })
 export class HomeModule { }

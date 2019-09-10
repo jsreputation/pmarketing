@@ -32,6 +32,12 @@ export interface IAppAccessTokenResponse {
 export interface IChangePasswordData {
     newPassword: string;
     passwordConfirmation: string;
+    oldPassword: string;
+    otp: string;
+}
+
+export interface IChangePhoneData {
+    phone: string;
     otp: string;
 }
 

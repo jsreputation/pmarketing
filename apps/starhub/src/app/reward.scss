@@ -71,6 +71,11 @@
   }
 }
 
+.reward-balance {
+  font-size: 1.6rem;
+  color: #666666;
+}
+
 .voucher {
   .badge {
     text-align: center;
@@ -128,7 +133,6 @@
 
   button.full-width {
     width: 100%;
-    text-transform: uppercase;
     color: #ffffff;
     padding: 0.5rem 0.5rem;
   }

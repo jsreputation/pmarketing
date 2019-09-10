@@ -2,7 +2,11 @@ import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ILocation } from './ilocation';
 
-const countDistance = (latestPosition: Position, latestLocations: ILocation[]): ILocation[] => {
+const countDistance = (latestPosition: Position | null, latestLocations: ILocation[]): ILocation[] => {
+  if (latestPosition === null) {
+    latestLocations.forEach(loc => loc.distance = null);
+    return latestLocations;
+  }
   const R: number = 6371e3; // radius of the earth
   const pi: number = Math.PI;
 

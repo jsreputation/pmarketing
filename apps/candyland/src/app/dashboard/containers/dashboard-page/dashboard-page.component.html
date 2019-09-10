@@ -1,15 +1,16 @@
-<section class="full-with page-header dashboard-header">
-  <div class="tree-title-wrap">
-    <p class="title">
-      Welcome to Perx, Migs
-    </p>
-    <a routerLink="/dashboard" class="link-overview">
-      Here is an overview of what’s going on with your active campaigns to help you get things done today.
-    </a>
-  </div>
+<section class="full-with page-header">
+  <h1 class="title">Dashboard</h1>
 </section>
 <section class="content">
-  <p class="dashboard-title">Explore Perx </p>
+  <div class="dashboard-welcome">
+    <h1 class="title">
+      Welcome to Perx, Migs
+    </h1>
+    <span class="link-overview">
+      Here is an overview of what’s going on with your active campaigns to help you get things done today.
+    </span>
+  </div>
+  <p class="dashboard-title">Explore Perx</p>
   <div class="game-card-wrap">
     <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
     </cl-dashboard-game-card>
