@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GameService, NotificationService, IGame } from '@perx/core';
 import { Location } from '@angular/common';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +17,7 @@ export class GameComponent implements OnInit {
   public numberOfTaps: number;
   public isGameAvailable: boolean = false;
   public isButtonDisabled: boolean = true;
-  private game: IGame;
+  public game: IGame;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -27,17 +28,12 @@ export class GameComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe(
-      ((params: Params) => {
-        if (params.id) {
-          const id = Number.parseInt(params.id, 10);
-          this.fetchGame(id);
-        }
-      }));
-  }
-
-  private fetchGame(gameId: number): void {
-    this.gameService.get(gameId)
+    this.activeRoute.queryParams
+      .pipe(
+        filter((params: Params) => params.id),
+        map((params: Params) => Number.parseInt(params.id, 10)),
+        switchMap((gameId: number) => this.gameService.get(gameId))
+      )
       .subscribe(
         (game: IGame) => {
           this.game = game;
