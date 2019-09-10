@@ -13,8 +13,8 @@ export class VerificationOtpComponent implements OnInit {
 
   private number: string;
   public get numberDisplay(): string {
-    return this.number ? this.number.substr(0, this.number.length - 3)
-      .replace(/\d/g, '*') + this.number.substr(this.number.length - 3) : '';
+    return this.number && this.number.substr(0, this.number.length - 3)
+      .replace(/\d/g, '*') + this.number.substr(this.number.length - 3);
   }
   constructor(
     private profileService: ProfileService,
@@ -23,9 +23,9 @@ export class VerificationOtpComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe((profile) => {
-      this.number = profile ? profile.phone: '';
-    });
+    this.profileService.whoAmI().subscribe((profile) =>
+      this.number = profile && profile.phone
+    );
   }
   public validate(otp: string): void {
     this.authService.verifyOTP(this.number, otp).pipe(catchError(() => of(null))).subscribe(() => {

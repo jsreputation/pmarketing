@@ -12,7 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
-import { IProfile } from '@perx/core';
+import { IProfile, AuthenticationService } from '@perx/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const accountDataStub: IProfile = {
   id: 0,
@@ -38,8 +39,12 @@ describe('AccountSummaryComponent', () => {
         NoopAnimationsModule,
         MatSlideToggleModule,
         TranslateModule.forRoot(),
+        RouterTestingModule
       ],
-      declarations: [AccountSummaryComponent]
+      declarations: [AccountSummaryComponent],
+      providers: [
+        { provide: AuthenticationService, useValue: {} }
+      ]
     })
       .compileComponents();
   }));
