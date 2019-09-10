@@ -5,7 +5,6 @@ import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
-import { EnvConfig } from '../../shared/env-config';
 import { TokenStorage } from './token-storage.service';
 import {
   IAppAccessTokenResponse,

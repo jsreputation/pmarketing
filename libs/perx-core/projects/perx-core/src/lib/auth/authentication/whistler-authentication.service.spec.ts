@@ -5,14 +5,6 @@ import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 
 describe('WhistlerAuthenticationService', () => {
-  const environment = {
-    apiHost: 'https://api.perxtech.io',
-    production: false,
-    isWhistler: false,
-    preAuth: false,
-    baseHref: '/'
-  };
-
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,

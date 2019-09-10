@@ -1,4 +1,3 @@
-import { VouchersModule } from '@perx/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BcodeRedemptionComponent } from './bcode-redemption.component';
