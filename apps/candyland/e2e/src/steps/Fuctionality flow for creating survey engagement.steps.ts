@@ -119,7 +119,7 @@ Then(/^6_The Add question button is present.$/, async () => {
 });
 
 // Verifiying that when clicking add question button element generates a list of five options.
-/*Given(/^7_that I am on the survey creation page$/, async () => {
+Given(/^7_that I am on the survey creation page$/, async () => {
     await CreateSurveyPage.navigateToSurvey();
 });
 
@@ -127,30 +127,31 @@ When(/^7_I click on the add question button.$/, async () => {
     const ec = protractor.ExpectedConditions;
     // waiting for the add question button to be loaded
     await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
-    element.all(by.css('cl-button>button')).last().click();
+    element.all(by.css('cl-button')).last().click();
 });
 
-Then(/^7_There are five options.$/, async () => {
+Then(/^7_There are seven options.$/, async () => {
+    const ec = protractor.ExpectedConditions;
+    await browser.wait(ec.presenceOf(element.all(by.css('mat-option.mat-option.ng-star-inserted')).get(0)), 6000 );
+    expect(await element.all(by.css('mat-option.mat-option.ng-star-inserted')).count()).to.be.equal(7);
+});
+
+// Verifiying that when clicking add picture choice list element generates a form.
+/*Given(/^8_that I am on list of options for the add question elements$/, async () => {
+    await CreateSurveyPage.navigateToSurvey();
+});
+
+When(/^8_I select the option for picture choice.$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
 
-/*Given('{int}_that I am on list of options for the add question elements', function (int) {
+Then(/^8_There is a form present.$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
 
-When('{int}_I select the option for picture choice.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Then('{int}_There is a form present.', function (int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
-
-Given('{int}_that I have selected added question picture choice', function (int) {
+/*Given('{int}_that I have selected added question picture choice', function (int) {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
