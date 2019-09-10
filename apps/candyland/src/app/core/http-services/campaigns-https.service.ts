@@ -24,7 +24,7 @@ export class CampaignsHttpsService {
   }
 
   public createCampaign(data: IResponseApi<any>): Observable<IResponseApi<any>> {
-    return this.http.post<IResponseApi<any>>(ApiConfig.rewardsPath,  data);
+    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath,  data);
   }
 
   public deleteCampaign(id: string): Observable<any> {

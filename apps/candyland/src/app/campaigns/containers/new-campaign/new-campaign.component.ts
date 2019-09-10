@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CampaignsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -20,7 +20,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
   constructor(private store: CampaignCreationStoreService,
-              private campaignCreationStepConditionService: StepConditionService,
+              private stepConditionService: StepConditionService,
+              private campaignsService: CampaignsService,
               private router: Router,
               public dialog: MatDialog,
               private fb: FormBuilder) {
@@ -38,7 +39,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe(value => {
         this.store.updateCampaign(value);
-    });
+      });
   }
 
   public ngOnDestroy(): void {
@@ -59,8 +60,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
-  public getStepConditions(key: number): Observable<boolean> {
-    return this.campaignCreationStepConditionService.stepCondition$(key);
+  public getStepCondition(key: number): boolean {
+    return this.stepConditionService.getStepCondition(key);
   }
 
   public goBack(): void {
@@ -68,11 +69,24 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public goNext(): void {
+    this.stepConditionService.nextEvent(this.stepper.selectedIndex);
     this.stepper.next();
   }
 
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
+  }
+
+  public save(): void {
+    console.log(this.store.currentCampaign);
+    this.campaignsService.createCampaign(this.store.currentCampaign).subscribe(
+      data => {
+        if (data) {
+          this.openDialog();
+        }
+      },
+      (error: Error) => console.warn(error.message)
+    );
   }
 
   private getDialogData(campaign): { title: string, subTitle: string, type?: string } {
@@ -98,7 +112,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openDialog(): void {
+  private openDialog(): void {
     const config = this.getDialogData(this.store.currentCampaign);
     const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, {data: config});
 

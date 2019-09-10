@@ -32,8 +32,9 @@ export class CampaignsService implements ITableService {
     this.campaignsHttpsService.updateCampaign(id, data);
   }
 
-  public createCampaign(data: any): void {
-    this.campaignsHttpsService.createCampaign(data);
+  public createCampaign(data: any): Observable<any> {
+    const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
+    return this.campaignsHttpsService.createCampaign({data: sendData});
   }
 
   public duplicateCampaign(id: string): Observable<any> {

@@ -20,19 +20,21 @@ export class CampaignsHttpAdapter {
     }
   }
 
-  public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
+  public static transformFromCampaign(data: any): any {
     return {
-      name: data.attributes.name,
-      id: data.id,
-      currency: data.attributes.currency,
-      rewardInfo: {
-        image: data.attributes.image_url,
-        rewardType: data.attributes.reward_type,
-        category: data.attributes.category,
-        redemptionType: data.attributes.redemption_type,
-        cost: data.attributes.cost_of_reward,
-        description: data.attributes.description,
-        termsAndCondition: data.attributes.terms_conditions
+      type: "entities",
+      attributes: {
+        name: data.name,
+        engagement_type: data.template.attributes_type,
+        engagement_id: data.template.id,
+        comm_channel: data.channel.type,
+        // status: "draft",
+        start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
+        end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
+        goal: data.campaignInfo.goal,
+        // pool_id: "1",
+        // possible_outcomes: "",
+        // comm: "description",
       }
     };
   };

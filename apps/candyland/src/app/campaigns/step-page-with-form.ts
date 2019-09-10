@@ -26,11 +26,15 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
         this.campaign = data;
         this.cd.detectChanges();
       });
+
+    if (this.stepIndex !== undefined && this.stepConditionService && this.form) {
+      this.stepConditionService.registerStepCondition(this.stepIndex, this.form);
+    }
+
     if (this.form && this.stepConditionService) {
       this.form.valueChanges
         .pipe(untilDestroyed(this))
         .subscribe((value) => {
-          this.stepConditionService.registerStepCondition(this.stepIndex, this.form.valid);
           this.store.updateCampaign(value);
         });
     }
