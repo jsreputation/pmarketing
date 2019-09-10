@@ -206,18 +206,22 @@ Then(/^10_File is uploaded successfully.$/, async () => {
 });
 
 // Verifiying that header message field generates error message when having null value.
-/*Given('{int}_that I am on the survey creation page', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Given(/^11_that I am on the survey creation page$/, async () => {
+  await CreateSurveyPage.navigateToSurvey();
+});
 
-When('{int}_I entered a empty text string in the header text box.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^11_I entered a empty text string in the header text box.$/, async () => {
+  const ec = protractor.ExpectedConditions ;
+  // waiting for header text field
+  await browser.wait(ec.presenceOf(element(by.id('mat-input-0'))), 7000 );
+  // clearing default values
+  await element(by.id('mat-input-0')).clear();
+  // clicking on the headline message field to elicit the message
+  await element(by.id('mat-input-0')).click();
+});
 
-Then('{int}_There is an error message present.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-*/
+Then(/^11_There is an error message present.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.presenceOf(element(by.css('mat-error'))), 6000 );
+  expect(await element(by.css('mat-error')).getText()).to.contain('Required field');
+});
