@@ -87,7 +87,8 @@ describe('AppComponent', () => {
     getCampaign: () => of()
   };
   const routerStub = {
-    navigate: () => { }
+    navigate: () => { },
+    events: of()
   };
   const matSnackBarStub = {
     open: () => { }

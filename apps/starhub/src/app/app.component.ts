@@ -11,10 +11,13 @@ import {
   IReward
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, Event, NavigationEnd } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+
+declare var dataLayerSH: any;
+declare var pageTrack: any;
 
 @Component({
   selector: 'app-root',
@@ -46,6 +49,29 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         this.authenticationService.saveUserAccessToken(params.token);
         this.fetchCampaigns();
       });
+
+    this.subscribeToRouteChanges();
+  }
+
+  private subscribeToRouteChanges(): void {
+    this.router.events.subscribe(
+      (event: Event) => {
+        if (event instanceof NavigationEnd) {
+          const eventUrl = event.url;
+          console.log(eventUrl);
+
+          // TODO: These are temp values
+          // TODO: A map is needed to map values between 'eventUrl' and 'dataLayerSH'
+          dataLayerSH.pageName = 'rewards:discover';
+          dataLayerSH.pageType = 'landing page';
+          dataLayerSH.siteSectionLevel2 = 'rewards:discover';
+          dataLayerSH.siteSectionLevel3 = 'rewards:discover';
+          dataLayerSH.hubID = 'ZPfW6pgwrG5oSKixBpexJ14LMylsoxrdNXo6nahA8vY';
+
+          pageTrack('msa-rewards-virtual-page');
+        }
+      }
+    );
   }
 
   private fetchCampaigns(): void {
