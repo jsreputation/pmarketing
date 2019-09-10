@@ -200,9 +200,9 @@ export class GameService implements IGameService {
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
-          // if (games.length === 0) {
-          //   throw new Error('Games list is empty');
-          // }
+          if (games.length === 0) {
+            throw new Error('Games list is empty');
+          }
           return games.map((game: Game): IGame => GameService.v4GameToGame(game));
         }),
         catchError((err) => {

@@ -94,16 +94,19 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         filter(games => games.length > 0),
         map(games => games[0])
       )
-      .subscribe((game: IGame) => {
-        this.game = game;
-        const data = {
-          imageUrl: './assets/shake.png',
-          text: campaign.name, // You’ve got a “Shake the Tree” reward!
-          buttonTxt: 'Play now',
-          afterClosedCallBack: this,
-        };
-        this.dialog.open(RewardPopupComponent, { data });
-      });
+      .subscribe(
+        (game: IGame) => {
+          this.game = game;
+          const data = {
+            imageUrl: './assets/shake.png',
+            text: campaign.name, // You’ve got a “Shake the Tree” reward!
+            buttonTxt: 'Play now',
+            afterClosedCallBack: this,
+          };
+          this.dialog.open(RewardPopupComponent, { data });
+        },
+        () => { /* nothing to do here, just fail silently */ }
+      );
   }
 
   public dialogClosed(): void {
