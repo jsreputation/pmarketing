@@ -60,7 +60,7 @@ const PROVIDERS = [
     ConfigModule.forRoot({...environment}),
     BrowserModule,
     AuthModule,
-    AuthenticationModule.forRoot({env: environment}),
+    AuthenticationModule,
     ProfileModule.forRoot({env: environment}),
     LoyaltyModule,
     VouchersModule.forRoot({env: environment}),

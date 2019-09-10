@@ -1,21 +1,25 @@
-import { ProfileService } from '@perx/core';
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { EnvConfig } from '../../shared/env-config';
+import { NgModule } from '@angular/core';
 import {
   AuthModule,
-  AUTH_SERVICE,
   PROTECTED_FALLBACK_PAGE_URI,
-  PUBLIC_FALLBACK_PAGE_URI
+  PUBLIC_FALLBACK_PAGE_URI,
+  AUTH_SERVICE
 } from 'ngx-auth';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
+import { ProfileService } from '../../profile/profile.service';
 
-export function AuthServiceFactory(http: HttpClient, config: Config, profileService: ProfileService, tokenStorage: TokenStorage): AuthenticationService {
+export function AuthServiceFactory(
+  http: HttpClient,
+  config: Config,
+  tokenStorage: TokenStorage,
+  profileService: ProfileService
+): AuthenticationService {
   // Make decision on what to instantiate base on config
-  return new V4AuthenticationService(http, config, profileService, tokenStorage);
+  return new V4AuthenticationService(config, http, tokenStorage, profileService);
 }
 
 @NgModule({
@@ -29,7 +33,12 @@ export function AuthServiceFactory(http: HttpClient, config: Config, profileServ
     {
       provide: AuthenticationService,
       useFactory: AuthServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, TokenStorage, ProfileService]
+    },
+    {
+      provide: AUTH_SERVICE,
+      useFactory: AuthServiceFactory,
+      deps: [HttpClient, Config, TokenStorage, ProfileService]
     }
   ]
 })

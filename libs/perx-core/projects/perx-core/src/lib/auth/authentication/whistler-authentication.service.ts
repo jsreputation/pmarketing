@@ -15,6 +15,7 @@ import {
   IChangePasswordData,
   ILoginResponse
 } from './models/authentication.model';
+import { Config } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -29,16 +30,16 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public $failedAuthObservable: Observable<boolean>;
 
   constructor(
-    config: EnvConfig,
+    config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
-    if (!config.env.production) {
+    this.apiHost = config.apiHost as string;
+    if (!config.production) {
       this.preAuthEndpoint = 'http://localhost:4000/preauth';
     } else {
-      this.preAuthEndpoint = config.env.baseHref + 'preauth';
+      this.preAuthEndpoint = config.baseHref + 'preauth';
     }
     this.$failedAuthObservable = new Observable();
   }
