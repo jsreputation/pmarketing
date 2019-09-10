@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IProfile } from '@perx/core';
+import { IProfile, ProfileService, NotificationService } from '@perx/core';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -10,14 +11,17 @@ import { IProfile } from '@perx/core';
 })
 export class AccountSummaryComponent implements OnChanges {
   @Input() public accountData: IProfile;
-
+  constructor(private profileService: ProfileService, private ntfs: NotificationService) {
+  }
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
     phone: new FormControl(''),
     email: new FormControl(),
     pass: new FormControl(),
-    customProperties: new FormControl()
+    customProperties: new FormGroup({
+      subscribe_notification: new FormControl(false)
+    })
   });
 
   public ngOnChanges(): void {
@@ -26,7 +30,12 @@ export class AccountSummaryComponent implements OnChanges {
     }
   }
 
-  public agreement(): void {
+  public agreement(event: MatSlideToggleChange): void {
+    this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
 
+    },
+      (err) => {
+        this.ntfs.addSnack(err);
+      });
   }
 }
