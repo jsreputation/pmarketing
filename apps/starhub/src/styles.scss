@@ -32,3 +32,9 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+.app-full-bleed-dialog .mat-dialog-container {
+  padding: 0;
+  position: relative;
+  border-radius: 1rem;
+}
