@@ -389,3 +389,12 @@ cl-game-mobile-preview, .tabs-component {
     padding-bottom: 0;
   }
 }
+
+.tabs-filter:first-child .tabs {
+  margin-bottom: 3.2rem;
+}
+
+.tabs-filter + .table-filter .mat-form-field-wrapper {
+  margin: 0 0 2.4rem !important;
+  padding-bottom: 0;
+}
