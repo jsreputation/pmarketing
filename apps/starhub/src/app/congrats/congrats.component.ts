@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { GameService } from '@perx/core';
+import { GameService, NotificationService } from '@perx/core';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-congrats',
@@ -13,20 +14,23 @@ export class CongratsComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private gameService: GameService,
+    private notificationService: NotificationService
   ) { }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe(
-      ((params: Params) => {
-      if (params.gameId) {
-        const id = Number.parseInt(params.gameId, 10);
-        this.fetchRewards(id);
-      }
-    }));
-  }
-
-  private fetchRewards(gameId: number): void {
-    this.gameService.play(gameId).subscribe(res => console.log(res));
+    this.activeRoute.queryParams
+      .pipe(
+        filter((params: Params) => params.gameId),
+        map((params: Params) => Number.parseInt(params.gameId, 10)),
+        switchMap((gameId: number) => this.gameService.play(gameId))
+      )
+      .subscribe(
+        (game: any) => console.log(game),
+        () => this.notificationService.addPopup({
+          title: 'Oooops!',
+          text: 'There is no more reward for you!'
+        })
+      );
   }
 
   public viewReward(id: number): void {
