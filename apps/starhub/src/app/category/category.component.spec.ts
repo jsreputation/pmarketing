@@ -161,7 +161,7 @@ describe('CategoryComponent', () => {
     tick();
     returnValue.subscribe(
       (values) => {
-        expect(values[0].id).toBe(1);
+        expect(values[0].id).toBe(3);
       }
     );
   }));
