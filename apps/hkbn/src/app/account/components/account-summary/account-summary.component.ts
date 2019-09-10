@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { IProfile,AuthenticationService, ProfileService, NotificationService } from '@perx/core';
+import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
@@ -18,7 +18,7 @@ export class AccountSummaryComponent implements OnChanges {
   constructor(
     public authService: AuthenticationService,
     public router: Router,
-    private profileService: ProfileService, 
+    private profileService: ProfileService,
     private ntfs: NotificationService
   ) { }
 

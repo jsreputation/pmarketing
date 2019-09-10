@@ -43,6 +43,7 @@ describe('AccountSummaryComponent', () => {
   let authService: AuthenticationService;
   let profileService: ProfileService;
   let notificationService: NotificationService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -63,7 +64,7 @@ describe('AccountSummaryComponent', () => {
       ],
       declarations: [AccountSummaryComponent],
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
@@ -97,20 +98,22 @@ describe('AccountSummaryComponent', () => {
     component.updateMobileVerification(new Event('click'));
     tick();
     expect(spy).toHaveBeenCalled();
-    it('should handle error', fakeAsync(() => {
-      const errorMessage = 'error';
-      const spy = spyOn(notificationService, 'addSnack');
-      spyOn(profileService, 'setCustomProperties').and.returnValue(throwError(errorMessage));
-      component.agreement(new MatSlideToggleChange({} as MatSlideToggle, true));
-      tick();
-      expect(spy).toHaveBeenCalledWith(errorMessage);
-    }));
+  }));
 
-    it('should handle success', fakeAsync(() => {
-      const spy = spyOn(notificationService, 'addSnack');
-      spyOn(profileService, 'setCustomProperties').and.returnValue(of(null));
-      component.agreement(new MatSlideToggleChange({} as MatSlideToggle, true));
-      tick();
-      expect(spy).not.toHaveBeenCalled();
-    }));
-  });
+  it('should handle error', fakeAsync(() => {
+    const errorMessage = 'error';
+    const spy = spyOn(notificationService, 'addSnack');
+    spyOn(profileService, 'setCustomProperties').and.returnValue(throwError(errorMessage));
+    component.agreement(new MatSlideToggleChange({} as MatSlideToggle, true));
+    tick();
+    expect(spy).toHaveBeenCalledWith(errorMessage);
+  }));
+
+  it('should handle success', fakeAsync(() => {
+    const spy = spyOn(notificationService, 'addSnack');
+    spyOn(profileService, 'setCustomProperties').and.returnValue(of(null));
+    component.agreement(new MatSlideToggleChange({} as MatSlideToggle, true));
+    tick();
+    expect(spy).not.toHaveBeenCalled();
+  }));
+});
