@@ -2,16 +2,15 @@
   <h1 class="title">Dashboard</h1>
 </section>
 <section class="content">
-  <div class="tree-title-wrap">
-    <p class="title">
+  <div class="dashboard-welcome">
+    <h1 class="title">
       Welcome to Perx, Migs
-    </p>
+    </h1>
     <span class="link-overview">
       Here is an overview of what’s going on with your active campaigns to help you get things done today.
     </span>
   </div>
-
-  <p class="dashboard-title">Explore Perx </p>
+  <p class="dashboard-title">Explore Perx</p>
   <div class="game-card-wrap">
     <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
     </cl-dashboard-game-card>
