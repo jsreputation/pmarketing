@@ -27,4 +27,5 @@ export class AudiencesUserInfoComponent implements OnInit {
       this.cd.detectChanges();
     });
   }
+
 }

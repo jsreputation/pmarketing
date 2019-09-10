@@ -51,16 +51,45 @@ export class AudiencesHttpAdapter {
       phone_number: data.attributes.phone_number,
       email_address: data.attributes.email_address,
       primary_identifier: data.attributes.primary_identifier,
-      pools: data.relationships.pools.data
+      pools: ''
     };
   }
 
+  public static transformUserWithPools(data: any): any {
+   const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+   const userData = AudiencesHttpAdapter.transformUser(data.data);
+   userData.pools = data.data.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
+    return userData;
+  }
+
+  public static createPoolMap(data: any[]): any {
+    const mapPool = {};
+    data.forEach(element => {
+      mapPool[element.id] = element.attributes.name;
+    });
+    return mapPool;
+  } 
+  
   public static transformTableData(data: any): ITableData<IUser> {
     return {
       data: data.data.map(item => AudiencesHttpAdapter.transformUser(item)),
       meta: data.meta
     }
   }
+
+  public static transformUsersWithPools(data: any): any {
+    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+    const usersData = data.data.map(item => {
+      console.log(item)
+      const formatedUser = AudiencesHttpAdapter.transformUser(item);
+      formatedUser.pools = item.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
+      return formatedUser
+    });
+     return {
+      data: usersData,
+      meta: data.meta
+    }
+   }
 
   // Audiences List 
   public static transformAudiences(data: any): IAudiences {

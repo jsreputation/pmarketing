@@ -35,8 +35,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public audiences;
   public currentFilter;
   public tabsFilterConfig: OptionConfig[] = [
-    {title: 'Users(340)', value: 'users'},
-    {title: 'Audience List(3)', value: 'audience'}
+    {title: 'Users', value: 'users'},
+    {title: 'Audience List', value: 'audience'}
   ];
   public config: any;
 

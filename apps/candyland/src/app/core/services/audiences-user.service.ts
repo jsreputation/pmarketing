@@ -13,9 +13,9 @@ export class AudiencesUserService implements ITableService {
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getUser(id): Observable<any> {
+  public getUser(id: number): Observable<any> {
     return this.http.getUser(id).pipe(
-      map((res: any) => AudiencesHttpAdapter.transformUser(res.data))
+      map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res))
     );
   }
 
@@ -26,7 +26,7 @@ export class AudiencesUserService implements ITableService {
   public getTableData(params: HttpParams): Observable<ITableData<IUser>> {
     return this.http.getAllUsers(params)
       .pipe(
-        map((res: any) => AudiencesHttpAdapter.transformTableData(res))
+        map((res: any) => AudiencesHttpAdapter.transformUsersWithPools(res))
       );
   }
 

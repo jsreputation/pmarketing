@@ -42,10 +42,8 @@
 
   <ng-container matColumnDef="audienceList">
     <th mat-header-cell *matHeaderCellDef>Audience List</th>
-    <td mat-cell *matCellDef="let element"> 
-      <span *ngFor="let item of element?.pools">
-          {{item.id}}
-      </span>
+    <td mat-cell *matCellDef="let element">
+      {{ element?.pools }}
     </td>
   </ng-container>
 
