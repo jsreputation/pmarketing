@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, Inject, OnInit } from '@angular/cor
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
+import { AudiencesService } from '@cl-core-services';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Component({
   selector: 'cl-add-user-popup',
@@ -10,8 +12,8 @@ import { ClValidators } from '@cl-helpers/cl-validators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddUserPopupComponent implements OnInit {
-
   public form: FormGroup;
+  public pools: any;
   public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
@@ -30,11 +32,13 @@ export class AddUserPopupComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddUserPopupComponent>,
               private fb: FormBuilder,
+              private audiencesService: AudiencesService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   public ngOnInit(): void {
     this.initForm();
+    this.getPools();
   }
 
   public close(): void {
@@ -66,6 +70,17 @@ export class AddUserPopupComponent implements OnInit {
       state: [],
       audienceList: [],
       file: [],
+    });
+  }
+
+  private getPools(): any {
+    const params = {
+      'page[number]': 1,
+      'page[size]': 20,
+    };
+    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
+    .subscribe( (data: any) => {
+      this.pools = data;
     });
   }
 }
