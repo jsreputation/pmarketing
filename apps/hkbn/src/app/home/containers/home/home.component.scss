@@ -47,6 +47,12 @@
   display: block;
   margin-bottom: 2rem;
   margin-left: 0.6rem;
+
+  ::ng-deep {
+    .mat-card {
+      height: 20rem !important;
+    }
+  }
 }
 
 .promotion {
