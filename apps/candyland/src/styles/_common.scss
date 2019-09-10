@@ -300,6 +300,8 @@ cl-game-mobile-preview, .tabs-component {
 }
 
 .name-control-title {
+  font-weight: 500;
+
   input {
     font-size: 2.2rem;
     color: $there-color;
@@ -386,4 +388,13 @@ cl-game-mobile-preview, .tabs-component {
   .mat-form-field-wrapper {
     padding-bottom: 0;
   }
+}
+
+.tabs-filter:first-child .tabs {
+  margin-bottom: 3.2rem;
+}
+
+.tabs-filter + .table-filter .mat-form-field-wrapper {
+  margin: 0 0 2.4rem !important;
+  padding-bottom: 0;
 }

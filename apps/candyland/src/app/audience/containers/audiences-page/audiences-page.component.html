@@ -5,32 +5,41 @@
 
 <section class="content">
   <ng-container *ngIf="hasData">
+
     <!--filters-->
-    <!-- <cl-search-filter class="search-block" [control]="search" placeholder="Search for users"></cl-search-filter> -->
-    <cl-table-filters [dataSource]="dataSource" classList="row input-group">
-      <ng-container *clTableFilter="searchKey ; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
-      </ng-container>
-    </cl-table-filters>
+    <ng-container [ngSwitch]="currentTab">
+      <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
+        <ng-container *clTableFilter="searchKey ; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+
+      <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource" classList="row input-group">
+        <ng-container *clTableFilter="searchKey ; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for audience">
+          </cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+    </ng-container>
+
+    <!--tabs-->
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
+
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
-      <cl-audiences-users-list *ngSwitchDefault
-                               (clickManageList)="openManageListDialog($event)"
-                               [dataSource]="dataSource">
-
+      <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)" 
+        [dataSource]="dataSource">
       </cl-audiences-users-list>
-      <cl-audiences-list *ngSwitchCase="'audience'"
-                         [dataSource]="dataSource">
-
+      <cl-audiences-list *ngSwitchCase="'audience'" 
+        [dataSource]="audiencesDataSource">
       </cl-audiences-list>
     </ng-container>
     <!--paginator-->
-    <!-- <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-    <cl-paginator [dataSource]="dataSource"
-                  [pageSize]="5"
-                  [pageSizeOptions]="[5, 10, 20]"
-    ></cl-paginator>
+    <ng-container [ngSwitch]="currentTab">
+      <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5" 
+        [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+      <span *ngSwitchCase="'audience'"></span>
+    </ng-container>
   </ng-container>
 
   <cl-no-data *ngIf="!hasData">

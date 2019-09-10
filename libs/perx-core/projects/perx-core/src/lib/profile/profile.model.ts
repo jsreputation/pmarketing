@@ -14,7 +14,7 @@ export interface IProfile {
 }
 
 export interface ICustomProperties {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
 }
 
 export interface IProfileProperty {

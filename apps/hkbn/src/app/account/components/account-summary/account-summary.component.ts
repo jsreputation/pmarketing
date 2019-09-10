@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IProfile, AuthenticationService } from '@perx/core';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { IProfile,AuthenticationService, ProfileService, NotificationService } from '@perx/core';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -16,7 +17,9 @@ export class AccountSummaryComponent implements OnChanges {
 
   constructor(
     public authService: AuthenticationService,
-    public router: Router
+    public router: Router,
+    private profileService: ProfileService, 
+    private ntfs: NotificationService
   ) { }
 
   public accountSummary: FormGroup = new FormGroup({
@@ -25,7 +28,9 @@ export class AccountSummaryComponent implements OnChanges {
     phone: new FormControl(''),
     email: new FormControl(),
     pass: new FormControl(),
-    customProperties: new FormControl()
+    customProperties: new FormGroup({
+      subscribe_notification: new FormControl(false)
+    })
   });
 
   public ngOnChanges(): void {
@@ -41,5 +46,13 @@ export class AccountSummaryComponent implements OnChanges {
     })).subscribe(() => {
       this.router.navigate(['account/verify_token']);
     });
+  }
+  public agreement(event: MatSlideToggleChange): void {
+    this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
+
+    },
+      (err) => {
+        this.ntfs.addSnack(err);
+      });
   }
 }

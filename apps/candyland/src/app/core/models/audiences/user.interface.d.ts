@@ -12,4 +12,5 @@ declare interface IUser {
   phone_number: string;
   email_address: string;
   primary_identifier: string;
+  pools?: any;
 }

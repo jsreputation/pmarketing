@@ -29,24 +29,18 @@ export class VouchersComponent implements OnInit {
     this.savedVouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => {
-          if (!this.hideSeeMore) {
-            this.hideSeeMore = vouchs.length <= this.defaultNbVouchers;
-          }
           return vouchs.filter(voucher => voucher.state === VoucherState.issued);
         }));
 
     this.redeemedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued && this.daysSince(voucher.expiry)))
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => this.daysSince(voucher.redemptionDate)))
       );
   }
 
   public voucherSelected(voucher: Voucher): void {
     this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
-  }
-
-  public pastVoucherSelected(voucher: Voucher): void {
-    this.router.navigate(['/redemption'], { queryParams: { id: voucher.id } });
   }
 
   public seeMoreClicked(): void {
