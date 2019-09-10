@@ -9,7 +9,7 @@ describe('V4RewardsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
-      VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
+      VouchersModule,
     ],
     providers: [
       EnvConfig,

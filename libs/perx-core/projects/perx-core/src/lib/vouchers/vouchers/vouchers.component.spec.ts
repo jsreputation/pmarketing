@@ -51,7 +51,7 @@ describe('VouchersComponent', () => {
         MatRippleModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule
       ]
     })
       .compileComponents();

@@ -14,7 +14,7 @@ describe('PinService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule
       ]
     }).compileComponents();
     service = TestBed.get(PinService);

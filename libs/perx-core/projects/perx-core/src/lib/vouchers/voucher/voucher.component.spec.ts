@@ -14,7 +14,7 @@ describe('VoucherComponent', () => {
       imports: [
         MatCardModule,
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule
       ]
     })
       .compileComponents();

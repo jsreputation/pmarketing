@@ -8,7 +8,7 @@ describe('ProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
-      ProfileModule.forRoot({ env: { apiHost: '' } })
+      ProfileModule
     ]
   }));
 

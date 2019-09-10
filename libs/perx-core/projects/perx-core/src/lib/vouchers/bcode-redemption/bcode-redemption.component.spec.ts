@@ -1,3 +1,4 @@
+import { VouchersModule } from '@perx/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BcodeRedemptionComponent } from './bcode-redemption.component';
@@ -14,7 +15,7 @@ describe('BcodeRedemptionComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } }),
+        VouchersModule,
       ]
     })
     .compileComponents();

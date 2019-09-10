@@ -139,7 +139,7 @@ describe('VouchersService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
+        VouchersModule,
       ]
     });
     // httpClient = TestBed.get(HttpClient);

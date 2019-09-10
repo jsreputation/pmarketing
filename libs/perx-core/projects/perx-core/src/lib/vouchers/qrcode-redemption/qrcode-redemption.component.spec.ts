@@ -12,7 +12,7 @@ describe('QrcodeRedemptionComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule
         ]
     })
     .compileComponents();

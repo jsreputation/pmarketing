@@ -16,7 +16,7 @@ describe('WhistlerAuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
-      ProfileModule.forRoot({ env: environment })
+      ProfileModule
     ],
     providers: [TokenStorage]
   }));

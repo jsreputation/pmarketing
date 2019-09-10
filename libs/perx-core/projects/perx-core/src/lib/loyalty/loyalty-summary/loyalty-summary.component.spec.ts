@@ -14,11 +14,11 @@ describe('LoyaltySummaryComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ProfileModule.forRoot({ env: { apiHost: '' } }),
-        LoyaltyModule.forRoot({ env: { apiHost: '' } })
+        ProfileModule,
+        LoyaltyModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
