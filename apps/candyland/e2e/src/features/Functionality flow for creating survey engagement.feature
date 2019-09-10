@@ -33,10 +33,10 @@ Scenario: Verifiying that add question button element exists.
   When  6_I do nothing
   Then  6_The Add question button is present.
 
-Scenario: Verifiying that when clicking add question button element generates a list of five options.
+Scenario: Verifiying that when clicking add question button element generates a list of seven options.
   Given 7_that I am on the survey creation page
   When  7_I click on the add question button.
-  Then  7_There are five options.
+  Then  7_There are seven options.
 
 Scenario: Verifiying that when clicking add picture choice list element generates a form.
   Given 8_that I am on list of options for the add question elements
