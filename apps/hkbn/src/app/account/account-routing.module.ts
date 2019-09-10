@@ -22,7 +22,8 @@ const routes: Route[] = [
   {
     path: 'verify_token',
     component: VerificationOtpComponent, data: {
-      backUrl: '/account'
+      backUrl: '/account',
+      back: true,
     }
   },
   {
