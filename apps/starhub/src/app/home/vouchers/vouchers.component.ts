@@ -45,10 +45,6 @@ export class VouchersComponent implements OnInit {
     this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
   }
 
-  public pastVoucherSelected(voucher: Voucher): void {
-    this.router.navigate(['/redemption'], { queryParams: { id: voucher.id } });
-  }
-
   public seeMoreClicked(): void {
     this.hideSeeMore = true;
   }
