@@ -13,6 +13,7 @@ import {
   RewardsModule,
   UtilsModule,
   VouchersModule,
+  ConfigModule
 } from '@perx/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
@@ -56,11 +57,12 @@ const PROVIDERS = [
     HistoryComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AuthModule,
     AuthenticationModule.forRoot({env: environment}),
     ProfileModule.forRoot({env: environment}),
-    LoyaltyModule.forRoot({env: environment}),
+    LoyaltyModule,
     VouchersModule.forRoot({env: environment}),
     RewardsModule.forRoot({env: environment}),
     TranslateModule.forRoot({

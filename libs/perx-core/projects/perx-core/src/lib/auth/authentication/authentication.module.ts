@@ -1,3 +1,4 @@
+import { ProfileService } from '@perx/core';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { EnvConfig } from '../../shared/env-config';
 import {
@@ -9,35 +10,28 @@ import {
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
+import { HttpClient } from '@angular/common/http';
+import { Config } from '../../config/config';
 
-export function factory(authenticationService: AuthenticationService): AuthenticationService {
-  return authenticationService;
+export function AuthServiceFactory(http: HttpClient, config: Config, profileService: ProfileService, tokenStorage: TokenStorage): AuthenticationService {
+  // Make decision on what to instantiate base on config
+  return new V4AuthenticationService(http, config, profileService, tokenStorage);
 }
 
 @NgModule({
   imports: [AuthModule],
   declarations: [],
-  exports: []
+  exports: [],
+  providers: [
+    TokenStorage,
+    { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
+    { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
+    {
+      provide: AuthenticationService,
+      useFactory: AuthServiceFactory,
+      deps: [HttpClient, Config]
+    }
+  ]
 })
 export class AuthenticationModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: AuthenticationModule,
-      providers: [
-        TokenStorage,
-        {
-          provide: EnvConfig,
-          useValue: config
-        },
-        { provide: AuthenticationService, useClass: V4AuthenticationService },
-        { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
-        { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
-        {
-          provide: AUTH_SERVICE,
-          deps: [AuthenticationService],
-          useFactory: factory
-        }
-      ]
-    };
-  }
 }

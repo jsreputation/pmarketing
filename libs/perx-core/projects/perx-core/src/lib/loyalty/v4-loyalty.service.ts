@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
 import { LoyaltyService } from './loyalty.service';
 import { ILoyalty, ITransaction } from './models/loyalty.model';
+import { Config } from '../config/config';
 
 interface IV4Meta {
   count?: number;
@@ -66,10 +66,10 @@ export class V4LoyaltyService extends LoyaltyService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig
+    @Optional() config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
