@@ -24,7 +24,7 @@ export class VerificationOtpComponent implements OnInit {
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe((profile) => {
-      this.number = profile.phone;
+      this.number = profile ? profile.phone: '';
     });
   }
   public validate(otp: string): void {
