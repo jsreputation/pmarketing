@@ -64,7 +64,7 @@ export class AudiencesHttpAdapter {
 
   public static createPoolMap(data: any[]): any {
     const mapPool = {};
-    data.forEach(element => {
+    data.forEach((element: any)=> {
       mapPool[element.id] = element.attributes.name;
     });
     return mapPool;
@@ -79,8 +79,7 @@ export class AudiencesHttpAdapter {
 
   public static transformUsersWithPools(data: any): any {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map(item => {
-      console.log(item)
+    const usersData = data.data.map((item: any) => {
       const formatedUser = AudiencesHttpAdapter.transformUser(item);
       formatedUser.pools = item.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
       return formatedUser
