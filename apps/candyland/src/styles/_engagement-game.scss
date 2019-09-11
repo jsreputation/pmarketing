@@ -28,13 +28,7 @@ $mobile-preview-width: 34.4rem;
   position: relative;
 }
 
-.second-tab {
-  padding-right: $mobile-preview-width;
-  position: relative; 
-}
-
 .mobile-preview {
-  position: fixed;
   &-single {
     @extend .base-format;
 
@@ -46,4 +40,8 @@ $mobile-preview-width: 34.4rem;
 
     background-image: url("/assets/images/mobile-phone/mobile_multiple.png");
   }
+}
+
+.game-title-wrap .sub-title {
+  margin-bottom: 2rem;
 }
