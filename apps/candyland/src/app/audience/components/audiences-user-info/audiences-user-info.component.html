@@ -5,101 +5,89 @@
     </p>
   </div>
   <div class="user-info-list">
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="ID" value="#{{user?.id}}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
 
     <div class="user-info-item">
-      <mat-form-field>
-        <input matInput placeholder="Input" value="Some Value" disabled>
-      </mat-form-field>
-      <p class="user-info-item-title">
-        ID
-      </p>
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Contact no." value="{{user?.phone_number || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Race" value="{{user?.race || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Country" value="{{user?.country || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="State" value="{{user?.state || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Email" value="{{user?.email_address || '-'}}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Birthday" value="{{user?.birthday || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Gender" value="{{user?.gender || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="City" value="{{user?.city || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput placeholder="Audience list" value="{{ user?.pool || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+<!--
       <p class="user-info-item-value">
-        #{{user?.id}}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Contact no.
-      </p>
-      <a class="user-info-item-value" [href]="'tel:' + user?.phone_number">
-        {{user?.phone_number || '-' }}
-      </a>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Race
-      </p>
-      <p class="user-info-item-value">
-        {{user?.race || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Country
-      </p>
-      <p class="user-info-item-value">
-        {{user?.country || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        State
-      </p>
-      <p class="user-info-item-value">
-        {{user?.state || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Email
-      </p>
-      <a class="user-info-item-value" [href]="'mailto:' + user?.email_address">
-        {{user?.email_address || '-'}}
-      </a>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Birthday
-      </p>
-      <p class="user-info-item-value">
-        {{user?.birthday || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Gender
-      </p>
-      <p class="user-info-item-value">
-        {{user?.gender || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        City
-      </p>
-      <p class="user-info-item-value">
-        {{user?.city || '-' }}
-      </p>
-    </div>
-
-    <div class="user-info-item">
-      <p class="user-info-item-title">
-        Audience list
-      </p>
-      <p class="user-info-item-value">
-        <span>
-            {{ user?.pools }}
-        </span>
         <span *ngIf="user?.pools?.length < 1"> - </span>
       </p>
+-->
     </div>
   </div>
 </div>
