@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
   NotificationService,
   IGame,
-  GameService,
+  IGameService,
   GameType
 } from '@perx/core';
 import { switchMap, filter, map } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class ShakeComponent implements OnInit {
   constructor(
     private router: Router,
     private notificationService: NotificationService,
-    private gameService: GameService,
+    private gameService: IGameService,
     private route: ActivatedRoute
   ) { }
 
