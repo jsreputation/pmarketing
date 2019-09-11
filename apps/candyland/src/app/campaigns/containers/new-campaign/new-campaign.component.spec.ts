@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
@@ -21,14 +22,18 @@ describe('NewCampaignComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         MatDialogModule,
-        EngagementItemModule
+        EngagementItemModule,
+        HttpClientTestingModule
       ],
       declarations: [NewCampaignComponent],
       providers: [
         {provide: CampaignCreationStoreService, useValue: {
           updateCampaign: (data: any) => data,
             currentCampaign$: new Subject()}},
-        {provide: StepConditionService, useValue: {stepCondition$: (data: any) => of(data) }},
+        {provide: StepConditionService, useValue: {
+          registerStepCondition: () => ({}),
+          getStepCondition: () => ({})
+        }},
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
