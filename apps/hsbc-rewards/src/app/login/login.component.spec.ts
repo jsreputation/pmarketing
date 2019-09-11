@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement, Type } from '@angular/core';
 import { AuthenticationModule, AuthenticationService, NotificationService } from '@perx/core';
 
@@ -37,7 +36,6 @@ describe('LoginComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule.withRoutes([{ path: 'home', component: LoginComponent }]),
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
