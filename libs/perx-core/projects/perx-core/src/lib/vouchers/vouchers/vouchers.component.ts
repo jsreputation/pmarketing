@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
+import { IVoucherService } from '../ivoucher.service';
 import { Observable } from 'rxjs';
 import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
 import { map } from 'rxjs/operators';
@@ -40,7 +40,7 @@ export class VouchersComponent implements OnInit {
 
   public repeatGhostCount: number = 10;
 
-  constructor(private vouchersService: VouchersService) { }
+  constructor(private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
     if (this.showRedeemedIcon && !this.mapping) {

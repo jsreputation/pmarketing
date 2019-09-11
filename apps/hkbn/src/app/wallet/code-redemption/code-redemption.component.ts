@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, flatMap } from 'rxjs/operators';
-import { VouchersService, VoucherState } from '@perx/core';
+import { IVoucherService, VoucherState } from '@perx/core';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { Location } from '@angular/common';
@@ -20,7 +20,7 @@ export class CodeRedemptionComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private vouchersService: VouchersService,
+    private vouchersService: IVoucherService,
     private notificationWrapperService: NotificationWrapperService,
     private router: Router,
     private location: Location

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedeemComponent } from './redeem.component';
-import { VouchersModule, VouchersService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perx/core';
 // import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
@@ -19,7 +19,7 @@ describe('RedeemComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

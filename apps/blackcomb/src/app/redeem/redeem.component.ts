@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Voucher, VouchersService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
+import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
 import { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -17,7 +17,7 @@ export class RedeemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private vouchersService: VouchersService,
+    private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router
   ) { }
