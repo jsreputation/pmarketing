@@ -181,15 +181,20 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
     return login$.pipe(
       tap(res => {
-        if (res.headers.get('authorization')) {
-          // const token = res.headers.get('authorization');
-          // const userId = res.body.data.id;
-          // this.login(token, userId);
+        const userBearer = res.headers.get('Authorization');
+        if (!userBearer) {
+          throw new Error('Get authentication token failed!');
         }
-      }),
+        this.saveUserAccessToken(userBearer);
+      },
+        () => {
+          this.$failedAuthObservable = of(true);
+        }
+      ),
+      catchError(err => throwError(err)),
       map(res => {
         return { bearer_token: res.headers.get('authorization') };
-      })
+      }),
     );
 
   }
