@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
         this.titleFn = (profile: IProfile) => res.HELLO + ` ${profile.lastName},`;
         this.summaryExpiringFn = (loyalty: ILoyalty) =>
           loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? res.POINTS_EXPITING
-            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : '')
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
               .toString())
             .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
               this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
