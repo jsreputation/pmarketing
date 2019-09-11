@@ -19,6 +19,8 @@ import { ChangePasswordFormComponent } from './components/change-password-form/c
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSlideToggleModule } from '@angular/material';
+import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { MatSlideToggleModule } from '@angular/material';
     UpdateEmailComponent,
     UpdatePhoneComponent,
     ChangePasswordComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    VerificationOtpComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { MatSlideToggleModule } from '@angular/material';
     MatIconModule,
     ErrorHandlerModule,
     TranslateModule,
+    UtilsModule
   ]
 })
 export class AccountModule {

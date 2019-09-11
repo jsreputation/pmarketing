@@ -5,6 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Type } from '@angular/core';
 import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('V4AuthenticationService', () => {
   const environment = {
@@ -24,7 +25,8 @@ describe('V4AuthenticationService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ProfileModule.forRoot({ env: environment }),
+        ProfileModule,
+        ConfigModule.forRoot({...environment})
       ],
       providers: [TokenStorage]
     });

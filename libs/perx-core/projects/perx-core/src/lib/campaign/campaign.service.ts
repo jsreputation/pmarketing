@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EnvConfig } from '../shared/env-config';
 import { map } from 'rxjs/operators';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
+import { Config } from '../config/config';
 
 interface IV4Image {
   type: string;
@@ -47,12 +47,12 @@ interface IV4CampaignsResponse {
 export class CampaignService implements ICampaignService {
   public baseUrl: string;
 
-  constructor(private http: HttpClient, config: EnvConfig) {
-    this.baseUrl = config.env.apiHost as string;
+  constructor(private http: HttpClient, config: Config) {
+    this.baseUrl = config.apiHost as string;
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
-    const thumbnail = campaign.images.find(image => image.type === 'catalog_thumbnail');
+    const thumbnail = campaign.images.find(image => ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type));
     const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
     const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
