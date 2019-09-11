@@ -94,15 +94,6 @@ button {
     background: $white-color;
     min-height: $header-height-base;
   }
-
-  &.sticky {
-    width: auto;
-    position: fixed;
-    top: 0;
-    left: $sidenav-width-initial;
-    right: 0;
-    z-index: 9999;
-  }
 }
 
 .title {
