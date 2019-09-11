@@ -49,19 +49,13 @@ Given(/^1_I am on the dashboard page.$/, async () => {
   await element.all(by.css('cl-button')).get(0).click();
   await browser.sleep(3000);
   await DashboardPage.navigateToDashboard();
-  // work around the first walk me button presence , run this for the first tc propogated
-  // await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
-  // await element(by.className('walkme-custom-balloon-button-text')).click();
-  // await DashboardPage.navigateToDashboard();
-  // work around for the second walk me button
-  await browser.wait(ec.elementToBeClickable(element(by.css('span.walkme-custom-balloon-button-text'))), 5000);
-  await element(by.css('span.walkme-custom-balloon-button-text')).click();
-  // work around for the configure settings walk me
-  // await browser.wait(ec.elementToBeClickable(element(
-  //  by.className('walkme-click-and-hover walkme-custom-balloon-close-button walkme-action-close walkme-inspect-ignore'))), 5000);
-  // await element(
-  // by.className('walkme-click-and-hover walkme-custom-balloon-close-button walkme-action-close walkme-inspect-ignore')).click();
+  // walk around for the walk me widget
+  await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 5000);
+  await element(by.className('trg-499259')).click();
   await DashboardPage.navigateToDashboard();
+  await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
+  await element(by.className('walkme-custom-balloon-button-text')).click();
+
 });
 
 When(/^1_I take no action.$/, () => {});
