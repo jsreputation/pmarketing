@@ -41,7 +41,7 @@ export class MacaronService {
       return {
         label: 'Fully redeemed',
         class: 'fully-redeemed',
-        isButtonEnabled: false
+        isButtonEnabled: true
       };
     }
 
@@ -49,7 +49,7 @@ export class MacaronService {
       return {
         label: 'Expired',
         class: 'expired',
-        isButtonEnabled: false
+        isButtonEnabled: true
       };
     }
 

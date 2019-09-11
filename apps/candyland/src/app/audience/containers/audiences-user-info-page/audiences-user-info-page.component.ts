@@ -15,6 +15,7 @@ import { tap } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -30,7 +31,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
-  constructor(private audiencesService: AudiencesService,
+  constructor(private audiencesUserService: AudiencesUserService,
+              private audiencesService: AudiencesService,
               private route: ActivatedRoute,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
@@ -52,7 +54,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public getUser(id: number): void {
-    this.audiencesService.getUser(id)
+    this.audiencesUserService.getUser(id)
       .subscribe(user => this.user = user);
 
   }
