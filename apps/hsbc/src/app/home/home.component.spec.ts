@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { VouchersModule, CampaignService, IVoucherService } from '@perx/core';
+import { VouchersModule, ICampaignService, IVoucherService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatTabsModule, MatCardModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,7 +30,7 @@ describe('HomeComponent', () => {
         // CampaignModule,
       ],
       providers: [
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub }
       ],
     })
