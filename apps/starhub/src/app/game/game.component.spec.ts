@@ -16,26 +16,26 @@ describe('GameComponent', () => {
   const routerStub = { navigate: () => ({}) };
 
   const gameServiceStub = {
-    getGamesFromCampaign: () => of()
+    get: () => of()
   };
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
   const notificationServiceStub = { addPopup: () => ({}) };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameComponent ],
-      imports: [ MatIconModule, MatToolbarModule, GameModule ],
+      declarations: [GameComponent],
+      imports: [MatIconModule, MatToolbarModule, GameModule],
       providers: [
         { provide: Router, useValue: routerStub },
-        { provide: ActivatedRoute, useValue: { queryParams: of({ campaignId: '1' }) } },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ id: '1' }) } },
         { provide: GameService, useValue: gameServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -50,8 +50,8 @@ describe('GameComponent', () => {
 
   it('should get game id from route, call gameService onInit', fakeAsync(() => {
     const gameService = TestBed.get<GameService>(GameService as Type<GameService>);
-    const gameServiceSpy = spyOn(gameService, 'getGamesFromCampaign').and.returnValue(
-      of([
+    const gameServiceSpy = spyOn(gameService, 'get').and.returnValue(
+      of(
         {
           id: 1,
           campaignId: 1,
@@ -74,7 +74,7 @@ describe('GameComponent', () => {
             noOutcome: null
           }
         }
-      ])
+      )
     );
     component.ngOnInit();
     tick();
@@ -109,8 +109,21 @@ describe('GameComponent', () => {
   it('should navigate to congrats screen on gameCompleted', fakeAsync(() => {
     const router = TestBed.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
+    component.game = {
+      id: 1,
+      campaignId: 1,
+      type: GameType.pinata,
+      remainingNumberOfTries: 1,
+      config: {
+        stillImg: '',
+        brokenImg: '',
+        nbTaps: 3
+      },
+      texts: {},
+      results: {}
+    };
     component.gameCompleted();
     tick(2000);
-    expect(routerSpy).toHaveBeenCalledWith([ '/congrats' ], { queryParams: Object({ gameId: undefined }) });
+    expect(routerSpy).toHaveBeenCalledWith(['/congrats'], { queryParams: Object({ gameId: 1 }) });
   }));
 });
