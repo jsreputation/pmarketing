@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
@@ -11,16 +11,16 @@ export class NewCampaignDetailFormService {
   public getForm(): FormGroup {
     return this.fb.group({
       campaignInfo: this.fb.group({
-        goal: ['Acquire customers'],
-        startDate: [],
-        startTime: [],
-        endDate: [],
-        endTime: [],
-        disabledEndDate: [true],
+        goal: ['Acquire customers', [Validators.required]],
+        startDate: [null, [Validators.required]],
+        startTime: [null, [Validators.required]],
+        endDate: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        disabledEndDate: [false],
         labels: []
       }),
       channel: this.fb.group({
-        type: [],
+        type: ['weblink', [Validators.required]],
         message: [],
         schedule: this.fb.group({
           sendDate: [],
@@ -35,7 +35,7 @@ export class NewCampaignDetailFormService {
         })
       }),
       audience: this.fb.group({
-        type: ['none'],
+        type: ['none', [Validators.required]],
         file: [],
         select: []
       })
