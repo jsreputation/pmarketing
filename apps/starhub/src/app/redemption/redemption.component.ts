@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, VouchersService, PinInputComponent, NotificationService } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService, PinInputComponent, NotificationService } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -20,7 +20,7 @@ export class RedemptionComponent implements OnInit {
   private pinInputComponent: PinInputComponent;
 
   constructor(
-    private vouchersService: VouchersService,
+    private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router,

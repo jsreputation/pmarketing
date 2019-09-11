@@ -20,7 +20,7 @@ import {
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 
-import { VouchersService } from '../vouchers/vouchers.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { Config } from '../config/config';
 
@@ -115,7 +115,7 @@ export class V4StampService implements StampService {
   constructor(
     private http: HttpClient,
     config: Config,
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) {
     this.baseUrl = config.apiHost as string;
   }

@@ -58,7 +58,7 @@ describe('AccountSummaryComponent', () => {
         MatSlideToggleModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([{
-          path: 'account/verify_token',
+          path: 'account/verify_token/:id',
           component: AccountSummaryComponent
         }])
       ],
@@ -95,7 +95,7 @@ describe('AccountSummaryComponent', () => {
 
   it('should navigate to account/verify_token', fakeAsync(() => {
     const spy = spyOn(authService, 'requestVerificationToken').and.returnValue(throwError(null));
-    component.updateMobileVerification(new Event('click'));
+    component.updateMobileVerification(new Event('click'), 'phone');
     tick();
     expect(spy).toHaveBeenCalled();
   }));

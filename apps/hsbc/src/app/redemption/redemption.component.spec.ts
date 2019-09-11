@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
-import { VouchersModule, VouchersService, Voucher, VoucherState, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
@@ -37,7 +37,7 @@ describe('RedemptionComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

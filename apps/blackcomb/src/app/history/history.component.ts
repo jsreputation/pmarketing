@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher, VouchersService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService, VoucherState } from '@perx/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ export class HistoryComponent implements OnInit {
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
 
-  constructor(private vouchersService: VouchersService) { }
+  constructor(private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
     this.vouchers$ = this.vouchersService.getAll();

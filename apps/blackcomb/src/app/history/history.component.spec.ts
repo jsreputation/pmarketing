@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HistoryComponent } from './history.component';
-import { VouchersModule, VouchersService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('HistoryComponent', () => {
@@ -19,7 +19,7 @@ describe('HistoryComponent', () => {
         VouchersModule,
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();
