@@ -4,7 +4,6 @@ import { DebugElement } from '@angular/core';
 
 import { DetailHeaderComponent } from './detail-header.component';
 import { By } from '@angular/platform-browser';
-import { ExpectedConditions } from 'protractor';
 
 describe('DetailHeaderComponent', () => {
   let component: DetailHeaderComponent;
