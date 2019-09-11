@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { MaterialModule } from '../shared/material.module';
-import { VouchersService } from './vouchers.service';
+import { IVoucherService } from './ivoucher.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
 import { PinRedemptionComponent } from './pin-redemption/pin-redemption.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,10 +12,11 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
+import { V4VouchersService } from './v4-vouchers.service';
 
-export function vouchersServiceFactory(http: HttpClient, config: Config): VouchersService {
+export function vouchersServiceFactory(http: HttpClient, config: Config): IVoucherService {
   // Make decision on what to instantiate base on config
-  return new VouchersService(http, config);
+  return new V4VouchersService(http, config);
 }
 
 const components = [
@@ -42,7 +43,7 @@ const components = [
   ],
   providers: [
     {
-      provide: VouchersService,
+      provide: IVoucherService,
       useFactory: vouchersServiceFactory,
       deps: [HttpClient, Config]
     }
