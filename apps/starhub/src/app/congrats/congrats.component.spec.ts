@@ -48,7 +48,8 @@ describe('CongratsComponent', () => {
       const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
       const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(
         of({
-          vouchers: []
+          vouchers: [],
+          rawPayload: {}
         })
       );
       component.ngOnInit();
