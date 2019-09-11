@@ -21,4 +21,4 @@ Scenario: Successful creation of survey engagement
   And   18_I enter test values for Issuance Limits Per User.
   And   18_I enter test values for Redemption Limits Per User.
   When  18_I press save button.
-  Then  18_Reward is present under the engagment category .
+  Then  18_Reward is present under the reward category .
