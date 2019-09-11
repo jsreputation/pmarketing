@@ -12,6 +12,7 @@ import {
   GameModule,
   LocationModule,
   ConfigModule,
+  CampaignModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -66,6 +67,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
+    CampaignModule,
     AppRoutingModule,
     MatDialogModule,
     MatIconModule,

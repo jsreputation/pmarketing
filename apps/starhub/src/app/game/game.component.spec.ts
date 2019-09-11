@@ -3,7 +3,7 @@ import {
   MatIconModule,
   MatToolbarModule,
 } from '@angular/material';
-import { GameModule, GameService, GameType, NotificationService } from '@perx/core';
+import { GameModule, IGameService, GameType, NotificationService } from '@perx/core';
 import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -30,7 +30,7 @@ describe('GameComponent', () => {
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: { queryParams: of({ id: '1' }) } },
-        { provide: GameService, useValue: gameServiceStub },
+        { provide: IGameService, useValue: gameServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
       ]
@@ -49,7 +49,7 @@ describe('GameComponent', () => {
   });
 
   it('should get game id from route, call gameService onInit', fakeAsync(() => {
-    const gameService = TestBed.get<GameService>(GameService as Type<GameService>);
+    const gameService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
     const gameServiceSpy = spyOn(gameService, 'get').and.returnValue(
       of(
         {

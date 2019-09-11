@@ -11,7 +11,7 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { IVoucherService } from '../../public-api';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
 const components = [
   RewardsCollectionComponent,
