@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CampaignService } from './campaign.service';
+import { V4CampaignService } from './v4-campaign.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { ICampaignService } from './icampaign.service';
+import { WhistlerCampaignService } from './whistler-campaign.service';
 
 export function campaignServiceFactory(http: HttpClient, config: Config): ICampaignService {
+  if (config.isWhistler) {
+    return new WhistlerCampaignService();
+  }
   // Make decision on what to instantiate base on config
-  return new CampaignService(http, config);
+  return new V4CampaignService(http, config);
 }
 
 @NgModule({
