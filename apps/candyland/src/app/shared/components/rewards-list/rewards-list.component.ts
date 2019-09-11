@@ -13,8 +13,9 @@ export class RewardsListComponent implements AfterViewInit {
   @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: IRewardEntity}>();
+  @Output() public itemAction = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
   @Output() public selectReward = new EventEmitter<IRewardEntity>();
+  @Output() public clickDetailReward = new EventEmitter<IRewardEntity>();
   public selected;
 
   public ngAfterViewInit(): void {
@@ -22,8 +23,16 @@ export class RewardsListComponent implements AfterViewInit {
   }
 
   public selectItem(item: IRewardEntity): void {
-    this.selected = item;
-    this.selectReward.emit(item);
+    if (this.selectable) {
+      this.selected = item;
+      this.selectReward.emit(item);
+    }
+  }
+
+  public clickDetailItem(item: IRewardEntity): void {
+    if (!this.selectable) {
+      this.clickDetailReward.emit(item);
+    }
   }
 
   public isSelected(item: IRewardEntity): boolean {

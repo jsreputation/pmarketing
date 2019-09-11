@@ -92,7 +92,10 @@
         Audience list
       </p>
       <p class="user-info-item-value">
-        {{user?.audienceList || '-' }}
+        <span>
+            {{ user?.pools }}
+        </span>
+        <span *ngIf="user?.pools?.length < 1"> - </span>
       </p>
     </div>
   </div>

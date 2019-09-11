@@ -13,7 +13,8 @@ import {
   IMessageResponse,
   IAppAccessTokenResponse,
   IChangePasswordData,
-  ILoginResponse
+  ILoginResponse,
+  IChangePhoneData
 } from '../authentication/models/authentication.model';
 import { V4ProfileService } from '../../profile/v4-profile.service';
 
@@ -59,7 +60,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     this.$failedAuthObservable = new Observable();
   }
 
-  public get $failedAuth(): Observable<boolean>  {
+  public get $failedAuth(): Observable<boolean> {
     return this.$failedAuthObservable;
   }
 
@@ -240,14 +241,43 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return throwError('Temporarily disabled');
-    // return this.http.patch<IMessageResponse>(
-    //   this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
-    //     tap( // Log the result or error
-    //       data => console.log(data),
-    //       error => console.log(error)
-    //     )
-    //   );
+    return this.http.patch<IMessageResponse>(
+      this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
+  }
+
+  public requestVerificationToken(): Observable<void> {
+    return this.profileService.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => {
+          return this.http.get<void>(
+            `${this.customersEndPoint}/${profile.id}/request_verification_token`
+          );
+        }
+      )
+    );
+  }
+
+  public changePhone(changePhoneData: IChangePhoneData): Observable<void> {
+    return this.profileService.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => {
+          return this.http.patch<void>(
+            `${this.customersEndPoint}/${profile.id}/change_phone`,
+            null,
+            {
+              headers: {
+                phone: changePhoneData.phone,
+                confirmation_token: changePhoneData.otp
+              }
+            });
+        }
+      )
+    );
   }
 
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
@@ -257,6 +287,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           return this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
+              old_password: changePasswordData.oldPassword,
               password: changePasswordData.newPassword,
               password_confirmation: changePasswordData.passwordConfirmation,
               confirmation_token: changePasswordData.otp

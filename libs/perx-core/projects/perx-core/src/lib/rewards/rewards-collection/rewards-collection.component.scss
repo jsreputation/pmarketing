@@ -58,7 +58,6 @@ $card-actual-height: 200px;
     max-width: calc(#{$card-actual-height} - 32px);
     width: calc(#{$card-actual-height} - 32px);
     min-width: calc(#{$card-actual-height} - 32px);
-    max-height: calc(#{$card-actual-height} - 24px);
     height: calc(#{$card-actual-height} - 24px);
     min-height: calc(#{$card-actual-height} - 24px);
     display: flex;
@@ -92,5 +91,11 @@ $card-actual-height: 200px;
       height: 10rem;
       background: #4E4E4E;
     }
+  }
+
+  .overflow-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

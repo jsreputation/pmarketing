@@ -35,8 +35,14 @@ interface IV4RewardPrice {
 }
 
 interface IV4Inventory {
-  reward_total_balance?: number;
-  reward_total_limit?: number;
+  reward_total_balance?: number | null;
+  reward_total_limit?: number | null;
+  reward_limit_per_user: number | null;
+  reward_limit_per_user_balance: {
+    available_amount: number;
+    limit_error_klass: null;
+    limit_type: string;
+  };
 }
 
 export interface IV4Reward {
@@ -152,6 +158,14 @@ export class V4RewardsService extends RewardsService {
     const merchantImg = reward.merchant_logo_url ? reward.merchant_logo_url : null;
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
 
+    const v4Invent = reward.inventory;
+    const inventory = {
+      rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
+      rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
+      rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
+        v4Invent.reward_limit_per_user_balance.available_amount : null
+    };
+
     return {
       id: reward.id,
       name: reward.name,
@@ -176,10 +190,7 @@ export class V4RewardsService extends RewardsService {
       termsAndConditions: reward.terms_and_conditions,
       howToRedeem: reward.how_to_redeem,
       categoryTags: reward.category_tags,
-      inventory: {
-        rewardTotalBalance: reward.inventory.reward_total_balance !== undefined ? reward.inventory.reward_total_balance : null,
-        rewardTotalLimit: reward.inventory.reward_total_limit !== undefined ? reward.inventory.reward_total_limit : null,
-      },
+      inventory,
     };
   }
 
