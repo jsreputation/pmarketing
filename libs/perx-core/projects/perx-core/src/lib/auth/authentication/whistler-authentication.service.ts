@@ -204,8 +204,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Not implement yet');
   }
-
-  public requestVerificationToken(): Observable<void> {
+  // @ts-ignore
+  public requestVerificationToken(phone: string): Observable<void> {
     return throwError('Not implement yet');
   }
 

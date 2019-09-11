@@ -250,12 +250,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       );
   }
 
-  public requestVerificationToken(): Observable<void> {
+  // @ts-ignore
+  public requestVerificationToken(phone: string): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => {
           return this.http.get<void>(
-            `${this.customersEndPoint}/${profile.id}/request_verification_token`
+            `${this.customersEndPoint}/${profile.id}/request_verification_token`, { params: { phone } }
           );
         }
       )

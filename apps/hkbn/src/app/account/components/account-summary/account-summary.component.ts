@@ -39,7 +39,7 @@ export class AccountSummaryComponent implements OnChanges {
 
   public updateMobileVerification(event: Event, type: string): void {
     event.preventDefault();
-    this.authService.requestVerificationToken().subscribe(() => {
+    this.authService.requestVerificationToken('111').subscribe(() => {
       this.router.navigate(['account/verify_token', type]);
     });
   }

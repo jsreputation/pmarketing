@@ -74,7 +74,7 @@ export abstract class AuthenticationService {
 
   public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 
-  public abstract requestVerificationToken(): Observable<void>;
+  public abstract requestVerificationToken(phone: string): Observable<void>;
 
   public abstract changePhone(changePhoneData: IChangePhoneData): Observable<void>;
 

@@ -33,6 +33,7 @@ export class VerificationOtpComponent implements OnInit {
     });
   }
   public resendSms(): void {
-    this.authService.requestVerificationToken().subscribe(() => { });
+    this.authService.requestVerificationToken(this.number).subscribe(()=>{
+    });
   }
 }
