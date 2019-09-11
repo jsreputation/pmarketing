@@ -100,4 +100,26 @@ export class EngagementHttpAdapter {
       }
     };
   }
+
+  public static transformStamp(data: any): any {
+    return {
+      type: 'engagements',
+      attributes: {
+        type: 'stamps',
+        title: data.name,
+        'image_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+        display_properties: {
+          'nb_of_slots': +data.stampsNumber,
+          slots: data.stampsSlotNumber.map(item => +item),
+          'pre_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          'reward_pre_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          'post_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          'reward_post_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          title: data.headlineMessage,
+          button: data.buttonText,
+          sub_title: data.subHeadlineMessage,
+        }
+      }
+    }
+  }
 }
