@@ -29,9 +29,6 @@ export class VouchersComponent implements OnInit {
     this.savedVouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => {
-          if (!this.hideSeeMore) {
-            this.hideSeeMore = vouchs.length <= this.defaultNbVouchers;
-          }
           return vouchs.filter(voucher => voucher.state === VoucherState.issued);
         }));
 
