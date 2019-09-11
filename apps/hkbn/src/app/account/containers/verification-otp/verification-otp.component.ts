@@ -39,7 +39,7 @@ export class VerificationOtpComponent implements OnInit {
   }
   public resendSms(): void {
     this.authService.resendOTP(this.number)
-      .pipe(catchError(()=>of(null)))
+      .pipe(catchError(() => of(null)))
       .pipe(
         flatMap(() => this.translate.get('CHECK_SMS')))
       .subscribe((msg) => this.notificationService.addSnack(msg));
