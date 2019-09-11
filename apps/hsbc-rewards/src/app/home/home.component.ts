@@ -1,9 +1,9 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
-import {ITabConfig, IPrice} from '@perx/core';
-import {Observable, of, Subject, forkJoin} from 'rxjs';
-import {flatMap, map} from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
+import { ITabConfig, IPrice } from '@perx/core';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { flatMap, map, filter } from 'rxjs/operators';
 
 const tabs: ITabConfig[] = [
   {
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(null, [tab.tabName])
-          .pipe(map((result: IReward[]) => ({key: tab.tabName, value: result})));
+          .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
@@ -108,11 +108,12 @@ export class HomeComponent implements OnInit {
     });
   }
   private getLoyalty(): void {
-    this.loyaltyService.getLoyalties().subscribe(
-      (loyalties: ILoyalty[]) => {
-        this.loyalty$ = this.loyaltyService.getLoyalty(loyalties[0].id);
-      }
-    );
+    this.loyaltyService.getLoyalties()
+      .pipe(
+        filter((loyalties: ILoyalty[]) => loyalties.length > 0),
+        map((loyalties: ILoyalty[]) => loyalties[0])
+      )
+      .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
   }
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
