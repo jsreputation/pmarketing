@@ -9,14 +9,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { VouchersService } from '@perx/core';
+import { IVoucherService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockVoucher } from '../voucher.mock';
 
 describe('VoucherDetailsComponent', () => {
   let component: VoucherDetailsComponent;
   let fixture: ComponentFixture<VoucherDetailsComponent>;
-  let vouchersService: VouchersService;
+  let vouchersService: IVoucherService;
   let router: Router;
   const vouchersServiceStub = {
     get: (): Observable<Voucher> => of(mockVoucher)
@@ -37,7 +37,7 @@ describe('VoucherDetailsComponent', () => {
             paramMap: of(convertToParamMap({ id: 1 }))
           }
         },
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ],
       declarations: [VoucherDetailsComponent]
     })
@@ -47,7 +47,7 @@ describe('VoucherDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VoucherDetailsComponent);
     component = fixture.componentInstance;
-    vouchersService = TestBed.get(VouchersService);
+    vouchersService = TestBed.get(IVoucherService);
     router = TestBed.get(Router);
     fixture.detectChanges();
   });

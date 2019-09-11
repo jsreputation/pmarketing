@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusLabelMapping, VouchersService } from '@perx/core';
+import { StatusLabelMapping, IVoucherService } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
@@ -24,7 +24,7 @@ export class VoucherDetailComponent implements OnInit {
   };
 
   constructor(
-    private voucherServe: VouchersService,
+    private voucherServe: IVoucherService,
     private route: ActivatedRoute,
     private location: Location
   ) { }
