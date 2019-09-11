@@ -1,6 +1,6 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap, catchError } from 'rxjs/operators';
+import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
@@ -17,7 +17,7 @@ import {
 } from '../authentication/models/authentication.model';
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
-import { IV4ProfileResponse } from '../../profile/v4-profile.service';
+import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 
 interface IV4SignUpData {
   first_name?: string;
