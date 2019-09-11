@@ -41,17 +41,14 @@ export class EngagementHttpAdapter {
       attributes: {
         type: 'instant_reward',
         title: data.name,
-        description: 'Instant Reward',
-        // game_type: 'reward',
-        image_url:
-          'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
+          banner: 'reward',
           title: data.headlineMessage,
-          headlineText: data.headlineMessage,
-          subHeadlineText: data.subHeadlineMessage,
-          cardBackground: ImageControlValue.getImagePath(data.cardBackground),
-          background: ImageControlValue.getImagePath(data.background),
-          callToActionText: data.buttonText
+          sub_title: data.headlineMessage,
+          // subHeadlineText: data.subHeadlineMessage,
+          card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
+          background_img_url: ImageControlValue.getImagePath(data.background),
+          button: data.buttonText
         }
       }
     };

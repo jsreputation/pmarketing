@@ -20,6 +20,7 @@ export class InstantRewardsService {
 
   public createRewardGame(data): Observable<any> {
     const sendData = EngagementHttpAdapter.transformInstantReward(data);
+    console.log(sendData);
     return this.instantRewardsHttpService.createRewardGame({data: sendData});
   }
 }
