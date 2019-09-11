@@ -4,7 +4,7 @@ import { VerificationOtpComponent } from './verification-otp.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilsModule, ProfileService, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 // import 'jasmine';
@@ -65,7 +65,7 @@ describe('VerificationOtpComponent', () => {
   it('should navigate to account/phone', fakeAsync(() => {
     const spy = spyOn(authService, 'verifyOTP');
     const nav = spyOn(router, 'navigate');
-    spy.and.returnValue(throwError(null));
+    spy.and.returnValue(of(null));
     const otp = '123456';
     component.validate(otp);
     expect(spy).toHaveBeenCalledWith(mockProfile.phone, otp);
@@ -74,7 +74,7 @@ describe('VerificationOtpComponent', () => {
 
   it('expect resend sms', fakeAsync(() => {
     const spy = spyOn(authService, 'requestVerificationToken');
-    spy.and.returnValue(throwError(null));
+    spy.and.returnValue(of(null));
     component.resendSms();
     tick();
     expect(spy).toHaveBeenCalled();

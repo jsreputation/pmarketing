@@ -8,7 +8,7 @@ export { PerxCoreModule } from './lib/perx-core.module';
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
-export { VouchersService } from './lib/vouchers/vouchers.service';
+export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
@@ -20,7 +20,7 @@ export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemp
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
-
+export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
 /**
  * Campaigns
  */

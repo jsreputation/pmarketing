@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
 import { IReward, ICatalog, IPrice, ICategoryTags, IRewardParams } from './models/reward.model';
 import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
-import { VouchersService } from '../vouchers/vouchers.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
 
@@ -139,7 +139,7 @@ export class V4RewardsService extends RewardsService {
 
   constructor(
     private http: HttpClient,
-    private voucherService: VouchersService,
+    private voucherService: IVoucherService,
     config: Config
   ) {
     super();
