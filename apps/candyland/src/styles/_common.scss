@@ -79,6 +79,8 @@ button {
   height: $header-height-base;
 }
 
+$header-font-size: 2.4rem;
+
 .page-header {
   display: flex;
   min-height: $header-height-base;
@@ -93,17 +95,46 @@ button {
   z-index: 99;
   background: #fff;
   width: calc(100% - 17rem);
-
+  
   &.full-with {
     background: $white-color;
     min-height: $header-height-base;
   }
+
+  .mat-form-field {
+    .mat-form-field-infix {
+      border: 0;
+    }
+
+    input {
+      font-weight: 400;
+      font-size: $header-font-size;
+      color: $there-color;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0;
+      transition: margin .05s ease-in;
+
+      .mat-form-field-underline {
+        bottom: 0;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        top: 100%;
+      }
+    }
+        
+    &.mat-form-field-invalid .mat-form-field-wrapper {
+      margin: 1.5rem 0 3rem;
+    }
+  }
 }
 
 .title {
-  font-size: 2.6rem;
+  font-size: $header-font-size;
   margin: auto 0;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.04;
@@ -305,19 +336,6 @@ cl-game-mobile-preview, .tabs-component {
     .mat-radio-label-content {
       display: none;
     }
-  }
-}
-
-.name-control-title {
-  font-weight: 500;
-
-  input {
-    font-size: 2.2rem;
-    color: $there-color;
-  }
-
-  .mat-form-field-infix {
-    border: 0;
   }
 }
 
