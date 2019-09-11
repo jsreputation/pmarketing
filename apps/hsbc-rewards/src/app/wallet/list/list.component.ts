@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Voucher, VouchersService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
+import { Voucher, IVoucherService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
     released: 'Declined',
   };
   constructor(
-    private vouchersService: VouchersService,
+    private vouchersService: IVoucherService,
     private route: ActivatedRoute,
     private router: Router
   ) {

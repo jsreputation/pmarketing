@@ -1,10 +1,10 @@
-declare interface Campaign {
-  id: number;
+declare interface ICampaign {
+  id: string;
   name: string;
   status: string;
   begin: Date;
-  end: Date;
-  audience: number;
+  end?: Date;
+  audience?: number;
   goal: string;
   engagementType: string;
 }

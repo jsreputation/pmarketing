@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VouchersService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher } from '@perx/core';
 
 @Component({
   selector: 'app-voucher',
@@ -17,7 +17,7 @@ export class VoucherComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private voucherService: VouchersService,
+    private voucherService: IVoucherService,
   ) { }
 
   public ngOnInit(): void {

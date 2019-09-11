@@ -2,13 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 
-import { VouchersService } from './vouchers.service';
+import { V4VouchersService } from './v4-vouchers.service';
 import { VouchersModule } from './vouchers.module';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
+import { ConfigModule } from '../../public-api';
 
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
-  let service: VouchersService;
+  let service: V4VouchersService;
 
   const mockIVouchers: IVoucher[] = [
     {
@@ -135,16 +136,25 @@ describe('VouchersService', () => {
     }
   };
 
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
+        VouchersModule,
+        ConfigModule.forRoot({...environment})
       ]
     });
     // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-    service = TestBed.get(VouchersService);
+    service = TestBed.get(V4VouchersService);
   });
 
   it('should be created', () => {
@@ -258,7 +268,7 @@ describe('VouchersService', () => {
 
   it('should convert to IVoucher format', () => {
     const voucher = mockVouchers.data[0];
-    const updateVoucher = VouchersService.voucherToVoucher(voucher);
+    const updateVoucher = V4VouchersService.v4VoucherToVoucher(voucher);
     expect(updateVoucher.id).toEqual(21);
     expect(updateVoucher.rewardId).toEqual(5);
     expect(updateVoucher.state).toEqual('issued');

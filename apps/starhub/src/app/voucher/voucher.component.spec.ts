@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersService, VoucherState, RedemptionType } from '@perx/core';
+import { IVoucherService, VoucherState, RedemptionType } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -47,11 +47,11 @@ describe('VoucherComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         {
           provide: ActivatedRoute, useValue: { queryParams: params }
         },
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

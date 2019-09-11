@@ -9,7 +9,9 @@ import {
   AuthenticationModule,
   CampaignModule,
   GameModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -50,9 +52,10 @@ import { ResultComponent } from './result/result.component';
     LoginComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
-    VouchersModule.forRoot({ env: environment }),
+    VouchersModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -64,9 +67,10 @@ import { ResultComponent } from './result/result.component';
     MatProgressBarModule,
     BrowserAnimationsModule,
     PerxCoreModule,
-    CampaignModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
+    ProfileModule,
+    CampaignModule,
+    GameModule,
+    AuthenticationModule,
     FormsModule,
     UtilsModule
   ],

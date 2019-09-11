@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
-import { AvailableNewEngagementService, SurveyService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, SurveyService } from '@cl-core/services';
 import { QuestionFormFieldService } from '@cl-shared';
 import { Router } from '@angular/router';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -60,17 +60,18 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   constructor(private questionFormFieldService: QuestionFormFieldService,
               private availableNewEngagementService: AvailableNewEngagementService,
               private surveyService: SurveyService,
-              private router: Router) {
+              private router: Router,
+              private routingState: RoutingStateService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.initForm();
     this.getSurveyData();
   }
 
   public ngOnDestroy(): void {
   }
-
+  // TODO: need for the future patch form
   public patchForm(): void {
     const data = NewSurveyForm.getDefaultValue();
     this.form.patchValue(data);
@@ -79,6 +80,10 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       group.patchValue(item);
       this.surveyQuestion.push(group);
     });
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public drop(event: any): void {

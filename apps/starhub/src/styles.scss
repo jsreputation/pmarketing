@@ -17,15 +17,34 @@ body {
 .app {
   .mat-tab-links {
     width: 100%;
+    align-items: center;
+    justify-content: center;
   }
 
-  .mat-tab-link {
-    width: 50%;
+  mat-ink-bar {
+    background-color: transparent !important;
+
+    &::before {
+      content: "";
+      height: 0.2rem;
+      width: 9.5rem;
+      background-color: #6dc00e;
+      display: block;
+      margin: 0 auto;
+    }
   }
 }
 
 .mat-flat-button.mat-primary {
   color: #fff;
+}
+
+cdk-virtual-scroll-viewport {
+  &::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+  }
 }
 
 .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {

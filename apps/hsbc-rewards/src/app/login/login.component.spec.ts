@@ -3,17 +3,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement, Type } from '@angular/core';
 import { AuthenticationModule, AuthenticationService, NotificationService } from '@perx/core';
 
 import { LoginComponent } from './login.component';
 
-import { environment } from '../../environments/environment';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { By } from '@angular/platform-browser';
-import { HttpErrorResponse } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -40,13 +36,12 @@ describe('LoginComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule.withRoutes([{ path: 'home', component: LoginComponent }]),
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
-        AuthenticationModule.forRoot({ env: environment }),
+        AuthenticationModule,
       ],
       declarations: [LoginComponent],
     })
