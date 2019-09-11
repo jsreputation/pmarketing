@@ -11,6 +11,7 @@ import {
   RewardsModule as PerxRewardsModule,
   VouchersModule as PerxVouchersModule,
   SurveyModule as PerxSurveyModule,
+  ProfileModule as PerxProfileModule,
   ConfigModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
@@ -37,6 +38,7 @@ import { LocationModule } from './location/location.module';
     PerxVouchersModule,
     PerxRewardsModule,
     PerxSurveyModule,
+    PerxProfileModule,
     FormsModule,
     RewardsModule,
     UtilsModule,
