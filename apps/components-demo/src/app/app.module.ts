@@ -10,7 +10,8 @@ import {
   UtilsModule as PerxCoreUtilsModule,
   RewardsModule as PerxRewardsModule,
   VouchersModule as PerxVouchersModule,
-  SurveyModule as PerxSurveyModule
+  SurveyModule as PerxSurveyModule,
+  ConfigModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,14 +28,15 @@ import { LocationModule } from './location/location.module';
     HomeComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     MatToolbarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthenticationModule.forRoot({ env: environment }),
-    PerxVouchersModule.forRoot({ env: environment }),
-    PerxRewardsModule.forRoot({ env: environment }),
-    PerxSurveyModule.forRoot({ env: environment }),
+    AuthenticationModule,
+    PerxVouchersModule,
+    PerxRewardsModule,
+    PerxSurveyModule,
     FormsModule,
     RewardsModule,
     UtilsModule,

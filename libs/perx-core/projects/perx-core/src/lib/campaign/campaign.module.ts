@@ -1,8 +1,13 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CampaignService } from './campaign.service';
-import { HttpClientModule } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Config } from '../config/config';
+
+export function campaignServiceFactory(http: HttpClient, config: Config): CampaignService {
+  // Make decision on what to instantiate base on config
+  return new CampaignService(http, config);
+}
 
 @NgModule({
   declarations: [
@@ -12,22 +17,14 @@ import { EnvConfig } from '../shared/env-config';
     HttpClientModule
   ],
   providers: [
-    CampaignService,
+    {
+      provide: CampaignService,
+      useFactory: campaignServiceFactory,
+      deps: [HttpClient, Config]
+    }
   ],
   exports: [
   ]
 })
 export class CampaignModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: CampaignModule,
-      providers: [
-        CampaignService,
-        {
-          provide: EnvConfig,
-          useValue: config
-        }
-      ],
-    };
-  }
 }

@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, ConfigModule } from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListComponent } from './list.component';
-import { environment } from 'src/environments/environment';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -14,7 +13,8 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ListComponent ],
       imports: [
-        VouchersModule.forRoot({env: environment}),
+        ConfigModule.forRoot({}),
+        VouchersModule,
         HttpClientModule,
         RouterTestingModule
       ]
