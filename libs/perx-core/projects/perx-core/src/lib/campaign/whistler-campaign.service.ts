@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ICampaignService } from './icampaign.service';
 import { Observable } from 'rxjs';
-import { ICampaign } from 'perx-core/perx-core';
+import { ICampaign } from './models/campaign.model';
 
 @Injectable({
   providedIn: 'root'
