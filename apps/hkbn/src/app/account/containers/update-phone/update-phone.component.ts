@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -40,7 +39,7 @@ export class UpdatePhoneComponent implements OnInit {
 
   public onSubmit(): void {
     this.authService.changePhone({ phone: this.updatePhoneGroup.value.phone, otp: this.otp })
-      .pipe(catchError(() => of(null))).subscribe(() => {
+      .subscribe(() => {
         this.router.navigate(['account']);
       });
   }
