@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListComponent } from './list.component';
+import { environment } from 'src/environments/environment';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -13,7 +14,7 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ListComponent ],
       imports: [
-        ConfigModule.forRoot({}),
+        ConfigModule.forRoot({...environment}),
         VouchersModule,
         HttpClientModule,
         RouterTestingModule

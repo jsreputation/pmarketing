@@ -85,10 +85,14 @@ button {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   box-sizing: border-box;
   padding: 0 $horizontal-content-padding;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  background: #fff;
+  width: calc(100% - 17rem);
 
   &.full-with {
     background: $white-color;
@@ -402,4 +406,9 @@ cl-game-mobile-preview, .tabs-component {
 .tabs-filter + .table-filter .mat-form-field-wrapper {
   margin: 0 0 2.4rem !important;
   padding-bottom: 0;
+}
+
+.section-stickyheader {
+  position: relative;
+  padding-top: $header-height-base;
 }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailComponent } from './detail.component';
-import { VouchersModule, VouchersService, Voucher, VoucherState, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('DetailComponent', () => {
@@ -33,7 +33,7 @@ describe('DetailComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

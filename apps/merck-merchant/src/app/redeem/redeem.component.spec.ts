@@ -4,7 +4,7 @@ import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
-import { RewardsService, VouchersService, NotificationService } from '@perx/core';
+import { RewardsService, IVoucherService, NotificationService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
@@ -66,7 +66,7 @@ describe('RedeemComponent', () => {
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: NotificationService, useValue:
           {
             addSnack: () => {}
@@ -107,7 +107,7 @@ describe('RedeemComponent', () => {
 
   it('should onProceed', () => {
     const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-    const vouchersService: VouchersService = fixture.debugElement.injector.get<VouchersService>(VouchersService as Type<VouchersService>);
+    const vouchersService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
 
