@@ -15,6 +15,7 @@ import { ActivatedRoute, Params, Router, Event, NavigationEnd } from '@angular/r
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { analyticsVariables } from './dtm-data';
 
 declare var dataLayerSH: any;
 declare var pageTrack: any;
@@ -57,17 +58,25 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     this.router.events.subscribe(
       (event: Event) => {
         if (event instanceof NavigationEnd) {
-          const eventUrl = event.url;
-          console.log(eventUrl);
+          const urlTree = this.router.parseUrl(event.url);
+          if (!urlTree.root.children.primary) {
+            return;
+          }
 
-          // TODO: These are temp values
-          // TODO: A map is needed to map values between 'eventUrl' and 'dataLayerSH'
-          dataLayerSH.pageName = 'rewards:discover';
-          dataLayerSH.pageType = 'landing page';
-          dataLayerSH.siteSectionLevel2 = 'rewards:discover';
-          dataLayerSH.siteSectionLevel3 = 'rewards:discover';
-          dataLayerSH.hubID = 'ZPfW6pgwrG5oSKixBpexJ14LMylsoxrdNXo6nahA8vY';
+          const urlWithoutParams = urlTree.root.children.primary.segments.map(it => it.path).join('/');
+          const currentSelectedArray = analyticsVariables.filter( (element) => (element.screen === urlWithoutParams));
+          if (currentSelectedArray.length === 0) {
+            return;
+          }
 
+          const currentSelectedVariable = currentSelectedArray[0];
+          dataLayerSH.pageName = currentSelectedVariable.pageName;
+          dataLayerSH.pageType = currentSelectedVariable.pageType;
+          dataLayerSH.siteSectionLevel2 = currentSelectedVariable.siteSectionLevel2;
+          dataLayerSH.siteSectionLevel3 = currentSelectedVariable.siteSectionLevel3;
+          // TODO: This is sample hub ID.
+          // dataLayerSH.hubID = 'ZPfW6pgwrG5oSKixBpexJ14LMylsoxrdNXo6nahA8vY';
+          dataLayerSH.loginStatus = currentSelectedVariable.loginStatus;
           pageTrack('msa-rewards-virtual-page');
         }
       }
