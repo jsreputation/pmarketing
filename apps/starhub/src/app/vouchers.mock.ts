@@ -101,7 +101,7 @@ export const vouchers: Voucher[] = [
     name: 'Free Frapuccino',
     redemptionType: RedemptionType.qr,
     thumbnailImg: 'https://picsum.photos/50/50?random=4',
-    rewardBanner: '',
+    rewardBanner: 'https://picsum.photos/400/200?random=20',
     merchantImg: '',
     merchantName: 'Starbucks',
     expiry: null,

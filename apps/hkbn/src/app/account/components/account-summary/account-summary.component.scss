@@ -1,7 +1,7 @@
 hkbn-account-summary {
   .member-ship {
     font-size: 1.4rem;
-    margin: 0.8rem 0;
+    margin: 0.8rem 1.6rem 1.6rem;
   }
 
   .account-summary {
@@ -11,8 +11,28 @@ hkbn-account-summary {
     font-size: 1.2rem;
   }
 
-  mat-form-field {
+  .mat-form-field {
     margin: 0.5rem 0;
+
+    &-flex {
+      padding-left: 1.6rem;
+    }
+
+    &-infix {
+      .mat-input-element {
+        font-size: 1.4rem;
+        line-height: 2.5rem;
+      }
+
+      .mat-form-field-label {
+        font-size: 1.2rem;
+        line-height: 2rem;
+      }
+    }
+  }
+
+  .mat-slide-toggle {
+    padding-left: 1.6rem;
   }
 
   .mat-checkbox-layout {
@@ -21,5 +41,17 @@ hkbn-account-summary {
 
   .mat-checkbox-inner-container {
     margin-top: 0.6rem;
+  }
+
+  .account-summary button.mat-raised-button {
+    align-self: flex-start;
+    color: #fff;
+  }
+
+  .form-field-border {
+    background: rgba(0, 0, 0, 0.42);
+    height: 0.1rem;
+    margin: 0.5rem 0;
+    width: 100%;
   }
 }
