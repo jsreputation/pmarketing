@@ -35,19 +35,21 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformInstantReward(data: any): any {
+  public static transformInstantReward(data: IInstantRewardForm): any {
     return {
       type: 'engagements',
       attributes: {
         type: 'instant_reward',
         title: data.name,
         display_properties: {
-          banner: 'reward',
+          banner: data.banner,
           title: data.headlineMessage,
           sub_title: data.headlineMessage,
           // subHeadlineText: data.subHeadlineMessage,
-          card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
-          background_img_url: ImageControlValue.getImagePath(data.background),
+          card_background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          // card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
+          background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          // background_img_url: ImageControlValue.getImagePath(data.background),
           button: data.buttonText
         }
       }
