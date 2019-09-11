@@ -1,7 +1,9 @@
+import { MatSort } from '@angular/material';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
+import { takeUntil } from 'rxjs/operators';
 
 // tslint:disable
 export class CustomDataSource<T> {
@@ -17,13 +19,20 @@ export class CustomDataSource<T> {
   public length$ = this.lengthData.asObservable();
   // use for set included params
   private _included: string;
+  private destroy$: Subject<void> = new Subject();
+
+  public hasData = true;
 
   public set included(value: any) {
     this._included = value;
   }
 
   public get included() {
-    return { include: this._included };
+    return {include: this._included};
+  }
+
+  public get data() {
+    return this.dataSubject.value;
   }
 
   // default items on the page set up pageSize
@@ -45,11 +54,11 @@ export class CustomDataSource<T> {
 
   private _filter: any;
 
-  public get filter(): {[key: string]: string} {
+  public get filter(): { [key: string]: string } {
     return this._filter;
   }
 
-  public set filter(value: {[key: string]: string}) {
+  public set filter(value: { [key: string]: string }) {
     const filter = JSON.parse((value as any));
     this._filter = filter;
     this.changeFilterSearch.next(0);
@@ -70,22 +79,38 @@ export class CustomDataSource<T> {
   }
 
   public disconnect(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
     this.dataSubject.complete();
     this.changeFilterSearch.complete();
     this.loadingSubject.complete();
     this.lengthData.complete();
   }
 
-  loadingData(pagination?: any) {
+
+  public updateData(): void {
+    this.loadingData({pageIndex: 0, pageSize: this.pageSize});
+  }
+
+  public registerSort(sort: MatSort) {
+    if (!sort) {
+      throw new Error('Sort is undefined');
+    }
+    sort.sortChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(newSort => this.sort = newSort);
+  }
+
+  private loadingData(pagination?: any) {
     const params = {
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
       ...this.included,
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
-      'page[size]': pagination ? pagination.pageSize : this.pageSize,
+      'page[size]': pagination ? pagination.pageSize : this.pageSize
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData( ClHttpParams.createHttpParams(params))
+    this.dataService.getTableData(ClHttpParams.createHttpParams(params))
       .subscribe((res: any) => {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
@@ -95,10 +120,6 @@ export class CustomDataSource<T> {
         this.lengthData.next(0);
         this.loadingSubject.next(false);
       });
-  }
-
-  public updateData(): void {
-    this.loadingData({pageIndex: 0, pageSize: this.pageSize})
   }
 
   private sortPrepare(sortData: SortModel) {
@@ -120,7 +141,7 @@ export class CustomDataSource<T> {
     const result = {};
     Object.keys(this._filter)
       .forEach((item) => {
-        result[`filter[${item}]`] = this.filter[item]
+        result[`filter[${item}]`] = this.filter[item];
       });
     return result;
   }

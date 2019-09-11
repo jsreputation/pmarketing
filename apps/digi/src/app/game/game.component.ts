@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
-  CampaignService,
+  ICampaignService,
   CampaignType,
   IGame,
   GameService,
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
 
   constructor(
     private route: ActivatedRoute,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private gameService: GameService,
     private notificationService: NotificationService
   ) { }

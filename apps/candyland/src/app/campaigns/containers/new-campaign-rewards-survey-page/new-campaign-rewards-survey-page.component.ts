@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { StepConditionService } from '../../services/step-condition.service';
 
@@ -45,6 +45,10 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
     }
   };
 
+  public get times(): FormControl {
+    return this.form.get('limits.times') as FormControl;
+  }
+
   constructor(
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
@@ -67,7 +71,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
       rewardsOptions: [],
       limits: this.fb.group({
         times: [null, [
-          Validators.required,
+          // Validators.required,
           Validators.min(1),
           Validators.max(60)
         ]]
