@@ -28,15 +28,14 @@ export class HomeComponent implements OnInit {
 
     switch (tier) {
       case 'gold':
-        return 'assets/gold-badge.png';
+        return 'assets/gold-icon.svg';
 
       case 'platinum':
-        return 'assets/platinum-badge.png';
-        break;
+        return 'assets/plat-icon.svg';
 
       case 'green':
       default:
-        return 'assets/green-badge.png';
+        return 'assets/green-icon.svg';
     }
   }
 
