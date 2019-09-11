@@ -25,7 +25,6 @@ export { IChangePasswordData } from './lib/auth/authentication/models/authentica
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { CampaignService } from './lib/campaign/campaign.service';
 export { ICampaignService } from './lib/campaign/icampaign.service';
 export {
   CampaignType,

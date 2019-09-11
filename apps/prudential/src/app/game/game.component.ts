@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { interval, forkJoin, Observable, of } from 'rxjs';
 import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
 import {
-  CampaignService,
+  ICampaignService,
   CampaignType,
   GameService,
   IGame,
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private gameService: GameService
   ) {
     this.isWhistler = environment.isWhistler;
