@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
-import { VouchersModule, VouchersService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('ListComponent', () => {
@@ -18,7 +18,7 @@ describe('ListComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

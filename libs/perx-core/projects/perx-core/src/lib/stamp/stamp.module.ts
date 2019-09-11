@@ -5,9 +5,9 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { V4StampService } from './v4-stamp.service';
 import { StampService } from './stamp.service';
 import { Config } from '../config/config';
-import { VouchersService } from '../vouchers/vouchers.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
-export function stampServiceFactory(http: HttpClient, config: Config, vouchersService: VouchersService): StampService {
+export function stampServiceFactory(http: HttpClient, config: Config, vouchersService: IVoucherService): StampService {
   // Make decision on what to instantiate base on config
   return new V4StampService(http, config, vouchersService);
 }

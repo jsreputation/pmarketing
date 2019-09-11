@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { VouchersService } from './vouchers.service';
+import { IVoucherService } from './ivoucher.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class PinService {
 
-  constructor(private vouchersService: VouchersService) { }
+  constructor(private vouchersService: IVoucherService) { }
 
   public getPin(voucherId: number): Observable<string> {
     return this.vouchersService.get(voucherId).pipe(
