@@ -25,9 +25,22 @@
         </div>
         to
         <div class="input-group">
-          <cl-date-picker [formControl]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value">
-          </cl-date-picker>
-          <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
+          <div class="date-field">
+            <cl-date-picker [control]="campaignInfo.get('endDate')"
+                            [min]="campaignInfo.get('startDate').value">
+            </cl-date-picker>
+            <mat-error class="date-field-error"
+                       *ngIf="campaignInfo.get('endDate').hasError('required') && campaignInfo.get('endDate').touched">
+              This field is required
+            </mat-error>
+          </div>
+          <div class="date-field">
+            <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
+            <mat-error class="date-field-error"
+                       *ngIf="campaignInfo.get('endTime').hasError('required') && campaignInfo.get('endTime').touched">
+              This field is required
+            </mat-error>
+          </div>
         </div>
         <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup} from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -12,7 +12,7 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
   selector: 'cl-new-campaign-detail-page',
   templateUrl: './new-campaign-detail-page.component.html',
   styleUrls: ['./new-campaign-detail-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implements OnInit, OnDestroy {
   public form: FormGroup;
