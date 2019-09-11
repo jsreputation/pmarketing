@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ICampaign, CampaignType, CampaignService } from '@perx/core';
+import { ICampaign, CampaignType, ICampaignService } from '@perx/core';
 
 @Component({
   selector: 'app-campaigns',
@@ -13,7 +13,7 @@ export class CampaignsComponent implements OnInit {
   public tapped: EventEmitter<ICampaign> = new EventEmitter();
 
   constructor(
-    private campaignService: CampaignService
+    private campaignService: ICampaignService
   ) {}
 
   public ngOnInit(): void {

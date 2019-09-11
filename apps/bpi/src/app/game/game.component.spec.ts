@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { CampaignService, PerxCoreModule, StampService, StampCardState, StampState, NotificationService } from '@perx/core';
+import { ICampaignService, PerxCoreModule, StampService, StampCardState, StampState, NotificationService } from '@perx/core';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
@@ -38,7 +38,7 @@ describe('GameComponent', () => {
           }
         },
         { provide: StampService, useValue: stampServiceStub },
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
       ]
     });

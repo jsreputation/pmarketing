@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CampaignService, ICampaign, CampaignType, NotificationService } from '@perx/core';
+import { ICampaignService, ICampaign, CampaignType, NotificationService } from '@perx/core';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private activeRoute: ActivatedRoute,
     private notificationService: NotificationService
   ) { }

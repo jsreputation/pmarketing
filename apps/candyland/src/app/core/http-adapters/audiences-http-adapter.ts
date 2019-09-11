@@ -80,7 +80,6 @@ export class AudiencesHttpAdapter {
   public static transformUsersWithPools(data: any): any {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map(item => {
-      console.log(item)
       const formatedUser = AudiencesHttpAdapter.transformUser(item);
       formatedUser.pools = item.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
       return formatedUser
