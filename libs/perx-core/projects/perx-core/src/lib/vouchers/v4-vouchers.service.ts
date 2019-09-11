@@ -65,7 +65,7 @@ interface IV4Voucher {
 @Injectable({
   providedIn: 'root'
 })
-export class VouchersService implements IVoucherService {
+export class V4VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
 
   constructor(
@@ -74,7 +74,7 @@ export class VouchersService implements IVoucherService {
   ) {
   }
 
-  public static voucherToVoucher(v: IV4Voucher): IVoucher {
+  public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward = v.reward;
     const images: IV4Image[] = reward.images || [];
     let thumbnail: IV4Image = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
@@ -152,7 +152,7 @@ export class VouchersService implements IVoucherService {
           return streams;
         }),
         mergeAll(),
-        map((resp: IV4Voucher[]) => resp.map(v => VouchersService.voucherToVoucher(v))),
+        map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
         map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.rewardId - v2.rewardId)),
         tap(vouchers => this.vouchers = vouchers)
@@ -191,7 +191,7 @@ export class VouchersService implements IVoucherService {
     const url = `${this.config.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
       map(resp => resp.data),
-      map((v: IV4Voucher) => VouchersService.voucherToVoucher(v)),
+      map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
       // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
       tap((v: IVoucher) => { if (this.vouchers.length > 0) { this.vouchers.unshift(v); } })
     );
@@ -224,7 +224,7 @@ export class VouchersService implements IVoucherService {
         return this.getAllFromPage(1);
       }),
       mergeAll(1),
-      map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => VouchersService.voucherToVoucher(v4Voucher))),
+      map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v4Voucher))),
       map((vouchers: IVoucher[]) => vouchers.filter(v => v.rewardId === rewardId && v.state === 'issued')),
       filter((vouchers: IVoucher[]) => {
         if (current === 0) {

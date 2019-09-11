@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher, ILocation, VouchersService } from '@perx/core';
+import { Voucher, ILocation, IVoucherService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ export class VoucherComponent implements OnInit {
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
 
-  constructor(private vouchersService: VouchersService, private activeRoute: ActivatedRoute) {
+  constructor(private vouchersService: IVoucherService, private activeRoute: ActivatedRoute) {
   }
 
   public ngOnInit(): void {

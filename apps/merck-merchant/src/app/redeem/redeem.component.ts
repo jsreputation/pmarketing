@@ -5,7 +5,7 @@ import {
   NotificationService,
   RewardsService,
   IReward,
-  VouchersService,
+  IVoucherService,
   IPrice
 } from '@perx/core';
 import { map, flatMap } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) {}
 
   public ngOnInit(): void {
