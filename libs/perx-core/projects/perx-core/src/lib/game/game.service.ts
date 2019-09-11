@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { EnvConfig } from '../shared/env-config';
 import { IGameService } from './iGameService';
 import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
 import { catchError, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { Config } from '../config/config';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -102,8 +102,8 @@ interface IV4PlayResponse {
 export class GameService implements IGameService {
   private hostName: string;
 
-  constructor(private httpClient: HttpClient, config: EnvConfig) {
-    this.hostName = config.env.apiHost as string;
+  constructor(private httpClient: HttpClient, config: Config) {
+    this.hostName = config.apiHost as string;
   }
 
   private static v4GameToGame(game: Game): IGame {

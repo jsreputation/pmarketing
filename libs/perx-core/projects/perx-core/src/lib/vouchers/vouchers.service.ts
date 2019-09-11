@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of, interval } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams, IRedeemOptions } from './models/voucher.model';
 import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
 import { IVoucherService } from './ivoucher.service';
 import { oc } from 'ts-optchain';
+import { Config } from '../config/config';
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -44,7 +45,7 @@ interface IV4Voucher {
   issued_date: string;
   name: string;
   redemption_date: any;
-  redemption_type: {
+  redemption_type: RedemptionType | {
     call_to_action: any;
     timer: any;
     type: RedemptionType | null;
@@ -69,7 +70,7 @@ export class VouchersService implements IVoucherService {
 
   constructor(
     private http: HttpClient,
-    @Inject('config') private config: any
+    private config: Config
   ) {
   }
 
@@ -86,7 +87,17 @@ export class VouchersService implements IVoucherService {
     const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
     const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
     const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
-    let redemptionTypeFinal: RedemptionType = v.redemption_type ? v.redemption_type.type : null;
+    let redemptionTypeFinal: RedemptionType = null;
+    if (v.redemption_type) {
+      if ((typeof v.redemption_type) === 'string') {
+        // @ts-ignore
+        redemptionTypeFinal = v.redemption_type;
+        // @ts-ignore
+      } else if (v.redemption_type.type) {
+        // @ts-ignore
+        redemptionTypeFinal = v.redemption_type.type;
+      }
+    }
     redemptionTypeFinal = redemptionTypeFinal || v.voucher_type;
     if (!(redemptionTypeFinal in RedemptionType)) {
       redemptionTypeFinal = RedemptionType.txtCode;
@@ -165,7 +176,7 @@ export class VouchersService implements IVoucherService {
   }
 
   get vouchersUrl(): string {
-    return `${this.config.env.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
+    return `${this.config.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
   public get(id: number, useCache: boolean = true): Observable<IVoucher> {
@@ -177,7 +188,7 @@ export class VouchersService implements IVoucherService {
         return of(found);
       }
     }
-    const url = `${this.config.env.apiHost}/v4/vouchers/${id}`;
+    const url = `${this.config.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url).pipe(
       map(resp => resp.data),
       map((v: IV4Voucher) => VouchersService.voucherToVoucher(v)),
@@ -187,7 +198,7 @@ export class VouchersService implements IVoucherService {
   }
 
   public redeemVoucher(id: number, options?: IRedeemOptions): Observable<any> {
-    const url = `${this.config.env.apiHost}/v4/vouchers/${id}/redeem`;
+    const url = `${this.config.apiHost}/v4/vouchers/${id}/redeem`;
     if (!options) {
       options = null;
     }

@@ -8,7 +8,8 @@ import {
   CampaignModule,
   GameModule,
   VouchersModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 
@@ -29,6 +30,7 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     LoginComponent,
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -36,10 +38,10 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     BrowserAnimationsModule,
     UtilsModule,
     MatDialogModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment })
+    VouchersModule,
+    AuthenticationModule,
+    CampaignModule,
+    GameModule
   ],
   providers: [
     httpInterceptorProviders

@@ -5,6 +5,7 @@ import { LoyaltySummaryComponent } from './loyalty-summary.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileModule } from '../../profile/profile.module';
 import { LoyaltyModule } from '../loyalty.module';
+import { ConfigModule } from '../../config/config.module';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -14,11 +15,12 @@ describe('LoyaltySummaryComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ProfileModule.forRoot({ env: { apiHost: '' } }),
-        LoyaltyModule.forRoot({ env: { apiHost: '' } })
+        ProfileModule,
+        LoyaltyModule,
+        ConfigModule.forRoot({})
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

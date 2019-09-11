@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProfileService } from '@perx/core';
+import { ProfileService, AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('UpdatePhoneComponent', () => {
@@ -28,7 +28,10 @@ describe('UpdatePhoneComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
-      providers: [{provide: ProfileService, useValue: {whoAmI: () => of({phone: '12345678'})}}],
+      providers: [
+        { provide: ProfileService, useValue: { whoAmI: () => of({ phone: '12345678' }) } },
+        { provide: AuthenticationService, useValue: {} }
+      ],
       declarations: [UpdatePhoneComponent]
     })
       .compileComponents();

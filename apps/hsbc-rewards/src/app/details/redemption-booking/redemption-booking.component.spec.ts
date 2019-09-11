@@ -3,8 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService } from '@perx/core';
-import { environment } from 'src/environments/environment';
+import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, ConfigModule } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -25,12 +24,13 @@ describe('RedemptionBookingComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RedemptionBookingComponent],
       imports: [
+        ConfigModule.forRoot({}),
         DetailHeaderModule,
         MatRadioModule,
         MatCheckboxModule,
-        RewardsModule.forRoot({ env: environment }),
-        VouchersModule.forRoot({ env: environment }),
-        LocationModule.forRoot({ env: environment }),
+        RewardsModule,
+        VouchersModule,
+        LocationModule,
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,

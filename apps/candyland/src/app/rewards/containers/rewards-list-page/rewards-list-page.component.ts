@@ -37,6 +37,10 @@ export class RewardsListPageComponent {
     }
   }
 
+  public detailReward(reward: IRewardEntity): void {
+    this.router.navigate(['/rewards/detail', reward.id], {state: reward});
+  }
+
   private editReward(reward: IRewardEntity): void {
     this.router.navigate(['/rewards/edit', reward.id], {state: reward});
   }
