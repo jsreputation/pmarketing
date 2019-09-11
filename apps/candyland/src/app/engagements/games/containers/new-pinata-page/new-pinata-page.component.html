@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
-<section class="pinata-wrap section-stickyheader" *ngIf="pinataData$ | async as pinataData" [formGroup]="formPinata">
-  <div class="page-header full-with sticky">
+<section class="pinata-wrap" *ngIf="pinataData$ | async as pinataData" [formGroup]="formPinata">
+  <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
         <mat-form-field class="messages-input">
@@ -32,7 +32,7 @@
   <section class="content flex">
     <div class="pinata-form">
       <mat-card class="game-graphic">
-        <div class="game-title-wrap">
+        <div class="messages-wrap">
           <p class="sub-title">
             Messages
           </p>
