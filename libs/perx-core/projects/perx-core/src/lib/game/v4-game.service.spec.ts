@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GameService } from './game.service';
+import { V4GameService } from './v4-game.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
 import { ConfigModule } from '../../public-api';
 
-describe('GameService', () => {
+describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
   const environment = {
     apiHost: 'https://api.perxtech.io',
@@ -20,7 +20,7 @@ describe('GameService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ConfigModule.forRoot({...environment})
+        ConfigModule.forRoot({ ...environment })
       ],
     });
 
@@ -33,12 +33,12 @@ describe('GameService', () => {
   });
 
   it('should be created', () => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     expect(service).toBeTruthy();
   });
 
   it('should play one game', (done: DoneFn) => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     service.play(1)
       .subscribe(() => {
         expect(true).toBeTruthy();
@@ -49,20 +49,20 @@ describe('GameService', () => {
 
     expect(req.request.method).toEqual('PUT');
 
-    req.flush(null);
+    req.flush({ data: { outcomes: [] } });
 
     httpTestingController.verify();
   });
 
   it('should get games from campaign Id', (done: DoneFn) => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       // .subscribe((games: IGame[]) => {
       //     expect(games.length).toBe(0);
       //     done();
       //   },
       .subscribe(
-        () => {},
+        () => { },
         (err: any) => {
           expect(err.message).toEqual('Games list is empty');
           done();
@@ -79,7 +79,7 @@ describe('GameService', () => {
   });
 
   it('should get many games from campaign Id', (done: DoneFn) => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
         expect(games.length).toBe(2);
@@ -155,7 +155,7 @@ describe('GameService', () => {
   });
 
   it('should get a shake the tree game from its id', (done: DoneFn) => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {
         expect(game.id).toBe(42);
@@ -201,7 +201,7 @@ describe('GameService', () => {
   });
 
   it('should get a pinata game from its id', (done: DoneFn) => {
-    const service: GameService = TestBed.get(GameService);
+    const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {
         expect(game.id).toBe(42);
