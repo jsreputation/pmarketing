@@ -12,7 +12,8 @@ import {
   IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
-  ILoginResponse
+  ILoginResponse,
+  IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
@@ -22,7 +23,7 @@ import { ProfileService } from '../../profile/profile.service';
 })
 export class WhistlerAuthenticationService extends AuthenticationService implements AuthService {
   private apiHost: string;
-  private preAuthEndpoint: string;
+  // private preAuthEndpoint: string;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
@@ -33,15 +34,16 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: ProfileService
+    profileService: ProfileService
   ) {
     super();
+    console.log(profileService);
     this.apiHost = config.apiHost as string;
-    if (!config.production) {
-      this.preAuthEndpoint = 'http://localhost:4000/preauth';
-    } else {
-      this.preAuthEndpoint = config.baseHref + 'preauth';
-    }
+    // if (!config.production) {
+    //   this.preAuthEndpoint = 'http://localhost:4000/preauth';
+    // } else {
+    //   this.preAuthEndpoint = config.baseHref + 'preauth';
+    // }
     this.$failedAuthObservable = new Observable();
   }
 
@@ -58,12 +60,27 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   // Need to review whistler auth process
   public setPreAuthJWT(): Observable<any> {
-    return this.http.get(this.preAuthEndpoint, {
-      params: {
-        url: location.host
-      },
-      observe: 'response'
-    }).pipe(
+    // return this.http.get(this.preAuthEndpoint, {
+    //   params: {
+    //     url: location.host
+    //   },
+    //   observe: 'response'
+    // }).pipe(
+    //   tap((resp) => {
+    //     this.preAuthJWT = resp.headers.get('Authorization');
+    //     return resp;
+    //   })
+    // );
+    const login$ = this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
+      data: {
+        attributes: {
+          tenant_id: '2',
+          username: 'Admin_2',
+          password: 'asdfjkl;'
+        }
+      }
+    }, { observe: 'response' });
+    return login$.pipe(
       tap((resp) => {
         this.preAuthJWT = resp.headers.get('Authorization');
         return resp;
