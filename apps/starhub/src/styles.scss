@@ -39,6 +39,14 @@ body {
   color: #fff;
 }
 
+cdk-virtual-scroll-viewport {
+  &::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+  }
+}
+
 .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
   display: flex;
   flex-direction: row;
