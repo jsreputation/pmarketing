@@ -24,20 +24,17 @@
   }
 
   &-list {
-    width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: stretch;
-    margin-left: -2rem;
+    margin: 0 -1rem;
   }
 
   &-item {
     min-width: 20rem;
-    width: calc(20% - 2rem);
-    flex-basis: 20rem;
+    width: 0;
     flex: auto;
-    margin-bottom: 0;
-    margin-left: 2rem;
+    padding: 0 1rem;
   }
 
 }
