@@ -4,7 +4,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IProfile, ICustomProperties, IProfileProperty } from './profile.model';
 import { ProfileService } from './profile.service';
-import { EnvConfig } from '../shared/env-config';
+import { Config } from '../config/config';
 
 interface IV4Profile {
   id: number;
@@ -33,10 +33,10 @@ export class V4ProfileService extends ProfileService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig
+    config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public static v4ProfileToProfile(profile: IV4Profile): IProfile {

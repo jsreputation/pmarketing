@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule, VouchersService, Voucher } from '@perx/core';
-import { environment } from 'src/environments/environment';
 import { NotificationWrapperService } from './services/notification-wrapper.service';
 import { TranslateService } from '@ngx-translate/core';
 import { of, BehaviorSubject, Observable } from 'rxjs';
@@ -46,7 +45,7 @@ describe('AppRoutingModule', () => {
                 CodeRedemptionModule,
                 HttpClientTestingModule,
                 QrRedemptionModule,
-                VouchersModule.forRoot({ env: environment }),
+                VouchersModule,
                 RouterTestingModule.withRoutes([
                     routes.find(el => el.path === '').children.find(el => el.path === 'wallet/:id'),
                     routes.find(el => el.path === '').children.find(el => el.path === 'reward/:id'),

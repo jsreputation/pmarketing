@@ -5,7 +5,6 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
-import { EnvConfig } from '../../shared/env-config';
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
@@ -16,7 +15,8 @@ import {
   ILoginResponse,
   IChangePhoneData
 } from '../authentication/models/authentication.model';
-import { V4ProfileService } from '../../profile/v4-profile.service';
+import { ProfileService } from '../../profile/profile.service';
+import { Config } from '../../config/config';
 
 // interface IV4SignUpData {
 //   first_name?: string;
@@ -43,20 +43,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public $failedAuthObservable: Observable<boolean>;
 
   constructor(
-    config: EnvConfig,
+    config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: V4ProfileService
+    private profileService: ProfileService
   ) {
     super();
-    if (!config.env.production) {
+    if (!config.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
     } else {
-      this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
-      this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
+      this.appAuthEndPoint = config.baseHref + 'v2/oauth';
+      this.userAuthEndPoint = config.baseHref + 'v4/oauth';
     }
-    this.customersEndPoint = config.env.apiHost + '/v4/customers';
+    this.customersEndPoint = config.apiHost + '/v4/customers';
     this.$failedAuthObservable = new Observable();
   }
 

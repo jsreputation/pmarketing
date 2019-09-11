@@ -14,6 +14,7 @@ import {
   CampaignService,
   AuthenticationService,
   ProfileService,
+  ConfigModule,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -90,13 +91,14 @@ const profileServiceStub = {
     HistoryComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    GameModule,
+    ProfileModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,

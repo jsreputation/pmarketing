@@ -9,10 +9,9 @@ import {
   MatCheckboxModule,
   MatRadioModule
 } from '@angular/material';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EnvConfig } from '../shared/env-config';
 import { SurveyService } from './survey.service';
 import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
@@ -23,6 +22,13 @@ import { SelectComponent } from './question/select/select.component';
 import { GroupComponent } from './question/group/group.component';
 import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
+import { Config } from '../config/config';
+import { HttpClient } from '@angular/common/http';
+
+export function surveyServiceFactory(http: HttpClient, config: Config): SurveyService {
+  // Make decision on what to instantiate base on config
+  return new SurveyService(http, config);
+}
 
 const components = [
   SurveyComponent,
@@ -53,21 +59,16 @@ const components = [
     MatCheckboxModule,
     MatRadioModule
   ],
+  providers: [
+    {
+      provide: SurveyService,
+      useFactory: surveyServiceFactory,
+      deps: [HttpClient, Config]
+    }
+  ],
   exports: [
     ...components
   ]
 })
 export class SurveyModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: SurveyModule,
-      providers: [
-        SurveyService,
-        {
-          provide: EnvConfig,
-          useValue: config
-        }
-      ],
-    };
-  }
 }

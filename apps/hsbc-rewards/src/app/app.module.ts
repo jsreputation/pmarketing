@@ -7,6 +7,7 @@ import {
   ProfileModule,
   LoyaltyModule,
   LocationModule,
+  ConfigModule,
 } from '@perx/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -21,15 +22,16 @@ import {UnauthorizedInterceptor} from './login/unauthorized.interceptor';
     AppComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AuthenticationModule.forRoot({env: environment}),
-    RewardsModule.forRoot({env: environment}),
-    ProfileModule.forRoot({env: environment}),
-    LoyaltyModule.forRoot({env: environment}),
-    LocationModule.forRoot({env: environment})
+    AuthenticationModule,
+    RewardsModule,
+    ProfileModule,
+    LoyaltyModule,
+    LocationModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
