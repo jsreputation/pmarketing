@@ -417,3 +417,8 @@ cl-game-mobile-preview, .tabs-component {
   margin: 0 0 2.4rem !important;
   padding-bottom: 0;
 }
+
+.section-stickyheader {
+  position: relative;
+  padding-top: $header-height-base;
+}

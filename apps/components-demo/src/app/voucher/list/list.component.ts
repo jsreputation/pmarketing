@@ -3,7 +3,7 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { Voucher, VouchersService, StatusLabelMapping } from '@perx/core';
+import { Voucher, IVoucherService, StatusLabelMapping } from '@perx/core';
 import { mock } from '../mock';
 
 @Component({
@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
     released: 'Declined',
   };
 
-  constructor(private vouchersService: VouchersService) { }
+  constructor(private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
     this.vouchersService.getAll().subscribe(

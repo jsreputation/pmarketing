@@ -9,7 +9,8 @@ import {
   GameModule,
   VouchersModule,
   UtilsModule,
-  ConfigModule
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 
@@ -31,6 +32,7 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
+    ProfileModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,

@@ -3,7 +3,7 @@ import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { VouchersModule, VouchersService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { mockVoucher } from '../voucher.mock';
@@ -40,7 +40,7 @@ describe('CodeRedemptionComponent', () => {
         VouchersModule,
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub }
       ],
       declarations: [CodeRedemptionComponent]
