@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IVoucher } from '../models/voucher.model';
-import { VouchersService } from '../vouchers.service';
+import { IVoucherService } from '../ivoucher.service';
 
 @Component({
   selector: 'perx-core-bcode-redemption',
@@ -18,7 +18,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   public voucher$: Observable<IVoucher>;
 
   constructor(
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
