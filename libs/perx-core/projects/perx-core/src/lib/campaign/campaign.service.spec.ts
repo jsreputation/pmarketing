@@ -20,7 +20,6 @@ describe('CampaignService', () => {
     baseHref: '/'
   };
 
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HttpClientTestingModule, ConfigModule.forRoot({...environment})],
