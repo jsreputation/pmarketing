@@ -2,10 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
 import { VouchersModule } from '@perx/core';
-import { environment } from 'src/environments/environment';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material';
 
 describe('WalletComponent', () => {
@@ -16,10 +13,7 @@ describe('WalletComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ WalletComponent ],
       imports: [
-        VouchersModule.forRoot({
-          env: environment
-        }),
-        HttpClientTestingModule,
+        VouchersModule,
         RouterTestingModule,
         MatTabsModule
       ]

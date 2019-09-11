@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
-import { IProfile, ProfileService, NotificationService } from '@perx/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
 import { of, throwError } from 'rxjs';
 import { Type } from '@angular/core';
 
@@ -25,7 +26,12 @@ const accountDataStub: IProfile = {
   lastName: 'Temp'
 };
 
-const notificationServiceStub = { addPopup: () => ({}), addSnack: () => { } };
+const authenticationServiceStub = {
+  requestVerificationToken: () => of(null)
+};
+const notificationServiceStub = {
+  addPopup: () => ({}), addSnack: () => { }
+};
 
 const profileServiceStub = {
   setCustomProperties: () => of(null)
@@ -34,8 +40,10 @@ const profileServiceStub = {
 describe('AccountSummaryComponent', () => {
   let component: AccountSummaryComponent;
   let fixture: ComponentFixture<AccountSummaryComponent>;
+  let authService: AuthenticationService;
   let profileService: ProfileService;
   let notificationService: NotificationService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -49,9 +57,14 @@ describe('AccountSummaryComponent', () => {
         NoopAnimationsModule,
         MatSlideToggleModule,
         TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([{
+          path: 'account/verify_token/:id',
+          component: AccountSummaryComponent
+        }])
       ],
       declarations: [AccountSummaryComponent],
       providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
@@ -61,6 +74,7 @@ describe('AccountSummaryComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountSummaryComponent);
+    authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     notificationService = TestBed.get(NotificationService);
     component = fixture.componentInstance;
@@ -77,6 +91,13 @@ describe('AccountSummaryComponent', () => {
     component.ngOnChanges();
     tick();
     expect(spy).toHaveBeenCalledWith(accountDataStub);
+  }));
+
+  it('should navigate to account/verify_token', fakeAsync(() => {
+    const spy = spyOn(authService, 'requestVerificationToken').and.returnValue(throwError(null));
+    component.updateMobileVerification(new Event('click'), 'phone');
+    tick();
+    expect(spy).toHaveBeenCalled();
   }));
 
   it('should handle error', fakeAsync(() => {

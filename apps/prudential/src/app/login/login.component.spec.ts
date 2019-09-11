@@ -6,7 +6,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, ProfileModule } from '@perx/core';
+import { AuthenticationModule, ProfileModule, ConfigModule } from '@perx/core';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -17,14 +17,16 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatCardModule,
+      imports: [
+        ConfigModule.forRoot({}),
+        MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule,
         HttpClientTestingModule,
         AuthenticationModule,
         NoopAnimationsModule,
-        ProfileModule.forRoot({ env: environment }),
-        AuthenticationModule.forRoot({ env: environment }),
+        ProfileModule,
+        AuthenticationModule,
         FormsModule,
       ],
       declarations: [LoginComponent],

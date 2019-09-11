@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { QrRedemptionComponent } from './qr-redemption.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { VouchersModule, VouchersService, Voucher, VoucherState } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { mockVoucher } from '../voucher.mock';
@@ -40,7 +40,7 @@ describe('QrRedemptionComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub }
       ],
       declarations: [QrRedemptionComponent]

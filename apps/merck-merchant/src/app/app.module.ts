@@ -18,7 +18,9 @@ import {
   AuthenticationModule,
   RewardsModule,
   LoyaltyModule,
-  VouchersModule
+  VouchersModule,
+  ConfigModule,
+  ProfileModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,7 +51,9 @@ import { RedeemComponent } from './redeem/redeem.component';
     RedeemComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
+    ProfileModule,
     AppRoutingModule,
     MatButtonModule,
     MatToolbarModule,
@@ -61,12 +65,12 @@ import { RedeemComponent } from './redeem/redeem.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    AuthenticationModule.forRoot({ env: environment }),
+    AuthenticationModule,
     ZXingScannerModule,
     MatSnackBarModule,
-    RewardsModule.forRoot({ env: environment }),
-    LoyaltyModule.forRoot({ env: environment }),
-    VouchersModule.forRoot({ env: environment })
+    RewardsModule,
+    LoyaltyModule,
+    VouchersModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ElementRef, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PinService } from '../pin.service';
-import { VouchersService } from '../vouchers.service';
+import { IVoucherService } from '../ivoucher.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
@@ -40,7 +40,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   constructor(
     private element: ElementRef,
     private pin: PinService,
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) {
   }
 

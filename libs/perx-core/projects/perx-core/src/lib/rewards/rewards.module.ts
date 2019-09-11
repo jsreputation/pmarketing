@@ -1,6 +1,5 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EnvConfig } from '../shared/env-config';
 import { RewardsService } from './rewards.service';
 import { V4RewardsService } from './v4-rewards.service';
 import { RewardsCollectionComponent } from './rewards-collection/rewards-collection.component';
@@ -10,6 +9,9 @@ import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
+import { HttpClient } from '@angular/common/http';
+import { Config } from '../config/config';
+import { IVoucherService } from '../../public-api';
 
 const components = [
   RewardsCollectionComponent,
@@ -17,6 +19,11 @@ const components = [
   RewardsListTabbedComponent,
   RewardComponent
 ];
+
+export function rewardsServiceFactory(http: HttpClient, vouchersService: IVoucherService, config: Config): RewardsService {
+  // Make decision on what to instantiate base on config
+  return new V4RewardsService(http, vouchersService, config);
+}
 
 @NgModule({
   declarations: [
@@ -30,22 +37,14 @@ const components = [
   ],
   exports: [
     ...components,
+  ],
+  providers: [
+    {
+      provide: RewardsService,
+      useFactory: rewardsServiceFactory,
+      deps: [HttpClient, IVoucherService, Config]
+    }
   ]
 })
 export class RewardsModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: RewardsModule,
-      providers: [
-        {
-          provide: EnvConfig,
-          useValue: config
-        },
-        {
-          provide: RewardsService,
-          useClass: V4RewardsService
-        }
-      ],
-    };
-  }
 }
