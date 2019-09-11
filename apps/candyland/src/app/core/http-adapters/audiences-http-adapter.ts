@@ -55,7 +55,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: any): IUser {
+  public static transformUserWithPools(data: IUserWithIncludes<IUserApi>): IUser {
    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
    const userData = AudiencesHttpAdapter.transformUser(data.data);
    userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
@@ -76,7 +76,7 @@ export class AudiencesHttpAdapter {
       meta: data.meta
     }
   }
-  
+
   public static transformUsersWithPools(data: IUsersWithIncludes<IUserApi>): IUsersWithPoolsData<IUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IUserApi) => {
