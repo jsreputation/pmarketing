@@ -10,7 +10,8 @@ import {
   VouchersModule,
   StampModule,
   UtilsModule,
-  ConfigModule
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -35,6 +36,7 @@ import { LandingComponent } from './landing/landing.component';
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
+    ProfileModule,
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,

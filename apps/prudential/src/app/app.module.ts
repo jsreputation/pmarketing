@@ -10,7 +10,8 @@ import {
   CampaignModule,
   GameModule,
   UtilsModule,
-  ConfigModule
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -66,6 +67,7 @@ import { ResultComponent } from './result/result.component';
     MatProgressBarModule,
     BrowserAnimationsModule,
     PerxCoreModule,
+    ProfileModule,
     CampaignModule,
     GameModule,
     AuthenticationModule,
