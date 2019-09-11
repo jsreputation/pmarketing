@@ -1,7 +1,5 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
 import { MatSlideToggleChange } from '@angular/material';
@@ -41,9 +39,7 @@ export class AccountSummaryComponent implements OnChanges {
 
   public updateMobileVerification(event: Event, type: string): void {
     event.preventDefault();
-    this.authService.requestVerificationToken().pipe(catchError(() => {
-      return of(null);
-    })).subscribe(() => {
+    this.authService.requestVerificationToken().subscribe(() => {
       this.router.navigate(['account/verify_token', type]);
     });
   }

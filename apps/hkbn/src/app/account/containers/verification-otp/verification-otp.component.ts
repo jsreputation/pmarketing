@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService, AuthenticationService } from '@perx/core';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -30,11 +28,11 @@ export class VerificationOtpComponent implements OnInit {
     );
   }
   public validate(otp: string): void {
-    this.authService.verifyOTP(this.number, otp).pipe(catchError(() => of(null))).subscribe(() => {
+    this.authService.verifyOTP(this.number, otp).subscribe(() => {
       this.router.navigate(['account', this.type], { queryParams: { otp } });
     });
   }
   public resendSms(): void {
-    this.authService.requestVerificationToken().pipe(catchError(() => of(null))).subscribe(() => { });
+    this.authService.requestVerificationToken().subscribe(() => { });
   }
 }
