@@ -55,33 +55,26 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: any): any {
+  public static transformUserWithPools(data: any): IUser {
    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
    const userData = AudiencesHttpAdapter.transformUser(data.data);
-   userData.pools = data.data.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
+   userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
     return userData;
   }
 
-  public static createPoolMap(data: any[]): any {
+  public static createPoolMap(data: IPoolsApi[]): IPools {
     const mapPool = {};
-    data.forEach((element: any)=> {
+    data.forEach((element: IPoolsApi) => {
       mapPool[element.id] = element.attributes.name;
     });
     return mapPool;
   } 
-  
-  public static transformTableData(data: any): ITableData<IUser> {
-    return {
-      data: data.data.map(item => AudiencesHttpAdapter.transformUser(item)),
-      meta: data.meta
-    }
-  }
 
-  public static transformUsersWithPools(data: any): any {
+  public static transformUsersWithPools(data: IUsersWithIncludes<IUserApi>): IUsersWithPoolsData<IUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map((item: any) => {
+    const usersData = data.data.map((item: IUserApi) => {
       const formatedUser = AudiencesHttpAdapter.transformUser(item);
-      formatedUser.pools = item.relationships.pools.data.map(item => poolMap[item.id]).join(', ');
+      formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
       return formatedUser
     });
      return {
