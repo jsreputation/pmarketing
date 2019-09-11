@@ -70,6 +70,13 @@ export class AudiencesHttpAdapter {
     return mapPool;
   } 
 
+  public static transformTableData(data: any): ITableData<IUser> {
+    return {
+      data: data.data.map(item => AudiencesHttpAdapter.transformUser(item)),
+      meta: data.meta
+    }
+  }
+  
   public static transformUsersWithPools(data: IUsersWithIncludes<IUserApi>): IUsersWithPoolsData<IUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IUserApi) => {
