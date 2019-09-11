@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule
   } from '@angular/forms';
 import { ProfileModule, ProfileService } from '@perx/core';
-import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   MatButtonModule,
@@ -32,7 +31,7 @@ describe('UserInfoComponent', () => {
         MatButtonModule,
         MatCheckboxModule,
         MatRadioModule,
-        ProfileModule.forRoot({ env: environment })
+        ProfileModule
       ],
       providers: [
         { provide: Router, useValue: routerStub },

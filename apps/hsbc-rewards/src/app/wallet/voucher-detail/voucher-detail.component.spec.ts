@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, ConfigModule } from '@perx/core';
 
 import { VoucherDetailComponent } from './voucher-detail.component';
-import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.module';
@@ -15,7 +14,8 @@ describe('VoucherDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VoucherDetailComponent],
       imports: [
-        VouchersModule.forRoot({ env: environment }),
+        ConfigModule.forRoot({}),
+        VouchersModule,
         HttpClientModule,
         RouterTestingModule,
         DetailHeaderModule

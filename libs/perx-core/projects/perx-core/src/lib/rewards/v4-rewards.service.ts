@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
 import { concatAll, map, mergeMap, reduce, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
@@ -8,6 +7,7 @@ import { IReward, ICatalog, IPrice, ICategoryTags, IRewardParams } from './model
 import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
 import { VouchersService } from '../vouchers/vouchers.service';
 import { oc } from 'ts-optchain';
+import { Config } from '../config/config';
 
 interface IV4Meta {
   count?: number;
@@ -140,10 +140,10 @@ export class V4RewardsService extends RewardsService {
   constructor(
     private http: HttpClient,
     private voucherService: VouchersService,
-    config: EnvConfig
+    config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public static v4RewardToReward(reward: IV4Reward): IReward {

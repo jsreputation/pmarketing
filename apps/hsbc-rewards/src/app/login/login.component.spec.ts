@@ -9,11 +9,8 @@ import { AuthenticationModule, AuthenticationService, NotificationService } from
 
 import { LoginComponent } from './login.component';
 
-import { environment } from '../../environments/environment';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { By } from '@angular/platform-browser';
-import { HttpErrorResponse } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -46,7 +43,7 @@ describe('LoginComponent', () => {
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
-        AuthenticationModule.forRoot({ env: environment }),
+        AuthenticationModule,
       ],
       declarations: [LoginComponent],
     })

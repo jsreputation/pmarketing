@@ -5,6 +5,7 @@ import { Type } from '@angular/core';
 import { VouchersService } from './vouchers.service';
 import { VouchersModule } from './vouchers.module';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
+import { ConfigModule } from '../../public-api';
 
 describe('VouchersService', () => {
   let httpTestingController: HttpTestingController;
@@ -135,11 +136,20 @@ describe('VouchersService', () => {
     }
   };
 
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
+        VouchersModule,
+        ConfigModule.forRoot({...environment})
       ]
     });
     // httpClient = TestBed.get(HttpClient);

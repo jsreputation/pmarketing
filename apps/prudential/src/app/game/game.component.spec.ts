@@ -9,16 +9,17 @@ import {
   VouchersService,
   GameType,
   defaultTree,
-  IGame
+  IGame,
+  ConfigModule
 } from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from 'src/environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -43,9 +44,10 @@ describe('GameComponent', () => {
     TestBed.configureTestingModule({
       declarations: [GameComponent],
       imports: [
+        ConfigModule.forRoot({...environment}),
         RouterModule.forRoot([]),
-        CampaignModule.forRoot({ env: environment }),
-        GameModule.forRoot({ env: environment }),
+        CampaignModule,
+        GameModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         RouterTestingModule,

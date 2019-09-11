@@ -5,6 +5,7 @@ import { VouchersService } from './vouchers.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigModule } from '../../public-api';
 
 describe('PinService', () => {
   let service: PinService;
@@ -14,7 +15,8 @@ describe('PinService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule,
+        ConfigModule.forRoot({})
       ]
     }).compileComponents();
     service = TestBed.get(PinService);
