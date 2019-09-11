@@ -94,6 +94,10 @@ button {
     background: $white-color;
     min-height: $header-height-base;
   }
+
+  &.sticky {
+    position: sticky;
+  }
 }
 
 .title {
