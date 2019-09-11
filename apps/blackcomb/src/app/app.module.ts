@@ -10,7 +10,7 @@ import {
   UtilsModule,
   ProfileModule,
   RewardsService,
-  VouchersService,
+  IVoucherService,
   CampaignService,
   AuthenticationService,
   ProfileService,
@@ -116,7 +116,7 @@ const profileServiceStub = {
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
+    { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
     { provide: AuthenticationService, useValue: authenticationServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { VouchersService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher } from '@perx/core';
 import { filter, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class VoucherDetailComponent implements OnInit {
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) { }
 
   public voucher$: Observable<Voucher>;

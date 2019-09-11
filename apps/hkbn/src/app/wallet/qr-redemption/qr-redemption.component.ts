@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { VouchersService, VoucherState } from '@perx/core';
+import { IVoucherService, VoucherState } from '@perx/core';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { Location } from '@angular/common';
@@ -21,7 +21,7 @@ export class QrRedemptionComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private voucherService: VouchersService,
+    private voucherService: IVoucherService,
     private notificationWrapperService: NotificationWrapperService,
     private location: Location
   ) {

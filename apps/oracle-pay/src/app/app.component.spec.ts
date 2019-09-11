@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { VouchersModule, VouchersService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 
 const vouchersServiceStub = {
@@ -19,7 +19,7 @@ describe('AppComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ],
       declarations: [
         AppComponent

@@ -6,7 +6,7 @@ import {
   CampaignModule,
   GameModule,
   GameService,
-  VouchersService,
+  IVoucherService,
   GameType,
   defaultTree,
   IGame,
@@ -38,7 +38,7 @@ describe('GameComponent', () => {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock }
       ]
     })
       .compileComponents();
