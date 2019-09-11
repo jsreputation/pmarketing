@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model';
+import { ConfigModule } from '../../config/config.module';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -51,7 +52,8 @@ describe('VouchersComponent', () => {
         MatRippleModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule,
+        ConfigModule.forRoot({})
       ]
     })
       .compileComponents();

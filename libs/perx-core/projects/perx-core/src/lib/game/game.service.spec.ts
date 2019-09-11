@@ -1,19 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 
 import { GameService } from './game.service';
-import { EnvConfig } from '../shared/env-config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
+import { ConfigModule } from '../../public-api';
 
 describe('GameService', () => {
   let httpTestingController: HttpTestingController;
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        EnvConfig
-      ]
+      imports: [
+        HttpClientTestingModule,
+        ConfigModule.forRoot({...environment})
+      ],
     });
 
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);

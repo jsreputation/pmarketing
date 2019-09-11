@@ -156,6 +156,11 @@ button {
   width: 100%;
 }
 
+.mat-form-field-infix {
+  min-width: 0;
+  flex-basis: 180px;
+}
+
 .mobile {
   &-preview {
     flex-shrink: 0;

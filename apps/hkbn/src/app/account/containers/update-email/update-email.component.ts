@@ -5,6 +5,7 @@ import { ProfileService, NotificationService } from '@perx/core';
 import { map, flatMap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'hkbn-update-email',
@@ -36,7 +37,7 @@ export class UpdateEmailComponent implements OnInit {
   public updateEmail(): void {
     this.profileService.updateUserInfo(this.updateEmailGroup.value)
       .pipe(flatMap(() => this.translateService.get('EMAIL_SUCCESS_UPDATE')),
-        catchError(() => this.translateService.get('EMAIL_ALREADY_EXISTS'))).subscribe((message) => {
+        catchError(() => this.translateService.get('EMAIL_ALREADY_EXISTS').pipe(throwError))).subscribe((message) => {
           this.notification.addSnack(message);
           this.router.navigate(['/account']);
         }, (err) => {

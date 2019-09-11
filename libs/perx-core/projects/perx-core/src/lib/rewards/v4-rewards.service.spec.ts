@@ -4,12 +4,14 @@ import { V4RewardsService } from './v4-rewards.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EnvConfig } from '../shared/env-config';
 import { VouchersModule } from '../vouchers/vouchers.module';
+import { ConfigModule } from '../../public-api';
 
 describe('V4RewardsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
-      VouchersModule.forRoot({ env: { apiHost: 'https://api.perxtech.io' } }),
+      VouchersModule,
+      ConfigModule.forRoot({})
     ],
     providers: [
       EnvConfig,

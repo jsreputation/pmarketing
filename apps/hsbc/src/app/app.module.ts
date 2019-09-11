@@ -17,7 +17,8 @@ import {
   VouchersModule,
   ProfileModule,
   StampModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -55,6 +56,7 @@ import { ProfileComponent } from './profile/profile.component';
     ProfileComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -74,11 +76,11 @@ import { ProfileComponent } from './profile/profile.component';
     MatProgressSpinnerModule,
     MatSidenavModule,
     UtilsModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
-    StampModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    CampaignModule,
+    ProfileModule,
+    StampModule,
     FormsModule
   ],
   providers: [

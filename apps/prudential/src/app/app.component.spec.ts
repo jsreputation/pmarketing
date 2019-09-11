@@ -32,7 +32,7 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatIconModule,
         NoopAnimationsModule,
-        ProfileModule.forRoot({ env: environment })
+        ProfileModule
       ],
       declarations: [
         AppComponent

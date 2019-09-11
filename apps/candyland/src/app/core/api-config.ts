@@ -12,4 +12,5 @@ export class ApiConfig {
   public static getAllUsers = `${ApiConfig.baseAPIUserPath}users`;
   public static getAudiences = `${ApiConfig.baseAPIUserPath}pools`;
   public static signIn = `${ApiConfig.IAMUsersPath}/sign_in`;
+  public static stampsPath = `${ApiConfig.engagementsPath}`;
 }

@@ -25,7 +25,7 @@ import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module
 import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.module';
 
 import {
-  RewardsModule as PerxRewardsModule,
+  RewardsModule as PerxRewardsModule, ConfigModule,
 } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
@@ -38,6 +38,7 @@ import { ConfirmModalModule } from '@cl-shared';
     NewInstantRewardRewardsPageComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     NewInstantRewardRoutingModule,
     ReactiveFormsModule,
@@ -47,7 +48,7 @@ import { ConfirmModalModule } from '@cl-shared';
     SelectGraphicWrapModule,
     InfoHintModule,
     GameMobilePreviewModule,
-    PerxRewardsModule.forRoot({ env: environment }),
+    PerxRewardsModule,
     SimpleMobileViewModule,
 
     MatTabsModule,
