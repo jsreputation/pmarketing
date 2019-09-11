@@ -9,7 +9,8 @@ import {
   CampaignModule,
   VouchersModule,
   StampModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule
 } from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -33,6 +34,7 @@ import { LandingComponent } from './landing/landing.component';
     LandingComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
@@ -43,10 +45,10 @@ import { LandingComponent } from './landing/landing.component';
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    StampModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    CampaignModule,
+    StampModule,
     BrowserAnimationsModule
   ],
   providers: [],

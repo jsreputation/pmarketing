@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { AudiencesService } from '@cl-core-services';
+import { ClHttpParams } from '@cl-helpers/http-params';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -11,13 +13,14 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 @Component({
   selector: 'cl-new-campaign-detail-page',
   templateUrl: './new-campaign-detail-page.component.html',
-  styleUrls: ['./new-campaign-detail-page.component.scss'],
+  styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
   public campaign;
+  public pools;
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
@@ -42,6 +45,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   constructor(
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
+    private audiencesService: AudiencesService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService
@@ -51,7 +55,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   }
 
   public ngOnInit(): void {
-   super.ngOnInit();
+    super.ngOnInit();
+    this.initPools();
   }
 
   public ngOnDestroy(): void {
@@ -78,5 +83,17 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm  implem
   private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
+  }
+
+  private initPools(): any {
+    const params = {
+      'page[number]': 1,
+      'page[size]': 20
+    };
+    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.pools = data;
+      });
   }
 }

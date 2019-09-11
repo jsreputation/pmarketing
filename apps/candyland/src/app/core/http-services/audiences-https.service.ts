@@ -10,16 +10,16 @@ export class AudiencesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getUsers(): Observable<any> {
-    return this.http.get('assets/mocks/users.json');
-  }
-
   public getUser(id: number): Observable<any> {
-    return this.http.get(ApiConfig.getAllUsers + '/' + id);
+    return this.http.get(ApiConfig.getAllUsers + '/' + id + '?include=pools');
   }
 
-  public getAudiences(): Observable<any> {
-    return this.http.get('assets/mocks/audiences.json');
+  public getAudiences(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, {params});
+  }
+
+  public getAudiencesList(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, {params});
   }
 
   public getVouchers(): Observable<any> {
@@ -32,5 +32,9 @@ export class AudiencesHttpsService {
 
   public createUser(body): Observable<any> {
     return this.http.post(ApiConfig.getAllUsers, {data: body});
+  }
+
+  public updateUserPools(body): Observable<any> {
+    return this.http.patch(ApiConfig.getAllUsers + '/' + body.id, {data: body});
   }
 }

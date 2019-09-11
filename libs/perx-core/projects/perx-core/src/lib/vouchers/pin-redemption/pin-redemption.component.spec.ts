@@ -4,14 +4,14 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { PinService } from '../pin.service';
 import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
+import { IVoucherService } from '../ivoucher.service';
 import { of } from 'rxjs';
 
 describe('PinRedemptionComponent', () => {
   let component: PinRedemptionComponent;
   let fixture: ComponentFixture<PinRedemptionComponent>;
   const pinServiceMock = jasmine.createSpyObj('PinService', ['getPin']);
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('PinRedemptionComponent', () => {
       ],
       providers: [
         { useValue: pinServiceMock, provide: PinService },
-        { useValue: vouchersServiceMock, provide: VouchersService }
+        { useValue: vouchersServiceMock, provide: IVoucherService }
       ]
     })
       .compileComponents();

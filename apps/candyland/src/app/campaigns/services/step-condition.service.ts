@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 @Injectable()
 export class StepConditionService {
-  private stepConditions: { [key: string]: FormGroup } = {};
+  public stepConditions: { [key: string]: FormGroup } = {};
 
   public registerStepCondition(key: number | string, form: FormGroup): void {
     this.stepConditions[key.toString()] = form;
@@ -13,11 +13,13 @@ export class StepConditionService {
     return key in this.stepConditions ? this.stepConditions[key].valid : false;
   }
 
+  public getStepFormValue(key): boolean {
+    return key in this.stepConditions ? this.stepConditions[key].value : {};
+  }
+
   public nextEvent(currentStep: number | string): void {
     const form = this.stepConditions[currentStep] as FormGroup;
-    console.log('nextEvent');
     if (form && form.invalid) {
-      console.log('markAllAsTouched');
       form.markAllAsTouched();
     }
   }

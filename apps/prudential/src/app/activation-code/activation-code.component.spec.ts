@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule } from '@perx/core';
+import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 
@@ -24,6 +24,7 @@ describe('ActivationCodeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ActivationCodeComponent],
       imports: [
+        ConfigModule.forRoot({ ...environment }),
         RouterTestingModule,
         PerxCoreModule,
         MatDialogModule,
@@ -32,9 +33,9 @@ describe('ActivationCodeComponent', () => {
         MatCardModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        ProfileModule.forRoot({ env: environment }),
-        VouchersModule.forRoot({ env: environment }),
-        AuthenticationModule.forRoot({ env: environment })
+        ProfileModule,
+        VouchersModule,
+        AuthenticationModule
       ],
       providers: [
         {

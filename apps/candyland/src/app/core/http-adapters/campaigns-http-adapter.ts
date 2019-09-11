@@ -32,7 +32,7 @@ export class CampaignsHttpAdapter {
         start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
-        // pool_id: "1",
+        pool_id: data.audience.select
         // possible_outcomes: "",
         // comm: "description",
       }

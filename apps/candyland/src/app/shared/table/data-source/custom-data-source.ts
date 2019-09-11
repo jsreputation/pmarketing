@@ -35,11 +35,6 @@ export class CustomDataSource<T> {
     return this.dataSubject.value;
   }
 
-  // public hasData() {
-  //   console.log('hasData', this.loadingSubject.value, this.dataSubject.value, this.lengthData.value);
-  //   return !this.loadingSubject.value || (!!this.dataSubject.value && this.lengthData.value > 0);
-  // }
-
   // default items on the page set up pageSize
   constructor(public dataService: ITableService, public pageSize = 5) {
     this.loadingData();

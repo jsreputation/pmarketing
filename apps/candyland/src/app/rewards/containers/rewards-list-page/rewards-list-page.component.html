@@ -13,7 +13,9 @@
     </cl-table-filters>
     <!--table-->
     <cl-rewards-list [dataSource]="dataSource"
-                     [displayedColumns]="displayedColumns"
+                     [displayedColumns] = "displayedColumns"
+                     [selectable] = "false"
+                     (clickDetailReward)="detailReward($event)"
                      (itemAction)="actionHandler($event)"
     ></cl-rewards-list>
     <!--paginator-->

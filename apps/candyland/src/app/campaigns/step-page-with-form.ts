@@ -30,14 +30,6 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     if (this.stepIndex !== undefined && this.stepConditionService && this.form) {
       this.stepConditionService.registerStepCondition(this.stepIndex, this.form);
     }
-
-    if (this.form && this.stepConditionService) {
-      this.form.valueChanges
-        .pipe(untilDestroyed(this))
-        .subscribe((value) => {
-          this.store.updateCampaign(value);
-        });
-    }
   }
 
   public ngOnDestroy(): void {

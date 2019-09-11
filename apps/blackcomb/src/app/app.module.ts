@@ -10,10 +10,11 @@ import {
   UtilsModule,
   ProfileModule,
   RewardsService,
-  VouchersService,
+  IVoucherService,
   CampaignService,
   AuthenticationService,
   ProfileService,
+  ConfigModule,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -90,13 +91,14 @@ const profileServiceStub = {
     HistoryComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    GameModule,
+    ProfileModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -114,7 +116,7 @@ const profileServiceStub = {
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
+    { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: CampaignService, useValue: campaignServiceStub },
     { provide: AuthenticationService, useValue: authenticationServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }

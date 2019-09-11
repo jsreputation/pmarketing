@@ -12,3 +12,4 @@ export * from './shake-tree.service';
 export * from './pinata.service';
 export * from './available-new-engagement.service';
 export * from './instant-rewards.service';
+export * from './stamps.service';

@@ -1,3 +1,6 @@
+<div class="dashboard-card-img-wrap">
+  <img [src]="gameCard.img" alt="icon">
+</div>
 <div class="dashboard-card-content">
   <p class="dashboard-card-title sub-title">
     {{gameCard.title}}
@@ -5,17 +8,14 @@
   <p class="dashboard-card-description">
     {{gameCard.description}}
   </p>
-  <p class="dashboard-card-actions">
-    <cl-button [classList]="'tertiary'"
-               [disableRipple]="true"
-               (click)="clickToLink(gameCard.name)"
-    >
-        <span>
-          {{gameCard.link}}
-        </span>
-    </cl-button>
-  </p>
-  <div class="dashboard-card-img-wrap">
-    <img [src]="gameCard.img" alt="icon">
-  </div>
+</div>
+<div class="dashboard-card-actions">
+  <cl-button [classList]="'tertiary'"
+              [disableRipple]="true"
+              (click)="clickToLink(gameCard.name)"
+  >
+      <span>
+        {{gameCard.link}}
+      </span>
+  </cl-button>
 </div>

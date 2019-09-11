@@ -156,10 +156,8 @@
       <cl-upload-file *ngIf="audience.get('file').enabled" [formControl]="audience.get('file')">
       </cl-upload-file>
       <mat-form-field *ngIf="audience.get('select').enabled">
-        <mat-select placeholder="Select" [formControl]="audience.get('select')">
-          <mat-option value="option">Gold</mat-option>
-          <mat-option value="option">Silver</mat-option>
-          <mat-option value="option">Bronze</mat-option>
+        <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
+          <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
