@@ -128,7 +128,7 @@ When(/^7_I click on the add question button.$/, async () => {
     const ec = protractor.ExpectedConditions;
     // waiting for the add question button to be loaded
     await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button>button')).last()), 6000 );
-    element.all(by.css('cl-button')).last().click();
+    await element.all(by.css('cl-button')).last().click();
 });
 
 Then(/^7_There are seven options.$/, async () => {
