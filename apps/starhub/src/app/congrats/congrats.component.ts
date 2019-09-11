@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
-  // GameService,
+  GameService,
   NotificationService,
   Voucher,
   VoucherState,
@@ -10,7 +10,7 @@ import {
 import {
   filter,
   map,
-  // switchMap
+  switchMap
 } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class CongratsComponent implements OnInit {
 
   constructor(
     private activeRoute: ActivatedRoute,
-    // private gameService: GameService,
+    private gameService: GameService,
     private notificationService: NotificationService
   ) { }
 
@@ -50,7 +50,7 @@ export class CongratsComponent implements OnInit {
       .pipe(
         filter((params: Params) => params.gameId),
         map((params: Params) => Number.parseInt(params.gameId, 10)),
-        // switchMap((gameId: number) => this.gameService.play(gameId))
+        switchMap((gameId: number) => this.gameService.play(gameId))
       )
       .subscribe(
         (game: any) => console.log(game),
