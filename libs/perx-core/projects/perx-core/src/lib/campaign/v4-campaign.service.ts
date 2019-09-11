@@ -44,7 +44,7 @@ interface IV4CampaignsResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class CampaignService implements ICampaignService {
+export class V4CampaignService implements ICampaignService {
   public baseUrl: string;
 
   constructor(private http: HttpClient, config: Config) {
@@ -71,7 +71,7 @@ export class CampaignService implements ICampaignService {
     return this.http.get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`)
       .pipe(
         map(resp => resp.data),
-        map((campaigns: IV4Campaign[]) => campaigns.map(campaign => CampaignService.v4CampaignToCampaign(campaign)))
+        map((campaigns: IV4Campaign[]) => campaigns.map(campaign => V4CampaignService.v4CampaignToCampaign(campaign)))
       );
   }
 
@@ -79,7 +79,7 @@ export class CampaignService implements ICampaignService {
     return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
         map(resp => resp.data),
-        map((campaign: IV4Campaign) => CampaignService.v4CampaignToCampaign(campaign))
+        map((campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign))
       );
   }
 }

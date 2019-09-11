@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   StampService,
-  CampaignService,
+  ICampaignService,
   CampaignType,
   ICampaign,
   IStampCard,
@@ -34,7 +34,7 @@ export class GameComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private stampService: StampService,
     private notificationService: NotificationService
   ) {
@@ -64,9 +64,8 @@ export class GameComponent implements OnInit {
           this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
           this.fetchCards();
         },
-        () => {
-          this.isLoading = false;
-        });
+        () => this.isLoading = false
+      );
   }
 
   private fetchCards(): void {

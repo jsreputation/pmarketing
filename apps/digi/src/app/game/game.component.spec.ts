@@ -6,7 +6,7 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { CampaignModule, GameModule, GameService, CampaignService } from '@perx/core';
+import { CampaignModule, GameModule, GameService, ICampaignService } from '@perx/core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -31,7 +31,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: GameService, useValue: gameServiceStub },
-        { provide: CampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     }).compileComponents();
   }));

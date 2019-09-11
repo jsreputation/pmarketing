@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { VouchersService, VouchersModule, CampaignService } from '@perx/core';
+import { IVoucherService, VouchersModule, ICampaignService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
@@ -33,8 +33,8 @@ describe('HomeComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: VouchersService, useValue: vouchersServiceStub },
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
       ]
     })
       .compileComponents();

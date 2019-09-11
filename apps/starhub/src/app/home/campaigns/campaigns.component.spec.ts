@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
-import { CampaignService, CampaignType, CampaignState } from '@perx/core';
+import { ICampaignService, CampaignType, CampaignState } from '@perx/core';
 import { Type } from '@angular/core';
 
 describe('CampaignsComponent', () => {
@@ -21,7 +21,7 @@ describe('CampaignsComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: CampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     })
     .compileComponents();
@@ -82,7 +82,7 @@ describe('CampaignsComponent', () => {
           thumbnailUrl: '',
         }
       ];
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
       component.ngOnInit();
       tick();

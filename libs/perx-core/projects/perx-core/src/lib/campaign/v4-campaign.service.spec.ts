@@ -2,15 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { CampaignService } from './campaign.service';
+import { V4CampaignService } from './v4-campaign.service';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
-import { VouchersService } from '../vouchers/vouchers.service';
-import { ConfigModule } from './../config/config.module';
+import { IVoucherService } from '../vouchers/ivoucher.service';
+import { ConfigModule } from '../config/config.module';
 
-describe('CampaignService', () => {
+describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
-  let service: CampaignService;
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  let service: V4CampaignService;
+  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   const environment = {
     apiHost: 'https://api.perxtech.io',
@@ -24,12 +24,12 @@ describe('CampaignService', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HttpClientTestingModule, ConfigModule.forRoot({...environment})],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock }
       ]
     });
     // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-    service = TestBed.get(CampaignService);
+    service = TestBed.get(V4CampaignService);
 
   });
 
@@ -95,7 +95,7 @@ describe('CampaignService', () => {
   });
 
   it('should map campaigns with new property name', () => {
-    const mapCampaign = CampaignService.v4CampaignToCampaign({
+    const mapCampaign = V4CampaignService.v4CampaignToCampaign({
       id: 1,
       name: 'UAT GAME',
       description: 'UAT description',
