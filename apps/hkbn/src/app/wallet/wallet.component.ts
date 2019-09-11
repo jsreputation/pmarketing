@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { Observable } from 'rxjs';
-import { Voucher, VouchersService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService, VoucherState } from '@perx/core';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ export class WalletComponent implements OnInit {
 
   public redeemedVouchers: Observable<Voucher[]>;
 
-  constructor(private router: Router, private vouchersService: VouchersService) {
+  constructor(private router: Router, private vouchersService: IVoucherService) {
   }
 
   public ngOnInit(): void {
