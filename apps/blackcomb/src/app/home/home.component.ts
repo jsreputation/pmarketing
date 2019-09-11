@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaign, CampaignService, VouchersService, VoucherState, Voucher } from '@perx/core';
+import { ICampaign, CampaignService, IVoucherService, VoucherState, Voucher } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private vouchersService: VouchersService,
+    private vouchersService: IVoucherService,
     private campaignService: CampaignService
   ) { }
 
