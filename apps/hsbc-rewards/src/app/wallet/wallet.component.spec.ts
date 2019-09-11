@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
 import { VouchersModule } from '@perx/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatTabsModule } from '@angular/material';
 
@@ -15,7 +14,6 @@ describe('WalletComponent', () => {
       declarations: [ WalletComponent ],
       imports: [
         VouchersModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         MatTabsModule
       ]

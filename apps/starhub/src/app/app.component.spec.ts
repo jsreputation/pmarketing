@@ -5,7 +5,7 @@ import { MatDialogModule, MatDialog, MatSnackBar } from '@angular/material';
 import {
   AuthenticationService,
   ProfileService,
-  CampaignService,
+  ICampaignService,
   NotificationService,
   PopupComponent,
   GameService,
@@ -132,7 +132,7 @@ describe('AppComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: NotificationService, useClass: MockNotificationService },
         {
           provide: ActivatedRoute, useValue: {
@@ -176,19 +176,19 @@ describe('AppComponent', () => {
       expect(authSpy).toHaveBeenCalled();
     });
 
-    it('should call CampaignService.getCampaigns', fakeAsync(() => {
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+    it('should call ICampaignService.getCampaigns', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
     }));
 
-    it('should call CampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+    it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
       component.ngOnInit();
       tick();
@@ -197,11 +197,11 @@ describe('AppComponent', () => {
       // expect(component.rewar).toBe(campaigns[1]);
     }));
 
-    it('should call CampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+    it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
       component.ngOnInit();
       tick();
@@ -214,10 +214,10 @@ describe('AppComponent', () => {
 
   describe('dialogClosed', () => {
     it('should navigate to reward if CampaignType is give_reward', fakeAsync(() => {
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
 
       const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
@@ -230,10 +230,10 @@ describe('AppComponent', () => {
     }));
 
     it('should navigate to game if CampaignType is game', fakeAsync(() => {
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
 
       const gamesService = TestBed.get<GameService>(GameService as Type<GameService>);
