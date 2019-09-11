@@ -15,6 +15,7 @@ import {
   ILoginResponse
 } from './models/authentication.model';
 import { Config } from '../../config/config';
+import { ProfileService } from '../../profile/profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   constructor(
     config: Config,
     private http: HttpClient,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private profileService: ProfileService
   ) {
     super();
     this.apiHost = config.apiHost as string;
@@ -166,8 +168,30 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void> {
-    return throwError('Not implement yet');
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
+    const login$ = this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
+      data: {
+        attributes: {
+          tenant_id: mechId,
+          username: user,
+          password: pass
+        }
+      }
+    }, { observe: 'response' });
+
+    return login$.pipe(
+      tap(res => {
+        if (res.headers.get('authorization')) {
+          // const token = res.headers.get('authorization');
+          // const userId = res.body.data.id;
+          // this.login(token, userId);
+        }
+      }),
+      map(res => {
+        return { bearer_token: res.headers.get('authorization') };
+      })
+    );
+
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
