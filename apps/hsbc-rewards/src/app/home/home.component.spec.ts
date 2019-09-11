@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule, ConfigModule } from '@perx/core';
-import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +14,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
       imports: [
-        ConfigModule.forRoot({...environment}),
+        ConfigModule.forRoot({}),
         HttpClientTestingModule,
         NoopAnimationsModule,
         RouterTestingModule,

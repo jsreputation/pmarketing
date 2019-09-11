@@ -5,7 +5,6 @@ import { VoucherDetailComponent } from './voucher-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.module';
-import { environment } from 'src/environments/environment';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
@@ -15,7 +14,7 @@ describe('VoucherDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VoucherDetailComponent],
       imports: [
-        ConfigModule.forRoot({...environment}),
+        ConfigModule.forRoot({}),
         VouchersModule,
         HttpClientModule,
         RouterTestingModule,

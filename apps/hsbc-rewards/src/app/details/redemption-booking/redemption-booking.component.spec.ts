@@ -4,7 +4,6 @@ import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, ConfigModule } from '@perx/core';
-import { environment } from 'src/environments/environment';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -25,7 +24,7 @@ describe('RedemptionBookingComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RedemptionBookingComponent],
       imports: [
-        ConfigModule.forRoot({...environment}),
+        ConfigModule.forRoot({}),
         DetailHeaderModule,
         MatRadioModule,
         MatCheckboxModule,
