@@ -12,6 +12,7 @@ import { of, Observable } from 'rxjs';
 import { IVoucherService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockVoucher } from '../voucher.mock';
+import { Type } from '@angular/core';
 
 describe('VoucherDetailsComponent', () => {
   let component: VoucherDetailsComponent;
@@ -47,7 +48,7 @@ describe('VoucherDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VoucherDetailsComponent);
     component = fixture.componentInstance;
-    vouchersService = TestBed.get(IVoucherService);
+    vouchersService = TestBed.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     router = TestBed.get(Router);
     fixture.detectChanges();
   });
