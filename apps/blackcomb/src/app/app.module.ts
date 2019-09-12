@@ -1,4 +1,4 @@
-import { of, from, throwError } from 'rxjs';
+import { of, from } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,10 +11,10 @@ import {
   ProfileModule,
   RewardsService,
   IVoucherService,
-  AuthenticationService,
   ProfileService,
   ConfigModule,
   ICampaignService,
+  RewardsModule,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -29,7 +29,6 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -46,6 +45,9 @@ import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
+import { RewardComponent } from './reward/reward.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TncComponent } from './tnc/tnc.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -65,16 +67,6 @@ const campaignServiceStub = {
   getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
 };
 
-const authenticationServiceStub = {
-  login: (username, password) => {
-    if (username === 'perx' && password === '1234') {
-      return of(true);
-    }
-    return throwError(new HttpErrorResponse({ status: 401 }));
-  },
-  logout: () => {}
-};
-
 const profileServiceStub = {
   whoAmI: () => of(profile)
 };
@@ -88,7 +80,10 @@ const profileServiceStub = {
     LoadingComponent,
     VoucherDetailComponent,
     AccountComponent,
-    HistoryComponent
+    HistoryComponent,
+    RewardComponent,
+    ContactUsComponent,
+    TncComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -100,6 +95,7 @@ const profileServiceStub = {
     GameModule,
     ProfileModule,
     BrowserAnimationsModule,
+    RewardsModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
@@ -118,7 +114,6 @@ const profileServiceStub = {
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },
-    { provide: AuthenticationService, useValue: authenticationServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]

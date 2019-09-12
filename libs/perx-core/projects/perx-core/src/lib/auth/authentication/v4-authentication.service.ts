@@ -86,7 +86,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
       tap(
         (res: ILoginResponse) => {
@@ -121,7 +121,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  public autoLogin(): Observable<ILoginResponse> {
+  public autoLogin(): Observable<any> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
