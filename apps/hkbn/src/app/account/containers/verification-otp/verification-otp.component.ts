@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { flatMap, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -14,7 +14,7 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
   styleUrls: ['./verification-otp.component.scss']
 })
 export class VerificationOtpComponent implements OnInit {
-  private type: string;
+  public type: string;
   private number: string;
   private reqestData: any;
   public get numberDisplay(): string {
@@ -30,9 +30,7 @@ export class VerificationOtpComponent implements OnInit {
     private notificationService: NotificationWrapperService,
     private translate: TranslateService
   ) { }
-  @HostListener('window:beforeunload') beforeUnloadEvent() {
-    return false;
-  }
+
   public ngOnInit(): void {
     this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
     this.route.params.subscribe((param: Params) => this.type = param.id);
@@ -46,14 +44,16 @@ export class VerificationOtpComponent implements OnInit {
       .subscribe((msg) => {
         this.notificationService.addSnack(msg);
         this.router.navigate(['account']);
-      });
+      }, () => console.error('type is required'));
   }
   private switchMethod(data): Observable<string> {
     switch (this.type) {
       case 'password':
         return this.authService.changePassword(data).pipe(switchMap(() => this.translate.get('PASSWORD_SUCCESS_UPDATE')));
       case 'phone':
-        return this.authService.changePhone(data).pipe(switchMap(() => this.translate.get('MOBILE_SUCCESS_UPDATE')));;
+        return this.authService.changePhone(data).pipe(switchMap(() => this.translate.get('MOBILE_SUCCESS_UPDATE')));
+      default:
+        return throwError(null);
     }
   }
   public resendSms(): void {
