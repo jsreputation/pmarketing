@@ -7,11 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-interface IWhistlerSurvey {
+interface IWhistlerSurveyContent {
   id: string;
   attributes: IWhistlerSurveyAttributes;
 }
 
+interface IWhistlerSurvey {
+  data: IWhistlerSurveyContent;
+}
 interface IWhistlerSurveyAttributes {
   id: string;
   title: string;
@@ -50,10 +53,10 @@ export class SurveyService {
   }
 
   public WhistlerCampaignToCampaign(survey: IWhistlerSurvey): ISurvey {
-    const dp = survey.attributes.display_properties;
+    const dp = survey.data.attributes.display_properties;
     return {
-      id: survey.id,
-      title: survey.attributes.title,
+      id: survey.data.id,
+      title: survey.data.attributes.title,
       sub_title: dp.sub_title,
       progress_bar_color: MaterialColor[dp.progress_bar_color],
       card_background_img_url: dp.card_background_img_url,
@@ -69,7 +72,7 @@ export class SurveyService {
         tap(stuff => console.log(stuff)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements' + campaign.engagementId
+            this.baseUrl + '/survey/engagements/' + campaign.engagementId
           )
         ),
         tap(stuff => console.log(stuff)),

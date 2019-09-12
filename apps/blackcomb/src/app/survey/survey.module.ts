@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SurveyModule as PerxSurveyModule, CampaignModule as PerxCampaignModule, ConfigModule } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, CampaignModule as PerxCampaignModule, ConfigModule, AuthenticationModule } from '@perx/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey/survey.component';
@@ -20,7 +20,8 @@ import { environment } from 'src/environments/environment';
     MatCheckboxModule,
     SurveyRoutingModule,
     PerxCampaignModule,
-    PerxSurveyModule
+    PerxSurveyModule,
+    AuthenticationModule
   ]
 })
 export class SurveyModule { }

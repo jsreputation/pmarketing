@@ -6,11 +6,14 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { map, tap } from 'rxjs/operators';
 
-interface IWhistlerCampaign {
+interface IWhistlerCampaignContent {
   id: string;
   attributes: IWhistlerCampaignAttributes;
 }
 
+interface IWhistlerCampaign {
+  data: IWhistlerCampaignContent;
+}
 interface IWhistlerCampaignAttributes {
   name: string;
   goal: string;
@@ -32,15 +35,16 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   public WhistlerCampaignToCampaign(campaign: IWhistlerCampaign): ICampaign {
+    const cAttributes = campaign.data.attributes;
     return {
-      id: parseInt(campaign.id, 10),
-      name: campaign.attributes.name,
-      description: campaign.attributes.goal,
-      type: campaign.attributes.engagement_type,
-      state: campaign.attributes.status,
-      endsAt: new Date(campaign.attributes.end_date_time),
-      engagementId: campaign.attributes.engagement_id,
-      commChannel: campaign.attributes.comm_channel
+      id: parseInt(campaign.data.id, 10),
+      name: cAttributes.name,
+      description: cAttributes.goal,
+      type: cAttributes.engagement_type,
+      state: cAttributes.status,
+      endsAt: new Date(cAttributes.end_date_time),
+      engagementId: cAttributes.engagement_id,
+      commChannel: cAttributes.comm_channel
     };
   }
   public getCampaigns(): Observable<ICampaign[]> {
