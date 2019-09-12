@@ -4,11 +4,6 @@
   &-wrap {
     cursor: pointer;
     position: relative;
-
-    &:hover > .info-content-wrap {
-      opacity: 1;
-      visibility: visible;
-    }
   }
 
   &-icon {
@@ -48,6 +43,11 @@
       border: 10px solid transparent;
       border-bottom: 12px solid $secondary-color;
     }
+  }
+
+  &-wrap:hover > .info-content-wrap {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
