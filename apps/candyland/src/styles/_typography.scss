@@ -1,5 +1,28 @@
 @import "variables";
 
+//Headlines
+@mixin typo-h5 {
+  font-weight: 400;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  letter-spacing: .018rem;
+}
+
+@mixin typo-h6 {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  letter-spacing: .015rem;
+}
+
+//General
+@mixin typo-body2 {
+  font-weight: 400;
+  font-size: $base-font-size;
+  line-height: 2rem;
+  letter-spacing: 0.025rem;
+}
+
 //Buttons
 @mixin typo-button {
   font-weight: 500;
@@ -7,31 +30,10 @@
   letter-spacing: 0.075rem;
 }
 
-//Page Titles
-@mixin typo-title {
-  font-weight: 400;
-  font-size: 2.4rem;
-  line-height: 2.8rem;
-  letter-spacing: 0;
-}
-
-//General
-@mixin typo-base {
-  font-weight: 400;
-  font-size: $base-font-size;
-  line-height: 2rem;
-  letter-spacing: 0.025rem;
-}
-
-//Small Text
-@mixin typo-small {
+//Input Fields
+@mixin typo-caption {
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 1.6rem;
   letter-spacing: 0.04rem;
-}
-
-//Input Fields
-@mixin typo-input {
-
 }
