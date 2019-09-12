@@ -26,7 +26,6 @@
 
   &:not(:nth-child(2)) {
     @include mat-elevation(1);
-
   }
 
   &-title {
