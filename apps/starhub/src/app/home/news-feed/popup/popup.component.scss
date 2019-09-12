@@ -1,6 +1,9 @@
 @import "../../../icon.scss";
 
 .header {
+  overflow: hidden;
+  border-radius: 5rem;
+
   img {
     width: 100%;
     max-height: 20.7rem;

@@ -4,7 +4,7 @@ import {
   NotificationService,
   IGame,
   GameType,
-  GameService
+  IGameService
 } from '@perx/core';
 import { filter, switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -24,7 +24,7 @@ export class TapComponent implements OnInit {
   constructor(
     private router: Router,
     private notificationService: NotificationService,
-    private gameService: GameService,
+    private gameService: IGameService,
     private route: ActivatedRoute
   ) { }
 

@@ -2,8 +2,7 @@
 
 .user-info {
   position: relative;
-  padding: 4rem 3.2rem 0.8rem;
-  background-color: $background-color;
+  padding: $vertical-content-padding 3.2rem 0.8rem;
 
   &-name-container {
     display: flex;
@@ -25,43 +24,17 @@
   }
 
   &-list {
-    width: 100%;
-    max-width: 120rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: stretch;
-    margin-left: -1rem;
+    margin: 0 -1rem;
   }
 
   &-item {
     min-width: 20rem;
-    word-break: break-word;
-    flex: 1;
-    margin-bottom: 4rem;
-    margin-left: 1rem;
+    width: 0;
+    flex: auto;
+    padding: 0 1rem;
   }
 
-  &-item-title {
-    margin-bottom: 1.6rem;
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
-    color: $secondary-color;
-  }
-
-  &-item-value {
-    font-family: $primary-font;
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
-    color: $base-font-color;
-    text-decoration: none;
-  }
 }
