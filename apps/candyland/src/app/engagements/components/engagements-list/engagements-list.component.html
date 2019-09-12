@@ -2,10 +2,10 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
     <td mat-cell *matCellDef="let element">
-      <p class="name-cell">
-        <a class="name-cell__link" routerLink="/">{{element?.title}}</a>
-        <span class="name-cell__id">ID: {{element?.id}}</span>
-      </p>
+      <div class="pw-cell">
+        <a class="pw-cell__link" routerLink="/">{{element?.title}}</a>
+        <span class="pw-cell__id">ID: {{element?.id}}</span>
+      </div>
     </td>
   </ng-container>
 
