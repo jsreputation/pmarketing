@@ -12,7 +12,10 @@ import { Observable } from 'rxjs';
 export class RewardComponent implements OnInit {
   public reward$: Observable<IReward>;
 
-  constructor(private rewardsService: RewardsService, private activeRoute: ActivatedRoute) { }
+  constructor(
+    private rewardsService: RewardsService,
+    private activeRoute: ActivatedRoute
+  ) { }
 
   public ngOnInit(): void {
     this.reward$ = this.activeRoute.queryParams
