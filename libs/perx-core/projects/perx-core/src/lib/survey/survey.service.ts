@@ -5,7 +5,7 @@ import { ISurvey, IQuestion, MaterialColor } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { mergeMap, map } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 interface IWhistlerSurvey {
   id: string;
@@ -63,15 +63,18 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    return this.campaignService.getCampaign(id).pipe(
-      mergeMap(
-        (campaign: ICampaign) => {
-          return this.http.get<IWhistlerSurvey>(
+    console.log('getSurveyFromCampaign', this);
+    return this.campaignService.getCampaign(id)
+      .pipe(
+        tap(stuff => console.log(stuff)),
+        switchMap(
+          (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
             this.baseUrl + '/survey/engagements' + campaign.engagementId
-          );
-        }
-      ),
-      map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
-    );
+          )
+        ),
+        tap(stuff => console.log(stuff)),
+        map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res)),
+        tap(stuff => console.log(stuff)),
+      );
   }
 }

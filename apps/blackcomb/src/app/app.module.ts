@@ -13,7 +13,6 @@ import {
   IVoucherService,
   ProfileService,
   ConfigModule,
-  ICampaignService,
   RewardsModule,
 } from '@perx/core';
 import {
@@ -43,7 +42,6 @@ import { HistoryComponent } from './history/history.component';
 import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
-import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
@@ -60,11 +58,6 @@ const rewardsServiceStub = {
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
   get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
-};
-
-const campaignServiceStub = {
-  getCampaigns: () => of(campaigns),
-  getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
 };
 
 const profileServiceStub = {
@@ -113,7 +106,6 @@ const profileServiceStub = {
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]

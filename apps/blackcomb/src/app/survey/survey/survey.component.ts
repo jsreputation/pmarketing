@@ -35,7 +35,7 @@ export class SurveyComponent implements OnInit {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
-        }),
+        })
       );
   }
 

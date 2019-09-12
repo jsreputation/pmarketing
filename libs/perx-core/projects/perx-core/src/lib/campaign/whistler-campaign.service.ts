@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ICampaign, CampaignState, CommChannel, CampaignType } from './models/campaign.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 interface IWhistlerCampaign {
   id: string;
@@ -49,9 +49,12 @@ export class WhistlerCampaignService implements ICampaignService {
 
   // @ts-ignore
   public getCampaign(id: number): Observable<ICampaign> {
-
-    return this.http.get<IWhistlerCampaign>(this.baseUrl + '/campaign/entities/' + id).pipe(
-      map((res: IWhistlerCampaign) => this.WhistlerCampaignToCampaign(res))
-    );
+    console.log('getCampaign');
+    return this.http.get<IWhistlerCampaign>(this.baseUrl + '/campaign/entities/' + id)
+      .pipe(
+        tap(stuff => console.log(stuff)),
+        map((res: IWhistlerCampaign) => this.WhistlerCampaignToCampaign(res)),
+        tap(stuff => console.log(stuff)),
+      );
   }
 }

@@ -8,7 +8,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { LoginComponent } from './login/login.component';
-import { ProtectedGuard } from 'ngx-auth';
+// import { ProtectedGuard } from 'ngx-auth';
 import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: 'vouchers', component: VouchersComponent },
       { path: 'vouchers/:id', component: VoucherComponent },
     ],
-    canActivate: [ProtectedGuard]
+    // canActivate: [ProtectedGuard]
   },
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'login', component: LoginComponent },
