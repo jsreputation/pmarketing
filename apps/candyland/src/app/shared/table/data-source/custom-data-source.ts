@@ -118,14 +118,10 @@ export class CustomDataSource<T> {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
-        if (res.meta.record_count === 0 && res.data && this.hasData) {
-          this.hasData = false;
-        }
-      }, error => {
+      }, () => {
         this.dataSubject.next([]);
         this.lengthData.next(0);
         this.loadingSubject.next(false);
-        console.warn('error', error);
       });
   }
 
