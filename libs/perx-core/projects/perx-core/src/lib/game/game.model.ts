@@ -1,3 +1,5 @@
+import { IVoucher } from '../vouchers/models/voucher.model';
+
 export enum GameType {
     unknown = -1,
     shakeTheTree,
@@ -60,4 +62,9 @@ export interface IPinata {
     breakingImg?: string;
     brokenImg: string;
     nbTaps: number;
+}
+
+export interface IPlayOutcome {
+    vouchers: IVoucher[];
+    rawPayload: any;
 }

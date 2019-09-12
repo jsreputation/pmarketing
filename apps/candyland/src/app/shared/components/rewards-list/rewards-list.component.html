@@ -19,7 +19,7 @@
   </ng-container>
 
   <ng-container matColumnDef="rewardType">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="rewardType">Reward Type</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="reward_type">Reward Type</th>
     <td mat-cell *matCellDef="let element"> {{element?.rewardType}}</td>
   </ng-container>
 
@@ -35,7 +35,7 @@
   </ng-container>
 
   <ng-container matColumnDef="balance">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="current">Balance</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="cost_of_reward">Balance</th>
     <td mat-cell *matCellDef="let element">
       <cl-progress-bar [current]="element?.current" [total]="element?.total"></cl-progress-bar>
     </td>

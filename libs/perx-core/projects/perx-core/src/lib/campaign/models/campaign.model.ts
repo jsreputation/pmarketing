@@ -3,7 +3,8 @@ import { IReward } from '../../rewards/models/reward.model';
 export enum CampaignType {
   give_reward = 'give_reward',
   stamp = 'stamp',
-  game = 'game'
+  game = 'game',
+  survey = 'survey'
 }
 
 export enum CampaignState {

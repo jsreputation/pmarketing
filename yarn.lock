@@ -2231,6 +2231,18 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular2-jsonapi@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/angular2-jsonapi/-/angular2-jsonapi-7.1.2.tgz#e87ce7225e50b4f710e72d42146c9b70b21790fd"
+  integrity sha512-Q7SaxnMrlxiB6QaSZYQ1okNW26iUY4T97A6wbNgi/uqV2V4iL6zX+6bRfkJl3Cg2U8NWSbHwB57mMwVMcnLdQw==
+  dependencies:
+    date-fns "^1.29.0"
+    lodash-es "^4.17.11"
+    qs "^6.6.0"
+    tslib "^1.9.0"
+  optionalDependencies:
+    fsevents "*"
+
 angular2-text-mask@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/angular2-text-mask/-/angular2-text-mask-9.0.0.tgz#70490170a8096241fc3ce9482ed6a758ddbce8ea"
@@ -4221,6 +4233,11 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+date-fns@^1.29.0:
+  version "1.30.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
+  integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
+
 date-format@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/date-format/-/date-format-2.0.0.tgz#7cf7b172f1ec564f0003b39ea302c5498fb98c8f"
@@ -5354,16 +5371,16 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
+fsevents@*, fsevents@^2.0.6:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.0.7.tgz#382c9b443c6cbac4c57187cdda23aa3bf1ccfc2a"
+
 fsevents@^1.2.7:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.9.tgz#3f5ed66583ccd6f400b5a00db6f7e861363e388f"
   dependencies:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
-
-fsevents@^2.0.6:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.0.7.tgz#382c9b443c6cbac4c57187cdda23aa3bf1ccfc2a"
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -7298,6 +7315,11 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
+lodash-es@^4.17.11:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
+  integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+
 lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
@@ -9182,6 +9204,11 @@ qrcodejs2@0.0.2:
 qs@6.7.0, qs@^6.5.1:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
+
+qs@^6.6.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
+  integrity sha512-tPSkj8y92PfZVbinY1n84i1Qdx75lZjMQYx9WZhnkofyxzw2r7Ho39G3/aEvSUdebxpnnM4LZJCtvE/Aq3+s9w==
 
 qs@~6.5.2:
   version "6.5.2"

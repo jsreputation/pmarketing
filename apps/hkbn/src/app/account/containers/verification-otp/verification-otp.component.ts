@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService, NotificationService } from '@perx/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { IMessageResponse } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { TranslateService } from '@ngx-translate/core';
+import { flatMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'hkbn-verification-otp',
@@ -23,7 +26,9 @@ export class VerificationOtpComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
-    private dataTransferService: DataTransferService
+    private dataTransferService: DataTransferService,
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -52,7 +57,10 @@ export class VerificationOtpComponent implements OnInit {
     }
   }
   public resendSms(): void {
-    this.authService.requestVerificationToken().subscribe(() => {
-    });
+    this.authService.resendOTP(this.number)
+      .pipe(catchError(() => of(null)))
+      .pipe(
+        flatMap(() => this.translate.get('CHECK_SMS')))
+      .subscribe((msg) => this.notificationService.addSnack(msg));
   }
 }

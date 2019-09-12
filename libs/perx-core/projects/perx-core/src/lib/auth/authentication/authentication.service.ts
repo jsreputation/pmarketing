@@ -6,7 +6,6 @@ import {
   IResetPasswordData,
   IAppAccessTokenResponse,
   IChangePasswordData,
-  ILoginResponse,
   IChangePhoneData
 } from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
@@ -45,9 +44,9 @@ export abstract class AuthenticationService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse>;
+  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any>;
 
-  public abstract autoLogin(): Observable<ILoginResponse>;
+  public abstract autoLogin(): Observable<any>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works

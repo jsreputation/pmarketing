@@ -6,9 +6,7 @@
                 {{question?.required ? '*': ''}}
             </span>
         </div>
-        <div class="description">
-            {{question?.description}}
-        </div>
+        <div class="description" [innerHTML]="question?.description"></div>
         <perx-core-group 
             *ngIf="question.payload.type === surveyQuestionType.questionGroup"
             [id]="id"
