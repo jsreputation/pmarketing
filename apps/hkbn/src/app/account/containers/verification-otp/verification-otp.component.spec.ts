@@ -18,7 +18,8 @@ const profileServiceStub = {
 
 const authenticationServiceStub = {
   verifyOTP: () => of(null),
-  requestVerificationToken: () => of(null)
+  requestVerificationToken: () => of(null),
+  resendOTP: () => of(null)
 };
 
 describe('VerificationOtpComponent', () => {
@@ -73,7 +74,7 @@ describe('VerificationOtpComponent', () => {
   }));
 
   it('expect resend sms', fakeAsync(() => {
-    const spy = spyOn(authService, 'requestVerificationToken');
+    const spy = spyOn(authService, 'resendOTP');
     spy.and.returnValue(of(null));
     component.resendSms();
     tick();

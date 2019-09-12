@@ -9,8 +9,6 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MatSort } from '@angular/material';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
 
 @Component({
@@ -25,9 +23,9 @@ export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public clickManageList: EventEmitter<number> = new EventEmitter();
-  private destroy$ = new Subject();
+
   public ngAfterViewInit(): void {
-    this.handleSorting();
+    this.dataSource.registerSort(this.sort);
   }
 
   public manageList(id: number): void {
@@ -38,16 +36,6 @@ export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
     console.log('Deactivate user with id: ', id);
   }
 
-  public handleSorting(): void {
-    if (this.sort) {
-      this.sort.sortChange
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(val => this.dataSource.sort = val);
-    }
-  }
-
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
