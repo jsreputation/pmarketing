@@ -10,7 +10,8 @@ import {
   CampaignType,
   IReward,
   IGameService,
-  IGame
+  IGame,
+  TokenStorage
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -36,7 +37,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    private gameService: IGameService
+    private gameService: IGameService,
+    private tokenStorage: TokenStorage,
   ) { }
 
   public ngOnInit(): void {
@@ -73,6 +75,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           if (firstComeFirstServed.length > 0) {
             const campaign = firstComeFirstServed[0];
             this.reward = campaign.rewards[0];
+            const isRewardIdExist = this.isIdExistInStorage(campaign.id);
+            if (isRewardIdExist) {
+              return;
+            }
+
             const data = {
               text: campaign.name,
               imageUrl: 'assets/reward.png',
@@ -95,6 +102,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private checkGame(campaign: ICampaign): void {
+    const isGameIdExist = this.isIdExistInStorage(campaign.id);
+    if (isGameIdExist) {
+      return;
+    }
+
     this.gameService.getGamesFromCampaign(campaign.id)
       .pipe(
         filter(games => games.length > 0),
@@ -123,5 +135,23 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     } else {
       console.error('Something fishy, we should not be here, without any reward or game');
     }
+  }
+
+  private isIdExistInStorage(id: number): boolean {
+    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
+    const ids: number[] = [];
+
+    if (campaignIdsInLocalStorage) {
+      const parsedIds = JSON.parse(campaignIdsInLocalStorage);
+      ids.push(...parsedIds);
+    }
+
+    if ( !ids.includes(id) ) {
+      ids.push(id);
+      this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
+      return false;
+    }
+
+    return true;
   }
 }
