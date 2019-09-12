@@ -20,14 +20,14 @@ export const survey: ISurvey = {
             required: true,
             payload: {
                 type: 'picture-select',
-                multiple: true,
+                multiple: false,
                 choices: [
                     {
-                        img_url: 'https://picsum.photos/600/900',
+                        img_url: 'https://picsum.photos/600/900?random=1',
                         text: 'I\'m attending alone'
                     },
                     {
-                        img_url: 'https://picsum.photos/600/900',
+                        img_url: 'https://picsum.photos/600/900?random=2',
                         text: 'I\'m attending with a guest'
                     }
                 ]
