@@ -24,7 +24,7 @@
   background-color: $primary-color;
 
   &:hover {
-    background-color: #124cc8;
+    background-color: $primary-hover;
   }
 }
 
@@ -38,7 +38,7 @@
   }
 }
 
-.second {
+.secondary {
   background-color: #3e4e73;
 
   &:hover {
