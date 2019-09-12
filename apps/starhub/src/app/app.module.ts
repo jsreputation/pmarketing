@@ -44,6 +44,7 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     GameComponent,
     CongratsComponent,
     RewardPopupComponent,
-    ExpireTimerComponent
+    ExpireTimerComponent,
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -88,7 +90,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     VouchersModule,
     GameModule,
     LocationModule,
-    ScrollingModule
+    ScrollingModule,
+    CampaignModule
   ],
   entryComponents: [
     CategorySelectComponent,
