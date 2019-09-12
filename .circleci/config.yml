@@ -16,7 +16,7 @@ commands:
     description: cuts app name out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup app var
           command: |
             SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
@@ -28,7 +28,7 @@ commands:
     description: cuts destination environment out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup env var
           command: |
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
@@ -37,7 +37,7 @@ commands:
     description: based on environment set the APIHOST
     steps:
       - run:
-          name: Setup APIHOST vars
+          name: Setup APIHOST var
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
@@ -57,7 +57,7 @@ commands:
     description: based on client set the PREAUTH
     steps:
       - run:
-          name: Setup PREAUTH vars
+          name: Setup PREAUTH var
           command: |
             echo 'export PREAUTH="false"' >> $BASH_ENV
             if [ $APP == 'prudential' ]
@@ -73,7 +73,7 @@ commands:
     description: based on client set deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup BASE_HREF var
           command: |
             echo 'export BASE_HREF="/"' >> $BASH_ENV
 
@@ -91,7 +91,7 @@ commands:
     description: based on client deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup ISWHISTLER var
           command: |
             echo 'export ISWHISTLER="false"' >> $BASH_ENV
             echo $ISWHISTLER
