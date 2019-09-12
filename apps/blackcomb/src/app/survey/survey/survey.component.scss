@@ -1,3 +1,5 @@
+@import '../../../custom-theme.scss';
+
 .survey-page {
   height: 100%;
   width: 100%;
@@ -39,8 +41,8 @@
     h2 {
       font-style: normal;
       font-weight: normal;
-      font-size: 1.6rem;
-      text-align: center;
+      font-size: 1.2rem;
+      text-align: start;
       color: #666666;
     }
 
