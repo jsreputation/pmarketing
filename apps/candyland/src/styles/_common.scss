@@ -226,7 +226,7 @@ $header-font-size: 2.4rem;
   }
 
   &-preview-sub-headline {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     margin-top: 0.8rem;
     color: rgba(51, 51, 51, 0.5);
   }
@@ -246,7 +246,7 @@ $header-font-size: 2.4rem;
     border-radius: 4px;
     background: #ff1c1c;
     color: $white-color;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
     min-height: 4rem;
@@ -340,7 +340,7 @@ cl-game-mobile-preview, .tabs-component {
 }
 
 .control-input {
-  font-size: 1.4rem !important;
+  font-size: $base-font-size !important;
   width: 100%;
 }
 
