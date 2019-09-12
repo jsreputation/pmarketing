@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, AuthenticationService, NotificationService } from '@perx/core';
+import { ProfileService, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
-import { IMessageResponse } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { TranslateService } from '@ngx-translate/core';
-import { flatMap, catchError } from 'rxjs/operators';
+import { flatMap, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 
 @Component({
   selector: 'hkbn-verification-otp',
@@ -27,7 +27,7 @@ export class VerificationOtpComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataTransferService: DataTransferService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationWrapperService,
     private translate: TranslateService
   ) { }
 
@@ -38,22 +38,20 @@ export class VerificationOtpComponent implements OnInit {
       this.number = profile && profile.phone
     );
   }
-  public validate(otp: string): void {
-    this.authService.verifyOTP(this.number, otp).subscribe(() => {
-      this.router.navigate(['account', this.type], { queryParams: { otp } });
-    });
-  }
   public update(otp: string): void {
-    this.switchMethod({ ... this.reqestData, ... { otp } }).subscribe((val) => {
-    
-    })
+    this.authService.verifyOTP(this.number, otp)
+      .pipe(switchMap(() => this.switchMethod({ ... this.reqestData, ... { otp } })))
+      .subscribe((msg) => {
+        this.notificationService.addSnack(msg);
+        this.router.navigate(['account']);
+      });
   }
-  private switchMethod(data): Observable<IMessageResponse | void> {
+  private switchMethod(data): Observable<string> {
     switch (this.type) {
       case 'password':
-        return this.authService.changePassword(data);
+        return this.authService.changePassword(data).pipe(switchMap(() => this.translate.get('PASSWORD_SUCCESS_UPDATE')));
       case 'phone':
-        return this.authService.changePhone(data);
+        return this.authService.changePhone(data).pipe(switchMap(() => this.translate.get('MOBILE_SUCCESS_UPDATE')));;
     }
   }
   public resendSms(): void {
