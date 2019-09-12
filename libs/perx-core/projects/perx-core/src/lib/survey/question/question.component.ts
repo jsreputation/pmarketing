@@ -70,7 +70,8 @@ export class QuestionComponent implements OnChanges {
 
   public updateNonGroupPoint(): void {
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-      this.point = this.question && this.question.required ? (this.question.answer === 0 || this.question.answer ? 1 : 0) : 1;
+      this.point = this.question && this.question.required ?
+        (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
       this.updatePoints.emit({ question_id: this.question.id, point: this.point });
     }
   }
