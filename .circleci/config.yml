@@ -41,7 +41,12 @@ commands:
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
-              APIHOST="https://api.perxtech.io"
+              if [ $APP == 'blackcomb' ]
+              then
+                APIHOST="https://api.whistler.perxtech.org"
+              else
+                APIHOST="https://api.perxtech.io"
+              fi
             elif [ $TARGET_ENV == 'production' ]
             then
               if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
@@ -59,7 +64,7 @@ commands:
       - run:
           name: Setup PREAUTH var
           command: |
-            if [ $APP == 'prudential' ] || [ $APP == 'digi' ]
+            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ]
             then
               PREAUTH="true"
             else
@@ -91,7 +96,12 @@ commands:
       - run:
           name: Setup ISWHISTLER var
           command: |
-            ISWHISTLER="false"
+            if [ $APP == 'blackcomb' ]
+            then
+              ISWHISTLER="true"
+            else
+              ISWHISTLER="false"
+            fi
             echo 'export ISWHISTLER=$ISWHISTLER' >> $BASH_ENV
             echo $ISWHISTLER
   setup_buildkitd:

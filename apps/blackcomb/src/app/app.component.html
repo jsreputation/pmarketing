@@ -1,6 +1,9 @@
 <div class="main-app-container">
   <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader" color="primary">
+    <mat-icon (click)="leftClick()">{{leftIcon}}</mat-icon>
     <img class="logo" src="assets/logo.png" />
+    <!-- ghost stuff-->
+    <span></span>
   </mat-toolbar>
   <div class="game-container">
     <router-outlet (activate)="onActivate($event)"></router-outlet>

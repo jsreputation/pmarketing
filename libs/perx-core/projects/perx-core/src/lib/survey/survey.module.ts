@@ -24,10 +24,11 @@ import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
+import { ICampaignService } from '../campaign/icampaign.service';
 
-export function surveyServiceFactory(http: HttpClient, config: Config): SurveyService {
+export function surveyServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): SurveyService {
   // Make decision on what to instantiate base on config
-  return new SurveyService(http, config);
+  return new SurveyService(http, campaignService, config);
 }
 
 const components = [
@@ -63,7 +64,7 @@ const components = [
     {
       provide: SurveyService,
       useFactory: surveyServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, ICampaignService, Config]
     }
   ],
   exports: [

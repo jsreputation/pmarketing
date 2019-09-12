@@ -136,7 +136,7 @@ describe('DiscoverComponent', () => {
       description: 'campaign',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
     };

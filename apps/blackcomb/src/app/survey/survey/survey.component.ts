@@ -34,8 +34,8 @@ export class SurveyComponent implements OnInit {
         switchMap((params: ParamMap) => {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
-          return this.surveyService.getSurvey(idN);
-        }),
+          return this.surveyService.getSurveyFromCampaign(idN);
+        })
       );
   }
 
@@ -49,9 +49,9 @@ export class SurveyComponent implements OnInit {
   public onSubmit(): void {
     this.router.navigate(['/wallet']);
     this.notificationService.addPopup({
-      text: 'Here is a reward for you.',
-      title: 'Thanks for completing the survey.',
-      buttonTxt: 'View Reward',
+      text: 'See you at our event!',
+      title: 'Your RSVP is successful!',
+      buttonTxt: 'To Wallet',
       imageUrl: 'assets/congrats_image.png'
     });
   }
