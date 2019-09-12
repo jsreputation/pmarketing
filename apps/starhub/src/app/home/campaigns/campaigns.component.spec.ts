@@ -46,7 +46,7 @@ describe('CampaignsComponent', () => {
           description: 'abc',
           type: CampaignType.game,
           state: CampaignState.active,
-          endsAt: '',
+          endsAt: undefined,
           rewards: [],
           thumbnailUrl: '',
         },
@@ -56,7 +56,7 @@ describe('CampaignsComponent', () => {
           description: 'abc',
           type: CampaignType.give_reward,
           state: CampaignState.active,
-          endsAt: '',
+          endsAt: undefined,
           rewards: [
             {
               id: 1,
