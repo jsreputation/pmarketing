@@ -26,10 +26,6 @@ mat-nav-list {
   padding-top: 0;
 }
 
-.mat-nav-list .mat-list-item {
-  font-size: 1.4rem;
-}
-
 .mat-list-item {
   height: 3rem !important;
 
@@ -41,6 +37,10 @@ mat-nav-list {
   .menu-link {
     color: rgba(255, 255, 255, 0.7);
   }
+}
+
+.mat-nav-list .mat-list-item {
+  font-size: 1.4rem;
 }
 
 .menu-icon {

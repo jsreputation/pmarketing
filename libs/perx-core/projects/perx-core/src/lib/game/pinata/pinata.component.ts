@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { IGameComponent } from '../IGame.component';
+import { IGameComponent } from '../igame.component';
 
 @Component({
   selector: 'perx-core-pinata',

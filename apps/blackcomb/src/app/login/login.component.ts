@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,23 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage: string;
   public preAuth: boolean;
+  public failedAuth: boolean;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
+    this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
     this.initForm();
+  }
+
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'wallet');
   }
 
   public initForm(): void {
@@ -37,8 +44,7 @@ export class LoginComponent implements OnInit {
     const username = (this.loginForm.get('customerID').value as string);
     const password: string = this.loginForm.get('password').value;
     this.errorMessage = null;
-
-    this.authService.login(username, password).subscribe(
+    this.authService.login(username, password, '2').subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
