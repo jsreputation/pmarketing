@@ -1,10 +1,12 @@
+@import "variables";
+
 .container-sidenav {
   position: relative;
   min-height: 100vh;
 }
 
 .sidenav {
-  width: 17rem;
+  width: $sidenav-width-initial;
   background-color: #202c46;
   position: fixed;
 
@@ -48,6 +50,7 @@
 .sidenav-content {
   position: relative;
   min-height: 100vh;
+  padding-top: $header-height-base;
 }
 
 .btn-text {

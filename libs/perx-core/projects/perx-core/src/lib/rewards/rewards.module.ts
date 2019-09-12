@@ -11,7 +11,7 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { VouchersService } from '../../public-api';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
 const components = [
   RewardsCollectionComponent,
@@ -20,7 +20,7 @@ const components = [
   RewardComponent
 ];
 
-export function rewardsServiceFactory(http: HttpClient, vouchersService: VouchersService, config: Config): RewardsService {
+export function rewardsServiceFactory(http: HttpClient, vouchersService: IVoucherService, config: Config): RewardsService {
   // Make decision on what to instantiate base on config
   return new V4RewardsService(http, vouchersService, config);
 }
@@ -42,7 +42,7 @@ export function rewardsServiceFactory(http: HttpClient, vouchersService: Voucher
     {
       provide: RewardsService,
       useFactory: rewardsServiceFactory,
-      deps: [HttpClient, VouchersService, Config]
+      deps: [HttpClient, IVoucherService, Config]
     }
   ]
 })

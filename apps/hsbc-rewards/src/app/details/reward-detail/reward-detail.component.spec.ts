@@ -1,28 +1,46 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
-import { DetailHeaderModule } from '../detail-header/detail-header.module';
-import { RewardsModule, ProfileModule, LoyaltyModule, VouchersModule, ConfigModule } from '@perx/core';
+import { RewardsModule, RewardsService, IReward } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Component } from '@angular/core';
+import { of } from 'rxjs';
+
+@Component({
+  selector: 'app-detail-header',
+  template: ''
+})
+class MockDetailHeaderComponent { }
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
   let debugElement: DebugElement;
+  const mockReward: IReward = {
+    id: 1,
+    name: '',
+    description: '',
+    subtitle: '',
+    validFrom: new Date(),
+    validTo: new Date(),
+    rewardBanner: '',
+    merchantImg: '',
+    termsAndConditions: '',
+    howToRedeem: '',
+  };
+  const rewardsServiceStub = {
+    getReward: () => of(mockReward)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardDetailComponent],
+      declarations: [RewardDetailComponent, MockDetailHeaderComponent],
       imports: [
-        ConfigModule.forRoot({}),
-        DetailHeaderModule,
         RewardsModule,
-        ProfileModule,
-        LoyaltyModule,
-        VouchersModule,
-        RouterTestingModule,
-        HttpClientTestingModule
+        RouterTestingModule
+      ],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub },
       ]
     })
       .compileComponents();

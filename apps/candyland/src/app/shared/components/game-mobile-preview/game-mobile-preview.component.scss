@@ -1,13 +1,15 @@
 @import "variables";
 
 :host {
-  width: 34.4rem;
+  position: relative;
+  width: 0;
+  padding-right: 34.4rem;
   height: 68rem;
   border-radius: 0.8rem;
   flex-shrink: 0;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-  background-image: linear-gradient(to top, #8b929b, #b9bfc7);
 }
 
-
-
+.mobile-preview-tabs {
+  position: fixed;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+}

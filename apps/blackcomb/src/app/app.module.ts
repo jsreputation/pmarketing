@@ -10,10 +10,10 @@ import {
   UtilsModule,
   ProfileModule,
   RewardsService,
-  VouchersService,
-  CampaignService,
+  IVoucherService,
   ProfileService,
   ConfigModule,
+  ICampaignService,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -104,8 +104,8 @@ const profileServiceStub = {
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
-    { provide: CampaignService, useValue: campaignServiceStub },
+    { provide: IVoucherService, useValue: vouchersServiceStub },
+    { provide: ICampaignService, useValue: campaignServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]

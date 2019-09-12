@@ -8,7 +8,7 @@ export { PerxCoreModule } from './lib/perx-core.module';
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
-export { VouchersService } from './lib/vouchers/vouchers.service';
+export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
@@ -25,7 +25,6 @@ export { IChangePasswordData } from './lib/auth/authentication/models/authentica
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { CampaignService } from './lib/campaign/campaign.service';
 export { ICampaignService } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
@@ -55,10 +54,11 @@ export {
   IGameOutcome,
   IPinata,
   ITree,
-  defaultTree
+  defaultTree,
+  IPlayOutcome
 } from './lib/game/game.model';
-export { GameService } from './lib/game/game.service';
-export { IGameComponent } from './lib/game/IGame.component';
+export { IGameService } from './lib/game/igame.service';
+export { IGameComponent } from './lib/game/igame.component';
 
 /**
  * Profile
