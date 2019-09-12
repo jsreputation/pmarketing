@@ -48,6 +48,6 @@ export class SelectComponent implements OnChanges {
   }
 
   public isSelected(index: number): boolean {
-    return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index].includes(index) : this.selectedChoice === index;
+    return this.payload.multiple ? this.selectedChoices && this.selectedChoices.includes(index) : this.selectedChoice === index;
   }
 }
