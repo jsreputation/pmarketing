@@ -24,7 +24,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       {{(element?.begin | date: DATE_FORMAT) || '-'}}
       <br>
-      {{element?.begin | date: TIME_FORMAT}}
+      <time class="name-cell__sub">{{element?.begin | date: TIME_FORMAT}}</time>
     </td>
   </ng-container>
 
@@ -33,7 +33,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       {{(element?.end | date: DATE_FORMAT) || '-'}}
       <br>
-      {{element?.end | date: TIME_FORMAT}}
+      <time class="name-cell__sub">{{element?.end | date: TIME_FORMAT}}</time>
     </td>
   </ng-container>
 

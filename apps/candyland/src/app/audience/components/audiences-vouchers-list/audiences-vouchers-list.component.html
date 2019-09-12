@@ -20,7 +20,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       {{element?.issuedDate | date: DATE_FORMAT}}
       <br>
-      {{element?.issuedDate | date: TIME_FORMAT}}
+      <time class="name-cell__sub">{{element?.issuedDate | date: TIME_FORMAT}}</time>
     </td>
   </ng-container>
 
@@ -29,7 +29,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       {{element?.expiryDate | date: DATE_FORMAT}}
       <br>
-      {{element?.expiryDate | date: TIME_FORMAT}}
+      <time class="name-cell__sub">{{element?.expiryDate | date: TIME_FORMAT}}</time>
     </td>
   </ng-container>
 
