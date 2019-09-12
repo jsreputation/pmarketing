@@ -8,6 +8,7 @@ import { GeneralModule } from './containers/general/general.module';
 import { BrandingModule } from './containers/branding/branding.module';
 import { CommunicationsModule } from './containers/communications/communications.module';
 import { UsersRolesModule } from './containers/users-roles/users-roles.module';
+import { JsonApiModule } from 'angular2-jsonapi';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UsersRolesModule } from './containers/users-roles/users-roles.module';
     CommunicationsModule,
     UsersRolesModule,
     MatTabsModule,
+    JsonApiModule
   ]
 })
 export class SettingsModule { }
