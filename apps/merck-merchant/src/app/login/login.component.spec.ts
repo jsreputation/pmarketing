@@ -3,7 +3,6 @@ import { AuthenticationService } from '@perx/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from '@perx/core';
-import { environment } from '../../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import {
@@ -33,7 +32,7 @@ describe('LoginComponent', () => {
         MatInputModule,
         MatRippleModule,
         BrowserAnimationsModule,
-        AuthenticationModule.forRoot({ env: environment }),
+        AuthenticationModule,
       ],
       providers: [
         { provide: Router, useValue: routerStub },

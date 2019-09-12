@@ -3,8 +3,8 @@ import { LocationsService } from './locations.service';
 import { Observable, of } from 'rxjs';
 import { ILocation } from './ilocation';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
 import { map, mergeMap, filter, scan, mergeAll } from 'rxjs/operators';
+import { Config } from '../config/config';
 
 interface IV4Meta {
   count?: number;
@@ -62,10 +62,10 @@ export class V4LocationsService extends LocationsService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig
+    config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public getAll(tags?: string[]): Observable<ILocation[]> {

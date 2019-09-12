@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
@@ -15,10 +15,13 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public defaultValue = {
     rewardsOptions: {
       enableProbability: false,
-      rewards: [
-      ]
+      rewards: []
     }
   };
+
+  public get times(): FormControl {
+    return this.form.get('limits.times') as FormControl;
+  }
 
   constructor(public store: CampaignCreationStoreService,
               public stepConditionService: StepConditionService,
@@ -40,12 +43,12 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
       rewardsOptions: [],
       limits: this.fb.group({
         times: [null, [
-          Validators.required,
+          // Validators.required,
           Validators.min(1),
           Validators.max(60)
         ]],
         duration: [null, [
-          Validators.required
+          // Validators.required
         ]]
       })
     });

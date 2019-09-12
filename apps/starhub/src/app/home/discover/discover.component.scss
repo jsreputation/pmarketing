@@ -17,3 +17,15 @@ app-rewards-cards, app-catalogs, app-campaigns {
 app-categories {
   margin-left: 0.9rem;
 }
+
+app-news-feed,
+app-categories,
+app-rewards-cards,
+app-catalogs,
+app-campaigns {
+  &::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+  }
+}

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/rewards-table-menu-actions';
 
 @Component({
@@ -9,7 +10,7 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
 })
 export class RewardsListComponent implements AfterViewInit {
   public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<IRewardEntity[]>;
+  @Input() public dataSource: CustomDataSource<IRewardEntity[]>;
   @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
@@ -19,7 +20,7 @@ export class RewardsListComponent implements AfterViewInit {
   public selected;
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    this.dataSource.registerSort(this.sort);
   }
 
   public selectItem(item: IRewardEntity): void {

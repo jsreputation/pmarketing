@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ChangePasswordComponent } from './change-password.component';
 import { ChangePasswordFormComponent } from '../../components/change-password-form/change-password-form.component';
@@ -6,15 +6,29 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
-import { of } from 'rxjs';
+import { AuthenticationService, NotificationService } from '@perx/core';
+import { of, throwError } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
+import { IChangePasswordData } from '@perx/core';
+
+const password = 'password';
+
+const passwordForm: IChangePasswordData = {
+  otp: '8888',
+  oldPassword: password,
+  newPassword: password,
+  passwordConfirmation: password
+};
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-
+  let authService: AuthenticationService;
+  let router: Router;
+  let notification: NotificationService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -22,13 +36,16 @@ describe('ChangePasswordComponent', () => {
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'account',
+          component: ChangePasswordComponent
+        }]),
         ErrorHandlerModule,
         NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
       providers: [
-        {provide: AuthenticationService, useValue: {changePassword: () => of(null)}}
+        { provide: AuthenticationService, useValue: { changePassword: () => of(null) } }
       ],
       declarations: [ChangePasswordComponent, ChangePasswordFormComponent]
     })
@@ -37,6 +54,9 @@ describe('ChangePasswordComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangePasswordComponent);
+    authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    router = TestBed.get<Router>(Router as Type<Router>);
+    notification = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -44,4 +64,22 @@ describe('ChangePasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to account', fakeAsync(() => {
+    spyOn(authService, 'changePassword').and.returnValue(of(null));
+    const routerSpy = spyOn(router, 'navigate');
+    component.changePassword(passwordForm);
+    tick();
+    expect(routerSpy).toHaveBeenCalledWith(['/account']);
+  }));
+
+  it('should display error snack', fakeAsync(() => {
+    const errorMessage = 'error';
+    component.messageError = errorMessage;
+    spyOn(authService, 'changePassword').and.returnValue(throwError(null));
+    const notificationSpy = spyOn(notification, 'addSnack');
+    component.changePassword(passwordForm);
+    tick();
+    expect(notificationSpy).toHaveBeenCalledWith(errorMessage);
+  }));
 });

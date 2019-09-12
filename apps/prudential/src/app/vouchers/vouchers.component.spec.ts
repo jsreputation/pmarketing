@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, PopupType } from './vouchers.component';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, ConfigModule } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -23,9 +23,10 @@ describe('VouchersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
       imports: [
+        ConfigModule.forRoot({}),
         HttpClientTestingModule,
         NoopAnimationsModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule
       ],
       providers: [
         DatePipe,
