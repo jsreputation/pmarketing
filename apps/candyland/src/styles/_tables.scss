@@ -38,22 +38,22 @@
     max-width: 30rem !important;
   }
 
-  td.mat-cell.menu-column, 
+  td.mat-cell.menu-column,
   th.mat-header-cell.menu-column {
     width: 5.4rem !important;
     padding-right: 0 !important;
   }
 
-  td.mat-cell.date-column, 
-  th.mat-header-cell.date-column, 
+  td.mat-cell.date-column,
+  th.mat-header-cell.date-column,
   .date-column th.mat-header-cell {
     width: 9rem !important;
     padding: 0 2rem;
   }
 
   // CLONED FROM STYLES ABOVE TEMPORARILY TO REFACTOR APPROPRIATE CELLS
-  td.mat-cell.limit-cell, 
-  th.mat-header-cell.limit-cell, 
+  td.mat-cell.limit-cell,
+  th.mat-header-cell.limit-cell,
   .limit-cell th.mat-header-cell {
     width: 9rem !important;
     padding: 0 2rem;
@@ -98,6 +98,6 @@
       display: block;
       margin-top: 0.2rem;
       color: $secondary-font-color;
-    }    
+    }
   }
 }

@@ -119,7 +119,7 @@ $header-font-size: 2.4rem;
   input {
     font-weight: 400;
     font-size: $header-font-size;
-    color: $there-color;
+    color: $base-font-color;
   }
 
   .mat-form-field-wrapper {
@@ -148,7 +148,7 @@ $header-font-size: 2.4rem;
   font-stretch: normal;
   line-height: 1.04;
   letter-spacing: normal;
-  color: $there-color;
+  color: $base-font-color;
 }
 
 .sub-title {
