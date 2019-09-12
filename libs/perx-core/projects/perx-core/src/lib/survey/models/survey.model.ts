@@ -30,6 +30,7 @@ export enum MaterialColor {
     warn = 'warn'
 }
 export interface ISurvey {
+    id: string;
     title: string;
     sub_title?: string;
     progress_bar_color?: MaterialColor;
