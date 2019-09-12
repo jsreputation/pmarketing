@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { IGameService } from './iGameService';
-import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome } from './game.model';
-import { catchError, map } from 'rxjs/operators';
+import {
+  Observable,
+  throwError,
+} from 'rxjs';
+import { IGameService } from './igame.service';
+import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome, IPlayOutcome } from './game.model';
+import {
+  catchError,
+  map,
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
+import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -66,7 +73,7 @@ interface PinataDisplayProperties extends GameProperties {
 
 interface Game {
   campaign_id: number;
-  display_properties: TreeDisplayProperties|PinataDisplayProperties;
+  display_properties: TreeDisplayProperties | PinataDisplayProperties;
   game_type: GameType;
   id: number;
   number_of_tries: number;
@@ -87,10 +94,7 @@ interface IV4PlayResponse {
     campaign_id: number;
     game_id: number;
     id: number;
-    outcomes: {
-      reward: any;
-      voucher_code: any;
-    }[];
+    outcomes: IV4Voucher[];
     state: string;
     use_account_id: number;
   };
@@ -99,16 +103,19 @@ interface IV4PlayResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class GameService implements IGameService {
+export class V4GameService implements IGameService {
   private hostName: string;
 
-  constructor(private httpClient: HttpClient, config: Config) {
+  constructor(
+    private httpClient: HttpClient,
+    config: Config,
+  ) {
     this.hostName = config.apiHost as string;
   }
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree|IPinata;
+    let config: ITree | IPinata;
     switch (game.game_type) {
       case GameType.shakeTheTree:
         type = TYPE.shakeTheTree;
@@ -151,10 +158,10 @@ export class GameService implements IGameService {
     const results: { [key: string]: IGameOutcome } = {};
 
     if (game.display_properties.outcome) {
-      results.outcome = GameService.outcomeToGameOutcome(game.display_properties.outcome);
+      results.outcome = V4GameService.outcomeToGameOutcome(game.display_properties.outcome);
     }
     if (game.display_properties.nooutcome) {
-      results.noOutcome = GameService.outcomeToGameOutcome(game.display_properties.nooutcome);
+      results.noOutcome = V4GameService.outcomeToGameOutcome(game.display_properties.nooutcome);
     }
 
     return {
@@ -183,27 +190,37 @@ export class GameService implements IGameService {
     return res;
   }
 
-  public play(gameId: number): Observable<any> {
-    return this.httpClient.put<IV4PlayResponse>(`${ this.hostName }/v4/games/${ gameId }/play`, null);
+  public play(gameId: number): Observable<IPlayOutcome> {
+    return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null)
+      .pipe(
+        map((res: IV4PlayResponse) => {
+          // @ts-ignore
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) =>  out.outcome_type === 'reward');
+          return {
+            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
+            rawPayload: res
+          };
+        })
+      );
   }
 
   public get(gameId: number): Observable<IGame> {
-    return this.httpClient.get<GameResponse>(`${ this.hostName }/v4/games/${ gameId }`)
+    return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
       .pipe(
         map(res => res.data),
-        map(game => GameService.v4GameToGame(game))
+        map(game => V4GameService.v4GameToGame(game))
       );
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${ this.hostName }/v4/campaigns/${ campaignId }/games`)
+    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => {
           if (games.length === 0) {
             throw new Error('Games list is empty');
           }
-          return games.map((game: Game): IGame => GameService.v4GameToGame(game));
+          return games.map((game: Game): IGame => V4GameService.v4GameToGame(game));
         }),
         catchError((err) => {
           // rethrow error for subscriber to handle

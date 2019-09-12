@@ -8,12 +8,12 @@ import {
   ICampaignService,
   NotificationService,
   PopupComponent,
-  GameService,
+  IGameService,
   ICampaign,
   IGame,
   GameType
 } from '@perx/core';
-import { of, Observable } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -91,7 +91,8 @@ describe('AppComponent', () => {
     getCampaign: () => of()
   };
   const routerStub = {
-    navigate: () => { }
+    navigate: () => { },
+    navigateByUrl: () => {}
   };
   const matSnackBarStub = {
     open: () => { }
@@ -141,7 +142,7 @@ describe('AppComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
-        { provide: GameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -210,6 +211,20 @@ describe('AppComponent', () => {
       // expect(component.selectedCampaign).toBe(campaigns[0]);
     }));
 
+    it('should redirect to error screen', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(
+        throwError({code: 500, message: 'server failed'})
+      );
+
+      const routerFixture: Router = fixture.debugElement.injector.get(Router);
+      const routerSpy = spyOn(routerFixture, 'navigateByUrl').and.callThrough();
+      component.ngOnInit();
+      tick();
+      expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(routerSpy).toHaveBeenCalledWith('error');
+    }));
+
   });
 
   describe('dialogClosed', () => {
@@ -236,7 +251,7 @@ describe('AppComponent', () => {
       const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
 
-      const gamesService = TestBed.get<GameService>(GameService as Type<GameService>);
+      const gamesService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
       spyOn(gamesService, 'getGamesFromCampaign').and.returnValue(of(games));
 
       const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
