@@ -15,6 +15,7 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/token.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { JsonApiModule } from 'angular2-jsonapi';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     MatNativeDateModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    JsonApiModule
   ],
   providers: [
     LocalStorageService,

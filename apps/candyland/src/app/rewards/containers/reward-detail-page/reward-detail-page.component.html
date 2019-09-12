@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="btn-group">
-    <cl-button classList="invert" routerLink="/rewards/">Close</cl-button>
+    <cl-button classList="tertiary" routerLink="/rewards/">Close</cl-button>
     <cl-button classList="primary" [routerLink]="'/rewards/edit/'+ id">Edit</cl-button>
   </div>
 </div>
@@ -20,7 +20,7 @@
     <div class="card-content">
       <div class="card-row">
         <div class="reward-detail-vouchers-value">{{avaibleVouchers?.value | number: '2.'}}</div>
-        <cl-button classList="dark" (click)="openDialogReplenish()">Replenish</cl-button>
+        <cl-button classList="tertiary opaque" (click)="openDialogReplenish()">Replenish</cl-button>
       </div>
       <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
     </div>
