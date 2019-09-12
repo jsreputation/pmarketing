@@ -11,7 +11,8 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { IVoucherService } from '../../public-api';
+import { IVoucherService } from '../vouchers/ivoucher.service';
+import { WhistlerRewardsService } from './whistler-rewards.service';
 
 const components = [
   RewardsCollectionComponent,
@@ -21,6 +22,9 @@ const components = [
 ];
 
 export function rewardsServiceFactory(http: HttpClient, vouchersService: IVoucherService, config: Config): RewardsService {
+  if (config.isWhistler) {
+    return new WhistlerRewardsService(http, config);
+  }
   // Make decision on what to instantiate base on config
   return new V4RewardsService(http, vouchersService, config);
 }

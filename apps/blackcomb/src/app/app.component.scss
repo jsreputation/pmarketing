@@ -1,9 +1,4 @@
-@import "~@angular/material/theming";
-
-@include mat-core();
-
-// Define your application's custom theme.
-$primary: mat-palette($mat-indigo);
+@import "../custom-theme.scss";
 
 :host {
   display: block;
@@ -13,7 +8,7 @@ $primary: mat-palette($mat-indigo);
 
 .toolbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   height: 6rem;
   z-index: 800;
   font-size: 2rem;

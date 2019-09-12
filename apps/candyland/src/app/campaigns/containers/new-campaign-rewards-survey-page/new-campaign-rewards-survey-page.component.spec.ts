@@ -3,7 +3,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewCampaignRewardsSurveyPageComponent } from './new-campaign-rewards-survey-page.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NewCampaignRewardsFormGroupComponent } from '../../components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
-import { MatCardModule, MatFormFieldModule, MatCheckboxModule, MatRippleModule, MatButtonModule, MatDialogModule, MatInputModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatCheckboxModule,
+  MatRippleModule,
+  MatButtonModule,
+  MatDialogModule,
+  MatInputModule
+} from '@angular/material';
 import { ButtonComponent } from '@cl-shared/components/button/button.component';
 import { RewardItemComponent } from '../../components/reward-item/reward-item.component';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
@@ -18,8 +26,6 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
   const campaignCreationStoreServiceStub = {
     currentCampaign$: (new BehaviorSubject<any>(null))
   };
-
-  const stepConditionServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -43,8 +49,8 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
         ProgressBarModule
       ],
       providers: [
-        { provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub },
-        { provide: StepConditionService, useValue: stepConditionServiceStub }
+        {provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub},
+        {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}}
       ]
     })
       .compileComponents();

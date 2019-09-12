@@ -6,7 +6,7 @@ import { IVoucherService } from '../ivoucher.service';
 @Component({
   selector: 'perx-core-bcode-redemption',
   templateUrl: './bcode-redemption.component.html',
-  styleUrls: ['./bcode-redemption.component.css']
+  styleUrls: ['./bcode-redemption.component.scss']
 })
 export class BcodeRedemptionComponent implements OnChanges {
   @Input()
