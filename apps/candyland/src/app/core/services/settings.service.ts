@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
+import { DataStore } from '@cl-core/http-adapters/datastore';
+import { Groups } from '@cl-core/http-adapters/iam-groups';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 export class SettingsService implements ITableService {
 
   constructor(private settingsHttpService: SettingsHttpService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private dataStore: DataStore) {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
@@ -89,10 +92,7 @@ export class SettingsService implements ITableService {
   }
 
   public getAllGroups(): Observable<any> {
-    return this.settingsHttpService.getAllGroups()
-      .pipe(
-        map(res => res.data)
-      );
+    return this.dataStore.findAll(Groups, {page: { size: 10, number: 1 }});
   }
 
 }

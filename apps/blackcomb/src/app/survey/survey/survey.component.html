@@ -6,8 +6,8 @@
         </div>
     </div>
     <mat-card class="survey-card mat-elevation-z2" *ngIf="data$ | async as data">
-        <h1>Headline</h1>
-        <h2>Sub-headline</h2>
+        <h1>{{data.title}}</h1>
+        <h2 *ngIf="data.sub_title">{{data.sub_title}}</h2>
         <perx-core-survey 
             [data]="data$"
             (surveyDone)="updateSurveyStatus($event)"
