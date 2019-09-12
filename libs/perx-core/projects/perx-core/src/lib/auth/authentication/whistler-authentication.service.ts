@@ -1,8 +1,8 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError } from 'rxjs';
-import { tap, mergeMap, catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
@@ -23,11 +23,10 @@ import { ProfileService } from '../../profile/profile.service';
 })
 export class WhistlerAuthenticationService extends AuthenticationService implements AuthService {
   private apiHost: string;
-  // private preAuthEndpoint: string;
+  private preAuthEndpoint: string;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
-  private preAuthJWT: string;
   public $failedAuthObservable: Observable<boolean>;
 
   constructor(
@@ -39,11 +38,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     super();
     console.log(profileService);
     this.apiHost = config.apiHost as string;
-    // if (!config.production) {
-    //   this.preAuthEndpoint = 'http://localhost:4000/preauth';
-    // } else {
-    //   this.preAuthEndpoint = config.baseHref + 'preauth';
-    // }
+    if (!config.production) {
+      this.preAuthEndpoint = 'http://localhost:4000/cognito/login';
+    } else {
+      this.preAuthEndpoint = config.baseHref + 'cognito/login';
+    }
     this.$failedAuthObservable = new Observable();
   }
 
@@ -58,122 +57,55 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return of(!!token);
   }
 
-  // Need to review whistler auth process
-  public setPreAuthJWT(): Observable<any> {
-    // return this.http.get(this.preAuthEndpoint, {
-    //   params: {
-    //     url: location.host
-    //   },
-    //   observe: 'response'
-    // }).pipe(
-    //   tap((resp) => {
-    //     this.preAuthJWT = resp.headers.get('Authorization');
-    //     return resp;
-    //   })
-    // );
-    const login$ = this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
-      data: {
-        attributes: {
-          tenant_id: '2',
-          username: 'Admin_2',
-          password: 'asdfjkl;'
-        }
-      }
-    }, { observe: 'response' });
-    return login$.pipe(
-      tap((resp) => {
-        this.preAuthJWT = resp.headers.get('Authorization');
-        return resp;
-      })
-    );
-  }
-
   public refreshToken(): Observable<ILoginResponse> {
     this.retries++;
-    return this.setPreAuthJWT().pipe(
-      mergeMap(
+    return this.getUserWithJWT().pipe(
+      tap(
         () => {
-          /* check if valid auth  */
-          return this.getUserWithJWT(this.preAuthJWT).pipe(
-            tap(
-              () => {
-                // @ts-ignore
-                const userBearer = resp.headers.get('Authorization');
-                if (!userBearer) {
-                  throw new Error('Get authentication token failed!');
-                }
-                this.saveUserAccessToken(userBearer.split(' ')[1]);
-              },
-              () => {
-                if (this.retries >= this.maxRetries) {
-                  this.$failedAuthObservable = of(true);
-                  this.logout();
-                  return false;
-                }
-              }
-            ),
-            catchError(err => throwError(err))
-          );
+          // @ts-ignore
+          const userBearer = resp.headers.get('Authorization');
+          if (!userBearer) {
+            throw new Error('Get authentication token failed!');
+          }
+          this.saveUserAccessToken(userBearer.split(' ')[1]);
+        },
+        () => {
+          if (this.retries >= this.maxRetries) {
+            this.$failedAuthObservable = of(true);
+            this.logout();
+            return false;
+          }
         }
-      )
+      ),
+      catchError(err => throwError(err))
     );
   }
 
-  public autoLogin(): Observable<ILoginResponse> {
-    return this.setPreAuthJWT().pipe(
-      mergeMap(
+  public autoLogin(): Observable<any> {
+    return this.getUserWithJWT().pipe(
+      tap(
+        (res) => {
+          const userBearer = res.data[0].attributes.jwt;
+          if (!userBearer) {
+            throw new Error('Get authentication token failed!');
+          }
+          this.saveUserAccessToken('Bearer ' + userBearer);
+        },
         () => {
-          return this.getUserWithJWT(this.preAuthJWT).pipe(
-            tap(
-              (res: ILoginResponse) => {
-                const userBearer = res && res.bearer_token;
-                if (!userBearer) {
-                  throw new Error('Get authentication token failed!');
-                }
-                this.saveUserAccessToken(userBearer);
-              },
-              () => {
-                this.$failedAuthObservable = of(true);
-              }
-            ),
-            catchError(err => throwError(err))
-          );
+          this.$failedAuthObservable = of(true);
         }
-      )
+      ),
+      catchError(err => throwError(err))
     );
-
   }
 
-  // Don't know real return format yet, put `ILoginResponse` now, later will refactor map transform
-  public getUserWithJWT(bearer: string): Observable<ILoginResponse> {
+  public getUserWithJWT(): Observable<any> {
     const user = (window as any).primaryIdentifier;
-    const payload = {
-      data: {
-        type: 'login',
-        attributes: {
-          primary_identifier: user,
-        }
-      }
-    };
-    const httpOptions = {
-      headers: new HttpHeaders(
-        {
-          'Content-Type': 'application/vnd.api+json',
-          Authorization: bearer
-        })
-    };
-    return this.http.post<ILoginResponse>(this.apiHost + '/cognito/login', payload, {
-      headers: httpOptions.headers,
-      observe: 'response'
-    }).pipe(
-      map(
-        (res: any) => {
-          return {
-            bearer_token: res.body.data[0].attributes.jwt || undefined
-          };
-        }
-      )
-    );
+    const httpParams = new HttpParams().append('identifier', user).append('url', location.host);
+
+    return this.http.post<any>(this.preAuthEndpoint, null, {
+      params: httpParams
+    });
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -185,18 +117,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
-    const login$ = this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
-      data: {
-        attributes: {
-          tenant_id: mechId,
-          username: user,
-          password: pass
-        }
-      }
-    }, { observe: 'response' });
-
-    return login$.pipe(
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
+    return this.getIamUser(user, pass, mechId).pipe(
       tap(res => {
         const userBearer = res.headers.get('Authorization');
         if (!userBearer) {
@@ -208,12 +130,21 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           this.$failedAuthObservable = of(true);
         }
       ),
-      catchError(err => throwError(err)),
-      map(res => {
-        return { bearer_token: res.headers.get('authorization') };
-      }),
+      catchError(err => throwError(err))
     );
 
+  }
+
+  public getIamUser(user: string, pass: string, mechId?: string): Observable<any> {
+    return this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
+      data: {
+        attributes: {
+          tenant_id: mechId,
+          username: user,
+          password: pass
+        }
+      }
+    }, { observe: 'response' });
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
