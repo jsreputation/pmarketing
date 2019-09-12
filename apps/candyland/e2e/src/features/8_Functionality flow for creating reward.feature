@@ -17,7 +17,7 @@ Scenario: Verifying the number of options in reward type.
 Scenario: Verifying the number of options in categories.
   Given 8_that I am on the reward creation page.
   When  8_I click on categories.
-  Then  8_I should see six options.
+  Then  8_I should see eight options.
 
 Scenario: Verifying the number of options in redemption types.
   Given 9_that I am on the reward creation page.

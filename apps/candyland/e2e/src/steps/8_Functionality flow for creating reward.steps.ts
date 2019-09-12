@@ -1,4 +1,4 @@
-import { Before, Given, Then } from 'cucumber';
+import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
 import { CreateRewardAppPage } from '../pages/shakeTheTreeFlow.po';
@@ -32,52 +32,59 @@ Then(/^6_The relevant text input fields are present.$/, async () => {
   expect(await element.all(by.css('textarea')).get(1).isPresent()).to.equal(true);
 });
 
-/*Given('{int}_that I am on the reward creation page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+// Verifying the number of options in reward type.
+Given(/^7_that I am on the reward creation page.$/, async () => {
+  await CreateRewardPage.navigateToRewardCreate();
+});
 
-When('{int}_I click on reward type.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^7_I click on reward type.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for reward type field
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(0)), 6000 );
+  await element.all(by.css('div.mat-select-trigger')).get(0).click();
+});
 
-Then('{int}_I should see eight options.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^7_I should see eight options.$/, async () => {
+  // asserting the number of options
+  expect(await element.all(by.css('span.mat-option-text')).count()).to.equal(8);
+});
 
-Given('{int}_that I am on the reward creation page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+// Verifying the number of options in categories.
+Given(/^8_that I am on the reward creation page.$/, async () => {
+  await CreateRewardPage.navigateToRewardCreate();
+});
 
-When('{int}_I click on categories.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^8_I click on categories.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for category field
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(1)), 6000 );
+  await element.all(by.css('div.mat-select-trigger')).get(1).click();
+});
 
-Then('{int}_I should see six options.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^8_I should see eight options.$/, async () => {
+  // asserting the number of options
+  expect(await element.all(by.css('span.mat-option-text')).count()).to.equal(8);
+});
 
-Given('{int}_that I am on the reward creation page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+// Verifying the number of options in redemption types.
+Given(/^9_that I am on the reward creation page.$/, async () => {
+  await CreateRewardPage.navigateToRewardCreate();
+});
 
-When('{int}_I click on redemption type.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^9_I click on redemption type.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for category field
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(2)), 6000 );
+  await element.all(by.css('div.mat-select-trigger')).get(2).click();
+});
 
-Then('{int}_I should see four options.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^9_I should see four options.$/, async () => {
+  // asserting the number of options
+  expect(await element.all(by.css('span.mat-option-text')).count()).to.equal(4);
+});
 
-Given('{int}_that I am on the survey creation page.', function(int) {
+// Verifiying that there is an upload field when clicking on the option user upload
+/*Given('{int}_that I am on the survey creation page.', function(int) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
