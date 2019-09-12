@@ -71,3 +71,14 @@
 .time-line-block {
   flex: 1;
 }
+
+.info-title {
+  position: relative;
+  margin-top: 3.2rem;
+  flex: calc(100% - 3.2rem);
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  line-height: 1.31;
+  color: $base-font-color;
+  font-family: $primary-font;
+}
