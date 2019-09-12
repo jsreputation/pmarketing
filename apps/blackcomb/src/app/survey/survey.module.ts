@@ -6,7 +6,6 @@ import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey/survey.component';
 import { MatCardModule, MatButtonModule, MatProgressBarModule, MatDatepickerModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 
-
 @NgModule({
   declarations: [SurveyComponent],
   imports: [
