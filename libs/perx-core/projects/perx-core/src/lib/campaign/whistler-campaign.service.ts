@@ -14,6 +14,14 @@ interface IWhistlerCampaignContent {
 interface IWhistlerCampaign {
   data: IWhistlerCampaignContent;
 }
+
+interface IWhistlerCampaigns {
+  data: IWhistlerCampaignContent[];
+  meta: {
+    record_count: number;
+    page_count: number;
+  };
+}
 interface IWhistlerCampaignAttributes {
   name: string;
   goal: string;
@@ -34,10 +42,10 @@ export class WhistlerCampaignService implements ICampaignService {
     this.baseUrl = config.apiHost as string;
   }
 
-  public WhistlerCampaignToCampaign(campaign: IWhistlerCampaign): ICampaign {
-    const cAttributes = campaign.data.attributes;
+  public WhistlerCampaignToCampaign(campaign: IWhistlerCampaignContent): ICampaign {
+    const cAttributes = campaign.attributes;
     return {
-      id: parseInt(campaign.data.id, 10),
+      id: parseInt(campaign.id, 10),
       name: cAttributes.name,
       description: cAttributes.goal,
       type: cAttributes.engagement_type,
@@ -48,14 +56,21 @@ export class WhistlerCampaignService implements ICampaignService {
     };
   }
   public getCampaigns(): Observable<ICampaign[]> {
-    throw new Error('Method not implemented.');
+    return this.http.get<IWhistlerCampaigns>(this.baseUrl + '/campaign/entities')
+      .pipe(
+        map((campaigns: IWhistlerCampaigns) => campaigns.data),
+        map(
+          (campaigns: IWhistlerCampaignContent[]) =>
+            campaigns.map((campaign: IWhistlerCampaignContent) => this.WhistlerCampaignToCampaign(campaign)))
+      );
   }
 
   // @ts-ignore
   public getCampaign(id: number): Observable<ICampaign> {
     return this.http.get<IWhistlerCampaign>(this.baseUrl + '/campaign/entities/' + id)
       .pipe(
-        map((res: IWhistlerCampaign) => this.WhistlerCampaignToCampaign(res)),
+        map((campaigns: IWhistlerCampaign) => campaigns.data),
+        map((campaign: IWhistlerCampaignContent) => this.WhistlerCampaignToCampaign(campaign)),
       );
   }
 }

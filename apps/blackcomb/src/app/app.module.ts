@@ -13,6 +13,7 @@ import {
   ProfileService,
   ConfigModule,
   RewardsModule,
+  CampaignModule as PerxCampaignModule
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -90,7 +91,8 @@ const profileServiceStub = {
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    PerxCampaignModule
   ],
   providers: [
     { provide: IVoucherService, useValue: vouchersServiceStub },
