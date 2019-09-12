@@ -13,7 +13,7 @@ import {
   IGame,
   GameType
 } from '@perx/core';
-import { of, Observable } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -91,7 +91,8 @@ describe('AppComponent', () => {
     getCampaign: () => of()
   };
   const routerStub = {
-    navigate: () => { }
+    navigate: () => { },
+    navigateByUrl: () => {}
   };
   const matSnackBarStub = {
     open: () => { }
@@ -208,6 +209,20 @@ describe('AppComponent', () => {
       expect(campaignsServiceSpy).toHaveBeenCalled();
       expect(campaignServiceSpy).toHaveBeenCalled();
       // expect(component.selectedCampaign).toBe(campaigns[0]);
+    }));
+
+    it('should redirect to error screen', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(
+        throwError({code: 500, message: 'server failed'})
+      );
+
+      const routerFixture: Router = fixture.debugElement.injector.get(Router);
+      const routerSpy = spyOn(routerFixture, 'navigateByUrl').and.callThrough();
+      component.ngOnInit();
+      tick();
+      expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(routerSpy).toHaveBeenCalledWith('error');
     }));
 
   });
