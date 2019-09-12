@@ -23,6 +23,7 @@ commands:
             CUT=-$TARGET_ENV-$SEM_VER
             APP=${CIRCLE_TAG%"$CUT"}
             echo "export APP=$APP" >> $BASH_ENV
+            echo $APP
   get_env_from_tag:
     description: cuts destination environment out of git tag
     steps:
@@ -31,6 +32,7 @@ commands:
           command: |
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
+            echo $TARGET_ENV
   set_apihost:
     description: based on environment set the APIHOST
     steps:
@@ -50,6 +52,7 @@ commands:
                 echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
               fi
             fi
+            echo $APIHOST
   set_preauth:
     description: based on client set the PREAUTH
     steps:
@@ -65,6 +68,7 @@ commands:
             then
               echo 'export PREAUTH="true"' >> $BASH_ENV
             fi
+            echo $PREAUTH
   set_basehref:
     description: based on client set deploy endpoint base href
     steps:
@@ -81,6 +85,7 @@ commands:
             then
               echo 'export BASE_HREF="/site/hsbc/rewardscatalogue/"' >> $BASH_ENV
             fi
+            echo $BASE_HREF
 
   set_iswhistler:
     description: based on client deploy endpoint base href
@@ -89,6 +94,7 @@ commands:
           name: Setup BASE_HREF vars
           command: |
             echo 'export ISWHISTLER="false"' >> $BASH_ENV
+            echo $ISWHISTLER
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
