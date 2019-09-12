@@ -21,7 +21,7 @@ export function AuthServiceFactory(
 ): AuthenticationService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerAuthenticationService(config, http, tokenStorage, profileService);
+    return new WhistlerAuthenticationService(config, http, tokenStorage);
   }
   return new V4AuthenticationService(config, http, tokenStorage, profileService);
 }
