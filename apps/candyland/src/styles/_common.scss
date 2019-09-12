@@ -165,8 +165,12 @@ $header-font-size: 2.4rem;
   width: 100%;
   padding: $vertical-content-padding $horizontal-content-padding;
 
-  &.no-padding-top {
+  &.pt-0 {
     padding-top: 0;
+  }
+
+  &.pb-0 {
+    padding-bottom: 0;
   }
 
   .mat-stepper-horizontal {

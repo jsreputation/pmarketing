@@ -28,10 +28,6 @@
       &.invite-new-users-top-row {
         margin: 0.8rem 0 1.2rem;
       }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
     }
   }
 
@@ -44,6 +40,10 @@
       padding: 0 1.2px;
       text-align: center;
     }
+  }
+
+  &-section > *:last-child {
+    margin-bottom: 0;
   }
 
   &-label {

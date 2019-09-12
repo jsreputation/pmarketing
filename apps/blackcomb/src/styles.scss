@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 // @import '~@angular/material/theming';
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "./custom-theme.scss";
 
 html {
   font-size: 62.5%;
@@ -16,7 +16,6 @@ html, body {
 
 .actions-container {
   background-color: transparent;
-  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
