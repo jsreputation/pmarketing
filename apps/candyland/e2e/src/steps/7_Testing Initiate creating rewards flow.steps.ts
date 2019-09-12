@@ -59,32 +59,34 @@ Then(/^3_I should see the search bar ,reward list and create new button.$/, asyn
 });
 
 // Ensure that create new reward button is functional
-/*Given('{int}_I am on the reward page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Given(/^4_I am on the reward page$/, async () => {
+    await RewardPage.navigateToReward();
+});
 
-When('{int}_I click on the create new button', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+When(/^4_I click on the create new button$/, async () => {
+    const ec = protractor.ExpectedConditions;
+    await browser.wait(ec.presenceOf(element(by.css('cl-button'))), 5000);
+    await element(by.css('cl-button')).click();
+});
 
-Then('{int}_I should be on the create new reward page.', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Then(/^4_I should be on the create new reward page.$/, async () => {
+    expect(await browser.getCurrentUrl()).to.contain('new-reward');
+});
 
-Given('{int}_I am on the reward page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+// Ensure that search bar is functional
+Given(/^5_I am on the reward page$/, async () => {
+    await RewardPage.navigateToReward();
+});
 
-When('{int}_I enter a filter criteria', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+When(/^5_I enter a filter criteria$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for search bar to load
+  await browser.wait(ec.presenceOf(element(by.css('input'))), 5000);
+  // entering search criteria
+  await element(by.css('input')).sendKeys('test_0101');
+});
 
-Then('{int}_I should see the filter items on the list.', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });*/
+Then(/^5_I should see the filter items on the list.$/, async () => {
+  // doing an assertion on the elements on the table based on the search criteria
+  expect(await element(by.className('name-cell__link')).getText()).to.contain('test_0101');
+});
