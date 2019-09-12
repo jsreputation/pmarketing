@@ -48,6 +48,8 @@ import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TncComponent } from './tnc/tnc.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -91,7 +93,9 @@ const profileServiceStub = {
     VoucherDetailComponent,
     AccountComponent,
     HistoryComponent,
-    RewardComponent
+    RewardComponent,
+    ContactUsComponent,
+    TncComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
