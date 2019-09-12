@@ -34,7 +34,7 @@
 
   &-text {
     height: 1.7rem;
-    font-family: $base-font-family;
+    font-family: $primary-font;
     font-size: $base-font-size;
     line-height: 1.21;
     color: #979797;
@@ -44,7 +44,7 @@
 .customer-info {
   &-text {
     padding-top: 6.8rem;
-    font-family: $base-font-family;
+    font-family: $primary-font;
     font-size: 3rem;
     font-weight: bold;
     line-height: 1.23;
@@ -56,7 +56,7 @@
     width: 58.2rem;
     padding-top: 1rem;
     margin: 0 auto;
-    font-family: $base-font-family;
+    font-family: $primary-font;
     font-size: $base-font-size;
     line-height: 1.21;
     color: #3e4e73;

@@ -1,8 +1,4 @@
-//font-sizes
-$base-font-family: Roboto, "Helvetica Neue", sans-serif;
-$base-font-size: 1.4rem;
-
-$primary-color: #2665ee;
+$primary-color: #2664ed;
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
 $background-color: rgba(212, 225, 244, 0.3);
@@ -33,7 +29,9 @@ $tablet-width: 768px;
 $desktop-width: 992px;
 
 /* ----- FONTS ----- */
-$primary-font: Roboto;
+$primary-font: Roboto, "Helvetica Neue", sans-serif;
+$base-font-size: 1.4rem;
+/* ----- DO REFER TO TYPOGRAPHY MIXINS */
 
 /* ----- Progress BAR ----- */
 $progress-bar-color: #ffa600;
