@@ -38,7 +38,7 @@ describe('CatalogsComponent', () => {
   });
 
   it('should get catalogs from getAllCatalogs', () => {
-    component.catalogs.subscribe(res => {
+    component.catalogs$.subscribe(res => {
       expect(res[0].id).toBe(0);
       expect(res[0].name).toBe('Ramadan Exclusive');
       expect(res[0].description).toBe('Here are deals for ramadan');
