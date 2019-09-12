@@ -3,7 +3,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 // tslint:disable
 export class CustomDataSource<T> {
@@ -97,7 +97,10 @@ export class CustomDataSource<T> {
       throw new Error('Sort is undefined');
     }
     sort.sortChange
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        debounceTime(300)
+      )
       .subscribe(newSort => this.sort = newSort);
   }
 
