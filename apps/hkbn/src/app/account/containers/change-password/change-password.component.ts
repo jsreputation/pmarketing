@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService } from '@perx/core';
 import { IChangePasswordData } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-change-password',
@@ -15,8 +16,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    private ntfc: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dataTransferService: DataTransferService
   ) {
   }
   public ngOnInit(): void {
@@ -27,11 +28,9 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   public changePassword(data: IChangePasswordData): void {
-    this.authService.changePassword(data).subscribe(() => {
-      this.ntfc.addSnack(this.messageSuccess);
-      this.router.navigate(['/account']);
-    }, () =>
-        this.ntfc.addSnack(this.messageError)
-    );
+    this.authService.requestVerificationToken().subscribe(() => {
+      this.dataTransferService.newxUpdateData(data);
+      this.router.navigate(['account', 'verify_token', 'password']);
+    });
   }
 }
