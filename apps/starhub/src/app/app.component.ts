@@ -9,7 +9,7 @@ import {
   ICampaign,
   CampaignType,
   IReward,
-  GameService,
+  IGameService,
   IGame
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    private gameService: GameService
+    private gameService: IGameService
   ) { }
 
   public ngOnInit(): void {

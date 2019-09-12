@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { GameService, NotificationService, IGame } from '@perx/core';
+import { IGameService, NotificationService, IGame } from '@perx/core';
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private gameService: GameService,
+    private gameService: IGameService,
     private location: Location,
     private notificationService: NotificationService,
     private router: Router

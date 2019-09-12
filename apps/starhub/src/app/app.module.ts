@@ -12,7 +12,7 @@ import {
   GameModule,
   LocationModule,
   ConfigModule,
-  CampaignModule
+  CampaignModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -69,6 +69,7 @@ import { ErrorComponent } from './error/error.component';
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
+    CampaignModule,
     AppRoutingModule,
     MatDialogModule,
     MatIconModule,

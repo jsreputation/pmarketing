@@ -8,7 +8,7 @@ import {
   ICampaignService,
   NotificationService,
   PopupComponent,
-  GameService,
+  IGameService,
   ICampaign,
   IGame,
   GameType
@@ -142,7 +142,7 @@ describe('AppComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
-        { provide: GameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -251,7 +251,7 @@ describe('AppComponent', () => {
       const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
 
-      const gamesService = TestBed.get<GameService>(GameService as Type<GameService>);
+      const gamesService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
       spyOn(gamesService, 'getGamesFromCampaign').and.returnValue(of(games));
 
       const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { GameService } from './game.service';
+import { V4GameService } from './v4-game.service';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PinataComponent } from './pinata/pinata.component';
 import { Config } from '../config/config';
+import { IGameService } from './igame.service';
 
-export function gameServiceFactory(http: HttpClient, config: Config): GameService {
+export function gameServiceFactory(http: HttpClient, config: Config): IGameService {
   // Make decision on what to instantiate base on config
-  return new GameService(http, config);
+  return new V4GameService(http, config);
 }
 
 @NgModule({
@@ -22,7 +23,7 @@ export function gameServiceFactory(http: HttpClient, config: Config): GameServic
   ],
   providers: [
     {
-      provide: GameService,
+      provide: IGameService,
       useFactory: gameServiceFactory,
       deps: [HttpClient, Config]
     }
