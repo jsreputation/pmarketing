@@ -21,15 +21,13 @@ export class LoadingComponent implements OnInit {
     this.preAuth = environment.preAuth;
   }
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+    if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const autoLogin$ =  this.authService.autoLogin();
       autoLogin$.subscribe(
         () => {
-          console.log('finished');
           this.redirectAfterLogin();
         },
-        (err) => {
-          console.log(err);
+        () => {
           this.failedAuth = true;
         }
       );

@@ -1,11 +1,11 @@
-<div class="survey-page">
+<div class="survey-page" *ngIf="data$ | async as data">
     <div class="progress-bar">
         <mat-progress-bar mode="determinate" color="warn" [value]="progressBarValue"></mat-progress-bar>
         <div class="progress-bar-label">
             {{ progressBarValue }}% Complete
         </div>
     </div>
-    <mat-card class="survey-card mat-elevation-z2" *ngIf="data$ | async as data">
+    <mat-card class="survey-card mat-elevation-z2">
         <h1>{{data.title}}</h1>
         <h2 *ngIf="data.sub_title">{{data.sub_title}}</h2>
         <perx-core-survey 

@@ -57,9 +57,9 @@ export class QuestionComponent implements OnChanges {
 
   public updateAnswer(answer: IAnswer): void {
     this.question.answer = answer.content;
-    this.updateNonGroupPoint();
     const questionId = answer.question_id ? answer.question_id : this.question.id;
     this.updateAnswers.emit({ question_id: questionId, content: answer.content });
+    this.updateNonGroupPoint();
     this.questionValidation();
   }
 
