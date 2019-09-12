@@ -10,7 +10,7 @@ import { survey } from '../mock/survey.mock';
 
 const surveyServiceStub = {
   // @ts-ignore
-  getSurveyFromCampaign: (id: number) => of(survey)
+  getSurvey: (id: number) => of(survey)
 };
 
 @NgModule({
