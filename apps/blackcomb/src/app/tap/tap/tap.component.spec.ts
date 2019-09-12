@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TapComponent } from './tap.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, GameService } from '@perx/core';
+import { GameModule, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('TapComponent', () => {
@@ -18,7 +18,7 @@ describe('TapComponent', () => {
       declarations: [TapComponent],
       imports: [RouterTestingModule, GameModule],
       providers: [
-        { provide: GameService, useValue: gameServiceStub },
+        { provide: IGameService, useValue: gameServiceStub },
       ]
     })
       .compileComponents();

@@ -17,13 +17,13 @@ export class NewCampaignRewardsStampsFormService {
         ])
       }),
       limits: this.fb.group({
-        enableStampCard: [true],
+        enableStampCard: [false],
         stampCard: this.fb.group({
           perCampaign: [null, [Validators.max(1000)]],
           perUser: [null, [Validators.max(1000)]],
           duration: []
         }),
-        enableStamp: [true],
+        enableStamp: [false],
         stamp: this.fb.group({
           perUser: [null, [Validators.max(1000)]],
           duration: []

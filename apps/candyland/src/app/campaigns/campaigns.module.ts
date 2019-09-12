@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
+import { CampaignsListComponent } from 'src/app/campaigns/components/campaigns-list/campaigns-list.component';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
@@ -82,6 +84,7 @@ import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign
     NewCampaignRewardsStampsFormService
   ],
   declarations: [
+    CampaignsListComponent,
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,
     NewAudiencePageComponent,
@@ -142,7 +145,8 @@ import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign
     ChipListModule,
     CheckboxGroupModule,
     SelectRewardPopupModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    PaginationModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
