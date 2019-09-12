@@ -52,7 +52,6 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
 
     if (this.type === SurveyQuestionType.questionGroup) {
       this.componentRef.instance.group = this.group;
-      console.log('group');
       this.setSettingsForGroup();
     } else {
       this.componentRef.instance.group = this.group.get('payload');

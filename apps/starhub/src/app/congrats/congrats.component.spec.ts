@@ -7,7 +7,7 @@ import {
 import { CongratsComponent } from './congrats.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { GameService } from '@perx/core';
+import { IGameService } from '@perx/core';
 import { Type } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -27,7 +27,7 @@ describe('CongratsComponent', () => {
       providers: [
         // { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: { queryParams: of({gameId: 1}) } },
-        { provide: GameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub }
       ]
     })
     .compileComponents();
@@ -45,20 +45,11 @@ describe('CongratsComponent', () => {
 
   describe('onInit', () => {
     it('should call gameService play if gameId is present in params', fakeAsync(() => {
-      const gameService: GameService = fixture.debugElement.injector.get<GameService>(GameService as Type<GameService>);
+      const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
       const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(
         of({
-          data: {
-            campaign_id: 1,
-            game_id: 1,
-            id: 1,
-            outcomes: [{
-              reward: '',
-              voucher_code: '',
-            }],
-            state: '',
-            use_account_id: 1,
-          }
+          vouchers: [],
+          rawPayload: {}
         })
       );
       component.ngOnInit();

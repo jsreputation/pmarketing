@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
+import { RewardComponent } from './reward/reward.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
         path: 'reward',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
       },
+      { path: 'reward-detail', component: RewardComponent },
       { path: 'loading', component: LoadingComponent }
     ]
   },
