@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
@@ -30,7 +30,9 @@ export class VerificationOtpComponent implements OnInit {
     private notificationService: NotificationWrapperService,
     private translate: TranslateService
   ) { }
-
+  @HostListener('window:beforeunload') beforeUnloadEvent() {
+    return false;
+  }
   public ngOnInit(): void {
     this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
     this.route.params.subscribe((param: Params) => this.type = param.id);
