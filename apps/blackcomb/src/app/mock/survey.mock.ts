@@ -11,8 +11,8 @@ export const survey: ISurvey = {
             <b>Time:</b> 1pm - 3pm (Registration starts at 12.30pm)<br>
             <b>Venue:</b> 30 Cecil Street, Prudential Tower, S’049712<br>
             <br>
-            <a href="">See Dr Wong Chiung Ing’s bio</a><br>
-            <a href="">See speaker’s bio</a><br>
+            <a href="/reward-detail?id=1">See Dr Wong Chiung Ing’s bio</a><br>
+            <a href="/reward-detail?id=2">See speaker’s bio</a><br>
             <br>
             <i>Light refreshment will be provided after the talk.
             You are also entitled for an optional Financial Review with our Consultant and received $30 NTUC/Grab vouchers when you’ve completed the review. T&Cs apply.</i>
