@@ -37,6 +37,7 @@ export class LoadingComponent implements OnInit {
   }
 
   public redirectAfterLogin(): void {
-    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'wallet');
+    const campaignId = (window as any).campaignId;
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'survey/' + campaignId);
   }
 }

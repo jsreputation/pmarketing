@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
+      (window as any).campaignId = new URLSearchParams(param).get('cid');
     }
 
     this.notificationService.$popup
