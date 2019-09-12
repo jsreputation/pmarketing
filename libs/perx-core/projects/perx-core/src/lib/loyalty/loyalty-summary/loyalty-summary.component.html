@@ -8,14 +8,12 @@
   </ng-container>
   <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
     <div class="points">
-      {{loyalty.pointsBalance.toLocaleString('en-sg')}}
+      {{loyalty.pointsBalance ? loyalty.pointsBalance.toLocaleString('en-sg') : 0 }}
     </div>
-    <div>
-      {{subTitleFn(loyalty)}}
+    <div *ngIf="loyalty.currencyBalance">
+      {{subTitleFn(loyalty)}} {{loyalty.currencyBalance}}
     </div>
-    <div
-      class="expiring-points"
-    >
+    <div class="expiring-points">
       {{summaryExpiringFn(loyalty)}}
     </div>
   </ng-container>
