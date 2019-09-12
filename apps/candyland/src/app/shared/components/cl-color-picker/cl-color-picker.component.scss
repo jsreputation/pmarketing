@@ -8,14 +8,6 @@
     padding: 1.4rem;
     display: flex;
     cursor: pointer;
-
-    &:hover {
-      border-color: transparent;
-    }
-
-    &:hover .picker-border {
-      visibility: visible;
-    }
   }
 
   &-border {
@@ -58,5 +50,12 @@
     line-height: 1.21;
     color: $base-font-color;
   }
-}
 
+  &-wrap:hover {
+    border-color: transparent;
+
+    .picker-border {
+      visibility: visible;
+    }
+  }
+}

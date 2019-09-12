@@ -31,7 +31,7 @@
     width: 75%;
     flex: 1;
     min-width: $dashboard-card-img-wrap-dimensions;
-    min-height: calc(100% - ($dashboard-card-img-wrap-dimensions + $dashboard-card-action-height) );
+    min-height: calc(100% - ($dashboard-card-img-wrap-dimensions + $dashboard-card-action-height));
   }
 
   &-title {
