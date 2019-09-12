@@ -24,9 +24,17 @@ export interface IQuestion {
     payload: IPayload;
     answer?: any;
 }
-
+export enum MaterialColor {
+    primary = 'primary',
+    accent = 'accent',
+    warn = 'warn'
+}
 export interface ISurvey {
     title: string;
+    sub_title?: string;
+    progress_bar_color?: MaterialColor;
+    card_background_img_url?: string;
+    background_img_url?: string;
     questions: IQuestion[];
 }
 

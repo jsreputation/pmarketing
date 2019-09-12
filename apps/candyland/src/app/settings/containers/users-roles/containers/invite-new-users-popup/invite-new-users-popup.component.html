@@ -35,17 +35,17 @@
         <!--role-->
         <mat-form-field class="row">
           <mat-label>Role</mat-label>
-          <mat-select [formControl]="form.get('role')">
+          <mat-select [formControl]="form.get('roleId')">
             <mat-select-trigger>
-              <cl-role-label [role]="form.get('role').value" [showTitle]="true"></cl-role-label>
+              <cl-role-label [role]="form.get('roleId').value" [showTitle]="true"></cl-role-label>
             </mat-select-trigger>
-            <ng-container *ngFor="let role of config?.roleTypes">
-              <mat-option [value]="role?.value">
-                <cl-role-label [role]="role?.value" [showTitle]="true" classList="small"></cl-role-label>
+            <ng-container *ngFor="let role of config">
+              <mat-option [value]="role.id">
+                <cl-role-label [role]="role?.id" [showTitle]="true" classList="small"></cl-role-label>
               </mat-option>
             </ng-container>
           </mat-select>
-          <mat-error *ngIf="this.form.get('role').hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="this.form.get('roleId').hasError('required')">Required field</mat-error>
         </mat-form-field>
         <!--/ role-->
       </div>
