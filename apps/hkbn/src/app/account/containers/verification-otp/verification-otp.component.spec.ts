@@ -16,9 +16,9 @@ const profileServiceStub = {
 };
 
 const notificationWrapperServiceStub = {
-  addPopup: ()=>{},
-  addSnack: ()=>{}
-}
+  addPopup: () => { },
+  addSnack: () => { }
+};
 
 const authenticationServiceStub = {
   verifyOTP: () => of(null),
@@ -51,7 +51,7 @@ describe('VerificationOtpComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: NotificationWrapperService, useValue: notificationWrapperServiceStub}
+        { provide: NotificationWrapperService, useValue: notificationWrapperServiceStub }
       ]
     })
       .compileComponents();
@@ -62,7 +62,7 @@ describe('VerificationOtpComponent', () => {
     component = fixture.componentInstance;
     authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     translateService = TestBed.get<TranslateService>(TranslateService as Type<TranslateService>);
-    notificationService = TestBed.get<NotificationWrapperService>(NotificationWrapperService as Type<NotificationWrapperService>)
+    notificationService = TestBed.get<NotificationWrapperService>(NotificationWrapperService as Type<NotificationWrapperService>);
     fixture.detectChanges();
   });
 
@@ -84,7 +84,7 @@ describe('VerificationOtpComponent', () => {
     expect(spy).toHaveBeenCalled();
   }));
 
-  it('should call switchMethod', fakeAsync(()=>{
+  it('should call switchMethod', fakeAsync(() => {
     const otp = '111222';
     spyOn(authService, 'verifyOTP').and.returnValue(of(null));
     spyOn(authService, 'changePassword').and.returnValue(of(null));
@@ -94,7 +94,7 @@ describe('VerificationOtpComponent', () => {
     expect(translateSpy).toHaveBeenCalledWith('PASSWORD_SUCCESS_UPDATE');
   }));
 
-  it('should do all workflow with mobile', fakeAsync(()=>{
+  it('should do all workflow with mobile', fakeAsync(() => {
     const otp = '111222';
     const msg = 'phone';
     component.type = 'phone';
@@ -102,9 +102,9 @@ describe('VerificationOtpComponent', () => {
     spyOn(authService, 'verifyOTP').and.returnValue(of(null));
     spyOn(authService, 'changePhone').and.returnValue(of(null));
     spyOn(translateService, 'get').and.returnValue(of(msg));
-    const spy = spyOn(notificationService, 'addSnack')
+    const spy = spyOn(notificationService, 'addSnack');
     component.update(otp);
     tick();
     expect(spy).toHaveBeenCalledWith(msg);
-  }))
+  }));
 });

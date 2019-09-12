@@ -7,14 +7,14 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class CheckFormTransferGuard implements CanActivate  {
+export class CheckFormTransferGuard implements CanActivate {
   constructor(
     private dataTransfer: DataTransferService,
     private router: Router
-  ){}
-  canActivate(): Observable<boolean> {
+  ) { }
+  public canActivate(): Observable<boolean> {
     return this.dataTransfer.updateData$
-    .pipe(map((data)=>Boolean(data)), 
-    tap((data)=> !data && this.router.navigate(['account'])));
+      .pipe(map((data) => Boolean(data)),
+        tap((data) => !data && this.router.navigate(['account'])));
   }
 }

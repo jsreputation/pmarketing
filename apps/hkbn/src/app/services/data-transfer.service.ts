@@ -6,12 +6,12 @@ import { IChangePasswordData } from '@perx/core';
   providedIn: 'root'
 })
 export class DataTransferService {
-  private _updateData$: BehaviorSubject<IChangePasswordData | null> = new BehaviorSubject(null);
+  private data$: BehaviorSubject<IChangePasswordData | null> = new BehaviorSubject(null);
 
   public get updateData$(): BehaviorSubject<any> {
-    return this._updateData$;
+    return this.data$;
   }
   public newxUpdateData(object: IChangePasswordData | null): void {
-    this._updateData$.next(object);
+    this.data$.next(object);
   }
 }
