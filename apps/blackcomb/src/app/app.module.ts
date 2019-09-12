@@ -9,7 +9,6 @@ import {
   GameModule,
   UtilsModule,
   ProfileModule,
-  RewardsService,
   IVoucherService,
   ProfileService,
   ConfigModule,
@@ -40,22 +39,12 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
-import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
-import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TncComponent } from './tnc/tnc.component';
-
-const rewardsServiceStub = {
-  getReward: () => of(rewards[0]),
-  getAllRewards: () => of(rewards),
-  getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
-  reserveReward: () => of(vouchers[1])
-};
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
@@ -111,7 +100,6 @@ const profileServiceStub = {
     UtilsModule
   ],
   providers: [
-    { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
