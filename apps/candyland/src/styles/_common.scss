@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 html, body {
@@ -75,9 +76,20 @@ button {
   }
 }
 
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-infix {
+  min-width: 0;
+  flex-basis: 180px;
+}
+
 .mat-toolbar-log.mat-toolbar-single-row {
   height: $header-height-base;
 }
+
+$header-font-size: 2.4rem;
 
 .page-header {
   display: flex;
@@ -87,23 +99,51 @@ button {
   align-items: center;
   box-sizing: border-box;
   padding: 0 $horizontal-content-padding;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   position: fixed;
   top: 0;
   z-index: 99;
   background: #fff;
   width: calc(100% - 17rem);
 
+  @include mat-elevation(4);
+
   &.full-with {
     background: $white-color;
     min-height: $header-height-base;
   }
+
+  .mat-form-field-infix {
+    border: 0;
+  }
+
+  input {
+    font-weight: 400;
+    font-size: $header-font-size;
+    color: $there-color;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+    transition: margin 0.05s ease-in;
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      top: 100%;
+    }
+  }
+
+  .mat-form-field-invalid .mat-form-field-wrapper {
+    margin: 1.5rem 0 3rem;
+  }
 }
 
 .title {
-  font-size: 2.6rem;
+  font-size: $header-font-size;
   margin: auto 0;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.04;
@@ -154,15 +194,6 @@ button {
       margin-right: 0;
     }
   }
-}
-
-.mat-form-field {
-  width: 100%;
-}
-
-.mat-form-field-infix {
-  min-width: 0;
-  flex-basis: 180px;
 }
 
 .mobile {
@@ -308,19 +339,6 @@ cl-game-mobile-preview, .tabs-component {
   }
 }
 
-.name-control-title {
-  font-weight: 500;
-
-  input {
-    font-size: 2.2rem;
-    color: $there-color;
-  }
-
-  .mat-form-field-infix {
-    border: 0;
-  }
-}
-
 .control-input {
   font-size: 1.4rem !important;
   width: 100%;
@@ -391,12 +409,6 @@ cl-game-mobile-preview, .tabs-component {
 
 .name-filter {
   position: relative;
-}
-
-.dashboard-content {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-  }
 }
 
 .tabs-filter:first-child .tabs {

@@ -36,7 +36,7 @@ interface IV4Reward {
   merchant_logo_url?: string;
 }
 
-interface IV4Voucher {
+export interface IV4Voucher {
   custom_fields: any;
   given_by: any;
   given_date: any;

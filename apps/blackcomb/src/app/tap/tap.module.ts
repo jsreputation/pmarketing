@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TapRoutingModule } from './tap-routing.module';
 import { TapComponent } from './tap/tap.component';
-import { GameModule, GameService } from '@perx/core';
+import { GameModule, IGameService } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 import { of } from 'rxjs';
 import { games } from '../mock/games.mock';
@@ -22,7 +22,7 @@ const gameServiceStub = {
     TapRoutingModule
   ],
   providers: [
-    { provide: GameService, useValue: gameServiceStub },
+    { provide: IGameService, useValue: gameServiceStub },
   ]
 })
 export class TapModule { }

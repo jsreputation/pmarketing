@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShakeComponent } from './shake.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, GameService } from '@perx/core';
+import { GameModule, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('ShakeComponent', () => {
@@ -21,7 +21,7 @@ describe('ShakeComponent', () => {
         GameModule
       ],
       providers: [
-        { provide: GameService, useValue: gameServiceStub },
+        { provide: IGameService, useValue: gameServiceStub },
       ]
     })
       .compileComponents();

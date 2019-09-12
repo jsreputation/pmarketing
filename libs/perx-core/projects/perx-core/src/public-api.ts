@@ -54,10 +54,11 @@ export {
   IGameOutcome,
   IPinata,
   ITree,
-  defaultTree
+  defaultTree,
+  IPlayOutcome
 } from './lib/game/game.model';
-export { GameService } from './lib/game/game.service';
-export { IGameComponent } from './lib/game/IGame.component';
+export { IGameService } from './lib/game/igame.service';
+export { IGameComponent } from './lib/game/igame.component';
 
 /**
  * Profile

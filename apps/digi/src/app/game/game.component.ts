@@ -5,12 +5,13 @@ import {
   ICampaignService,
   CampaignType,
   IGame,
-  GameService,
+  IGameService,
   ICampaign,
   NotificationService,
   IGameOutcome,
   IGameComponent,
   PopUpClosedCallBack,
+  IPlayOutcome,
 } from '@perx/core';
 import { map, take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -40,7 +41,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   constructor(
     private route: ActivatedRoute,
     private campaignService: ICampaignService,
-    private gameService: GameService,
+    private gameService: IGameService,
     private notificationService: NotificationService
   ) { }
 
@@ -140,15 +141,13 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
           take(1)
         )
         .subscribe(
-          (res: any) => {
+          (res: IPlayOutcome) => {
             // one try has been used
             this.game.remainingNumberOfTries--;
             // select proper popup based on outcome
-            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.filter((out) => {
-              return out.outcome_type === 'reward';
-            }).length > 0);
+            const hasOutcome: boolean = res.vouchers.length > 0;
             const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
-            this.lastPayload = hasOutcome ? res.data.outcomes : undefined;
+            this.lastPayload = hasOutcome ? res.rawPayload : undefined;
             if (this.game.remainingNumberOfTries === 0 && !hasOutcome) {
               outcome.button = null;
             }
