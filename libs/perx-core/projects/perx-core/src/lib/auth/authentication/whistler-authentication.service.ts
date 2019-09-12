@@ -16,7 +16,6 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { ProfileService } from '../../profile/profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +32,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    profileService: ProfileService
   ) {
     super();
-    console.log(profileService);
     this.apiHost = config.apiHost as string;
     if (!config.production) {
       this.preAuthEndpoint = 'http://localhost:4000/cognito/login';
@@ -89,7 +86,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
-          this.saveUserAccessToken('Bearer ' + userBearer);
+          this.saveUserAccessToken(userBearer);
         },
         () => {
           this.$failedAuthObservable = of(true);

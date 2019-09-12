@@ -1,6 +1,12 @@
 @import "../cards";
 @import "../../macaron.scss";
 
+:host {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
 .featured-image {
   position: relative;
 
