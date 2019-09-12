@@ -44,7 +44,7 @@
   $fixed-cell-4: 15rem !important;
   $fixed-cell-5: 18rem !important;
   $fixed-cell-6: 21rem !important;
-  
+
   td.mat-cell {
     @include typo-body2;
 
@@ -60,13 +60,13 @@
       }
 
       &-actions,
-      &-id {
+      &-id,
+      &-logo {
         width: $fixed-cell-1;
       }
 
       &-branches,
-      &-rewardType,
-      &-logo {
+      &-rewardType {
         width: $fixed-cell-3;
       }
 
@@ -80,17 +80,17 @@
 
       &-email {
         width: $fixed-cell-6;
-        table-layout: fixed
       }
 
-      &-status {
+      &-actions,
+      &-status,
+      &-username {
         vertical-align: middle;
       }
 
       &-actions {
         padding-top: 0;
         padding-bottom: 0;
-        vertical-align: middle;
         text-align: center;
       }
     }

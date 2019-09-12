@@ -59,6 +59,13 @@ $base-font-size: 1.4rem;
   letter-spacing: 0.025rem;
 }
 
+//Input Fields
+@mixin typo-input {
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.015rem;
+}
+
 //Buttons
 @mixin typo-button {
   font-weight: 500;
