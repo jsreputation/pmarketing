@@ -48,7 +48,7 @@
     padding: 0 2rem;
   }
 
-// CLONED FROM STYLES ABOVE TEMPORARILY TO REFACTOR APPROPRIATE CELLS
+  // CLONED FROM STYLES ABOVE TEMPORARILY TO REFACTOR APPROPRIATE CELLS
   td.mat-cell.limit-cell, th.mat-header-cell.limit-cell, .limit-cell th.mat-header-cell {
     width: 9rem !important;
     padding: 0 2rem;
@@ -68,8 +68,6 @@
   }
 
   .name-cell {
-    @include typo-body2;
-
     margin: 1.1rem 0;
     display: flex;
     flex-flow: column nowrap;
