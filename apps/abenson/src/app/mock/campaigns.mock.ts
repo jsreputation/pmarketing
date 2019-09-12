@@ -2,7 +2,7 @@ import { ICampaign, CampaignType, CampaignState } from '@perx/core';
 
 export const campaigns: ICampaign[] = [
     {
-        id: 1,
+        id: '1',
         name: 'Smash that Pinata',
         description: '',
         type: CampaignType.stamp,
@@ -10,7 +10,7 @@ export const campaigns: ICampaign[] = [
         endsAt: '2017-12-17T03:24:00'
     },
     {
-        id: 2,
+        id: '2',
         name: 'Abenson GAME',
         description: 'Abenson description',
         type: CampaignType.game,
@@ -18,7 +18,7 @@ export const campaigns: ICampaign[] = [
         endsAt: '2017-11-17T03:24:00'
     },
     {
-        id: 3,
+        id: '3',
         name: 'Abenson Stamp',
         description: 'Abenson description',
         type: CampaignType.stamp,
