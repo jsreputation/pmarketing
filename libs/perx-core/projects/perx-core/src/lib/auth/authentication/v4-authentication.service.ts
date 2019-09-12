@@ -1,11 +1,10 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap, catchError } from 'rxjs/operators';
+import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
-import { EnvConfig } from '../../shared/env-config';
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
@@ -16,19 +15,21 @@ import {
   ILoginResponse,
   IChangePhoneData
 } from '../authentication/models/authentication.model';
-import { V4ProfileService } from '../../profile/v4-profile.service';
+import { ProfileService } from '../../profile/profile.service';
+import { Config } from '../../config/config';
+import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 
-// interface IV4SignUpData {
-//   first_name?: string;
-//   last_name: string;
-//   middle_name?: string;
-//   phone: string;
-//   email?: string;
-//   birthday?: string;
-//   gender?: string;
-//   password: string;
-//   password_confirmation: string;
-// }
+interface IV4SignUpData {
+  first_name?: string;
+  last_name: string;
+  middle_name?: string;
+  phone: string;
+  email?: string;
+  birthday?: string;
+  gender?: string;
+  password: string;
+  password_confirmation: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -43,20 +44,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public $failedAuthObservable: Observable<boolean>;
 
   constructor(
-    config: EnvConfig,
+    config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: V4ProfileService
+    private profileService: ProfileService
   ) {
     super();
-    if (!config.env.production) {
+    if (!config.production) {
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
     } else {
-      this.appAuthEndPoint = config.env.baseHref + 'v2/oauth';
-      this.userAuthEndPoint = config.env.baseHref + 'v4/oauth';
+      this.appAuthEndPoint = config.baseHref + 'v2/oauth';
+      this.userAuthEndPoint = config.baseHref + 'v4/oauth';
     }
-    this.customersEndPoint = config.env.apiHost + '/v4/customers';
+    this.customersEndPoint = config.apiHost + '/v4/customers';
     this.$failedAuthObservable = new Observable();
   }
 
@@ -85,7 +86,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
       tap(
         (res: ILoginResponse) => {
@@ -120,7 +121,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  public autoLogin(): Observable<ILoginResponse> {
+  public autoLogin(): Observable<any> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
@@ -203,40 +204,38 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return throwError('Temporarily disabled');
-    // return this.http.get<IMessageResponse>(
-    //   this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
-    //     tap( // Log the result or error
-    //       data => console.log(data),
-    //       error => console.log(error)
-    //     )
-    //   );
+    return this.http.get<IMessageResponse>(
+      this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
-  // used for signup function, don't remove
-  // private static signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
-  //   const res = {
-  //     last_name: data.lastName,
-  //     first_name: data.firstName,
-  //     birthday: data.birthDay,
-  //     ...data
-  //   };
-  //   res.lastName = undefined;
-  //   res.firstName = undefined;
-  //   return res;
-  // }
+
+  private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
+    const res = {
+      last_name: data.lastName,
+      first_name: data.firstName,
+      birthday: data.birthDay,
+      ...data
+    };
+    res.lastName = undefined;
+    res.firstName = undefined;
+    return res;
+  }
 
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
-    return throwError('Temporarily disabled');
-    // const profileV4 = V4AuthenticationService.signUpDataToV4SignUpData(profile);
-    // return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
-    //   .pipe(
-    //     tap( // Log the result or error
-    //       data => console.log(data),
-    //       error => console.log(error)
-    //     ),
-    //     map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
-    //   );
+    const profileV4 = this.signUpDataToV4SignUpData(profile);
+    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        ),
+        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+      );
   }
 
   // @ts-ignore

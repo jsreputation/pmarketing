@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VouchersService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher } from '@perx/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class RedemptionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private vouchersService: VouchersService
+    private vouchersService: IVoucherService
   ) { }
 
   public ngOnInit(): void {

@@ -1,7 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { GameService, NotificationService } from '@perx/core';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Params } from '@angular/router';
+import {
+  IGameService,
+  NotificationService,
+  Voucher
+} from '@perx/core';
+import {
+  filter,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { IPlayOutcome } from '@perx/core';
 
 @Component({
   selector: 'app-congrats',
@@ -9,11 +20,11 @@ import { filter, map, switchMap } from 'rxjs/operators';
   styleUrls: ['./congrats.component.scss']
 })
 export class CongratsComponent implements OnInit {
+  public vouchers: Observable<Voucher[]>;
 
   constructor(
-    private router: Router,
     private activeRoute: ActivatedRoute,
-    private gameService: GameService,
+    private gameService: IGameService,
     private notificationService: NotificationService
   ) { }
 
@@ -22,18 +33,16 @@ export class CongratsComponent implements OnInit {
       .pipe(
         filter((params: Params) => params.gameId),
         map((params: Params) => Number.parseInt(params.gameId, 10)),
-        switchMap((gameId: number) => this.gameService.play(gameId))
+        switchMap((gameId: number) => this.gameService.play(gameId)),
+        map((game: IPlayOutcome) => game.vouchers),
+        tap((vouchers: Voucher[]) => this.vouchers = of(vouchers))
       )
       .subscribe(
-        (game: any) => console.log(game),
+        () => { },
         () => this.notificationService.addPopup({
           title: 'Oooops!',
           text: 'There is no more reward for you!'
         })
       );
-  }
-
-  public viewReward(id: number): void {
-    this.router.navigate(['/reward'], { queryParams: { id } });
   }
 }

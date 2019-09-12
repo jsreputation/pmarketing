@@ -5,18 +5,18 @@ import {
   PopupComponent,
   IPopupConfig,
   PopUpClosedCallBack,
-  CampaignService,
+  ICampaignService,
   ICampaign,
   CampaignType,
   IReward,
-  GameService,
+  IGameService,
   IGame
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { switchMap, filter, map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { switchMap, filter, map, catchError } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +32,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private activeRoute: ActivatedRoute,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    private gameService: GameService
+    private gameService: IGameService
   ) { }
 
   public ngOnInit(): void {
@@ -54,6 +54,12 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   private fetchCampaigns(): void {
     this.campaignService.getCampaigns()
+      .pipe(
+        catchError(() => {
+          this.router.navigateByUrl('error');
+          return of([]);
+        })
+      )
       .pipe(
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))

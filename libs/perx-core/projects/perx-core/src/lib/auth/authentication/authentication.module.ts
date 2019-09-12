@@ -1,43 +1,50 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { EnvConfig } from '../../shared/env-config';
+import { NgModule } from '@angular/core';
 import {
   AuthModule,
-  AUTH_SERVICE,
   PROTECTED_FALLBACK_PAGE_URI,
-  PUBLIC_FALLBACK_PAGE_URI
+  PUBLIC_FALLBACK_PAGE_URI,
+  AUTH_SERVICE
 } from 'ngx-auth';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
+import { HttpClient } from '@angular/common/http';
+import { Config } from '../../config/config';
+import { ProfileService } from '../../profile/profile.service';
+import { WhistlerAuthenticationService } from './whistler-authentication.service';
 
-export function factory(authenticationService: AuthenticationService): AuthenticationService {
-  return authenticationService;
+export function AuthServiceFactory(
+  http: HttpClient,
+  config: Config,
+  tokenStorage: TokenStorage,
+  profileService: ProfileService
+): AuthenticationService {
+  // Make decision on what to instantiate base on config
+  if (config.isWhistler) {
+    return new WhistlerAuthenticationService(config, http, tokenStorage, profileService);
+  }
+  return new V4AuthenticationService(config, http, tokenStorage, profileService);
 }
 
 @NgModule({
   imports: [AuthModule],
   declarations: [],
-  exports: []
+  exports: [],
+  providers: [
+    TokenStorage,
+    { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
+    { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
+    {
+      provide: AuthenticationService,
+      useFactory: AuthServiceFactory,
+      deps: [HttpClient, Config, TokenStorage, ProfileService]
+    },
+    {
+      provide: AUTH_SERVICE,
+      useFactory: AuthServiceFactory,
+      deps: [HttpClient, Config, TokenStorage, ProfileService]
+    }
+  ]
 })
 export class AuthenticationModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: AuthenticationModule,
-      providers: [
-        TokenStorage,
-        {
-          provide: EnvConfig,
-          useValue: config
-        },
-        { provide: AuthenticationService, useClass: V4AuthenticationService },
-        { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
-        { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
-        {
-          provide: AUTH_SERVICE,
-          deps: [AuthenticationService],
-          useFactory: factory
-        }
-      ]
-    };
-  }
 }

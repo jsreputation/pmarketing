@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersService } from '@perx/core';
+import { IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 import { vouchers } from 'src/app/vouchers.mock';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
@@ -25,7 +25,7 @@ describe('VouchersComponent', () => {
         NgxMultiLineEllipsisModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();

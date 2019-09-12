@@ -43,8 +43,8 @@ export interface IVoucher {
   expiry: Date | null;
   redemptionDate?: Date | null;
   description: IVoucherDescription[];
-  redemptionSuccessTxt: string;
-  redemptionSuccessImg: string;
+  redemptionSuccessTxt?: string;
+  redemptionSuccessImg?: string;
 }
 
 export interface IGetVoucherParams {

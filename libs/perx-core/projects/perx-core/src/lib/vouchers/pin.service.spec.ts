@@ -1,24 +1,27 @@
 import { TestBed, async } from '@angular/core/testing';
 import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
-import { VouchersService } from './vouchers.service';
+import { IVoucherService } from './ivoucher.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigModule } from '../../public-api';
+import { Type } from '@angular/core';
 
 describe('PinService', () => {
   let service: PinService;
-  let vouchersService: VouchersService;
+  let vouchersService: IVoucherService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        VouchersModule,
+        ConfigModule.forRoot({})
       ]
     }).compileComponents();
     service = TestBed.get(PinService);
-    vouchersService = TestBed.get(VouchersService);
+    vouchersService = TestBed.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
   }));
 
   it('should be created', () => {
