@@ -37,6 +37,6 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public readMore(item: FeedItem): void {
-    this.dialog.open(PopupComponent, {panelClass: 'app-full-bleed-dialog', data: item});
+    this.dialog.open(PopupComponent, {panelClass: 'app-full-bleed-dialog', data: item, maxHeight: '80vh'});
   }
 }

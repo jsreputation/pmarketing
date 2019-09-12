@@ -1,6 +1,8 @@
 @import "~src/assets/styles/variables";
 
 :host {
+  height: 100%;
+
   ::ng-deep {
     .details {
       padding: 0 1.6rem 1.5rem !important;
@@ -17,10 +19,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 
   &-buy {
-    margin: 2rem 1.6rem 1.6rem;
     color: $white;
+    width: 100%;
   }
 }
 
@@ -28,9 +31,19 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 perx-core-reward {
   display: flex;
+  overflow-y: scroll;
+}
+
+.container {
+  height: 100%;
+}
+
+.button-container {
+  padding: 1.6rem;
 }

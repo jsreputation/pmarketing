@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import {
   CampaignModule,
   GameModule,
-  GameService,
+  IGameService,
   IVoucherService,
   GameType,
   defaultTree,
@@ -25,7 +25,7 @@ describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let router: Router;
-  let gameService: GameService;
+  let gameService: IGameService;
 
   const fakeGame: IGame = {
     id: 1,
@@ -65,7 +65,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    gameService = TestBed.get(GameService);
+    gameService = TestBed.get(IGameService);
     fixture.detectChanges();
   });
 
