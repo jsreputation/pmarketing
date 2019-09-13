@@ -179,7 +179,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return throwError('Not implement yet');
   }
   // @ts-ignore
-  public requestVerificationToken(phone: string): Observable<void> {
+  public requestVerificationToken(): Observable<void> {
     return throwError('Not implement yet');
   }
 

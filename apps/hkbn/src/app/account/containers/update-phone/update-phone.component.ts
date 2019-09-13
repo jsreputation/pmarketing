@@ -18,7 +18,7 @@ export class UpdatePhoneComponent implements OnInit {
       HkbnValidators.required,
       HkbnValidators.pattern('^[0-9]+$'),
       HkbnValidators.minLength(8),
-      HkbnValidators.maxLength(8)])
+      HkbnValidators.maxLength(11)])
   });
 
   constructor(
@@ -41,7 +41,7 @@ export class UpdatePhoneComponent implements OnInit {
 
   public onSubmit(): void {
     this.dataTransfer.newxUpdateData(this.updatePhoneGroup.value);
-    this.authService.requestVerificationToken(this.updatePhoneGroup.value.phone)
+    this.authService.requestVerificationToken()
     .subscribe(()=>this.router.navigate(['account',  'verify_token', 'phone']));
   }
 }
