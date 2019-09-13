@@ -1,5 +1,5 @@
 <div class="tab-group__content">
-    <div *ngIf="campaigns$ && (campaigns$ | async).length > 0">
+    <div *ngIf="campaigns$ | async">
         <h1>My Stamp Card</h1>
         <a *ngFor="let campaign of campaigns$ | async as campaigns" [routerLink]="['/stamp/' + campaign.id]">
             <mat-card matRipple>

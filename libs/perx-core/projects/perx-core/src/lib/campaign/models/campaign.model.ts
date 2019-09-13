@@ -9,7 +9,8 @@ export enum CampaignType {
 
 export enum CampaignState {
   active = 'active',
-  inactive = 'inactive'
+  inactive = 'inactive',
+  draft = 'draft'
 }
 
 export interface ICampaign {
@@ -18,7 +19,14 @@ export interface ICampaign {
   description: string;
   type: CampaignType;
   state: CampaignState;
-  endsAt: string;
+  endsAt: Date;
   rewards?: IReward[];
   thumbnailUrl?: string;
+  engagementId?: number;
+  commChannel?: CommChannel;
+}
+
+export enum CommChannel {
+  sms = 'sms',
+  email = 'email'
 }
