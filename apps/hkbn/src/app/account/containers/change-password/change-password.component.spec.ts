@@ -6,7 +6,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,6 +21,10 @@ const passwordForm: IChangePasswordData = {
   oldPassword: password,
   newPassword: password,
   passwordConfirmation: password
+};
+
+const accountStub = {
+  phone: '777888999'
 };
 
 describe('ChangePasswordComponent', () => {
@@ -48,6 +52,10 @@ describe('ChangePasswordComponent', () => {
           provide: AuthenticationService, useValue: {
             changePassword: () => of(null),
             requestVerificationToken: () => of(null)
+          }
+        }, {
+          provide: ProfileService, useValue: {
+            whoAmI: () => of(accountStub)
           }
         }
       ],
