@@ -1,6 +1,5 @@
 export class ApiConfig {
-  public static basePath: string = 'https://api.whistler.perxtech.org';
-  // public static basePath: string = 'http://708f54de.ngrok.io/';
+  public static basePath: string = 'https://api-pru1.uat.whistler.perxtech.io';
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam/`;
   public static engagementsPath =  `${ApiConfig.basePath}/engagements/`;
   public static campaignsPath = `${ApiConfig.basePath}campaign/entities/`;

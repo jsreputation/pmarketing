@@ -45,7 +45,7 @@ export class DataService {
 
   private getToken(id: number): Observable<string> {
     return this.http.get<ITokenResponse>(
-      `https://api.whistler.perxtech.org/cognito/metabase_token/${id}`
+      `https://api-pru1.uat.whistler.perxtech.io/cognito/metabase_token/${id}`
       // { headers: { Authorization: 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg' } }
     )
       .pipe(
