@@ -3,9 +3,7 @@ import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
-// import { SettingsHttpAdapter } from '@cl-core/services/settings-transform-data.service';
 import { filter, switchMap } from 'rxjs/operators';
-// import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-users-roles',
@@ -21,7 +19,6 @@ export class UsersRolesComponent  implements AfterViewInit {
   constructor(private settingsService: SettingsService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
-              // private settingsTransformDataService: SettingsHttpAdapter
   ) {
     this.dataSource = new SettingsUsersRolesDataSource<IAMUser>(this.settingsService);
   }
@@ -37,7 +34,6 @@ export class UsersRolesComponent  implements AfterViewInit {
       data: {
         groups: this.groups
     }});
-
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -68,9 +64,7 @@ export class UsersRolesComponent  implements AfterViewInit {
         // })
       )
       .subscribe(() => {
-        // if (value) {
-          this.dataSource.updateData();
-        // }
+        this.dataSource.updateData();
     });
   }
 
@@ -84,7 +78,7 @@ export class UsersRolesComponent  implements AfterViewInit {
   private getAllGroups(): void {
     this.settingsService.getAllGroups()
       .subscribe((res) => {
-        this.groups = res;
+        this.groups = res.getModels();
       });
   }
 

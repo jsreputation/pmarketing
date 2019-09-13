@@ -34,7 +34,7 @@ export class SurveyComponent implements OnInit {
         switchMap((params: ParamMap) => {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
-          return this.surveyService.getSurvey(idN);
+          return this.surveyService.getSurveyFromCampaign(idN);
         }),
       );
   }
@@ -47,13 +47,17 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    this.router.navigate(['/wallet']);
-    this.notificationService.addPopup({
-      text: 'Here is a reward for you.',
-      title: 'Thanks for completing the survey.',
-      buttonTxt: 'View Reward',
-      imageUrl: 'assets/congrats_image.png'
-    });
+    this.surveyService.postSurveyAnswer(this.answers).subscribe(
+      () => {
+        this.router.navigate(['/wallet']);
+        this.notificationService.addPopup({
+          text: 'Here is a reward for you.',
+          title: 'Thanks for completing the survey.',
+          buttonTxt: 'View Reward',
+          imageUrl: 'assets/congrats_image.png'
+        });
+      }
+    );
   }
 
   public setTotalLength(totalLength: number): void {

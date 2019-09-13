@@ -11,7 +11,8 @@ import {
   IGameService,
   ICampaign,
   IGame,
-  GameType
+  GameType,
+  TokenStorage
 } from '@perx/core';
 import { of, Observable, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,7 +51,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
     },
@@ -60,7 +61,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.give_reward,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [
         {
           id: 1,
@@ -131,6 +132,7 @@ describe('AppComponent', () => {
         ExpireTimerComponent
       ],
       providers: [
+        TokenStorage,
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },

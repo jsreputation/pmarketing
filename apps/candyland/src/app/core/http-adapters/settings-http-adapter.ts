@@ -14,7 +14,7 @@ export class SettingsHttpAdapter {
       },
       relationships: {
         groups: {
-          data: [{id: data.groups.id, type: data.groups.type}]
+          data: [{id: data.roleId, type: "groups"}]
         }
       }
     };
