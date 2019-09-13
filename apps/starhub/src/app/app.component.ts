@@ -17,7 +17,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
-import { combineLatest, of } from 'rxjs';
+import { combineLatest, of, map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -64,7 +64,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.isIdExistInStorage(c.id)))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
@@ -75,10 +76,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           if (firstComeFirstServed.length > 0) {
             const campaign = firstComeFirstServed[0];
             this.reward = campaign.rewards[0];
-            const isRewardIdExist = this.isIdExistInStorage(campaign.id);
-            if (isRewardIdExist) {
-              return;
-            }
 
             const data = {
               text: campaign.name,
@@ -103,9 +100,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   private checkGame(campaign: ICampaign): void {
     const isGameIdExist = this.isIdExistInStorage(campaign.id);
-    if (isGameIdExist) {
-      return;
-    }
 
     this.gameService.getGamesFromCampaign(campaign.id)
       .pipe(
