@@ -4,7 +4,7 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { LoyaltyService, IProfile, ProfileService } from '@perx/core';
+import { LoyaltyService, IProfile, ProfileService, FeedReaderService } from '@perx/core';
 import { of } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 import { Type } from '@angular/core';
@@ -26,6 +26,8 @@ describe('HomeComponent', () => {
     whoAmI: () => of()
   };
 
+  const newsFeedServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, NoRenewaleInNamePipe],
@@ -37,7 +39,8 @@ describe('HomeComponent', () => {
       providers: [
         NoRenewaleInNamePipe,
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: FeedReaderService, useValue: newsFeedServiceStub }
       ]
     })
       .compileComponents();
