@@ -8,7 +8,7 @@ import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/setti
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
   @Input() public dataSource: SettingsUsersRolesDataSource<IAMUser>;
   @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
