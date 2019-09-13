@@ -1,1 +1,6 @@
 @import '../reward.scss';
+
+app-reward-detail {
+	flex-grow: 1;
+	overflow: scroll;
+}
