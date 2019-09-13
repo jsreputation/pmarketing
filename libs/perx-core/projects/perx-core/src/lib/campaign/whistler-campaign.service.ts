@@ -5,23 +5,8 @@ import { ICampaign, CampaignState, CommChannel, CampaignType } from './models/ca
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { map } from 'rxjs/operators';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 
-interface IWhistlerCampaignContent {
-  id: string;
-  attributes: IWhistlerCampaignAttributes;
-}
-
-interface IWhistlerCampaign {
-  data: IWhistlerCampaignContent;
-}
-
-interface IWhistlerCampaigns {
-  data: IWhistlerCampaignContent[];
-  meta: {
-    record_count: number;
-    page_count: number;
-  };
-}
 interface IWhistlerCampaignAttributes {
   name: string;
   goal: string;
@@ -42,35 +27,34 @@ export class WhistlerCampaignService implements ICampaignService {
     this.baseUrl = config.apiHost as string;
   }
 
-  public WhistlerCampaignToCampaign(campaign: IWhistlerCampaignContent): ICampaign {
+  public WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWhistlerCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
-      id: parseInt(campaign.id, 10),
+      id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
       description: cAttributes.goal,
       type: cAttributes.engagement_type,
       state: cAttributes.status,
       endsAt: new Date(cAttributes.end_date_time),
-      engagementId: cAttributes.engagement_id,
-      commChannel: cAttributes.comm_channel
+      rawPayload: cAttributes
     };
   }
   public getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<IWhistlerCampaigns>(this.baseUrl + '/campaign/entities')
+    return this.http.get<IJsonApiListPayload<IWhistlerCampaignAttributes>>(this.baseUrl + '/campaign/entities')
       .pipe(
-        map((campaigns: IWhistlerCampaigns) => campaigns.data),
+        map((campaigns: IJsonApiListPayload<IWhistlerCampaignAttributes>) => campaigns.data),
         map(
-          (campaigns: IWhistlerCampaignContent[]) =>
-            campaigns.map((campaign: IWhistlerCampaignContent) => this.WhistlerCampaignToCampaign(campaign)))
+          (campaigns: IJsonApiItem<IWhistlerCampaignAttributes>[]) =>
+            campaigns.map((campaign: IJsonApiItem<IWhistlerCampaignAttributes>) => this.WhistlerCampaignToCampaign(campaign)))
       );
   }
 
   // @ts-ignore
   public getCampaign(id: number): Observable<ICampaign> {
-    return this.http.get<IWhistlerCampaign>(this.baseUrl + '/campaign/entities/' + id)
+    return this.http.get<IJsonApiItemPayload<IWhistlerCampaignAttributes>>(this.baseUrl + '/campaign/entities/' + id)
       .pipe(
-        map((campaigns: IWhistlerCampaign) => campaigns.data),
-        map((campaign: IWhistlerCampaignContent) => this.WhistlerCampaignToCampaign(campaign)),
+        map((campaigns: IJsonApiItemPayload<IWhistlerCampaignAttributes>) => campaigns.data),
+        map((campaign: IJsonApiItem<IWhistlerCampaignAttributes>) => this.WhistlerCampaignToCampaign(campaign)),
       );
   }
 }
