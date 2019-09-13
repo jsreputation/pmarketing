@@ -23,7 +23,7 @@ export class AudiencesUserService implements ITableService {
     return this.http.getAllUsers(data);
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<IUser>> {
+  public getTableData(params: HttpParams): Observable<any> {
     return this.http.getAllUsers(params)
       .pipe(
         map((res: any) => AudiencesHttpAdapter.transformUsersWithPools(res))

@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./catalogs.component.scss']
 })
 export class CatalogsComponent {
-  public catalogs: Observable<ICatalog[]>;
+  public catalogs$: Observable<ICatalog[]>;
 
   @Output()
   public tapped: EventEmitter<ICatalog> = new EventEmitter<ICatalog>();
 
   constructor( private rewardsService: RewardsService ) {
-    this.catalogs = this.rewardsService.getAllCatalogs();
+    this.catalogs$ = this.rewardsService.getAllCatalogs();
   }
 
   public selected(catalog: ICatalog): void {

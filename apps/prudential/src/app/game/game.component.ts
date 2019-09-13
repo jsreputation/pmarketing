@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { interval, forkJoin, Observable, of } from 'rxjs';
 import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
 import {
-  CampaignService,
+  ICampaignService,
   CampaignType,
-  GameService,
+  IGameService,
   IGame,
   defaultTree,
   GameType,
@@ -37,8 +37,8 @@ export class GameComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private campaignService: CampaignService,
-    private gameService: GameService
+    private campaignService: ICampaignService,
+    private gameService: IGameService
   ) {
     this.isWhistler = environment.isWhistler;
   }
@@ -71,10 +71,7 @@ export class GameComponent implements OnInit {
   }
 
   public done(): void {
-    const r1 = this.gameService.play(this.game.id)
-      .pipe(
-        map(res => res.data)
-      );
+    const r1 = this.gameService.play(this.game.id);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
@@ -89,13 +86,11 @@ export class GameComponent implements OnInit {
     forkJoin(r1, r2).subscribe(
       ([resr1, resr2]) => {
         if (!this.isWhistler) {
-          numRewards = resr1.outcomes.length;
+          numRewards = resr1.vouchers.length;
         }
         this.router.navigate(['/result'], { queryParams: { numRewards } });
       },
-      () => {
-        this.router.navigate(['/result'], { queryParams: { numRewards } });
-      }
+      () => this.router.navigate(['/result'], { queryParams: { numRewards } })
     );
   }
 }

@@ -1,34 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
-  GameService,
+  IGameService,
   NotificationService,
-  Voucher,
-  VoucherState,
-  RedemptionType
+  Voucher
 } from '@perx/core';
 import {
   filter,
   map,
-  switchMap
+  switchMap,
+  tap
 } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-
-const mockVoucher: Voucher = {
-  id: 2,
-  rewardId: 2,
-  state: VoucherState.issued,
-  name: '10% off a family order of 3 pizzas or more',
-  redemptionType: RedemptionType.none,
-  thumbnailImg: 'https://picsum.photos/300/200?random=1',
-  rewardBanner: 'https://picsum.photos/300/200?random=2',
-  merchantImg: 'https://picsum.photos/300/200?random=3',
-  merchantName: 'Pizza Hut',
-  expiry: null,
-  description: [],
-  redemptionSuccessTxt: '',
-  redemptionSuccessImg: '',
-};
+import { IPlayOutcome } from '@perx/core';
 
 @Component({
   selector: 'app-congrats',
@@ -36,24 +20,25 @@ const mockVoucher: Voucher = {
   styleUrls: ['./congrats.component.scss']
 })
 export class CongratsComponent implements OnInit {
-  public vouchers: Observable<Voucher[]> = null;
+  public vouchers: Observable<Voucher[]>;
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private gameService: GameService,
+    private gameService: IGameService,
     private notificationService: NotificationService
   ) { }
 
   public ngOnInit(): void {
-    this.vouchers = of([mockVoucher, mockVoucher, mockVoucher]);
     this.activeRoute.queryParams
       .pipe(
         filter((params: Params) => params.gameId),
         map((params: Params) => Number.parseInt(params.gameId, 10)),
-        switchMap((gameId: number) => this.gameService.play(gameId))
+        switchMap((gameId: number) => this.gameService.play(gameId)),
+        map((game: IPlayOutcome) => game.vouchers),
+        tap((vouchers: Voucher[]) => this.vouchers = of(vouchers))
       )
       .subscribe(
-        (game: any) => console.log(game),
+        () => { },
         () => this.notificationService.addPopup({
           title: 'Oooops!',
           text: 'There is no more reward for you!'

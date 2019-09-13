@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CampaignType,
-  CampaignService,
+  ICampaignService,
   StampService,
   ICampaign,
   IStampCard,
@@ -33,7 +33,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private currentStampId: number = 0;
 
   constructor(
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private stampService: StampService,
     private route: ActivatedRoute,
     private router: Router,
