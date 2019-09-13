@@ -33,6 +33,14 @@ $primary: mat-palette($mat-indigo);
   background-color: #F2F2F2;
 }
 
+.active-img {
+  display: none;
+}
+
+.no-active-img {
+  display: block;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -59,14 +67,6 @@ $primary: mat-palette($mat-indigo);
       }
     }
   }
-}
-
-.active-img {
-  display: none;
-}
-
-.no-active-img {
-  display: block;
 }
 
 .nav-item {

@@ -52,6 +52,10 @@ h1 {
   letter-spacing: 0.015rem;
 }
 
+p {
+  margin: 4px 0;
+}
+
 .rewards {
   display: flex;
   flex-direction: column;
@@ -72,18 +76,7 @@ h1 {
     margin-top: 2.4rem;
     align-self: center;
   }
-
 }
-
-p {
-  margin: 4px 0;
-  //   padding: 0;
-}
-
-// .tab-group {
-//   margin: 7rem -1.2rem;
-// }
-
 
 perx-core-loyalty-summary ::ng-deep {
   .container {
