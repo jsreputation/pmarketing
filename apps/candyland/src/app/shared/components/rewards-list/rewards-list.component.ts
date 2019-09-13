@@ -9,7 +9,7 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
   @Input() public dataSource: CustomDataSource<IRewardEntity[]>;
   @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;

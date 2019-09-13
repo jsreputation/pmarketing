@@ -1,4 +1,5 @@
 <div class="survey-page" *ngIf="data$ | async as data">
+    <img [src]="data.background_img_url" *ngIf="data.background_img_url" class="background_img_url">
     <div class="progress-bar">
         <mat-progress-bar mode="determinate" color="warn" [value]="progressBarValue"></mat-progress-bar>
         <div class="progress-bar-label">

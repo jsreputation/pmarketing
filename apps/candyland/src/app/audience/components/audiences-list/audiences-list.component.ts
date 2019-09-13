@@ -16,7 +16,7 @@ import { AudiencesListDataSource } from '@cl-shared/table/data-source/audiences-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesListComponent implements AfterViewInit, OnDestroy {
-  public DATE_FORMAT: string = 'dd MMM yyyy';
+  public DATE_FORMAT: string = 'MMM dd, yyyy';
   @Input() public dataSource: AudiencesListDataSource<IAudiences>;
   @Input() public displayedColumns: string[] = ['name', 'updated', 'numberUsers']; // 'format' 'status'
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

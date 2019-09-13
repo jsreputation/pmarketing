@@ -16,7 +16,7 @@
     .choice-image {
       flex: 1 1 auto;
       position: relative;
-      background: #4e4e4e 50%;
+      // background: #4e4e4e 50%;
       background-size: cover;
       border-radius: 8px;
       min-height: 13rem;
@@ -27,7 +27,7 @@
       }
 
       img {
-        object-fit: cover;
+        object-fit: contain;
         position: absolute;
         width: 100%;
         height: 100%;

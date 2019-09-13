@@ -1,4 +1,6 @@
+@import "variables";
+
 mat-form-field {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
   width: auto;
 }
