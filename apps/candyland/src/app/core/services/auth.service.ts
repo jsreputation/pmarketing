@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/token.service';
+import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
 import { map, tap } from 'rxjs/operators';
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(private http: AuthHttpService,
               private localStorage: LocalStorageService,
               private sessionService: SessionService,
+              private userService: UserService,
               private router: Router
   ) {
 
@@ -29,7 +31,7 @@ export class AuthService {
           this.login(token, userId);
         }
       }),
-      map(res => res.body)
+      map(res => res.body),
     );
   }
 

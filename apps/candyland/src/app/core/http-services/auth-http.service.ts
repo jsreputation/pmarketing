@@ -13,4 +13,8 @@ export class AuthHttpService {
   public signIn(body: any): Observable<HttpResponse<any>> {
     return this.http.post<any>(ApiConfig.signIn, {data: body}, {observe: 'response'});
   }
+
+  public getUser(body: any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(ApiConfig.signIn, {data: body}, {observe: 'response'});
+  }
 }

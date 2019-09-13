@@ -7,7 +7,7 @@ import { LocalStorageService } from './local-storage.service';
 export class SessionService {
 
   public isActiveSession$;
-  private authToken$: BehaviorSubject<any>;
+  private authToken$: BehaviorSubject<string>;
 
   constructor(private localStorage: LocalStorageService) {
     const localToken = this.localStorage.get('authToken');
