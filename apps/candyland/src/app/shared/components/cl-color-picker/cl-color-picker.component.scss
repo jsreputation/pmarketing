@@ -5,7 +5,7 @@
     border: 1px solid $border-color;
     border-radius: 5px;
     position: relative;
-    padding: 1.4rem;
+    padding: $base-font-size;
     display: flex;
     cursor: pointer;
   }
@@ -46,7 +46,7 @@
   }
 
   &-text {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     line-height: 1.21;
     color: $base-font-color;
   }

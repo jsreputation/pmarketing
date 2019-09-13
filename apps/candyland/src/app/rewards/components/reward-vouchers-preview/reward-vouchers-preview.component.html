@@ -41,10 +41,9 @@
     </p>
   </div>
   <div class="card-content">
-    <p class="card-value" *ngIf="data?.voucherValidity?.period">
-      {{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}}
-      - {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}
-    </p>
+    <time class="card-value" *ngIf="data?.voucherValidity?.period">
+      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}} - {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span>
+    </time>
     <p class="card-value" *ngIf="data?.voucherValidity?.issuanceDate">
       Valid for
       {{data?.voucherValidity?.issuanceDate?.times}}
