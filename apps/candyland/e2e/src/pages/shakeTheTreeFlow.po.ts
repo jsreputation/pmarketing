@@ -50,18 +50,3 @@ export class CreateSurveyAppPage {
 
 }
 
-export class RewardAppPage {
-
-  public navigateToReward(): Promise<string> {
-    return browser.get('rewards') as Promise<string> ;
- }
-
-}
-
-export class CreateRewardAppPage {
-
-  public navigateToRewardCreate(): Promise<string> {
-    return browser.get('rewards/new-reward') as Promise<string> ;
- }
-
-}

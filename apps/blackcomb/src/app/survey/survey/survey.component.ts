@@ -34,8 +34,8 @@ export class SurveyComponent implements OnInit {
         switchMap((params: ParamMap) => {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
-          return this.surveyService.getSurvey(idN);
-        }),
+          return this.surveyService.getSurveyFromCampaign(idN);
+        })
       );
   }
 
