@@ -8,7 +8,7 @@
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
-        <mat-icon>arrow_forward</mat-icon>
+        <img src="assets/forward-arrow.svg" alt="">
       </div>
     </mat-card>
     <button *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
@@ -23,7 +23,7 @@
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">
-        <mat-icon>arrow_forward</mat-icon>
+        <img src="assets/forward-disabled-arrow.svg" alt="">
       </div>
     </mat-card>
   </div>

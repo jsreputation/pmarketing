@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SurveyModule as PerxSurveyModule, ConfigModule } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, ConfigModule, ICampaignService } from '@perx/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
+  const iCampaignServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,6 +22,12 @@ describe('SurveyComponent', () => {
         RouterTestingModule,
         MatProgressBarModule,
         PerxSurveyModule
+      ],
+      providers: [
+        {
+          provide: ICampaignService,
+          useValue: iCampaignServiceStub
+        }
       ]
     })
     .compileComponents();

@@ -1,21 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SurveyModule as PerxSurveyModule, SurveyService } from '@perx/core';
+import {
+  SurveyModule as PerxSurveyModule,
+  CampaignModule as PerxCampaignModule,
+  ConfigModule,
+  AuthenticationModule,
+  // SurveyService
+} from '@perx/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey/survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule, MatDatepickerModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { of } from 'rxjs';
-import { survey } from '../mock/survey.mock';
+import {
+  MatCardModule,
+  MatButtonModule,
+  MatProgressBarModule,
+  MatDatepickerModule,
+  MatRadioModule,
+  MatCheckboxModule
+} from '@angular/material';
+import { environment } from 'src/environments/environment';
+// import { of } from 'rxjs';
+// import { survey } from '../mock/survey.mock';
 
-const surveyServiceStub = {
-  // @ts-ignore
-  getSurvey: (id: number) => of(survey)
-};
+// const surveyServiceStub = {
+//   getSurveyFromCampaign: () => of(survey)
+// };
 
 @NgModule({
   declarations: [SurveyComponent],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     MatCardModule,
     MatButtonModule,
@@ -24,10 +38,12 @@ const surveyServiceStub = {
     MatRadioModule,
     MatCheckboxModule,
     SurveyRoutingModule,
-    PerxSurveyModule
+    PerxCampaignModule,
+    PerxSurveyModule,
+    AuthenticationModule
   ],
   providers: [
-    { provide: SurveyService, useValue: surveyServiceStub },
+    // { provide: SurveyService, useValue: surveyServiceStub }
   ]
 })
 export class SurveyModule { }

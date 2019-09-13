@@ -8,7 +8,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   styleUrls: ['./campaigns-list.component.scss']
 })
 export class CampaignsListComponent implements AfterViewInit {
-  public DATE_FORMAT: string = 'dd MMM yyyy';
+  public DATE_FORMAT: string = 'MMM dd, yyyy';
   public TIME_FORMAT: string = 'hh:ssa';
 
   @Input() public dataSource: CustomDataSource<ICampaign>;
