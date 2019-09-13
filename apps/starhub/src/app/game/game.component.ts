@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { GameService, GameType, NotificationService, IGame } from '@perx/core';
+import { IGameService, NotificationService, IGame } from '@perx/core';
 import { Location } from '@angular/common';
-import { take, map } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -17,42 +17,32 @@ export class GameComponent implements OnInit {
   public numberOfTaps: number;
   public isGameAvailable: boolean = false;
   public isButtonDisabled: boolean = true;
-  private gameId: number;
+  public game: IGame;
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private gameService: GameService,
+    private gameService: IGameService,
     private location: Location,
     private notificationService: NotificationService,
     private router: Router
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe(
-      ((params: Params) => {
-      if (params.campaignId) {
-        const id = Number.parseInt(params.campaignId, 10);
-        this.fetchGame(id);
-      }
-    }));
-  }
-
-  private fetchGame(campaignId: number): void {
-    this.gameService.getGamesFromCampaign(campaignId)
+    this.activeRoute.queryParams
       .pipe(
-        take(1),
-        map((games: IGame[]) => games[0])
+        filter((params: Params) => params.id),
+        map((params: Params) => Number.parseInt(params.id, 10)),
+        switchMap((gameId: number) => this.gameService.get(gameId))
       )
-      .subscribe((game: IGame) => {
-        if (game && game.type === GameType.pinata) {
-          this.gameId = game.id;
-          this.isGameAvailable = true;
-          this.isButtonDisabled = false;
+      .subscribe(
+        (game: IGame) => {
+          this.game = game;
           this.buttonText = game.texts.button || 'Start playing';
           this.title = game.texts.title || 'Shake the Pinata';
           this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
+          this.isGameAvailable = true;
+          this.isButtonDisabled = false;
           this.numberOfTaps = game.config.nbTaps;
-
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;
             this.notificationService.addPopup({
@@ -61,17 +51,17 @@ export class GameComponent implements OnInit {
               buttonTxt: '',
             });
           }
+
+        },
+        (err: any) => {
+          console.log(err);
+          this.isEnabled = false;
+          this.notificationService.addPopup({
+            title: 'Oooops!',
+            text: 'Something is wrong, game cannot be played at the moment!'
+          });
         }
-      },
-      (err: any) => {
-        console.log(err);
-        this.isEnabled = false;
-        this.notificationService.addPopup({
-          title: 'Oooops!',
-          text: 'Something is wrong, game cannot be played at the moment!'
-        });
-      }
-    );
+      );
   }
 
   public goBack(): void {
@@ -94,7 +84,7 @@ export class GameComponent implements OnInit {
 
   public gameCompleted(): void {
     setTimeout(() => {
-      this.router.navigate(['/congrats'], { queryParams: { gameId: this.gameId } });
+      this.router.navigate(['/congrats'], { queryParams: { gameId: this.game.id } });
     }, 2000);
   }
 }

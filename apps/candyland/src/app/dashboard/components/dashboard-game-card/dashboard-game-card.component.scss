@@ -1,9 +1,11 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 :host {
+  @include mat-elevation(1);
+
   display: flex;
   border-radius: 4px;
-  border: solid 1px rgba(0, 0, 0, 0.2);
   background-color: $white-color;
   padding: 2.4rem 3rem;
   min-height: 18.5rem;
@@ -11,32 +13,53 @@
 }
 
 .dashboard-card {
+  $dashboard-card-img-wrap-dimensions: 8rem;
+  $dashboard-card-action-height: 2rem;
+
+  &-img-wrap {
+    position: relative;
+    top: 0;
+    left: -1rem;
+    flex-basis: $dashboard-card-img-wrap-dimensions;
+    flex-shrink: 0;
+    height: $dashboard-card-img-wrap-dimensions;
+    width: $dashboard-card-img-wrap-dimensions;
+  }
+
   &-content {
     position: relative;
-    padding-left: 8rem;
+    display: flex;
+    flex-flow: column;
+    width: 75%;
+    flex: 1;
+    min-width: $dashboard-card-img-wrap-dimensions;
+    min-height: calc(100% - ($dashboard-card-img-wrap-dimensions + $dashboard-card-action-height));
   }
 
   &-title {
-    color: $there-color;
+    color: $base-font-color;
     line-height: 1.31;
     font-size: 1.6rem;
   }
 
   &-description {
-    color: $there-color;
-    margin-top: 0.8rem;
-    font-size: 1.4rem;
-  }
+    @include typo-body2;
 
-  &-img-wrap {
-    position: absolute;
-    top: 0;
-    left: -1rem;
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
   }
 
   &-actions {
-    position: absolute;
-    bottom: 0;
-    left: auto;
+    position: relative;
+    margin-top: auto;
+    width: 100%;
+    height: $dashboard-card-action-height;
+    display: flex;
+
+    &::before {
+      content: "";
+      flex-basis: $dashboard-card-img-wrap-dimensions;
+      flex-shrink: 1;
+    }
   }
 }

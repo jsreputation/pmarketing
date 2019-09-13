@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/rewards-table-menu-actions';
 
 @Component({
@@ -8,22 +9,31 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<IRewardEntity[]>;
+  public DATE_FORMAT = 'MMM dd, yyyy';
+  @Input() public dataSource: CustomDataSource<IRewardEntity[]>;
   @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
   @Input() public selectable = false;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter<{action: RewardsTableMenuActions, data: IRewardEntity}>();
+  @Output() public itemAction = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
   @Output() public selectReward = new EventEmitter<IRewardEntity>();
+  @Output() public clickDetailReward = new EventEmitter<IRewardEntity>();
   public selected;
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    this.dataSource.registerSort(this.sort);
   }
 
   public selectItem(item: IRewardEntity): void {
-    this.selected = item;
-    this.selectReward.emit(item);
+    if (this.selectable) {
+      this.selected = item;
+      this.selectReward.emit(item);
+    }
+  }
+
+  public clickDetailItem(item: IRewardEntity): void {
+    if (!this.selectable) {
+      this.clickDetailReward.emit(item);
+    }
   }
 
   public isSelected(item: IRewardEntity): boolean {

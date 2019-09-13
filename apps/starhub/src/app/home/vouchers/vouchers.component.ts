@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Voucher, VoucherState, VouchersService } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService } from '@perx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class VouchersComponent implements OnInit {
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
-  constructor(private router: Router, private vouchersService: VouchersService) {
+  constructor(private router: Router, private vouchersService: IVoucherService) {
   }
 
   public ngOnInit(): void {
@@ -29,15 +29,13 @@ export class VouchersComponent implements OnInit {
     this.savedVouchers = feed
       .pipe(
         map((vouchs: Voucher[]) => {
-          if (!this.hideSeeMore) {
-            this.hideSeeMore = vouchs.length <= this.defaultNbVouchers;
-          }
           return vouchs.filter(voucher => voucher.state === VoucherState.issued);
         }));
 
     this.redeemedVouchers = feed
       .pipe(
-        map((vouchs: Voucher[]) => vouchs.filter(voucher => voucher.state !== VoucherState.issued && this.daysSince(voucher.expiry)))
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => this.daysSince(voucher.redemptionDate)))
       );
   }
 

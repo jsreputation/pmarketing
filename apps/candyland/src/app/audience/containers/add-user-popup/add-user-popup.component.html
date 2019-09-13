@@ -2,7 +2,7 @@
   <div class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
     <h3 class="dialog-title">Add User</h3>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -14,23 +14,23 @@
 
           <div class="dialog-input-group">
             <mat-form-field>
-              <input matInput type="text" formControlName="firstName" placeholder="First Name">
+              <input matInput type="text" formControlName="firstName" placeholder="First Name*">
               <mat-error *ngIf="this.form.get('firstName').hasError('required')">Required field</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="text" formControlName="lastName" placeholder="Last Name">
+              <input matInput type="text" formControlName="lastName" placeholder="Last Name*">
               <mat-error *ngIf="this.form.get('lastName').hasError('required')">Required field</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="email" formControlName="email" placeholder="Email Address">
+              <input matInput type="email" formControlName="email" placeholder="Email Address*">
               <mat-error *ngIf="this.form.get('email').hasError('required')">Required field</mat-error>
               <mat-error *ngIf="this.form.get('email').hasError('email')">Wrong format of email</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="tel" formControlName="phone" placeholder="Mobile Number">
+              <input matInput type="tel" formControlName="phone" placeholder="Mobile Number*">
               <mat-error *ngIf="this.form.get('phone').hasError('required')">Required field</mat-error>
             </mat-form-field>
 
@@ -70,8 +70,8 @@
           <div class="dialog-input-group">
             <mat-form-field>
               <mat-select formControlName="audienceList" multiple>
-                <mat-option *ngFor="let option of config.audienceList"
-                            [value]="option.value">{{option.title}}
+                <mat-option *ngFor="let option of pools"
+                            [value]="option.value">{{option.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -86,7 +86,7 @@
     </mat-tab-group>
   </mat-dialog-content>
   <div class="dialog-actions">
-    <cl-button classList="invert"
+    <cl-button classList="tertiary"
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">

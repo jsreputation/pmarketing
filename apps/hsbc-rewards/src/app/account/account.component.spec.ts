@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
-import { of, Observable } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {AccountComponent} from './account.component';
@@ -53,7 +52,6 @@ describe('AccountComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([{
           path: 'login',
           component: MockComponent

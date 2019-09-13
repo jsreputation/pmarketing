@@ -10,12 +10,30 @@ export class AudiencesHttpAdapter {
         phone_number: data.phone,
         email_address: data.email,
         primary_identifier: data.firstName + 'identifier',
-        properties: ''
+        properties: '',
+      },
+      relationships: {
+        pools: {
+          data: data.audienceList
+        }
       }
     };
     if (data.id) {
       res['id'] = data.id;
     }
+    return res;
+  }
+
+  public static transformUpdateUserPools(data: any): any {
+    const res = {
+      type: data.type,
+      id: data.id,
+      relationships: {
+        pools: {
+          data: data.pools
+        }
+      }
+    };
     return res;
   }
 
@@ -32,9 +50,25 @@ export class AudiencesHttpAdapter {
       last_name: data.attributes.last_name,
       phone_number: data.attributes.phone_number,
       email_address: data.attributes.email_address,
-      primary_identifier: data.attributes.primary_identifier
+      primary_identifier: data.attributes.primary_identifier,
+      pools: ''
     };
   }
+
+  public static transformUserWithPools(data: IUserWithIncludes<IUserApi>): IUser {
+   const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+   const userData = AudiencesHttpAdapter.transformUser(data.data);
+   userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
+    return userData;
+  }
+
+  public static createPoolMap(data: IPoolsApi[]): IPools {
+    const mapPool = {};
+    data.forEach((element: IPoolsApi) => {
+      mapPool[element.id] = element.attributes.name;
+    });
+    return mapPool;
+  } 
 
   public static transformTableData(data: any): ITableData<IUser> {
     return {
@@ -43,5 +77,55 @@ export class AudiencesHttpAdapter {
     }
   }
 
+  public static transformUsersWithPools(data: IUsersWithIncludes<IUserApi>): IUsersWithPoolsData<IUser> {
+    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+    const usersData = data.data.map((item: IUserApi) => {
+      const formatedUser = AudiencesHttpAdapter.transformUser(item);
+      formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
+      return formatedUser
+    });
+     return {
+      data: usersData,
+      meta: data.meta
+    }
+   }
 
+  // Audiences List 
+  public static transformAudiences(data: any): IAudiences {
+    return {
+      id: data.id,
+      type: data.type,
+      self: data.links.self,
+      urn: data.attributes.urn,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      name: data.attributes.name,
+      properties: data.attributes.properties,
+      users: data.relationships.users.data
+    };
+  }
+
+  public static transformAudiencesUser(data: any): IAUser {
+    return {
+      id: data.relationships.users.data.id,
+      type: data.relationships.users.data.type,
+      self: data.relationships.users.data.links.self,
+      urn: data.relationships.users.data.attributes.urn,
+      created_at: data.relationships.users.data.attributes.created_at,
+      updated_at: data.relationships.users.data.attributes.updated_at,
+      title: data.relationships.users.data.attributes.title,
+      first_name: data.relationships.users.data.attributes.first_name,
+      last_name: data.relationships.users.data.last_name,
+      phone_number: data.relationships.users.data.phone_number,
+      email_address: data.relationships.users.data.email_address,
+      primary_identifier: data.relationships.users.data.primary_identifier
+    };
+  }
+
+  public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
+    return {
+      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
+      meta: data.meta
+    }
+  }
 }

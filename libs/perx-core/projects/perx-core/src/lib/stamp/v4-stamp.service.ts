@@ -10,7 +10,6 @@ import {
   tap
 } from 'rxjs/operators';
 
-import { EnvConfig } from '../shared/env-config';
 import {
   IStampCard,
   IStamp,
@@ -21,8 +20,9 @@ import {
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 
-import { VouchersService } from '../vouchers/vouchers.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
+import { Config } from '../config/config';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -114,10 +114,10 @@ export class V4StampService implements StampService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig,
-    private vouchersService: VouchersService
+    config: Config,
+    private vouchersService: IVoucherService
   ) {
-    this.baseUrl = config.env.apiHost as string;
+    this.baseUrl = config.apiHost as string;
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {

@@ -1,4 +1,3 @@
-
 @import "variables";
 
 .survey {
@@ -7,10 +6,10 @@
   }
 
   &-title {
-    font-family: Roboto;
+    font-family: $primary-font;
     font-weight: bold;
     line-height: 1.21;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     color: $secondary-color;
     padding-bottom: 0.9rem;
   }
@@ -18,5 +17,5 @@
 
 .mat-form-field {
   width: 100%;
-  font-size: 1.4rem;
+  font-size: $base-font-size;
 }

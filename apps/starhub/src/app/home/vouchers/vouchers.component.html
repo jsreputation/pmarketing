@@ -1,17 +1,17 @@
 <div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers;">
   <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
-    <mat-card *ngFor="let voucher of (hideSeeMore ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
+    <mat-card *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
       <mat-card-header>
         <mat-card-title ngxEllipsis [lines]="2">{{voucher.name}}</mat-card-title>
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
-        <mat-icon>arrow_forward</mat-icon>
+        <img src="assets/forward-arrow.svg" alt="">
       </div>
     </mat-card>
-    <button *ngIf="!hideSeeMore" (click)="seeMoreClicked()">See more</button>
+    <button *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
   </div>
 
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
@@ -23,7 +23,7 @@
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">
-        <mat-icon>arrow_forward</mat-icon>
+        <img src="assets/forward-disabled-arrow.svg" alt="">
       </div>
     </mat-card>
   </div>

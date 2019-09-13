@@ -19,6 +19,7 @@
   height: 17rem;
   display: flex;
   padding: 1.6rem;
+  justify-content: space-between;
 
   ::ng-deep {
     .container {
@@ -28,8 +29,6 @@
 }
 
 .loyalty-item {
-  flex: 1;
-
   &-qr {
     display: flex;
     flex-direction: column;
@@ -47,6 +46,12 @@
   display: block;
   margin-bottom: 2rem;
   margin-left: 0.6rem;
+
+  ::ng-deep {
+    .mat-card {
+      height: 20rem !important;
+    }
+  }
 }
 
 .promotion {

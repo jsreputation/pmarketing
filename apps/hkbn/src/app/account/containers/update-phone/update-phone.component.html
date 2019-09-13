@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="updatePhoneGroup" class="update-phone-form">
+  <form [formGroup]="updatePhoneGroup" class="update-phone-form" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
       <input type="text" matInput formControlName="phone">

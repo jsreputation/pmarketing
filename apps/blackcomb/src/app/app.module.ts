@@ -1,4 +1,4 @@
-import { of, from, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,11 +9,11 @@ import {
   GameModule,
   UtilsModule,
   ProfileModule,
-  RewardsService,
-  VouchersService,
-  CampaignService,
-  AuthenticationService,
+  // IVoucherService,
   ProfileService,
+  ConfigModule,
+  RewardsModule,
+  CampaignModule as PerxCampaignModule
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -28,7 +28,6 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -40,39 +39,16 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
-import { rewards } from './mock/rewards.mock';
-import { vouchers } from './mock/vouchers.mock';
-import { catalogs } from './mock/catalogs.mock';
-import { campaigns } from './mock/campaigns.mock';
+// import { vouchers } from './mock/vouchers.mock';
 import { profile } from './mock/profile.mock';
+import { RewardComponent } from './reward/reward.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TncComponent } from './tnc/tnc.component';
 
-const rewardsServiceStub = {
-  getReward: () => of(rewards[0]),
-  getAllRewards: () => of(rewards),
-  getAllCatalogs: () => of(catalogs),
-  getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
-  reserveReward: () => of(vouchers[1])
-};
-
-const vouchersServiceStub = {
-  getAll: () => of(vouchers),
-  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
-};
-
-const campaignServiceStub = {
-  getCampaigns: () => of(campaigns),
-  getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
-};
-
-const authenticationServiceStub = {
-  login: (username, password) => {
-    if (username === 'perx' && password === '1234') {
-      return of(true);
-    }
-    return throwError(new HttpErrorResponse({ status: 401 }));
-  },
-  logout: () => {}
-};
+// const vouchersServiceStub = {
+//   getAll: () => of(vouchers),
+//   get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
+// };
 
 const profileServiceStub = {
   whoAmI: () => of(profile)
@@ -87,17 +63,22 @@ const profileServiceStub = {
     LoadingComponent,
     VoucherDetailComponent,
     AccountComponent,
-    HistoryComponent
+    HistoryComponent,
+    RewardComponent,
+    ContactUsComponent,
+    TncComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
-    VouchersModule.forRoot({ env: environment }),
-    AuthenticationModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    GameModule,
+    ProfileModule,
     BrowserAnimationsModule,
+    RewardsModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
@@ -110,13 +91,11 @@ const profileServiceStub = {
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    PerxCampaignModule
   ],
   providers: [
-    { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: VouchersService, useValue: vouchersServiceStub },
-    { provide: CampaignService, useValue: campaignServiceStub },
-    { provide: AuthenticationService, useValue: authenticationServiceStub },
+    // { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]

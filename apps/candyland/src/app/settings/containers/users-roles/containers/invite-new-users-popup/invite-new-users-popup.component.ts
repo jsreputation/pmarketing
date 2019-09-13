@@ -22,7 +22,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.settingsService.getRolesOptions().subscribe(config => this.config = config);
+    this.settingsService.getAllGroups().subscribe(config => this.config = config.getModels());
     this.initForm();
     this.doPatchForm(this.data.user);
   }
@@ -44,7 +44,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
   }
 
   public invite(): void {
-    this.dialogRef.close({...this.form.value, groups: this.data.groups[0]});
+    this.dialogRef.close({...this.form.value});
   }
 
   private initForm(): void {
@@ -59,7 +59,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
         Validators.minLength(15),
         Validators.maxLength(50),
         ClValidators.email]],
-      role: [null, [Validators.required]]
+      roleId: [null, [Validators.required]]
     });
   }
 
@@ -71,7 +71,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
     this.form.patchValue({
       name: data.username,
       email: data.email ? data.email : null,
-      role: data.role ? data.role : null
+      roleId: data.relationships_groups_id ? data.relationships_groups_id : null
     });
   }
 }

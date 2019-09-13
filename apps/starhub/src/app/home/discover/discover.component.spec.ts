@@ -9,7 +9,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { RewardsService, CampaignService, FeedReaderService, CampaignType, CampaignState } from '@perx/core';
+import { RewardsService, ICampaignService, FeedReaderService, CampaignType, CampaignState } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -55,7 +55,7 @@ describe('DiscoverComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
       ]
@@ -136,7 +136,7 @@ describe('DiscoverComponent', () => {
       description: 'campaign',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
     };

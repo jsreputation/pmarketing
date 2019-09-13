@@ -1,10 +1,12 @@
+@import "variables";
+
 .container-sidenav {
   position: relative;
   min-height: 100vh;
 }
 
 .sidenav {
-  width: 17rem;
+  width: $sidenav-width-initial;
   background-color: #202c46;
   position: fixed;
 
@@ -41,20 +43,18 @@
   padding: 0 1rem;
   background-color: #172238;
   display: flex;
-}
-
-.cl-user {
-  display: block;
-  padding-top: 1.6rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidenav-content {
   position: relative;
   min-height: 100vh;
+  padding-top: $header-height-base;
 }
 
 .btn-text {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
 }

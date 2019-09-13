@@ -1,14 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable, Subject } from 'rxjs';
-import { RoutingStateService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, StampsService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -35,10 +35,11 @@ export class NewStampComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(private fb: FormBuilder,
-              private stampService: StampHttpService,
               private routingState: RoutingStateService,
               private router: Router,
-              private stampDataService: StampDataService) {
+              private stampDataService: StampDataService,
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private stampsService: StampsService) {
   }
 
   public ngOnInit(): void {
@@ -101,14 +102,12 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
-    // TODO: uncomment when exist Api service for Stamps
-    // this.stampService.createStamp(this.formSurvey.value)
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe((data: IResponseApi<IEngagementApi>) => {
-    //     this.availableNewEngagementService.setNewEngagement(data);
-    //     this.router.navigateByUrl('/engagements');
-    //   });
+    this.stampsService.createStamp(this.formStamp.value)
+      .pipe(untilDestroyed(this))
+      .subscribe((data: IResponseApi<IEngagementApi>) => {
+        this.availableNewEngagementService.setNewEngagement(data);
+        this.router.navigateByUrl('/engagements');
+      });
   }
 
   public comeBack(): void {
@@ -187,7 +186,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   private getStampData(): void {
-    this.stampData$ = this.stampService.getStampsData()
+    this.stampData$ = this.stampsService.getStampsData()
       .pipe(
         tap((res) => {
           this.stampSlotNumbers = this.allStampSlotNumbers = res.slotNumber;

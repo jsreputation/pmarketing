@@ -19,7 +19,7 @@
       <mat-icon>chevron_left</mat-icon>
     </button>
     <img class="header-logo" src="assets/images/logo.png" alt="" *ngIf="!routeData?.title">
-    <p class="header-title" *ngIf="routeData?.title">{{routeData.title}}</p>
+    <p class="header-title" *ngIf="routeData?.title">{{routeData.title | translate}}</p>
   </div>
 
   <mat-sidenav-container>
@@ -29,7 +29,7 @@
       <mat-nav-list>
         <div class="nav_header">
           <img class="nav_logo" src="assets/images/logo.png" alt="">
-          <p>{{user?.firstName}} {{user?.lastName}}</p>
+          <p>{{user?.lastName}}</p>
         </div>
 
         <mat-nav-list class="nav_links">
@@ -37,8 +37,8 @@
           <a mat-list-item routerLink="/history">{{"TRANSACTION_HISTORY" | translate}}</a>
           <a mat-list-item routerLink="/wallet">{{"MY_REWARDS" | translate}}</a>
           <a mat-list-item routerLink="/account">{{"MY_ACCOUNT" | translate}}</a>
-          <a mat-list-item href="https://home-plus.hk/index.php/about-us/">{{"ABOUT_US" | translate}}</a>
-          <a mat-list-item href="mailto:contact@home-plus.hk">{{"CONTACT_US" | translate}}</a>
+          <a mat-list-item href="https://home-plus.hk/index.php/about-us/" target="_blank">{{"ABOUT_US" | translate}}</a>
+          <a mat-list-item href="mailto:contact@home-plus.hk" target="_blank">{{"CONTACT_US" | translate}}</a>
           <mat-list-item (click)="logout()">{{"LOGOUT" | translate}}</mat-list-item>
         </mat-nav-list>
       </mat-nav-list>

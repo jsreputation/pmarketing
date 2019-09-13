@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, VouchersService, VoucherState, UtilsModule, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -62,7 +62,7 @@ describe('RedemptionComponent', () => {
         UtilsModule
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         {
           provide: ActivatedRoute, useValue: { queryParams: params }
         },
@@ -84,7 +84,7 @@ describe('RedemptionComponent', () => {
   });
 
   it('should redeemVoucher', fakeAsync(() => {
-    const voucherService: VouchersService = fixture.debugElement.injector.get<VouchersService>(VouchersService as Type<VouchersService>);
+    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher').and.returnValue(of(vouchers[0]));
     component.voucher = vouchers[0];
     component.full('2222');

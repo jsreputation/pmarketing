@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
-import { MerchantService } from './merchant.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MerchantService } from './merchant.service';
 
 describe('MerchantService', () => {
   beforeEach(() => TestBed.configureTestingModule({

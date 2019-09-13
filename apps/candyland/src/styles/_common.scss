@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 html, body {
@@ -75,30 +76,79 @@ button {
   }
 }
 
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-infix {
+  min-width: 0;
+  flex-basis: 180px;
+}
+
+.mat-toolbar-log.mat-toolbar-single-row {
+  height: $header-height-base;
+}
+
+$header-font-size: 2.4rem;
+
 .page-header {
   display: flex;
+  min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   box-sizing: border-box;
   padding: 0 $horizontal-content-padding;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  background: #fff;
+  width: calc(100% - 17rem);
+
+  @include mat-elevation(4);
 
   &.full-with {
     background: $white-color;
-    min-height: 6.6rem;
+    min-height: $header-height-base;
+  }
+
+  .mat-form-field-infix {
+    border: 0;
+  }
+
+  input {
+    font-weight: 400;
+    font-size: $header-font-size;
+    color: $base-font-color;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+    transition: margin 0.05s ease-in;
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      top: 100%;
+    }
+  }
+
+  .mat-form-field-invalid .mat-form-field-wrapper {
+    margin: 1.5rem 0 3rem;
   }
 }
 
 .title {
-  font-size: 2.6rem;
-  font-weight: 500;
+  font-size: $header-font-size;
+  margin: auto 0;
+  font-weight: 400;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.04;
   letter-spacing: normal;
-  color: $there-color;
+  color: $base-font-color;
 }
 
 .sub-title {
@@ -115,8 +165,12 @@ button {
   width: 100%;
   padding: $vertical-content-padding $horizontal-content-padding;
 
-  &.no-padding-top {
+  &.pt-0 {
     padding-top: 0;
+  }
+
+  &.pb-0 {
+    padding-bottom: 0;
   }
 
   .mat-stepper-horizontal {
@@ -144,10 +198,6 @@ button {
       margin-right: 0;
     }
   }
-}
-
-.mat-form-field {
-  width: 100%;
 }
 
 .mobile {
@@ -180,7 +230,7 @@ button {
   }
 
   &-preview-sub-headline {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     margin-top: 0.8rem;
     color: rgba(51, 51, 51, 0.5);
   }
@@ -200,7 +250,7 @@ button {
     border-radius: 4px;
     background: #ff1c1c;
     color: $white-color;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
     min-height: 4rem;
@@ -293,19 +343,8 @@ cl-game-mobile-preview, .tabs-component {
   }
 }
 
-.name-control-title {
-  input {
-    font-size: 2.2rem;
-    color: $there-color;
-  }
-
-  .mat-form-field-infix {
-    border: 0;
-  }
-}
-
 .control-input {
-  font-size: 1.4rem !important;
+  font-size: $base-font-size !important;
   width: 100%;
 }
 
@@ -329,6 +368,11 @@ cl-game-mobile-preview, .tabs-component {
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  & > .mat-form-field {
+    width: 0;
+    flex: auto;
   }
 }
 
@@ -371,8 +415,16 @@ cl-game-mobile-preview, .tabs-component {
   position: relative;
 }
 
-.dashboard-content {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-  }
+.tabs-filter:first-child .tabs {
+  margin-bottom: 3.2rem;
+}
+
+.tabs-filter + .table-filter .mat-form-field-wrapper {
+  margin: 0 0 2.4rem !important;
+  padding-bottom: 0;
+}
+
+.section-stickyheader {
+  position: relative;
+  padding-top: $header-height-base;
 }

@@ -4,7 +4,7 @@ import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, VouchersService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,7 +29,7 @@ describe('WalletComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [
-        { provide: VouchersService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ],
       declarations: [WalletComponent]
     })

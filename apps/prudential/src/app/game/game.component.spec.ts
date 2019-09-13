@@ -5,26 +5,27 @@ import { RouterModule, Router } from '@angular/router';
 import {
   CampaignModule,
   GameModule,
-  GameService,
-  VouchersService,
+  IGameService,
+  IVoucherService,
   GameType,
   defaultTree,
-  IGame
+  IGame,
+  ConfigModule
 } from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from 'src/environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let router: Router;
-  let gameService: GameService;
+  let gameService: IGameService;
 
   const fakeGame: IGame = {
     id: 1,
@@ -37,15 +38,16 @@ describe('GameComponent', () => {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GameComponent],
       imports: [
+        ConfigModule.forRoot({...environment}),
         RouterModule.forRoot([]),
-        CampaignModule.forRoot({ env: environment }),
-        GameModule.forRoot({ env: environment }),
+        CampaignModule,
+        GameModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         RouterTestingModule,
@@ -53,7 +55,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock }
       ]
     })
       .compileComponents();
@@ -63,7 +65,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    gameService = TestBed.get(GameService);
+    gameService = TestBed.get(IGameService);
     fixture.detectChanges();
   });
 

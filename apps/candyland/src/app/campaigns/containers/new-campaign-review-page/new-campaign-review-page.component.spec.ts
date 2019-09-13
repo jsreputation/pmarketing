@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 import { NewCampaignReviewPageComponent } from './new-campaign-review-page.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -16,6 +17,7 @@ describe('NewCampaignReviewPageComponent', () => {
         {provide: CampaignCreationStoreService, useValue: {
             updateCampaign: (data: any) => data,
             currentCampaign$: new Subject()}},
+        {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })

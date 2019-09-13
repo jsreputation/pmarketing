@@ -14,7 +14,7 @@
   <mat-form-field>
     <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="phone">
-    <a routerLink="phone" matSuffix>
+    <a (click)="updateMobileVerification($event, 'mobile')" href="phone" matSuffix>
       <mat-icon>edit</mat-icon>
     </a>
   </mat-form-field>
@@ -30,12 +30,14 @@
   <mat-form-field>
     <mat-label>{{"CURRENT_PASSWORD" | translate}}</mat-label>
     <input type="password" matInput readonly formControlName="pass">
-    <a routerLink="password" matSuffix>
+    <a href="password" (click)="updateMobileVerification($event, 'password')" matSuffix>
       <mat-icon>edit</mat-icon>
     </a>
   </mat-form-field>
-  <mat-slide-toggle formControlName="customProperties" labelPosition="before">
-    {{"AGREE_MARKETING" | translate}}
-  </mat-slide-toggle>
+  <form formGroupName="customProperties">
+    <mat-slide-toggle (change)="agreement($event)" formControlName="subscribe_notification" labelPosition="before">
+      {{"AGREE_MARKETING" | translate}}
+    </mat-slide-toggle>
+  </form>
+  <div class="form-field-border"></div>
 </form>
-

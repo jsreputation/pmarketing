@@ -1,3 +1,5 @@
+@import "variables";
+
 :host {
   display: block;
   margin-bottom: 1rem;
@@ -26,21 +28,21 @@ mat-nav-list {
   padding-top: 0;
 }
 
-.mat-nav-list .mat-list-item {
-  font-size: 1.4rem;
-}
-
 .mat-list-item {
   height: 3rem !important;
 
   mat-icon {
-    padding: 0 0 0 1.4rem !important;
+    padding: 0 0 0 $base-font-size !important;
     color: rgba(255, 255, 255, 0.7);
   }
 
   .menu-link {
     color: rgba(255, 255, 255, 0.7);
   }
+}
+
+.mat-nav-list .mat-list-item {
+  font-size: $base-font-size;
 }
 
 .menu-icon {
