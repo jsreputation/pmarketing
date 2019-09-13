@@ -18,21 +18,7 @@ Before( () => {
   EngagementPage = new EngagementAppPage();
   LoginApp = new LoginAppPage();
 });
-// Background steps
-/*Given(/^I am logged into the loyalty platform as admin user.$/, async () => {
-  await LoginApp.navigateToLogin();
-  const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('input')).get(0)), 5000);
-  // entering correct account id
-  await element.all(by.css('input')).get(0).sendKeys(testAccountId);
-  // entering correct testUserAccount
-  await element.all(by.css('input')).get(1).sendKeys(testUserAccount);
-  // entering correct pw
-  await element.all(by.css('input')).get(2).sendKeys(testPW);
-  // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
-  await browser.sleep(3000);
-});*/
+
 // Engagements tab is visible to customer
 Given(/^1_I am on the dashboard page.$/, async () => {
   const ec = protractor.ExpectedConditions;
@@ -46,15 +32,20 @@ Given(/^1_I am on the dashboard page.$/, async () => {
   // entering correct pw
   await element.all(by.css('input')).get(2).sendKeys(testPW);
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
   await DashboardPage.navigateToDashboard();
+  await browser.sleep(8000);
+  await DashboardPage.navigateToDashboard();
   // walk around for the walk me widget
-  await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 5000);
+  await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
   await element(by.className('trg-499259')).click();
+  await browser.sleep(8000);
   await DashboardPage.navigateToDashboard();
   await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
   await element(by.className('walkme-custom-balloon-button-text')).click();
+  await browser.sleep(3000);
 
 });
 
