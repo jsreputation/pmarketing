@@ -11,7 +11,8 @@ describe('LoadingComponent', () => {
   let fixture: ComponentFixture<LoadingComponent>;
 
   const authenticationServiceStub = {
-    getUserAccessToken: () => of('')
+    getUserAccessToken: () => of(''),
+    autoLogin: () => of()
   };
 
   beforeEach(async(() => {
