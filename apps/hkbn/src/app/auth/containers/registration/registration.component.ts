@@ -15,8 +15,8 @@ export class RegistrationComponent {
     private router: Router,
   ) { }
   public submitHandler(data: ISignUpData): void {
-    this.auth.signup(data).subscribe((data: IProfile) => {
-      this.router.navigate(['sms-validation'], { queryParams: { identifier: data.phone } });
+    this.auth.signup(data).subscribe((profile: IProfile) => {
+      this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     });
   }
 

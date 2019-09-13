@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil, mergeMap } from 'rxjs/operators';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'hkbn-sms-validation',
@@ -14,12 +13,10 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
 
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
-  private number: string;
   constructor(
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router,
-    private dataTransferService: DataTransferService
+    private router: Router
   ) {
   }
 
@@ -40,10 +37,10 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
 
   public validate(code: string): void {
     this.authenticationService.verifyOTP(this.identifier, code).subscribe(
-        () => {
-          this.router.navigate(['/']);
-        }
-      );
+      () => {
+        this.router.navigate(['/']);
+      }
+    );
   }
 
   public resendSms(): void {

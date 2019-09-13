@@ -14,6 +14,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService } from '@perx/core';
+import { of } from 'rxjs';
+
+const authenticationService = {
+  signup: () => of(null)
+};
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -33,7 +39,10 @@ describe('RegistrationComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [RegistrationComponent, RegistrationFormComponent]
+      declarations: [RegistrationComponent, RegistrationFormComponent],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationService }
+      ]
     })
       .compileComponents();
   }));
