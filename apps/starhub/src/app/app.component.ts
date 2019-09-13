@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       .pipe(
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.isIdExistInStorage(c.id)))
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
@@ -99,8 +99,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private checkGame(campaign: ICampaign): void {
-    const isGameIdExist = this.isIdExistInStorage(campaign.id);
-
     this.gameService.getGamesFromCampaign(campaign.id)
       .pipe(
         filter(games => games.length > 0),
@@ -131,7 +129,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     }
   }
 
-  private isIdExistInStorage(id: number): boolean {
+  protected idExistsInStorage(id: number): boolean {
     const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
     const ids: number[] = [];
 
