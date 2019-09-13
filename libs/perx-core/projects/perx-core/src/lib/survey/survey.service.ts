@@ -1,11 +1,11 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 interface IWhistlerSurveyContent {
   id: string;
@@ -43,6 +43,8 @@ interface IWhistlerDisplayProperties {
 })
 export class SurveyService {
   private baseUrl: string;
+  private engagementId: number;
+  private campaignId: number;
 
   constructor(
     private http: HttpClient,
@@ -66,8 +68,12 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
+    this.campaignId = id;
     return this.campaignService.getCampaign(id)
       .pipe(
+        tap(
+          (campaign: ICampaign) => this.engagementId = campaign.engagementId
+        ),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
             this.baseUrl + '/survey/engagements/' + campaign.engagementId
@@ -75,5 +81,24 @@ export class SurveyService {
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
       );
+  }
+
+  public postSurveyAnswer(answers: IAnswer[]): Observable<void> {
+    const body = {
+      data: {
+        type: 'answers',
+        attributes: {
+          engagement_id: this.engagementId,
+          campaign_entity_id: this.campaignId,
+          content: answers
+        }
+      }
+    };
+
+    return this.http.post<any>(this.baseUrl + '/survey/answers', body, {
+      headers: {
+        'Content-Type': 'application/vnd.api+json'
+      }
+    });
   }
 }
