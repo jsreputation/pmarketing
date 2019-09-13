@@ -44,7 +44,7 @@
 
   &-sub-title {
     margin-bottom: 2.4rem;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     line-height: 1.21;
     color: $secondary-color;
   }
@@ -84,7 +84,7 @@
       left: 2rem;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 1.4rem;
+      font-size: $base-font-size;
       color: $secondary-color;
     }
 

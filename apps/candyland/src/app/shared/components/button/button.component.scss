@@ -6,13 +6,13 @@
 }
 
 .btn {
+  @include typo-button;
+
   position: relative;
   min-width: 10rem;
   height: 4rem;
   border-radius: 0.2rem;
   color: $white-color;
-  font-size: 1.4rem;
-  letter-spacing: 0.05rem;
   padding: 0 2rem;
   box-shadow: none;
 

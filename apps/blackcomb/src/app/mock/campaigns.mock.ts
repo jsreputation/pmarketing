@@ -23,6 +23,6 @@ export const campaigns: ICampaign[] = [
         description: 'Blackcomb description',
         type: CampaignType.survey,
         state: CampaignState.active,
-        endsAt: '2017-10-17T03:24:00'
+        endsAt: new Date('2017-10-17T03:24:00')
     }
 ];

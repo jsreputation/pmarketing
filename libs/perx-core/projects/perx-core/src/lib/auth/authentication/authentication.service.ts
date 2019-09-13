@@ -9,8 +9,9 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
+import { AuthService } from 'ngx-auth';
 
-export abstract class AuthenticationService {
+export abstract class AuthenticationService implements AuthService {
   public abstract get $failedAuth(): Observable<boolean>;
 
   /**
