@@ -93,7 +93,6 @@ describe('AccountSummaryComponent', () => {
     expect(spy).toHaveBeenCalledWith(accountDataStub);
   }));
 
-
   it('should handle error', fakeAsync(() => {
     const errorMessage = 'error';
     const spy = spyOn(notificationService, 'addSnack');
