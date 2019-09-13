@@ -1,7 +1,7 @@
 <div class="tab-group__content">
-    <div *ngIf="campaigns$ && (campaigns$ | async).length>0 ">
-        <h1>My Stamp Card</h1>
-        <a *ngFor="let campaign of campaigns$ | async as campaigns" [routerLink]="['/stamp/' + campaign.id]">
+    <div *ngIf="campaigns$ && campaigns$ | async as campaigns">
+        <h1 *ngIf="campaigns.length>0">My Stamp Card</h1>
+        <a *ngFor="let campaign of campaigns" [routerLink]="['/stamp/' + campaign.id]">
             <mat-card matRipple>
                 <div class="puzzle-content">
                     <div class="puzzle-img__wrapper">
