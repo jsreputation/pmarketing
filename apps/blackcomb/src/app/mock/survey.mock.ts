@@ -45,6 +45,7 @@ export const survey: ISurvey = {
         //     <a href="/reward-detail?id=2">See speaker’s bio</a><br>
         //     <br>
         //     <i>Light refreshment will be provided after the talk.
+        // tslint:disable-next-line:max-line-length
         //     You are also entitled for an optional Financial Review with our Consultant and received $30 NTUC/Grab vouchers when you’ve completed the review. T&Cs apply.</i>
         //     `,
         //     id: '1',
