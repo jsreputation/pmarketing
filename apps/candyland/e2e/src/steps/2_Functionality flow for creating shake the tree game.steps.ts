@@ -222,7 +222,7 @@ When(/^17_you select one of the the tree design.$/, async () => {
 Then(/^17_that selected tree design is reflected in the preview element.$/, async () => {
   const TreeElement = element(by.className('tree__img ng-star-inserted'));
   // Doing an assertion on the src attribute
-  expect(await TreeElement.getAttribute('src')).to.contain('assets/images/tree/full_tree_2.png');
+  expect(await TreeElement.getAttribute('src')).to.contain('assets/images/games/tree/full_tree_2.png');
 
   });
 
