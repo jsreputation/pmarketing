@@ -63,7 +63,6 @@ export class SurveyComponent implements OnInit {
           content: answer.content
         };
       });
-      console.log(answers);
       this.surveyDone.emit(answers);
     }
   }

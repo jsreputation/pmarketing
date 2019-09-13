@@ -19,8 +19,11 @@
 
   <ng-container matColumnDef="duration">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="begin">Duration</th>
-    <td mat-cell *matCellDef="let element">{{element?.begin | date: DATE_FORMAT}}
-      - {{element?.end | date: DATE_FORMAT}}</td>
+    <td mat-cell *matCellDef="let element">
+      <time datetime="">
+        <span>{{element?.begin | date: DATE_FORMAT}} - {{element?.end | date: DATE_FORMAT}}</span>
+      </time>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="issued">
