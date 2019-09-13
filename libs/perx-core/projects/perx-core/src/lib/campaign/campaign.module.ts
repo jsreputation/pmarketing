@@ -8,7 +8,7 @@ import { WhistlerCampaignService } from './whistler-campaign.service';
 
 export function campaignServiceFactory(http: HttpClient, config: Config): ICampaignService {
   if (config.isWhistler) {
-    return new WhistlerCampaignService();
+    return new WhistlerCampaignService(http, config);
   }
   // Make decision on what to instantiate base on config
   return new V4CampaignService(http, config);
