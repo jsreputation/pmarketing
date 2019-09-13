@@ -12,4 +12,7 @@ export class NotificationWrapperService {
     this.notificationService.addPopup(config);
   }
 
+  public addSnack(message: string): void {
+    this.notificationService.addSnack(message);
+  }
 }
