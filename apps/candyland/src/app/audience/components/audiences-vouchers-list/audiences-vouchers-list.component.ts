@@ -7,7 +7,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./audiences-vouchers-list.component.scss']
 })
 export class AudiencesVouchersListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
   public TIME_FORMAT = 'hh:ssa';
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign', 'redemptionType', 'actions'];
