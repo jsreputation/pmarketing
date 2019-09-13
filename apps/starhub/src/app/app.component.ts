@@ -17,7 +17,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
-import { combineLatest, of, map } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
