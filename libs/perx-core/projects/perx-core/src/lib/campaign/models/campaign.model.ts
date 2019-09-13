@@ -22,8 +22,7 @@ export interface ICampaign {
   endsAt: Date;
   rewards?: IReward[];
   thumbnailUrl?: string;
-  engagementId?: number;
-  commChannel?: CommChannel;
+  rawPayload?: any;
 }
 
 export enum CommChannel {
