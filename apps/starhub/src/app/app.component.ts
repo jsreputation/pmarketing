@@ -131,19 +131,14 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   protected idExistsInStorage(id: number): boolean {
     const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
-    const ids: number[] = [];
+    const ids: number[] = campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
 
-    if (campaignIdsInLocalStorage) {
-      const parsedIds = JSON.parse(campaignIdsInLocalStorage);
-      ids.push(...parsedIds);
+    if (ids.includes(id)) {
+      return true;
     }
 
-    if ( !ids.includes(id) ) {
-      ids.push(id);
-      this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
-      return false;
-    }
-
-    return true;
+    ids.push(id);
+    this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
+    return false;
   }
 }
