@@ -1,24 +1,38 @@
-$base-font-size: 14px;
-$base-font-family: Roboto;
+//brand palette
+$blue: #2665ee;
+$blue-hover: #124cc8;
+$orange: #FFA641;
+$red: #ff1c1c;
+$green: #10D994;
+$white: #fff;
 
-$primary-color: #2665ee;
+//app colors
+$primary-color: $blue;
+$primary-hover: $blue-hover;
+
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
+
 $background-color: rgba(212, 225, 244, 0.3);
-$white-color: #ffffff;
+
+$white-color: $white;
 $secondary-color: #3e4e73;
-$there-color: #333333;
 $light-gray:  #f7fafc;
 $simple-light-gray:  #fafafa;
 $dark-color: #3B4E77;
-$warning-color: #ff1c1c;
+$warning-color: $red;
 $border-color: #d9dfe4;
-$primary-section-color: f8fbfd;
+$primary-section-color: #f8fbfd;
 
-$success-color: #10D994;
+$success-color: $green;
 $draft-color: #D8D8D8;
-$pending-color: #FFA641;
+$pending-color: $orange;
 
+/* ----- Progress BAR ----- */
+$progress-bar-color: #ffa600;
+$progress-bar-background-color: #e7e9ed;
+
+/* ----- SPACING ----- */
 $vertical-content-padding: 3rem;
 $horizontal-content-padding: 3rem;
 
@@ -31,9 +45,51 @@ $mobile-width: 576px;
 $tablet-width: 768px;
 $desktop-width: 992px;
 
-/* ----- FONTS ----- */
-$primary-font: Roboto;
+/* -------------- FONTS -------------- */
+$primary-font: Roboto, "Helvetica Neue", sans-serif;
+$base-font-size: 1.4rem;
 
-/* ----- Progress BAR ----- */
-$progress-bar-color: #ffa600;
-$progress-bar-background-color: #e7e9ed;
+//Headlines
+@mixin typo-h5 {
+  font-weight: 400;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.018rem;
+}
+
+@mixin typo-h6 {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+}
+
+//General
+@mixin typo-body2 {
+  font-weight: 400;
+  font-size: $base-font-size;
+  line-height: 2rem;
+  letter-spacing: 0.025rem;
+}
+
+//Input Fields
+@mixin typo-input {
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.015rem;
+}
+
+//Buttons
+@mixin typo-button {
+  font-weight: 500;
+  font-size: $base-font-size;
+  letter-spacing: 0.075rem;
+}
+
+//Input Fields
+@mixin typo-caption {
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.04rem;
+}

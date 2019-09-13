@@ -7,7 +7,7 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./rewards-campaigns-list.component.scss']
 })
 export class RewardsCampaignsListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns = ['name', 'status', 'engagementType', 'duration', 'issued'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

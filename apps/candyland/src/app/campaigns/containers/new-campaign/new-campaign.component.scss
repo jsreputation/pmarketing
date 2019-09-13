@@ -1,6 +1,6 @@
 @import "variables";
 
 :host {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
   background-color: $simple-light-gray;
 }

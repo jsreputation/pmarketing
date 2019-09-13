@@ -1,11 +1,5 @@
 @import '../icon.scss';
 
-:host {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-}
-
 mat-card {
   max-width: 28rem;
 }
