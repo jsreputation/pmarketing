@@ -7,7 +7,7 @@ export const campaigns: ICampaign[] = [
         description: '',
         type: CampaignType.stamp,
         state: CampaignState.active,
-        endsAt: '2017-12-17T03:24:00'
+        endsAt: new Date('2017-11-17T03:24:00')
     },
     {
         id: 2,
@@ -15,7 +15,7 @@ export const campaigns: ICampaign[] = [
         description: 'Abenson description',
         type: CampaignType.game,
         state: CampaignState.active,
-        endsAt: '2017-11-17T03:24:00'
+        endsAt: new Date('2017-11-17T03:24:00')
     },
     {
         id: 3,
@@ -23,6 +23,6 @@ export const campaigns: ICampaign[] = [
         description: 'Abenson description',
         type: CampaignType.stamp,
         state: CampaignState.active,
-        endsAt: '2017-10-17T03:24:00'
+        endsAt: new Date('2017-11-17T03:24:00')
     }
 ];
