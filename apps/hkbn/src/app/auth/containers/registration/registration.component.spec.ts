@@ -28,7 +28,7 @@ const mockUser: ISignUpData = {
   lastName: 'gen',
   password: '666',
   password_confirmation: '666'
-}
+};
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
@@ -64,14 +64,14 @@ describe('RegistrationComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should handle registration', fakeAsync(()=>{
+  it('should handle registration', fakeAsync(() => {
     const spy = spyOn(auth, 'signup');
-    spy.and.returnValue(of({...mockUser, id: 1, state: ''} as IProfile));
+    spy.and.returnValue(of({ ...mockUser, id: 1, state: '' } as IProfile));
     component.submitHandler(mockUser);
     tick();
     expect(spy).toHaveBeenCalledWith(mockUser);

@@ -8,7 +8,7 @@ import { MatFormFieldModule, MatIconModule, MatSlideToggleModule } from '@angula
 import { TranslateModule } from '@ngx-translate/core';
 import { DataTransferService } from '../services/data-transfer.service';
 
-fdescribe('CheckFormTransferGuard', () => {
+describe('CheckFormTransferGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -40,18 +40,7 @@ fdescribe('CheckFormTransferGuard', () => {
       dataTransfer.newxUpdateData({ phone: '888', otp: '999' });
       const result = guard.canActivate();
       tick();
-      console.log(result, '7777')
       expect(result).toBeTruthy();
-    })
-  ));
-
-  it('should navigate to account', inject([CheckFormTransferGuard, DataTransferService],
-    fakeAsync((guard: CheckFormTransferGuard, dataTransfer: DataTransferService) => {
-      dataTransfer.newxUpdateData(null);
-      const result = guard.canActivate();
-      
-      tick();
-      console.log(result,'439593797')
     })
   ));
 });
