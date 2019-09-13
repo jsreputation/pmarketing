@@ -3,6 +3,7 @@ import { AuthenticationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, mergeMap } from 'rxjs/operators';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-sms-validation',
@@ -13,11 +14,12 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
 
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
-
+  private number: string;
   constructor(
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dataTransferService: DataTransferService
   ) {
   }
 
@@ -37,14 +39,7 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
   }
 
   public validate(code: string): void {
-    // TODO: Remove when methods will be implemented, and we have an ability to get user and password data
-    const mockUser = { user: 'John', pass: 'qwerty123' };
-    this.authenticationService.verifyOTP(this.identifier, code).pipe(
-      mergeMap(
-        () => {
-          return this.authenticationService.login(mockUser.user, mockUser.pass);
-        }
-      )).subscribe(
+    this.authenticationService.verifyOTP(this.identifier, code).subscribe(
         () => {
           this.router.navigate(['/']);
         }

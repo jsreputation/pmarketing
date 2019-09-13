@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, IProfile } from '@perx/core';
 import { Router } from '@angular/router';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
@@ -12,11 +12,11 @@ export class RegistrationComponent {
   /* istanbul ignore next */
   constructor(
     private auth: AuthenticationService,
-    private router: Router
+    private router: Router,
   ) { }
   public submitHandler(data: ISignUpData): void {
-    this.auth.signup(data).subscribe(() => {
-      this.router.navigate(['sms-validation']);
+    this.auth.signup(data).subscribe((data: IProfile) => {
+      this.router.navigate(['sms-validation'], { queryParams: { identifier: data.phone } });
     });
   }
 
