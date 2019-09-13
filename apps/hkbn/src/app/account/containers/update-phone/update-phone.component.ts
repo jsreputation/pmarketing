@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -24,7 +25,8 @@ export class UpdatePhoneComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     private authService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataTransfer: DataTransferService
   ) {
   }
 
@@ -38,9 +40,8 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.authService.changePhone({ phone: this.updatePhoneGroup.value.phone, otp: this.otp })
-      .subscribe(() => {
-        this.router.navigate(['account']);
-      });
+    this.dataTransfer.newxUpdateData(this.updatePhoneGroup.value);
+    this.authService.requestVerificationToken(this.updatePhoneGroup.value.phone)
+    .subscribe(()=>this.router.navigate(['account',  'verify_token', 'phone']));
   }
 }

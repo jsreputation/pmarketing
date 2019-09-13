@@ -41,7 +41,6 @@ const profileServiceStub = {
 describe('AccountSummaryComponent', () => {
   let component: AccountSummaryComponent;
   let fixture: ComponentFixture<AccountSummaryComponent>;
-  let authService: AuthenticationService;
   let profileService: ProfileService;
   let notificationService: NotificationService;
 
@@ -75,7 +74,6 @@ describe('AccountSummaryComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountSummaryComponent);
-    authService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     notificationService = TestBed.get(NotificationService);
     component = fixture.componentInstance;
@@ -95,12 +93,6 @@ describe('AccountSummaryComponent', () => {
     expect(spy).toHaveBeenCalledWith(accountDataStub);
   }));
 
-  it('should navigate to account/verify_token', fakeAsync(() => {
-    const spy = spyOn(authService, 'requestVerificationToken').and.returnValue(throwError(null));
-    component.updateMobileVerification(new Event('click'), 'phone');
-    tick();
-    expect(spy).toHaveBeenCalled();
-  }));
 
   it('should handle error', fakeAsync(() => {
     const errorMessage = 'error';
