@@ -42,3 +42,10 @@ export class LoginAppPage {
  }
 
 }
+export class CreateSurveyAppPage {
+
+  public navigateToSurvey(): Promise<string> {
+    return browser.get('engagements/new-survey/questions') as Promise<string> ;
+ }
+
+}
