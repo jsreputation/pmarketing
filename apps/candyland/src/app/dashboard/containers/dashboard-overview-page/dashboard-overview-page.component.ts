@@ -45,7 +45,6 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
         untilDestroyed(this),
         tap(value => this.params = value),
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
-        tap(value => console.log('tab', value)),
         tap(value => this.tabsValue = value)
       )
       .subscribe(() => this.cd.detectChanges());
