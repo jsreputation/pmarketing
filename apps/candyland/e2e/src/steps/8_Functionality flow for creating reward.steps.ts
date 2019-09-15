@@ -87,6 +87,7 @@ Then(/^9_I should see four options.$/, async () => {
 Given(/^10_that I am on the survey creation page.$/, async () => {
   await CreateRewardPage.navigateToRewardCreate();
   await browser.sleep(3000);
+  // making the position header absolute so it will not obstruct element
   await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
   // browser.sleep(3000);
 });
