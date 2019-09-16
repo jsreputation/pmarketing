@@ -92,22 +92,33 @@ Then(/^17_File uploaded successfully.$/, async () => {
 });
 
 // Verifiying file upload assertion for user upload codes
-/*Given(/^18_that I am on reward creation page$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Given(/^18_that I am on reward creation page$/, async () => {
+  await CreateRewardPage.navigateToRewardCreate();
+  browser.sleep(3000);
+  // making the position header absolute so it will not obstruct element
+  await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
+});
 
 Given(/^18_I select user upload option for unique codes$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  const ec = protractor.ExpectedConditions;
+  // waiting for user upload radio button to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-ripple mat-ripple')).get(4)), 6000);
+  // getting the element finder for the radio button for user upload
+  const elementRadioButton: ElementFinder = element.all(by.css('div.mat-radio-outer-circle')).get(4);
+  browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
+    elementRadioButton.click();
   });
+});
 
 When(/^18_I upload a non csv file$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  const FileToUpload = './testArtifacts/test.xyz';
+  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
+  // upload the file to the user upload voucher upload section
+  await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
+  await browser.sleep(3000);
   });
 
 Then(/^18_File uploaded unsuccessfully.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
+    // Need to write assertions
     return 'pending';
-});*/
+});
