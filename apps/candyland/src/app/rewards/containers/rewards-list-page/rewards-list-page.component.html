@@ -4,7 +4,7 @@
 </section>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
+    <ng-container *ngIf="hasData && dataSource.length > 0">
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
       <ng-container *clTableFilter="'name'; let filter">
@@ -26,14 +26,12 @@
     <!--/ paginator-->
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
-    <figure>
-      <img src="/assets/images/no-data/reward-empty-illustration.svg" alt="">
-    </figure>
-    <h2>
-      Your reward bag is empty :(
+  <cl-no-data *ngIf="!hasData || !dataSource.length">
+    <img class="no-data-img" src="/assets/images/no-data/reward-empty-illustration.svg" alt="">
+    <h2 class="no-data-title">
+      Your reward bag is empty <span style="display: inline-block;">:(</span>
     </h2>
-    <p>
+    <p class="no-data-text">
       Let&rsquo;s begin by creating your first Reward
     </p>
   </cl-no-data>

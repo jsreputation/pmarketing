@@ -1,5 +1,5 @@
 <section class="content">
-  <ng-container *ngIf="hasData">
+  <ng-container *ngIf="hasData && dataSource.length > 0">
     <!--filters-->
     <div class="row">
       <cl-table-filters [dataSource]="dataSource" classList="row input-group">
@@ -33,14 +33,12 @@
     <!--<mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
-    <figure>
-      <img src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
-    </figure>
-    <h2>
+  <cl-no-data *ngIf="!hasData || !dataSource.length">
+    <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
+    <h2 class="no-data-title">
       You need Merchants to build your eco-system!
     </h2>
-    <p>
+    <p class="no-data-text">
       Let&rsquo;s begin by creating your first Merchant
     </p>
   </cl-no-data>
