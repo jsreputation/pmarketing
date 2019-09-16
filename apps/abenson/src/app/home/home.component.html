@@ -1,23 +1,22 @@
-<div class="tab-group__content">
-    <h1>My Stamp Card</h1>
-    <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple (click)="onCampaignSelect(campaign)">
-        <div class="puzzle-content">
-            <div class="puzzle-img__wrapper">
-                <img class="puzzle-img" src="assets/static_image.png">
-            </div>
-            <div class="puzzle-details">
-                <span class='main-reward-title'>
-                    {{campaign.name}}
-                </span>
-                <span class="reward-subtitle">{{campaign.description}}</span>
-            </div>
-        </div>
+<div class="container">
+  <div class="loyalty-block">
+    <perx-core-loyalty-summary></perx-core-loyalty-summary>
+  </div>
+  <h1>Games</h1>
+  <div class="games">
+    <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple
+              (click)="onCampaignSelect(campaign)">
+      <img class="puzzle-img" src="assets/static_image.png">
+      <mat-card-content>
+        <p class='main-reward-title'>{{campaign.name}}</p>
+        <p class="reward-subtitle">{{campaign.description}}</p>
+      </mat-card-content>
     </mat-card>
-    <h1>My Rewards</h1>
-    <perx-core-vouchers 
-        (tapped)="voucherSelected($event)" 
-        [data]="vouchers$"
-        [filter]="filter"
-        [showRedeemedIcon]="false">
-    </perx-core-vouchers>
+  </div>
+
+  <div class="rewards">
+    <h1>Rewards</h1>
+    <img class="coming-soon-img" src="assets/img/coming_soon.png">
+    <p>Coming soon</p>
+  </div>
 </div>

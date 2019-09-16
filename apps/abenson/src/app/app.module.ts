@@ -6,6 +6,7 @@ import {
   PerxCoreModule,
   VouchersModule,
   AuthenticationModule,
+  LoyaltyModule,
   GameModule,
   UtilsModule,
   ProfileModule,
@@ -112,7 +113,8 @@ const profileServiceStub = {
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    LoyaltyModule
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },

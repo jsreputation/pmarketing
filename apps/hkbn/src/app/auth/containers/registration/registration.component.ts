@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthenticationService, IProfile } from '@perx/core';
+import { Router } from '@angular/router';
+import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-registration',
@@ -7,8 +10,14 @@ import { Component } from '@angular/core';
 })
 export class RegistrationComponent {
   /* istanbul ignore next */
-  public submitHandler(data: any): void {
-    console.log(data);
+  constructor(
+    private auth: AuthenticationService,
+    private router: Router,
+  ) { }
+  public submitHandler(data: ISignUpData): void {
+    this.auth.signup(data).subscribe((profile: IProfile) => {
+      this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
+    });
   }
 
 }
