@@ -4,7 +4,7 @@
 </div>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
+  <ng-container>
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
       <ng-container *clTableFilter="'engagement_type'; let filter">
@@ -48,7 +48,7 @@
     <!--/ paginator-->
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
+  <cl-no-data>
     <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Engaging with your customers is easy!
