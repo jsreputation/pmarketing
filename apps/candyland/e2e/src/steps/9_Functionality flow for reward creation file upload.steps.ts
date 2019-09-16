@@ -70,19 +70,21 @@ Given(/^17_that I am on reward creation page$/, async () => {
 Given(/^17_I select user upload option for unique codes$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for user upload radio button to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-ripple mat-ripple')).get(4)), 6000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2)), 6000);
   // getting the element finder for the radio button for user upload
   const elementRadioButton: ElementFinder = element.all(by.css('div.mat-radio-outer-circle')).get(4);
-  browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-radio-outer-circle')).get(4)), 6000);
+  await browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
     elementRadioButton.click();
   });
+
 });
 
 When(/^17_I upload a file$/, async () => {
   const FileToUpload = './testArtifacts/pru-event-reward-test.csv';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the user upload voucher upload section
-  await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
+  await element(by.css('input.upload-file-input.ng-star-inserted')).sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
@@ -105,7 +107,8 @@ Given(/^18_I select user upload option for unique codes$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-ripple mat-ripple')).get(4)), 6000);
   // getting the element finder for the radio button for user upload
   const elementRadioButton: ElementFinder = element.all(by.css('div.mat-radio-outer-circle')).get(4);
-  browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-radio-outer-circle')).get(4)), 6000);
+  await browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
     elementRadioButton.click();
   });
 });
@@ -116,9 +119,9 @@ When(/^18_I upload a non csv file$/, async () => {
   // upload the file to the user upload voucher upload section
   await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
   await browser.sleep(3000);
-  });
+});
 
 Then(/^18_File uploaded unsuccessfully.$/, async () => {
-    // Need to write assertions
-    return 'pending';
+  // doing an assertion on the error message
+  expect(await element(by.className('error upload-file-error ng-star-inserted')).getText()).to.contain('Only .csv are supported.');
 });

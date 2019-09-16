@@ -118,11 +118,14 @@ Given(/^11_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^11_I entered a pseudo random text string in the headline text box.$/, async () => {
-  await element(by.css('input#mat-input-1')).clear();
-  await element(by.css('input#mat-input-1')).sendKeys('This is a test string!');
+  await element.all(by.css('input')).get(1).clear();
+  await element.all(by.css('input')).get(1).sendKeys('This is a test string!');
+  await browser.sleep(3000);
 });
 
 Then(/^11_the random string entered is reflected in the preview element.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-headline'))), 6000);
   expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('This is a test string!');
 });
 
@@ -149,11 +152,14 @@ Given(/^13_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^13_I entered a pseudo random text string in the sub-headline text box.$/, async () => {
-  await element(by.css('input#mat-input-2')).clear();
-  await element(by.css('input#mat-input-2')).sendKeys('This is a test string!');
+  await element.all(by.css('input')).get(2).clear();
+  await element.all(by.css('input')).get(2).sendKeys('This is a test string!');
+  await browser.sleep(3000);
 });
 
 Then(/^13_the random string entered is reflected in the preview element.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-sub-headline'))), 6000);
   expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.equal('This is a test string!');
 });
 
@@ -179,11 +185,14 @@ Given(/^15_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^15_I entered a pseudo random text string in the button text box.$/, async () => {
-  await element(by.css('input#mat-input-3')).clear();
-  await element(by.css('input#mat-input-3')).sendKeys('This is a test string!');
+  await element.all(by.css('input')).last().clear();
+  await element.all(by.css('input')).last().sendKeys('This is a test string!');
+  await browser.sleep(3000);
 });
 
 Then(/^15_the random string entered is reflected in the preview element.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-btn'))), 6000);
   expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('This is a test string!');
 });
 

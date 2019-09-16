@@ -99,7 +99,7 @@ When(/^10_I click on the user upload button.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-ripple mat-ripple')).get(4)), 6000);
   // getting the element finder for the radio button for user upload
   const elementRadioButton: ElementFinder = element.all(by.css('div.mat-radio-outer-circle')).get(4);
-  browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
+  await browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
     elementRadioButton.click();
   });
 });
