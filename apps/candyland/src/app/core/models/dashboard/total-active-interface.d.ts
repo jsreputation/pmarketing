@@ -1,6 +1,6 @@
 declare interface ITotal {
   id?: number;
   name: string;
-  value: any;
+  value?: any;
   title: string;
 }

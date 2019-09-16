@@ -7,6 +7,6 @@
       <ng-container>{{"CHECK_SMS" | translate}}</ng-container>
     </p>
   </div>
-  <perx-core-pin-input [length]="6" (full)="validate($event)"></perx-core-pin-input>
+  <perx-core-pin-input [length]="6" (full)="update($event)"></perx-core-pin-input>
   <p class="resend-sms" (click)="resendSms()">{{"RESEND_SMS" | translate}}</p>
 </div>

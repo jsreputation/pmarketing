@@ -36,14 +36,14 @@ export class SurveyHttpService {
   }
 
   public getSurvey(id: string): Observable<any> {
-    return this.http.get<any>(ApiConfig.engagementsPath + 'survey/' + id);
+    return this.http.get<any>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
   public createSurvey(data: any): Observable<any> {
-    return this.http.post<any>(ApiConfig.engagementsPath, data);
+    return this.http.post<any>(ApiConfig.engagementsPath + '/', data);
   }
 
   public updateSurvey(id: string, data: any): Observable<any> {
-    return this.http.patch<any>(ApiConfig.engagementsPath + 'survey/' + id, data);
+    return this.http.patch<any>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 }

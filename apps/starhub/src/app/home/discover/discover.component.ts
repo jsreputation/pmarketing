@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
-import { IReward, ICampaign, ICatalog } from '@perx/core';
+import { IReward, ICatalog } from '@perx/core';
 
 @Component({
   selector: 'app-discover',
@@ -22,7 +22,7 @@ export class DiscoverComponent {
     this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
-  public campaignSelected(campaign: ICampaign): void {
-    this.router.navigate(['/game'], { queryParams: {campaignId: campaign.id} });
+  public campaignSelected(gameId: number): void {
+    this.router.navigate(['/game'], { queryParams: {id: gameId} });
   }
 }
