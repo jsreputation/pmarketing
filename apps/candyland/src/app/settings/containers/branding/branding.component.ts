@@ -119,7 +119,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
           return this.tenants.save();
         }))
       )
-      .subscribe((val) => {
+      .subscribe(() => {
       });
   }
 
