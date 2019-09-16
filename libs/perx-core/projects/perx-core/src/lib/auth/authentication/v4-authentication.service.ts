@@ -250,12 +250,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public requestVerificationToken(phone: string): Observable<void> {
+  public requestVerificationToken(): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => {
           return this.http.get<void>(
-            `${this.customersEndPoint}/${profile.id}/request_verification_token`, { params: { phone } }
+            `${this.customersEndPoint}/${profile.id}/request_verification_token`
           );
         }
       )
@@ -268,13 +268,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         (profile: IProfile) => {
           return this.http.patch<void>(
             `${this.customersEndPoint}/${profile.id}/change_phone`,
-            null,
             {
-              headers: {
-                phone: changePhoneData.phone,
-                confirmation_token: changePhoneData.otp
-              }
-            });
+              phone: changePhoneData.phone,
+              confirmation_token: changePhoneData.otp
+            }
+          );
         }
       )
     );
