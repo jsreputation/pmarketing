@@ -16,7 +16,6 @@ import {
   RedemptionType
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { RewardConfirmComponent } from '../../components/reward-confirm/reward-confirm.component';
@@ -87,7 +86,6 @@ describe('RewardComponent', () => {
         MatButtonModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
       providers: [
