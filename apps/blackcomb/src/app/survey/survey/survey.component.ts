@@ -52,7 +52,7 @@ export class SurveyComponent implements OnInit {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
       (res) => {
         let text = 'Here is a reward for you.';
-        if (!res.totalOutcomes) {
+        if (!res.hasOutcomes) {
           text = 'Rewards are fully redeemed.';
         }
         this.router.navigate(['/wallet']);

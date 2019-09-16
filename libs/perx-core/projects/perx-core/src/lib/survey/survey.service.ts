@@ -45,7 +45,14 @@ interface IWhistlerPostAnswerAttributes {
   updated_at: string;
   engagement_id: number;
   campaign_entity_id: number;
-  results: any[];
+  results: IWhistlerOutcomes;
+}
+
+interface IWhistlerOutcomes {
+  id: string;
+  attributes: any;
+  relationships: any;
+  type: string;
 }
 
 @Injectable({
@@ -88,7 +95,7 @@ export class SurveyService {
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ totalOutcomes: number }> {
+  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ hasOutcomes: boolean }> {
     const body = {
       data: {
         type: 'answers',
@@ -105,9 +112,9 @@ export class SurveyService {
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
       map((res) => {
-        const outComesData = Object.entries(res.data.attributes.results).length;
+        const hasOutcomes = !!res.data.attributes.results.id;
         return {
-          totalOutcomes: outComesData
+          hasOutcomes
         };
       })
     );
