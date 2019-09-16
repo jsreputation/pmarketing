@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment';
 })
 export class LoadingComponent implements OnInit {
   public preAuth: boolean;
-  public failedAuth: boolean;
 
   constructor(
     private router: Router,
@@ -22,14 +21,10 @@ export class LoadingComponent implements OnInit {
   }
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
-      const autoLogin$ =  this.authService.autoLogin();
-      autoLogin$.subscribe(
-        () => {
-          this.redirectAfterLogin();
-        },
-        () => {
-          this.failedAuth = true;
-        }
+      this.authService.autoLogin()
+      .subscribe(
+        () => this.redirectAfterLogin(),
+        () => this.router.navigate(['/login'])
       );
     }
   }

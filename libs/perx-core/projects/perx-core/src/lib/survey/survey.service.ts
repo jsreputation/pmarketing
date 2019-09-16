@@ -1,11 +1,12 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 interface IWhistlerSurveyContent {
   id: string;
@@ -68,12 +69,33 @@ export class SurveyService {
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
     return this.campaignService.getCampaign(id)
       .pipe(
+        tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.engagementId
+            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagementId
           )
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
       );
+  }
+
+  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'answers',
+        attributes: {
+          engagement_id: survey.id,
+          campaign_entity_id: campaignId,
+          content: answers
+        }
+      }
+    };
+
+    return this.http.post<IJsonApiItemPayload<any>>(this.baseUrl + '/survey/answers', body, {
+      headers: { 'Content-Type': 'application/vnd.api+json' }
+    }).pipe(
+      // tslint:disable-next-line: no-unused-expression
+      map(() => { return; })
+    );
   }
 }

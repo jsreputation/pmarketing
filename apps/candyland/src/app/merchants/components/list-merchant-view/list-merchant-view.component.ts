@@ -11,7 +11,7 @@ export class ListMerchantViewComponent implements  AfterViewInit {
   @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public itemAction = new EventEmitter<{action: 'edit' | 'delete' | 'duplicate', merchant: IMerchant}>();
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
 
   public ngAfterViewInit(): void {
     if (this.sort) {

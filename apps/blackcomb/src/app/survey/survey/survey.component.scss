@@ -1,4 +1,4 @@
-@import '../../../custom-theme.scss';
+@import "../../../custom-theme.scss";
 
 .survey-page {
   height: 100%;
@@ -6,9 +6,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #3a6186 0%, #89243e 100%);
   padding: 1rem;
   box-sizing: border-box;
+
+  .background_img_url {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    //offset the padding
+    transform: translateY(-1rem);
+  }
 
   .progress-bar {
     width: 100%;
