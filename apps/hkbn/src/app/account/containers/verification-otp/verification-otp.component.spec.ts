@@ -86,7 +86,6 @@ describe('VerificationOtpComponent', () => {
 
   it('should call switchMethod', fakeAsync(() => {
     const otp = '111222';
-    spyOn(authService, 'verifyOTP').and.returnValue(of(null));
     spyOn(authService, 'changePassword').and.returnValue(of(null));
     const translateSpy = spyOn(translateService, 'get');
     component.update(otp);
@@ -99,7 +98,6 @@ describe('VerificationOtpComponent', () => {
     const msg = 'phone';
     component.type = 'phone';
     fixture.detectChanges();
-    spyOn(authService, 'verifyOTP').and.returnValue(of(null));
     spyOn(authService, 'changePhone').and.returnValue(of(null));
     spyOn(translateService, 'get').and.returnValue(of(msg));
     const spy = spyOn(notificationService, 'addSnack');
