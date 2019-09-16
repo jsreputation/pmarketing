@@ -48,17 +48,21 @@ export class WhistlerVouchersService implements IVoucherService {
   private static WVoucherToVoucher(voucher: IJsonApiItem<IWhistlerVoucher>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
-      rewardId: -1, // use at \lib\vouchers\vouchers.service.ts
+      rewardId: voucher.attributes.source_id, // use at \lib\vouchers\vouchers.service.ts
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
-      name: 'TODO',
+      name: reward.name,
       code: voucher.attributes.code,
-      redemptionType: RedemptionType.qr,
-      thumbnailImg: 'https://picsum.photos/200/300?random=1',
-      rewardBanner: 'https://picsum.photos/200/300?random=1',
-      merchantImg: 'https://picsum.photos/200/300?random=1',
-      merchantName: 'TODO',
+      redemptionType: RedemptionType[reward.howToRedeem],
+      thumbnailImg: reward.rewardThumbnail,
+      rewardBanner: reward.rewardThumbnail,
+      merchantImg: reward.merchantImg,
+      merchantName: reward.merchantName,
       expiry: null,
-      description: []
+      description: [{
+        title: reward.description,
+        content: null,
+        tag: []
+      }]
     };
   }
 
