@@ -13,6 +13,7 @@ import { IReward } from '@perx/core';
 export class RewardComponent implements OnInit {
   public rewardId: number;
   public isButtonEnable: boolean = true;
+  public isRewardsDetailsFetched: boolean = false;
 
   constructor(
     private location: Location,
@@ -51,6 +52,7 @@ export class RewardComponent implements OnInit {
   }
 
   public setButton(isEnable: boolean): void {
+    this.isRewardsDetailsFetched = true;
     this.isButtonEnable = isEnable && this.isButtonEnable;
   }
 }
