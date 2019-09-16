@@ -105,8 +105,9 @@ export class SurveyService {
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
       map((res) => {
+        const outComesData = Object.entries(res.data.attributes.results).length;
         return {
-          totalOutcomes: res.data.attributes.results.length
+          totalOutcomes: outComesData
         };
       })
     );
