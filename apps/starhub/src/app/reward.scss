@@ -92,6 +92,7 @@
 
 .container {
   padding: 0 1.5rem 2rem 1.5rem;
+  margin-bottom: 5rem;
 
   h1 {
     font-size: 1.6rem;
@@ -128,12 +129,14 @@
 }
 
 .button-area {
-  padding: 1.5rem 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   background-color: #ffffff;
 
   button.full-width {
-    width: 100%;
+    width: 70%;
     color: #ffffff;
-    padding: 0.5rem 0.5rem;
+    margin: 1rem;
   }
 }

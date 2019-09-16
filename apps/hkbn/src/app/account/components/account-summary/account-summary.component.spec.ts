@@ -23,7 +23,8 @@ const accountDataStub: IProfile = {
   id: 0,
   firstName: 'Temp',
   state: 'issued',
-  lastName: 'Temp'
+  lastName: 'Temp',
+  phone: '999888199'
 };
 
 const authenticationServiceStub = {
@@ -78,6 +79,7 @@ describe('AccountSummaryComponent', () => {
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     notificationService = TestBed.get(NotificationService);
     component = fixture.componentInstance;
+    component.accountData = accountDataStub;
     fixture.detectChanges();
   });
 
