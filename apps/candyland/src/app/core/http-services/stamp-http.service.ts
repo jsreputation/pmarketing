@@ -33,7 +33,7 @@ export class StampHttpService {
   }
 
   public createStamp(data: any): Observable<any> {
-    return this.http.post(ApiConfig.stampsPath, data);
+    return this.http.post(ApiConfig.stampsPath + '/', data);
   }
 
 }
