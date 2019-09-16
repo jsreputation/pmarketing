@@ -127,10 +127,11 @@ export class V4LocationsService extends LocationsService {
   }
 
   public getFromMerchant(merchantId: number): Observable<ILocation[]> {
+    const pageSize = 100;
     const merchantsUrl: string = `${this.apiHost}/v4/merchants/${merchantId}`;
     const merchantsOptions = {
       params: {
-        size: `100`
+        size: `${pageSize}`
       }
     };
 
