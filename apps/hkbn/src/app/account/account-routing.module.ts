@@ -5,6 +5,7 @@ import { UpdateEmailComponent } from './containers/update-email/update-email.com
 import { UpdatePhoneComponent } from './containers/update-phone/update-phone.component';
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
 import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
+import { CheckFormTransferGuard } from '../guards/check-form-transfer.guard';
 
 const routes: Route[] = [
   {
@@ -24,7 +25,8 @@ const routes: Route[] = [
     component: VerificationOtpComponent, data: {
       backUrl: '/account',
       back: true,
-    }
+    },
+    canActivate: [CheckFormTransferGuard]
   },
   {
     path: 'phone', component: UpdatePhoneComponent, data: {
