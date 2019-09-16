@@ -34,6 +34,11 @@
     line-height: 1.31;
     color: $base-font-color;
     font-family: $primary-font;
+
+    &.with-control {
+      align-items: baseline;
+      max-height: 42px;
+    }
   }
 
   &-block {
