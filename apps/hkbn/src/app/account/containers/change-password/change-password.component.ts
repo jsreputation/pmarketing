@@ -31,7 +31,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   public changePassword(data: IChangePasswordData): void {
-    this.authService.requestVerificationToken(this.profile.phone).subscribe(() => {
+    this.authService.requestVerificationToken().subscribe(() => {
       this.dataTransferService.newxUpdateData(data);
       this.router.navigate(['account', 'verify_token', 'password']);
     });

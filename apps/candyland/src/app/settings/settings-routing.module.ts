@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './containers/settings/settings.component';
 import { GeneralComponent } from './containers/general/general.component';
 import { BrandingComponent } from './containers/branding/branding.component';
-import { CommunicationsComponent } from './containers/communications/communications.component';
 import { UsersRolesComponent } from './containers/users-roles/users-roles.component';
 
 const routes: Routes = [
@@ -20,10 +19,10 @@ const routes: Routes = [
         path: 'branding',
         component: BrandingComponent
       },
-      {
-        path: 'communications',
-        component: CommunicationsComponent
-      },
+      // {
+      //  path: 'communications',
+      //  component: CommunicationsComponent
+      // },
       {
         path: 'users-roles',
         component: UsersRolesComponent

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { flatMap, switchMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
@@ -39,8 +39,8 @@ export class VerificationOtpComponent implements OnInit {
     );
   }
   public update(otp: string): void {
-    this.authService.verifyOTP(this.number, otp)
-      .pipe(switchMap(() => this.switchMethod({ ... this.reqestData, ... { otp } })))
+    this
+      .switchMethod({ ... this.reqestData, ... { otp } })
       .subscribe((msg) => {
         this.notificationService.addSnack(msg);
         this.router.navigate(['account']);
