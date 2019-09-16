@@ -72,7 +72,7 @@ export class SurveyService {
         tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagementId
+            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id
           )
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
