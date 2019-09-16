@@ -13,7 +13,7 @@ export class CheckFormTransferGuard implements CanActivate {
     private router: Router
   ) { }
   public canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-    if(route.params.id!=='password') {
+    if (route.params.id !== 'password') {
       return true;
     }
     return this.dataTransfer.updateData$
