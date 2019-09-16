@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutingStateService } from '@cl-core/services';
+import { AuthService, RoutingStateService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-root',
@@ -7,9 +7,11 @@ import { RoutingStateService } from '@cl-core/services';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private routingState: RoutingStateService) { }
+  constructor(private routingState: RoutingStateService,
+              public authService: AuthService) { }
 
   public ngOnInit(): void {
+    this.authService.initAuth();
     this.routingState.loadRouting()
       .subscribe(() => { });
   }

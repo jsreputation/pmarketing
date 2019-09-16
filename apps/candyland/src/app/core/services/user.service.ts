@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { BehaviorSubject } from 'rxjs';
-import { share } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userSubject$: BehaviorSubject<any>;
-
-  constructor(private localStorage: LocalStorageService) {
-    const localUserId = this.localStorage.get('userId');
-    if (localUserId) {
-
-    }
-    this.userSubject$ = new BehaviorSubject<any>(localToken);
-  }
+  private userSubject$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   public set user(user: any) {
     this.userSubject$.next(user);
@@ -26,9 +16,7 @@ export class UserService {
   }
 
   public get user$(): any {
-    return this.userSubject$.asObservable().pipe(
-      share()
-    );
+    return this.userSubject$.asObservable();
   }
 
   public get userId(): any {
