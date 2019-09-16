@@ -30,7 +30,7 @@
 }
 
 .router-actions {
-  margin-top: .8rem;
+  margin-top: 0.8rem;
   margin-left: -2rem;
 }
 
@@ -72,16 +72,8 @@
 }
 
 cl-logo {
-  padding-top: $vertical-content-padding;
-
-}
-
-cl-login-form {
-  padding-top: $vertical-content-padding * 2;
-}
-
-cl-button {
-  display: block;
+  margin-top: $vertical-content-padding;
+  margin-bottom: $vertical-content-padding * 2;
 }
 
 @import "resize";
