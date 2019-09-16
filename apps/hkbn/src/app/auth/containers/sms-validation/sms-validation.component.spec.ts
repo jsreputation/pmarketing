@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SmsValidationComponent } from './sms-validation.component';
 import { AuthenticationService, UtilsModule } from '@perx/core';
@@ -7,8 +7,9 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
-describe('SmsValidationComponent', () => {
+fdescribe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;
   let fixture: ComponentFixture<SmsValidationComponent>;
 
@@ -16,7 +17,10 @@ describe('SmsValidationComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         UtilsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'home',
+          component: SmsValidationComponent
+        }]),
         TranslateModule.forRoot()
       ],
       declarations: [SmsValidationComponent],
@@ -24,8 +28,9 @@ describe('SmsValidationComponent', () => {
         {
           provide: AuthenticationService, useValue: {
             verifyOTP: () => of(true),
-            login: () => of(true),
-            resendOTP: () => of(true)
+            login: () =>   of(true),
+            resendOTP: () => of(true),
+            getInterruptedUrl: () => 'home'
           }
         },
         {
@@ -50,24 +55,29 @@ describe('SmsValidationComponent', () => {
 
   describe('validate method', () => {
     let authenticationService;
-    let verifyOTPSpy;
-    let router;
-    let navigateSpy;
+    let transferService: DataTransferService;
+    let spyverifyOTP;
+    let router: Router;
 
     beforeEach(() => {
       authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
-      verifyOTPSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(of({message: 'OTP verified'}));
-      router = TestBed.get(Router);
-      navigateSpy = spyOn(router, 'navigate');
+      transferService = TestBed.get<DataTransferService>(DataTransferService as Type<DataTransferService>);
+      router = TestBed.get<Router>(Router as Type<Router>);
+      spyverifyOTP = spyOn(authenticationService, 'verifyOTP');
     });
 
-    it('should validate otp, authorize and redirect to root page', () => {
+    it('should validate otp, authorize and redirect to root page', fakeAsync(() => {
+      spyverifyOTP.and.returnValue(of({message: 'OTP verified'}));
+      spyOnProperty(transferService.updateData$, 'value').and.returnValue(of(null));
+      spyOn(authenticationService, 'login').and.returnValue(of(null));
+      spyOn(component, 'login').and.returnValue(of(null));
+      const spy = spyOn(router,'navigateByUrl');
       component.validate('888888');
-      expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
-      expect(navigateSpy).toHaveBeenCalledWith(['/']);
-    });
+      tick();
+      expect(spy).toHaveBeenCalledWith('home');
+    }));
   });
-
+  
   it('should make request for send otp, when call resendSms method', () => {
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const resendSpy = spyOn(authenticationService, 'resendOTP').and.returnValue(of(null));
