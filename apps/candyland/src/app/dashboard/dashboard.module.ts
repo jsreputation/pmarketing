@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { DashboardCampaignPageComponent } from 'src/app/dashboard/containers/dashboard-campaign-page/dashboard-campaign-page.component';
 import { DashboardOverviewPageComponent } from 'src/app/dashboard/containers/dashboard-overview-page/dashboard-overview-page.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -52,7 +53,8 @@ import { DashboardChartsParametersService } from './services/dashboard-charts-pa
     MatRadioModule,
     MatTabsModule,
     MatSelectModule,
-    ChartCardModule
+    ChartCardModule,
+    SearchFilterModule
   ],
   providers: [
     DashboardChartsParametersService

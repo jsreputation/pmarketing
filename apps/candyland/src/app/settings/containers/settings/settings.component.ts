@@ -16,10 +16,10 @@ export class SettingsComponent implements OnInit {
       path: 'branding',
       label: 'Branding'
     },
-    {
-      path: 'communications',
-      label: 'Communications'
-    },
+    // {
+    //  path: 'communications',
+    //  label: 'Communications'
+    // },
     {
       path: 'users-roles',
       label: 'Users & Roles'
