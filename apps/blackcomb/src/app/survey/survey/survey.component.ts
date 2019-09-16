@@ -50,10 +50,14 @@ export class SurveyComponent implements OnInit {
   }
   public onSubmit(): void {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
-      () => {
+      (res) => {
+        let text = 'Here is a reward for you.';
+        if (!res.totalOutcomes) {
+          text = 'Rewards are fully redeemed.';
+        }
         this.router.navigate(['/wallet']);
         this.notificationService.addPopup({
-          text: 'Here is a reward for you.',
+          text,
           title: 'Thanks for completing the survey.',
           buttonTxt: 'View Reward',
           imageUrl: 'assets/congrats_image.png'

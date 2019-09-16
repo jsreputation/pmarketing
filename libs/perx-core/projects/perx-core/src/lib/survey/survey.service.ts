@@ -39,6 +39,15 @@ interface IWhistlerDisplayProperties {
 
 }
 
+interface IWhistlerPostAnswerAttributes {
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  engagement_id: number;
+  campaign_entity_id: number;
+  results: any[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -79,7 +88,7 @@ export class SurveyService {
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<void> {
+  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ totalOutcomes: number }> {
     const body = {
       data: {
         type: 'answers',
@@ -91,11 +100,15 @@ export class SurveyService {
       }
     };
 
-    return this.http.post<IJsonApiItemPayload<any>>(this.baseUrl + '/survey/answers', body, {
+    return this.http.post<IJsonApiItemPayload<IWhistlerPostAnswerAttributes>>(this.baseUrl + '/survey/answers', body, {
       headers: { 'Content-Type': 'application/vnd.api+json' }
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
-      map(() => { return; })
+      map((res) => {
+        return {
+          totalOutcomes: res.data.attributes.results.length
+        };
+      })
     );
   }
 }
