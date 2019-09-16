@@ -7,7 +7,7 @@ import { IVoucher, IGetVoucherParams, VoucherState, RedemptionType } from './mod
 import { IJsonApiListPayload, IJsonApiItem } from '../jsonapi.payload';
 import { map, switchMap, last } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
-import { IReward } from '../rewards/models/reward.model';
+import { IReward, IRewardParams } from '../rewards/models/reward.model';
 
 const enum VoucherStatus {
   assigned = 'assigned'
@@ -110,5 +110,14 @@ export class WhistlerVouchersService implements IVoucherService {
 
   private get vouchersUrl(): string {
     return `${this.config.apiHost}/voucher/entities`;
+  }
+
+  // @ts-ignore
+  public reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public issueReward(rewardId: number): Observable<IVoucher> {
+    throw new Error('Method not implemented.');
   }
 }
