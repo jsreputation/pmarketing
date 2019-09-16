@@ -7,13 +7,13 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Style</span>
           </p>
           <mat-form-field class="branding-select">
             <mat-select formControlName="style">
-              <mat-option *ngFor="let style of styles" [value]="style.id">
+              <mat-option *ngFor="let style of styles" [value]="style.value">
                 {{style.value}}
               </mat-option>
             </mat-select>
@@ -25,7 +25,7 @@
           </p>
           <mat-form-field class="branding-select">
             <mat-select formControlName="font">
-              <mat-option *ngFor="let font of fonts" [value]="font.id">
+              <mat-option *ngFor="let font of fonts" [value]="font.value">
                 {{font.value}}
               </mat-option>
             </mat-select>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Primary Color</span>
           </p>
@@ -55,12 +55,12 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Color</span>
           </p>
           <!--color select-->
-          <div class="control-input w-50 select">
+          <div class="control-input w-50 select-outcome">
             <mat-form-field color="primary" appearance="outline">
               <mat-select [formControlName]="'headerNavbarColor'">
                 <mat-select-trigger>
@@ -131,12 +131,12 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Color</span>
           </p>
           <!--color select-->
-          <div class="control-input w-50 select">
+          <div class="control-input w-50 select-outcome">
             <mat-form-field color="primary" appearance="outline">
               <mat-select [formControlName]="'button'">
                 <mat-select-trigger>

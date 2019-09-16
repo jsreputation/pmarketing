@@ -9,6 +9,29 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { DataStore } from '@cl-core/http-adapters/datastore';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+
+export enum DefaultSetting {
+  style = 'Light',
+  font = 'Roboto',
+  primaryColor = '#0f69af',
+  secondaryColor = '#1cd6ff',
+  headerColor = '#0f69af',
+  logoType = 'image',
+  buttonColor = '#0f69af',
+  headerNavbarColor = '#0f69af'
+}
+
+export const settingsStyles: ISimpleValue[] = [{
+  id: 1, value: 'Light'
+}, {
+  id: 2, value: 'Dark'
+}];
+export const settingsFonts: ISimpleValue[] = [{
+  id: 1, value: 'Roboto'
+}, {
+  id: 2, value: 'Lato'
+}];
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +81,8 @@ export class SettingsService implements ITableService {
 
   private createFormBranding(): FormGroup {
     return this.fb.group({
-      style: [null], font: [null],
+      style: [DefaultSetting.style],
+      font: [DefaultSetting.font],
       primaryColor: ['#0f69af'],
       secondaryColor: ['#1cd6ff'],
       headerNavbarColor: [null],
@@ -66,6 +90,27 @@ export class SettingsService implements ITableService {
       logoType: ['image'],
       button: [null]
     });
+  }
+
+  public prepareDefaultValue(data: any): any {
+    const style = data['theme.style'] ? data['theme.style'] : DefaultSetting.style;
+    const font = data['theme.font'] ? data['theme.font'] : DefaultSetting.font;
+    const primary = data['theme.primary'] ? data['theme.primary'] : DefaultSetting.primaryColor;
+    const accent = data['theme.accent'] ? data['theme.accent'] : DefaultSetting.secondaryColor;
+    const headerNavbarColor = data['theme.header_color'] ? data['theme.header_color'] : DefaultSetting.headerNavbarColor;
+    const logo = data['theme.logo'] ? data['theme.logo'] : '';
+    const title = data['theme.title'] ? data['theme.title'] : '';
+    const buttonColor = data['theme.button_color'] ? data['theme.button_color'] : DefaultSetting.buttonColor;
+    return {
+      'theme.style': style,
+      'theme.font': font,
+      'theme.primary': primary,
+      'theme.accent': accent,
+      'theme.header_color': headerNavbarColor,
+      'theme.logo': logo,
+      'theme.title': title,
+      'theme.button_color': buttonColor
+    };
   }
 
   public getTableData(params: any): Observable<ITableData<IAMUser>> {
@@ -93,6 +138,10 @@ export class SettingsService implements ITableService {
 
   public getAllGroups(): Observable<any> {
     return this.dataStore.findAll(Groups, {page: { size: 10, number: 1 }});
+  }
+
+  public getTenants(): Observable<Tenants> {
+    return this.dataStore.findRecord(Tenants, '2');
   }
 
 }

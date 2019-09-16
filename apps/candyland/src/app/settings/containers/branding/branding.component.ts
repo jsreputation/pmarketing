@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { SettingsService } from '@cl-core/services';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-branding',
@@ -10,19 +13,12 @@ import { SettingsService } from '@cl-core/services';
   styleUrls: ['./branding.component.scss']
 })
 export class BrandingComponent implements OnInit, OnDestroy {
-  public styles: ISimpleValue[] = [{
-    id: 1, value: 'Light'
-  }, {
-    id: 2, value: 'Dark'
-  }];
-  public fonts: ISimpleValue[] = [{
-    id: 1, value: 'Roboto'
-  }, {
-    id: 2, value: 'Lato'
-  }];
+  public styles: ISimpleValue[] = settingsStyles;
+  public fonts: ISimpleValue[] = settingsFonts;
   public formBranding: FormGroup;
   public listColors;
   private destroy$ = new Subject<void>();
+  public tenants: Tenants;
   constructor(private settingsService: SettingsService) {
   }
 
@@ -64,6 +60,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.createFormBranding();
+    this.getTenants();
     this.listColors = [{
       labelView: 'Primary Color', color: this.primaryColor.value
     },
@@ -98,6 +95,61 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .subscribe((val) => {
         this.listColors[1].color = val;
       });
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenants = res;
+        this.handlerValue(res.properties);
+      });
+  }
+
+  private subscribeFormChanges(): void {
+    this.formBranding
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        untilDestroyed(this),
+        switchMap((value => {
+          this.tenants.properties = {
+            ...this.tenants.properties,
+            ...SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value)
+          };
+          return this.tenants.save();
+        }))
+      )
+      .subscribe((val) => {
+      });
+  }
+
+  private handlerValue(data: any): void {
+    if (!data['theme.primary'] || !data['theme.style']) {
+      this.setDefaultValue(data);
+    } else {
+      this.changeDefaultColors(data);
+      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors);
+      this.patchValue(patchFormValue);
+      this.subscribeFormChanges();
+    }
+  }
+
+  private setDefaultValue(data: any): void {
+      const defaultValue = this.prepareDefaultValue(data);
+      this.tenants.properties = {...this.tenants.properties, ...defaultValue};
+      this.tenants.save()
+        .subscribe(() => {
+          this.subscribeFormChanges();
+        });
+  }
+
+  private prepareDefaultValue(data: any): any {
+    return this.settingsService.prepareDefaultValue(data);
+  }
+
+  private changeDefaultColors(data: any): void {
+    this.listColors[0].color = data['theme.primary'];
+    this.listColors[1].color = data['theme.accent'];
   }
 
   public ngOnDestroy(): void {

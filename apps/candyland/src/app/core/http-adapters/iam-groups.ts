@@ -1,7 +1,7 @@
 import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany,*/ BelongsTo } from 'angular2-jsonapi';
 // tslint:disable
 @JsonApiModelConfig({
-  type: 'iam/groups'
+  type: 'groups'
 })
 export class Groups extends JsonApiModel {
 
@@ -22,30 +22,8 @@ export class Groups extends JsonApiModel {
 
   @BelongsTo()
    user: User;
-
-  // @HasMany()
-  // comments: Comment[];
 }
 
-//
-// @JsonApiModelConfig({
-//   type: 'comments'
-// })
-// export class Comment extends JsonApiModel {
-//
-//   @Attribute()
-//   title: string;
-//
-//   @Attribute()
-//   created_at: Date;
-//
-//   @BelongsTo()
-//   post: Post;
-//
-//   @BelongsTo()
-//   user: User;
-// }
-//
 @JsonApiModelConfig({
   type: 'users'
 })
