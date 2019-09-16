@@ -1,7 +1,9 @@
+@import "./variables";
+
 :host {
   position: relative;
   width: 0;
-  padding-right: 34.4rem;
+  padding-right: $mobile-preview-width;
 }
 
 .mobile-preview {

@@ -1,4 +1,4 @@
-@import "variables";
+@import "./variables";
 
 mat-card.game-graphic {
   padding: 2.4rem 2.4rem 4.7rem;
@@ -17,9 +17,6 @@ mat-card.game-graphic {
 }
 
 /* this style for mobile preview with tabs */
-
-$mobile-preview-width: 34.4rem;
-
 .base-format {
   width: $mobile-preview-width;
   height: 63.8rem;
