@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
-fdescribe('SmsValidationComponent', () => {
+describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;
   let fixture: ComponentFixture<SmsValidationComponent>;
 
