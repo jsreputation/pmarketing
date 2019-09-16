@@ -3,14 +3,19 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState } from '@perx/core';
+import { ICampaignService, CampaignType, CampaignState, IGameService } from '@perx/core';
 import { Type } from '@angular/core';
+import { game } from '../../game.mock';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
   let fixture: ComponentFixture<CampaignsComponent>;
   const campaignServiceStub = {
     getCampaigns: () => of([])
+  };
+
+  const gameServiceStub = {
+    getGamesFromCampaign: () => of()
   };
 
   beforeEach(async(() => {
@@ -21,7 +26,8 @@ describe('CampaignsComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: IGameService, useValue: gameServiceStub }
       ]
     })
     .compileComponents();
@@ -101,8 +107,9 @@ describe('CampaignsComponent', () => {
       rewards: [],
       thumbnailUrl: '',
     };
+    component.games = game;
     spyOn(component.tapped, 'emit');
     component.selected(campaign);
-    expect(component.tapped.emit).toHaveBeenCalledWith(campaign);
+    expect(component.tapped.emit).toHaveBeenCalledWith(1);
   });
 });
