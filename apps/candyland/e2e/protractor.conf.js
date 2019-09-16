@@ -16,6 +16,8 @@ exports.config = {
     './src/features/**/*.feature'
   ],
   capabilities: {
+    // 'elementScrollBehavior': 0,
+    'unexpectedAlertBehaviour':'dismiss',
     'browserName': 'chrome'
   },
   directConnect: true,

@@ -6,8 +6,10 @@
       </a>
       <div class="reward">
         <h2>Explore your rewards,</h2>
-        <h1 *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h1>
-        <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub Club</span>
+        <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
+        <div>
+          <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub Club</span>
+        </div>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
