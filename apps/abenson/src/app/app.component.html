@@ -6,21 +6,38 @@
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
-    <a [routerLink]="[ '/wallet' ]" routerLinkActive="active">
+    <a [routerLink]="[ '/home' ]" routerLinkActive="active">
       <div class="nav-item">
-        <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
-        <span>Wallet</span>
+        <img class="no-active-img" src="assets/img/home.svg">
+        <img class="active-img" src="assets/img/home_active.svg">
+        <span>Home</span>
       </div>
     </a>
-    <a [routerLink]="[ '/history' ]" routerLinkActive="active">
+    <a [routerLink]="[ '/promos' ]" routerLinkActive="active">
       <div class="nav-item">
-        <mat-icon aria-hidden="false">list</mat-icon>
-        <span>History</span>
+        <img class="no-active-img" src="assets/img/promos.svg">
+        <img class="active-img" src="assets/img/promos_active.svg">
+        <span>Promos</span>
+      </div>
+    </a>
+    <a [routerLink]="[ '/card' ]" routerLinkActive="active">
+      <div class="nav-item">
+        <img class="no-active-img" src="assets/img/card.svg">
+        <img class="active-img" src="assets/img/card_active.svg">
+        <span>Card</span>
+      </div>
+    </a>
+    <a [routerLink]="[ '/wallet' ]" routerLinkActive="active">
+      <div class="nav-item">
+        <img class="no-active-img" src="assets/img/wallet.svg">
+        <img class="active-img" src="assets/img/wallet_active.svg">
+        <span>Wallet</span>
       </div>
     </a>
     <a [routerLink]="[ '/account' ]" routerLinkActive="active">
       <div class="nav-item">
-        <mat-icon aria-hidden="false">account_circle</mat-icon>
+        <img class="no-active-img" src="assets/img/account.svg">
+        <img class="active-img" src="assets/img/account_active.svg">
         <span>Account</span>
       </div>
     </a>
