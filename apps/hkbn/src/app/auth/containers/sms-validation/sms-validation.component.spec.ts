@@ -66,13 +66,6 @@ describe('SmsValidationComponent', () => {
       expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
-
-    it('should validate otp, but not authorized', () => {
-      spyOn(authenticationService, 'login').and.returnValue(of());
-      component.validate('888888');
-      expect(verifyOTPSpy).toHaveBeenCalledWith('639876543210', '888888');
-      expect(navigateSpy.calls.count()).toBe(0);
-    });
   });
 
   it('should make request for send otp, when call resendSms method', () => {

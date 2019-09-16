@@ -48,8 +48,7 @@ describe('ChangePasswordFormComponent', () => {
     component.changePasswordForm.setValue({
       oldPassword: 'qwerty123',
       newPassword: '123qwerty',
-      passwordConfirmation: '123qwerty',
-      otp: '8888'
+      passwordConfirmation: '123qwerty'
     });
     fixture.detectChanges();
     component.submit();
