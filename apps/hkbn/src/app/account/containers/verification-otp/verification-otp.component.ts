@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService, AuthenticationService, IChangePasswordData } from '@perx/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,8 +32,9 @@ export class VerificationOtpComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
-    this.route.params.subscribe((param: Params) => this.type = param.id);
+    this.getInitData();
+    // this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
+    // this.route.params.subscribe((param: Params) => this.type = param.id);
     this.profileService.whoAmI().subscribe((profile) =>
       this.number = profile && profile.phone
     );
@@ -46,7 +47,15 @@ export class VerificationOtpComponent implements OnInit {
         this.router.navigate(['account']);
       }, () => console.error('type is required'));
   }
-
+  private getInitData(): void {
+    this.route.params.pipe(flatMap((param) => {
+      this.type = param.id;
+      if (this.type === 'password') {
+        return this.dataTransferService.updateData$;
+      }
+      return this.route.queryParams;
+    })).subscribe((updateData) => this.reqestData = updateData);
+  }
   private switchMethod(data: IChangePasswordData | IChangePhoneData): Observable<string> {
     switch (this.type) {
       case 'password':
