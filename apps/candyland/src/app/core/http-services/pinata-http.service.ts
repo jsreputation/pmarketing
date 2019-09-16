@@ -21,6 +21,6 @@ export class PinataHttpService {
   }
 
   public createPinata(data: any): any {
-    return this.http.post(ApiConfig.engagementsPath, data);
+    return this.http.post(ApiConfig.engagementsPath + '/', data);
   }
 }
