@@ -39,6 +39,22 @@ interface IWhistlerDisplayProperties {
 
 }
 
+interface IWhistlerPostAnswerAttributes {
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  engagement_id: number;
+  campaign_entity_id: number;
+  results: IWhistlerOutcomes;
+}
+
+interface IWhistlerOutcomes {
+  id: string;
+  attributes: any;
+  relationships: any;
+  type: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,14 +88,14 @@ export class SurveyService {
         tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagementId
+            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id
           )
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<void> {
+  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ hasOutcomes: boolean }> {
     const body = {
       data: {
         type: 'answers',
@@ -91,11 +107,16 @@ export class SurveyService {
       }
     };
 
-    return this.http.post<IJsonApiItemPayload<any>>(this.baseUrl + '/survey/answers', body, {
+    return this.http.post<IJsonApiItemPayload<IWhistlerPostAnswerAttributes>>(this.baseUrl + '/survey/answers', body, {
       headers: { 'Content-Type': 'application/vnd.api+json' }
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
-      map(() => { return; })
+      map((res) => {
+        const hasOutcomes = !!res.data.attributes.results.id;
+        return {
+          hasOutcomes
+        };
+      })
     );
   }
 }
