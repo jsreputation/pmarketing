@@ -5,6 +5,7 @@ import { ProfileService, AuthenticationService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { countryCodes, ICountryCode } from 'src/assets/mock/country-code';
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -13,7 +14,11 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 })
 export class UpdatePhoneComponent implements OnInit {
   public otp: string;
+  public countryCodes: ICountryCode[];
   public updatePhoneGroup: FormGroup = new FormGroup({
+    code: new FormControl(null, [
+      HkbnValidators.required
+    ]),
     phone: new FormControl(null, [
       HkbnValidators.required,
       HkbnValidators.pattern('^[0-9]+$'),
@@ -31,11 +36,12 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.countryCodes = countryCodes;
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.profileService.whoAmI().pipe(
       map((profile) => profile.phone)
-    ).subscribe((phone: string) => {
-      this.updatePhoneGroup.setValue({ phone });
+    ).subscribe((phone: string) => {   
+      this.updatePhoneGroup.setValue({ phone, code: 1 });
     });
   }
 
