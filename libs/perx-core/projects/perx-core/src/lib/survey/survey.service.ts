@@ -6,6 +6,7 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 interface IWhistlerSurveyContent {
   id: string;
@@ -43,8 +44,6 @@ interface IWhistlerDisplayProperties {
 })
 export class SurveyService {
   private baseUrl: string;
-  private engagementId: number;
-  private campaignId: number;
 
   constructor(
     private http: HttpClient,
@@ -68,37 +67,35 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    this.campaignId = id;
     return this.campaignService.getCampaign(id)
       .pipe(
-        tap(
-          (campaign: ICampaign) => this.engagementId = campaign.engagementId
-        ),
+        tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.engagementId
+            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagementId
           )
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[]): Observable<void> {
+  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<void> {
     const body = {
       data: {
         type: 'answers',
         attributes: {
-          engagement_id: this.engagementId,
-          campaign_entity_id: this.campaignId,
+          engagement_id: survey.id,
+          campaign_entity_id: campaignId,
           content: answers
         }
       }
     };
 
-    return this.http.post<any>(this.baseUrl + '/survey/answers', body, {
-      headers: {
-        'Content-Type': 'application/vnd.api+json'
-      }
-    });
+    return this.http.post<IJsonApiItemPayload<any>>(this.baseUrl + '/survey/answers', body, {
+      headers: { 'Content-Type': 'application/vnd.api+json' }
+    }).pipe(
+      // tslint:disable-next-line: no-unused-expression
+      map(() => { return; })
+    );
   }
 }
