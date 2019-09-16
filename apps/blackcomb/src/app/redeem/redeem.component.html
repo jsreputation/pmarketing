@@ -1,6 +1,5 @@
 <div class="parent-container" *ngIf="voucher$ | async as voucher">
   <div class="full-page-container-white">
-    RedemptionType: {{redemptionType}}
     <div *ngIf="voucher.redemptionType === 'pin'">
       <p>
         The merchant will enter the redemption code when you are ready to redeem at the venue.

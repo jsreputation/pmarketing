@@ -1,7 +1,7 @@
 @import "variables";
 
 :host {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
 }
 
 .dialog {
@@ -85,7 +85,7 @@
     border-radius: 4px;
     background-color: rgba(26, 184, 255, 0.05);
     font-family: $primary-font;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -121,7 +121,6 @@
     }
   }
 
-
   &-row {
     //margin-top: 2rem;
     display: flex;
@@ -129,7 +128,7 @@
     justify-content: flex-start;
     align-items: center;
     font-family: $primary-font;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;

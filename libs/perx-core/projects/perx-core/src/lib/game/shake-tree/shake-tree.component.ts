@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { IGameComponent } from '../IGame.component';
+import { IGameComponent } from '../igame.component';
 import { Shake } from '../../utils/shake';
 
 const enum GiftStatus {

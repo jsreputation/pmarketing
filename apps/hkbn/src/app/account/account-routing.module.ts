@@ -5,16 +5,17 @@ import { UpdateEmailComponent } from './containers/update-email/update-email.com
 import { UpdatePhoneComponent } from './containers/update-phone/update-phone.component';
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
 import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
+import { CheckFormTransferGuard } from '../guards/check-form-transfer.guard';
 
 const routes: Route[] = [
   {
     path: '', component: AccountComponent, data: {
-      title: 'My Account'
+      title: 'MY_ACCOUNT'
     }
   },
   {
     path: 'email', component: UpdateEmailComponent, data: {
-      title: 'My Account',
+      title: 'MY_ACCOUNT',
       back: true,
       backUrl: '/account'
     }
@@ -24,18 +25,19 @@ const routes: Route[] = [
     component: VerificationOtpComponent, data: {
       backUrl: '/account',
       back: true,
-    }
+    },
+    canActivate: [CheckFormTransferGuard]
   },
   {
     path: 'phone', component: UpdatePhoneComponent, data: {
-      title: 'My Account',
+      title: 'MY_ACCOUNT',
       back: true,
       backUrl: '/account'
     }
   },
   {
     path: 'password', component: ChangePasswordComponent, data: {
-      title: 'My Account',
+      title: 'MY_ACCOUNT',
       back: true,
       backUrl: '/account'
     }

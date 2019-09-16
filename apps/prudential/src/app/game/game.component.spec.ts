@@ -5,8 +5,8 @@ import { RouterModule, Router } from '@angular/router';
 import {
   CampaignModule,
   GameModule,
-  GameService,
-  VouchersService,
+  IGameService,
+  IVoucherService,
   GameType,
   defaultTree,
   IGame,
@@ -25,7 +25,7 @@ describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let router: Router;
-  let gameService: GameService;
+  let gameService: IGameService;
 
   const fakeGame: IGame = {
     id: 1,
@@ -38,7 +38,7 @@ describe('GameComponent', () => {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  const vouchersServiceMock = jasmine.createSpyObj('VouchersService', ['']);
+  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: VouchersService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock }
       ]
     })
       .compileComponents();
@@ -65,7 +65,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    gameService = TestBed.get(GameService);
+    gameService = TestBed.get(IGameService);
     fixture.detectChanges();
   });
 

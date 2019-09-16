@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
+import { IProfile, ProfileService, NotificationService } from '@perx/core';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
@@ -14,7 +14,6 @@ export class AccountSummaryComponent implements OnChanges {
   @Input() public accountData: IProfile;
 
   constructor(
-    public authService: AuthenticationService,
     public router: Router,
     private profileService: ProfileService,
     private ntfs: NotificationService
@@ -25,7 +24,7 @@ export class AccountSummaryComponent implements OnChanges {
     lastName: new FormControl(),
     phone: new FormControl(''),
     email: new FormControl(),
-    pass: new FormControl(),
+    pass: new FormControl('*'.repeat(10)),
     customProperties: new FormGroup({
       subscribe_notification: new FormControl(false)
     })
@@ -37,12 +36,6 @@ export class AccountSummaryComponent implements OnChanges {
     }
   }
 
-  public updateMobileVerification(event: Event, type: string): void {
-    event.preventDefault();
-    this.authService.requestVerificationToken().subscribe(() => {
-      this.router.navigate(['account/verify_token', type]);
-    });
-  }
   public agreement(event: MatSlideToggleChange): void {
     this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
     },

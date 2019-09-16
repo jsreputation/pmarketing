@@ -1,25 +1,46 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VouchersModule, ConfigModule } from '@perx/core';
-import { HttpClientModule } from '@angular/common/http';
+import { VouchersModule, IVoucherService, RewardsService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListComponent } from './list.component';
+import { of } from 'rxjs';
+import { IReward } from '@perx/core';
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
+  const voucherServiceStub = {
+    getAll: () => of([])
+  };
+  const mockReward: IReward = {
+    id: 1,
+    name: '',
+    description: '',
+    subtitle: '',
+    validFrom: new Date(),
+    validTo: new Date(),
+    rewardBanner: '',
+    merchantImg: '',
+    termsAndConditions: '',
+    howToRedeem: '',
+  };
+  const rewardServiceStub = {
+    getReward: () => of(mockReward)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListComponent ],
+      declarations: [ListComponent],
       imports: [
-        ConfigModule.forRoot({}),
         VouchersModule,
-        HttpClientModule,
         RouterTestingModule
+      ],
+      providers: [
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: RewardsService, useValue: rewardServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

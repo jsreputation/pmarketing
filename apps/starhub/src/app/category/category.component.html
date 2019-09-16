@@ -5,10 +5,10 @@
   <div class="spacer"></div>
   <span *ngIf="showToolbarTitle" class="toolbar-title">{{selectedCategory}}</span>
   <button class="icon" (click)="selectCategory()">
-    <mat-icon>apps</mat-icon>
+    <img src="assets/category.svg" alt="">
   </button>
   <button class="icon" (click)="selectSort()">
-    <mat-icon>sort</mat-icon>
+    <img src="assets/sort.svg" alt="">
   </button>
 </mat-toolbar>
 <div *ngIf="rewards" class="content" cdkScrollable>
@@ -29,7 +29,7 @@
         <h2>{{reward.merchantName}}</h2>
       </div>
       <div class="icon">
-          <mat-icon>arrow_forward</mat-icon>
+        <img src="assets/forward-arrow.svg" alt="">
       </div>
     </mat-card-content>
   </mat-card>

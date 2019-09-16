@@ -8,7 +8,7 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardVoucherCodeFormGroupComponent {
-  public DATE_FORMAT = 'dd MMM yyyy';
+  public DATE_FORMAT = 'MMM dd, yyyy';
   @Input() public formGroup: AbstractControl;
   @Input() public form: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };

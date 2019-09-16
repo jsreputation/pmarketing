@@ -8,12 +8,12 @@
   & > * {
     margin: 0 1.6rem 0 0;
 
+    &.actions-row,
     &:last-child {
       margin: 0;
     }
   }
 }
-
 
 .block {
   display: block;

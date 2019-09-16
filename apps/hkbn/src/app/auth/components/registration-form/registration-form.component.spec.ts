@@ -54,7 +54,7 @@ describe('RegistrationFormComponent', () => {
       phone: '123456',
       email: 'email@gmail.com',
       password: 'qwerty123',
-      confirmPassword: 'qwerty123',
+      password_confirmation: 'qwerty123',
       terms: true,
       promo: true
     });

@@ -14,7 +14,7 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
 })
 export class RewardsListPageComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
-  public displayedColumns = ['name', 'rewardType', 'category', 'validity', 'balance', 'actions'];
+  public displayedColumns = ['name', 'rewardType', 'category', 'balance', 'actions'];
   public hasData = true;
 
   constructor(private rewardsService: RewardsService,

@@ -2,7 +2,7 @@ import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by } from 'protractor';
 import * as path from 'path' ;
-import { CreateShakeTheTreeAppPage } from '../pages/shakeTheTreeFlow.po';
+import { CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
 
 let PageShakeTheTree: CreateShakeTheTreeAppPage ;
 

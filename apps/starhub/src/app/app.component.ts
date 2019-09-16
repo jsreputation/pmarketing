@@ -5,18 +5,19 @@ import {
   PopupComponent,
   IPopupConfig,
   PopUpClosedCallBack,
-  CampaignService,
+  ICampaignService,
   ICampaign,
   CampaignType,
   IReward,
-  GameService,
-  IGame
+  IGameService,
+  IGame,
+  TokenStorage
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { switchMap, filter, map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { switchMap, filter, map, catchError } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +33,12 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private activeRoute: ActivatedRoute,
-    private campaignService: CampaignService,
+    private campaignService: ICampaignService,
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    private gameService: GameService
+    private gameService: IGameService,
+    private tokenStorage: TokenStorage,
   ) { }
 
   public ngOnInit(): void {
@@ -55,8 +57,15 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   private fetchCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
+        catchError(() => {
+          this.router.navigateByUrl('error');
+          return of([]);
+        })
+      )
+      .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
@@ -67,6 +76,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           if (firstComeFirstServed.length > 0) {
             const campaign = firstComeFirstServed[0];
             this.reward = campaign.rewards[0];
+
             const data = {
               text: campaign.name,
               imageUrl: 'assets/reward.png',
@@ -117,5 +127,18 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     } else {
       console.error('Something fishy, we should not be here, without any reward or game');
     }
+  }
+
+  protected idExistsInStorage(id: number): boolean {
+    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
+    const ids: number[] = campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
+
+    if (ids.includes(id)) {
+      return true;
+    }
+
+    ids.push(id);
+    this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
+    return false;
   }
 }

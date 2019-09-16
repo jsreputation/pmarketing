@@ -38,14 +38,85 @@
     max-width: 30rem !important;
   }
 
-  td.mat-cell.menu-column, th.mat-header-cell.menu-column {
-    width: 5.4rem !important;
+  $fixed-cell-1: 5.4rem !important;
+  $fixed-cell-2: 9rem !important;
+  $fixed-cell-3: 12rem !important;
+  $fixed-cell-4: 15rem !important;
+  $fixed-cell-5: 18rem !important;
+  $fixed-cell-6: 21rem !important;
+
+  td.mat-cell {
+    @include typo-body2;
+
+    width: $fixed-cell-2;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    vertical-align: baseline;
+
+    &.mat-column {
+      &-email,
+      &-name {
+        width: auto !important;
+      }
+
+      &-actions,
+      &-id,
+      &-logo {
+        width: $fixed-cell-1;
+      }
+
+      &-branches,
+      &-rewardType {
+        width: $fixed-cell-3;
+      }
+
+      &-audienceList,
+      &-category,
+      &-engagementType,
+      &-phone,
+      &-primary_identifier {
+        width: $fixed-cell-4;
+      }
+
+      &-email {
+        width: $fixed-cell-6;
+      }
+
+      &-actions,
+      &-status,
+      &-username {
+        vertical-align: middle;
+      }
+
+      &-actions {
+        padding-top: 0;
+        padding-bottom: 0;
+        text-align: center;
+      }
+    }
+  }
+
+  td.mat-cell.menu-column,
+  th.mat-header-cell.menu-column {
+    width: $fixed-cell-1;
     padding-right: 0 !important;
   }
 
-  td.mat-cell.date-column, th.mat-header-cell.date-column, .date-column th.mat-header-cell {
-    width: 9rem !important;
-    padding: 0 2rem;
+  td.mat-cell.date-column,
+  th.mat-header-cell.date-column,
+  .date-column th.mat-header-cell {
+    width: $fixed-cell-2;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  // CLONED FROM STYLES ABOVE TEMPORARILY TO REFACTOR APPROPRIATE CELLS
+  td.mat-cell.limit-cell,
+  th.mat-header-cell.limit-cell,
+  .limit-cell th.mat-header-cell {
+    width: $fixed-cell-2;
+    padding-left: 2rem;
+    padding-right: 2rem;
     text-align: right;
   }
 
@@ -61,16 +132,7 @@
     }
   }
 
-  .name-cell {
-    margin: 1.1rem 0;
-    display: flex;
-    flex-flow: column nowrap;
-    font-family: $base-font-family;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-    line-height: 2.4rem;
-
+  .pw-cell {
     &__link {
       width: fit-content;
       color: $base-font-color;
@@ -83,11 +145,18 @@
     }
 
     &__id {
+      @include typo-caption;
+
+      display: block;
       color: $secondary-font-color;
       text-transform: uppercase;
     }
 
     &__sub {
+      @include typo-caption;
+
+      display: block;
+      margin-top: 0.2rem;
       color: $secondary-font-color;
     }
   }

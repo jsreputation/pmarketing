@@ -17,16 +17,25 @@ export interface ITracker {
 }
 
 export interface IQuestion {
-    id: string;
+    id?: string;
     question: string;
     description?: string;
     required: boolean;
     payload: IPayload;
     answer?: any;
 }
-
+export enum MaterialColor {
+    primary = 'primary',
+    accent = 'accent',
+    warn = 'warn'
+}
 export interface ISurvey {
+    id?: string;
     title: string;
+    sub_title?: string;
+    progress_bar_color?: MaterialColor;
+    card_background_img_url?: string;
+    background_img_url?: string;
     questions: IQuestion[];
 }
 

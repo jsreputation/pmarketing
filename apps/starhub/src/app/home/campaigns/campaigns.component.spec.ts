@@ -3,14 +3,19 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
-import { CampaignService, CampaignType, CampaignState } from '@perx/core';
+import { ICampaignService, CampaignType, CampaignState, IGameService } from '@perx/core';
 import { Type } from '@angular/core';
+import { game } from '../../game.mock';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
   let fixture: ComponentFixture<CampaignsComponent>;
   const campaignServiceStub = {
     getCampaigns: () => of([])
+  };
+
+  const gameServiceStub = {
+    getGamesFromCampaign: () => of()
   };
 
   beforeEach(async(() => {
@@ -21,7 +26,8 @@ describe('CampaignsComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: CampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: IGameService, useValue: gameServiceStub }
       ]
     })
     .compileComponents();
@@ -46,7 +52,7 @@ describe('CampaignsComponent', () => {
           description: 'abc',
           type: CampaignType.game,
           state: CampaignState.active,
-          endsAt: '',
+          endsAt: undefined,
           rewards: [],
           thumbnailUrl: '',
         },
@@ -56,7 +62,7 @@ describe('CampaignsComponent', () => {
           description: 'abc',
           type: CampaignType.give_reward,
           state: CampaignState.active,
-          endsAt: '',
+          endsAt: undefined,
           rewards: [
             {
               id: 1,
@@ -82,7 +88,7 @@ describe('CampaignsComponent', () => {
           thumbnailUrl: '',
         }
       ];
-      const campaigndService = TestBed.get<CampaignService>(CampaignService as Type<CampaignService>);
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
       component.ngOnInit();
       tick();
@@ -97,12 +103,13 @@ describe('CampaignsComponent', () => {
       description: 'abc',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
     };
+    component.games = game;
     spyOn(component.tapped, 'emit');
     component.selected(campaign);
-    expect(component.tapped.emit).toHaveBeenCalledWith(campaign);
+    expect(component.tapped.emit).toHaveBeenCalledWith(1);
   });
 });
