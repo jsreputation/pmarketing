@@ -4,7 +4,7 @@
 </section>
 
 <section class="content">
-    <ng-container *ngIf="hasData">
+  <ng-container *ngIf="hasData">
     <!--filters-->
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">

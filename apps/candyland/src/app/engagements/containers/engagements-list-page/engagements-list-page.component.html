@@ -4,7 +4,7 @@
 </section>
 
 <section class="content">
-  <ng-container *ngIf="hasData && dataSource.length > 0">
+  <ng-container *ngIf="hasData">
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
       <ng-container *clTableFilter="'title'; let filter">
@@ -22,7 +22,7 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData || !dataSource.length">
+  <cl-no-data *ngIf="!hasData">
     <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Build your customer experience, now!
