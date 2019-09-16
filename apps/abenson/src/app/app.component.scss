@@ -1,9 +1,7 @@
-@import "~@angular/material/theming";
-
-@include mat-core();
+@import "../custom-theme.scss";
 
 // Define your application's custom theme.
-$primary: mat-palette($mat-indigo);
+//$primary: mat-palette($mat-indigo);
 
 :host {
   display: block;
@@ -30,16 +28,26 @@ $primary: mat-palette($mat-indigo);
   flex: 1;
   width: 100%;
   overflow-y: scroll;
+  background-color: #F2F2F2;
+}
+
+.active-img {
+  display: none;
+}
+
+.no-active-img {
+  display: block;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-around;
-  height: 7rem;
+  justify-content: space-between;
+  height: 5.6rem;
   z-index: 800;
   background: #fff;
   font-size: 1rem;
   line-height: 1.6rem;
+  padding: 0 2.4rem;
 
   a {
     text-decoration: none;
@@ -47,6 +55,14 @@ $primary: mat-palette($mat-indigo);
 
     &.active {
       color: mat-color($primary);
+
+      .active-img {
+        display: block;
+      }
+
+      .no-active-img {
+        display: none;
+      }
     }
   }
 }
