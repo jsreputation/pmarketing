@@ -11,7 +11,8 @@ import {
   IGameService,
   ICampaign,
   IGame,
-  GameType
+  GameType,
+  TokenStorage
 } from '@perx/core';
 import { of, Observable, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,7 +51,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
     },
@@ -60,7 +61,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.give_reward,
       state: CampaignState.active,
-      endsAt: '',
+      endsAt: undefined,
       rewards: [
         {
           id: 1,
@@ -87,12 +88,12 @@ describe('AppComponent', () => {
     }
   ];
   const campaignServiceStub = {
-    getCampaigns: () => of(),
-    getCampaign: () => of()
+    getCampaigns: () => of(campaigns),
+    getCampaign: () => of(campaigns[0])
   };
   const routerStub = {
     navigate: () => { },
-    navigateByUrl: () => {}
+    navigateByUrl: () => { }
   };
   const matSnackBarStub = {
     open: () => { }
@@ -116,6 +117,10 @@ describe('AppComponent', () => {
   const gameServiceStub = {
     getGamesFromCampaign: () => of([])
   };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -131,6 +136,7 @@ describe('AppComponent', () => {
         ExpireTimerComponent
       ],
       providers: [
+        // TokenStorage,
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
@@ -142,7 +148,8 @@ describe('AppComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -214,7 +221,7 @@ describe('AppComponent', () => {
     it('should redirect to error screen', fakeAsync(() => {
       const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(
-        throwError({code: 500, message: 'server failed'})
+        throwError({ code: 500, message: 'server failed' })
       );
 
       const routerFixture: Router = fixture.debugElement.injector.get(Router);

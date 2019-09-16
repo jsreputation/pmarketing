@@ -19,10 +19,10 @@
 }
 
 .tabs > a {
-  font-family: $base-font-family;
+  font-family: $primary-font;
   font-style: normal;
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: $base-font-size;
   line-height: 1.6rem;
   position: relative;
   display: inline-block;

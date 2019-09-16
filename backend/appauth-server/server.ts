@@ -122,9 +122,9 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
       null,
       {
         params: {
-          'client_id': endpointCredential.perx_access_key_id,
-          'client_secret': endpointCredential.perx_secret_access_key,
-          'grant_type': 'client_credentials'
+          client_id: endpointCredential.perx_access_key_id,
+          client_secret: endpointCredential.perx_secret_access_key,
+          grant_type: 'client_credentials'
         }
       }
     );
@@ -189,7 +189,11 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
     });
     res.json(endpointRequest.data);
   } catch (e) {
-    next(e);
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
   }
 });
 

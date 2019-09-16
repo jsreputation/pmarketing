@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 .chard-card-list {
@@ -18,11 +19,14 @@
 
 .chart-card {
   position: relative;
-  border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 3.4rem;
   flex: calc(50% - 3.2rem);
   box-sizing: border-box;
+
+  &:not(:nth-child(2)) {
+    @include mat-elevation(1);
+  }
 
   &-title {
     margin-bottom: 2.4rem;
@@ -30,6 +34,11 @@
     line-height: 1.31;
     color: $base-font-color;
     font-family: $primary-font;
+
+    &.with-control {
+      align-items: baseline;
+      max-height: 42px;
+    }
   }
 
   &-block {

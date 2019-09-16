@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
   question_id: string;
@@ -19,6 +19,7 @@ export class SurveyComponent implements OnInit {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
+  private survey: ISurvey;
 
   constructor(
     private notificationService: NotificationService,
@@ -34,8 +35,9 @@ export class SurveyComponent implements OnInit {
         switchMap((params: ParamMap) => {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
-          return this.surveyService.getSurvey(idN);
+          return this.surveyService.getSurveyFromCampaign(idN);
         }),
+        tap((survey: ISurvey) => this.survey = survey)
       );
   }
 
@@ -47,13 +49,17 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    this.router.navigate(['/wallet']);
-    this.notificationService.addPopup({
-      text: 'Here is a reward for you.',
-      title: 'Thanks for completing the survey.',
-      buttonTxt: 'View Reward',
-      imageUrl: 'assets/congrats_image.png'
-    });
+    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
+      () => {
+        this.router.navigate(['/wallet']);
+        this.notificationService.addPopup({
+          text: 'Here is a reward for you.',
+          title: 'Thanks for completing the survey.',
+          buttonTxt: 'View Reward',
+          imageUrl: 'assets/congrats_image.png'
+        });
+      }
+    );
   }
 
   public setTotalLength(totalLength: number): void {

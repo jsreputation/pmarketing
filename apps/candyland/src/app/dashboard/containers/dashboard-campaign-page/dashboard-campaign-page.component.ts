@@ -1,8 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { switchMap, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services';
-import { DataService } from '@perx/chart';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -15,23 +13,36 @@ export enum DictionaryTotal {
 @Component({
   selector: 'cl-dashboard-campaign-page',
   templateUrl: './dashboard-campaign-page.component.html',
-  styleUrls: ['./dashboard-campaign-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./dashboard-campaign-page.component.scss']
 })
 export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
-  public activeTab: ITotal;
-  public tabs: ITotal[];
+  public activeTab: string = 'survey';
+  public tabs: ITotal[] = [
+    {id: 174, name: 'survey', title: 'Survey'},
+    {id: 157, name: 'games', title: 'Games'},
+    {id: 173, name: 'stamps', title: 'Stamps'},
+    {id: 180, name: 'reward', title: 'Instant Reward'}
+  ];
+  public tabsValue;
+  public activeCampaigns: number;
+
+  public get tabsIds(): number[] {
+    return this.tabs.map(tab => tab.id);
+  }
+
+  public getTabValue(index: number): number {
+    return this.tabsValue ? this.tabsValue[index] : null;
+  }
 
   constructor(private dashboardService: DashboardService,
-              private dataService: DataService,
-              private chartsParametersService: DashboardChartsParametersService,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private chartsParametersService: DashboardChartsParametersService) {
   }
 
   public ngOnInit(): void {
-    this.initTabs();
     this.handelChartsParamsChanges();
+    this.handelActiveCampaigns();
   }
 
   public ngOnDestroy(): void {
@@ -43,38 +54,24 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
 
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$
-      .pipe(untilDestroyed(this))
-      .subscribe(value => {
-        this.params = value;
-        this.cd.detectChanges();
-      });
-  }
-
-  private initTabs(): void {
-    this.dashboardService.getDashboardCampaignsTabs()
       .pipe(
         untilDestroyed(this),
-        tap(res => this.activeTab = res[0]),
-        tap(res => this.tabs = res),
-        map(res => res.map(item => item.id)),
-        switchMap((idArray: number[]) =>
-          combineLatest(this.getTabsValue$(idArray))
-        ),
-        tap(values => this.tabs.forEach((item, index) => item.value = values[index]))
+        tap(value => this.params = value),
+        switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
+        tap(value => this.tabsValue = value)
       )
-      .subscribe(() => {
-        this.cd.detectChanges();
-      });
+      .subscribe(() => this.cd.detectChanges());
   }
 
-  private getTabsValue$(idArray: number[]): Observable<number | string>[] {
-    return idArray.map(id =>
-      this.dataService.getData(id, this.params)
-        .pipe(
-          untilDestroyed(this),
-          map(response => response.rows[0][0])
-        )
-    );
+  private handelActiveCampaigns(): void {
+    this.chartsParametersService.params$
+      .pipe(
+        untilDestroyed(this),
+        switchMap(params => this.dashboardService.getTabValue(176, params)),
+        tap(value => console.log('tab', value)),
+        tap(value => this.activeCampaigns = value)
+      )
+      .subscribe(() => this.cd.detectChanges());
   }
 
 }

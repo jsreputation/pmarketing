@@ -1,7 +1,9 @@
 import { ISurvey } from '@perx/core';
 
 export const survey: ISurvey = {
+    id: '1',
     title: 'What all women should know about cancers',
+    background_img_url: 'https://cdn.perxtech.io/content/prudential/BreastCancer_Banner.jpg',
     sub_title: 'A private event hosted by Prudential & Parkway Cancer Centre in conjunction with Breast Cancer month. Join us at our event to hear from Medical Oncologist sharing with you important insight to the condition.',
     questions: [
         {
@@ -23,16 +25,37 @@ export const survey: ISurvey = {
                 multiple: false,
                 choices: [
                     {
-                        img_url: 'https://picsum.photos/600/900?random=1',
+                        img_url: 'https://cdn.perxtech.io/content/prudential/single.png',
                         text: 'I\'m attending alone'
                     },
                     {
-                        img_url: 'https://picsum.photos/600/900?random=2',
+                        img_url: 'https://cdn.perxtech.io/content/prudential/multiple.png',
                         text: 'I\'m attending with a guest'
                     }
                 ]
             }
         },
+        // {
+        //     question: 'Details',
+        //     description: `<b>Date:</b> 19 Oct 2019 (Saturday)<br>
+        //     <b>Time:</b> 1pm - 3pm (Registration starts at 12.30pm)<br>
+        //     <b>Venue:</b> 30 Cecil Street, Prudential Tower, S’049712<br>
+        //     <br>
+        //     <a href="/reward-detail?id=1">See Dr Wong Chiung Ing’s bio</a><br>
+        //     <a href="/reward-detail?id=2">See speaker’s bio</a><br>
+        //     <br>
+        //     <i>Light refreshment will be provided after the talk.
+        // tslint:disable-next-line:max-line-length
+        //     You are also entitled for an optional Financial Review with our Consultant and received $30 NTUC/Grab vouchers when you’ve completed the review. T&Cs apply.</i>
+        //     `,
+        //     id: '1',
+        //     required: true,
+        //     payload: {
+        //         type: 'select',
+        //         multiple: false,
+        //         choices: ['I\'m attending alone', 'I\'m attending with a guest']
+        //     }
+        // },
         // {
         //     question: 'When were you born?',
         //     description: 'It\'s between us',

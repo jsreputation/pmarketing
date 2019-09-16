@@ -39,8 +39,9 @@ When(/^31_I enter the right credentials$/, async () => {
   await element.all(by.css('input')).get(1).sendKeys(testUserAccount);
   // entering correct pw
   await element.all(by.css('input')).get(2).sendKeys(testPW);
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
 
 });
 
@@ -67,7 +68,8 @@ When(/^32_I entered the incorrect username with the valid p\/w$/, async () => {
   // entering correct pw
   await element.all(by.css('input')).get(2).sendKeys(testPW);
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^32_I am not able to login.$/, async () => {
@@ -93,7 +95,8 @@ When(/^33_I entered the correct email and invalid p\/w$/, async () => {
   // entering incorrect pw
   await element.all(by.css('input')).get(2).sendKeys('test0101');
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^33_I am not able to login.$/, async () => {
@@ -120,7 +123,8 @@ When(/^34_I entered the correct email and p\/w with invalid accountId$/, async (
   // entering correct pw
   await element.all(by.css('input')).get(2).sendKeys(testPW);
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
   });
 
 Then(/^34_I am not able to login.$/, async () => {
@@ -146,10 +150,11 @@ When(/^35_I entered the correct email and invalid p\/w$/, async () => {
   // entering incorrect pw
   await element.all(by.css('input')).get(2).sendKeys('test0101');
   // clicking on the login button
-  await element.all(by.css('cl-button')).get(0).click();
+  // await element.all(by.css('cl-button')).get(0).click();
+  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^35_I see the message prompt for invalid login$/, async () => {
   // asserting for the message prompt
-  await logs.expect('The email or password is incorrect! Http failure response for https://api.whistler.perxtech.org/iam/users/sign_in: 401 OK');
+  await logs.expect('The email or password is incorrect! Http failure response for https://api-pru1.uat.whistler.perxtech.io/iam/users/sign_in: 401 OK');
 });

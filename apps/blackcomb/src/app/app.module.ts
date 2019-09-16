@@ -1,4 +1,4 @@
-import { of, from } from 'rxjs';
+import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,11 +9,11 @@ import {
   GameModule,
   UtilsModule,
   ProfileModule,
-  IVoucherService,
+  // IVoucherService,
   ProfileService,
   ConfigModule,
-  ICampaignService,
   RewardsModule,
+  CampaignModule as PerxCampaignModule
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -39,22 +39,16 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
-import { vouchers } from './mock/vouchers.mock';
-import { campaigns } from './mock/campaigns.mock';
+// import { vouchers } from './mock/vouchers.mock';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TncComponent } from './tnc/tnc.component';
 
-const vouchersServiceStub = {
-  getAll: () => of(vouchers),
-  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
-};
-
-const campaignServiceStub = {
-  getCampaigns: () => of(campaigns),
-  getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
-};
+// const vouchersServiceStub = {
+//   getAll: () => of(vouchers),
+//   get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
+// };
 
 const profileServiceStub = {
   whoAmI: () => of(profile)
@@ -97,11 +91,11 @@ const profileServiceStub = {
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    PerxCampaignModule
   ],
   providers: [
-    { provide: IVoucherService, useValue: vouchersServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub },
+    // { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]
