@@ -92,7 +92,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     };
     this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
       .subscribe((data: any) => {
-        console.log(data);
         this.pools = data;
       });
   }

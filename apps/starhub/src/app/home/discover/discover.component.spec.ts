@@ -9,7 +9,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { RewardsService, ICampaignService, FeedReaderService, CampaignType, CampaignState } from '@perx/core';
+import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -34,6 +34,9 @@ describe('DiscoverComponent', () => {
   const routerStub = {
     navigate: () => { }
   };
+  const gameServiceStub = {
+    getGamesFromCampaign: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,13 +54,15 @@ describe('DiscoverComponent', () => {
         MatDialogModule,
         RouterTestingModule,
         NgxMultiLineEllipsisModule,
-        ScrollingModule
+        ScrollingModule,
+        GameModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
+        { provide: IGameService, useValue: gameServiceStub }
       ]
     })
       .compileComponents();
@@ -130,17 +135,7 @@ describe('DiscoverComponent', () => {
   it('should go to game with queryParams campaign id', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
-    const campaign = {
-      id: 1,
-      name: 'campaign',
-      description: 'campaign',
-      type: CampaignType.game,
-      state: CampaignState.active,
-      endsAt: undefined,
-      rewards: [],
-      thumbnailUrl: '',
-    };
-    component.campaignSelected(campaign);
-    expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { campaignId: 1 } });
+    component.campaignSelected(17);
+    expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 17 } });
   });
 });

@@ -26,6 +26,6 @@ export class ShakeHttpService {
   }
 
   public createShakeTree(data: any): Observable<any> {
-    return this.http.post(ApiConfig.createGamePath, data);
+    return this.http.post(ApiConfig.engagementsPath + '/', data);
   }
 }

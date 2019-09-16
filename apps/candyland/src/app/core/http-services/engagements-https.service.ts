@@ -12,7 +12,7 @@ export class EngagementsHttpsService {
   }
 
   public getEngagements(): Observable<any> {
-    return this.http.get(ApiConfig.engagementsPath);
+    return this.http.get(ApiConfig.engagementsPath + '/');
   }
 
   public getEngagementType(): Observable<any> {
