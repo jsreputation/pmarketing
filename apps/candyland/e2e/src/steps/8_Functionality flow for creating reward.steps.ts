@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor, ElementFinder } from 'protractor';
-import { CreateRewardAppPage } from '../pages/shakeTheTreeFlow.po';
+import { CreateRewardAppPage } from '../pages/candylandApp.po';
 
 let CreateRewardPage: CreateRewardAppPage;
 Before( () => {

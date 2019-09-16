@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor, ElementFinder } from 'protractor';
-import { CreateRewardAppPage } from '../pages/shakeTheTreeFlow.po';
+import { CreateRewardAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let CreateRewardPage: CreateRewardAppPage;
@@ -92,7 +92,7 @@ Then(/^17_File uploaded successfully.$/, async () => {
 });
 
 // Verifiying file upload assertion for user upload codes
-Given(/^18_that I am on reward creation page$/, async () => {
+/*Given(/^18_that I am on reward creation page$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
@@ -110,4 +110,4 @@ When(/^18_I upload a non csv file$/, async () => {
 Then(/^18_File uploaded unsuccessfully.$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
-});
+});*/
