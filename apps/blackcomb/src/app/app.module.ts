@@ -39,16 +39,10 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
-// import { vouchers } from './mock/vouchers.mock';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TncComponent } from './tnc/tnc.component';
-
-// const vouchersServiceStub = {
-//   getAll: () => of(vouchers),
-//   get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
-// };
 
 const profileServiceStub = {
   whoAmI: () => of(profile)
@@ -95,7 +89,6 @@ const profileServiceStub = {
     PerxCampaignModule
   ],
   providers: [
-    // { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]
