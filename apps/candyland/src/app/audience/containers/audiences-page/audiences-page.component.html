@@ -4,7 +4,7 @@
 </section>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
+  <ng-container>
     <!--filters-->
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
@@ -41,7 +41,7 @@
     </ng-container>
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
+  <cl-no-data>
     <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Slice and dice your target audience
