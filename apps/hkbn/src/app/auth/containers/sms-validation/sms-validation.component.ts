@@ -5,7 +5,7 @@ import { Subject, Observable } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
- 
+
 @Component({
   selector: 'hkbn-sms-validation',
   templateUrl: './sms-validation.component.html',
