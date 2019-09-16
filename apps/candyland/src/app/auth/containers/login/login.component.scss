@@ -2,20 +2,20 @@
 
 .login-wrap {
   display: flex;
-  min-height: 100vh;
   position: relative;
+  background: $background-color;
 }
 
 .col {
   &-login-form {
     width: 43.1rem;
     min-height: 100vh;
-    height: 100%;
     padding-left: $horizontal-content-padding;
     padding-right: $horizontal-content-padding;
     position: relative;
     display: flex;
     flex-flow: column nowrap;
+    background-color: $white-color;
   }
 
   &-customer-info {
@@ -23,7 +23,6 @@
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
-    background: $background-color;
     padding: ($vertical-content-padding * 2) $horizontal-content-padding $vertical-content-padding;
     text-align: center;
   }
