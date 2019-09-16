@@ -56,13 +56,12 @@ describe('CheckFormTransferGuard', () => {
     expect(guard).toBeTruthy();
   }));
 
-  it('should leave route, what is not password', inject([CheckFormTransferGuard, DataTransferService],
-    fakeAsync((guard: CheckFormTransferGuard) => {
-      const result = guard.canActivate(fakeRoute).valueOf();
-      tick();
+  it('should leave route, what is not password', inject([CheckFormTransferGuard],
+    (guard: CheckFormTransferGuard) => {
+      const result = guard.canActivate(fakeRoute);
       expect(result).toBe(true);
     })
-  ));
+  );
 
   it('should check dataTransfer', inject([CheckFormTransferGuard, DataTransferService, ],
     fakeAsync((guard: CheckFormTransferGuard, dataTransfer: DataTransferService) => {
