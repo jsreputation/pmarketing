@@ -13,6 +13,7 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'loading' },
+      { path: 'home', component: HomeComponent },
       { path: 'wallet', component: HomeComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'account', component: AccountComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/wallet' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
