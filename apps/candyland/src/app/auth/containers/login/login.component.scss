@@ -1,86 +1,83 @@
-@import "../../../../styles/variables";
+@import "./variables";
 
 .login-wrap {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
 }
 
 .col {
   &-login-form {
     width: 43.1rem;
+    min-height: 100vh;
     height: 100%;
-    padding-left: 3.2rem;
-    padding-right: 4.3rem;
+    padding-left: $horizontal-content-padding;
+    padding-right: $horizontal-content-padding;
     position: relative;
+    display: flex;
+    flex-flow: column nowrap;
   }
 
   &-customer-info {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     flex-grow: 1;
     background: $background-color;
+    padding: ($vertical-content-padding * 2) $horizontal-content-padding $vertical-content-padding;
+    text-align: center;
   }
 }
 
 .router-actions {
-  padding-top: $base-font-size;
+  margin-top: .8rem;
+  margin-left: -2rem;
 }
 
-.copy-right {
-  position: absolute;
-  left: 3.2rem;
-  bottom: 4.2rem;
+.copyright {
+  @include typo-caption;
 
-  &-text {
-    height: 1.7rem;
-    font-family: $primary-font;
-    font-size: $base-font-size;
-    line-height: 1.21;
-    color: #979797;
-  }
+  margin-top: ($vertical-content-padding * 2);
+  margin-bottom: 1rem;
 }
 
 .customer-info {
-  &-text {
-    padding-top: 6.8rem;
-    font-family: $primary-font;
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 1.23;
-    color: #3e4e73;
-    margin: 0;
+  &-title {
+    @include typo-h3;
+
+    color: $secondary-color;
+    margin: 0 0 ($vertical-content-padding / 2);
+    justify-self: flex-start;
   }
 
   &-description {
-    width: 58.2rem;
-    padding-top: 1rem;
-    margin: 0 auto;
-    font-family: $primary-font;
-    font-size: $base-font-size;
-    line-height: 1.21;
-    color: #3e4e73;
+    @include typo-body1;
+
+    color: $secondary-color;
+    max-width: 40em; //this has to be in `em`s because paragraph width should be relative to font-size
+    margin: 0 auto ($vertical-content-padding * 1.5);
   }
 
   &-picture {
-    width: 58.1rem;
-    height: 47.6rem;
-    margin: 5.4rem auto 0;
+    width: 100%;
+    max-width: 58.1rem;
+    height: auto;
+    margin: 0 auto;
 
     img {
       width: 100%;
-      max-height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
 }
 
 cl-logo {
-  padding-top: 3.1rem;
+  padding-top: $vertical-content-padding;
+
 }
 
 cl-login-form {
-  padding-top: 7.6rem;
+  padding-top: $vertical-content-padding * 2;
 }
 
 cl-button {
