@@ -58,7 +58,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     this.popupSubscription.unsubscribe();
   }
 
-  private getData(page?:number): void {
+  private getData(): void {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
@@ -67,7 +67,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       [this.reward, this.prices] = result;
       const merchantId = this.reward.merchantId;
       // merchantId can be null if reward is set up incorrectly on dashboard
-      return this.locationService.getFromMerchant(merchantId, page);
+      return this.locationService.getFromMerchant(merchantId);
     })).subscribe(
       (merchantLocations) => {
         this.locationData = of(merchantLocations);
