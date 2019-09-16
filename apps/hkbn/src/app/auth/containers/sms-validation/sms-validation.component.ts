@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'hkbn-sms-validation',
@@ -43,21 +43,19 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
 
   public validate(code: string): void {
     this.authenticationService.verifyOTP(this.identifier, code)
-    .pipe(switchMap(()=> this.dataTransfer.updateData$ ))
-    .pipe(switchMap(this.login)).subscribe(this.redirectAfterLogin, this.errorHandling);
+      .pipe(switchMap(() => this.dataTransfer.updateData$))
+      .pipe(switchMap(this.login)).subscribe(this.redirectAfterLogin, this.errorHandling);
   }
 
-  public login(val: ISignUpData) {
+  public login(val: ISignUpData): Observable<any> {
     return this.authenticationService.login(val.phone, val.password);
   }
-  
-  private errorHandling(err) {
-    if (err instanceof HttpErrorResponse) {
-      this.notificationService.addPopup({
-        title: 'We could not reach the server',
-        text: 'Please try again soon'
-      });
-    }
+
+  private errorHandling(): void {
+    this.notificationService.addPopup({
+      title: 'We could not reach the server',
+      text: 'Please try again soon'
+    });
   }
   public redirectAfterLogin(): void {
     this.router.navigateByUrl(this.authenticationService.getInterruptedUrl() ? this.authenticationService.getInterruptedUrl() : 'home');

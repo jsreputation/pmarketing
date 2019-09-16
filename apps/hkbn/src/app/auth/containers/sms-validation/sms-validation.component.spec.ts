@@ -28,7 +28,7 @@ fdescribe('SmsValidationComponent', () => {
         {
           provide: AuthenticationService, useValue: {
             verifyOTP: () => of(true),
-            login: () =>   of(true),
+            login: () => of(true),
             resendOTP: () => of(true),
             getInterruptedUrl: () => 'home'
           }
@@ -67,17 +67,17 @@ fdescribe('SmsValidationComponent', () => {
     });
 
     it('should validate otp, authorize and redirect to root page', fakeAsync(() => {
-      spyverifyOTP.and.returnValue(of({message: 'OTP verified'}));
+      spyverifyOTP.and.returnValue(of({ message: 'OTP verified' }));
       spyOnProperty(transferService.updateData$, 'value').and.returnValue(of(null));
       spyOn(authenticationService, 'login').and.returnValue(of(null));
       spyOn(component, 'login').and.returnValue(of(null));
-      const spy = spyOn(router,'navigateByUrl');
+      const spy = spyOn(router, 'navigateByUrl');
       component.validate('888888');
       tick();
       expect(spy).toHaveBeenCalledWith('home');
     }));
   });
-  
+
   it('should make request for send otp, when call resendSms method', () => {
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const resendSpy = spyOn(authenticationService, 'resendOTP').and.returnValue(of(null));
