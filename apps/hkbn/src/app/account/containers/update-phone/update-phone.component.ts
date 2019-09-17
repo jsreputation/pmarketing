@@ -24,7 +24,10 @@ export class UpdatePhoneComponent implements OnInit {
       HkbnValidators.minLength(8),
       HkbnValidators.maxLength(11)])
   });
-
+  public get newNumber(): string {
+    return this.countryCodes.find(code => code.id === this.updatePhoneGroup.value.code)
+      .phone + this.updatePhoneGroup.value.phone;
+  }
   constructor(
     private profileService: ProfileService,
     private router: Router,
@@ -38,13 +41,13 @@ export class UpdatePhoneComponent implements OnInit {
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.profileService.whoAmI().pipe(
       map((profile) => profile.phone)
-    ).subscribe((phone: string) => {   
-      this.updatePhoneGroup.setValue({ phone, code: 1 });
+    ).subscribe((phone: string) => {
+      this.updatePhoneGroup.setValue({ phone: phone.substr(3), code: 11 });
     });
   }
 
   public onSubmit(): void {
-    this.authService.requestVerificationToken(this.updatePhoneGroup.value.phone)
-      .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone'], {queryParams: this.updatePhoneGroup.value }));
+    this.authService.requestVerificationToken(this.newNumber)
+      .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone'], { queryParams: { phone: this.newNumber } }));
   }
 }
