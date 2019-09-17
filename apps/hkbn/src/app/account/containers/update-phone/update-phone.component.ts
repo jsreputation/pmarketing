@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { ProfileService, AuthenticationService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { countryCodes, ICountryCode } from 'src/assets/mock/country-code';
 
 @Component({
@@ -30,8 +29,7 @@ export class UpdatePhoneComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     private authService: AuthenticationService,
-    private route: ActivatedRoute,
-    private dataTransfer: DataTransferService
+    private route: ActivatedRoute
   ) {
   }
 
@@ -46,8 +44,7 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.dataTransfer.newxUpdateData(this.updatePhoneGroup.value);
-    this.authService.requestVerificationToken()
-      .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone']));
+    this.authService.requestVerificationToken(this.updatePhoneGroup.value.phone)
+      .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone'], {queryParams: this.updatePhoneGroup.value }));
   }
 }
