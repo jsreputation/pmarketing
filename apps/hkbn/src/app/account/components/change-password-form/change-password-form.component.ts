@@ -13,9 +13,9 @@ export class ChangePasswordFormComponent {
   @Output() public passwordChange: EventEmitter<IChangePasswordData> = new EventEmitter<IChangePasswordData>();
 
   public changePasswordForm: FormGroup = new FormGroup({
-    oldPassword: new FormControl(null, [Validators.required]),
-    newPassword: new FormControl(null, [Validators.required]),
-    passwordConfirmation: new FormControl(null, [Validators.required])
+    oldPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    newPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    passwordConfirmation: new FormControl(null, [Validators.required, Validators.minLength(6)])
   }, [HkbnValidators.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   public submit(): void {

@@ -33,8 +33,10 @@ const countDistance = (latestPosition: Position | null, latestLocations: ILocati
 };
 
 export const sortByDistance =
-  (position: Observable<Position>, locations: Observable<ILocation[]>, inc: boolean): Observable<ILocation[]> => {
-    return combineLatest(position, locations)
+  (position: Observable<Position>,
+   locations: Observable<ILocation[]>
+    // tslint:disable-next-line: align
+    , inc: boolean): Observable<ILocation[]> => combineLatest(position, locations)
       .pipe(
         map(([latestPosition, latestLocations]: [Position, ILocation[]]) => {
           const locationsList = countDistance(latestPosition, latestLocations);
@@ -42,4 +44,3 @@ export const sortByDistance =
           return locationsList.sort((loc1, loc2) => inc ? loc1.distance - loc2.distance : loc2.distance - loc1.distance);
         })
       );
-  };

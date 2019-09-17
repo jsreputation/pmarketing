@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGameService, NotificationService, IGame } from '@perx/core';
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-game',
@@ -24,7 +25,8 @@ export class GameComponent implements OnInit {
     private gameService: IGameService,
     private location: Location,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private analytics: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
@@ -52,6 +54,12 @@ export class GameComponent implements OnInit {
             });
           }
 
+          this.analytics.addEvent({
+            pageName: 'rewards:game',
+            pageType: PageType.static,
+            siteSectionLevel2: 'rewards:game',
+            siteSectionLevel3: 'rewards:game'
+          });
         },
         (err: any) => {
           console.log(err);

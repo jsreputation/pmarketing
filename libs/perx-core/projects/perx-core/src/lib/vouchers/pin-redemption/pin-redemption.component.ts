@@ -111,9 +111,7 @@ export class PinRedemptionComponent implements OnInit, OnChanges {
   }
 
   get value(): string {
-    return this.controls.reduce((p: string, v: FormControl): string => {
-      return v.value === null ? p : `${p}${v.value}`;
-    }, '');
+    return this.controls.reduce((p: string, v: FormControl): string => v.value === null ? p : `${p}${v.value}`, '');
   }
 
   public onKey(event: KeyboardEvent): void {

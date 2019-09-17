@@ -15,16 +15,8 @@ p {
   margin: 0;
 }
 
-button {
-  outline: none;
-}
-
 .w-100 {
   width: 100% !important;
-}
-
-.m-w-100 {
-  max-width: 100% !important;
 }
 
 .m-0 {
@@ -33,16 +25,6 @@ button {
 
 .text-center {
   text-align: center !important;
-}
-
-.btn-transparent {
-  display: flex;
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  cursor: pointer;
 }
 
 .flex {
@@ -96,11 +78,11 @@ button {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 $horizontal-content-padding;
+  padding: 0 $horizontal-padding;
   position: fixed;
   top: 0;
   z-index: 99;
-  background: #fff;
+  background: $white-color;
   width: calc(100% - 17rem);
 
   @include mat-elevation(4);
@@ -110,32 +92,48 @@ button {
     min-height: $header-height-base;
   }
 
-  .mat-form-field-infix {
-    border: 0;
-  }
-
-  input {
+  .pagetitle-input {
     @include typo-h5;
 
-    font-weight: 400;
-    color: $base-font-color;
-  }
-
-  .mat-form-field-wrapper {
-    padding: 0;
-    transition: margin 0.05s ease-in;
-
-    .mat-form-field-underline {
-      bottom: 0;
+    input {
+      color: $base-font-color;
     }
 
-    .mat-form-field-subscript-wrapper {
-      top: 100%;
-    }
-  }
+    .mat-form-field-wrapper {
+      padding: 0;
+      transition: margin 0.05s ease-in;
 
-  .mat-form-field-invalid .mat-form-field-wrapper {
-    margin: 1.5rem 0 3rem;
+      .mat-form-field-underline {
+        bottom: 0;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        @include typo-body2;
+
+        text-align: right;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        background: $white-color;
+        display: inline-block;
+        margin-top: 0;
+        width: auto;
+        left: auto;
+        right: -1px;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+        overflow: visible;
+
+        &::before {
+          content: "";
+          width: 1em;
+          background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+          position: absolute;
+          top: 0;
+          right: 100%;
+          bottom: 0;
+        }
+      }
+    }
   }
 }
 
@@ -159,7 +157,7 @@ button {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  padding: $vertical-content-padding $horizontal-content-padding;
+  padding: $vertical-padding $horizontal-padding;
 
   &.pt-0 {
     padding-top: 0;
@@ -188,7 +186,7 @@ button {
   align-items: flex-start;
 
   & > div {
-    margin-right: 2.4rem;
+    margin-right: ($horizontal-padding * 0.75);
 
     &:last-of-type {
       margin-right: 0;
@@ -316,12 +314,12 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
     font-size: 1.6rem;
     line-height: 1.06;
     color: $secondary-color;
-    margin: 2.4rem 0 1.6rem 0;
+    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
   }
 
   &-graphic, &-button {
     display: block;
-    margin-top: 1.6rem;
+    margin-top: ($vertical-padding * 0.5);
   }
 
   &-actions {
@@ -337,6 +335,10 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
       display: none;
     }
   }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.75em;
 }
 
 .control-input {
@@ -412,7 +414,7 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
 }
 
 .tabs-filter:first-child .tabs {
-  margin-bottom: 3.2rem;
+  margin-bottom: $vertical-padding;
 }
 
 .tabs-filter + .table-filter .mat-form-field-wrapper {
@@ -420,7 +422,24 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   padding-bottom: 0;
 }
 
-.section-stickyheader {
-  position: relative;
-  padding-top: $header-height-base;
+.no-data {
+  &-img {
+    display: block;
+    width: 100%;
+    max-width: 35rem;
+    height: auto;
+    margin: 0 auto $vertical-padding;
+  }
+
+  &-title {
+    @include typo-h6;
+
+    color: $base-font-color;
+  }
+
+  &-text {
+    @include typo-body2;
+
+    color: $base-font-color;
+  }
 }
