@@ -8,7 +8,7 @@
   justify-content: space-between;
 
   & > * {
-    margin: 0 ($horizontal-padding / 2) 0 0;
+    margin: 0 ($horizontal-padding * 0.5) 0 0;
 
     &.actions-row,
     &:last-child {

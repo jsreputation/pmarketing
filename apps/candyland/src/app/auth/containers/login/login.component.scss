@@ -45,7 +45,7 @@
     @include typo-h3;
 
     color: $secondary-color;
-    margin: 0 0 ($vertical-padding / 2);
+    margin: 0 0 ($vertical-padding * 0.5);
     justify-self: flex-start;
   }
 

@@ -24,12 +24,12 @@
 
 .btn-add-question {
   display: block;
-  margin-top: ($vertical-padding / 2);
+  margin-top: ($vertical-padding * 0.5);
 }
 
 cl-question-form-field {
   display: block;
-  margin-bottom: ($vertical-padding / 2);
+  margin-bottom: ($vertical-padding * 0.5);
   margin-top: 3rem;
 
   &:last-child {
