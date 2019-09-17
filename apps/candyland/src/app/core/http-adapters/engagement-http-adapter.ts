@@ -35,23 +35,22 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformInstantReward(data: any): any {
+  public static transformInstantReward(data: IInstantRewardForm): any {
     return {
       type: 'engagements',
       attributes: {
         type: 'instant_reward',
         title: data.name,
-        description: 'Instant Reward',
-        // game_type: 'reward',
-        image_url:
-          'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
+          banner: data.banner,
           title: data.headlineMessage,
-          headlineText: data.headlineMessage,
-          subHeadlineText: data.subHeadlineMessage,
-          cardBackground: ImageControlValue.getImagePath(data.cardBackground),
-          background: ImageControlValue.getImagePath(data.background),
-          callToActionText: data.buttonText
+          sub_title: data.headlineMessage,
+          // subHeadlineText: data.subHeadlineMessage,
+          card_background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          // card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
+          background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          // background_img_url: ImageControlValue.getImagePath(data.background),
+          button: data.buttonText
         }
       }
     };
