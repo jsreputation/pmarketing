@@ -15,7 +15,7 @@ Scenario: Verifying the number of options for channel .
 
 Scenario: Verifying the number of options for campaign goal .
   Given 15_that I am on the campaign info page.
-  When  15_I do nothing
+  When  15_I click on the campaign goal
   Then  15_I should see five options.
 
 Scenario: Verifying that functionality of audience upload form

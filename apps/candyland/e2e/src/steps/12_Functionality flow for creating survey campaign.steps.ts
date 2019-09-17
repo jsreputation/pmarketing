@@ -64,6 +64,8 @@ Given(/^7_that I am on the campaign creation page.$/, () => {
   // Adding this step to ensure scenario modularity later
 });
 
+When(/^7_I do nothing.$/, () => {});
+
 Given(/^7_I should see the add rewards button on campaign creation page.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for add reward button to load
@@ -169,8 +171,18 @@ Then(/^10_I should be able to input interger string in the probability field$/, 
 
 // Verifiying that the presence of include probablity box
 Given(/^11_that I am on the campaign creation page.$/, async () => {
-     // Write code here that turns the phrase above into concrete actions
-     return 'pending';
+  const ec = protractor.ExpectedConditions;
+  await CreateCampaignPage.navigateToCreateCampaign();
+  // waiting for the search bar to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
+  // entering search criteria for survey in search bar
+  await element.all(by.css('input[type=text]')).get(1).sendKeys('Survey');
+  // selecting first element
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
+  // asserting the presence of the card and title of the card
+  await element.all(by.css('div.engagement-item')).first().click();
+  // clicking on the next button
+  await element.all(by.css('cl-button')).get(1).click();
 });
 
 When(/^11_I do nothing .$/, () => {});

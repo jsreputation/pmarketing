@@ -42,5 +42,5 @@ Scenario: Verifiying that the presence of include probablity box
 
 Scenario: Verifiying that the functionality of the next button
   Given 12_that I am on the campaign creation page.
-  When  12_I click on the next button
+  When  12_I click on the next button on campaign creation page
   Then  12_I should see be in the campaign info form.
