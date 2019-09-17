@@ -67,6 +67,7 @@ When(/^4_I click on the create new button$/, async () => {
     const ec = protractor.ExpectedConditions;
     await browser.wait(ec.presenceOf(element(by.css('cl-button'))), 5000);
     await element(by.css('cl-button')).click();
+    await browser.sleep(8000);
 });
 
 Then(/^4_I should be on the create new reward page.$/, async () => {
@@ -83,10 +84,10 @@ When(/^5_I enter a filter criteria$/, async () => {
   // waiting for search bar to load
   await browser.wait(ec.presenceOf(element(by.css('input'))), 5000);
   // entering search criteria
-  await element(by.css('input')).sendKeys('test_0101');
+  await element(by.css('input')).sendKeys('test10101010');
 });
 
 Then(/^5_I should see the filter items on the list.$/, async () => {
   // doing an assertion on the elements on the table based on the search criteria
-  expect(await element(by.className('name-cell__link')).getText()).to.contain('test_0101');
+  expect(await element(by.className('name-cell__link')).getText()).to.contain('test10101010');
 });
