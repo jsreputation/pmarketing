@@ -7,7 +7,7 @@
   display: flex;
   border-radius: 4px;
   background-color: $white-color;
-  padding: 2.4rem 3rem;
+  padding: ($vertical-padding * 0.75) 3rem;
   min-height: 18.5rem;
   box-sizing: border-box;
 }
