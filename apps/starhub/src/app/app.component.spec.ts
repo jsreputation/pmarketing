@@ -93,7 +93,8 @@ describe('AppComponent', () => {
   };
   const routerStub = {
     navigate: () => { },
-    navigateByUrl: () => { }
+    navigateByUrl: () => { },
+    events: of()
   };
   const matSnackBarStub = {
     open: () => { }
