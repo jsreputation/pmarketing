@@ -5,7 +5,7 @@ export * from './auth.service';
 export * from './campaigns.service';
 export * from './dashboard.service';
 export * from './engagements.service';
-export * from './merchant.service';
+export * from 'src/app/core/services/merchants.service';
 export * from './settings.service';
 export * from './survey.service';
 export * from './shake-tree.service';

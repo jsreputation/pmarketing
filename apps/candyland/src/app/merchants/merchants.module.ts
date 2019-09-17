@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { CreateMerchantComponent } from './containers/create-merchant/create-merchant.component';
 import { ListMerchantComponent } from './containers/list-merchant/list-merchant.component';
 import { DetailedMerchantComponent } from './containers/detailed-merchant/detailed-merchant.component';
@@ -34,6 +35,7 @@ import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant
     MatPaginatorModule,
     SearchFilterModule,
     TableFiltersModule,
+    PaginationModule
   ]
 })
 export class MerchantsModule { }

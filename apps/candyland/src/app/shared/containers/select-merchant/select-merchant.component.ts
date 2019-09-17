@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MerchantService } from '@cl-core/services';
+import { MerchantsService } from '@cl-core/services';
 import { MAT_DIALOG_DATA, MatDialogRef, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 
@@ -10,14 +10,16 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectMerchantComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public selectMerchant: IMerchant;
+
   constructor(
     public dialogRef: MatDialogRef<SelectMerchantComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private merchantService: MerchantService
-  ) { }
+    private merchantService: MerchantsService
+  ) {
+  }
 
   public ngOnInit(): void {
     this.getMerchants();

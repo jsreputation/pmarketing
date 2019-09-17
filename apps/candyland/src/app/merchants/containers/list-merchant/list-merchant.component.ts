@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MerchantService } from '@cl-core/services';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Merchant } from '@cl-core/http-adapters/merchant';
+import { MerchantsService } from '@cl-core/services';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { MerchantsListDataSource } from '@cl-shared/table/data-source/merchants-list-data-source';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
@@ -12,23 +14,26 @@ import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merch
   styleUrls: ['./list-merchant.component.scss']
 })
 export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  public dataSource = new MatTableDataSource<any>();
+  // @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  public dataSource: MerchantsListDataSource<Merchant>;
   private destroy$ = new Subject();
 
-  constructor(private merchantService: MerchantService,
+  constructor(private merchantService: MerchantsService,
               public dialog: MatDialog) {
+    this.dataSource = new MerchantsListDataSource<Merchant>(this.merchantService);
   }
 
   public ngOnInit(): void {
-    this.getListMerchant();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    // this.merchantService.getTableData({include: 'branches'})
+    //   .subscribe(data => console.log('test', data));
+    // this.getListMerchant();
+    // this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
   }
 
   public ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+    // if (this.paginator) {
+      // this.dataSource.paginator = this.paginator;
+    // }
   }
 
   public openDialogCreate(merchant?: IMerchant): void {
@@ -54,12 +59,12 @@ export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
     ( typeof actions[data.action] === 'function' ) && actions[data.action](data.merchant);
   }
 
-  private getListMerchant(): void {
-    this.merchantService.getMerchantList()
-      .subscribe((res) => {
-        this.dataSource.data = res;
-      });
-  }
+  // private getListMerchant(): void {
+  //   this.merchantService.getMerchantList()
+  //     .subscribe((res) => {
+  //       this.dataSource.data = res;
+  //     });
+  // }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
