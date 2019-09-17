@@ -17,7 +17,7 @@
   height: 100%;
   flex-direction: column;
 
-  select, input {
+  select, mat-select, input {
     appearance: none;
     width: 100%;
     background: #F8F8FC;
@@ -26,7 +26,7 @@
     font-size: 1.4rem;
   }
 
-  select {
+  select, mat-select {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #E9E9ED;
   }
@@ -64,6 +64,10 @@ button {
 
 .select-wrap, .input-wrap {
   position: relative;
+  margin-bottom: 1.6rem;
+}
+
+.mat-select-wrap {
   margin-bottom: 1.6rem;
 }
 
