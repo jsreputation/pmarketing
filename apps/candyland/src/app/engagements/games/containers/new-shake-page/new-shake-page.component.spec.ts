@@ -57,8 +57,8 @@ describe('NewShakePageComponent', () => {
                 id: 1,
                 type: 'simple-tree',
                 active: 'false',
-                img: 'assets/images/tree/simple-tree.png',
-                fullImg: 'assets/images/tree/full_tree_1.png',
+                img: 'assets/images/games/tree/simple-tree.png',
+                fullImg: 'assets/images/games/tree/full_tree_1.png',
                 title: 'tree'
               }],
               giftBox: [{
