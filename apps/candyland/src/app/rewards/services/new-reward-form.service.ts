@@ -23,7 +23,7 @@ export class NewRewardFormService {
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
           type: [],
-          total: [],
+          // total: [],
           singleCode: this.fb.group({
             code: [null]
           }),

@@ -16,6 +16,7 @@ export class ApiConfig {
   public static getAudiences = `${ApiConfig.baseAPIUserPath}/pools`;
   public static signIn = `${ApiConfig.IAMUsersPath}/sign_in`;
   public static stampsPath = `${ApiConfig.engagementsPath}`;
-  public static vouchersPath = `${ApiConfig.basePath}/vouchers/batches`;
+  public static voucherPath = `${ApiConfig.basePath}/voucher/batch`;
+  public static vouchersPath = `${ApiConfig.basePath}/voucher/entities`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}tenants/2`;
 }

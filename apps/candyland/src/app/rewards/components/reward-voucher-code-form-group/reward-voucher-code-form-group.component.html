@@ -1,3 +1,4 @@
+{{ formGroup.value | json}} <br>
 <ng-container *ngIf="formGroup.get('merchantPIN').disabled">
   <label class="card-label">Voucher Code Type</label>
   <!--Voucher Code Type-->
@@ -65,7 +66,7 @@
   <!--/ Unique codes: System generated-->
 
   <!--Unique codes: User upload-->
-  <div *ngIf="formGroup.get('uniqueUserUploadCode').enabled">
+  <!-- <div *ngIf="formGroup.get('uniqueUserUploadCode').enabled">
     <cl-upload-file [formControl]="formGroup.get('uniqueUserUploadCode.file')"
                     (uploadFile)="setTotalVoucher(20000)"
                     (deleteFile)="setTotalVoucher(null)">
@@ -76,7 +77,7 @@
         {{formGroup.get('total').value | number: '2.'}}
       </p>
     </div>
-  </div>
+  </div> -->
   <!-- /Unique codes: User upload-->
 </ng-container>
 
@@ -97,7 +98,7 @@
 </ng-container>
 <!--   /   Merchant PIN-->
 
-<ng-container *ngIf="formGroup.get('type').value !== 'Unique codes: User upload'">
+<!-- <ng-container *ngIf="formGroup.get('type').value !== 'Unique codes: User upload'">
   <div class="code-preview">
     <label class="card-label">Total Number of Voucher</label>
     <mat-form-field class="dialog-content-block">
@@ -110,5 +111,5 @@
         [formControl]="formGroup.get('total')">
     </mat-form-field>
   </div>
-</ng-container>
+</ng-container> -->
 <!--/ Total Number of Voucher-->
