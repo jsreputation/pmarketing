@@ -8,6 +8,7 @@ import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
+import { CardComponent } from './card/card.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'promos', component: PromosComponent },
       { path: 'wallet', component: HomeComponent },
+      { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'account', component: AccountComponent },
       { path: 'redeem/:id', component: RedeemComponent },
