@@ -67,16 +67,14 @@ export class V4ProfileService extends ProfileService {
   public setCustomProperties(data: ICustomProperties): Observable<void> {
     return this.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<void>(
+        (profile: IProfile) => this.http.patch<void>(
             `${this.apiHost}/v4/customers/${profile.id}`,
             {
               personal_properties: {
                 ...profile.customProperties,
                 ...data
               }
-            });
-        }
+            })
       )
     );
   }
@@ -92,14 +90,12 @@ export class V4ProfileService extends ProfileService {
   public updateUserInfo(data: IProfileProperty): Observable<void> {
     return this.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<void>(
+        (profile: IProfile) => this.http.patch<void>(
             `${this.apiHost}/v4/customers/${profile.id}`,
             {
               ...profile,
               ...data
-            });
-        }
+            })
       )
     );
   }

@@ -22,12 +22,10 @@ export class AdvancedPieComponent implements OnChanges {
       return;
     }
     this.data.subscribe((data: IData) => {
-      this.ngxChartData = data.rows.map((row: (string | number)[]) => {
-        return {
+      this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
           name: row[0],
           value: row[1]
-        };
-      });
+        }));
     });
   }
 }
