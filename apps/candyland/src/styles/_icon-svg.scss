@@ -115,7 +115,7 @@
 .delete {
   mask: url("assets/images/delete.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: $dark-color;
+  background-color: $secondary-color;
 }
 
 .delete-action {
@@ -168,6 +168,6 @@
 
 .active {
   .icon {
-    background-color: #ffffff;
+    background-color: $white;
   }
 }

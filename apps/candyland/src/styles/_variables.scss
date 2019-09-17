@@ -4,29 +4,30 @@ $blue-hover: #2E41CE;
 $orange: #FFA641;
 $red: #B00020;
 $green: #10D994;
+
+//grays
 $white: #fff;
+$lightest-gray:  #fafafa;
+$light-gray:  #f7fafc;
 
 //app colors
 $primary-color: $blue;
 $primary-hover: $blue-hover;
+$secondary-color: #3E4E73;
 
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
 
-$background-color: #F2F6FC;
-
-$white-color: $white;
-$secondary-color: #577AA7;
-$light-gray:  #f7fafc;
-$simple-light-gray:  #fafafa;
-$dark-color: #3E4E73;
-$warning-color: $red;
-$border-color: #d9dfe4;
-$primary-section-color: #f8fbfd;
-
 $success-color: $green;
-$draft-color: #D8D8D8;
 $pending-color: $orange;
+$warning-color: $red;
+
+$background-color: $lightest-gray;
+
+$border-color: rgba(0, 0, 0, .12);
+
+/* ----- UNIQUE COLORS -----*/
+$loginpage-color: #F2F6FC;
 
 /* ----- Progress BAR ----- */
 $progress-bar-color: $orange;
