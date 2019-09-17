@@ -52,7 +52,7 @@ describe('HomeComponent', () => {
   });
 
   it('should navigate to login onLogOut click', () => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService
     );
     const logoutSpy = spyOn(authenticationService, 'logout');

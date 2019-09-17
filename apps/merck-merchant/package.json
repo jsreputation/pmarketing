@@ -8,8 +8,13 @@
     "build:merck-merchant:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
+<<<<<<< HEAD
     "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
+=======
+    "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint ./src/*/*.ts",
+    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix && eslint ./src/*/*.ts --fix",
+>>>>>>> c0103a589d555aae7e7e46af1ad020dc870f2783
     "e2e~": "ng e2e"
   },
   "private": true,
