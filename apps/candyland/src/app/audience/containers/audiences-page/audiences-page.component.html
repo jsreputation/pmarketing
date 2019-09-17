@@ -5,7 +5,6 @@
 
 <section class="content">
   <ng-container *ngIf="hasData">
-
     <!--filters-->
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
@@ -42,12 +41,13 @@
     </ng-container>
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
-    <h2>
-      Nothing to use yet
+  <cl-no-data *ngIf="(dataSource.data).length === 0">
+    <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
+    <h2 class="no-data-title">
+      Slice and dice your target audience
     </h2>
-    <p>
-      See your engagement list here once you created your first engagement
+    <p class="no-data-text">
+      Let&rsquo;s begin by creating your first Audience List
     </p>
   </cl-no-data>
 </section>
