@@ -23,7 +23,7 @@ export class AudiencesService implements ITableService {
         map((res: any) => {
         const poolsList = res.data;
         return poolsList.map((pool: any) => {
-          return {name: pool.attributes.name, value: {id: pool.id, type: pool.type}};
+          return {name: pool.attributes.name, checked: false, value: {id: pool.id, type: pool.type}};
         });
     }));
   }
