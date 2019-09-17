@@ -65,7 +65,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    gameService = TestBed.get(IGameService);
+    gameService = TestBed.get<IGameService>(IGameService);
     fixture.detectChanges();
   });
 

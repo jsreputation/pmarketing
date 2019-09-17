@@ -76,7 +76,7 @@ describe('AccountComponent', () => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    authService = debugElement.injector.get(AuthenticationService);
+    authService = debugElement.injector.get<AuthenticationService>(AuthenticationService);
     fixture.detectChanges();
   });
 
