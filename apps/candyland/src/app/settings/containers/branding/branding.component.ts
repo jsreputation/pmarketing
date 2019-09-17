@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
@@ -19,6 +19,29 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public listColors;
   private destroy$ = new Subject<void>();
   public tenants: Tenants;
+  public reward = of(  {
+    id: 1,
+    name: 'Starbucks venti $5',
+    subtitle: 'So yummy',
+    description: 'One bought, one offered',
+    validFrom: null,
+    validTo: null,
+    rewardThumbnail: 'https://picsum.photos/300/300',
+    rewardBanner: 'https://picsum.photos/200/300',
+    merchantImg: 'https://picsum.photos/200/300',
+    termsAndConditions: '',
+    howToRedeem: '',
+    rewardPrice: [{
+      id: 23,
+      currencyCode: '44',
+      price: 3
+    }],
+    categoryTags: [{
+      id: 34,
+      title: 'Lifestyle',
+      parent: null
+    }],
+  });
   constructor(private settingsService: SettingsService) {
   }
 
@@ -44,6 +67,14 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   public get button(): AbstractControl {
     return this.formBranding.get('button');
+  }
+
+  public get font(): AbstractControl {
+    return this.formBranding.get('font');
+  }
+
+  public get style(): AbstractControl {
+    return this.formBranding.get('style');
   }
 
   public resetLogo(data: any): void {
@@ -112,11 +143,10 @@ export class BrandingComponent implements OnInit, OnDestroy {
         debounceTime(300),
         untilDestroyed(this),
         switchMap((value => {
-          this.tenants.properties = {
-            ...this.tenants.properties,
-            ...SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value)
-          };
-          return this.tenants.save();
+          if (this.formBranding.valid) {
+            return this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value));
+          }
+          return of([]);
         }))
       )
       .subscribe(() => {

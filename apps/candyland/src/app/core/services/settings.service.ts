@@ -4,7 +4,7 @@ import { SettingsHttpService } from '@cl-core/http-services/settings-http.servic
 import { TimeZoneSort } from '@cl-helpers/time-zone-sort';
 import Utils from '@cl-helpers/utils';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { DataStore } from '@cl-core/http-adapters/datastore';
@@ -37,7 +37,7 @@ export const settingsFonts: ISimpleValue[] = [{
   providedIn: 'root'
 })
 export class SettingsService implements ITableService {
-
+  private tenants: Tenants;
   constructor(private settingsHttpService: SettingsHttpService,
               private fb: FormBuilder,
               private dataStore: DataStore) {
@@ -141,7 +141,16 @@ export class SettingsService implements ITableService {
   }
 
   public getTenants(): Observable<Tenants> {
-    return this.dataStore.findRecord(Tenants, '2');
+    return this.dataStore.findRecord(Tenants, '2')
+      .pipe(
+        tap((tenants) => this.tenants = tenants)
+      );
+  }
+
+  public updateTenants(value: any): any {
+    const newProperties = {...this.tenants.properties, ...value};
+    this.tenants.properties = {...newProperties};
+    return this.tenants.save();
   }
 
 }

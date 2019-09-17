@@ -39,10 +39,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(300),
         untilDestroyed(this),
-        switchMap((value => {
-          this.tenants.properties = {...this.tenants.properties, ...value};
-          return this.tenants.save();
-        }))
+        switchMap((value => this.settingsService.updateTenants(value))
+        )
       )
       .subscribe(() => {
       });
