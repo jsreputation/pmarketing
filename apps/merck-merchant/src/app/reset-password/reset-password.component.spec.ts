@@ -53,7 +53,7 @@ describe('ResetPasswordComponent', () => {
 
   it('should call forgot password on from submit', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService
+      AuthenticationService as Type<AuthenticationService>
     );
     const spy = spyOn(authenticationService, 'forgotPassword').and.callFake(() => of());
     component.onSubmit();

@@ -14,6 +14,7 @@ import {
 } from '@angular/material';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -63,7 +64,7 @@ describe('LoginComponent', () => {
 
   it('should navigate to home if authenticated', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService
+      AuthenticationService as Type<AuthenticationService>
     );
     const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
     const routerStub: Router = fixture.debugElement.injector.get(Router);

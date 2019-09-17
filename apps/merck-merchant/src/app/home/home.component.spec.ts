@@ -53,7 +53,7 @@ describe('HomeComponent', () => {
 
   it('should navigate to login onLogOut click', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService
+      AuthenticationService as Type<AuthenticationService>
     );
     const logoutSpy = spyOn(authenticationService, 'logout');
     const routerStub: Router = fixture.debugElement.injector.get(Router);
