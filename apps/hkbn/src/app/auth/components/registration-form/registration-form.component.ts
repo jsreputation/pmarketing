@@ -10,7 +10,7 @@ import { ICountryCode } from 'src/assets/mock/country-code';
   encapsulation: ViewEncapsulation.None
 })
 export class RegistrationFormComponent {
-  @Input() public countryCodes: ICountryCode[]
+  @Input() public countryCodes: ICountryCode[];
   @Output()
   public formSubmit: EventEmitter<any> = new EventEmitter<any>();
 

@@ -12,7 +12,7 @@ import { ICountryCode, countryCodes } from 'src/assets/mock/country-code';
 })
 export class RegistrationComponent {
   /* istanbul ignore next */
-  countryCodes: ICountryCode[] = countryCodes;
+  public countryCodes: ICountryCode[] = countryCodes;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
