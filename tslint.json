@@ -129,6 +129,8 @@
       true,
       "element",
       "kebab-case"
-    ]
+    ],
+    "no-string-literal": false,
+    "object-literal-key-quotes": [true, "as-needed"]
   }
 }

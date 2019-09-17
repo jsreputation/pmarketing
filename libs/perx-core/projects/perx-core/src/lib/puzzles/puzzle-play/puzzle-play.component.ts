@@ -110,6 +110,7 @@ export class PuzzlePlayComponent implements OnChanges {
     const topPosition = Math.floor((tile.puzzleLocation / this.cols)) * this.tileHeight;
     if (tile.isSelected) {
       return {
+        // tslint:disable: object-literal-key-quotes
         width: this.tileWidth + 'px',
         height: this.tileHeight + 'px',
         'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
