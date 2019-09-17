@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
+import { ICountryCode } from 'src/assets/mock/country-code';
 
 @Component({
   selector: 'hkbn-registration-form',
@@ -9,7 +10,7 @@ import { HkbnValidators } from '../../../helpers/hkbn-validators';
   encapsulation: ViewEncapsulation.None
 })
 export class RegistrationFormComponent {
-
+  @Input() public countryCodes: ICountryCode[]
   @Output()
   public formSubmit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -21,7 +22,8 @@ export class RegistrationFormComponent {
       HkbnValidators.pattern('^[0-9]+$'),
       HkbnValidators.minLength(6),
       HkbnValidators.maxLength(11)
-      ]),
+    ]),
+    code: new FormControl(11, [HkbnValidators.required]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
@@ -33,7 +35,10 @@ export class RegistrationFormComponent {
     if (this.registrationForm.invalid) {
       return;
     }
-    this.formSubmit.emit(this.registrationForm.value);
+    const requestBody = this.registrationForm.value;
+    requestBody.phone = this.countryCodes.find(code => code.id === requestBody.code).phone + requestBody.phone;
+    delete requestBody.code;
+    this.formSubmit.emit(requestBody);
   }
 
 }

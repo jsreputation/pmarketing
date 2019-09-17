@@ -3,6 +3,7 @@ import { AuthenticationService, IProfile } from '@perx/core';
 import { Router } from '@angular/router';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { ICountryCode, countryCodes } from 'src/assets/mock/country-code';
 
 @Component({
   selector: 'hkbn-registration',
@@ -11,6 +12,7 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 })
 export class RegistrationComponent {
   /* istanbul ignore next */
+  countryCodes: ICountryCode[] = countryCodes;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
