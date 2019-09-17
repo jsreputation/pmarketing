@@ -73,7 +73,7 @@ Given(/^9_that I am on the reward creation page.$/, async () => {
 
 When(/^9_I click on redemption type.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  // waiting for category field
+  // waiting for redemption type
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(2)), 6000 );
   await element.all(by.css('div.mat-select-trigger')).get(2).click();
 });
