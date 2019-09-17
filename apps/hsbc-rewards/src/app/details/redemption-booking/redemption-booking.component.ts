@@ -8,7 +8,8 @@ import {
   PopupComponent,
   LoyaltyService,
   ILoyalty,
-  IPrice
+  IPrice,
+  IVoucherService
 } from '@perx/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {switchMap, map, flatMap} from 'rxjs/operators';
@@ -36,6 +37,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   constructor(
     private locationService: LocationsService,
     private rewardsService: RewardsService,
+    private vouchersService: IVoucherService,
     private loyaltyService: LoyaltyService,
     private route: ActivatedRoute,
     private build: FormBuilder,
@@ -104,7 +106,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => {
-      return this.rewardsService.reserveReward(this.rewardId,
+      return this.vouchersService.reserveReward(this.rewardId,
         {priceId: this.bookingForm.value.priceId, locationId: this.bookingForm.value.location});
     })).subscribe((result) => {
       this.router.navigate(['detail/success']);
