@@ -110,10 +110,10 @@ module.exports = {
             "error",
             {
                 "rulesDirectory": [
-                    "/Users/perx/Desktop/microapp 2/microsite-apps-ng/node_modules/rxjs-tslint-rules/dist/rules",
-                    "/Users/perx/Desktop/microapp 2/microsite-apps-ng/node_modules/codelyzer",
-                    "/Users/perx/Desktop/microapp 2/microsite-apps-ng/node_modules/rxjs-tslint",
-                    "/Users/perx/Desktop/microapp 2/microsite-apps-ng/node_modules/tslint-consistent-codestyle/rules"
+                    "rxjs-tslint-rules",
+                    "codelyzer",
+                    "rxjs-tslint",
+                    "tslint-consistent-codestyle"
                 ],
                 "rules": {
                     "align": [
