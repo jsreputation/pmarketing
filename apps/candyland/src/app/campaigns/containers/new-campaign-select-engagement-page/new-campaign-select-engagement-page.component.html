@@ -23,7 +23,7 @@
       Please, choose template.
     </mat-error>
 
-    <mat-radio-group class="item-list shadow" [formControl]="form.get('template')">
+    <mat-radio-group color="primary" class="item-list shadow" [formControl]="form.get('template')">
       <ng-container *ngIf="(dataSource.connect() | async) as items">
         <ng-container *ngFor="let item of items">
           <mat-radio-button [value]="item">
