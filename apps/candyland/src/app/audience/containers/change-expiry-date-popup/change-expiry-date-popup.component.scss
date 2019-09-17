@@ -79,7 +79,7 @@
     align-items: flex-start;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 1.6rem 2rem 1.45rem;
+    padding: ($vertical-padding / 2) 2rem 1.45rem;
     width: 19.8rem;
     height: 16.1rem;
     border-radius: 4px;

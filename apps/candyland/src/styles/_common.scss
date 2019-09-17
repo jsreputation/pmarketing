@@ -316,12 +316,12 @@ cl-game-mobile-preview, .tabs-component {
     font-size: 1.6rem;
     line-height: 1.06;
     color: $secondary-color;
-    margin: 2.4rem 0 1.6rem 0;
+    margin: 2.4rem 0 ($vertical-padding / 2) 0;
   }
 
   &-graphic, &-button {
     display: block;
-    margin-top: 1.6rem;
+    margin-top: ($vertical-padding / 2);
   }
 
   &-actions {
