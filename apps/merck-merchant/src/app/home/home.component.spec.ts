@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 import { MatToolbarModule } from '@angular/material';
+import { Type } from '@angular/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
