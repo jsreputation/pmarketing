@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Voucher, ILocation, IVoucherService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-voucher',
@@ -13,7 +14,7 @@ export class VoucherComponent implements OnInit {
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
 
-  constructor(private vouchersService: IVoucherService, private activeRoute: ActivatedRoute) {
+  constructor(private vouchersService: IVoucherService, private activeRoute: ActivatedRoute, private analytics: AnalyticsService) {
   }
 
   public ngOnInit(): void {
@@ -25,9 +26,16 @@ export class VoucherComponent implements OnInit {
       )
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
-        // this.analytics.addEvent({
-
-        // });
+        const category: string = voucher.categories && voucher.categories.length > 0 ? voucher.categories[0] : undefined;
+        if (category !== undefined) {
+          const pageName: string = `rewards:vouchers:${category}:${voucher.name}`;
+          this.analytics.addEvent({
+            pageName,
+            pageType: PageType.detailPage,
+            siteSectionLevel2: 'rewards:vouchers',
+            siteSectionLevel3: pageName
+          });
+        }
       });
   }
 
