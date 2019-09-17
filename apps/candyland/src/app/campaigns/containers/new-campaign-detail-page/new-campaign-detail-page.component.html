@@ -58,7 +58,7 @@
     <!--channel type-->
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group [formControl]="channel.get('type')">
+        <mat-radio-group color="primary" [formControl]="channel.get('type')">
           <ng-container *ngFor="let type of config?.channelTypes">
             <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
           </ng-container>
@@ -147,7 +147,7 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group aria-label="Select an option" [formControl]="audience.get('type')">
+        <mat-radio-group color="primary" aria-label="Select an option" [formControl]="audience.get('type')">
           <mat-radio-button [value]="'none'">No audience</mat-radio-button>
           <mat-radio-button [value]="'upload'">Upload an audience list</mat-radio-button>
           <mat-radio-button [value]="'select'">Select an audience list</mat-radio-button>

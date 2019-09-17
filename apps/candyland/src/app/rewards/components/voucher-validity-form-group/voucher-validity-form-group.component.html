@@ -1,6 +1,6 @@
 <!--Voucher Validity Type-->
 <div class="card-row radio-group-row">
-  <mat-radio-group [formControl]="formGroup.get('type')" color="primary">
+  <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
     <ng-container *ngFor="let type of config?.voucherValidityType">
       <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
     </ng-container>
