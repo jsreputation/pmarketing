@@ -87,7 +87,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   }
 
   private getMerchantData(): void {
-    if (!this.isCurrentMerchantPageLoaded){
+    if (!this.isCurrentMerchantPageLoaded) {
       return;
     }
 
@@ -103,7 +103,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
           text: 'We\'re unable to perform this transaction at this time'
         });
       }
-    )
+    );
   }
 
   private updateMerchantData(merchantLocations: ILocation[]): any {
