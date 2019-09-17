@@ -4,6 +4,13 @@
 </div>
 
 <section class="content">
+  <!--
+  <h1>
+    Greater than 0: {{ !(dataSource.data).length === 0 }} <br>
+    Greater exactly 0: {{ (dataSource.data).length === 0 }}<br>
+    Datasource length: {{ (dataSource.data).length }}
+  </h1>
+  -->
   <ng-container *ngIf="dataSource.hasData">
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
@@ -48,7 +55,7 @@
     <!--/ paginator-->
   </ng-container>
 
-  <cl-no-data *ngIf="!dataSource.hasData">
+  <cl-no-data *ngIf="(dataSource.data).length === 0">
     <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Engaging with your customers is easy!
