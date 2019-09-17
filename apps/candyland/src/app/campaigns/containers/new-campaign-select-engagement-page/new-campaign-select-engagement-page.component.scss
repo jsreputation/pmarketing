@@ -1,3 +1,5 @@
+@import "variables";
+
 .select-template {
   display: flex;
 }
@@ -10,5 +12,5 @@
 }
 
 .template-error {
-  margin-bottom: 2.4rem;
+  margin-bottom: ($vertical-padding * 0.75);
 }
