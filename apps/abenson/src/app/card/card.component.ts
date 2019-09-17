@@ -9,10 +9,13 @@ import { Observable } from 'rxjs';
 })
 export class CardComponent implements OnInit {
   public transactions: Observable<ITransaction[]>;
+  public priceLabelFn: (tr: ITransaction) => string;
 
   constructor(private loyaltyService: LoyaltyService) { }
 
   public ngOnInit(): void {
     this.transactions = this.loyaltyService.getAllTransactions();
+
+    this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
   }
 }
