@@ -152,7 +152,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         (game: IGame) => {
           this.game = game;
           const data = {
-            imageUrl: './assets/shake.png',
+            imageUrl: './assets/tap-tap.png',
             text: campaign.name, // You’ve got a “Shake the Tree” reward!
             buttonTxt: 'Play now',
             afterClosedCallBack: this,
