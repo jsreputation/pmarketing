@@ -4,7 +4,7 @@
   <div class="full-with page-header">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
-        <mat-form-field class="messages-input" [floatLabel]="'never'">
+        <mat-form-field class="pagetitle-input" [floatLabel]="'never'">
           <input type="text"  matInput formControlName="name" placeholder="Enter title here">
           <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
           <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
