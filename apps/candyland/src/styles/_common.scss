@@ -96,7 +96,7 @@ button {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 $horizontal-content-padding;
+  padding: 0 $horizontal-padding;
   position: fixed;
   top: 0;
   z-index: 99;
@@ -159,7 +159,7 @@ button {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  padding: $vertical-content-padding $horizontal-content-padding;
+  padding: $vertical-padding $horizontal-padding;
 
   &.pt-0 {
     padding-top: 0;
@@ -412,7 +412,7 @@ cl-game-mobile-preview, .tabs-component {
 }
 
 .tabs-filter:first-child .tabs {
-  margin-bottom: $vertical-content-padding;
+  margin-bottom: $vertical-padding;
 }
 
 .tabs-filter + .table-filter .mat-form-field-wrapper {

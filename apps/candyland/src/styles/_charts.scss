@@ -11,8 +11,8 @@
   margin: 0;
 
   & > * {
-    margin-bottom: $vertical-content-padding;
-    margin-right: $horizontal-content-padding;
+    margin-bottom: $vertical-padding;
+    margin-right: $horizontal-padding;
     flex: 1;
   }
 }
@@ -20,8 +20,8 @@
 .chart-card {
   position: relative;
   border-radius: 4px;
-  padding: $vertical-content-padding $horizontal-content-padding;
-  flex: calc(50% - $horizontal-content-padding);
+  padding: $vertical-padding $horizontal-padding;
+  flex: calc(50% - $horizontal-padding);
   box-sizing: border-box;
 
   &:not(:nth-child(2)) {
@@ -44,15 +44,15 @@
   &-block {
     border: solid 1px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    margin-top: $vertical-content-padding;
-    padding: $vertical-content-padding $horizontal-content-padding;
+    margin-top: $vertical-padding;
+    padding: $vertical-padding $horizontal-padding;
     box-sizing: border-box;
   }
 
   ngx-charts-bar-vertical {
     display: block;
     height: 100%;
-    max-height: ($vertical-content-padding * 10);
+    max-height: ($vertical-padding * 10);
     width: 100%;
   }
 

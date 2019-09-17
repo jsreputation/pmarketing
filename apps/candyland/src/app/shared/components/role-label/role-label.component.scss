@@ -7,8 +7,8 @@
   justify-content: flex-start;
 
   &-abbr {
-    width: $horizontal-content-padding;
-    height: $vertical-content-padding;
+    width: $horizontal-padding;
+    height: $vertical-padding;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,8 +63,8 @@
 
 .medium {
   .role-label-abbr {
-    width: $horizontal-content-padding;
-    height: $vertical-content-padding;
+    width: $horizontal-padding;
+    height: $vertical-padding;
   }
 }
 

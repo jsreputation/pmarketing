@@ -4,11 +4,11 @@
   &-content {
     position: relative;
     flex: 1;
-    padding: 0 $horizontal-content-padding;
+    padding: 0 $horizontal-padding;
   }
 
   &-top-row {
-    margin-bottom: $vertical-content-padding;
+    margin-bottom: $vertical-padding;
   }
 
   &-section {

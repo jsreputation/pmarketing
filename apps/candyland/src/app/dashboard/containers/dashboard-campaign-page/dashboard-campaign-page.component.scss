@@ -77,8 +77,8 @@
 
 .info-title {
   position: relative;
-  margin-top: $vertical-content-padding;
-  flex: calc(100% - $horizontal-content-padding);
+  margin-top: $vertical-padding;
+  flex: calc(100% - $horizontal-padding);
   box-sizing: border-box;
   font-size: 1.6rem;
   line-height: 1.31;
