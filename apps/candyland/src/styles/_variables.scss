@@ -1,8 +1,8 @@
 //brand palette
-$blue: #2665ee;
-$blue-hover: #124cc8;
+$blue: #2664ED;
+$blue-hover: #2E41CE;
 $orange: #FFA641;
-$red: #ff1c1c;
+$red: #B00020;
 $green: #10D994;
 $white: #fff;
 
@@ -13,13 +13,13 @@ $primary-hover: $blue-hover;
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
 
-$background-color: rgba(212, 225, 244, 0.3);
+$background-color: #F2F6FC;
 
 $white-color: $white;
-$secondary-color: #3e4e73;
+$secondary-color: #577AA7;
 $light-gray:  #f7fafc;
 $simple-light-gray:  #fafafa;
-$dark-color: #3B4E77;
+$dark-color: #3E4E73;
 $warning-color: $red;
 $border-color: #d9dfe4;
 $primary-section-color: #f8fbfd;
@@ -29,8 +29,8 @@ $draft-color: #D8D8D8;
 $pending-color: $orange;
 
 /* ----- Progress BAR ----- */
-$progress-bar-color: #ffa600;
-$progress-bar-background-color: #e7e9ed;
+$progress-bar-color: $orange;
+$progress-bar-background-color: $light-gray;
 
 /* ----- SPACING ----- */
 $vertical-padding: 3.2rem;
