@@ -64,12 +64,12 @@
   right: 0.2rem;
 
   &-none {
-    background-color: #f85400;
+    background-color: $pending-color;
   }
 
   &-email {
     right: 0;
-    background-color: #35c6ff;
+    background-color: $primary-color;
   }
 }
 

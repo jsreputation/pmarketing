@@ -18,11 +18,14 @@ $secondary-color: #3E4E73;
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
 
+$disable-color: #a4b0c3;
 $success-color: $green;
 $pending-color: $orange;
 $warning-color: $red;
 
 $background-color: $lightest-gray;
+$bgcolor-sidebar: #202c46;
+$bgcolor-sidebar-logo: #172238;
 
 $border-color: rgba(0, 0, 0, .12);
 
@@ -30,7 +33,7 @@ $border-color: rgba(0, 0, 0, .12);
 $loginpage-color: #F2F6FC;
 
 /* ----- Progress BAR ----- */
-$progress-bar-color: $orange;
+$progress-bar-color: $green;
 $progress-bar-background-color: $light-gray;
 
 /* ----- SPACING ----- */

@@ -80,11 +80,11 @@
 }
 
 .creator {
-  background-color: #4cd9d0;
+  background-color: $green;
 }
 
 .customer {
-  background-color: #4455fd;
+  background-color: $primary-color;
 }
 
 .manager {
@@ -92,5 +92,5 @@
 }
 
 .viewer {
-  background-color: #b5bcc8;
+  background-color: $disable-color;
 }
