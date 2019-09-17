@@ -152,5 +152,5 @@ When(/^35_I entered the correct email and invalid p\/w$/, async () => {
 
 Then(/^35_I see the message prompt for invalid login$/, async () => {
   // asserting for the message prompt
-  await logs.expect('The email or password is incorrect! Http failure response for https://api.whistler.perxtech.org/iam/users/sign_in: 401 OK');
+  await logs.expect('The email or password is incorrect! Http failure response for https://api-pru1.uat.whistler.perxtech.io/iam/users/sign_in: 401 OK');
 });
