@@ -7,16 +7,16 @@
   flex-flow: column nowrap;
 
   .mat-tab-header {
-    padding: 0 32px !important;
+    padding: 0 $horizontal-content-padding !important;
   }
 
   &-content {
     flex: 1;
-    padding: 0 3.2rem !important;
+    padding: 0 $horizontal-content-padding !important;
   }
 
   &-header-wrap {
-    padding: 3.2rem 3.2rem 1rem;
+    padding: $vertical-content-padding $horizontal-content-padding 1rem;
     position: relative;
     display: flex;
     align-items: center;
