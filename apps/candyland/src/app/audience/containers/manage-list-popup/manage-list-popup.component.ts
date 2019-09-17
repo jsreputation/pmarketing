@@ -22,6 +22,18 @@ export class ManageListPopupComponent implements OnInit {
     this.getPools();
   }
 
+  public setSelectedPools(): any {
+    const userPools = this.data.pools.split(', ');
+    userPools.forEach(item => {
+      this.pools.forEach(pool => {
+        if (item && pool.name === item) {
+          pool.checked = true;
+          this.changePools(pool.value, true);
+        }
+      });
+    });
+  }
+
   private getPools(): any {
     const params = {
       'page[number]': 1,
@@ -30,12 +42,13 @@ export class ManageListPopupComponent implements OnInit {
     this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
       .subscribe((data: any) => {
         this.pools = data;
+        this.setSelectedPools();
         this.ref.markForCheck();
       });
   }
 
-  public changePools(value, event): any {
-    if (event.checked) {
+  public changePools(value, checked): any {
+    if (checked) {
       this.poolsArray.push(value);
     } else {
       this.poolsArray.splice(this.poolsArray.indexOf(value), 1);
