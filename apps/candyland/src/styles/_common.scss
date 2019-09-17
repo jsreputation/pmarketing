@@ -15,16 +15,8 @@ p {
   margin: 0;
 }
 
-button {
-  outline: none;
-}
-
 .w-100 {
   width: 100% !important;
-}
-
-.m-w-100 {
-  max-width: 100% !important;
 }
 
 .m-0 {
@@ -33,16 +25,6 @@ button {
 
 .text-center {
   text-align: center !important;
-}
-
-.btn-transparent {
-  display: flex;
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  cursor: pointer;
 }
 
 .flex {
@@ -108,10 +90,6 @@ button {
   &.full-with {
     background: $white-color;
     min-height: $header-height-base;
-  }
-
-  .mat-form-field-infix {
-    border: 0;
   }
 
   .pagetitle-input {
@@ -357,6 +335,10 @@ cl-game-mobile-preview, .tabs-component {
       display: none;
     }
   }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.75em;
 }
 
 .control-input {
