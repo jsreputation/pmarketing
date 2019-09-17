@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor, ElementFinder } from 'protractor';
-import { CreateRewardAppPage } from '../pages/shakeTheTreeFlow.po';
+import { CreateRewardAppPage } from '../pages/candylandApp.po';
 
 let CreateRewardPage: CreateRewardAppPage;
 Before( () => {
@@ -73,7 +73,7 @@ Given(/^9_that I am on the reward creation page.$/, async () => {
 
 When(/^9_I click on redemption type.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  // waiting for category field
+  // waiting for redemption type
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(2)), 6000 );
   await element.all(by.css('div.mat-select-trigger')).get(2).click();
 });
@@ -87,6 +87,7 @@ Then(/^9_I should see four options.$/, async () => {
 Given(/^10_that I am on the survey creation page.$/, async () => {
   await CreateRewardPage.navigateToRewardCreate();
   await browser.sleep(3000);
+  // making the position header absolute so it will not obstruct element
   await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
   // browser.sleep(3000);
 });
@@ -98,7 +99,7 @@ When(/^10_I click on the user upload button.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.className('mat-radio-ripple mat-ripple')).get(4)), 6000);
   // getting the element finder for the radio button for user upload
   const elementRadioButton: ElementFinder = element.all(by.css('div.mat-radio-outer-circle')).get(4);
-  browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
+  await browser.executeScript('arguments[0].scrollIntoView(true);', elementRadioButton.getWebElement()).then(function anon(): void {
     elementRadioButton.click();
   });
 });

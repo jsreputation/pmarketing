@@ -170,7 +170,7 @@ describe('AppComponent', () => {
 
   describe('onInit', () => {
     it('should open dialog on init and saveUserAccessToken', () => {
-      const notificationService = TestBed.get(NotificationService);
+      const notificationService = TestBed.get<NotificationService>(NotificationService);
       const dialog = TestBed.get(MatDialog);
 
       const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);

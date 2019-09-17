@@ -41,9 +41,9 @@ commands:
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
-              if [ $APP == 'blackcomb' ]
+              if [ $APP == 'blackcomb' ] || [ $APP == 'candyland-uat' ]
               then
-                APIHOST="https://api.whistler.perxtech.org"
+                APIHOST="https://api-pru1.uat.whistler.perxtech.io"
               else
                 APIHOST="https://api.perxtech.io"
               fi

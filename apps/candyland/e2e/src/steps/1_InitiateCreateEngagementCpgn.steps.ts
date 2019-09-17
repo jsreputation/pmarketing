@@ -1,15 +1,12 @@
 import { Before, Given, Then, When, setDefaultTimeout } from 'cucumber';
 import { expect } from 'chai';
 import { element, by, protractor, browser } from 'protractor';
-import { DashboardAppPage, EngagementAppPage, LoginAppPage } from '../pages/shakeTheTreeFlow.po';
+import { DashboardAppPage, EngagementAppPage, LoginAppPage } from '../pages/candylandApp.po';
 
 let DashboardPage: DashboardAppPage;
 let EngagementPage: EngagementAppPage;
 let LoginApp: LoginAppPage;
-// login credentials
-const testAccountId: number = 2;
-const testUserAccount: string = 'Admin_2';
-const testPW: string = 'asdfjkl;';
+
 // setting step timeout time
 setDefaultTimeout(60 * 1000);
 Before( () => {
@@ -24,24 +21,24 @@ Given(/^1_I am on the dashboard page.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // login process
   await LoginApp.navigateToLogin();
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('input')).get(0)), 5000);
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginApp.accountIDField()), 5000);
   // entering correct account id
-  await element.all(by.css('input')).get(0).sendKeys(testAccountId);
+  await LoginApp.accountIDField().sendKeys(LoginApp.getAccountId());
   // entering correct testUserAccount
-  await element.all(by.css('input')).get(1).sendKeys(testUserAccount);
+  await LoginApp.userAccountField().sendKeys(LoginApp.getUserAccount());
   // entering correct pw
-  await element.all(by.css('input')).get(2).sendKeys(testPW);
-  // clicking on the login button
-  // await element.all(by.css('cl-button')).get(0).click();
-  await element.all(by.css('input')).get(0).sendKeys(protractor.Key.ENTER);
+  await LoginApp.pwField().sendKeys(LoginApp.getPassword());
+   // pressing the enter key on the accountID field to log in
+  await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
   await DashboardPage.navigateToDashboard();
-  await browser.sleep(8000);
+  await browser.sleep(5000);
   await DashboardPage.navigateToDashboard();
   // walk around for the walk me widget
   await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
   await element(by.className('trg-499259')).click();
-  await browser.sleep(8000);
+  await browser.sleep(5000);
   await DashboardPage.navigateToDashboard();
   await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
   await element(by.className('walkme-custom-balloon-button-text')).click();

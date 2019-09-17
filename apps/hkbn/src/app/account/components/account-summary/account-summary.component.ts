@@ -24,7 +24,7 @@ export class AccountSummaryComponent implements OnChanges {
     lastName: new FormControl(),
     phone: new FormControl(''),
     email: new FormControl(),
-    pass: new FormControl(),
+    pass: new FormControl('*'.repeat(10)),
     customProperties: new FormGroup({
       subscribe_notification: new FormControl(false)
     })
