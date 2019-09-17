@@ -14,17 +14,6 @@ import { DataTransferService } from 'src/app/services/data-transfer.service';
 export class AccountSummaryComponent implements OnChanges, OnInit {
   @Input() public accountData: IProfile;
 
-  constructor(
-    public router: Router,
-    private profileService: ProfileService,
-    private ntfs: NotificationService,
-    private dataTransfer: DataTransferService
-  ) { }
-
-  public ngOnInit(): void {
-    this.dataTransfer.newxUpdateData(null);
-  }
-  
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
@@ -35,6 +24,17 @@ export class AccountSummaryComponent implements OnChanges, OnInit {
       subscribe_notification: new FormControl(false)
     })
   });
+
+  constructor(
+    public router: Router,
+    private profileService: ProfileService,
+    private ntfs: NotificationService,
+    private dataTransfer: DataTransferService
+  ) { }
+
+  public ngOnInit(): void {
+    this.dataTransfer.newxUpdateData(null);
+  }
 
   public ngOnChanges(): void {
     if (this.accountData) {
