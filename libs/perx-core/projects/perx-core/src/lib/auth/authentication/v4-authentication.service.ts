@@ -252,11 +252,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public requestVerificationToken(phone?: string): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.get<void>(
+        (profile: IProfile) =>
+          this.http.get<void>(
             `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? '?phone=' + phone : ''}`
-          );
-        }
+          )
+
       )
     );
   }
@@ -265,12 +265,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<void>(
-            `${this.customersEndPoint}/${profile.id}/change_phone`,
-            {
-              phone: changePhoneData.phone,
-              confirmation_token: changePhoneData.otp
-            }
-          )
+          `${this.customersEndPoint}/${profile.id}/change_phone`,
+          {
+            phone: changePhoneData.phone,
+            confirmation_token: changePhoneData.otp
+          }
+        )
       )
     );
   }
@@ -279,13 +279,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<IMessageResponse>(
-            `${this.customersEndPoint}/${profile.id}/change_password`,
-            {
-              old_password: changePasswordData.oldPassword,
-              password: changePasswordData.newPassword,
-              password_confirmation: changePasswordData.passwordConfirmation,
-              confirmation_token: changePasswordData.otp
-            })
+          `${this.customersEndPoint}/${profile.id}/change_password`,
+          {
+            old_password: changePasswordData.oldPassword,
+            password: changePasswordData.newPassword,
+            password_confirmation: changePasswordData.passwordConfirmation,
+            confirmation_token: changePasswordData.otp
+          })
       )
     );
   }
