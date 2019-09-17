@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
@@ -23,6 +23,8 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService
   ) {
     this.redirectAfterLogin = this.redirectAfterLogin.bind(this);
+    this.login = this.login.bind(this);
+    this.errorHandling = this.errorHandling.bind(this);
   }
 
   public ngOnInit(): void {
@@ -47,6 +49,9 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
   }
 
   public login(val: ISignUpData): Observable<any> {
+    if (!val) {
+      return of(null);
+    }
     return this.authenticationService.login(val.phone, val.password);
   }
 
