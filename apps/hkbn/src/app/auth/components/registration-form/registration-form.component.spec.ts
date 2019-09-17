@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationFormComponent } from './registration-form.component';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { countryCodes } from 'src/assets/mock/country-code';
 
 describe('RegistrationFormComponent', () => {
   let component: RegistrationFormComponent;
@@ -24,6 +25,7 @@ describe('RegistrationFormComponent', () => {
         ErrorHandlerModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
+        MatSelectModule
       ],
       declarations: [RegistrationFormComponent]
     })
@@ -33,6 +35,7 @@ describe('RegistrationFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationFormComponent);
     component = fixture.componentInstance;
+    component.countryCodes = countryCodes;
     fixture.detectChanges();
   });
 
@@ -56,7 +59,8 @@ describe('RegistrationFormComponent', () => {
       password: 'qwerty123',
       password_confirmation: 'qwerty123',
       terms: true,
-      promo: true
+      promo: true,
+      code: 11
     });
     fixture.detectChanges();
     component.submit();
