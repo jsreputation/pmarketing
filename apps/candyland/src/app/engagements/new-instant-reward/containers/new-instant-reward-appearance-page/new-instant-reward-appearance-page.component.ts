@@ -48,7 +48,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   }
 
   public save(): void {
-    this.instantRewardsService.createRewardGame(this.formReward.value)
+    this.instantRewardsService.createRewardGame((this.formReward.value as IInstantRewardForm))
       .pipe(untilDestroyed(this))
       .subscribe((data: IResponseApi<IEngagementApi>) => {
         this.availableNewEngagementService.setNewEngagement(data);
@@ -103,7 +103,7 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      typeImage: ['2', [Validators.required]],
+      banner: ['reward', [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
       buttonText: ['See my rewards', [
