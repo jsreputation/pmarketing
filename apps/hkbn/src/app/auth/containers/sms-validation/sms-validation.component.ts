@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable, throwError, of } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
