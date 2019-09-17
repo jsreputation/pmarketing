@@ -3,8 +3,8 @@
   <div class="full-with page-header">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
-        <mat-form-field class="messages-input">
-          <input type="text"  matInput formControlName="name">
+        <mat-form-field class="pagetitle-input" floatLabel="never">
+          <input type="text"  matInput formControlName="name" placeholder="Enter title here">
           <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
           <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
           <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="game-actions">
-      <cl-button [classList]="'third'"
+      <cl-button [classList]="'secondary'"
                  class="btn-right_padding"
                  (click)="comeBack()"
 
@@ -161,7 +161,7 @@
       </div>
       <div class="plugin-block">
         <perx-core-shake-tree class="mobile-preview-plugin"
-                              [treeImg]="getImgLink(treeType, 'assets/images/tree/full_tree_1.png')"
+                              [treeImg]="getImgLink(treeType, 'assets/images/games/tree/full_tree_1.png')"
                               [giftImg]="getImgLink(giftBox, 'assets/images/gifts/state1.png')"
                               [waitingManImg]="''"
                               [waitingManCelebrateImg]="''"

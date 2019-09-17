@@ -7,7 +7,7 @@ import {
   VouchersModule,
   PuzzlesModule,
   StampModule,
-  CampaignService,
+  ICampaignService,
   StampService,
   IStampCard,
   StampCardState
@@ -62,7 +62,7 @@ describe('PuzzleComponent', () => {
         StampModule,
       ],
       providers: [
-        { provide: CampaignService, useValue: campaignServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub }
       ]
     })

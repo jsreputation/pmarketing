@@ -16,79 +16,94 @@ commands:
     description: cuts app name out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup app var
           command: |
             SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             CUT=-$TARGET_ENV-$SEM_VER
             APP=${CIRCLE_TAG%"$CUT"}
             echo "export APP=$APP" >> $BASH_ENV
+            echo $APP
   get_env_from_tag:
     description: cuts destination environment out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup env var
           command: |
             TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
+            echo $TARGET_ENV
   set_apihost:
     description: based on environment set the APIHOST
     steps:
       - run:
-          name: Setup APIHOST vars
+          name: Setup APIHOST var
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
-              echo 'export APIHOST="https://api.perxtech.io"' >> $BASH_ENV
-            fi
-            if [ $TARGET_ENV == 'production' ]
+              if [ $APP == 'blackcomb' ] || [ $APP == 'candyland-uat' ]
+              then
+                APIHOST="https://api-pru1.uat.whistler.perxtech.io"
+              else
+                APIHOST="https://api.perxtech.io"
+              fi
+            elif [ $TARGET_ENV == 'production' ]
             then
               if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
               then
-                echo 'export APIHOST="https://api-hsbc.perxtech.net"' >> $BASH_ENV
+                APIHOST="https://api-hsbc.perxtech.net"
               else
-                echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+                APIHOST="https://api.perxtech.net"
               fi
             fi
+            echo "export APIHOST=$APIHOST" >> $BASH_ENV
+            echo $APIHOST
   set_preauth:
     description: based on client set the PREAUTH
     steps:
       - run:
-          name: Setup PREAUTH vars
+          name: Setup PREAUTH var
           command: |
-            echo 'export PREAUTH="false"' >> $BASH_ENV
-            if [ $APP == 'prudential' ]
+            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ]
             then
-              echo 'export PREAUTH="true"' >> $BASH_ENV
+              PREAUTH="true"
+            else
+              PREAUTH="false"
             fi
-            if [ $APP == 'digi' ]
-            then
-              echo 'export PREAUTH="true"' >> $BASH_ENV
-            fi
+            echo "export PREAUTH=$PREAUTH" >> $BASH_ENV
+            echo $PREAUTH
   set_basehref:
     description: based on client set deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup BASE_HREF var
           command: |
-            echo 'export BASE_HREF="/"' >> $BASH_ENV
-
             if [ $APP == 'hsbc' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/collect2/"' >> $BASH_ENV
-            fi
-            if [ $APP == 'hsbc-rewards' ]
+              BASE_HREF="/site/hsbc/collect2/"
+            elif [ $APP == 'hsbc-rewards' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/rewardscatalogue/"' >> $BASH_ENV
+              BASE_HREF="/site/hsbc/rewardscatalogue/"
+            else
+              BASE_HREF="/"
             fi
+            echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
+            echo $BASE_HREF
 
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup ISWHISTLER var
           command: |
-            echo 'export ISWHISTLER="false"' >> $BASH_ENV
+            if [ $APP == 'blackcomb' ]
+            then
+              ISWHISTLER="true"
+            else
+              ISWHISTLER="false"
+            fi
+            echo 'export ISWHISTLER=$ISWHISTLER' >> $BASH_ENV
+            echo $ISWHISTLER
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -135,6 +150,7 @@ jobs:
       - run:
           name: Build docker image
           command: |
+            echo $BASH_ENV
             echo "APP: ${APP}"
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"

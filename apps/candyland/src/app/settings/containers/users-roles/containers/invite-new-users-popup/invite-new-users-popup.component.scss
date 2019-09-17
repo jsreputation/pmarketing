@@ -4,16 +4,16 @@
   &-content {
     position: relative;
     flex: 1;
-    padding: 0 3.2rem;
+    padding: 0 $horizontal-padding;
   }
 
   &-top-row {
-    margin-bottom: 3.2rem;
+    margin-bottom: $vertical-padding;
   }
 
   &-section {
     margin-bottom: 1.6rem;
-    padding: 2.4rem 2rem;
+    padding: ($vertical-padding * 0.75) 2rem;
     border-radius: 4px;
     background-color: $simple-light-gray;
 
@@ -23,14 +23,10 @@
     }
 
     & > * {
-      margin-bottom: 2.4rem;
+      margin-bottom: ($vertical-padding * 0.75);
 
       &.invite-new-users-top-row {
         margin: 0.8rem 0 1.2rem;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
       }
     }
   }
@@ -44,6 +40,10 @@
       padding: 0 1.2px;
       text-align: center;
     }
+  }
+
+  &-section > *:last-child {
+    margin-bottom: 0;
   }
 
   &-label {

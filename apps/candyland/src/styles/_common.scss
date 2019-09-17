@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 html, body {
@@ -14,16 +15,8 @@ p {
   margin: 0;
 }
 
-button {
-  outline: none;
-}
-
 .w-100 {
   width: 100% !important;
-}
-
-.m-w-100 {
-  max-width: 100% !important;
 }
 
 .m-0 {
@@ -32,16 +25,6 @@ button {
 
 .text-center {
   text-align: center !important;
-}
-
-.btn-transparent {
-  display: flex;
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  cursor: pointer;
 }
 
 .flex {
@@ -75,6 +58,15 @@ button {
   }
 }
 
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-infix {
+  min-width: 0;
+  flex-basis: 180px;
+}
+
 .mat-toolbar-log.mat-toolbar-single-row {
   height: $header-height-base;
 }
@@ -86,29 +78,71 @@ button {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 $horizontal-content-padding;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  padding: 0 $horizontal-padding;
   position: fixed;
   top: 0;
   z-index: 99;
-  background: #fff;
+  background: $white-color;
   width: calc(100% - 17rem);
+
+  @include mat-elevation(4);
 
   &.full-with {
     background: $white-color;
     min-height: $header-height-base;
   }
+
+  .pagetitle-input {
+    @include typo-h5;
+
+    input {
+      color: $base-font-color;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0;
+      transition: margin 0.05s ease-in;
+
+      .mat-form-field-underline {
+        bottom: 0;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        @include typo-body2;
+
+        text-align: right;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        background: $white-color;
+        display: inline-block;
+        margin-top: 0;
+        width: auto;
+        left: auto;
+        right: -1px;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+        overflow: visible;
+
+        &::before {
+          content: "";
+          width: 1em;
+          background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+          position: absolute;
+          top: 0;
+          right: 100%;
+          bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 .title {
-  font-size: 2.6rem;
+  @include typo-h5;
+
   margin: auto 0;
-  font-weight: 500;
-  font-style: normal;
   font-stretch: normal;
-  line-height: 1.04;
-  letter-spacing: normal;
-  color: $there-color;
+  color: $base-font-color;
 }
 
 .sub-title {
@@ -123,10 +157,14 @@ button {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  padding: $vertical-content-padding $horizontal-content-padding;
+  padding: $vertical-padding $horizontal-padding;
 
-  &.no-padding-top {
+  &.pt-0 {
     padding-top: 0;
+  }
+
+  &.pb-0 {
+    padding-bottom: 0;
   }
 
   .mat-stepper-horizontal {
@@ -148,21 +186,12 @@ button {
   align-items: flex-start;
 
   & > div {
-    margin-right: 2.4rem;
+    margin-right: ($horizontal-padding * 0.75);
 
     &:last-of-type {
       margin-right: 0;
     }
   }
-}
-
-.mat-form-field {
-  width: 100%;
-}
-
-.mat-form-field-infix {
-  min-width: 0;
-  flex-basis: 180px;
 }
 
 .mobile {
@@ -195,7 +224,7 @@ button {
   }
 
   &-preview-sub-headline {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     margin-top: 0.8rem;
     color: rgba(51, 51, 51, 0.5);
   }
@@ -215,7 +244,7 @@ button {
     border-radius: 4px;
     background: #ff1c1c;
     color: $white-color;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
     min-height: 4rem;
@@ -285,12 +314,12 @@ cl-game-mobile-preview, .tabs-component {
     font-size: 1.6rem;
     line-height: 1.06;
     color: $secondary-color;
-    margin: 2.4rem 0 1.6rem 0;
+    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
   }
 
   &-graphic, &-button {
     display: block;
-    margin-top: 1.6rem;
+    margin-top: ($vertical-padding * 0.5);
   }
 
   &-actions {
@@ -308,21 +337,12 @@ cl-game-mobile-preview, .tabs-component {
   }
 }
 
-.name-control-title {
-  font-weight: 500;
-
-  input {
-    font-size: 2.2rem;
-    color: $there-color;
-  }
-
-  .mat-form-field-infix {
-    border: 0;
-  }
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.75em;
 }
 
 .control-input {
-  font-size: 1.4rem !important;
+  font-size: $base-font-size !important;
   width: 100%;
 }
 
@@ -393,14 +413,8 @@ cl-game-mobile-preview, .tabs-component {
   position: relative;
 }
 
-.dashboard-content {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-  }
-}
-
 .tabs-filter:first-child .tabs {
-  margin-bottom: 3.2rem;
+  margin-bottom: $vertical-padding;
 }
 
 .tabs-filter + .table-filter .mat-form-field-wrapper {
@@ -408,7 +422,24 @@ cl-game-mobile-preview, .tabs-component {
   padding-bottom: 0;
 }
 
-.section-stickyheader {
-  position: relative;
-  padding-top: $header-height-base;
+.no-data {
+  &-img {
+    display: block;
+    width: 100%;
+    max-width: 35rem;
+    height: auto;
+    margin: 0 auto $vertical-padding;
+  }
+
+  &-title {
+    @include typo-h6;
+
+    color: $base-font-color;
+  }
+
+  &-text {
+    @include typo-body2;
+
+    color: $base-font-color;
+  }
 }

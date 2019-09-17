@@ -1,4 +1,4 @@
-@import "../../../../styles/variables";
+@import "variables";
 
 :host {
   display: flex;
@@ -12,16 +12,16 @@
   }
 
   &-title {
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 0.9;
-    color: #333333;
-    margin-bottom: 5.4rem;
+    @include typo-h4;
+
+    color: $base-font-color;
+    margin-bottom: $vertical-padding;
   }
 
   &-control {
-    padding-bottom: 3.5rem;
-    font-size: 1.6rem;
+    @include typo-input;
+
+    padding-bottom: $vertical-padding;
 
     mat-form-field {
       width: 100%;

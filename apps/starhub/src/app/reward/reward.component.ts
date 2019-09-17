@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RewardsService, NotificationService } from '@perx/core';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-reward',
@@ -13,13 +14,15 @@ import { IReward } from '@perx/core';
 export class RewardComponent implements OnInit {
   public rewardId: number;
   public isButtonEnable: boolean = true;
+  public isRewardsDetailsFetched: boolean = false;
 
   constructor(
     private location: Location,
     private router: Router,
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private analyticsService: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
@@ -31,6 +34,16 @@ export class RewardComponent implements OnInit {
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
+        if (reward.categoryTags && reward.categoryTags.length > 0) {
+          const category = reward.categoryTags[0].title;
+          this.analyticsService.addEvent({
+            pageName: `rewards:discover:${category}:${reward.name}`,
+            pageType: PageType.detailPage,
+            siteSectionLevel2: 'rewards:discover',
+            siteSectionLevel3: `rewards:discover:${category}:${reward.name}`
+          });
+        }
+        // this.analyticsService.addEvent({});
         // if there is no more personnal inventory for this user disable the button
         if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
           this.isButtonEnable = false;
@@ -51,6 +64,7 @@ export class RewardComponent implements OnInit {
   }
 
   public setButton(isEnable: boolean): void {
+    this.isRewardsDetailsFetched = true;
     this.isButtonEnable = isEnable && this.isButtonEnable;
   }
 }

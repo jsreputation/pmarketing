@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { IChangePasswordData } from '@perx/core';
 
-const mockOtp = '8888';
-
 @Component({
   selector: 'hkbn-change-password-form',
   templateUrl: './change-password-form.component.html',
@@ -15,10 +13,9 @@ export class ChangePasswordFormComponent {
   @Output() public passwordChange: EventEmitter<IChangePasswordData> = new EventEmitter<IChangePasswordData>();
 
   public changePasswordForm: FormGroup = new FormGroup({
-    oldPassword: new FormControl(null, [Validators.required]),
-    otp: new FormControl(mockOtp),
-    newPassword: new FormControl(null, [Validators.required]),
-    passwordConfirmation: new FormControl(null, [Validators.required])
+    oldPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    newPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    passwordConfirmation: new FormControl(null, [Validators.required, Validators.minLength(6)])
   }, [HkbnValidators.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   public submit(): void {

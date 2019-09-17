@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import {
   CampaignModule,
   GameModule,
-  GameService,
+  IGameService,
   IVoucherService,
   GameType,
   defaultTree,
@@ -20,12 +20,13 @@ import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
+import { Type } from '@angular/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let router: Router;
-  let gameService: GameService;
+  let gameService: IGameService;
 
   const fakeGame: IGame = {
     id: 1,
@@ -65,7 +66,7 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    gameService = TestBed.get(GameService);
+    gameService = TestBed.get(IGameService as Type<IGameService>);
     fixture.detectChanges();
   });
 

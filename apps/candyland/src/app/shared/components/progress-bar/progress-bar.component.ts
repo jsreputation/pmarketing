@@ -4,13 +4,15 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   selector: 'cl-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProgressBarComponent {
   @Input() public current: number;
   @Input() public total: number;
 
   public get progress(): number {
-    return this.current / this.total * 100;
+    // TODO: delete when get total from API
+    const total = this.total >= this.current ? this.total : this.current;
+    return this.current / total * 100;
   }
 }

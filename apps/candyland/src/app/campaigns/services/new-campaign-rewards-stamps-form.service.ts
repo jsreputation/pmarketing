@@ -17,13 +17,13 @@ export class NewCampaignRewardsStampsFormService {
         ])
       }),
       limits: this.fb.group({
-        enableStampCard: [true],
+        enableStampCard: [false],
         stampCard: this.fb.group({
           perCampaign: [null, [Validators.max(1000)]],
           perUser: [null, [Validators.max(1000)]],
           duration: []
         }),
-        enableStamp: [true],
+        enableStamp: [false],
         stamp: this.fb.group({
           perUser: [null, [Validators.max(1000)]],
           duration: []
@@ -69,7 +69,7 @@ export class NewCampaignRewardsStampsFormService {
               {
                 value: {
                   id: 1,
-                  image: 'assets/images/mask-group.png',
+                  image: 'assets/images/placeholders/mask-group.png',
                   name: 'Free Coffee',
                   type: 'Starbucks',
                   current: 500,
@@ -80,7 +80,7 @@ export class NewCampaignRewardsStampsFormService {
               {
                 value: {
                   id: 2,
-                  image: 'assets/images/mask-group.png',
+                  image: 'assets/images/placeholders/mask-group.png',
                   name: 'Free Coffee 2',
                   type: 'Starbucks',
                   current: 500,
@@ -99,7 +99,7 @@ export class NewCampaignRewardsStampsFormService {
               {
                 value: {
                   id: 1,
-                  image: 'assets/images/mask-group.png',
+                  image: 'assets/images/placeholders/mask-group.png',
                   name: 'Free Coffee',
                   type: 'Starbucks',
                   current: 500,
@@ -109,7 +109,7 @@ export class NewCampaignRewardsStampsFormService {
               {
                 value: {
                   id: 2,
-                  image: 'assets/images/mask-group.png',
+                  image: 'assets/images/placeholders/mask-group.png',
                   name: 'Free Coffee 2',
                   type: 'Starbucks',
                   current: 500,

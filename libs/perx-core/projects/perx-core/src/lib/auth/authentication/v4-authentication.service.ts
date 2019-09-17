@@ -1,6 +1,6 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap, catchError } from 'rxjs/operators';
+import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
@@ -17,18 +17,19 @@ import {
 } from '../authentication/models/authentication.model';
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
+import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 
-// interface IV4SignUpData {
-//   first_name?: string;
-//   last_name: string;
-//   middle_name?: string;
-//   phone: string;
-//   email?: string;
-//   birthday?: string;
-//   gender?: string;
-//   password: string;
-//   password_confirmation: string;
-// }
+interface IV4SignUpData {
+  first_name?: string;
+  last_name: string;
+  middle_name?: string;
+  phone: string;
+  email?: string;
+  birthday?: string;
+  gender?: string;
+  password: string;
+  password_confirmation: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +86,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
     return this.authenticateUser(user, pass, mechId, campaignId).pipe(
       tap(
         (res: ILoginResponse) => {
@@ -120,7 +121,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     });
   }
 
-  public autoLogin(): Observable<ILoginResponse> {
+  public autoLogin(): Observable<any> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
@@ -203,40 +204,38 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return throwError('Temporarily disabled');
-    // return this.http.get<IMessageResponse>(
-    //   this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
-    //     tap( // Log the result or error
-    //       data => console.log(data),
-    //       error => console.log(error)
-    //     )
-    //   );
+    return this.http.get<IMessageResponse>(
+      this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
-  // used for signup function, don't remove
-  // private static signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
-  //   const res = {
-  //     last_name: data.lastName,
-  //     first_name: data.firstName,
-  //     birthday: data.birthDay,
-  //     ...data
-  //   };
-  //   res.lastName = undefined;
-  //   res.firstName = undefined;
-  //   return res;
-  // }
+
+  private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
+    const res = {
+      last_name: data.lastName,
+      first_name: data.firstName,
+      birthday: data.birthDay,
+      ...data
+    };
+    res.lastName = undefined;
+    res.firstName = undefined;
+    return res;
+  }
 
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
-    return throwError('Temporarily disabled');
-    // const profileV4 = V4AuthenticationService.signUpDataToV4SignUpData(profile);
-    // return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
-    //   .pipe(
-    //     tap( // Log the result or error
-    //       data => console.log(data),
-    //       error => console.log(error)
-    //     ),
-    //     map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
-    //   );
+    const profileV4 = this.signUpDataToV4SignUpData(profile);
+    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        ),
+        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+      );
   }
 
   // @ts-ignore
@@ -250,14 +249,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       );
   }
 
+  // @ts-ignore
   public requestVerificationToken(): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.get<void>(
+        (profile: IProfile) => this.http.get<void>(
             `${this.customersEndPoint}/${profile.id}/request_verification_token`
-          );
-        }
+          )
       )
     );
   }
@@ -265,17 +263,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public changePhone(changePhoneData: IChangePhoneData): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<void>(
+        (profile: IProfile) => this.http.patch<void>(
             `${this.customersEndPoint}/${profile.id}/change_phone`,
-            null,
             {
-              headers: {
-                phone: changePhoneData.phone,
-                confirmation_token: changePhoneData.otp
-              }
-            });
-        }
+              phone: changePhoneData.phone,
+              confirmation_token: changePhoneData.otp
+            }
+          )
       )
     );
   }
@@ -283,16 +277,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<IMessageResponse>(
+        (profile: IProfile) => this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
               old_password: changePasswordData.oldPassword,
               password: changePasswordData.newPassword,
               password_confirmation: changePasswordData.passwordConfirmation,
               confirmation_token: changePasswordData.otp
-            });
-        }
+            })
       )
     );
   }

@@ -7,29 +7,53 @@ import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
+import { RewardComponent } from './reward/reward.component';
+import { TncComponent } from './tnc/tnc.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'loading' },
-      { path: 'wallet', component: HomeComponent },
-      { path: 'history', component: HistoryComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'redeem/:id', component: RedeemComponent },
-      { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
-      { path: 'shake/:id', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
-      { path: 'stamp/:id', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
-      { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
+      { path: 'wallet', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
+      { path: 'account', component: AccountComponent, canActivate: [ProtectedGuard] },
+      { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
+      { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
+      {
+        path: 'tap/:id',
+        loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'shake/:id',
+        loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'stamp/:id',
+        loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'survey/:id',
+        loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule),
+        canActivate: [ProtectedGuard]
+      },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        canActivate: [ProtectedGuard]
       },
-      { path: 'loading', component: LoadingComponent }
+      { path: 'reward-detail', component: RewardComponent, canActivate: [ProtectedGuard] },
+      { path: 'loading', component: LoadingComponent },
+      { path: 'tnc', component: TncComponent },
+      { path: 'contact-us', component: ContactUsComponent }
     ]
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/wallet' }
 ];
 

@@ -54,11 +54,12 @@ export class GroupComponent implements OnChanges {
   }
 
   public calculatePoints(): number {
+    if (!this.payload) {
+      return 0;
+    }
     const pointsTrackerValues = Object.values(this.pointsTracker);
     const subQuestionLength = this.payload.questions.length;
-    const totalPoint = pointsTrackerValues.reduce((sum, point) => {
-      return sum + point;
-    }, 0);
+    const totalPoint = pointsTrackerValues.reduce((sum, point) => sum + point, 0);
     return totalPoint / subQuestionLength;
   }
 

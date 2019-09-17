@@ -3,7 +3,7 @@
     [rewardId]="rewardId"
     (isButtonEnabled)="setButton($event)"
   ></app-reward-detail>
-  <div class="button-area">
-    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save()">Save to my rewards</button>
+  <div *ngIf="isRewardsDetailsFetched" class="button-area">
+    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save()">Save to My Rewards</button>
   </div>
 </div>

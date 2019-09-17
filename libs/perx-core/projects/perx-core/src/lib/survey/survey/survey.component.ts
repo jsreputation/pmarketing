@@ -32,8 +32,10 @@ export class SurveyComponent implements OnInit {
     if (this.data$) {
       this.data$.subscribe(data => {
         this.data = data;
-        this.totalLength.emit(this.data.questions.length);
-        this.currentPointer.emit(0);
+        if (this.data) {
+          this.totalLength.emit(this.data.questions.length);
+          this.currentPointer.emit(0);
+        }
       });
     }
   }
@@ -49,16 +51,16 @@ export class SurveyComponent implements OnInit {
 
   public updateParent(): void {
     const currentPoint = this.calculatePoints();
-    const totalQuestion = this.data.questions.length;
-    this.totalLength.emit(totalQuestion);
-    this.currentPointer.emit(currentPoint);
+    const totalQuestion = this.data && this.data.questions.length;
+    if (this.data) {
+      this.totalLength.emit(totalQuestion);
+      this.currentPointer.emit(currentPoint);
+    }
     if (currentPoint >= totalQuestion) {
-      const answers = Object.entries(this.answersTracker).map(([id, answer]) => {
-        return {
+      const answers = Object.entries(this.answersTracker).map(([id, answer]) => ({
           question_id: id,
           content: answer.content
-        };
-      });
+        }));
       this.surveyDone.emit(answers);
     }
   }
@@ -72,8 +74,6 @@ export class SurveyComponent implements OnInit {
   }
 
   public calculatePoints(): number {
-    return Object.values(this.pointsTracker).reduce((sum, point) => {
-      return sum + point;
-    }, 0);
+    return Object.values(this.pointsTracker).reduce((sum, point) => sum + point, 0);
   }
 }

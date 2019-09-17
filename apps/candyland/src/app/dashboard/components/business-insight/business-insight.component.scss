@@ -18,20 +18,13 @@
       font-size: 1.8rem;
       font-weight: 500;
       line-height: 1.5;
-      color: $there-color;
+      color: $base-font-color;
     }
 
     &__second {
       margin-top: 0.9rem;
-      font-size: 1.4rem;
-      color: $there-color;
+      font-size: $base-font-size;
+      color: $base-font-color;
     }
-  }
-
-  &-empty-content {
-    width: 100%;
-    height: 32.5rem;
-    background: url("/assets/images/dashboard-business/blank-chart-img.png") no-repeat;
-    background-position: center;
   }
 }

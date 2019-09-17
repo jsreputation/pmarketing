@@ -1,7 +1,9 @@
 @import "variables";
 
 .progress-bar {
-  width: 7.5rem;
+  width: 100%;
+  min-width: 7.5rem;
+  max-width: 15rem;
   position: relative;
   display: flex;
   flex-flow: column nowrap;
@@ -11,28 +13,25 @@
   &-block {
     position: relative;
     display: block;
-    height: 3px;
+    height: ($vertical-padding / 2);
     width: 100%;
     background: $progress-bar-background-color;
-    border-radius: 1rem;
+    border-radius: ($vertical-padding / 2);
     margin-bottom: 0.5rem;
+    overflow: hidden;
   }
 
   &-indicator {
     height: 100%;
     background: $progress-bar-color;
-    border-radius: 1rem;
+    border-radius: ($vertical-padding / 2) 0 0 ($vertical-padding / 2);
   }
 
   &-value {
+    @include typo-body2;
+
     text-align: justify;
     white-space: nowrap;
-    font-size: 1.4rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.29;
-    letter-spacing: normal;
     color: $dark-color;
   }
 }

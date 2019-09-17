@@ -20,14 +20,14 @@ export class RegistrationFormComponent {
       HkbnValidators.required,
       HkbnValidators.pattern('^[0-9]+$'),
       HkbnValidators.minLength(6),
-      HkbnValidators.maxLength(6)
+      HkbnValidators.maxLength(11)
       ]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
-    confirmPassword: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
+    password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     terms: new FormControl(null, [HkbnValidators.requiredTrue]),
     promo: new FormControl(null)
-  }, [HkbnValidators.equalityValidator('password', 'confirmPassword')]);
+  }, [HkbnValidators.equalityValidator('password', 'password_confirmation')]);
 
   public submit(): void {
     if (this.registrationForm.invalid) {

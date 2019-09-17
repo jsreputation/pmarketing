@@ -43,11 +43,10 @@
   &-actions {
     display: flex;
     justify-content: flex-end;
-    padding: 1rem 3.2rem 3rem;
+    padding: 1rem $horizontal-padding 3rem;
 
     &.type-survey {
       padding: 0 4rem 3rem 4rem;
     }
   }
 }
-

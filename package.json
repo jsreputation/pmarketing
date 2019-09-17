@@ -2,6 +2,7 @@
   "name": "perx-microsites",
   "scripts": {
     "build": "lerna run build:lib && lerna run build -- ",
+    "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
     "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
@@ -32,12 +33,7 @@
     "backend/*"
   ],
   "devDependencies": {
-    "lerna": "^3.14.1",
-    "@types/chai": "^4.2.0",
-    "@types/cucumber": "^4.0.7",
-    "protractor": "^5.4.2",
-    "protractor-browser-logs": "^1.0.456",
-    "protractor-cucumber-framework": "^6.1.3"
+    "lerna": "^3.14.1"
 
-  }
+  } 
 }

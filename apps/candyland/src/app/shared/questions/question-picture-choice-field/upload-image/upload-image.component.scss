@@ -25,7 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     font-weight: 500;
     color: $primary-color;
 
@@ -42,7 +42,7 @@
 
   &-error-wrap {
     position: absolute;
-    bottom: -2.4rem;
+    bottom: -($vertical-padding * 0.75);
     left: 0;
     width: max-content;
   }
@@ -54,7 +54,7 @@
 
   &-type-wrap {
     position: absolute;
-    bottom: -2.4rem;
+    bottom: -($vertical-padding * 0.75);
     left: 0;
     width: max-content;
   }
@@ -64,23 +64,6 @@
   max-height: 100%;
   max-width: 100%;
   background: $simple-light-gray;
-
-  &-wrap {
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: $simple-light-gray;
-    position: relative;
-    cursor: pointer;
-
-    &:hover {
-      .image-clear {
-        opacity: 1;
-      }
-    }
-  }
 
   &-clear {
     opacity: 0;
@@ -105,5 +88,21 @@
       color: $dark-color;
     }
   }
-}
 
+  &-wrap {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $simple-light-gray;
+    position: relative;
+    cursor: pointer;
+
+    &-wrap:hover {
+      .image-clear {
+        opacity: 1;
+      }
+    }
+  }
+}

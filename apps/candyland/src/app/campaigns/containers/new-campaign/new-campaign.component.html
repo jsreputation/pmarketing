@@ -1,8 +1,8 @@
 <div class="page-header full-with" [formGroup]="form">
   <div class="game-title-wrap">
     <div class="control-input name-control name-control-title">
-      <mat-form-field class="messages-input">
-        <input type="text" matInput formControlName="name">
+      <mat-form-field class="pagetitle-input" floatLabel="never" >
+        <input type="text" matInput formControlName="name" placeholder="Enter title here">
         <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
         <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
         <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
@@ -10,24 +10,25 @@
     </div>
   </div>
   <div class="btn-group">
-    <cl-button classList="invert" routerLink="..">Cancel</cl-button>
-    <cl-button classList="third" routerLink="..">Save as a draft</cl-button>
+    <cl-button classList="tertiary" routerLink="..">Cancel</cl-button>
+    <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
     <cl-button *ngIf="!isLastStep"
                classList="primary"
-               [disable]="(getStepConditions(stepper.selectedIndex) | async) === 0"
-               (click)="goNext()">Next
+               (click)="goNext()">
+      Next
     </cl-button>
-    <cl-button *ngIf="isLastStep" classList="primary" (click)="openDialog()">Launch</cl-button>
+    <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
+    <cl-button *ngIf="isLastStep" classList="primary" (click)="save()">Launch</cl-button>
   </div>
 </div>
 
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step [completed]="getStepConditions(0) | async">
+    <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>Select engagement</ng-template>
       <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step [completed]="getStepConditions(1) | async">
+    <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
       <ng-container [ngSwitch]="campaign?.template?.attributes_type">
         <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"></cl-new-campaign-rewards-stamps-page>
@@ -36,7 +37,7 @@
         <cl-new-campaign-rewards-page *ngSwitchCase="'game'"></cl-new-campaign-rewards-page>
       </ng-container>
     </mat-step>
-    <mat-step [completed]="getStepConditions(2) | async">
+    <mat-step [completed]="getStepCondition(2)">
       <ng-template matStepLabel>Campaign Details</ng-template>
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>

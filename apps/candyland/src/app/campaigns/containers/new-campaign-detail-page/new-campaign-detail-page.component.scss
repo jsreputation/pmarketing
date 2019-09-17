@@ -6,4 +6,15 @@
   justify-content: flex-start;
 }
 
+.date-field {
+  position: relative;
 
+  &-error {
+    display: flex;
+    width: max-content;
+    flex-flow: row nowrap;
+    position: absolute;
+    font-size: 1.2rem;
+    bottom: -0.5rem;
+  }
+}

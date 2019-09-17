@@ -1,7 +1,7 @@
 @import "variables";
 
 :host {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
 }
 
 .dialog {
@@ -11,16 +11,16 @@
   flex-flow: column nowrap;
 
   ::ng-deep .mat-tab-header {
-    padding: 0 3.2rem !important;
+    padding: 0 $horizontal-padding !important;
   }
 
   &-content {
     flex: 1;
-    padding: 0 3.2rem !important;
+    padding: 0 $horizontal-padding !important;
   }
 
   &-header-wrap {
-    padding: 3.2rem 3.2rem 1rem;
+    padding: $vertical-padding $horizontal-padding 1rem;
     position: relative;
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
     justify-content: flex-start;
     align-items: center;
     font-family: $primary-font;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -94,7 +94,7 @@
   }
 
   &-tab-content {
-    padding: 3.5rem 3.2rem;
+    padding: 3.5rem $horizontal-padding;
   }
 
   &-content-title {
@@ -110,7 +110,7 @@
 
   &-actions {
     box-sizing: border-box;
-    padding: 3.2rem;
+    padding: $vertical-padding $horizontal-padding;
     width: 100%;
     display: flex;
     justify-content: flex-end;

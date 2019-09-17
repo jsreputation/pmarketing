@@ -34,9 +34,14 @@ interface IV4Reward {
   id: number;
   images?: IV4Image[];
   merchant_logo_url?: string;
+  category_tags?: {
+    id: number;
+    title: string;
+    parent: any;
+  }[];
 }
 
-interface IV4Voucher {
+export interface IV4Voucher {
   custom_fields: any;
   given_by: any;
   given_date: any;
@@ -103,6 +108,11 @@ export class V4VouchersService implements IVoucherService {
       redemptionTypeFinal = RedemptionType.txtCode;
     }
 
+    let categories: string[];
+    if (reward.category_tags) {
+      categories = reward.category_tags.map(c => c.title);
+    }
+
     return {
       id: v.id,
       rewardId: reward.id,
@@ -121,7 +131,8 @@ export class V4VouchersService implements IVoucherService {
         { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
       ],
       redemptionSuccessTxt,
-      redemptionSuccessImg
+      redemptionSuccessImg,
+      categories
     };
   }
 
@@ -181,9 +192,7 @@ export class V4VouchersService implements IVoucherService {
 
   public get(id: number, useCache: boolean = true): Observable<IVoucher> {
     if (useCache) {
-      const found = this.vouchers.find(v => {
-        return `${v.id}` === `${id}`;
-      });
+      const found = this.vouchers.find(v => `${v.id}` === `${id}`);
       if (found) {
         return of(found);
       }
@@ -250,9 +259,7 @@ export class V4VouchersService implements IVoucherService {
 
         return true;
       }),
-      map((_: IVoucher[]) => {
-        return newIssued;
-      })
+      map((_: IVoucher[]) => newIssued)
     );
   }
 

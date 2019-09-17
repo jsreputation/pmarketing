@@ -1,12 +1,11 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfileService, ProfileModule, AuthenticationService, ConfigModule } from '@perx/core';
-import { of, Observable } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {AccountComponent} from './account.component';
-import {DebugElement, Component} from '@angular/core';
+import { DebugElement, Component, Type } from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {DynamicCreateService} from '../shared/service/dynamic-create.service';
 import {MatListModule} from '@angular/material/list';
@@ -51,10 +50,8 @@ describe('AccountComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent, MockComponent],
       imports: [
-        ConfigModule.forRoot({}),
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([{
           path: 'login',
           component: MockComponent
@@ -79,7 +76,7 @@ describe('AccountComponent', () => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    authService = debugElement.injector.get(AuthenticationService);
+    authService = debugElement.injector.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 

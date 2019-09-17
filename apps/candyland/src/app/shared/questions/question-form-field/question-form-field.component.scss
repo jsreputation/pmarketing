@@ -8,7 +8,7 @@
     box-sizing: border-box;
     border-radius: 4px;
     border: solid 1px #d9dfe4;
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     position: relative;
 
     .wrap-drop-zone {
@@ -46,7 +46,7 @@
     margin: 0 -20px;
     padding: 20px 20px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
-    margin-top: 3.2rem;
+    margin-top: $vertical-padding;
   }
 
   &-btn-actions {
@@ -90,4 +90,3 @@ cl-question-form-field {
 .control-input, .nested-form-group {
   transition: 0.4s cubic-bezier(0.35, 0, 0.25, 1);
 }
-
