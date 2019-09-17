@@ -64,7 +64,7 @@ import { ErrorComponent } from './error/error.component';
     CongratsComponent,
     RewardPopupComponent,
     ExpireTimerComponent,
-    ErrorComponent
+    ErrorComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
