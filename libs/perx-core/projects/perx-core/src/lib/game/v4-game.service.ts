@@ -137,8 +137,7 @@ export class V4GameService implements IGameService {
         config = {
           ...defaultPinata(),
           stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
-          // TODO: Temporary workaround.
-          brokenImg: '', // dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
           breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
           nbTaps: 5
         };
@@ -223,10 +222,10 @@ export class V4GameService implements IGameService {
           }
           return games.map((game: Game): IGame => V4GameService.v4GameToGame(game));
         }),
-        catchError((err) => {
+        catchError((err) =>
           // rethrow error for subscriber to handle
-          return throwError(err);
-        })
+           throwError(err)
+        )
       );
   }
 }
