@@ -42,7 +42,7 @@
 
   &-error-wrap {
     position: absolute;
-    bottom: -2.4rem;
+    bottom: -($vertical-padding * 0.75);
     left: 0;
     width: max-content;
   }
@@ -54,7 +54,7 @@
 
   &-type-wrap {
     position: absolute;
-    bottom: -2.4rem;
+    bottom: -($vertical-padding * 0.75);
     left: 0;
     width: max-content;
   }
