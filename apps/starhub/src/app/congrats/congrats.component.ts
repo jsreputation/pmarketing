@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   IGameService,
   NotificationService,
-  Voucher
+  Voucher,
+  PopUpClosedCallBack
 } from '@perx/core';
 import {
   filter,
@@ -17,11 +18,12 @@ import { IPlayOutcome } from '@perx/core';
   templateUrl: './congrats.component.html',
   styleUrls: ['./congrats.component.scss']
 })
-export class CongratsComponent implements OnInit {
+export class CongratsComponent implements OnInit, PopUpClosedCallBack {
   public vouchers: Voucher[];
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private router: Router,
     private gameService: IGameService,
     private notificationService: NotificationService
   ) { }
@@ -49,7 +51,12 @@ export class CongratsComponent implements OnInit {
 
     this.notificationService.addPopup({
           title: 'Oh snap, you didn’t win.',
-          text: 'You can play the game till 20 Oct.'
+          text: 'You can play the game till 20 Oct.',
+          afterClosedCallBack: this
         });
+  }
+
+  public dialogClosed(): void {
+    this.router.navigateByUrl('/home/discover');
   }
 }
