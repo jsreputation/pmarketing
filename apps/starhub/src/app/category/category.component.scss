@@ -34,7 +34,7 @@ mat-toolbar {
   h1.catergory-title {
     color: #666666;
     font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin: 1rem 0;
   }
 
   .mat-card {
@@ -51,10 +51,9 @@ mat-toolbar {
         flex: 1;
 
         h1 {
-          font-size: 2rem;
-          font-weight: normal;
-          margin: 0;
+          font-size: 1.6rem;
           color: #666666;
+          font-weight: bold;
         }
 
         h2 {

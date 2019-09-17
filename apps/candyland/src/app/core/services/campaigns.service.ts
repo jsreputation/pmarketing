@@ -45,6 +45,9 @@ export class CampaignsService implements ITableService {
           delete response.data.links;
           delete response.data.attributes.goal;
           delete response.data.attributes.status;
+          delete response.data.attributes.created_at;
+          delete response.data.attributes.updated_at;
+          delete response.data.attributes.urn;
           return response;
         }),
         switchMap(data => this.campaignsHttpsService.createCampaign(data))

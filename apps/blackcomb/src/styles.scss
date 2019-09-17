@@ -6,12 +6,17 @@ html {
   font-size: 62.5%;
   font-family: Roboto, sans-serif;
   font-style: normal;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
+}
+
+.cdk-overlay-container .mat-primary {
+  background-color: #eb202f !important;
 }
 
 .actions-container {

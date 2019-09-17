@@ -5,7 +5,7 @@ import { ApiConfig } from '@cl-core/api-config';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
 
 const config: DatastoreConfig = {
-  baseUrl: ApiConfig.basePath,
+  baseUrl: ApiConfig.baseAPIPath,
   models: {
     groups: Groups,
     // comments: Comment,
