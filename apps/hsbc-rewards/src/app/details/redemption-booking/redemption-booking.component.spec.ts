@@ -3,7 +3,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, LocationsService, RewardsService, IReward, IVoucherService } from '@perx/core';
+import {
+  RewardsModule,
+  LocationModule,
+  VouchersModule,
+  ILoyalty,
+  LoyaltyService,
+  LocationsService,
+  RewardsService,
+  IReward,
+  IVoucherService
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
