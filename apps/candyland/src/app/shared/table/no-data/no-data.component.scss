@@ -1,7 +1,7 @@
-@import "./variables";
+@import "variables";
 
 :host {
-  padding: $vertical-content-padding;
+  padding: $vertical-padding;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -10,5 +10,5 @@
   z-index: 10;
   position: relative;
   max-width: 57rem;
-  margin: $vertical-content-padding auto;
+  margin: $vertical-padding auto;
 }
