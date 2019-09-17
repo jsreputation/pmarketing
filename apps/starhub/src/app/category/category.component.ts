@@ -9,6 +9,7 @@ import { SortingMode } from './category.model';
 import { map } from 'rxjs/operators';
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
 import { MacaronService, IMacaron } from '../services/macaron.service';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-category',
@@ -30,19 +31,32 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private activeRoute: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
     private zone: NgZone,
-    private macaronService: MacaronService
+    private macaronService: MacaronService,
+    private analytics: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
       this.selectedCategory = categoryName;
+      this.analytics.addEvent({
+        pageName: `rewards:discover:${categoryName}`,
+        pageType: PageType.sectionLanding,
+        siteSectionLevel2: 'rewards:discover',
+        siteSectionLevel3: `rewards:discover:${categoryName}`
+      });
       this.fetchRewards();
     } else {
       const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
       this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
+          this.analytics.addEvent({
+            pageName: `rewards:discover:${catalog.name}`,
+            pageType: PageType.sectionLanding,
+            siteSectionLevel2: 'rewards:discover',
+            siteSectionLevel3: `rewards:discover:${catalog.name}`
+          });
           return catalog.rewards;
         })
       );
