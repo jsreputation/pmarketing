@@ -5,13 +5,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from './../../config/config.module';
 import { RewardsService } from '../../rewards/rewards.service';
+import { of } from 'rxjs';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
   let fixture: ComponentFixture<QrcodeRedemptionComponent>;
 
   const rewardsServiceStub = {
-    getReward: () => { }
+    getReward: () => of()
   };
 
   beforeEach(async(() => {

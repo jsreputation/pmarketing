@@ -13,7 +13,7 @@ describe('PinService', () => {
   let service: PinService;
   let vouchersService: IVoucherService;
   const rewardsServiceStub = {
-    getReward: () => { }
+    getReward: () => of()
   };
 
   beforeEach(async(() => {

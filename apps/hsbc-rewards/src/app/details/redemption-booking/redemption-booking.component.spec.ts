@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, LocationsService, RewardsService, IReward } from '@perx/core';
+import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, LocationsService, RewardsService, IReward, IVoucherService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -38,6 +38,10 @@ describe('RedemptionBookingComponent', () => {
     getReward: () => of(mockReward)
   };
 
+  const vouchersServiceStub = {
+    reserveReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionBookingComponent],
@@ -56,7 +60,8 @@ describe('RedemptionBookingComponent', () => {
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: LocationsService, useValue: locationsServiceStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
       ]
     })
       .compileComponents();

@@ -8,12 +8,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model';
 import { ConfigModule } from '../../config/config.module';
 import { RewardsService } from '../../rewards/rewards.service';
+import { of } from 'rxjs';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
   const rewardsServiceStub = {
-    getReward: () => { }
+    getReward: () => of()
   };
 
   const mockRedeemedVoucherDetail: IVoucher = {
