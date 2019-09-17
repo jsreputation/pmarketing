@@ -16,12 +16,10 @@ export class PieComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       this.data.subscribe((data: IData) => {
-        this.ngxChartData = data.rows.map((row: (string | number)[]) => {
-          return {
+        this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
             name: row[0],
             value: row[1]
-          };
-        });
+          }));
       });
     }
   }

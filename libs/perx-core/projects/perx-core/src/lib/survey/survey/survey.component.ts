@@ -57,12 +57,10 @@ export class SurveyComponent implements OnInit {
       this.currentPointer.emit(currentPoint);
     }
     if (currentPoint >= totalQuestion) {
-      const answers = Object.entries(this.answersTracker).map(([id, answer]) => {
-        return {
+      const answers = Object.entries(this.answersTracker).map(([id, answer]) => ({
           question_id: id,
           content: answer.content
-        };
-      });
+        }));
       this.surveyDone.emit(answers);
     }
   }
@@ -76,8 +74,6 @@ export class SurveyComponent implements OnInit {
   }
 
   public calculatePoints(): number {
-    return Object.values(this.pointsTracker).reduce((sum, point) => {
-      return sum + point;
-    }, 0);
+    return Object.values(this.pointsTracker).reduce((sum, point) => sum + point, 0);
   }
 }

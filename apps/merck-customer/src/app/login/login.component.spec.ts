@@ -12,6 +12,7 @@ import {
   MatInputModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Type } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -75,8 +76,8 @@ describe('LoginComponent', () => {
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
-      AuthenticationService
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
     );
     const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
     const routerStub: Router = fixture.debugElement.injector.get(Router);

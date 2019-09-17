@@ -222,10 +222,10 @@ export class V4GameService implements IGameService {
           }
           return games.map((game: Game): IGame => V4GameService.v4GameToGame(game));
         }),
-        catchError((err) => {
+        catchError((err) =>
           // rethrow error for subscriber to handle
-          return throwError(err);
-        })
+           throwError(err)
+        )
       );
   }
 }
