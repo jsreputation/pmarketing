@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, switchMap } from 'rxjs/operators';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-sms-validation',
@@ -16,8 +18,11 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
   constructor(
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dataTransfer: DataTransferService,
+    private notificationService: NotificationService
   ) {
+    this.redirectAfterLogin = this.redirectAfterLogin.bind(this);
   }
 
   public ngOnInit(): void {
@@ -36,13 +41,24 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
   }
 
   public validate(code: string): void {
-    this.authenticationService.verifyOTP(this.identifier, code).subscribe(
-      () => {
-        this.router.navigate(['/']);
-      }
-    );
+    this.authenticationService.verifyOTP(this.identifier, code)
+      .pipe(switchMap(() => this.dataTransfer.updateData$))
+      .pipe(switchMap(this.login)).subscribe(this.redirectAfterLogin, this.errorHandling);
   }
 
+  public login(val: ISignUpData): Observable<any> {
+    return this.authenticationService.login(val.phone, val.password);
+  }
+
+  private errorHandling(): void {
+    this.notificationService.addPopup({
+      title: 'We could not reach the server',
+      text: 'Please try again soon'
+    });
+  }
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authenticationService.getInterruptedUrl() ? this.authenticationService.getInterruptedUrl() : 'home');
+  }
   public resendSms(): void {
     this.authenticationService.resendOTP(this.identifier).subscribe(() => {
     });

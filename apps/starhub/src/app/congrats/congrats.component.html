@@ -38,6 +38,6 @@
     </a>
   </div>
 </div>
-<div class="actions">
+<div *ngIf="vouchers && vouchers.length !== 0" class="actions">
   <a mat-flat-button color="primary" [routerLink]="[ '/home/vouchers']">View My Reward</a>
 </div>
