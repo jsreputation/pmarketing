@@ -42,7 +42,7 @@
             </mat-error>
           </div>
         </div>
-        <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
+        <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
       <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
@@ -58,7 +58,7 @@
     <!--channel type-->
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group [formControl]="channel.get('type')">
+        <mat-radio-group color="primary" [formControl]="channel.get('type')">
           <ng-container *ngFor="let type of config?.channelTypes">
             <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
           </ng-container>
@@ -96,7 +96,7 @@
           </div>
           <!--recurrence Settings-->
           <div class="card-row form-field">
-            <mat-checkbox [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
+            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
           </div>
           <!--recurrence-->
           <div class="card-row stretch" *ngIf="recurrence.enabled">
@@ -124,7 +124,7 @@
                   <label class="card-label">Repeat on</label>
                   <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
                     <ng-container *ngFor="let day of config?.days">
-                      <mat-checkbox [value]="day.value">
+                      <mat-checkbox color="primary" [value]="day.value">
                         <div>{{day.title}}</div>
                       </mat-checkbox>
                     </ng-container>
@@ -147,7 +147,7 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group aria-label="Select an option" [formControl]="audience.get('type')">
+        <mat-radio-group color="primary" aria-label="Select an option" [formControl]="audience.get('type')">
           <mat-radio-button [value]="'none'">No audience</mat-radio-button>
           <mat-radio-button [value]="'upload'">Upload an audience list</mat-radio-button>
           <mat-radio-button [value]="'select'">Select an audience list</mat-radio-button>
