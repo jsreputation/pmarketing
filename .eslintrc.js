@@ -17,17 +17,17 @@ module.exports = {
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/ban-types": "error",
         "@typescript-eslint/class-name-casing": "error",
-        "@typescript-eslint/explicit-member-accessibility": [
-            "error",
-            {
-                "overrides": {
-                    "constructors": "off"
-                }
-            }
-        ],
-        "@typescript-eslint/indent": "error",
+        // "@typescript-eslint/explicit-member-accessibility": [
+        //     "error",
+        //     {
+        //         "overrides": {
+        //             "constructors": "off"
+        //         }
+        //     }
+        // ],
+        // "@typescript-eslint/indent": "error",
         "@typescript-eslint/interface-name-prefix": "off",
-        "@typescript-eslint/no-angle-bracket-type-assertion": "error",
+        // "@typescript-eslint/no-angle-bracket-type-assertion": "error",
         "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-inferrable-types": "off",
@@ -35,12 +35,12 @@ module.exports = {
         "@typescript-eslint/no-namespace": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-parameter-properties": "off",
-        "@typescript-eslint/no-triple-slash-reference": "error",
-        "@typescript-eslint/no-use-before-declare": "error",
+        // "@typescript-eslint/no-triple-slash-reference": "error",
+        // "@typescript-eslint/no-use-before-declare": "error",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
-        "@typescript-eslint/prefer-interface": "error",
+        // "@typescript-eslint/prefer-interface": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
@@ -60,18 +60,18 @@ module.exports = {
         "no-bitwise": "error",
         "no-caller": "error",
         "no-cond-assign": "error",
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "debug",
-                    "info",
-                    "time",
-                    "timeEnd",
-                    "trace"
-                ]
-            }
-        ],
+        // "no-console": [
+        //     "error",
+        //     {
+        //         "allow": [
+        //             "debug",
+        //             "info",
+        //             "time",
+        //             "timeEnd",
+        //             "trace"
+        //         ]
+        //     }
+        // ],
         "no-debugger": "error",
         "no-empty": "off",
         "no-empty-functions": "off",
@@ -83,17 +83,17 @@ module.exports = {
         "no-undef-init": "error",
         "no-unsafe-finally": "error",
         "no-unused-labels": "error",
-        "no-useless-constructor": "error",
+        // "no-useless-constructor": "error",
         "no-var": "error",
         "object-shorthand": "error",
-        "one-var": "error",
+        // "one-var": "error",
         "prefer-const": "error",
         "quote-props": [
             "error",
             "as-needed"
         ],
         "radix": "error",
-        "some-rule": "error",
+        // "some-rule": "error",
         "space-before-function-paren": [
             "error",
             {
