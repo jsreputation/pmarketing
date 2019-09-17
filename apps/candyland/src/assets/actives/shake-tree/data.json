@@ -59,24 +59,24 @@
       "id": 1,
       "type": "simple-tree",
       "active": "false",
-      "img": "assets/images/tree/simple-tree.png",
-      "fullImg": "assets/images/tree/full_tree_1.png",
+      "img": "assets/images/games/tree/simple-tree.png",
+      "fullImg": "assets/images/games/tree/full_tree_1.png",
       "title": "tree"
     },
     {
       "id": 2,
       "type": "fir-tree",
       "active": "false",
-      "img": "assets/images/tree/fir-tree.png",
-      "fullImg": "assets/images/tree/full_tree_2.png",
+      "img": "assets/images/games/tree/fir-tree.png",
+      "fullImg": "assets/images/games/tree/full_tree_2.png",
       "title": "fir tree"
     },
     {
       "id": 3,
       "type": "tree-pot",
       "active": "false",
-      "img": "assets/images/tree/tree-pot.png",
-      "fullImg": "assets/images/tree/full_tree_3.png",
+      "img": "assets/images/games/tree/tree-pot.png",
+      "fullImg": "assets/images/games/tree/full_tree_3.png",
       "title": "tree in a pot"
     }
   ],

@@ -38,7 +38,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       name: 'caffrghe',
       status: 'pending',
       type: 'Stamp',
-      image: '/assets/images/pinata-preview.png',
+      image: '/assets/images/previews/pinata-preview.png',
       begin: '2018-12-17 03:24:00',
       end: '2019-12-17 03:24:00',
       payload: {
@@ -105,7 +105,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         rewards: [{value: null, probability: 5}, {
           value: {
             id: 1,
-            image: 'assets/images/mask-group.png',
+            image: 'assets/images/placeholders/mask-group.png',
             name: 'Free Coffee',
             type: 'Starbucks',
             current: 500,
@@ -114,7 +114,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         }, {
           value: {
             id: 2,
-            image: 'assets/images/mask-group.png',
+            image: 'assets/images/placeholders/mask-group.png',
             name: 'Free Coffee 2',
             type: 'Starbucks',
             current: 500,
@@ -129,7 +129,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         rewards: [{
           value: {
             id: 1,
-            image: 'assets/images/mask-group.png',
+            image: 'assets/images/placeholders/mask-group.png',
             name: 'Free Coffee',
             type: 'Starbucks',
             current: 500,
@@ -138,7 +138,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         }, {
           value: {
             id: 2,
-            image: 'assets/images/mask-group.png',
+            image: 'assets/images/placeholders/mask-group.png',
             name: 'Free Coffee 2',
             type: 'Starbucks',
             current: 500,
@@ -153,7 +153,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         rewards: [{
           value: {
             id: 1,
-            image: '/assets/images/mask-group.png',
+            image: '/assets/images/placeholders/mask-group.png',
             name: 'Free Coffee',
             type: 'Starbucks',
             category: 'Food & Beverage',
@@ -174,7 +174,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         rewards: [{
           value: {
             id: 3,
-            image: '/assets/images/mask-group.png',
+            image: '/assets/images/placeholders/mask-group.png',
             name: 'Free Coke',
             type: 'Starbucks',
             category: 'Food & Beverage',
