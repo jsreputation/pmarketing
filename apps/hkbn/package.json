@@ -11,7 +11,7 @@
     "build-zh": "DEFAULT_LANG=zh npm run config && ng build",
     "test": "ng test",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "lint": "ng lint && stylelint \"src/**/*.*css\"",
+    "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e"
   },
