@@ -89,8 +89,6 @@ button {
   height: $header-height-base;
 }
 
-$header-font-size: 2.4rem;
-
 .page-header {
   display: flex;
   min-height: $header-height-base;
@@ -98,7 +96,7 @@ $header-font-size: 2.4rem;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 $horizontal-content-padding;
+  padding: 0 $horizontal-padding;
   position: fixed;
   top: 0;
   z-index: 99;
@@ -117,8 +115,9 @@ $header-font-size: 2.4rem;
   }
 
   input {
+    @include typo-h5;
+
     font-weight: 400;
-    font-size: $header-font-size;
     color: $base-font-color;
   }
 
@@ -141,13 +140,10 @@ $header-font-size: 2.4rem;
 }
 
 .title {
-  font-size: $header-font-size;
+  @include typo-h5;
+
   margin: auto 0;
-  font-weight: 400;
-  font-style: normal;
   font-stretch: normal;
-  line-height: 1.04;
-  letter-spacing: normal;
   color: $base-font-color;
 }
 
@@ -163,7 +159,7 @@ $header-font-size: 2.4rem;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  padding: $vertical-content-padding $horizontal-content-padding;
+  padding: $vertical-padding $horizontal-padding;
 
   &.pt-0 {
     padding-top: 0;
@@ -192,7 +188,7 @@ $header-font-size: 2.4rem;
   align-items: flex-start;
 
   & > div {
-    margin-right: 2.4rem;
+    margin-right: ($horizontal-padding * 0.75);
 
     &:last-of-type {
       margin-right: 0;
@@ -320,12 +316,12 @@ cl-game-mobile-preview, .tabs-component {
     font-size: 1.6rem;
     line-height: 1.06;
     color: $secondary-color;
-    margin: 2.4rem 0 1.6rem 0;
+    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
   }
 
   &-graphic, &-button {
     display: block;
-    margin-top: 1.6rem;
+    margin-top: ($vertical-padding * 0.5);
   }
 
   &-actions {
@@ -416,7 +412,7 @@ cl-game-mobile-preview, .tabs-component {
 }
 
 .tabs-filter:first-child .tabs {
-  margin-bottom: 3.2rem;
+  margin-bottom: $vertical-padding;
 }
 
 .tabs-filter + .table-filter .mat-form-field-wrapper {

@@ -18,6 +18,35 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
+import { AnalyticsService, IEvent } from './analytics.service';
+
+export interface IdataLayerSH {
+  pageName: string;
+  channel: string;
+  pageType: string;
+  siteSectionLevel1: string;
+  siteSectionLevel2: string;
+  siteSectionLevel3: string;
+  hubID: string;
+  perxID: string;
+  loginStatus: boolean;
+}
+
+const dataLayerSH: IdataLayerSH = {
+  pageName: '',
+  channel: 'msa',
+  pageType: '',
+  siteSectionLevel1: 'rewards',
+  siteSectionLevel2: '',
+  siteSectionLevel3: '',
+  hubID: '',
+  perxID: '',
+  loginStatus: true
+};
+
+declare const _satellite: {
+  track: (ev: string) => void;
+};
 
 @Component({
   selector: 'app-root',
@@ -39,6 +68,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private snackBar: MatSnackBar,
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
+    private analytics: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
@@ -52,6 +82,20 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         this.authenticationService.saveUserAccessToken(params.token);
         this.fetchCampaigns();
       });
+
+    this.analytics.events$.subscribe(
+      (event: IEvent) => {
+        dataLayerSH.pageName = event.pageName;
+        dataLayerSH.pageType = event.pageType;
+        dataLayerSH.siteSectionLevel2 = event.siteSectionLevel2;
+        dataLayerSH.siteSectionLevel3 = event.siteSectionLevel3;
+
+        const token = 'todo';
+        dataLayerSH.hubID = token;
+        dataLayerSH.perxID = token;
+        _satellite.track('msa-rewards-virtual-page');
+      }
+    );
   }
 
   private fetchCampaigns(): void {
@@ -108,7 +152,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         (game: IGame) => {
           this.game = game;
           const data = {
-            imageUrl: './assets/shake.png',
+            imageUrl: './assets/tap-tap.png',
             text: campaign.name, // You’ve got a “Shake the Tree” reward!
             buttonTxt: 'Play now',
             afterClosedCallBack: this,
