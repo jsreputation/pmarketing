@@ -16,7 +16,7 @@
   background-color: $white-color !important;
   padding: 0 !important;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
-  margin-bottom: 1.6rem !important;
+  margin-bottom: ($vertical-padding * 0.5) !important;
 
   &-header {
     height: 5.7rem;
@@ -33,11 +33,11 @@
 
   &-content {
     position: relative;
-    padding: 0.4rem 2.4rem 3rem !important;
+    padding: 0.4rem ($horizontal-padding * 0.75) 3rem !important;
   }
 
   &-item {
-    margin-bottom: 1.6rem;
+    margin-bottom: ($vertical-padding * 0.5);
   }
 
   &-label {
@@ -60,7 +60,7 @@
     line-height: 1.06;
     letter-spacing: normal;
     color: $base-font-color;
-    margin: 1.6rem 0 1rem;
+    margin: ($vertical-padding * 0.5) 0 1rem;
   }
 
   &-chip {
@@ -70,7 +70,7 @@
     border-radius: 1.6rem;
     align-items: center;
     cursor: default;
-    min-height: 3.2rem;
+    min-height: $vertical-padding;
     height: 1px;
     background-color: #e0e0e0;
     color: rgba(0, 0, 0, 0.87);
@@ -127,7 +127,7 @@
   }
 
   .mat-radio-button ~ .mat-radio-button {
-    margin-left: 1.6rem;
+    margin-left: ($horizontal-padding * 0.5);
   }
 
   .mat-horizontal-content-container {
