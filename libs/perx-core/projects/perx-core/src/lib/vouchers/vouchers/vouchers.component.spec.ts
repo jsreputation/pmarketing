@@ -7,10 +7,15 @@ import { VouchersModule } from '../vouchers.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model';
 import { ConfigModule } from '../../config/config.module';
+import { RewardsService } from '../../rewards/rewards.service';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
+  const rewardsServiceStub = {
+    getReward: () => { }
+  };
+
   const mockRedeemedVoucherDetail: IVoucher = {
     description: [{ title: 'Vidyut', content: '', tag: [] }],
     id: 21,
@@ -54,6 +59,11 @@ describe('VouchersComponent', () => {
         RouterTestingModule,
         VouchersModule,
         ConfigModule.forRoot({})
+      ],
+      providers: [
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
       .compileComponents();

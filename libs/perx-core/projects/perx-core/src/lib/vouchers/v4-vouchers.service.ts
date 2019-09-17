@@ -89,8 +89,6 @@ export interface IV4Voucher {
 })
 export class V4VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
-  apiHost: any;
-  voucherService: any;
 
   constructor(
     private http: HttpClient,
@@ -317,7 +315,7 @@ export class V4VouchersService implements IVoucherService {
     }
 
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { params }
+      `${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, { params }
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id)),
@@ -326,7 +324,7 @@ export class V4VouchersService implements IVoucherService {
 
   public issueReward(rewardId: number): Observable<IVoucher> {
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/issue`, {}
+      `${this.config.apiHost}/v4/rewards/${rewardId}/issue`, {}
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id)),

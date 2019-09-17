@@ -96,7 +96,6 @@ interface IV4GetCatalogResponse {
   data: IV4Catalog;
 }
 
-
 interface IV4Catalog {
   id: number;
   name: string;
