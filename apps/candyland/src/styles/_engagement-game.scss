@@ -1,7 +1,7 @@
 @import "variables";
 
 mat-card.game-graphic {
-  padding: 2.4rem 2.4rem 4.7rem;
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) 4.7rem;
 
   &:first-child {
     margin-top: 0;

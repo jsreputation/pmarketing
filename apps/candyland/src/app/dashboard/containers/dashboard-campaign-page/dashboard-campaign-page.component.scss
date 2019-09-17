@@ -12,7 +12,7 @@
     color: $base-font-color;
 
     &__indent {
-      margin: 2.4rem 0 ($vertical-padding * 0.5) 0;
+      margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
     }
   }
 
@@ -62,7 +62,7 @@
 
   &-wrap {
     display: flex;
-    margin-top: 2.4rem;
+    margin-top: ($vertical-padding * 0.75);
   }
 }
 

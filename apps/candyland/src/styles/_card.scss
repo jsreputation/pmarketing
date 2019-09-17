@@ -33,7 +33,7 @@
 
   &-content {
     position: relative;
-    padding: 0.4rem 2.4rem 3rem !important;
+    padding: 0.4rem ($horizontal-padding * 0.75) 3rem !important;
   }
 
   &-item {

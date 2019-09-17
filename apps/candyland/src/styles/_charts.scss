@@ -29,7 +29,7 @@
   }
 
   &-title {
-    margin-bottom: 2.4rem;
+    margin-bottom: ($vertical-padding * 0.75);
     font-size: 1.6rem;
     line-height: 1.31;
     color: $base-font-color;

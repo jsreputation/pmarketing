@@ -57,7 +57,7 @@
 }
 
 .logout {
-  height: 24px;
+  height: ($vertical-padding * 0.75);
   mask: url("assets/images/icon-logout.svg") no-repeat 50% 50%;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.7);

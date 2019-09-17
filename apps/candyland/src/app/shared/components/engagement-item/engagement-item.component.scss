@@ -5,7 +5,7 @@
   flex-flow: row nowrap;
   box-sizing: border-box;
   width: 36.5rem;
-  padding: 2rem 2.4rem;
+  padding: 2rem ($horizontal-padding * 0.75);
   border-radius: 8px;
   background-color: $white-color;
 
