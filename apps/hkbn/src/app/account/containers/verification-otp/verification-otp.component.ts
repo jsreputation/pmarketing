@@ -18,8 +18,8 @@ export class VerificationOtpComponent implements OnInit {
   private number: string;
   private reqestData: any;
   public get numberDisplay(): string {
-    return this.number && this.number.substr(0, this.number.length - 3)
-      .replace(/\d/g, '*') + this.number.substr(this.number.length - 3);
+    return this.number && this.number.substr(0, this.number.length - 4)
+      .replace(/\d/g, '*') + this.number.substr(this.number.length - 4);
   }
   constructor(
     private profileService: ProfileService,
@@ -33,10 +33,8 @@ export class VerificationOtpComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getInitData();
-    // this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
-    // this.route.params.subscribe((param: Params) => this.type = param.id);
     this.profileService.whoAmI().subscribe((profile) =>
-      this.number = profile && profile.phone
+      this.type !== 'phone' ? this.number = profile && profile.phone : ''
     );
   }
   public update(otp: string): void {
@@ -54,7 +52,12 @@ export class VerificationOtpComponent implements OnInit {
         return this.dataTransferService.updateData$;
       }
       return this.route.queryParams;
-    })).subscribe((updateData) => this.reqestData = updateData);
+    })).subscribe((updateData) => {
+      if (this.type === 'phone') {
+        this.number = updateData.phone;
+      }
+      this.reqestData = updateData;
+    });
   }
   private switchMethod(data: IChangePasswordData | IChangePhoneData): Observable<string> {
     switch (this.type) {
@@ -68,7 +71,7 @@ export class VerificationOtpComponent implements OnInit {
     }
   }
   public resendSms(): void {
-    this.authService.resendOTP(this.number)
+    this.authService.requestVerificationToken(this.number)
       .pipe(
         flatMap(() => this.translate.get('CHECK_SMS')))
       .subscribe((msg) => this.notificationService.addSnack(msg));

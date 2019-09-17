@@ -59,7 +59,7 @@ describe('CheckFormTransferGuard', () => {
   it('should leave route, what is not password', inject([CheckFormTransferGuard],
     (guard: CheckFormTransferGuard) => {
       const result = guard.canActivate(fakeRoute);
-      expect(result).toBe(true);
+      expect(result).toBeTruthy();
     })
   );
 

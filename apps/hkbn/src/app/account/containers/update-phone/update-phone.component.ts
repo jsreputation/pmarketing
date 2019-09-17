@@ -38,7 +38,7 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.authService.requestVerificationToken()
+    this.authService.requestVerificationToken(this.updatePhoneGroup.value.phone)
       .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone'], {queryParams: this.updatePhoneGroup.value }));
   }
 }
