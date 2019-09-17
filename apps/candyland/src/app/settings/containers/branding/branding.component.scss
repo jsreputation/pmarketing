@@ -1,3 +1,5 @@
+@import "variables";
+
 .branding {
   &-form {
     flex: 1;
@@ -22,9 +24,9 @@
 .logo-header-wrap {
   width: 39rem;
   height: 6.4rem;
-  margin-bottom: 3.2rem;
+  margin-bottom: $vertical-content-padding;
 }
 
 .section-margin-t {
-  margin-top: 3.2rem;
+  margin-top: $vertical-content-padding;
 }

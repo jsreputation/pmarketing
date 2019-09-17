@@ -90,7 +90,7 @@
   }
 
   &-tab-content {
-    padding: 3.5rem 3.2rem;
+    padding: 3.5rem $horizontal-content-padding;
     overflow-y: auto;
   }
 
@@ -107,7 +107,7 @@
 
   &-actions {
     box-sizing: border-box;
-    padding: 3.2rem;
+    padding: $vertical-content-padding $horizontal-content-padding;
     width: 100%;
     display: flex;
     justify-content: flex-end;

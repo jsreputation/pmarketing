@@ -2,7 +2,7 @@
 
 .user-info {
   position: relative;
-  padding: $vertical-content-padding 3.2rem 0.8rem;
+  padding: $vertical-content-padding $horizontal-content-padding 0.8rem;
 
   &-name-container {
     display: flex;

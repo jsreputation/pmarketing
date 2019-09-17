@@ -11,7 +11,7 @@
   flex-flow: column nowrap;
 
   ::ng-deep .mat-tab-header {
-    padding: 0 3.2rem !important;
+    padding: 0 $horizontal-content-padding !important;
   }
 
   &-content {
@@ -22,7 +22,7 @@
   }
 
   &-header-wrap {
-    padding: 3.2rem 3.2rem 1rem;
+    padding: $vertical-content-padding $horizontal-content-padding 1rem;
     position: relative;
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
   }
 
   &-tab-content {
-    padding: 3.5rem 3.2rem;
+    padding: 3.5rem $horizontal-content-padding;
   }
 
   &-content-title {
@@ -96,7 +96,7 @@
 
   &-actions {
     box-sizing: border-box;
-    padding: 3.2rem;
+    padding: $vertical-content-padding $horizontal-content-padding;
     width: 100%;
     display: flex;
     justify-content: flex-end;
