@@ -16,7 +16,7 @@
       </div>
       <div class="card-content" formGroupName="stampsRule">
         <div class="card-row">
-          <mat-checkbox formControlName="sequence">Sequence</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="sequence">Sequence</mat-checkbox>
         </div>
         <div class="flex flex-end" *ngIf="!isSequence">
           <cl-button classList="tertiary no-padding" (click)="addStampRule()">+ Add Rule</cl-button>

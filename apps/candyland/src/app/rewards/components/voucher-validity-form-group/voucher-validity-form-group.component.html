@@ -20,7 +20,7 @@
                     [min]="formGroup.get('period.startDate').value"></cl-date-picker>
     <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
   </div>
-  <mat-checkbox [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
+  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
 </div>
 <!--/ Voucher Validity Period-->
 <!-- Voucher Validity Isuance date-->

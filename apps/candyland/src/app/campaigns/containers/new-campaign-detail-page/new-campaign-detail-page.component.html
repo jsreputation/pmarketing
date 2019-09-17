@@ -42,7 +42,7 @@
             </mat-error>
           </div>
         </div>
-        <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
+        <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
       <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
@@ -96,7 +96,7 @@
           </div>
           <!--recurrence Settings-->
           <div class="card-row form-field">
-            <mat-checkbox [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
+            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
           </div>
           <!--recurrence-->
           <div class="card-row stretch" *ngIf="recurrence.enabled">
@@ -124,7 +124,7 @@
                   <label class="card-label">Repeat on</label>
                   <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
                     <ng-container *ngFor="let day of config?.days">
-                      <mat-checkbox [value]="day.value">
+                      <mat-checkbox color="primary" [value]="day.value">
                         <div>{{day.title}}</div>
                       </mat-checkbox>
                     </ng-container>
