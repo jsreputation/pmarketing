@@ -12,8 +12,8 @@ export enum PageType {
 export interface IEvent {
   pageType: PageType;
   pageName: string;
-  siteSectionLevel2: string;
-  siteSectionLevel3: string;
+  siteSectionLevel2?: string;
+  siteSectionLevel3?: string;
 }
 
 @Injectable({

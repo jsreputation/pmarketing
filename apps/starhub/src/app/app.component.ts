@@ -18,7 +18,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
-import { AnalyticsService, IEvent } from './analytics.service';
+import { AnalyticsService, IEvent, PageType } from './analytics.service';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
   private reward: IReward = null;
   private game: IGame = null;
+  private token: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -85,14 +86,22 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
     this.analytics.events$.subscribe(
       (event: IEvent) => {
-        dataLayerSH.pageName = event.pageName;
+        if (event.pageType === PageType.overlay) {
+          dataLayerSH.pageName = `${dataLayerSH.pageName}:${event.pageName}`;
+        } else {
+          dataLayerSH.pageName = event.pageName;
+        }
         dataLayerSH.pageType = event.pageType;
-        dataLayerSH.siteSectionLevel2 = event.siteSectionLevel2;
-        dataLayerSH.siteSectionLevel3 = event.siteSectionLevel3;
+        if (event.siteSectionLevel2) {
+          dataLayerSH.siteSectionLevel2 = event.siteSectionLevel2;
+        }
+        if (event.siteSectionLevel3) {
+          dataLayerSH.siteSectionLevel3 = event.siteSectionLevel3;
+        }
 
-        const token = 'todo';
-        dataLayerSH.hubID = token;
-        dataLayerSH.perxID = token;
+        this.token = this.authenticationService.getUserAccessToken();
+        dataLayerSH.hubID = this.token;
+        dataLayerSH.perxID = this.token;
         _satellite.track('msa-rewards-virtual-page');
       }
     );
@@ -130,6 +139,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               validTo: new Date(campaign.endsAt)
             };
             this.dialog.open(RewardPopupComponent, { data });
+            this.analytics.addEvent({
+              pageType: PageType.overlay,
+              pageName: campaign.name
+            });
             return;
           }
 
@@ -157,6 +170,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             buttonTxt: 'Play now',
             afterClosedCallBack: this,
           };
+          this.analytics.addEvent({
+            pageType: PageType.overlay,
+            pageName: campaign.name
+          });
           this.dialog.open(RewardPopupComponent, { data });
         },
         () => { /* nothing to do here, just fail silently */ }
