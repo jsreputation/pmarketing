@@ -81,11 +81,9 @@ export class PuzzleListComponent implements OnChanges {
     }
 
     // get list of active puzzles
-    const activePuzzles = this.puzzles.filter(p => {
-      return p.state === StampCardState.active &&
+    const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
         p.stamps &&
-        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
-    });
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
     // if there is no active puzzle, this one should not be active
     if (activePuzzles.length === 0) {
