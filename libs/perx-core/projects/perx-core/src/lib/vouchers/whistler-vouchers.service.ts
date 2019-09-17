@@ -59,8 +59,8 @@ export class WhistlerVouchersService implements IVoucherService {
       merchantName: reward.merchantName,
       expiry: null,
       description: [{
-        title: reward.description,
-        content: null,
+        title: null,
+        content: reward.description,
         tag: []
       }]
     };

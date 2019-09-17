@@ -52,7 +52,7 @@ export class WhistlerRewardsService implements RewardsService {
         // }
       ],
       termsAndConditions: r.attributes.terms_conditions,
-      howToRedeem: '',
+      howToRedeem: r.attributes.redemption_type,
       categoryTags: [
         {
           id: 0,
