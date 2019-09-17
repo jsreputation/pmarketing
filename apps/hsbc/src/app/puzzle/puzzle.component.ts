@@ -165,6 +165,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               this.router.navigateByUrl('/home');
             }
           }
+          this.currentStampId++;
         },
         () => {
           this.notificationService.addPopup({
@@ -174,6 +175,5 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/home');
         }
       );
-    this.currentStampId++;
   }
 }
