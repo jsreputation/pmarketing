@@ -75,7 +75,7 @@ describe('LoginComponent', () => {
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService
     );
     const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
