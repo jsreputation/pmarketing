@@ -14,10 +14,26 @@ import {
   TokenStorage
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, Event, NavigationEnd } from '@angular/router';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
+import { analyticsVariables, IdataLayerSH } from './dtm-data';
+
+const dataLayerSH: IdataLayerSH = {
+  pageName: '',
+  channel: 'msa',
+  pageType: '',
+  siteSectionLevel1: 'rewards',
+  siteSectionLevel2: '',
+  siteSectionLevel3: '',
+  hubID: '',
+  loginStatus: true
+};
+
+declare var _satellite: {
+  track: (ev: string) => void;
+};
 
 @Component({
   selector: 'app-root',
@@ -52,6 +68,37 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         this.authenticationService.saveUserAccessToken(params.token);
         this.fetchCampaigns();
       });
+
+    this.subscribeToRouteChanges();
+  }
+
+  private subscribeToRouteChanges(): void {
+    this.router.events.subscribe(
+      (event: Event) => {
+        if (event instanceof NavigationEnd) {
+          const urlTree = this.router.parseUrl(event.url);
+          if (!urlTree.root.children.primary) {
+            return;
+          }
+
+          const urlWithoutParams = urlTree.root.children.primary.segments.map(it => it.path).join('/');
+          const currentSelectedArray = analyticsVariables.filter((element) => (element.screen === urlWithoutParams));
+          if (currentSelectedArray.length === 0) {
+            return;
+          }
+
+          const currentSelectedVariable = currentSelectedArray[0];
+          dataLayerSH.pageName = currentSelectedVariable.pageName;
+          dataLayerSH.pageType = currentSelectedVariable.pageType;
+          dataLayerSH.siteSectionLevel2 = currentSelectedVariable.siteSectionLevel2;
+          dataLayerSH.siteSectionLevel3 = currentSelectedVariable.siteSectionLevel3;
+          // TODO: This is sample hub ID.
+          // dataLayerSH.hubID = 'ZPfW6pgwrG5oSKixBpexJ14LMylsoxrdNXo6nahA8vY';
+          dataLayerSH.loginStatus = currentSelectedVariable.loginStatus;
+          _satellite.track('msa-rewards-virtual-page');
+        }
+      }
+    );
   }
 
   private fetchCampaigns(): void {
