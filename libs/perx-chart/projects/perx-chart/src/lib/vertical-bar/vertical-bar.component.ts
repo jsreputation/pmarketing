@@ -33,15 +33,13 @@ export class VerticalBarComponent implements OnChanges {
           };
         }
 
-        const series = row.slice(1).map((v: number, i: number) => {
-          return {
+        const series = row.slice(1).map((v: number, i: number) => ({
             name: data.cols[i + 1].display_name,
             value: v,
             extra: {
               code: data.cols[i + 1].display_name
             }
-          };
-        });
+          }));
 
         return {
           name: row[0],
