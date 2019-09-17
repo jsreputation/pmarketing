@@ -41,7 +41,7 @@
     </ng-container>
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
+  <cl-no-data *ngIf="(dataSource.data).length === 0">
     <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Slice and dice your target audience

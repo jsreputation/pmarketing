@@ -22,7 +22,7 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </ng-container>
 
-  <cl-no-data *ngIf="!hasData">
+  <cl-no-data *ngIf="(dataSource.data).length === 0">
     <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Build your customer experience, now!
