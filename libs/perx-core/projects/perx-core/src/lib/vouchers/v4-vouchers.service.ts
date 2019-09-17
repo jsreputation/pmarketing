@@ -181,9 +181,7 @@ export class V4VouchersService implements IVoucherService {
 
   public get(id: number, useCache: boolean = true): Observable<IVoucher> {
     if (useCache) {
-      const found = this.vouchers.find(v => {
-        return `${v.id}` === `${id}`;
-      });
+      const found = this.vouchers.find(v => `${v.id}` === `${id}`);
       if (found) {
         return of(found);
       }
@@ -250,9 +248,7 @@ export class V4VouchersService implements IVoucherService {
 
         return true;
       }),
-      map((_: IVoucher[]) => {
-        return newIssued;
-      })
+      map((_: IVoucher[]) => newIssued)
     );
   }
 

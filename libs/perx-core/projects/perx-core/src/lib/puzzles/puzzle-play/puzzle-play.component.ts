@@ -100,9 +100,8 @@ export class PuzzlePlayComponent implements OnChanges {
       const puzzleLocation = this.remainingPuzzleTiles[0].puzzleLocation;
       this.moved.emit();
       this.boardPuzzleTiles[puzzleLocation].isSelected = true;
-      this.remainingPuzzleTiles = this.remainingPuzzleTiles.filter((currentValue: DrawTile) => {
-        return currentValue.puzzleLocation !== puzzleLocation;
-      });
+      this.remainingPuzzleTiles = this.remainingPuzzleTiles
+      .filter((currentValue: DrawTile) => currentValue.puzzleLocation !== puzzleLocation);
     }
   }
 
