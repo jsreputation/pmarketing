@@ -1,4 +1,4 @@
-@import "./variables";
+@import "variables";
 
 .login-wrap {
   display: flex;
@@ -10,8 +10,8 @@
   &-login-form {
     width: 43.1rem;
     min-height: 100vh;
-    padding-left: $horizontal-content-padding;
-    padding-right: $horizontal-content-padding;
+    padding-left: $horizontal-padding;
+    padding-right: $horizontal-padding;
     position: relative;
     display: flex;
     flex-flow: column nowrap;
@@ -23,7 +23,7 @@
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
-    padding: ($vertical-content-padding * 2) $horizontal-content-padding $vertical-content-padding;
+    padding: ($vertical-padding * 2) $horizontal-padding $vertical-padding;
     text-align: center;
   }
 }
@@ -36,7 +36,7 @@
 .copyright {
   @include typo-caption;
 
-  margin-top: ($vertical-content-padding * 2);
+  margin-top: ($vertical-padding * 2);
   margin-bottom: 1rem;
 }
 
@@ -45,7 +45,7 @@
     @include typo-h3;
 
     color: $secondary-color;
-    margin: 0 0 ($vertical-content-padding / 2);
+    margin: 0 0 ($vertical-padding * 0.5);
     justify-self: flex-start;
   }
 
@@ -54,7 +54,7 @@
 
     color: $secondary-color;
     max-width: 40em; //this has to be in `em`s because paragraph width should be relative to font-size
-    margin: 0 auto ($vertical-content-padding * 1.5);
+    margin: 0 auto ($vertical-padding * 1.5);
   }
 
   &-picture {
@@ -71,8 +71,8 @@
 }
 
 cl-logo {
-  margin-top: $vertical-content-padding;
-  margin-bottom: $vertical-content-padding * 2;
+  margin-top: $vertical-padding;
+  margin-bottom: $vertical-padding * 2;
 }
 
 @import "resize";

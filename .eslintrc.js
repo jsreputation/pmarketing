@@ -38,7 +38,7 @@ module.exports = {
         // "@typescript-eslint/no-triple-slash-reference": "error",
         // "@typescript-eslint/no-use-before-declare": "error",
         "@typescript-eslint/no-var-requires": "off",
-        "@typescript-eslint/prefer-for-of": "error",
+        // "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
         // "@typescript-eslint/prefer-interface": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",

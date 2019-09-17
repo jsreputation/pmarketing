@@ -9,7 +9,7 @@
     </div>
 
     <div class="tabs-list-wrap">
-      <mat-radio-group class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+      <mat-radio-group color="primary" class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
         <ng-container *ngFor="let tab of tabs; let index = index">
           <mat-radio-button [value]="tab?.name">
             <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>

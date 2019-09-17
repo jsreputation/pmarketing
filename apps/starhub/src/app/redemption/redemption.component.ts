@@ -3,6 +3,7 @@ import { Voucher, VoucherState, IVoucherService, PinInputComponent, Notification
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-redemption',
@@ -24,7 +25,8 @@ export class RedemptionComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private notficationService: NotificationService
+    private notficationService: NotificationService,
+    private analytics: AnalyticsService
   ) {
   }
 
@@ -37,6 +39,16 @@ export class RedemptionComponent implements OnInit {
       )
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
+        const category: string = voucher.categories && voucher.categories.length > 0 ? voucher.categories[0] : undefined;
+        if (category !== undefined) {
+          const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.name}`;
+          this.analytics.addEvent({
+            pageName,
+            pageType: PageType.detailPage,
+            siteSectionLevel2: 'rewards:vouchers',
+            siteSectionLevel3: 'rewards:vouchers:redemption'
+          });
+        }
       });
   }
 
