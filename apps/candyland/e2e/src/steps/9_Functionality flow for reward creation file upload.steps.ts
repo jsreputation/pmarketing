@@ -114,7 +114,7 @@ Given(/^18_I select user upload option for unique codes$/, async () => {
 });
 
 When(/^18_I upload a non csv file$/, async () => {
-  const FileToUpload = './testArtifacts/test.xyz';
+  const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the user upload voucher upload section
   await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);

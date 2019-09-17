@@ -22,15 +22,13 @@ export class CalendarHeatmapComponent implements OnChanges {
       return;
     }
     this.data.subscribe((data: IData) => {
-      this.ngxChartData = data.rows.map((row: (string | number)[]) => {
-        return {
+      this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
           name: row[0],
           series: [{
             name: row[1],
             value: row[2]
           }]
-        };
-      });
+        }));
     });
   }
 }
