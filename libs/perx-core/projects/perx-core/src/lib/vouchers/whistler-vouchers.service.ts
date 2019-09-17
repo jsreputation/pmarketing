@@ -4,7 +4,7 @@ import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState, RedemptionType } from './models/voucher.model';
-import { IJsonApiListPayload, IJsonApiItem } from '../jsonapi.payload';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 import { map, switchMap, last } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
@@ -85,7 +85,10 @@ export class WhistlerVouchersService implements IVoucherService {
 
   // @ts-ignore
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
-    throw new Error('Method not implemented.');
+    return this.http.get<IJsonApiItemPayload<IWhistlerVoucher>>(this.vouchersUrl + '/' + id).pipe(
+      map((res) => res.data),
+      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => this.getFullVoucher(voucher))
+    );
   }
 
   // @ts-ignore
