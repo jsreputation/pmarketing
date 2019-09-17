@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
-import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/shakeTheTreeFlow.po';
+import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
 import * as moment from 'moment';
 // initializing instances of the pages
 

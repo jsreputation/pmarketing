@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
-import { EngagementAppPage } from '../pages/shakeTheTreeFlow.po';
+import { EngagementAppPage } from '../pages/candylandApp.po';
 
 let PageEngagement: EngagementAppPage ;
 
