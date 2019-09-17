@@ -50,6 +50,7 @@ export class RegistrationFormComponent implements OnInit {
     const requestBody = this.registrationForm.value;
     requestBody.phone = this.countryCodes.find(code => code.id === requestBody.code).phone + requestBody.phone;
     delete requestBody.code;
+    this.dataTransfer.newxUpdateData(requestBody);
     this.formSubmit.emit(requestBody);
   }
 }
