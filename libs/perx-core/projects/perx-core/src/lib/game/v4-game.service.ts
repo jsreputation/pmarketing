@@ -137,8 +137,7 @@ export class V4GameService implements IGameService {
         config = {
           ...defaultPinata(),
           stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
-          // TODO: Temporary workaround.
-          brokenImg: '', // dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
           breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
           nbTaps: 5
         };

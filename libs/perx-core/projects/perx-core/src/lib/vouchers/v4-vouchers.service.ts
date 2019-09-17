@@ -34,6 +34,11 @@ interface IV4Reward {
   id: number;
   images?: IV4Image[];
   merchant_logo_url?: string;
+  category_tags?: {
+    id: number;
+    title: string;
+    parent: any;
+  }[];
 }
 
 export interface IV4Voucher {
@@ -103,6 +108,11 @@ export class V4VouchersService implements IVoucherService {
       redemptionTypeFinal = RedemptionType.txtCode;
     }
 
+    let categories: string[];
+    if (reward.category_tags) {
+      categories = reward.category_tags.map(c => c.title);
+    }
+
     return {
       id: v.id,
       rewardId: reward.id,
@@ -121,7 +131,8 @@ export class V4VouchersService implements IVoucherService {
         { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
       ],
       redemptionSuccessTxt,
-      redemptionSuccessImg
+      redemptionSuccessImg,
+      categories
     };
   }
 
