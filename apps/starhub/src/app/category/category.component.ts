@@ -31,7 +31,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private activeRoute: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
     private zone: NgZone,
-    private macaronService: MacaronService, 
+    private macaronService: MacaronService,
     private analytics: AnalyticsService
   ) { }
 

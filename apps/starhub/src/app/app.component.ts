@@ -44,7 +44,7 @@ const dataLayerSH: IdataLayerSH = {
   loginStatus: true
 };
 
-declare var _satellite: {
+declare const _satellite: {
   track: (ev: string) => void;
 };
 

@@ -26,7 +26,7 @@ export class VoucherComponent implements OnInit {
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
         // this.analytics.addEvent({
-          
+
         // });
       });
   }
