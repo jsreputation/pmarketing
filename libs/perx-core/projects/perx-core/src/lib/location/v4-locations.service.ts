@@ -134,9 +134,8 @@ export class V4LocationsService extends LocationsService {
         params: {
           page: `${page}`
         }
-      }
+      };
     }
-    ;
 
     return this.http.get<IV4GetMerchantResponse>(
       merchantsUrl,

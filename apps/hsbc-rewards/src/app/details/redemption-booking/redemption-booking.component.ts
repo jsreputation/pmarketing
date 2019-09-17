@@ -86,7 +86,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getMerchantData(): void {
+  public getMerchantData(): void {
     if (!this.isCurrentMerchantPageLoaded) {
       return;
     }
