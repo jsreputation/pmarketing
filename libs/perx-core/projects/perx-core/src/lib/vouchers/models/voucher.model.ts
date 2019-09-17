@@ -45,6 +45,7 @@ export interface IVoucher {
   description: IVoucherDescription[];
   redemptionSuccessTxt?: string;
   redemptionSuccessImg?: string;
+  categories?: string[];
 }
 
 export interface IGetVoucherParams {

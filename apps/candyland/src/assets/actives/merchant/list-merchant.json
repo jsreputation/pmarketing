@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 1",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -10,7 +10,7 @@
   },
   {
     "id": "2",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 2",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -19,7 +19,7 @@
   },
   {
     "id": "3",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 3",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -28,7 +28,7 @@
   },
   {
     "id": "4",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 4",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -37,7 +37,7 @@
   },
   {
     "id": "5",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 5",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -46,7 +46,7 @@
   },
   {
     "id": "6",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 6",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -55,7 +55,7 @@
   },
   {
     "id": "7",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 7",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -64,7 +64,7 @@
   },
   {
     "id": "8",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 8",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -73,7 +73,7 @@
   },
   {
     "id": "9",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 9",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -82,7 +82,7 @@
   },
   {
     "id": "10",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 10",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -91,7 +91,7 @@
   },
   {
     "id": "11",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 11",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -100,7 +100,7 @@
   },
   {
     "id": "12",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 12",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -109,7 +109,7 @@
   },
   {
     "id": "13",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 13",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -118,7 +118,7 @@
   },
   {
     "id": "14",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 14",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -127,7 +127,7 @@
   },
   {
     "id": "15",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 15",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -136,7 +136,7 @@
   },
   {
     "id": "16",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 16",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -145,7 +145,7 @@
   },
   {
     "id": "17",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 17",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -154,7 +154,7 @@
   },
   {
     "id": "18",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 18",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -163,7 +163,7 @@
   },
   {
     "id": "19",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 19",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -172,7 +172,7 @@
   },
   {
     "id": "20",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 20",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -181,7 +181,7 @@
   },
   {
     "id": "21",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 21",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -190,7 +190,7 @@
   },
   {
     "id": "22",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 22",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -199,7 +199,7 @@
   },
   {
     "id": "23",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 23",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -208,7 +208,7 @@
   },
   {
     "id": "24",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 24",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -217,7 +217,7 @@
   },
   {
     "id": "25",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 25",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -226,7 +226,7 @@
   },
   {
     "id": "26",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 26",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -235,7 +235,7 @@
   },
   {
     "id": "27",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 27",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -244,7 +244,7 @@
   },
   {
     "id": "28",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 28",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -253,7 +253,7 @@
   },
   {
     "id": "29",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 29",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -262,7 +262,7 @@
   },
   {
     "id": "30",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 30",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -271,7 +271,7 @@
   },
   {
     "id": "31",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 31",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -280,7 +280,7 @@
   },
   {
     "id": "32",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 32",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -289,7 +289,7 @@
   },
   {
     "id": "33",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 33",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -298,7 +298,7 @@
   },
   {
     "id": "34",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 34",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -307,7 +307,7 @@
   },
   {
     "id": "35",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 35",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -316,7 +316,7 @@
   },
   {
     "id": "36",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 36",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -325,7 +325,7 @@
   },
   {
     "id": "37",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 37",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -334,7 +334,7 @@
   },
   {
     "id": "38",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 38",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -343,7 +343,7 @@
   },
   {
     "id": "39",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 39",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -352,7 +352,7 @@
   },
   {
     "id": "40",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 40",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -361,7 +361,7 @@
   },
   {
     "id": "41",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 41",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -370,7 +370,7 @@
   },
   {
     "id": "42",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 42",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -379,7 +379,7 @@
   },
   {
     "id": "43",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 43",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -388,7 +388,7 @@
   },
   {
     "id": "44",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 44",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -397,7 +397,7 @@
   },
   {
     "id": "45",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 45",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -406,7 +406,7 @@
   },
   {
     "id": "46",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 46",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -415,7 +415,7 @@
   },
   {
     "id": "47",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 47",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -424,7 +424,7 @@
   },
   {
     "id": "48",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 48",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -433,7 +433,7 @@
   },
   {
     "id": "49",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 49",
     "dateCreated": "2019-08-20T00:00:00.000Z",
@@ -442,7 +442,7 @@
   },
   {
     "id": "50",
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "lastName": "Starbucks",
     "firstName": "Lorem 50",
     "dateCreated": "2019-08-20T00:00:00.000Z",

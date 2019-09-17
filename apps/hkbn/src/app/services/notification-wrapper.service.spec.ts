@@ -17,7 +17,7 @@ describe('NotificationWrapperService', () => {
     ]
   }));
   beforeEach(() => {
-    notification = TestBed.get(NotificationService);
+    notification = TestBed.get<NotificationService>(NotificationService);
     service = TestBed.get(NotificationWrapperService);
   });
 

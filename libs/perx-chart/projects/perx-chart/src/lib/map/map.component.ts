@@ -30,12 +30,12 @@ export class MapComponent implements OnInit, OnChanges {
       return;
     }
     this.data.subscribe((data: IData) => {
-      this.dataTable = data.rows.map((row: (string | number)[]) => {
+      this.dataTable = data.rows.map((row: (string | number)[]) =>
         // data conversion to markers mode format
-        return [
+         [
           +row[1], +row[2], row[0], row[3]
-        ];
-      });
+        ]
+      );
 
       const firstRow = ['Lat', 'Lng', 'City', 'Revenue'];
       return this.dataTable.unshift(firstRow);
