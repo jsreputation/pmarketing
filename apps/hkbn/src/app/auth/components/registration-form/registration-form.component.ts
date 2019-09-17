@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Output, ViewEncapsulation, Input } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ICountryCode } from 'src/assets/mock/country-code';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-registration-form',
@@ -9,7 +11,7 @@ import { ICountryCode } from 'src/assets/mock/country-code';
   styleUrls: ['./registration-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnInit {
   @Input() public countryCodes: ICountryCode[];
   @Output()
   public formSubmit: EventEmitter<any> = new EventEmitter<any>();
@@ -31,6 +33,16 @@ export class RegistrationFormComponent {
     promo: new FormControl(null)
   }, [HkbnValidators.equalityValidator('password', 'password_confirmation')]);
 
+  constructor(
+    private dataTransfer: DataTransferService
+  ) {
+  }
+
+  public ngOnInit(): void {
+    this.dataTransfer.updateData$.subscribe((data: ISignUpData) =>
+      data && this.registrationForm.setValue({ ...data, code: 11, phone: data.phone.substr(3) }));
+  }
+
   public submit(): void {
     if (this.registrationForm.invalid) {
       return;
@@ -40,5 +52,4 @@ export class RegistrationFormComponent {
     delete requestBody.code;
     this.formSubmit.emit(requestBody);
   }
-
 }
