@@ -126,14 +126,17 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
-    const pageSize = 100;
+  public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
     const merchantsUrl: string = `${this.apiHost}/v4/merchants/${merchantId}`;
-    const merchantsOptions = {
-      params: {
-        size: `${pageSize}`
+    let merchantsOptions = {};
+    if (page) {
+      merchantsOptions = {
+        params: {
+          page: `${page}`
+        }
       }
-    };
+    }
+    ;
 
     return this.http.get<IV4GetMerchantResponse>(
       merchantsUrl,

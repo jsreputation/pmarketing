@@ -32,6 +32,10 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   public bookingForm: FormGroup;
   private loyalty: ILoyalty;
   private popupSubscription: SubscriptionLike;
+  private merchantAllLocations: ILocation[] = [];
+  private lastMerchantPage: number = 1;
+  private isCurrentMerchantPageLoaded: boolean = false;
+  private merchantId: number = null;
 
   constructor(
     private locationService: LocationsService,
@@ -65,12 +69,12 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
         this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
-      const merchantId = this.reward.merchantId;
+      this.merchantId = this.reward.merchantId;
       // merchantId can be null if reward is set up incorrectly on dashboard
-      return this.locationService.getFromMerchant(merchantId);
+      return this.locationService.getFromMerchant(this.merchantId);
     })).subscribe(
-      (merchantLocations) => {
-        this.locationData = of(merchantLocations);
+      (merchantLocations: ILocation[]) => {
+        this.updateMerchantData(merchantLocations);
       },
       (err) => {
         // validators will prevent form submission
@@ -80,6 +84,33 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
         });
       }
     );
+  }
+
+  private getMerchantData(): void {
+    if (!this.isCurrentMerchantPageLoaded){
+      return;
+    }
+
+    this.isCurrentMerchantPageLoaded = false;
+    this.locationService.getFromMerchant(this.merchantId, this.lastMerchantPage).subscribe(
+      (merchantLocations: ILocation[]) => {
+        this.updateMerchantData(merchantLocations);
+      },
+      (err) => {
+        // validators will prevent form submission
+        this.notificationService.addPopup({
+          title: 'Sorry',
+          text: 'We\'re unable to perform this transaction at this time'
+        });
+      }
+    )
+  }
+
+  private updateMerchantData(merchantLocations: ILocation[]): any {
+    this.merchantAllLocations = this.merchantAllLocations.concat(merchantLocations);
+    this.locationData = of(this.merchantAllLocations);
+    this.lastMerchantPage++;
+    this.isCurrentMerchantPageLoaded = true;
   }
 
   public buildForm(): void {
