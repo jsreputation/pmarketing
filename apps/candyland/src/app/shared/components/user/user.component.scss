@@ -1,4 +1,4 @@
-@import "../../../../styles/variables";
+@import "variables";
 
 .user {
   &-info {
@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 1.6rem;
     padding-bottom: 1.7rem;
     border-bottom: 0.2rem solid rgba(255, 255, 255, 0.2);
   }

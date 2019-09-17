@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataStore } from '@cl-core/http-adapters/datastore';
+import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { UserService } from '@cl-core/services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class AuthService {
   constructor(private http: AuthHttpService,
               private localStorage: LocalStorageService,
               private sessionService: SessionService,
+              private dataStore: DataStore,
               private userService: UserService,
               private router: Router
   ) {
@@ -28,10 +31,18 @@ export class AuthService {
       return;
     }
     this.sessionService.token = localToken;
-    this.http.getUser(localUserId).subscribe(
-      user => this.userService.user = user,
-      () => this.logout()
-    );
+    this.updateUser(localUserId).subscribe(() => {});
+  }
+
+  public updateUser(id): Observable<IamUser> {
+    return this.dataStore.findRecord(IamUser, id)
+      .pipe(
+        tap(user => this.userService.user = user),
+        catchError(error => {
+          this.logout();
+          return of(error);
+        })
+      );
   }
 
   public signIn(data: any): Observable<any> {
@@ -40,7 +51,7 @@ export class AuthService {
       tap(res => {
         if (res.headers.get('authorization')) {
           const token = res.headers.get('authorization');
-          const user = res.body.data;
+          const user = this.dataStore.deserializeModel(IamUser, res.body.data);
           this.login(token, user);
         }
       }),
