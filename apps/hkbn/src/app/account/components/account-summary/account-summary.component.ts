@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IProfile, ProfileService, NotificationService } from '@perx/core';
 import { MatSlideToggleChange } from '@angular/material';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-account-summary',
@@ -10,15 +11,20 @@ import { MatSlideToggleChange } from '@angular/material';
   styleUrls: ['./account-summary.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AccountSummaryComponent implements OnChanges {
+export class AccountSummaryComponent implements OnChanges, OnInit {
   @Input() public accountData: IProfile;
 
   constructor(
     public router: Router,
     private profileService: ProfileService,
-    private ntfs: NotificationService
+    private ntfs: NotificationService,
+    private dataTransfer: DataTransferService
   ) { }
 
+  public ngOnInit(): void {
+    this.dataTransfer.newxUpdateData(null);
+  }
+  
   public accountSummary: FormGroup = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),

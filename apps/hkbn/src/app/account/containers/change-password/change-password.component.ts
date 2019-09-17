@@ -14,6 +14,8 @@ export class ChangePasswordComponent implements OnInit {
   public messageSuccess: string;
   public messageError: string;
   public profile: IProfile;
+  public cache: IChangePasswordData;
+
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -23,6 +25,7 @@ export class ChangePasswordComponent implements OnInit {
   ) {
   }
   public ngOnInit(): void {
+    this.dataTransferService.updateData$.subscribe((data) => this.cache = data);
     this.profileService.whoAmI().pipe(take(1)).subscribe((prof) => this.profile = prof);
     this.translate.get(['PASSWORD_SUCCESS_UPDATE', 'INCORRECT_PASSWORD']).subscribe((dictionary) => {
       this.messageSuccess = dictionary.PASSWORD_SUCCESS_UPDATE;
