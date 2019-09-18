@@ -8,7 +8,6 @@ import { of } from 'rxjs';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 
-
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;

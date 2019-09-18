@@ -8,7 +8,15 @@ import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 
-import { PerxCoreModule, VouchersModule, ProfileModule, AuthenticationService, ProfileService, IVoucherService } from '@perx/core';
+import { 
+  PerxCoreModule, 
+  VouchersModule, 
+  ProfileModule, 
+  AuthenticationService, 
+  ProfileService, 
+  IVoucherService, 
+  RewardsService 
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
 
