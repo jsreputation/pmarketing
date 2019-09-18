@@ -41,7 +41,7 @@ export class MacaronService {
       return {
         label: 'Fully redeemed',
         class: 'fully-redeemed',
-        isButtonEnabled: true
+        isButtonEnabled: false
       };
     }
 

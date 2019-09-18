@@ -82,13 +82,13 @@ p {
   position: fixed;
   top: 0;
   z-index: 99;
-  background: $white-color;
-  width: calc(100% - 17rem);
+  background: $white;
+  width: calc(100% - $sidenav-width-initial);
 
   @include mat-elevation(4);
 
   &.full-with {
-    background: $white-color;
+    background: $white;
     min-height: $header-height-base;
   }
 
@@ -114,7 +114,7 @@ p {
         top: 50%;
         transform: translateY(-50%);
         pointer-events: none;
-        background: $white-color;
+        background: $white;
         display: inline-block;
         margin-top: 0;
         width: auto;
@@ -243,7 +243,7 @@ p {
     border: none;
     border-radius: 4px;
     background: #ff1c1c;
-    color: $white-color;
+    color: $white;
     font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
@@ -285,7 +285,7 @@ p {
     transform: translateX(-49%);
     width: 22.8rem;
     min-height: 31.7rem;
-    background: $white-color;
+    background: $white;
     background-size: cover;
     border-radius: 8px;
     z-index: 3;
@@ -298,7 +298,7 @@ p {
   }
 }
 
-cl-game-mobile-preview, .tabs-component {
+cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
   }
@@ -400,7 +400,7 @@ cl-game-mobile-preview, .tabs-component {
     font-size: 12px;
     border-radius: 50%;
     background-color: $warning-color;
-    color: $white-color;
+    color: $white;
   }
 }
 

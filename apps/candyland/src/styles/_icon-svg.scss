@@ -115,37 +115,37 @@
 .delete {
   mask: url("assets/images/icons/delete.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: $dark-color;
+  background-color: $secondary-color;
 }
 
 .delete-action {
   mask: url("/assets/images/icons/delete-action.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .date-icon {
   mask: url("/assets/images/icons/date.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .time-icon {
   mask: url("/assets/images/icons/time.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .check-icon {
   mask: url("/assets/images/icons/check.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .link-icon {
   mask: url("/assets/images/icons/link.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .download-icon {
@@ -157,17 +157,17 @@
 .select-merchant-icon {
   mask: url("/assets/images/icons/select-merchant.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .create-merchant-icon {
   mask: url("/assets/images/icons/create-merchant.svg") no-repeat 50% 50%;
   background-position: center;
-  background-color: #3e4e73;
+  background-color: $secondary-color;
 }
 
 .active {
   .icon {
-    background-color: #ffffff;
+    background-color: $white;
   }
 }

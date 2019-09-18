@@ -8,11 +8,16 @@ import { AuthService, RoutingStateService } from '@cl-core/services';
 })
 export class AppComponent implements OnInit {
   constructor(private routingState: RoutingStateService,
-              public authService: AuthService) { }
+              public authService: AuthService) {
+  }
 
   public ngOnInit(): void {
     this.authService.initAuth();
+    this.authService.updateUser()
+      .subscribe(() => {
+      });
     this.routingState.loadRouting()
-      .subscribe(() => { });
+      .subscribe(() => {
+      });
   }
 }

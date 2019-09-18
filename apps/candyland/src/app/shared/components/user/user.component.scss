@@ -34,7 +34,7 @@
     font-weight: 500;
     line-height: 1.69;
     text-align: center;
-    color: $white-color;
+    color: $white;
   }
 
   &-company {
@@ -65,12 +65,12 @@
   right: 0.2rem;
 
   &-none {
-    background-color: #f85400;
+    background-color: $pending-color;
   }
 
   &-email {
     right: 0;
-    background-color: #35c6ff;
+    background-color: $primary-color;
   }
 }
 

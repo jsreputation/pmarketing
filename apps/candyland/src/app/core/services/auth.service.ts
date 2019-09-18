@@ -31,11 +31,11 @@ export class AuthService {
       return;
     }
     this.sessionService.token = localToken;
-    this.updateUser(localUserId).subscribe(() => {});
   }
 
-  public updateUser(id): Observable<IamUser> {
-    return this.dataStore.findRecord(IamUser, id)
+  public updateUser(): Observable<IamUser> {
+    const userId = this.userService.userId || this.localStorage.get('userId');
+    return this.dataStore.findRecord(IamUser, userId)
       .pipe(
         tap(user => this.userService.user = user),
         catchError(error => {
