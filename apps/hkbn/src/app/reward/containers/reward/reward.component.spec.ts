@@ -133,7 +133,7 @@ describe('RewardComponent', () => {
     let notificationServiceSpy;
     beforeEach(() => {
       dialog = TestBed.get(MatDialog);
-      notificationService = TestBed.get(NotificationService);
+      notificationService = TestBed.get<NotificationService>(NotificationService);
       dialogSpy = spyOn(dialog, 'open');
       notificationServiceSpy = spyOn(notificationService, 'addPopup');
     });

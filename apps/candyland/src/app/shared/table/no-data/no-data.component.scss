@@ -1,36 +1,14 @@
 @import "variables";
 
-.no-data {
-  padding: 5.5rem;
+:host {
+  padding: $vertical-padding;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
-
-  &-info {
-    z-index: 10;
-    position: relative;
-    max-width: 57rem;
-    font-family: $primary-font;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    color: rgba(0, 0, 0, 0.6);
-
-    h2 {
-      font-family: $primary-font;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 2.2rem;
-      line-height: 2.7rem;
-      text-align: center;
-      color: $base-font-color;
-    }
-  }
-
-  img {
-    margin-top: -5rem;
-  }
+  z-index: 10;
+  position: relative;
+  max-width: 57rem;
+  margin: $vertical-padding auto;
 }
