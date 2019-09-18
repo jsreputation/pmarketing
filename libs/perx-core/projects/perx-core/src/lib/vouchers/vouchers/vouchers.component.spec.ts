@@ -45,7 +45,7 @@ describe('VouchersComponent', () => {
     redemptionSuccessImg: ''
     // img: undefined,
   };
-  
+
   const voucherServiceStub = {
     get: () => {
       return of('');
