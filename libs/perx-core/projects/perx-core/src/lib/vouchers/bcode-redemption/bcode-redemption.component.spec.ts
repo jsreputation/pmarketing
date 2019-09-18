@@ -7,15 +7,14 @@ import { ConfigModule } from '../../config/config.module';
 import { of } from 'rxjs';
 import { IVoucherService } from '../ivoucher.service';
 
-
 describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
   let fixture: ComponentFixture<BcodeRedemptionComponent>;
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     }
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

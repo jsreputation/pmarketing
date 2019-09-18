@@ -9,13 +9,12 @@ import { LoyaltyService } from '../loyalty.service';
 import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 
-
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
   const loyaltyServiceStub = {
     getLoyalties: () => {
-      return of({})
+      return of({});
     }
   };
   const profileServiceStub = {
@@ -24,7 +23,7 @@ describe('LoyaltySummaryComponent', () => {
         id: 1,
         state: '',
         firstName: '',
-        lastName: ''})
+        lastName: ''});
     }
   };
   beforeEach(async(() => {

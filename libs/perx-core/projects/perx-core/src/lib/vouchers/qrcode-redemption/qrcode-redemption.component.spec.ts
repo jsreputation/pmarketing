@@ -11,10 +11,10 @@ describe('QrcodeRedemptionComponent', () => {
   let fixture: ComponentFixture<QrcodeRedemptionComponent>;
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     },
     getAll: () => of([])
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

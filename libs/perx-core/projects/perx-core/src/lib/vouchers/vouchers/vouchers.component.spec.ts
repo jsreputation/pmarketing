@@ -48,10 +48,10 @@ describe('VouchersComponent', () => {
   
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     },
     getAll: () => of([])
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
