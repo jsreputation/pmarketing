@@ -1,4 +1,4 @@
-..import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IGame, IPlayOutcome } from './game.model';
 
 export abstract class IGameService {
