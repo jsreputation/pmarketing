@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {AccountComponent} from './account.component';
-import {DebugElement, Component} from '@angular/core';
+import { DebugElement, Component, Type } from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {DynamicCreateService} from '../shared/service/dynamic-create.service';
 import {MatListModule} from '@angular/material/list';
@@ -76,7 +76,7 @@ describe('AccountComponent', () => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    authService = debugElement.injector.get(AuthenticationService);
+    authService = debugElement.injector.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable } from 'rxjs';
-import { IReward, ICatalog, IPrice, IRewardParams } from './models/reward.model';
-import { IVoucher } from '../vouchers/models/voucher.model';
+import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { map } from 'rxjs/operators';
@@ -53,7 +52,7 @@ export class WhistlerRewardsService implements RewardsService {
         // }
       ],
       termsAndConditions: r.attributes.terms_conditions,
-      howToRedeem: '',
+      howToRedeem: r.attributes.redemption_type,
       categoryTags: [
         {
           id: 0,
@@ -72,14 +71,6 @@ export class WhistlerRewardsService implements RewardsService {
   }
   // @ts-ignore
   public getRewards(page: number, pageSize: number, tags?: string[], categories?: string[]): Observable<IReward[]> {
-    throw new Error('Method not implemented.');
-  }
-  // @ts-ignore
-  public reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher> {
-    throw new Error('Method not implemented.');
-  }
-  // @ts-ignore
-  public issueReward(rewardId: number): Observable<IVoucher> {
     throw new Error('Method not implemented.');
   }
 

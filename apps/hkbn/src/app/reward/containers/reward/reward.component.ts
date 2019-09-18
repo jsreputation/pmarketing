@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent, IRewardConfirmComponentParam } from '../../components/reward-confirm/reward-confirm.component';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap, filter, last } from 'rxjs/operators';
-import { IReward, NotificationService, RewardsService, LoyaltyService, ILoyalty, IPopupConfig, PopupComponent } from '@perx/core';
+import { IReward, NotificationService, LoyaltyService, ILoyalty, IPopupConfig, PopupComponent, IVoucherService, RewardsService } from '@perx/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,6 +23,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
+    private voucherService: IVoucherService,
     private rewardsService: RewardsService,
     private translateService: TranslateService,
     private loyaltyService: LoyaltyService
@@ -68,7 +69,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   private exchangePoints(): Observable<void> {
-    return this.rewardsService.issueReward(this.rewardData.id)
+    return this.voucherService.issueReward(this.rewardData.id)
       .pipe(
         switchMap(() => combineLatest([this.translateService.get('YOUR_BALANCE_IS'), this.translateService.get('POINTS')])
           .pipe(

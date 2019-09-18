@@ -9,7 +9,6 @@ import {
   GameModule,
   UtilsModule,
   ProfileModule,
-  // IVoucherService,
   ProfileService,
   ConfigModule,
   RewardsModule,

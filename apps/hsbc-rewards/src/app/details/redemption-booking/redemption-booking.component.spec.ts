@@ -1,9 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  MatRadioModule,
+  MatCheckboxModule,
+  MatSelectModule,
+} from '@angular/material';
 
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
-import { MatRadioModule, MatCheckboxModule } from '@angular/material';
-import { RewardsModule, LocationModule, VouchersModule, ILoyalty, LoyaltyService, LocationsService, RewardsService, IReward } from '@perx/core';
+import {
+  RewardsModule,
+  LocationModule,
+  VouchersModule,
+  ILoyalty,
+  LoyaltyService,
+  LocationsService,
+  RewardsService,
+  IReward,
+  IVoucherService
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -38,6 +52,10 @@ describe('RedemptionBookingComponent', () => {
     getReward: () => of(mockReward)
   };
 
+  const vouchersServiceStub = {
+    reserveReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionBookingComponent],
@@ -45,6 +63,7 @@ describe('RedemptionBookingComponent', () => {
         DetailHeaderModule,
         MatRadioModule,
         MatCheckboxModule,
+        MatSelectModule,
         RewardsModule,
         VouchersModule,
         LocationModule,
@@ -56,7 +75,8 @@ describe('RedemptionBookingComponent', () => {
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: LocationsService, useValue: locationsServiceStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
       ]
     })
       .compileComponents();
@@ -72,15 +92,4 @@ describe('RedemptionBookingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should populate quantity', () => {
-    const checkVal = 1;
-    component.buildForm();
-    fixture.detectChanges();
-    component.bookingForm.patchValue({ quantity: checkVal });
-    fixture.detectChanges();
-    const elem = debugElem.query(By.css('select[formcontrolname=quantity]')).nativeElement;
-    expect(elem.value).toBe(checkVal.toString());
-  });
-
 });
