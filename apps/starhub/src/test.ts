@@ -9,6 +9,10 @@ import {
 
 declare const require: any;
 
+// @ts-ignore
+// tslint:disable-next-line
+var dataLayerSH = {}; // eslint-disable-line
+
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
