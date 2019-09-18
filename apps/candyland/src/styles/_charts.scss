@@ -54,8 +54,9 @@
   }
 
   &-header-with-control > *:not(&-title) {
-    flex-basis: 20rem;
     @include typo-body2;
+
+    flex-basis: 20rem;
   }
 
   &-block {
