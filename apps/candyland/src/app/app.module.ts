@@ -12,7 +12,7 @@ import { SideNavModule } from './shared/components/side-nav/side-nav.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { SessionService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/session.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { JsonApiModule } from 'angular2-jsonapi';
