@@ -22,30 +22,8 @@ export class Groups extends JsonApiModel {
 
   @BelongsTo()
    user: User;
-
-  // @HasMany()
-  // comments: Comment[];
 }
 
-//
-// @JsonApiModelConfig({
-//   type: 'comments'
-// })
-// export class Comment extends JsonApiModel {
-//
-//   @Attribute()
-//   title: string;
-//
-//   @Attribute()
-//   created_at: Date;
-//
-//   @BelongsTo()
-//   post: Post;
-//
-//   @BelongsTo()
-//   user: User;
-// }
-//
 @JsonApiModelConfig({
   type: 'users'
 })
