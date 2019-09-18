@@ -8,6 +8,8 @@ import {
   CampaignModule,
   GameModule,
   VouchersModule,
+  RewardsModule,
+  MerchantsModule,
   UtilsModule,
   ConfigModule,
   ProfileModule
@@ -31,7 +33,7 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     LoginComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     ProfileModule,
     BrowserModule,
     AppRoutingModule,
@@ -41,6 +43,8 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     UtilsModule,
     MatDialogModule,
     VouchersModule,
+    RewardsModule,
+    MerchantsModule,
     AuthenticationModule,
     CampaignModule,
     GameModule

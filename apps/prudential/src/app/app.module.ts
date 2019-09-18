@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   VouchersModule,
+  RewardsModule,
+  MerchantsModule,
   PerxCoreModule,
   AuthenticationModule,
   CampaignModule,
@@ -49,6 +51,8 @@ import { ResultComponent } from './result/result.component';
     ContactUsComponent,
     VouchersComponent,
     VoucherComponent,
+    RewardsModule,
+    MerchantsModule,
     LoginComponent
   ],
   imports: [

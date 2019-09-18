@@ -8,6 +8,8 @@ import {
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
+  MerchantsModule,
+  RewardsModule,
   StampModule,
   UtilsModule,
   ConfigModule,
@@ -35,7 +37,7 @@ import { LandingComponent } from './landing/landing.component';
     LandingComponent
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     ProfileModule,
     BrowserModule,
     AppRoutingModule,
@@ -48,6 +50,8 @@ import { LandingComponent } from './landing/landing.component';
     MatInputModule,
     MatButtonModule,
     VouchersModule,
+    MerchantsModule,
+    RewardsModule,
     AuthenticationModule,
     CampaignModule,
     StampModule,
