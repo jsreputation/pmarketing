@@ -26,9 +26,18 @@
   border-radius: $border-radius;
   border: 1px solid $border-color;
 
+  &-info-title {
+    @include typo-body1;
+
+    flex: 1 0 100%;
+    width: 100%;
+    margin-bottom: $vertical-padding / 2;
+  }
+
   &-title {
-    margin-bottom: ($vertical-padding * 0.75);
     @include typo-subtitle1;
+
+    margin-bottom: ($vertical-padding * 0.75);
     color: $secondary-color;
 
     &.with-control {

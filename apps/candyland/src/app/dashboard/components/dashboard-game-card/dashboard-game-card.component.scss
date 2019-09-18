@@ -37,9 +37,8 @@
   }
 
   &-title {
+    @include typo-subtitle1;
     color: $base-font-color;
-    line-height: 1.31;
-    font-size: 1.6rem;
   }
 
   &-description {

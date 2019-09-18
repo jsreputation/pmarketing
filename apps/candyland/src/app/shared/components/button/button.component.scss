@@ -15,10 +15,11 @@
   color: $white-color;
   padding: 0 2rem;
   box-shadow: none;
+}
 
-  &.no-padding {
-    padding: 0;
-  }
+.btn.no-padding,
+.mat-flat-button {
+  padding: 0;
 }
 
 .primary {
