@@ -25,7 +25,7 @@ export class UpdatePhoneComponent implements OnInit {
       HkbnValidators.maxLength(11)])
   });
   public get newNumber(): string {
-    return this.updatePhoneGroup.value.code.replace('+','') + this.updatePhoneGroup.value.phone;
+    return this.updatePhoneGroup.value.code.replace('+', '') + this.updatePhoneGroup.value.phone;
   }
   constructor(
     private profileService: ProfileService,
