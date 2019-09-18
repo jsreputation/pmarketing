@@ -186,12 +186,63 @@
           </div>
         </div>
       </mat-card>
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
     </div>
-
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
+    <cl-simple-mobile-view class="second-tab"
+                           [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
+                           [mobileImageClass]="'mobile-non-header'"
+                           [headerColor]="getTenantProperty('theme.header_color')"
+                           [logo]="tenantLogo()"
+                           [logoType]="tenantTypeLogo()"
+                           [fontFamily]="getTenantProperty('theme.font')"
+    >
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          {{headlineMessage?.value}}
+        </p>
+        <p class="mobile-preview-sub-headline">
+          {{subHeadlineMessage?.value}}
+        </p>
       </div>
-    </div>
+      <div class="plugin-block">
+        <div class="mobile-preview-card"
+             [ngStyle]="{
+             'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
+             'font-family': 'Roboto'
+             }"
+        >
+          <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
+        </div>
+
+      </div>
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn"
+                [ngStyle]="{
+                backgroundColor: getTenantProperty('theme.button_color'),
+                'font-family': getTenantProperty('theme.font')
+                }"
+        >
+          {{buttonText?.value}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
   </section>
 </div>
 

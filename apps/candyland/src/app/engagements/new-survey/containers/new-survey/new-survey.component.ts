@@ -1,14 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
-import { AvailableNewEngagementService, RoutingStateService, SurveyService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
 import { QuestionFormFieldService } from '@cl-shared';
 import { Router } from '@angular/router';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 
 @Component({
   selector: 'cl-new-survey',
@@ -21,7 +23,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public surveyQuestionType: IEngagementType[];
   public surveyData$: Observable<any>;
   public level = 0;
-
+  public questionData$ = new Subject();
+  public tenants: Tenants;
   // tslint:disable
   public get listId(): string {
     const id = this.questionFormFieldService.listId;
@@ -57,16 +60,54 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     return this.form.get('color');
   }
 
+  public get background(): AbstractControl {
+    return this.form.get('background');
+  }
+
+  public get cardBackground(): AbstractControl {
+    return this.form.get('cardBackground');
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return ImageControlValue.getImgLink(control, defaultImg);
+  }
+
+  public getQuestionData(): Observable<any> {
+    return this.questionData$.asObservable();
+  }
+
+  public getTenantProperty(property: string): any {
+    return this.tenants ? this.tenants.properties[property] : null;
+  }
+
+  public tenantLogo(): any {
+    if (this.tenants && this.tenants.properties['theme.title']) {
+      return this.tenants.properties['theme.title']
+    } else if (this.tenants && this.tenants.properties['theme.logo']) {
+      return this.tenants.properties['theme.logo']
+    }
+  }
+
+  /**
+   * this method need for get right type of logo img or text in the component
+   */
+  public tenantTypeLogo(): boolean {
+    return !(this.tenants && (this.tenants.properties['theme.title'] as any));
+  }
   constructor(private questionFormFieldService: QuestionFormFieldService,
               private availableNewEngagementService: AvailableNewEngagementService,
               private surveyService: SurveyService,
               private router: Router,
-              private routingState: RoutingStateService) {
+              private routingState: RoutingStateService,
+              private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
     this.initForm();
     this.getSurveyData();
+    this.subscribeFormValueChanges();
+    this.getTenants();
   }
 
   public ngOnDestroy(): void {
@@ -135,7 +176,26 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         this.form.patchValue({
           background: res.background[0],
           cardBackground: res.cardBackground[0]
-        });
+        }, {emitEvent: false});
       }));
+  }
+
+  private subscribeFormValueChanges(): void {
+    this.form.valueChanges
+      .pipe(
+        debounceTime(500),
+        untilDestroyed(this)
+      )
+      .subscribe((val) => {
+        this.questionData$.next({questions: [val.questions[0]]});
+        this.cdr.detectChanges();
+      })
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenants = res;
+      });
   }
 }
