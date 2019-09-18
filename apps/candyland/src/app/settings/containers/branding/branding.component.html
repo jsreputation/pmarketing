@@ -7,13 +7,13 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Style</span>
           </p>
           <mat-form-field class="branding-select">
             <mat-select formControlName="style">
-              <mat-option *ngFor="let style of styles" [value]="style.id">
+              <mat-option *ngFor="let style of styles" [value]="style.value">
                 {{style.value}}
               </mat-option>
             </mat-select>
@@ -25,7 +25,7 @@
           </p>
           <mat-form-field class="branding-select">
             <mat-select formControlName="font">
-              <mat-option *ngFor="let font of fonts" [value]="font.id">
+              <mat-option *ngFor="let font of fonts" [value]="font.value">
                 {{font.value}}
               </mat-option>
             </mat-select>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Primary Color</span>
           </p>
@@ -55,12 +55,12 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Color</span>
           </p>
           <!--color select-->
-          <div class="control-input w-50 select">
+          <div class="control-input w-50 select-outcome">
             <mat-form-field color="primary" appearance="outline">
               <mat-select [formControlName]="'headerNavbarColor'">
                 <mat-select-trigger>
@@ -131,12 +131,12 @@
         </p>
       </div>
       <div class="flex">
-        <div class="control-input select">
+        <div class="control-input select-outcome">
           <p class="game-title">
             <span>Color</span>
           </p>
           <!--color select-->
-          <div class="control-input w-50 select">
+          <div class="control-input w-50 select-outcome">
             <mat-form-field color="primary" appearance="outline">
               <mat-select [formControlName]="'button'">
                 <mat-select-trigger>
@@ -170,6 +170,74 @@
     </mat-card>
   </div>
   <cl-settings-mobile-preview>
+    <cl-simple-mobile-view class="firs-tab"
+                           [mobileImageClass]="'mobile-non-header'"
+                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
+                           [headerColor]="headerNavbarColor.value.color"
+                           [logo]="logo.value"
+                           [logoType]="logoType.value === 'image'"
+                           [fontFamily]="font.value"
+    >
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn"
+                [ngStyle]="{
+                backgroundColor: button.value.color,
+                'font-family': font.value
+                }"
+        >
+          {{'button text'}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
+    <cl-simple-mobile-view class="second-tab"
+                           [mobileImageClass]="'mobile-non-header'"
+                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
+                           [headerColor]="headerNavbarColor.value.color"
+                           [logo]="logo.value"
+                           [logoType]="logoType.value === 'image'"
+                           [fontFamily]="font.value"
+    >
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn"
+                [ngStyle]="{
+                backgroundColor: button.value.color,
+                'font-family': font.value
+                }"
+        >
+          {{'button text'}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
+    <cl-simple-mobile-view class="three-tab"
+                           [mobileImageClass]="'mobile-non-header'"
+                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
+                           [headerColor]="headerNavbarColor.value.color"
+                           [logo]="logo.value"
+                           [logoType]="logoType.value === 'image'"
+                           [fontFamily]="font.value"
+    >
+      <div class="plugin-block">
+        <div class="mobile-preview-card"
+             [ngStyle]="{
+             'background-image': 'url(assets/images/reward/card-background/card-bg-1.png)',
+             'font-family': font.value
+             }"
+        >
+          <perx-core-reward [reward]="reward"></perx-core-reward>
+        </div>
+      </div>
+
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn"
+                [ngStyle]="{
+                backgroundColor: button.value.color,
+                'font-family': font.value
+                }"
+        >
+          {{'button text'}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
   </cl-settings-mobile-preview>
 </section>
 

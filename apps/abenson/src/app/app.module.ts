@@ -48,6 +48,7 @@ import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
+import { CardComponent } from './card/card.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -91,7 +92,8 @@ const profileServiceStub = {
     VoucherDetailComponent,
     AccountComponent,
     HistoryComponent,
-    PromosComponent
+    PromosComponent,
+    CardComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),

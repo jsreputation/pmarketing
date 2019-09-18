@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AuthGuard} from '@cl-core/guards/auth.guard';
+import { AuthGuard } from '@cl-core/guards/auth.guard';
 import { NoAuthGuard } from '@cl-core/guards/no-auth.guard';
-import {MainContainerComponent} from './main-container/main-container.component';
+import { MainContainerComponent } from './main-container/main-container.component';
 import { LoginComponent } from './auth/containers/login/login.component';
 
 const routes: Routes = [
@@ -38,7 +38,7 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(mod => mod.SettingsModule)
-      },
+      }
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
