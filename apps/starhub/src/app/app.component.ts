@@ -33,7 +33,7 @@ export interface IdataLayerSH {
 }
 
 // tslint:disable-next-line
-declare var dataLayerSH: IdataLayerSH;
+declare var dataLayerSH: IdataLayerSH;// eslint-disable-line
 
 declare const _satellite: {
   track: (ev: string) => void;
