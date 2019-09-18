@@ -51,7 +51,6 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   }
 
   public selectedTab(value: string): void {
-    console.log(value);
     this.activeTab = value;
   }
 
