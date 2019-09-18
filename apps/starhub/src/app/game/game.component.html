@@ -6,8 +6,8 @@
     </div>
     <div *ngIf="isGameAvailable" class="pinata-wrapper">
       <perx-core-pinata
-        [stillImg]="'assets/pinata/still-img.png'"
-        [openedImg]="'assets/pinata/opened-img.png'"
+        [stillImg]="game.config.stillImg"
+        [openedImg]="game.config.brokenImg"
         (broken)="gameCompleted()"
         [nbTaps]="numberOfTaps"
         [enabled]="isEnabled">
