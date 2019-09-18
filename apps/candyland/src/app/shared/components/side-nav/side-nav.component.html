@@ -5,6 +5,13 @@
     >
       <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
     </mat-toolbar>
+    <div class="sidenav-data-container">
+      <cl-user *ngIf="(user$ | async) as user"
+              class="cl-user"
+               [isOpen]="isOpen"
+               [user]="user"
+      ></cl-user>
+    </div>
     <div class="sidenav-menu-wrap">
       <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
     </div>
