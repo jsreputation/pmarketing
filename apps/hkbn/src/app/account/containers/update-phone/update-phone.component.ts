@@ -37,7 +37,7 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.staticDataService.getCountriesList().subscribe((countries)=>this.countryCodes = countries);
+    this.staticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.profileService.whoAmI().pipe(
       map((profile) => profile.phone)
