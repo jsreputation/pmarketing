@@ -12,5 +12,5 @@ export abstract class LocationsService {
 
   public abstract getTags(): Observable<string[]>;
 
-  public abstract getFromMerchant(merchantId: number): Observable<ILocation[]>;
+  public abstract getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]>;
 }

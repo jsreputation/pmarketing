@@ -1,8 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  MatRadioModule,
+  MatCheckboxModule,
+  MatSelectModule,
+} from '@angular/material';
 
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
-import { MatRadioModule, MatCheckboxModule } from '@angular/material';
 import {
   RewardsModule,
   LocationModule,
@@ -59,6 +63,7 @@ describe('RedemptionBookingComponent', () => {
         DetailHeaderModule,
         MatRadioModule,
         MatCheckboxModule,
+        MatSelectModule,
         RewardsModule,
         VouchersModule,
         LocationModule,
@@ -87,15 +92,4 @@ describe('RedemptionBookingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should populate quantity', () => {
-    const checkVal = 1;
-    component.buildForm();
-    fixture.detectChanges();
-    component.bookingForm.patchValue({ quantity: checkVal });
-    fixture.detectChanges();
-    const elem = debugElem.query(By.css('select[formcontrolname=quantity]')).nativeElement;
-    expect(elem.value).toBe(checkVal.toString());
-  });
-
 });
