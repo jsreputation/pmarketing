@@ -94,3 +94,11 @@ export class CampaignAppPage {
  }
 
 }
+
+export class CreateCampaignAppPage {
+
+  public navigateToCreateCampaign(): Promise<string> {
+    return browser.get('campaigns/new-campaign') as Promise<string> ;
+ }
+
+}

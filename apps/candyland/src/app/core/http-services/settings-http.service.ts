@@ -50,4 +50,12 @@ export class SettingsHttpService {
   public getAllGroups(): Observable<any> {
     return this.http.get(ApiConfig.IAMGroupsPath);
   }
+
+  public patchSettings(data: any): Observable<any> {
+    return this.http.patch(`${ApiConfig.tenantsPath}`, {data});
+  }
+
+  public getTenants(): Observable<any> {
+    return this.http.get(ApiConfig.tenantsPath);
+  }
 }

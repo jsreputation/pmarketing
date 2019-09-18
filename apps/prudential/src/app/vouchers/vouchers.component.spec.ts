@@ -26,6 +26,10 @@ describe('VouchersComponent', () => {
       return of ('');
     }
   };
+
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
@@ -38,7 +42,8 @@ describe('VouchersComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: MatDialog, useValue: matDialogStub },
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     }).compileComponents();
   }));

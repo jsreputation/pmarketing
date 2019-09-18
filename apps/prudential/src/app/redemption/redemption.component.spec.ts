@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
 import { Voucher, VoucherState, RedemptionType, VouchersModule, IVoucherService } from '@perx/core';
+
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
@@ -29,6 +30,10 @@ describe('RedemptionComponent', () => {
       return of('');
     }
   };
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],
@@ -39,7 +44,10 @@ describe('RedemptionComponent', () => {
         VouchersModule,
       ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
       .compileComponents();

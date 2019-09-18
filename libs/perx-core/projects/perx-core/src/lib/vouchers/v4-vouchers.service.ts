@@ -2,10 +2,32 @@ import { Injectable } from '@angular/core';
 import { Observable, of, interval } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams, IRedeemOptions } from './models/voucher.model';
-import { map, tap, flatMap, mergeAll, scan, filter } from 'rxjs/operators';
+import { map, tap, flatMap, mergeAll, scan, filter, switchMap } from 'rxjs/operators';
 import { IVoucherService } from './ivoucher.service';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
+import { IRewardParams } from '../rewards/models/reward.model';
+
+interface IV4Meta {
+  count?: number;
+  size?: number;
+  total_pages?: number;
+  page?: number;
+}
+
+interface IV4ReserveRewardResponse {
+  data: IV4MinifiedVoucher;
+  meta?: IV4Meta;
+}
+
+interface IV4MinifiedVoucher {
+  id: number;
+  voucher_code: string;
+  voucher_key: string;
+  state: VoucherState;
+  custom_fields: any;
+  reserved_expires_at: Date;
+}
 
 interface IV4VouchersResponse {
   data: IV4Voucher[];
@@ -284,6 +306,33 @@ export class V4VouchersService implements IVoucherService {
 
         return true;
       })
+    );
+  }
+
+  public reserveReward(rewardId: number, rewardParams?: IRewardParams): Observable<IVoucher> {
+    let params = new HttpParams();
+
+    if (oc(rewardParams).locationId()) {
+      params = params.set('location_id', rewardParams.locationId.toString());
+    }
+    if (oc(rewardParams).priceId()) {
+      params = params.set('price_id', rewardParams.priceId.toString());
+    }
+
+    return this.http.post<IV4ReserveRewardResponse>(
+      `${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, { params }
+    ).pipe(
+      map(res => res.data),
+      switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id)),
+    );
+  }
+
+  public issueReward(rewardId: number): Observable<IVoucher> {
+    return this.http.post<IV4ReserveRewardResponse>(
+      `${this.config.apiHost}/v4/rewards/${rewardId}/issue`, {}
+    ).pipe(
+      map(res => res.data),
+      switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id)),
     );
   }
 }

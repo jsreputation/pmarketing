@@ -7,9 +7,11 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
+
 import { PerxCoreModule, VouchersModule, ProfileModule, AuthenticationService, ProfileService, IVoucherService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
+
 import { of } from 'rxjs';
 
 describe('ActivationCodeComponent', () => {
@@ -27,6 +29,10 @@ describe('ActivationCodeComponent', () => {
     get: () => {
       return of('');
     }
+  };
+
+  const rewardsServiceStub = {
+    getReward: () => of()
   };
 
   beforeEach(async(() => {
@@ -53,7 +59,8 @@ describe('ActivationCodeComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: AUTH_SERVICE, useValue: ''},
         { provide: ProfileService, useValue: profileServiceStub},
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();

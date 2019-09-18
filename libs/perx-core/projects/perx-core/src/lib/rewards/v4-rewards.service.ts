@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { concatAll, map, mergeMap, reduce, switchMap } from 'rxjs/operators';
+import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RewardsService } from './rewards.service';
-import { IReward, ICatalog, IPrice, ICategoryTags, IRewardParams } from './models/reward.model';
-import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
-import { IVoucherService } from '../vouchers/ivoucher.service';
-import { oc } from 'ts-optchain';
+import { IReward, ICatalog, IPrice, ICategoryTags } from './models/reward.model';
 import { Config } from '../config/config';
 
 interface IV4Meta {
@@ -76,15 +73,6 @@ interface IV4Price {
   identifier?: string;
 }
 
-interface IV4MinifiedVoucher {
-  id: number;
-  voucher_code: string;
-  voucher_key: string;
-  state: VoucherState;
-  custom_fields: any;
-  reserved_expires_at: Date;
-}
-
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
   meta?: IV4Meta;
@@ -106,11 +94,6 @@ interface IV4GetCatalogsResponse {
 
 interface IV4GetCatalogResponse {
   data: IV4Catalog;
-}
-
-interface IV4ReserveRewardResponse {
-  data: IV4MinifiedVoucher;
-  meta?: IV4Meta;
 }
 
 interface IV4Catalog {
@@ -139,7 +122,6 @@ export class V4RewardsService extends RewardsService {
 
   constructor(
     private http: HttpClient,
-    private voucherService: IVoucherService,
     config: Config
   ) {
     super();
@@ -245,33 +227,6 @@ export class V4RewardsService extends RewardsService {
       }),
       concatAll(),
       reduce((acc: IReward[], curr: IReward[]) => acc.concat(curr), [])
-    );
-  }
-
-  public reserveReward(rewardId: number, rewardParams?: IRewardParams): Observable<IVoucher> {
-    let params = new HttpParams();
-
-    if (oc(rewardParams).locationId()) {
-      params = params.set('location_id', rewardParams.locationId.toString());
-    }
-    if (oc(rewardParams).priceId()) {
-      params = params.set('price_id', rewardParams.priceId.toString());
-    }
-
-    return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { params }
-    ).pipe(
-      map(res => res.data),
-      switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
-    );
-  }
-
-  public issueReward(rewardId: number): Observable<IVoucher> {
-    return this.http.post<IV4ReserveRewardResponse>(
-      `${this.apiHost}/v4/rewards/${rewardId}/issue`, {}
-    ).pipe(
-      map(res => res.data),
-      switchMap((minVoucher: IV4MinifiedVoucher) => this.voucherService.get(minVoucher.id)),
     );
   }
 

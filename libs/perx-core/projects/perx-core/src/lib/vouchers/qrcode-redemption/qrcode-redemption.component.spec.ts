@@ -4,6 +4,7 @@ import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from './../../config/config.module';
 import { IVoucherService } from '../ivoucher.service';
+import { RewardsService } from '../../rewards/rewards.service';
 import { of } from 'rxjs';
 
 describe('QrcodeRedemptionComponent', () => {
@@ -14,6 +15,10 @@ describe('QrcodeRedemptionComponent', () => {
     getAll: () => of([])
   };
 
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -21,10 +26,13 @@ describe('QrcodeRedemptionComponent', () => {
         ConfigModule.forRoot({})
         ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

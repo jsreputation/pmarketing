@@ -26,6 +26,9 @@ describe('VoucherComponent', () => {
   const vouchersServiceStub = {
     get: () => of(mockVoucher)
   };
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +38,10 @@ describe('VoucherComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
       .compileComponents();

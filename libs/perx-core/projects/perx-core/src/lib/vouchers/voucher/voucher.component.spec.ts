@@ -6,6 +6,8 @@ import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from '../../config/config.module';
 import { of } from 'rxjs';
 import { IVoucherService } from '../ivoucher.service';
+import { RewardsService } from '../../rewards/rewards.service';
+
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -14,6 +16,10 @@ describe('VoucherComponent', () => {
     get: () => of(''),
     getAll: () => of([])
   };
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -22,7 +28,10 @@ describe('VoucherComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
       .compileComponents();

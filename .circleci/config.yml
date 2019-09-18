@@ -94,16 +94,16 @@ commands:
     description: based on client deploy endpoint base href
     steps:
       - run:
-          name: Setup ISWHISTLER var
+          name: Setup IS_WHISTLER var
           command: |
             if [ $APP == 'blackcomb' ]
             then
-              ISWHISTLER="true"
+              IS_WHISTLER="true"
             else
-              ISWHISTLER="false"
+              IS_WHISTLER="false"
             fi
-            echo 'export ISWHISTLER=$ISWHISTLER' >> $BASH_ENV
-            echo $ISWHISTLER
+            echo "export IS_WHISTLER=$IS_WHISTLER" >> $BASH_ENV
+            echo $IS_WHISTLER
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -150,11 +150,12 @@ jobs:
       - run:
           name: Build docker image
           command: |
-            echo $BASH_ENV
             echo "APP: ${APP}"
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "IS_WHISTLER: ${IS_WHISTLER}"
             if [ $APP == 'candyland-uat' ]
             then
               export APP="candyland"
@@ -167,7 +168,7 @@ jobs:
             --build-arg apihost=$APIHOST \
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
-            --build-arg iswhistler=$ISWHISTLER
+            --build-arg iswhistler=$IS_WHISTLER
       - run:
           name: Push docker
           command: |

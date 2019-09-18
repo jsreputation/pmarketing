@@ -6,14 +6,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NotificationService,
   RewardsModule,
-  RewardsService,
   VouchersModule,
   IReward,
   LoyaltyService,
   ILoyalty,
   Voucher,
   VoucherState,
-  RedemptionType
+  RedemptionType,
+  IVoucherService,
+  RewardsService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -55,9 +56,12 @@ describe('RewardComponent', () => {
     redemptionSuccessImg: '',
   };
 
-  const rewardsServiceStub = {
-    getReward: (): Observable<IReward> => of(mockReward),
+  const vouchersServiceStub = {
     issueReward: (): Observable<Voucher> => of(mockVoucher)
+  };
+
+  const rewardsServiceStub = {
+    getReward: (): Observable<IReward> => of(mockReward)
   };
 
   const mockLoyalty: ILoyalty = {
@@ -92,6 +96,7 @@ describe('RewardComponent', () => {
         {
           provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) }
         },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ],
