@@ -7,8 +7,10 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, VouchersModule, ProfileModule, AuthenticationService } from '@perx/core';
+import { PerxCoreModule, VouchersModule, ProfileModule, AuthenticationService, ProfileService, IVoucherService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AUTH_SERVICE } from 'ngx-auth';
+import { of } from 'rxjs';
 
 
 describe('ActivationCodeComponent', () => {
@@ -19,6 +21,14 @@ describe('ActivationCodeComponent', () => {
   let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
   const authenticationServiceStub = {};
+  const profileServiceStub = {
+    whoAmI: () => of()
+  };
+  const voucherServiceStub = {
+    get: () => {
+      return of('')
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,7 +51,10 @@ describe('ActivationCodeComponent', () => {
             return { getContainerElement: () => overlayContainerElement };
           }
         },
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: AUTH_SERVICE, useValue: ''},
+        { provide: ProfileService, useValue: profileServiceStub},
+        { provide: IVoucherService, useValue: voucherServiceStub }
       ]
     })
       .compileComponents();

@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, PopupType } from './vouchers.component';
-import { VouchersModule, ConfigModule } from '@perx/core';
+import { VouchersModule,  IVoucherService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { MatDialogStub } from 'src/testing/mat-dialog-stub';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -18,13 +18,18 @@ describe('VouchersComponent', () => {
   const activatedRouteStub = new ActivatedRouteStub();
   const matDialogStub = new MatDialogStub();
   const spy = routerSpy.navigate as jasmine.Spy;
-
+  const voucherServiceStub = {
+    get: () => {
+      return of('')
+    },
+    getAll: () => {
+      return of ('');
+    }
+  }
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
       imports: [
-        ConfigModule.forRoot({}),
-        HttpClientTestingModule,
         NoopAnimationsModule,
         VouchersModule
       ],
@@ -32,7 +37,8 @@ describe('VouchersComponent', () => {
         DatePipe,
         { provide: Router, useValue: routerSpy },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: MatDialog, useValue: matDialogStub }
+        { provide: MatDialog, useValue: matDialogStub },
+        { provide: IVoucherService, useValue: voucherServiceStub }
       ]
     }).compileComponents();
   }));
