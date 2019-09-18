@@ -8,9 +8,10 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule } from '@perx/core';
+import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule, RewardsService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
+import { of } from 'rxjs';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -19,6 +20,10 @@ describe('ActivationCodeComponent', () => {
   let router: Router;
   let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
+
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -43,6 +48,9 @@ describe('ActivationCodeComponent', () => {
             overlayContainerElement = document.createElement('div');
             return { getContainerElement: () => overlayContainerElement };
           }
+        },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
         }
       ]
     })

@@ -48,18 +48,19 @@ import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
+import { CardComponent } from './card/card.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
   getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
-  reserveReward: () => of(vouchers[1])
 };
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
-  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id))
+  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id)),
+  reserveReward: () => of(vouchers[1])
 };
 
 const campaignServiceStub = {
@@ -91,7 +92,8 @@ const profileServiceStub = {
     VoucherDetailComponent,
     AccountComponent,
     HistoryComponent,
-    PromosComponent
+    PromosComponent,
+    CardComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),

@@ -2,7 +2,7 @@ import { environment } from '@cl-environments/environment';
 
 export class ApiConfig {
   public static basePath: string = environment.apiHost;
-  // public static basePath: string = 'https://api.whistler.perxtech.org';
+  // public static basePath: string = environment.apiHost;
   // public static basePath: string = 'http://708f54de.ngrok.io/';
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath = `${ApiConfig.basePath}/engagements`;

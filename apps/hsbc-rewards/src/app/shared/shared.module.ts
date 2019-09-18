@@ -14,7 +14,8 @@ import {
   MatProgressSpinnerModule,
   MatSidenavModule,
   MatRadioModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSelectModule,
 } from '@angular/material';
 import { UtilsModule } from '@perx/core';
 
@@ -37,7 +38,8 @@ import { UtilsModule } from '@perx/core';
     MatSidenavModule,
     MatRadioModule,
     MatCheckboxModule,
-    UtilsModule
+    MatSelectModule,
+    UtilsModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -55,7 +57,8 @@ import { UtilsModule } from '@perx/core';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
   ]
 })
 export class SharedModule { }
