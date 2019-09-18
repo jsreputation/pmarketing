@@ -346,6 +346,14 @@ cl-game-mobile-preview, .tabs-component {
   width: 100%;
 }
 
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $primary-hover;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $primary-color;
+}
+
 .btn-group {
   cl-button, button, a {
     margin-right: 8px;
@@ -411,6 +419,11 @@ cl-game-mobile-preview, .tabs-component {
 
 .name-filter {
   position: relative;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, 
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: $primary-color;
 }
 
 .tabs-filter:first-child .tabs {

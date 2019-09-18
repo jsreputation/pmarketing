@@ -27,6 +27,7 @@
   &-content {
     @include mat-elevation(1);
 
+    min-width: 48rem;
     border-radius: $border-radius;
     background-color: $white-color;
     box-sizing: border-box;
@@ -36,12 +37,20 @@
       border-bottom: 1px solid $border-color;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       align-items: flex-end;
 
+      .mat-tab-nav-bar {
+        border-color: $border-color;
+        margin-bottom: -1px;
+        flex-grow: 1;
+      }
+
       cl-range-date-picker-filter {
+        flex-shrink: 0;
+        font-size: 1.2rem;
         display: block;
-        font-size: $base-font-size;
-        margin: 1rem 1.2rem;
+        margin: 1rem 1.2rem -1rem auto;
       }
     }
   }
@@ -51,22 +60,18 @@
     justify-content: space-between;
     padding: 6rem 4rem 0;
   }
-
 }
 
 .game-card {
-  margin-right: 2rem;
+  margin: 0 ($horizontal-padding / 4) ($vertical-padding / 2);
   flex: auto;
   width: 0;
   flex-wrap: wrap;
 
-  &:last-child {
-    margin-right: 0;
-  }
-
   &-wrap {
     display: flex;
-    margin-top: ($vertical-padding * 0.75);
+    flex-wrap: wrap;
+    margin: ($vertical-padding * 0.75) (-($vertical-padding / 4)) 0;
   }
 }
 
