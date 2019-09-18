@@ -50,7 +50,7 @@
         flex-shrink: 0;
         font-size: 1.2rem;
         display: block;
-        margin: 1rem 1.2rem -1rem auto;
+        margin: 1rem $horizontal-padding -0.75rem auto;
       }
     }
   }
@@ -77,7 +77,6 @@
 
 .tabs-list-wrap {
   width: 27rem;
-  margin-right: $horizontal-padding;
 }
 
 .time-line-block {

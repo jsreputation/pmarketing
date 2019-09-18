@@ -8,19 +8,18 @@
   box-sizing: border-box;
   justify-content: space-between;
   padding: 0;
-  margin: 0;
+  margin: 0 (-($horizontal-padding / 2));
 
   & > * {
-    margin-bottom: $vertical-padding;
-    margin-right: $horizontal-padding;
+    margin: 0 ($horizontal-padding / 2) $vertical-padding;
     flex: 1;
   }
 }
 
 .chart-card {
   position: relative;
-  padding: $vertical-padding $horizontal-padding;
-  flex: calc(50% - $horizontal-padding);
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+  flex: 1 1 calc(50% - $horizontal-padding);
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
@@ -50,6 +49,15 @@
     color: $secondary-color;
   }
 
+  &-header-with-control &-title {
+    flex-shrink: 0;
+  }
+
+  &-header-with-control > *:not(&-title) {
+    flex-basis: 20rem;
+    @include typo-body2;
+  }
+
   &-block {
     border: solid 1px $border-color;
     border-radius: $border-radius;
@@ -68,4 +76,10 @@
   &.full-width {
     flex: 100%;
   }
+}
+
+.chart-card:first-child,
+.tabs-list-wrap + .chart-card {
+  border-color: $white;
+  flex-grow: 2;
 }

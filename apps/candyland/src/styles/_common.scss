@@ -337,10 +337,6 @@ cl-game-mobile-preview, .tabs-component {
   }
 }
 
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding-top: 0.75em;
-}
-
 .control-input {
   font-size: $base-font-size !important;
   width: 100%;
@@ -352,6 +348,14 @@ cl-game-mobile-preview, .tabs-component {
 
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: $primary-color;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.5em;
+}
+
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: none !important;
 }
 
 .btn-group {
