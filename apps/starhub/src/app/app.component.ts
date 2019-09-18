@@ -33,7 +33,8 @@ export interface IdataLayerSH {
 }
 
 // tslint:disable-next-line
-declare var dataLayerSH: IdataLayerSH;// eslint-disable-line
+//@ts-ignore
+declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 
 declare const _satellite: {
   track: (ev: string) => void;
@@ -62,15 +63,23 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService
   ) {
-    dataLayerSH.pageName = '';
-    dataLayerSH.channel = 'msa';
-    dataLayerSH.pageType = '';
-    dataLayerSH.siteSectionLevel1 = 'rewards';
-    dataLayerSH.siteSectionLevel2 = '';
-    dataLayerSH.siteSectionLevel3 = '';
-    dataLayerSH.hubID = '';
-    dataLayerSH.perxID = '';
-    dataLayerSH.loginStatus = true;
+    this.data.pageName = '';
+    this.data.channel = 'msa';
+    this.data.pageType = '';
+    this.data.siteSectionLevel1 = 'rewards';
+    this.data.siteSectionLevel2 = '';
+    this.data.siteSectionLevel3 = '';
+    this.data.hubID = '';
+    this.data.perxID = '';
+    this.data.loginStatus = true;
+  }
+
+  private get data(): Partial<IdataLayerSH> {
+    // tslint:disable-next-line: no-use-before-declare
+    if (dataLayerSH === undefined) {
+      return {};
+    }
+    return dataLayerSH;
   }
 
   public ngOnInit(): void {
@@ -88,22 +97,23 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     this.analytics.events$.subscribe(
       (event: IEvent) => {
         if (event.pageType === PageType.overlay) {
-          dataLayerSH.pageName = `${dataLayerSH.pageName}:${event.pageName}`;
+          this.data.pageName = `${this.data.pageName}:${event.pageName}`;
         } else {
-          dataLayerSH.pageName = event.pageName;
+          this.data.pageName = event.pageName;
         }
-        dataLayerSH.pageType = event.pageType;
+        this.data.pageType = event.pageType;
         if (event.siteSectionLevel2) {
-          dataLayerSH.siteSectionLevel2 = event.siteSectionLevel2;
+          this.data.siteSectionLevel2 = event.siteSectionLevel2;
         }
         if (event.siteSectionLevel3) {
-          dataLayerSH.siteSectionLevel3 = event.siteSectionLevel3;
+          this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
         this.token = this.authenticationService.getUserAccessToken();
-        dataLayerSH.hubID = this.token;
-        dataLayerSH.perxID = this.token;
+        this.data.hubID = this.token;
+        this.data.perxID = this.token;
         _satellite.track('msa-rewards-virtual-page');
+        // console.log(this.data, dataLayerSH);
       }
     );
   }
