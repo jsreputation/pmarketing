@@ -3,7 +3,7 @@
 .active-item {
   border-radius: $border-radius-lg !important;
   position: relative;
-  border: solid 1px $dark-color !important;
+  border: solid 1px $secondary-color !important;
 
   &::after {
     content: '';

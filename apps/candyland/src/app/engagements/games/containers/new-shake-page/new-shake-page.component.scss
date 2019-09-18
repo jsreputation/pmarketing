@@ -3,14 +3,14 @@
 .tree {
   &-wrap {
     min-height: 100vh;
-    background-color: $simple-light-gray;
+    background-color: $background-color;
   }
 
   &-page-header {
     display: flex;
     justify-content: space-between;
     padding: 0 3rem 0 4.3rem;
-    background: $white-color;
+    background: $white;
     align-items: center;
     height: 6.6rem;
   }

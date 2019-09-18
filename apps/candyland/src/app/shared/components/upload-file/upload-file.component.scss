@@ -82,7 +82,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: $white-color;
+    background: $white;
     border: dashed 1px rgba(62, 78, 115, 0.7);
     border-radius: $border-radius;
     transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
@@ -137,7 +137,7 @@
 
     & > i {
       height: 0.7rem !important;
-      background-color: $white-color;
+      background-color: $white;
     }
   }
 

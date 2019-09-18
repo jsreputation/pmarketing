@@ -20,8 +20,8 @@
     padding: 0.4rem;
     height: ($vertical-padding * 0.75);
     border-radius: $border-radius;
-    background-color: $dark-color;
-    color: $white-color;
+    background-color: $secondary-color;
+    color: $white;
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -31,7 +31,7 @@
     & .icon {
       margin-right: 0.5rem;
       background-position: center;
-      background-color: #ffffff;
+      background-color: $white;
       padding: 0;
     }
   }
@@ -48,11 +48,11 @@
   }
 
   &-group-label {
-    color: $dark-color !important;
+    color: $secondary-color !important;
   }
 
   &-text {
-    color: $dark-color;
+    color: $secondary-color;
     line-height: 1.4;
   }
 }

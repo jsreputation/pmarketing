@@ -15,11 +15,11 @@
     margin-bottom: 1.6rem;
     padding: ($vertical-padding * 0.75) 2rem;
     border-radius: $border-radius;
-    background-color: $simple-light-gray;
+    background-color: $background-color;
 
     &.primary {
       padding: 3.4rem 2rem;
-      background-color: $primary-section-color;
+      background-color: $light-gray;
     }
 
     & > * {

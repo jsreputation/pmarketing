@@ -17,7 +17,7 @@
   &-btn {
     width: 3rem;
     height: 3rem;
-    background: $white-color;
+    background: $white;
     border: dashed 1px rgba(62, 78, 115, 0.7);
     border-radius: $border-radius;
     transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
@@ -63,7 +63,7 @@
 .image {
   max-height: 100%;
   max-width: 100%;
-  background: $simple-light-gray;
+  background: $lightest-gray;
 
   &-clear {
     opacity: 0;
@@ -85,7 +85,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: $dark-color;
+      color: $secondary-color;
     }
   }
 
@@ -95,7 +95,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $simple-light-gray;
+    background: $lightest-gray;
     position: relative;
     cursor: pointer;
 

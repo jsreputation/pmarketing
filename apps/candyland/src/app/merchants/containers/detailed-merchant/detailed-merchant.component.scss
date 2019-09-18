@@ -26,7 +26,7 @@
     height: 12.7rem;
     border-radius: $border-radius;
     border: solid 1px rgba(62, 78, 115, 0.7);
-    background-color: $white-color;
+    background-color: $white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +64,7 @@
     position: relative;
     height: 5.4rem;
     border-radius: $border-radius;
-    background-color: $simple-light-gray;
+    background-color: $background-color;
     padding: 0 5.2rem;
     margin-bottom: 1rem;
 

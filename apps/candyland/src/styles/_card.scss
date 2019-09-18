@@ -13,7 +13,7 @@
   letter-spacing: normal;
   color: $base-font-color;
   border-radius: $border-radius-lg !important;
-  background-color: $white-color !important;
+  background-color: $white !important;
   padding: 0 !important;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
   margin-bottom: ($vertical-padding * 0.5) !important;
@@ -106,8 +106,7 @@
 
   &-section {
     margin-top: 1.9rem;
-    border-radius: $border-radius;
-    background-color: $simple-light-gray;
+    background-color: $background-color;
 
     .card-header {
       padding: 0 3rem;
@@ -135,12 +134,12 @@
   }
 
   &.dark-theme {
-    color: $white-color;
     border-radius: $border-radius-lg !important;
-    background-color: $dark-color !important;
+    color: $white;
+    background-color: $secondary-color !important;
 
     .card-title, .card-label {
-      color: $white-color;
+      color: $white;
     }
   }
 }
