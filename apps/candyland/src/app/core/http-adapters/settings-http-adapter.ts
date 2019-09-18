@@ -70,4 +70,42 @@ export class SettingsHttpAdapter {
     });
     return relationships_groups_id;
   }
+
+  public static transformGeneralSettings(data: any): any {
+    return {
+      'time_zone': data.timeZone,
+      currency: data.currency
+    };
+  }
+
+  public static transformSettingsBrandingFormToAPI (data: any): any {
+    return {
+      'theme.style': data.style,
+      'theme.font': data.font,
+      'theme.primary': data.primaryColor,
+      'theme.accent': data.secondaryColor,
+      'theme.header_color': data.headerNavbarColor.color,
+      'theme.logo': data.logoType === 'image' ? data.logo : '',
+      'theme.title': data.logoType === 'text' ? data.logo : '',
+      'theme.button_color': data.button.color
+    };
+  }
+
+  public static transformSettingsBrandingToForm (data: any, listColors: any[]): any {
+    const logoType = data['theme.title'] ? 'text' : 'image';
+    return {
+      style: data['theme.style'],
+      font: data['theme.font'],
+      primaryColor: data['theme.primary'],
+      secondaryColor: data['theme.accent'],
+      headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']),
+      logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
+      logoType: logoType,
+      button: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_color'])
+    }
+  }
+
+  public static getColorObj(listColors: any[], color: string): any {
+    return listColors.find(item => item.color === color);
+  }
 }
