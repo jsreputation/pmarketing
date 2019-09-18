@@ -40,7 +40,6 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { rewards } from './mock/rewards.mock';
@@ -91,7 +90,6 @@ const profileServiceStub = {
     RedeemComponent,
     LoadingComponent,
     VoucherDetailComponent,
-    AccountComponent,
     HistoryComponent,
     PromosComponent,
     CardComponent
