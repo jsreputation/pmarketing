@@ -18,6 +18,7 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
+console.log(apiConfig);
 
 app.options('*', cors());
 
