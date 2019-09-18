@@ -19,7 +19,6 @@
 
 .chart-card {
   position: relative;
-  border-radius: $border-radius;
   padding: $vertical-padding $horizontal-padding;
   flex: calc(50% - $horizontal-padding);
   box-sizing: border-box;
@@ -52,7 +51,7 @@
   }
 
   &-block {
-    border: solid 1px rgba(0, 0, 0, 0.2);
+    border: solid 1px $border-color;
     border-radius: $border-radius;
     margin-top: $vertical-padding;
     padding: $vertical-padding $horizontal-padding;
