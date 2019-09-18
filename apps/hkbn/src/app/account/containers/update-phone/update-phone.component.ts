@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService, GeneralStaticDataService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { countryCodes, ICountryCode } from 'src/assets/mock/country-code';
+import { ICountryCode } from '@perx/core/dist/perx-core/lib/utils/general-static-data/country-code';
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -25,19 +25,19 @@ export class UpdatePhoneComponent implements OnInit {
       HkbnValidators.maxLength(11)])
   });
   public get newNumber(): string {
-    return this.countryCodes.find(code => code.id === this.updatePhoneGroup.value.code)
-      .phone + this.updatePhoneGroup.value.phone;
+    return this.updatePhoneGroup.value.code + this.updatePhoneGroup.value.phone;
   }
   constructor(
     private profileService: ProfileService,
     private router: Router,
     private authService: AuthenticationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private staticDataService: GeneralStaticDataService
   ) {
   }
 
   public ngOnInit(): void {
-    this.countryCodes = countryCodes;
+    this.staticDataService.getCountriesList().subscribe((countries)=>this.countryCodes = countries);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.profileService.whoAmI().pipe(
       map((profile) => profile.phone)
