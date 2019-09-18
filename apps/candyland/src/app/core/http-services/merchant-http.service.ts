@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,5 +17,9 @@ export class MerchantHttpService {
 
   public getMerchantList(): Observable<any> {
     return this.http.get('assets/actives/merchant/list-merchant.json');
+  }
+
+  public createMerchant(data): Observable<any> {
+    return this.http.post(ApiConfig.merchantsPath, data);
   }
 }

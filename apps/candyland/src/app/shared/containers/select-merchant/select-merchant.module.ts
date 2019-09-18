@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ListMerchantViewModule } from '@cl-shared/components/list-merchant-view/list-merchant-view.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { SelectMerchantComponent } from './select-merchant.component';
 import { MerchantListComponent } from './merchant-list/merchant-list.component';
 import {
@@ -8,7 +10,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatPaginatorModule, MatSelectModule,
+  MatSelectModule,
   MatSortModule,
   MatTableModule
 } from '@angular/material';
@@ -19,8 +21,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 
 @NgModule({
   declarations: [
-    SelectMerchantComponent,
-    MerchantListComponent
+    SelectMerchantComponent
   ],
   exports: [
     SelectMerchantComponent
@@ -31,7 +32,6 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
   imports: [
     CommonModule,
     ButtonModule,
-
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
@@ -39,11 +39,12 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     MatInputModule,
     MatSortModule,
     MatTableModule,
-    MatPaginatorModule,
     MatSelectModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,
+    PaginationModule,
+    ListMerchantViewModule
   ]
 })
 export class SelectMerchantModule { }

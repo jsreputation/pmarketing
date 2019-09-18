@@ -3,7 +3,7 @@ import {
   JsonApiModelConfig,
   JsonApiModel,
   Attribute,
-  BelongsTo
+  HasMany
 } from 'angular2-jsonapi';
 
 // tslint:disable
@@ -27,8 +27,8 @@ export class Merchant extends JsonApiModel {
   @Attribute()
   properties: object;
 
-  @BelongsTo()
-  branches: MerchantBranch;
+  @HasMany()
+  branches: MerchantBranch[];
 }
 
 

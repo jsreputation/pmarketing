@@ -15,14 +15,14 @@ export class MerchantsService implements ITableService {
               private datastore: DataStore) {
   }
 
-  public getTableData(params: any): Observable<any> {
+  public getTableData(params: any): Observable<ITableData<Merchant>> {
     params.include = 'branches';
     console.log(params);
     return this.datastore.findAll<Merchant>(Merchant, params)
       .pipe(
         tap(data => console.log('merchant', data)),
         map(response => ({data: response.getModels(), meta: response.getMeta().meta})),
-        tap(data => console.log('formatMerchant', data)),
+        tap(data => console.log('formatMerchant', data))
       );
     // return this.settingsHttpService.getAllIMAUsers(params)
     //   .pipe(
@@ -35,6 +35,29 @@ export class MerchantsService implements ITableService {
       .pipe(
         map((res: IMerchant[]) => res)
       );
+  }
+
+  public deleteMerchant(id: string): Observable<any> {
+    return this.datastore.deleteRecord(Merchant, id);
+  }
+
+  public duplicateMerchant(merchant: Merchant): Observable<any> {
+    // return this.merchantHttpService.createMerchant(merchant);
+    // const post = this.datastore.createRecord(Merchant, {
+    //   'name': 'test',
+    //   'type': 'orgs',
+    //   'description': 'we do this'
+    // });
+    // return post.save();  // => POST to '/posts'
+    // const newDuplicate = this.datastore.createRecord(Merchant, merchant);
+    // console.log(newDuplicate);
+    // return this.datastore.saveRecord(merchant, Merchant);
+    let comment = this.datastore.createRecord(Merchant, {
+      'name': 'Prudential',
+      'description': 'we do this',
+      'properties': {'something': 'good'}
+    });
+    return comment.save();
   }
 
   public getMerchantList(): Observable<IMerchant[]> {

@@ -1,7 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MerchantsService } from '@cl-core/services';
-import { MAT_DIALOG_DATA, MatDialogRef, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-select-merchant',
@@ -9,28 +10,16 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
   styleUrls: ['./select-merchant.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectMerchantComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+export class SelectMerchantComponent {
+  public dataSource: CustomDataSource<Merchant>;
   public selectMerchant: IMerchant;
+  public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches'];
 
   constructor(
     public dialogRef: MatDialogRef<SelectMerchantComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private merchantService: MerchantsService
-  ) {
-  }
-
-  public ngOnInit(): void {
-    this.getMerchants();
-  }
-
-  public ngAfterViewInit(): void {
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+    private merchantService: MerchantsService) {
+    this.dataSource = new CustomDataSource<Merchant>(this.merchantService);
   }
 
   public selectedMerchant(merchant: IMerchant): void {
@@ -39,12 +28,5 @@ export class SelectMerchantComponent implements OnInit, AfterViewInit {
 
   public close(): void {
     this.dialogRef.close(this.selectMerchant);
-  }
-
-  private getMerchants(): void {
-    this.merchantService.getMerchant()
-      .subscribe((val: IMerchant[]) => {
-        this.dataSource.data = val;
-      });
   }
 }

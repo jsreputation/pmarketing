@@ -9,7 +9,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-form/create-merchant-form.module';
-import { ListMerchantViewModule } from './components/list-merchant-view/list-merchant-view.module';
+import { ListMerchantViewModule } from '../shared/components/list-merchant-view/list-merchant-view.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';

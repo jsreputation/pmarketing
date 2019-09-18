@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MerchantsService } from '@cl-core/services';
 import { MatDialog } from '@angular/material';
-import { MerchantsListDataSource } from '@cl-shared/table/data-source/merchants-list-data-source';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { logger } from 'codelyzer/util/logger';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
 
 @Component({
@@ -12,62 +12,49 @@ import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merch
   templateUrl: './list-merchant.component.html',
   styleUrls: ['./list-merchant.component.scss']
 })
-export class ListMerchantComponent implements OnInit, AfterViewInit, OnDestroy {
-  // @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  public dataSource: MerchantsListDataSource<Merchant>;
-  private destroy$ = new Subject();
+export class ListMerchantComponent implements OnDestroy {
+  public dataSource: CustomDataSource<Merchant>;
 
   constructor(private merchantService: MerchantsService,
               public dialog: MatDialog) {
-    this.dataSource = new MerchantsListDataSource<Merchant>(this.merchantService);
+    this.dataSource = new CustomDataSource<Merchant>(this.merchantService);
   }
 
-  public ngOnInit(): void {
-    // this.merchantService.getTableData({include: 'branches'})
-    //   .subscribe(data => console.log('test', data));
-    // this.getListMerchant();
-    // this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+  public ngOnDestroy(): void {
   }
 
-  public ngAfterViewInit(): void {
-    // if (this.paginator) {
-      // this.dataSource.paginator = this.paginator;
-    // }
-  }
-
-  public openDialogCreate(merchant?: IMerchant): void {
+  public openDialogCreate(merchant: Merchant): void {
     const dialogRef = this.dialog.open(CreateMerchantPopupComponent, {
       data: merchant
     });
 
     dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
+      .pipe(untilDestroyed(this))
       .subscribe(() => {
       });
   }
 
-  public handlerAction(data: {action: 'edit' | 'delete' | 'duplicate', merchant: IMerchant}): void {
-    const actions = {
-      edit: this.openDialogCreate.bind(this),
-      delete: '',
-      duplicate: ''
-    };
-    // tslint:disable
-    ( typeof actions[data.action] === 'function' ) && actions[data.action](data.merchant);
+  public deleteMerchant(merchant: Merchant): void {
+      this.merchantService.deleteMerchant(merchant.id).subscribe(
+        data => console.log('delete', data)
+      );
   }
 
-  // private getListMerchant(): void {
-  //   this.merchantService.getMerchantList()
-  //     .subscribe((res) => {
-  //       this.dataSource.data = res;
-  //     });
-  // }
+  public duplicateMerchant(merchant: Merchant): void {
+    console.log('duplicateMerchant');
+    this.merchantService.duplicateMerchant(merchant).subscribe(
+      data => console.log('duplicateMerchant', data)
+    );
+  }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  public handlerAction(data: { action: 'edit' | 'delete' | 'duplicate', merchant: IMerchant }): void {
+    const actions = {
+      edit: this.openDialogCreate.bind(this),
+      delete: this.deleteMerchant.bind(this),
+      duplicate: this.duplicateMerchant(this)
+    };
+    // tslint:disable
+    (typeof actions[data.action] === 'function') && actions[data.action](data.merchant);
   }
 
 }
