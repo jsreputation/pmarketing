@@ -36,7 +36,7 @@ export class RegistrationFormComponent {
       return;
     }
     const requestBody = this.registrationForm.value;
-    requestBody.phone = this.countryCodes.find(code => code.id === requestBody.code).phone + requestBody.phone;
+    requestBody.phone = requestBody.code + requestBody.phone;
     delete requestBody.code;
     this.formSubmit.emit(requestBody);
   }
