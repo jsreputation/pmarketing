@@ -1,26 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, ConfigModule } from '@perx/core';
+import { VouchersModule, ConfigModule, RewardsService } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
   let router: Router;
 
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VoucherComponent ],
+      declarations: [VoucherComponent],
       imports: [
         ConfigModule.forRoot({}),
         HttpClientTestingModule,
         VouchersModule,
         RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
-    .compileComponents();
+      .compileComponents();
     router = TestBed.get(Router);
   }));
 
