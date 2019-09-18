@@ -24,11 +24,11 @@ Scenario: Verifying that functionality of audience upload form
   Then  16_I should see file successfully updated.
 
 Scenario: Verifying that functionality of launch button
-  Given 17_that I am on the campaign info page.
+  Given 17_that I am on the campaign review page.
   When  17_I click on the launch button.
   Then  17_I should see url link for campaign.
 
 Scenario: Verifiying that the relevant elements in the campaign review page
-  Given 18_that I am on the campaign info page.
+  Given 18_that I am on the campaign review page.
   When  18_I do nothing .
   Then  18_I should see the relevant elements on the campaign review page.
