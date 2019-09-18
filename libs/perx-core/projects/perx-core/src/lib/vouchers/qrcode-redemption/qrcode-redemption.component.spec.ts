@@ -10,9 +10,7 @@ describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
   let fixture: ComponentFixture<QrcodeRedemptionComponent>;
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    },
+    get: () => of(''),
     getAll: () => of([])
   };
 

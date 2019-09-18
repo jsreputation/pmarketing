@@ -13,18 +13,14 @@ describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
   const loyaltyServiceStub = {
-    getLoyalties: () => {
-      return of({});
-    }
+    getLoyalties: () => of({})
   };
   const profileServiceStub = {
-    whoAmI: () => {
-      return of({
+    whoAmI: () => of({
         id: 1,
         state: '',
         firstName: '',
-        lastName: ''});
-    }
+        lastName: ''})
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({

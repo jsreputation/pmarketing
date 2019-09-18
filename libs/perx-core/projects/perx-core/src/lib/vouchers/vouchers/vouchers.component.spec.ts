@@ -47,9 +47,7 @@ describe('VouchersComponent', () => {
   };
 
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    },
+    get: () => of(''),
     getAll: () => of([])
   };
 

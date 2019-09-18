@@ -11,9 +11,7 @@ describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
   let fixture: ComponentFixture<BcodeRedemptionComponent>;
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    }
+    get: () => of('')
   };
 
   beforeEach(async(() => {

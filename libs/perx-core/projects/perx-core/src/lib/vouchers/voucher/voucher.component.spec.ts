@@ -11,9 +11,7 @@ describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    },
+    get: () => of(''),
     getAll: () => of([])
   };
   beforeEach(async(() => {
