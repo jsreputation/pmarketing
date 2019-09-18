@@ -4,7 +4,7 @@ import { AuthService } from '@cl-core-services';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SessionService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/session.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

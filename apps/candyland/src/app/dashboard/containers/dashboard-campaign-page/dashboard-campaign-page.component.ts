@@ -68,7 +68,6 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this),
         switchMap(params => this.dashboardService.getTabValue(176, params)),
-        tap(value => console.log('tab', value)),
         tap(value => this.activeCampaigns = value)
       )
       .subscribe(() => this.cd.detectChanges());

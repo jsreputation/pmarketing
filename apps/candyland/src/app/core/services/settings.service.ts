@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SettingsHttpService } from '@cl-core/http-services/settings-http.service';
+import { AuthService } from '@cl-core/services/auth.service';
 import { TimeZoneSort } from '@cl-helpers/time-zone-sort';
 import Utils from '@cl-helpers/utils';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { DataStore } from '@cl-core/http-adapters/datastore';
@@ -40,6 +41,7 @@ export class SettingsService implements ITableService {
   private tenants: Tenants;
   constructor(private settingsHttpService: SettingsHttpService,
               private fb: FormBuilder,
+              private authService: AuthService,
               private dataStore: DataStore) {
   }
 
@@ -150,7 +152,9 @@ export class SettingsService implements ITableService {
   public updateTenants(value: any): any {
     const newProperties = {...this.tenants.properties, ...value};
     this.tenants.properties = {...newProperties};
-    return this.tenants.save();
+    return this.tenants.save().pipe(
+      switchMap(() => this.authService.updateUser())
+    );
   }
 
 }
