@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdatePhoneComponent } from './update-phone.component';
-import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ describe('UpdatePhoneComponent', () => {
         TextMaskModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        MatSelectModule,
         TranslateModule.forRoot()
       ],
       providers: [
