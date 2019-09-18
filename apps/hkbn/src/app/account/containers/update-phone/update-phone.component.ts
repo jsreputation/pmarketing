@@ -42,7 +42,7 @@ export class UpdatePhoneComponent implements OnInit {
     this.profileService.whoAmI().pipe(
       map((profile) => profile.phone)
     ).subscribe((phone: string) => {
-      this.updatePhoneGroup.setValue({ phone: phone.substr(3), code: 11 });
+      this.updatePhoneGroup.setValue({ phone: phone.substr(3), code: '+852' });
     });
   }
 
