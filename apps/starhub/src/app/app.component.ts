@@ -32,17 +32,8 @@ export interface IdataLayerSH {
   loginStatus: boolean;
 }
 
-const dataLayerSH: IdataLayerSH = {
-  pageName: '',
-  channel: 'msa',
-  pageType: '',
-  siteSectionLevel1: 'rewards',
-  siteSectionLevel2: '',
-  siteSectionLevel3: '',
-  hubID: '',
-  perxID: '',
-  loginStatus: true
-};
+// tslint:disable-next-line
+declare var dataLayerSH: IdataLayerSH;
 
 declare const _satellite: {
   track: (ev: string) => void;
@@ -70,7 +61,17 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService
-  ) { }
+  ) {
+    dataLayerSH.pageName = '';
+    dataLayerSH.channel = 'msa';
+    dataLayerSH.pageType = '';
+    dataLayerSH.siteSectionLevel1 = 'rewards';
+    dataLayerSH.siteSectionLevel2 = '';
+    dataLayerSH.siteSectionLevel3 = '';
+    dataLayerSH.hubID = '';
+    dataLayerSH.perxID = '';
+    dataLayerSH.loginStatus = true;
+  }
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
