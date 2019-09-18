@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Config } from 'perx-core/perx-core';
 import { Observable, of } from 'rxjs';
 import { mergeMap, mergeAll, map } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant, IMeta } from './models/merchants.model';
+import { Config } from '../config/config';
 
 interface IV4GetMerchantsResponse {
   data: IMerchant[];

@@ -1,13 +1,11 @@
-import { IJsonApiListPayload } from './../jsonapi.payload';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMeta, IMerchant } from './models/merchants.model';
-import { HttpClient } from '@angular/common/http';
-import { Config } from 'perx-core/perx-core';
-import { Observable, of } from 'rxjs';
-import { mergeMap, mergeAll, map } from 'rxjs/operators';
-import { IJsonApiItem, IJsonApiItemPayload } from 'perx-core/lib/jsonapi.payload';
-import { WhistlerRewardsService } from 'perx-core/lib/rewards/whistler-rewards.service';
+import { Config } from '../config/config';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from './../jsonapi.payload';
 
 interface IWMerchant {
   urn: string;
