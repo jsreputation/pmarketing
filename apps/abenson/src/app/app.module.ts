@@ -49,6 +49,7 @@ import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { CardComponent } from './card/card.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -118,7 +119,8 @@ const profileServiceStub = {
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
-    LoyaltyModule
+    LoyaltyModule,
+    NgxBarcodeModule
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
