@@ -7,7 +7,7 @@
 
 .sidenav {
   width: $sidenav-width-initial;
-  background-color: #202c46;
+  background-color: $bgcolor-sidebar;
   position: fixed;
 
   &-data-container {
@@ -41,7 +41,7 @@
 
 .mat-toolbar-log {
   padding: 0 1rem;
-  background-color: #172238;
+  background-color: $bgcolor-sidebar-logo;
   display: flex;
   align-items: center;
   justify-content: center;

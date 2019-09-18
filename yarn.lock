@@ -8169,6 +8169,13 @@ next-tick@1, next-tick@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
+ng-mat-select-infinite-scroll@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ng-mat-select-infinite-scroll/-/ng-mat-select-infinite-scroll-1.1.0.tgz#c01d98cb204ac4f4a4661a86f150cc0deeebefe1"
+  integrity sha512-QFbEWsnPZxUTzKq8GyBrmc7rSLsD8JovkO0XtgySTS92j6C2vNpWPvRK4QMEQ8RNI5VGA55z4Hzg4i0hMxR4tA==
+  dependencies:
+    tslib "^1.9.0"
+
 ng-packagr@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-5.3.0.tgz#92434ca05ecbd1e01fe961a66c8a9a66b095f6fa"
