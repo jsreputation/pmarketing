@@ -3,7 +3,7 @@
     <div class="flex">
       <mat-form-field class="grow1">
         <mat-select formControlName="code">
-          <mat-option *ngFor="let code of countryCodes" [value]="code.id">+{{code.phone}}</mat-option>
+          <mat-option *ngFor="let code of countryCodes" [value]="code.phone">{{code.phone}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="grow4">

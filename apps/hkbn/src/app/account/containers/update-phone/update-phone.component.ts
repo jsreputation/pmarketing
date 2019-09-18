@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map, flatMap } from 'rxjs/operators';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService, GeneralStaticDataService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { ICountryCode } from '@perx/core';
 import { of } from 'rxjs';
-import { countryCodes, ICountryCode } from 'src/assets/mock/country-code';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -27,24 +27,24 @@ export class UpdatePhoneComponent implements OnInit {
       HkbnValidators.maxLength(11)])
   });
   public get newNumber(): string {
-    return this.countryCodes.find(code => code.id === this.updatePhoneGroup.value.code)
-      .phone + this.updatePhoneGroup.value.phone;
+    return this.updatePhoneGroup.value.code.replace('+', '') + this.updatePhoneGroup.value.phone;
   }
   constructor(
     private profileService: ProfileService,
     private router: Router,
     private authService: AuthenticationService,
     private route: ActivatedRoute,
+    private staticDataService: GeneralStaticDataService,
     private dataTransfer: DataTransferService
   ) {
   }
 
   public ngOnInit(): void {
-    this.countryCodes = countryCodes;
+    this.staticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.dataTransfer.updateData$.pipe(flatMap((val) => val ? of(val) :
       this.profileService.whoAmI().pipe(
-        map((profile) => ({ phone: profile.phone.substr(3), code: 11 }))
+        map((profile) => ({ phone: profile.phone.substr(3), code: '+852' }))
       ))).subscribe((phonePrew) => {
         this.updatePhoneGroup.setValue(phonePrew);
       });
