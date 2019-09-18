@@ -2,7 +2,7 @@
   {
     "id": "5d385e2eaf9064af6f35490d",
     "index": 0,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (805) 473-2139",
     "firstName": "Moreno",
     "lastName": "Briggs",
@@ -11,7 +11,7 @@
   {
     "id": "5d385e2ed3f11bdb009abd2c",
     "index": 1,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (967) 443-3302",
     "firstName": "Rosanne",
     "lastName": "Jensen",
@@ -20,7 +20,7 @@
   {
     "id": "5d385e2e4ac37efe900c47c8",
     "index": 2,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (861) 407-2620",
     "firstName": "Nettie",
     "lastName": "Wilcox",
@@ -29,7 +29,7 @@
   {
     "id": "5d385e2ec1feade9d420b927",
     "index": 3,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (895) 547-2518",
     "firstName": "Zimmerman",
     "lastName": "Flores",
@@ -38,7 +38,7 @@
   {
     "id": "5d385e2e2251fa5a63f37fb6",
     "index": 4,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (833) 437-3130",
     "firstName": "Audrey",
     "lastName": "Whitehead",
@@ -47,7 +47,7 @@
   {
     "id": "5d385e2ebf8a7d02b2904885",
     "index": 5,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (951) 463-3179",
     "firstName": "Walton",
     "lastName": "Whitfield",
@@ -56,7 +56,7 @@
   {
     "id": "5d385e2ec528f94f42e5fd3f",
     "index": 6,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (801) 490-3069",
     "firstName": "Morgan",
     "lastName": "Stevenson",
@@ -65,7 +65,7 @@
   {
     "id": "5d385e2ed9e0be8618fece19",
     "index": 7,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (873) 521-3754",
     "firstName": "Loraine",
     "lastName": "Pennington",
@@ -74,7 +74,7 @@
   {
     "id": "5d385e2f78d2e65aa83e9449",
     "index": 8,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (919) 445-3399",
     "firstName": "Petty",
     "lastName": "Mcpherson",
@@ -83,7 +83,7 @@
   {
     "id": "5d385e2fdc75db25fb320ced",
     "index": 9,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (980) 565-2829",
     "firstName": "Simpson",
     "lastName": "Browning",
@@ -92,7 +92,7 @@
   {
     "id": "5d385e2f8438c569831d0042",
     "index": 10,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (967) 526-3024",
     "firstName": "Lina",
     "lastName": "Mcbride",
@@ -101,7 +101,7 @@
   {
     "id": "5d385e2f8644504e71c20492",
     "index": 11,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (824) 560-2496",
     "firstName": "Jeanette",
     "lastName": "Reed",
@@ -110,7 +110,7 @@
   {
     "id": "5d385e2f780222eb536d8f13",
     "index": 12,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (950) 554-3959",
     "firstName": "Kelli",
     "lastName": "Lang",
@@ -119,7 +119,7 @@
   {
     "id": "5d385e2fde8e1566d6b3f9a7",
     "index": 13,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (862) 535-2664",
     "firstName": "Rogers",
     "lastName": "Battle",
@@ -128,7 +128,7 @@
   {
     "id": "5d385e2fc24068513d387246",
     "index": 14,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (824) 537-2211",
     "firstName": "Colette",
     "lastName": "Kaufman",
@@ -137,7 +137,7 @@
   {
     "id": "5d385e2fef3e18815cc2c2e5",
     "index": 15,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (927) 493-2941",
     "firstName": "Hoffman",
     "lastName": "Robertson",
@@ -146,7 +146,7 @@
   {
     "id": "5d385e2f53645e32883a21a4",
     "index": 16,
-    "logo": "assets/images/merchant/merchant.png",
+    "logo": "assets/images/placeholders/merchants/merchant.png",
     "phone": "+1 (927) 460-2244",
     "firstName": "Penelope",
     "lastName": "Beck",
