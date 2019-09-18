@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService, AuthenticationService, IChangePasswordData } from '@perx/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,8 +18,8 @@ export class VerificationOtpComponent implements OnInit {
   private number: string;
   private reqestData: any;
   public get numberDisplay(): string {
-    return this.number && this.number.substr(0, this.number.length - 3)
-      .replace(/\d/g, '*') + this.number.substr(this.number.length - 3);
+    return this.number && this.number.substr(0, this.number.length - 4)
+      .replace(/\d/g, '*') + this.number.substr(this.number.length - 4);
   }
   constructor(
     private profileService: ProfileService,
@@ -32,10 +32,9 @@ export class VerificationOtpComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.dataTransferService.updateData$.subscribe((data) => this.reqestData = data);
-    this.route.params.subscribe((param: Params) => this.type = param.id);
+    this.getInitData();
     this.profileService.whoAmI().subscribe((profile) =>
-      this.number = profile && profile.phone
+      this.type !== 'phone' ? this.number = profile && profile.phone : ''
     );
   }
   public update(otp: string): void {
@@ -46,7 +45,20 @@ export class VerificationOtpComponent implements OnInit {
         this.router.navigate(['account']);
       }, () => console.error('type is required'));
   }
-
+  private getInitData(): void {
+    this.route.params.pipe(flatMap((param) => {
+      this.type = param.id;
+      if (this.type === 'password') {
+        return this.dataTransferService.updateData$;
+      }
+      return this.route.queryParams;
+    })).subscribe((updateData) => {
+      if (this.type === 'phone') {
+        this.number = updateData.phone;
+      }
+      this.reqestData = updateData;
+    });
+  }
   private switchMethod(data: IChangePasswordData | IChangePhoneData): Observable<string> {
     switch (this.type) {
       case 'password':
@@ -59,7 +71,7 @@ export class VerificationOtpComponent implements OnInit {
     }
   }
   public resendSms(): void {
-    this.authService.resendOTP(this.number)
+    this.authService.requestVerificationToken(this.number)
       .pipe(
         flatMap(() => this.translate.get('CHECK_SMS')))
       .subscribe((msg) => this.notificationService.addSnack(msg));
