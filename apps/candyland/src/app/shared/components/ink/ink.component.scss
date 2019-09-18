@@ -1,3 +1,5 @@
+@import "variables";
+
 :host {
   display: flex;
   flex-shrink: 0;
@@ -44,7 +46,7 @@
   &::before {
     bottom: -0.1rem;
     z-index: 5;
-    border-bottom: 8px solid #fff;
+    border-bottom: 8px solid $white;
   }
 
   &::after {

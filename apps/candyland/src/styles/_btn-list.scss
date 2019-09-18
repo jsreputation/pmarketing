@@ -2,14 +2,14 @@
 
 .active-btn-item {
   border: solid 1px $secondary-font-color !important;
-  background-color: $dark-color !important;
-  color: $white-color !important;
+  background-color: $secondary-color !important;
+  color: $white !important;
 }
 
 .btn-item {
   width: 4rem;
   height: 4rem;
-  background-color: $white-color;
+  background-color: $white;
   font-family: $primary-font;
   font-size: 1.2rem;
   font-weight: normal;
@@ -18,7 +18,7 @@
   line-height: 1.58;
   letter-spacing: normal;
   text-align: center;
-  color: rgba($dark-color, 0.5);
+  color: rgba($secondary-color, 0.5);
   border-radius: 0.4rem;
   border: solid 1px $secondary-font-color;
 
