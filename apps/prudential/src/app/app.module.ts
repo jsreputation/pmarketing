@@ -51,7 +51,6 @@ import { ResultComponent } from './result/result.component';
     ContactUsComponent,
     VouchersComponent,
     VoucherComponent,
-    RewardsModule,
     MerchantsModule,
     LoginComponent
   ],
@@ -59,6 +58,7 @@ import { ResultComponent } from './result/result.component';
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
+    RewardsModule,
     VouchersModule,
     MatToolbarModule,
     MatSidenavModule,
