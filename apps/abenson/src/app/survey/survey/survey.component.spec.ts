@@ -1,34 +1,45 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SurveyModule as PerxSurveyModule, ConfigModule, ICampaignService } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyService } from '@perx/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
 import { MatCardModule, MatButtonModule, MatProgressBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
-  const iCampaignServiceStub = {};
+  const mockSurvey: ISurvey = {
+    title: '',
+    questions: []
+  }
+  const surveyServiceStub: Partial<SurveyService> = {};
+
+  const iCampaignServiceStub: Partial<SurveyService> = {
+    getSurveyFromCampaign: () => of(mockSurvey)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SurveyComponent ],
       imports: [
-        ConfigModule.forRoot({}),
-        HttpClientTestingModule,
         MatCardModule,
         MatButtonModule,
         RouterTestingModule,
         MatProgressBarModule,
-        PerxSurveyModule
+        PerxSurveyModule,
+        RouterTestingModule
       ],
       providers: [
         {
           provide: ICampaignService,
           useValue: iCampaignServiceStub
+        },
+        {
+          provide: SurveyService, useValue: surveyServiceStub
         }
-      ]
+      ],
+      schemas: [ ]
     })
     .compileComponents();
   }));

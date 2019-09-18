@@ -126,6 +126,11 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
+
+
+    if (this.vouchers.length > 0) {
+      return of(this.vouchers);
+    }
     let params = new HttpParams()
       .set('sort_by', 'id')
       .set('order', 'desc');
@@ -133,11 +138,6 @@ export class V4VouchersService implements IVoucherService {
     if (oc(voucherParams).type()) {
       params = params.set('type', voucherParams.type);
     }
-
-    if (this.vouchers.length > 0) {
-      return of(this.vouchers);
-    }
-
     return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
         // todo change to a combination of switchMap and combineLatest

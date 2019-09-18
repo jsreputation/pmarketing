@@ -1,5 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SurveyModule as PerxSurveyModule, ConfigModule, ICampaignService } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, ConfigModule, ICampaignService, SurveyService } from '@perx/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -10,13 +9,13 @@ describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
   const iCampaignServiceStub = {};
+  const surveyServiceStub: Partial<SurveyService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SurveyComponent ],
       imports: [
         ConfigModule.forRoot({}),
-        HttpClientTestingModule,
         MatCardModule,
         MatButtonModule,
         RouterTestingModule,
@@ -27,6 +26,9 @@ describe('SurveyComponent', () => {
         {
           provide: ICampaignService,
           useValue: iCampaignServiceStub
+        },
+        {
+          provide: SurveyService, useValue: surveyServiceStub
         }
       ]
     })
