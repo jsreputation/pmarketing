@@ -47,7 +47,7 @@
     @include mat-elevation(4);
 
     &.mat-radio-button {
-      background: $simple-light-gray;
+      background: $lightest-gray;
       border-radius: $border-radius 0 0 $border-radius !important;
     }
 
