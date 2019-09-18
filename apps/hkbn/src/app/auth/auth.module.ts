@@ -7,7 +7,9 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule,
+  MatIconModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -47,7 +49,9 @@ const CONTAINERS = [
     UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
-    TranslateModule
+    TranslateModule,
+    MatSelectModule,
+    MatIconModule
   ],
   exports: [
     ...COMPONENTS,
