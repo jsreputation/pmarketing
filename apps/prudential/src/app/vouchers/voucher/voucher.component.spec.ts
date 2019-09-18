@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, ConfigModule, RewardsService } from '@perx/core';
+import { VouchersModule, ConfigModule, RewardsService, IMerchantsService } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -15,6 +15,10 @@ describe('VoucherComponent', () => {
     getReward: () => of()
   };
 
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VoucherComponent],
@@ -27,6 +31,9 @@ describe('VoucherComponent', () => {
       providers: [
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, PopupType } from './vouchers.component';
-import { VouchersModule, ConfigModule, RewardsService } from '@perx/core';
+import { VouchersModule, ConfigModule, RewardsService, IMerchantsService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -24,6 +24,10 @@ describe('VouchersComponent', () => {
     getReward: () => of()
   };
 
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
@@ -38,7 +42,10 @@ describe('VouchersComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: MatDialog, useValue: matDialogStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
+        }
       ]
     }).compileComponents();
   }));

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
-import { VouchersModule, ConfigModule, RewardsService } from '@perx/core';
+import { VouchersModule, ConfigModule, RewardsService, IMerchantsService } from '@perx/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +14,10 @@ describe('RedemptionComponent', () => {
 
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   beforeEach(async(() => {
@@ -30,6 +34,9 @@ describe('RedemptionComponent', () => {
       providers: [
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

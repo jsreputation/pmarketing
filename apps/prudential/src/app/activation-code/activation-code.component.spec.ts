@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule, RewardsService } from '@perx/core';
+import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule, RewardsService, IMerchantsService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { of } from 'rxjs';
@@ -23,6 +23,10 @@ describe('ActivationCodeComponent', () => {
 
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   beforeEach(async(() => {
@@ -51,6 +55,9 @@ describe('ActivationCodeComponent', () => {
         },
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

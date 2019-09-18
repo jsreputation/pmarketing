@@ -84,8 +84,7 @@ export class WhistlerVouchersService implements IVoucherService {
       .pipe(
         mergeMap(
           ([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) =>
-            combineLatest(of(v), of(reward), this.merchantsService.getMerchant(1))
-          // combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
+          combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
         ),
         map(([v, reward, merchant]: [IJsonApiItem<IWhistlerVoucher>, IReward, IMerchant]) =>
           WhistlerVouchersService.WVoucherToVoucher(v, reward, merchant))
