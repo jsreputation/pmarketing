@@ -22,13 +22,13 @@ describe('RedemptionComponent', () => {
     merchantName: 'nil',
     expiry:  null,
     description: []
-  }
+  };
 
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     }
-  }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],

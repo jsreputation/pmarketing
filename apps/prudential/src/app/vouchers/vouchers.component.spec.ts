@@ -20,12 +20,12 @@ describe('VouchersComponent', () => {
   const spy = routerSpy.navigate as jasmine.Spy;
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     },
     getAll: () => {
       return of ('');
     }
-  }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],

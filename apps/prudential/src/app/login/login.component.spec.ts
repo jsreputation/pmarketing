@@ -9,11 +9,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileModule, AuthenticationService } from '@perx/core';
 import { FormsModule } from '@angular/forms';
 
-
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authModuleStub = {}
+  const authModuleStub = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [

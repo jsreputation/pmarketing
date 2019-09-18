@@ -12,7 +12,7 @@ describe('SurveyComponent', () => {
   const mockSurvey: ISurvey = {
     title: '',
     questions: []
-  }
+  };
   const surveyServiceStub: Partial<SurveyService> = {};
 
   const iCampaignServiceStub: Partial<SurveyService> = {

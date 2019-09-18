@@ -12,7 +12,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
 import { of } from 'rxjs';
 
-
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
   let fixture: ComponentFixture<ActivationCodeComponent>;
@@ -26,9 +25,9 @@ describe('ActivationCodeComponent', () => {
   };
   const voucherServiceStub = {
     get: () => {
-      return of('')
+      return of('');
     }
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
