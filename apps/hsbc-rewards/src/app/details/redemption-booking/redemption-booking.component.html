@@ -2,21 +2,27 @@
   <app-detail-header [customBackButton]="customBackButton"></app-detail-header>
   <div class="reward-body">
     <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
-      <div class="select-wrap">
-        <select formControlName="quantity">
-          <option disabled [value]="null">Quantity</option>
-          <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
-        </select>
+      <div class="mat-select-wrap">
+        <mat-select
+          placeholder="Quantity"
+          formControlName="quantity"
+        >
+          <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
+        </mat-select>
       </div>
       <div class="input-wrap no-content">
         <input disabled type="text" [value]="reward && reward.merchantName || ''">
         <input hidden type="text" formControlName="merchant" [value]="reward && reward.merchantId">
       </div>
-      <div class="select-wrap">
-        <select formControlName="location">
-          <option disabled [value]="null">Location</option>
-          <option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</option>
-        </select>
+      <div class="mat-select-wrap">
+        <mat-select
+          placeholder="Location"
+          formControlName="location"
+          msInfiniteScroll
+          (infiniteScroll)="getMerchantData()"
+        >
+          <mat-option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</mat-option>
+        </mat-select>
       </div>
       <mat-radio-group class="radio-group" formControlName="priceId">
         <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">

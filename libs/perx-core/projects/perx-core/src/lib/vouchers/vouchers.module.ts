@@ -14,10 +14,11 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { V4VouchersService } from './v4-vouchers.service';
 import { WhistlerVouchersService } from './whistler-vouchers.service';
+import { RewardsService } from '../rewards/rewards.service';
 
-export function vouchersServiceFactory(http: HttpClient, config: Config): IVoucherService {
+export function vouchersServiceFactory(http: HttpClient, config: Config, rewardsService: RewardsService): IVoucherService {
   if (config.isWhistler) {
-    return new WhistlerVouchersService(http, config);
+    return new WhistlerVouchersService(http, config, rewardsService);
   }
   // Make decision on what to instantiate base on config
   return new V4VouchersService(http, config);
@@ -49,7 +50,7 @@ const components = [
     {
       provide: IVoucherService,
       useFactory: vouchersServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, RewardsService]
     }
   ]
 })
