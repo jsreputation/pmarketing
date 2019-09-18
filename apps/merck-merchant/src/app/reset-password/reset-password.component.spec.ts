@@ -12,6 +12,7 @@ import {
 } from '@angular/material';
 import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
+import { Type } from '@angular/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -51,8 +52,8 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should call forgot password on from submit', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
-      AuthenticationService
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
     );
     const spy = spyOn(authenticationService, 'forgotPassword').and.callFake(() => of());
     component.onSubmit();

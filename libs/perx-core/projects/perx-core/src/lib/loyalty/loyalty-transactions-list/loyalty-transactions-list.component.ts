@@ -38,19 +38,13 @@ export class LoyaltyTransactionsListComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (tr: ITransaction) => {
-        return `${tr.name}`;
-      };
+      this.titleFn = (tr: ITransaction) => `${tr.name}`;
     }
     if (!this.subTitleFn) {
-      this.subTitleFn = (tr: ITransaction) => {
-        return `${this.datePipe.transform(tr.earnedDate, 'dd/MM/yyyy')}`;
-      };
+      this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'dd/MM/yyyy')}`;
     }
     if (!this.priceLabelFn) {
-      this.priceLabelFn = (tr: ITransaction) => {
-        return `${this.transactionPipe.transform(tr.points)}`;
-      };
+      this.priceLabelFn = (tr: ITransaction) => `${this.transactionPipe.transform(tr.points)}`;
     }
   }
 }

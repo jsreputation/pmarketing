@@ -1,3 +1,21 @@
+.btn-block {
+  width: 100%;
+}
+
+button {
+  outline: none;
+}
+
 .btn-right_padding {
   padding-right: 0.8rem;
+}
+
+.btn-transparent {
+  display: flex;
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
 }
