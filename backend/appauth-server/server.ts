@@ -18,6 +18,7 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
+console.log(apiConfig);
 
 app.options('*', cors());
 
@@ -153,6 +154,7 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    console.log('endpointCredential', endpointCredential);
     const preAuthRequest = await axios.get(
       endpoint.target_url + '/cognito/users',
       {
@@ -163,6 +165,7 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
       }
     );
     const bearerToken = preAuthRequest.headers.authorization;
+    console.log('bearerToken', bearerToken);
     const endpointRequest = await axios.post(
       endpoint.target_url + '/cognito/login',
       {
