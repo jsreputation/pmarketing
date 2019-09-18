@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService } from '@perx/core';
+import { RewardsService, IVoucherService } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
@@ -16,11 +16,14 @@ describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
   const rewardsServiceStub = {
-    getReward: () => of(),
+    getReward: () => of()
+  };
+
+  const vouchersServiceStub = {
     issueReward: () => of()
   };
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
   const routerStub = { navigate: () => ({}) };
 
@@ -33,6 +36,7 @@ describe('RewardComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         {
           provide: ActivatedRoute, useValue: {
             queryParams: of({ id: '1' })
@@ -63,13 +67,14 @@ describe('RewardComponent', () => {
   });
 
   it('should save reward', () => {
-    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-    const rewardsServiceSpy = spyOn(rewardsService, 'issueReward').and.returnValue(
+    const vouchersService: IVoucherService = fixture.debugElement.injector
+      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
       of()
     );
     const router: Router = fixture.debugElement.injector.get(Router);
     spyOn(router, 'navigate');
     component.save();
-    expect(rewardsServiceSpy).toHaveBeenCalled();
+    expect(vouchersServiceSpy).toHaveBeenCalled();
   });
 });
