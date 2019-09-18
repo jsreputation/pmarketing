@@ -77,7 +77,7 @@ describe('VerificationOtpComponent', () => {
   });
 
   it('expect resend sms', fakeAsync(() => {
-    const spy = spyOn(authService, 'resendOTP');
+    const spy = spyOn(authService, 'requestVerificationToken');
     spy.and.returnValue(of(null));
     component.resendSms();
     tick();
