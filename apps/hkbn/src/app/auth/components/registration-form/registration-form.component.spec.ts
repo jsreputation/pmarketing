@@ -58,7 +58,7 @@ describe('RegistrationFormComponent', () => {
       password_confirmation: 'qwerty123',
       terms: true,
       promo: true,
-      code: 11
+      code: '+852'
     });
     fixture.detectChanges();
     component.submit();

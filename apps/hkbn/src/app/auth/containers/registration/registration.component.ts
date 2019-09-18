@@ -3,7 +3,7 @@ import { AuthenticationService, IProfile, GeneralStaticDataService } from '@perx
 import { Router } from '@angular/router';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { ICountryCode } from '@perx/core/dist/perx-core/lib/utils/general-static-data/country-code';
+import { ICountryCode } from '@perx/core';
 
 @Component({
   selector: 'hkbn-registration',
