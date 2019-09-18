@@ -150,11 +150,12 @@ jobs:
       - run:
           name: Build docker image
           command: |
-            echo $BASH_ENV
             echo "APP: ${APP}"
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "IS_WHISTLER: ${IS_WHISTLER}"
             if [ $APP == 'candyland-uat' ]
             then
               export APP="candyland"
