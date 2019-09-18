@@ -34,16 +34,21 @@
     margin-bottom: $vertical-padding / 2;
   }
 
+  &-header-with-control {
+    margin-bottom: ($vertical-padding * 0.75);
+    align-items: baseline;
+    max-height: 42px;
+
+    > * {
+      margin-top: -($vertical-padding * 0.25);
+    }
+  }
+
   &-title {
     @include typo-subtitle1;
 
     margin-bottom: ($vertical-padding * 0.75);
     color: $secondary-color;
-
-    &.with-control {
-      align-items: baseline;
-      max-height: 42px;
-    }
   }
 
   &-block {

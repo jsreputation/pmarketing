@@ -55,9 +55,6 @@
     box-sizing: border-box;
   }
 
-  &-group-graphics {
-    padding: 1.8rem 4rem 4rem;
-  }
 }
 
 .game-card {
@@ -76,7 +73,7 @@
 
 .tabs-list-wrap {
   min-width: 27rem;
-  margin-right: 4rem;
+  margin-right: $horizontal-padding;
 }
 
 .time-line-block {

@@ -443,3 +443,10 @@ cl-game-mobile-preview, .tabs-component {
     color: $base-font-color;
   }
 }
+
+// Dashboard Page Commons
+.dashboard {
+  &-group-graphics {
+    padding: $vertical-padding $horizontal-padding;
+  }
+}
