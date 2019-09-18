@@ -1,8 +1,12 @@
 import {
   Component,
-  OnInit
+  OnInit,
 } from '@angular/core';
-import { FormGroup } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 
 @Component({
   selector: 'app-forgot-pin',
@@ -12,9 +16,18 @@ import { FormGroup } from "@angular/forms";
 export class ForgotPinComponent implements OnInit {
   public forgotPinForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.initForm();
+  }
+
+  private initForm(): void {
+    this.forgotPinForm = this.fb.group({
+      mobileNumber: ['', Validators.required]
+    });
   }
 
   public onSubmit(): void {
