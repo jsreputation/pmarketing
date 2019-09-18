@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-@import "./variables";
+@import "variables";
 
 html, body {
   min-height: 100%;
@@ -72,6 +72,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 .page-header {
+  @include mat-elevation(4);
+
   display: flex;
   min-height: $header-height-base;
   flex-flow: row nowrap;
@@ -83,9 +85,7 @@ h1, h2, h3, h4, h5, p {
   top: 0;
   z-index: 99;
   background: $white;
-  width: calc(100% - ($sidenav-width-initial));
-
-  @include mat-elevation(4);
+  width: calc(100% - #{$sidenav-width-initial});
 
   &.full-with {
     background: $white;
