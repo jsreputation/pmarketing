@@ -18,7 +18,7 @@
   &-in-group {
     min-width: 4.4rem;
     padding: 0.4rem;
-    height: 2.4rem;
+    height: ($vertical-padding * 0.75);
     border-radius: 4px;
     background-color: $dark-color;
     color: $white-color;

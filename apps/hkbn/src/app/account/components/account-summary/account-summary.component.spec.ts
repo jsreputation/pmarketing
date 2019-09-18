@@ -75,7 +75,7 @@ describe('AccountSummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountSummaryComponent);
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
-    notificationService = TestBed.get(NotificationService);
+    notificationService = TestBed.get<NotificationService>(NotificationService);
     component = fixture.componentInstance;
     component.accountData = accountDataStub;
     fixture.detectChanges();
