@@ -23,7 +23,7 @@ export class RegistrationFormComponent {
       HkbnValidators.minLength(6),
       HkbnValidators.maxLength(11)
     ]),
-    code: new FormControl("+852", [HkbnValidators.required]),
+    code: new FormControl('+852', [HkbnValidators.required]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
@@ -35,9 +35,8 @@ export class RegistrationFormComponent {
     if (this.registrationForm.invalid) {
       return;
     }
-    console.log()
     const requestBody = this.registrationForm.value;
-    requestBody.phone = requestBody.code.replace('+','') + requestBody.phone;
+    requestBody.phone = requestBody.code.replace('+', '') + requestBody.phone;
     delete requestBody.code;
     this.formSubmit.emit(requestBody);
   }
