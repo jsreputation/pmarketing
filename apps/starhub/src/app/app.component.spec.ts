@@ -161,6 +161,8 @@ describe('AppComponent', () => {
   }));
 
   beforeEach(() => {
+    // @ts-ignore
+    global.dataLayerSH = {};
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
   });

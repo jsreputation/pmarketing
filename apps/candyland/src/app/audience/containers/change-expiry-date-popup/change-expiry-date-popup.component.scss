@@ -82,7 +82,7 @@
     padding: ($vertical-padding * 0.5) 2rem 1.45rem;
     width: 19.8rem;
     height: 16.1rem;
-    border-radius: 4px;
+    border-radius: $border-radius;
     background-color: rgba(26, 184, 255, 0.05);
     font-family: $primary-font;
     font-size: $base-font-size;

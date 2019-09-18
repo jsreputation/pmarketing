@@ -1,21 +1,23 @@
 @import '~@angular/material/theming';
 @import "variables";
 
+$dashboard-card-img-wrap-dimensions: 9rem;
+$dashboard-card-action-width: 21rem;
+$dashboard-card-action-height: 4rem;
+
 :host {
   @include mat-elevation(1);
 
   display: flex;
-  border-radius: 4px;
+  border-radius: $border-radius;
   background-color: $white;
   padding: ($vertical-padding * 0.75) 3rem;
   min-height: 18.5rem;
+  min-width: $dashboard-card-action-width;
   box-sizing: border-box;
 }
 
 .dashboard-card {
-  $dashboard-card-img-wrap-dimensions: 8rem;
-  $dashboard-card-action-height: 2rem;
-
   &-img-wrap {
     position: relative;
     top: 0;
@@ -37,9 +39,9 @@
   }
 
   &-title {
+    @include typo-subtitle1;
+
     color: $base-font-color;
-    line-height: 1.31;
-    font-size: 1.6rem;
   }
 
   &-description {
