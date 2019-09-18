@@ -12,7 +12,7 @@
   line-height: 1.36;
   letter-spacing: normal;
   color: $base-font-color;
-  border-radius: 8px !important;
+  border-radius: $border-radius-lg !important;
   background-color: $white-color !important;
   padding: 0 !important;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
@@ -136,7 +136,7 @@
 
   &.dark-theme {
     color: $white-color;
-    border-radius: 8px !important;
+    border-radius: $border-radius-lg !important;
     background-color: $dark-color !important;
 
     .card-title, .card-label {

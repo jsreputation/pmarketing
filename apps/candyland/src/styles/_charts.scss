@@ -23,13 +23,13 @@
   padding: $vertical-padding $horizontal-padding;
   flex: calc(50% - $horizontal-padding);
   box-sizing: border-box;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
 
   &-title {
     margin-bottom: ($vertical-padding * 0.75);
-    font-size: 1.6rem;
-    line-height: 1.31;
-    color: $base-font-color;
-    font-family: $primary-font;
+    @include typo-subtitle1;
+    color: $secondary-color;
 
     &.with-control {
       align-items: baseline;

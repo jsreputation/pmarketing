@@ -17,7 +17,7 @@
 :host {
   width: 36.3rem;
   height: 68rem;
-  border-radius: 0.8rem;
+  border-radius: $border-radius-lg;
   flex-shrink: 0;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
   background-image: linear-gradient(to top, #8b929b, #b9bfc7);

@@ -201,7 +201,7 @@ p {
     height: 63.8rem;
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 0.8rem;
+    border-radius: $border-radius-lg;
     position: relative;
 
     &-headline, &-sub-headline {
@@ -287,7 +287,7 @@ p {
     min-height: 31.7rem;
     background: $white-color;
     background-size: cover;
-    border-radius: 8px;
+    border-radius: $border-radius-lg;
     z-index: 3;
   }
 
@@ -387,7 +387,7 @@ cl-game-mobile-preview, .tabs-component {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  border-radius: 5px;
+  border-radius: $border-radius;
 
   &::before {
     content: '!';

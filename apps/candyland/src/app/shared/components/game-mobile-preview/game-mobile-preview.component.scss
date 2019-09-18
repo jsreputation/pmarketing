@@ -4,6 +4,6 @@
   position: relative;
   width: $mobile-preview-width;
   height: 68rem;
-  border-radius: 0.8rem;
+  border-radius: $border-radius-lg;
   flex-shrink: 0;
 }

@@ -3,7 +3,7 @@
 .image {
   max-height: 100%;
   max-width: 100%;
-  border-radius: 5px;
+  border-radius: $border-radius;
 
   &-wrap {
     width: 10.8rem;
