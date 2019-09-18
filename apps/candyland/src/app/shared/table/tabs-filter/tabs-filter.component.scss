@@ -36,7 +36,7 @@
 
 .tabs > a.active {
   color: $base-font-color;
-  border-bottom-color: #458CFF;
+  border-bottom-color: $primary-color;
 }
 
 .tabs > a:not(.active):hover {

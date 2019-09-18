@@ -23,15 +23,15 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
   public customTheme: NgxMaterialTimepickerTheme = {
     container: {
       bodyBackgroundColor: '#fff',
-      buttonColor: '#3b4e77'
+      buttonColor: '#3E4E73'
     },
     dial: {
-      dialBackgroundColor: '#3b4e77',
+      dialBackgroundColor: '#3E4E73',
     },
     clockFace: {
       clockFaceBackgroundColor: '#fff',
-      clockHandColor: '#3b4e77',
-      clockFaceTimeInactiveColor: '#3b4e77'
+      clockHandColor: '#3E4E73',
+      clockFaceTimeInactiveColor: '#3E4E73'
     }
   };
 

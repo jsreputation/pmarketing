@@ -3,7 +3,7 @@
 .login-wrap {
   display: flex;
   position: relative;
-  background: $background-color;
+  background: $loginpage-color;
 }
 
 .col {
@@ -15,7 +15,7 @@
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    background-color: $white-color;
+    background-color: $white;
   }
 
   &-customer-info {
