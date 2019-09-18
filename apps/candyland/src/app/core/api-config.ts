@@ -9,7 +9,7 @@ export class ApiConfig {
   public static campaignsPath = `${ApiConfig.basePath}/campaign/entities`;
   public static rewardsPath = `${ApiConfig.basePath}/reward/entities`;
   public static getAllCredentialPath = `${ApiConfig.baseAPIPath}/credentials`;
-  public static IAMUsersPath = `${ApiConfig.baseAPIPath}users`;
+  public static IAMUsersPath = `${ApiConfig.baseAPIPath}/users`;
   public static IAMGroupsPath = `${ApiConfig.baseAPIPath}/groups`;
   public static baseAPIUserPath: string = `${ApiConfig.basePath}/cognito`;
   public static getAllUsers = `${ApiConfig.baseAPIUserPath}/users`;
