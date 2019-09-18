@@ -102,7 +102,7 @@ commands:
             else
               IS_WHISTLER="false"
             fi
-            echo 'export IS_WHISTLER=$IS_WHISTLER' >> $BASH_ENV
+            echo "export IS_WHISTLER=$IS_WHISTLER" >> $BASH_ENV
             echo $IS_WHISTLER
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
