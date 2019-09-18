@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
+import { MatIconModule } from '@angular/material';
+import { ProfileService } from '@perx/core';
+import { of } from 'rxjs';
+
+const profileServiceStud = {
+  whoAmI: () => of(null)
+};
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -8,9 +15,15 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [ProfileComponent],
+      imports: [
+        MatIconModule
+      ],
+      providers: [
+        { provide: ProfileService, useValue: profileServiceStud }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

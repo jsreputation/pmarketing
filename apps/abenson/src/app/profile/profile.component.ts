@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  profile$: Observable<IProfile>
+  public profile$: Observable<IProfile>;
   constructor(
     private profileService: ProfileService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.profile$ = this.profileService.whoAmI();
   }
 

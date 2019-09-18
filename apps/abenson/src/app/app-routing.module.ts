@@ -21,7 +21,7 @@ const routes: Routes = [
       { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'account', component: AccountComponent },
-      { path: 'profile', loadChildren: (): any=> import('./profile/profile.module').then((mod: any)=>mod.ProfileModule)},
+      { path: 'profile', loadChildren: (): any => import('./profile/profile.module').then((mod: any) => mod.ProfileModule) },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
