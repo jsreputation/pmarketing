@@ -9,12 +9,17 @@ import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model'
 import { ConfigModule } from '../../config/config.module';
 import { RewardsService } from '../../rewards/rewards.service';
 import { of } from 'rxjs';
+import { IMerchantsService } from '../../merchants/imerchants.service';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   const mockRedeemedVoucherDetail: IVoucher = {
@@ -64,6 +69,9 @@ describe('VouchersComponent', () => {
       providers: [
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

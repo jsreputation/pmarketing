@@ -56,7 +56,7 @@ export class WhistlerVouchersService implements IVoucherService {
       name: reward.name,
       code: voucher.attributes.code,
       // redemptionType: RedemptionType[reward.howToRedeem],
-      redemptionType: RedemptionType['txtCode'],
+      redemptionType: RedemptionType.txtCode,
       thumbnailImg: reward.rewardThumbnail,
       rewardBanner: reward.rewardThumbnail,
       merchantImg: merchant.images && merchant.images[0].url || '',
