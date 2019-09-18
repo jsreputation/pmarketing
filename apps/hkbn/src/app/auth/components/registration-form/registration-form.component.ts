@@ -25,7 +25,7 @@ export class RegistrationFormComponent implements OnInit {
       HkbnValidators.minLength(6),
       HkbnValidators.maxLength(11)
     ]),
-    code: new FormControl(11, [HkbnValidators.required]),
+    code: new FormControl('+852', [HkbnValidators.required]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
@@ -48,7 +48,7 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
     const requestBody = this.registrationForm.value;
-    requestBody.phone = this.countryCodes.find(code => code.id === requestBody.code).phone + requestBody.phone;
+    requestBody.phone = requestBody.code.replace('+', '') + requestBody.phone;
     delete requestBody.code;
     this.dataTransfer.newxUpdateData(requestBody);
     this.formSubmit.emit(requestBody);

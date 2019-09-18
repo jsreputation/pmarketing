@@ -18,7 +18,7 @@
     <mat-form-field class="grow1" appearance="fill">
       <mat-label>{{"MOBILE_CODE" | translate}}</mat-label>
       <mat-select  formControlName="code">
-        <mat-option *ngFor="let code of countryCodes" [value]="code.id">+{{code.phone}}</mat-option>
+        <mat-option *ngFor="let code of countryCodes" [value]="code.phone">{{code.phone}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill" class="grow4">

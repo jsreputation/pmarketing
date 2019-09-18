@@ -34,7 +34,6 @@ describe('RegistrationFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationFormComponent);
     component = fixture.componentInstance;
-    component.countryCodes = countryCodes;
     fixture.detectChanges();
   });
 
@@ -59,7 +58,7 @@ describe('RegistrationFormComponent', () => {
       password_confirmation: 'qwerty123',
       terms: true,
       promo: true,
-      code: 11
+      code: '+852'
     });
     fixture.detectChanges();
     component.submit();
