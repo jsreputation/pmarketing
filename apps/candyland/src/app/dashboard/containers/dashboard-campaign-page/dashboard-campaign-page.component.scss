@@ -12,7 +12,7 @@
     color: $base-font-color;
 
     &__indent {
-      margin: 2.4rem 0 1.6rem 0;
+      margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
     }
   }
 
@@ -62,7 +62,7 @@
 
   &-wrap {
     display: flex;
-    margin-top: 2.4rem;
+    margin-top: ($vertical-padding * 0.75);
   }
 }
 
@@ -73,4 +73,15 @@
 
 .time-line-block {
   flex: 1;
+}
+
+.info-title {
+  position: relative;
+  margin-top: $vertical-padding;
+  flex: calc(100% - $horizontal-padding);
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  line-height: 1.31;
+  color: $base-font-color;
+  font-family: $primary-font;
 }

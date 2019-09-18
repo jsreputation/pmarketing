@@ -112,7 +112,6 @@ describe('RewardComponent', () => {
     }));
   });
 
-
   it('should go back', () => {
     const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
     const locationSpy = spyOn(location, 'back');

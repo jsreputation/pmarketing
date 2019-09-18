@@ -25,7 +25,8 @@ Scenario: Verifiying file upload functionality for user upload codes
   Then  17_File uploaded successfully.
 
 Scenario: Verifiying file upload assertion for user upload codes
-  Given 17_that I am on reward creation page
-  And   17_I select user upload option for unique codes
-  When  17_I upload a non csv file
-  Then  17_File uploaded unsuccessfully.
+  Given 18_that I am on reward creation page
+  And   18_I select user upload option for unique codes
+  When  18_I upload a non csv file
+  Then  18_File uploaded unsuccessfully.
+

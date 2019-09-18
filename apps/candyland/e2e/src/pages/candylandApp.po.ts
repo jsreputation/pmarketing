@@ -15,9 +15,6 @@ export class DashboardAppPage {
     return element(by.css('p')).getText() as Promise<string>;
   }
 
-  public getStartGameButton(): ElementFinder  {
-    return element(by.css('button'));
-  }
 }
 
 export class EngagementAppPage {
@@ -40,8 +37,32 @@ export class LoginAppPage {
   public navigateToLogin(): Promise<string> {
     return browser.get('login') as Promise<string> ;
  }
+  public accountIDField(): ElementFinder {
+    return element.all(by.css('input')).first();
+
+  }
+  public userAccountField(): ElementFinder {
+    return element.all(by.css('input')).get(1);
+  }
+
+  public pwField(): ElementFinder {
+    return element.all(by.css('input')).get(2);
+  }
+
+  public getPassword(): string {
+    return 'asdfjkl;';
+  }
+
+  public getAccountId(): number {
+    return 2;
+  }
+
+  public getUserAccount(): string {
+    return 'Admin_2';
+  }
 
 }
+
 export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
@@ -62,6 +83,14 @@ export class CreateRewardAppPage {
 
   public navigateToRewardCreate(): Promise<string> {
     return browser.get('rewards/new-reward') as Promise<string> ;
+ }
+
+}
+
+export class CampaignAppPage {
+
+  public navigateToCampaign(): Promise<string> {
+    return browser.get('campaigns') as Promise<string> ;
  }
 
 }

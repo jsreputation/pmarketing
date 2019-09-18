@@ -249,14 +249,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       );
   }
 
+  // @ts-ignore
   public requestVerificationToken(): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.get<void>(
+        (profile: IProfile) => this.http.get<void>(
             `${this.customersEndPoint}/${profile.id}/request_verification_token`
-          );
-        }
+          )
       )
     );
   }
@@ -264,17 +263,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public changePhone(changePhoneData: IChangePhoneData): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<void>(
+        (profile: IProfile) => this.http.patch<void>(
             `${this.customersEndPoint}/${profile.id}/change_phone`,
-            null,
             {
-              headers: {
-                phone: changePhoneData.phone,
-                confirmation_token: changePhoneData.otp
-              }
-            });
-        }
+              phone: changePhoneData.phone,
+              confirmation_token: changePhoneData.otp
+            }
+          )
       )
     );
   }
@@ -282,16 +277,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => {
-          return this.http.patch<IMessageResponse>(
+        (profile: IProfile) => this.http.patch<IMessageResponse>(
             `${this.customersEndPoint}/${profile.id}/change_password`,
             {
               old_password: changePasswordData.oldPassword,
               password: changePasswordData.newPassword,
               password_confirmation: changePasswordData.passwordConfirmation,
               confirmation_token: changePasswordData.otp
-            });
-        }
+            })
       )
     );
   }

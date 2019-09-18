@@ -11,7 +11,7 @@ FROM node:lts-alpine
 COPY --from=builder /service /service
 
 ENV PORT=8000
-ENV BASE_URL="https://api.whistler.perxtech.org"
+ENV BASE_URL="https://api-pru1.uat.whistler.perxtech.io"
 WORKDIR /service
 
 CMD ["yarn", "start:prod"]

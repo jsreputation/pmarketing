@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LocationsComponent } from './locations.component';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UtilsModule, LocationsService, GeoLocationService } from '@perx/core';
+import { UtilsModule, LocationsService, GeoLocationService, RewardsService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
@@ -50,12 +50,13 @@ describe('LocationsComponent', () => {
     back: () => {}
   };
   let params: Subject<Params>;
+  const rewardsServiceStub = {};
 
   beforeEach(async(() => {
     params = new Subject<Params>();
 
     TestBed.configureTestingModule({
-      declarations: [ LocationsComponent ],
+      declarations: [LocationsComponent],
       imports: [
         MatIconModule,
         MatToolbarModule,
@@ -69,9 +70,10 @@ describe('LocationsComponent', () => {
         { provide: LocationsService, useValue: locationsServiceStub },
         { provide: GeoLocationService, useValue: geoLocationServiceStub },
         { provide: Location, useValue: locationStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

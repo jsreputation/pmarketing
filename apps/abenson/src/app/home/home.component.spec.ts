@@ -3,9 +3,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { IVoucherService, VouchersModule, ICampaignService } from '@perx/core';
+import { IVoucherService, VouchersModule, ICampaignService, LoyaltyModule, ProfileModule, ConfigModule } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
+import { environment } from '../../environments/environment';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -29,7 +30,10 @@ describe('HomeComponent', () => {
         NoopAnimationsModule,
         MatCardModule,
         VouchersModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LoyaltyModule,
+        ProfileModule,
+        ConfigModule.forRoot({...environment}),
       ],
       providers: [
         { provide: Router, useValue: router },

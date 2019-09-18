@@ -87,14 +87,13 @@
 }
 
 .code-redemption {
+  min-height: 14rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 14rem;
 
-  h1,
-  p {
+  h1, p {
     font-size: 2rem;
     color: #666666;
   }

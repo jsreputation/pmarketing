@@ -33,8 +33,8 @@ $progress-bar-color: #ffa600;
 $progress-bar-background-color: #e7e9ed;
 
 /* ----- SPACING ----- */
-$vertical-content-padding: 3rem;
-$horizontal-content-padding: 3rem;
+$vertical-padding: 3.2rem;
+$horizontal-padding: 3.2rem;
 
 $header-height-base: 6.4rem;
 
@@ -50,6 +50,20 @@ $primary-font: Roboto, "Helvetica Neue", sans-serif;
 $base-font-size: 1.4rem;
 
 //Headlines
+@mixin typo-h3 {
+  font-weight: 400;
+  font-size: 4.8rem;
+  line-height: 5.6rem;
+  letter-spacing: 0;
+}
+
+@mixin typo-h4 {
+  font-weight: 400;
+  font-size: 3.4rem;
+  line-height: 3.6rem;
+  letter-spacing: 0;
+}
+
 @mixin typo-h5 {
   font-weight: 400;
   font-size: 2.4rem;
@@ -65,6 +79,13 @@ $base-font-size: 1.4rem;
 }
 
 //General
+@mixin typo-body1 {
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.05rem;
+}
+
 @mixin typo-body2 {
   font-weight: 400;
   font-size: $base-font-size;
@@ -86,7 +107,7 @@ $base-font-size: 1.4rem;
   letter-spacing: 0.075rem;
 }
 
-//Input Fields
+//Small Text
 @mixin typo-caption {
   font-weight: 400;
   font-size: 1.2rem;

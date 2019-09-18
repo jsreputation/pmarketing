@@ -1,9 +1,9 @@
 <div class="login-wrap">
   <div class="col-login-form">
-    <cl-logo></cl-logo>
+    <cl-logo class="logo-link"></cl-logo>
     <cl-login-form></cl-login-form>
     <div class="router-actions">
-      <cl-button [classList]="'tertiary'"
+      <cl-button [classList]="'tertiary ph-0'"
                  [disableRipple]="true"
       >
         <span>
@@ -11,24 +11,20 @@
         </span>
       </cl-button>
     </div>
-    <div class="copy-right">
-      <span class="copy-right-text">
-        &copy; 2019 Perx Techologies. All rights reserved.
-      </span>
-    </div>
+    <small class="copyright">
+      &copy; 2019 Perx Techologies. All rights reserved.
+    </small>
   </div>
   <div class="col-customer-info">
-    <div class="customer-info">
-      <h1 class="customer-info-text text-center">
-        Customer engagement made easy
-      </h1>
-    </div>
-    <div class="customer-info-description text-center">
+    <h1 class="customer-info-title">
+      Customer engagement made easy
+    </h1>
+    <p class="customer-info-description">
       Perx is now equipped with more robust features like gamified campaigns,
       rewards, merchant and customer segmentation with an advanced A.I. technology.
-    </div>
+    </p>
     <div class="customer-info-picture">
-      <img src="assets/images/customers_engagement.png" alt="customer">
+      <img src="assets/images/login/customers_engagement.png" alt="Customer Engagement">
     </div>
   </div>
 </div>
