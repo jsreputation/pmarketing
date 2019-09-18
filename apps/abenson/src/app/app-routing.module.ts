@@ -9,6 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
+import { ForgotPinComponent } from "./forgot-pin/forgot-pin.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'account', component: AccountComponent },
+      { path: 'forgot-pin', component: ForgotPinComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },

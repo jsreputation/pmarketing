@@ -43,6 +43,7 @@ import { VoucherDetailComponent } from './voucher-detail/voucher-detail.componen
 import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
+import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
@@ -93,7 +94,8 @@ const profileServiceStub = {
     AccountComponent,
     HistoryComponent,
     PromosComponent,
-    CardComponent
+    CardComponent,
+    ForgotPinComponent,
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
