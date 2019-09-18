@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { countryCodes } from './country-code';
+import { countryCodes, ICountryCode } from './country-code';
 import { of, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { of, Observable } from 'rxjs';
 })
 export class GeneralStaticDataService {
 
-  public getCountriesList(): Observable<any> {
+  public getCountriesList(): Observable<ICountryCode[]> {
     return of(countryCodes);
   }
 
