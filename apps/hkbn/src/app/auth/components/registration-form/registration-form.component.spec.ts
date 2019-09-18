@@ -7,7 +7,6 @@ import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.modu
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { countryCodes } from 'src/assets/mock/country-code';
 
 describe('RegistrationFormComponent', () => {
   let component: RegistrationFormComponent;
