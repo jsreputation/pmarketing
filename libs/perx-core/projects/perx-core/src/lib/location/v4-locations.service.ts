@@ -126,14 +126,24 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
+  public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
+    const merchantsUrl: string = `${this.apiHost}/v4/merchants/${merchantId}`;
+    let merchantsOptions = {};
+    if (page) {
+      merchantsOptions = {
+        params: {
+          page: `${page}`
+        }
+      };
+    }
+
     return this.http.get<IV4GetMerchantResponse>(
-      `${this.apiHost}/v4/merchants/${merchantId}`
+      merchantsUrl,
+      merchantsOptions
     ).pipe(
       map((res: IV4GetMerchantResponse) => res.data),
       filter((merchant: IV4Merchant) => merchant.outlets && merchant.outlets.length > 0),
-      map((merchant: IV4Merchant) => {
-        return merchant.outlets.map((outlet: IV4Outlet) => ({
+      map((merchant: IV4Merchant) => merchant.outlets.map((outlet: IV4Outlet) => ({
           merchantId: merchant.id,
           merchantName: merchant.name,
           locationId: outlet.outlet_id,
@@ -145,16 +155,13 @@ export class V4LocationsService extends LocationsService {
           latitude: outlet.coordinates.lat,
           longitude: outlet.coordinates.lng,
           phone: outlet.tel
-        }));
-      })
+        })))
     );
   }
 
   public getTags(): Observable<string[]> {
     return this.getAllMerchants().pipe(
-      map((merchants: IV4Merchant[]) => {
-        return merchants.filter((merchant: IV4Merchant) => merchant.tags && merchant.tags.length > 0);
-      }),
+      map((merchants: IV4Merchant[]) => merchants.filter((merchant: IV4Merchant) => merchant.tags && merchant.tags.length > 0)),
       filter((merchants: IV4Merchant[]) => merchants.length > 0),
       map((merchants: IV4Merchant[]) => {
         let tags = [];

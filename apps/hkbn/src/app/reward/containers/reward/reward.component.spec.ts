@@ -6,14 +6,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NotificationService,
   RewardsModule,
-  RewardsService,
   VouchersModule,
   IReward,
   LoyaltyService,
   ILoyalty,
   Voucher,
   VoucherState,
-  RedemptionType
+  RedemptionType,
+  IVoucherService,
+  RewardsService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -56,9 +57,12 @@ describe('RewardComponent', () => {
     redemptionSuccessImg: '',
   };
 
-  const rewardsServiceStub = {
-    getReward: (): Observable<IReward> => of(mockReward),
+  const vouchersServiceStub = {
     issueReward: (): Observable<Voucher> => of(mockVoucher)
+  };
+
+  const rewardsServiceStub = {
+    getReward: (): Observable<IReward> => of(mockReward)
   };
 
   const mockLoyalty: ILoyalty = {
@@ -94,6 +98,7 @@ describe('RewardComponent', () => {
         {
           provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) }
         },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ],
@@ -133,7 +138,7 @@ describe('RewardComponent', () => {
     let notificationServiceSpy;
     beforeEach(() => {
       dialog = TestBed.get(MatDialog);
-      notificationService = TestBed.get(NotificationService);
+      notificationService = TestBed.get<NotificationService>(NotificationService);
       dialogSpy = spyOn(dialog, 'open');
       notificationServiceSpy = spyOn(notificationService, 'addPopup');
     });

@@ -7,5 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class SimpleMobileViewComponent {
   @Input() public background = 'assets/images/reward/card-background/card-bg-1.png';
+  @Input() public mobileImageClass = 'mobile-preview-mobile';
+  @Input() public headerColor = '#ffffff';
+  @Input() public logo: string;
+  @Input() public logoType: boolean;
+  @Input() public fontFamily: string;
 
 }

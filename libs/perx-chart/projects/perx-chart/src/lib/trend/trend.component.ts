@@ -36,15 +36,13 @@ export class TrendComponent implements OnChanges {
     if (changes.data) {
       this.data.subscribe((data: IData) => {
         this.ngxChartData = data.rows.map((row: (string | number)[]) => {
-          const series = row.slice(2).map((v: number, i: number) => {
-            return {
+          const series = row.slice(2).map((v: number, i: number) => ({
               name: data.cols[i + 2].display_name,
               value: v,
               extra: {
                 code: data.cols[i].name
               }
-            };
-          });
+            }));
           return {
             reward_name: row[0],
             revenue: row[1],

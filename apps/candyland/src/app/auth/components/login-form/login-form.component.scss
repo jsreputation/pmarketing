@@ -1,4 +1,4 @@
-@import "./variables";
+@import "variables";
 
 :host {
   display: flex;
@@ -8,20 +8,20 @@
 .login-form {
   &-wrap {
     width: 100%;
-    background-color: $white-color;
+    background-color: $white;
   }
 
   &-title {
     @include typo-h4;
 
     color: $base-font-color;
-    margin-bottom: $vertical-content-padding;
+    margin-bottom: $vertical-padding;
   }
 
   &-control {
     @include typo-input;
 
-    padding-bottom: $vertical-content-padding;
+    padding-bottom: $vertical-padding;
 
     mat-form-field {
       width: 100%;

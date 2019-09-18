@@ -86,3 +86,19 @@ export class CreateRewardAppPage {
  }
 
 }
+
+export class CampaignAppPage {
+
+  public navigateToCampaign(): Promise<string> {
+    return browser.get('campaigns') as Promise<string> ;
+ }
+
+}
+
+export class CreateCampaignAppPage {
+
+  public navigateToCreateCampaign(): Promise<string> {
+    return browser.get('campaigns/new-campaign') as Promise<string> ;
+ }
+
+}

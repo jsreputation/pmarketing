@@ -7,8 +7,8 @@
   justify-content: flex-start;
 
   &-abbr {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: $horizontal-padding;
+    height: $vertical-padding;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     box-sizing: border-box;
     line-height: 1.71;
     letter-spacing: normal;
-    color: $white-color;
+    color: $white;
   }
 
   &-title {
@@ -63,8 +63,8 @@
 
 .medium {
   .role-label-abbr {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: $horizontal-padding;
+    height: $vertical-padding;
   }
 }
 
@@ -80,11 +80,11 @@
 }
 
 .creator {
-  background-color: #4cd9d0;
+  background-color: $green;
 }
 
 .customer {
-  background-color: #4455fd;
+  background-color: $primary-color;
 }
 
 .manager {
@@ -92,5 +92,5 @@
 }
 
 .viewer {
-  background-color: #b5bcc8;
+  background-color: $disable-color;
 }

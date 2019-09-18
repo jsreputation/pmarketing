@@ -7,7 +7,7 @@
     padding: 2rem 2rem 2rem 3rem;
     box-sizing: border-box;
     border-radius: 4px;
-    border: solid 1px #d9dfe4;
+    border: solid 1px $border-color;
     font-size: $base-font-size;
     position: relative;
 
@@ -20,11 +20,11 @@
   }
 
   &-nested-0 {
-    background-color: $simple-light-gray;
+    background-color: $lightest-gray;
   }
 
   &-nested-1 {
-    background-color: #f4f4f5;
+    background-color: $light-gray;
   }
 
   &-form-header {
@@ -46,7 +46,7 @@
     margin: 0 -20px;
     padding: 20px 20px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
-    margin-top: 3.2rem;
+    margin-top: $vertical-padding;
   }
 
   &-btn-actions {

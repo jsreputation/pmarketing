@@ -20,7 +20,7 @@ describe('RewardDetailComponent', () => {
       providers: [
         {
           provide: RewardsService,
-          useValue: {getReward: () => {}}
+          useValue: {getReward: () => of()}
         },
         {
           provide: ActivatedRoute,

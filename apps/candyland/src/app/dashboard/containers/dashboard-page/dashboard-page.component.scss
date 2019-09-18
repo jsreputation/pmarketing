@@ -11,7 +11,7 @@
 
 .dashboard {
   &-welcome {
-    margin-bottom: 3.2rem;
+    margin-bottom: $vertical-padding;
   }
 
   &-title {
@@ -20,7 +20,7 @@
     color: $base-font-color;
 
     &__indent {
-      margin: 2.4rem 0 1.6rem 0;
+      margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
     }
   }
 
@@ -28,7 +28,7 @@
     @include mat-elevation(1);
 
     border-radius: 4px;
-    background-color: $white-color;
+    background-color: $white;
     box-sizing: border-box;
 
     &-header {
@@ -69,7 +69,7 @@
 
   &-wrap {
     display: flex;
-    margin-top: 2.4rem;
+    margin-top: ($vertical-padding * 0.75);
   }
 }
 

@@ -3,7 +3,7 @@
 .active-item {
   border-radius: 8px !important;
   position: relative;
-  border: solid 1px $dark-color !important;
+  border: solid 1px $secondary-color !important;
 
   &::after {
     content: '';
@@ -14,7 +14,7 @@
     right: -0.1rem;
     height: 4.2rem;
     width: 4.2rem;
-    background: url("/assets/images/preview/triangle.png") no-repeat;
+    background: url("/assets/images/previews/triangle.png") no-repeat;
   }
 }
 
@@ -23,7 +23,7 @@
   justify-content: space-between;
   position: relative;
   margin-right: 1.7rem;
-  margin-bottom: 2.4rem;
+  margin-bottom: ($vertical-padding * 0.75);
   border-radius: 8px !important;
   border: 1px solid transparent;
 

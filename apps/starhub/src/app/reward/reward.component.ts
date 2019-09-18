@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RewardsService, NotificationService } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-reward',
@@ -20,7 +21,9 @@ export class RewardComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
-    private notificationService: NotificationService
+    private vouchersService: IVoucherService,
+    private notificationService: NotificationService,
+    private analyticsService: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
@@ -32,6 +35,16 @@ export class RewardComponent implements OnInit {
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
+        if (reward.categoryTags && reward.categoryTags.length > 0) {
+          const category = reward.categoryTags[0].title;
+          this.analyticsService.addEvent({
+            pageName: `rewards:discover:${category}:${reward.name}`,
+            pageType: PageType.detailPage,
+            siteSectionLevel2: 'rewards:discover',
+            siteSectionLevel3: `rewards:discover:${category}:${reward.name}`
+          });
+        }
+        // this.analyticsService.addEvent({});
         // if there is no more personnal inventory for this user disable the button
         if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
           this.isButtonEnable = false;
@@ -44,7 +57,7 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.rewardsService.issueReward(this.rewardId)
+    this.vouchersService.issueReward(this.rewardId)
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
