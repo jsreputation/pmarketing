@@ -8,6 +8,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
+import { AnalyticsService } from '../analytics.service';
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -50,7 +51,36 @@ describe('LocationsComponent', () => {
     back: () => {}
   };
   let params: Subject<Params>;
-  const rewardsServiceStub = {};
+  const rewardsServiceStub = {
+    getReward: () => of({
+      id: 1,
+      name: 'Reward Test',
+      description: 'Reward Description',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      categoryTags: [{
+        id: 1,
+        title: 'tag',
+        parent: '',
+      }],
+      inventory: null,
+    })
+  };
+
+  const analyticsServiceStub = {
+    addEvent: () => {}
+  };
 
   beforeEach(async(() => {
     params = new Subject<Params>();
@@ -70,7 +100,8 @@ describe('LocationsComponent', () => {
         { provide: LocationsService, useValue: locationsServiceStub },
         { provide: GeoLocationService, useValue: geoLocationServiceStub },
         { provide: Location, useValue: locationStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: AnalyticsService, useValue: analyticsServiceStub }
       ]
     })
       .compileComponents();
@@ -95,6 +126,7 @@ describe('LocationsComponent', () => {
 
     it('should set locations based on the mid queryParams', () => {
       params.next({mid: 1});
+      params.next({rid: 2});
       component.ngOnInit();
       component.locations.subscribe(res => {
         expect(res[0].merchantId).toBe(1);
