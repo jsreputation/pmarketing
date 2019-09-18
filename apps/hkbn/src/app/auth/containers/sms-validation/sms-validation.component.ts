@@ -68,4 +68,7 @@ export class SmsValidationComponent implements OnInit, OnDestroy {
     this.authenticationService.resendOTP(this.identifier).subscribe(() => {
     });
   }
+  public goBack(): void {
+    this.router.navigate(['registration']);
+  }
 }
