@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ProfileService, AuthenticationService, GeneralStaticDataService } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICountryCode } from '@perx/core/dist/perx-core/lib/utils/general-static-data/country-code';
+import { ICountryCode } from '@perx/core';
 
 @Component({
   selector: 'hkbn-update-phone',
