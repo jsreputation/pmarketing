@@ -51,7 +51,6 @@ import { ResultComponent } from './result/result.component';
     ContactUsComponent,
     VouchersComponent,
     VoucherComponent,
-    MerchantsModule,
     LoginComponent
   ],
   imports: [
@@ -60,6 +59,7 @@ import { ResultComponent } from './result/result.component';
     AppRoutingModule,
     RewardsModule,
     VouchersModule,
+    MerchantsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
