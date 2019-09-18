@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map, flatMap } from 'rxjs/operators';
-import { ProfileService, AuthenticationService, GeneralStaticDataService } from '@perx/core';
+import { ProfileService, AuthenticationService, GeneralStaticDataService , ICountryCode} from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICountryCode } from '@perx/core';
 import { of } from 'rxjs';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
