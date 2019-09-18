@@ -137,8 +137,6 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-
-
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
