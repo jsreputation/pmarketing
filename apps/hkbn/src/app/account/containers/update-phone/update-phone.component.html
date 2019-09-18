@@ -1,15 +1,24 @@
 <div class="container">
   <form [formGroup]="updatePhoneGroup" class="update-phone-form" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
-      <input type="text" matInput formControlName="phone">
-      <mat-error *hkbnErrorHandler="'required'">
-        {{"REQUIRED" | translate}}
-      </mat-error>
-      <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
-        {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
-      </mat-error>
-    </mat-form-field>
+    <div class="flex">
+      <mat-form-field class="grow1">
+        <mat-select formControlName="code">
+          <mat-option *ngFor="let code of countryCodes" [value]="code.phone">{{code.phone}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="grow4">
+        <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
+
+        <input matInput type="text" matInput formControlName="phone">
+        <mat-error *hkbnErrorHandler="'required'">
+          {{"REQUIRED" | translate}}
+        </mat-error>
+        <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
+          {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
 
     <button mat-raised-button color="primary">{{"UPDATE" | translate}}</button>
   </form>
