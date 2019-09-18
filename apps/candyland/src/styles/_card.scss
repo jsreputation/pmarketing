@@ -106,7 +106,7 @@
 
   &-section {
     margin-top: 1.9rem;
-    border-radius: 4px;
+    border-radius: $border-radius;
     background-color: $simple-light-gray;
 
     .card-header {

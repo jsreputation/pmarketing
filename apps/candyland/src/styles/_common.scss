@@ -241,7 +241,7 @@ p {
 
   &-preview-btn {
     border: none;
-    border-radius: 4px;
+    border-radius: $border-radius;
     background: #ff1c1c;
     color: $white-color;
     font-size: $base-font-size;

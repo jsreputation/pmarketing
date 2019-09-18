@@ -5,7 +5,7 @@
   @include mat-elevation(1);
 
   display: flex;
-  border-radius: 4px;
+  border-radius: $border-radius;
   background-color: $white-color;
   padding: ($vertical-padding * 0.75) 3rem;
   min-height: 18.5rem;

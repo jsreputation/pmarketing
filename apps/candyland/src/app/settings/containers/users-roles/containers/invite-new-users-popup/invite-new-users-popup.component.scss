@@ -14,7 +14,7 @@
   &-section {
     margin-bottom: 1.6rem;
     padding: ($vertical-padding * 0.75) 2rem;
-    border-radius: 4px;
+    border-radius: $border-radius;
     background-color: $simple-light-gray;
 
     &.primary {

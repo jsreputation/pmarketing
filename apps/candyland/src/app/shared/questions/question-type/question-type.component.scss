@@ -19,7 +19,7 @@
     min-width: 4.4rem;
     padding: 0.4rem;
     height: ($vertical-padding * 0.75);
-    border-radius: 4px;
+    border-radius: $border-radius;
     background-color: $dark-color;
     color: $white-color;
     font-weight: bold;
