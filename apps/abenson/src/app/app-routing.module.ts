@@ -9,7 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
-import { ForgotPinComponent } from "./forgot-pin/forgot-pin.component";
+import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 
 const routes: Routes = [
   {

@@ -3,7 +3,7 @@
 
   ::ng-deep {
     .mat-form-field-outline {
-      top: .35em;
+      top: 0.35em;
       background: #E8E8E8;
     }
 
@@ -13,10 +13,8 @@
       border: none;
     }
 
-    .mat-form-field-invalid {
-      .mat-form-field-label {
-        color: #f44336;;
-      }
+    .mat-form-field-invalid.mat-form-field-label {
+      color: #f44336;
     }
 
     .mat-form-field-label {

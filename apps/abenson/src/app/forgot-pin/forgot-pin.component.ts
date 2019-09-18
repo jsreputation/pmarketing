@@ -6,7 +6,7 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-} from "@angular/forms";
+} from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-pin',
@@ -20,7 +20,7 @@ export class ForgotPinComponent implements OnInit {
     private fb: FormBuilder,
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.initForm();
   }
 
