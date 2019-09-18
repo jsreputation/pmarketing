@@ -145,6 +145,7 @@ export const survey: ISurvey = {
             id: '5',
             required: false,
             payload: {
+                // tslint:disable: object-literal-key-quotes
                 type: 'long-text',
                 'max-length': 20
             }

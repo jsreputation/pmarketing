@@ -80,5 +80,5 @@ mat-nav-list {
 
 .icon {
   width: 1.8rem !important;
-  padding: 0 0 0 16px !important;
+  padding: 0 0 0 ($horizontal-padding * 0.5) !important;
 }

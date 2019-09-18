@@ -16,7 +16,7 @@
       </div>
       <div class="card-content" formGroupName="stampsRule">
         <div class="card-row">
-          <mat-checkbox formControlName="sequence">Sequence</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="sequence">Sequence</mat-checkbox>
         </div>
         <div class="flex flex-end" *ngIf="!isSequence">
           <cl-button classList="tertiary no-padding" (click)="addStampRule()">+ Add Rule</cl-button>
@@ -50,7 +50,7 @@
           <div class="card-header">
             <div class="row">
               <p class="card-title">Stamp Card Limits</p>
-              <mat-slide-toggle formControlName="enableStampCard"></mat-slide-toggle>
+              <mat-slide-toggle color="primary" formControlName="enableStampCard"></mat-slide-toggle>
             </div>
           </div>
           <div class="card-content" formGroupName="stampCard">
@@ -83,7 +83,7 @@
           <div class="card-header">
             <div class="row">
               <p class="card-title">Stamp Limits</p>
-              <mat-slide-toggle formControlName="enableStamp"></mat-slide-toggle>
+              <mat-slide-toggle color="primary" formControlName="enableStamp"></mat-slide-toggle>
             </div>
           </div>
           <div class="card-content" formGroupName="stamp">
@@ -112,7 +112,7 @@
       <div class="card-header">
         <div class="row">
           <p class="card-title">Stamp Cards Validity</p>
-          <mat-slide-toggle formControlName="enableStampCardsValidity"></mat-slide-toggle>
+          <mat-slide-toggle color="primary" formControlName="enableStampCardsValidity"></mat-slide-toggle>
         </div>
       </div>
       <div class="card-content">
