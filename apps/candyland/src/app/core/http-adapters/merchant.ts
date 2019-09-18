@@ -1,20 +1,16 @@
+import { ApiConfig } from '@cl-core/api-config';
 import {
   JsonApiModelConfig,
   JsonApiModel,
-  Attribute, /* HasMany,*/
+  Attribute,
   BelongsTo
 } from 'angular2-jsonapi';
 
 // tslint:disable
 @JsonApiModelConfig({
-  type: ''
+  type: ApiConfig.merchantsPath
 })
 export class Merchant extends JsonApiModel {
-
-  // id: string;
-  // logo: string;
-  // phone?: string;
-  // dateCreated?: string;
 
   @Attribute()
   id: string;
@@ -28,42 +24,18 @@ export class Merchant extends JsonApiModel {
   @Attribute({serializedName: 'created_at'})
   createdAt: Date;
 
-  @Attribute({serializedName: 'created_at'})
-  updatedAt: Date;
-
   @Attribute()
   properties: object;
 
   @BelongsTo()
-  branches: Branch;
-
-  // @HasMany()
-  // comments: Comment[];
+  branches: MerchantBranch;
 }
 
-//
-// @JsonApiModelConfig({
-//   type: 'comments'
-// })
-// export class Comment extends JsonApiModel {
-//
-//   @Attribute()
-//   title: string;
-//
-//   @Attribute()
-//   created_at: Date;
-//
-//   @BelongsTo()
-//   post: Post;
-//
-//   @BelongsTo()
-//   user: User;
-// }
-//
+
 @JsonApiModelConfig({
   type: 'branches'
 })
-export class Branch extends JsonApiModel {
+export class MerchantBranch extends JsonApiModel {
 
   @Attribute()
   id: string;

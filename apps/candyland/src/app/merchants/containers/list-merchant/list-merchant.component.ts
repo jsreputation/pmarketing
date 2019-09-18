@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MerchantsService } from '@cl-core/services';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { MatDialog } from '@angular/material';
 import { MerchantsListDataSource } from '@cl-shared/table/data-source/merchants-list-data-source';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

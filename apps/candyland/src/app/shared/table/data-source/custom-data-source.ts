@@ -1,5 +1,4 @@
 import { MatSort } from '@angular/material';
-import { ClHttpParams } from '@cl-helpers/http-params';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
@@ -108,12 +107,11 @@ export class CustomDataSource<T> {
     const params = {
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
-      ...this.included,
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
       'page[size]': pagination ? pagination.pageSize : this.pageSize
     };
     this.loadingSubject.next(true);
-    this.dataService.getTableData(ClHttpParams.createHttpParams(params))
+    this.dataService.getTableData(params)
       .subscribe((res: any) => {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
@@ -134,17 +132,19 @@ export class CustomDataSource<T> {
         sort
       };
     }
-    return {sort: null};
+    return {};
   }
 
   private prepareFilters(): any {
     if (!this._filter) {
-      return {filter: null};
+      return {};
     }
     const result = {};
     Object.keys(this._filter)
       .forEach((item) => {
-        result[`filter[${item}]`] = this.filter[item];
+        if (this.filter[item]) {
+          result[`filter[${item}]`] = this.filter[item];
+        }
       });
     return result;
   }
