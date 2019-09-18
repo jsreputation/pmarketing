@@ -11,12 +11,12 @@ Scenario: Ensure that survey template is present under the campaign page
 Scenario: Verifying that the relevant input text fields are present.
   Given 6_that I am on the campaign creation page
   When  6_I do nothing
-  Then  6_The relevant text input fields are present.
+  Then  6_The relevant text input fields are present for campaign rewards and limits page.
 
 Scenario: Verifying the add rewards button.
   Given 7_that I am on the campaign creation page.
   When  7_I do nothing.
-  Then  7_I should see the add rewards button.
+  Then  7_I should see the add rewards button on campaign creation page.
 
 Scenario: Verifying the elements present when clicking add rewards.
   Given 8_that I am on the campaign creation page.
@@ -26,7 +26,7 @@ Scenario: Verifying the elements present when clicking add rewards.
 Scenario: Verifying that functionality of add rewards button.
   Given 9_that I am on the campaign creation page.
   And   9_I select add rewards button
-  And   9_I select of the reward categories
+  And   9_I select a reward.
   When  9_I select the add reward button
   Then  9_I should see reward added to rewards list.
 
@@ -41,6 +41,6 @@ Scenario: Verifiying that the presence of include probablity box
   Then  11_I should see include probablity box.
 
 Scenario: Verifiying that the functionality of the next button
-  Given 12_that I am on the survey creation page.
-  When  12_I click on the next button
+  Given 12_that I am on the campaign creation page.
+  When  12_I click on the next button on campaign creation page
   Then  12_I should see be in the campaign info form.

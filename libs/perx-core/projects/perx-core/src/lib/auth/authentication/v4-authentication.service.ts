@@ -256,7 +256,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           this.http.get<void>(
             `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? '?phone=' + phone : ''}`
           )
-
       )
     );
   }
