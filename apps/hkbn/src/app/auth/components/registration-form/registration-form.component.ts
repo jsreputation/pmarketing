@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, ViewEncapsulation, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { ICountryCode } from 'src/assets/mock/country-code';
+import { ICountryCode } from '@perx/core/dist/perx-core/lib/utils/general-static-data/country-code';
 
 @Component({
   selector: 'hkbn-registration-form',
