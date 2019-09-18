@@ -298,7 +298,7 @@ p {
   }
 }
 
-cl-game-mobile-preview, .tabs-component {
+cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
   }
@@ -422,7 +422,24 @@ cl-game-mobile-preview, .tabs-component {
   padding-bottom: 0;
 }
 
-.section-stickyheader {
-  position: relative;
-  padding-top: $header-height-base;
+.no-data {
+  &-img {
+    display: block;
+    width: 100%;
+    max-width: 35rem;
+    height: auto;
+    margin: 0 auto $vertical-padding;
+  }
+
+  &-title {
+    @include typo-h6;
+
+    color: $base-font-color;
+  }
+
+  &-text {
+    @include typo-body2;
+
+    color: $base-font-color;
+  }
 }

@@ -146,7 +146,7 @@
     }
   ],
   "rewardInfo": {
-    "image": "assets/images/spin-the-wheel-preview.png",
+    "image": "assets/images/previews/spin-the-wheel-preview.png",
     "rewardType": "Buy X get Y",
     "category": "F&B",
     "redemptionType": "QR code",
@@ -156,7 +156,7 @@
   },
   "merchantInfo": {
     "id": 4,
-    "logo": "assets/images/spin-the-wheel-preview.png",
+    "logo": "assets/images/previews/spin-the-wheel-preview.png",
     "type": "Starbucks",
     "firstName": "Moreno",
     "lastName": "Briggs",
