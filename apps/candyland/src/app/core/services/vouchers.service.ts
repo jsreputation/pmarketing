@@ -11,13 +11,15 @@ export class VouchersService {
 
   constructor(private vouchersHttp: VouchersHttpService) { }
 
-  public getRewards(params: HttpParams): Observable<any> {
+  public getVouchers(params: HttpParams): Observable<any> {
     return this.vouchersHttp.getVouchers(params);
   }
 
-  public getReward(id: string): Observable<IRewardEntityForm> {
+  public getVoucher(id: string): Observable<IRewardEntityForm> {
     return this.vouchersHttp.getVoucher(id).pipe(
-      map(response => response)
+      map(response => {
+        console.log(response);
+      })
     );
   }
 

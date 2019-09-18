@@ -13,14 +13,14 @@ export class VouchersHttpService {
   }
 
   public getVouchers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.vouchersPath + '/', {params});
+    return this.http.get(ApiConfig.voucherEntitiesPath + '/', {params});
   }
 
   public getVoucher(id: string): any {
-    return this.http.get<any>(ApiConfig.voucherPath + '/' + id);
+    return this.http.get<any>(ApiConfig.voucherEntitiesPath + '/' + id);
   }
 
   public createVoucher(data: any): Observable<any> {
-    return this.http.post<any>(ApiConfig.voucherPath, data);
+    return this.http.post<any>(ApiConfig.voucherEntitiesPath, data);
   }
 }
