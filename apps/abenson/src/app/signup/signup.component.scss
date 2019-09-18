@@ -82,13 +82,8 @@
   font-size: 1.6rem;
   line-height: 2.4rem;
 
-  .error_msg {
-    padding-bottom: 1rem;
-
-    span {
-      color: red;
-      font-size: 1.5rem;
-    }
+  .mat-error {
+    color: red;
   }
 
   h1 {
