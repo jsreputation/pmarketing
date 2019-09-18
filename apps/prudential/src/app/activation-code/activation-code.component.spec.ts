@@ -7,9 +7,9 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule } from '@perx/core';
+import { PerxCoreModule, VouchersModule, ProfileModule, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from 'src/environments/environment';
+
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -18,6 +18,7 @@ describe('ActivationCodeComponent', () => {
   let router: Router;
   let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
+  const authenticationServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,8 +32,7 @@ describe('ActivationCodeComponent', () => {
         MatCardModule,
         NoopAnimationsModule,
         ProfileModule,
-        VouchersModule,
-        AuthenticationModule
+        VouchersModule
       ],
       providers: [
         {
@@ -40,7 +40,8 @@ describe('ActivationCodeComponent', () => {
             overlayContainerElement = document.createElement('div');
             return { getContainerElement: () => overlayContainerElement };
           }
-        }
+        },
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
       .compileComponents();
@@ -75,7 +76,7 @@ describe('ActivationCodeComponent', () => {
   // it('shows information without details', () => {
   //   const config = {
   //     data: {
-  //       title: 'You need to login to reddem the voucher',
+  //       title: 'You need to login to redeem the voucher',
   //       buttonTxt: 'Go to login'
   //     }
   //   };
