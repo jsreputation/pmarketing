@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-survey',
@@ -24,7 +25,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public surveyData$: Observable<any>;
   public level = 0;
   public questionData$ = new Subject();
-  public tenants: Tenants;
+  public tenantSettings: ITenantsProperties;
   // tslint:disable
   public get listId(): string {
     const id = this.questionFormFieldService.listId;
@@ -76,24 +77,6 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     return this.questionData$.asObservable();
   }
 
-  public getTenantProperty(property: string): any {
-    return this.tenants ? this.tenants.properties[property] : null;
-  }
-
-  public tenantLogo(): any {
-    if (this.tenants && this.tenants.properties['theme.title']) {
-      return this.tenants.properties['theme.title']
-    } else if (this.tenants && this.tenants.properties['theme.logo']) {
-      return this.tenants.properties['theme.logo']
-    }
-  }
-
-  /**
-   * this method need for get right type of logo img or text in the component
-   */
-  public tenantTypeLogo(): boolean {
-    return !(this.tenants && (this.tenants.properties['theme.title'] as any));
-  }
   constructor(private questionFormFieldService: QuestionFormFieldService,
               private availableNewEngagementService: AvailableNewEngagementService,
               private surveyService: SurveyService,
@@ -195,7 +178,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   private getTenants(): void {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
-        this.tenants = res;
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
       });
   }
 }
