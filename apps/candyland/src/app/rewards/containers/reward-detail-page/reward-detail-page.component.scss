@@ -2,7 +2,7 @@
 
 :host {
   font-size: $base-font-size;
-  background-color: $simple-light-gray;
+  background-color: $background-color;
 }
 
 .reward-detail {
@@ -32,6 +32,6 @@
     font-style: normal;
     font-stretch: normal;
     letter-spacing: normal;
-    color: $white-color;
+    color: $white;
   }
 }

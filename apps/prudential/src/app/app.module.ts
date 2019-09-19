@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   VouchersModule,
+  RewardsModule,
+  MerchantsModule,
   PerxCoreModule,
   AuthenticationModule,
   CampaignModule,
@@ -55,7 +57,9 @@ import { ResultComponent } from './result/result.component';
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
+    RewardsModule,
     VouchersModule,
+    MerchantsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,

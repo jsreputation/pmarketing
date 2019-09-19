@@ -27,13 +27,13 @@
   &-content {
     @include mat-elevation(1);
 
-    border-radius: 4px;
-    background-color: $white-color;
+    border-radius: $border-radius;
+    background-color: $white;
     box-sizing: border-box;
 
     &-header {
       //height: 6rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid $border-color;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -54,10 +54,6 @@
     padding: 6rem 4rem 0;
     box-sizing: border-box;
   }
-
-  &-group-graphics {
-    padding: 1.8rem 4rem 4rem;
-  }
 }
 
 .game-card {
@@ -76,7 +72,6 @@
 
 .tabs-list-wrap {
   min-width: 27rem;
-  margin-right: 4rem;
 }
 
 .time-line-block {

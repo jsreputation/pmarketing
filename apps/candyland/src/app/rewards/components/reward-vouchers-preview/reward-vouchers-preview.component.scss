@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.3rem 2rem;
-    border-radius: 4px;
-    background-color: #f8fbfd;
+    border-radius: $border-radius;
+    background-color: $light-gray;
   }
 }

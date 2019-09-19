@@ -2,15 +2,24 @@ import { TestBed, async } from '@angular/core/testing';
 import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
 import { IVoucherService } from './ivoucher.service';
+import { RewardsService } from '../rewards/rewards.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../../public-api';
 import { Type } from '@angular/core';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 describe('PinService', () => {
   let service: PinService;
   let vouchersService: IVoucherService;
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,6 +27,14 @@ describe('PinService', () => {
         HttpClientTestingModule,
         VouchersModule,
         ConfigModule.forRoot({})
+      ],
+      providers: [
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
+        }
       ]
     }).compileComponents();
     service = TestBed.get(PinService);

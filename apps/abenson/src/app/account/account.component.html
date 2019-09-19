@@ -1,10 +1,12 @@
 <div class="section">
-    <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
+  <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
 </div>
 <div class="section">
-    <a [routerLink]="[ '/tnc' ]">Terms & Conditions</a>
-    <a [routerLink]="[ '/privacy' ]">Privacy Policy</a>
+  <a [routerLink]="[ 'profile' ]">Profile</a>
+  <a [routerLink]="[ 'change-password' ]">Change PIN code</a>
+  <a [routerLink]="[ '/tnc' ]">Terms & Conditions</a>
+  <a [routerLink]="[ '/privacy' ]">Privacy Policy</a>
 </div>
 <div class="section">
-    <span (click)="logout()">Log Out</span>
+  <span (click)="logout()">Log Out</span>
 </div>

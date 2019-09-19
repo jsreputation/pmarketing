@@ -1,0 +1,18 @@
+<div class="container">
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="My Card">
+      <perx-core-loyalty-summary></perx-core-loyalty-summary>
+      <div class="bc-block">
+        <div class="image">
+          <ngx-barcode [bc-value]="membershipId"></ngx-barcode>
+        </div>
+        <p class="bc-text">Present this code upon purchase at any participating branches.</p>
+        <button mat-button class="bc-question"> Already Have an Existing Card?</button>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="History">
+      <perx-core-loyalty-transactions-list [transactions]="transactions" [priceLabelFn]="priceLabelFn"></perx-core-loyalty-transactions-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -19,6 +19,7 @@ export class GameComponent implements OnInit {
   public isGameAvailable: boolean = false;
   public isButtonDisabled: boolean = true;
   public game: IGame;
+  public backgroundImage: string = '';
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -45,6 +46,8 @@ export class GameComponent implements OnInit {
           this.isGameAvailable = true;
           this.isButtonDisabled = false;
           this.numberOfTaps = game.config.nbTaps;
+          this.backgroundImage = game.backgroundImg;
+
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;
             this.notificationService.addPopup({

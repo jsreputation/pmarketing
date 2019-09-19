@@ -18,6 +18,7 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
+console.log(apiConfig);
 
 app.options('*', cors());
 
@@ -153,16 +154,6 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
-    const preAuthRequest = await axios.get(
-      endpoint.target_url + '/cognito/users',
-      {
-        headers: {
-          Authorization: endpointCredential.basic_token
-        },
-        timeout: 10000
-      }
-    );
-    const bearerToken = preAuthRequest.headers.authorization;
     const endpointRequest = await axios.post(
       endpoint.target_url + '/cognito/login',
       {
@@ -174,7 +165,7 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
       },
       {
         headers: {
-          Authorization: bearerToken,
+          Authorization: endpointCredential.basic_token,
           'Content-Type': 'text/plain'
         }
       }
@@ -184,7 +175,7 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
       'Access-Control-Expose-Headers': 'Authorization',
-      Authorization: bearerToken
+      Authorization: endpointRequest.headers.authorization
 
     });
     res.json(endpointRequest.data);

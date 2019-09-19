@@ -7127,6 +7127,11 @@ js-yaml@^3.13.0, js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+jsbarcode@^3.6.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.11.0.tgz#20623e008b101ef45d0cce9c8022cdf49be28547"
+  integrity sha512-/ozCd7wsa+VIHo9sUc03HneVEQrH7cVWfJolUT/WOW1m8mJ2e3iYZje6C9X3LFHdczlesqFHRpxLtbVsNtjyow==
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -8169,6 +8174,13 @@ next-tick@1, next-tick@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
+ng-mat-select-infinite-scroll@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ng-mat-select-infinite-scroll/-/ng-mat-select-infinite-scroll-1.1.0.tgz#c01d98cb204ac4f4a4661a86f150cc0deeebefe1"
+  integrity sha512-QFbEWsnPZxUTzKq8GyBrmc7rSLsD8JovkO0XtgySTS92j6C2vNpWPvRK4QMEQ8RNI5VGA55z4Hzg4i0hMxR4tA==
+  dependencies:
+    tslib "^1.9.0"
+
 ng-packagr@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-5.3.0.tgz#92434ca05ecbd1e01fe961a66c8a9a66b095f6fa"
@@ -8206,6 +8218,13 @@ ngx-auth@^5.0.0:
   resolved "https://registry.yarnpkg.com/ngx-auth/-/ngx-auth-5.0.0.tgz#557dd9baac79972e93a5262ef318889ea60552c6"
   dependencies:
     tslib "^1.9.0"
+
+ngx-barcode@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ngx-barcode/-/ngx-barcode-0.2.4.tgz#666e337d59cd72d93b836ede9a402bf5db08ffaa"
+  integrity sha1-Zm4zfVnNctk7g27emkAr9dsI/6o=
+  dependencies:
+    jsbarcode "^3.6.0"
 
 ngx-color-picker@^8.1.0:
   version "8.1.0"

@@ -7,7 +7,8 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
@@ -45,7 +46,8 @@ import { UtilsModule } from '@perx/core';
     MatIconModule,
     ErrorHandlerModule,
     TranslateModule,
-    UtilsModule
+    UtilsModule,
+    MatSelectModule
   ]
 })
 export class AccountModule {

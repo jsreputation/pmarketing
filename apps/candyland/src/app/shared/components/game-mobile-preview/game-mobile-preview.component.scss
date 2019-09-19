@@ -1,15 +1,10 @@
-@import "variables";
+@import "./variables";
 
 :host {
   position: relative;
-  width: 0;
-  padding-right: 34.4rem;
+  width: $mobile-preview-width;
   height: 68rem;
-  border-radius: 0.8rem;
+  border-radius: $border-radius-lg;
   flex-shrink: 0;
-}
-
-.mobile-preview-tabs {
-  position: fixed;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
 }

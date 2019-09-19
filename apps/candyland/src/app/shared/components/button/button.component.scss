@@ -11,14 +11,15 @@
   position: relative;
   min-width: 10rem;
   height: 4rem;
-  border-radius: 0.2rem;
-  color: $white-color;
+  border-radius: $border-radius;
+  color: $white;
   padding: 0 2rem;
   box-shadow: none;
+}
 
-  &.no-padding {
-    padding: 0;
-  }
+.btn.no-padding,
+.mat-flat-button {
+  padding: 0;
 }
 
 .primary {
@@ -30,7 +31,7 @@
 }
 
 .secondary {
-  background-color: $white-color;
+  background-color: $white;
   border: 1px solid $light-gray;
   color: $primary-color;
 
@@ -44,7 +45,7 @@
   color: $primary-color;
 
   &.opaque {
-    background-color: $white-color;
+    background-color: $white;
   }
 
   &:hover {
@@ -53,8 +54,8 @@
 }
 
 .disable-btn {
-  color: #a4b0c3 !important;
-  background-color: #e7e9ed !important;
+  color: $disable-color !important;
+  background-color: $light-gray !important;
 }
 
 .disable {
