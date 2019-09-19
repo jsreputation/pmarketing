@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
   VouchersModule,
+  MerchantsModule,
   AuthenticationModule,
   LoyaltyModule,
   GameModule,
@@ -105,6 +106,7 @@ const profileServiceStub = {
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule,
+    MerchantsModule,
     AuthenticationModule,
     GameModule,
     ProfileModule,

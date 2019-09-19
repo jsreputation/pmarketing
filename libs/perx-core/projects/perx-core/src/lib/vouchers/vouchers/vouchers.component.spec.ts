@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucher, VoucherState, RedemptionType } from '../models/voucher.model';
 import { ConfigModule } from '../../config/config.module';
 import { of } from 'rxjs';
+import { IMerchantsService } from '../../merchants/imerchants.service';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 
@@ -15,6 +16,10 @@ describe('VouchersComponent', () => {
   let fixture: ComponentFixture<VouchersComponent>;
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   const mockRedeemedVoucherDetail: IVoucher = {
@@ -69,6 +74,9 @@ describe('VouchersComponent', () => {
         { provide: IVoucherService, useValue: voucherServiceStub },
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from '../../config/config.module';
 import { of } from 'rxjs';
+import { IMerchantsService } from '../../merchants/imerchants.service';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 
@@ -19,6 +20,10 @@ describe('VoucherComponent', () => {
     getReward: () => of()
   };
 
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -30,6 +35,9 @@ describe('VoucherComponent', () => {
         { provide: IVoucherService, useValue: voucherServiceStub },
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })
