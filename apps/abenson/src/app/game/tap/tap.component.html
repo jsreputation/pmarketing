@@ -8,7 +8,7 @@
       <perx-core-pinata
         [stillImg]="game.config.stillImg"
         [openedImg]="game.config.openedImg" 
-        (broken)="gameCompleted()" 
+        (broken)="broken.emit()" 
         [enabled]="isEnabled">
         [nbTaps]="game.config.nbTaps"
       </perx-core-pinata>

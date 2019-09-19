@@ -9,7 +9,7 @@
       [giftImg]="game.config.giftImg"
       [nbHangedGifts]="game.config.nbHangedGift"
       [nbFallingGifts]="game.config.nbGiftsToDrop"
-      (completed)="gameCompleted()"
+      (completed)="broken.emit()"
       [enabled]="isEnabled"
       [nbShakes]="game.config.nbTaps">
     </perx-core-shake-tree>
