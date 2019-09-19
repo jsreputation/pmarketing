@@ -88,7 +88,7 @@ export class SurveyService {
         tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id
+            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
           )
         ),
         map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
@@ -112,7 +112,7 @@ export class SurveyService {
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
       map((res) => {
-        const hasOutcomes = !!res.data.attributes.results.id;
+        const hasOutcomes = res.data.attributes.results.attributes.results.length > 0;
         return {
           hasOutcomes
         };
