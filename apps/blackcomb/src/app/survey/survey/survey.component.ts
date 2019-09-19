@@ -51,16 +51,26 @@ export class SurveyComponent implements OnInit {
   public onSubmit(): void {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
       (res) => {
-        let text = 'Here is a reward for you.';
-        if (!res.hasOutcomes) {
-          text = 'Rewards are fully redeemed.';
+        let text: string;
+        let title: string;
+        let imageUrl: string;
+        let buttonTxt: string;
+        if (res.hasOutcomes) {
+          text = 'See you at our event!';
+          title = 'Your RSVP is successful!';
+          buttonTxt = 'To Wallet';
+          imageUrl = 'assets/congrats_image.png';
+        } else {
+          text = 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019';
+          title = 'Thank you for your interest. We’re sorry, all places have been taken.';
+          buttonTxt = null;
         }
         this.router.navigate(['/wallet']);
         this.notificationService.addPopup({
           text,
-          title: 'Thanks for completing the survey.',
-          buttonTxt: 'View Reward',
-          imageUrl: 'assets/congrats_image.png'
+          title,
+          buttonTxt,
+          imageUrl
         });
       }
     );
