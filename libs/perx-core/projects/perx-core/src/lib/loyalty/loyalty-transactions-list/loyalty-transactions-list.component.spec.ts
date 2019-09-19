@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TransactionPipe } from './transaction.pipe';
 import { DatePipe } from '@angular/common';
 
@@ -12,9 +11,6 @@ describe('LoyaltyTransactionsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoyaltyTransactionsListComponent, TransactionPipe ],
-      imports: [
-        HttpClientTestingModule
-      ],
       providers: [
         DatePipe,
         TransactionPipe

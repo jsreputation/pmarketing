@@ -1,11 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ProfileComponent } from './profile.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileService, AuthenticationService, IProfile, ProfileModule } from '@perx/core';
+
 import { of } from 'rxjs';
+
+import {
+  ProfileService,
+  AuthenticationService,
+  IProfile,
+  ProfileModule,
+  IVoucherService,
+} from '@perx/core';
+
+import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -23,6 +31,7 @@ describe('ProfileComponent', () => {
     whoAmI: () => of(mockProfile)
   };
   const authenticationServiceStub = {};
+  const vouchersServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +44,8 @@ describe('ProfileComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
       ]
     })
       .compileComponents();
