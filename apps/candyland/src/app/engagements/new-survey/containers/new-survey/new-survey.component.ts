@@ -12,6 +12,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { SurveyQuestionType } from '@perx/core';
 
 @Component({
   selector: 'cl-new-survey',
@@ -24,6 +25,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public surveyQuestionType: IEngagementType[];
   public surveyData$: Observable<any>;
   public level = 0;
+  public subHeadlineMaxLength: number = 250;
+
   public questionData$ = new Subject();
   public tenantSettings: ITenantsProperties;
   // tslint:disable
@@ -131,26 +134,26 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     this.surveyQuestion.removeAt(index);
   }
 
-  public updateQuestionType(data: { index: number, selectedTypeQuestion: string }): void {
+  public updateQuestionType(data: { index: number, selectedTypeQuestion: SurveyQuestionType }): void {
     this.deleteQuestion(data.index);
     this.surveyQuestion.insert(data.index, this.createControlQuestion(data.selectedTypeQuestion));
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: string): void {
+  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
     this.addQuestion(selectedTypeQuestion);
   }
 
-  public addQuestion(questionType: string): void {
+  public addQuestion(questionType: SurveyQuestionType): void {
     this.surveyQuestion.push(this.createControlQuestion(questionType));
   }
 
-  private createControlQuestion(questionType: string): FormGroup {
+  private createControlQuestion(questionType: SurveyQuestionType): FormGroup {
     return this.questionFormFieldService.createFormField(questionType);
   }
 
   private initForm(): void {
     this.form = NewSurveyForm.getForm();
-    this.addQuestion('rating');
+    this.addQuestion(SurveyQuestionType.rating);
   }
 
   private getSurveyData(): void {
