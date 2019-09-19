@@ -2,11 +2,7 @@
 <div class="dashboard-group-graphics">
   <div class="chard-card-list">
 
-    <div class="info-title">
-      <p>
-        Active Campaigns: {{activeCampaigns}}
-      </p>
-    </div>
+    <h2 class="chart-card-info-title">Active Campaigns: {{activeCampaigns}}</h2>
 
     <div class="tabs-list-wrap">
       <mat-radio-group color="primary" class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
@@ -23,35 +19,29 @@
       <ng-container *ngSwitchCase="'survey'">
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Survey Engagement Rate
-          </p>
+          <h3 class="chart-card-title">Survey Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="181" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Top 5 Rewards
-          </p>
+          <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="177" [cardType]="'horizontalBar'"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Channels
-          </p>
+          <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="178" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <div class="chart-card-title row with-control">
-            <p>Survey Campaign lists</p>
+          <div class="chart-card-header-with-control row">
+            <h3 class="chart-card-title">Survey Campaign lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for survey campaign"></cl-search-filter>
           </div>
           <div class="chart-card-content">
@@ -65,9 +55,9 @@
       <ng-container *ngSwitchCase="'games'">
 
         <div class="chart-card">
-          <div class="chart-card-title row with-control">
-            <p>Game Engagement Rate</p>
-            <mat-form-field appearance="outline" style="width: 200px;">
+          <div class="chart-card-header-with-control row">
+            <h3 class="chart-card-title">Game Engagement Rate</h3>
+            <mat-form-field appearance="outline">
               <mat-select #selectGame [value]="106">
                 <mat-option selected [value]="106">Shake the tree</mat-option>
                 <mat-option [value]="107">Hit the pinata</mat-option>
@@ -81,18 +71,14 @@
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Top 5 Rewards
-          </p>
+          <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Channels
-          </p>
+          <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
@@ -104,35 +90,29 @@
       <ng-container *ngSwitchCase="'stamps'">
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Stamps Engagement Rate
-          </p>
+          <h3 class="chart-card-title">Stamps Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Top 5 Rewards
-          </p>
+          <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Channels
-          </p>
+          <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <div class="chart-card-title row with-control">
-            <p>Stamps Campaign lists</p>
+          <div class="chart-card-header-with-control row">
+            <h3 class="chart-card-title">Stamps Campaign lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for stamps campaign"></cl-search-filter>
           </div>
           <div class="chart-card-content">
@@ -146,35 +126,29 @@
       <ng-container *ngSwitchCase="'reward'">
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Stamps Engagement Rate
-          </p>
+          <h3 class="chart-card-title">Stamps Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Top 5 Rewards
-          </p>
+          <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <p class="chart-card-title">
-            Channels
-          </p>
+          <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
         </div>
 
         <div class="chart-card">
-          <div class="chart-card-title row with-control">
-            <p>Stamps Rewards lists</p>
+          <div class="chart-card-header-with-control row">
+            <h3 class="chart-card-title">Stamps Rewards lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for rewards campaign"></cl-search-filter>
           </div>
           <div class="chart-card-content">
