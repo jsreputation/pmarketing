@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-
 import {
   PerxCoreModule,
   VouchersModule,
@@ -15,7 +14,8 @@ import {
   AuthenticationService,
   ProfileService,
   IVoucherService,
-  RewardsService
+  RewardsService,
+  IMerchantsService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
@@ -43,6 +43,10 @@ describe('ActivationCodeComponent', () => {
     getReward: () => of()
   };
 
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ActivationCodeComponent],
@@ -63,6 +67,12 @@ describe('ActivationCodeComponent', () => {
             overlayContainerElement = document.createElement('div');
             return { getContainerElement: () => overlayContainerElement };
           }
+        },
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: AUTH_SERVICE, useValue: ''},

@@ -5,6 +5,12 @@
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
+ * Merchants
+ */
+export { MerchantsModule } from './lib/merchants/merchants.module';
+export { IMerchantsService } from './lib/merchants/imerchants.service';
+
+/**
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';

@@ -8,12 +8,17 @@ import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../../public-api';
 import { Type } from '@angular/core';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 describe('PinService', () => {
   let service: PinService;
   let vouchersService: IVoucherService;
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   beforeEach(async(() => {
@@ -26,6 +31,9 @@ describe('PinService', () => {
       providers: [
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     }).compileComponents();
