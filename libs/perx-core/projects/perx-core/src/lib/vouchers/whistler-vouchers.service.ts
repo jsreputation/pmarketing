@@ -84,7 +84,7 @@ export class WhistlerVouchersService implements IVoucherService {
       .pipe(
         mergeMap(
           ([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) =>
-          combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
+            combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
         ),
         map(([v, reward, merchant]: [IJsonApiItem<IWhistlerVoucher>, IReward, IMerchant]) =>
           WhistlerVouchersService.WVoucherToVoucher(v, reward, merchant))
@@ -95,10 +95,7 @@ export class WhistlerVouchersService implements IVoucherService {
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
     return this.http.get<IJsonApiItemPayload<IWhistlerVoucher>>(this.vouchersUrl + '/' + id).pipe(
       map((res) => res.data),
-      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => {
-        // console.log(voucher);
-        return this.getFullVoucher(voucher);
-      })
+      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => this.getFullVoucher(voucher))
     );
   }
 
