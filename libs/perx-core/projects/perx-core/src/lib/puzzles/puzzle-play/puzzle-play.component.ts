@@ -59,6 +59,10 @@ export class PuzzlePlayComponent implements OnChanges {
 
   public staticPuzzleDummyTiles: number[][] = [];
 
+  public get hasRemainingPuzzleTiles(): boolean {
+    return this.remainingPuzzleTiles.length > 0;
+  }
+
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
   public ngOnChanges(

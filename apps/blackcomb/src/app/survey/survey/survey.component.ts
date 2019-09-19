@@ -44,12 +44,6 @@ export class SurveyComponent implements OnInit {
       },
       () => {
         this.router.navigate(['/wallet']);
-        this.notificationService.addPopup({
-          text: 'Please check the reward you get',
-          title: 'You already completed this survey before.',
-          buttonTxt: 'View Reward',
-          imageUrl: 'assets/congrats_image.png'
-        });
       }
     );
   }
