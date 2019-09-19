@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material';
 
 import { NgxBarcodeModule } from 'ngx-barcode';
-
-import { LoyaltyModule } from '@perx/core';
 
 import { CardRoutingModule } from './card-routing.module';
 import { CardComponent } from './containers/card/card.component';
 import { ExistingCardComponent } from './containers/existing-card/existing-card.component';
+
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -18,9 +17,8 @@ import { ExistingCardComponent } from './containers/existing-card/existing-card.
   imports: [
     CommonModule,
     CardRoutingModule,
-    LoyaltyModule,
-    MatTabsModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    SharedModule,
   ],
 })
 export class CardModule { }

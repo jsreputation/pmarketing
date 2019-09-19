@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-existing-card',
@@ -6,10 +14,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./existing-card.component.scss']
 })
 export class ExistingCardComponent implements OnInit {
+  public existingCardForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    this.initForm();
   }
 
+  private initForm(): void {
+    this.existingCardForm = this.fb.group({
+      cardNumber: ['', Validators.required]
+    });
+  }
+
+  public onSubmit(): void {
+    // @TODO: req, existing card number
+  }
 }

@@ -1,1 +1,28 @@
-<p>existing-card works!</p>
+<div class="container">
+  <form
+    class="existing-card-form"
+    [formGroup]="existingCardForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>
+        Enter your existing card number
+      </mat-label>
+      <input
+        matInput
+        placeholder="Enter your existing card number"
+        formControlName="cardNumber"
+      >
+      <mat-error *ngIf="existingCardForm.get('cardNumber').hasError('required')">
+        Card number is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary">
+      Submit
+    </button>
+  </form>
+  <a mat-button>Contact Us</a>
+</div>
