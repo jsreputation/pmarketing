@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '@cl-core-services';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { SessionService } from '@cl-core/services/token.service';
+import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('LoginComponent', () => {

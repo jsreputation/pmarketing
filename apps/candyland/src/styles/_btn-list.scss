@@ -18,8 +18,8 @@
   line-height: 1.58;
   letter-spacing: normal;
   text-align: center;
+  border-radius: $border-radius;
   color: rgba($secondary-color, 0.5);
-  border-radius: 0.4rem;
   border: solid 1px $secondary-font-color;
 
   &.active {

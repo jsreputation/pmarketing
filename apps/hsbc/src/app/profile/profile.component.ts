@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile, AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
+
 import { take } from 'rxjs/operators';
+
+import {
+  ProfileService,
+  IProfile,
+  AuthenticationService,
+  IVoucherService,
+} from '@perx/core';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +21,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private profileService: ProfileService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private vouchersService: IVoucherService,
   ) { }
 
   public ngOnInit(): void {
@@ -32,6 +40,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public onSignout(): void {
+    this.vouchersService.reset();
     this.authService.logout();
     this.router.navigate(['/login']);
   }

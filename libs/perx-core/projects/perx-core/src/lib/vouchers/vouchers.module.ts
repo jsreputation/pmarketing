@@ -15,10 +15,16 @@ import { Config } from '../config/config';
 import { V4VouchersService } from './v4-vouchers.service';
 import { WhistlerVouchersService } from './whistler-vouchers.service';
 import { RewardsService } from '../rewards/rewards.service';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
-export function vouchersServiceFactory(http: HttpClient, config: Config, rewardsService: RewardsService): IVoucherService {
+export function vouchersServiceFactory(
+  http: HttpClient,
+  config: Config,
+  rewardsService: RewardsService,
+  merchantsService: IMerchantsService
+): IVoucherService {
   if (config.isWhistler) {
-    return new WhistlerVouchersService(http, config, rewardsService);
+    return new WhistlerVouchersService(http, config, rewardsService, merchantsService);
   }
   // Make decision on what to instantiate base on config
   return new V4VouchersService(http, config);
@@ -50,7 +56,7 @@ const components = [
     {
       provide: IVoucherService,
       useFactory: vouchersServiceFactory,
-      deps: [HttpClient, Config, RewardsService]
+      deps: [HttpClient, Config, RewardsService, IMerchantsService]
     }
   ]
 })

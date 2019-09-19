@@ -1,4 +1,4 @@
-interface ICountryCode {
+export interface ICountryCode {
     id: number;
     name: string;
     phone: string;

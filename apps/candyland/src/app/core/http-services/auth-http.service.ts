@@ -13,4 +13,8 @@ export class AuthHttpService {
   public signIn(body: any): Observable<HttpResponse<any>> {
     return this.http.post<any>(ApiConfig.signIn, {data: body}, {observe: 'response'});
   }
+
+  public getUser(id: string): Observable<any> {
+    return this.http.get<any>(ApiConfig.IAMUsersPath + '/' + id);
+  }
 }

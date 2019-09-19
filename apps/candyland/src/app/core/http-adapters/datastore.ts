@@ -1,3 +1,4 @@
+import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig } from 'angular2-jsonapi';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +11,7 @@ const config: DatastoreConfig = {
     groups: Groups,
     tenants: Tenants,
     vouchers: Vouchers,
+    users: IamUser
   }
 };
 

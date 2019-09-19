@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
   VouchersModule,
+  MerchantsModule,
   AuthenticationModule,
   LoyaltyModule,
   GameModule,
@@ -27,7 +28,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { HttpErrorResponse } from '@angular/common/http';
@@ -49,6 +51,8 @@ import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { CardComponent } from './card/card.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { SignUpComponent } from './signup/signup.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -93,7 +97,8 @@ const profileServiceStub = {
     AccountComponent,
     HistoryComponent,
     PromosComponent,
-    CardComponent
+    CardComponent,
+    SignUpComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -101,6 +106,7 @@ const profileServiceStub = {
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule,
+    MerchantsModule,
     AuthenticationModule,
     GameModule,
     ProfileModule,
@@ -118,7 +124,9 @@ const profileServiceStub = {
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
-    LoyaltyModule
+    LoyaltyModule,
+    NgxBarcodeModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
