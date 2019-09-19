@@ -7,7 +7,8 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -48,7 +49,8 @@ describe('RegistrationComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatSelectModule
       ],
       declarations: [RegistrationComponent, RegistrationFormComponent],
       providers: [

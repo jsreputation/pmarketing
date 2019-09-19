@@ -7127,6 +7127,11 @@ js-yaml@^3.13.0, js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+jsbarcode@^3.6.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.11.0.tgz#20623e008b101ef45d0cce9c8022cdf49be28547"
+  integrity sha512-/ozCd7wsa+VIHo9sUc03HneVEQrH7cVWfJolUT/WOW1m8mJ2e3iYZje6C9X3LFHdczlesqFHRpxLtbVsNtjyow==
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -8213,6 +8218,13 @@ ngx-auth@^5.0.0:
   resolved "https://registry.yarnpkg.com/ngx-auth/-/ngx-auth-5.0.0.tgz#557dd9baac79972e93a5262ef318889ea60552c6"
   dependencies:
     tslib "^1.9.0"
+
+ngx-barcode@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ngx-barcode/-/ngx-barcode-0.2.4.tgz#666e337d59cd72d93b836ede9a402bf5db08ffaa"
+  integrity sha1-Zm4zfVnNctk7g27emkAr9dsI/6o=
+  dependencies:
+    jsbarcode "^3.6.0"
 
 ngx-color-picker@^8.1.0:
   version "8.1.0"

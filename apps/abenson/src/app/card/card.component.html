@@ -4,10 +4,10 @@
       <perx-core-loyalty-summary></perx-core-loyalty-summary>
       <div class="bc-block">
         <div class="image">
-
+          <ngx-barcode [bc-value]="membershipId"></ngx-barcode>
         </div>
         <p class="bc-text">Present this code upon purchase at any participating branches.</p>
-        <p class="bc-question">Already Have an Existing Card?</p>
+        <button mat-button class="bc-question"> Already Have an Existing Card?</button>
       </div>
 
     </mat-tab>
