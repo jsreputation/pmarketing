@@ -16,7 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
-import { SurveyModule as PerxSurveyModule} from '@perx/core';
+// import { SurveyModule as PerxSurveyModule} from '@perx/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;
@@ -33,7 +35,7 @@ describe('NewSurveyPageComponent', () => {
         SelectGraphicWrapModule,
         HttpClientTestingModule,
         SimpleMobileViewModule,
-        PerxSurveyModule,
+        // PerxSurveyModule,
 
         MatCardModule,
         MatFormFieldModule,
@@ -43,6 +45,7 @@ describe('NewSurveyPageComponent', () => {
         MatDialogModule,
         ConfirmModalModule,
       ],
+      schemas: [ NO_ERRORS_SCHEMA ],
       declarations: [ NewSurveyComponent ],
       providers: [
         {provide: StampHttpService, useValue: {
@@ -52,7 +55,8 @@ describe('NewSurveyPageComponent', () => {
         {provide: RoutingStateService, useValue: {}},
         {
           provide: StampDataService, useValue: {}
-        }
+        },
+        { provide: LocalStorageService, useValue: {}}
       ]
     })
     .compileComponents();
