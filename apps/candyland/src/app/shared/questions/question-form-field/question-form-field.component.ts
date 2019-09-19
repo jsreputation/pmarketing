@@ -70,7 +70,7 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
     this.removed.emit(this.currentIndex);
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: string): void {
+  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
     this.changeControl.emit({ index: this.currentIndex, selectedTypeQuestion, level: this.level });
   }
 
