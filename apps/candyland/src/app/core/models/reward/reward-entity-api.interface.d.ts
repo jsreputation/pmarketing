@@ -17,5 +17,19 @@ declare interface IRewardEntityApi {
     currency?: string;
     description?: string;
     terms_conditions?: string;
+    display_properties?: {
+      voucher_properties: {
+        code_type: string,
+        code?: string,
+        prefix?: string;
+        length?: number;
+        format_type?: string;
+        validity: {
+          type: 'period',
+          start_date: string,
+          end_date?: string
+        }
+      }
+    }
   };
 }
