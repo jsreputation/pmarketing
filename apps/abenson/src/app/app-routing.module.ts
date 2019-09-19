@@ -9,6 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
+import { SignUpComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: '**', redirectTo: '/home' }
 ];
 
