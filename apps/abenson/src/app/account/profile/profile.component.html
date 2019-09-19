@@ -49,7 +49,7 @@
   <div class="group">
     <label>Barangay</label>
     <div>{{profile.customProperties.barangay || '-'}}</div>
-    <div class="wrap">
+    <div class="wrap" [routerLink]="['change-barangay']">
       <mat-icon>edit</mat-icon>
     </div>
   </div>
