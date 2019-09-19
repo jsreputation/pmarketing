@@ -16,7 +16,11 @@ import { V4VouchersService } from './v4-vouchers.service';
 import { WhistlerVouchersService } from './whistler-vouchers.service';
 import { RewardsService } from '../rewards/rewards.service';
 
-export function vouchersServiceFactory(http: HttpClient, config: Config, rewardsService: RewardsService): IVoucherService {
+export function vouchersServiceFactory(
+  http: HttpClient,
+  config: Config,
+  rewardsService: RewardsService,
+): IVoucherService {
   if (config.isWhistler) {
     return new WhistlerVouchersService(http, config, rewardsService);
   }
