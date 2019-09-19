@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -35,7 +34,6 @@ describe('CodeRedemptionComponent', () => {
           path: 'wallet',
           component: CodeRedemptionComponent
         }]),
-        HttpClientTestingModule,
         TranslateModule.forRoot(),
         VouchersModule,
       ],

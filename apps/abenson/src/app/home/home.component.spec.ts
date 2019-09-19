@@ -1,12 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { IVoucherService, VouchersModule, ICampaignService, LoyaltyModule, ProfileModule, ConfigModule } from '@perx/core';
+import { IVoucherService, VouchersModule, ICampaignService, LoyaltyModule, ProfileModule, ProfileService, LoyaltyService, IProfile } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
-import { environment } from '../../environments/environment';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -23,6 +21,20 @@ describe('HomeComponent', () => {
     getCampaigns: () => of()
   };
 
+  const mockProfile: IProfile = {
+    id: 1,
+    state: '',
+    firstName: '',
+    lastName: '',
+  };
+  const profileServiceStub: Partial<ProfileService> = {
+    whoAmI: () => of(mockProfile)
+  };
+
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalties: () => of([])
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
@@ -30,15 +42,15 @@ describe('HomeComponent', () => {
         NoopAnimationsModule,
         MatCardModule,
         VouchersModule,
-        HttpClientTestingModule,
         LoyaltyModule,
         ProfileModule,
-        ConfigModule.forRoot({...environment}),
       ],
       providers: [
         { provide: Router, useValue: router },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub},
+        { provide: LoyaltyService, useValue: loyaltyServiceStub}
       ]
     })
       .compileComponents();

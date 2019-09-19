@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from './../../config/config.module';
+import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { of } from 'rxjs';
 import { IMerchantsService } from '../../merchants/imerchants.service';
@@ -11,6 +11,10 @@ import { IMerchantsService } from '../../merchants/imerchants.service';
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
   let fixture: ComponentFixture<QrcodeRedemptionComponent>;
+  const voucherServiceStub = {
+    get: () => of(''),
+    getAll: () => of([])
+  };
 
   const rewardsServiceStub = {
     getReward: () => of()
@@ -23,11 +27,11 @@ describe('QrcodeRedemptionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         VouchersModule,
         ConfigModule.forRoot({})
-      ],
+        ],
       providers: [
+        { provide: IVoucherService, useValue: voucherServiceStub },
         {
           provide: RewardsService, useValue: rewardsServiceStub
         },
