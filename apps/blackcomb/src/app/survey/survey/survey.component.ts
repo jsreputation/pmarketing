@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 
 interface IAnswer {
   question_id: string;
@@ -36,9 +36,16 @@ export class SurveyComponent implements OnInit {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
-        }),
-        tap((survey: ISurvey) => this.survey = survey)
+        })
       );
+    this.data$.subscribe(
+      (survey: ISurvey) => {
+        this.survey = survey;
+      },
+      () => {
+        this.router.navigate(['/wallet']);
+      }
+    );
   }
 
   public get progressBarValue(): number {

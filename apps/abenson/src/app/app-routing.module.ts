@@ -5,7 +5,6 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
-import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
@@ -22,8 +21,10 @@ const routes: Routes = [
       { path: 'wallet', component: HomeComponent },
       { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'profile', loadChildren: (): any => import('./profile/profile.module').then((mod: any) => mod.ProfileModule) },
+      {
+        path: 'account',
+        loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
+      },
       { path: 'forgot-pin', component: ForgotPinComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
