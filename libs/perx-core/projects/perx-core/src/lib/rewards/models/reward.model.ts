@@ -17,7 +17,6 @@ export interface IReward {
   howToRedeem: string;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory;
-  merchant_id?: number;
 }
 
 export interface ICatalog {

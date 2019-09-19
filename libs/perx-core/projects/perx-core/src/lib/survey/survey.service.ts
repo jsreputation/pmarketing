@@ -112,7 +112,7 @@ export class SurveyService {
     }).pipe(
       // tslint:disable-next-line: no-unused-expression
       map((res) => {
-        const hasOutcomes = !!res.data.attributes.results.attributes.results.length;
+        const hasOutcomes = res.data.attributes.results.attributes.results.length > 0;
         return {
           hasOutcomes
         };

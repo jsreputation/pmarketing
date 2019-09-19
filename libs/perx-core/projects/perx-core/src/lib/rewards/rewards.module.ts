@@ -12,6 +12,7 @@ import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 const components = [
   RewardsCollectionComponent,
@@ -20,9 +21,9 @@ const components = [
   RewardComponent
 ];
 
-export function rewardsServiceFactory(http: HttpClient, config: Config): RewardsService {
+export function rewardsServiceFactory(http: HttpClient, config: Config, merchant: IMerchantsService): RewardsService {
   if (config.isWhistler) {
-    return new WhistlerRewardsService(http, config);
+    return new WhistlerRewardsService(http, config, merchant);
   }
   // Make decision on what to instantiate base on config
   return new V4RewardsService(http, config);
@@ -45,7 +46,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config): Rewards
     {
       provide: RewardsService,
       useFactory: rewardsServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, IMerchantsService]
     }
   ]
 })
