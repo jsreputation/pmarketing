@@ -18,7 +18,8 @@ import {
   ProfileModule,
   StampModule,
   UtilsModule,
-  ConfigModule
+  ConfigModule,
+  RewardsModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -81,7 +82,8 @@ import { ProfileComponent } from './profile/profile.component';
     CampaignModule,
     ProfileModule,
     StampModule,
-    FormsModule
+    FormsModule,
+    RewardsModule,
   ],
   providers: [
     DatePipe,
