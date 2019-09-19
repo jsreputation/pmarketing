@@ -56,7 +56,6 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       name: reward.name,
       code: voucher.attributes.code,
-      // redemptionType: RedemptionType[reward.howToRedeem],
       redemptionType: RedemptionType.txtCode,
       thumbnailImg: reward.rewardThumbnail,
       rewardBanner: reward.rewardThumbnail,
@@ -85,7 +84,7 @@ export class WhistlerVouchersService implements IVoucherService {
       .pipe(
         mergeMap(
           ([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) =>
-          combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
+            combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
         ),
         map(([v, reward, merchant]: [IJsonApiItem<IWhistlerVoucher>, IReward, IMerchant]) =>
           WhistlerVouchersService.WVoucherToVoucher(v, reward, merchant))
