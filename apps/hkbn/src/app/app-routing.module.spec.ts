@@ -4,7 +4,6 @@ import { NgModuleFactoryLoader, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
 import { NotificationWrapperService } from './services/notification-wrapper.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -43,7 +42,6 @@ describe('AppRoutingModule', () => {
             ],
             imports: [
                 CodeRedemptionModule,
-                HttpClientTestingModule,
                 QrRedemptionModule,
                 VouchersModule,
                 RouterTestingModule.withRoutes([

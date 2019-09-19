@@ -6,6 +6,7 @@ import { IProfile, LoyaltyModule, LoyaltyService, ProfileService } from '@perx/c
 import { MatTabsModule } from '@angular/material';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -30,7 +31,8 @@ describe('CardComponent', () => {
       imports: [
         LoyaltyModule,
         MatTabsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        NgxBarcodeModule
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

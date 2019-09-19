@@ -5,10 +5,10 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
-import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
+import { SignUpComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -20,7 +20,10 @@ const routes: Routes = [
       { path: 'wallet', component: HomeComponent },
       { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
-      { path: 'account', component: AccountComponent },
+      {
+        path: 'account',
+        loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
+      },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
@@ -35,6 +38,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: '**', redirectTo: '/home' }
 ];
 

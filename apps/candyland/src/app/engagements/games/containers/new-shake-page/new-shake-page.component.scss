@@ -1,5 +1,4 @@
-
-@import "variables";
+@import "./variables";
 
 .tree {
   &-wrap {
@@ -55,7 +54,7 @@
   }
 
   &-gift-select {
-    width: 34.4rem;
+    width: $mobile-preview-width;
   }
 
   &-selected-graphic {

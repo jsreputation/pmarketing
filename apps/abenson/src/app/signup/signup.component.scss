@@ -1,0 +1,109 @@
+@import "../../custom-theme.scss";
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(0deg, #3DBFFF 0%, #A1F3F3 100%);
+
+  ::ng-deep {
+    .mat-form-field-appearance-fill {
+      .mat-form-field-underline::before {
+        height: 0 !important;
+      }
+
+      .mat-form-field-flex {
+        border-radius: 0;
+        background-color: #E8E8E8;
+      }
+    }
+
+    .mat-form-field .mat-form-field-ripple {
+      height: 0;
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+      background-color: mat-color($accent) !important;
+    }
+  }
+
+  .top-image {
+    display: flex;
+    margin-top: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .bottom-image {
+    margin: 2rem 0;
+  }
+
+  .mat-icon {
+    color: #606060;
+  }
+}
+
+.full-width__input,
+.full-width__button {
+  width: 100%;
+}
+
+.full-width__button {
+  background: #0F69AF !important;
+  height: 4.4rem;
+  letter-spacing: 0.075rem;
+  margin-bottom: 0.8rem;
+}
+
+.checkbox-container {
+  margin-bottom: 3.2rem;
+  margin-top: 2rem;
+  display: flex;
+
+  .mat-checkbox {
+    position: relative;
+    bottom: 0.4rem;
+    margin-right: 1.6rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    letter-spacing: 0.04rem;
+  }
+}
+
+.signup-form {
+  background-color: white;
+  max-width: 35.4rem;
+  padding: 1.5rem;
+  margin: 0 1.6rem;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+
+  .mat-error {
+    color: red;
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 3.4rem;
+    line-height: 4rem;
+    margin-top: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0.025rem;
+    margin-top: 0;
+
+    .link {
+      color: mat-color($primary);
+    }
+  }
+
+  border-radius: 0.8rem;
+}

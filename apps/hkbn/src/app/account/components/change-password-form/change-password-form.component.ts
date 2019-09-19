@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { IChangePasswordData } from '@perx/core';
@@ -18,8 +18,13 @@ export class ChangePasswordFormComponent {
     passwordConfirmation: new FormControl(null, [Validators.required, Validators.minLength(6)])
   }, [HkbnValidators.equalityValidator('newPassword', 'passwordConfirmation')]);
 
-  public submit(): void {
+  @Input() public set cache(passwordChangeForm: IChangePasswordData) {
+    if (this.changePasswordForm && passwordChangeForm) {
+      this.changePasswordForm.setValue(passwordChangeForm);
+    }
+  }
 
+  public submit(): void {
     if (this.changePasswordForm.invalid) {
       return;
     }

@@ -5,7 +5,6 @@ import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -26,7 +25,6 @@ describe('WalletComponent', () => {
         RouterTestingModule,
         TranslateModule.forRoot(),
         VouchersModule,
-        HttpClientTestingModule,
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
