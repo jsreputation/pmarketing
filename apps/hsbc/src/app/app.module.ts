@@ -15,7 +15,6 @@ import {
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
-  RewardsModule,
   MerchantsModule,
   ProfileModule,
   StampModule,
