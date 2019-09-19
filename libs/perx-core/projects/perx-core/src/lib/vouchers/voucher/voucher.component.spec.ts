@@ -5,10 +5,15 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from '../../config/config.module';
+import { RewardsService } from '../../rewards/rewards.service';
+import { of } from 'rxjs';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,6 +22,11 @@ describe('VoucherComponent', () => {
         HttpClientTestingModule,
         VouchersModule,
         ConfigModule.forRoot({})
+      ],
+      providers: [
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        }
       ]
     })
       .compileComponents();

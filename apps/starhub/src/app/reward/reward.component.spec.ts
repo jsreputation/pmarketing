@@ -3,11 +3,11 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, VoucherState, RedemptionType, NotificationService } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
@@ -16,11 +16,14 @@ describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
   const rewardsServiceStub = {
-    getReward: () => of(),
+    getReward: () => of()
+  };
+
+  const vouchersServiceStub = {
     issueReward: () => of()
   };
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
   const routerStub = { navigate: () => ({}) };
   const notificationServiceStub = { addSnack: () => ({}) };
@@ -34,6 +37,7 @@ describe('RewardComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         {
           provide: ActivatedRoute, useValue: {
             queryParams: of({ id: '1' })
@@ -119,44 +123,16 @@ describe('RewardComponent', () => {
     expect(locationSpy).toHaveBeenCalled();
   });
 
-  describe('save', () => {
-    it('should save reward', () => {
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-      const rewardsServiceSpy = spyOn(rewardsService, 'issueReward').and.returnValue(
-        of({
-          id: 1,
-          rewardId: 1,
-          state: VoucherState.redeemed,
-          name: 'Free Frapuccino',
-          redemptionType: RedemptionType.qr,
-          thumbnailImg: 'https://picsum.photos/50/50?random=4',
-          rewardBanner: '',
-          merchantImg: '',
-          merchantName: 'Starbucks',
-          expiry: null,
-          description: [],
-          redemptionSuccessTxt: '',
-          redemptionSuccessImg: '',
-        })
-      );
-      const router: Router = fixture.debugElement.injector.get(Router);
-      spyOn(router, 'navigate');
-      component.save();
-      expect(rewardsServiceSpy).toHaveBeenCalled();
-    });
-
-    it('should throw an error and show snackbar', () => {
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-      const rewardsServiceSpy = spyOn(rewardsService, 'issueReward').and.returnValue(
-        throwError({error: ''})
-      );
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
-      const notificationServiceSpy = spyOn(notificationService, 'addSnack');
-      component.save();
-      expect(rewardsServiceSpy).toHaveBeenCalled();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Sorry! Could not save reward.');
-    });
+  it('should save reward', () => {
+    const vouchersService: IVoucherService = fixture.debugElement.injector
+      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
+      of()
+    );
+    const router: Router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigate');
+    component.save();
+    expect(vouchersServiceSpy).toHaveBeenCalled();
   });
 
   describe('setButton', () => {

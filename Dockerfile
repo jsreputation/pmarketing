@@ -15,7 +15,7 @@ RUN echo "preauth: ${preauth}"
 RUN echo "iswhistler: ${iswhistler}"
 
 RUN yarn
-RUN APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${isWhistler} yarn build:${app}:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
+RUN APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${iswhistler} yarn build:${app}:prod --base-href ${basehref} --rebase-root-relative-css-urls=true
 RUN BASE_HREF=${basehref} yarn build:backend
 
 FROM node:lts-alpine

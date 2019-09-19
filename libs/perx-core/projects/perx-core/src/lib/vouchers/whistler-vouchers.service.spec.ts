@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { WhistlerVouchersService } from './whistler-vouchers.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigModule } from '../../public-api';
+import { ConfigModule, RewardsService } from '../../public-api';
+import { of } from 'rxjs';
 
 describe('WhistlerVouchersService', () => {
 
@@ -14,10 +15,19 @@ describe('WhistlerVouchersService', () => {
     baseHref: '/'
   };
 
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
       ConfigModule.forRoot({ ...environment })
+    ],
+    providers: [
+      {
+        provide: RewardsService, useValue: rewardsServiceStub
+      }
     ]
   }));
 
