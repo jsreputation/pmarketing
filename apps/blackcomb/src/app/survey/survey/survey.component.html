@@ -1,5 +1,5 @@
-<div class="survey-page" *ngIf="data$ | async as data">
-    <img [src]="data.background_img_url" *ngIf="data.background_img_url" class="background_img_url">
+<div class="survey-page" *ngIf="survey">
+    <img [src]="survey.background_img_url" *ngIf="survey.background_img_url" class="background_img_url">
     <div class="progress-bar">
         <mat-progress-bar mode="determinate" color="warn" [value]="progressBarValue"></mat-progress-bar>
         <div class="progress-bar-label">
@@ -7,8 +7,8 @@
         </div>
     </div>
     <mat-card class="survey-card mat-elevation-z2">
-        <h1>{{data.title}}</h1>
-        <h2 *ngIf="data.sub_title">{{data.sub_title}}</h2>
+        <h1>{{survey.title}}</h1>
+        <h2 *ngIf="survey.sub_title">{{survey.sub_title}}</h2>
         <perx-core-survey 
             [data]="data$"
             (surveyDone)="updateSurveyStatus($event)"

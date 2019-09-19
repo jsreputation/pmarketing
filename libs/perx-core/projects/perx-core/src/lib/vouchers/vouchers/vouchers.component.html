@@ -14,7 +14,7 @@
             <p *ngIf="showMerchant">
               {{voucher.merchantName}}
             </p>
-            <p *ngIf="showExpireDate && voucher.expiry">
+            <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
               Expiry: {{voucher.expiry | date: 'dd/MM/yyyy'}}
             </p>
             <p *ngIf="showRedeemedDate && voucher.redemptionDate">
