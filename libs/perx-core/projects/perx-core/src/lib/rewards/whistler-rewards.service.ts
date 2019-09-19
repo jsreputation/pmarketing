@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { IMerchant } from '../merchants/models/merchants.model';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 interface WhistlerIReward {
   category: string;
@@ -29,11 +31,11 @@ interface WhistlerIReward {
 export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
 
-  constructor(private http: HttpClient, config: Config) {
+  constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
     this.baseUrl = `${config.apiHost}/reward/entities/`;
   }
 
-  private static WRewardToReward(r: IJsonApiItem<WhistlerIReward>): IReward {
+  private static WRewardToReward(r: IJsonApiItem<WhistlerIReward>, merchant: IMerchant | null): IReward {
     return {
       // @ts-ignore
       id: (typeof r.id) === 'string' ? Number.parseInt(r.id, 10) : r.id,
@@ -44,14 +46,10 @@ export class WhistlerRewardsService implements RewardsService {
       validTo: null,
       rewardThumbnail: r.attributes.image_url,
       rewardBanner: r.attributes.image_url,
-      merchantImg: r.attributes.image_url,
-      organization_id: r.attributes.organization_id,
+      merchantId: r.attributes.organization_id,
+      merchantImg: merchant && merchant.images.length > 0 ? merchant.images[0].url : null,
+      merchantName: merchant ? merchant.name : null,
       rewardPrice: [
-        // {
-        //   id: 0,
-        //   price: r.attributes.cost_of_reward
-
-        // }
       ],
       termsAndConditions: r.attributes.terms_conditions,
       howToRedeem: r.attributes.redemption_type,
@@ -79,7 +77,14 @@ export class WhistlerRewardsService implements RewardsService {
   public getReward(id: number): Observable<IReward> {
     return this.http.get<IJsonApiItemPayload<WhistlerIReward>>(`${this.baseUrl}${id}`)
       .pipe(
-        map((res: IJsonApiItemPayload<WhistlerIReward>) => WhistlerRewardsService.WRewardToReward(res.data))
+        switchMap((reward: IJsonApiItemPayload<WhistlerIReward>) => {
+          if (reward.data.attributes.organization_id === null) {
+            return of([reward, null]);
+          }
+          return combineLatest(of(reward), this.merchantService.getMerchant(reward.data.attributes.organization_id));
+        }),
+        map(([reward, merchant]: [IJsonApiItemPayload<WhistlerIReward>, IMerchant | null]) =>
+          WhistlerRewardsService.WRewardToReward(reward.data, merchant))
       );
   }
 
