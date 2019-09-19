@@ -6,30 +6,27 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, ProfileModule, ConfigModule } from '@perx/core';
-import { environment } from '../../environments/environment';
+import { ProfileModule, AuthenticationService } from '@perx/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-
+  const authModuleStub = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        ConfigModule.forRoot({}),
         MatCardModule,
         MatProgressSpinnerModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        AuthenticationModule,
         NoopAnimationsModule,
         ProfileModule,
-        AuthenticationModule,
         FormsModule,
       ],
       declarations: [LoginComponent],
+      providers: [
+        { provide: AuthenticationService, useValue: authModuleStub}
+      ]
     })
       .compileComponents();
   }));

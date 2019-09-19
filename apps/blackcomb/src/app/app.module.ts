@@ -12,6 +12,7 @@ import {
   ProfileService,
   ConfigModule,
   RewardsModule,
+  MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule
 } from '@perx/core';
 import {
@@ -72,6 +73,7 @@ const profileServiceStub = {
     ProfileModule,
     BrowserAnimationsModule,
     RewardsModule,
+    PerxMerchantsModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,

@@ -13,6 +13,7 @@ import {
   RewardsModule,
   UtilsModule,
   VouchersModule,
+  MerchantsModule,
   ConfigModule
 } from '@perx/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -61,6 +62,7 @@ const PROVIDERS = [
     LoyaltyModule,
     VouchersModule,
     RewardsModule,
+    MerchantsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

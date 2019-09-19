@@ -32,6 +32,7 @@ import {
   RewardsModule,
   LocationModule,
   VouchersModule,
+  MerchantsModule,
   ConfigModule
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -108,6 +109,7 @@ import { TransactionPipe } from './account/transaction-history/transaction.pipe'
     UtilsModule,
     LoyaltyModule,
     RewardsModule,
+    MerchantsModule,
     VouchersModule,
     QRCodeModule,
     LocationModule
