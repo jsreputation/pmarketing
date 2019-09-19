@@ -22,7 +22,7 @@ export class QuestionPictureChoiceFieldComponent {
   public selectUploadGraphic(img: any, uploadImage: UploadImageComponent): void {
     this.choices.push(this.fb.group({
       text: [null, [Validators.required]],
-      image: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
+      img_url: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
     }));
     uploadImage.clear();
   }
@@ -30,7 +30,7 @@ export class QuestionPictureChoiceFieldComponent {
   public addedField(input: HTMLInputElement): void {
     this.choices.push(this.fb.group({
       text: [input.value, [Validators.required]],
-      image: [null, [Validators.required]]
+      img_url: [null, [Validators.required]]
     }));
     input.value = '';
   }

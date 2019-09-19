@@ -1,4 +1,4 @@
-import { ISurvey } from '@perx/core';
+import { ISurvey, SurveyQuestionType } from '@perx/core';
 
 export const mock: ISurvey = {
     title: 'Please help us knowing you better',
@@ -9,7 +9,7 @@ export const mock: ISurvey = {
             id: '9',
             required: false,
             payload: {
-                type: 'picture-select',
+                type: SurveyQuestionType.pictureChoice,
                 choices: [
                     {
                         img_url: 'https://picsum.photos/600/900',
@@ -36,7 +36,7 @@ export const mock: ISurvey = {
             id: '1',
             required: false,
             payload: {
-                type: 'rating',
+                type: SurveyQuestionType.rating,
                 color: 'primary',
                 left_label: 'not much',
                 right_label: 'a lot',
@@ -50,7 +50,7 @@ export const mock: ISurvey = {
             id: '10',
             required: false,
             payload: {
-                type: 'rating',
+                type: SurveyQuestionType.rating,
                 color: 'primary',
                 left_label: 'not much',
                 right_label: 'a lot',
@@ -64,7 +64,7 @@ export const mock: ISurvey = {
             id: '11',
             required: false,
             payload: {
-                type: 'rating',
+                type: SurveyQuestionType.rating,
                 color: 'primary',
                 left_label: 'not much',
                 right_label: 'a lot',
@@ -78,7 +78,7 @@ export const mock: ISurvey = {
             id: '7',
             required: true,
             payload: {
-                type: 'group',
+                type: SurveyQuestionType.questionGroup,
                 questions: [
                     {
                         question: 'What\'s your favorite color 1',
@@ -86,7 +86,7 @@ export const mock: ISurvey = {
                         id: '7.1',
                         required: false,
                         payload: {
-                            type: 'select',
+                            type: SurveyQuestionType.multipleChoice,
                             choices: [
                                 'blue',
                                 'white',
@@ -100,7 +100,7 @@ export const mock: ISurvey = {
                         id: '7.2',
                         required: true,
                         payload: {
-                            type: 'select',
+                            type: SurveyQuestionType.multipleChoice,
                             choices: [
                                 'blue',
                                 'white',
@@ -114,7 +114,7 @@ export const mock: ISurvey = {
                         id: '7.3',
                         required: true,
                         payload: {
-                            type: 'group',
+                            type: SurveyQuestionType.questionGroup,
                             questions: [
                                 {
                                     question: 'What\'s your favorite color 3.1',
@@ -122,7 +122,7 @@ export const mock: ISurvey = {
                                     id: '7.3.1',
                                     required: false,
                                     payload: {
-                                        type: 'select',
+                                        type: SurveyQuestionType.multipleChoice,
                                         choices: [
                                             'blue',
                                             'white',
@@ -136,7 +136,7 @@ export const mock: ISurvey = {
                                     id: '7.3.2',
                                     required: true,
                                     payload: {
-                                        type: 'select',
+                                        type: SurveyQuestionType.multipleChoice,
                                         choices: [
                                             'blue',
                                             'white',
@@ -156,7 +156,7 @@ export const mock: ISurvey = {
             id: '2',
             required: true,
             payload: {
-                type: 'date'
+                type: SurveyQuestionType.date
             }
         },
         {
@@ -165,7 +165,7 @@ export const mock: ISurvey = {
             id: '3',
             required: false,
             payload: {
-                type: 'date',
+                type: SurveyQuestionType.date,
                 period: true
             }
         },
@@ -175,7 +175,7 @@ export const mock: ISurvey = {
             id: '4',
             required: false,
             payload: {
-                type: 'date',
+                type: SurveyQuestionType.date,
                 period: true
             }
         },
@@ -185,7 +185,7 @@ export const mock: ISurvey = {
             id: '5',
             required: false,
             payload: {
-                type: 'long-text',
+                type: SurveyQuestionType.longText,
                 'max-length': 20
             }
         },
@@ -195,7 +195,7 @@ export const mock: ISurvey = {
             id: '6',
             required: false,
             payload: {
-                type: 'long-text'
+                type: SurveyQuestionType.longText
             }
         },
         {
@@ -204,7 +204,7 @@ export const mock: ISurvey = {
             id: '8',
             required: false,
             payload: {
-                type: 'phone',
+                type: SurveyQuestionType.phone,
                 default_country_code: 'SG'
             }
         }
