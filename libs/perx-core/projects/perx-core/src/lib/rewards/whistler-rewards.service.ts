@@ -44,14 +44,9 @@ export class WhistlerRewardsService implements RewardsService {
       validTo: null,
       rewardThumbnail: r.attributes.image_url,
       rewardBanner: r.attributes.image_url,
-      merchantImg: r.attributes.image_url,
       merchant_id: r.attributes.organization_id,
+      merchantImg: 'https://cdn.perxtech.io/content/prudential/PCC_Logo.png',
       rewardPrice: [
-        // {
-        //   id: 0,
-        //   price: r.attributes.cost_of_reward
-
-        // }
       ],
       termsAndConditions: r.attributes.terms_conditions,
       howToRedeem: r.attributes.redemption_type,
