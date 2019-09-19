@@ -9,7 +9,7 @@ import {
   styleUrls: ['./tap.component.scss']
 })
 export class TapComponent {
-  @Output() broken: EventEmitter<void> = new EventEmitter();
+  @Output() public broken: EventEmitter<void> = new EventEmitter();
   @Input() public game: IGame;
   public isEnabled: boolean = false;
 }

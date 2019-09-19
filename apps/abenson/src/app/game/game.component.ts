@@ -19,12 +19,12 @@ export class GameComponent implements OnInit {
     private notificationService: NotificationService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
       flatMap((params) => this.gameService.getGamesFromCampaign(+params.id)),
       take(1),
-      tap((games)=>!games || !games.length && this.router.navigate(['/wallet'])),
-      map((games)=>games[0]),
+      tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
+      map((games) => games[0]),
     );
   }
 
