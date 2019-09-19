@@ -1,6 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ExistingCardComponent } from './existing-card.component';
+
+import { SharedModule } from '../../../shared/shared.module';
 
 describe('ExistingCardComponent', () => {
   let component: ExistingCardComponent;
@@ -8,7 +15,13 @@ describe('ExistingCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExistingCardComponent ]
+      declarations: [
+        ExistingCardComponent,
+      ],
+      imports: [
+        SharedModule,
+        NoopAnimationsModule,
+      ],
     })
     .compileComponents();
   }));
