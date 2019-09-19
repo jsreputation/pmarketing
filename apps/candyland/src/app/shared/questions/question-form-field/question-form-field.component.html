@@ -23,10 +23,10 @@
         <div class="control-input" *ngIf="description.enabled" [ngClass]="{hidden: isActive()}">
           <mat-form-field class="messages-input">
             <input type="text" matInput [placeholder]="'Description'" [formControlName]="'description'">
-            <mat-hint align="end">{{description.value?.length || 0}}/512</mat-hint>
+            <mat-hint align="end">{{description.value?.length || 0}}/{{descriptionFieldMaxLength}}</mat-hint>
             <mat-error *ngIf="description.hasError('required')">Required field</mat-error>
             <mat-error *ngIf="description.hasError('minlength')">Min length 1</mat-error>
-            <mat-error *ngIf="description.hasError('maxlength')">Max length 512</mat-error>
+            <mat-error *ngIf="description.hasError('maxlength')">Max length {{descriptionFieldMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 

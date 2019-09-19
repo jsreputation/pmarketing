@@ -52,10 +52,10 @@
           <div class="control-input">
             <mat-form-field class="messages-input">
               <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{subHeadlineMaxLength}}</mat-hint>
               <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
               <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length {{subHeadlineMaxLength}}</mat-error>
             </mat-form-field>
           </div>
         </div>
