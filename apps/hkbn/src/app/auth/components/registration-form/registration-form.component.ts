@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { ICountryCode } from '@perx/core';
 
 @Component({
   selector: 'hkbn-registration-form',
@@ -8,8 +11,8 @@ import { HkbnValidators } from '../../../helpers/hkbn-validators';
   styleUrls: ['./registration-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RegistrationFormComponent {
-
+export class RegistrationFormComponent implements OnInit {
+  @Input() public countryCodes: ICountryCode[];
   @Output()
   public formSubmit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -21,7 +24,8 @@ export class RegistrationFormComponent {
       HkbnValidators.pattern('^[0-9]+$'),
       HkbnValidators.minLength(6),
       HkbnValidators.maxLength(11)
-      ]),
+    ]),
+    code: new FormControl('+852', [HkbnValidators.required]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
@@ -29,11 +33,24 @@ export class RegistrationFormComponent {
     promo: new FormControl(null)
   }, [HkbnValidators.equalityValidator('password', 'password_confirmation')]);
 
+  constructor(
+    private dataTransfer: DataTransferService
+  ) {
+  }
+
+  public ngOnInit(): void {
+    this.dataTransfer.updateData$.subscribe((data: ISignUpData) =>
+      data && this.registrationForm.setValue({ ...data, code: 11, phone: data.phone.substr(3) }));
+  }
+
   public submit(): void {
     if (this.registrationForm.invalid) {
       return;
     }
-    this.formSubmit.emit(this.registrationForm.value);
+    const requestBody = this.registrationForm.value;
+    requestBody.phone = requestBody.code.replace('+', '') + requestBody.phone;
+    delete requestBody.code;
+    this.dataTransfer.newxUpdateData(requestBody);
+    this.formSubmit.emit(requestBody);
   }
-
 }

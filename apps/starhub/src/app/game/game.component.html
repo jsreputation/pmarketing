@@ -1,8 +1,8 @@
 <div class="main" [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}">
   <div class="game-wrapper">
     <div class="labels">
-      <span class="title">{{title}}</span>
-      <h1 class="sub-title">{{subTitle}}</h1>
+      <h1 class="title">{{title}}</h1>
+      <span class="sub-title">{{subTitle}}</span>
     </div>
     <div *ngIf="isGameAvailable" class="pinata-wrapper">
       <perx-core-pinata
