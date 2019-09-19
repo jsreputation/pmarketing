@@ -3,8 +3,8 @@
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
@@ -96,7 +96,7 @@ main {
   margin: 0 auto;
 }
 
-.mast__img::before {
+.mast__img:::before {
   content: "";
   background: url(img/mastimg.jpg);
   filter: blur(1rem);
