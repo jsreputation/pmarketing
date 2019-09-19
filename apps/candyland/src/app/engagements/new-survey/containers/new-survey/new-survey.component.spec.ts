@@ -15,8 +15,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { ConfirmModalModule } from '@cl-shared';
-
+import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
+import { SurveyModule as PerxSurveyModule} from '@perx/core';
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;
@@ -32,6 +32,8 @@ describe('NewSurveyPageComponent', () => {
         QuestionFormFieldModule,
         SelectGraphicWrapModule,
         HttpClientTestingModule,
+        SimpleMobileViewModule,
+        PerxSurveyModule,
 
         MatCardModule,
         MatFormFieldModule,
