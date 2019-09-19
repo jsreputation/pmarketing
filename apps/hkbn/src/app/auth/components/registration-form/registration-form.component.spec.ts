@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationFormComponent } from './registration-form.component';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -24,6 +24,7 @@ describe('RegistrationFormComponent', () => {
         ErrorHandlerModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
+        MatSelectModule
       ],
       declarations: [RegistrationFormComponent]
     })
@@ -56,7 +57,8 @@ describe('RegistrationFormComponent', () => {
       password: 'qwerty123',
       password_confirmation: 'qwerty123',
       terms: true,
-      promo: true
+      promo: true,
+      code: '+852'
     });
     fixture.detectChanges();
     component.submit();

@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivationCodeComponent } from './activation-code.component';
@@ -8,9 +7,20 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { PerxCoreModule, AuthenticationModule, VouchersModule, ProfileModule, ConfigModule } from '@perx/core';
+
+import {
+  PerxCoreModule,
+  VouchersModule,
+  ProfileModule,
+  AuthenticationService,
+  ProfileService,
+  IVoucherService,
+  RewardsService
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from 'src/environments/environment';
+import { AUTH_SERVICE } from 'ngx-auth';
+
+import { of } from 'rxjs';
 
 describe('ActivationCodeComponent', () => {
   let component: ActivationCodeComponent;
@@ -19,12 +29,24 @@ describe('ActivationCodeComponent', () => {
   let router: Router;
   let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
+  const authenticationServiceStub = {};
+  const profileServiceStub = {
+    whoAmI: () => of()
+  };
+  const voucherServiceStub = {
+    get: () => {
+      return of('');
+    }
+  };
+
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ActivationCodeComponent],
       imports: [
-        ConfigModule.forRoot({ ...environment }),
         RouterTestingModule,
         PerxCoreModule,
         MatDialogModule,
@@ -32,10 +54,8 @@ describe('ActivationCodeComponent', () => {
         MatCardModule,
         MatCardModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         ProfileModule,
-        VouchersModule,
-        AuthenticationModule
+        VouchersModule
       ],
       providers: [
         {
@@ -43,7 +63,12 @@ describe('ActivationCodeComponent', () => {
             overlayContainerElement = document.createElement('div');
             return { getContainerElement: () => overlayContainerElement };
           }
-        }
+        },
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: AUTH_SERVICE, useValue: ''},
+        { provide: ProfileService, useValue: profileServiceStub},
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();
@@ -78,7 +103,7 @@ describe('ActivationCodeComponent', () => {
   // it('shows information without details', () => {
   //   const config = {
   //     data: {
-  //       title: 'You need to login to reddem the voucher',
+  //       title: 'You need to login to redeem the voucher',
   //       buttonTxt: 'Go to login'
   //     }
   //   };
