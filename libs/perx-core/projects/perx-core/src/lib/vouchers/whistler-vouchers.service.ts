@@ -24,6 +24,7 @@ interface IWhistlerVoucher {
   status: VoucherStatus;
   source_id: number;
   source_type: string;
+  end_date: string;
 }
 
 @Injectable({
@@ -61,7 +62,7 @@ export class WhistlerVouchersService implements IVoucherService {
       rewardBanner: reward.rewardThumbnail,
       merchantImg: merchant.images && merchant.images[0].url || '',
       merchantName: merchant.name,
-      expiry: null,
+      expiry: new Date(voucher.attributes.end_date) || null,
       description: [{
         title: null,
         content: reward.description,
