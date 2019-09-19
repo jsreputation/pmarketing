@@ -9,18 +9,21 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
   styleUrls: ['./create-merchant-popup.component.scss']
 })
 export class CreateMerchantPopupComponent implements OnInit {
+  public merchant: any;
   public formMerchant: FormGroup;
   public formConfig: IMerchantFormConfig = {
     shoveName: true
   };
+
   constructor(public dialog: MatDialog,
               private dialogRef: MatDialogRef<CreateMerchantPopupComponent>,
               private merchantFormService: MerchantFormService,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant) { }
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant) {
+  }
 
   public ngOnInit(): void {
     this.createFormMerchant();
-    this.doPatchFrom(this.data);
+    // this.doPatchFrom(this.data);
   }
 
   public close(): void {
@@ -28,20 +31,25 @@ export class CreateMerchantPopupComponent implements OnInit {
   }
 
   public addMerchant(): void {
-    this.dialogRef.close(this.formMerchant.value);
+    console.log('addMerchant', this.formMerchant.value, this.formMerchant.valid, this.formMerchant.errors);
+    if (this.formMerchant.valid) {
+      this.dialogRef.close(this.formMerchant.value);
+    } else {
+      this.formMerchant.markAllAsTouched();
+    }
   }
 
   private createFormMerchant(): void {
     this.formMerchant = this.merchantFormService.getMerchantForm();
   }
 
-  private doPatchFrom(data: IMerchant): void {
-    if (data) {
-      this.merchantFormService.patchMerchantForm(this.formMerchant, {
-        name: data.firstName,
-        image: data.logo,
-        contactNumber: data.phone
-      });
-    }
-  }
+  // private doPatchFrom(data: IMerchant): void {
+  //   if (data) {
+  //     this.merchantFormService.patchMerchantForm(this.formMerchant, {
+  //       name: data.firstName,
+  //       image: data.logo,
+  //       phone: data.phone
+  //     });
+  //   }
+  // }
 }

@@ -3,12 +3,13 @@ import {
   JsonApiModelConfig,
   JsonApiModel,
   Attribute,
-  HasMany
+  HasMany, BelongsTo
 } from 'angular2-jsonapi';
 
 // tslint:disable
 @JsonApiModelConfig({
-  type: ApiConfig.merchantsPath
+  type: 'orgs',
+  baseUrl: `${ApiConfig.merchantsPath}`
 })
 export class Merchant extends JsonApiModel {
 
@@ -33,10 +34,23 @@ export class Merchant extends JsonApiModel {
 
 
 @JsonApiModelConfig({
-  type: 'branches'
+  type: 'branches',
+  baseUrl: `${ApiConfig.merchantsPath}`
 })
 export class MerchantBranch extends JsonApiModel {
 
   @Attribute()
   id: string;
+
+  @Attribute()
+  type: string;
+
+  @Attribute()
+  name: string;
+
+  @Attribute()
+  properties: object;
+
+  @BelongsTo()
+  branches: Merchant;
 }

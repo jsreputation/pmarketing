@@ -13,16 +13,16 @@ export class MerchantFormService {
 
   public getMerchantForm(): FormGroup {
     return this.fb.group({
-      name: ['Merchant 1', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
+      name: ['Merchant 1', [Validators.minLength(1), Validators.maxLength(60)]],
       image: [null, [Validators.required]],
       description: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(120)]],
-      countryCode: [null, [Validators.required]],
-      contactNumber: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      stateProvince: [null, [Validators.required]],
-      postalCode: [null, [Validators.required]],
-      weblink: [null, [Validators.required, ClValidators.checkUrl]],
+      countryCode: [null, []],
+      phone: [null, []],
+      address: [null, []],
+      city: [null, []],
+      state: [null, []],
+      postalCode: [null, []],
+      weblink: [null, [ClValidators.checkUrl]],
       onBranches: [null],
       branches: this.fb.array([])
     });
@@ -44,7 +44,7 @@ export class MerchantFormService {
     return this.fb.group({
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
       address: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      contactNumber: [null]
+      phone: [null]
     });
   }
 }

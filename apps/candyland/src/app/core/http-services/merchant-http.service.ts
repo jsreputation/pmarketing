@@ -19,7 +19,15 @@ export class MerchantHttpService {
     return this.http.get('assets/actives/merchant/list-merchant.json');
   }
 
-  public createMerchant(data): Observable<any> {
-    return this.http.post(ApiConfig.merchantsPath, data);
+  public createMerchant(data: IResponseApi<any>): Observable<IResponseApi<any>> {
+    return this.http.post<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs', data);
+  }
+
+  public createMerchantBranch(data: IResponseApi<any>): Observable<IResponseApi<any>> {
+    return this.http.post<IResponseApi<any>>(ApiConfig.merchantsPath + '/branches', data);
+  }
+
+  public updateMerchant(id: string, data: IResponseApi<any>): Observable<IResponseApi<any>> {
+    return this.http.patch<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs' + id, data);
   }
 }

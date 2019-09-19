@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ListMerchantViewModule } from '@cl-shared/components/list-merchant-view/list-merchant-view.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { SelectMerchantComponent } from './select-merchant.component';
-import { MerchantListComponent } from './merchant-list/merchant-list.component';
 import {
   MatButtonModule,
   MatDialogModule,

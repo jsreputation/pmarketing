@@ -6,9 +6,10 @@ import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 
 const config: DatastoreConfig = {
+  // baseUrl: ApiConfig.merchantsPath,
   models: {
     groups: Groups,
-    merchant: Merchant,
+    orgs: Merchant,
     branches: MerchantBranch,
     tenants: Tenants,
   }
