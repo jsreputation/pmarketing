@@ -30,6 +30,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public cols: number = 3;
   public image: string = '';
   private cardsCount: number = 0;
+  private currentStampId: number = 0;
 
   constructor(
     private campaignService: ICampaignService,
@@ -134,7 +135,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       // don't do anything
       return;
     }
-    const firstAvailableStamp = stamps[0];
+    const firstAvailableStamp = stamps[this.currentStampId];
     this.stampService.putStamp(firstAvailableStamp.id)
       .subscribe(
         (stamp: IStamp) => {
@@ -164,6 +165,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               this.router.navigateByUrl('/home');
             }
           }
+          this.currentStampId++;
         },
         () => {
           this.notificationService.addPopup({
