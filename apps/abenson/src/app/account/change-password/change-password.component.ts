@@ -12,7 +12,7 @@ export class ChangePasswordComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.passwordChangeForm = this.fb.group({
       newPassword: [''],
       passwordConfirmation: [''],
