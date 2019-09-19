@@ -8,6 +8,8 @@ const routes: Routes = [{
 }, {
   path: 'change-password',
   loadChildren: () => import('./change-password/change-password.module').then(mod => mod.ChangePasswordModule)
+}, { 
+  path: 'profile', loadChildren: ()=> import('./profile/profile.module').then(mod=> mod.ProfileModule) 
 }];
 
 @NgModule({
