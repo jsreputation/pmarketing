@@ -64,7 +64,7 @@ Given(/^14_that I am on the campaign info page.$/, async () => {
 
 Then(/^14_I should see two options.$/, async () => {
   // doing a assertion based on the number of child elements
-  expect(await element.all(by.css('mat-radio-group')).get(1).getAttribute('childElementCount')).to.equal(2);
+  expect(await element.all(by.css('mat-radio-group')).get(1).getAttribute('childElementCount')).to.contain('2');
 });
 
 // Verifying the number of options for campaign goal .
@@ -87,6 +87,8 @@ Given(/^15_that I am on the campaign info page.$/, async () => {
 });
 
 When(/^15_I click on the campaign goal$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(1)), 6000);
   await element.all(by.css('div.mat-select-trigger')).get(1).click();
 });
 
@@ -105,9 +107,8 @@ Given(/^16_that I am on the campaign info page.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
   await element.all(by.css('input[type=text]')).get(1).sendKeys('Survey');
-  // selecting first element
+  // selecting first element for survey engagment
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
-  // asserting the presence of the card and title of the card
   await element.all(by.css('div.engagement-item')).first().click();
   // clicking on the next button on select engagement page
   await element.all(by.css('cl-button')).get(1).click();
@@ -121,7 +122,7 @@ When(/^16_I upload a csv file$/, async () => {
   const FileToUpload = './testArtifacts/pru-event-reward-test.csv';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // waiting for the upload an audience list radio button to be loaded
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('mat-radio-button')).get(38)), 8000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('mat-radio-button')).get(38)), 20000);
   // clicking on the upload an audience list radio button
   await element.all(by.css('mat-radio-button')).get(38).click();
   // wait for file upload file to upload
@@ -164,7 +165,7 @@ When(/^17_I click on the launch button.$/, async () => {
 Then(/^17_I should see url link for campaign.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for field to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(2)), 8000);
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(2)), 10000);
   // applying an assertion on url field element not null
   expect(await element.all(by.css('input[type=text]')).get(2).getAttribute('ng-reflect-value')).to.be.not.equal(null);
 

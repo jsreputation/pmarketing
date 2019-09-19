@@ -75,7 +75,7 @@ Then(/^32_I am not able to login.$/, async () => {
 
 // Login with incorrect p/w
 Given(/^33_I am on the login page.$/, async () => {
-  await DashboardPage.navigateToDashboard();
+  await LoginApp.navigateToLogin();
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
@@ -103,7 +103,7 @@ Then(/^33_I am not able to login.$/, async () => {
 // Login with incorrect accountId
 
 Given(/^34_I am on the login page.$/, async () => {
-  await DashboardPage.navigateToDashboard();
+  await LoginApp.navigateToLogin();
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();

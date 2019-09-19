@@ -36,6 +36,13 @@ Then(/^2_I should be navigated to the campaign page.$/, async () => {
 // Ensure that campaign page have relevant element
 Given(/^3_I am on the campaign page$/, async () => {
   await CampaignPage.navigateToCampaign();
+  // walk around for the walk me button
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 8000);
+  // clicking on the walkme button
+  await element(by.className('walkme-custom-balloon-button-text')).click();
+  await browser.executeScript('document.getElementById("walkme-main").remove()');
+  await browser.sleep(3000);
 });
 
 Then(/^3_I should see the relevant elements.$/, async () => {
