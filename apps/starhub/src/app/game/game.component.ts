@@ -20,6 +20,8 @@ export class GameComponent implements OnInit {
   public isButtonDisabled: boolean = true;
   public game: IGame;
   public backgroundImage: string = '';
+  public pinata: GameType = GameType.pinata;
+  public shakeTheTree: GameType = GameType.shakeTheTree;
 
   constructor(
     private activeRoute: ActivatedRoute,

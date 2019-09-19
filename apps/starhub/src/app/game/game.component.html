@@ -7,7 +7,7 @@
     <div *ngIf="isGameAvailable" class="pinata-wrapper">
 
       <perx-core-pinata
-        *ngIf="game && game.type === 1"
+        *ngIf="game && game.type === pinata"
         [stillImg]="game.config.stillImg"
         [openedImg]="game.config.brokenImg"
         [movingImg]="game.config.breakingImg"
@@ -18,7 +18,7 @@
       </perx-core-pinata>
 
       <perx-core-shake-tree
-        *ngIf="game && game.type === 0"
+        *ngIf="game && game.type === shakeTheTree"
         [treeImg]="game.config.treeImg || 'assets/tree/tree.png'"
         [giftImg]="game.config.giftImg || 'assets/tree/gift.png'"
         [nbHangedGifts]="game.config.nbHangedGift"
@@ -26,8 +26,6 @@
         (completed)="gameCompleted()"
         [enabled]="isEnabled"
         [nbShakes]="numberOfTaps"
-        [distanceFromTree]=26
-        [bottomDistance]=1
       >
       </perx-core-shake-tree>
 
