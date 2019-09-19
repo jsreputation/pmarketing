@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IGameService, IGame, NotificationService } from '@perx/core';
 import { flatMap, take, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +17,8 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -29,15 +31,14 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    setTimeout(() => {
+    this.dialog.afterAllClosed.subscribe(() => {
       this.router.navigate(['/wallet']);
-      this.notificationService.addPopup({
-        title: 'Congratulations!',
-        text: this.congratsDetailText,
-        buttonTxt: 'View Rewards',
-        imageUrl: 'assets/congrats_image.png',
-      });
-    }, 2000);
+    });
+    this.notificationService.addPopup({
+      title: 'Congratulations!',
+      text: this.congratsDetailText,
+      buttonTxt: 'View Rewards',
+      imageUrl: 'assets/congrats_image.png',
+    });
   }
-
 }
