@@ -56,7 +56,7 @@
   <div class="group">
     <label>Street Address</label>
     <div>{{profile.customProperties.addr1 || '-'}}</div>
-    <div class="wrap">
+    <div class="wrap" [routerLink]="['change-street-address']">
       <mat-icon>edit</mat-icon>
     </div>
   </div>

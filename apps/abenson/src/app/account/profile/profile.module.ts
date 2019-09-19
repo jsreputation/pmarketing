@@ -3,14 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatInputModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileComponent, ChangeStreetAddressComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfileModule { }
