@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LocationsComponent } from './locations.component';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UtilsModule, LocationsService, GeoLocationService, RewardsService } from '@perx/core';
+import { UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
@@ -13,6 +13,10 @@ import { AnalyticsService } from '../analytics.service';
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
   let fixture: ComponentFixture<LocationsComponent>;
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
+
   const position = {
     coords: {
       accuracy: 0,
@@ -48,7 +52,7 @@ describe('LocationsComponent', () => {
     positions: () => of(position)
   };
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
   let params: Subject<Params>;
   const rewardsServiceStub = {
@@ -79,7 +83,7 @@ describe('LocationsComponent', () => {
   };
 
   const analyticsServiceStub = {
-    addEvent: () => {}
+    addEvent: () => { }
   };
 
   beforeEach(async(() => {
@@ -94,6 +98,9 @@ describe('LocationsComponent', () => {
         UtilsModule
       ],
       providers: [
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
+        },
         {
           provide: ActivatedRoute, useValue: { queryParams: params }
         },
@@ -119,14 +126,14 @@ describe('LocationsComponent', () => {
 
   describe('onInit', () => {
     it('should location be undefined if mid is not present in the queryParams', () => {
-      params.next({mid: null});
+      params.next({ mid: null });
       component.ngOnInit();
       expect(component.locations).toBe(undefined);
     });
 
     it('should set locations based on the mid queryParams', () => {
-      params.next({mid: 1});
-      params.next({rid: 2});
+      params.next({ mid: 1 });
+      params.next({ rid: 2 });
       component.ngOnInit();
       component.locations.subscribe(res => {
         expect(res[0].merchantId).toBe(1);
