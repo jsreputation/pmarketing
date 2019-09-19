@@ -15,7 +15,7 @@ import {
   AuthenticationService,
   ProfileService,
   ConfigModule,
-  ICampaignService,
+  ICampaignService
 } from '@perx/core';
 import {
   MatToolbarModule,

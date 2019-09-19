@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
-
   public filter: string[];
 
   constructor(
@@ -27,7 +26,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onCampaignSelect(campaign: ICampaign): void {
-    this.router.navigate([`/game-play/${campaign.id}`]);
+    this.router.navigate([`/game/${campaign.id}`]);
   }
 
   public voucherSelected(voucher: Voucher): void {
