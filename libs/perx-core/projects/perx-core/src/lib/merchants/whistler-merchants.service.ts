@@ -32,7 +32,13 @@ export class WhistlerMerchantsService implements IMerchantsService {
     return {
       id: (typeof merchant.id === 'string') ? Number.parseInt(merchant.id, 10) : merchant.id,
       name: merchant.attributes.name,
-      description: merchant.attributes.description
+      description: merchant.attributes.description,
+      images: [
+        {
+          type: 'banner',
+          url: merchant.attributes.properties.img_url
+        }
+      ]
     };
   }
 

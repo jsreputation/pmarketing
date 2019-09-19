@@ -8,8 +8,6 @@ import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsona
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
-import { IMerchant } from '../merchants/models/merchants.model';
-import { IMerchantsService } from '../merchants/imerchants.service';
 
 const enum VoucherStatus {
   assigned = 'assigned'
@@ -24,7 +22,7 @@ interface IWhistlerVoucher {
   status: VoucherStatus;
   source_id: number;
   source_type: string;
-  end_date: string;
+  end_date_time: string;
 }
 
 @Injectable({
@@ -37,7 +35,6 @@ export class WhistlerVouchersService implements IVoucherService {
     // @ts-ignore
     private config: Config,
     private rewardsService: RewardsService,
-    private merchantsService: IMerchantsService
   ) { }
 
   private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
@@ -49,20 +46,19 @@ export class WhistlerVouchersService implements IVoucherService {
     }
   }
 
-  private static WVoucherToVoucher(voucher: IJsonApiItem<IWhistlerVoucher>, reward: IReward, merchant: IMerchant): IVoucher {
+  private static WVoucherToVoucher(voucher: IJsonApiItem<IWhistlerVoucher>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
       rewardId: voucher.attributes.source_id, // use at \lib\vouchers\vouchers.service.ts
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       name: reward.name,
       code: voucher.attributes.code,
-      // redemptionType: RedemptionType[reward.howToRedeem],
       redemptionType: RedemptionType.txtCode,
       thumbnailImg: reward.rewardThumbnail,
       rewardBanner: reward.rewardThumbnail,
-      merchantImg: merchant.images && merchant.images[0].url || '',
-      merchantName: merchant.name,
-      expiry: new Date(voucher.attributes.end_date) || null,
+      merchantImg: reward.merchantImg,
+      merchantName: reward.merchantName,
+      expiry: voucher.attributes.end_date_time ? new Date(voucher.attributes.end_date_time) : null,
       description: [{
         title: null,
         content: reward.description,
@@ -83,12 +79,7 @@ export class WhistlerVouchersService implements IVoucherService {
   private getFullVoucher(voucher: IJsonApiItem<IWhistlerVoucher>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
-        mergeMap(
-          ([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) =>
-          combineLatest(of(v), of(reward), this.merchantsService.getMerchant(reward.organization_id))
-        ),
-        map(([v, reward, merchant]: [IJsonApiItem<IWhistlerVoucher>, IReward, IMerchant]) =>
-          WhistlerVouchersService.WVoucherToVoucher(v, reward, merchant))
+        map(([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
       );
   }
 
