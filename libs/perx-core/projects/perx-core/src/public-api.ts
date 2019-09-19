@@ -134,7 +134,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType } from './lib/survey/models/survey.model';
 
 /**
  * Config

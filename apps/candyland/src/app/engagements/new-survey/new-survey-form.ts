@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ISurvey } from '@perx/core';
+import { ISurvey, SurveyQuestionType } from '@perx/core';
 
 export class NewSurveyForm {
 
@@ -14,8 +14,12 @@ export class NewSurveyForm {
         [Validators.required, Validators.minLength(5), Validators.maxLength(60)]
       ),
       subHeadlineMessage: new FormControl(
-        null, [Validators.required,
-          Validators.minLength(5), Validators.maxLength(60)]
+        null,
+        [
+          // Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(250)
+        ]
       ),
       questions: new FormArray([]),
       color: new FormControl(
@@ -43,7 +47,7 @@ export class NewSurveyForm {
           id: '1',
           required: false,
           payload: {
-            type: 'select',
+            type: SurveyQuestionType.multipleChoice,
             multiple: false,
             choices: [
               'blue',
@@ -58,7 +62,7 @@ export class NewSurveyForm {
           id: '9',
           required: false,
           payload: {
-            type: 'picture-select',
+            type: SurveyQuestionType.pictureChoice,
             multiple: true,
             choices: [
               {
@@ -87,7 +91,7 @@ export class NewSurveyForm {
           required: true,
           payload: {
             duration: true,
-            type: 'date'
+            type: SurveyQuestionType.date
           }
         },
         {
@@ -96,7 +100,7 @@ export class NewSurveyForm {
           id: '8',
           required: false,
           payload: {
-            type: 'phone',
+            type: SurveyQuestionType.phone,
             default_country_code: 'SG'
           }
         },
@@ -106,7 +110,7 @@ export class NewSurveyForm {
           id: '11',
           required: false,
           payload: {
-            type: 'rating',
+            type: SurveyQuestionType.rating,
             color: 'primary',
             left_label: 'not much',
             right_label: 'a lot',
@@ -120,7 +124,7 @@ export class NewSurveyForm {
           id: '7',
           required: true,
           payload: {
-            type: 'group',
+            type: SurveyQuestionType.questionGroup,
             questions: [
               {
                 question: 'What\'s your favorite color 1',
@@ -159,7 +163,7 @@ export class NewSurveyForm {
           id: '3',
           required: false,
           payload: {
-            type: 'date',
+            type: SurveyQuestionType.date,
             period: true
           }
         },
@@ -169,7 +173,7 @@ export class NewSurveyForm {
           id: '4',
           required: false,
           payload: {
-            type: 'date',
+            type: SurveyQuestionType.date,
             period: true
           }
         },
@@ -179,7 +183,7 @@ export class NewSurveyForm {
           id: '5',
           required: false,
           payload: {
-            type: 'long-text',
+            type: SurveyQuestionType.longText,
             'max-length': 20
           }
         },
@@ -189,7 +193,7 @@ export class NewSurveyForm {
           id: '6',
           required: false,
           payload: {
-            type: 'long-text'
+            type: SurveyQuestionType.longText
           }
         }
       ]
