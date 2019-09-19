@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { IGameService, NotificationService, IGame } from '@perx/core';
+import { IGameService, NotificationService, IGame, GameType } from '@perx/core';
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
@@ -46,7 +46,14 @@ export class GameComponent implements OnInit {
           this.isGameAvailable = true;
           this.isButtonDisabled = false;
           this.numberOfTaps = game.config.nbTaps;
-          this.backgroundImage = game.backgroundImg;
+
+          if (game.type === GameType.shakeTheTree) {
+            this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
+          }
+
+          if (game.type === GameType.pinata) {
+            this.backgroundImage = game.backgroundImg || '';
+          }
 
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;

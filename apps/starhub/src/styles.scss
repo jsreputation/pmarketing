@@ -57,3 +57,8 @@ cdk-virtual-scroll-viewport {
   position: relative;
   border-radius: 1rem;
 }
+
+.shake-tree-container .tree {
+  display: block !important;
+  max-width: 300px !important;
+}

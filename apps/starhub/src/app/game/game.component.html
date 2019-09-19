@@ -5,13 +5,32 @@
       <span class="sub-title">{{subTitle}}</span>
     </div>
     <div *ngIf="isGameAvailable" class="pinata-wrapper">
+
       <perx-core-pinata
-        [stillImg]="game.config.stillImg || 'assets/pinata/still-img.png'"
-        [openedImg]="game.config.brokenImg || 'assets/pinata/opened-img.png'"
-        (broken)="gameCompleted()"
-        [nbTaps]="numberOfTaps"
-        [enabled]="isEnabled">
-      </perx-core-pinata>
+        *ngIf="game && game.type === 1"
+        [stillImg]="game.config.stillImg"
+        [openedImg]="game.config.brokenImg"
+        [movingImg]="game.config.breakingImg"
+        [nbTaps]="numberOfTaps"
+        [enabled]="isEnabled"
+        (broken)="gameCompleted()"
+      >
+      </perx-core-pinata>
+
+      <perx-core-shake-tree
+        *ngIf="game && game.type === 0"
+        [treeImg]="game.config.treeImg || 'assets/tree/tree.png'"
+        [giftImg]="game.config.giftImg || 'assets/tree/gift.png'"
+        [nbHangedGifts]="game.config.nbHangedGift"
+        [nbFallingGifts]="game.config.nbGiftsToDrop"
+        (completed)="gameCompleted()"
+        [enabled]="isEnabled"
+        [nbShakes]="numberOfTaps"
+        [distanceFromTree]=26
+        [bottomDistance]=1
+      >
+      </perx-core-shake-tree>
+
     </div>
   </div>
 
