@@ -15,10 +15,12 @@ import {
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
+  MerchantsModule,
   ProfileModule,
   StampModule,
   UtilsModule,
-  ConfigModule
+  ConfigModule,
+  RewardsModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -77,11 +79,14 @@ import { ProfileComponent } from './profile/profile.component';
     MatSidenavModule,
     UtilsModule,
     VouchersModule,
+    RewardsModule,
+    MerchantsModule,
     AuthenticationModule,
     CampaignModule,
     ProfileModule,
     StampModule,
-    FormsModule
+    FormsModule,
+    RewardsModule,
   ],
   providers: [
     DatePipe,

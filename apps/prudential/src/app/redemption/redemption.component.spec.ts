@@ -2,8 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
-import { VouchersModule, ConfigModule, RewardsService } from '@perx/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  Voucher, VoucherState, RedemptionType, VouchersModule, IVoucherService, RewardsService, IMerchantsService
+} from '@perx/core';
+
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
@@ -11,25 +13,49 @@ import { of } from 'rxjs';
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
+  const mockVoucher: Partial<Voucher> = {
+    id: 2,
+    rewardId: 2,
+    state: VoucherState.issued,
+    name: 'sir',
+    redemptionType: RedemptionType.offline,
+    thumbnailImg: 'nil',
+    rewardBanner: 'nil',
+    merchantImg: 'nil',
+    merchantName: 'nil',
+    expiry:  null,
+    description: []
+  };
 
+  const voucherServiceStub = {
+    get: () => {
+      return of('');
+    }
+  };
   const rewardsServiceStub = {
     getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],
       imports: [
-        ConfigModule.forRoot({}),
         MatCardModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         NoopAnimationsModule,
         VouchersModule,
       ],
       providers: [
+        { provide: IVoucherService, useValue: voucherServiceStub },
         {
           provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
         }
       ]
     })

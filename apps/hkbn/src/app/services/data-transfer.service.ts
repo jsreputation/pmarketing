@@ -9,7 +9,7 @@ import { IChangePhoneData, ISignUpData } from '@perx/core/dist/perx-core/lib/aut
 export class DataTransferService {
   private data$: BehaviorSubject<IChangePasswordData | IChangePhoneData| ISignUpData | null> = new BehaviorSubject(null);
 
-  public get updateData$(): BehaviorSubject<any> {
+  public get updateData$(): BehaviorSubject<IChangePasswordData | IChangePhoneData| ISignUpData | null> {
     return this.data$;
   }
   public newxUpdateData(object: IChangePasswordData | IChangePhoneData | ISignUpData | null): void {

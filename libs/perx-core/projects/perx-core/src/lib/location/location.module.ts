@@ -5,14 +5,13 @@ import { LocationsMapComponent } from './locations-map/locations-map.component';
 import { MatDividerModule, MatListModule, MatCardModule, MatIconModule } from '@angular/material';
 import { V4LocationsService } from './v4-locations.service';
 import { LocationsService } from './locations.service';
-import { Config } from '../config/config';
-import { HttpClient } from '@angular/common/http';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 const comps: any[] = [LocationsListComponent, LocationsMapComponent];
 
-export function locationsServiceFactory(http: HttpClient, config: Config): LocationsService {
+export function locationsServiceFactory(merchantsService: IMerchantsService): LocationsService {
   // Make decision on what to instantiate base on config
-  return new V4LocationsService(http, config);
+  return new V4LocationsService(merchantsService);
 }
 
 @NgModule({
@@ -28,7 +27,7 @@ export function locationsServiceFactory(http: HttpClient, config: Config): Locat
     {
       provide: LocationsService,
       useFactory: locationsServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [IMerchantsService]
     }
   ],
   exports: comps
