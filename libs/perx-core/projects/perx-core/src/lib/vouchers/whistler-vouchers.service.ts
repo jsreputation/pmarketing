@@ -52,10 +52,10 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       name: reward.name,
       code: voucher.attributes.code,
-      redemptionType: RedemptionType[reward.howToRedeem],
+      redemptionType: RedemptionType.txtCode,
       thumbnailImg: reward.rewardThumbnail,
       rewardBanner: reward.rewardThumbnail,
-      merchantImg: reward.merchantImg,
+      merchantImg: 'https://cdn.perxtech.io/content/prudential/PCC_Logo.png',
       merchantName: reward.merchantName,
       expiry: null,
       description: [{
@@ -87,7 +87,10 @@ export class WhistlerVouchersService implements IVoucherService {
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
     return this.http.get<IJsonApiItemPayload<IWhistlerVoucher>>(this.vouchersUrl + '/' + id).pipe(
       map((res) => res.data),
-      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => this.getFullVoucher(voucher))
+      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => {
+        // console.log(voucher);
+        return this.getFullVoucher(voucher);
+      })
     );
   }
 
