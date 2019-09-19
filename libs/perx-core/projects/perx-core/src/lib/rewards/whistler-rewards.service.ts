@@ -45,7 +45,7 @@ export class WhistlerRewardsService implements RewardsService {
       rewardThumbnail: r.attributes.image_url,
       rewardBanner: r.attributes.image_url,
       merchantImg: r.attributes.image_url,
-      organization_id: r.attributes.organization_id,
+      merchant_id: r.attributes.organization_id,
       rewardPrice: [
         // {
         //   id: 0,
