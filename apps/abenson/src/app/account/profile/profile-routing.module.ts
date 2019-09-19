@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'change-barangay',
+    path: 'edit-barangay',
     component: ChangeBarangayComponent
   },
 ];
