@@ -6,12 +6,12 @@ import {
 import {
   FormsModule,
   ReactiveFormsModule
-} from "@angular/forms";
+} from '@angular/forms';
 import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ForgotPinComponent } from './forgot-pin.component';
 
