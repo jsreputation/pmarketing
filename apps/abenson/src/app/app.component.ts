@@ -6,7 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { PromosComponent } from './promos/promos.component';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './card/containers/card/card.component';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
 
