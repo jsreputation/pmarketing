@@ -41,6 +41,7 @@ Given(/^3_I am on the campaign page$/, async () => {
   await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 8000);
   // clicking on the walkme button
   await element(by.className('walkme-custom-balloon-button-text')).click();
+  await browser.sleep(3000);
   await browser.executeScript('document.getElementById("walkme-main").remove()');
   await browser.sleep(3000);
 });

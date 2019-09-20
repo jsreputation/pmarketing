@@ -22,9 +22,11 @@ Before( () => {
 // Login with correct credentials
 Given(/^31_I am on the login page$/, async () => {
   await DashboardPage.navigateToDashboard();
+  browser.waitForAngularEnabled(false);
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
+  await browser.waitForAngularEnabled(false);
 });
 
 When(/^31_I enter the right credentials$/, async () => {
@@ -39,8 +41,8 @@ When(/^31_I enter the right credentials$/, async () => {
   await LoginApp.pwField().sendKeys(LoginApp.getPassword());
   // pressing the enter key on the accountID field to log in
   await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
  });
-
 Then(/^31_I am able to login successfully$/, async () => {
   // able to log in successfully and redirect to dashboard
   expect(await browser.getCurrentUrl()).to.contain('dashboard');
@@ -52,6 +54,7 @@ Given(/^32_I am on the login page$/, async () => {
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
+  await browser.waitForAngularEnabled(false);
 });
 
 When(/^32_I entered the incorrect username with the valid p\/w$/, async () => {
@@ -79,6 +82,7 @@ Given(/^33_I am on the login page.$/, async () => {
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
+  await browser.waitForAngularEnabled(false);
 });
 
 When(/^33_I entered the correct email and invalid p\/w$/, async () => {
@@ -107,6 +111,7 @@ Given(/^34_I am on the login page.$/, async () => {
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
+  await browser.waitForAngularEnabled(false);
   });
 
 When(/^34_I entered the correct email and p\/w with invalid accountId$/, async () => {
@@ -134,6 +139,7 @@ Given(/^35_I am on the login page.$/, async () => {
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginApp.navigateToLogin();
+  await browser.waitForAngularEnabled(false);
 });
 
 When(/^35_I entered the correct email and invalid p\/w$/, async () => {

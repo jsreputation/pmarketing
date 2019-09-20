@@ -26,15 +26,15 @@ Given(/^19_I click on the survey engagement.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
 });
 
-Given(/^19_I click next on select engagement page$/, async () => {
+Given(/^19_I click next on select engagement page.$/, async () => {
   // clicking on the next button on select engagement page
   await element.all(by.css('cl-button')).get(1).click();
-  });
+});
 
 Given(/^19_I click on the include probability checkbox$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for include probability checkbox to load
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-checkbox-inner-container')).get(0)), 8000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-checkbox-inner-container')).get(0)), 8000);
   // unchecking the probability box
   await element.all(by.css('div.mat-checkbox-inner-container')).get(0).click();
 });

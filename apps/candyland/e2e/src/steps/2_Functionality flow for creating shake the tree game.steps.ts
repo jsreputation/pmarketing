@@ -102,12 +102,15 @@ Given(/^10_that I am on the shake the tree creation page.$/, async () => {
 
 When(/^10_I entered a empty text string in the headline text box.$/, async () => {
   await element(by.css('input#mat-input-1')).clear();
-  await element(by.css('input#mat-input-1')).sendKeys(' ');
+  // await element(by.css('input#mat-input-1')).sendKeys(' ');
 
 });
 
 Then(/^10_the empty string entered is reflected in the preview element.$/, async () => {
-  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('');
+  const ec = protractor.ExpectedConditions;
+  // waiting for preview headline to load
+  await browser.wait(ec.presenceOf(element(by.className('mobile-preview-headline'))), 6000);
+  expect(await element(by.css('p.mobile-preview-headline')).getText()).to.be.equal('');
 });
 
 // Verifiying that headline message is reflected in the preview element
@@ -220,6 +223,7 @@ Then(/^16_the random string entered is not reflected in the preview element.$/, 
 Given('17_that I am on the shake the tree creation page.', async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
   await browser.sleep(3000);
+  await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
 
 });
 
