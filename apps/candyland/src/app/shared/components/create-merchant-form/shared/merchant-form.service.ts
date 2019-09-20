@@ -23,27 +23,29 @@ export class MerchantFormService {
       state: [null, []],
       postalCode: [null, []],
       weblink: [null, [ClValidators.checkUrl]],
-      onBranches: [null],
+      // onBranches: [null],
       branches: this.fb.array([])
     });
   }
 
   public patchMerchantForm(form: FormGroup, val: any): void {
-    form.patchValue(val);
     if (val.branches && val.branches.length) {
-      form.get('onBranches').patchValue(true);
+      // form.get('onBranches').patchValue(true);
       val.branches.forEach((branch) => {
         const merchantBranchField: FormGroup = this.getMerchantBranchField();
         merchantBranchField.patchValue(branch);
         (form.get('branches') as FormArray).push(merchantBranchField);
-      })
+      });
     }
+    form.patchValue(val);
+    form.updateValueAndValidity();
   }
 
   public getMerchantBranchField(): FormGroup {
     return this.fb.group({
+      id: [null],
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      address: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
+      address: [null, [Validators.minLength(5), Validators.maxLength(60)]],
       phone: [null]
     });
   }

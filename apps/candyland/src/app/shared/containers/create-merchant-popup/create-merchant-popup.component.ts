@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
@@ -10,6 +10,7 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
 })
 export class CreateMerchantPopupComponent implements OnInit {
   public merchant: any;
+  public deletedBranches = [];
   public formMerchant: FormGroup;
   public formConfig: IMerchantFormConfig = {
     shoveName: true
@@ -23,7 +24,7 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   public ngOnInit(): void {
     this.createFormMerchant();
-    // this.doPatchFrom(this.data);
+    this.doPatchFrom(this.data);
   }
 
   public close(): void {
@@ -31,25 +32,35 @@ export class CreateMerchantPopupComponent implements OnInit {
   }
 
   public addMerchant(): void {
-    console.log('addMerchant', this.formMerchant.value, this.formMerchant.valid, this.formMerchant.errors);
     if (this.formMerchant.valid) {
-      this.dialogRef.close(this.formMerchant.value);
+      this.dialogRef.close({...this.formMerchant.value, deletedBranches: this.deletedBranches});
     } else {
       this.formMerchant.markAllAsTouched();
     }
+  }
+
+  public removeBranches(i?: number): void {
+    const branches = this.formMerchant.get('branches') as FormArray;
+    if (!i) {
+      branches.clear();
+      this.formMerchant.updateValueAndValidity();
+      return;
+    }
+    const deletedBranchId = branches.at(i).value.id;
+    if (deletedBranchId) {
+      this.deletedBranches.push(deletedBranchId);
+      console.log('deletedBranches', this.deletedBranches);
+    }
+    branches.removeAt(i);
   }
 
   private createFormMerchant(): void {
     this.formMerchant = this.merchantFormService.getMerchantForm();
   }
 
-  // private doPatchFrom(data: IMerchant): void {
-  //   if (data) {
-  //     this.merchantFormService.patchMerchantForm(this.formMerchant, {
-  //       name: data.firstName,
-  //       image: data.logo,
-  //       phone: data.phone
-  //     });
-  //   }
-  // }
+  private doPatchFrom(data: IMerchant): void {
+    if (data) {
+      this.merchantFormService.patchMerchantForm(this.formMerchant, data);
+    }
+  }
 }

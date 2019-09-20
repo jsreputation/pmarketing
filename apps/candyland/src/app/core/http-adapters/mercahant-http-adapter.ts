@@ -17,18 +17,26 @@ export class MerchantHttpAdapter {
 
   public static transformToMerchantForm(data: any): any {
     return {
-      name: data.attributes.name,
+      name: data.name,
+      type: data.type,
       id: data.id,
-      currency: data.attributes.currency,
-      rewardInfo: {
-        image: data.attributes.image_url,
-        rewardType: data.attributes.reward_type,
-        category: data.attributes.category,
-        redemptionType: data.attributes.redemption_type,
-        cost: data.attributes.cost_of_reward,
-        description: data.attributes.description,
-        termsAndCondition: data.attributes.terms_conditions
-      }
+      description: data.description,
+      countryCode: data.properties.country_code,
+      phone:  data.properties.phone,
+      address:  data.properties.address,
+      city:  data.properties.city,
+      state: data.properties.state,
+      postalCode: data.properties.postal_code,
+      weblink: data.properties.weblink,
+      // onBranches: !!data.branches,
+      branches: data.branches ? data.branches.map(branch => (
+        {
+          id: branch.id,
+          name: branch.name,
+          address: branch.properties.address,
+          phone: branch.properties.phone,
+        }
+        )) : []
     };
   };
 
@@ -52,7 +60,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformFromMerchantBranchForm(id: string, data: any): any {
+  public static transformFromMerchantBranchForm(data: any, merchantId?: string): any {
     return {
           type: "branches",
           attributes: {
@@ -66,7 +74,7 @@ export class MerchantHttpAdapter {
             org: {
               data: {
                 type: "orgs",
-                id: id
+                id: merchantId || data.id
               }
             }
         }

@@ -22,6 +22,9 @@ export class Merchant extends JsonApiModel {
   @Attribute()
   name: string;
 
+  @Attribute()
+  description: string;
+
   @Attribute({serializedName: 'created_at'})
   createdAt: Date;
 

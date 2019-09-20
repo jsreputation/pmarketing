@@ -8,7 +8,7 @@ import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merch
 import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
-import { RewardsService } from '@cl-core-services';
+import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
@@ -27,6 +27,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private rewardsService: RewardsService,
+              private merchantsService: MerchantsService,
               private newRewardFormService: NewRewardFormService,
               private toggleControlService: ToggleControlService) {
   }
@@ -71,8 +72,15 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public openDialogCreateMerchant(): void {
     const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
 
-    dialogRef.afterClosed().subscribe((merchant) => {
-      this.form.get('merchantInfo').patchValue(merchant);
+    dialogRef.afterClosed()
+      .pipe(
+      untilDestroyed(this),
+      filter(Boolean),
+      switchMap(merchant => this.merchantsService.createMerchant(merchant)),
+      tap(answer => console.log('answer', answer)),
+    )
+      .subscribe((merchant) => {
+        this.form.get('merchantInfo').patchValue(merchant);
     });
   }
 
@@ -80,6 +88,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(SelectMerchantComponent);
 
     dialogRef.afterClosed().subscribe((merchant) => {
+      console.log(merchant);
       this.form.get('merchantInfo').patchValue(merchant);
     });
   }

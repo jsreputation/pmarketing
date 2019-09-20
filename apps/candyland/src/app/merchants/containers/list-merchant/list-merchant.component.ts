@@ -1,11 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
+import { MerchantHttpAdapter } from '@cl-core/http-adapters/mercahant-http-adapter';
 import { Merchant } from '@cl-core/http-adapters/merchant';
-import { MerchantsService } from '@cl-core/services';
 import { MatDialog } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
 import { filter, switchMap } from 'rxjs/operators';
+import { MerchantsService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-list-merchant',
@@ -25,7 +26,7 @@ export class ListMerchantComponent implements OnDestroy {
 
   public openDialogCreate(merchant?: Merchant): void {
     const dialogRef = this.dialog.open(CreateMerchantPopupComponent, {
-      data: merchant || null
+      data: merchant ?  MerchantHttpAdapter.transformToMerchantForm(merchant) : null
     });
 
     dialogRef.afterClosed()
@@ -34,7 +35,6 @@ export class ListMerchantComponent implements OnDestroy {
         filter(Boolean),
         switchMap(updatedMerchant => {
           if (merchant) {
-            console.log('updateMerchant', updatedMerchant);
             return this.merchantService.updateMerchant(merchant.id, updatedMerchant);
           }
           return this.merchantService.createMerchant(updatedMerchant);
@@ -54,7 +54,6 @@ export class ListMerchantComponent implements OnDestroy {
   }
 
   public duplicateMerchant(merchant: Merchant): void {
-    // console.log('duplicateMerchant');
     this.merchantService.duplicateMerchant(merchant).subscribe(
       () => this.dataSource.updateData()
     );

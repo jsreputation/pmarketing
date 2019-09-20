@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Merchant } from '@cl-core/http-adapters/merchant';
-import { MerchantsService } from '@cl-core/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { MerchantsService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-select-merchant',
