@@ -1,37 +1,55 @@
 <div class="page" *ngIf="profile$ | async as profile">
   <div class="group">
-    <label>First Name</label>
-    <div>{{profile.firstName || '-'}}</div>
+    <div>
+      <label>First Name</label>
+      <div>{{profile.firstName || '-'}}</div>
+    </div>
+
   </div>
   <div class="group">
-    <label>Middle Name</label>
-    <div>{{profile.middleName || '-'}}</div>
+    <div>
+      <label>Middle Name</label>
+      <div>{{profile.middleName || '-'}}</div>
+    </div>
+
   </div>
   <div class="group">
-    <label>Last Name</label>
-    <div>{{profile.lastName || '-'}}</div>
+    <div>
+      <label>Last Name</label>
+      <div>{{profile.lastName || '-'}}</div>
+    </div>
+
   </div>
   <div class="group">
-    <label>Date of Birth</label>
-    <div>{{profile.birthDate || '-'}}</div>
+    <div>
+      <label>Date of Birth</label>
+      <div>{{profile.birthDate || '-'}}</div>
+    </div>
+
   </div>
   <div class="group">
-    <label>Gender</label>
-    <div>{{profile.gender || '-'}}</div>
+    <div><label>Gender</label>
+      <div>{{profile.gender || '-'}}</div>
+    </div>
+
   </div>
   <div class="sub-title">
     Contact Details
   </div>
   <div class="group">
-    <label>Mobile Number</label>
-    <div>{{profile.phone || '-'}}</div>
+    <div>
+      <label>Mobile Number</label>
+      <div>{{profile.phone || '-'}}</div>
+    </div>
     <a routerLink="edit-mobile" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
   <div class="group">
-    <label>Email</label>
-    <div>{{profile.email || '-'}}</div>
+    <div>
+      <label>Email</label>
+      <div>{{profile.email || '-'}}</div>
+    </div>
     <a routerLink="edit-email" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
@@ -40,22 +58,28 @@
     Address
   </div>
   <div class="group">
-    <label>City/Municipality</label>
-    <div>{{profile.customProperties.city || '-'}}</div>
+    <div>
+      <label>City/Municipality</label>
+      <div>{{profile.customProperties.city || '-'}}</div>
+    </div>
     <a routerLink="edit-address" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
   <div class="group">
-    <label>Barangay</label>
-    <div>{{profile.customProperties.barangay || '-'}}</div>
+    <div>
+      <label>Barangay</label>
+      <div>{{profile.customProperties.barangay || '-'}}</div>
+    </div>
     <a routerLink="edit-barangay" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
   <div class="group">
-    <label>Street Address</label>
-    <div>{{profile.customProperties.addr1 || '-'}}</div>
+    <div>
+      <label>Street Address</label>
+      <div>{{profile.customProperties.addr1 || '-'}}</div>
+    </div>
     <a routerLink="edit-street" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
