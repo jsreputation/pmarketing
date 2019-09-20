@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
+import { SurveyQuestionType } from '@perx/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -20,15 +20,17 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
   @Output() public removed = new EventEmitter<number>();
   @Output() public changeControl = new EventEmitter<any>();
   public descriptionField: FormControl;
+  public descriptionFieldMaxLength: number = 1024;
   public showDescription: boolean;
   public required = false;
   public closed = true;
   public surveyQuestionType = SurveyQuestionType;
   private destroy$ = new Subject();
 
-  constructor(private questionFormFieldService: QuestionFormFieldService,
-              private fb: FormBuilder,
-              ) {
+  constructor(
+    private questionFormFieldService: QuestionFormFieldService,
+    private fb: FormBuilder,
+  ) {
   }
 
   public isActive(): boolean {
@@ -68,8 +70,8 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
     this.removed.emit(this.currentIndex);
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: string): void {
-    this.changeControl.emit({index: this.currentIndex, selectedTypeQuestion, level: this.level });
+  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
+    this.changeControl.emit({ index: this.currentIndex, selectedTypeQuestion, level: this.level });
   }
 
   private updateStatusDescriptionField(): void {
@@ -90,14 +92,14 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
       )
       .subscribe(value => {
         this.showDescription = value;
-        this.toggleControl( value);
+        this.toggleControl(value);
       });
   }
 
   private toggleControl(toggle: boolean): void {
     toggle
-      ? this.description.enable({emitEvent: false})
-      : this.description.disable({emitEvent: false});
+      ? this.description.enable({ emitEvent: false })
+      : this.description.disable({ emitEvent: false });
     this.group.updateValueAndValidity();
   }
 

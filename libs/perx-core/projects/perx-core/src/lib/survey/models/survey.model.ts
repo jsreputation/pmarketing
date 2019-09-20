@@ -59,7 +59,7 @@ export interface IErrors {
 }
 
 export interface IPayload {
-    type: string;
+    type: SurveyQuestionType;
     [key: string]: any;
 }
 
