@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { MatIconModule, MatInputModule } from '@angular/material';
+import { MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProfileRoutingModule,
     MatIconModule,
     MatInputModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule
   ]
