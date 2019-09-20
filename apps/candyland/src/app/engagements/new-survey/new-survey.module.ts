@@ -10,7 +10,8 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule } fr
 import { QuestionFormFieldModule } from '@cl-shared/questions/question-form-field/question-form-field.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-
+import { SimpleMobileViewModule } from '@cl-shared';
+import { SurveyModule as PerxSurveyModule} from '@perx/core';
 @NgModule({
   declarations: [
     NewSurveyAppearancePageComponent,
@@ -24,6 +25,8 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
     ButtonModule,
     QuestionFormFieldModule,
     SelectGraphicWrapModule,
+    SimpleMobileViewModule,
+    PerxSurveyModule,
 
     MatCardModule,
     MatFormFieldModule,

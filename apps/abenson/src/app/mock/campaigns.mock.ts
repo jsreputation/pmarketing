@@ -5,7 +5,7 @@ export const campaigns: ICampaign[] = [
         id: 1,
         name: 'Smash that Pinata',
         description: '',
-        type: CampaignType.stamp,
+        type: CampaignType.game,
         state: CampaignState.active,
         endsAt: new Date('2017-11-17T03:24:00')
     },

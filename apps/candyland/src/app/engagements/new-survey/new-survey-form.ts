@@ -33,7 +33,12 @@ export class NewSurveyForm {
       background: new FormControl(
         null,
         [Validators.required]
-      )
+      ),
+      buttonText: new FormControl('start', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ])
     });
   }
 

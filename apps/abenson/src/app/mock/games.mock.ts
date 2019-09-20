@@ -3,7 +3,7 @@ import { IGame, GameType } from '@perx/core';
 export const games: IGame[] = [
     {
         id: 1,
-        campaignId: 1,
+        campaignId: 2,
         type: GameType.shakeTheTree,
         remainingNumberOfTries: 3,
         config: {
