@@ -24,10 +24,10 @@ export class LoadingComponent implements OnInit {
       this.authService.autoLogin()
         .subscribe(
           () => this.redirectAfterLogin(),
-          () => this.router.navigate(['/login'])
+          () => this.router.navigateByUrl('/login')
         );
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigateByUrl('login');
     }
   }
 
