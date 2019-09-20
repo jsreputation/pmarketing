@@ -52,10 +52,10 @@
           <div class="control-input">
             <mat-form-field class="messages-input">
               <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{subHeadlineMaxLength}}</mat-hint>
               <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
               <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length {{subHeadlineMaxLength}}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -186,12 +186,63 @@
           </div>
         </div>
       </mat-card>
+      <mat-card class="game-graphic">
+        <div class="messages-wrap">
+          <p class="sub-title">
+            Button
+          </p>
+        </div>
+        <div class="messages-form">
+          <div class="control-input">
+            <mat-form-field class="messages-input">
+              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
     </div>
-
-    <div class="mobile-preview">
-      <div class="mobile-preview-mobile">
+    <cl-simple-mobile-view class="second-tab"
+                           [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
+                           [mobileImageClass]="'mobile-non-header'"
+                           [headerColor]="tenantSettings?.headerColor"
+                           [logo]="tenantSettings?.logo"
+                           [logoType]="tenantSettings?.logoType"
+                           [fontFamily]="tenantSettings?.font"
+    >
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          {{headlineMessage?.value}}
+        </p>
+        <p class="mobile-preview-sub-headline">
+          {{subHeadlineMessage?.value}}
+        </p>
       </div>
-    </div>
+      <div class="plugin-block">
+        <div class="mobile-preview-card"
+             [ngStyle]="{
+             'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
+             'font-family': 'Roboto'
+             }"
+        >
+          <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
+        </div>
+
+      </div>
+      <div class="mobile-preview-btn-wrap mobile-btn-block">
+        <button class="mobile-preview-btn"
+                [ngStyle]="{
+                backgroundColor: tenantSettings?.buttonColor,
+                'font-family': tenantSettings?.font
+                }"
+        >
+          {{buttonText?.value}}
+        </button>
+      </div>
+    </cl-simple-mobile-view>
   </section>
 </div>
 

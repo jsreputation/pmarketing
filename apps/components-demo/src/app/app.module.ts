@@ -10,6 +10,7 @@ import {
   UtilsModule as PerxCoreUtilsModule,
   RewardsModule as PerxRewardsModule,
   VouchersModule as PerxVouchersModule,
+  MerchantsModule as PerxMerchantsModule,
   SurveyModule as PerxSurveyModule,
   ProfileModule as PerxProfileModule,
   ConfigModule
@@ -41,6 +42,7 @@ import { LocationModule } from './location/location.module';
     PerxProfileModule,
     FormsModule,
     RewardsModule,
+    PerxMerchantsModule,
     UtilsModule,
     PerxCoreUtilsModule,
     LocationModule,

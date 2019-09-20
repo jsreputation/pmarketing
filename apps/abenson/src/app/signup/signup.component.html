@@ -1,0 +1,47 @@
+<div class="content-container">
+  <img src="assets/signup-top-image.svg" class="top-image">
+  <div class="signup-form">
+    <h1>Sign Up</h1>
+    <p>Have an account? <span routerLink="/login" class="link">Sign in</span></p>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" formControlName="firstName">
+        <mat-error *ngIf="signUpForm.get('firstName').hasError('required')">
+          First Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Second Name</mat-label>
+        <input matInput placeholder="Second Name" formControlName="secondName">
+        <mat-error *ngIf="signUpForm.get('secondName').hasError('required')">
+          Second Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput placeholder="Mobile Number" formControlName="mobileNumber">
+        <mat-error *ngIf="signUpForm.get('mobileNumber').hasError('required')">
+          Mobile Number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Create your 4-Digit Pin Code</mat-label>
+        <input matInput placeholder="Create your 4-Digit Pin Code" formControlName="pinCode">
+        <mat-icon matSuffix>remove_red_eye</mat-icon>
+        <mat-error *ngIf="signUpForm.get('pinCode').hasError('required')">
+          Pin Code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="checkbox-container">
+        <mat-checkbox></mat-checkbox>
+        <span>
+          I have read and agree to the Terms and Privacy Policy and to receive email newsletters from PLUS! Rewards.
+        </span>
+      </div>
+      <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign Up</button>
+    </form>
+  </div>
+  <img src="assets/signup-bottom-image.svg" class="bottom-image">
+</div>

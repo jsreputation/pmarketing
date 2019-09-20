@@ -41,4 +41,12 @@ cl-question-form-field {
   &-preview-mobile {
     background: url("/assets/images/survey/survey_mobile.png") no-repeat 100% 100%;
   }
+  &-preview-card {
+    padding-top: 5rem;
+    top: 13rem;
+  }
+}
+
+perx-core-survey {
+  pointer-events: none;
 }

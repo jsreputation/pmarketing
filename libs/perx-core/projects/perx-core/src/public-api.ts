@@ -5,6 +5,12 @@
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
+ * Merchants
+ */
+export { MerchantsModule } from './lib/merchants/merchants.module';
+export { IMerchantsService } from './lib/merchants/imerchants.service';
+
+/**
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
@@ -128,7 +134,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType } from './lib/survey/models/survey.model';
 
 /**
  * Config

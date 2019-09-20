@@ -5,7 +5,7 @@ import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState, RedemptionType } from './models/voucher.model';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { map, switchMap, last } from 'rxjs/operators';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
 
@@ -22,6 +22,7 @@ interface IWhistlerVoucher {
   status: VoucherStatus;
   source_id: number;
   source_type: string;
+  end_date_time: string;
 }
 
 @Injectable({
@@ -33,7 +34,7 @@ export class WhistlerVouchersService implements IVoucherService {
     private http: HttpClient,
     // @ts-ignore
     private config: Config,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
   ) { }
 
   private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
@@ -52,12 +53,12 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       name: reward.name,
       code: voucher.attributes.code,
-      redemptionType: RedemptionType[reward.howToRedeem],
+      redemptionType: RedemptionType.txtCode,
       thumbnailImg: reward.rewardThumbnail,
       rewardBanner: reward.rewardThumbnail,
       merchantImg: reward.merchantImg,
       merchantName: reward.merchantName,
-      expiry: null,
+      expiry: voucher.attributes.end_date_time ? new Date(voucher.attributes.end_date_time) : null,
       description: [{
         title: null,
         content: reward.description,
@@ -71,14 +72,13 @@ export class WhistlerVouchersService implements IVoucherService {
     return this.http.get<IJsonApiListPayload<IWhistlerVoucher>>(this.vouchersUrl)
       .pipe(
         map((res) => res.data),
-        switchMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v))))
+        mergeMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v))))
       );
   }
 
   private getFullVoucher(voucher: IJsonApiItem<IWhistlerVoucher>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
-        last(),
         map(([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
       );
   }
