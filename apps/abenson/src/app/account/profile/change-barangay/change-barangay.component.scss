@@ -3,23 +3,6 @@
   height: 100%;
   background-color: #FAFAFA;
 
-  ::ng-deep {
-    .mat-form-field-appearance-fill {
-      .mat-form-field-underline::before {
-        height: 0 !important;
-      }
-
-      .mat-form-field-flex {
-        border-radius: 0;
-        background-color: #E8E8E8;
-      }
-    }
-
-    .mat-form-field .mat-form-field-ripple {
-      height: 0;
-    }
-  }
-
   .form {
     display: flex;
     flex-direction: column;
