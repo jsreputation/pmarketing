@@ -42,7 +42,11 @@ Given(/^12_I type the test string.$/, async () => {
 });
 
 When(/^12_I press save button.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // clicking on the save button
   await element.all(by.css('cl-button')).get(1).click();
+  // Wait for engagement tab to appear
+  await browser.wait(ec.presenceOf(element(by.css('cl-confirm-modal'))), 6000);
   // clicking on the launch now button
   await element.all(by.css('cl-button')).get(2).click();
 });

@@ -16,7 +16,7 @@ import {
   AuthenticationService,
   ProfileService,
   ConfigModule,
-  ICampaignService,
+  ICampaignService
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -44,12 +44,14 @@ import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
+import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { SignUpComponent } from './signup/signup.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -93,7 +95,9 @@ const profileServiceStub = {
     VoucherDetailComponent,
     HistoryComponent,
     PromosComponent,
-    SignUpComponent
+    SignUpComponent,
+    WalletComponent,
+    ForgotPinComponent,
   ],
   imports: [
     ConfigModule.forRoot({...environment}),

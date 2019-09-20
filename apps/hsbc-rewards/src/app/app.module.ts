@@ -8,6 +8,7 @@ import {
   LoyaltyModule,
   LocationModule,
   ConfigModule,
+  MerchantsModule,
 } from '@perx/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -28,6 +29,7 @@ import {UnauthorizedInterceptor} from './login/unauthorized.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     AuthenticationModule,
+    MerchantsModule,
     RewardsModule,
     ProfileModule,
     LoyaltyModule,
