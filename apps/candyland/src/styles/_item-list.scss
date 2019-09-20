@@ -45,6 +45,13 @@
     justify-content: flex-start;
     align-items: flex-start;
     position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      flex: 1 1 ($horizontal-padding * 11.25);
+      margin: 1rem;
+    }
   }
 
   & > .mat-radio-button {
