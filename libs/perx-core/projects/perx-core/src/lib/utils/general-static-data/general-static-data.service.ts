@@ -7,8 +7,11 @@ import { of, Observable } from 'rxjs';
 })
 export class GeneralStaticDataService {
 
-  public getCountriesList(): Observable<ICountryCode[]> {
-    return of(countryCodes);
+  public getCountriesList(countries?: string[]): Observable<ICountryCode[]> {
+    if (!countries || !countries.length) {
+      return of(countryCodes);
+    }
+    return of(countryCodes.filter(code => countries.includes(code.name)));
   }
 
 }

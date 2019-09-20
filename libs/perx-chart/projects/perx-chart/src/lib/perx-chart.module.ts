@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { VerticalBarComponent } from './vertical-bar/vertical-bar.component';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
@@ -13,6 +13,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MetaCardComponent } from './meta-card/meta-card.component';
 import { MatTableModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { DataService } from './data.service';
+import { EnvConfig } from './env.config';
 
 const comps: any[] = [
   VerticalBarComponent,
@@ -46,4 +47,17 @@ const comps: any[] = [
     DataService
   ]
 })
-export class PerxChartModule { }
+export class PerxChartModule {
+  public static forRoot(config?: EnvConfig): ModuleWithProviders {
+    return {
+      ngModule: PerxChartModule,
+      providers: [
+        DataService,
+        {
+          provide: EnvConfig,
+          useValue: config
+        }
+      ],
+    };
+  }
+}
