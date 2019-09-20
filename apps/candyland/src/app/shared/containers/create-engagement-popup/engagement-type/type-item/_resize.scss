@@ -7,24 +7,3 @@
 
 }
 */
-@media (max-width: 800px) {
-  .type-item {
-    width: 11rem;
-    margin-bottom: 1rem;
-  }
-
-  .type-title {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: $mobile-width) {
-  .type-item {
-    width: 10rem;
-    margin-bottom: 1rem;
-  }
-
-  .type-title {
-    font-size: 12px;
-  }
-}
