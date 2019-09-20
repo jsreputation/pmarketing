@@ -6,6 +6,7 @@ import { TapComponent } from './tap/tap.component';
 import { GameModule, ConfigModule } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
+import { MatDialogModule } from '@angular/material';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -17,7 +18,8 @@ describe('GameComponent', () => {
       imports: [
         GameModule,
         RouterTestingModule,
-        ConfigModule.forRoot(environment)
+        ConfigModule.forRoot(environment),
+        MatDialogModule
       ]
     })
     .compileComponents();

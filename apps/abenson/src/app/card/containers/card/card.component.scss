@@ -3,6 +3,22 @@
 perx-core-loyalty-summary ::ng-deep {
   .container {
     background-color: #FFFFFF;
+    line-height: 1.6rem;
+    height: 12rem;
+    box-sizing: border-box;
+
+    .welcome-text {
+      margin-bottom: 1.6rem;
+      font-weight: 500;
+      letter-spacing: 0.075rem;
+    }
+
+    .points {
+      font-size: 3.4rem;
+      line-height: 4rem;
+      letter-spacing: 0.025rem;
+      font-weight: 500;
+    }
   }
 }
 
