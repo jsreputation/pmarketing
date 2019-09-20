@@ -34,8 +34,8 @@ export class RewardsService implements ITableService {
 
   public getReward(id: string): Observable<IRewardEntityForm> {
     return this.rewardHttp.getReward(id).pipe(
-      map(response => RewardHttpAdapter.transformToRewardForm(response.data))
-    );
+      map(response => RewardHttpAdapter.transformToRewardForm(response.data)
+    ));
   }
 
   public getMocksRewardDetail(): Observable<any> {

@@ -124,11 +124,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       map((params: ParamMap) => params.get('id')),
       tap((id) => this.updateId(id)),
       filter(Boolean),
-      switchMap(id => this.rewardsService.getReward(id))
+      switchMap((id: string) => this.rewardsService.getReward(id))
     )
       .subscribe(
         reward => {
           this.reward = reward;
+          console.log(this.reward);
           this.form.patchValue(reward);
         },
         () => this.router.navigateByUrl('/rewards')

@@ -23,7 +23,6 @@ export class NewRewardFormService {
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
           type: [],
-          // total: [],
           singleCode: this.fb.group({
             code: [null]
           }),
@@ -81,7 +80,7 @@ export class NewRewardFormService {
         controls: [form.get('vouchers.voucherCode.merchantPIN')]
       },
       {
-        condition: form.get('vouchers.voucherCode.type').value === 'Single code',
+        condition: form.get('vouchers.voucherCode.type').value === 'Single code' && form.get('rewardInfo.redemptionType').value !== 'Merchant PIN',
         controls: [form.get('vouchers.voucherCode.singleCode')]
       },
       {

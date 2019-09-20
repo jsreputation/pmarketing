@@ -11,16 +11,24 @@ declare interface IRewardEntityForm {
     description: string;
     termsAndCondition: string;
   };
-  voucherInfo?: {
-    type: string;
-    code?: string;
-    prefix?: string;
-    codeFormat?: string;
-    length?: number;
-  };
-  voucherValidity?: {
-    type: string;
-    startDate: string;
-    endDate?: string;
+  vouchers: {
+    voucherCode?: {
+      type: string;
+      singleCode?: {
+        code?: string;
+      };
+      uniqueGeneratedCode?: {
+        prefix?: string;
+        codeFormat?: string;
+        length?: number;
+      };
+    };
+    voucherValidity: {
+      type: string;
+      startDate: string;
+      startTime: string;
+      endDate?: string;
+      endTime?: string;
+    };
   };
 }

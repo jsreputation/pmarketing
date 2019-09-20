@@ -19,6 +19,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   public data;
   public statusFilterConfig: OptionConfig[];
 
+  public rewardData;
+
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private rewardsService: RewardsService,
