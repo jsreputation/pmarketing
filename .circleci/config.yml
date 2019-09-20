@@ -43,7 +43,7 @@ commands:
             then
               if [ $APP == 'blackcomb' ] || [ $APP == 'candyland-uat' ]
               then
-                APIHOST="https://api-pru1.uat.whistler.perxtech.io"
+                APIHOST="https://api-dev1.uat.whistler.perxtech.io"
               else
                 APIHOST="https://api.perxtech.io"
               fi
