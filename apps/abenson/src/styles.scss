@@ -44,7 +44,7 @@ html, body {
 
   .mat-form-field-flex {
     border-radius: 0 !important;
-    padding: .55em .75em 0 .75em !important;
+    padding: 0.55em 0.75em 0 0.75em !important;
     background-color: #E8E8E8 !important;
   }
 
@@ -57,7 +57,7 @@ html, body {
   }
 }
 
-.mat-form-field-invalid{
+.mat-form-field-invalid {
   .mat-form-field-label {
     color: #f44336 !important;
   }
