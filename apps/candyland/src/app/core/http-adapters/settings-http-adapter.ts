@@ -1,3 +1,5 @@
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+
 export class SettingsHttpAdapter {
 
   // tslint:disable
@@ -107,5 +109,43 @@ export class SettingsHttpAdapter {
 
   public static getColorObj(listColors: any[], color: string): any {
     return listColors.find(item => item.color === color);
+  }
+
+  public static getTenantsSettings(data): ITenantsProperties {
+    return {
+      timeZone: SettingsHttpAdapter.getTenantProperty('time_zone', data),
+      color: SettingsHttpAdapter.getTenantProperty('theme.color', data),
+      currency: SettingsHttpAdapter.getTenantProperty('currency', data),
+      style: SettingsHttpAdapter.getTenantProperty('theme.style', data),
+      accent: SettingsHttpAdapter.getTenantProperty('theme.accent', data),
+      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_color', data),
+      font: SettingsHttpAdapter.getTenantProperty('theme.font', data),
+      headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
+      logo: SettingsHttpAdapter.tenantLogo(data),
+      primary: SettingsHttpAdapter.getTenantProperty('theme.primary', data),
+      logoType: SettingsHttpAdapter.tenantTypeLogo(data),
+    }
+  }
+
+  public static getTenantProperty(property: string, data: Tenants): any {
+    return data ? data.properties[property] : null;
+  }
+
+  public static tenantLogo(data: Tenants): any {
+    const logo = SettingsHttpAdapter.getTenantProperty('theme.logo', data);
+    const title = SettingsHttpAdapter.getTenantProperty('theme.title', data);
+    if (title) {
+      return title;
+    }
+    if (logo) {
+      return logo;
+    }
+  }
+
+  /**
+   * this method need for get right type of logo img or text in the component
+   */
+  public static tenantTypeLogo(data: Tenants): boolean {
+    return !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
   }
 }

@@ -29,7 +29,7 @@ Then(/^5_I should see the survey template.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
   // asserting the presence of the card and title of the card
   expect(await element.all(by.css('div.engagement-item')).first().isDisplayed()).to.be.equal(true);
-  expect(await  element.all(by.css('p.engagement-item-type')).first().getText()).to.contain('survey');
+  expect(await  element.all(by.css('p.engagement-item-type')).first().getText()).to.contain('Survey');
 });
 
 // Verifying that the relevant input text fields are present.
@@ -126,7 +126,10 @@ Given(/^9_I select a reward./, async () => {
 });
 When(/^9_I select the add reward button$/, async () => {
   // selecting the add reward button
-  await element.all('cl-button').get(5).click();
+  const ec = protractor.ExpectedConditions;
+  // waiting for button to load
+  await browser.wait(ec.elementToBeClickable(element.all('cl-button').last()), 5000);
+  await element.all('cl-button').last().click();
   await browser.sleep(3000);
 });
 
@@ -222,5 +225,5 @@ Then(/^12_I should see be in the campaign info form.$/, async () => {
   await browser.wait(ec.presenceOf(element.all(by.css('mat-expansion-panel-header')).get(0)), 5000);
   // doing an assertion on the presence of the element
   expect(await element.all(by.css('mat-expansion-panel-header')).get(0).isPresent()).to.equal(true);
-  expect(await element.all(by.css('mat-expansion-panel-header')).get(0).getText()).to.contain('Campaign Info');
+  expect(await element.all(by.css('p.card-title')).get(2).getText()).to.contain('Campaign Info');
 });

@@ -1,4 +1,4 @@
-<ng-container  *ngIf="isVoucherReady(vouchers$ | async); else elseBlock">
+<ng-container  *ngIf="isVoucherQueryComplete(vouchers$ | async); else elseBlock">
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
       <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
