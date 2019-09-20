@@ -52,11 +52,9 @@ export class VouchersComponent implements OnInit {
     }
   }
 
-  // public ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes.data) {
-
-  //   }
-  // }
+  public isVoucherReady(vouchers: IVoucher[]): boolean {
+    return Array.isArray(vouchers);
+  }
 
   public notClickable(voucher: IVoucher): boolean {
     return !this.canSelectRedeemed && [VoucherState.redeemed, VoucherState.expired].includes(voucher.state);

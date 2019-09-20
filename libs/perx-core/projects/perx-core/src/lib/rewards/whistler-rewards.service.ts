@@ -5,7 +5,7 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
 
@@ -81,10 +81,14 @@ export class WhistlerRewardsService implements RewardsService {
           if (reward.data.attributes.organization_id === null) {
             return of([reward, null]);
           }
-          return combineLatest(of(reward), this.merchantService.getMerchant(reward.data.attributes.organization_id));
+          return combineLatest(
+            of(reward),
+            this.merchantService.getMerchant(reward.data.attributes.organization_id)
+              .pipe(catchError(() => of(null)))
+          );
         }),
         map(([reward, merchant]: [IJsonApiItemPayload<WhistlerIReward>, IMerchant | null]) =>
-          WhistlerRewardsService.WRewardToReward(reward.data, merchant))
+          WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
       );
   }
 
