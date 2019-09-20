@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { ProfileComponent } from './profile.component';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
+import { ChangeEmailComponent } from "./change-email/change-email.component";
 
 const routes: Routes = [
   {
@@ -9,8 +11,12 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'edit-barangay',
+    path: 'change-barangay',
     component: ChangeBarangayComponent
+  },
+  {
+    path: 'change-email',
+    component: ChangeEmailComponent
   },
 ];
 

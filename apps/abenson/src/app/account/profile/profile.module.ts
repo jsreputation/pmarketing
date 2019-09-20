@@ -1,14 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  MatIconModule,
+  MatInputModule,
+  MatButtonModule,
+} from '@angular/material';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 
 @NgModule({
-  declarations: [ProfileComponent, ChangeBarangayComponent],
+  declarations: [
+    ProfileComponent,
+    ChangeBarangayComponent,
+    ChangeEmailComponent,
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -16,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class ProfileModule { }

@@ -34,17 +34,37 @@ html, body {
   }
 }
 
-.mat-form-field-appearance-fill {
-  .mat-form-field-underline::before {
-    display: none !important;
+.mat-form-field {
+  font-size: 1.6rem !important;
+
+  .mat-form-field-label {
+    letter-spacing: 0.015rem !important;
+    color: #535253 !important;
   }
 
   .mat-form-field-flex {
     border-radius: 0 !important;
+    padding: .55em .75em 0 .75em !important;
     background-color: #E8E8E8 !important;
+  }
+
+  .mat-form-field-ripple {
+    display: none !important;
+  }
+
+  .mat-form-field-underline::before {
+    display: none !important;
   }
 }
 
-.mat-form-field .mat-form-field-ripple {
-  display: none !important;
+.mat-form-field-invalid{
+  .mat-form-field-label {
+    color: #f44336 !important;
+  }
+}
+
+.mat-flat-button {
+  border-radius: 0.2rem !important;
+  color: #FFFFFF !important;
+  background: #186DE1 !important;
 }
