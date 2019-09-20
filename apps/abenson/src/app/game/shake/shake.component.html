@@ -1,4 +1,4 @@
-<div class="main-puzzle-container" *ngIf="game$ | async as game">
+<div class="main-puzzle-container" *ngIf="game">
   <div>
     <h1>{{game.texts.title}}</h1>
     <h3>{{game.texts.subTitle}}</h3>
@@ -9,7 +9,7 @@
       [giftImg]="game.config.giftImg"
       [nbHangedGifts]="game.config.nbHangedGift"
       [nbFallingGifts]="game.config.nbGiftsToDrop"
-      (completed)="gameCompleted()"
+      (completed)="broken.emit()"
       [enabled]="isEnabled"
       [nbShakes]="game.config.nbTaps">
     </perx-core-shake-tree>
