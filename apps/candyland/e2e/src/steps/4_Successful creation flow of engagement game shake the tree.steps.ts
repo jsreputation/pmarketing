@@ -135,6 +135,9 @@ When(/^30_I press the save button$/, async () => {
 
 Then(/^30_Both options are present.$/, async () => {
   // doing an assertion on the presence of both elements in the dialog
+  // waiting for the dialog element to load
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.presenceOf(element(by.css('cl-confirm-modal'))), 6000);
   expect(await element.all(by.css('cl-button')).get(1).isPresent()).to.equal(true);
   expect(await element.all(by.css('cl-button')).get(2).isPresent()).to.equal(true);
 });

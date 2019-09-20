@@ -29,6 +29,7 @@ When(/^1_I click on the survey option$/, async () => {
   await element.all(by.css('cl-type-item')).first().click();
   // clicking on the next button
   await element.all(by.className('btn mat-flat-button primary')).get(1).click();
+  await browser.sleep(5000);
 });
 
 Then(/^1_the page should be redirected to the correct url.$/, async () => {
@@ -150,13 +151,13 @@ Given(/^8_that I am on list of options for the add question elements$/, async ()
 When(/^8_I select the option for picture choice.$/, async () => {
     // clicking the picture option
     const ec = protractor.ExpectedConditions;
-    await browser.wait(ec.presenceOf(element.all(by.css('mat-option.mat-option.ng-star-inserted')).get(1)), 6000 );
-    await element.all(by.css('div.view-text')).get(1).click();
+    await browser.wait(ec.presenceOf(element.all(by.css('span.mat-option-text')).get(1)), 6000 );
+    await element.all(by.css('div.view-wrap')).get(1).click();
 });
 
 Then(/^8_There is a form present.$/, async () => {
     // checking whether the question form is displayed.
-    expect(await element(by.css('div.question-form-header')).isDisplayed()).to.be.equal(true);
+    expect(await element.all(by.css('div.question-form-header')).last().isDisplayed()).to.be.equal(true);
 });
 
 // Verifiying that picture choice form has relevant text fields
@@ -216,12 +217,14 @@ When(/^11_I entered a empty text string in the header text box.$/, async () => {
   await browser.wait(ec.presenceOf(element(by.id('mat-input-0'))), 7000 );
   // clearing default values
   await element(by.id('mat-input-0')).clear();
+  // pressing tab on the header field
+  await element(by.id('mat-input-0')).sendKeys(protractor.Key.TAB);
+  await browser.sleep(3000);
   // clicking on the headline message field to elicit the message
-  await element(by.id('mat-input-0')).click();
+  // await element(by.id('mat-input-1')).click();
 });
 
 Then(/^11_There is an error message present.$/, async () => {
-  const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element(by.css('mat-error'))), 6000 );
-  expect(await element(by.css('mat-error')).getText()).to.contain('Required field');
+  // doing an assertion based on the attr aria-invalid
+  expect(await element(by.id('mat-input-0')).getAttribute('aria-invalid')).to.contain('true');
 });
