@@ -1,6 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChangeEmailComponent } from './change-email.component';
+
+import { SharedModule } from "../../../shared/shared.module";
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
@@ -8,7 +15,13 @@ describe('ChangeEmailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangeEmailComponent ]
+      declarations: [
+        ChangeEmailComponent,
+      ],
+      imports: [
+        SharedModule,
+        NoopAnimationsModule,
+      ],
     })
     .compileComponents();
   }));
