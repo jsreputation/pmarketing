@@ -9,6 +9,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
 import { SignUpComponent } from './signup/signup.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'loading' },
       { path: 'home', component: HomeComponent },
       { path: 'promos', component: PromosComponent },
-      { path: 'wallet', component: HomeComponent },
+      { path: 'wallet', component: WalletComponent },
       { path: 'card', component: CardComponent },
       { path: 'history', component: HistoryComponent },
       {

@@ -53,6 +53,7 @@ import { profile } from './mock/profile.mock';
 import { CardComponent } from './card/card.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { SignUpComponent } from './signup/signup.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -98,6 +99,7 @@ const profileServiceStub = {
     PromosComponent,
     CardComponent,
     SignUpComponent,
+    WalletComponent,
     ForgotPinComponent,
   ],
   imports: [
