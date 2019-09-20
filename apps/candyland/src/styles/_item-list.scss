@@ -36,22 +36,20 @@
 }
 
 .item-list {
-  &.list {
-    margin: 0 -1rem;
-    padding-top: ($vertical-padding * 0.5);
-    padding-bottom: ($vertical-padding * 0.5);
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: relative;
+  margin: 0 -1rem;
+  padding-top: ($vertical-padding * 0.5);
+  padding-bottom: ($vertical-padding * 0.5);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
 
-    &::after {
-      content: "";
-      display: block;
-      flex: 1 1 ($horizontal-padding * 11.25);
-      margin: 1rem;
-    }
+  &::after {
+    content: "";
+    display: block;
+    flex: 1 1 ($horizontal-padding * 11.25);
+    margin: 1rem;
   }
 
   & > .mat-radio-button {
@@ -59,6 +57,7 @@
 
     .mat-radio-label-content {
       padding: 0;
+      width: 100%;
     }
   }
 
