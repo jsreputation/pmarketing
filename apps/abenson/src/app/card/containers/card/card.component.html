@@ -3,11 +3,16 @@
     <mat-tab label="My Card">
       <perx-core-loyalty-summary></perx-core-loyalty-summary>
       <div class="bc-block">
-        <div class="image">
+        <div class="barcode">
           <ngx-barcode [bc-value]="membershipId"></ngx-barcode>
         </div>
         <p class="bc-text">Present this code upon purchase at any participating branches.</p>
-        <button mat-button class="bc-question"> Already Have an Existing Card?</button>
+        <button
+          mat-button
+          routerLink="existing-card"
+          class="bc-question">
+          Already Have an Existing Card?
+        </button>
       </div>
 
     </mat-tab>

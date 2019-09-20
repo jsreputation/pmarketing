@@ -1,5 +1,4 @@
-<div *ngIf="(vouchers$ | async); then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
+<ng-container  *ngIf="isVoucherQueryComplete(vouchers$ | async); else elseBlock">
   <div class="card-list-container">
     <ng-container *ngFor="let voucher of vouchers$ | async">
       <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
@@ -15,7 +14,7 @@
             <p *ngIf="showMerchant">
               {{voucher.merchantName}}
             </p>
-            <p *ngIf="showExpireDate && voucher.expiry">
+            <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
               Expiry: {{voucher.expiry | date: 'dd/MM/yyyy'}}
             </p>
             <p *ngIf="showRedeemedDate && voucher.redemptionDate">
@@ -30,7 +29,7 @@
       </mat-card>
     </ng-container>
   </div>
-</ng-template>
+</ng-container>
 <ng-template #elseBlock>
   <div class="card-list-container loading">
     <mat-card *perxCoreRepeatTimes="repeatGhostCount">

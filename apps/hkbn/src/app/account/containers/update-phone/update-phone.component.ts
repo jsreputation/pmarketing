@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { ProfileService, AuthenticationService, GeneralStaticDataService } from '@perx/core';
+import { map, flatMap } from 'rxjs/operators';
+import { ProfileService, AuthenticationService, GeneralStaticDataService , ICountryCode} from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICountryCode } from '@perx/core';
+import { of } from 'rxjs';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
+
+const countries = ['China', 'Hong Kong', 'Macau'];
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -32,22 +35,27 @@ export class UpdatePhoneComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private route: ActivatedRoute,
-    private staticDataService: GeneralStaticDataService
+    private staticDataService: GeneralStaticDataService,
+    private dataTransfer: DataTransferService
   ) {
   }
 
   public ngOnInit(): void {
-    this.staticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
+    this.staticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
-    this.profileService.whoAmI().pipe(
-      map((profile) => profile.phone)
-    ).subscribe((phone: string) => {
-      this.updatePhoneGroup.setValue({ phone: phone.substr(3), code: '+852' });
-    });
+    this.dataTransfer.updateData$.pipe(flatMap((val) => val ? of(val) :
+      this.profileService.whoAmI().pipe(
+        map((profile) => ({ phone: profile.phone.substr(3), code: '+852' }))
+      ))).subscribe((phonePrew) => {
+        this.updatePhoneGroup.setValue(phonePrew);
+      });
   }
 
   public onSubmit(): void {
     this.authService.requestVerificationToken(this.newNumber)
-      .subscribe(() => this.router.navigate(['account', 'verify_token', 'phone'], { queryParams: { phone: this.newNumber } }));
+      .subscribe(() => {
+        this.dataTransfer.newxUpdateData(this.updatePhoneGroup.value);
+        this.router.navigate(['account', 'verify_token', 'phone'], { queryParams: { phone: this.newNumber } });
+      });
   }
 }

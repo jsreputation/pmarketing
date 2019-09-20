@@ -3,9 +3,9 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SurveyService } from '@cl-core-services';
-import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SurveyQuestionType } from '@perx/core';
 // tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

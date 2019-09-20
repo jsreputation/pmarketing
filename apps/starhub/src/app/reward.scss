@@ -133,10 +133,11 @@
   display: flex;
   justify-content: center;
   background-color: #ffffff;
+  min-height: 3.6rem;
+  padding: 1rem 0;
 
   button.full-width {
     width: 70%;
     color: #ffffff;
-    margin: 1rem;
   }
 }

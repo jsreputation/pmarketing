@@ -1,4 +1,4 @@
-@import "../../custom-theme.scss";
+@import "../../../../custom-theme";
 
 perx-core-loyalty-summary ::ng-deep {
   .container {
@@ -29,9 +29,8 @@ perx-core-loyalty-transactions-list ::ng-deep {
   align-items: center;
   flex-direction: column;
 
-  .image {
+  .barcode {
     width: 26rem;
-    height: 10rem;
     margin-top: 3.8rem;
     display: flex;
     justify-content: center;
@@ -43,7 +42,8 @@ perx-core-loyalty-transactions-list ::ng-deep {
     letter-spacing: 0.04rem;
     text-align: center;
     width: 21rem;
-    margin-top: 2.4rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.6rem;
   }
 
   .bc-question {

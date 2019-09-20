@@ -7,7 +7,7 @@
       <img [src]="voucher.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
-      <div class="inner">
+      <div [ngClass]="(voucher.redemptionType === 'txtCode' && !voucher.code)?'inner no-code':'inner'">
         <div class="upper-section">
           <div class="code-redemption unavailable" *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
             <p>Your reward is</p>
@@ -16,9 +16,11 @@
           <ng-template #available>
             <div *ngIf="voucher.redemptionType === 'txtCode'">
               <div class="code-redemption">
-                <h1 *ngIf="voucher.code">Promo code</h1>
-                <input *ngIf="voucher.code" class="code" #codeInput matInput type="text" [value]="voucher.code" readonly>
-                <button *ngIf="voucher.code" mat-button color="primary" (click)="copyCode(codeInput)">Copy the code</button>
+                <ng-template [ngIf]="voucher.code">
+                  <h1>Promo code</h1>
+                  <input class="code" #codeInput matInput type="text" [value]="voucher.code" readonly>
+                  <button mat-button color="primary" (click)="copyCode(codeInput)">Copy the code</button>
+                </ng-template>
               </div>
             </div>
             <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">

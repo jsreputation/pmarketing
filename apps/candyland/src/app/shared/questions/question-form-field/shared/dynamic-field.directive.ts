@@ -1,6 +1,5 @@
 import { ComponentFactoryResolver, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SurveyQuestionType } from '@cl-shared/questions/question-form-field/survey-question-type.enum';
 import { QuestionRatingFieldComponent } from '@cl-shared/questions/question-rating-field/question-rating-field.component';
 import { QuestionDateFieldComponent } from '@cl-shared/questions/question-date-field/question-date-field.component';
 import { QuestionCountryCodeFieldComponent } from '@cl-shared/questions/question-country-code-field/question-country-code-field.component';
@@ -12,6 +11,7 @@ import {
 import {
   QuestionMultipleChoiceFieldComponent
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.component';
+import { SurveyQuestionType } from '@perx/core';
 
 const componentMapper = {
   [SurveyQuestionType.rating]: QuestionRatingFieldComponent,

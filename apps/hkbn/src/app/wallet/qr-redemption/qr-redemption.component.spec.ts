@@ -4,7 +4,6 @@ import { QrRedemptionComponent } from './qr-redemption.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { mockVoucher } from '../voucher.mock';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
@@ -35,7 +34,6 @@ describe('QrRedemptionComponent', () => {
           path: 'wallet',
           component: QrRedemptionComponent
         }]),
-        HttpClientTestingModule,
         VouchersModule,
         TranslateModule.forRoot(),
       ],

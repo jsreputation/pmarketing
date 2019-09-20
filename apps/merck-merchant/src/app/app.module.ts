@@ -19,6 +19,7 @@ import {
   RewardsModule,
   LoyaltyModule,
   VouchersModule,
+  MerchantsModule,
   ConfigModule,
   ProfileModule
    } from '@perx/core';
@@ -69,6 +70,7 @@ import { RedeemComponent } from './redeem/redeem.component';
     ZXingScannerModule,
     MatSnackBarModule,
     RewardsModule,
+    MerchantsModule,
     LoyaltyModule,
     VouchersModule
   ],

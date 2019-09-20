@@ -3,6 +3,7 @@ $max-width: 60rem;
 :host {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .voucher-container {
@@ -42,7 +43,8 @@ $max-width: 60rem;
   position: absolute;
   left: 37.5%;
   top: 0;
-  width: 25%;
+  width: 26.67%;
+  height: 100%;
 }
 
 .details {
@@ -101,27 +103,27 @@ $max-width: 60rem;
   margin: 1rem auto;
 
   &.redeemed {
-    background: #BBE5B3;
+    background: #bbe5b3;
     color: #173630;
   }
 
   &.expired {
-    background: #919EAB;
+    background: #919eab;
     color: #212121;
   }
 
   &.issued {
-    background: #BBE5B3;
+    background: #bbe5b3;
     color: #173630;
   }
 
   &.reserved {
-    background: #FFC58B;
-    color: #4A1504;
+    background: #ffc58b;
+    color: #4a1504;
   }
 
   &.released {
-    background: #FEAD9A;
+    background: #fead9a;
     color: #330101;
   }
 }
