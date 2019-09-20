@@ -7,7 +7,12 @@
           <ngx-barcode [bc-value]="membershipId"></ngx-barcode>
         </div>
         <p class="bc-text">Present this code upon purchase at any participating branches.</p>
-        <button mat-button class="bc-question"> Already Have an Existing Card?</button>
+        <button
+          mat-button
+          routerLink="existing-card"
+          class="bc-question">
+          Already Have an Existing Card?
+        </button>
       </div>
 
     </mat-tab>
