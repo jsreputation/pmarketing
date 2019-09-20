@@ -6,6 +6,8 @@ import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
+const countries = ['China', 'Hong Kong', 'Macau'];
+
 @Component({
   selector: 'hkbn-update-phone',
   templateUrl: './update-phone.component.html',
@@ -37,7 +39,7 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.staticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
+    this.staticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
     this.dataTransfer.updateData$
       .pipe(map((val) => val ? val : { phone: '', code: '+852' }))
