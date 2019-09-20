@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
-import { ChangeEmailComponent } from "./change-email/change-email.component";
+import { ChangeEmailComponent } from './change-email/change-email.component';
 
 const routes: Routes = [
   {
