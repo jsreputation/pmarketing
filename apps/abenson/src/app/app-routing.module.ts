@@ -10,6 +10,7 @@ import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/card.component';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 
 const routes: Routes = [
   {
@@ -25,10 +26,10 @@ const routes: Routes = [
         path: 'account',
         loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
       },
+      { path: 'forgot-pin', component: ForgotPinComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'tap/:id', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
-      { path: 'shake/:id', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
+      { path: 'game/:id', loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule) },
       { path: 'stamp/:id', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
       { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
       {

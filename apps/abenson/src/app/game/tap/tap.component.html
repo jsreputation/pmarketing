@@ -1,4 +1,4 @@
-<div class="main-puzzle-container" *ngIf="game$ | async as game">
+<div class="main-puzzle-container" *ngIf="game">
   <div>
     <h1>{{game.texts.title}}</h1>
     <h3>{{game.texts.subTitle}}</h3>
@@ -8,7 +8,7 @@
       <perx-core-pinata
         [stillImg]="game.config.stillImg"
         [openedImg]="game.config.openedImg" 
-        (broken)="gameCompleted()" 
+        (broken)="broken.emit()" 
         [enabled]="isEnabled">
         [nbTaps]="game.config.nbTaps"
       </perx-core-pinata>
