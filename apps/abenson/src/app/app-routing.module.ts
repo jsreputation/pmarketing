@@ -7,8 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PromosComponent } from './promos/promos.component';
-import { CardComponent } from './card/card.component';
 import { SignUpComponent } from './signup/signup.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 
 const routes: Routes = [
@@ -18,8 +18,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'loading' },
       { path: 'home', component: HomeComponent },
       { path: 'promos', component: PromosComponent },
-      { path: 'wallet', component: HomeComponent },
-      { path: 'card', component: CardComponent },
+      { path: 'wallet', component: WalletComponent },
       { path: 'history', component: HistoryComponent },
       {
         path: 'account',
@@ -34,6 +33,10 @@ const routes: Routes = [
       {
         path: 'reward',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+      },
+      {
+        path: 'card',
+        loadChildren: () => import('./card/card.module').then(mod => mod.CardModule)
       },
       { path: 'loading', component: LoadingComponent }
     ]
