@@ -5,9 +5,9 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ChangeEmailComponent } from './change-email.component';
+import { SharedModule } from '../../../shared/shared.module';
 
-import { SharedModule } from "../../../shared/shared.module";
+import { ChangeEmailComponent } from './change-email.component';
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
