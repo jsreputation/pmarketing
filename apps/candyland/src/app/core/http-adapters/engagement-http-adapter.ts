@@ -4,6 +4,7 @@ export class EngagementHttpAdapter {
 
 // tslint:disable
   public static transformEngagement(data: IEngagementApi): IEngagement {
+    console.log('data in the transformer', data);
     return {
       id: data.id,
       current_type: data.type,
@@ -35,21 +36,74 @@ export class EngagementHttpAdapter {
     };
   }
 
+  public static transformEngagementHandler(data: IEngagementApi): any {
+    switch (data.attributes.type) {
+      case 'game':
+        return EngagementHttpAdapter.transformGameHandler(data);
+      case 'survey':
+        return
+    }
+  }
+
+  public static transformGameHandler(data: IEngagementApi): any {
+    switch (data.attributes.game_type) {
+      case 'shake':
+        return EngagementHttpAdapter.transformToShackType(data);
+      case 'tap':
+        return EngagementHttpAdapter.transformToPinataType(data);
+    }
+  }
+
+  public static transformToShackType(data: any): IEngagementShakeType {
+    return {
+      id: data.id,
+      type: data.type,
+      game_type: data.attributes.game_type,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      tree_img_url: data.attributes.display_properties.tree_img_url,
+      nb_hanged_gifts: data.attributes.display_properties.nb_hanged_gifts,
+      gift_box_img_url: data.attributes.display_properties.gift_box_img_url,
+      background_img_url: data.attributes.display_properties.background_img_url,
+      attributes_type: data.attributes.type,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+    }
+  }
+
+  public static transformToPinataType(data: any): IEngagementPatType {
+    // TODO: need change it is simple copy and past
+    console.log('pinata', data);
+    return {
+      id: data.id,
+      type: data.type,
+      game_type: data.attributes.game_type,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      attributes_type: data.attributes.type,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      closed_pinata_img_url:  data.attributes.display_properties.closed_pinata_img_url,
+      opened_pinata_img_url:  data.attributes.display_properties.opened_pinata_img_url,
+      cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
+    }
+  }
+
   public static transformInstantReward(data: IInstantRewardForm): any {
     return {
-      type: 'engagements',
-      attributes: {
-        type: 'instant_reward',
-        title: data.name,
-        display_properties: {
-          banner: data.banner,
-          title: data.headlineMessage,
-          sub_title: data.headlineMessage,
-          // subHeadlineText: data.subHeadlineMessage,
-          card_background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
-          // card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
-          background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
-          // background_img_url: ImageControlValue.getImagePath(data.background),
+      type: 'engagements', attributes: {
+        type: 'instant_reward', title: data.name, display_properties: {
+          banner: data.banner, title: data.headlineMessage, sub_title: data.headlineMessage, // subHeadlineText: data.subHeadlineMessage,
+          card_background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png', // card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
+          background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png', // background_img_url: ImageControlValue.getImagePath(data.background),
           button: data.buttonText
         }
       }
@@ -58,14 +112,12 @@ export class EngagementHttpAdapter {
 
   public static transformShakeTheTree(data: any): any {
     return {
-      type: 'engagements',
-      attributes: {
+      type: 'engagements', attributes: {
         type: 'game',
         title: data.name,
         description: 'Spin and win',
         game_type: 'shake',
-        image_url:
-          'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
+        image_url: 'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
         display_properties: {
           title: data.headlineMessage,
           button: data.buttonText,
@@ -81,8 +133,7 @@ export class EngagementHttpAdapter {
 
   public static transformPinata(data: any): any {
     return {
-      type: 'engagements',
-      attributes: {
+      type: 'engagements', attributes: {
         type: 'game',
         title: data.name,
         game_type: 'tap',
@@ -102,8 +153,7 @@ export class EngagementHttpAdapter {
 
   public static transformStamp(data: any): any {
     return {
-      type: 'engagements',
-      attributes: {
+      type: 'engagements', attributes: {
         type: 'stamps',
         title: data.name,
         'image_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
@@ -121,4 +171,40 @@ export class EngagementHttpAdapter {
       }
     }
   }
+}
+
+export interface IEngagementShakeType {
+  id: string;
+  type: string;
+  game_type: string;
+  title: string;
+  description: string;
+  image_url: string;
+  title_display: string;
+  button: string;
+  sub_title: string;
+  tree_img_url: string;
+  nb_hanged_gifts: number;
+  gift_box_img_url: string;
+  background_img_url: string;
+  attributes_type: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface IEngagementPatType {
+  id: string;
+  type: string;
+  game_type: string;
+  title: string;
+  description: string;
+  image_url: string;
+  title_display: string;
+  button: string;
+  sub_title: string;
+  closed_pinata_img_url:  string;
+  opened_pinata_img_url:  string;
+  cracking_pinata_img_url:  string;
+  attributes_type: string;
+  created_at: string;
+  updated_at: string;
 }

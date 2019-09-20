@@ -75,6 +75,8 @@ import {
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
+import { SimpleMobileViewModule } from '@cl-shared';
+import { SurveyModule as PerxSurveyModule } from '@perx/core';
 
 @NgModule({
   providers: [
@@ -146,7 +148,10 @@ import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign
     CheckboxGroupModule,
     SelectRewardPopupModule,
     MatSlideToggleModule,
-    PaginationModule
+    PaginationModule,
+
+    SimpleMobileViewModule,
+    PerxSurveyModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

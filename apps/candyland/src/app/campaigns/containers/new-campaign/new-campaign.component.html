@@ -26,7 +26,7 @@
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>Select engagement</ng-template>
-      <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
+      <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>Rewards & Limits</ng-template>

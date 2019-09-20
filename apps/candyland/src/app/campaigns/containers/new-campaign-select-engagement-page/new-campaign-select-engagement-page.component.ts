@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -8,6 +8,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { IEngagementPatType, IEngagementShakeType } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -15,11 +16,13 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
   styleUrls: ['./new-campaign-select-engagement-page.component.scss']
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   public dataSource = new MatTableDataSource<IEngagement>();
   public defaultSearchValue = null;
   public defaultTypeValue = null;
   public typeFilterConfig: OptionConfig[];
+  public selectedEngagement: IEngagementShakeType | IEngagementPatType;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -41,6 +44,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     super.ngOnInit();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    this.subscribeFormValueChange();
   }
 
   public ngOnDestroy(): void {
@@ -69,8 +73,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.engagementsService.getEngagements()
       .pipe(
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
-          this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
+          console.log(data);
+          //
+          // const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
+          // this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
         })
       )
       .subscribe((res: IEngagement[]) => {
@@ -86,5 +92,13 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       const findTemplate = res.find(template => template.id === id);
       this.template.patchValue(findTemplate);
     }
+  }
+
+  private subscribeFormValueChange(): void {
+    this.form.valueChanges
+      .subscribe((val) => {
+        this.selectedEngagement = val.template;
+        console.log(val);
+      });
   }
 }
