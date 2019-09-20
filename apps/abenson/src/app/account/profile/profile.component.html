@@ -41,8 +41,7 @@
       <label>Mobile Number</label>
       <div>{{profile.phone || '-'}}</div>
     </div>
-
-    <div class="wrap">
+    <a routerLink="edit-mobile" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
@@ -51,8 +50,7 @@
       <label>Email</label>
       <div>{{profile.email || '-'}}</div>
     </div>
-
-    <div class="wrap">
+    <a routerLink="edit-email" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
@@ -64,8 +62,7 @@
       <label>City/Municipality</label>
       <div>{{profile.customProperties.city || '-'}}</div>
     </div>
-
-    <div class="wrap">
+    <a routerLink="edit-address" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
@@ -74,8 +71,7 @@
       <label>Barangay</label>
       <div>{{profile.customProperties.barangay || '-'}}</div>
     </div>
-
-    <div class="wrap">
+    <a routerLink="edit-barangay" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
@@ -84,7 +80,7 @@
       <label>Street Address</label>
       <div>{{profile.customProperties.addr1 || '-'}}</div>
     </div>
-    <div class="wrap">
+    <a routerLink="edit-street" class="wrap">
       <mat-icon>edit</mat-icon>
     </a>
   </div>
