@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
     private generalStaticDataService: GeneralStaticDataService
   ) { }
   public ngOnInit(): void {
-    this.generalStaticDataService.getCountriesList(countries).subscribe((countries) => this.countryCodes = countries);
+    this.generalStaticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
   }
   public submitHandler(data: ISignUpData): void {
     this.auth.signup(data).subscribe((profile: IProfile) => {
