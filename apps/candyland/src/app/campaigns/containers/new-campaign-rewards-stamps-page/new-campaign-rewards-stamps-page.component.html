@@ -19,7 +19,7 @@
           <mat-checkbox color="primary" formControlName="sequence">Sequence</mat-checkbox>
         </div>
         <div class="flex flex-end" *ngIf="!isSequence">
-          <cl-button classList="tertiary no-padding" (click)="addStampRule()">+ Add Rule</cl-button>
+          <cl-button classList="tertiary ph-0" (click)="addStampRule()">+ Add Rule</cl-button>
         </div>
         <div class="card-section" *ngFor="let rule of stampRule?.controls; let i = index; let first = first">
           <div class="card-content">
