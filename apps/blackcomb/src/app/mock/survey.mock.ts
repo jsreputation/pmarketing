@@ -1,4 +1,4 @@
-import { ISurvey } from '@perx/core';
+import { ISurvey, SurveyQuestionType } from '@perx/core';
 
 export const survey: ISurvey = {
     id: '1',
@@ -21,7 +21,7 @@ export const survey: ISurvey = {
             id: '1',
             required: true,
             payload: {
-                type: 'picture-select',
+                type: SurveyQuestionType.pictureChoice,
                 multiple: false,
                 choices: [
                     {
