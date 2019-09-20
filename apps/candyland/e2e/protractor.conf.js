@@ -41,6 +41,10 @@ exports.config = {
     compiler: []
 },
   onPrepare() {
+    let globals = require('protractor');
+    let browser = globals.browser;
+    browser.manage().timeouts().implicitlyWait(50000);
+    // browser.ignoreSynchronization = true;
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.json')
     });

@@ -79,6 +79,9 @@ When(/^9_I click on redemption type.$/, async () => {
 });
 
 Then(/^9_I should see four options.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for option field to load
+  await browser.wait(ec.presenceOf(element.all(by.css('span.mat-option-text')).get(0)), 6000 );
   // asserting the number of options
   expect(await element.all(by.css('span.mat-option-text')).count()).to.equal(4);
 });
@@ -115,6 +118,8 @@ Then(/^10_There should be an upload field.$/, async () => {
 // Verifiying that the slider functionality is working for voucher limits per campaign
 Given(/^11_that I am on the survey creation page.$/, async () => {
   await CreateRewardPage.navigateToRewardCreate();
+  await browser.sleep(3000);
+  await browser.executeScript('document.getElementById("walkme-player").remove();');
 });
 
 When(/^11_I click on the slider .$/, async () => {
@@ -123,6 +128,7 @@ When(/^11_I click on the slider .$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=checkbox]')).get(1)), 6000);
   // clicking on the slider
   await element.all(by.className('mat-slide-toggle-thumb-container')).get(0).click();
+  await browser.sleep(3000);
 });
 
 Then(/^11_I should be type a value in the voucher field and select the frequency.$/, async () => {
@@ -136,6 +142,8 @@ Then(/^11_I should be type a value in the voucher field and select the frequency
 // Verifiying that the slider functionality is working for issuance limits per user
 Given(/^12_that I am on the survey creation page.$/, async () => {
   await CreateRewardPage.navigateToRewardCreate();
+  await browser.sleep(3000);
+  await browser.executeScript('document.getElementById("walkme-player").remove();');
 });
 
 When(/^12_I click on the slider .$/, async () => {
@@ -144,6 +152,7 @@ When(/^12_I click on the slider .$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=checkbox]')).get(2)), 6000);
   // clicking on the slider
   await element.all(by.className('mat-slide-toggle-thumb-container')).get(1).click();
+  await browser.sleep(3000);
 });
 
 Then(/^12_I should be able to type a value in the times field and select the frequency.$/, async () => {
@@ -157,14 +166,17 @@ Then(/^12_I should be able to type a value in the times field and select the fre
 // Verifiying that the slider functionality is working for redemption limits per user
 Given(/^13_that I am on the survey creation page.$/, async () => {
   await CreateRewardPage.navigateToRewardCreate();
+  await browser.sleep(3000);
+  await browser.executeScript('document.getElementById("walkme-player").remove();');
 });
 
 When(/^13_I click on the slider .$/, async () => {
   const ec = protractor.ExpectedConditions;
-  // waiting for the slider to load for voucher limits per campaign
+  // waiting for the slider to load for redemption limits per campaign
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=checkbox]')).get(3)), 6000);
   // clicking on the slider
   await element.all(by.className('mat-slide-toggle-thumb-container')).get(2).click();
+  await browser.sleep(3000);
 });
 
 Then(/^13_I should be able to type a value in the times field and select the frequency.$/, async () => {
