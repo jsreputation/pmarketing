@@ -1,6 +1,6 @@
-<ng-container  *ngIf="vouchers$ | async as vouchers; else elseBlock">
+<ng-container  *ngIf="isVoucherQueryComplete(vouchers$ | async); else elseBlock">
   <div class="card-list-container">
-    <ng-container *ngFor="let voucher of vouchers">
+    <ng-container *ngFor="let voucher of vouchers$ | async">
       <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
         [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
         <div [ngClass]="'voucher-content ' + imageSize">
