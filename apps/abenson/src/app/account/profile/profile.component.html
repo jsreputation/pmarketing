@@ -25,16 +25,16 @@
   <div class="group">
     <label>Mobile Number</label>
     <div>{{profile.phone || '-'}}</div>
-    <div class="wrap">
+    <a routerLink="edit-mobile" class="wrap">
       <mat-icon>edit</mat-icon>
-    </div>
+    </a>
   </div>
   <div class="group">
     <label>Email</label>
     <div>{{profile.email || '-'}}</div>
-    <div class="wrap">
+    <a routerLink="edit-email" class="wrap">
       <mat-icon>edit</mat-icon>
-    </div>
+    </a>
   </div>
   <div class="sub-title">
     Address
@@ -42,22 +42,22 @@
   <div class="group">
     <label>City/Municipality</label>
     <div>{{profile.customProperties.city || '-'}}</div>
-    <div class="wrap">
+    <a routerLink="edit-address" class="wrap">
       <mat-icon>edit</mat-icon>
-    </div>
+    </a>
   </div>
   <div class="group">
     <label>Barangay</label>
     <div>{{profile.customProperties.barangay || '-'}}</div>
-    <div class="wrap">
+    <a routerLink="edit-barangay" class="wrap">
       <mat-icon>edit</mat-icon>
-    </div>
+    </a>
   </div>
   <div class="group">
     <label>Street Address</label>
     <div>{{profile.customProperties.addr1 || '-'}}</div>
-    <div class="wrap">
+    <a routerLink="edit-street" class="wrap">
       <mat-icon>edit</mat-icon>
-    </div>
+    </a>
   </div>
 </div>
