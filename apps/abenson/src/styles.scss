@@ -33,3 +33,18 @@ html, body {
     text-transform: uppercase;
   }
 }
+
+.mat-form-field-appearance-fill {
+  .mat-form-field-underline::before {
+    display: none !important;
+  }
+
+  .mat-form-field-flex {
+    border-radius: 0 !important;
+    background-color: #E8E8E8 !important;
+  }
+}
+
+.mat-form-field .mat-form-field-ripple {
+  display: none !important;
+}
