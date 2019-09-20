@@ -86,6 +86,17 @@
   border-radius: 1rem;
 }
 
+.inner.no-code {
+  .upper-section, .middle-section {
+    display: none;
+  }
+
+  .lower-section {
+    border-radius: 1rem;
+    padding-top: 1rem;
+  }
+}
+
 .code-redemption {
   min-height: 14rem;
   display: flex;

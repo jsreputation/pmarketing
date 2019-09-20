@@ -16,6 +16,7 @@ import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.co
 import { LineComponent } from './line/line.component';
 import { MetabaseComponent } from './metabase/metabase.component';
 import { TableComponent } from './table/table.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { TableComponent } from './table/table.component';
   imports: [
     CommonModule,
     ChartsRoutingModule,
-    PerxChartModule,
+    PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
     MatTabsModule
   ]
 })
