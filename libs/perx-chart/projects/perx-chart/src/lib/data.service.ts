@@ -8,6 +8,7 @@ import {
   retry,
   // tap
 } from 'rxjs/operators';
+import { EnvConfig } from './env.config';
 
 interface ITokenResponse {
   token: string;
@@ -21,7 +22,12 @@ interface IMetabaseResponse {
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private http: HttpClient) { }
+  public tokenBasePath: string = null; // 'https://api-dev1.uat.whistler.perxtech.io';
+  constructor(private http: HttpClient, config?: EnvConfig) {
+    if (config && config.tokenBasePath) {
+      this.tokenBasePath = config.tokenBasePath;
+    }
+  }
 
   public getData(id: number, params: { [key: string]: string }): Observable<IData> {
     if (id === undefined) {
@@ -44,10 +50,7 @@ export class DataService {
   }
 
   private getToken(id: number): Observable<string> {
-    return this.http.get<ITokenResponse>(
-      `https://api-pru1.uat.whistler.perxtech.io/cognito/metabase_token/${id}`
-      // { headers: { Authorization: 'Basic AFQNNUOBPRMSNLJEQCMY:y4QichclvXX4JE0DHHspZeWT3-svHbqe7B8CWklYW0KmyYPHJ0JOeg' } }
-    )
+    return this.http.get<ITokenResponse>(`${this.tokenBasePath}/cognito/metabase_token/${id}`)
       .pipe(
         retry(2),
         map((res: ITokenResponse) => res.token)

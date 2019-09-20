@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
-import { Router } from '@angular/router';
+import { IProfile, ProfileService } from '@perx/core';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -12,8 +11,6 @@ export class AccountComponent implements OnInit {
   public profile: IProfile;
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router,
     private profileService: ProfileService,
   ) { }
 
@@ -27,8 +24,4 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  public logout(): void {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-  }
 }

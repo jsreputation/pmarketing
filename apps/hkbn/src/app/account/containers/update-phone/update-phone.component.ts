@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { map, flatMap } from 'rxjs/operators';
-import { ProfileService, AuthenticationService, GeneralStaticDataService , ICountryCode} from '@perx/core';
+import { map } from 'rxjs/operators';
+import { AuthenticationService, GeneralStaticDataService, ICountryCode } from '@perx/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+
+const countries = ['China', 'Hong Kong', 'Macau'];
 
 @Component({
   selector: 'hkbn-update-phone',
@@ -29,7 +30,6 @@ export class UpdatePhoneComponent implements OnInit {
     return this.updatePhoneGroup.value.code.replace('+', '') + this.updatePhoneGroup.value.phone;
   }
   constructor(
-    private profileService: ProfileService,
     private router: Router,
     private authService: AuthenticationService,
     private route: ActivatedRoute,
@@ -39,14 +39,11 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.staticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
+    this.staticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
     this.route.queryParams.subscribe((param) => this.otp = param.otp);
-    this.dataTransfer.updateData$.pipe(flatMap((val) => val ? of(val) :
-      this.profileService.whoAmI().pipe(
-        map((profile) => ({ phone: profile.phone.substr(3), code: '+852' }))
-      ))).subscribe((phonePrew) => {
-        this.updatePhoneGroup.setValue(phonePrew);
-      });
+    this.dataTransfer.updateData$
+      .pipe(map((val) => val ? val : { phone: '', code: '+852' }))
+      .subscribe((update) => this.updatePhoneGroup.setValue(update));
   }
 
   public onSubmit(): void {
