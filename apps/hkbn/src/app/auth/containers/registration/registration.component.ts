@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
+const countries = ['China', 'Hong Kong', 'Macau'];
+
 @Component({
   selector: 'hkbn-registration',
   templateUrl: './registration.component.html',
@@ -17,7 +19,7 @@ export class RegistrationComponent implements OnInit {
     private generalStaticDataService: GeneralStaticDataService
   ) { }
   public ngOnInit(): void {
-    this.generalStaticDataService.getCountriesList().subscribe((countries) => this.countryCodes = countries);
+    this.generalStaticDataService.getCountriesList(countries).subscribe((countries) => this.countryCodes = countries);
   }
   public submitHandler(data: ISignUpData): void {
     this.auth.signup(data).subscribe((profile: IProfile) => {
