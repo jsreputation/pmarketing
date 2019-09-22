@@ -115,7 +115,6 @@ interface IV4CatalogResults {
   providedIn: 'root'
 })
 export class V4RewardsService extends RewardsService {
-
   private apiHost: string;
   private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
@@ -176,7 +175,7 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
+  private static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
     const images = catalog.images || [];
     let thumbnail = images.find((image: IV4Image) => image.type === 'catalog_thumbnail');
     if (thumbnail === undefined) {
@@ -208,10 +207,6 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getTags(): void {
-    // todo: api not implemented yet
-  }
-
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     const pageSize = 10;
     return this.getRewards(1, pageSize, tags, categories).pipe(
@@ -230,7 +225,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
+  private getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
 
     let params = new HttpParams()
       .set('page', page.toString())
@@ -289,7 +284,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getCatalogs(page: number = 1, pageSize: number = 25): Observable<ICatalog[]> {
+  private getCatalogs(page: number = 1, pageSize: number = 25): Observable<ICatalog[]> {
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
