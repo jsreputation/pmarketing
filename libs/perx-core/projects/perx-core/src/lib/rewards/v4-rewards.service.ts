@@ -116,7 +116,7 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
-  private rewardMeta: IV4Meta = {};
+  // private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
 
   constructor(
@@ -208,25 +208,29 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const pageSize = 10;
-    return this.getRewards(1, pageSize, tags, categories).pipe(
-      mergeMap(reward => {
-        const streams = [
-          of(reward)
-        ];
-        for (let i = 2; i <= this.rewardMeta.total_pages; i++) {
-          const stream = this.getRewards(i, pageSize, tags, categories);
-          streams.push(stream);
+    return new Observable(subject => {
+      const pageSize = 10;
+      let current: IReward[] = [];
+      // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
+      const process = (res: IV4GetRewardsResponse) => {
+        current = current.concat(res.data.map(r => V4RewardsService.v4RewardToReward(r)));
+        subject.next(current);
+        // if finished close the stream
+        if (res.meta.page >= res.meta.total_pages) {
+          subject.complete();
+        } else {
+          // otherwise get next page
+          this.getRewards(res.meta.page + 1, pageSize, tags, categories)
+            .subscribe(process);
         }
-        return streams;
-      }),
-      concatAll(),
-      reduce((acc: IReward[], curr: IReward[]) => acc.concat(curr), [])
-    );
+      };
+      // do the first query
+      this.getRewards(1, pageSize, tags, categories)
+        .subscribe(process);
+    });
   }
 
-  private getRewards(page: number = 1, pageSize: number = 25, tags?: string[], categories?: string[]): Observable<IReward[]> {
-
+  private getRewards(page: number = 1, pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IV4GetRewardsResponse> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
@@ -239,22 +243,7 @@ export class V4RewardsService extends RewardsService {
       params = params.set('categories', categories.join());
     }
 
-    return this.http.get<IV4GetRewardsResponse>(
-      `${this.apiHost}/v4/rewards`, { params }
-    ).pipe(
-      map((res: IV4GetRewardsResponse) => {
-        if (res.meta) {
-          this.rewardMeta = {
-            ...this.rewardMeta,
-            ...res.meta
-          };
-        }
-        return res.data;
-      }),
-      map((rewards: IV4Reward[]) => rewards.map(
-        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-      ))
-    );
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params });
   }
 
   public getReward(id: number): Observable<IReward> {
@@ -284,7 +273,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  private getCatalogs(page: number = 1, pageSize: number = 25): Observable<ICatalog[]> {
+  private getCatalogs(page: number = 1, pageSize: number = 10): Observable<ICatalog[]> {
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
