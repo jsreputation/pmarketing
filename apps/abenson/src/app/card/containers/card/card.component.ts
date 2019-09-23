@@ -16,14 +16,13 @@ export class CardComponent implements OnInit {
   constructor(private loyaltyService: LoyaltyService) { }
 
   public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getAllTransactions();
-
     this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
 
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
     ).subscribe( (loyalty) => {
       this.membershipId = +loyalty.membershipIdentifier;
+      this.transactions = this.loyaltyService.getTransactions(loyalty.id);
     });
   }
 }
