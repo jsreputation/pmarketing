@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AuthenticationService } from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +12,10 @@ export class SignUpComponent implements OnInit {
   public errorMessage: string;
   public hide: boolean = true;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthenticationService,
+  ) { }
 
   public ngOnInit(): void {
     this.initForm();
@@ -20,19 +24,19 @@ export class SignUpComponent implements OnInit {
   public initForm(): void {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
-      secondName: ['', Validators.required],
-      mobileNumber: ['', Validators.required],
-      pinCode: ['', Validators.required]
+      lastName: ['', Validators.required],
+      phone: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
   public onSubmit(): void {
-    const firstName = (this.signUpForm.get('firstName').value as string);
-    const secondName: string = this.signUpForm.get('secondName').value;
-    const mobileNumber: string = this.signUpForm.get('mobileNumber').value;
-    const pinCode: string = this.signUpForm.get('pinCode').value;
-    this.errorMessage = null;
+    const password: string = this.signUpForm.get('password').value;
 
-    console.log(firstName, secondName, mobileNumber, pinCode);
+    this.errorMessage = null;
+    const profile = this.signUpForm.value;
+    profile.password_confirmation = password;
+
+    this.authService.signup(profile).subscribe(() => {}, (e) => {console.log(e); });
   }
 }
