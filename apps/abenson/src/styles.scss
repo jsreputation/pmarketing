@@ -48,18 +48,24 @@ html, body {
     background-color: #E8E8E8 !important;
   }
 
-  .mat-form-field-ripple {
-    display: none !important;
-  }
-
   .mat-form-field-underline::before {
     display: none !important;
+  }
+}
+
+.mat-form-field.mat-focused {
+  .mat-form-field-ripple {
+    background-color: #535253 !important;
   }
 }
 
 .mat-form-field-invalid {
   .mat-form-field-label {
     color: #f44336 !important;
+  }
+
+  .mat-form-field-ripple {
+    background-color:#f44336 !important;
   }
 }
 
