@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { V4StampService } from './v4-stamp.service';
 import { StampService } from './stamp.service';
@@ -15,8 +15,7 @@ export function stampServiceFactory(http: HttpClient, config: Config, vouchersSe
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   providers: [
     {

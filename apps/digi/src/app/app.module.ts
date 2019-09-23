@@ -23,6 +23,7 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './UserIdInterceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     MerchantsModule,
     AuthenticationModule,
     CampaignModule,
-    GameModule
+    GameModule,
+    HttpClientModule
   ],
   providers: [
     httpInterceptorProviders
