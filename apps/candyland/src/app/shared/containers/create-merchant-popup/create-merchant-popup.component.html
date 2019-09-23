@@ -11,7 +11,10 @@
 </div>
 <mat-dialog-content>
   <div class="dialog-content">
-    <cl-create-merchant-form [formMerchant]="formMerchant" [settings]="formConfig"></cl-create-merchant-form>
+    <cl-create-merchant-form [formMerchant]="formMerchant"
+                             [settings]="formConfig"
+                             (removeBranch)="removeBranches($event)">
+    </cl-create-merchant-form>
   </div>
 </mat-dialog-content>
 <div class="dialog-actions"

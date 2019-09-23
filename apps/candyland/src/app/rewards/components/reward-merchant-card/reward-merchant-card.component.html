@@ -1,16 +1,14 @@
 <!--Merchant Cards-->
-<mat-radio-group color="primary" class="item-list">
-  <mat-radio-button value="select" (click)="clickSelectMerchant()">
-    <div class="merchant-card">
-      <i class="icon select-merchant-icon  merchant-card-icon"></i>
-      <span class="merchant-card-label">Select existing merchant</span>
-    </div>
-  </mat-radio-button>
-  <mat-radio-button value="create" (click)="clickCreateMerchant()">
-    <div class="merchant-card">
-      <i class="icon create-merchant-icon merchant-card-icon"></i>
-      <span class="merchant-card-label">Create new merchant</span>
-    </div>
-  </mat-radio-button>
-</mat-radio-group>
+<button mat-button class="merchant-btn" [class.active-item]="selected === 'select'" (click)="clickSelectMerchant()">
+  <div class="merchant-card">
+    <i class="icon select-merchant-icon  merchant-card-icon"></i>
+    <span class="merchant-card-label">Select existing merchant</span>
+  </div>
+</button>
+<button mat-button class="merchant-btn" [class.active-item]="selected === 'create'" (click)="clickCreateMerchant()">
+  <div class="merchant-card">
+    <i class="icon create-merchant-icon merchant-card-icon"></i>
+    <span class="merchant-card-label">Create new merchant</span>
+  </div>
+</button>
 <!--/ Merchant Cards-->

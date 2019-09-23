@@ -48,7 +48,7 @@ export class V4LocationsService extends LocationsService {
       page = 1;
     }
     if (pageSize === undefined) {
-      pageSize = 25;
+      pageSize = 10;
     }
     if (tags) {
       tags = [];
