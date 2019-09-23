@@ -43,6 +43,7 @@ import { SoundModule } from './sound/sound.module';
 import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ProfileComponent } from './profile/profile.component';
     StampModule,
     FormsModule,
     RewardsModule,
+    HttpClientModule
   ],
   providers: [
     DatePipe,

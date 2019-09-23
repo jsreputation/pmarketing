@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { V4GameService } from './v4-game.service';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PinataComponent } from './pinata/pinata.component';
@@ -18,8 +18,7 @@ export function gameServiceFactory(http: HttpClient, config: Config): IGameServi
     PinataComponent
   ],
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   providers: [
     {
