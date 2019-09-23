@@ -1,11 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DataService } from './data.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EnvConfig } from './env.config';
 
 describe('DataService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule]
+    imports: [HttpClientTestingModule],
+    providers: [
+      { provide: EnvConfig, useValue: {} }
+    ]
   }));
 
   it('should be created', () => {

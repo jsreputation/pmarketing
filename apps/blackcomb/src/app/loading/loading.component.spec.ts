@@ -17,7 +17,7 @@ describe('LoadingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingComponent ],
+      declarations: [LoadingComponent],
       imports: [
         MatProgressSpinnerModule,
         RouterTestingModule
@@ -26,10 +26,13 @@ describe('LoadingComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
+    if ((window as any).primaryIdentifier) {
+      delete (window as any).primaryIdentifier;
+    }
     fixture = TestBed.createComponent(LoadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
