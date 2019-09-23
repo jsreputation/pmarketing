@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ParamMap, ActivatedRoute } from '@angular/router';
+import { ParamMap, ActivatedRoute } from '@angular/router';
 import {
   // NotificationService,
   IGame,
