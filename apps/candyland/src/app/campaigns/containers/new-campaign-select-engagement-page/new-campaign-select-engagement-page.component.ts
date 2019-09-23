@@ -8,7 +8,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-import { IEngagementPatType, IEngagementShakeType } from '@cl-core/http-adapters/engagement-http-adapter';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -22,7 +22,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public defaultSearchValue = null;
   public defaultTypeValue = null;
   public typeFilterConfig: OptionConfig[];
-  public selectedEngagement: IEngagementShakeType | IEngagementPatType;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -38,6 +37,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     super(0, store, stepConditionService, cd);
     this.initForm();
     this.initFiltersDefaultValue();
+    this.store.template$.subscribe(val => console.log('test', val));
   }
 
   public ngOnInit(): void {
@@ -73,10 +73,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.engagementsService.getEngagements()
       .pipe(
         tap(data => {
-          console.log(data);
-          //
-          // const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
-          // this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
+          this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
         })
       )
       .subscribe((res: IEngagement[]) => {
@@ -96,9 +94,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
 
   private subscribeFormValueChange(): void {
     this.form.valueChanges
+      .pipe(untilDestroyed(this))
       .subscribe((val) => {
-        this.selectedEngagement = val.template;
-        console.log(val);
+        this.store.updateCampaign(val);
       });
   }
+
 }

@@ -15,7 +15,8 @@ export class SurveyHttpAdapter {
           'progress_bar_color': data.color,
           'card_background_img_url': ImageControlValue.getImagePath(data.cardBackground),
           'background_img_url': ImageControlValue.getImagePath(data.background),
-          questions: data.questions
+          questions: data.questions,
+          // button: data.buttonText, throw an error
         }
       }
     };

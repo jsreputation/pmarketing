@@ -1,10 +1,12 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import {
+  IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
+} from '@cl-core/models/engagement/engagement-interfaces';
 
 export class EngagementHttpAdapter {
 
 // tslint:disable
   public static transformEngagement(data: IEngagementApi): IEngagement {
-    console.log('data in the transformer', data);
     return {
       id: data.id,
       current_type: data.type,
@@ -41,8 +43,60 @@ export class EngagementHttpAdapter {
       case 'game':
         return EngagementHttpAdapter.transformGameHandler(data);
       case 'survey':
-        return
+        return EngagementHttpAdapter.transformToSurveyType(data);
+      case 'stamps':
+        return EngagementHttpAdapter.transformToStampType(data);
+      case 'instant_reward':
+        // TODO: need implemented this method for now it don't work
+        return;
     }
+  }
+
+  public static transformToSurveyType(data: any): IEngagementSurvey {
+    return {
+      id: data.id,
+      type: data.type,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      background_img_url: data.attributes.display_properties.background_img_url,
+      attributes_type: data.attributes.type,
+      progress_bar_color: data.attributes.display_properties.progress_bar_color,
+      card_background_img_url: data.attributes.display_properties.card_background_img_url,
+      questions: EngagementHttpAdapter.prepareQuestion(data.attributes.display_properties.questions)
+    };
+  }
+
+  public static prepareQuestion(data: any): any {
+    return data[0];
+  }
+
+  public static transformToStampType(data: any): IEngagementStamps {
+    return {
+      id: data.id,
+      type: data.type,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      slots: data.attributes.display_properties.slots,
+      nb_of_slots: data.attributes.display_properties.nb_of_slots,
+      pre_stamp_img_url: data.attributes.display_properties.pre_stamp_img_url,
+      post_stamp_img_url: data.attributes.display_properties.post_stamp_img_url,
+      reward_pre_stamp_img_url: data.attributes.display_properties.reward_pre_stamp_img_url,
+      reward_post_stamp_img_url: data.attributes.display_properties.reward_post_stamp_img_url,
+      attributes_type: data.attributes.type,
+      background_img_url: data.attributes.display_properties.background_img_url
+    };
   }
 
   public static transformGameHandler(data: IEngagementApi): any {
@@ -75,9 +129,7 @@ export class EngagementHttpAdapter {
     }
   }
 
-  public static transformToPinataType(data: any): IEngagementPatType {
-    // TODO: need change it is simple copy and past
-    console.log('pinata', data);
+  public static transformToPinataType(data: any): IEngagementTapType {
     return {
       id: data.id,
       type: data.type,
@@ -160,10 +212,10 @@ export class EngagementHttpAdapter {
         display_properties: {
           'nb_of_slots': +data.stampsNumber,
           slots: data.stampsSlotNumber.map(item => +item),
-          'pre_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
-          'reward_pre_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
-          'post_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
-          'reward_post_stamp_img_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+          'pre_stamp_img_url': ImageControlValue.getImagePath(data.preStamp),
+          'reward_pre_stamp_img_url': ImageControlValue.getImagePath(data.rewardPreStamps),
+          'post_stamp_img_url': ImageControlValue.getImagePath(data.postStamps),
+          'reward_post_stamp_img_url': ImageControlValue.getImagePath(data.rewardPostStamps),
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
@@ -171,40 +223,4 @@ export class EngagementHttpAdapter {
       }
     }
   }
-}
-
-export interface IEngagementShakeType {
-  id: string;
-  type: string;
-  game_type: string;
-  title: string;
-  description: string;
-  image_url: string;
-  title_display: string;
-  button: string;
-  sub_title: string;
-  tree_img_url: string;
-  nb_hanged_gifts: number;
-  gift_box_img_url: string;
-  background_img_url: string;
-  attributes_type: string;
-  created_at: string;
-  updated_at: string;
-}
-export interface IEngagementPatType {
-  id: string;
-  type: string;
-  game_type: string;
-  title: string;
-  description: string;
-  image_url: string;
-  title_display: string;
-  button: string;
-  sub_title: string;
-  closed_pinata_img_url:  string;
-  opened_pinata_img_url:  string;
-  cracking_pinata_img_url:  string;
-  attributes_type: string;
-  created_at: string;
-  updated_at: string;
 }
