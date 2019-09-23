@@ -23,7 +23,7 @@ import { GroupComponent } from './question/group/group.component';
 import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
 import { Config } from '../config/config';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 
 export function surveyServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): SurveyService {
@@ -58,8 +58,7 @@ const components = [
     MatSelectModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatRadioModule,
-    HttpClientModule
+    MatRadioModule
   ],
   providers: [
     {

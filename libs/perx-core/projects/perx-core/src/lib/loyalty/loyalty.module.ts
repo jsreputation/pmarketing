@@ -7,7 +7,7 @@ import { LoyaltySummaryComponent } from './loyalty-summary/loyalty-summary.compo
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list/loyalty-transactions-list.component';
 import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 import { Config } from '../config/config';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -21,8 +21,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
     LoyaltyTransactionsListComponent
   ],
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   exports: [
     LoyaltySummaryComponent,

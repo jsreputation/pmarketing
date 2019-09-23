@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerMerchantsService } from './whistler-merchants.service';
 import { V4MerchantsService } from './v4-merchants.service';
@@ -17,8 +17,7 @@ export function merchantsServiceFactory(http: HttpClient, config: Config): IMerc
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   providers: [
     {

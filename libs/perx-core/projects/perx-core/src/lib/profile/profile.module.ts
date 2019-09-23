@@ -5,7 +5,7 @@ import { V4ProfileService } from './v4-profile.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MicroProfileComponent } from './micro-profile/micro-profile.component';
 import { MatIconModule } from '@angular/material';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 
 export function profileServiceFactory(http: HttpClient, config: Config): ProfileService {
@@ -16,8 +16,7 @@ export function profileServiceFactory(http: HttpClient, config: Config): Profile
 @NgModule({
   imports: [
     CommonModule,
-    MatIconModule,
-    HttpClientModule
+    MatIconModule
   ],
   providers: [
     {
