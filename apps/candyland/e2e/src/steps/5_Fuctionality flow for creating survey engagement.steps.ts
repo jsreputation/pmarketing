@@ -214,11 +214,11 @@ Given(/^11_that I am on the survey creation page$/, async () => {
 When(/^11_I entered a empty text string in the header text box.$/, async () => {
   const ec = protractor.ExpectedConditions ;
   // waiting for header text field
-  await browser.wait(ec.presenceOf(element(by.id('mat-input-0'))), 7000 );
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(0)), 7000 );
   // clearing default values
-  await element(by.id('mat-input-0')).clear();
+  await element.all(by.css('input[type=text]')).get(0).clear();
   // pressing tab on the header field
-  await element(by.id('mat-input-0')).sendKeys(protractor.Key.TAB);
+  await element.all(by.css('input[type=text]')).get(0).sendKeys(protractor.Key.TAB);
   await browser.sleep(3000);
   // clicking on the headline message field to elicit the message
   // await element(by.id('mat-input-1')).click();

@@ -30,7 +30,7 @@ exports.config = {
       './src/steps/**/*.steps.ts',
       'features/'
     ],
-    tags: [],
+    tags: '@runThis',
     ui:       'bdd',
     reporter: 'dot',
     strict: true,
