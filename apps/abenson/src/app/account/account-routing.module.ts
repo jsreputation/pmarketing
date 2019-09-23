@@ -11,7 +11,7 @@ const routes: Routes = [{
 }, {
   path: 'profile', loadChildren: () => import('./profile/profile.module').then(mod => mod.ProfileModule)
 }, {
-  path: 'additions/:id',
+  path: 'additions',
   loadChildren:  () => import('./profile-additions/profile-additions.module').then(mod => mod.ProfileAdditionsModule)
 }];
 
