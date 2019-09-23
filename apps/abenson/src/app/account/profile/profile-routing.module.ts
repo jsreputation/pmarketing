@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
 import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangeCityComponent } from './change-city/change-city.component';
 
 const routes: Routes = [
@@ -16,11 +17,15 @@ const routes: Routes = [
     component: ChangeBarangayComponent
   },
   {
+    path: 'change-email',
+    component: ChangeEmailComponent
+  },
+  {
     path: 'change-city',
     component: ChangeCityComponent
   },
   {
-    path: 'edit-street',
+    path: 'change-street',
     component: ChangeStreetAddressComponent
   },
 ];
