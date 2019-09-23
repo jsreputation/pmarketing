@@ -1,26 +1,26 @@
 <div class="content-container">
-  <img class="logo" src="assets/logo.png" />
+  <img src="assets/signup-top-image.svg" class="top-image">
   <div class="login-form">
     <h1>Log In</h1>
-    <div class="error_msg">
-      <span>{{errorMessage}}</span>
-    </div>
+    <p>Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a></p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="full-width__input">
-        <mat-label>Enter your customer ID</mat-label>
-        <input matInput placeholder="Enter your customer ID" formControlName="customerID">
-        <mat-error *ngIf="loginForm.hasError('customerID')">
-          Player code is <strong>required</strong>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Enter Mobile Number</mat-label>
+        <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+        <mat-error *ngIf="loginForm.get('mobileNumber').hasError('required')">
+          Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width__input">
-        <mat-label>Enter your password</mat-label>
-        <input matInput placeholder="Enter your password" formControlName="password">
-        <mat-error *ngIf="loginForm.hasError('password')">
-          Password is <strong>required</strong>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>PIN Code</mat-label>
+        <input matInput placeholder="PIN Code" formControlName="pinCode">
+        <mat-error *ngIf="loginForm.get('pinCode').hasError('required')">
+          PIN Code is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <a class="link forgot-pin">Forgot Pin Code?</a>
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
     </form>
   </div>
+  <img src="assets/signup-bottom-image.svg" class="bottom-image">
 </div>

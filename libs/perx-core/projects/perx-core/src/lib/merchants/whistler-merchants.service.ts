@@ -61,7 +61,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
     );
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 25): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
     return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       {

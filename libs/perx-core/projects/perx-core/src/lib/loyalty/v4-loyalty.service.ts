@@ -103,7 +103,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public getLoyalties(page: number = 1, pageSize: number = 25): Observable<ILoyalty[]> {
+  public getLoyalties(page: number = 1, pageSize: number = 10): Observable<ILoyalty[]> {
     return this.http.get<IV4GetLoyaltiesResponse>(
       `${this.apiHost}/v4/loyalty`,
       {
@@ -153,7 +153,7 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 25): Observable<ITransaction[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ITransaction[]> {
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
