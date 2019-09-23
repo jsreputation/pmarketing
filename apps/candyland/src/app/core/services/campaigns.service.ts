@@ -14,14 +14,14 @@ export class CampaignsService implements ITableService {
   constructor(private campaignsHttpsService: CampaignsHttpsService) {
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<ICampaign>> {
-    return this.campaignsHttpsService.getCampaigns(params).pipe(
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaign>> {
+    return this.campaignsHttpsService.getCampaigns(new HttpParams(params)).pipe(
       map(response => CampaignsHttpAdapter.transformTableData(response))
     );
   }
 
-  public getCampaigns(params: HttpParams): Observable<any> {
-    return this.campaignsHttpsService.getCampaigns(params);
+  public getCampaigns(params: HttpParamsOptions): Observable<any> {
+    return this.campaignsHttpsService.getCampaigns(new HttpParams(params));
   }
 
   public getCampaign(id: string): void {
