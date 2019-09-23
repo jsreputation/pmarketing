@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { PuzzlesModule, IVoucherService } from '@perx/core';
 import { VouchersModule as PerxVouchersModule } from '@perx/core';
+import { HttpClientModule } from '@angular/common/http';
 
 const vouchersServiceStub = {};
 
@@ -17,7 +18,8 @@ const vouchersServiceStub = {};
     BrowserModule,
     AppRoutingModule,
     PerxVouchersModule,
-    PuzzlesModule
+    PuzzlesModule,
+    HttpClientModule
   ],
   providers: [
     { provide: IVoucherService, useValue: vouchersServiceStub }
