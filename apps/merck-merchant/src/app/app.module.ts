@@ -36,6 +36,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { RedeemComponent } from './redeem/redeem.component';
     RewardsModule,
     MerchantsModule,
     LoyaltyModule,
-    VouchersModule
+    VouchersModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

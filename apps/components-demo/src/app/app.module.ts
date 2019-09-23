@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { UtilsModule } from './utils/utils.module';
 import { HomeComponent } from './home/home.component';
 import { LocationModule } from './location/location.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { LocationModule } from './location/location.module';
     LocationModule,
     MatCardModule,
     MatRippleModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

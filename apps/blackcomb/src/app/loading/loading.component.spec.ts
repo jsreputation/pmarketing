@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 describe('LoadingComponent', () => {
   let component: LoadingComponent;
@@ -16,6 +17,8 @@ describe('LoadingComponent', () => {
   };
 
   beforeEach(async(() => {
+    const routerStub = { navigate: () => ({}) };
+
     TestBed.configureTestingModule({
       declarations: [LoadingComponent],
       imports: [
@@ -23,7 +26,8 @@ describe('LoadingComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: Router, useValue: routerStub }
       ]
     })
       .compileComponents();
