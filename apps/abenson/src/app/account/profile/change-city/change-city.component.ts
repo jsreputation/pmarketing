@@ -31,6 +31,6 @@ export class ChangeCityComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    // @TODO: req
+    // @TODO: req, change city
   }
 }
