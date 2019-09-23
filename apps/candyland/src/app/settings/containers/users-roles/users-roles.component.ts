@@ -2,8 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
-import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
 import { filter, switchMap } from 'rxjs/operators';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-users-roles',
@@ -11,7 +11,7 @@ import { filter, switchMap } from 'rxjs/operators';
   styleUrls: ['./users-roles.component.scss']
 })
 export class UsersRolesComponent  implements AfterViewInit {
-  public dataSource: SettingsUsersRolesDataSource<IAMUser>;
+  public dataSource: CustomDataSource<IAMUser>;
   public hasData = true;
   public config: any;
   private groups: any;
@@ -20,7 +20,7 @@ export class UsersRolesComponent  implements AfterViewInit {
               public cd: ChangeDetectorRef,
               public dialog: MatDialog,
   ) {
-    this.dataSource = new SettingsUsersRolesDataSource<IAMUser>(this.settingsService);
+    this.dataSource = new CustomDataSource<IAMUser>(this.settingsService);
   }
 
   public ngAfterViewInit(): void {
