@@ -9,7 +9,9 @@ import { flatMap, tap } from 'rxjs/operators';
   styleUrls: ['./qr-code.component.scss']
 })
 export class QRCodeComponent implements OnInit {
-  public voucher: Voucher;
+  public voucherId: number;
+  public voucherState: VoucherState;
+  public code: string;
   constructor(
     private route: ActivatedRoute,
     private notification: NotificationService,
@@ -18,16 +20,20 @@ export class QRCodeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.route.params.pipe(flatMap((param) => this.vouchersService.get(+param.id)),
-      tap((voucher) => this.voucher = voucher),
-      flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucher.id))).subscribe((val) =>
+    this.route.params.pipe(flatMap((param) => this.vouchersService.get(parseInt(param.id, 10))),
+      tap((voucher: Voucher) => {
+        this.voucherId = voucher.id;
+        this.voucherState = voucher.state;
+        this.code = voucher.code;
+      }),
+      flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
         this.successRedeemed(val)
         , (msg) =>
           this.notification.addSnack(msg));
   }
 
   public successRedeemed(voucher: Voucher): void {
-    if (voucher.state === VoucherState.redeemed && this.voucher.state === VoucherState.issued) {
+    if (voucher.state === VoucherState.redeemed && this.voucherState === VoucherState.issued) {
       this.notification.addPopup({ title: 'Congratulations' });
     }
   }

@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
 
   public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
-      flatMap((params) => this.gameService.getGamesFromCampaign(+params.id)),
+      flatMap((params) => this.gameService.getGamesFromCampaign(parseInt(params.id, 10))),
       take(1),
       tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games) => games[0]),
