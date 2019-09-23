@@ -9,7 +9,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MatSort } from '@angular/material';
-import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -18,7 +18,7 @@ import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audie
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
-  @Input() public dataSource: AudiencesUsersListDataSource<IUser>;
+  @Input() public dataSource: CustomDataSource<IUser>;
   @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'phone', 'audienceList', 'actions']; // 'state'
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;

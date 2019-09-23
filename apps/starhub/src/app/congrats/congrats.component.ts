@@ -12,6 +12,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { IPlayOutcome } from '@perx/core';
+import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
   selector: 'app-congrats',
@@ -25,7 +26,8 @@ export class CongratsComponent implements OnInit, PopUpClosedCallBack {
     private activeRoute: ActivatedRoute,
     private router: Router,
     private gameService: IGameService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private analytics: AnalyticsService
   ) { }
 
   public ngOnInit(): void {
@@ -42,6 +44,14 @@ export class CongratsComponent implements OnInit, PopUpClosedCallBack {
           if (this.vouchers.length === 0) {
             this.showNoRewardsPopUp();
           }
+
+          this.analytics.addEvent({
+            pageName: 'rewards:game:congrats',
+            pageType: PageType.static,
+            siteSectionLevel2: 'rewards:game',
+            siteSectionLevel3: 'rewards:game:congrats'
+          });
+
          },
         () => this.showNoRewardsPopUp()
       );

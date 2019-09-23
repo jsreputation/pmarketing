@@ -20,24 +20,24 @@ export class DetailedMerchantComponent {
     phone: '+3555 5556 6666',
     address: '20 Upper Circular Rd, #02-21B Perx Technologies Pte Ltd, The Riverwalk',
     city: 'Singapore',
-    stateProvince: '-',
+    state: '-',
     postalCode: '6786546',
     weblink: 'https://www.starbucks.com.sg/',
     branches: [
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       },
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       },
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       }
     ]
   };
