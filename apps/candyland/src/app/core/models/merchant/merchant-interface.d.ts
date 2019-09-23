@@ -5,7 +5,7 @@ declare interface IMerchantFull extends IMerchant {
   phone: string;
   address: string;
   city: string;
-  stateProvince: string;
+  state: string;
   postalCode: string;
   weblink: string;
   branches: IBranch[];
@@ -14,6 +14,5 @@ declare interface IMerchantFull extends IMerchant {
 declare interface IBranch {
   name: string;
   address: string;
-  contactNumber: string;
-
+  phone: string;
 }

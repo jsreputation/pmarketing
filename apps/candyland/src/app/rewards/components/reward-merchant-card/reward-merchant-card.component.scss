@@ -1,5 +1,11 @@
 @import "variables";
 
+.merchant-btn {
+  margin-right: 1.55rem;
+  margin-bottom: 3.2rem;
+  padding: 0;
+}
+
 .merchant-card {
   @include typo-subtitle2;
 
