@@ -9,10 +9,6 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 
 export function stampServiceFactory(http: HttpClient, config: Config, vouchersService: IVoucherService): StampService {
   // Make decision on what to instantiate base on config
-  if (config.isWhistler) {
-    return new WhistlerStamp
-    Service(http, config);
-  }
   return new V4StampService(http, config, vouchersService);
 }
 
