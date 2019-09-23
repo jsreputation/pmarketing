@@ -6,8 +6,8 @@
   <div class="merchant-list">
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'firstName'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search"></cl-search-filter>
+      <ng-container *clTableFilter="'name'; let filter">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for merchants"></cl-search-filter>
       </ng-container>
     </cl-table-filters>
     <!--table-->
@@ -16,6 +16,10 @@
     >
     </cl-list-merchant-view>
     <!--paginator-->
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <cl-paginator [dataSource]="dataSource"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 20]"
+    ></cl-paginator>
+    <!--/ paginator-->
   </div>
 </section>

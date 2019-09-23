@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ICampaignService, IGameService } from '@perx/core';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 describe('LoadingComponent', () => {
   let component: LoadingComponent;
@@ -23,6 +24,8 @@ describe('LoadingComponent', () => {
   const iGameSvcStub = {};
 
   beforeEach(async(() => {
+    const routerStub = { navigate: () => ({}) };
+
     TestBed.configureTestingModule({
       declarations: [LoadingComponent],
       imports: [
