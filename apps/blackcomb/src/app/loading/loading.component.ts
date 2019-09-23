@@ -24,7 +24,6 @@ export class LoadingComponent implements OnInit {
       this.authService.autoLogin()
         .subscribe(
           () => this.redirectAfterLogin(),
-          () => console.log('wa'),
           () => this.router.navigate(['/login'])
         );
     } else {

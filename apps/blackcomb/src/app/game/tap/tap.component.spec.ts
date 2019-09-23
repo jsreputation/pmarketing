@@ -1,13 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TapComponent } from './tap.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, IGameService } from '@perx/core';
+import { GameModule, IGameService, IGame } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('TapComponent', () => {
   let component: TapComponent;
   let fixture: ComponentFixture<TapComponent>;
-
+  let mockGame: IGame = {
+    id: 1,
+    type: 0,
+    remainingNumberOfTries: 3,
+    config: {
+      treeImg: '',
+      giftImg: '',
+      nbHangedGift: 3,
+      nbGiftsToDrop: 3,
+      nbTaps: 3,
+    },
+    texts: {
+    },
+    results: {
+    }
+  };
   const gameServiceStub = {
     get: () => of(),
     getGamesFromCampaign: () => of()
@@ -16,7 +30,7 @@ describe('TapComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TapComponent],
-      imports: [RouterTestingModule, GameModule],
+      imports: [GameModule],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
       ]
@@ -27,6 +41,7 @@ describe('TapComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TapComponent);
     component = fixture.componentInstance;
+    component.game = mockGame;
     fixture.detectChanges();
   });
 
