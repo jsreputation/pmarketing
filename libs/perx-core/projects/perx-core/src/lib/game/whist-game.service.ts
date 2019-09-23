@@ -87,36 +87,6 @@ interface PinataDisplayProperties extends GameDisplayProperties {
   opened_pinata_img_url: string;
 }
 
-// interface Game {
-//   id: number;
-//   type: string;
-//   links?: { self: string };
-//   attributes: AttbsObjGame;
-// }
-
-// interface GameResponse {
-//   data: Game;
-// }
-
-// interface IWPlayResponse {
-//   data: {
-//     game_id: number;
-//     id: number;
-//     outcomes: IWhistlerVoucher[];
-//     state: string;
-//   };
-// }
-
-// interface CampaignResponse {
-//   data: Entity[];
-// }
-
-// interface Entity {
-//   id: number;
-//   links?: { self: string };
-//   attributes: AttbsObjEntity;
-// }
-
 @Injectable({
   providedIn: 'root'
 })

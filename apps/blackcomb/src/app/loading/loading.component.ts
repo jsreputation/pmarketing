@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService,  ICampaignService, IGameService } from '@perx/core';
+import { AuthenticationService,  ICampaignService } from '@perx/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
@@ -16,7 +16,6 @@ export class LoadingComponent implements OnInit {
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private campaignSvc: ICampaignService,
-    private gameSvc: IGameService
   ) {
     this.preAuth = environment.preAuth;
   }
@@ -25,6 +24,7 @@ export class LoadingComponent implements OnInit {
       this.authService.autoLogin()
         .subscribe(
           () => this.redirectAfterLogin(),
+          () => console.log('wa'),
           () => this.router.navigate(['/login'])
         );
     } else {
@@ -38,24 +38,9 @@ export class LoadingComponent implements OnInit {
     // engagement router - i should put it in its own service
     this.campaignSvc.getCampaign(campaignId)
     .subscribe(({type}) => {
-      if (type !== 'game') {
-        this.router.navigateByUrl(
-          this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`
-        );
-      } else {
-        this.gameSvc.getGamesFromCampaign(campaignId)
-        .subscribe(
-          SingleGameGameArray => {
-            const gameType = SingleGameGameArray[0].type === 1 ? 'shake' : 'tap';
-            console.log(`${gameType}/${SingleGameGameArray[0].id}`);
-            this.router.navigateByUrl(
-              this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${gameType}/${SingleGameGameArray[0].id}`
-            );
-          }
-        );
-
-      }
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`
+      );
     });
-
   }
 }
