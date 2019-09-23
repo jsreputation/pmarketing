@@ -5,18 +5,18 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 import { MerchantsService } from '@cl-core-services';
 
 @Component({
-  selector: 'cl-select-merchant',
-  templateUrl: './select-merchant.component.html',
-  styleUrls: ['./select-merchant.component.scss'],
+  selector: 'cl-select-merchant-popup',
+  templateUrl: './select-merchant-popup.component.html',
+  styleUrls: ['./select-merchant-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectMerchantComponent {
+export class SelectMerchantPopupComponent {
   public dataSource: CustomDataSource<Merchant>;
   public selectMerchant: IMerchant;
   public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches'];
 
   constructor(
-    public dialogRef: MatDialogRef<SelectMerchantComponent>,
+    public dialogRef: MatDialogRef<SelectMerchantPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private merchantService: MerchantsService) {
     this.dataSource = new CustomDataSource<Merchant>(this.merchantService);

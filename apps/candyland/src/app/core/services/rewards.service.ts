@@ -4,7 +4,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
-import { HttpParams } from '@angular/common/http';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,8 @@ export class RewardsService implements ITableService {
   }
 
   public getRewards(params: HttpParamsOptions): Observable<any> {
-    return this.rewardHttp.getRewards(new HttpParams(params));
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.rewardHttp.getRewards(httpParams);
   }
 
   public getRewardsOptions(): Observable<OptionConfig[]> {
