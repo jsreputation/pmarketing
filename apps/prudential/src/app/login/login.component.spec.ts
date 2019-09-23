@@ -8,11 +8,14 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileModule, AuthenticationService } from '@perx/core';
 import { FormsModule } from '@angular/forms';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authModuleStub = {};
+  const authServiceStub = {
+    getUserAccessToken: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -25,7 +28,7 @@ describe('LoginComponent', () => {
       ],
       declarations: [LoginComponent],
       providers: [
-        { provide: AuthenticationService, useValue: authModuleStub}
+        { provide: AuthenticationService, useValue: authServiceStub}
       ]
     })
       .compileComponents();
