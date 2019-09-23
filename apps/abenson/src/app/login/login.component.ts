@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit {
 
   public initForm(): void {
     this.loginForm = this.fb.group({
-      customerID: ['', Validators.required],
-      password: ['', Validators.required]
+      mobileNumber: ['', Validators.required],
+      pinCode: ['', Validators.required]
     });
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('customerID').value as string);
-    const password: string = this.loginForm.get('password').value;
+    const username = (this.loginForm.get('mobileNumber').value as string);
+    const password: string = this.loginForm.get('pinCode').value;
     this.errorMessage = null;
 
     this.authService.login(username, password).subscribe(

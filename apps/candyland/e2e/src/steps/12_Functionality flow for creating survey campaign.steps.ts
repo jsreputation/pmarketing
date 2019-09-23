@@ -115,21 +115,21 @@ Given(/^9_I select add rewards button$/, async () => {
   // waiting for add reward button to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('button.btn.mat-flat-button')).get(3)), 6000);
   // clicking on the add reward button
-  element.all(by.css('button.btn.mat-flat-button')).get(3).click();
+  await element.all(by.css('button.btn.mat-flat-button')).get(3).click();
 });
 Given(/^9_I select a reward./, async () => {
   // waiting for the row to load
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element.all(by.css('tr[role=row]')).get(1)), 6000);
+  await browser.wait(ec.presenceOf(element(by.className('table mat-table'))), 6000);
   // selecting the reward
-  element.all(by.css('tr[role=row]')).get(1).click();
+  await element.all(by.css('td[role=gridcell]')).get(0).click();
 });
 When(/^9_I select the add reward button$/, async () => {
   // selecting the add reward button
   const ec = protractor.ExpectedConditions;
   // waiting for button to load
-  await browser.wait(ec.elementToBeClickable(element.all('cl-button').last()), 5000);
-  await element.all('cl-button').last().click();
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).last()), 5000);
+  await element.all(by.css('cl-button')).last().click();
   await browser.sleep(3000);
 });
 
@@ -210,20 +210,21 @@ Given(/^12_that I am on the campaign creation page.$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
   // asserting the presence of the card and title of the card
   await element.all(by.css('div.engagement-item')).first().click();
-  // clicking on the next button
+  // clicking on the next button on select engagement
   await element.all(by.css('cl-button')).get(1).click();
 });
 
 When(/^12_I click on the next button on campaign creation page$/, async () => {
-  // clicking on the next button
+  // clicking on the next button on rewards and limits page
   await element.all(by.css('cl-button')).get(1).click();
 });
 
-Then(/^12_I should see be in the campaign info form.$/, async () => {
+Then(/^12_I should see be in the campaign info card.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  // waiting for campaign info form
+  // waiting for campaign info card to load
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-expansion-panel')).get(0)), 5000);
   await browser.wait(ec.presenceOf(element.all(by.css('mat-expansion-panel-header')).get(0)), 5000);
   // doing an assertion on the presence of the element
-  expect(await element.all(by.css('mat-expansion-panel-header')).get(0).isPresent()).to.equal(true);
-  expect(await element.all(by.css('p.card-title')).get(2).getText()).to.contain('Campaign Info');
+  expect(await element.all(by.css('mat-expansion-panel')).get(0).isPresent()).to.equal(true);
+  // expect(await element.all(by.css('mat-expansion-panel-header>span.mat-content')).get(0).getText()).to.contain('Campaign Info');
 });

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListMerchantViewComponent } from './list-merchant-view.component';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { ListMerchantViewComponent } from 'src/app/shared/components/list-merchant-view/list-merchant-view.component';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -33,7 +34,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
     MatTableModule,
     MatSelectModule,
     MatMenuModule,
-
+    PipesModule
   ]
 })
 export class ListMerchantViewModule { }

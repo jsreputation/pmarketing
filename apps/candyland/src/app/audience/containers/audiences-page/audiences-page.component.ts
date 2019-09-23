@@ -14,9 +14,9 @@ import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsService } from '@cl-core-services';
 import { filter, switchMap } from 'rxjs/operators';
-import { AudiencesUsersListDataSource } from '@cl-shared/table/data-source/audiences-users-list-data-source';
+
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { AudiencesListDataSource } from '@cl-shared/table/data-source/audiences-list-data-source';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -29,8 +29,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public tabs: FormControl;
   public search: FormControl;
   public searchKey = 'primary_identifier';
-  public dataSource: AudiencesUsersListDataSource<IUser>;
-  public audiencesDataSource: AudiencesListDataSource<IAudiences>;
+  public dataSource: CustomDataSource<IUser>;
+  public audiencesDataSource: CustomDataSource<IAudiences>;
   public users;
   public audiences;
   public currentFilter;
@@ -45,8 +45,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
               private audiencesUserService: AudiencesUserService,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
-    this.dataSource = new AudiencesUsersListDataSource<IUser>(this.audiencesUserService);
-    this.audiencesDataSource = new AudiencesListDataSource<IAudiences>(this.audiencesService);
+    this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
+    this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
   }
@@ -96,12 +96,12 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     switch (tab) {
       case 'audience':
         this.searchKey = 'id';
-        this.audiencesDataSource = new AudiencesListDataSource<IAudiences>(this.audiencesService);
+        this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
         break;
       case 'users':
       default:
         this.searchKey = 'primary_identifier';
-        this.dataSource = new AudiencesUsersListDataSource<IUser>(this.audiencesUserService);
+        this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();
