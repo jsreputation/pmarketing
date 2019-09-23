@@ -1,4 +1,3 @@
-import { ApiConfig } from '@cl-core/api-config';
 import { JsonApiModelConfig, JsonApiModel, Attribute } from 'angular2-jsonapi';
 // tslint:disable
 @JsonApiModelConfig({

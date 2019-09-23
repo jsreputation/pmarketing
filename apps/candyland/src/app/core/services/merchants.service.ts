@@ -5,7 +5,7 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,38 +16,33 @@ export class MerchantsService implements ITableService {
               private datastore: DataStore) {
   }
 
-  public getTableData(params: any): Observable<ITableData<Merchant>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<Merchant>> {
     params.include = 'branches';
-    console.log(params);
     return this.datastore.findAll<Merchant>(Merchant, params)
       .pipe(
-        tap(data => console.log('merchant', data)),
         map(response => ({data: response.getModels(), meta: response.getMeta().meta})),
-        tap(data => console.log('formatMerchant', data))
       );
   }
 
-  public getMerchant(): Observable<IMerchant[]> {
-    return this.merchantHttpService.getMerchants()
-      .pipe(
-        map((res: IMerchant[]) => res)
-      );
+  public getMerchant(id: string): Observable<Merchant> {
+    return this.datastore.findRecord<Merchant>(Merchant, id, {include: 'branches'});
   }
 
-  public createMerchant(data: any): Observable<any> {
+  public createMerchant(data: Merchant): Observable<number> {
     // version: 1;
+    let id;
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
-    let  request = this.merchantHttpService.createMerchant({data: sendData});
-    if ('branches' in data && data.branches) {
+    let request = this.merchantHttpService.createMerchant({data: sendData});
+    if ('branches' in data && data.branches && data.branches.length > 0) {
       request = request.pipe(
         switchMap((merchant: any) => {
-          const id = merchant.data.id;
+          id = merchant.data.id;
           const branchRequests$ = data.branches.map(branch => this.createMerchantBranch(id, branch));
           return combineLatest(branchRequests$);
         })
       );
     }
-    return request;
+    return request.pipe(map(() => id));
   }
 
   public createMerchantBranch(merchantId: string, data: any): Observable<any> {

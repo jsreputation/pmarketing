@@ -11,6 +11,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { DataStore } from '@cl-core/http-adapters/datastore';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { HttpParams } from '@angular/common/http';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -115,8 +116,9 @@ export class SettingsService implements ITableService {
     };
   }
 
-  public getTableData(params: any): Observable<ITableData<IAMUser>> {
-    return this.settingsHttpService.getAllIMAUsers(params)
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAMUser>> {
+    params.included = 'groups';
+    return this.settingsHttpService.getAllIMAUsers(new HttpParams(params))
       .pipe(
         map((res: any) => SettingsHttpAdapter.transformToTableData(res))
       );

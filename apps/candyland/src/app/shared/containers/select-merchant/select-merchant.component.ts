@@ -27,6 +27,12 @@ export class SelectMerchantComponent {
   }
 
   public close(): void {
-    this.dialogRef.close(this.selectMerchant);
+    this.dialogRef.close();
+  }
+
+  public add(): void {
+    if (this.selectMerchant) {
+      this.dialogRef.close(this.selectMerchant);
+    }
   }
 }

@@ -21,6 +21,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public reward: any;
   public form: FormGroup;
   public config: OptionConfig[];
+  public selectedMerchant;
+  public selectedMerchantTab: 'select' | 'create' | null;
 
   constructor(public cd: ChangeDetectorRef,
               public dialog: MatDialog,
@@ -36,6 +38,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.initConfig();
     this.initForm();
     this.handleFormValueChanges();
+    this.handleMerchantControleChanges();
     if (!this.id) {
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
     }
@@ -74,27 +77,32 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-      untilDestroyed(this),
-      filter(Boolean),
-      switchMap(merchant => this.merchantsService.createMerchant(merchant)),
-      tap(answer => console.log('answer', answer)),
-    )
-      .subscribe((merchant) => {
-        this.form.get('merchantInfo').patchValue(merchant);
-    });
+        untilDestroyed(this),
+        filter(Boolean),
+        switchMap(merchant => this.merchantsService.createMerchant(merchant)),
+        filter(Boolean),
+      )
+      .subscribe((id) => {
+        this.form.get('merchantInfo').patchValue(id);
+        this.selectedMerchantTab = 'create';
+      });
   }
 
   public openDialogSelectMerchant(): void {
     const dialogRef = this.dialog.open(SelectMerchantComponent);
 
     dialogRef.afterClosed().subscribe((merchant) => {
-      console.log(merchant);
-      this.form.get('merchantInfo').patchValue(merchant);
+      if (merchant) {
+        this.form.get('merchantInfo').patchValue(merchant.id);
+        this.selectedMerchantTab = 'select';
+      }
     });
   }
 
   public deleteMerchant(): void {
     this.form.get('merchantInfo').patchValue(null);
+    this.selectedMerchant = null;
+    this.selectedMerchantTab = null;
   }
 
   private initConfig(): void {
@@ -119,6 +127,21 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
+      });
+  }
+
+  private handleMerchantControleChanges(): void {
+    this.form.get('merchantInfo').valueChanges
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        debounceTime(500),
+        filter(Boolean),
+        switchMap((id: string) => this.merchantsService.getMerchant(id))
+      )
+      .subscribe((merchant) => {
+        this.selectedMerchant = merchant;
+        this.updateForm();
       });
   }
 

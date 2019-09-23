@@ -5,9 +5,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { ApiConfig } from '@cl-core/api-config';
 
 const config: DatastoreConfig = {
-  // baseUrl: ApiConfig.merchantsPath,
+  baseUrl: ApiConfig.baseAPIPath,
   models: {
     groups: Groups,
     users: IamUser,

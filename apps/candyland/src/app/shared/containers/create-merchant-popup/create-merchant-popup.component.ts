@@ -49,7 +49,6 @@ export class CreateMerchantPopupComponent implements OnInit {
     const deletedBranchId = branches.at(i).value.id;
     if (deletedBranchId) {
       this.deletedBranches.push(deletedBranchId);
-      console.log('deletedBranches', this.deletedBranches);
     }
     branches.removeAt(i);
   }

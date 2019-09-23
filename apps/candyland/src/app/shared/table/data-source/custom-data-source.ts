@@ -104,7 +104,7 @@ export class CustomDataSource<T> {
   }
 
   private loadingData(pagination?: any) {
-    const params = {
+    const params: HttpParamsOptions = {
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,

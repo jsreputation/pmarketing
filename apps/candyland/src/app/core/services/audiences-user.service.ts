@@ -19,12 +19,13 @@ export class AudiencesUserService implements ITableService {
     );
   }
 
-  public getAllUsers(data: HttpParams): any {
-    return this.http.getAllUsers(data);
+  public getAllUsers(params: HttpParamsOptions): any {
+    return this.http.getAllUsers(new HttpParams(params));
   }
 
-  public getTableData(params: HttpParams): Observable<any> {
-    return this.http.getAllUsers(params)
+  public getTableData(params: HttpParamsOptions): Observable<any> {
+    params.included = 'pools';
+    return this.http.getAllUsers(new HttpParams(params))
       .pipe(
         map((res: any) => AudiencesHttpAdapter.transformUsersWithPools(res))
       );

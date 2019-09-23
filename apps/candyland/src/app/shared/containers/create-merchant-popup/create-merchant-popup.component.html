@@ -11,7 +11,6 @@
 </div>
 <mat-dialog-content>
   <div class="dialog-content">
-    <pre>{{formMerchant.value | json}}</pre>
     <cl-create-merchant-form [formMerchant]="formMerchant"
                              [settings]="formConfig"
                              (removeBranch)="removeBranches($event)">
