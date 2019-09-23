@@ -1,11 +1,52 @@
 .page {
-  height: 100%;
+  min-height: 100%;
   background-color: #fff;
   padding: 2.4rem 1.5rem;
   box-sizing: border-box;
 }
 
+p {
+  margin: 0;
+}
+
+.text {
+  margin-bottom: 2rem;
+}
+
 .additions {
   line-height: 2rem;
   font-size: 1.4rem;
+}
+
+.bold,
+.title,
+.subtitle {
+  font-weight: 700;
+}
+
+ul {
+  margin: 0;
+  list-style-type: none;
+  padding-inline-start: 3rem;
+
+  li::before {
+    content: "\2713";
+  }
+}
+
+ol {
+  margin: 0;
+  counter-reset: section;
+  list-style-type: none;
+
+  li::before {
+    counter-increment: section;
+    content: ""counter(section, decimal) ". ";
+  }
+}
+
+.footer {
+  margin-top: 4rem;
+  font-weight: 700;
+  text-align: center;
 }
