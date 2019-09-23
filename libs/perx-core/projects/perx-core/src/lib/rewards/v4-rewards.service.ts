@@ -213,7 +213,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const pageSize = 100;
+    const pageSize = 10;
     return this.getRewards(1, pageSize, tags, categories).pipe(
       mergeMap(reward => {
         const streams = [

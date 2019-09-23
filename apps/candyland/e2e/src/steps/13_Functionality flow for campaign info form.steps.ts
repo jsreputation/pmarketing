@@ -88,15 +88,15 @@ Given(/^15_that I am on the campaign info page.$/, async () => {
 
 When(/^15_I click on the campaign goal$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(1)), 6000);
-  await element.all(by.css('div.mat-select-trigger')).get(1).click();
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-value')).get(1)), 10000);
+  await element.all(by.css('div.mat-select-value')).get(1).click();
 });
 
 Then(/^15_I should see five options.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the options to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-trigger')).get(1)), 6000);
-  expect(await element.all(by.css('div.mat-select-trigger')).count()).to.equal(5);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-select-value')).get(1)), 6000);
+  expect(await element.all(by.css('span.mat-option-text')).count()).to.equal(5);
 });
 
 // Verifying that functionality of audience upload form
@@ -122,9 +122,9 @@ When(/^16_I upload a csv file$/, async () => {
   const FileToUpload = './testArtifacts/pru-event-reward-test.csv';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // waiting for the upload an audience list radio button to be loaded
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('mat-radio-button')).get(38)), 20000);
+  await browser.wait(ec.elementToBeClickable(element(by.xpath('//*[@id="mat-radio-5"]/label/div[1]/div[1]'))), 8000);
   // clicking on the upload an audience list radio button
-  await element.all(by.css('mat-radio-button')).get(38).click();
+  await element.all(by.xpath('//*[@id="mat-radio-5"]/label/div[1]/div[1]')).click();
   // wait for file upload file to upload
   await browser.wait(ec.elementToBeClickable(element(by.css('input[type=file]'))), 6000);
   await element(by.css('input[type="file"]')).sendKeys(absolutePath);
@@ -160,6 +160,7 @@ Given(/^17_that I am on the campaign review page.$/, async () => {
 When(/^17_I click on the launch button.$/, async () => {
   // clicking on the launch button
   await element.all(by.css('cl-button')).get(1).click();
+  await browser.sleep(3000);
 });
 
 Then(/^17_I should see url link for campaign.$/, async () => {

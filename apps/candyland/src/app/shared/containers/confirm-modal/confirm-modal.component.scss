@@ -2,14 +2,13 @@
 
 :host {
   display: block;
-  width: 56rem;
 }
 
 .btn {
   &-closed {
     position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
+    right: ($horizontal-padding / 2);
+    top: ($vertical-padding / 2);
     color: $secondary-color;
   }
 }
@@ -18,29 +17,31 @@
   position: relative;
 }
 
-.wrap-template-img {
-  padding: 3.8rem 0 1.6rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dialog-body {
+  padding: $vertical-padding $horizontal-padding;
 }
 
 .description {
+  &-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: ($vertical-padding / 2) auto;
+  }
+
   &-header {
-    width: 427px;
-    font-size: 2rem;
-    font-weight: 500;
+    @include typo-h6;
+
     color: $secondary-color;
+    text-align: center;
   }
 
-  &-body {
-    padding-top: 1.5rem;
-    width: 427px;
-    font-size: 1.6rem;
-    color: $secondary-color;
-  }
-}
+  &-copy {
+    @include typo-subtitle1;
 
-.dialog-actions {
-  margin-top: 5rem;
+    margin: ($vertical-padding / 2) auto 0;
+    color: $secondary-color;
+    text-align: center;
+    max-width: 26em; //used ems because this has to do with character length / readability
+  }
 }

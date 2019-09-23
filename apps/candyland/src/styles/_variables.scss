@@ -88,12 +88,19 @@ $base-font-size: 1.4rem;
   letter-spacing: 0.015rem;
 }
 
-//General
+//Subtitles
 @mixin typo-subtitle1 {
   font-weight: 500; //changed
   font-size: 1.6rem;
   line-height: 2.4rem;
   letter-spacing: 0.015rem;
+}
+
+@mixin typo-subtitle2 {
+  font-weight: 500; //changed
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.01rem;
 }
 
 //General
