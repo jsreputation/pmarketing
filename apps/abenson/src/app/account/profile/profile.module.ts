@@ -1,18 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  MatIconModule,
+  MatInputModule,
+  MatButtonModule,
+} from '@angular/material';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
+import { ChangeEmailComponent } from './change-email/change-email.component';
+import { ChangeCityComponent } from './change-city/change-city.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ChangeBarangayComponent,
-    ChangeStreetAddressComponent
+    ChangeStreetAddressComponent,
+    ChangeEmailComponent,
+    ChangeCityComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +32,7 @@ import { ChangeStreetAddressComponent } from './change-street-address/change-str
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class ProfileModule { }
