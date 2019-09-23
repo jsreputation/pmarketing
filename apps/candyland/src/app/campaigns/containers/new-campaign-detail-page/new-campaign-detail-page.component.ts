@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
-import { ClHttpParams } from '@cl-helpers/http-params';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -86,11 +85,11 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   private initPools(): any {
-    const params = {
-      'page[number]': 1,
-      'page[size]': 20
+    const params: HttpParamsOptions = {
+      'page[number]': '1',
+      'page[size]': '20'
     };
-    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
+    this.audiencesService.getAudiencesList(params)
       .subscribe((data: any) => {
         this.pools = data;
       });

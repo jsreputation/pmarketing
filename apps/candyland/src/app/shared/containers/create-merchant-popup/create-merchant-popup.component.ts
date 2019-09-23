@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
@@ -9,14 +9,18 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
   styleUrls: ['./create-merchant-popup.component.scss']
 })
 export class CreateMerchantPopupComponent implements OnInit {
+  public merchant: any;
+  public deletedBranches = [];
   public formMerchant: FormGroup;
   public formConfig: IMerchantFormConfig = {
     shoveName: true
   };
+
   constructor(public dialog: MatDialog,
               private dialogRef: MatDialogRef<CreateMerchantPopupComponent>,
               private merchantFormService: MerchantFormService,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant) { }
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant) {
+  }
 
   public ngOnInit(): void {
     this.createFormMerchant();
@@ -28,7 +32,25 @@ export class CreateMerchantPopupComponent implements OnInit {
   }
 
   public addMerchant(): void {
-    this.dialogRef.close(this.formMerchant.value);
+    if (this.formMerchant.valid) {
+      this.dialogRef.close({...this.formMerchant.value, deletedBranches: this.deletedBranches});
+    } else {
+      this.formMerchant.markAllAsTouched();
+    }
+  }
+
+  public removeBranches(i?: number): void {
+    const branches = this.formMerchant.get('branches') as FormArray;
+    if (!i) {
+      branches.clear();
+      this.formMerchant.updateValueAndValidity();
+      return;
+    }
+    const deletedBranchId = branches.at(i).value.id;
+    if (deletedBranchId) {
+      this.deletedBranches.push(deletedBranchId);
+    }
+    branches.removeAt(i);
   }
 
   private createFormMerchant(): void {
@@ -37,11 +59,7 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   private doPatchFrom(data: IMerchant): void {
     if (data) {
-      this.merchantFormService.patchMerchantForm(this.formMerchant, {
-        name: data.firstName,
-        image: data.logo,
-        contactNumber: data.phone
-      });
+      this.merchantFormService.patchMerchantForm(this.formMerchant, data);
     }
   }
 }
