@@ -13,6 +13,7 @@ import {
   LocationModule,
   ConfigModule,
   CampaignModule,
+  MerchantsModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -91,7 +92,8 @@ import { ErrorComponent } from './error/error.component';
     GameModule,
     LocationModule,
     ScrollingModule,
-    CampaignModule
+    CampaignModule,
+    MerchantsModule
   ],
   entryComponents: [
     CategorySelectComponent,

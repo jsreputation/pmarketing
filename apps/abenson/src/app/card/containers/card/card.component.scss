@@ -1,0 +1,72 @@
+@import "../../../../custom-theme";
+
+perx-core-loyalty-summary ::ng-deep {
+  .container {
+    background-color: #FFFFFF;
+    line-height: 1.6rem;
+    height: 12rem;
+    box-sizing: border-box;
+
+    .welcome-text {
+      margin-bottom: 1.6rem;
+      font-weight: 500;
+      letter-spacing: 0.075rem;
+    }
+
+    .points {
+      font-size: 3.4rem;
+      line-height: 4rem;
+      letter-spacing: 0.025rem;
+      font-weight: 500;
+    }
+  }
+}
+
+perx-core-loyalty-transactions-list ::ng-deep {
+  .transaction {
+    background-color: #FFFFFF;
+  }
+}
+
+.mat-tab-group {
+  ::ng-deep {
+    .mat-tab-header {
+      background-color: #FFFFFF;
+    }
+
+    .mat-ink-bar {
+      background-color: mat-color($primary) !important;
+    }
+  }
+}
+
+.bc-block {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .barcode {
+    width: 26rem;
+    margin-top: 3.8rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .bc-text {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    letter-spacing: 0.04rem;
+    text-align: center;
+    width: 21rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .bc-question {
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    letter-spacing: 0.075rem;
+    color: mat-color($primary);
+    margin-top: 0.6rem;
+  }
+}

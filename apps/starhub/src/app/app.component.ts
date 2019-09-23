@@ -27,7 +27,6 @@ export interface IdataLayerSH {
   siteSectionLevel1: string;
   siteSectionLevel2: string;
   siteSectionLevel3: string;
-  hubID: string;
   perxID: string;
   loginStatus: boolean;
 }
@@ -69,7 +68,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     this.data.siteSectionLevel1 = 'rewards';
     this.data.siteSectionLevel2 = '';
     this.data.siteSectionLevel3 = '';
-    this.data.hubID = '';
     this.data.perxID = '';
     this.data.loginStatus = true;
   }
@@ -101,6 +99,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         } else {
           this.data.pageName = event.pageName;
         }
+        this.data.pageName = this.data.pageName.toLowerCase();
+        this.data.pageName = this.data.pageName.replace(/\s/g , '-');
+
         this.data.pageType = event.pageType;
         if (event.siteSectionLevel2) {
           this.data.siteSectionLevel2 = event.siteSectionLevel2;
@@ -110,7 +111,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         }
 
         this.token = this.authenticationService.getUserAccessToken();
-        this.data.hubID = this.token;
         this.data.perxID = this.token;
         _satellite.track('msa-rewards-virtual-page');
         // console.log(this.data, dataLayerSH);

@@ -3,6 +3,7 @@
 .container-sidenav {
   position: relative;
   min-height: 100vh;
+  overflow: initial; // required to make header sticky
 }
 
 .sidenav {
@@ -45,12 +46,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: $header-height-base;
 }
 
 .sidenav-content {
   position: relative;
   min-height: 100vh;
-  padding-top: $header-height-base;
 }
 
 .btn-text {
@@ -82,4 +83,8 @@
     width: auto;
     opacity: 1;
   }
+}
+
+.mat-drawer-content {
+  overflow: initial; // required to make header sticky
 }

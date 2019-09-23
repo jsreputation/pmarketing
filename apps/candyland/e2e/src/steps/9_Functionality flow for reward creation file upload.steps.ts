@@ -114,8 +114,11 @@ Given(/^18_I select user upload option for unique codes$/, async () => {
 });
 
 When(/^18_I upload a non csv file$/, async () => {
+  const ec = protractor.ExpectedConditions;
   const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
+  // wait for file upload to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type="file"]')).get(1)), 6000);
   // upload the file to the user upload voucher upload section
   await element.all(by.css('input[type="file"]')).get(1).sendKeys(absolutePath);
   await browser.sleep(3000);
