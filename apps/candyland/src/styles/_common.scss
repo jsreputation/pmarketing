@@ -67,10 +67,6 @@ h1, h2, h3, h4, h5, p {
   flex-basis: 180px;
 }
 
-.mat-toolbar-log.mat-toolbar-single-row {
-  height: $header-height-base;
-}
-
 .page-header {
   @include mat-elevation(4);
 
@@ -81,11 +77,11 @@ h1, h2, h3, h4, h5, p {
   align-items: center;
   box-sizing: border-box;
   padding: 0 $horizontal-padding;
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 99;
   background: $white;
-  width: calc(100% - #{$sidenav-width-initial});
+  width: 100%;
 
   &.full-with {
     background: $white;

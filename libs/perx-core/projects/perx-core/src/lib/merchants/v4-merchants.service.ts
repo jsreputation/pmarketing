@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { mergeMap, mergeAll, map } from 'rxjs/operators';
+import { mergeMap, mergeAll, map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant, IMeta } from './models/merchants.model';
 import { Config } from '../config/config';
@@ -20,6 +20,7 @@ interface IV4GetMerchantResponse {
 })
 export class V4MerchantsService implements IMerchantsService {
   private historyMeta: IMeta = {};
+  private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
 
   constructor(
     private http: HttpClient,
@@ -46,7 +47,7 @@ export class V4MerchantsService implements IMerchantsService {
     );
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 25): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
     return this.http.get<IV4GetMerchantsResponse>(
       `${this.config.apiHost}/v4/merchants`,
       {
@@ -69,12 +70,28 @@ export class V4MerchantsService implements IMerchantsService {
     );
   }
 
-  public getMerchant(merchantId: number): Observable<IMerchant> {
+  public getMerchant(merchantId: number, useCache?: boolean, page?: number): Observable<IMerchant> {
+    if (useCache === undefined) {
+      useCache = true;
+    }
+    if (page === undefined) {
+      page = 1;
+    }
+
+    if (useCache && this.merchants[merchantId] && this.merchants[merchantId][page]) {
+      return of(this.merchants[merchantId][page]);
+    }
+
     return this.http.get<IV4GetMerchantResponse>(
-      `${this.config.apiHost}/v4/merchants/${merchantId}`
+      `${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`
     ).pipe(
-      map(res => res.data)
+      map(res => res.data),
+      tap((merchant: IMerchant) => {
+        if (!this.merchants[merchantId]) {
+          this.merchants[merchantId] = {};
+        }
+        this.merchants[merchant.id][page] = merchant;
+      })
     );
   }
-
 }

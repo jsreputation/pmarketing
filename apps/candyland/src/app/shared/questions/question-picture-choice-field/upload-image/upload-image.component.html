@@ -1,24 +1,35 @@
-<div class="upload-wrap"
-     [class.field-lock]="lock"
+<div [class.field-lock]="lock"
+     class="upload-wrap"
 >
-  <input #fileInput type="file"
+  <input #fileInput (change)="preview(fileInput)"
          *ngIf="!imgURL"
-         class="upload-input"
          accept='image/*'
-         (change)="preview(fileInput)"
+         class="upload-input"
+         type="file"
   />
-  <div class="image-wrap"
-       (click)="setActive()"
-       [ngClass]="{active: imgURL === selectedGraphic}"
+  <div (click)="setActive()"
        *ngIf="imgURL"
+       [ngClass]="{active: imgURL === selectedGraphic}"
+       class="image-wrap"
   >
-    <img [src]="imgURL" class="image" alt="upload">
-    <button class="image-clear" (click)="clear()">
+    <img [src]="imgURL" alt="upload" class="image">
+    <button (click)="clear()" class="image-clear">
       <mat-icon>highlight_off</mat-icon>
     </button>
   </div>
 
-  <div class="upload-wrap-btn" *ngIf="!imgURL">
-    <button class="upload-btn" (click)="fileInput.click()">+</button>
+  <div *ngIf="!imgURL" class="upload-wrap-btn">
+    <button (click)="fileInput.click()" class="upload-btn">+</button>
+  </div>
+
+  <div *ngIf="message" class="upload-error-wrap">
+    <span class="upload-error">
+      {{message}}
+    </span>
+  </div>
+  <div *ngIf="!message" class="upload-type-wrap">
+    <span class="upload-type">
+      Recommended format: .JPG or .PNG
+    </span>
   </div>
 </div>

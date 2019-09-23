@@ -13,12 +13,14 @@ import {
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
+import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ChangeBarangayComponent,
+    ChangeStreetAddressComponent,
     ChangeEmailComponent,
   ],
   imports: [
