@@ -17,9 +17,12 @@ cdk-virtual-scroll-viewport {
   }
 
   &-name {
+    font-style: normal;
     font-size: 1.4rem;
     line-height: 1.7rem;
     font-weight: 900;
+    font-family: Lato;
+    color: #1B1B25;
   }
 
   &-description {
@@ -28,17 +31,25 @@ cdk-virtual-scroll-viewport {
   }
 
   &-point {
+    font-style: normal;
+    font-weight: normal;
     font-size: 1.2rem;
     line-height: 1.4rem;
     letter-spacing: 0.2px;
-    color: #ddac28;
     margin-top: 1.6rem;
+    font-family: Lato;
+    color: #666666;
   }
 
   &-date {
     flex: 1 1 0;
+    font-style: normal;
+    font-weight: normal;
     font-size: 1.2rem;
-    line-height: 2.1rem;
+    line-height: 1.4rem;
     text-align: right;
+    letter-spacing: 0.2px;
+    font-family: Lato;
+    color: #1B1B25;
   }
 }
