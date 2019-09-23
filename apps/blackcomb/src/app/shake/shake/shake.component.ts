@@ -38,23 +38,18 @@ export class ShakeComponent implements OnInit {
         }),
         map((games: IGame[]) => games.filter(game => game.type === GameType.shakeTheTree)[0])
       );
-    this.actionOnGameStatus();
-  }
-
-  public actionOnGameStatus(): void {
-    this.game$.subscribe(game => {
-      if (game.remainingNumberOfTries <= 0) {
-        this.router.navigate(['/wallet']);
-      }
-    },
-      () => {
-        this.router.navigate(['/wallet']);
-      }
-    );
+    this.game$
+      .pipe(
+        filter(game => game.remainingNumberOfTries <= 0)
+      ).subscribe(
+        () => this.router.navigate(['/wallet']),
+        () => this.router.navigate(['/wallet'])
+      );
   }
 
   public gameCompleted(): void {
     setTimeout(() => {
+      // this.gameService.postPlay();
       this.router.navigate(['/wallet']);
       this.notificationService.addPopup({
         title: 'Congratulations!',

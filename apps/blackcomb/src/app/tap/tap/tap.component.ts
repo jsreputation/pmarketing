@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import {
-  NotificationService,
+  // NotificationService,
   IGame,
   GameType,
   IGameService
@@ -23,7 +23,7 @@ export class TapComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private notificationService: NotificationService,
+    // private notificationService: NotificationService,
     private gameService: IGameService,
     private route: ActivatedRoute
   ) { }
@@ -32,37 +32,39 @@ export class TapComponent implements OnInit {
     this.game$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
+        map((params: ParamMap) => {
           const id: string = params.get('id');
-          const idN = Number.parseInt(id, 10);
-          return this.gameService.getGamesFromCampaign(idN);
+          return Number.parseInt(id, 10);
         }),
-        map((games: IGame[]) => games.filter(game => game.type === GameType.pinata)[0])
+        switchMap(idN => this.gameService.getGamesFromCampaign(idN)),
+        map((games: IGame[]) => games.filter(game => game.type === GameType.pinata)),
+        map((games: IGame[]) => games[0])
       );
-    this.actionOnGameStatus();
+    this.game$
+      .pipe(
+        filter(game => game.remainingNumberOfTries <= 0)
+      )
+      .subscribe(
+        () => this.router.navigate(['/wallet']),
+        () => this.router.navigate(['/wallet'])
+      );
   }
 
-  public actionOnGameStatus(): void {
-    this.game$.subscribe(game => {
-      if (game.remainingNumberOfTries <= 0) {
-        this.router.navigate(['/wallet']);
-      }
-    },
-      () => {
-        this.router.navigate(['/wallet']);
-      }
-    );
-  }
+  // public gameCompleted(): void {
+  //   setTimeout(() => {
+  //     this.gameService.postPlay()
+  //       .subscribe(
+  //         () => {
+  //           this.router.navigate(['/wallet']);
+  //           this.notificationService.addPopup({
+  //             title: 'Congratulations!',
+  //             text: this.congratsDetailText,
+  //             buttonTxt: 'View Rewards',
+  //             imageUrl: 'assets/congrats_image.png',
+  //           })
+  //         }
+  //       );
 
-  public gameCompleted(): void {
-    setTimeout(() => {
-      this.router.navigate(['/wallet']);
-      this.notificationService.addPopup({
-        title: 'Congratulations!',
-        text: this.congratsDetailText,
-        buttonTxt: 'View Rewards',
-        imageUrl: 'assets/congrats_image.png',
-      });
-    }, 2000);
-  }
+  //   }, 2000);
+  // }
 }

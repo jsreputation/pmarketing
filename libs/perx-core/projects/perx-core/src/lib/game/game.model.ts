@@ -14,7 +14,7 @@ export interface IGameOutcome {
 }
 export interface IGame {
     id: number;
-    campaignId: number;
+    campaignId?: number;
     type: GameType;
     remainingNumberOfTries: number;
     config: ITree | IPinata;
