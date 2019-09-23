@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 describe('TapComponent', () => {
   let component: TapComponent;
   let fixture: ComponentFixture<TapComponent>;
-  let mockGame: IGame = {
+  const mockGame: IGame = {
     id: 1,
     type: 0,
     remainingNumberOfTries: 3,
