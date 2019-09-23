@@ -47,7 +47,7 @@ export class V4MerchantsService implements IMerchantsService {
     );
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 25): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
     return this.http.get<IV4GetMerchantsResponse>(
       `${this.config.apiHost}/v4/merchants`,
       {
