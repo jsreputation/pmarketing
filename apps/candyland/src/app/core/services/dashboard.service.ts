@@ -31,13 +31,13 @@ export class DashboardService {
     return this.dashboardHttpService.getDashboardCampaignsTabs();
   }
 
-  public getTabValue(id: number, params: { [key: string]: string } ): Observable<any> {
+  public getTabValue(id: number, params: HttpParamsOptions ): Observable<any> {
     return this.dataService.getData(id, params).pipe(
       map(response => response.rows[0][0] || null)
     );
   }
 
-  public getTabsValue(idArray: number[], params: { [key: string]: string } ): Observable<any> {
+  public getTabsValue(idArray: number[], params: HttpParamsOptions ): Observable<any> {
     return combineLatest(idArray.map(id => this.getTabValue(id, params)));
   }
 }
