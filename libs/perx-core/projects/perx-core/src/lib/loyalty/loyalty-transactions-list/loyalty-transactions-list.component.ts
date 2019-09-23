@@ -25,6 +25,9 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   @Input()
   public titleFn: (tr: ITransaction) => string;
 
+  @Output()
+  public scrolled: EventEmitter<void> = new EventEmitter<void>();
+
   @Input()
   public subTitleFn: (tr: ITransaction) => string;
 
@@ -46,5 +49,10 @@ export class LoyaltyTransactionsListComponent implements OnInit {
     if (!this.priceLabelFn) {
       this.priceLabelFn = (tr: ITransaction) => `${this.transactionPipe.transform(tr.points)}`;
     }
+  }
+
+  onScroll() {
+    console.log('scrolled!!');
+    this.scrolled.emit();
   }
 }

@@ -23,8 +23,8 @@
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "e2e-ci": "lerna run e2e -- --protractor-config=e2e/protractor-ci.conf.js",
-    "pree2e-ci":"lerna run pree2e",
-    "e2e-ci-pro":"lerna run e2e-pro -- e2e/protractor-ci.conf.js --protractor-config=e2e/protractor-ci.conf.js"
+    "pree2e-ci": "lerna run pree2e",
+    "e2e-ci-pro": "lerna run e2e-pro -- e2e/protractor-ci.conf.js --protractor-config=e2e/protractor-ci.conf.js"
   },
   "private": true,
   "workspaces": [
@@ -34,6 +34,8 @@
   ],
   "devDependencies": {
     "lerna": "^3.14.1"
-
-  } 
+  },
+  "dependencies": {
+    "ngx-infinite-scroll": "^8.0.0"
+  }
 }
