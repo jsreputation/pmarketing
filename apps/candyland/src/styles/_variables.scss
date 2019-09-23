@@ -44,6 +44,12 @@ $header-height-base: 6.4rem;
 
 $sidenav-width-initial: 17rem;
 
+$mobile-preview-width: 34.4rem;
+
+/* ---- VISUAL STYLES -- */
+$border-radius: 0.4rem;
+$border-radius-lg: 0.8rem;
+
 /* ----- SCREEN DIMENSIONS ----- */
 $mobile-width: 576px;
 $tablet-width: 768px;
@@ -80,6 +86,21 @@ $base-font-size: 1.4rem;
   font-size: 2rem;
   line-height: 2.4rem;
   letter-spacing: 0.015rem;
+}
+
+//Subtitles
+@mixin typo-subtitle1 {
+  font-weight: 500; //changed
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+}
+
+@mixin typo-subtitle2 {
+  font-weight: 500; //changed
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.01rem;
 }
 
 //General

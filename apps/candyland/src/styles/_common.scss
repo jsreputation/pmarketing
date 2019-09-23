@@ -11,7 +11,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-p {
+h1, h2, h3, h4, h5, p {
   margin: 0;
 }
 
@@ -67,11 +67,9 @@ p {
   flex-basis: 180px;
 }
 
-.mat-toolbar-log.mat-toolbar-single-row {
-  height: $header-height-base;
-}
-
 .page-header {
+  @include mat-elevation(4);
+
   display: flex;
   min-height: $header-height-base;
   flex-flow: row nowrap;
@@ -79,13 +77,11 @@ p {
   align-items: center;
   box-sizing: border-box;
   padding: 0 $horizontal-padding;
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 99;
   background: $white;
-  width: calc(100% - $sidenav-width-initial);
-
-  @include mat-elevation(4);
+  width: 100%;
 
   &.full-with {
     background: $white;
@@ -197,11 +193,11 @@ p {
 .mobile {
   &-preview {
     flex-shrink: 0;
-    width: 34.4rem;
+    width: $mobile-preview-width;
     height: 63.8rem;
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 0.8rem;
+    border-radius: $border-radius-lg;
     position: relative;
 
     &-headline, &-sub-headline {
@@ -241,7 +237,7 @@ p {
 
   &-preview-btn {
     border: none;
-    border-radius: 4px;
+    border-radius: $border-radius;
     background: #ff1c1c;
     color: $white;
     font-size: $base-font-size;
@@ -287,12 +283,12 @@ p {
     min-height: 31.7rem;
     background: $white;
     background-size: cover;
-    border-radius: 8px;
+    border-radius: $border-radius-lg;
     z-index: 3;
   }
 
   &-preview-mobile {
-    width: 34.4rem;
+    width: $mobile-preview-width;
     height: 63.8rem;
     background: url("assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
   }
@@ -337,13 +333,25 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   }
 }
 
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding-top: 0.75em;
-}
-
 .control-input {
   font-size: $base-font-size !important;
   width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $primary-hover;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $primary-color;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.5em;
+}
+
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: none !important;
 }
 
 .btn-group {
@@ -387,7 +395,7 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
-  border-radius: 5px;
+  border-radius: $border-radius;
 
   &::before {
     content: '!';
@@ -411,6 +419,11 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
 
 .name-filter {
   position: relative;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: $primary-color;
 }
 
 .tabs-filter:first-child .tabs {
@@ -441,5 +454,12 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
     @include typo-body2;
 
     color: $base-font-color;
+  }
+}
+
+// Dashboard Page Commons
+.dashboard {
+  &-group-graphics {
+    padding: $vertical-padding $horizontal-padding;
   }
 }

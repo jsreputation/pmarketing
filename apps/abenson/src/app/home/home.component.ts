@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher } from '@perx/core';
+import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,6 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
-
   public filter: string[];
 
   constructor(
@@ -21,13 +21,14 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.campaigns$ = this.campaignService.getCampaigns();
+    this.campaigns$ = this.campaignService.getCampaigns()
+      .pipe(map((compaing) => compaing.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
 
   public onCampaignSelect(campaign: ICampaign): void {
-    this.router.navigate([`/game-play/${campaign.id}`]);
+    this.router.navigate([`/game/${campaign.id}`]);
   }
 
   public voucherSelected(voucher: Voucher): void {

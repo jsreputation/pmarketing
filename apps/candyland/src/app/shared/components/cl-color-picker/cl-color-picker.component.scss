@@ -3,7 +3,7 @@
 .picker {
   &-wrap {
     border: 1px solid $border-color;
-    border-radius: 5px;
+    border-radius: $border-radius;
     position: relative;
     padding: $base-font-size;
     display: flex;
@@ -17,7 +17,7 @@
     bottom: -1px;
     left: -1px;
     border: 2px solid #000000;
-    border-radius: 5px;
+    border-radius: $border-radius;
     visibility: hidden;
     transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
     z-index: 1;
@@ -36,7 +36,7 @@
   &-btn {
     width: 3rem;
     height: 2.3rem;
-    border-radius: 0.3rem;
+    border-radius: $border-radius;
     border: none;
     cursor: pointer;
   }

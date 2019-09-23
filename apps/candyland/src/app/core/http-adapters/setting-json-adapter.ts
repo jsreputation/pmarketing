@@ -1,8 +1,8 @@
 import { ApiConfig } from '@cl-core/api-config';
-import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany, BelongsTo*/ } from 'angular2-jsonapi';
+import { JsonApiModelConfig, JsonApiModel, Attribute } from 'angular2-jsonapi';
 // tslint:disable
 @JsonApiModelConfig({
-  type: ApiConfig.tenantsPath
+  type: 'tenants'
 })
 export class Tenants extends JsonApiModel {
 
@@ -12,7 +12,7 @@ export class Tenants extends JsonApiModel {
   @Attribute({ serializedName: 'created_at' })
   createdAt: Date;
 
-  @Attribute({ serializedName: 'created_at' })
+  @Attribute({ serializedName: 'updated_at' })
   updatedAt: Date;
   @Attribute({ serializedName: 'account_id' })
   accountId: string;
@@ -24,7 +24,14 @@ export class Tenants extends JsonApiModel {
     "time_zone": string,
     "theme.color": string,
     "currency": any,
-    "theme.style": string
+    "theme.style": string,
+    "theme.accent": string,
+    "theme.button_color": string
+    "theme.font": string,
+    "theme.header_color": string,
+    "theme.logo": string,
+    "theme.primary": string,
+    "theme.title": string,
   };
 }
 

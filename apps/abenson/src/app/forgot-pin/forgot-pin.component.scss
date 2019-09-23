@@ -1,0 +1,51 @@
+.container {
+  padding: 0 1.5rem;
+
+  ::ng-deep {
+    .mat-form-field-outline {
+      top: 0.35em;
+      background: #E8E8E8;
+    }
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      border: none;
+    }
+
+    .mat-form-field-invalid.mat-form-field-label {
+      color: #f44336;
+    }
+
+    .mat-form-field-label {
+      font-style: normal;
+      font-weight: 500;
+      color: #535253;
+    }
+
+    .mat-flat-button {
+      border-radius: 2px;
+      background: #186DE1;
+    }
+  }
+
+  .mat-form-field {
+    margin-bottom: 2rem;
+  }
+
+  .forgot-pin-form {
+    font-size: 1.6rem;
+  }
+
+  .title {
+    margin: 2rem 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}

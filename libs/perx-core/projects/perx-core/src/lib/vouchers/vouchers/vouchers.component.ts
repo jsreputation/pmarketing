@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { IVoucherService } from '../ivoucher.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-vouchers',
@@ -40,6 +40,8 @@ export class VouchersComponent implements OnInit {
 
   public repeatGhostCount: number = 10;
 
+  public ghostTimeOut: boolean;
+
   constructor(private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
@@ -50,6 +52,13 @@ export class VouchersComponent implements OnInit {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll();
     }
+    of(true).pipe(delay(2000)).subscribe(
+      () => this.ghostTimeOut = true
+    );
+  }
+
+  public isVoucherQueryComplete(vouchers: IVoucher[]): boolean {
+    return Array.isArray(vouchers) || this.ghostTimeOut;
   }
 
   public notClickable(voucher: IVoucher): boolean {

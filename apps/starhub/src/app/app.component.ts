@@ -27,22 +27,13 @@ export interface IdataLayerSH {
   siteSectionLevel1: string;
   siteSectionLevel2: string;
   siteSectionLevel3: string;
-  hubID: string;
   perxID: string;
   loginStatus: boolean;
 }
 
-const dataLayerSH: IdataLayerSH = {
-  pageName: '',
-  channel: 'msa',
-  pageType: '',
-  siteSectionLevel1: 'rewards',
-  siteSectionLevel2: '',
-  siteSectionLevel3: '',
-  hubID: '',
-  perxID: '',
-  loginStatus: true
-};
+// tslint:disable-next-line
+//@ts-ignore
+declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 
 declare const _satellite: {
   track: (ev: string) => void;
@@ -70,7 +61,24 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService
-  ) { }
+  ) {
+    this.data.pageName = '';
+    this.data.channel = 'msa';
+    this.data.pageType = '';
+    this.data.siteSectionLevel1 = 'rewards';
+    this.data.siteSectionLevel2 = '';
+    this.data.siteSectionLevel3 = '';
+    this.data.perxID = '';
+    this.data.loginStatus = true;
+  }
+
+  private get data(): Partial<IdataLayerSH> {
+    // tslint:disable-next-line: no-use-before-declare
+    if (dataLayerSH === undefined) {
+      return {};
+    }
+    return dataLayerSH;
+  }
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
@@ -87,22 +95,25 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     this.analytics.events$.subscribe(
       (event: IEvent) => {
         if (event.pageType === PageType.overlay) {
-          dataLayerSH.pageName = `${dataLayerSH.pageName}:${event.pageName}`;
+          this.data.pageName = `${this.data.pageName}:${event.pageName}`;
         } else {
-          dataLayerSH.pageName = event.pageName;
+          this.data.pageName = event.pageName;
         }
-        dataLayerSH.pageType = event.pageType;
+        this.data.pageName = this.data.pageName.toLowerCase();
+        this.data.pageName = this.data.pageName.replace(/\s/g , '-');
+
+        this.data.pageType = event.pageType;
         if (event.siteSectionLevel2) {
-          dataLayerSH.siteSectionLevel2 = event.siteSectionLevel2;
+          this.data.siteSectionLevel2 = event.siteSectionLevel2;
         }
         if (event.siteSectionLevel3) {
-          dataLayerSH.siteSectionLevel3 = event.siteSectionLevel3;
+          this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
         this.token = this.authenticationService.getUserAccessToken();
-        dataLayerSH.hubID = this.token;
-        dataLayerSH.perxID = this.token;
+        this.data.perxID = this.token;
         _satellite.track('msa-rewards-virtual-page');
+        // console.log(this.data, dataLayerSH);
       }
     );
   }

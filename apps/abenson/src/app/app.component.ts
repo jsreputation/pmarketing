@@ -6,7 +6,9 @@ import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { PromosComponent } from './promos/promos.component';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './card/containers/card/card.component';
+import { SignUpComponent } from './signup/signup.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 @Component({
   selector: 'app-root',
@@ -28,11 +30,12 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof LoginComponent);
+    this.showHeader = !(ref instanceof LoginComponent || ref instanceof SignUpComponent );
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof PromosComponent ||
       ref instanceof AccountComponent ||
+      ref instanceof WalletComponent ||
       ref instanceof CardComponent;
   }
 }

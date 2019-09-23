@@ -15,3 +15,24 @@
 .container {
   padding: 0 1.6rem;
 }
+
+.flex {
+  display: flex;
+
+  mat-form-field {
+    flex-basis: 0;
+  }
+
+  .grow1 {
+    flex-grow: 1;
+    min-width: 10rem;
+  }
+
+  .grow4 {
+    flex-grow: 4;
+  }
+
+  input {
+    padding-left: 1rem;
+  }
+}

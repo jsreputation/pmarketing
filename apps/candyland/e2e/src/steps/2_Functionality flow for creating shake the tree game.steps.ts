@@ -90,8 +90,8 @@ When(/^9_I do nothing$/, () => {});
 
 Then(/^9_the preview section element is present.$/, async () => {
   // checking whether mobile preview exist
-  expect(await element(by.className('mobile-preview-mobile')).isPresent()).to.equal(true);
-
+  expect(await browser.getCurrentUrl()).to.contain('new-shake');
+  expect(await element(by.className('mobile-preview mobile-content-multiple')).isPresent()).to.equal(true);
 });
 
 // Verifiying that headline message field takes null value
@@ -101,13 +101,16 @@ Given(/^10_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^10_I entered a empty text string in the headline text box.$/, async () => {
-  await element(by.css('input#mat-input-1')).clear();
-  await element(by.css('input#mat-input-1')).sendKeys(' ');
+  await element.all(by.css('input[type=text]')).get(1).clear();
+  await element.all(by.css('input[type=text]')).get(1).sendKeys(protractor.Key.SPACE);
 
 });
 
 Then(/^10_the empty string entered is reflected in the preview element.$/, async () => {
-  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('');
+  const ec = protractor.ExpectedConditions;
+  // waiting for preview headline to load
+  await browser.wait(ec.presenceOf(element(by.className('mobile-preview-headline'))), 6000);
+  expect(await element(by.css('p.mobile-preview-headline')).getText()).to.be.equal('');
 });
 
 // Verifiying that headline message is reflected in the preview element
@@ -220,6 +223,7 @@ Then(/^16_the random string entered is not reflected in the preview element.$/, 
 Given('17_that I am on the shake the tree creation page.', async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
   await browser.sleep(3000);
+  await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
 
 });
 
