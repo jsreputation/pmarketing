@@ -3,10 +3,10 @@ import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import {
   // NotificationService,
   IGame,
-  GameType,
+  // GameType,
   IGameService
 } from '@perx/core';
-import { filter, switchMap, map } from 'rxjs/operators';
+import { filter, switchMap, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,7 +22,7 @@ export class TapComponent implements OnInit {
   public congratsDetailText: string = 'You just won 2 rewards';
 
   constructor(
-    private router: Router,
+    // private router: Router,
     // private notificationService: NotificationService,
     private gameService: IGameService,
     private route: ActivatedRoute
@@ -36,18 +36,19 @@ export class TapComponent implements OnInit {
           const id: string = params.get('id');
           return Number.parseInt(id, 10);
         }),
-        switchMap(idN => this.gameService.getGamesFromCampaign(idN)),
-        map((games: IGame[]) => games.filter(game => game.type === GameType.pinata)),
-        map((games: IGame[]) => games[0])
+        switchMap(idN => this.gameService.get(idN)), // changed from getgamesfromcampaign
+        // map((games: IGame[]) => games.filter(game => game.type === GameType.pinata)),
+        // map((games: IGame[]) => games[0])
       );
     this.game$
       .pipe(
+        tap(game => console.log(game)), // testing out
         filter(game => game.remainingNumberOfTries <= 0)
-      )
-      .subscribe(
-        () => this.router.navigate(['/wallet']),
-        () => this.router.navigate(['/wallet'])
       );
+      // .subscribe(
+      //   () => this.router.navigate(['/wallet']),
+      //   () => this.router.navigate(['/wallet'])
+      // );
   }
 
   // public gameCompleted(): void {

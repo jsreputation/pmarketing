@@ -22,7 +22,7 @@ const enum GameType {
 }
 
 interface AttbsObjGame {
-  // number_of_tries: number;
+  number_of_tries?: number;
   urn: string;
   created_at: string;
   updated_at: string;

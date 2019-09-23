@@ -45,6 +45,7 @@ export class LoadingComponent implements OnInit {
         .subscribe(
           SingleGameGameArray => {
             const gameType = SingleGameGameArray[0].type === 1 ? 'shake' : 'tap';
+            console.log(`${gameType}/${SingleGameGameArray[0].id}`);
             this.router.navigateByUrl(
               this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${gameType}/${SingleGameGameArray[0].id}`
             );
