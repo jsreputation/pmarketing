@@ -19,8 +19,8 @@ export class MerchantBranchComponent {
     return this.group.get('address');
   }
 
-  public get contactNumber(): AbstractControl {
-    return this.group.get('contactNumber');
+  public get phone(): AbstractControl {
+    return this.group.get('phone');
   }
 
   public remove(): void {

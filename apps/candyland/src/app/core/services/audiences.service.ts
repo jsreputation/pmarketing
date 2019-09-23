@@ -13,12 +13,13 @@ export class AudiencesService implements ITableService {
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getAudiences(data: HttpParams): Observable<any> {
-    return this.http.getAudiences(data);
+  public getAudiences(params: HttpParamsOptions): Observable<any> {
+    return this.http.getAudiences(new HttpParams(params));
   }
 
-  public getAudiencesList(data: HttpParams): Observable<any> {
-    return this.http.getAudiencesList(data)
+  public getAudiencesList(params: HttpParamsOptions): Observable<any> {
+    params.included = 'users';
+    return this.http.getAudiencesList(new HttpParams(params))
       .pipe(
         map((res: any) => {
         const poolsList = res.data;
@@ -32,8 +33,8 @@ export class AudiencesService implements ITableService {
     return this.http.getVouchers();
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<IAudiences>> {
-    return this.http.getAudiences(params)
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiences>> {
+    return this.http.getAudiences(new HttpParams(params))
       .pipe(
         map((res: any) => AudiencesHttpAdapter.transformAudiencesTableData(res))
       );

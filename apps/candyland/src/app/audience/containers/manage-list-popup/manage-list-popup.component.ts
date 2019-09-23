@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AudiencesService } from '@cl-core-services';
-import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Component({
   selector: 'cl-manage-list-popup',
@@ -35,11 +34,11 @@ export class ManageListPopupComponent implements OnInit {
   }
 
   private getPools(): any {
-    const params = {
-      'page[number]': 1,
-      'page[size]': 20,
+    const params: HttpParamsOptions = {
+      'page[number]': '1',
+      'page[size]': '20',
     };
-    this.audiencesService.getAudiencesList(ClHttpParams.createHttpParams(params))
+    this.audiencesService.getAudiencesList(params)
       .subscribe((data: any) => {
         this.pools = data;
         this.setSelectedPools();
