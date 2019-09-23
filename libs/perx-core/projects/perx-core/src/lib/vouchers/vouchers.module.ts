@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { UtilsModule } from '../utils/utils.module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { V4VouchersService } from './v4-vouchers.service';
 import { WhistlerVouchersService } from './whistler-vouchers.service';
@@ -45,7 +45,8 @@ const components = [
     QRCodeModule,
     ReactiveFormsModule,
     MaterialModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   exports: [
     ...components

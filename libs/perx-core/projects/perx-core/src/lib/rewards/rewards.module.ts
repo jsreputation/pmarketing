@@ -9,7 +9,7 @@ import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { IMerchantsService } from '../merchants/imerchants.service';
@@ -37,7 +37,8 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, merchant
     CommonModule,
     MaterialModule,
     NgxMultiLineEllipsisModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   exports: [
     ...components,

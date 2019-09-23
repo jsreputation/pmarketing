@@ -8,7 +8,7 @@ import {
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
@@ -27,7 +27,7 @@ export function AuthServiceFactory(
 }
 
 @NgModule({
-  imports: [AuthModule],
+  imports: [AuthModule, HttpClientModule],
   declarations: [],
   exports: [],
   providers: [
