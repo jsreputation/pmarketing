@@ -1,0 +1,31 @@
+<div class="container">
+  <form
+    [formGroup]="cityChangeForm"
+    (ngSubmit)="onSubmit()"
+    class="form"
+  >
+    <mat-form-field
+      appearance="fill"
+      class="city-field"
+    >
+      <mat-label>
+        Enter new city/municipality
+      </mat-label>
+      <input
+        matInput
+        placeholder="Enter new city/municipality"
+        formControlName="newCity"
+      >
+      <mat-error *ngIf="cityChangeForm.get('newCity').hasError('required')">
+        New city is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="submit"
+      class="save-button"
+    >
+      Save
+    </button>
+  </form>
+</div>
