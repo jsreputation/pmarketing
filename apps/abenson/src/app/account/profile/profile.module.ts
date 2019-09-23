@@ -6,9 +6,14 @@ import { ProfileComponent } from './profile.component';
 import { MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ChangeBarangayComponent } from './change-barangay/change-barangay.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 
 @NgModule({
-  declarations: [ProfileComponent, ChangeBarangayComponent],
+  declarations: [
+    ProfileComponent,
+    ChangeBarangayComponent,
+    ChangeStreetAddressComponent
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
