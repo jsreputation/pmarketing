@@ -33,7 +33,7 @@ import {UnauthorizedInterceptor} from './login/unauthorized.interceptor';
     RewardsModule,
     ProfileModule,
     LoyaltyModule,
-    LocationModule
+    LocationModule,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},

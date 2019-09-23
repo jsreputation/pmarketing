@@ -1,4 +1,4 @@
-import { of, from, throwError } from 'rxjs';
+import { of, from } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,7 +13,6 @@ import {
   ProfileModule,
   RewardsService,
   IVoucherService,
-  AuthenticationService,
   ProfileService,
   ConfigModule,
   ICampaignService
@@ -32,7 +31,7 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -69,16 +68,6 @@ const vouchersServiceStub = {
 const campaignServiceStub = {
   getCampaigns: () => of(campaigns),
   getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
-};
-
-const authenticationServiceStub = {
-  login: (username, password) => {
-    if (username === 'perx' && password === '1234') {
-      return of(true);
-    }
-    return throwError(new HttpErrorResponse({ status: 401 }));
-  },
-  logout: () => {}
 };
 
 const profileServiceStub = {
@@ -124,13 +113,13 @@ const profileServiceStub = {
     FormsModule,
     UtilsModule,
     LoyaltyModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    HttpClientModule
   ],
   providers: [
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },
-    { provide: AuthenticationService, useValue: authenticationServiceStub },
     { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]
