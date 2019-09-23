@@ -42,14 +42,14 @@ html, body {
     color: #535253 !important;
   }
 
+  .mat-form-field-ripple {
+    background-color: #535253 !important;
+  }
+
   .mat-form-field-flex {
     border-radius: 0 !important;
     padding: 0.55em 0.75em 0 0.75em !important;
     background-color: #E8E8E8 !important;
-  }
-
-  .mat-form-field-ripple {
-    display: none !important;
   }
 
   .mat-form-field-underline::before {
@@ -60,6 +60,10 @@ html, body {
 .mat-form-field-invalid {
   .mat-form-field-label {
     color: #f44336 !important;
+  }
+
+  .mat-form-field-ripple {
+    background-color: #f44336 !important;
   }
 }
 
