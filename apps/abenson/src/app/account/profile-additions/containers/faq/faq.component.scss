@@ -1,0 +1,46 @@
+p {
+  margin: 0;
+}
+
+.page {
+  min-height: 100%;
+  background-color: #fff;
+  padding: 2.4rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.additions {
+  line-height: 2rem;
+  font-size: 1.4rem;
+}
+
+.main-title,
+.title,
+.question,
+.footer {
+  font-weight: 700;
+}
+
+.title {
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.text,
+.title {
+  margin-bottom: 2rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.group-email {
+  max-width: 30rem;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+}

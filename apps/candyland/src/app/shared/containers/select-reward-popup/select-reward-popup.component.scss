@@ -40,9 +40,15 @@
   }
 }
 
-.merchant {
+.reward {
   &-list {
     padding-top: 3.5rem;
+  }
+
+  &-list-wrapper {
+    position: relative;
+    max-height: 50rem;
+    overflow: auto;
   }
 
   &-dialog-content {
