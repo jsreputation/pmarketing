@@ -14,7 +14,10 @@ const routes: Routes = [{
   path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(mod => mod.CustomerSupportModule)
 }, {
   path: 'additions',
-  loadChildren:  () => import('./profile-additions/profile-additions.module').then(mod => mod.ProfileAdditionsModule)
+  loadChildren: () => import('./profile-additions/profile-additions.module').then(mod => mod.ProfileAdditionsModule)
+}, {
+  path: 'mobile',
+  loadChildren: () => import('./change-mobile/change-mobile.module').then(mod => mod.ChangeMobileModule)
 }];
 
 @NgModule({
