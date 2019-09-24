@@ -14,13 +14,21 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
 })
 export class RewardsListPageComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
-  public displayedColumns = ['name', 'rewardType', 'category', 'balance', 'actions'];
+  public displayedColumns = [
+    'name',
+    'rewardType',
+    'category',
+    // 'balance',
+    'actions'
+  ];
   public hasData = true;
 
-  constructor(private rewardsService: RewardsService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private router: Router) {
+  constructor(
+    private rewardsService: RewardsService,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private router: Router
+  ) {
     this.dataSource = new CustomDataSource<IRewardEntity>(this.rewardsService);
   }
 
@@ -38,11 +46,11 @@ export class RewardsListPageComponent {
   }
 
   public detailReward(reward: IRewardEntity): void {
-    this.router.navigate(['/rewards/detail', reward.id], {state: reward});
+    this.router.navigate(['/rewards/detail', reward.id], { state: reward });
   }
 
   private editReward(reward: IRewardEntity): void {
-    this.router.navigate(['/rewards/edit', reward.id], {state: reward});
+    this.router.navigate(['/rewards/edit', reward.id], { state: reward });
   }
 
   private duplicateReward(reward: IRewardEntity): void {

@@ -12,7 +12,7 @@
       <!--filters-->
       <cl-table-filters [dataSource]="dataSource" classList="block">
         <ng-container *clTableFilter="'type'; let filter">
-          <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'Search for rewards'"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <!--table-->
