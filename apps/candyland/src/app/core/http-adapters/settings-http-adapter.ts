@@ -128,7 +128,7 @@ export class SettingsHttpAdapter {
   }
 
   public static getTenantProperty(property: string, data: Tenants): any {
-    return data ? data.properties[property] : null;
+    return data && data.properties ? data.properties[property] : null;
   }
 
   public static tenantLogo(data: Tenants): any {
