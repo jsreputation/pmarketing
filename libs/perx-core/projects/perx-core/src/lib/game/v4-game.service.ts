@@ -72,7 +72,7 @@ interface PinataDisplayProperties extends GameProperties {
 }
 
 interface Game {
-  campaign_id: number;
+  campaign_id?: number;
   display_properties: TreeDisplayProperties | PinataDisplayProperties;
   game_type: GameType;
   id: number;
