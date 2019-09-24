@@ -21,15 +21,15 @@ import {
 })
 export class CardComponent implements OnInit {
   public transactions$: Observable<ITransaction[]>;
-  private transactions = new BehaviorSubject<ITransaction[]>([]);
+  private transactions: BehaviorSubject<ITransaction[]> = new BehaviorSubject<ITransaction[]>([]);
   public priceLabelFn: (tr: ITransaction) => string;
   public membershipId: number;
-  public transactionsLoaded = false;
-  public transactionsEnded = false;
+  public transactionsLoaded: boolean = false;
+  public transactionsEnded: boolean = false;
   private loyaltyId: number = null;
   private activeTabId: number = 0;
   private transactionsPageId: number = 1;
-  private tabsId = {
+  private tabsId: any = {
     MyCard : 0,
     History: 1,
   };
