@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT } from './themes.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { IJsonApiItemPayload } from '../../jsonapi.payload';
+import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
 
 interface WhistlerITenant {
@@ -11,7 +11,7 @@ interface WhistlerITenant {
   alias: string;
   created_at: string;
   name: string;
-  properties: WhistlerISetting;
+  display_properties: WhistlerISetting;
 }
 
 interface WhistlerISetting {
@@ -92,8 +92,8 @@ export class ThemesService {
   public getThemeSetting(): Observable<ITheme> {
     const params = new HttpParams().append('url', location.host);
 
-    return this.http.post<IJsonApiItemPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
-      map(res => res.data.attributes.properties),
+    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
+      map(res => res.data[0].attributes.display_properties),
       map((setting) => ThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
     );

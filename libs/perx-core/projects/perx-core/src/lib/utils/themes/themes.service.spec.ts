@@ -4,7 +4,7 @@ import { ThemesService } from './themes.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../../config/config.module';
 
-fdescribe('ThemesService', () => {
+describe('ThemesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,

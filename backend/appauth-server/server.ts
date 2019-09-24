@@ -202,7 +202,7 @@ app.post(BASE_HREF + 'themes', async (req, res, next) => {
     }
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
     const endpointRequest = await axios.get(
-      endpoint.target_url + '/iam/tenants/2',
+      endpoint.target_url + '/iam/tenants',
       {
         headers: {
           Authorization: endpointCredential.basic_token,

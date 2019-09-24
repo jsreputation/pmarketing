@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
 
-const themesServiceStub = {}
+const themesServiceStub = {};
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
