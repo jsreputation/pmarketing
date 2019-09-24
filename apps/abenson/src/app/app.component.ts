@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Location } from '@angular/common';
 import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -9,6 +10,12 @@ import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/containers/card/card.component';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { ChangeBarangayComponent } from './account/profile/change-barangay/change-barangay.component';
+import { ChangePasswordComponent } from './account/change-password/change-password.component';
+import { ChangeEmailComponent } from './account/profile/change-email/change-email.component';
+import { ChangeCityComponent } from './account/profile/change-city/change-city.component';
+import { ChangeStreetAddressComponent } from './account/profile/change-street-address/change-street-address.component';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +25,15 @@ import { WalletComponent } from './wallet/wallet.component';
 export class AppComponent implements OnInit {
   public showHeader: boolean = true;
   public showToolbar: boolean = true;
+  public showBackArrow: boolean = false;
+  public showLogo: boolean = false;
+  public showPageTitle: boolean = false;
+  public headerTitle: string = '';
 
   constructor(
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private location: Location
   ) { }
 
   public ngOnInit(): void {
@@ -37,5 +49,23 @@ export class AppComponent implements OnInit {
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent ||
       ref instanceof CardComponent;
+    this.showBackArrow = !this.showHeader || !this.showToolbar;
+    this.showLogo = !(ref instanceof ProfileComponent ||
+      ref instanceof ChangeBarangayComponent ||
+      ref instanceof ChangePasswordComponent ||
+      ref instanceof ChangeEmailComponent ||
+      ref instanceof ChangeCityComponent ||
+      ref instanceof ChangeStreetAddressComponent);
+    this.showPageTitle = !this.showLogo;
+    this.headerTitle = ref instanceof ProfileComponent ? 'Profile' :
+      ref instanceof ChangeBarangayComponent ? 'Change Barangay' :
+        ref instanceof ChangePasswordComponent ? 'Change PIN Code' :
+          ref instanceof ChangeEmailComponent ? 'Change Email' :
+            ref instanceof ChangeCityComponent ? 'Change City/Municipality' :
+              ref instanceof ChangeStreetAddressComponent ? 'Change Street Address' : '' ;
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }
