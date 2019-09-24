@@ -3,7 +3,7 @@ export class AuthHttpAdapter {
     public static transformFromLogin(data: any): ILogin {
         return {
             attributes: {
-                tenant_id: data.tenant_id,
+                account_id: data.account_id,
                 username: data.username,
                 password: data.password
             }
