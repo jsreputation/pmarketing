@@ -5,7 +5,7 @@ import { FaqComponent } from './containers/faq/faq.component';
 const routes: Routes = [{
   path: 'privacy-policy',
   component: PrivacyPolicyComponent
-},{
+}, {
   path: 'faq',
   component: FaqComponent
 }];
