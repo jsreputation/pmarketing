@@ -1,9 +1,9 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
 
 export enum GameType {
-    unknown = -1,
-    shakeTheTree,
-    pinata
+    unknown = 'unknown',
+    shake = 'shake',
+    tap = 'tap'
 }
 
 export interface IGameOutcome {

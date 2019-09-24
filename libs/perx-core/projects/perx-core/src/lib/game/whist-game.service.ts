@@ -103,7 +103,7 @@ export class WhistlerGameService implements IGameService {
     let config: ITree | IPinata;
     const { attributes } = game;
     if (attributes.game_type === GameType.shakeTheTree) {
-      type = TYPE.shakeTheTree;
+      type = TYPE.shake;
       const treedp: TreeDisplayProperties = attributes.display_properties as TreeDisplayProperties;
       config = {
         ...defaultTree(),
@@ -112,7 +112,7 @@ export class WhistlerGameService implements IGameService {
         nbHangedGift: treedp.nb_hanged_gifts
       };
     } else if (attributes.game_type === GameType.pinata) {
-      type = TYPE.pinata;
+      type = TYPE.tap;
       const pinatadp: PinataDisplayProperties = attributes.display_properties as PinataDisplayProperties;
       config = {
         ...defaultPinata(),
