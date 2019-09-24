@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -8,6 +8,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -15,6 +16,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
   styleUrls: ['./new-campaign-select-engagement-page.component.scss']
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   public dataSource = new MatTableDataSource<IEngagement>();
   public defaultSearchValue = null;
@@ -41,6 +43,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     super.ngOnInit();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    this.subscribeFormValueChange();
   }
 
   public ngOnDestroy(): void {
@@ -87,4 +90,13 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       this.template.patchValue(findTemplate);
     }
   }
+
+  private subscribeFormValueChange(): void {
+    this.form.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
+      });
+  }
+
 }

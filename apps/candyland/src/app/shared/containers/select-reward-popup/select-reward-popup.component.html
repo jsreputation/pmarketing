@@ -7,30 +7,32 @@
   </button>
 </div>
 <mat-dialog-content>
-  <section class="merchant-dialog-content">
-    <div class="merchant-list">
+  <section class="reward-dialog-content">
+    <div class="reward-list">
       <!--filters-->
       <cl-table-filters [dataSource]="dataSource" classList="block">
-        <ng-container *clTableFilter="'type'; let filter">
-          <cl-search-filter class="search-block" [control]="filter"></cl-search-filter>
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <!--table-->
-      <cl-rewards-list [dataSource]="dataSource"
-                       [selectable]="true"
-                       [displayedColumns]="displayedColumns"
-                       (selectReward)="selectReward($event)">
-      </cl-rewards-list>
+      <div class="reward-list-wrapper">
+        <cl-rewards-list [dataSource]="dataSource"
+                         [selectable]="true"
+                         [displayedColumns]="displayedColumns"
+                         (selectReward)="selectReward($event)">
+        </cl-rewards-list>
+      </div>
       <!--paginator-->
       <cl-paginator [dataSource]="dataSource"
                     [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    [pageSizeOptions]="[5, 10, 20]"
       ></cl-paginator>
     </div>
   </section>
 </mat-dialog-content>
 <!--<mat-dialog-actions>-->
-<div class="merchant-dialog-actions"
+<div class="reward-dialog-actions"
 >
   <cl-button [classList]="'tertiary'"
              class="actions-close"

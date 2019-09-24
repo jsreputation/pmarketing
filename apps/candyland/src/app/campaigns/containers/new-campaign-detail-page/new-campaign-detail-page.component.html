@@ -10,7 +10,7 @@
     <div class="card-content">
       <!--goal-->
       <mat-form-field class="card-row">
-        <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Campagin goal">
+        <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Campaign goal">
           <ng-container *ngFor="let goal of config?.goals">
             <mat-option [value]="goal?.value">{{goal?.title}}</mat-option>
           </ng-container>

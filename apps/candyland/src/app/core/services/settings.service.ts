@@ -11,7 +11,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { DataStore } from '@cl-core/http-adapters/datastore';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { HttpParams } from '@angular/common/http';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -40,6 +40,7 @@ export const settingsFonts: ISimpleValue[] = [{
 })
 export class SettingsService implements ITableService {
   private tenants: Tenants;
+
   constructor(private settingsHttpService: SettingsHttpService,
               private fb: FormBuilder,
               private authService: AuthService,
@@ -117,8 +118,9 @@ export class SettingsService implements ITableService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAMUser>> {
-    params.included = 'groups';
-    return this.settingsHttpService.getAllIMAUsers(new HttpParams(params))
+    params.include = 'groups';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.settingsHttpService.getAllIMAUsers(httpParams)
       .pipe(
         map((res: any) => SettingsHttpAdapter.transformToTableData(res))
       );
@@ -141,7 +143,7 @@ export class SettingsService implements ITableService {
   }
 
   public getAllGroups(): Observable<any> {
-    return this.dataStore.findAll(Groups, {page: { size: 10, number: 1 }});
+    return this.dataStore.findAll(Groups, {page: {size: 10, number: 1}});
   }
 
   public getTenants(): Observable<Tenants> {
@@ -152,8 +154,8 @@ export class SettingsService implements ITableService {
   }
 
   public updateTenants(value: any): any {
-    const newProperties = {...this.tenants.properties, ...value};
-    this.tenants.properties = {...newProperties};
+    const newProperties = {...this.tenants.display_properties, ...value};
+    this.tenants.display_properties = {...newProperties};
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
