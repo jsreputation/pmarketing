@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { GeneralStaticDataService } from '@perx/core';
+import { IJsonApiItemPayload } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +37,11 @@ export class SurveyHttpService {
   }
 
   public getSurvey(id: string): Observable<any> {
-    return this.http.get<any>(ApiConfig.engagementsPath + '/survey/' + id);
+    return this.http.get<IJsonApiItemPayload<any>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: any): Observable<any> {
-    return this.http.post<any>(ApiConfig.engagementsPath + '/', data);
+  public createSurvey(data: any): Observable<IJsonApiItemPayload<any>> {
+    return this.http.post<IJsonApiItemPayload<any>>(ApiConfig.engagementsPath + '/', data);
   }
 
   public updateSurvey(id: string, data: any): Observable<any> {
