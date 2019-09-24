@@ -8,8 +8,8 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   styleUrls: ['./campaigns-list.component.scss']
 })
 export class CampaignsListComponent implements AfterViewInit {
-  public DATE_FORMAT: string = 'MMM dd, yyyy';
-  public TIME_FORMAT: string = 'hh:ssa';
+  public DATE_FORMAT: string = 'mediumDate';
+  public TIME_FORMAT: string = 'shortTime';
 
   @Input() public dataSource: CustomDataSource<ICampaign>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
