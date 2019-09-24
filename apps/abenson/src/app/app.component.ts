@@ -16,6 +16,8 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
 import { ChangeEmailComponent } from './account/profile/change-email/change-email.component';
 import { ChangeCityComponent } from './account/profile/change-city/change-city.component';
 import { ChangeStreetAddressComponent } from './account/profile/change-street-address/change-street-address.component';
+import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
+import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 
 @Component({
   selector: 'app-root',
@@ -55,14 +57,18 @@ export class AppComponent implements OnInit {
       ref instanceof ChangePasswordComponent ||
       ref instanceof ChangeEmailComponent ||
       ref instanceof ChangeCityComponent ||
-      ref instanceof ChangeStreetAddressComponent);
+      ref instanceof ChangeStreetAddressComponent ||
+      ref instanceof FaqComponent ||
+      ref instanceof PrivacyPolicyComponent);
     this.showPageTitle = !this.showLogo;
     this.headerTitle = ref instanceof ProfileComponent ? 'Profile' :
       ref instanceof ChangeBarangayComponent ? 'Change Barangay' :
         ref instanceof ChangePasswordComponent ? 'Change PIN Code' :
           ref instanceof ChangeEmailComponent ? 'Change Email' :
             ref instanceof ChangeCityComponent ? 'Change City/Municipality' :
-              ref instanceof ChangeStreetAddressComponent ? 'Change Street Address' : '' ;
+              ref instanceof ChangeStreetAddressComponent ? 'Change Street Address' :
+                ref instanceof FaqComponent ? 'FAQ' :
+                  ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' : '' ;
   }
 
   public goBack(): void {
