@@ -62,7 +62,7 @@ const profileServiceStub = {
     HistoryComponent,
     RewardComponent,
     ContactUsComponent,
-    TncComponent
+    TncComponent,
   ],
   imports: [
     ConfigModule.forRoot({...environment}),

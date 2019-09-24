@@ -25,8 +25,6 @@ import { environment } from 'src/environments/environment';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  let router: Router;
-
   const gameServiceStub = {};
   const campaignServiceStub = {
     getCampaigns: () => of([])
@@ -46,6 +44,7 @@ describe('GameComponent', () => {
   const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
+    const routerStub = { navigate: () => ({}) };
     TestBed.configureTestingModule({
       declarations: [GameComponent],
       imports: [
@@ -63,6 +62,8 @@ describe('GameComponent', () => {
         { provide: IVoucherService, useValue: vouchersServiceMock },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: Router, useValue: routerStub },
+
       ]
     })
       .compileComponents();
@@ -71,7 +72,6 @@ describe('GameComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
-    router = TestBed.get(Router);
     fixture.detectChanges();
   });
 
@@ -86,17 +86,19 @@ describe('GameComponent', () => {
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    spyOn(router, 'navigate');
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    spyOn(routerStub, 'navigate');
     component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
     component.actionOnGameStatus();
-    expect(router.navigate).toHaveBeenCalledWith(['/vouchers', { popup: PopupType.completed }]);
+    expect(routerStub.navigate).toHaveBeenCalledWith(['/vouchers', { popup: PopupType.completed }]);
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    spyOn(router, 'navigate');
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    spyOn(routerStub, 'navigate');
     component.$game = of(fakeGame);
     component.actionOnGameStatus();
-    expect(router.navigate).not.toHaveBeenCalled();
+    expect(routerStub.navigate).not.toHaveBeenCalled();
   });
 
   // it('should call router navigate with numRewards more than 0 when r1 status code is 200', () => {

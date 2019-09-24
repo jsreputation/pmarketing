@@ -22,16 +22,7 @@ const routes: Routes = [
       { path: 'account', component: AccountComponent, canActivate: [ProtectedGuard] },
       { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
-      {
-        path: 'tap/:id',
-        loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: 'shake/:id',
-        loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule),
-        canActivate: [ProtectedGuard]
-      },
+
       {
         path: 'stamp/:id',
         loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
@@ -40,6 +31,11 @@ const routes: Routes = [
       {
         path: 'survey/:id',
         loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'game/:id',
+        loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule),
         canActivate: [ProtectedGuard]
       },
       {
