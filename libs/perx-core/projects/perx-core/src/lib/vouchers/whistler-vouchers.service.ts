@@ -12,7 +12,8 @@ import { IReward, IRewardParams } from '../rewards/models/reward.model';
 const enum VoucherStatus {
   assigned = 'assigned'
 }
-interface IWhistlerVoucher {
+
+export interface IWhistlerVoucher {
   urn: string;
   created_at: string;
   updated_at: string;
