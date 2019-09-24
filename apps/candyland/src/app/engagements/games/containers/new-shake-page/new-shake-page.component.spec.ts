@@ -18,6 +18,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
 import { ShakeTreeService } from '@cl-core/services';
 import { ConfirmModalModule } from '@cl-shared';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -84,7 +85,8 @@ describe('NewShakePageComponent', () => {
         {
           provide: EngagementHttpAdapter,
           useValue: {}
-        }
+        },
+        {provide: LocalStorageService, useValue: {}}
       ]
     })
     .compileComponents();

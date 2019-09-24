@@ -5,7 +5,8 @@ import { IEngagementService } from '../iengagement.service';
 
 @Injectable()
 export class InstantOutcomeService extends EngagementService<IEngagement> implements IEngagementService {
-    protected service: string = 'instant_outcome';
+    // from outside it is called instant_outcome but from within the cluster it is called instant-outcome...
+    protected service: string = 'instant-outcome';
 
     // important so, that parent abstract class get HttpService injected
     constructor(protected http: HttpService) {

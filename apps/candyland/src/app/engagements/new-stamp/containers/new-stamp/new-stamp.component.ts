@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { AvailableNewEngagementService, RoutingStateService, StampsService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
@@ -9,6 +9,8 @@ import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -32,6 +34,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }>;
   public stamps: PuzzleCollectStamp[] = [];
   public stampsSlotNumberData = [];
+  public tenantSettings: ITenantsProperties;
   private destroy$ = new Subject();
 
   constructor(private fb: FormBuilder,
@@ -39,10 +42,13 @@ export class NewStampComponent implements OnInit, OnDestroy {
               private router: Router,
               private stampDataService: StampDataService,
               private availableNewEngagementService: AvailableNewEngagementService,
-              private stampsService: StampsService) {
+              private stampsService: StampsService,
+              private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.createStampForm();
     this.subscribeStampsNumberChanges();
     this.subscribeStampsSlotChanges();
@@ -207,5 +213,13 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
+      });
   }
 }

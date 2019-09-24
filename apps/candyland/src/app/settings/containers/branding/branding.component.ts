@@ -132,7 +132,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenants = res;
-        this.handlerValue(res.properties);
+        this.handlerValue(res.display_properties);
       });
   }
 
@@ -166,7 +166,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   private setDefaultValue(data: any): void {
       const defaultValue = this.prepareDefaultValue(data);
-      this.tenants.properties = {...this.tenants.properties, ...defaultValue};
+      this.tenants.display_properties = {...this.tenants.display_properties, ...defaultValue};
       this.tenants.save()
         .subscribe(() => {
           this.subscribeFormChanges();
