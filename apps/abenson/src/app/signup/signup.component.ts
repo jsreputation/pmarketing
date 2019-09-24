@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '@perx/core';
 
@@ -15,6 +16,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -37,6 +39,11 @@ export class SignUpComponent implements OnInit {
     const profile = this.signUpForm.value;
     profile.password_confirmation = password;
 
-    this.authService.signup(profile).subscribe(() => {}, (e) => {console.log(e); });
+    this.authService.signup(profile).subscribe(() => {
+      this.router.navigate(['validation']);
+    },
+      (e) => {
+      console.log(e);
+    });
   }
 }
