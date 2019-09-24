@@ -22,7 +22,7 @@ describe('GameComponent', () => {
         MatDialogModule,
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
-        ]),
+        ])
       ],
       providers: [
         {
