@@ -21,6 +21,7 @@ Before( () => {
 // Successful creation of engagement game shake the tree - launch now
 Given(/^27_I am on the engagment page.$/, async () => {
   await PageEngagement.navigateToEngagement();
+  await browser.waitForAngularEnabled(false);
   await browser.sleep(3000);
 });
 
@@ -41,9 +42,12 @@ Given(/^27_I click on the next button.$/, async () => {
 });
 
 Given(/^27_I type the test string$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for main headline field to load
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(1)), 6000);
   // typing test string in the main headline text field
-  await element(by.css('input#mat-input-1')).clear();
-  await element(by.css('input#mat-input-1')).sendKeys('Test - launch now');
+  await element.all(by.css('input[type=text]')).get(0).clear();
+  await element.all(by.css('input[type=text]')).get(0).sendKeys('Test - launch now');
 });
 
 Given(/^27_I press save button$/, async () => {
@@ -88,8 +92,12 @@ Given(/^28_I click on the next button.$/, async () => {
 });
 
 Given(/^28_I type the test string$/, async () => {
-  await element(by.css('input#mat-input-1')).clear();
-  await element(by.css('input#mat-input-1')).sendKeys('Test - launch later');
+  const ec = protractor.ExpectedConditions;
+  // waiting for main headline field to load
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(1)), 6000);
+  // typing test string in the main headline text field
+  await element.all(by.css('input[type=text]')).get(0).clear();
+  await element.all(by.css('input[type=text]')).get(0).sendKeys('Test - launch later');
 });
 
 Given(/^28_I press save button$/, async () => {

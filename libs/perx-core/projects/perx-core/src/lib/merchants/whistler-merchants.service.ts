@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, mergeAll } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMeta, IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
@@ -43,18 +43,31 @@ export class WhistlerMerchantsService implements IMerchantsService {
   }
 
   public getAllMerchants(): Observable<IMerchant[]> {
-    const pageSize = 100;
-    // Currently the API don't support query by page
-    return this.getMerchants(1, pageSize);
+    const pageSize = 10;
+    return this.getMerchants(1, pageSize).pipe(
+      mergeMap((merchants: IMerchant[]) => {
+        const streams = [
+          of(merchants)
+        ];
+
+        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
+          const stream = this.getMerchants(i, pageSize);
+          streams.push(stream);
+        }
+
+        return streams;
+      }),
+      mergeAll(5),
+    );
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 25): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
     return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       {
         params: {
-          page: `${page}`,
-          size: `${pageSize}`
+          page_number: `${page}`,
+          page_size: `${pageSize}`
         }
       }
     ).pipe(

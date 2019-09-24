@@ -43,6 +43,7 @@ import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TncComponent } from './tnc/tnc.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const profileServiceStub = {
   whoAmI: () => of(profile)
@@ -60,7 +61,7 @@ const profileServiceStub = {
     HistoryComponent,
     RewardComponent,
     ContactUsComponent,
-    TncComponent
+    TncComponent,
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -87,7 +88,8 @@ const profileServiceStub = {
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
-    PerxCampaignModule
+    PerxCampaignModule,
+    HttpClientModule
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub }

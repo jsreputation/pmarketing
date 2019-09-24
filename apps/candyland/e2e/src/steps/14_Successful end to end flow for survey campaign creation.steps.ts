@@ -34,7 +34,7 @@ Given(/^19_I click next on select engagement page.$/, async () => {
 Given(/^19_I click on the include probability checkbox$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for include probability checkbox to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-checkbox-inner-container')).get(0)), 8000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('mat-checkbox')).get(0)), 8000);
   // unchecking the probability box
   await element.all(by.css('div.mat-checkbox-inner-container')).get(0).click();
 });

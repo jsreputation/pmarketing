@@ -36,11 +36,12 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-reward-merchant-card
+        [selected]="selectedMerchantTab"
         (createMerchant)="openDialogCreateMerchant()"
         (selectMerchant)="openDialogSelectMerchant()">
       </cl-reward-merchant-card>
-      <cl-reward-merchant-item *ngIf="form.get('merchantInfo').value"
-                               [merchant]="form.get('merchantInfo').value"
+      <cl-reward-merchant-item *ngIf="selectedMerchant"
+                               [merchant]="selectedMerchant"
                                (deleteMerchant)="deleteMerchant()"
                                [enableActions]="true">
       </cl-reward-merchant-item>

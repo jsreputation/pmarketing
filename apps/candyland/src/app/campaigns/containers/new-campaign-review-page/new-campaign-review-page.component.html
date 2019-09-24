@@ -56,13 +56,13 @@
           <label class="card-label">Campaign duration</label>
           <div class="card-row">
             <div class="input-group">
-              <p class="card-value">{{campaign?.campaignInfo?.startDate | date: 'dd MMM yyyy' }}</p>
+              <p class="card-value">{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</p>
               <p class="card-value">{{campaign?.campaignInfo?.startTime}}</p>
             </div>
             <ng-container *ngIf="campaign?.campaignInfo?.endDate">
               to
               <div class="input-group">
-                <p class="card-value">{{campaign?.campaignInfo?.endDate | date: 'dd MMM yyyy' }}</p>
+                <p class="card-value">{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</p>
                 <p class="card-value">{{campaign?.campaignInfo?.endTime}}</p>
               </div>
             </ng-container>

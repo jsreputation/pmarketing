@@ -1,10 +1,10 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CampaignsHttpAdapter } from '@cl-core/http-adapters/campaigns-http-adapter';
 import { CampaignsHttpsService } from '@cl-core/http-services/campaigns-https.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,16 @@ export class CampaignsService implements ITableService {
   constructor(private campaignsHttpsService: CampaignsHttpsService) {
   }
 
-  public getTableData(params: HttpParams): Observable<ITableData<ICampaign>> {
-    return this.campaignsHttpsService.getCampaigns(params).pipe(
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaign>> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.campaignsHttpsService.getCampaigns(httpParams).pipe(
       map(response => CampaignsHttpAdapter.transformTableData(response))
     );
   }
 
-  public getCampaigns(params: HttpParams): Observable<any> {
-    return this.campaignsHttpsService.getCampaigns(params);
+  public getCampaigns(params: HttpParamsOptions): Observable<any> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.campaignsHttpsService.getCampaigns(httpParams);
   }
 
   public getCampaign(id: string): void {

@@ -2,25 +2,16 @@
 
 :host {
   display: flex;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.wrap {
-  width: 100%;
-  display: flex;
-  padding: 1rem 0 2rem;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 0 ($vertical-padding * 0.5);
+  margin: 0 (-($horizontal-padding / 4));
+  justify-content: center;
   position: relative;
 }
 
 cl-type-item {
   display: flex;
-  margin-right: 1.4rem;
-
-  &:last-child {
-    margin-right: 0;
-  }
+  margin: ($vertical-padding / 4) ($horizontal-padding / 4);
 }
 
 @import "resize";

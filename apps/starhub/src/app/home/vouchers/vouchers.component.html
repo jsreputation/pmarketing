@@ -4,7 +4,7 @@
     <mat-card *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
       <mat-card-header>
-        <mat-card-title ngxEllipsis [lines]="2">{{voucher.name}}</mat-card-title>
+        <mat-card-title>{{(voucher.name.length > 35) ? (voucher.name | slice:0:35)+'...' : (voucher.name)}}</mat-card-title>
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
@@ -19,7 +19,7 @@
     <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
       <mat-card-header>
-        <mat-card-title ngxEllipsis [lines]="2">{{voucher.name}}</mat-card-title>
+        <mat-card-title>{{(voucher.name.length > 35) ? (voucher.name | slice:0:35)+'...' : (voucher.name)}}</mat-card-title>
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">

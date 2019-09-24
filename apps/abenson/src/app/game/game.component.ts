@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, NotificationService } from '@perx/core';
+import { IGameService, IGame, PopupComponent } from '@perx/core';
 import { flatMap, take, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-game',
@@ -16,12 +17,12 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private notificationService: NotificationService
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
-      flatMap((params) => this.gameService.getGamesFromCampaign(+params.id)),
+      flatMap((params) => this.gameService.getGamesFromCampaign(parseInt(params.id, 10))),
       take(1),
       tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games) => games[0]),
@@ -29,15 +30,16 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    setTimeout(() => {
-      this.router.navigate(['/wallet']);
-      this.notificationService.addPopup({
+    const dialog = this.dialog.open(PopupComponent, {
+      data: {
         title: 'Congratulations!',
         text: this.congratsDetailText,
         buttonTxt: 'View Rewards',
         imageUrl: 'assets/congrats_image.png',
-      });
-    }, 2000);
+      }
+    });
+    dialog.afterClosed().subscribe(() => {
+      this.router.navigate(['/wallet']);
+    });
   }
-
 }

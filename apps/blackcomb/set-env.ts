@@ -12,10 +12,10 @@ require('dotenv').config();
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
-  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api-pru1.uat.whistler.perxtech.io'}',
+  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api-dev1.uat.whistler.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
-  preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
-  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
+  preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
+  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
 };
 `;

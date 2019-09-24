@@ -48,7 +48,7 @@ export class V4LocationsService extends LocationsService {
       page = 1;
     }
     if (pageSize === undefined) {
-      pageSize = 25;
+      pageSize = 10;
     }
     if (tags) {
       tags = [];
@@ -75,8 +75,8 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
-    return this.merchantsService.getMerchant(merchantId).pipe(
+  public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
+    return this.merchantsService.getMerchant(merchantId, true, page).pipe(
       filter((merchant: IMerchant) => merchant.outlets && merchant.outlets.length > 0),
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
         merchantId: merchant.id,

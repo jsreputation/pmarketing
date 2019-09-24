@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material';
-import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/settings-users-roles-data-source';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-users-roles-list',
@@ -8,8 +8,8 @@ import { SettingsUsersRolesDataSource } from '@cl-shared/table/data-source/setti
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'MMM dd, yyyy';
-  @Input() public dataSource: SettingsUsersRolesDataSource<IAMUser>;
+  public DATE_FORMAT = 'mediumDate';
+  @Input() public dataSource: CustomDataSource<IAMUser>;
   @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
