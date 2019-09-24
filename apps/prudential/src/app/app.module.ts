@@ -39,6 +39,7 @@ import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ResultComponent } from './result/result.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ResultComponent } from './result/result.component';
     GameModule,
     AuthenticationModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   providers: [
     DatePipe
