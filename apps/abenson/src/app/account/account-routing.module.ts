@@ -12,6 +12,9 @@ const routes: Routes = [{
   path: 'profile', loadChildren: () => import('./profile/profile.module').then(mod => mod.ProfileModule)
 }, {
   path: 'support', loadChildren: () => import('./customer-support/customer-support.module').then(mod => mod.CustomerSupportModule)
+}, {
+  path: 'additions',
+  loadChildren:  () => import('./profile-additions/profile-additions.module').then(mod => mod.ProfileAdditionsModule)
 }];
 
 @NgModule({

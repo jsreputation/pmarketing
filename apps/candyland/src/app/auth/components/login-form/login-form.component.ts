@@ -24,21 +24,22 @@ export class LoginFormComponent implements OnInit {
     if (this.formLogin.valid) {
       this.authService.signIn(this.formLogin.value)
       .subscribe(
-        () => this.router.navigate(['/settings/general']),
+        () => this.router.navigate(['/dashboard/overview']),
         (error: Error) => alert('The email or password is incorrect! ' + error.message));
     }
   }
 
   get username(): AbstractControl | null { return this.formLogin.get('username'); }
   get password(): AbstractControl | null { return this.formLogin.get('password'); }
-  get accountId(): AbstractControl | null { return this.formLogin.get('tenant_id'); }
+  get accountId(): AbstractControl | null { return this.formLogin.get('account_id'); }
 
+  // ideally should be 9 digits or alpha numeric char
   private createForm(): void {
     this.formLogin = this.fb.group({
-      tenant_id: [null, [
+      account_id: [null, [
         Validators.required,
         Validators.pattern(/^-?(0|[1-9]\d*)?$/),
-        Validators.minLength(1),
+        Validators.minLength(3),
         Validators.maxLength(50)
       ]],
       username: [null, [
