@@ -1,6 +1,6 @@
 declare interface ILogin {
     attributes: {
-        tenant_id: string;
+        account_id: string;
         username: string;
         password: string;
     };
