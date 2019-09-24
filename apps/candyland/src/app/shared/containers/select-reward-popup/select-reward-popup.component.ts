@@ -10,12 +10,20 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 })
 export class SelectRewardPopupComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
-  public displayedColumns = ['image', 'name', 'rewardType', 'category', 'balance'];
+  public displayedColumns = [
+    'image',
+    'name',
+    'rewardType',
+    'category',
+    //  'balance'
+  ];
   public selectedReward: IRewardEntity;
 
-  constructor(public dialogRef: MatDialogRef<SelectRewardPopupComponent>,
-              private rewardsService: RewardsService,
-              public cd: ChangeDetectorRef) {
+  constructor(
+    public dialogRef: MatDialogRef<SelectRewardPopupComponent>,
+    private rewardsService: RewardsService,
+    public cd: ChangeDetectorRef
+  ) {
     this.dataSource = new CustomDataSource<IRewardEntity>(this.rewardsService);
   }
 
