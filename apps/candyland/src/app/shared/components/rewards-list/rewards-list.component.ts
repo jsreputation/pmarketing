@@ -9,11 +9,19 @@ import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/reward
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'MMM dd, yyyy';
+  public DATE_FORMAT = 'mediumDate';
   @Input() public dataSource: CustomDataSource<IRewardEntity[]>;
-  @Input() public displayedColumns = ['image', 'rewardType', 'category', 'validity', 'balance', 'actions'];
+  @Input() public displayedColumns: string[] = [
+    'image',
+    'rewardType',
+    'category',
+    'validity',
+    // temporarily hide balance as it is not available from the api yet
+    // 'balance',
+    'actions'
+  ];
   @Input() public selectable = false;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public itemAction = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
   @Output() public selectReward = new EventEmitter<IRewardEntity>();
   @Output() public clickDetailReward = new EventEmitter<IRewardEntity>();
@@ -41,19 +49,19 @@ export class RewardsListComponent implements AfterViewInit {
   }
 
   public editItem(reward: IRewardEntity): void {
-    this.itemAction.emit({action: RewardsTableMenuActions.edit, data: reward});
+    this.itemAction.emit({ action: RewardsTableMenuActions.edit, data: reward });
   }
 
   public duplicateItem(reward: IRewardEntity): void {
-    this.itemAction.emit({action: RewardsTableMenuActions.duplicate, data: reward});
+    this.itemAction.emit({ action: RewardsTableMenuActions.duplicate, data: reward });
   }
 
   public deleteItem(reward: IRewardEntity): void {
-    this.itemAction.emit({action: RewardsTableMenuActions.delete, data: reward});
+    this.itemAction.emit({ action: RewardsTableMenuActions.delete, data: reward });
   }
 
   public useAsCaptionItem(reward: IRewardEntity): void {
-    this.itemAction.emit({action: RewardsTableMenuActions.useAsCaption, data: reward});
+    this.itemAction.emit({ action: RewardsTableMenuActions.useAsCaption, data: reward });
   }
 
 }

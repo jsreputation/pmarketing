@@ -13,24 +13,24 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>Second Name</mat-label>
-        <input matInput placeholder="Second Name" formControlName="secondName">
-        <mat-error *ngIf="signUpForm.get('secondName').hasError('required')">
-          Second Name is <strong>required</strong>
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName">
+        <mat-error *ngIf="signUpForm.get('lastName').hasError('required')">
+          Last Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Mobile Number</mat-label>
-        <input matInput placeholder="Mobile Number" formControlName="mobileNumber">
-        <mat-error *ngIf="signUpForm.get('mobileNumber').hasError('required')">
+        <input matInput placeholder="Mobile Number" formControlName="phone">
+        <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Create your 4-Digit Pin Code</mat-label>
-        <input [type]="hide ? 'password' : 'text'" matInput placeholder="Create your 4-Digit Pin Code" formControlName="pinCode">
+        <input [type]="hide ? 'password' : 'text'" matInput placeholder="Create your 4-Digit Pin Code" formControlName="password">
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        <mat-error *ngIf="signUpForm.get('pinCode').hasError('required')">
+        <mat-error *ngIf="signUpForm.get('password').hasError('required')">
           Pin Code is <strong>required</strong>
         </mat-error>
       </mat-form-field>

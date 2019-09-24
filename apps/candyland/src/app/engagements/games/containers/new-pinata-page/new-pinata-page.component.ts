@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
-  AvailableNewEngagementService,
-  PinataService,
-  RoutingStateService
+  AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -24,16 +24,20 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     pinata: IGraphic[],
     background: IGraphic[]
   }>;
+  public tenantSettings: ITenantsProperties;
   private destroy$ = new Subject();
 
   constructor(private fb: FormBuilder,
               private pinataService: PinataService,
               private routingState: RoutingStateService,
               private availableNewEngagementService: AvailableNewEngagementService,
-              private router: Router) {
+              private router: Router,
+              private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.createPinataForm();
     this.getPinataData();
   }
@@ -120,5 +124,13 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
+      });
   }
 }
