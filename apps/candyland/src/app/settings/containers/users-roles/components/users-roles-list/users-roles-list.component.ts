@@ -8,7 +8,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'MMM dd, yyyy';
+  public DATE_FORMAT = 'mediumDate';
   @Input() public dataSource: CustomDataSource<IAMUser>;
   @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
