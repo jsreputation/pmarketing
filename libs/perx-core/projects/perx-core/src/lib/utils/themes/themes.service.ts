@@ -48,6 +48,9 @@ export class ThemesService {
   }
 
   private static WThemeToTheme(setting: WhistlerISetting): ITheme {
+    if (!setting) {
+      return LIGHT;
+    }
     let backgroundColor = LIGHT.properties['--background'];
     let fontColor = LIGHT.properties['--font_color'];
     if (setting['theme.style'] === DARK.name) {
@@ -93,7 +96,7 @@ export class ThemesService {
     const params = new HttpParams().append('url', location.host);
 
     return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
-      map(res => res.data[0].attributes.display_properties),
+      map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => ThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
     );
