@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -10,6 +10,7 @@ import { StepConditionService } from '../../services/step-condition.service';
   styleUrls: ['./new-campaign-rewards-survey-page.component.scss']
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {

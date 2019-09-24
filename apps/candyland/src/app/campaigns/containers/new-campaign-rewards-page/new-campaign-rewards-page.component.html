@@ -37,8 +37,8 @@
       </div>
     </mat-card>
   </div>
-  <div class="preview">
-    <div class="preview-mobile">
-    </div>
-  </div>
+  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$"
+                               [tenantSettings]="tenantSettings"
+  >
+  </cl-campaigns-mobile-preview>
 </div>
