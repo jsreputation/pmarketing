@@ -2,6 +2,10 @@
 
 mat-card {
   max-width: 28rem;
+
+  .mat-card-image {
+    margin-bottom: 0;
+  }
 }
 
 .mat-card {
@@ -28,6 +32,7 @@ mat-card-content {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin: 1.4rem 0 1.9rem 0;
 
   .icon {
     @include icon;
@@ -37,7 +42,7 @@ mat-card-content {
     h1 {
       font-size: 1.6rem;
       color: #666666;
-      margin-left: 0;
+      margin: 0;
     }
 
     h2 {
@@ -45,12 +50,15 @@ mat-card-content {
       text-overflow: ellipsis;
       color: #666666;
       font-weight: normal;
+      margin: 0.2rem 0 0 0;
     }
 
     h3 {
       margin-top: 0;
       font-weight: normal;
       color: #666666;
+      font-size: 1.2rem;
+      margin-bottom: 0;
     }
   }
 }

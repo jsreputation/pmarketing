@@ -9,7 +9,7 @@
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
         <ng-container *clTableFilter="searchKey ; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="search for user"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" placeholder="search for users"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
 
@@ -26,16 +26,16 @@
 
     <!--table-->
     <ng-container [ngSwitch]="currentTab">
-      <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)" 
+      <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)"
         [dataSource]="dataSource">
       </cl-audiences-users-list>
-      <cl-audiences-list *ngSwitchCase="'audience'" 
+      <cl-audiences-list *ngSwitchCase="'audience'"
         [dataSource]="audiencesDataSource">
       </cl-audiences-list>
     </ng-container>
     <!--paginator-->
     <ng-container [ngSwitch]="currentTab">
-      <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5" 
+      <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5"
         [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       <span *ngSwitchCase="'audience'"></span>
     </ng-container>
