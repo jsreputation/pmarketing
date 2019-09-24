@@ -35,7 +35,8 @@ describe('LoadingComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ICampaignService, useValue: iCampaignSvcStub},
-        { provide: IGameService, useValue: iGameSvcStub}
+        { provide: IGameService, useValue: iGameSvcStub},
+        { provide: Router, useValue: routerStub}
       ]
     })
       .compileComponents();
