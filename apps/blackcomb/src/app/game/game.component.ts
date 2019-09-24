@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, PopupComponent } from '@perx/core';
+import { IGameService, IGame, PopupComponent, GameType } from '@perx/core';
 import { flatMap, take, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
@@ -13,12 +13,15 @@ import { MatDialog } from '@angular/material';
 export class GameComponent implements OnInit {
   public gameData$: Observable<IGame>;
   public congratsDetailText: string = 'You just won 2 rewards';
+  public gt: typeof GameType = GameType;
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+
+  }
 
   public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
