@@ -34,7 +34,13 @@ export class QRCodeComponent implements OnInit {
 
   public successRedeemed(voucher: Voucher): void {
     if (voucher.state === VoucherState.redeemed && this.voucherState === VoucherState.issued) {
-      this.notification.addPopup({ title: 'Congratulations' });
+      this.notification.addPopup({
+        title: 'Successfully Redeemed!',
+        text: `You have redeemed ${voucher.name}.`,
+        buttonTxt: 'Back to rewards',
+        imageUrl: 'assets/img/success_redeem.png',
+      });
+      this.router.navigate(['wallet']);
     }
   }
 
