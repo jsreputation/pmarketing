@@ -19,6 +19,8 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 import { StepConditionService } from '../../services/step-condition.service';
 import { BehaviorSubject } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CampaignsMobilePreviewComponent } from '../../components/campaigns-mobile-preview/campaigns-mobile-preview.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('NewCampaignRewardsSurveyPageComponent', () => {
   let component: NewCampaignRewardsSurveyPageComponent;
@@ -33,7 +35,8 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
         NewCampaignRewardsSurveyPageComponent,
         NewCampaignRewardsFormGroupComponent,
         ButtonComponent,
-        RewardItemComponent
+        RewardItemComponent,
+        CampaignsMobilePreviewComponent,
       ],
       imports: [
         ReactiveFormsModule,
@@ -51,7 +54,8 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
       providers: [
         {provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}}
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

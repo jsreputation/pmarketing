@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -15,6 +15,7 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
 
   constructor(

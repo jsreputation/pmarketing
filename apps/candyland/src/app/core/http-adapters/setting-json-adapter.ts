@@ -19,7 +19,7 @@ export class Tenants extends JsonApiModel {
   rootId: string;
 
   @Attribute()
-  properties: {
+  display_properties: {
     "time_zone": string,
     "theme.color": string,
     "currency": any,
