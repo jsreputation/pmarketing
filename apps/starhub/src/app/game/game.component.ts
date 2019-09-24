@@ -60,9 +60,10 @@ export class GameComponent implements OnInit {
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;
             this.notificationService.addPopup({
-              title: 'No more tries',
-              text: 'Come back when you\'ve earned more tries!',
-              buttonTxt: '',
+              title: 'Oops, you’ve already played.',
+              text: 'Try again tomorrow! You can play the game till 20 Oct.',
+              buttonTxt: 'Close',
+              afterClosedCallBack: this
             });
           }
 

@@ -62,3 +62,7 @@ cdk-virtual-scroll-viewport {
   display: block !important;
   max-width: 30rem !important;
 }
+
+ol, ul {
+  margin-top: 0;
+}
