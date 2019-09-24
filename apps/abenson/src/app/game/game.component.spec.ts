@@ -22,7 +22,7 @@ describe('GameComponent', () => {
       declarations: [GameComponent, ShakeComponent, TapComponent],
       imports: [
         GameModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{ path: 'wallet', component: GameComponent }]),
         MatDialogModule
       ],
       providers: [
