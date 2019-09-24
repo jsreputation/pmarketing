@@ -24,7 +24,7 @@ describe('CardComponent', () => {
   let fixture: ComponentFixture<CardComponent>;
   const loyaltyServiceStub = {
     getLoyalties: () => of([]),
-    getAllTransactions: () => of([])
+    getTransactions: () => of([])
   };
   const mockProfile: IProfile = {
     id: 1,
