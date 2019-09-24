@@ -1,18 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GameComponent } from './game.component';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { GameModule, IGameService } from '@perx/core';
-import { RouterTestingModule } from '@angular/router/testing';
-
 import { MatDialogModule } from '@angular/material';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-
   const gameServiceStub = {
     getGamesFromCampaign: () => of([])
   };
@@ -22,8 +19,10 @@ describe('GameComponent', () => {
       declarations: [GameComponent, ShakeComponent, TapComponent],
       imports: [
         GameModule,
-        RouterTestingModule.withRoutes([{ path: 'wallet', component: GameComponent }]),
-        MatDialogModule
+        MatDialogModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ])
       ],
       providers: [
         {
