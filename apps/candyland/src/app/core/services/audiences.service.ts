@@ -4,7 +4,7 @@ import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.se
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { HttpParams } from '@angular/common/http';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,14 @@ export class AudiencesService implements ITableService {
   }
 
   public getAudiences(params: HttpParamsOptions): Observable<any> {
-    return this.http.getAudiences(new HttpParams(params));
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.http.getAudiences(httpParams);
   }
 
   public getAudiencesList(params: HttpParamsOptions): Observable<any> {
-    params.included = 'users';
-    return this.http.getAudiencesList(new HttpParams(params))
+    params.include = 'users';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.http.getAudiencesList(httpParams)
       .pipe(
         map((res: any) => {
         const poolsList = res.data;
@@ -34,7 +36,8 @@ export class AudiencesService implements ITableService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiences>> {
-    return this.http.getAudiences(new HttpParams(params))
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.http.getAudiences(httpParams)
       .pipe(
         map((res: any) => AudiencesHttpAdapter.transformAudiencesTableData(res))
       );
