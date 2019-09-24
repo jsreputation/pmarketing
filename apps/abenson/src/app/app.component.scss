@@ -16,6 +16,19 @@
   z-index: 800;
   font-size: 2rem;
   line-height: 1.9rem;
+  position: relative;
+
+  .mat-icon {
+    position: absolute;
+    left: 1.9rem;
+  }
+
+  .title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 2.4rem;
+    letter-spacing: 0.75px;
+  }
 }
 
 .main-app-container {
