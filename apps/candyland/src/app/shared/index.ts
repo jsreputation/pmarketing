@@ -1,16 +1,20 @@
-export * from './containers/create-engagement-popup/create-engagement-popup.component';
 export * from './providers/toggle-control.service';
 export * from './pipes/pipes.module';
 export * from './containers/create-engagement-popup/create-engagement-popup.module';
+export * from './containers/create-engagement-popup/create-engagement-popup.component';
 export * from './containers/create-merchant-popup/create-merchant-popup.module';
+export * from './containers/create-merchant-popup/create-merchant-popup.component';
 export * from './containers/select-reward-popup/select-reward-popup.module';
-export * from './containers/select-merchant/select-merchant.module';
+export * from './containers/select-reward-popup/select-reward-popup.component';
+export * from './containers/select-merchant-popup/select-merchant-popup.module';
+export * from './containers/select-merchant-popup/select-merchant-popup.component';
 export * from './components/button/button.module';
 export * from './components/checkbox-group/checkbox-group.module';
 export * from './components/chip-list/chip-list.module';
 export * from './components/cl-color-picker/cl-color-picker.module';
 export * from './components/copy-link/copy-link.module';
 export * from './components/create-merchant-form/create-merchant-form.module';
+export * from './components/create-merchant-form/create-merchant-form.component';
 export * from './components/date-picker/date-picker.module';
 export * from './components/date-time-picker/date-time-picker.module';
 export * from './components/download-button/download-button.module';
@@ -53,7 +57,6 @@ export * from './components/checkbox-group/checkbox-group.component';
 export * from './components/chip-list/chip-list.component';
 export * from './components/cl-color-picker/cl-color-picker.component';
 export * from './components/copy-link/copy-link.component';
-export * from './components/create-merchant-form/create-merchant-form.component';
 export * from './components/date-picker/date-picker.component';
 export * from './components/date-time-picker/date-time-picker.component';
 export * from './components/download-button/download-button.component';
@@ -117,3 +120,6 @@ export * from './containers/confirm-modal/confirm-modal.module';
 export * from './containers/confirm-modal/confirm-modal.component';
 
 export * from './questions/question-form-field/shared/services/question-form-field.service';
+export * from './providers/toggle-control.service';
+
+export * from './table';
