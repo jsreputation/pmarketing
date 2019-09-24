@@ -5,12 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
-
-export enum DictionaryTotal {
-  activeCustomers = 'activeCustomers',
-  issuedRewards = 'issuedRewards',
-  activeCampaigns = 'activeCampaigns',
-}
+import { UserService } from '@cl-core/services/user.service';
 
 @Component({
   selector: 'cl-dashboard-page',
@@ -21,6 +16,7 @@ export enum DictionaryTotal {
 export class DashboardPageComponent implements OnInit, OnDestroy {
   public dateRange = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
+  public userName$: string;
   public navLinks = [
     {
       path: 'overview',
@@ -37,10 +33,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private dashboardService: DashboardService,
+              private userService: UserService,
               private chartsParametersService: DashboardChartsParametersService) {
   }
 
   public ngOnInit(): void {
+    this.userName$ =  this.userService.userName$;
     this.getGameCard();
     this.handelDateRangeChanges();
     this.dateRange.patchValue(this.defaultDateRange);
