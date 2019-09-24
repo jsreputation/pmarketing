@@ -1,4 +1,4 @@
-import { IQuestion } from '../../../../../../../libs/perx-core/projects/perx-core/src/lib/survey/models/survey.model';
+import { IQuestion } from '@perx/core';
 
 export interface IEngagementShakeType {
   id: string;
