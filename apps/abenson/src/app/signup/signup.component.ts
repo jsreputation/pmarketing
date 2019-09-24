@@ -9,6 +9,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public errorMessage: string;
+  public hide: boolean = true;
 
   constructor(private fb: FormBuilder) { }
 

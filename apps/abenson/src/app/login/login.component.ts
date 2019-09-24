@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
               text: 'Please try again soon'
             });
           } else if (err.status === 401) {
-            [this.loginForm.controls.customerID, this.loginForm.controls.password]
+            [this.loginForm.controls.mobileNumber, this.loginForm.controls.pinCode]
               .forEach(c => c.setErrors({
                 invalid: true
               }));
