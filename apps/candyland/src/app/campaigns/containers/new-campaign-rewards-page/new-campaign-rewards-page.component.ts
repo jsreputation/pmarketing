@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -11,6 +11,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {

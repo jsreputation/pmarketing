@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Observable, of } from 'rxjs';
@@ -8,11 +8,11 @@ import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
-  AvailableNewEngagementService,
-  InstantRewardsService,
-  RoutingStateService
+  AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -29,15 +29,19 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   public reward$: Observable<IReward[]>;
   public rewards$: Observable<IReward[]>;
   public rewardId: number = 8;
+  public tenantSettings: ITenantsProperties;
 
   constructor(private fb: FormBuilder,
               private instantRewardsService: InstantRewardsService,
               private routingState: RoutingStateService,
               private availableNewEngagementService: AvailableNewEngagementService,
-              private router: Router) {
+              private router: Router,
+              private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.createRewardForm();
     this.getRewardData();
     this.reward$ = of([MockRewardsMobilePreview[0]]);
@@ -124,5 +128,13 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
           });
         })
       );
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
+      });
   }
 }
