@@ -2,14 +2,12 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import { NewRewardFormService } from 'src/app/rewards/services/new-reward-form.service';
-import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
-import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
-import { RewardsService } from '@cl-core-services';
+import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { NewRewardFormService } from '../../services/new-reward-form.service';
+import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -21,12 +19,15 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public reward: any;
   public form: FormGroup;
   public config: OptionConfig[];
+  public selectedMerchant;
+  public selectedMerchantTab: 'select' | 'create' | null;
 
   constructor(public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute,
               private rewardsService: RewardsService,
+              private merchantsService: MerchantsService,
               private newRewardFormService: NewRewardFormService,
               private toggleControlService: ToggleControlService) {
   }
@@ -35,6 +36,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.initConfig();
     this.initForm();
     this.handleFormValueChanges();
+    this.handleMerchantControleChanges();
     if (!this.id) {
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
     }
@@ -71,21 +73,34 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public openDialogCreateMerchant(): void {
     const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
 
-    dialogRef.afterClosed().subscribe((merchant) => {
-      this.form.get('merchantInfo').patchValue(merchant);
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        untilDestroyed(this),
+        filter(Boolean),
+        switchMap(merchant => this.merchantsService.createMerchant(merchant)),
+        filter(Boolean),
+      )
+      .subscribe((id) => {
+        this.form.get('merchantInfo').patchValue(id);
+        this.selectedMerchantTab = 'create';
+      });
   }
 
   public openDialogSelectMerchant(): void {
-    const dialogRef = this.dialog.open(SelectMerchantComponent);
+    const dialogRef = this.dialog.open(SelectMerchantPopupComponent);
 
     dialogRef.afterClosed().subscribe((merchant) => {
-      this.form.get('merchantInfo').patchValue(merchant);
+      if (merchant) {
+        this.form.get('merchantInfo').patchValue(merchant.id);
+        this.selectedMerchantTab = 'select';
+      }
     });
   }
 
   public deleteMerchant(): void {
     this.form.get('merchantInfo').patchValue(null);
+    this.selectedMerchant = null;
+    this.selectedMerchantTab = null;
   }
 
   private initConfig(): void {
@@ -110,6 +125,21 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
+      });
+  }
+
+  private handleMerchantControleChanges(): void {
+    this.form.get('merchantInfo').valueChanges
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        debounceTime(500),
+        filter(Boolean),
+        switchMap((id: string) => this.merchantsService.getMerchant(id))
+      )
+      .subscribe((merchant) => {
+        this.selectedMerchant = merchant;
+        this.updateForm();
       });
   }
 

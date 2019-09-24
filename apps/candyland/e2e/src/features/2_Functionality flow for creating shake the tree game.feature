@@ -71,7 +71,7 @@ Scenario: Verifying that the background design choice is reflected in the previe
   Given 18_that I am on the shake the tree creation page.
   When  18_you select one of the the background design.
   Then  18_that selected background design design is reflected in the preview element.
-
+@runThis
 Scenario: Verifying the choice of gift amount is reflected in the preview element
   Given 19_that I am on the shake the tree creation page.
   When  19_you select one of the options for the gift amount
