@@ -15,8 +15,8 @@ import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 
 const enum GameType {
-  shakeTheTree = 'shake',
-  pinata = 'tap'
+  shakeTheTree = 'shake_the_tree',
+  pinata = 'hit_the_pinata'
 }
 
 interface Asset {
