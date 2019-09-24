@@ -1,10 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-// @import '~@angular/material/theming';
+// @import ~@angular/material/theming;
 @import "./custom-theme.scss";
+
+:root {
+  --font: Roboto;
+  --logo: "";
+  --title: #797c80;
+  --accent: #c91dc9;
+  --primary: #147dd3;
+  --button_color: #c91dc9;
+  --header_color: #147dd3;
+  --background: #e5e5e5;
+  --font_color: #2d2d2d;
+}
 
 html {
   font-size: 62.5%;
-  font-family: Roboto, sans-serif;
+  font-family: var(--font);
   font-style: normal;
   background-color: #fafafa;
 }
@@ -13,10 +25,33 @@ html,
 body {
   height: 100%;
   margin: 0;
+  background-color: var(--background);
+  color: var(--font_color);
 }
 
-.cdk-overlay-container .mat-primary {
-  background-color: #eb202f !important;
+.mat-primary {
+  color: var(--primary) !important;
+}
+
+button.mat-primary {
+  background-color: var(--primary) !important;
+}
+
+.mat-accent {
+  color: var(--accent) !important;
+}
+
+button.mat-primary {
+  background-color: var(--accent) !important;
+  color: var(--font_color) !important;
+}
+
+.mat-toolbar {
+  background-color: var(--header_color) !important;
+}
+
+button {
+  background-color: var(--button_color) !important;
 }
 
 .actions-container {

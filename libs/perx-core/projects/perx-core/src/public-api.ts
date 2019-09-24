@@ -126,7 +126,7 @@ export {
 export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
-export { sortByDistance } from  './lib/location/sort-by-distance';
+export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
 
 /**
@@ -141,3 +141,9 @@ export { ISurvey, SurveyQuestionType } from './lib/survey/models/survey.model';
  */
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
+
+/**
+ * Theme
+ */
+export { ITheme } from './lib/utils/themes/themes.model';
+export { ThemesService } from './lib/utils/themes/themes.service';
