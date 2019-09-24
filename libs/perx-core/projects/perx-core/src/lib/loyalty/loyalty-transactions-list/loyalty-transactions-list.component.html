@@ -1,27 +1,18 @@
 <ng-container *ngIf="transactions$ | async as transactions">
-  <div
-    class="transaction-results"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="500"
-    (scrolled)="onScroll()"
-    [scrollWindow]="false"
-  >
-    <div *ngFor="let transaction of transactions" class="transaction">
-      <div class="transaction-info">
-        <div *ngIf="transaction.name" class="transaction-name">
-          {{titleFn(transaction)}}
-        </div>
-        <div *ngIf="transaction.description" class="transaction-description">
-          {{transaction.description}}
-        </div>
-        <div class="transaction-point">
-          {{transaction.points}} {{priceLabelFn(transaction)}}
-        </div>
+  <div *ngFor="let transaction of transactions" class="transaction">
+    <div class="transaction-info">
+      <div *ngIf="transaction.name" class="transaction-name">
+        {{titleFn(transaction)}}
       </div>
-      <div class="transaction-date">
-        {{subTitleFn(transaction)}}
+      <div *ngIf="transaction.description" class="transaction-description">
+        {{transaction.description}}
       </div>
+      <div class="transaction-point">
+        {{transaction.points}} {{priceLabelFn(transaction)}}
+      </div>
+    </div>
+    <div class="transaction-date">
+      {{subTitleFn(transaction)}}
     </div>
   </div>
 </ng-container>

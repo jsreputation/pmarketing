@@ -35,7 +35,5 @@
   "devDependencies": {
     "lerna": "^3.14.1"
   },
-  "dependencies": {
-    "ngx-infinite-scroll": "^8.0.0"
-  }
+  "dependencies": {}
 }

@@ -8,7 +8,6 @@ import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list/lo
 import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -23,7 +22,6 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
   ],
   imports: [
     CommonModule,
-    InfiniteScrollModule,
   ],
   exports: [
     LoyaltySummaryComponent,

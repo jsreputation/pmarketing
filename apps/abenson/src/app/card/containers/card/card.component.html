@@ -1,6 +1,17 @@
-<div class="container">
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="My Card">
+<div
+  class="container"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
+>
+  <mat-tab-group
+    mat-stretch-tabs
+    #tabGroup
+    (selectedTabChange)="tabChanged($event)"
+  >
+    <mat-tab label="MyCard">
       <perx-core-loyalty-summary></perx-core-loyalty-summary>
       <div class="bc-block">
         <div class="barcode">
@@ -18,11 +29,16 @@
     </mat-tab>
     <mat-tab label="History">
       <perx-core-loyalty-transactions-list
-        [transactions]="transactions"
+        [transactions]="transactions$"
         [priceLabelFn]="priceLabelFn"
-        (scrolled)="transactionsScrolled()"
       >
       </perx-core-loyalty-transactions-list>
+      <div *ngIf="!transactionsLoaded" class="spinner-wrapper">
+        <mat-spinner
+          strokeWidth="2"
+          [diameter]="40"
+        ></mat-spinner>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>
