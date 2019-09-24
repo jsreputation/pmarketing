@@ -1,8 +1,8 @@
-<ng-container *ngIf="formGroup.get('merchantPIN').disabled">
+<ng-container>
   <label class="card-label">Voucher Code Type</label>
 
   <!--Voucher Code Type-->
-  <div class="card-row radio-group-row">
+  <div class="card-row radio-group-row" *ngIf="redemptionType !== 'Merchant PIN'">
     <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
       <ng-container *ngFor="let type of config?.voucherCodeTypes">
         <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
@@ -12,6 +12,17 @@
   <!--/Voucher Code Type-->
 
   <!--Voucher Single Code-->
+  <mat-form-field *ngIf="redemptionType === 'Merchant PIN'">
+    <input
+      type="text"
+      minlenght="2"
+      maxlength="6"
+      step="1"
+      matInput
+      placeholder="Merchant PIN"
+      [formControl]="formGroup.get('singleCode.code')">
+  </mat-form-field>
+
   <mat-form-field
     *ngIf="formGroup.get('singleCode').enabled && (redemptionType === 'QR Code' || redemptionType === 'Promo Code') && formGroup.get('uniqueGeneratedCode').disabled">
     <input
@@ -67,7 +78,7 @@
 </ng-container>
 
 <!--Merchant PIN-->
-<ng-container *ngIf="formGroup.get('merchantPIN').enabled">
+<!-- <ng-container *ngIf="formGroup.get('merchantPIN').enabled">
   <div class="card-row">
     <mat-form-field>
       <input
@@ -80,5 +91,5 @@
         [formControl]="formGroup.get('merchantPIN.code')">
     </mat-form-field>
   </div>
-</ng-container>
+</ng-container> -->
 <!--   /   Merchant PIN-->

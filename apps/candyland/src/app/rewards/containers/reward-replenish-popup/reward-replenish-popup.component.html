@@ -9,7 +9,7 @@
     <div class="dialog-content">
 
       <!--      Single code-->
-      <ng-container *ngIf="data?.singleCode">
+      <ng-container *ngIf="data?.type === 'single_code'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes(+$event.target.value)"/>
@@ -25,7 +25,7 @@
       <!--/      Single code-->
 
       <!-- Unique codes: System generated-->
-      <ng-container *ngIf="data?.uniqueGeneratedCode">
+      <ng-container *ngIf="data?.type === 'system_generated'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes(+$event.target.value)"/>
@@ -34,7 +34,7 @@
         <div class="code-preview">
           <label class="dialog-content-title">Unique codes: System generated</label>
           <div class="code-preview-block">
-            {{data?.uniqueGeneratedCode?.code}} ({{data?.uniqueGeneratedCode?.codeFormat}})
+            {{data?.uniqueGeneratedCode?.prefix}} ({{data?.uniqueGeneratedCode?.codeFormat}})
           </div>
         </div>
       </ng-container>

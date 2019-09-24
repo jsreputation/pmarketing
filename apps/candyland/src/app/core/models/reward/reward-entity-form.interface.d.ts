@@ -13,13 +13,13 @@ declare interface IRewardEntityForm {
   };
   vouchers: {
     voucherCode?: {
-      type: string;
+      type?: string;
       singleCode?: {
         code?: string;
       };
       uniqueGeneratedCode?: {
         prefix?: string;
-        codeFormat?: string;
+        codeFormat?: any;
         length?: number;
       };
     };

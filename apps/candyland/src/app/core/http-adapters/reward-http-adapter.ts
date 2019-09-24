@@ -16,6 +16,7 @@ export class RewardHttpAdapter {
   }
 
   public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
+    console.log(data);
     return {
       name: data.attributes.name,
       id: data.id,
@@ -53,6 +54,35 @@ export class RewardHttpAdapter {
   };
 
   public static transformFromRewardForm(data: IRewardEntityForm): IRewardEntityApi {
+    console.log(data);
+    if (data.vouchers.voucherCode.type !== 'single_code') {
+      return {
+        type: 'entities',
+        attributes: {
+          name: data.name,
+          image_url: 'https://lorempixel.com/300/300',
+          reward_type: data.rewardInfo.rewardType,
+          category: data.rewardInfo.category,
+          redemption_type: data.rewardInfo.redemptionType,
+          cost_of_reward: data.rewardInfo.cost,
+          description: data.rewardInfo.description,
+          terms_conditions: data.rewardInfo.termsAndCondition,
+          display_properties: {
+            voucher_properties: {
+              code_type: data.vouchers.voucherCode.type,
+              prefix: data.vouchers.voucherCode.uniqueGeneratedCode.prefix,
+              length: data.vouchers.voucherCode.uniqueGeneratedCode.length,
+              format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat,
+              validity: {
+                type: data.vouchers.voucherValidity.type,
+                start_date: data.vouchers.voucherValidity.startDate,
+                end_date: data.vouchers.voucherValidity.endDate
+              }
+            },
+          }
+        }
+      };
+    }
     return {
       type: 'entities',
       attributes: {
@@ -68,9 +98,6 @@ export class RewardHttpAdapter {
           voucher_properties: {
             code_type: data.vouchers.voucherCode.type,
             code: data.vouchers.voucherCode.singleCode.code,
-            prefix: data.vouchers.voucherCode.uniqueGeneratedCode.prefix,
-            length: data.vouchers.voucherCode.uniqueGeneratedCode.length,
-            format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat,
             validity: {
               type: data.vouchers.voucherValidity.type,
               start_date: data.vouchers.voucherValidity.startDate,

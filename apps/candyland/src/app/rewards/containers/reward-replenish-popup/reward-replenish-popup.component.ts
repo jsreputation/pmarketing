@@ -22,10 +22,11 @@ export class RewardReplenishPopupComponent  {
     if (this.replenishVoucherCodes) {
       this.dialogRef.close(this.replenishVoucherCodes);
     }
+
+    console.log(this.data);
   }
 
   public setReplenishVoucherCodes(value: any): void {
     this.replenishVoucherCodes = value;
   }
-
 }
