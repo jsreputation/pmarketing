@@ -3,10 +3,11 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, filter } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService } from '@cl-core/services';
+import { VouchersService } from '@cl-core/services/vouchers.service';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -24,6 +25,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   constructor(private rewardsService: RewardsService,
+              private vouchersService: VouchersService,
               private router: Router,
               private route: ActivatedRoute,
               public cd: ChangeDetectorRef,
@@ -44,14 +46,13 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(RewardReplenishPopupComponent,
-      {panelClass: 'reward-replenish-dialog', data: this.data.vouchers.voucherCode});
-
-    dialogRef.afterClosed().subscribe((value) => {
-      if (value) {
-        this.avaibleVouchers = value;
-      }
-    });
+    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, {panelClass: 'reward-replenish-dialog', data: this.data});
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((data: any) => this.vouchersService.createVoucher(data))
+      )
+      .subscribe(() => {});
   }
 
   public updateRewardImage(image: WindowBase64): void {

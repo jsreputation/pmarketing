@@ -25,9 +25,11 @@ declare interface IRewardEntityApi {
         length?: number;
         format_type?: string;
         validity: {
-          type: string,
-          start_date: string,
-          end_date?: string
+          type: string;
+          start_date: string;
+          end_date?: string;
+          times?: string;
+          duration?: string;
         }
       }
     }

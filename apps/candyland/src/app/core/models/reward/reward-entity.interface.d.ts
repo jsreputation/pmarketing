@@ -20,5 +20,7 @@ declare interface IRewardEntity {
     type: string;
     startDate: string;
     endDate?: string;
+    times?: string;
+    duration?: string;
   };
 }

@@ -21,6 +21,6 @@ export class VouchersHttpService {
   }
 
   public createVoucher(data: any): Observable<any> {
-    return this.http.post<any>(ApiConfig.voucherEntitiesPath, data);
+    return this.http.post<any>(ApiConfig.voucherBatchPath, data);
   }
 }

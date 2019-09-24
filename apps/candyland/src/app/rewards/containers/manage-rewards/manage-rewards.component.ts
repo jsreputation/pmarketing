@@ -159,7 +159,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       .subscribe(
         reward => {
           this.reward = reward;
-          console.log(this.reward);
           this.form.patchValue(reward);
         },
         () => this.router.navigateByUrl('/rewards')

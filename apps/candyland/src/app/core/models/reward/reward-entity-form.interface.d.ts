@@ -29,6 +29,8 @@ declare interface IRewardEntityForm {
       startTime: string;
       endDate?: string;
       endTime?: string;
+      times?: string;
+      duration?: string;
     };
   };
 }
