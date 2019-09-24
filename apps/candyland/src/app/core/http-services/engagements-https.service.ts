@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { IJsonApiListPayload } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class EngagementsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getEngagements(): Observable<any> {
-    return this.http.get(ApiConfig.engagementsPath + '/');
+  public getEngagements(): Observable<IJsonApiListPayload<any>> {
+    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.engagementsPath + '/');
   }
 
   public getEngagementType(): Observable<any> {

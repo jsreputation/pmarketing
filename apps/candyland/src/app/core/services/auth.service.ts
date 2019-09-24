@@ -50,8 +50,12 @@ export class AuthService {
     return this.http.signIn(sendData).pipe(
       tap(res => {
         if (res.headers.get('authorization')) {
-          const token = res.headers.get('authorization');
-          const user = this.dataStore.deserializeModel(IamUser, res.body.data);
+          const token: string = res.headers.get('authorization');
+          let dat = res.body.data;
+          if (Array.isArray(dat)) {
+            dat = dat[0];
+          }
+          const user: IamUser = this.dataStore.deserializeModel(IamUser, dat);
           this.login(token, user);
         }
       }),
@@ -59,7 +63,7 @@ export class AuthService {
     );
   }
 
-  public login(token: string, user: any): void {
+  private login(token: string, user: IamUser): void {
     this.sessionService.token = token;
     this.userService.user = user;
     this.localStorage.set('authToken', token);

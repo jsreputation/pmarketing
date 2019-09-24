@@ -141,9 +141,11 @@ export class QuestionFormFieldService {
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
         type: [type],
-        'max-length': [null, [Validators.required,
-        Validators.minLength(0),
-        Validators.maxLength(1024)]]
+        'max-length': [null, [
+          // Validators.required,
+          Validators.minLength(0),
+          Validators.maxLength(1024)
+        ]]
       })
     });
   }

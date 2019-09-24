@@ -9,7 +9,7 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
   styleUrls: ['./list-merchant-view.component.scss']
 })
 export class ListMerchantViewComponent implements AfterViewInit {
-  public DATE_FORMAT = 'MMM dd, yyyy';
+  public DATE_FORMAT = 'mediumDate';
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Input() public dataSource: CustomDataSource<Merchant>;
   @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
