@@ -4,10 +4,13 @@ import { SignUpComponent } from './signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatCheckboxModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticationService } from '@perx/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
+  const authenticationServiceStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +22,11 @@ describe('SignupComponent', () => {
         MatIconModule,
         MatCheckboxModule,
         MatInputModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        RouterTestingModule
+      ],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
     .compileComponents();
