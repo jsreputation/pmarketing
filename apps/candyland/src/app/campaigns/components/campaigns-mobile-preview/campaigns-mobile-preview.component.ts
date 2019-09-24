@@ -22,13 +22,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   constructor(private cd: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
-    this.storeTemplate$
-      .pipe(untilDestroyed(this))
-      .subscribe((value => {
-        this.engagement = value;
-        this.prepareStampsData();
-        this.setSurveyQuestion(this.engagement);
-      }));
+   this.subscribeToStore();
   }
 
   public ngOnDestroy(): void {
@@ -41,6 +35,19 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
 
     if (this.engagement.attributes_type === 'game' && this.engagement.game_type === 'shake') {
       return this.engagement.background_img_url;
+    }
+  }
+
+  private subscribeToStore(): void {
+    if (this.storeTemplate$) {
+      this.storeTemplate$
+        .pipe(untilDestroyed(this))
+        .subscribe((value => {
+          this.engagement = value;
+          this.prepareStampsData();
+          this.setSurveyQuestion(this.engagement);
+          this.cd.detectChanges();
+        }));
     }
   }
 

@@ -37,7 +37,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     super(0, store, stepConditionService, cd);
     this.initForm();
     this.initFiltersDefaultValue();
-    this.store.template$.subscribe(val => console.log('test', val));
   }
 
   public ngOnInit(): void {

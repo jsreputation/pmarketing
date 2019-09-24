@@ -19,6 +19,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -45,7 +46,10 @@ describe('NewPinataPageComponent', () => {
         MatDialogModule,
         ConfirmModalModule,
       ],
-      declarations: [ NewPinataPageComponent ]
+      declarations: [ NewPinataPageComponent ],
+      providers: [
+        {provide: LocalStorageService, useValue: {}}
+      ]
     })
     .compileComponents();
   }));
