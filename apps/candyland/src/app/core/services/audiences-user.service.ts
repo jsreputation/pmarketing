@@ -4,7 +4,7 @@ import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.se
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { HttpParams } from '@angular/common/http';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,14 @@ export class AudiencesUserService implements ITableService {
   }
 
   public getAllUsers(params: HttpParamsOptions): any {
-    return this.http.getAllUsers(new HttpParams(params));
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.http.getAllUsers(httpParams);
   }
 
   public getTableData(params: HttpParamsOptions): Observable<any> {
-    params.included = 'pools';
-    return this.http.getAllUsers(new HttpParams(params))
+    params.include = 'pools';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.http.getAllUsers(httpParams)
       .pipe(
         map((res: any) => AudiencesHttpAdapter.transformUsersWithPools(res))
       );

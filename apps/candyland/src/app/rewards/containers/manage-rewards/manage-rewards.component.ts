@@ -2,14 +2,12 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import { NewRewardFormService } from 'src/app/rewards/services/new-reward-form.service';
-import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
-import { SelectMerchantComponent } from '@cl-shared/containers/select-merchant/select-merchant.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { NewRewardFormService } from '../../services/new-reward-form.service';
+import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -89,7 +87,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public openDialogSelectMerchant(): void {
-    const dialogRef = this.dialog.open(SelectMerchantComponent);
+    const dialogRef = this.dialog.open(SelectMerchantPopupComponent);
 
     dialogRef.afterClosed().subscribe((merchant) => {
       if (merchant) {
