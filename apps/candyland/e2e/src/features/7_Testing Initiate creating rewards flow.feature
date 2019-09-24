@@ -7,7 +7,7 @@ Scenario: Ensure that reward tab is present
   Given 1_I am on dashboard page
   When  1_I do nothing
   Then  1_The reward tab should be present.
-
+@runThis
 Scenario: Ensure that clicking on the reward tab leads to the reward page
   Given 2_I am on dashboard page
   When  2_I click on the rewards tab
