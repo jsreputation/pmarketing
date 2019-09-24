@@ -2,7 +2,7 @@
   <h1 class="title">Audiences</h1>
 </section>
 
-<cl-audiences-user-info></cl-audiences-user-info>
+<cl-audiences-user-info [user]="user"></cl-audiences-user-info>
 
 <section class="content">
   <!--filters-->
@@ -10,22 +10,27 @@
     <ng-container *clTableFilter="'rewardName'; let filter">
       <div class="actions-row flex justify-content-between align-items-center">
         <cl-search-filter class="search-block" [control]="filter" placeholder="Search vouchers"></cl-search-filter>
-        <cl-button [classList]="'primary'"
-         (click)="openSelectRewardPopup()">
-        <span>
-          Issue Voucher
-        </span>
-        </cl-button>
       </div>
     </ng-container>
     <ng-container *clTableFilter="'status'; let filter">
       <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig"></cl-tabs-filter>
     </ng-container>
   </cl-table-filters>
+  <cl-button [classList]="'primary'"
+             (click)="openSelectRewardPopup()">
+        <span>
+          Issue Voucher
+        </span>
+  </cl-button>
   <!--table-->
   <cl-audiences-vouchers-list [dataSource]="dataSource"
                               (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
   </cl-audiences-vouchers-list>
+  <!--/table-->
   <!--paginator-->
-  <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <cl-paginator [dataSource]="dataSource"
+                [pageSize]="5"
+                [pageSizeOptions]="[5, 10, 20]"
+  ></cl-paginator>
+  <!--/paginator-->
 </section>

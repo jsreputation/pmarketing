@@ -172,7 +172,7 @@ describe('RewardDetailComponent', () => {
     //     }
     //   };
     //   const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-    //   const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(of(expiringReward));
+    //   const rewardsServiceSpy = spyOn(rewardsService, 'getRewardToForm').and.returnValue(of(expiringReward));
 
     //   component.ngOnInit();
     //   tick();

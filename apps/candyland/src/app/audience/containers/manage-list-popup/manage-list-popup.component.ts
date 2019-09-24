@@ -9,7 +9,7 @@ import { AudiencesService } from '@cl-core-services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageListPopupComponent implements OnInit {
-  public pools = new Array<any>();
+  public pools = new Array<any>();bb
   public poolsArray = [];
   constructor(public dialogRef: MatDialogRef<ManageListPopupComponent>,
               public audiencesService: AudiencesService,

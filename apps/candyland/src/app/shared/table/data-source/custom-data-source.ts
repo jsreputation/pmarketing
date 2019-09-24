@@ -17,17 +17,18 @@ export class CustomDataSource<T> {
   // used for set all length items the pagination component
   public length$ = this.lengthData.asObservable();
   // use for set included params
-  private _included: string;
+  private _params: HttpParamsOptions;
   private destroy$: Subject<void> = new Subject();
 
   public hasData = true;
 
-  public set included(value: any) {
-    this._included = value;
+  public set params(value: HttpParamsOptions) {
+    this._params = value;
+    this.loadingData();
   }
 
-  public get included() {
-    return {include: this._included};
+  public get params() {
+    return this._params || {};
   }
 
   public get data() {
@@ -105,6 +106,7 @@ export class CustomDataSource<T> {
 
   private loadingData(pagination?: any) {
     const params: HttpParamsOptions = {
+      ...this.params,
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
