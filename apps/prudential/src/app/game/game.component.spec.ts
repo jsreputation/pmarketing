@@ -10,7 +10,8 @@ import {
   GameType,
   defaultTree,
   IGame,
-  ConfigModule
+  ConfigModule,
+  ICampaignService
 } from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
@@ -20,13 +21,14 @@ import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
-import { Type } from '@angular/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  let router: Router;
-  let gameService: IGameService;
+  const gameServiceStub = {};
+  const campaignServiceStub = {
+    getCampaigns: () => of([])
+  };
 
   const fakeGame: IGame = {
     id: 1,
@@ -42,10 +44,11 @@ describe('GameComponent', () => {
   const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
 
   beforeEach(async(() => {
+    const routerStub = { navigate: () => ({}) };
     TestBed.configureTestingModule({
       declarations: [GameComponent],
       imports: [
-        ConfigModule.forRoot({...environment}),
+        ConfigModule.forRoot({ ...environment }),
         RouterModule.forRoot([]),
         CampaignModule,
         GameModule,
@@ -56,7 +59,11 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: IVoucherService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock },
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: Router, useValue: routerStub },
+
       ]
     })
       .compileComponents();
@@ -65,8 +72,6 @@ describe('GameComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
-    router = TestBed.get(Router);
-    gameService = TestBed.get(IGameService as Type<IGameService>);
     fixture.detectChanges();
   });
 
@@ -81,17 +86,19 @@ describe('GameComponent', () => {
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    spyOn(router, 'navigate');
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    spyOn(routerStub, 'navigate');
     component.$game = of({ ...fakeGame, remainingNumberOfTries: 0 });
     component.actionOnGameStatus();
-    expect(router.navigate).toHaveBeenCalledWith(['/vouchers', { popup: PopupType.completed }]);
+    expect(routerStub.navigate).toHaveBeenCalledWith(['/vouchers', { popup: PopupType.completed }]);
   });
 
   it('should stay in game page if game remaining number of tries greater than 0', () => {
-    spyOn(router, 'navigate');
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    spyOn(routerStub, 'navigate');
     component.$game = of(fakeGame);
     component.actionOnGameStatus();
-    expect(router.navigate).not.toHaveBeenCalled();
+    expect(routerStub.navigate).not.toHaveBeenCalled();
   });
 
   // it('should call router navigate with numRewards more than 0 when r1 status code is 200', () => {

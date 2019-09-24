@@ -93,7 +93,6 @@ export class HomeComponent implements OnInit {
   }
 
   private getRewards(): void {
-
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {

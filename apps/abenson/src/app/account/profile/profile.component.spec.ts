@@ -4,6 +4,7 @@ import { ProfileComponent } from './profile.component';
 import { MatIconModule } from '@angular/material';
 import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const profileServiceStud = {
   whoAmI: () => of(null)
@@ -17,7 +18,8 @@ describe('ProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
       imports: [
-        MatIconModule
+        MatIconModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStud }

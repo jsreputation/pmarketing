@@ -1,0 +1,31 @@
+<div class="container">
+  <form
+    [formGroup]="emailChangeForm"
+    (ngSubmit)="onSubmit()"
+    class="form"
+  >
+    <mat-form-field
+      appearance="fill"
+      class="email-field"
+    >
+      <mat-label>
+        Enter new email
+      </mat-label>
+      <input
+        matInput
+        placeholder="Enter new email"
+        formControlName="newEmail"
+      >
+      <mat-error *ngIf="emailChangeForm.get('newEmail').hasError('required')">
+        New email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      type="submit"
+      class="save-button"
+    >
+      Save
+    </button>
+  </form>
+</div>

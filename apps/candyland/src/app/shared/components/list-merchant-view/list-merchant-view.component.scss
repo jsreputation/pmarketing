@@ -29,4 +29,20 @@
       background: rgba(102, 149, 187, 0.3);
     }
   }
+
+  &-list-view {
+    .table-list {
+      width: 100%;
+    }
+
+    &-image-cell {
+      height: 3.6rem;
+      width: 3.5rem;
+
+      img {
+        max-height: 100%;
+        width: 100%;
+      }
+    }
+  }
 }

@@ -1,0 +1,12 @@
+<div class="container">
+  <form [formGroup]="streetAddressChangeForm" class="form">
+    <mat-form-field appearance="fill" class="full-width__input">
+      <mat-label>Enter new street address</mat-label>
+      <input matInput placeholder="Enter new street address" formControlName="newStreetAddress">
+      <mat-error *ngIf="streetAddressChangeForm.get('newStreetAddress').hasError('required')">
+        New street address is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button class="full-width__button" mat-flat-button>Save</button>
+  </form>
+</div>
