@@ -114,7 +114,7 @@ import { HttpClientModule } from '@angular/common/http';
     VouchersModule,
     QRCodeModule,
     LocationModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   // TODO: Uncomment the following for 'zh-Hans' support
   // providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
