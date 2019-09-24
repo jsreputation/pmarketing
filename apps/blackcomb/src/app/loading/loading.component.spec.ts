@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingComponent } from './loading.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ICampaignService, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,13 @@ describe('LoadingComponent', () => {
     autoLogin: () => of()
   };
 
+  const iCampaignSvcStub = {
+    getCampaigns: () => '',
+    getCampaign: (id = 1) => `${id}`
+  };
+
+  const iGameSvcStub = {};
+
   beforeEach(async(() => {
     const routerStub = { navigate: () => ({}) };
 
@@ -27,7 +34,9 @@ describe('LoadingComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: ICampaignService, useValue: iCampaignSvcStub},
+        { provide: IGameService, useValue: iGameSvcStub},
+        { provide: Router, useValue: routerStub}
       ]
     })
       .compileComponents();
