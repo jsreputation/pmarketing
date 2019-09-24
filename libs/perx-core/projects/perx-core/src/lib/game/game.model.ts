@@ -2,8 +2,8 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 
 export enum GameType {
     unknown = -1,
-    shakeTheTree,
-    pinata
+    shakeTheTree = 'shake',
+    pinata = 'tap'
 }
 
 export interface IGameOutcome {
@@ -14,7 +14,7 @@ export interface IGameOutcome {
 }
 export interface IGame {
     id: number;
-    campaignId: number;
+    campaignId?: number;
     type: GameType;
     remainingNumberOfTries: number;
     config: ITree | IPinata;

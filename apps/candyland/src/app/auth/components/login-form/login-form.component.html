@@ -10,7 +10,7 @@
   >
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="tenant_id" placeholder="Account ID">
+        <input matInput formControlName="account_id" placeholder="Account ID">
         <mat-error *ngIf="accountId.hasError('required')">Required field</mat-error>
         <mat-error *ngIf="accountId.hasError('minlength')">Min length 1</mat-error>
         <mat-error *ngIf="accountId.hasError('pattern')">Only numbers</mat-error>

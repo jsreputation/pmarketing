@@ -16,12 +16,16 @@
                             placeholder="Search for merchants"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
-      <cl-list-merchant-view [dataSource]="dataSource"
-                             [displayedColumns]="displayedColumns"
-                             [selectable]="true"
-                             (selectedMerchant)="selectedMerchant($event)"
-      >
-      </cl-list-merchant-view>
+      <!--table-->
+      <div class="merchant-list-wrapper">
+        <cl-list-merchant-view [dataSource]="dataSource"
+                               [displayedColumns]="displayedColumns"
+                               [selectable]="true"
+                               (selectedMerchant)="selectedMerchant($event)"
+        >
+        </cl-list-merchant-view>
+      </div>
+      <!--/table-->
       <!--paginator-->
       <cl-paginator [dataSource]="dataSource"
                     [pageSize]="5"
@@ -45,6 +49,7 @@
   </cl-button>
 
   <cl-button [classList]="'primary'"
+             [disable]="!selectMerchant"
              (click)="add()"
              [disableRipple]="true"
   >
