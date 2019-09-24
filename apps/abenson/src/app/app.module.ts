@@ -61,8 +61,9 @@ const rewardsServiceStub = {
 
 const vouchersServiceStub = {
   getAll: () => of(vouchers),
-  get: (id: number) => from(vouchers.filter(voucher => voucher.id === id)),
-  reserveReward: () => of(vouchers[1])
+  get: (id: number) => of(vouchers.find(voucher => voucher.id === id)),
+  reserveReward: () => of(vouchers[1]),
+  redeemVoucher: () => of(null)
 };
 
 const campaignServiceStub = {

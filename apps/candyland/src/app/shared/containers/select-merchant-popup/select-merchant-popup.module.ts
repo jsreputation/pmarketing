@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListMerchantViewModule } from '@cl-shared/components/list-merchant-view/list-merchant-view.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
-import { SelectMerchantComponent } from './select-merchant.component';
+import { SelectMerchantPopupComponent } from './select-merchant-popup.component';
 import {
   MatButtonModule,
   MatDialogModule,
@@ -20,13 +20,13 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 
 @NgModule({
   declarations: [
-    SelectMerchantComponent
+    SelectMerchantPopupComponent
   ],
   exports: [
-    SelectMerchantComponent
+    SelectMerchantPopupComponent
   ],
   entryComponents: [
-    SelectMerchantComponent
+    SelectMerchantPopupComponent
   ],
   imports: [
     CommonModule,
@@ -46,4 +46,4 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     ListMerchantViewModule
   ]
 })
-export class SelectMerchantModule { }
+export class SelectMerchantPopupModule { }

@@ -1,0 +1,39 @@
+:host {
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+}
+
+.page {
+  flex-grow: 1;
+  display: flex;
+  padding-top: 5.5rem;
+  flex-direction: column;
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-bottom: 1px solid #cccccc;
+  flex-grow: 1;
+
+  div {
+    padding: 3.6rem 1.5rem 2rem;
+    font-weight: 700;
+    line-height: 2.3rem;
+    font-size: 2rem;
+  }
+}
+
+.action {
+  padding: 1.2rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  button {
+    width: 100%;
+    border-color: #0F69AF;
+    font-size: 1.4rem;
+  }
+}
