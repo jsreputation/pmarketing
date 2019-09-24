@@ -102,3 +102,11 @@ export class CreateCampaignAppPage {
  }
 
 }
+
+export class GeneralSettingsAppPage {
+
+  public navigateToGeneralSettings(): Promise<string> {
+    return browser.get('settings/general') as Promise<string> ;
+ }
+
+}

@@ -7,7 +7,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardVouchersPreviewComponent {
-  public DATE_FORMAT = 'MMM dd, yyyy';
+  public DATE_FORMAT = 'mediumDate';
   @Input() public data: any;
 
 }
