@@ -156,6 +156,13 @@ export class SettingsService implements ITableService {
       );
   }
 
+  public getTenantsSettings(): Observable<any> {
+    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+      .pipe(
+        map(response => SettingsHttpAdapter.getTenantsSettings(response)),
+      );
+  }
+
   public updateTenants(value: any): any {
     const newProperties = { ...this.tenants.display_properties, ...value };
     this.tenants.display_properties = { ...newProperties };

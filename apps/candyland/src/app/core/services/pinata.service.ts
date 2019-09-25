@@ -17,6 +17,10 @@ export class PinataService {
     return this.pinataHttpService.getPinataData();
   }
 
+  public getPinata(id) {
+
+  }
+
   public createPinata(data: any): any {
     const sendData = EngagementHttpAdapter.transformPinata(data);
     return this.pinataHttpService.createPinata({ data: sendData });
