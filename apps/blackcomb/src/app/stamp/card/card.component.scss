@@ -32,17 +32,14 @@
     margin: 0;
     color: #666666;
   }
-
-
 }
 
 button {
   width: 100%; // edited from 50%
-  background-color: #EB202F;
+  background-color: #eb202f;
   color: white;
   margin-top: 10%;
 }
-
 
 .stamp {
   &-form {
@@ -51,11 +48,14 @@ button {
 
     .contain-child {
       display: block;
+
       ::ng-deep {
         .row {
-          margin-top: 1px !important; 
+          margin-top: 1px !important;
+
           .dummy-container {
             max-width: 50%;
+
             img {
               width: 100%;
             }
@@ -63,7 +63,6 @@ button {
         }
       }
     }
-
   }
 }
 
