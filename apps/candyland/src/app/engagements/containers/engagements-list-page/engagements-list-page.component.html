@@ -17,7 +17,7 @@
     <!--table-->
     <cl-engagements-list *ngIf="!isGridMode" [dataSource]="dataSource"></cl-engagements-list>
     <!--grid-->
-    <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource"></cl-engagements-grid>
+    <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource" [menuOptions]="options" (menuTapped)="menuOptionTapped($event)"></cl-engagements-grid>
     <!--paginator-->
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
   </ng-container>

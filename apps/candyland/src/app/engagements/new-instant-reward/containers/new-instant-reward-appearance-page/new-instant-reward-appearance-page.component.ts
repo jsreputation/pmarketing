@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
@@ -13,6 +13,7 @@ import {
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
   selector: 'cl-new-instant-reward-appearance-page',
@@ -31,14 +32,15 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   public rewardId: number = 8;
   public tenantSettings: ITenantsProperties;
 
-  constructor(private fb: FormBuilder,
-              private instantRewardsService: InstantRewardsService,
-              private routingState: RoutingStateService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              private router: Router,
-              private cdr: ChangeDetectorRef,
-              private settingsService: SettingsService) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private instantRewardsService: InstantRewardsService,
+    private routingState: RoutingStateService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService
+  ) {}
 
   public ngOnInit(): void {
     this.getTenants();
@@ -53,8 +55,11 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
 
   public save(): void {
     this.instantRewardsService.createRewardGame((this.formReward.value as IInstantRewardForm))
-      .pipe(untilDestroyed(this))
-      .subscribe((data: IResponseApi<IEngagementApi>) => {
+      .pipe(
+        untilDestroyed(this),
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+      )
+      .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
       });
@@ -95,8 +100,8 @@ export class NewInstantRewardAppearancePageComponent implements OnInit, OnDestro
   private createRewardForm(): void {
     this.formReward = this.fb.group({
       name: ['Instant Reward Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['You have got rewards!', [
         Validators.required,

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabsFilterComponent } from './tabs-filter.component';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 describe('TabsFilterComponent', () => {
   let component: TabsFilterComponent;
@@ -8,9 +9,10 @@ describe('TabsFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabsFilterComponent ]
+      declarations: [TabsFilterComponent],
+      imports: [PipesModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
