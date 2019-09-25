@@ -61,7 +61,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
-    console.log(this.store.currentCampaign);
     this.form.patchValue(this.store.currentCampaign);
   }
 
@@ -100,7 +99,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((val) => {
-        console.log(val);
         this.store.updateCampaign(val);
       });
   }
