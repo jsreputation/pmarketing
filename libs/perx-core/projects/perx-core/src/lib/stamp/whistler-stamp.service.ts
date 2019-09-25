@@ -18,16 +18,16 @@ import { PuzzleCollectStampState } from '../puzzles/models/puzzle-stamp.model';
 // actual card
 // http://api-dev1.uat.whistler.perxtech.io/campaign/entities/
 
-export interface IWStamp {
-  id: number;
-  user_account_id: number;
-  stamp_card_id: number;
-  state: StampState;
-  created_at: string;
-  updated_at: string;
-  campaign_id: number;
-  vouchers?: IVoucher[];
-}
+// interface IWStamp {
+//   id: number;
+//   user_account_id: number;
+//   stamp_card_id: number;
+//   state: StampState;
+//   created_at: string;
+//   updated_at: string;
+//   campaign_id: number;
+//   vouchers?: IVoucher[];
+// }
 
 interface AttbsObjEntity {
   urn: string;
@@ -99,8 +99,6 @@ export class WhistlerStampService implements StampService {
   private static WStampCardToStampCard(stampCard: IJsonApiItem<AttbsObjStamp>): IStampCard {
     const attributesObj = stampCard.attributes as AttbsObjStamp;
     return {
-      bg: attributesObj.display_properties.background_img_url,
-      cardBg: attributesObj.display_properties.card_background_img_url,
       title: attributesObj.display_properties.title,
       subTitle: attributesObj.description,
       buttonText: attributesObj.display_properties.button,
@@ -108,8 +106,6 @@ export class WhistlerStampService implements StampService {
       state: StampCardState.active,
       campaignConfig: {
         totalSlots: attributesObj.display_properties.nb_of_slots,
-        // attributesObj.display_properties.slots.map(
-        //   (slot) => WhistlerStampService.WRewardToReward(slot))
         collectionRewards:
           attributesObj.display_properties.slots.map(position => (
             { rewardPosition: position - 1}
@@ -117,47 +113,17 @@ export class WhistlerStampService implements StampService {
           )
       },
       displayProperties: {
-        cardImage: {
-          value: {
-            imageUrl: attributesObj.image_url
-          }
-        },
         preStampImg: attributesObj.display_properties.pre_stamp_img_url,
         postStampImg: attributesObj.display_properties.post_stamp_img_url,
         rewardPreStamp: attributesObj.display_properties.reward_pre_stamp_img_url,
         rewardPostStamp: attributesObj.display_properties.reward_post_stamp_img_url,
-        totalSlots: attributesObj.display_properties.nb_of_slots
-      },
-      stamps: [
-        {
-          id: 1,
-          userAccountId: 0,
-          stampCardId: 0,
-          state: StampState.issued,
-          createdAt: attributesObj.created_at,
-          updatedAt: attributesObj.updated_at,
-          campaignId: 0,
-        },
-
-      ],
-      collectionStamps: [
-        { id: 1, state: PuzzleCollectStampState.issued},
-        { id: 1, state: PuzzleCollectStampState.issued},
-        { id: 1, state: PuzzleCollectStampState.issued},
-        { id: 1, state: PuzzleCollectStampState.issued},
-        { id: 1, state: PuzzleCollectStampState.issued}
-      ]
+        bgImage: attributesObj.display_properties.background_img_url,
+        cardBgImage: attributesObj.display_properties.card_background_img_url,
+      }
     };
   }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
-    // return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
-    //   .pipe(
-    //     map(res => res.data.attributes),
-    //     map(correctEntityAttribute => correctEntityAttribute.engagement_id),
-    //     switchMap(correctId => this.getCurrentCard(correctId)),
-    //     map((stamp: IStampCard) => [stamp])
-    //   );
     return this.getCurrentCard(campaignId)
       .pipe(map((card: IStampCard) => [card]));
   }
