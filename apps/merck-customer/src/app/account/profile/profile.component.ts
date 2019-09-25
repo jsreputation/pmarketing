@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService, IProfile } from '@perx/core';
+import { ProfileService, IProfile, LoyaltyService, ILoyalty } from '@perx/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 
@@ -12,10 +12,12 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-prop
 export class ProfileComponent implements OnInit, PageAppearence {
   public profile: IProfile;
   public conditions: string[];
+  public loyalty: ILoyalty;
 
   constructor(
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
@@ -23,6 +25,8 @@ export class ProfileComponent implements OnInit, PageAppearence {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);
     });
+
+    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
   }
 
   private getConditionsFromProfile(profile: IProfile): string[] {

@@ -15,7 +15,7 @@
 
   <mat-list-item>
     <p matLine class="label">Membership Tier</p>
-    <p matLine>{{profile.state}}</p>
+    <p matLine *ngIf="loyalty">{{loyalty.membershipTierName}}</p>
   </mat-list-item>
 
   <mat-divider></mat-divider>
