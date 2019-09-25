@@ -10,6 +10,7 @@ import { PromosComponent } from './promos/promos.component';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
       { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'card',
@@ -40,10 +42,11 @@ const routes: Routes = [
       },
       { path: 'loading', component: LoadingComponent },
       { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) }
-    ]
+    ],
+    // canActivate: [ProtectedGuard]
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignUpComponent },
+  { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
+  { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/home' }
 ];
 

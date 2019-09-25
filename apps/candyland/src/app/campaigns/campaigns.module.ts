@@ -75,6 +75,10 @@ import {
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
+import { SimpleMobileViewModule } from '@cl-shared';
+import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
+import { environment } from '@cl-environments/environment';
+import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 
 @NgModule({
   providers: [
@@ -102,6 +106,7 @@ import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign
     NewCampaignStampRuleFormGroupComponent,
     ReviewCampaignComponent,
     NewCampaignRewardsSurveyPageComponent,
+    CampaignsMobilePreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -146,7 +151,14 @@ import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign
     CheckboxGroupModule,
     SelectRewardPopupModule,
     MatSlideToggleModule,
-    PaginationModule
+    PaginationModule,
+
+    SimpleMobileViewModule,
+    PerxSurveyModule,
+    ConfigModule.forRoot({...environment}),
+    GameModule,
+    PuzzlesModule,
+    PerxRewardsModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

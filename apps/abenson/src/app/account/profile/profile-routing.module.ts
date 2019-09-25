@@ -6,6 +6,7 @@ import { ChangeBarangayComponent } from './change-barangay/change-barangay.compo
 import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangeCityComponent } from './change-city/change-city.component';
+import { VerificationOtpComponent } from './verification-otp/verification-otp.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
   {
     path: 'change-street',
     component: ChangeStreetAddressComponent
+  }, {
+    path: 'verify-otp/:type',
+    component: VerificationOtpComponent
   },
 ];
 

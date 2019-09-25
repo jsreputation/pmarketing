@@ -1,0 +1,9 @@
+<div class="page">
+  <div class="body">
+    <h1 class="title">Thank you for registering</h1>
+    <div class="mb24">Enter the 6-digit One-Time Password (OTP) sent to your mobile number ({{phoneDisplay}})</div>
+    <perx-core-pin-input [length]="6" (full)="update($event)"></perx-core-pin-input>
+    <div class="pslink">Resend OTP</div>
+    <button mat-flat-button type="submit" color="primary" class="full-width">Next</button>
+  </div>
+</div>
