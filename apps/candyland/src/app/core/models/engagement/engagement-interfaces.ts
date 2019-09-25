@@ -56,6 +56,7 @@ export interface IEngagementStamps {
   reward_post_stamp_img_url: string;
   attributes_type: string;
   background_img_url: string;
+  card_background_img_url: string;
 }
 
 export interface IEngagementSurvey {
@@ -74,4 +75,21 @@ export interface IEngagementSurvey {
   card_background_img_url: string;
   attributes_type: string;
   button: string;
+}
+
+export interface  IEngagementInstantReward {
+  id: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  description: string;
+  image_url: string;
+  title_display: string;
+  banner: string;
+  button: string;
+  sub_title: string;
+  background_img_url: string;
+  card_background_img_url: string;
+  attributes_type: string;
 }

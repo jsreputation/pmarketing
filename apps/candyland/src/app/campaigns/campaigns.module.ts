@@ -76,7 +76,7 @@ import { ReviewCampaignComponent } from './containers/review-campaign/review-cam
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
 import { SimpleMobileViewModule } from '@cl-shared';
-import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 
@@ -158,6 +158,7 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     ConfigModule.forRoot({...environment}),
     GameModule,
     PuzzlesModule,
+    PerxRewardsModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

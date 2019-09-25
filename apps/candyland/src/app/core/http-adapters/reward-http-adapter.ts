@@ -9,6 +9,7 @@ export class RewardHttpAdapter {
       type: data.type,
       rewardType: data.attributes.reward_type,
       redemptionType: data.attributes.redemption_type,
+      merchantId: data.attributes.organization_id,
       current: data.attributes.cost_of_reward,
       total: 100,
       prprobability: null,

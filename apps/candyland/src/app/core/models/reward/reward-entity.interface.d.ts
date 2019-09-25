@@ -23,4 +23,5 @@ declare interface IRewardEntity {
     times?: string;
     duration?: string;
   };
+  merchantId?: string;
 }

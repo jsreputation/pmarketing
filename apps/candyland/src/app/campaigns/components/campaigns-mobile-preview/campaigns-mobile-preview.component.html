@@ -5,7 +5,7 @@
                        [logo]="tenantSettings?.logo"
                        [logoType]="tenantSettings?.logoType"
                        [fontFamily]="tenantSettings?.font"
-><!--[background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"-->
+>
   <ng-container *ngIf="engagement?.attributes_type !== 'stamps'">
     <div class="mobile-preview-header">
       <p class="mobile-preview-headline">
@@ -18,16 +18,14 @@
   </ng-container>
 
   <div class="plugin-block">
-    <div [ngClass]="{ 'mobile-preview-card': engagement?.attributes_type === 'stamps' ||engagement?.attributes_type === 'survey'}"
+    <div [ngClass]="{ 'mobile-preview-card': engagement?.attributes_type !== 'game'}"
          [ngStyle]="{
-             'background-image': 'url(/assets/images/stamps/card-background/card-bg-1.png)',
+             'background-image': 'url(' + engagement?.card_background_img_url + ')'||'url(/assets/images/stamps/card-background/card-bg-1.png)',
              'font-family': tenantSettings?.font
              }"
-    ><!--class="mobile-preview-card"-->
-      <!--'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',-->
-      <!--<perx-core-survey [data]="getQuestionData()"></perx-core-survey>-->
-      <!--this block used for stamps view-->
-      <ng-container *ngIf="engagement?.attributes_type === 'stamps'">
+    >
+      <!--this block used for stamps and instant reward view-->
+      <ng-container *ngIf="engagement?.attributes_type === 'stamps' || engagement?.attributes_type === 'instant_reward'">
         <div class="mobile-preview-header-nested">
           <p class="mobile-preview-headline">
             {{engagement?.title}}
@@ -40,7 +38,7 @@
 
       <ng-container [ngSwitch]="engagement?.attributes_type">
         <ng-container *ngSwitchCase="'game'">
-          <!--game of type-->
+          <!--type of the game-->
           <ng-container [ngSwitch]="engagement?.game_type">
             <ng-container *ngSwitchCase="'shake'">
               <!--shake the tree-->
@@ -82,6 +80,10 @@
         </ng-container>
         <ng-container *ngSwitchCase="'survey'">
           <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
+        </ng-container>
+        <ng-container *ngSwitchCase="'instant_reward'">
+          <perx-core-rewards-collection [rewardsList]="getReward$()"
+          ></perx-core-rewards-collection>
         </ng-container>
       </ng-container>
     </div>

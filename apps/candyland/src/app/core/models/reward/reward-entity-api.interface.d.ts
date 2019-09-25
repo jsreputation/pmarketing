@@ -33,5 +33,6 @@ declare interface IRewardEntityApi {
         }
       }
     }
+    organization_id?: string;
   };
 }

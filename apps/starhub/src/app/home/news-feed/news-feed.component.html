@@ -2,7 +2,7 @@
   <cdk-virtual-scroll-viewport (scrolledIndexChange)="updateScrollIndex($event)" [itemSize]="itemSize"
     orientation="horizontal">
     <mat-card *cdkVirtualFor="let item of items" class="mat-item mat-elevation-z2"
-      [ngStyle]="{'width': (itemSize-50)+'px'}">
+      [ngStyle]="{'width': ((itemSize-48) / 10)+'rem'}">
       <img mat-card-image [src]="item.image" *ngIf="item.image">
       <mat-card-content>
         <p>{{ (item.description.length > 120) ? (item.description | slice:0:120)+'...':(item.description) }}</p>

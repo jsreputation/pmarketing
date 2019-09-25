@@ -188,6 +188,39 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
   }
 });
 
+app.post(BASE_HREF + 'themes', async (req, res, next) => {
+  try {
+    // check query parameter 'url'
+    const url = req.query.url;
+
+    if (url === undefined) {
+      throw new Error('No query parameter "url" specified');
+    }
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found for ${url}`);
+    }
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const endpointRequest = await axios.get(
+      endpoint.target_url + '/iam/tenants',
+      {
+        headers: {
+          Authorization: endpointCredential.basic_token,
+          'Content-Type': 'text/plain'
+        }
+      }
+    );
+
+    res.json(endpointRequest.data);
+  } catch (e) {
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
+  }
+});
+
 if (process.env.PRODUCTION) {
   console.log('production mode ON');
   app.set('view engine', 'html');

@@ -33,7 +33,13 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewardsOptions();
   }
 
-  public getReward(id: string): Observable<IRewardEntityForm> {
+  public getReward(id: string): Observable<IRewardEntity> {
+    return this.rewardHttp.getReward(id).pipe(
+      map(response => RewardHttpAdapter.transformToReward(response.data))
+    );
+  }
+
+  public getRewardToForm(id: string): Observable<IRewardEntityForm> {
     return this.rewardHttp.getReward(id).pipe(
       map(response => RewardHttpAdapter.transformToRewardForm(response.data)
     ));
