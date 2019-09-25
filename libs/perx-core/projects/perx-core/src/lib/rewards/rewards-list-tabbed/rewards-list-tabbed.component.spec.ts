@@ -5,6 +5,7 @@ import { RewardsListComponent } from '../rewards-list/rewards-list.component';
 import { MaterialModule } from '../../shared/material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UtilsModule } from '../../utils/utils.module';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 describe('RewardsListTabbedComponent', () => {
   let component: RewardsListTabbedComponent;
@@ -15,7 +16,8 @@ describe('RewardsListTabbedComponent', () => {
       imports: [
         NoopAnimationsModule,
         MaterialModule,
-        UtilsModule
+        UtilsModule,
+        NgxMultiLineEllipsisModule
       ],
       declarations: [RewardsListTabbedComponent, RewardsListComponent]
     })
