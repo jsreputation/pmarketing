@@ -14,6 +14,7 @@ import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
+import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -22,18 +23,25 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
-  public dataSource = new MatTableDataSource<IEngagement>();
+  private static CAMPAIGN_ACTION = 'campaign';
+
+  public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
   public tabsFilterConfig;
-  public hasData = true;
-  public isGridMode = true;
+  public hasData: boolean = true;
+  public isGridMode: boolean = true;
+  public options: IEngagementItemMenuOption[] = [
+    { action: EngagementsListPageComponent.CAMPAIGN_ACTION, label: 'Launch as a campaign' }
+  ];
 
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
-  constructor(private engagementsService: EngagementsService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              private router: Router,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+  constructor(
+    private engagementsService: EngagementsService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private router: Router,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog
+  ) {
   }
 
   public ngAfterViewInit(): void {
@@ -55,7 +63,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe(result => {
         if (result) {
-          this.router.navigateByUrl('/campaigns/new-campaign');
+          this.launchCampaign();
         } else {
           this.availableNewEngagementService.remove();
         }
@@ -82,5 +90,19 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
         this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
       });
+  }
+
+  public menuOptionTapped(event: { engagement: IEngagement, action: string }): void {
+    switch (event.action) {
+      case EngagementsListPageComponent.CAMPAIGN_ACTION:
+        this.launchCampaign(event.engagement);
+    }
+  }
+
+  private launchCampaign(e?: IEngagement): void {
+    if (e !== undefined) {
+      this.availableNewEngagementService.setNewEngagement(e);
+    }
+    this.router.navigateByUrl('/campaigns/new-campaign');
   }
 }

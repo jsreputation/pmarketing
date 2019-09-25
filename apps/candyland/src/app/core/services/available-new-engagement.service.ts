@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -8,9 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AvailableNewEngagementService {
   private newEngagementSubject = new BehaviorSubject<IEngagement>(null);
 
-  public setNewEngagement(engagement: IResponseApi<IEngagementApi>): void {
-    const formattedNewEngagement = EngagementHttpAdapter.transformEngagement(engagement.data);
-    this.newEngagementSubject.next(formattedNewEngagement);
+  public setNewEngagement(engagement: IEngagement): void {
+    this.newEngagementSubject.next(engagement);
   }
 
   public get newEngagement(): IEngagement {
