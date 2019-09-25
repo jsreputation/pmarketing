@@ -28,8 +28,8 @@ export class VouchersComponent implements OnInit {
     this.analytics.addEvent({
       pageName: 'rewards:vouchers',
       pageType: PageType.landingPage,
-      siteSectionLevel2: 'rewards:discover',
-      siteSectionLevel3: 'rewards:discover'
+      siteSectionLevel2: 'rewards:vouchers',
+      siteSectionLevel3: 'rewards:vouchers'
     });
     const feed = this.vouchersService.getAll();
     this.savedVouchers = feed

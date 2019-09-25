@@ -9,4 +9,5 @@ declare interface IRewardEntity {
   total: number;
   prprobability?: number | null;
   category: string;
+  merchantId?: string;
 }

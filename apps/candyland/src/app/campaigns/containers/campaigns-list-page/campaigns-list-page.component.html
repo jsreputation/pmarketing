@@ -7,8 +7,8 @@
   <ng-container *ngIf="dataSource.hasData">
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
-      <ng-container *clTableFilter="'engagement_type'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for engagement"></cl-search-filter>
+      <ng-container *clTableFilter="'name'; let filter">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for campaign"></cl-search-filter>
       </ng-container>
       <div>
         <ng-container *clTableFilter="'rangeDate'; let filter">

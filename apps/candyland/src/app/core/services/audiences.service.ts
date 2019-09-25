@@ -31,10 +31,6 @@ export class AudiencesService implements ITableService {
     }));
   }
 
-  public getVouchers(): Observable<any> {
-    return this.http.getVouchers();
-  }
-
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiences>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAudiences(httpParams)
