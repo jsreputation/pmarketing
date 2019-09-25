@@ -25,7 +25,6 @@ export class VouchersService {
   }
 
   public createVoucher(data: any): Observable<any> {
-    console.log(data);
     const formattedVoucher = VouchersHttpAdapter.transformCreateVoucher(data);
     return this.vouchersHttp.createVoucher({data: formattedVoucher});
   }

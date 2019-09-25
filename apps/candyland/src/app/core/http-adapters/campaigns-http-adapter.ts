@@ -60,8 +60,10 @@ export class CampaignsHttpAdapter {
             format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat,
             validity: {
               type: data.vouchers.voucherValidity.type,
-              start_date: data.vouchers.voucherValidity.startDate,
-              end_date: data.vouchers.voucherValidity.endDate
+              start_date: data.vouchers.voucherValidity.period.startDate,
+              end_date: data.vouchers.voucherValidity.period.endDate,
+              times: data.vouchers.voucherValidity.issuanceDate.times,
+              duration: data.vouchers.voucherValidity.issuanceDate.duration
             }
           },
         }

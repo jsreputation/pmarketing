@@ -25,12 +25,16 @@ declare interface IRewardEntityForm {
     };
     voucherValidity: {
       type: string;
-      startDate: string;
-      startTime: string;
-      endDate?: string;
-      endTime?: string;
-      times?: string;
-      duration?: string;
+      period: {
+        startDate?: string;
+        startTime?: string;
+        endDate?: string;
+        endTime?: string;
+      };
+      issuanceDate: {
+        times?: string;
+        duration?: string;
+      };
     };
   };
 }

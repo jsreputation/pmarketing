@@ -14,7 +14,7 @@ export class VouchersHttpAdapter {
         type: 'batch',
         attributes: {
           amount: data.amount,
-          start_date: '2019-09-27T10:57:32.114Z',
+          start_date: data.start_date,
           source_type: 'Ros::Reward::Entity',
           source_id: data.source_id,
           code_type: data.code_type,
@@ -28,7 +28,7 @@ export class VouchersHttpAdapter {
         type: 'batch',
         attributes: {
           amount: data.amount,
-          start_date: '2019-09-27T10:57:32.114Z',
+          start_date: data.start_date,
           source_type: 'Ros::Reward::Entity',
           source_id: data.source_id,
           code_type: data.code_type,

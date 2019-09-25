@@ -12,7 +12,7 @@
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'single_code'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes(+$event.target.value)"/>
+                 (input)="setReplenishVoucherCodes(+$event.target.value)"/>
           <mat-hint>Voucher codes available: 10,000</mat-hint>
         </mat-form-field>
         <div class="code-preview">

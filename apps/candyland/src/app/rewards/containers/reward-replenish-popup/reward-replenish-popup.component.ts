@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
   selector: 'cl-reward-replenish-popup',
@@ -28,7 +29,7 @@ export class RewardReplenishPopupComponent implements OnInit {
     if (this.replenishVoucherCodes) {
       this.rewardInfo = {
         amount: this.replenishVoucherCodes,
-        start_date: this.voucherSettings.voucherValidity.startDate,
+        start_date: moment().toISOString(),
         source_id: this.data.id,
         code_type: this.voucherSettings.voucherCode.type,
         code: this.voucherSettings.voucherCode.singleCode.code,

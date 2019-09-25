@@ -15,18 +15,6 @@
 </ng-container>
 <!--/ Unique codes: System generated-->
 
-<!--Unique codes: User upload-->
-<!-- <ng-container *ngIf="data?.voucherCode?.uniqueUserUploadCode">
-  <label class="card-label">Voucher Code Type</label>
-  <p>Unique codes: User upload</p>
-  <div class="reward-vouchers-preview-download">
-    {{data?.voucherCode?.uniqueUserUploadCode?.name}}
-    <cl-download-button [file]="data?.voucherCode?.uniqueUserUploadCode?.file">Download voucher codes
-    </cl-download-button>
-  </div>
-</ng-container> -->
-<!--/ Unique codes: User upload-->
-
 <!--Merchant PIN-->
 <ng-container *ngIf="data?.voucherCode?.merchantPIN">
   <label class="card-label">Merchant PIN</label>
@@ -42,10 +30,12 @@
     </p>
   </div>
   <div class="card-content">
-    <time class="card-value" *ngIf="data?.voucherValidity?.type === 'period' && data?.voucherCode?.singleCode?.code">
-      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}} - {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span>
+    <time class="card-value" *ngIf="data?.voucherValidity?.type === 'period'">
+      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}} 
+        <span *ngIf="data?.voucherValidity?.period?.endDate">- {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span> 
+      </span>
     </time>
-    <p class="card-value" *ngIf="data?.voucherValidity?.type === 'issuance_date' && data?.voucherValidity?.issuanceDate?.times">
+    <p class="card-value" *ngIf="data?.voucherValidity?.type === 'issuance_date'">
       Valid for
       {{data?.voucherValidity?.issuanceDate?.times}}
       {{data?.voucherValidity?.issuanceDate?.duration}}{{data?.voucherValidity?.issuanceDate?.times > 1 ? 's' : ''}}
