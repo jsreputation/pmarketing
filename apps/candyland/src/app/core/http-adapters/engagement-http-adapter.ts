@@ -1,6 +1,6 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import {
-  IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
+  IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
 
 export class EngagementHttpAdapter {
@@ -47,8 +47,26 @@ export class EngagementHttpAdapter {
       case 'stamps':
         return EngagementHttpAdapter.transformToStampType(data);
       case 'instant_reward':
-        // TODO: need implemented this method for now it don't work
-        return;
+        return EngagementHttpAdapter.transformToInstantReward(data);
+    }
+  }
+
+  public static transformToInstantReward(data: any): IEngagementInstantReward {
+    return {
+      id: data.id,
+      type: data.type,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      banner: data.attributes.display_properties.banner,
+      attributes_type: data.attributes.type,
+      background_img_url: data.attributes.display_properties.background_img_url,
+      card_background_img_url: data.attributes.display_properties.card_background_img_url
     }
   }
 
