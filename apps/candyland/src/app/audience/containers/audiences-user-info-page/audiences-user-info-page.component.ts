@@ -5,17 +5,17 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild
 } from '@angular/core';
-import { AudiencesService } from '@cl-core/services';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
+import { CustomDataSource } from '@cl-shared';
+import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -24,53 +24,35 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  public userId: number;
+  public userId: string;
   public user;
   public vouchers;
   public tabsFilterConfig;
-  public dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  public dataSource: CustomDataSource<any>;
 
   constructor(private audiencesUserService: AudiencesUserService,
-              private audiencesService: AudiencesService,
+              private vouchersService: AudiencesVouchersService,
               private route: ActivatedRoute,
+              private router: Router,
               public cd: ChangeDetectorRef,
               public dialog: MatDialog) {
-
   }
 
   public ngOnInit(): void {
-    this.userId = this.route.snapshot.params.id;
-    this.getUser(this.userId);
-    this.getVouchers();
+    this.dataSource = new CustomDataSource<any>(this.vouchersService);
+    this.handleRouteParams();
+    this.dataSource.data$.pipe(
+      untilDestroyed(this)
+    ).subscribe((data: any) => {
+      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
+      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
+    });
   }
 
   public ngAfterViewInit(): void {
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
   }
 
   public ngOnDestroy(): void {
-  }
-
-  public getUser(id: number): void {
-    this.audiencesUserService.getUser(id)
-      .subscribe(user => this.user = user);
-
-  }
-
-  public getVouchers(): void {
-    this.audiencesService.getVouchers()
-      .pipe(
-        tap((data: any) => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
-          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
-        }),
-      )
-      .subscribe(vouchers => {
-        this.vouchers = vouchers;
-        this.dataSource.data = this.vouchers;
-      });
   }
 
   public openChangeExpiryDateDialog(item): void {
@@ -89,4 +71,24 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     this.dialog.open(SelectRewardPopupComponent);
   }
 
+  private handleRouteParams(): void {
+    this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap(id => this.userId = id),
+      tap(id => this.setUserParams(id)),
+      switchMap((id: string) => this.audiencesUserService.getUser(id)),
+    )
+      .subscribe(
+        user => {
+          this.user = user;
+          this.cd.detectChanges();
+        },
+        () => this.router.navigateByUrl('/audience')
+      );
+  }
+
+  private setUserParams(id): void {
+    this.dataSource.params = {'filter[assigned_to_id]': id};
+  }
 }
