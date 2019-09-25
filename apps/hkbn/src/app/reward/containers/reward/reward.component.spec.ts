@@ -117,7 +117,7 @@ describe('RewardComponent', () => {
   });
 
   // it('should get reward by id param', () => {
-  //   // const getRewardSpy = spyOn(rewardsServiceStub, 'getReward').and.returnValue(of(mockReward));
+  //   // const getRewardSpy = spyOn(rewardsServiceStub, 'getRewardToForm').and.returnValue(of(mockReward));
   //   fixture.detectChanges();
   //   // expect(getRewardSpy).toHaveBeenCalledWith(1);
   // });
