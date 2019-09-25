@@ -156,16 +156,9 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
   padding: $vertical-padding $horizontal-padding;
 
-  &.pt-0 {
-    padding-top: 0;
-  }
-
-  &.pb-0 {
-    padding-bottom: 0;
-  }
-
   .mat-stepper-horizontal {
     background-color: inherit;
+    padding: 0;
   }
 }
 
