@@ -7,4 +7,12 @@
     <p class="engagement-item-name">{{data?.title}}</p>
     <p class="engagement-item-date">{{data?.created_at | date: 'mediumDate' }}</p>
   </div>
+  <div class="engagement-item-actions" *ngIf="menuOptions.length > 0">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label}}</button>
+    </mat-menu>
+  </div>
 </div>

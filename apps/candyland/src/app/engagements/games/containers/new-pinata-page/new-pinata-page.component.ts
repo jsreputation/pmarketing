@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
   AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
@@ -11,6 +11,7 @@ import {
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -27,13 +28,15 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   public tenantSettings: ITenantsProperties;
   private destroy$ = new Subject();
 
-  constructor(private fb: FormBuilder,
-              private pinataService: PinataService,
-              private routingState: RoutingStateService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              private router: Router,
-              private cdr: ChangeDetectorRef,
-              private settingsService: SettingsService) {
+  constructor(
+    private fb: FormBuilder,
+    private pinataService: PinataService,
+    private routingState: RoutingStateService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService
+  ) {
   }
 
   public ngOnInit(): void {
@@ -44,8 +47,11 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.pinataService.createPinata(this.formPinata.value)
-      .pipe(untilDestroyed(this))
-      .subscribe((data: IResponseApi<IEngagementApi>) => {
+      .pipe(
+        untilDestroyed(this),
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+      )
+      .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
       });
@@ -86,8 +92,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   private createPinataForm(): void {
     this.formPinata = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,
