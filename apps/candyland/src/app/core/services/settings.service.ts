@@ -41,10 +41,12 @@ export const settingsFonts: ISimpleValue[] = [{
 export class SettingsService implements ITableService {
   private tenants: Tenants;
 
-  constructor(private settingsHttpService: SettingsHttpService,
+  constructor(
+    private settingsHttpService: SettingsHttpService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private dataStore: DataStore) {
+    private dataStore: DataStore
+  ) {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
