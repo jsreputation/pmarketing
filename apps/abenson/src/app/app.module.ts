@@ -13,7 +13,6 @@ import {
   ProfileModule,
   RewardsService,
   IVoucherService,
-  ProfileService,
   ConfigModule,
   ICampaignService
 } from '@perx/core';
@@ -48,7 +47,6 @@ import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
-import { profile } from './mock/profile.mock';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -70,10 +68,6 @@ const vouchersServiceStub = {
 const campaignServiceStub = {
   getCampaigns: () => of(campaigns),
   getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
-};
-
-const profileServiceStub = {
-  whoAmI: () => of(profile)
 };
 
 @NgModule({
@@ -123,7 +117,6 @@ const profileServiceStub = {
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },
-    { provide: ProfileService, useValue: profileServiceStub }
   ],
   bootstrap: [AppComponent]
 })
