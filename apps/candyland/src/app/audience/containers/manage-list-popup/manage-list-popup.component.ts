@@ -8,9 +8,11 @@ import { AudiencesService } from '@cl-core-services';
   styleUrls: ['./manage-list-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ManageListPopupComponent implements OnInit {
-  public pools = new Array<any>();
+  public pools = [];
   public poolsArray = [];
+
   constructor(public dialogRef: MatDialogRef<ManageListPopupComponent>,
               public audiencesService: AudiencesService,
               private ref: ChangeDetectorRef,

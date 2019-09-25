@@ -13,7 +13,7 @@ export class AudiencesUserService implements ITableService {
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getUser(id: number): Observable<any> {
+  public getUser(id: string): Observable<any> {
     return this.http.getUser(id).pipe(
       map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res))
     );
