@@ -31,7 +31,7 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -51,6 +51,7 @@ import { campaigns } from './mock/campaigns.mock';
 import { profile } from './mock/profile.mock';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -118,6 +119,7 @@ const profileServiceStub = {
     HttpClientModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },

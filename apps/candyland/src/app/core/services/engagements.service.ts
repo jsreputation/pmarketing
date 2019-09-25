@@ -14,7 +14,7 @@ export class EngagementsService {
   public getEngagements(): Observable<IEngagement[]> {
     return this.http.getEngagements()
       .pipe(
-        map((res: any) => res.data.map(item => EngagementHttpAdapter.transformEngagement(item)))
+        map((res: any) => res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item)))
       );
   }
 
