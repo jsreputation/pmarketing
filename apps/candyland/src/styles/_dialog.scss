@@ -128,7 +128,7 @@
 
 .mat-dialog-container {
   padding: 0 !important;
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 
 .mat-dialog-content {
@@ -137,7 +137,6 @@
   margin: 0 !important;
   padding: 0 !important;
   max-height: 65vh;
-  overflow: visible !important;
 }
 
 .audience-dialog {

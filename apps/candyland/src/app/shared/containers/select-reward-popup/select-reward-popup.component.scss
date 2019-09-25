@@ -47,13 +47,10 @@
 
   &-list-wrapper {
     position: relative;
-    max-height: 50rem;
-    overflow: auto;
   }
 
   &-dialog-content {
     padding: 0 3rem;
-    min-width: 94.4rem;
   }
 
   &-dialog-actions {
@@ -61,5 +58,7 @@
     justify-content: flex-end;
     align-items: center;
     padding: ($vertical-padding * 0.75) 3rem;
+    background: #fff;
+    position: relative;
   }
 }
