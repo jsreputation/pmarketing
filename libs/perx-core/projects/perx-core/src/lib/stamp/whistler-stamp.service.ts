@@ -111,9 +111,10 @@ export class WhistlerStampService implements StampService {
         // attributesObj.display_properties.slots.map(
         //   (slot) => WhistlerStampService.WRewardToReward(slot))
         collectionRewards:
-          attributesObj.display_properties.slots.map(position => {
-            return { rewardPosition: position - 1};
-          })
+          attributesObj.display_properties.slots.map(position => (
+            { rewardPosition: position - 1}
+          )
+          )
       },
       displayProperties: {
         cardImage: {
@@ -168,9 +169,7 @@ export class WhistlerStampService implements StampService {
         switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
           `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
         )),
-        map((res) => {
-          return WhistlerStampService.WStampCardToStampCard(res.data);
-        })
+        map((res) => WhistlerStampService.WStampCardToStampCard(res.data))
       );
   }
 
