@@ -142,7 +142,6 @@ export class RewardHttpAdapter {
   public static setTime(date: string, time: any ): string {
     const [hours, minutes] = time.split(':');
     const resultDate = moment(date).set({ hours: hours, minutes: minutes }).toISOString();
-    console.log(resultDate);
     return resultDate;
   }
 
