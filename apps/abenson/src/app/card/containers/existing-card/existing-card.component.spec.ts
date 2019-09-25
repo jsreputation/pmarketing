@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { of } from "rxjs";
+import { of } from 'rxjs';
 
 import {LoyaltyService, ProfileService} from '@perx/core';
 
