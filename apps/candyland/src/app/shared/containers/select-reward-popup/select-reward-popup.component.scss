@@ -1,11 +1,5 @@
 @import "variables";
 
-.dialog {
-  &-content {
-    padding-top: 3rem;
-  }
-}
-
 .reward {
   &-list {
     padding-top: 3.5rem;
@@ -17,14 +11,5 @@
 
   &-dialog-content {
     padding: 0 3rem;
-  }
-
-  &-dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: ($vertical-padding * 0.75) 3rem;
-    background: #fff;
-    position: relative;
   }
 }
