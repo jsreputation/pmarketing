@@ -25,7 +25,6 @@ const routes: Routes = [
         path: 'account',
         loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
       },
-      { path: 'forgot-pin', component: ForgotPinComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'game/:id', loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule) },
@@ -44,6 +43,7 @@ const routes: Routes = [
     ],
     canActivate: [ProtectedGuard]
   },
+  { path: 'forgot-pin', component: ForgotPinComponent },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/home' }
