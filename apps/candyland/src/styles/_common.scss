@@ -162,6 +162,10 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+.mat-horizontal-stepper-header-container + .mat-horizontal-content-container {
+  padding: 0 !important;
+}
+
 .row {
   display: flex;
   flex-flow: row nowrap;

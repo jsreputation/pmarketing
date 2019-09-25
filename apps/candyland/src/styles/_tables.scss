@@ -33,9 +33,21 @@
     }
   }
 
+  td.mat-cell, 
+  td.mat-footer-cell, 
+  th.mat-header-cell {
+    padding-left: ($horizontal-padding * 0.5);
+    padding-right: ($horizontal-padding * 0.5);
+    &:first-of-type {
+      padding-left: ($horizontal-padding * 0.75);
+    }
+    &:last-of-type {
+      padding-right: ($horizontal-padding * 0.75);
+    }
+  }
+
   th.mat-header-cell {
     text-align: left;
-    max-width: 30rem !important;
   }
 
   $fixed-cell-1: 5.4rem !important;
@@ -137,9 +149,10 @@
 
   .image-cell {
     display: inline-flex;
-    height: 4.2rem;
-    width: 4.2rem;
-    margin: 1.2rem 0;
+    height: $thumbnail-size;
+    width: $thumbnail-size;
+    vertical-align: middle;
+    background: $light-gray;
 
     img {
       max-height: 100%;

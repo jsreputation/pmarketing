@@ -20,7 +20,8 @@
 .btn.ph-0 {
   padding-left: 0;
   padding-right: 0;
-  transition: padding .15s ease;
+  transition: padding 0.15s ease;
+
   &:active,
   &:focus {
     padding-left: ($horizontal-padding * 0.75);
