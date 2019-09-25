@@ -24,6 +24,7 @@
   }
 
   &-info {
+    flex: 1;
     position: relative;
     display: flex;
     flex-flow: column nowrap;
@@ -53,5 +54,11 @@
     @include typo-caption;
 
     color: $base-font-color;
+  }
+
+  &-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 }
