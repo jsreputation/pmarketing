@@ -93,7 +93,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
       tap( id => this.id = id),
-      switchMap(id => this.rewardsService.getReward(id))
+      switchMap(id => this.rewardsService.getRewardToForm(id))
     )
       .subscribe(
         reward => {
