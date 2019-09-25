@@ -1,8 +1,9 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { StampService, IStampCard } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 import { filter, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -10,17 +11,21 @@ import { Observable } from 'rxjs';
 })
 export class CardComponent implements OnInit {
 
-  public title: string = 'Scratch & Win!';
-  public subTitle: string = 'Collect all 10 stickers and win a reward!';
+  public title: string; // = 'Scratch & Win!'
+  public subTitle: string; //  = 'Collect all 10 stickers and win a reward!'
+  public background: string;
+  public cardBackground: string;
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
 
   public congratsDetailText: string = 'You just won 2 rewards';
-
   constructor(
     private stampService: StampService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+
+  }
 
   public ngOnInit(): void {
     this.stampCard$ = this.route.paramMap
@@ -32,5 +37,16 @@ export class CardComponent implements OnInit {
           return this.stampService.getCurrentCard(idN);
         }),
       );
+    this.stampCard$.subscribe(
+      (stampCard: IStampCard) => {
+        this.title = stampCard.title;
+        this.subTitle = stampCard.subTitle;
+        this.background = stampCard.bg;
+        this.cardBackground = stampCard.cardBg;
+      },
+      () => {
+        this.router.navigate(['/wallet']);
+      }
+    );
   }
 }
