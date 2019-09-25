@@ -42,9 +42,9 @@ export class SettingsService implements ITableService {
   private tenants: Tenants;
 
   constructor(private settingsHttpService: SettingsHttpService,
-              private fb: FormBuilder,
-              private authService: AuthService,
-              private dataStore: DataStore) {
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private dataStore: DataStore) {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
@@ -143,19 +143,20 @@ export class SettingsService implements ITableService {
   }
 
   public getAllGroups(): Observable<any> {
-    return this.dataStore.findAll(Groups, {page: {size: 10, number: 1}});
+    return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
   }
 
   public getTenants(): Observable<Tenants> {
-    return this.dataStore.findRecord(Tenants, '2')
+    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
-        tap((tenants) => this.tenants = tenants)
+        map(tenants => tenants.getModels()[0]),
+        tap(tenant => this.tenants = tenant)
       );
   }
 
   public updateTenants(value: any): any {
-    const newProperties = {...this.tenants.display_properties, ...value};
-    this.tenants.display_properties = {...newProperties};
+    const newProperties = { ...this.tenants.display_properties, ...value };
+    this.tenants.display_properties = { ...newProperties };
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
