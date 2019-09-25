@@ -28,7 +28,6 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public user;
   public vouchers;
   public tabsFilterConfig;
-  status;
   public dataSource: CustomDataSource<any>;
 
   constructor(private audiencesUserService: AudiencesUserService,

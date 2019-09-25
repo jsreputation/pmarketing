@@ -6,12 +6,11 @@ import _isEmpty from 'lodash.isempty';
 
 export default class Utils {
 
-  static convertArrToObj<T>(arr: T[], propKey: string): {[key: string]: T} {
-    const obj = {} as {[key: string]: T};
-    arr.forEach((item) => {
-      obj[item[propKey]] = item;
-    });
-    return obj;
+  static convertArrToObj(arr: any, propKey: string): {[key: string]: any} {
+    return arr.reduce((map, obj) => {
+      map[obj[propKey]] = obj;
+      return map;
+    }, {});
   }
 
   static convertObjToArr(obj: any): any[] {

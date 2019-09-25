@@ -38,7 +38,7 @@ export class AudiencesVouchersService implements ITableService {
   private getRewardsMap(idList): Observable<{ [key: string]: IRewardEntity }> {
     const requests = idList.map(id => this.rewardsService.getReward(id));
     return combineLatest(requests).pipe(
-      map(rewards => Utils.convertArrToObj<IRewardEntity>(rewards, 'id')),
+      map(rewards => Utils.convertArrToObj(rewards, 'id')),
     );
   }
 
