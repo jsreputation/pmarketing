@@ -17,12 +17,15 @@
   box-shadow: none;
 }
 
-.btn.edge-l-0 {
-  margin-left: -($horizontal-padding * 0.75);
-}
-
-.btn.edge-r-0 {
-  margin-right: -($horizontal-padding * 0.75);
+.btn.ph-0 {
+  padding-left: 0;
+  padding-right: 0;
+  transition: padding .15s ease;
+  &:active,
+  &:focus {
+    padding-left: ($horizontal-padding * 0.75);
+    padding-right: ($horizontal-padding * 0.75);
+  }
 }
 
 .primary {
