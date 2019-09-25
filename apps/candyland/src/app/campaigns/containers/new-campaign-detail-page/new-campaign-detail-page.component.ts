@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -18,6 +18,7 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
+  @Input()
   public campaign;
   public pools;
 

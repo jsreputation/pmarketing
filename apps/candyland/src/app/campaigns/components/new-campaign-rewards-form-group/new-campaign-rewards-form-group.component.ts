@@ -19,8 +19,9 @@ import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop } from 'rxjs';
+import { noop, combineLatest } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { RewardsService } from '@cl-core/services/rewards.service';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -37,9 +38,10 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
+  @Input() public campaign;
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: [false],
-    rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})]
+    rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
     )
   });
   private onChange: any = noop;
@@ -58,9 +60,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     return this.rewards.getError('sumMoreThan');
   }
 
-  constructor(public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private fb: FormBuilder) {
+  constructor(
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private rewardsService: RewardsService
+  ) {
   }
 
   public ngOnInit(): void {
@@ -77,6 +82,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       .subscribe((reward) => {
         this.onChange(reward);
       });
+
+    if (this.campaign && this.campaign.possible_outcomes) {
+      this.initRewardsList();
+    }
+
   }
 
   public ngAfterViewInit(): void {
@@ -93,6 +103,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
         this.addReward(reward);
       }
     });
+  }
+  public initRewardsList(): void {
+    const possibleOutcomes = this.campaign.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
+    combineLatest(possibleOutcomes).subscribe(
+      rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
+    );
   }
 
   public addReward(value: IRewardEntity): void {
@@ -114,7 +130,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
         this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
       }
     }
-    this.group.patchValue(data, {emitEvent: false});
+    this.group.patchValue(data, { emitEvent: false });
     this.group.updateValueAndValidity();
     this.cd.detectChanges();
   }
@@ -139,7 +155,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
       value: [value],
-      probability: {value: 0, disabled: !isEnableProbability}
+      probability: { value: 0, disabled: !isEnableProbability }
     });
   }
 
@@ -147,13 +163,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     if (isEnableProbability) {
       this.rewards.insert(0, this.createRewardFormGroup(null, isEnableProbability));
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').enable({emitEvent: false});
+        this.rewards.at(i).get('probability').enable({ emitEvent: false });
       }
     } else {
       this.rewards.removeAt(0);
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').reset(0, {emitEvent: false});
-        this.rewards.at(i).get('probability').disable({emitEvent: false});
+        this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
+        this.rewards.at(i).get('probability').disable({ emitEvent: false });
       }
     }
     this.cd.detectChanges();

@@ -11,6 +11,8 @@ import { StepConditionService } from '../../services/step-condition.service';
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+  @Input() public campaign;
+
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
