@@ -97,7 +97,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 .mat-horizontal-stepper-header-container + .mat-horizontal-content-container {
-  padding: 0 !important;
+  padding: 0;
+  overflow: initial; // needed to make phone mock-ups sticky
 }
 
 .row {
@@ -113,6 +114,11 @@ h1, h2, h3, h4, h5, p {
   justify-content: stretch;
   align-items: flex-start;
   grid-template-columns: auto $mobile-preview-width;
+
+  > *:last-child {
+    position: sticky;
+    top: $header-height-base + $vertical-padding;
+  }
 }
 
 .mobile {
