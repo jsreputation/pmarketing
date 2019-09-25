@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EngagementItemComponent } from './engagement-item.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 describe('EngagementItemComponent', () => {
   let component: EngagementItemComponent;
@@ -9,10 +9,13 @@ describe('EngagementItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EngagementItemComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [EngagementItemComponent],
+      imports: [
+        PipesModule
+      ],
+      schemas: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
