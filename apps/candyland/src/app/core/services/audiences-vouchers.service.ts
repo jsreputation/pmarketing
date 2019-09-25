@@ -21,15 +21,9 @@ export class AudiencesVouchersService implements ITableService {
     let vouchers;
     return this.audiencesHttpsService.getVouchers(httpParams)
       .pipe(
-        tap(data => vouchers = data),
-        switchMap(data => {
-          const rewardIds = data.data.map(item => item.attributes.source_id);
-          const uniqRewardIds = Utils.filterUniq(rewardIds);
-          const requests = uniqRewardIds.map(id => this.rewardsService.getReward(id));
-          return combineLatest(requests).pipe(
-            map(rewards => Utils.convertArrToObj(rewards, 'id')),
-          );
-        }),
+        tap(response => vouchers = response),
+        map(response => this.getUniqIds(response.data, 'source_id')),
+        switchMap(idList => this.getRewardsMap(idList)),
         map(rewardsMap => {
           vouchers.data = vouchers.data.map(voucher => {
             const formattedVoucher = AudiencesHttpAdapter.transformAudiencesVoucher(voucher);
@@ -39,5 +33,17 @@ export class AudiencesVouchersService implements ITableService {
           return vouchers;
         }),
       );
+  }
+
+  private getRewardsMap(idList): Observable<{ [key: string]: IRewardEntity }> {
+    const requests = idList.map(id => this.rewardsService.getReward(id));
+    return combineLatest(requests).pipe(
+      map(rewards => Utils.convertArrToObj<IRewardEntity>(rewards, 'id')),
+    );
+  }
+
+  private getUniqIds(data: any[], propKey: string): string[] {
+    const idList = data.map(item => item.attributes[propKey]);
+    return Utils.filterUniq(idList);
   }
 }

@@ -35,6 +35,10 @@ export class CustomDataSource<T> {
     return this.dataSubject.value;
   }
 
+  public get data$() {
+    return this.dataSubject.asObservable();
+  }
+
   // default items on the page set up pageSize
   constructor(public dataService: ITableService, public pageSize = 5) {
     this.loadingData();

@@ -15,6 +15,7 @@ import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
+import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -27,6 +28,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public user;
   public vouchers;
   public tabsFilterConfig;
+  status;
   public dataSource: CustomDataSource<any>;
 
   constructor(private audiencesUserService: AudiencesUserService,
@@ -40,6 +42,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public ngOnInit(): void {
     this.dataSource = new CustomDataSource<any>(this.vouchersService);
     this.handleRouteParams();
+    this.dataSource.data$.pipe(
+      untilDestroyed(this)
+    ).subscribe((data: any) => {
+      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
+      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
+    });
   }
 
   public ngAfterViewInit(): void {
@@ -69,8 +77,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.userId = id),
-      tap(id => this.dataSource.params = {'filter[assigned_to_id]': id}),
-      switchMap((id: string) => this.audiencesUserService.getUser(id))
+      tap(id => this.setUserParams(id)),
+      switchMap((id: string) => this.audiencesUserService.getUser(id)),
     )
       .subscribe(
         user => {
@@ -81,4 +89,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
+  private setUserParams(id): void {
+    this.dataSource.params = {'filter[assigned_to_id]': id};
+  }
 }

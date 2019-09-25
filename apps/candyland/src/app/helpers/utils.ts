@@ -6,8 +6,8 @@ import _isEmpty from 'lodash.isempty';
 
 export default class Utils {
 
-  static convertArrToObj(arr: any[], propKey: string): Object {
-    const obj = {};
+  static convertArrToObj<T>(arr: T[], propKey: string): {[key: string]: T} {
+    const obj = {} as {[key: string]: T};
     arr.forEach((item) => {
       obj[item[propKey]] = item;
     });
