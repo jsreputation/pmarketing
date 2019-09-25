@@ -35,13 +35,12 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   public getBackgroundPlugin(): string {
-    if (!this.engagement) {
-      return  '/assets/images/stamps/card-background/card-bg-1.png';
-    }
 
-    if (this.engagement.attributes_type === 'game' && this.engagement.game_type === 'shake') {
+    if (this.engagement && this.engagement.background_img_url) {
       return this.engagement.background_img_url;
     }
+
+    return  '/assets/images/stamps/card-background/card-bg-1.png';
   }
 
   private subscribeToStore(): void {

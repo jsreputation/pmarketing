@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EngagementItemComponent } from './engagement-item.component';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { MatMenuModule, MatIconModule } from '@angular/material';
 
 describe('EngagementItemComponent', () => {
   let component: EngagementItemComponent;
@@ -11,7 +12,9 @@ describe('EngagementItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [EngagementItemComponent],
       imports: [
-        PipesModule
+        PipesModule,
+        MatMenuModule,
+        MatIconModule
       ],
       schemas: []
     })
