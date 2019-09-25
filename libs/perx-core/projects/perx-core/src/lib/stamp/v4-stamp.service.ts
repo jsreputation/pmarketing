@@ -171,12 +171,12 @@ export class V4StampService implements StampService {
           value: {
             imageUrl: oc(stampCard).display_properties.card_image.value.image_url(),
           }
-        // },
-        // totalSlots: stampCard.display_properties.total_slots,
+        },
+        totalSlots: stampCard.display_properties.total_slots,
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
-    }
-  };
+    };
+  }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
     return this.http.get<IV4GetStampCardsResponse>(

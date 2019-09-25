@@ -69,7 +69,8 @@ export interface IStampCard {
     rewardPostStamp?: string;
     bgImage?: string;
     cardBgImage?: string;
-    stamps?: IStamp[];
+    totalSlots?: number;
   };
   collectionStamps?: PuzzleCollectStamp[];
+  stamps?: IStamp[];
 }
