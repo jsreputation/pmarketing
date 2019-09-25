@@ -34,7 +34,6 @@ const routes: Routes = [
       {
         path: 'reward',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
-        canActivate: [ProtectedGuard]
       },
       {
         path: 'card',

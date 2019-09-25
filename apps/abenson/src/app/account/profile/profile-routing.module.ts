@@ -31,7 +31,10 @@ const routes: Routes = [
   }, {
     path: 'verify-otp/:type',
     component: VerificationOtpComponent
-  },
+  }, {
+    path: 'edit-mobile',
+    loadChildren: () => import('./change-mobile/change-mobile.module').then(mod => mod.ChangeMobileModule)
+  }
 ];
 
 @NgModule({

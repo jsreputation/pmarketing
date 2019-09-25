@@ -24,7 +24,7 @@ export class ChangeMobileComponent implements OnInit {
 
   public requestOtp(): void {
     this.auth.requestVerificationToken(this.phoneForm.value.phone).subscribe(() => {
-      this.router.navigate(['verify_otp', 'mobile'], { queryParams: this.phoneForm.value });
+      this.router.navigate(['account', 'profile', 'verify-otp', 'mobile'], { queryParams: this.phoneForm.value });
     });
   }
 }

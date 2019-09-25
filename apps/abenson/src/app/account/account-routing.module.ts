@@ -15,9 +15,6 @@ const routes: Routes = [{
 }, {
   path: 'additions',
   loadChildren: () => import('./profile-additions/profile-additions.module').then(mod => mod.ProfileAdditionsModule)
-}, {
-  path: 'mobile',
-  loadChildren: () => import('./change-mobile/change-mobile.module').then(mod => mod.ChangeMobileModule)
 }];
 
 @NgModule({
