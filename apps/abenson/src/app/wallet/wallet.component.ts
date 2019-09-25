@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { StatusLabelMapping, Voucher } from '@perx/core';
-import { vouchers } from '../mock/vouchers.mock';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { StatusLabelMapping, Voucher, IVoucherService, VoucherState } from '@perx/core';
 
 @Component({
   selector: 'app-wallet',
@@ -21,8 +21,18 @@ export class WalletComponent implements OnInit {
     released: 'Declined',
   };
 
+  constructor(private vouchersService: IVoucherService) {}
+
   public ngOnInit(): void {
-    this.issuedVouchers = of(vouchers);
-    this.redeemedVouchers = of(vouchers);
+    const feed = this.vouchersService.getAll();
+    this.issuedVouchers = feed
+      .pipe(
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state === VoucherState.issued))
+      );
+
+    this.redeemedVouchers = feed
+      .pipe(
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued))
+      );
   }
 }
