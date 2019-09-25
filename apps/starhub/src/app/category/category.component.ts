@@ -39,11 +39,12 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
     if (categoryName) {
       this.selectedCategory = categoryName;
+      const pageName: string = `rewards:discover:${categoryName.toLowerCase()}`;
       this.analytics.addEvent({
-        pageName: `rewards:discover:${categoryName}`,
+        pageName,
         pageType: PageType.sectionLanding,
         siteSectionLevel2: 'rewards:discover',
-        siteSectionLevel3: `rewards:discover:${categoryName}`
+        siteSectionLevel3: pageName
       });
       this.fetchRewards();
     } else {
