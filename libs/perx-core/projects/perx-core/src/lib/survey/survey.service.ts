@@ -5,7 +5,7 @@ import { ISurvey, IQuestion, MaterialColor, IAnswer } from './models/survey.mode
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 interface IWhistlerSurveyContent {
@@ -85,7 +85,6 @@ export class SurveyService {
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
     return this.campaignService.getCampaign(id)
       .pipe(
-        tap(campaign => console.log(campaign)),
         switchMap(
           (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
             this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
