@@ -33,7 +33,8 @@ const routes: Routes = [
       { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'card',
@@ -42,7 +43,7 @@ const routes: Routes = [
       { path: 'loading', component: LoadingComponent },
       { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) }
     ],
-    canActivate: [ProtectedGuard]
+    // canActivate: [ProtectedGuard]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
