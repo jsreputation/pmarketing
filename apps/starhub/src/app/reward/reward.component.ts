@@ -38,10 +38,10 @@ export class RewardComponent implements OnInit {
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
           this.analyticsService.addEvent({
-            pageName: `rewards:discover:${category}:${reward.name}`,
+            pageName: `rewards:discover:${category.toLowerCase()}:${reward.name}`,
             pageType: PageType.detailPage,
             siteSectionLevel2: 'rewards:discover',
-            siteSectionLevel3: `rewards:discover:${category}:${reward.name}`
+            siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
           });
         }
         // this.analyticsService.addEvent({});
