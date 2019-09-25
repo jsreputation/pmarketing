@@ -87,6 +87,10 @@
 
   &-closed {
     color: $secondary-color;
+    position: absolute; // start here for fixed
+    right: 1.5rem;
+    top: 1.8rem;
+    color: $secondary-color;
   }
 
   &-tab-content {
