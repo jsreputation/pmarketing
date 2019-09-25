@@ -1,13 +1,31 @@
 <div class="container">
   <h1 class="title">Help us retrieve your profile</h1>
-  <form class="forgot-pin-form" [formGroup]="forgotPinForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline" class="full-width">
+  <form
+    class="forgot-pin-form"
+    [formGroup]="forgotPinForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field
+      appearance="fill"
+      class="full-width"
+    >
       <mat-label>Enter Mobile Number</mat-label>
-      <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+      <input
+        matInput
+        placeholder="Enter Mobile Number"
+        formControlName="mobileNumber"
+      >
       <mat-error *ngIf="forgotPinForm.get('mobileNumber').hasError('required')">
         Mobile number is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-    <button mat-flat-button type="submit" color="primary" class="full-width">Next</button>
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      class="full-width"
+    >
+      Next
+    </button>
   </form>
 </div>
