@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignsService } from '@cl-core-services';
+import { CampaignsService, SettingsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -17,6 +19,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 export class NewCampaignComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public campaign;
+  public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
   constructor(private store: CampaignCreationStoreService,
@@ -24,10 +27,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
               private campaignsService: CampaignsService,
               private router: Router,
               public dialog: MatDialog,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private cdr: ChangeDetectorRef,
+              private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.initForm();
     this.store.currentCampaign$
       .asObservable()
@@ -122,5 +128,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/campaigns']);
     });
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
+      });
   }
 }
