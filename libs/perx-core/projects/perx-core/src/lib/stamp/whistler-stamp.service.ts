@@ -2,9 +2,7 @@ import { switchMap, map } from 'rxjs/operators';
 import {
   IStampCard,
   IStamp,
-  StampState,
   StampCardState
-  // StampState,
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable } from 'rxjs';
@@ -12,8 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
-import { IVoucher } from '../vouchers/models/voucher.model';
-import { PuzzleCollectStampState } from '../puzzles/models/puzzle-stamp.model';
+
 // http://api-dev1.uat.whistler.perxtech.io/loyalty/engagements/
 // actual card
 // http://api-dev1.uat.whistler.perxtech.io/campaign/entities/

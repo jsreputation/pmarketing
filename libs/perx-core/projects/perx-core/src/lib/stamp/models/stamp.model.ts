@@ -74,4 +74,5 @@ export interface IStampCard {
   };
   stamps?: IStamp[];
   collectionStamps?: PuzzleCollectStamp[];
+  totalSlots?: number;
 }
