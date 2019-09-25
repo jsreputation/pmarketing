@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '../../../../../../../libs/perx-core/dist/perx-core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-campaigns-mobile-preview',
@@ -15,7 +16,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   public stampsSlotNumberData = [];
   public questionData$ = new BehaviorSubject(null);
   public engagement;
-
+  public reward$ = new BehaviorSubject(null);
   public getQuestionData(): Observable<any> {
     return this.questionData$.asObservable();
   }
@@ -26,6 +27,11 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+  }
+
+  public getReward$(): Observable<any[]> {
+    return this.reward$
+      .pipe(filter(Boolean));
   }
 
   public getBackgroundPlugin(): string {
@@ -46,6 +52,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
           this.engagement = value;
           this.prepareStampsData();
           this.setSurveyQuestion(this.engagement);
+          this.setReward(this.engagement);
           this.cd.detectChanges();
         }));
     }
@@ -72,6 +79,29 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
     if (data.attributes_type === 'survey') {
       this.questionData$.next({questions: [data.questions]});
       this.cd.detectChanges();
+    }
+  }
+
+  private setReward(data: any): void {
+    if (data.attributes_type === 'instant_reward') {
+      this.reward$.next([{
+        id: 1,
+        name: 'Reward Name',
+        subtitle: 'So yummy',
+        description: 'Merchant Name',
+        validFrom: null,
+        validTo: null,
+        rewardThumbnail: 'https://picsum.photos/300/300',
+        rewardBanner: 'https://picsum.photos/200/300',
+        merchantImg: 'https://picsum.photos/200/300',
+        termsAndConditions: '',
+        howToRedeem: '',
+        rewardPrice: [{
+          id: 1,
+          currencyCode: '44',
+          price: 3
+        }]
+      }]);
     }
   }
 
