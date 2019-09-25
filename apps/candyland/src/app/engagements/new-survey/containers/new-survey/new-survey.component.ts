@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
+import { debounceTime, tap, map } from 'rxjs/operators';
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
@@ -13,6 +13,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SurveyQuestionType } from '@perx/core';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
   selector: 'cl-new-survey',
@@ -81,12 +82,12 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   constructor(private questionFormFieldService: QuestionFormFieldService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              private surveyService: SurveyService,
-              private router: Router,
-              private routingState: RoutingStateService,
-              private cdr: ChangeDetectorRef,
-              private settingsService: SettingsService) {
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private surveyService: SurveyService,
+    private router: Router,
+    private routingState: RoutingStateService,
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService) {
   }
 
   public ngOnInit(): void {
@@ -123,8 +124,11 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.surveyService.createSurvey(this.form.value)
-      .pipe(untilDestroyed(this))
-      .subscribe((data: IResponseApi<IEngagementApi>) => {
+      .pipe(
+        untilDestroyed(this), 
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+      )
+      .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
       });
@@ -162,7 +166,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         this.form.patchValue({
           background: res.background[0],
           cardBackground: res.cardBackground[0]
-        }, {emitEvent: false});
+        }, { emitEvent: false });
       }));
   }
 
@@ -173,7 +177,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe((val) => {
-        this.questionData$.next({questions: [val.questions[0]]});
+        this.questionData$.next({ questions: [val.questions[0]] });
         this.cdr.detectChanges();
       })
   }
