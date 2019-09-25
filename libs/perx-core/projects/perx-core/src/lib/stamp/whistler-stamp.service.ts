@@ -2,11 +2,9 @@ import { switchMap, map } from 'rxjs/operators';
 import {
   IStampCard,
   IStamp,
-  StampCardState,
-  IReward,
   StampState,
+  StampCardState
   // StampState,
-  // IReward,
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable } from 'rxjs';
@@ -15,6 +13,7 @@ import { Config } from '../config/config';
 import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
 import { IVoucher } from '../vouchers/models/voucher.model';
+import { PuzzleCollectStampState } from '../puzzles/models/puzzle-stamp.model';
 // http://api-dev1.uat.whistler.perxtech.io/loyalty/engagements/
 // actual card
 // http://api-dev1.uat.whistler.perxtech.io/campaign/entities/
@@ -62,13 +61,15 @@ interface AttbsObjStamp {
     post_stamp_img_url: string;
     reward_pre_stamp_img_url: string;
     reward_post_stamp_img_url: string;
+    card_background_img_url: string;
+    background_img_url: string;
   };
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class WStampService implements StampService {
+export class WhistlerStampService implements StampService {
   public baseUrl: string;
 
   constructor(
@@ -78,32 +79,41 @@ export class WStampService implements StampService {
     this.baseUrl = `${config.apiHost}`;
   }
   // doesn't work yet.
-  private static WStampToStamp(stamp: IWStamp): IStamp {
-    return {
-      id: stamp.id,
-      userAccountId: stamp.user_account_id,
-      stampCardId: stamp.stamp_card_id,
-      state: stamp.state,
-      createdAt: stamp.created_at,
-      updatedAt: stamp.updated_at,
-      campaignId: stamp.campaign_id,
-      vouchers: stamp.vouchers,
-    };
-  }
+  // private static WStampToStamp(stamp: IWStamp): IStamp {
+  //   return {
+  //     id: stamp.id,
+  //     userAccountId: stamp.user_account_id,
+  //     stampCardId: stamp.stamp_card_id,
+  //     state: stamp.state,
+  //     createdAt: stamp.created_at,
+  //     updatedAt: stamp.updated_at,
+  //     campaignId: stamp.campaign_id,
+  //     vouchers: stamp.vouchers,
+  //   };
+  // }
   // takes in a WReward: IReward
-  private static WRewardToReward(slot: number): IReward {
-    throw new Error(`${slot}, Method not implemented.`);
-  }
+  // private static WRewardToReward(slot: number): IReward {
+  //   throw new Error(`${slot}, Method not implemented.`);
+  // }
 
   private static WStampCardToStampCard(stampCard: IJsonApiItem<AttbsObjStamp>): IStampCard {
     const attributesObj = stampCard.attributes as AttbsObjStamp;
     return {
+      bg: attributesObj.display_properties.background_img_url,
+      cardBg: attributesObj.display_properties.card_background_img_url,
+      title: attributesObj.display_properties.title,
+      subTitle: attributesObj.description,
+      buttonText: attributesObj.display_properties.button,
       id: +stampCard.id,
       state: StampCardState.active,
       campaignConfig: {
         totalSlots: attributesObj.display_properties.nb_of_slots,
-        rewards: attributesObj.display_properties.slots.map(
-          (slot) => WStampService.WRewardToReward(slot))
+        // attributesObj.display_properties.slots.map(
+        //   (slot) => WhistlerStampService.WRewardToReward(slot))
+        collectionRewards:
+          attributesObj.display_properties.slots.map(position => {
+            return { rewardPosition: position - 1};
+          })
       },
       displayProperties: {
         cardImage: {
@@ -116,37 +126,64 @@ export class WStampService implements StampService {
         rewardPreStamp: attributesObj.display_properties.reward_pre_stamp_img_url,
         rewardPostStamp: attributesObj.display_properties.reward_post_stamp_img_url,
         totalSlots: attributesObj.display_properties.nb_of_slots
-      }
+      },
+      stamps: [
+        {
+          id: 1,
+          userAccountId: 0,
+          stampCardId: 0,
+          state: StampState.issued,
+          createdAt: attributesObj.created_at,
+          updatedAt: attributesObj.updated_at,
+          campaignId: 0,
+        },
+
+      ],
+      collectionStamps: [
+        { id: 1, state: PuzzleCollectStampState.issued},
+        { id: 1, state: PuzzleCollectStampState.issued},
+        { id: 1, state: PuzzleCollectStampState.issued},
+        { id: 1, state: PuzzleCollectStampState.issued},
+        { id: 1, state: PuzzleCollectStampState.issued}
+      ]
     };
   }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
+    // return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
+    //   .pipe(
+    //     map(res => res.data.attributes),
+    //     map(correctEntityAttribute => correctEntityAttribute.engagement_id),
+    //     switchMap(correctId => this.getCurrentCard(correctId)),
+    //     map((stamp: IStampCard) => [stamp])
+    //   );
+    return this.getCurrentCard(campaignId)
+      .pipe(map((card: IStampCard) => [card]));
+  }
+
+  public getCurrentCard(campaignId: number): Observable<IStampCard> {
     return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
-        map(correctEntityAttribute => correctEntityAttribute.engagement_id),
-        switchMap(correctId => this.getCurrentCard(correctId)),
-        map((stamp: IStampCard) => [stamp])
-      );
-  }
-  // actually using engagementId
-  public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    return this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
-      `${this.baseUrl}/loyalty/engagements/${campaignId}`
-    ).pipe(
-        map((res) => WStampService.WStampCardToStampCard(res.data))
+        switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
+          `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
+        )),
+        map((res) => {
+          const result = WhistlerStampService.WStampCardToStampCard(res.data);
+          return result;
+        })
       );
   }
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
-    throw new Error('Method not implemented.');
+    throw new Error(`Method not implemented. ${campaignId}`);
   }
 
   public putStamp(stampId: number): Observable<IStamp> {
-    throw new Error('Method not implemented.');
+    throw new Error(`Method not implemented. ${stampId}`);
   }
 
   public stampAll(cardId: number): Observable<IStamp[]> {
-    throw new Error('Method not implemented.');
+    throw new Error(`Method not implemented. ${cardId}`);
   }
 }

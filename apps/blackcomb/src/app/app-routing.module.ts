@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
 
       {
-        path: 'stamp/:id',
+        path: 'loyalty/:id',
         loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
         canActivate: [ProtectedGuard]
       },

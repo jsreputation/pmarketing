@@ -42,6 +42,11 @@ export interface IStamp {
 }
 
 export interface IStampCard {
+  bg?: string;
+  cardBg?: string;
+  title?: string; // added
+  subTitle?: string; // added
+  buttonText?: string; // added
   id: number;
   userAccountId?: number; // made optional
   state: StampCardState;
@@ -49,7 +54,7 @@ export interface IStampCard {
   cardNumber?: number; // made optional
   campaignConfig: {
     totalSlots: number;
-    rewards: IReward[];
+    rewards?: IReward[];
     collectionRewards?: PuzzleCollectReward[];
   };
   displayProperties: {
