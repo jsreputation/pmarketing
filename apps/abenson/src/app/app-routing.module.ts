@@ -42,7 +42,7 @@ const routes: Routes = [
       { path: 'loading', component: LoadingComponent },
       { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) }
     ],
-    // canActivate: [ProtectedGuard]
+    canActivate: [ProtectedGuard]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
