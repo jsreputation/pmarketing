@@ -42,8 +42,6 @@ export interface IStamp {
 }
 
 export interface IStampCard {
-  bg?: string;
-  cardBg?: string;
   title?: string; // added
   subTitle?: string; // added
   buttonText?: string; // added
@@ -71,8 +69,7 @@ export interface IStampCard {
     rewardPostStamp?: string;
     bgImage?: string;
     cardBgImage?: string;
-    totalSlots?: number;
+    stamps?: IStamp[];
   };
-  stamps?: IStamp[];
   collectionStamps?: PuzzleCollectStamp[];
 }

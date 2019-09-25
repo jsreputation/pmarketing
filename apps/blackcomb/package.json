@@ -8,7 +8,6 @@
     "build:blackcomb:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
-    "testPdtn": "ng test ",
     "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e"
