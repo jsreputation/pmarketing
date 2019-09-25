@@ -1,5 +1,9 @@
 @import "variables";
 
+.table-settings-user-role thead {
+  background: $light-gray;
+}
+
 .info {
   height: auto;
   max-width: 37.9rem;
@@ -58,7 +62,7 @@
 }
 
 .name {
-  height: 6.6rem;
+  height: ($thumbnail-size / 2);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
