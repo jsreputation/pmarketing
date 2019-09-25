@@ -26,8 +26,8 @@ export class CampaignsService implements ITableService {
     return this.campaignsHttpsService.getCampaigns(httpParams);
   }
 
-  public getCampaign(id: string): void {
-    this.campaignsHttpsService.getCampaign(id);
+  public getCampaign(id: string): Observable<any> {
+    return this.campaignsHttpsService.getCampaign(id);
   }
 
   public updateCampaign(id: number, data: any): void {
@@ -36,7 +36,7 @@ export class CampaignsService implements ITableService {
 
   public createCampaign(data: any): Observable<any> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    return this.campaignsHttpsService.createCampaign({data: sendData});
+    return this.campaignsHttpsService.createCampaign({ data: sendData });
   }
 
   public duplicateCampaign(id: string): Observable<any> {

@@ -1,4 +1,3 @@
-import { NewCampaignDetailFormService } from './../../services/new-campaign-detail-form.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignsService, SettingsService } from '@cl-core-services';
@@ -10,7 +9,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, tap, filter, switchMap } from 'rxjs/operators';
+import { map, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -22,6 +21,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
   public campaign;
+  public campaignDetail;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
@@ -34,8 +34,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService,
-    private newCampaignDetailFormService: NewCampaignDetailFormService
+    private settingsService: SettingsService
   ) {
   }
 
@@ -57,6 +56,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.cdr.detach();
   }
 
   private initForm(): void {
@@ -150,26 +150,18 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap((id) => this.updateId(id)),
       filter(Boolean),
       switchMap(id => this.campaignsService.getCampaign(id))
-    )
-      .subscribe(
-        campaign => {
-          this.campaign = campaign;
-          this.form.patchValue(campaign);
-        },
-        () => this.router.navigateByUrl('/campaigns')
-      );
-  }
-
-  private updateId(id): void {
-    if (id) {
-      this.id = id;
-    } else {
-      this.id = null;
-      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
-    }
+    ).subscribe(
+      campaign => {
+        this.campaign = campaign;
+        this.campaignDetail = campaign && campaign.data && campaign.data.attributes;
+        console.log(this.campaignDetail);
+        this.form.patchValue(this.campaignDetail);
+        this.store.updateCampaign(this.form);
+      },
+      () => this.router.navigateByUrl('/campaigns')
+    );
   }
 
 }

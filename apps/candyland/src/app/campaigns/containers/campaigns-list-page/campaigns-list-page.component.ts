@@ -18,7 +18,7 @@ export class CampaignsListPageComponent {
   }
 
   public editCampaign(campaign: ICampaign): void {
-    this.router.navigateByUrl('/edit' + campaign.id);
+    this.router.navigateByUrl('/campaigns/edit/' + campaign.id);
   }
 
   public duplicateCampaign(campaign: ICampaign): void {

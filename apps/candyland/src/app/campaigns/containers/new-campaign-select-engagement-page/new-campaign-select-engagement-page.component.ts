@@ -17,6 +17,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+  @Input() public campaign;
   public form: FormGroup;
   public dataSource = new MatTableDataSource<IEngagement>();
   public defaultSearchValue = null;
@@ -27,13 +28,15 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     return this.form.get('template');
   }
 
-  constructor(private engagementsService: EngagementsService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              public store: CampaignCreationStoreService,
-              public stepConditionService: StepConditionService,
-              private fb: FormBuilder,
-              private dialog: MatDialog,
-              public cd: ChangeDetectorRef) {
+  constructor(
+    private engagementsService: EngagementsService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    public cd: ChangeDetectorRef
+  ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
     this.initFiltersDefaultValue();
@@ -58,6 +61,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
+    console.log(this.store.currentCampaign);
     this.form.patchValue(this.store.currentCampaign);
   }
 
@@ -84,9 +88,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   private initSelectedTemplate(res: IEngagement[]): void {
-    if (this.availableNewEngagementService.isAvailable) {
-      const id = this.availableNewEngagementService.newEngagement.id;
-      const findTemplate = res.find(template => template.id === id);
+    const engagementId = this.availableNewEngagementService.isAvailable ?
+      this.availableNewEngagementService.newEngagement.id : this.campaign.engagement_id.toString();
+    if (engagementId) {
+      const findTemplate = res.find(template => template.id === engagementId);
       this.template.patchValue(findTemplate);
     }
   }
@@ -95,6 +100,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((val) => {
+        console.log(val);
         this.store.updateCampaign(val);
       });
   }
