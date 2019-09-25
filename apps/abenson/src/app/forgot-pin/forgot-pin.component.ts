@@ -54,6 +54,8 @@ export class ForgotPinComponent implements OnInit {
               this.notificationService.addSnack('We could not reach the server');
             } else if (err.status === 401) {
               this.notificationService.addSnack('Invalid mobile number.');
+            } else if (err.status === 404) {
+              this.notificationService.addSnack('Mobile number not found.');
             } else {
               this.notificationService.addSnack(err.statusText);
             }
