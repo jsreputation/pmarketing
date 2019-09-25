@@ -17,15 +17,15 @@
   box-shadow: none;
 }
 
-.btn.ph-0 {
-  padding-left: 0;
-  padding-right: 0;
+.ph-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   transition: padding 0.15s ease;
 
   &:active,
   &:focus {
-    padding-left: ($horizontal-padding * 0.75);
-    padding-right: ($horizontal-padding * 0.75);
+    padding-left: ($horizontal-padding * 0.75) !important;
+    padding-right: ($horizontal-padding * 0.75) !important;
   }
 }
 
