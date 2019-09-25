@@ -68,72 +68,6 @@ h1, h2, h3, h4, h5, p {
   width: auto !important;
 }
 
-.page-header {
-  @include mat-elevation(4);
-
-  display: flex;
-  min-height: $header-height-base;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0 $horizontal-padding;
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  background: $white;
-  width: 100%;
-
-  &.full-with {
-    background: $white;
-    min-height: $header-height-base;
-  }
-
-  .pagetitle-input {
-    @include typo-h5;
-
-    input {
-      color: $base-font-color;
-    }
-
-    .mat-form-field-wrapper {
-      padding: 0;
-      transition: margin 0.05s ease-in;
-
-      .mat-form-field-underline {
-        bottom: 0;
-      }
-
-      .mat-form-field-subscript-wrapper {
-        @include typo-body2;
-
-        text-align: right;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        background: $white;
-        display: inline-block;
-        margin-top: 0;
-        width: auto;
-        left: auto;
-        right: -1px;
-        padding: 0.5rem 0 0.5rem 0.5rem;
-        overflow: visible;
-
-        &::before {
-          content: "";
-          width: 1em;
-          background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-          position: absolute;
-          top: 0;
-          right: 100%;
-          bottom: 0;
-        }
-      }
-    }
-  }
-}
-
 .title {
   @include typo-h5;
 
@@ -329,10 +263,13 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   width: 100%;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: $primary-hover;
+//BOX OUTLINED FIELDS
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: $primary-color;
 }
@@ -417,15 +354,7 @@ cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   background-color: $primary-color;
 }
 
-.tabs-filter:first-child .tabs {
-  margin-bottom: $vertical-padding;
-}
-
-.tabs-filter + .table-filter .mat-form-field-wrapper {
-  margin: 0 0 2.4rem !important;
-  padding-bottom: 0;
-}
-
+// no-data graphics layout
 .no-data {
   &-img {
     display: block;
