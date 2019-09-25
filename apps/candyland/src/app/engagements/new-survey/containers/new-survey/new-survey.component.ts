@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, tap, map } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { SurveyQuestionType } from '@perx/core';
+import { IQuestion, SurveyQuestionType } from '@perx/core';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
@@ -87,7 +87,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     private router: Router,
     private routingState: RoutingStateService,
     private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+              private fb: FormBuilder) {
   }
 
   public ngOnInit(): void {
@@ -101,10 +102,13 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
   // TODO: need for the future patch form
   public patchForm(): void {
+    this.deleteQuestion(0);
     const data = NewSurveyForm.getDefaultValue();
-    this.form.patchValue(data);
+    this.form.patchValue(data, {emitEvent: false});
     data.questions.forEach((item) => {
       const group = this.createControlQuestion(item.payload.type);
+      console.log('question need to changes', item);
+      this.pathChoicePicture(item, group);
       group.patchValue(item);
       this.surveyQuestion.push(group);
     });
@@ -123,15 +127,16 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.surveyService.createSurvey(this.form.value)
-      .pipe(
-        untilDestroyed(this), 
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-      )
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    console.log(this.form.value);
+    // this.surveyService.createSurvey(this.form.value)
+    //   .pipe(
+    //     untilDestroyed(this),
+    //     map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+    //   )
+    //   .subscribe((data: IEngagement) => {
+    //     this.availableNewEngagementService.setNewEngagement(data);
+    //     this.router.navigateByUrl('/engagements');
+    //   });
   }
 
   public deleteQuestion(index: number) {
@@ -149,6 +154,19 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   public addQuestion(questionType: SurveyQuestionType): void {
     this.surveyQuestion.push(this.createControlQuestion(questionType));
+  }
+
+  private patchMultipleChoice(item: any, group: FormGroup): void {
+    if (item.payload.type === SurveyQuestionType.multipleChoice) {
+      // TODO: need implement it
+      // this.questionFormFieldService.pathChoicePicture(item, group);
+    }
+  }
+
+  private pathChoicePicture(item: IQuestion, group: FormGroup): void {
+    if (item.payload.type === SurveyQuestionType.pictureChoice) {
+      this.questionFormFieldService.pathChoicePicture(item, group);
+    }
   }
 
   private createControlQuestion(questionType: SurveyQuestionType): FormGroup {

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SurveyQuestionType } from '@perx/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IQuestion, SurveyQuestionType } from '@perx/core';
 
 @Injectable()
 export class QuestionFormFieldService {
@@ -57,6 +57,18 @@ export class QuestionFormFieldService {
 
   public createFormField(type: SurveyQuestionType): FormGroup {
     return this.formControls[type](type);
+  }
+
+  public pathChoicePicture(item: IQuestion, group: FormGroup): void {
+    const choices = (group.get('payload.choices') as FormArray);
+    choices.removeAt(0);
+
+    item.payload.choices.forEach((dataChoice) => {
+      choices.push(this.fb.group({
+        text: [dataChoice, [Validators.required]],
+        img_url: [dataChoice.img_url, [Validators.required]]
+      }));
+    });
   }
 
   private ratingGroup(type: string): FormGroup {

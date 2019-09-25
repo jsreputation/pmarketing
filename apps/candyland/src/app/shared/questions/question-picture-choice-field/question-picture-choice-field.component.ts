@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadImageComponent } from '@cl-shared/questions/question-picture-choice-field/upload-image/upload-image.component';
 
@@ -7,7 +7,7 @@ import { UploadImageComponent } from '@cl-shared/questions/question-picture-choi
   templateUrl: './question-picture-choice-field.component.html',
   styleUrls: ['./question-picture-choice-field.component.scss']
 })
-export class QuestionPictureChoiceFieldComponent {
+export class QuestionPictureChoiceFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   constructor(private fb: FormBuilder) { }
 
@@ -19,12 +19,14 @@ export class QuestionPictureChoiceFieldComponent {
     this.choices.removeAt(index);
   }
 
-  public selectUploadGraphic(img: any, uploadImage: UploadImageComponent): void {
+  public selectUploadGraphic(img: any, uploadImage: UploadImageComponent, input: HTMLInputElement): void {
+    const text = input && input.value ? input.value : null;
     this.choices.push(this.fb.group({
-      text: [null, [Validators.required]],
+      text: [text, [Validators.required]],
       img_url: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
     }));
     uploadImage.clear();
+    this.clearInputValue(input);
   }
 
   public addedField(input: HTMLInputElement): void {
@@ -32,7 +34,15 @@ export class QuestionPictureChoiceFieldComponent {
       text: [input.value, [Validators.required]],
       img_url: [null, [Validators.required]]
     }));
+    this.clearInputValue(input);
+  }
+
+  private clearInputValue(input: HTMLInputElement): void {
     input.value = '';
+  }
+
+  ngOnInit(): void {
+    console.log(this.group);
   }
 
 }
