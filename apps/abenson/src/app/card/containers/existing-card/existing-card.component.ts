@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { map } from "rxjs/operators"
+import { map } from 'rxjs/operators';
 
 import {
   ProfileService,
@@ -70,9 +70,9 @@ export class ExistingCardComponent implements OnInit {
             if (err.status === 0) {
               this.notificationService.addSnack('We could not reach the server');
             } else if (err.status === 401) {
-              this.notificationService.addSnack('Invalid mobile number.');
+              this.notificationService.addSnack('Invalid card number.');
             } else if (err.status === 404) {
-              this.notificationService.addSnack('Mobile number not found.');
+              this.notificationService.addSnack('Card number not found.');
             } else {
               this.notificationService.addSnack(err.statusText);
             }
