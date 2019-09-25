@@ -169,8 +169,7 @@ export class WhistlerStampService implements StampService {
           `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
         )),
         map((res) => {
-          const result = WhistlerStampService.WStampCardToStampCard(res.data);
-          return result;
+          return WhistlerStampService.WStampCardToStampCard(res.data);
         })
       );
   }
