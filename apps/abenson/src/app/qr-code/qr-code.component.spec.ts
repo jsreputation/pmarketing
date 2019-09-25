@@ -20,7 +20,10 @@ describe('QrCodeComponent', () => {
       imports: [
         NgxBarcodeModule,
         VouchersModule,
-        RouterTestingModule
+        RouterTestingModule.withRoutes([{
+          path: 'wallet',
+          component: QRCodeComponent
+        }])
       ],
       providers: [
         { provide: IVoucherService, useValue: ivoucherServiceStub }
