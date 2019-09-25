@@ -22,6 +22,10 @@ const routes: Routes = [
         component: NewCampaignComponent
       },
       {
+        path: 'edit/:id',
+        component: NewCampaignComponent
+      },
+      {
         path: 'review/:id',
         component: ReviewCampaignComponent
       }

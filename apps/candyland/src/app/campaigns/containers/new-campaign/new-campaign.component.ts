@@ -1,14 +1,16 @@
+import { NewCampaignDetailFormService } from './../../services/new-campaign-detail-form.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignsService, SettingsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { map, tap, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -17,19 +19,24 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
+  public id: string;
   public form: FormGroup;
   public campaign;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
-  constructor(private store: CampaignCreationStoreService,
-              private stepConditionService: StepConditionService,
-              private campaignsService: CampaignsService,
-              private router: Router,
-              public dialog: MatDialog,
-              private fb: FormBuilder,
-              private cdr: ChangeDetectorRef,
-              private settingsService: SettingsService) {
+  constructor(
+    private store: CampaignCreationStoreService,
+    private stepConditionService: StepConditionService,
+    private campaignsService: CampaignsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService,
+    private newCampaignDetailFormService: NewCampaignDetailFormService
+  ) {
   }
 
   public ngOnInit(): void {
@@ -46,6 +53,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         this.store.updateCampaign(value);
       });
+    this.handleRouteParams();
   }
 
   public ngOnDestroy(): void {
@@ -123,7 +131,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private openDialog(): void {
     const config = this.getDialogData(this.store.currentCampaign);
-    const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, {data: config});
+    const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, { data: config });
 
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/campaigns']);
@@ -137,4 +145,31 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       });
   }
+
+  private handleRouteParams(): void {
+    this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap((id) => this.updateId(id)),
+      filter(Boolean),
+      switchMap(id => this.campaignsService.getCampaign(id))
+    )
+      .subscribe(
+        campaign => {
+          this.campaign = campaign;
+          this.form.patchValue(campaign);
+        },
+        () => this.router.navigateByUrl('/campaigns')
+      );
+  }
+
+  private updateId(id): void {
+    if (id) {
+      this.id = id;
+    } else {
+      this.id = null;
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
+  }
+
 }
