@@ -169,19 +169,12 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
-.tab-content {
-  display: flex;
-  flex-flow: row nowrap;
+.phonepreview-wrapper {
+  display: grid;
+  grid-gap: ($horizontal-padding * 0.75);
   justify-content: stretch;
   align-items: flex-start;
-
-  & > div {
-    margin-right: ($horizontal-padding * 0.75);
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
+  grid-template-columns: auto $mobile-preview-width;
 }
 
 .mobile {
