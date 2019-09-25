@@ -1,12 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerificationOtpComponent } from './verification-otp.component';
-import { UtilsModule, ProfileService } from '@perx/core';
+import { UtilsModule, ProfileService, AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-const profileService = {
+const profileServiceStub = {
   whoAmI: () => of({ phone: '12345' })
+};
+
+const authenticationServiceStub = {
+  changePhone: () => of(),
+  requestVerificationToken: () => of(),
+  resendOTP: () => of()
 };
 
 describe('VerificationOtpComponent', () => {
@@ -21,7 +27,8 @@ describe('VerificationOtpComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: ProfileService, useValue: profileService }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub}
       ]
     })
       .compileComponents();
