@@ -1,8 +1,12 @@
 <div class="page">
   <div class="code">
-    <ngx-barcode [bc-value]="code" [bc-display-value]="false"></ngx-barcode>
-    <div>Present this bar code to the cashier
-      to complete your transaction.</div>
+    <ngx-barcode
+      [bc-value]="8971346115280910"
+      [bc-display-value]="false"
+    ></ngx-barcode>
+    <div class="title">
+      Present this bar code to the cashier to complete your transaction.
+    </div>
   </div>
   <div class="action">
     <button mat-stroked-button color="primary" (click)="goToHome()">Cancel</button>
