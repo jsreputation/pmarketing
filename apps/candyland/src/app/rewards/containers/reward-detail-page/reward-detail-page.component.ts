@@ -73,33 +73,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       this.data.vouchersStatistics = [];
     }
     const v = this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
-    const res = v !== undefined ? v.value : 0;
-    console.log(res);
-    return res;
+    return v !== undefined ? v.value : 0;
   }
-
-  // private getMockData(): void {
-  //   this.rewardsService.getMocksRewardDetail()
-  //     .pipe(
-  //       map((data: any) => {
-  //         data.campaigns.map(item => {
-  //           item.begin = new Date(item.begin);
-  //           item.end = new Date(item.end);
-  //           return item;
-  //         });
-  //         return data;
-  //       }
-  //       ),
-  //       tap(data => {
-  //         const counterObject = PrepareTableFilers.countFieldValue(data.campaigns, 'status');
-  //         this.statusFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
-  //       })
-  //     )
-  //     .subscribe((res: any) => {
-  //       this.data = res;
-  //       this.dataSource.data = res.campaigns;
-  //     });
-  // }
 
   private handleRouteParams(): void {
     const $id = this.route.paramMap.pipe(
