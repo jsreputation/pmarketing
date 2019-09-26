@@ -96,3 +96,25 @@ perx-core-locations-list {
 .mat-snack-bar-container {
   background-color: #FFC832 !important;
 }
+
+perx-core-reward {
+  .details {
+    .reward-name {
+      color: #1B1B25;
+    }
+
+    .points-cost {
+      span {
+        color: #ddac28;
+      }
+    }
+
+    .section-heading {
+      color: #212b36;
+    }
+
+    .section-content {
+      color: #494953;
+    }
+  }
+}
