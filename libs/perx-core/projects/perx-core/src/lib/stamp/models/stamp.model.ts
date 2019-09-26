@@ -42,20 +42,23 @@ export interface IStamp {
 }
 
 export interface IStampCard {
+  title?: string; // added
+  subTitle?: string; // added
+  buttonText?: string; // added
   id: number;
-  userAccountId: number;
+  userAccountId?: number; // made optional
   state: StampCardState;
-  campaignId: number;
-  cardNumber: number;
+  campaignId?: number; // made optional
+  cardNumber?: number; // made optional
   campaignConfig: {
     totalSlots: number;
-    rewards: IReward[];
+    rewards?: IReward[];
     collectionRewards?: PuzzleCollectReward[];
   };
   displayProperties: {
-    numberOfCols: number;
-    numberOfRows: number;
-    cardImage: {
+    numberOfCols?: number; // made optional
+    numberOfRows?: number; // made optional
+    cardImage?: { // made optional
       value: {
         imageUrl: string;
       }
@@ -64,8 +67,10 @@ export interface IStampCard {
     postStampImg?: string;
     rewardPreStamp?: string;
     rewardPostStamp?: string;
-    totalSlots: number;
+    bgImage?: string;
+    cardBgImage?: string;
+    totalSlots?: number;
   };
-  stamps?: IStamp[];
   collectionStamps?: PuzzleCollectStamp[];
+  stamps?: IStamp[];
 }

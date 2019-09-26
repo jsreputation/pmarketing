@@ -9,4 +9,19 @@ declare interface IRewardEntity {
   total: number;
   prprobability?: number | null;
   category: string;
+  voucherInfo?: {
+    type: string;
+    code?: string;
+    prefix?: string;
+    codeFormat?: string;
+    length?: number;
+  };
+  voucherValidity?: {
+    type: string;
+    startDate: string;
+    endDate?: string;
+    times?: string;
+    duration?: string;
+  };
+  merchantId?: string;
 }
