@@ -113,7 +113,8 @@ export class EngagementHttpAdapter {
       reward_pre_stamp_img_url: data.attributes.display_properties.reward_pre_stamp_img_url,
       reward_post_stamp_img_url: data.attributes.display_properties.reward_post_stamp_img_url,
       attributes_type: data.attributes.type,
-      background_img_url: data.attributes.display_properties.background_img_url
+      background_img_url: data.attributes.display_properties.background_img_url,
+      card_background_img_url: data.attributes.display_properties.card_background_img_url
     };
   }
 
@@ -172,8 +173,8 @@ export class EngagementHttpAdapter {
       type: 'engagements', attributes: {
         type: 'instant_reward', title: data.name, display_properties: {
           banner: data.banner, title: data.headlineMessage, sub_title: data.headlineMessage, // subHeadlineText: data.subHeadlineMessage,
-          card_background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png', // card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
-          background_img_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png', // background_img_url: ImageControlValue.getImagePath(data.background),
+          card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
+          background_img_url: ImageControlValue.getImagePath(data.background),
           button: data.buttonText
         }
       }
@@ -237,6 +238,8 @@ export class EngagementHttpAdapter {
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
+          background_img_url: ImageControlValue.getImagePath(data.background),
+          card_background_img_url:  ImageControlValue.getImagePath(data.cardBackground)
         }
       }
     }

@@ -68,7 +68,7 @@ export class AudiencesHttpAdapter {
       mapPool[element.id] = element.attributes.name;
     });
     return mapPool;
-  } 
+  }
 
   public static transformTableData(data: any): ITableData<IUser> {
     return {
@@ -90,7 +90,7 @@ export class AudiencesHttpAdapter {
     }
    }
 
-  // Audiences List 
+  // Audiences List
   public static transformAudiences(data: any): IAudiences {
     return {
       id: data.id,
@@ -127,5 +127,21 @@ export class AudiencesHttpAdapter {
       data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
       meta: data.meta
     }
+  }
+
+  public static transformAudiencesVoucher(data: any ): any {
+    return {
+      id: data.id,
+      batchId: data.attributes.batch_id,
+      endDate: data.attributes.end_date,
+      rewardId: data.attributes.source_id,
+      issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.start_date),
+      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date),
+      status: data.attributes.status,
+    }
+  }
+
+  private static stringToDate(stringDate: string | null): Date | null {
+    return stringDate ? new Date(stringDate) : null;
   }
 }
