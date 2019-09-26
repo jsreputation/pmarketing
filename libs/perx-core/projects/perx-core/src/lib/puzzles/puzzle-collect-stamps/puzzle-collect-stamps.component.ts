@@ -68,20 +68,13 @@ export class PuzzleCollectStampsComponent implements OnChanges {
 
     const itemIndex = this.getItemIndex(index, rowNum);
 
-    if (itemIndex < (this.stamps.length)) {
-      if (this.stamps[itemIndex].state === PuzzleCollectStampState.redeemed) {
-        if (this.isIndexPresentInRewards(itemIndex)) {
-          return this.rewardPostStamp;
-        }
-        return this.postStampImg;
-      }
-      // Issued
-      if (this.isIndexPresentInRewards(itemIndex)) {
-        return this.rewardPreStamp;
-      }
-      return this.rewardPreStamp;
+    const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === PuzzleCollectStampState.redeemed);
+
+    if (this.isIndexPresentInRewards(itemIndex)) {
+      return stamped ? this.rewardPostStamp : this.rewardPreStamp;
     }
-    return this.preStampImg;
+
+    return stamped ? this.postStampImg : this.preStampImg;
   }
 
   public isIssued(index: number, rowNum: number): boolean {

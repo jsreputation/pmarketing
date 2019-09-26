@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   OnInit,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AudiencesService } from '@cl-core/services';
@@ -25,26 +25,28 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  public currentTab;
+  public currentTab: string;
   public tabs: FormControl;
   public search: FormControl;
   public searchKey = 'primary_identifier';
   public dataSource: CustomDataSource<IUser>;
   public audiencesDataSource: CustomDataSource<IAudiences>;
-  public users;
-  public audiences;
-  public currentFilter;
+  // public users;
+  // public audiences;
+  // public currentFilter;
   public tabsFilterConfig: OptionConfig[] = [
-    {title: 'Users', value: 'users'},
-    {title: 'Audience List', value: 'audience'}
+    { title: 'Users', value: 'users' },
+    { title: 'Audience List', value: 'audience' }
   ];
-  public config: any;
+  public config: any[];
 
-  constructor(private settingsService: SettingsService,
-              private audiencesService: AudiencesService,
-              private audiencesUserService: AudiencesUserService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+  constructor(
+    private settingsService: SettingsService,
+    private audiencesService: AudiencesService,
+    private audiencesUserService: AudiencesUserService,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog
+  ) {
     this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
     this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
     this.tabs = new FormControl('users');
@@ -60,14 +62,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public ngAfterViewInit(): void {
     this.settingsService.getRolesOptions()
       .subscribe(config => this.config = config);
-
   }
 
-  public ngOnDestroy(): void {
-  }
+  /** necessary as we are using untilDestroyed on observables */
+  public ngOnDestroy(): void { }
 
   public openAddUserDialog(): void {
-    const dialogRef = this.dialog.open(AddUserPopupComponent, {panelClass: 'audience-dialog'});
+    const dialogRef = this.dialog.open(AddUserPopupComponent, { panelClass: 'audience-dialog' });
 
     dialogRef.afterClosed()
       .pipe(
@@ -80,23 +81,24 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       });
   }
 
-  public openManageListDialog(item): void {
-    const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
+  public openManageListDialog(item: number): void {
+    const dialogRef = this.dialog.open(ManageListPopupComponent, { panelClass: 'manage-list-dialog', data: item });
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
         switchMap((updateUser: any) => this.audiencesUserService.updateUserPools(updateUser))
       )
-      .subscribe(() => {
-        this.dataSource.updateData();
-      });
+      .subscribe(() => this.dataSource.updateData());
   }
 
-  public changeList(tab): void {
+  public changeList(tab: string): void {
     switch (tab) {
       case 'audience':
         this.searchKey = 'id';
+
         this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
+        const params: HttpParamsOptions = { include: 'users' };
+        this.audiencesDataSource.params = params;
         break;
       case 'users':
       default:

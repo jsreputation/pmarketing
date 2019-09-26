@@ -4,7 +4,7 @@ import { Subject, Observable } from 'rxjs';
 export enum PageType {
   landingPage = 'landing page',
   sectionLanding = 'section landing',
-  detailPage = 'detailPage',
+  detailPage = 'detail page',
   static = 'static',
   overlay = 'overlay',
   errorPage = 'error page'
