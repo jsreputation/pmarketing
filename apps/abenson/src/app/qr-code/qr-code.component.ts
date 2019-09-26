@@ -48,7 +48,7 @@ export class QRCodeComponent implements OnInit {
         if (err && err.error) {
           this.notification.addSnack(err.error.message);
         } else {
-          this.notification.addSnack(err);
+          this.notification.addSnack('Oops, something went wrong');
         }
       });
   }
