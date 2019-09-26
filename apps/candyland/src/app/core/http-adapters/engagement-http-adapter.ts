@@ -2,10 +2,11 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import {
   IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
+import { EngagementTypeFromAPIMapping } from '@cl-shared/containers/create-engagement-popup/shared/models/EngagementType';
 
 export class EngagementHttpAdapter {
 
-// tslint:disable
+  // tslint:disable
   public static transformEngagement(data: IEngagementApi): IEngagement {
     return {
       id: data.id,
@@ -38,8 +39,10 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IEngagementApi): any {
-    switch (data.attributes.type) {
+  public static transformEngagementHandler(data: IEngagementApi, type?: string): any {
+    const engagementType = EngagementTypeFromAPIMapping[type ? type : data.attributes.type];
+
+    switch (engagementType) {
       case 'game':
         return EngagementHttpAdapter.transformGameHandler(data);
       case 'survey':
@@ -162,8 +165,8 @@ export class EngagementHttpAdapter {
       attributes_type: data.attributes.type,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
-      closed_pinata_img_url:  data.attributes.display_properties.closed_pinata_img_url,
-      opened_pinata_img_url:  data.attributes.display_properties.opened_pinata_img_url,
+      closed_pinata_img_url: data.attributes.display_properties.closed_pinata_img_url,
+      opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
     }
   }
@@ -239,7 +242,7 @@ export class EngagementHttpAdapter {
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
           background_img_url: ImageControlValue.getImagePath(data.background),
-          card_background_img_url:  ImageControlValue.getImagePath(data.cardBackground)
+          card_background_img_url: ImageControlValue.getImagePath(data.cardBackground)
         }
       }
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EngagementsHttpsService } from '@cl-core/http-services/engagements-https.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Injectable({
@@ -18,6 +18,12 @@ export class EngagementsService {
       );
   }
 
+  public getEngagement(id: string, type: string): Observable<IEngagement> {
+    return this.http.getEngagement(id, type).pipe(
+      map(res => EngagementHttpAdapter.transformEngagementHandler(res.data, type)),
+      tap(res => console.log(res))
+    );
+  }
   public getEngagementType(): Observable<any> {
     return this.http.getEngagementType();
   }

@@ -5,7 +5,8 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
+import { combineLatest, of, Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -256,10 +257,28 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     this.route.paramMap
       .pipe(
         untilDestroyed(this),
-        switchMap((param: ParamMap) => this.campaignsService.getCampaign(param.get('id')))
+        switchMap((param: ParamMap) => this.campaignsService.getCampaign(param.get('id'))),
+        switchMap(campaign => combineLatest(
+          of(campaign),
+          this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+          // this.getRewards(campaign.rewardsList))),
+          this.getRewards([{
+            result_id: 1
+          }
+          ]))),
+        map(([campaign, engagement, rewardsList]) => ({
+          ...campaign,
+          template: engagement,
+          rewardsList
+        }))
       ).subscribe(campaign => {
+        console.log(campaign);
         this.campaign = campaign;
       });
+  }
+
+  private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
+    return combineLatest(...rewardsList.map(reward => this.rewardsService.getRewardToForm(reward.result_id)));
   }
 
   private initForm(): void {

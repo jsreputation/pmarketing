@@ -22,9 +22,11 @@ export class CampaignsHttpAdapter {
 
   public static transformAPIResponseToCampaign(data: any): any {
     const campaignData = data.attributes;
-
+    console.log(data);
     return {
       id: data.id,
+      engagement_id: campaignData.engagement_id,
+      engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
         startDate: new Date(campaignData.start_date_time),

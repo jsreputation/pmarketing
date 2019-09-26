@@ -18,20 +18,9 @@ export class RewardHttpAdapter {
   }
 
   public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
-    return {
-      name: data.attributes.name,
-      id: data.id,
-      currency: data.attributes.currency,
-      rewardInfo: {
-        image: data.attributes.image_url,
-        rewardType: data.attributes.reward_type,
-        category: data.attributes.category,
-        redemptionType: data.attributes.redemption_type,
-        cost: data.attributes.cost_of_reward,
-        description: data.attributes.description,
-        termsAndCondition: data.attributes.terms_conditions,
-      },
-      vouchers: {
+    let vouchers;
+    if (data.attributes.display_properties.voucher_properties) {
+      vouchers = {
         voucherCode: {
           type: data.attributes.display_properties.voucher_properties.code_type,
           singleCode: {
@@ -57,6 +46,21 @@ export class RewardHttpAdapter {
           }
         }
       }
+    }
+    return {
+      name: data.attributes.name,
+      id: data.id,
+      currency: data.attributes.currency,
+      rewardInfo: {
+        image: data.attributes.image_url,
+        rewardType: data.attributes.reward_type,
+        category: data.attributes.category,
+        redemptionType: data.attributes.redemption_type,
+        cost: data.attributes.cost_of_reward,
+        description: data.attributes.description,
+        termsAndCondition: data.attributes.terms_conditions,
+      },
+      vouchers
     };
   };
 
@@ -97,55 +101,55 @@ export class RewardHttpAdapter {
   }
 
   public static handlerRewardDate(data: any, rewardRequestData: any): void {
-    switch(data.vouchers.voucherValidity.type) {
-      case 'period': 
-      const period = {
-        startDate: data.vouchers.voucherValidity.period.startDate,
-        startTime: data.vouchers.voucherValidity.period.startTime,
-        endDate: data.vouchers.voucherValidity.period.endDate,
-        endTime: data.vouchers.voucherValidity.period.endTime,
-      }
-      RewardHttpAdapter.setRewardSendDate(rewardRequestData, period);
-      break;
+    switch (data.vouchers.voucherValidity.type) {
+      case 'period':
+        const period = {
+          startDate: data.vouchers.voucherValidity.period.startDate,
+          startTime: data.vouchers.voucherValidity.period.startTime,
+          endDate: data.vouchers.voucherValidity.period.endDate,
+          endTime: data.vouchers.voucherValidity.period.endTime,
+        }
+        RewardHttpAdapter.setRewardSendDate(rewardRequestData, period);
+        break;
       case 'issuance_date':
-      const issuance = {
-         times: data.vouchers.voucherValidity.issuanceDate.times,
-         duration: data.vouchers.voucherValidity.issuanceDate.duration,
-      }
-      RewardHttpAdapter.setRewardIssuanceDate(rewardRequestData, issuance);
-      break;
+        const issuance = {
+          times: data.vouchers.voucherValidity.issuanceDate.times,
+          duration: data.vouchers.voucherValidity.issuanceDate.duration,
+        }
+        RewardHttpAdapter.setRewardIssuanceDate(rewardRequestData, issuance);
+        break;
     }
   }
 
   public static setRewardSendDate(rewardRequestData: any, period: any) {
     if (period.startDate) {
-      rewardRequestData.attributes.display_properties.voucher_properties.validity.start_date 
-      =  RewardHttpAdapter.setTime(period.startDate, period.startTime);
+      rewardRequestData.attributes.display_properties.voucher_properties.validity.start_date
+        = RewardHttpAdapter.setTime(period.startDate, period.startTime);
     }
     if (period.endDate) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.end_date
-      = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+        = RewardHttpAdapter.setTime(period.endDate, period.endTime);
     }
   }
 
   public static setRewardIssuanceDate(rewardRequestData: any, issuance: any) {
     if (issuance.times) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.times
-      = issuance.times;
+        = issuance.times;
     }
     if (issuance.duration) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.duration
-      = issuance.duration;
+        = issuance.duration;
     }
   }
 
-  public static setTime(date: string, time: any ): string {
+  public static setTime(date: string, time: any): string {
     const [hours, minutes] = time.split(':');
     const resultDate = moment(date).set({ hours: hours, minutes: minutes }).toISOString();
     return resultDate;
   }
 
-  public static transformFromRewardSystemForm(data: IRewardEntityForm): IRewardEntityApi { 
+  public static transformFromRewardSystemForm(data: IRewardEntityForm): IRewardEntityApi {
     const result = {
       type: 'entities',
       attributes: {
