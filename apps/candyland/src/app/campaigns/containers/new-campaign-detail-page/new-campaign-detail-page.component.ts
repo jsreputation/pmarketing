@@ -70,14 +70,19 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(() => {
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
       });
-    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    if (this.campaign) {
+      this.form.patchValue({});
+    } else {
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
   }
 
   private updateForm(): void {

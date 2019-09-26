@@ -86,6 +86,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
+    console.log(this.store.currentCampaign);
     this.stepper.next();
   }
 
@@ -95,7 +96,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.store.updateCampaign(this.form.value);
-    this.campaignsService.createCampaign(this.store.currentCampaign).subscribe(
+    let saveCampaign$;
+    if (this.campaign) {
+      saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
+    } else {
+      saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
+    }
+    saveCampaign$.subscribe(
       data => {
         if (data) {
           this.openDialog();

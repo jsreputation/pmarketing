@@ -106,6 +106,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   }
   public initRewardsList(): void {
     const possibleOutcomes = this.campaign.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
+    this.rewards.reset();
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
     );

@@ -21,6 +21,10 @@ export class CampaignsHttpAdapter {
   }
 
   public static transformFromCampaign(data: any): any {
+    const possible_outcomes = data.rewardsOptions.rewards.map(
+      reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
+    ).filter(outcomes => outcomes.result_id);
+
     return {
       type: "entities",
       attributes: {
@@ -32,8 +36,8 @@ export class CampaignsHttpAdapter {
         start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
-        pool_id: data.audience.select
-        // possible_outcomes: "",
+        pool_id: data.audience.select,
+        possible_outcomes,
         // comm: "description",
       }
     };
