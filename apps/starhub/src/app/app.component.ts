@@ -100,7 +100,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.data.pageName = event.pageName;
         }
         this.data.pageName = this.data.pageName.toLowerCase();
-        this.data.pageName = this.data.pageName.replace(/\s/g , '-');
+        this.data.pageName = this.data.pageName.replace(/\s/g, '-');
 
         this.data.pageType = event.pageType;
         if (event.siteSectionLevel2) {
@@ -113,7 +113,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         this.token = this.authenticationService.getUserAccessToken();
         this.data.perxID = this.token;
         _satellite.track('msa-rewards-virtual-page');
-        // console.log(this.data, dataLayerSH);
       }
     );
   }
