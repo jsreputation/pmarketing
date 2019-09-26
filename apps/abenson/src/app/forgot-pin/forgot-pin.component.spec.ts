@@ -11,13 +11,19 @@ import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
+import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AuthenticationService } from '@perx/core';
 
 import { ForgotPinComponent } from './forgot-pin.component';
 
 describe('ForgotPinComponent', () => {
   let component: ForgotPinComponent;
   let fixture: ComponentFixture<ForgotPinComponent>;
+  const router = {
+    navigate: jasmine.createSpy('navigate')
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +36,10 @@ describe('ForgotPinComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,
+      ],
+      providers: [
+        { provide: Router, useValue: router },
+        { provide: AuthenticationService, useValue: {} }
       ],
     })
     .compileComponents();
