@@ -207,7 +207,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.form = NewSurveyForm.getForm();
-    this.addQuestion(SurveyQuestionType.rating);
+    // this.addQuestion(SurveyQuestionType.rating);
   }
 
   private getSurveyData(): any {

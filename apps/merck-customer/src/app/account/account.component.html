@@ -2,11 +2,11 @@
 <div class="main-container">
   <mat-card class="basic-info mat-elevation-z0">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image">
+      <div mat-card-avatar>
         <img src="assets/avatar.png" alt="">
       </div>
       <mat-card-title *ngIf="profile">{{profile.firstName}} {{profile.lastName}}</mat-card-title>
-      <mat-card-subtitle *ngIf="profile">{{profile.state}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="loyalty">{{loyalty.membershipTierName}} Tier</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 

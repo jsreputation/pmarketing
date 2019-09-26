@@ -3,10 +3,10 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
     <td mat-cell *matCellDef="let element">
-      <div class="pw-cell">
-        <a class="pw-cell__link" [routerLink]="['/campaigns/review/', element.id]">
+      <div class="name-cell">
+        <a class="name-cell__link" [routerLink]="['/campaigns/review/', element.id]">
           <span>{{element?.name}}</span>
-          <span class="block pw-cell__sub">{{element?.goal}}</span>
+          <span class="block name-cell__sub">{{element?.goal}}</span>
         </a>
       </div>
     </td>
@@ -24,7 +24,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       <time datetime="">
         <span>{{(element?.begin | date: DATE_FORMAT) || '-'}}</span>
-        <span class="block pw-cell__sub">{{element?.begin | date: TIME_FORMAT}}</span>
+        <span class="block name-cell__sub">{{element?.begin | date: TIME_FORMAT}}</span>
       </time>
     </td>
   </ng-container>
@@ -34,7 +34,7 @@
     <td mat-cell *matCellDef="let element" class="date-column">
       <time datetime="">
         <span>{{(element?.end | date: DATE_FORMAT) || '-'}}</span>
-        <span class="block pw-cell__sub">{{element?.end | date: TIME_FORMAT}}</span>
+        <span class="block name-cell__sub">{{element?.end | date: TIME_FORMAT}}</span>
       </time>
     </td>
   </ng-container>

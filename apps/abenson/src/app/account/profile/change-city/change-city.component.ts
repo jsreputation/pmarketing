@@ -7,6 +7,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ICustomProperties, ProfileService } from '@perx/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-city',
@@ -15,9 +17,12 @@ import {
 })
 export class ChangeCityComponent implements OnInit {
   public cityChangeForm: FormGroup;
+  public customProperties: ICustomProperties;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService: ProfileService,
+    private location: Location
   ) { }
 
   public ngOnInit(): void {
@@ -31,6 +36,16 @@ export class ChangeCityComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    // @TODO: req, change city
+    this.customProperties = {
+      city: this.cityChangeForm.get('newCity').value
+    };
+
+    if (this.customProperties.city) {
+      this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
+          this.location.back();
+        },
+        (err) => {console.log(err); });
+    }
+    return;
   }
 }

@@ -14,9 +14,9 @@
     </div>
     <div class="game-actions">
       <cl-button [classList]="'secondary'"
-                 class="btn-cancel btn-right_padding"
-                 (click)=" patchForm()"
-      ><!--comeBack()-->
+                 class="btn-cancel"
+                 (click)="comeBack()"
+      >
       <span>
         Cancel
       </span>
@@ -31,7 +31,7 @@
       </cl-button>
     </div>
   </div>
-  <section class="content flex">
+  <section class="content phonepreview-wrapper">
     <div class="survey-form">
       <mat-card class="game-graphic">
         <div class="messages-wrap">

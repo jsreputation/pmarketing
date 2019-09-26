@@ -5,6 +5,7 @@ import {
   MatInputModule,
   MatButtonModule,
   MatTabsModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 import {
@@ -19,8 +20,8 @@ import {
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
     UtilsModule,
-
     ReactiveFormsModule,
     FormsModule,
     LoyaltyModule,
@@ -30,7 +31,7 @@ import {
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
-
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
     LoyaltyModule,

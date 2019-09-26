@@ -25,7 +25,6 @@ const routes: Routes = [
         path: 'account',
         loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
       },
-      { path: 'forgot-pin', component: ForgotPinComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'game/:id', loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule) },
@@ -33,17 +32,19 @@ const routes: Routes = [
       { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
       },
       {
         path: 'card',
         loadChildren: () => import('./card/card.module').then(mod => mod.CardModule)
       },
       { path: 'loading', component: LoadingComponent },
-      { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) }
+      { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) },
+      { path: 'rewards', loadChildren: (): any => import('./rewards/rewards.module').then((mod: any) => mod.RewardsModule) }
     ],
     canActivate: [ProtectedGuard]
   },
+  { path: 'forgot-pin', component: ForgotPinComponent },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/home' }

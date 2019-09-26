@@ -26,3 +26,8 @@ export interface IProfileProperty {
   birthDate?: Date;
   gender?: string;
 }
+
+export interface ICardNumber {
+  card_number: number;
+  loyalty_program_id: number;
+}

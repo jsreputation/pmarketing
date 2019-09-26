@@ -3,10 +3,11 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService } from '@cl-core/services';
+import { VouchersService } from '@cl-core/services/vouchers.service';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -16,20 +17,30 @@ import { RewardsService } from '@cl-core/services';
 export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public dataSource = new MatTableDataSource<any>();
   public id: string;
-  public data;
+  public data: {
+    name?: string;
+    rewardInfo?: any;
+    merchantInfo?: any;
+    vouchers?: any;
+    limits?: any;
+    vouchersStatistics?: { type: string, value: number }[];
+  } = {};
   public statusFilterConfig: OptionConfig[];
 
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  public rewardData;
 
-  constructor(private rewardsService: RewardsService,
-              private router: Router,
-              private route: ActivatedRoute,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
-  }
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
+
+  constructor(
+    private rewardsService: RewardsService,
+    private vouchersService: VouchersService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog
+  ) { }
 
   public ngOnInit(): void {
-    this.getMockData();
     this.handleRouteParams();
   }
 
@@ -42,14 +53,13 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(RewardReplenishPopupComponent,
-      {panelClass: 'reward-replenish-dialog', data: this.data.vouchers.voucherCode});
-
-    dialogRef.afterClosed().subscribe((value) => {
-      if (value) {
-        this.avaibleVouchers = value;
-      }
-    });
+    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((data: any) => this.vouchersService.createVoucher(data))
+      )
+      .subscribe(() => { });
   }
 
   public updateRewardImage(image: WindowBase64): void {
@@ -57,50 +67,38 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     console.log(image);
   }
 
-  get avaibleVouchers(): any {
-    return this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
-  }
-
-  set avaibleVouchers(value) {
-    this.avaibleVouchers.value = value;
-  }
-
-  private getMockData(): void {
-    this.rewardsService.getMocksRewardDetail()
-      .pipe(
-        map((data: any) => {
-            data.campaigns.map(item => {
-              item.begin = new Date(item.begin);
-              item.end = new Date(item.end);
-              return item;
-            });
-            return data;
-          }
-        ),
-        tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data.campaigns, 'status');
-          this.statusFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
-        })
-      )
-      .subscribe((res: any) => {
-        this.data = res;
-        this.dataSource.data = res.campaigns;
-      });
+  get availableVouchers(): number {
+    if (!this.data.vouchersStatistics) {
+      this.data.vouchersStatistics = [];
+    }
+    const v = this.data.vouchersStatistics.find(voucher => voucher.type === 'available');
+    return v !== undefined ? v.value : 0;
   }
 
   private handleRouteParams(): void {
-    this.route.paramMap.pipe(
+    const $id = this.route.paramMap.pipe(
       untilDestroyed(this),
-      map((params: ParamMap) => params.get('id')),
-      tap( id => this.id = id),
-      switchMap(id => this.rewardsService.getRewardToForm(id))
-    )
+      map((params: ParamMap) => params.get('id'))
+    );
+    $id.subscribe(id => this.id = id);
+    $id
+      .pipe(switchMap(id => this.rewardsService.getRewardToForm(id)))
       .subscribe(
-        reward => {
+        (reward: IRewardEntityForm) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
           this.cd.detectChanges();
         },
-        () => this.router.navigateByUrl('/rewards')
+        (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
       );
+    $id.pipe(switchMap(id => this.vouchersService.getStats(id)))
+      .subscribe((stats: { [k: string]: number }) => {
+        if (!this.data.vouchersStatistics) {
+          this.data.vouchersStatistics = [];
+        }
+        // tslint:disable-next-line: forin
+        for (const k in stats) {
+          this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+        }
+      });
   }
 }

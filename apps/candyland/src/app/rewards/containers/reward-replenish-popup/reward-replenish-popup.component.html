@@ -9,23 +9,23 @@
     <div class="dialog-content">
 
       <!--      Single code-->
-      <ng-container *ngIf="data?.singleCode">
+      <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'single_code'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes(+$event.target.value)"/>
+                 (input)="setReplenishVoucherCodes(+$event.target.value)"/>
           <mat-hint>Voucher codes available: 10,000</mat-hint>
         </mat-form-field>
         <div class="code-preview">
           <label class="dialog-content-title">Single code</label>
           <div class="code-preview-block">
-            {{data?.singleCode?.code}}
+            {{voucherSettings?.voucherCode?.singleCode?.code}}
           </div>
         </div>
       </ng-container>
       <!--/      Single code-->
 
       <!-- Unique codes: System generated-->
-      <ng-container *ngIf="data?.uniqueGeneratedCode">
+      <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'system_generated'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes(+$event.target.value)"/>
@@ -34,14 +34,14 @@
         <div class="code-preview">
           <label class="dialog-content-title">Unique codes: System generated</label>
           <div class="code-preview-block">
-            {{data?.uniqueGeneratedCode?.code}} ({{data?.uniqueGeneratedCode?.codeFormat}})
+            {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
           </div>
         </div>
       </ng-container>
       <!--/ Unique codes: System generated-->
 
       <!-- Unique codes: User Upload-->
-      <ng-container *ngIf="data?.uniqueUserUploadCode">
+      <!-- <ng-container *ngIf="data?.uniqueUserUploadCode">
         <cl-upload-file label="Unique codes: User Upload"
                         (uploadFile)="setReplenishVoucherCodes(20000)"
                         (deleteFile)="setReplenishVoucherCodes($event)">
@@ -52,11 +52,11 @@
             {{replenishVoucherCodes | number: '2.'}}
           </p>
         </div>
-      </ng-container>
+      </ng-container> -->
       <!--/ Unique codes: User Upload-->
 
       <!--Merchant PIN-->
-      <ng-container *ngIf="data?.merchantPIN">
+      <ng-container *ngIf="voucherSettings?.merchantPIN">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes($event.target.value)"/>
@@ -65,7 +65,7 @@
         <div class="code-preview">
           <label class="dialog-content-title">Merchant PIN</label>
           <div class="code-preview-block">
-            {{data?.merchantPIN?.code}}
+            {{voucherSettings?.merchantPIN?.code}}
           </div>
         </div>
       </ng-container>

@@ -13,7 +13,6 @@ import {
   ProfileModule,
   RewardsService,
   IVoucherService,
-  ProfileService,
   ConfigModule,
   ICampaignService
 } from '@perx/core';
@@ -28,7 +27,8 @@ import {
   MatInputModule,
   MatDialogModule,
   MatProgressSpinnerModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -48,7 +48,6 @@ import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
-import { profile } from './mock/profile.mock';
 import { SignUpComponent } from './signup/signup.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -64,16 +63,13 @@ const vouchersServiceStub = {
   getAll: () => of(vouchers),
   get: (id: number) => of(vouchers.find(voucher => voucher.id === id)),
   reserveReward: () => of(vouchers[1]),
-  redeemVoucher: () => of(null)
+  redeemVoucher: () => of(null),
+  issueReward: () => of()
 };
 
 const campaignServiceStub = {
   getCampaigns: () => of(campaigns),
   getCampaign: (id: number) => from(campaigns.filter(campaign => campaign.id === id))
-};
-
-const profileServiceStub = {
-  whoAmI: () => of(profile)
 };
 
 @NgModule({
@@ -91,7 +87,7 @@ const profileServiceStub = {
     ForgotPinComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
@@ -111,6 +107,7 @@ const profileServiceStub = {
     MatInputModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
@@ -119,11 +116,10 @@ const profileServiceStub = {
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub },
-    { provide: ProfileService, useValue: profileServiceStub }
+    { provide: ICampaignService, useValue: campaignServiceStub }
   ],
   bootstrap: [AppComponent]
 })
