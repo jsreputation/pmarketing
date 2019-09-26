@@ -4,8 +4,8 @@
   &-item {
     cursor: pointer;
     position: relative;
-    width: 13.7rem;
-    height: 12.7rem;
+    width: ($horizontal-padding * 5);
+    height: ($vertical-padding * 5);
     background-color: $light-gray;
     padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
     display: flex;
@@ -16,10 +16,19 @@
     border: 1px solid transparent;
   }
 
-  &-title {
+  &-wrap-img {
+    margin: auto;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &-name {
     @include typo-body2;
 
-    color: $secondary-color;
+    color: $base-font-color;
     margin-top: auto;
     text-align: center;
   }

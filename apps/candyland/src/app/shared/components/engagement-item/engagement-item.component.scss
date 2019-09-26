@@ -35,17 +35,17 @@
   }
 
   &-type {
-    @include typo-body2;
+    @include typo-overline;
 
-    color: $secondary-color;
-    text-transform: capitalize;
+    color: $base-font-color;
+    text-transform: uppercase;
   }
 
   &-name {
-    @include typo-body1;
+    @include typo-body2;
 
     flex: 1;
-    margin-top: 0.7rem;
+    margin-top: 0.4rem;
     color: $base-font-color;
     overflow-wrap: break-word;
     word-wrap: break-word;
