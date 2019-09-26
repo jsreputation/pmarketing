@@ -24,4 +24,12 @@ export class InstantRewardsHttpService {
   public createRewardGame(data: any): Observable<any> {
     return this.http.post(ApiConfig.engagementsPath + '/', data);
   }
+
+  public updateInstantReward(id: string, data: IResponseApi<any>): Observable<IResponseApi<any>> {
+    return this.http.patch<IResponseApi<any>>(ApiConfig.engagementsPath + '/instant_reward/' + id, data);
+  }
+
+  public getInstantReward(id: string): Observable<any> {
+    return this.http.get(ApiConfig.engagementsPath + '/instant_reward/' + id);
+  }
 }

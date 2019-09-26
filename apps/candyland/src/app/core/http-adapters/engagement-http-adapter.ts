@@ -2,6 +2,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import {
   IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
+import { ControlsName } from 'src/app/models/controls-name';
 
 export class EngagementHttpAdapter {
 
@@ -171,8 +172,12 @@ export class EngagementHttpAdapter {
   public static transformInstantReward(data: IInstantRewardForm): any {
     return {
       type: 'engagements', attributes: {
-        type: 'instant_reward', title: data.name, display_properties: {
-          banner: data.banner, title: data.headlineMessage, sub_title: data.headlineMessage, // subHeadlineText: data.subHeadlineMessage,
+        type: 'instant_reward', title: data.name,
+        display_properties: {
+          banner: data.banner,
+          title: data.headlineMessage,
+          sub_title: data.headlineMessage,
+          // subHeadlineText: data.subHeadlineMessage,
           card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
           background_img_url: ImageControlValue.getImagePath(data.background),
           button: data.buttonText
@@ -242,6 +247,18 @@ export class EngagementHttpAdapter {
           card_background_img_url:  ImageControlValue.getImagePath(data.cardBackground)
         }
       }
+    }
+  }
+
+  public static transformRewardForm(data: any): any {
+    return {
+      name: data.attributes.title,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      banner: data.attributes.display_properties.banner,
+      buttonText: data.attributes.display_properties.button,
+      [ControlsName.background]: data.attributes.display_properties.background_img_url,
+      [ControlsName.cardBackground]: data.attributes.display_properties.card_background_img_url
     }
   }
 }
