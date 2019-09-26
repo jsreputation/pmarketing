@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IQuestion, SurveyQuestionType } from '@perx/core';
 
 @Injectable()
@@ -59,9 +59,20 @@ export class QuestionFormFieldService {
     return this.formControls[type](type);
   }
 
+  public patchMultipleChoice(item: IQuestion, group: FormGroup): void {
+    const choices = (this.getChoices('payload.choices', group) as FormArray);
+    this.removeFirsElement(choices);
+
+    item.payload.choices.forEach((dataChoice) => {
+      choices.push(this.fb.control(
+      dataChoice, [Validators.required]
+      ));
+    });
+  }
+
   public pathChoicePicture(item: IQuestion, group: FormGroup): void {
-    const choices = (group.get('payload.choices') as FormArray);
-    choices.removeAt(0);
+    const choices = (this.getChoices('payload.choices', group) as FormArray);
+    this.removeFirsElement(choices);
 
     item.payload.choices.forEach((dataChoice) => {
       choices.push(this.fb.group({
@@ -69,6 +80,16 @@ export class QuestionFormFieldService {
         img_url: [dataChoice.img_url, [Validators.required]]
       }));
     });
+  }
+
+  private getChoices(field: string, group: FormGroup): AbstractControl {
+    return group.get(field);
+  }
+
+  private removeFirsElement(formArray: FormArray): void {
+    if (formArray) {
+      formArray.removeAt(0);
+    }
   }
 
   private ratingGroup(type: string): FormGroup {

@@ -16,6 +16,10 @@ export class ImageControlValue {
   }
 
   public static getImagePath(data: IGraphic): string {
-    return data.fullImg ? data.fullImg : data.img;
+    return data.fullImg
+      ? data.fullImg
+      : data.img
+        ? data.img
+        : (data as any) ;
   }
 }

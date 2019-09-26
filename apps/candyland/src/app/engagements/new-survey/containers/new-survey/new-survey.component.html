@@ -109,7 +109,7 @@
             Graphics
           </p>
         </div>
-        <div class="game-form">
+        <div class="game-form" *ngIf="color">
           <div class="survey-select-color">
             <div class="control-input">
               <mat-form-field color="primary">
@@ -117,7 +117,7 @@
                 <mat-select [formControlName]="'color'">
                   <mat-select-trigger>
                     <div class="select-color">
-                      <div class="select-color-preview" [ngClass]="color.value + '-material'">
+                      <div class="select-color-preview" [ngClass]="color?.value + '-material'">
                       </div>
                       <p class="select-color-text">
                         {{color.value}}
