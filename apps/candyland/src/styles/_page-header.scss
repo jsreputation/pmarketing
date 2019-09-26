@@ -66,3 +66,36 @@
     }
   }
 }
+
+.game {
+  &-title-wrap {
+    flex: 1;
+    margin-right: 4rem;
+  }
+
+  &-title {
+    font-size: 1.6rem;
+    line-height: 1.06;
+    color: $secondary-color;
+    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
+  }
+
+  &-graphic, &-button {
+    display: block;
+    margin-top: ($vertical-padding * 0.5);
+  }
+
+  &-actions {
+    flex-shrink: 0;
+    width: 36.3rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &-checkbox {
+    .mat-radio-label-content {
+      display: none;
+    }
+  }
+}

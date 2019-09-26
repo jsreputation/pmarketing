@@ -72,14 +72,12 @@ h1, h2, h3, h4, h5, p {
   @include typo-h5;
 
   margin: auto 0;
-  font-stretch: normal;
   color: $base-font-color;
 }
 
 .sub-title {
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1.06;
+  @include typo-subtitle1;
+
   color: $secondary-color;
 }
 
@@ -96,15 +94,134 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
-.mat-horizontal-stepper-header-container + .mat-horizontal-content-container {
-  padding: 0 !important;
-}
-
 .row {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 100%;
+}
+
+.control-input {
+  font-size: $base-font-size !important;
+  width: 100%;
+}
+
+//BOX OUTLINED FIELDS
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $primary-color;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding-top: 0.5em;
+}
+
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: none !important;
+}
+
+.btn-group {
+  cl-button, button, a {
+    margin-right: 8px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-flow: row nowrap;
+
+  & > * {
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  & > .mat-form-field {
+    width: 0;
+    flex: auto;
+  }
+}
+
+.error {
+  @include typo-body2;
+
+  display: flex !important;
+  align-items: baseline;
+  background-color: rgba($warning-color, 0.1);
+  padding: 14px 20px;
+  color: $base-font-color;
+  border-radius: $border-radius;
+
+  &::before {
+    content: '!';
+    margin-right: 10px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: $warning-color;
+    color: $white;
+  }
+}
+
+.forms-container {
+  position: relative;
+  width: 100%;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: $primary-color;
+}
+
+// no-data graphics layout
+.no-data {
+  &-img {
+    display: block;
+    width: 100%;
+    max-width: 35rem;
+    height: auto;
+    margin: 0 auto $vertical-padding;
+  }
+
+  &-title {
+    @include typo-h6;
+
+    color: $base-font-color;
+  }
+
+  &-text {
+    @include typo-body2;
+
+    color: $base-font-color;
+  }
+}
+
+// Dashboard Page Commons
+.dashboard {
+  &-group-graphics {
+    padding: $vertical-padding $horizontal-padding;
+  }
+}
+
+// MOBILE PHONE PREVIEW PANELS
+.mat-horizontal-stepper-header-container + .mat-horizontal-content-container {
+  padding: 0;
+  overflow: initial; // needed to make phone mock-ups sticky
 }
 
 .phonepreview-wrapper {
@@ -113,6 +230,11 @@ h1, h2, h3, h4, h5, p {
   justify-content: stretch;
   align-items: flex-start;
   grid-template-columns: auto $mobile-preview-width;
+
+  > *:last-child {
+    position: sticky;
+    top: $header-height-base + $vertical-padding;
+  }
 }
 
 .mobile {
@@ -222,165 +344,6 @@ h1, h2, h3, h4, h5, p {
 cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
-  }
-}
-
-.game {
-  &-title-wrap {
-    flex: 1;
-    margin-right: 4rem;
-  }
-
-  &-title {
-    font-size: 1.6rem;
-    line-height: 1.06;
-    color: $secondary-color;
-    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: ($vertical-padding * 0.5);
-  }
-
-  &-actions {
-    flex-shrink: 0;
-    width: 36.3rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  &-checkbox {
-    .mat-radio-label-content {
-      display: none;
-    }
-  }
-}
-
-.control-input {
-  font-size: $base-font-size !important;
-  width: 100%;
-}
-
-//BOX OUTLINED FIELDS
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: $primary-color;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding-top: 0.5em;
-}
-
-.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: none !important;
-}
-
-.btn-group {
-  cl-button, button, a {
-    margin-right: 8px;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
-}
-
-.input-group {
-  display: flex;
-  flex-flow: row nowrap;
-
-  & > * {
-    margin-right: 16px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  & > .mat-form-field {
-    width: 0;
-    flex: auto;
-  }
-}
-
-.error {
-  display: flex !important;
-  align-items: baseline;
-  background-color: rgba($warning-color, 0.1);
-  padding: 14px 20px;
-  color: $base-font-color;
-  font-family: $primary-font;
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  border-radius: $border-radius;
-
-  &::before {
-    content: '!';
-    margin-right: 10px;
-    min-width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    border-radius: 50%;
-    background-color: $warning-color;
-    color: $white;
-  }
-}
-
-.forms-container {
-  position: relative;
-  width: 100%;
-}
-
-.name-filter {
-  position: relative;
-}
-
-.mat-tab-group.mat-primary .mat-ink-bar,
-.mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  background-color: $primary-color;
-}
-
-// no-data graphics layout
-.no-data {
-  &-img {
-    display: block;
-    width: 100%;
-    max-width: 35rem;
-    height: auto;
-    margin: 0 auto $vertical-padding;
-  }
-
-  &-title {
-    @include typo-h6;
-
-    color: $base-font-color;
-  }
-
-  &-text {
-    @include typo-body2;
-
-    color: $base-font-color;
-  }
-}
-
-// Dashboard Page Commons
-.dashboard {
-  &-group-graphics {
-    padding: $vertical-padding $horizontal-padding;
   }
 }
 

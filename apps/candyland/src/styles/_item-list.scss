@@ -34,8 +34,8 @@
 }
 
 .item-list {
-  padding-top: ($vertical-padding * 0.5);
-  padding-bottom: ($vertical-padding * 0.5);
+  margin-top: $vertical-padding;
+  margin-bottom: $vertical-padding;
   display: grid;
   grid-gap: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
   grid-template-columns: repeat(auto-fill, minmax(36rem, 1fr));
