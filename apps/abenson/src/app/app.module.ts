@@ -63,7 +63,8 @@ const vouchersServiceStub = {
   getAll: () => of(vouchers),
   get: (id: number) => of(vouchers.find(voucher => voucher.id === id)),
   reserveReward: () => of(vouchers[1]),
-  redeemVoucher: () => of(null)
+  redeemVoucher: () => of(null),
+  issueReward: () => of()
 };
 
 const campaignServiceStub = {
@@ -86,7 +87,7 @@ const campaignServiceStub = {
     ForgotPinComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
@@ -115,7 +116,7 @@ const campaignServiceStub = {
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub }
