@@ -3,7 +3,6 @@ import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SharedDataService } from '../services/shared-data.service';
 import { map, tap } from 'rxjs/operators';
-import { isNull } from 'util';
 
 @Injectable({
   providedIn: 'root'
