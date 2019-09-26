@@ -32,8 +32,8 @@ Given(/^1_I am on the dashboard page.$/, async () => {
    // pressing the enter key on the accountID field to log in
   await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
-  await DashboardPage.navigateToDashboard();
-  await browser.sleep(3000);
+  // await DashboardPage.navigateToDashboard();
+  // await browser.sleep(3000);
   await DashboardPage.navigateToDashboard();
   // walk around for the walk me widget
   await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
