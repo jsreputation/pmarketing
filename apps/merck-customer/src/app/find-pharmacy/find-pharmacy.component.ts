@@ -20,6 +20,7 @@ export interface IData {
   styleUrls: ['./find-pharmacy.component.scss']
 })
 export class FindPharmacyComponent implements OnInit, PageAppearence {
+  public key: string = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
   public locations: Observable<ILocation[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;

@@ -32,7 +32,8 @@
   .reward-preview-details {
     font-size: 1.4rem;
     display: flex;
-    margin: 1.6rem 1.6rem 0.8rem;
+    margin: 1.6rem 0;
+    margin-left: 0.8rem;
     padding-left: 0;
     flex-direction: column;
     flex: 1;
@@ -58,6 +59,10 @@
       padding: 0;
     }
 
+    .description {
+      width: 70%;
+    }
+
     .reward-price-details {
       font-size: 1rem;
       line-height: 1.4rem;
@@ -70,7 +75,7 @@
 }
 
 .card-list-container {
-  padding: 0 1.5rem;
+  padding: 0 0.2rem;
 }
 
 .card-list-container.loading {
