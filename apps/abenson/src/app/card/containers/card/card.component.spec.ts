@@ -1,19 +1,30 @@
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {
+  IProfile,
+  LoyaltyModule,
+  LoyaltyService,
+  ProfileService,
+} from '@perx/core';
 
 import { CardComponent } from './card.component';
-import { IProfile, LoyaltyModule, LoyaltyService, ProfileService } from '@perx/core';
-import { MatTabsModule } from '@angular/material';
-import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxBarcodeModule } from 'ngx-barcode';
+
+import { SharedModule } from '../../../shared/shared.module';
 
 describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   const loyaltyServiceStub = {
     getLoyalties: () => of([]),
-    getAllTransactions: () => of([])
+    getTransactions: () => of([])
   };
   const mockProfile: IProfile = {
     id: 1,
@@ -29,10 +40,11 @@ describe('CardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CardComponent ],
       imports: [
+        SharedModule,
         LoyaltyModule,
-        MatTabsModule,
         NoopAnimationsModule,
-        NgxBarcodeModule
+        NgxBarcodeModule,
+        InfiniteScrollModule,
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

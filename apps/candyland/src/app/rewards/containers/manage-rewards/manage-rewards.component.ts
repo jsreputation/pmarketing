@@ -77,7 +77,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this),
         filter(Boolean),
-        switchMap(merchant => this.merchantsService.createMerchant(merchant)),
+        switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
         filter(Boolean),
       )
       .subscribe((id) => {
@@ -154,7 +154,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       map((params: ParamMap) => params.get('id')),
       tap((id) => this.updateId(id)),
       filter(Boolean),
-      switchMap(id => this.rewardsService.getRewardToForm(id))
+      switchMap((id: any) => this.rewardsService.getRewardToForm(id))
     )
       .subscribe(
         reward => {

@@ -53,10 +53,15 @@ $fluid-cell-6: 21% !important;
     vertical-align: baseline;
   }
 
+  th.mat-header-cell {
+    @include typo-subtitle2;
+
+    padding-top: ($vertical-padding / 2);
+  }
+
   td.mat-cell {
     @include typo-body2;
 
-    width: $fluid-cell-2;
     padding-top: ($vertical-padding / 2);
     padding-bottom: ($vertical-padding / 2);
   }
@@ -77,16 +82,16 @@ $fluid-cell-6: 21% !important;
   }
 
   td.mat-cell.mat-column {
+    width: $fluid-cell-2;
+
     &-email,
     &-name {
       width: auto !important;
       min-width: $fixed-cell-3;
     }
 
-    &-actions,
     &-id,
     &-logo {
-      width: $fluid-cell-1;
       min-width: $fixed-cell-1;
     }
 
@@ -117,6 +122,7 @@ $fluid-cell-6: 21% !important;
     }
 
     &-actions {
+      width: $fixed-cell-1;
       padding-top: 0.4rem;
       padding-bottom: 0;
       text-align: center;
@@ -152,10 +158,17 @@ $fluid-cell-6: 21% !important;
 
   .image-cell {
     display: inline-flex;
-    height: $thumbnail-size;
-    width: $thumbnail-size;
+    height: ($thumbnail-size * 0.75);
+    width: ($thumbnail-size * 0.75);
     vertical-align: middle;
-    background: $light-gray;
+    background: $gray;
+
+    &.profilepic {
+      height: ($thumbnail-size * 0.5);
+      width: ($thumbnail-size * 0.5);
+      border-radius: 100%;
+      overflow: hidden;
+    }
 
     img {
       max-height: 100%;

@@ -4,15 +4,14 @@
 <div class="section">
   <a [routerLink]="[ 'profile' ]">Profile</a>
   <a [routerLink]="[ 'change-password' ]">Change PIN code</a>
-  <a>Change Mobile Number</a>
+  <a [routerLink]="[ 'profile', 'edit-mobile' ]">Change Mobile Number</a>
   <a>Customer Support</a>
 </div>
 <div class="section">
-  <a [routerLink]="[ 'additions/terms-and-condition' ]">Terms & Conditions</a>
-  <a [routerLink]="[ 'additions/privacy-policy' ]">Privacy Policy</a>
-  <a [routerLink]="[ 'additions/faq' ]">FAQ</a>
+  <a [routerLink]="[ 'additions', 'terms-and-condition' ]">Terms & Conditions</a>
+  <a [routerLink]="[ 'additions', 'privacy-policy' ]">Privacy Policy</a>
+  <a [routerLink]="[ 'additions', 'faq' ]">FAQ</a>
 </div>
 <div class="section">
   <span (click)="logout()">Log Out</span>
 </div>
-
