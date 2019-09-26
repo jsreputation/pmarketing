@@ -230,7 +230,7 @@ h1, h2, h3, h4, h5, p {
   justify-content: stretch;
   align-items: flex-start;
   grid-template-columns: auto $mobile-preview-width;
-  
+
   > *:last-child {
     position: sticky;
     top: $header-height-base + $vertical-padding;
