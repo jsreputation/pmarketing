@@ -1,11 +1,8 @@
-<div class="create-engagement-dialog-header-wrap">
-  <!--<h2 mat-dialog-title class="create-engagement-dialog-title">Create Engagement</h2>-->
-  <p class="create-engagement-dialog-content-title">
-    Select Engagement Type
-  </p>
-</div>
+<header class="dialog-header-wrap">
+  <h2 class="dialog-content-title">Select Engagement Type</h2>
+</header>
 <mat-dialog-content>
-  <div class="create-engagement-dialog-content">
+  <div class="dialog-content">
 
     <cl-ink [border]="true" [triangle]="true">
       <cl-engagement-type #engagementHost
@@ -33,24 +30,17 @@
 </div>
 
 </mat-dialog-content>
-<div class="create-engagement-dialog-actions"
->
-<cl-button [classList]="'secondary'"
-           class="actions-close"
-           (click)="close()"
-           [disableRipple]="true"
->
-      <span>
-        Cancel
-      </span>
-</cl-button>
+<div class="dialog-actions">
+  <cl-button [classList]="'secondary'"
+      class="actions-close"
+      (click)="close()"
+      [disableRipple]="true">
+    <span>Cancel</span>
+  </cl-button>
 
-<cl-button [classList]="'primary'"
-           (click)="next()"
-           [disableRipple]="true"
->
-      <span>
-        Next
-      </span>
-</cl-button>
+  <cl-button [classList]="'primary'"
+      (click)="next()"
+      [disableRipple]="true">
+    <span>Next</span>
+  </cl-button>
 </div>

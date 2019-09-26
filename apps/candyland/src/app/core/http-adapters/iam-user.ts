@@ -1,7 +1,8 @@
 import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany, BelongsTo*/ } from 'angular2-jsonapi';
+import { ApiConfig } from '@cl-core/api-config';
 // tslint:disable
 @JsonApiModelConfig({
-  type: 'users'
+  type: ApiConfig.getAllUsers
 })
 export class IamUser extends JsonApiModel {
 
