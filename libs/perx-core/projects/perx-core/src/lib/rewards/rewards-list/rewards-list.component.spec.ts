@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardsListComponent } from './rewards-list.component';
 import { MatCardModule } from '@angular/material';
 import { UtilsModule } from '../../utils/utils.module';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
@@ -13,7 +14,8 @@ describe('RewardsListComponent', () => {
       declarations: [RewardsListComponent],
       imports: [
         MatCardModule,
-        UtilsModule
+        UtilsModule,
+        NgxMultiLineEllipsisModule
       ],
     })
       .compileComponents();

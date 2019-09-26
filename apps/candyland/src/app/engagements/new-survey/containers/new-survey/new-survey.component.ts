@@ -125,7 +125,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public save(): void {
     this.surveyService.createSurvey(this.form.value)
       .pipe(
-        untilDestroyed(this), 
+        untilDestroyed(this),
         map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
       )
       .subscribe((data: IEngagement) => {
@@ -157,7 +157,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.form = NewSurveyForm.getForm();
-    this.addQuestion(SurveyQuestionType.rating);
+    // this.addQuestion(SurveyQuestionType.rating);
   }
 
   private getSurveyData(): void {
