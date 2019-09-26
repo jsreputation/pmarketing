@@ -6,10 +6,21 @@ import _isEmpty from 'lodash.isempty';
 
 export default class Utils {
 
+  static convertArrToObj(arr: any, propKey: string): {[key: string]: any} {
+    return arr.reduce((map, obj) => {
+      map[obj[propKey]] = obj;
+      return map;
+    }, {});
+  }
+
   static convertObjToArr(obj: any): any[] {
     return Object.keys(obj).map((key) => {
       return { name: key, ...obj[key] };
     });
+  }
+
+  static filterUniq(arr: any[]): any[] {
+    return arr.filter((item, pos, array) => array.indexOf(item) === pos);
   }
 
   static nestedObjectAssign(target, ...sources) {
