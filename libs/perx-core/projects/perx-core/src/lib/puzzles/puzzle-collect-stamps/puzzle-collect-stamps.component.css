@@ -10,11 +10,16 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .dummy-container {
   position: relative;
+  max-width: 50%;
+}
+
+.dummy-container > img {
+  width: 100%;
 }
 
 .add {

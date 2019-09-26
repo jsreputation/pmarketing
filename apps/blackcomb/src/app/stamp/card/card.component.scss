@@ -48,40 +48,6 @@ button {
 
     .contain-child {
       display: block;
-
-      ::ng-deep {
-        .row {
-          margin-top: 1px !important;
-
-          .dummy-container {
-            max-width: 50%;
-
-            img {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.game {
-  &-selected-graphic {
-    margin-bottom: 4rem;
-    display: flex;
-  }
-
-  &-title {
-    display: flex;
-    align-items: center;
-  }
-
-  &-number {
-    margin-top: 3.4rem;
-
-    &-slot {
-      margin-top: 2.2rem;
     }
   }
 }
