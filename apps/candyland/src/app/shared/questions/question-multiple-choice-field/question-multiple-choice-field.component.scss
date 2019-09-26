@@ -22,3 +22,9 @@
 mat-icon {
   color: $secondary-color;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
