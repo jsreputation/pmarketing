@@ -8,6 +8,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { ChangeEmailComponent } from './change-email.component';
+import { ProfileService } from '@perx/core';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+
+const profileServiceStub = {
+  updateUserInfo: () => of(),
+  whoAmI: () => of({email: 'email@e.mail'})
+};
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
@@ -21,9 +29,16 @@ describe('ChangeEmailComponent', () => {
       imports: [
         SharedModule,
         NoopAnimationsModule,
+        RouterTestingModule.withRoutes([{
+          path: 'account',
+          component: ChangeEmailComponent
+        }])
       ],
+      providers: [
+        { provide: ProfileService, useValue: profileServiceStub }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

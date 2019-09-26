@@ -20,7 +20,7 @@
   <div class="plugin-block">
     <div [ngClass]="{ 'mobile-preview-card': engagement?.attributes_type !== 'game'}"
          [ngStyle]="{
-             'background-image': engagement?.card_background_img_url ||'url(/assets/images/stamps/card-background/card-bg-1.png)',
+             'background-image': 'url(' + engagement?.card_background_img_url + ')'||'url(/assets/images/stamps/card-background/card-bg-1.png)',
              'font-family': tenantSettings?.font
              }"
     >
