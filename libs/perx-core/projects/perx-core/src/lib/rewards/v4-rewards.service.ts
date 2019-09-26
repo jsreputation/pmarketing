@@ -258,7 +258,6 @@ export class V4RewardsService extends RewardsService {
               ...res.meta
             };
           }
-          console.log(this.rewardMultiPageMetaTracker);
           return res.data;
         }),
         map((rewards: IV4Reward[]) => rewards.map(
@@ -297,7 +296,6 @@ export class V4RewardsService extends RewardsService {
               ...res.meta
             };
           }
-          console.log(this.rewardMultiPageMetaTracker);
           return res.data;
         }),
         map((rewards: IV4Reward[]) => rewards.map(
