@@ -108,4 +108,8 @@ export class WhistlerRewardsService implements RewardsService {
   public getCatalog(id: number): Observable<ICatalog> {
     throw new Error('Method not implemented.');
   }
+  // @ts-ignore
+  public getNextPageRewards(pageSize: number, tags?: string[], categories?: string[]): Observable<IReward[]> {
+  throw new Error('Method not implemented.');
+  }
 }
