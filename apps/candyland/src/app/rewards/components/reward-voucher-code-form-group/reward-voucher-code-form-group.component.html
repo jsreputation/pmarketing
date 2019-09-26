@@ -1,7 +1,8 @@
-<ng-container *ngIf="formGroup.get('merchantPIN').disabled">
+<ng-container>
   <label class="card-label">Voucher Code Type</label>
+
   <!--Voucher Code Type-->
-  <div class="card-row radio-group-row">
+  <div class="card-row radio-group-row" *ngIf="redemptionType !== 'Merchant PIN'">
     <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
       <ng-container *ngFor="let type of config?.voucherCodeTypes">
         <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
@@ -11,8 +12,19 @@
   <!--/Voucher Code Type-->
 
   <!--Voucher Single Code-->
+  <mat-form-field *ngIf="redemptionType === 'Merchant PIN'">
+    <input
+      type="text"
+      minlenght="2"
+      maxlength="6"
+      step="1"
+      matInput
+      placeholder="Merchant PIN"
+      [formControl]="formGroup.get('singleCode.code')">
+  </mat-form-field>
+
   <mat-form-field
-    *ngIf="formGroup.get('singleCode').enabled && (redemptionType === 'QR Code' || redemptionType === 'Promo Code')">
+    *ngIf="formGroup.get('singleCode').enabled && (redemptionType === 'QR Code' || redemptionType === 'Promo Code') && formGroup.get('uniqueGeneratedCode').disabled">
     <input
       type="text"
       min="0"
@@ -22,9 +34,9 @@
       [formControl]="formGroup.get('singleCode.code')">
   </mat-form-field>
 
-  <mat-form-field *ngIf="formGroup.get('singleCode').enabled && redemptionType === 'Bar Code'">
+  <mat-form-field *ngIf="formGroup.get('singleCode').enabled && redemptionType === 'Bar Code' && formGroup.get('uniqueGeneratedCode').disabled">
     <input
-      type="text"
+      type="number"
       min="0"
       step="1"
       matInput
@@ -33,8 +45,9 @@
     <mat-hint>12 Digits only</mat-hint>
   </mat-form-field>
   <!--/ Voucher Single Code-->
+
   <!-- Unique codes: System generated-->
-  <div class="card-row" *ngIf="formGroup.get('uniqueGeneratedCode').enabled">
+  <div class="card-row" *ngIf="formGroup.get('uniqueGeneratedCode').enabled && formGroup.get('singleCode').disabled">
     <mat-form-field>
       <input
         type="text"
@@ -62,26 +75,10 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <!--/ Unique codes: System generated-->
-
-  <!--Unique codes: User upload-->
-  <div *ngIf="formGroup.get('uniqueUserUploadCode').enabled">
-    <cl-upload-file [formControl]="formGroup.get('uniqueUserUploadCode.file')"
-                    (uploadFile)="setTotalVoucher(20000)"
-                    (deleteFile)="setTotalVoucher(null)">
-    </cl-upload-file>
-    <div class="code-preview" *ngIf="formGroup.get('total').value">
-      <label class="dialog-content-title">Total Number of Voucher</label>
-      <p class="code-preview-value">
-        {{formGroup.get('total').value | number: '2.'}}
-      </p>
-    </div>
-  </div>
-  <!-- /Unique codes: User upload-->
 </ng-container>
 
 <!--Merchant PIN-->
-<ng-container *ngIf="formGroup.get('merchantPIN').enabled">
+<!-- <ng-container *ngIf="formGroup.get('merchantPIN').enabled">
   <div class="card-row">
     <mat-form-field>
       <input
@@ -94,21 +91,5 @@
         [formControl]="formGroup.get('merchantPIN.code')">
     </mat-form-field>
   </div>
-</ng-container>
+</ng-container> -->
 <!--   /   Merchant PIN-->
-
-<ng-container *ngIf="formGroup.get('type').value !== 'Unique codes: User upload'">
-  <div class="code-preview">
-    <label class="card-label">Total Number of Voucher</label>
-    <mat-form-field class="dialog-content-block">
-      <input
-        type="number"
-        min="0"
-        max="50000"
-        step="1"
-        matInput
-        [formControl]="formGroup.get('total')">
-    </mat-form-field>
-  </div>
-</ng-container>
-<!--/ Total Number of Voucher-->

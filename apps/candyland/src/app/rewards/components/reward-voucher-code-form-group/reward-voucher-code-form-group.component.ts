@@ -28,8 +28,4 @@ export class RewardVoucherCodeFormGroupComponent {
     return this.form.get('rewardInfo.redemptionType').value;
   }
 
-  public setTotalVoucher(value): void {
-    this.formGroup.get('total').patchValue(value);
-  }
-
 }

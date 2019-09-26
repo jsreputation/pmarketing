@@ -15,6 +15,7 @@
     width: 10rem;
     overflow: hidden;
     flex-shrink: 0;
+    background: $gray;
   }
 
   &-img {
@@ -31,19 +32,20 @@
     justify-content: space-between;
     margin: 0 0 0 ($horizontal-padding * 0.5);
     padding: 0;
-    font-family: $primary-font;
   }
 
   &-type {
-    font-size: $base-font-size;
-    color: $secondary-color;
-    text-transform: capitalize;
+    @include typo-overline;
+
+    color: $base-font-color;
+    text-transform: uppercase;
   }
 
   &-name {
+    @include typo-body2;
+
     flex: 1;
-    margin-top: 0.7rem;
-    font-size: 1.6rem;
+    margin-top: 0.4rem;
     color: $base-font-color;
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -60,5 +62,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    margin-right: -($horizontal-padding  * 0.5);
+    margin-bottom: -($vertical-padding * 0.5);
+
+    .btn-icon {
+      min-width: auto;
+      width: ($horizontal-padding * 1.5);
+      height: ($vertical-padding * 1.5);
+      padding: 0;
+    }
   }
 }

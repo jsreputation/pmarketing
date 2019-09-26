@@ -12,15 +12,18 @@
 
   &-content {
     flex: 1;
-    padding: 0 $horizontal-padding !important;
+    max-height: 65vh;
+    padding: 0 ($horizontal-padding * 0.75);
   }
 
   &-header-wrap {
-    padding: $vertical-padding $horizontal-padding 1rem;
+    height: ($vertical-padding * 2);
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: ($horizontal-padding * 0.75);
+    padding-right: ($horizontal-padding * 0.75);
     box-sizing: border-box;
   }
 
@@ -87,35 +90,35 @@
 
   &-closed {
     color: $secondary-color;
+    position: absolute; // start here for fixed
+    right: ($horizontal-padding * 0.5);
+    top: ($vertical-padding * 0.5);
   }
 
   &-tab-content {
-    padding: 3.5rem $horizontal-padding;
+    padding: $vertical-padding ($horizontal-padding * 0.75);
     overflow-y: auto;
   }
 
   &-content-title {
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.18px;
+    @include typo-h6;
+
     color: $secondary-color;
+    margin: 0;
   }
 
   &-actions {
     box-sizing: border-box;
-    padding: $vertical-padding $horizontal-padding;
-    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+    background: $white;
   }
 }
 
 .nested-type {
+  padding: 0 ($horizontal-padding * 0.75);
   transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
 }
 
@@ -137,6 +140,7 @@
   margin: 0 !important;
   padding: 0 !important;
   max-height: 65vh;
+  overflow-x: hidden !important;
 }
 
 .audience-dialog {

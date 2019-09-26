@@ -17,7 +17,9 @@
           </div>
           <div class="reward-preview-details">
             <h1>{{ reward.name }}</h1>
-            <p [innerHtml]="reward.subtitle"></p>
+            <div class="description" ngxEllipsis [lines]="2">
+            {{reward.description}}
+            </div>
             <div class="reward-price-details">
               <div *ngIf="reward.rewardPrice &&
                   reward.rewardPrice.length > 0">

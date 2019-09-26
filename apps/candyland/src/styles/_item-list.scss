@@ -20,10 +20,8 @@
 }
 
 .item {
-  flex: 1 1 ($horizontal-padding * 11.25);
   justify-content: space-between;
   position: relative;
-  margin: 1rem;
   border-radius: $border-radius-lg !important;
 
   &.active {
@@ -36,21 +34,14 @@
 }
 
 .item-list {
-  margin: 0 -1rem;
-  padding-top: ($vertical-padding * 0.5);
-  padding-bottom: ($vertical-padding * 0.5);
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  position: relative;
-
-  &::after {
-    content: "";
-    display: block;
-    flex: 1 1 ($horizontal-padding * 11.25);
-    margin: 1rem;
-  }
+  margin-top: $vertical-padding;
+  margin-bottom: $vertical-padding;
+  display: grid;
+  grid-gap: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
+  grid-template-columns: repeat(auto-fill, minmax(36rem, 1fr));
+  justify-content: start;
+  align-items: start;
+  // position: relative;
 
   & > .mat-radio-button {
     @extend .item;

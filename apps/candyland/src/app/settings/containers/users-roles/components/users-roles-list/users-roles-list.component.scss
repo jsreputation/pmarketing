@@ -68,12 +68,8 @@
   align-items: center;
   justify-content: flex-start;
 
-  & > * {
-    margin-right: 1.4rem;
-
-    &:last-child {
-      margin-right: 0;
-    }
+  .profilepic + * {
+    margin-left: ($horizontal-padding * 0.5);
   }
 }
 
