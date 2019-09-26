@@ -8,7 +8,7 @@
   box-sizing: border-box;
   justify-content: space-between;
   align-items: flex-start;
-  padding: ($vertical-padding / 2) ($horizontal-padding / 2);
+  padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
   background-color: $background-color;
   border-radius: $border-radius;
 
@@ -16,14 +16,14 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    padding-right: ($horizontal-padding / 2);
+    padding-right: ($horizontal-padding * 0.5);
   }
 
   &-container {
     display: grid;
     min-width: ($horizontal-padding * 10);
     grid-template-columns: $thumbnail-size auto minmax($progressbar-min, $progressbar-max);
-    grid-gap: ($horizontal-padding / 2);
+    grid-gap: ($horizontal-padding * 0.5);
     align-items: center;
     flex: 1 0 ($horizontal-padding * 10);
   }
@@ -34,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: $light-gray;
   }
 
   &-img {
@@ -74,7 +75,7 @@
     display: flex;
     margin-left: auto;
     align-items: baseline;
-    padding-left: ($horizontal-padding / 2);
+    padding-left: ($horizontal-padding * 0.5);
     width: 14rem;
   }
 

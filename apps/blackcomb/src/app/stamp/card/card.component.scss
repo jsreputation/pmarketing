@@ -10,11 +10,11 @@
 
 .game-wrapper {
   display: flex;
-  justify-content: center;
+  // justify-content: center; // commented out
   flex-direction: column;
   width: 34.5rem;
   background-color: white;
-  align-items: center;
+  // align-items: center;
   border-radius: 0.8rem;
   padding: 1rem;
 
@@ -35,5 +35,19 @@
 }
 
 button {
-  width: 50%;
+  width: 100%; // edited from 50%
+  background-color: #eb202f;
+  color: white;
+  margin-top: 10%;
+}
+
+.stamp {
+  &-form {
+    height: 100%;
+    width: 100%;
+
+    .contain-child {
+      display: block;
+    }
+  }
 }

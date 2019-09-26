@@ -1,13 +1,11 @@
-<div class="dialog-header-wrap">
-  <p class="dialog-content-title">
-    Select Rewards
-  </p>
+<header class="dialog-header-wrap">
+  <h2 class="dialog-content-title">Select Rewards</h2>
   <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
     <mat-icon>close</mat-icon>
   </button>
-</div>
+</header>
 <mat-dialog-content>
-  <section class="reward-dialog-content">
+  <section class="dialog-content">
     <div class="reward-list">
       <!--filters-->
       <cl-table-filters [dataSource]="dataSource" classList="block">
@@ -32,26 +30,20 @@
   </section>
 </mat-dialog-content>
 <!--<mat-dialog-actions>-->
-<div class="reward-dialog-actions"
+<div class="dialog-actions"
 >
   <cl-button [classList]="'tertiary'"
              class="actions-close"
              (click)="close()"
-             [disableRipple]="true"
-  >
-      <span>
-        Cancel
-      </span>
+             [disableRipple]="true">
+    <span>Cancel</span>
   </cl-button>
 
   <cl-button [classList]="'primary'"
              (click)="add()"
              [disable]="!selectedReward"
-             [disableRipple]="true"
-  >
-      <span>
-        Add Reward
-      </span>
+             [disableRipple]="true">
+    <span>Add Reward</span>
   </cl-button>
 </div>
 <!--</mat-dialog-actions>-->

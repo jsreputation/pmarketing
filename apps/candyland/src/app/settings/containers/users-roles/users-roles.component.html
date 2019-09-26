@@ -1,10 +1,10 @@
-<section class="content">
+<section>
   <ng-container *ngIf="hasData">
     <!--filters-->
     <div class="row">
       <cl-table-filters [dataSource]="dataSource" classList="row input-group">
         <ng-container *clTableFilter="'username'; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="search for users"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'name'; value: ''; let filter">
           <mat-form-field appearance="outline" class="type-block">

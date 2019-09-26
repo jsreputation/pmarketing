@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
 import { LoginComponent } from './login/login.component';
@@ -36,12 +36,15 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private snackBar: MatSnackBar,
   ) { }
 
   public ngOnInit(): void {
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    this.notificationService.$snack
+      .subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
   }
 
   public onActivate(ref: any): void {
