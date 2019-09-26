@@ -9,7 +9,7 @@
 
   &-select-color {
     .control-input, mat-form-field {
-      width: auto;
+      width: 285px;
     }
   }
 
@@ -50,4 +50,31 @@ cl-question-form-field {
 
 perx-core-survey {
   pointer-events: none;
+}
+
+
+// preview
+.mobile-preview-header {
+  width: 60%;
+  .mobile-preview-sub-headline {
+    max-height: 8rem;
+    overflow-y: auto;
+  }
+}
+.plugin-block {
+  padding-top: 17rem;
+  height: 100%;
+  max-height: 36rem;
+  .mobile-preview-card{
+    padding-top: 17rem;
+    height: 56%;
+    perx-core-survey {
+      position: absolute;
+      width: 85%;
+      max-height: 17rem;
+      overflow-y: overlay;
+      display: block;
+      pointer-events: all;
+    }
+  }
 }
