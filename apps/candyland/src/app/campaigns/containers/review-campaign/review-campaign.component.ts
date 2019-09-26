@@ -1,8 +1,11 @@
+import { RewardsService } from './../../../core/services/rewards.service';
+import { CampaignsService, EngagementsService } from '@cl-core/services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -29,10 +32,10 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         sendDate: null,
         sendTime: null,
         enableRecurrence: false,
-        recurrence: {times: null, period: null, repeatOn: []}
+        recurrence: { times: null, period: null, repeatOn: [] }
       }
     },
-    audience: {type: 'none', file: null},
+    audience: { type: 'none', file: null },
     template: {
       id: 324,
       name: 'caffrghe',
@@ -102,7 +105,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       stampSlotNumber: 2,
       rewardsOptions: {
         enableProbability: true,
-        rewards: [{value: null, probability: 5}, {
+        rewards: [{ value: null, probability: 5 }, {
           value: {
             id: 1,
             image: 'assets/images/placeholders/mask-group.png',
@@ -188,37 +191,42 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           }
         }]
       }
-    }, {stampSlotNumber: '10', rewardsOptions: []}],
+    }, { stampSlotNumber: '10', rewardsOptions: [] }],
     stampsRule: {
       sequence: true,
-      rules: [{ruleType: 'Referral'}, {ruleType: 'First login'}, {
+      rules: [{ ruleType: 'Referral' }, { ruleType: 'First login' }, {
         ruleType: 'transaction',
-        condition: {rule: 'isMoreThan', value: 54}
+        condition: { rule: 'isMoreThan', value: 54 }
       },
-        {ruleType: 'Bill payment'},
-        {ruleType: 'Reward redeemed'},
-        {ruleType: 'Sign up'},
-        {ruleType: 'Bill payment'},
-        {ruleType: 'Sign up'},
-        {
+      { ruleType: 'Bill payment' },
+      { ruleType: 'Reward redeemed' },
+      { ruleType: 'Sign up' },
+      { ruleType: 'Bill payment' },
+      { ruleType: 'Sign up' },
+      {
         ruleType: 'review',
         product: 'productB'
-      }, {ruleType: 'transaction', condition: {rule: 'isMoreThan', value: 47}}]
+      }, { ruleType: 'transaction', condition: { rule: 'isMoreThan', value: 47 } }]
     },
     limits: {
       enableStampCard: true,
-      stampCard: {perCampaign: null, perUser: null, duration: null},
+      stampCard: { perCampaign: null, perUser: null, duration: null },
       enableStamp: true,
-      stamp: {perUser: null, duration: null}
+      stamp: { perUser: null, duration: null }
     },
     enableStampCardsValidity: null,
-    stampCardsValidity: {times: null, duration: null}
+    stampCardsValidity: { times: null, duration: null }
   };
 
-  constructor(private fb: FormBuilder,
-              private store: CampaignCreationStoreService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder,
+    private store: CampaignCreationStoreService,
+    private router: Router,
+    private campaignsService: CampaignsService,
+    private rewardsService: RewardsService,
+    private engagementsService: EngagementsService,
+    private route: ActivatedRoute
+  ) {
   }
 
   public get name(): AbstractControl {
@@ -233,7 +241,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         this.campaign = data;
       });
     this.initForm();
-    this.getIdCampaign();
+    this.getCampaignData();
     this.store.updateCampaign(this.temp);
   }
 
@@ -244,17 +252,19 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
   }
   // TODO: it need for get right data from back end in the future
-  private getIdCampaign(): void {
+  private getCampaignData(): void {
     this.route.paramMap
-      .pipe(untilDestroyed(this))
-      .subscribe((param: ParamMap) => {
-        console.log(param.get('id'));
+      .pipe(
+        untilDestroyed(this),
+        switchMap((param: ParamMap) => this.campaignsService.getCampaign(param.get('id')))
+      ).subscribe(campaign => {
+        this.campaign = campaign;
       });
   }
 
   private initForm(): void {
     this.form = this.fb.group({
-      name: [{value: 'caffrghe', disabled: true, }]
+      name: [{ value: 'caffrghe', disabled: true, }]
     });
   }
 

@@ -20,6 +20,36 @@ export class CampaignsHttpAdapter {
     }
   }
 
+  public static transformAPIResponseToCampaign(data: any): any {
+    const campaignData = data.attributes;
+
+    return {
+      id: data.id,
+      campaignInfo: {
+        goal: campaignData.goal,
+        startDate: new Date(campaignData.start_date_time),
+        startTime: `${(new Date(campaignData.start_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        endDate: new Date(campaignData.end_date_time),
+        endTime: `${(new Date(campaignData.end_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        disabledEndDate: !campaignData.end_date_time,
+        labels: campaignData.labels
+      },
+      channel: {
+        type: campaignData.comm_channel,
+        message: null,
+        schedule: {
+          sendDate: null,
+          sendTime: null,
+          enableRecurrence: false,
+          recurrence: { times: null, period: null, repeatOn: [] }
+        }
+      },
+      audience: { type: 'none', file: null },
+      template: {},
+      rewardsList: campaignData.possible_outcomes,
+    };
+  }
+
   public static transformFromCampaign(data: any): any {
     return {
       type: "entities",
