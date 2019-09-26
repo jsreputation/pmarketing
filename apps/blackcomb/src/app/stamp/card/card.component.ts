@@ -39,10 +39,11 @@ export class CardComponent implements OnInit {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
+        console.log(stampCard);
         this.title = stampCard.title;
         this.subTitle = stampCard.subTitle;
-        this.background = stampCard.bg;
-        this.cardBackground = stampCard.cardBg;
+        this.background = stampCard.displayProperties.bgImage;
+        this.cardBackground = stampCard.displayProperties.cardBgImage;
       },
       () => {
         this.router.navigate(['/wallet']);
