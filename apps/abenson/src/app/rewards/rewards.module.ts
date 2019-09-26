@@ -15,7 +15,7 @@ const rewardsServiceStub = {
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
   getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id))
-}
+};
 
 @NgModule({
   declarations: [RewardDetailComponent, RewardConfirmComponent],

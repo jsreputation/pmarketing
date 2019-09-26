@@ -19,7 +19,7 @@ export interface IRewardConfirmComponentParam {
 })
 export class RewardDetailComponent implements OnInit {
   public reward$: Observable<IReward>;
-  public rewardData;
+  public rewardData: IReward;
   public loyalty: ILoyalty;
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +30,7 @@ export class RewardDetailComponent implements OnInit {
     private ntfcService: NotificationService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.reward$ = this.route.params
       .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 19))),
         tap((reward) => this.rewardData = reward));
@@ -50,7 +50,7 @@ export class RewardDetailComponent implements OnInit {
         this.ntfcService.addPopup({
           title: '[Reward Title]',
           text: `Balance ${29} points`
-        })
+        });
       });
   }
 
