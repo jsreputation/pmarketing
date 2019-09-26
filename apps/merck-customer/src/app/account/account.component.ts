@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile, AuthenticationService } from '@perx/core';
+import { ProfileService, IProfile, AuthenticationService, LoyaltyService, ILoyalty } from '@perx/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
@@ -10,17 +10,18 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../page-propert
 })
 export class AccountComponent implements OnInit, PageAppearence {
   public profile: IProfile;
+  public loyalty: ILoyalty;
 
   constructor(
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe(res => {
-      this.profile = res;
-    });
+    this.profileService.whoAmI().subscribe(res => this.profile = res);
+    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
   }
 
   public showHeader(): boolean {
