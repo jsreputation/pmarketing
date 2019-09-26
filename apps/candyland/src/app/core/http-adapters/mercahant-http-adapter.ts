@@ -86,15 +86,29 @@ export class MerchantHttpAdapter {
 
   public static transformFromReward(data: IRewardEntity): IRewardEntityApi {
     return {
-        type: 'entities',
-        attributes: {
-          name: data.name,
-          image_url: data.image,
-          reward_type: data.rewardType,
-          category: data.category,
-          redemption_type: data.redemptionType,
-          cost_of_reward: data.current,
+      type: 'entities',
+      attributes: {
+        name: data.name,
+        image_url: data.image,
+        reward_type: data.rewardType,
+        category: data.category,
+        redemption_type: data.redemptionType,
+        cost_of_reward: data.current,
+        display_properties: {
+          voucher_properties: {
+            code_type: data.voucherInfo.type,
+            code: data.voucherInfo.code,
+            prefix: data.voucherInfo.prefix,
+            length: data.voucherInfo.length,
+            format_type: data.voucherInfo.codeFormat,
+            validity: {
+              type: data.voucherValidity.type,
+              start_date: data.voucherValidity.startDate,
+              end_date: data.voucherValidity.endDate
+            }
+          }
         }
+      }
     };
   }
 }
