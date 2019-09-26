@@ -21,6 +21,7 @@
       mat-flat-button
       type="submit"
       color="primary"
+      [disabled]="!existingCardForm.valid"
     >
       Submit
     </button>
