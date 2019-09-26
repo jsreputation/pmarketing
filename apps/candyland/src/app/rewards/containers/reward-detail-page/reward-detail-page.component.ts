@@ -41,7 +41,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   ) { }
 
   public ngOnInit(): void {
-    // this.getMockData();
     this.handleRouteParams();
   }
 
