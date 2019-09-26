@@ -4,6 +4,7 @@ import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@pe
 import { ITabConfig, IPrice } from '@perx/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { flatMap, map, filter } from 'rxjs/operators';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 const tabs: ITabConfig[] = [
   {
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit {
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
+  public currentTab: string;
 
   constructor(
     private rewardsService: RewardsService,
@@ -121,6 +123,10 @@ export class HomeComponent implements OnInit {
     this.tabs.next(this.staticTab);
     this.cd.detectChanges();
     return of(tabs);
+  }
+
+  public tabChanged(event: MatTabChangeEvent): void {
+    this.currentTab = event.tab.textLabel;
   }
 
   public openRewardDetails(tab: IReward): void {
