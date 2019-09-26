@@ -21,7 +21,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
     LoyaltyTransactionsListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     LoyaltySummaryComponent,

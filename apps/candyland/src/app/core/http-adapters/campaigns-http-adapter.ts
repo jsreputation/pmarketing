@@ -50,7 +50,23 @@ export class CampaignsHttpAdapter {
         redemption_type: data.rewardInfo.redemptionType,
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
-        terms_conditions: data.rewardInfo.termsAndCondition
+        terms_conditions: data.rewardInfo.termsAndCondition,
+        display_properties: {
+          voucher_properties: {
+            code_type: data.vouchers.voucherCode.type,
+            code: data.vouchers.voucherCode.singleCode.code,
+            prefix: data.vouchers.voucherCode.uniqueGeneratedCode.prefix,
+            length: data.vouchers.voucherCode.uniqueGeneratedCode.length,
+            format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat,
+            validity: {
+              type: data.vouchers.voucherValidity.type,
+              start_date: data.vouchers.voucherValidity.period.startDate,
+              end_date: data.vouchers.voucherValidity.period.endDate,
+              times: data.vouchers.voucherValidity.issuanceDate.times,
+              duration: data.vouchers.voucherValidity.issuanceDate.duration
+            }
+          },
+        }
       }
     };
   }
@@ -64,7 +80,21 @@ export class CampaignsHttpAdapter {
         reward_type: data.rewardType,
         category: data.category,
         redemption_type: data.redemptionType,
-        cost_of_reward: data.current
+        cost_of_reward: data.current,
+        display_properties: {
+          voucher_properties: {
+            code_type: data.voucherInfo.type,
+            code: data.voucherInfo.code,
+            prefix: data.voucherInfo.prefix,
+            length: data.voucherInfo.length,
+            format_type: data.voucherInfo.codeFormat,
+            validity: {
+              type: data.voucherValidity.type,
+              start_date: data.voucherValidity.startDate,
+              end_date: data.voucherValidity.endDate
+            }
+          }
+        }
       }
     };
   }
