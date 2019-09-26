@@ -88,7 +88,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       this.form.patchValue(
         {
           campaignInfo: {
-            startTime: `${(new Date()).toLocaleString('en-US',
+            startTime: `${(new Date(this.campaignDetail.start_date_time)).toLocaleString('en-US',
               {
                 hour: 'numeric', minute: 'numeric', hour12: true
               })
@@ -96,7 +96,12 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
             startDate: new Date(this.campaignDetail.start_date_time),
             goal: this.campaignDetail.goal,
             disabledEndDate: !this.campaignDetail.end_date_time,
-            endDate: new Date(this.campaignDetail.end_date_time)
+            endDate: new Date(this.campaignDetail.end_date_time),
+            endTime: `${(new Date(this.campaignDetail.end_date_time)).toLocaleString('en-US',
+              {
+                hour: 'numeric', minute: 'numeric', hour12: true
+              })
+              }`
           },
           channel: {
             type: this.campaignDetail.comm_channel,
