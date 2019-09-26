@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, mergeMap } from 'rxjs/operators';
+
+import {
+  map,
+  mergeMap,
+} from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IProfile, ICustomProperties, IProfileProperty } from './profile.model';
+
+import {
+  IProfile,
+  ICustomProperties,
+  IProfileProperty,
+  ICardNumber,
+} from './profile.model';
 import { ProfileService } from './profile.service';
+
 import { Config } from '../config/config';
 
 interface IV4Profile {
@@ -96,6 +107,18 @@ export class V4ProfileService extends ProfileService {
               ...profile,
               ...data
             })
+      )
+    );
+  }
+
+  public setCardNumber(data: ICardNumber): Observable<any> {
+    return this.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => this.http.patch<void>(
+          `${this.apiHost}/v4/customers/${profile.id}/map_cardnumber`,
+          {
+            data
+          })
       )
     );
   }

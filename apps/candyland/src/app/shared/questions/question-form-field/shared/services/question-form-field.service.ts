@@ -73,8 +73,8 @@ export class QuestionFormFieldService {
         scale: [5, []],
         shape: ['star', []],
         color: ['primary', []],
-        left_label: ['Not Very', [Validators.maxLength(10)]],
-        right_label: ['Very much', [Validators.maxLength(10)]]
+        left_label: ['Not Very', [Validators.maxLength(25)]],
+        right_label: ['Very much', [Validators.maxLength(25)]]
       })
     });
   }

@@ -64,7 +64,7 @@ commands:
       - run:
           name: Setup PREAUTH var
           command: |
-            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ]
+            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' || [ $APP == 'bpi' ]
             then
               PREAUTH="true"
             else
