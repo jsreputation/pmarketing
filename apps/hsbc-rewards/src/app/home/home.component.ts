@@ -134,4 +134,16 @@ export class HomeComponent implements OnInit {
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
   }
+
+  public onScroll(): void {
+    this.rewardsService.getNextPageRewards(10, null, [this.currentTab]).subscribe(
+      (newRewards: IReward[]) => {
+        const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
+          (existingRewards: IReward[]) => {
+            tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(newRewards));
+          });
+      },
+      (err) => console.log(err)
+    );
+  }
 }
