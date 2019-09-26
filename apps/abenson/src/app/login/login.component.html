@@ -18,7 +18,7 @@
           PIN Code is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <a class="link forgot-pin">Forgot Pin Code?</a>
+      <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
     </form>
   </div>

@@ -90,5 +90,5 @@ When(/^5_I enter a filter criteria$/, async () => {
 
 Then(/^5_I should see the filter items on the list.$/, async () => {
   // doing an assertion on the elements on the table based on the search criteria
-  expect(await element(by.className('pw-cell__link')).getText()).to.contain('test10101010');
+  expect(await element(by.className('name-cell__link')).getText()).to.contain('test10101010');
 });

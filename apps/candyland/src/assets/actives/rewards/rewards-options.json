@@ -116,25 +116,21 @@
   "voucherCodeTypes": [
     {
       "title": "Single code",
-      "value": "Single code"
+      "value": "single_code"
     },
     {
       "title": "Unique codes: System generated",
-      "value": "Unique codes: System generated"
-    },
-    {
-      "title": "Unique codes: User upload",
-      "value": "Unique codes: User upload"
+      "value": "system_generated"
     }
   ],
   "voucherValidityType": [
     {
       "title": "Period",
-      "value": "Period"
+      "value": "period"
     },
     {
       "title": "Issuance date",
-      "value": "Issuance date"
+      "value": "issuance_date"
     }
   ],
   "goals": [

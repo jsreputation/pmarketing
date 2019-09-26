@@ -1,22 +1,17 @@
 @import "variables";
 
 .active-btn-item {
-  border: solid 1px $secondary-font-color !important;
+  border-color: $secondary-font-color !important;
   background-color: $secondary-color !important;
   color: $white !important;
 }
 
 .btn-item {
-  width: 4rem;
-  height: 4rem;
+  @include typo-caption;
+
+  width: $horizontal-padding;
+  height: $vertical-padding;
   background-color: $white;
-  font-family: $primary-font;
-  font-size: 1.2rem;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.58;
-  letter-spacing: normal;
   text-align: center;
   border-radius: $border-radius;
   color: rgba($secondary-color, 0.5);
@@ -30,6 +25,7 @@
 .btn-list {
   display: flex;
   flex-flow: row nowrap;
+  margin: ($vertical-padding * 0.5) 0;
 
   .mat-radio-button {
     @extend .btn-item;

@@ -28,12 +28,12 @@ export class VoucherComponent implements OnInit {
         this.voucher = voucher;
         const category: string = voucher.categories && voucher.categories.length > 0 ? voucher.categories[0] : undefined;
         if (category !== undefined) {
-          const pageName: string = `rewards:vouchers:${category}:${voucher.name}`;
+          const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.name}`;
           this.analytics.addEvent({
             pageName,
             pageType: PageType.detailPage,
             siteSectionLevel2: 'rewards:vouchers',
-            siteSectionLevel3: pageName
+            siteSectionLevel3: `rewards:vouchers:${category.toLowerCase()}`
           });
         }
       });

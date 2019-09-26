@@ -8,10 +8,10 @@ import {
   ICampaignService,
   NotificationService,
   PopupComponent,
-  IGameService,
+  // IGameService,
   ICampaign,
-  IGame,
-  GameType,
+  // IGame,
+  // GameType,
   TokenStorage
 } from '@perx/core';
 import { of, Observable, throwError } from 'rxjs';
@@ -100,24 +100,24 @@ describe('AppComponent', () => {
     open: () => { }
   };
 
-  const games: IGame[] = [{
-    id: 1,
-    campaignId: 1,
-    type: GameType.pinata,
-    remainingNumberOfTries: 1,
-    config: {
-      stillImg: '',
-      brokenImg: '',
-      nbTaps: 5
-    },
-    texts: {
-    },
-    results: {
-    }
-  }];
-  const gameServiceStub = {
-    getGamesFromCampaign: () => of([])
-  };
+  // const games: IGame[] = [{
+  //   id: 1,
+  //   campaignId: 1,
+  //   type: GameType.pinata,
+  //   remainingNumberOfTries: 1,
+  //   config: {
+  //     stillImg: '',
+  //     brokenImg: '',
+  //     nbTaps: 5
+  //   },
+  //   texts: {
+  //   },
+  //   results: {
+  //   }
+  // }];
+  // const gameServiceStub = {
+  //   getGamesFromCampaign: () => of([])
+  // };
   const tokenStorageStub = {
     getAppInfoProperty: () => null,
     setAppInfoProperty: () => { }
@@ -149,7 +149,7 @@ describe('AppComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
-        { provide: IGameService, useValue: gameServiceStub },
+        // { provide: IGameService, useValue: gameServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub }
       ],
     });
@@ -195,31 +195,31 @@ describe('AppComponent', () => {
       expect(campaignsServiceSpy).toHaveBeenCalled();
     }));
 
-    it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+    // it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
+    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(campaignServiceSpy).toHaveBeenCalled();
-      // expect(component.rewar).toBe(campaigns[1]);
-    }));
+    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
+    //   component.ngOnInit();
+    //   tick();
+    //   expect(campaignsServiceSpy).toHaveBeenCalled();
+    //   expect(campaignServiceSpy).toHaveBeenCalled();
+    //   // expect(component.rewar).toBe(campaigns[1]);
+    // }));
 
-    it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+    // it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
+    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(campaignServiceSpy).toHaveBeenCalled();
-      // expect(component.selectedCampaign).toBe(campaigns[0]);
-    }));
+    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
+    //   component.ngOnInit();
+    //   tick();
+    //   expect(campaignsServiceSpy).toHaveBeenCalled();
+    //   expect(campaignServiceSpy).toHaveBeenCalled();
+    //   // expect(component.selectedCampaign).toBe(campaigns[0]);
+    // }));
 
     it('should redirect to error screen', fakeAsync(() => {
       const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
@@ -237,40 +237,40 @@ describe('AppComponent', () => {
 
   });
 
-  describe('dialogClosed', () => {
-    it('should navigate to reward if CampaignType is give_reward', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+  // describe('dialogClosed', () => {
+  // it('should navigate to reward if CampaignType is give_reward', fakeAsync(() => {
+  //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+  //   spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
+  //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+  //   spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
 
-      const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-      const routerSpy = spyOn(router, 'navigate');
+  //   const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+  //   const routerSpy = spyOn(router, 'navigate');
 
-      component.ngOnInit();
-      component.dialogClosed();
-      tick();
-      expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });
-    }));
+  //   component.ngOnInit();
+  //   component.dialogClosed();
+  //   tick();
+  //   expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });
+  // }));
 
-    it('should navigate to game if CampaignType is game', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+  // it('should navigate to game if CampaignType is game', fakeAsync(() => {
+  //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+  //   spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
+  //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+  //   spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
 
-      const gamesService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
-      spyOn(gamesService, 'getGamesFromCampaign').and.returnValue(of(games));
+  //   const gamesService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
+  //   spyOn(gamesService, 'getGamesFromCampaign').and.returnValue(of(games));
 
-      const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-      const routerSpy = spyOn(router, 'navigate');
+  //   const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+  //   const routerSpy = spyOn(router, 'navigate');
 
-      component.ngOnInit();
-      component.dialogClosed();
-      tick();
-      expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 1 } });
-    }));
-  });
+  //   component.ngOnInit();
+  //   component.dialogClosed();
+  //   tick();
+  //   expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 1 } });
+  // }));
+  // });
 });
