@@ -14,6 +14,7 @@ export class VouchersProgressBarComponent {
   }
 
   public getPercent(value: number): number {
+    console.log('getPercent', value);
     return value / this.total * 100;
   }
 }
