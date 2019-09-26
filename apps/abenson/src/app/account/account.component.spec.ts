@@ -6,6 +6,7 @@ import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '
 import { of, Observable } from 'rxjs';
 import { profile } from '../mock/profile.mock';
 import { Router } from '@angular/router';
+import { Type } from '@angular/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -13,7 +14,7 @@ describe('AccountComponent', () => {
   let auth: AuthenticationService;
   let router: Router;
   const authenticationServiceStub = {
-    logout: ()=>{}
+    logout: () => { }
   };
 
   const profileServiceStub = {
@@ -42,7 +43,7 @@ describe('AccountComponent', () => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
-    auth = TestBed.get(AuthenticationService);
+    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 
@@ -53,7 +54,7 @@ describe('AccountComponent', () => {
   it('expect recive profile', fakeAsync(() => {
     component.ngOnInit();
     expect(component.profile).toBe(profile);
-  }))
+  }));
 
   it('should log out', () => {
     const routerSpy = spyOn(router, 'navigate');
@@ -61,5 +62,5 @@ describe('AccountComponent', () => {
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
     expect(authSpy).toHaveBeenCalled();
-  })
+  });
 });

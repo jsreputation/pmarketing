@@ -46,7 +46,7 @@ describe('AppComponent', () => {
     snackBar = TestBed.get(MatSnackBar);
     location = TestBed.get(Location);
     app.ngOnInit();
-  }))
+  }));
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
@@ -57,7 +57,7 @@ describe('AppComponent', () => {
     const spyPopup = spyOn(dialog, 'open');
     const spySnack = spyOn(snackBar, 'open');
     ntfs.addPopup(config);
-    ntfs.addSnack('test')
+    ntfs.addSnack('test');
     tick();
     expect(spyPopup).toHaveBeenCalled();
     expect(spySnack).toHaveBeenCalled();
@@ -90,7 +90,7 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('Privacy Policy');
   });
 
-  it('should navigate back', ()=>{
+  it('should navigate back', () => {
     const spy = spyOn(location, 'back');
     app.goBack();
     expect(spy).toHaveBeenCalled();
