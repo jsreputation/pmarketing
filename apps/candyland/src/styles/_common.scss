@@ -189,14 +189,6 @@ h1, h2, h3, h4, h5, p {
   background-color: $primary-color;
 }
 
-/*
-.mat-tab-labels {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-}
-*/
-
 // MATERIALS CARD COMPONENT OVERRIDES
 .mat-card {
   border-radius: $border-radius-lg !important;
@@ -231,9 +223,6 @@ h1, h2, h3, h4, h5, p {
     padding: $vertical-padding $horizontal-padding;
   }
 }
-
-// MOVED MOBILE PHONE PREVIEW PANELS STYLES 
-// TO `_preview.scss` prior to better componentisation
 
 // UTILITIES
 .sr-only {
