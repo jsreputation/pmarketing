@@ -45,7 +45,11 @@ export class QRCodeComponent implements OnInit {
       flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
         this.successRedeemed(val)
       , (err) => {
-        this.notification.addSnack(err.error.message);
+        if (err && err.error) {
+          this.notification.addSnack(err.error.message);
+        } else {
+          this.notification.addSnack(err);
+        }
       });
   }
 
