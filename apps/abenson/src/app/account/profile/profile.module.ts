@@ -16,6 +16,8 @@ import { ChangeBarangayComponent } from './change-barangay/change-barangay.compo
 import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangeCityComponent } from './change-city/change-city.component';
+import { VerificationOtpComponent } from './verification-otp/verification-otp.component';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ChangeCityComponent } from './change-city/change-city.component';
     ChangeStreetAddressComponent,
     ChangeEmailComponent,
     ChangeCityComponent,
+    VerificationOtpComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,7 @@ import { ChangeCityComponent } from './change-city/change-city.component';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    UtilsModule
   ]
 })
 export class ProfileModule { }

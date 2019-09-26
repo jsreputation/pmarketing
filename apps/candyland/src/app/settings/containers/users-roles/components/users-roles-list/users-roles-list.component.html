@@ -1,10 +1,10 @@
-<table class="table" mat-table [dataSource]="dataSource" matSort>
+<table class="table table-settings-user-role" mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="username">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="username">Name</th>
     <td mat-cell *matCellDef="let element">
       <div class="name">
-        <div class="image-cell">
+        <div class="image-cell profilepic">
           <img [src]="element?.avatar || 'assets/images/user-profile/no-avatar.svg'" alt="Firstname Lastname">
         </div>
         <p>{{element?.username}}</p>

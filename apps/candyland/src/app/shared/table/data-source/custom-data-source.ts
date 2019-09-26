@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { IPagination } from './ipagination';
 
 // tslint:disable
 export class CustomDataSource<T> {
@@ -17,25 +18,30 @@ export class CustomDataSource<T> {
   // used for set all length items the pagination component
   public length$ = this.lengthData.asObservable();
   // use for set included params
-  private _included: string;
+  private _params: HttpParamsOptions;
   private destroy$: Subject<void> = new Subject();
 
   public hasData = true;
 
-  public set included(value: any) {
-    this._included = value;
+  public set params(value: HttpParamsOptions) {
+    this._params = value;
+    this.loadingData();
   }
 
-  public get included() {
-    return {include: this._included};
+  public get params() {
+    return this._params || {};
   }
 
   public get data() {
     return this.dataSubject.value;
   }
 
+  public get data$() {
+    return this.dataSubject.asObservable();
+  }
+
   // default items on the page set up pageSize
-  constructor(public dataService: ITableService, public pageSize = 5) {
+  constructor(public dataService: ITableService, public pageSize: number = 5) {
     this.loadingData();
   }
 
@@ -65,7 +71,7 @@ export class CustomDataSource<T> {
     this.loadingData();
   }
 
-  public set pagination(value: any) {
+  public set pagination(value: IPagination) {
     if (this.pageSize !== value.pageSize) {
       this.pageSize = value.pageSize;
       this.changeFilterSearch.next(0);
@@ -88,7 +94,7 @@ export class CustomDataSource<T> {
 
 
   public updateData(): void {
-    this.loadingData({pageIndex: 0, pageSize: this.pageSize});
+    this.loadingData({ pageIndex: 0, pageSize: this.pageSize });
   }
 
   public registerSort(sort: MatSort) {
@@ -103,8 +109,9 @@ export class CustomDataSource<T> {
       .subscribe(newSort => this.sort = newSort);
   }
 
-  private loadingData(pagination?: any) {
+  private loadingData(pagination?: IPagination) {
     const params: HttpParamsOptions = {
+      ...this.params,
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
@@ -112,7 +119,7 @@ export class CustomDataSource<T> {
     };
     this.loadingSubject.next(true);
     this.dataService.getTableData(params)
-      .subscribe((res: any) => {
+      .subscribe((res: ITableData<T>) => {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);

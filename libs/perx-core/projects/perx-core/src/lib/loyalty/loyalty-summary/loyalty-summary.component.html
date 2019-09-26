@@ -10,8 +10,8 @@
     <div class="points">
       {{loyalty.pointsBalance ? loyalty.pointsBalance.toLocaleString('en-sg') : 0 }}
     </div>
-    <div *ngIf="loyalty.currencyBalance">
-      {{subTitleFn(loyalty)}} {{loyalty.currencyBalance}}
+    <div>
+      {{subTitleFn(loyalty)}}
     </div>
     <div class="expiring-points">
       {{summaryExpiringFn(loyalty)}}

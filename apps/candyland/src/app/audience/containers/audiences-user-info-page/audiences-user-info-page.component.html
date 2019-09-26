@@ -2,7 +2,7 @@
   <h1 class="title">Audiences</h1>
 </section>
 
-<cl-audiences-user-info></cl-audiences-user-info>
+<cl-audiences-user-info [user]="user"></cl-audiences-user-info>
 
 <section class="content">
   <!--filters-->
@@ -26,6 +26,11 @@
   <cl-audiences-vouchers-list [dataSource]="dataSource"
                               (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
   </cl-audiences-vouchers-list>
+  <!--/table-->
   <!--paginator-->
-  <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <cl-paginator [dataSource]="dataSource"
+                [pageSize]="5"
+                [pageSizeOptions]="[5, 10, 20]"
+  ></cl-paginator>
+  <!--/paginator-->
 </section>

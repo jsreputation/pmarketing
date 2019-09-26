@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +18,7 @@ import { ChangeCityComponent } from './account/profile/change-city/change-city.c
 import { ChangeStreetAddressComponent } from './account/profile/change-street-address/change-street-address.component';
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
+import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 
 @Component({
   selector: 'app-root',
@@ -35,12 +36,15 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private snackBar: MatSnackBar,
   ) { }
 
   public ngOnInit(): void {
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    this.notificationService.$snack
+      .subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
   }
 
   public onActivate(ref: any): void {
@@ -59,7 +63,8 @@ export class AppComponent implements OnInit {
       ref instanceof ChangeCityComponent ||
       ref instanceof ChangeStreetAddressComponent ||
       ref instanceof FaqComponent ||
-      ref instanceof PrivacyPolicyComponent);
+      ref instanceof PrivacyPolicyComponent ||
+      ref instanceof TermsAndConditionComponent);
     this.showPageTitle = !this.showLogo;
     this.headerTitle = ref instanceof ProfileComponent ? 'Profile' :
       ref instanceof ChangeBarangayComponent ? 'Change Barangay' :
@@ -68,7 +73,8 @@ export class AppComponent implements OnInit {
             ref instanceof ChangeCityComponent ? 'Change City/Municipality' :
               ref instanceof ChangeStreetAddressComponent ? 'Change Street Address' :
                 ref instanceof FaqComponent ? 'FAQ' :
-                  ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' : '' ;
+                  ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' :
+                    ref instanceof TermsAndConditionComponent ? 'Terms & Conditions' : '' ;
   }
 
   public goBack(): void {
