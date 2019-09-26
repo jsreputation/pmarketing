@@ -17,7 +17,7 @@ import { FaqComponent } from './account/profile-additions/containers/faq/faq.com
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { Location } from '@angular/common';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let ntfs: NotificationService;
