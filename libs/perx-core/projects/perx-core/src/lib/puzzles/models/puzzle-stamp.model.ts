@@ -1,4 +1,3 @@
-
 export enum PuzzleCollectStampState {
   issued = 'issued',
   redeemed = 'redeemed'
