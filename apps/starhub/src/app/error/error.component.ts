@@ -12,7 +12,7 @@ export class ErrorComponent implements OnInit {
 
   public ngOnInit(): void {
     this.analytics.addEvent({
-      pageName: 'rewards:error',
+      pageName: 'error',
       pageType: PageType.errorPage,
       siteSectionLevel2: 'rewards:error',
       siteSectionLevel3: 'rewards:error'

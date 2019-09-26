@@ -7,7 +7,7 @@
     width: 13.7rem;
     height: 12.7rem;
     background-color: $light-gray;
-    padding: ($vertical-padding / 2) ($horizontal-padding / 2);
+    padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;

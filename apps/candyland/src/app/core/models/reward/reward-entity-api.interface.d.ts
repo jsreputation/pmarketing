@@ -17,5 +17,6 @@ declare interface IRewardEntityApi {
     currency?: string;
     description?: string;
     terms_conditions?: string;
+    organization_id?: string;
   };
 }

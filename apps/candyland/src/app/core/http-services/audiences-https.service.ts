@@ -10,7 +10,7 @@ export class AudiencesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getUser(id: number): Observable<any> {
+  public getUser(id: string): Observable<any> {
     return this.http.get(ApiConfig.getAllUsers + '/' + id + '?include=pools');
   }
 
@@ -22,9 +22,9 @@ export class AudiencesHttpsService {
     return this.http.get(ApiConfig.getAudiences, {params});
   }
 
-  public getVouchers(): Observable<any> {
-    return this.http.get('assets/mocks/vouchers.json');
-  }
+  // public getVouchers(): Observable<any> {
+  //   return this.http.get('assets/mocks/vouchers.json');
+  // }
 
   public getAllUsers(params: HttpParams): Observable<any> {
     return this.http.get(ApiConfig.getAllUsers, {params});
@@ -36,5 +36,9 @@ export class AudiencesHttpsService {
 
   public updateUserPools(body): Observable<any> {
     return this.http.patch(ApiConfig.getAllUsers + '/' + body.id, {data: body});
+  }
+
+  public getVouchers(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.vouchersEntetiesPath, {params});
   }
 }
