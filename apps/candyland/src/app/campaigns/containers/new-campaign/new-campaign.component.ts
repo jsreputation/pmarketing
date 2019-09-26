@@ -42,6 +42,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getTenants();
     this.initForm();
 
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        console.log(data);
+      });
+
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {

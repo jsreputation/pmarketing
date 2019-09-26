@@ -1,3 +1,5 @@
+import { EngagementTypeAPIMapping } from '@cl-shared/containers/create-engagement-popup/shared/models/EngagementType';
+
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -29,7 +31,7 @@ export class CampaignsHttpAdapter {
       type: "entities",
       attributes: {
         name: data.name,
-        engagement_type: data.template.attributes_type,
+        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
         // status: "draft",

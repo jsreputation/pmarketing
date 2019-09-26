@@ -89,7 +89,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   private initSelectedTemplate(res: IEngagement[]): void {
     const engagementId = this.availableNewEngagementService.isAvailable ?
       this.availableNewEngagementService.newEngagement.id :
-      this.campaignDetail.engagement_id && this.campaignDetail.engagement_id.toString();
+      this.campaignDetail && this.campaignDetail.engagement_id.toString();
     if (engagementId) {
       const findTemplate = res.find(template => template.id === engagementId);
       this.template.patchValue(findTemplate);

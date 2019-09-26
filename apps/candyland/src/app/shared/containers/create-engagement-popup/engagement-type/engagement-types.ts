@@ -9,14 +9,14 @@ export const EngagementType: IEngagementType[] = [
   },
   {
     id: 2,
-    type: 'games',
-    title: 'Games',
+    type: 'game',
+    title: 'Game',
     active: false
   },
   {
     id: 3,
-    type: 'stamp',
-    title: 'Stamp',
+    type: 'stamps',
+    title: 'Stamps',
     active: false
   },
   {
