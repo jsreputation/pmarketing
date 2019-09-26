@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { RewardsService, IReward, LoyaltyService, ILoyalty, IVoucherService, NotificationService } from '@perx/core';
+import { RewardsService, IReward, LoyaltyService, ILoyalty, IVoucherService, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
 import { switchMap, mergeMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../reward-confirm/reward-confirm.component';
@@ -31,25 +31,27 @@ export class RewardDetailComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.ntfcService.$popup
+      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.reward$ = this.route.params
       .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 19))),
         tap((reward) => this.rewardData = reward));
     this.loyaltyService.getLoyalty().subscribe((loyalty) => this.loyalty = loyalty);
   }
 
-  public buyReward(): void {
+  public buyReward(): any {
     const data: IRewardConfirmComponentParam = {
       title: this.rewardData ? this.rewardData.name : '',
       requiredPoints: this.rewardData &&
         this.rewardData.rewardPrice &&
         this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points : 0
     };
-    this.dialog.open(RewardConfirmComponent, { width: '30rem', data }).afterClosed()
+    return this.dialog.open(RewardConfirmComponent, { width: '30rem', data }).afterClosed()
       .pipe(switchMap((result) => result ? this.exchangePoints() : of(null)))
       .subscribe(() => {
         this.ntfcService.addPopup({
-          title: '[Reward Title]',
-          text: `Balance ${29} points`
+          title: `Successfully purchased ${this.rewardData.name}.`,
+          buttonTxt: `Got it`
         });
       });
   }

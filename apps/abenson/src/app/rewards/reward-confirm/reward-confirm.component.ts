@@ -14,13 +14,8 @@ export class RewardConfirmComponent {
     @Inject(MAT_DIALOG_DATA) public data: IRewardConfirmComponentParam
   ) {
   }
-
-  public confirm(): void {
-    this.dialogRef.close(true);
-  }
-
-  public back(): void {
-    this.dialogRef.close(false);
+  public closeDialog(result: boolean): void {
+    this.dialogRef.close(result);
   }
 
 }
