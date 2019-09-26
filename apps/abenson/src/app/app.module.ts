@@ -27,7 +27,8 @@ import {
   MatInputModule,
   MatDialogModule,
   MatProgressSpinnerModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -105,6 +106,7 @@ const campaignServiceStub = {
     MatInputModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,

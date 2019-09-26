@@ -81,7 +81,8 @@ export class HomeComponent implements OnInit {
         this.subTitleFn = () => res.YOU_HAVE;
         this.titleFn = (profile: IProfile) => res.HELLO + ` ${profile.lastName},`;
         this.summaryExpiringFn = (loyalty: ILoyalty) =>
-          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? res.POINTS_EXPITING
+          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
+          loyalty.expiringPoints[0].points !== 0 ? res.POINTS_EXPITING
             .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
               .toString())
             .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?

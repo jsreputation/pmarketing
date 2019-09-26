@@ -116,7 +116,10 @@ export class WhistlerStampService implements StampService {
         rewardPostStamp: attributesObj.display_properties.reward_post_stamp_img_url,
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
-      }
+      },
+      collectionStamps: [
+        // { id: 1, state: PuzzleCollectStampState.issued }
+      ]
     };
   }
 
