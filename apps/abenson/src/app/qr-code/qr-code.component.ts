@@ -1,8 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService, IVoucherService, Voucher, VoucherState } from '@perx/core';
-import { flatMap, tap } from 'rxjs/operators';
-import {HttpErrorResponse} from "@angular/common/http";
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
+
+import {
+  flatMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  NotificationService,
+  IVoucherService,
+  Voucher,
+  VoucherState,
+} from '@perx/core';
 
 @Component({
   selector: 'app-qr-code',
