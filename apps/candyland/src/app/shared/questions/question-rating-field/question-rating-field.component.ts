@@ -10,6 +10,8 @@ export class QuestionRatingFieldComponent implements OnInit {
   @Input() public group: FormGroup;
   public scales: OptionConfig[] = [];
 
+  public maxLabelLength: number = 25;
+
   public get left(): AbstractControl {
     return this.group.get('left_label');
   }
