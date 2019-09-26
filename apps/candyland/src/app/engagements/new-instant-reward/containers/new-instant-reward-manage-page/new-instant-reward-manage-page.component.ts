@@ -72,13 +72,18 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
     this.initTenants();
     this.initRewardForm();
     combineLatest([this.getRewardData(), this.handleRouteParams()])
-      .subscribe(([rewardData, reward]) => {
-        console.log('result', rewardData, reward);
-        const patchData = reward || this.getDefaultValue(rewardData);
-
-        this.form.patchValue(patchData);
-        this.cd.detectChanges();
-      });
+      .subscribe(
+        ([previewData, reward]) => {
+          console.log('result', previewData, reward);
+          const patchData = reward || this.getDefaultValue(previewData);
+          this.form.patchValue(patchData);
+          this.cd.detectChanges();
+        },
+        (error: Error) => {
+          console.warn(error.message);
+          this.router.navigateByUrl('/engagements');
+        }
+      );
   }
 
   public ngOnDestroy(): void {
@@ -140,15 +145,15 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getDefaultValue(rewardData: any): any {
+  private getDefaultValue(data: any): any {
     return {
       name: 'Instant Reward Template',
       headlineMessage: 'You have got rewards!',
       subHeadlineMessage: '',
       banner: 'reward',
       buttonText: 'See my rewards',
-      [ControlsName.background]: rewardData.background[0],
-      [ControlsName.cardBackground]: rewardData.cardBackground[0]
+      [ControlsName.background]: data.background[0],
+      [ControlsName.cardBackground]: data.cardBackground[0]
     };
   }
 
@@ -159,9 +164,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
 
   private initTenants(): void {
     this.settingsService.getTenantsSettings()
-      .pipe(
-        untilDestroyed(this)
-      )
+      .pipe(untilDestroyed(this))
       .subscribe(data => this.tenantSettings = data);
   }
 

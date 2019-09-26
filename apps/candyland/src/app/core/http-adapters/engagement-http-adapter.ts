@@ -68,7 +68,7 @@ export class EngagementHttpAdapter {
       attributes_type: data.attributes.type,
       background_img_url: data.attributes.display_properties.background_img_url,
       card_background_img_url: data.attributes.display_properties.card_background_img_url
-    }
+    };
   }
 
   public static transformToSurveyType(data: any): IEngagementSurvey {
@@ -145,8 +145,8 @@ export class EngagementHttpAdapter {
       background_img_url: data.attributes.display_properties.background_img_url,
       attributes_type: data.attributes.type,
       created_at: data.attributes.created_at,
-      updated_at: data.attributes.updated_at,
-    }
+      updated_at: data.attributes.updated_at
+    };
   }
 
   public static transformToPinataType(data: any): IEngagementTapType {
@@ -163,10 +163,10 @@ export class EngagementHttpAdapter {
       attributes_type: data.attributes.type,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
-      closed_pinata_img_url:  data.attributes.display_properties.closed_pinata_img_url,
-      opened_pinata_img_url:  data.attributes.display_properties.opened_pinata_img_url,
+      closed_pinata_img_url: data.attributes.display_properties.closed_pinata_img_url,
+      opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
-    }
+    };
   }
 
   public static transformInstantReward(data: IInstantRewardForm): any {
@@ -244,10 +244,27 @@ export class EngagementHttpAdapter {
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
           background_img_url: ImageControlValue.getImagePath(data.background),
-          card_background_img_url:  ImageControlValue.getImagePath(data.cardBackground)
+          card_background_img_url: ImageControlValue.getImagePath(data.cardBackground)
         }
       }
-    }
+    };
+  }
+
+  public static transformStampForm(data: any): any {
+    return {
+      name: data.attributes.title,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      cardBackground: data.attributes.display_properties.card_background_img_url,
+      background: data.attributes.display_properties.background_img_url,
+      buttonText: data.attributes.display_properties.button,
+      stampsNumber: data.attributes.display_properties.nb_of_slots,
+      stampsSlotNumber: data.attributes.display_properties.slots,
+      preStamp: data.attributes.display_properties.pre_stamp_img_url,
+      rewardPreStamps: data.attributes.display_properties.reward_pre_stamp_img_url,
+      postStamps: data.attributes.display_properties.post_stamp_img_url,
+      rewardPostStamps: data.attributes.display_properties.reward_post_stamp_img_url
+    };
   }
 
   public static transformRewardForm(data: any): any {
@@ -259,6 +276,6 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       [ControlsName.background]: data.attributes.display_properties.background_img_url,
       [ControlsName.cardBackground]: data.attributes.display_properties.card_background_img_url
-    }
+    };
   }
 }

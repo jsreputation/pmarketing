@@ -41,7 +41,7 @@ export class CreateEngagementPopupComponent implements OnInit {
 
     switch (this.selectedType.type) {
       case EngagementType.stamp:
-        this.router.navigateByUrl('/engagements/new-stamp/settings');
+        this.router.navigateByUrl('/engagements/new-stamp');
         break;
       case EngagementType.instantReward:
         this.router.navigateByUrl('/engagements/new-instant-reward');

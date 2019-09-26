@@ -36,4 +36,11 @@ export class StampHttpService {
     return this.http.post(ApiConfig.stampsPath + '/', data);
   }
 
+  public updateStamp(id: string, data: IResponseApi<any>): Observable<IResponseApi<any>> {
+    return this.http.patch<IResponseApi<any>>(ApiConfig.engagementsPath + '/stamps/' + id, data);
+  }
+
+  public getStamp(id: string): Observable<any> {
+    return this.http.get(ApiConfig.engagementsPath + '/stamps/' + id);
+  }
 }
