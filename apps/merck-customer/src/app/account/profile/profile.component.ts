@@ -12,7 +12,7 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-prop
 export class ProfileComponent implements OnInit, PageAppearence {
   public profile: IProfile;
   public conditions: string[];
-  public loyalty: ILoyalty;
+  public tier: string;
 
   constructor(
     private profileService: ProfileService,
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
       this.conditions = this.getConditionsFromProfile(res);
     });
 
-    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.tier = loyalty.membershipTierName);
   }
 
   private getConditionsFromProfile(profile: IProfile): string[] {
