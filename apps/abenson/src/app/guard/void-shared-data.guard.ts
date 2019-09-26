@@ -13,13 +13,13 @@ export class VoidSharedDataGuard implements CanActivate {
     private sharedData: SharedDataService,
     private router: Router
   ) { }
-  canActivate(
+  public canActivate(
     next: ActivatedRouteSnapshot,
   ): Observable<boolean> | boolean {
     if (!next.params || next.params.type !== 'password') {
       return true;
     }
-    return this.sharedData.data.pipe(map(val => !isNull(val)),
+    return this.sharedData.data.pipe(map(val => val !== null),
       tap(bool => !bool && this.router.navigate(['account', 'change-password'])));
   }
 

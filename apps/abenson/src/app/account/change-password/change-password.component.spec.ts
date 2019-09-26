@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 
 const authenticationServiceStub = {
   requestVerificationToken: () => of(null)
-}
+};
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
