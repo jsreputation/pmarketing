@@ -183,9 +183,23 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
+// MATERIALS TAB COMPONENT OVERRIDES
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: $primary-color;
+}
+
+/*
+.mat-tab-labels {
+  display: grid !important;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+*/
+
+// MATERIALS CARD COMPONENT OVERRIDES
+.mat-card {
+  border-radius: $border-radius-lg !important;
 }
 
 // no-data graphics layout
