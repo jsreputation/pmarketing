@@ -8,7 +8,8 @@ $green: #10D994;
 //grays
 $white: #fff;
 $lightest-gray:  #fafafa;
-$light-gray:  #f7fafc;
+$light-gray:  rgba(0, 0, 0, 0.025); //#F2F8FB
+$gray: #A4B0C3;
 
 //app colors
 $primary-color: $blue;
@@ -50,10 +51,18 @@ $mobile-preview-width: 34.4rem;
 $border-radius: 0.4rem;
 $border-radius-lg: 0.8rem;
 
+$thumbnail-size: 6.4rem;
+
+$progressbar-min: 6.4rem;
+$progressbar-max: 12.8rem;
+
+$modal-header-height: 6.4rem;
+
 /* ----- SCREEN DIMENSIONS ----- */
 $mobile-width: 576px;
 $tablet-width: 768px;
 $desktop-width: 992px;
+$lg-width: 1400px;
 
 /* -------------- FONTS -------------- */
 $primary-font: Roboto, "Helvetica Neue", sans-serif;
