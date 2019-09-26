@@ -87,19 +87,19 @@ export class HomeComponent implements OnInit {
       }
       return `Welcome`;
     };
-    this.getRewards();
+    this.initRewards();
   }
 
   private getRewardsCollection(): void {
     this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
-  private getRewards(): void {
+  private initRewards(): void {
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, [tab.tabName])
-          .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })));
+        return this.rewardsService.getRewards(1, 10, null, [tab.tabName])
+          .pipe(map((result: IReward[]) => ({key: tab.tabName, value: result})));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
@@ -108,6 +108,7 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+
   private getLoyalty(): void {
     this.loyaltyService.getLoyalties()
       .pipe(
@@ -116,6 +117,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
   }
+
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
