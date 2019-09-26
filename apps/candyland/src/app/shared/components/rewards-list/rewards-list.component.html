@@ -1,7 +1,7 @@
 <table class="table" mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="image">
-    <th mat-header-cell *matHeaderCellDef>Reward Image</th>
+    <th mat-header-cell *matHeaderCellDef><span class="sr-only">Reward Image</span></th>
     <td mat-cell *matCellDef="let element">
       <a (click)="clickDetailItem(element)" class="image-cell">
         <img [src]="element?.image"/>
@@ -12,7 +12,7 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Reward Name</th>
     <td mat-cell *matCellDef="let element">
-      <a class="pw-cell__link" (click)="clickDetailItem(element)">
+      <a class="name-cell__link" (click)="clickDetailItem(element)">
         {{element?.name}}
       </a>
     </td>

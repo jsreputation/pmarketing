@@ -8,10 +8,10 @@
   box-sizing: border-box;
   justify-content: space-between;
   padding: 0;
-  margin: 0 (-($horizontal-padding / 2));
+  margin: 0 (-($horizontal-padding * 0.5));
 
   & > * {
-    margin: 0 ($horizontal-padding / 2) $vertical-padding;
+    margin: 0 ($horizontal-padding * 0.5) $vertical-padding;
     flex: 1;
   }
 }
@@ -29,7 +29,7 @@
 
     flex: 1 0 100%;
     width: 100%;
-    margin-bottom: $vertical-padding / 2;
+    margin-bottom: ($vertical-padding * 0.5);
   }
 
   &-header-with-control {

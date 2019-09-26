@@ -1,5 +1,10 @@
 @import "../../../../custom-theme";
 
+.container {
+  overflow: scroll;
+  height: 100%;
+}
+
 perx-core-loyalty-summary ::ng-deep {
   .container {
     background-color: #FFFFFF;
@@ -69,4 +74,10 @@ perx-core-loyalty-transactions-list ::ng-deep {
     color: mat-color($primary);
     margin-top: 0.6rem;
   }
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.6rem;
 }
