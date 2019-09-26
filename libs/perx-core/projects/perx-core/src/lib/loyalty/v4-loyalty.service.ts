@@ -6,6 +6,8 @@ import { LoyaltyService } from './loyalty.service';
 import { ILoyalty, ITransaction } from './models/loyalty.model';
 import { Config } from '../config/config';
 
+const DEFAULT_PAGE_COUNT: number = 10;
+
 interface IV4Meta {
   count?: number;
   size?: number;
@@ -103,7 +105,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public getLoyalties(page: number = 1, pageSize: number = 10): Observable<ILoyalty[]> {
+  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
     return this.http.get<IV4GetLoyaltiesResponse>(
       `${this.apiHost}/v4/loyalty`,
       {

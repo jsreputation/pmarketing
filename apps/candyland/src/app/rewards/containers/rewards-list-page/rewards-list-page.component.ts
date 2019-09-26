@@ -55,7 +55,7 @@ export class RewardsListPageComponent {
   }
 
   private duplicateReward(reward: IRewardEntity): void {
-    this.rewardsService.getReward(reward.id).pipe(
+    this.rewardsService.getRewardToForm(reward.id).pipe(
       switchMap(responseReward => this.rewardsService.createReward(responseReward))
     ).subscribe(() => this.dataSource.updateData());
   }
