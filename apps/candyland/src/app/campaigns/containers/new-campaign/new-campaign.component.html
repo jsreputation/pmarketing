@@ -26,15 +26,23 @@
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>Select engagement</ng-template>
-      <cl-new-campaign-select-engagement-page></cl-new-campaign-select-engagement-page>
+      <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
       <ng-container [ngSwitch]="campaign?.template?.attributes_type">
-        <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"></cl-new-campaign-rewards-stamps-page>
-        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"></cl-new-campaign-rewards-survey-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'Instant Reward'"></cl-new-campaign-rewards-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'game'"></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"
+                                             [tenantSettings]="tenantSettings"
+        ></cl-new-campaign-rewards-stamps-page>
+        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"
+                                             [tenantSettings]="tenantSettings"
+        ></cl-new-campaign-rewards-survey-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'instant_reward'"
+                                      [tenantSettings]="tenantSettings"
+        ></cl-new-campaign-rewards-page>
+        <cl-new-campaign-rewards-page *ngSwitchCase="'game'"
+                                      [tenantSettings]="tenantSettings"
+        ></cl-new-campaign-rewards-page>
       </ng-container>
     </mat-step>
     <mat-step [completed]="getStepCondition(2)">
@@ -43,7 +51,8 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
-      <cl-new-campaign-review-page></cl-new-campaign-review-page>
+      <cl-new-campaign-review-page [tenantSettings]="tenantSettings"
+      ></cl-new-campaign-review-page>
     </mat-step>
   </mat-horizontal-stepper>
 </section>

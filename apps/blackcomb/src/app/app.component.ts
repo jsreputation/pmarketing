@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme } from '@perx/core';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -21,12 +21,14 @@ export class AppComponent implements OnInit {
   public showToolbar: boolean = true;
   public leftIcon: string = '';
   public preAuth: boolean;
+  public theme: ITheme;
 
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private location: Location,
     private router: Router,
+    private themesService: ThemesService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.preAuth = environment.preAuth;
@@ -37,6 +39,9 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
       (window as any).campaignId = new URLSearchParams(param).get('cid');
+      this.themesService.getThemeSetting().subscribe(
+        theme => this.theme = theme
+      );
     }
 
     this.notificationService.$popup

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable()
 export class CampaignCreationStoreService {
@@ -59,6 +60,13 @@ export class CampaignCreationStoreService {
       this.currentCampaign.rewards = value.rewards;
     }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
+  }
+
+  public get template$(): any {
+    return this.currentCampaign$
+      .pipe(
+        filter(value => value && value.template),
+        map(value => value.template));
   }
 
 }

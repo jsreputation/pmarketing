@@ -1,7 +1,8 @@
-import { JsonApiModelConfig, JsonApiModel, Attribute } from 'angular2-jsonapi';
+import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany, BelongsTo*/ } from 'angular2-jsonapi';
+import { ApiConfig } from '@cl-core/api-config';
 // tslint:disable
 @JsonApiModelConfig({
-  type: 'tenants'
+  type: ApiConfig.tenantsPath
 })
 export class Tenants extends JsonApiModel {
 
@@ -19,7 +20,7 @@ export class Tenants extends JsonApiModel {
   rootId: string;
 
   @Attribute()
-  properties: {
+  display_properties: {
     "time_zone": string,
     "theme.color": string,
     "currency": any,

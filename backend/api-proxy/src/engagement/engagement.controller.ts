@@ -164,9 +164,15 @@ class EngagementControllerImplem {
             );
     }
 
-    private handleError(err: AxiosError): Observable<any> {
+    private handleError(err: AxiosError | Error): Observable<any> {
         console.error(err);
-        throw new HttpException(err.response.data, err.response.status);
+        // @ts-ignore
+        if (err.response !== undefined) {
+            // @ts-ignore
+            throw new HttpException(err.response.data, err.response.status);
+        }
+        throw new HttpException(err.message, 500);
+
     }
 
     private getService(type: EngagementType): IEngagementService {

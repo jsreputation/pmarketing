@@ -1,17 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import { IGameGifts } from './shared/models/game-gifts.model';
 import {
-  AvailableNewEngagementService,
-  RoutingStateService,
-  ShakeTreeService
+  AvailableNewEngagementService, RoutingStateService, SettingsService, ShakeTreeService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -27,16 +28,21 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     giftBox: IGraphic[],
     background: IGraphic[]
   }>;
+  public tenantSettings: ITenantsProperties;
 
   public selectGiftBox: IGraphic;
   public gameGift: AbstractControl;
   private destroy$ = new Subject();
-  constructor(private fb: FormBuilder,
-              private shakeDataService: ShakeTreeService,
-              private routingState: RoutingStateService,
-              private router: Router,
-              private availableNewEngagementService: AvailableNewEngagementService) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private shakeDataService: ShakeTreeService,
+    private routingState: RoutingStateService,
+    private router: Router,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private cdr: ChangeDetectorRef,
+    private settingsService: SettingsService
+  ) { }
+
   public get name(): AbstractControl {
     return this.shakeTree.get(ControlsName.name);
   }
@@ -74,6 +80,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.createShakeTreeForm();
     this.createGameGiftField();
     this.getData();
@@ -81,8 +88,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.shakeDataService.createShakeTree(this.shakeTree.value)
-      .pipe(untilDestroyed(this))
-      .subscribe((data: IResponseApi<IEngagementApi>) => {
+      .pipe(
+        untilDestroyed(this),
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+      )
+
+      .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
       });
@@ -103,12 +114,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private createShakeTreeForm(): void {
     this.shakeTree = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the tree and Win!', [Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(60)]
+      Validators.minLength(5),
+      Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.required,
@@ -144,5 +155,13 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cdr.detectChanges();
+      });
   }
 }

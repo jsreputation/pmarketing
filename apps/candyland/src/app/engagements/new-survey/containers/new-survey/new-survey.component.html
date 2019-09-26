@@ -14,7 +14,7 @@
     </div>
     <div class="game-actions">
       <cl-button [classList]="'secondary'"
-                 class="btn-cancel btn-right_padding"
+                 class="btn-cancel"
                  (click)="comeBack()"
       >
       <span>
@@ -31,7 +31,7 @@
       </cl-button>
     </div>
   </div>
-  <section class="content flex">
+  <section class="content phonepreview-wrapper">
     <div class="survey-form">
       <mat-card class="game-graphic">
         <div class="messages-wrap">
@@ -225,7 +225,7 @@
         <div class="mobile-preview-card"
              [ngStyle]="{
              'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
-             'font-family': 'Roboto'
+             'font-family': tenantSettings?.font
              }"
         >
           <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
@@ -235,8 +235,8 @@
       <div class="mobile-preview-btn-wrap mobile-btn-block">
         <button class="mobile-preview-btn"
                 [ngStyle]="{
-                backgroundColor: tenantSettings?.buttonColor,
-                'font-family': tenantSettings?.font
+                  backgroundColor: tenantSettings?.buttonColor,
+                  'font-family': tenantSettings?.font
                 }"
         >
           {{buttonText?.value}}

@@ -1,10 +1,10 @@
-<div class="tab-content">
+<div class="phonepreview-wrapper">
   <div>
     <!--  filters-->
     <div class="template-filters">
       <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'title'; value: defaultSearchValue; let filter">
-          <cl-search-filter class="name-filter" [control]="filter" placeholder="Search for engagements"></cl-search-filter>
+          <cl-search-filter [control]="filter" placeholder="Search for engagements"></cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'attributes_type'; value: defaultTypeValue; let filter">
           <mat-form-field appearance="outline">
@@ -16,7 +16,7 @@
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button classList="tertiary" (click)="createNewEngagement()">+ Create New Engagement</cl-button>
+      <cl-button classList="tertiary ph-0" (click)="createNewEngagement()">+ Create New Engagement</cl-button>
     </div>
     <!--items-->
     <mat-error class="error template-error" *ngIf="form.get('template').getError('required') && form.get('template').touched">
@@ -33,8 +33,8 @@
       </ng-container>
     </mat-radio-group>
   </div>
-  <div class="preview">
-    <div class="preview-mobile">
-    </div>
-  </div>
+  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$"
+                               [tenantSettings]="tenantSettings"
+  >
+  </cl-campaigns-mobile-preview>
 </div>

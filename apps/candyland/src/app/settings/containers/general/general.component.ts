@@ -58,7 +58,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenants = res;
-        this.patchValue(res.properties);
+        this.patchValue(res.display_properties);
         this.subscribeFormChanges();
       });
   }
