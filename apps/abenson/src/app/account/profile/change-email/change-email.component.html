@@ -14,9 +14,9 @@
       <input
         matInput
         placeholder="Enter new email"
-        formControlName="newEmail"
+        formControlName="email"
       >
-      <mat-error *ngIf="emailChangeForm.get('newEmail').hasError('required')">
+      <mat-error *ngIf="emailChangeForm.get('email').hasError('required')">
         New email is <strong>required</strong>
       </mat-error>
     </mat-form-field>

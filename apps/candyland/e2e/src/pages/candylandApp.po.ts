@@ -54,7 +54,7 @@ export class LoginAppPage {
   }
 
   public getAccountId(): number {
-    return 2;
+   return 222222222;
   }
 
   public getUserAccount(): string {
@@ -107,6 +107,14 @@ export class GeneralSettingsAppPage {
 
   public navigateToGeneralSettings(): Promise<string> {
     return browser.get('settings/general') as Promise<string> ;
+ }
+
+}
+
+export class BrandingSettingsAppPage {
+
+  public navigateToBrandingSettings(): Promise<string> {
+    return browser.get('settings/branding') as Promise<string> ;
  }
 
 }

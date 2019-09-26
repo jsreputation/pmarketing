@@ -1,23 +1,29 @@
 import { MatTableDataSource } from '@angular/material';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { IPagination } from './ipagination';
+
+interface ISort {
+  direction: string;
+  active: any;
+}
 
 export class TableDataSource<T> extends MatTableDataSource<T> {
   public data$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   public prepaginateData$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
-  public filtersState$: BehaviorSubject<any> = new BehaviorSubject<any>({
+  public filtersState$: BehaviorSubject<{ filters: any | null }> = new BehaviorSubject<{ filters: any | null }>({
     filters: null
   });
-  public sortState$: BehaviorSubject<any> = new BehaviorSubject<any>({
+  public sortState$: BehaviorSubject<{ sort: ISort | null }> = new BehaviorSubject<{ sort: ISort | null }>({
     sort: null
   });
-  public paginatorState$: BehaviorSubject<any> = new BehaviorSubject<any>({
+  public paginatorState$: BehaviorSubject<{ paginator: IPagination | null }> = new BehaviorSubject<{ paginator: IPagination | null }>({
     paginator: null
   });
   public addDeleteData$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(
     this.initData
   );
 
-  constructor(public initData: any) {
+  constructor(public initData: T[]) {
     super();
     this.data$.next(this.initData);
   }
@@ -31,8 +37,8 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
     ];
 
     combineLatest(...displayDataChanges).subscribe(
-      ([filtersState, sortState, paginatorState]: any[]) => {
-        let data = this.initData.slice();
+      ([filtersState, sortState, paginatorState]: [{ filters: any | null }, { sort: ISort | null }, { paginator: IPagination | null }]) => {
+        let data: T[] = this.initData.slice();
         if (filtersState.filters) {
           data = this.dataMultiFilter(data, filtersState.filters);
         }
@@ -52,11 +58,11 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
   public disconnect(): void {
   }
 
-  public applySort(sortInfo: any): void {
+  public applySort(sortInfo: ISort): void {
     this.sortState$.next({ sort: sortInfo });
   }
 
-  public applyPaginator(paginatorInfo: any): void {
+  public applyPaginator(paginatorInfo: IPagination): void {
     this.paginatorState$.next({ paginator: paginatorInfo });
   }
 
@@ -71,21 +77,20 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
   }
 
   // TODO typings
-  private dataMultiFilter(data: any[], filters: any): any[] {
+  private dataMultiFilter(data: T[], filters: any): T[] {
     const filterKeys = Object.keys(filters);
-    return data.filter((item: any) => {
+    return data.filter((item: T) => {
       return filterKeys.every((key: any) => {
         return item[key].match(filters[key]);
       });
     });
   }
 
-  // Todo typings
-  public dataSort(data: any[], sortData: any): any[] {
+  public dataSort(data: T[], sortData: ISort): T[] {
     if (!sortData.active || sortData.direction === '') {
       return data;
     }
-    return data.sort((valueA: any, valueB: any) => {
+    return data.sort((valueA: T, valueB: T) => {
       return (
         (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
         (sortData.direction === 'asc' ? 1 : -1)
@@ -93,7 +98,7 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
     });
   }
 
-  public dataPaginator(data: any[], paginatorData: any): any[] {
+  public dataPaginator(data: T[], paginatorData: IPagination): T[] {
     const startIndex = paginatorData.pageIndex * paginatorData.pageSize;
     return data.splice(startIndex, paginatorData.pageSize);
   }
