@@ -40,7 +40,6 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public ngOnInit(): void {
     super.ngOnInit();
     this.subscribeFormValueChange();
-    console.log(this.campaignDetail);
   }
 
   public ngOnDestroy(): void {

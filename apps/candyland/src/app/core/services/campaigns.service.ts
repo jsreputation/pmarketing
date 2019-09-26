@@ -30,8 +30,8 @@ export class CampaignsService implements ITableService {
     return this.campaignsHttpsService.getCampaign(id);
   }
 
-  public updateCampaign(id: number, data: any): void {
-    this.campaignsHttpsService.updateCampaign(id, data);
+  public updateCampaign(id: number, data: any): Observable<any> {
+    return this.campaignsHttpsService.updateCampaign(id, data);
   }
 
   public createCampaign(data: any): Observable<any> {

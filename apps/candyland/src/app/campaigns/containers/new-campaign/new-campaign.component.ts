@@ -41,12 +41,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        console.log(data);
-      });
 
     this.form.valueChanges
       .pipe(untilDestroyed(this))
@@ -87,7 +81,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
-    console.log(this.store.currentCampaign);
     this.stepper.next();
   }
 
@@ -164,7 +157,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       campaign => {
         this.campaign = campaign;
         this.campaignDetail = campaign && campaign.data && campaign.data.attributes;
-        console.log(this.campaignDetail);
         this.form.patchValue(this.campaignDetail);
         this.store.updateCampaign(this.form);
       },

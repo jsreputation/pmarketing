@@ -2,10 +2,12 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  OnChanges,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
-  forwardRef, AfterViewInit
+  forwardRef,
+  SimpleChanges
 } from '@angular/core';
 import {
   AbstractControl,
@@ -36,7 +38,7 @@ import { RewardsService } from '@cl-core/services/rewards.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
   @Input() public title = 'Rewards';
   @Input() public campaignDetail;
   @Input() public group: FormGroup = this.fb.group({
@@ -82,13 +84,15 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       .subscribe((reward) => {
         this.onChange(reward);
       });
-    if (this.campaignDetail && this.campaignDetail.possible_outcomes) {
-      this.initRewardsList();
-    }
-    console.log(this.campaignDetail);
   }
 
-  public ngAfterViewInit(): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.campaignDetail) {
+      const currentCampaignDetail = changes.campaignDetail.currentValue;
+      if (currentCampaignDetail && currentCampaignDetail.possible_outcomes) {
+        this.initRewardsList();
+      }
+    }
   }
 
   public ngOnDestroy(): void {
@@ -104,7 +108,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     });
   }
   public initRewardsList(): void {
-    const possibleOutcomes = this.campaign.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
+    const possibleOutcomes = this.campaignDetail.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
     this.rewards.reset();
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))

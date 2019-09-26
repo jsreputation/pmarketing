@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -15,7 +15,7 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy, OnChanges {
   public form: FormGroup;
   public config: any;
   @Input()
@@ -59,6 +59,12 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     this.initPools();
   }
 
+  public ngOnChanges(change: SimpleChanges): void {
+    if (change.campaignDetail) {
+      this.initForm();
+    }
+  }
+
   public ngOnDestroy(): void {
   }
 
@@ -79,7 +85,30 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         }
       });
     if (this.campaignDetail) {
-      this.form.patchValue({});
+      this.form.patchValue(
+        {
+          campaignInfo: {
+            startTime: `${(new Date()).toLocaleString('en-US',
+              {
+                hour: 'numeric', minute: 'numeric', hour12: true
+              })
+              }`,
+            startDate: new Date(this.campaignDetail.start_date_time),
+            goal: this.campaignDetail.goal,
+            disabledEndDate: !this.campaignDetail.end_date_time,
+            endDate: new Date(this.campaignDetail.end_date_time)
+          },
+          channel: {
+            type: this.campaignDetail.comm_channel,
+            schedule: {
+              enableRecurrence: false,
+              recurrence: {
+                repeatOn: []
+              }
+            }
+          }
+        }
+      );
     } else {
       this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
     }
