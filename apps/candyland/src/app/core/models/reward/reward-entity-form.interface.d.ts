@@ -11,7 +11,7 @@ declare interface IRewardEntityForm {
     description: string;
     termsAndCondition: string;
   };
-  vouchers: {
+  vouchers?: {
     voucherCode?: {
       type?: string;
       singleCode?: {

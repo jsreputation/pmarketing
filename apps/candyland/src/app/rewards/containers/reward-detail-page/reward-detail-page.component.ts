@@ -22,14 +22,15 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
 
   public rewardData;
 
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
-  constructor(private rewardsService: RewardsService,
-              private vouchersService: VouchersService,
-              private router: Router,
-              private route: ActivatedRoute,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
+  constructor(
+    private rewardsService: RewardsService,
+    private vouchersService: VouchersService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog) {
   }
 
   public ngOnInit(): void {
@@ -46,13 +47,13 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, {panelClass: 'reward-replenish-dialog', data: this.data});
+    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
         switchMap((data: any) => this.vouchersService.createVoucher(data))
       )
-      .subscribe(() => {});
+      .subscribe(() => { });
   }
 
   public updateRewardImage(image: WindowBase64): void {
@@ -72,13 +73,13 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     this.rewardsService.getMocksRewardDetail()
       .pipe(
         map((data: any) => {
-            data.campaigns.map(item => {
-              item.begin = new Date(item.begin);
-              item.end = new Date(item.end);
-              return item;
-            });
-            return data;
-          }
+          data.campaigns.map(item => {
+            item.begin = new Date(item.begin);
+            item.end = new Date(item.end);
+            return item;
+          });
+          return data;
+        }
         ),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data.campaigns, 'status');
@@ -95,7 +96,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap( id => this.id = id),
+      tap(id => this.id = id),
       switchMap(id => this.rewardsService.getRewardToForm(id))
     )
       .subscribe(
@@ -103,7 +104,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
           this.data = Utils.nestedObjectAssign(this.data, reward);
           this.cd.detectChanges();
         },
-        () => this.router.navigateByUrl('/rewards')
+        (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
       );
   }
 }
