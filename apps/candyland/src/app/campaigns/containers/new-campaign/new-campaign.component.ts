@@ -45,8 +45,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .asObservable()
       .pipe(untilDestroyed(this))
       .subscribe(data => {
-        this.campaign = data;
+        console.log(data);
       });
+
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {

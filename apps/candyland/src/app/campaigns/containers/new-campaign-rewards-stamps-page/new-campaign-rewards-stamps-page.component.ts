@@ -16,7 +16,7 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public campaign;
+  @Input() public campaignDetail;
   public form: FormGroup;
 
   constructor(
@@ -45,6 +45,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
           this.initUnsequenceRules();
         }
       });
+    console.log(this.campaignDetail);
     // TODO: will be need for realization edit page
     // this.form.patchValue(this.formService.getDefaultValue());
   }

@@ -38,7 +38,7 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
-  @Input() public campaign;
+  @Input() public campaignDetail;
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: [false],
     rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
@@ -82,11 +82,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       .subscribe((reward) => {
         this.onChange(reward);
       });
-
-    if (this.campaign && this.campaign.possible_outcomes) {
+    if (this.campaignDetail && this.campaignDetail.possible_outcomes) {
       this.initRewardsList();
     }
-
+    console.log(this.campaignDetail);
   }
 
   public ngAfterViewInit(): void {

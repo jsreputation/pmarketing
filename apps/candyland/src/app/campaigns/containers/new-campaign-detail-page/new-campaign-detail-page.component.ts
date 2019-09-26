@@ -19,7 +19,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public form: FormGroup;
   public config: any;
   @Input()
-  public campaign;
+  public campaignDetail;
   public pools;
 
   public get campaignInfo(): AbstractControl | null {
@@ -78,7 +78,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
           this.updateForm();
         }
       });
-    if (this.campaign) {
+    if (this.campaignDetail) {
       this.form.patchValue({});
     } else {
       this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());

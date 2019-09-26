@@ -13,7 +13,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public campaign;
+  @Input() public campaignDetail;
 
   public form: FormGroup;
   public defaultValue = {
@@ -40,6 +40,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public ngOnInit(): void {
     super.ngOnInit();
     this.subscribeFormValueChange();
+    console.log(this.campaignDetail);
   }
 
   public ngOnDestroy(): void {
@@ -67,7 +68,6 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
       .pipe(untilDestroyed(this))
       .subscribe((val) => {
         this.store.updateCampaign(val);
-        console.log(this.store.currentCampaign);
       });
   }
 }
