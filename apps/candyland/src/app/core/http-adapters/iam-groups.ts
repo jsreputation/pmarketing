@@ -1,7 +1,8 @@
 import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany,*/ BelongsTo } from 'angular2-jsonapi';
+import { ApiConfig } from '@cl-core/api-config';
 // tslint:disable
 @JsonApiModelConfig({
-  type: 'groups'
+  type: ApiConfig.IAMGroupsPath
 })
 export class Groups extends JsonApiModel {
 

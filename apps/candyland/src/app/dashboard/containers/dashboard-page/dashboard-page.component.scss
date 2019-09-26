@@ -63,7 +63,7 @@
 }
 
 .game-card {
-  margin: 0 ($horizontal-padding / 4) ($vertical-padding / 2);
+  margin: 0 ($horizontal-padding * 0.25) ($vertical-padding * 0.5);
   flex: auto;
   width: 0;
   flex-wrap: wrap;
@@ -71,7 +71,7 @@
   &-wrap {
     display: flex;
     flex-wrap: wrap;
-    margin: ($vertical-padding * 0.75) (-($vertical-padding / 4)) 0;
+    margin: ($vertical-padding * 0.75) (-($vertical-padding * 0.25)) 0;
   }
 }
 
