@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 .preview {
@@ -5,8 +6,6 @@
   width: $mobile-preview-width;
   height: 63.8rem;
   background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-  border-radius: $border-radius-lg;
 
   &-mobile {
     width: $mobile-preview-width;
@@ -33,8 +32,13 @@
   grid-template-columns: auto $mobile-preview-width;
 
   > *:last-child {
+    @include mat-elevation(1);
+
     position: sticky;
     top: $header-height-base + $vertical-padding;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: $border-radius-lg;
+    overflow: hidden;
   }
 }
 
@@ -45,7 +49,6 @@
     height: 63.8rem;
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: $border-radius-lg;
     position: relative;
 
     &-headline, &-sub-headline {
