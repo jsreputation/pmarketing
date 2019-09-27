@@ -37,7 +37,7 @@ export class CardComponent implements OnInit {
   constructor(private loyaltyService: LoyaltyService) {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => {
-        return [...acc, ...curr];
+        return [...acc, ... curr ? curr : []];
       }, [])
     );
   }
@@ -70,7 +70,7 @@ export class CardComponent implements OnInit {
       .subscribe((transactions) => {
         this.transactions.next(transactions);
         this.transactionsLoaded = true;
-        if (transactions.length < 3) {
+        if (transactions && transactions.length < 3) {
           this.transactionsEnded = true;
         }
       });
