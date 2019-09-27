@@ -13,7 +13,7 @@
         <input matInput formControlName="account_id" placeholder="Account ID">
         <mat-error *ngIf="accountId.hasError('required')">Required field</mat-error>
         <mat-error *ngIf="accountId.hasError('minlength')">Min length 1</mat-error>
-        <mat-error *ngIf="accountId.hasError('pattern')">Only numbers</mat-error>
+        <mat-error *ngIf="accountId.hasError('pattern')">Should end with a '-'</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
