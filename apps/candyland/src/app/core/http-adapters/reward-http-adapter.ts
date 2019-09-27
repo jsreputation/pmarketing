@@ -20,30 +20,39 @@ export class RewardHttpAdapter {
   public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
     let vouchers;
     if (data.attributes.display_properties.voucher_properties) {
+      const voucher_properties = data.attributes.display_properties.voucher_properties;
       vouchers = {
         voucherCode: {
-          type: data.attributes.display_properties.voucher_properties.code_type,
+          type: voucher_properties.code_type,
           singleCode: {
-            code: data.attributes.display_properties.voucher_properties.code,
+            code: voucher_properties.code,
           },
           uniqueGeneratedCode: {
-            prefix: data.attributes.display_properties.voucher_properties.prefix,
-            codeFormat: data.attributes.display_properties.voucher_properties.format_type,
-            length: data.attributes.display_properties.voucher_properties.length,
+            prefix: voucher_properties.prefix,
+            codeFormat: voucher_properties.format_type,
+            length: voucher_properties.length,
           },
         },
         voucherValidity: {
-          type: data.attributes.display_properties.voucher_properties.validity.type,
+          type: voucher_properties.validity.type,
           period: {
-            startDate: data.attributes.display_properties.voucher_properties.validity.start_date,
-            startTime: moment(data.attributes.display_properties.voucher_properties.validity.start_date).utc().format('HH:mm'),
-            endDate: data.attributes.display_properties.voucher_properties.validity.end_date,
-            endTime: moment(data.attributes.display_properties.voucher_properties.validity.end_date).utc().format('HH:mm'),
+            startDate: voucher_properties.validity.start_date,
+            startTime: moment(voucher_properties.validity.start_date).utc().format('HH:mm'),
+            endDate: voucher_properties.validity.end_date,
+            endTime: moment(voucher_properties.validity.end_date).utc().format('HH:mm'),
           },
           issuanceDate: {
-            times: data.attributes.display_properties.voucher_properties.validity.times,
-            duration: data.attributes.display_properties.voucher_properties.validity.duration
+            times: voucher_properties.validity.times,
+            duration: voucher_properties.validity.duration
           }
+        }
+      }
+    } else {
+      vouchers = {
+        voucherValidity: {
+          duration: "day",
+          times: 30,
+          type: "issuance_date"
         }
       }
     }

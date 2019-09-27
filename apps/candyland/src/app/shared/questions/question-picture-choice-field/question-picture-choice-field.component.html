@@ -1,5 +1,7 @@
 <ng-container *ngIf="group">
   <div class="form-group" [formGroup]="group">
+    <mat-slide-toggle color="primary" formControlName="multiple">Multiple selection</mat-slide-toggle>
+
     <div class="choice-wrap" *ngFor="let item of choices.controls; let i = index">
 
       <div class="choice-group-control" [formGroup]="item">
@@ -20,7 +22,8 @@
 </ng-container>
 
 <div class="choice-group-control">
-  <cl-upload-image class="choice-upload-img" #uploadImage (selectUploadGraphic)="selectUploadGraphic($event, uploadImage)"></cl-upload-image>
+  <cl-upload-image class="choice-upload-img" #uploadImage
+    (selectUploadGraphic)="selectUploadGraphic($event, uploadImage, choiceText)"></cl-upload-image>
 
   <div class="control-input">
     <mat-form-field class="messages-input">
