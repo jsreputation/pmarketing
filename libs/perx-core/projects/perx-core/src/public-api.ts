@@ -73,6 +73,7 @@ export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
+  ICardNumber,
   ICustomProperties
 } from './lib/profile/profile.model';
 

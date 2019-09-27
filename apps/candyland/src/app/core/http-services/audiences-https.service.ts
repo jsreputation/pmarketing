@@ -7,19 +7,18 @@ import { ApiConfig } from '@cl-core/api-config';
   providedIn: 'root'
 })
 export class AudiencesHttpsService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   public getUser(id: string): Observable<any> {
-    return this.http.get(ApiConfig.getAllUsers + '/' + id + '?include=pools');
+    return this.http.get(`${ApiConfig.getAllUsers}/${id}?include=pools`);
   }
 
   public getAudiences(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.getAudiences, {params});
+    return this.http.get(ApiConfig.getAudiences, { params });
   }
 
   public getAudiencesList(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.getAudiences, {params});
+    return this.http.get(ApiConfig.getAudiences, { params });
   }
 
   // public getVouchers(): Observable<any> {
@@ -27,18 +26,18 @@ export class AudiencesHttpsService {
   // }
 
   public getAllUsers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.getAllUsers, {params});
+    return this.http.get(ApiConfig.getAllUsers, { params });
   }
 
   public createUser(body): Observable<any> {
-    return this.http.post(ApiConfig.getAllUsers, {data: body});
+    return this.http.post(ApiConfig.getAllUsers, { data: body });
   }
 
   public updateUserPools(body): Observable<any> {
-    return this.http.patch(ApiConfig.getAllUsers + '/' + body.id, {data: body});
+    return this.http.patch(ApiConfig.getAllUsers + '/' + body.id, { data: body });
   }
 
-  public getVouchers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.vouchersEntetiesPath, {params});
+  public getAssignedVouchers(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.vouchersAssignedPath, { params });
   }
 }

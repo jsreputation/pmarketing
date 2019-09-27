@@ -13,16 +13,16 @@ export class RewardHttpService {
   }
 
   public getRewards(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.rewardsPath + '/', {params});
+    return this.http.get(ApiConfig.rewardsPath + '/', { params });
   }
 
   public getReward(id: string): Observable<IResponseApi<IRewardEntityApi>> {
     return this.http.get<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath + '/' + id);
   }
 
-  public getMockRewardDetail(): Observable<any> {
-    return this.http.get('assets/actives/rewards/reward-detail.json');
-  }
+  // public getMockRewardDetail(): Observable<any> {
+  //   return this.http.get('assets/actives/rewards/reward-detail.json');
+  // }
 
   public getRewardsOptions(): Observable<OptionConfig[]> {
     return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');

@@ -8,16 +8,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class VouchersHttpService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   public getVouchers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.vouchersEntetiesPath + '/', {params});
+    return this.http.get(ApiConfig.vouchersEntitiesPath + '/', { params });
   }
 
   public getVoucher(id: string): any {
-    return this.http.get<any>(ApiConfig.vouchersEntetiesPath + '/' + id);
+    return this.http.get<any>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
   public createVoucher(data: any): Observable<any> {
