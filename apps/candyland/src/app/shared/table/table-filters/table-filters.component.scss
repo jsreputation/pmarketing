@@ -21,9 +21,8 @@ cl-table-filters {
       margin-right: auto;
     }
 
-    &.span-100 {
-      flex-basis: 100%;
-      max-width: initial !important;
+    &.half-block {
+      flex-basis: ($horizontal-padding * 5);
     }
   }
 }
@@ -32,6 +31,14 @@ cl-table-filters {
   .filters {
     & > * {
       max-width: ($horizontal-padding * 17.5);
+
+      &.half-block {
+        max-width:  ($horizontal-padding * 8.75);
+      }
     }
   }
+}
+
+cl-table-filters + cl-button {
+  margin-left: ($horizontal-padding * 0.5);
 }
