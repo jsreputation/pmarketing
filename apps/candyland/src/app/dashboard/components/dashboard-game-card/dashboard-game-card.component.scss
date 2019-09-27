@@ -39,7 +39,7 @@ $dashboard-card-action-height: 4rem;
   }
 
   &-title {
-    @include typo-subtitle1;
+    @include typo-subtitle1-alt;
 
     color: $base-font-color;
   }

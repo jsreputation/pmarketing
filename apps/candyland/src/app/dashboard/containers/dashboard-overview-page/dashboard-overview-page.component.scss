@@ -1,13 +1,5 @@
 @import "variables";
 
-//.link-overview {
-//  font-size: 1.6rem;
-//  color: $base-font-color;
-//  text-decoration: none;
-//  margin-top: 0.8rem;
-//  display: flex;
-//}
-
 .dashboard {
   &-header {
     height: 13.8rem;
@@ -51,6 +43,10 @@
     padding: 6rem 4rem 0;
     box-sizing: border-box;
   }
+
+  &-group-graphics {
+    padding: $vertical-padding $horizontal-padding;
+  }
 }
 
 .game-card {
@@ -69,8 +65,4 @@
 
 .tabs-list-wrap {
   max-width: 27rem;
-}
-
-.time-line-block {
-  flex: 1;
 }

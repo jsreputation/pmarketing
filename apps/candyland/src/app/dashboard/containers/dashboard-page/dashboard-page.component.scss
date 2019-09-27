@@ -1,15 +1,14 @@
 @import '~@angular/material/theming';
 @import "variables";
 
-.link-overview {
-  @include typo-subtitle1;
-
-  color: $secondary-font-color;
-}
-
 .dashboard {
   &-welcome {
     margin-bottom: $vertical-padding;
+
+    .sub-title {
+      color: $secondary-font-color;
+      margin-top: 0.4rem;
+    }
   }
 
   &-title {
@@ -72,8 +71,4 @@
 
 .tabs-list-wrap {
   width: 27rem;
-}
-
-.time-line-block {
-  flex: 1;
 }
