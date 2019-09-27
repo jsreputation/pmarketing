@@ -24,7 +24,6 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   public set setGraphic(val: IGraphic) {
     if (val !== undefined && this.selectedGraphic !== val) {
       this.selectedGraphic = val;
-      this.onChange(val);
       this.onTouch(val);
     }
   }
@@ -50,5 +49,4 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
-
 }
