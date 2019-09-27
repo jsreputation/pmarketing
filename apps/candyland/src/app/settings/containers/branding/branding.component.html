@@ -86,7 +86,7 @@
                            color="primary"
                            formControlName="logoType">
             <mat-radio-button value="image">Logo header</mat-radio-button>
-            <mat-radio-button value="text">Text header</mat-radio-button>
+            <!-- <mat-radio-button value="text">Text header</mat-radio-button> -->
           </mat-radio-group>
         </div>
       </div>
@@ -96,19 +96,7 @@
                              placeholder="Recommended size: 250px by 50px"
                              formControlName="logo"
           >
-
           </cl-upload-graphic>
-        </div>
-      </div>
-      <div class="flex section-margin-t" *ngIf="logoType.value === 'text'">
-        <div class="control-input">
-          <mat-form-field class="messages-input">
-            <input type="text" [placeholder]="'Your company name'" matInput formControlName="logo">
-            <mat-hint align="end">{{logo.value?.length || 0}}/20</mat-hint>
-            <mat-error *ngIf="logo.hasError('required')">Required field</mat-error>
-            <mat-error *ngIf="logo.hasError('minlength')">Min length 2</mat-error>
-            <mat-error *ngIf="logo.hasError('maxlength')">Max length 20</mat-error>
-          </mat-form-field>
         </div>
       </div>
     </mat-card>

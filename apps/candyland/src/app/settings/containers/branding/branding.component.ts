@@ -77,14 +77,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('style');
   }
 
-  public resetLogo(data: any): void {
+  public resetLogo(): void {
     this.logo.reset();
-    if (data.value === 'text') {
-      this.logo.setValidators([Validators.required, Validators.minLength(2),
-      Validators.maxLength(20)]);
-    } else {
-      this.logo.setValidators([Validators.required]);
-    }
+    this.logo.setValidators([Validators.required]);
     this.formBranding.updateValueAndValidity();
     this.logo.markAsUntouched({onlySelf: true});
   }
