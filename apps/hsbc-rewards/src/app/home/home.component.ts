@@ -41,7 +41,7 @@ const tabs: ITabConfig[] = [
 ];
 
 interface PageTracker {
-  [key: string]: number;
+  [key: string]: { page: number, isLast: boolean };
 }
 
 @Component({
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getRewards(1, 10, null, [tab.tabName])
           .pipe(map((result: IReward[]) => {
-            this.rewardMultiPageMetaTracker[tab.tabName] = 1;
+            this.rewardMultiPageMetaTracker[tab.tabName] = {page: 1, isLast: false};
             return ({key: tab.tabName, value: result});
           }));
       }));
@@ -144,14 +144,21 @@ export class HomeComponent implements OnInit {
   }
 
   public onScroll(): void {
-    this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab] += 1, 10, null, [this.currentTab]).subscribe(
-      (newRewards: IReward[]) => {
-        const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
-          (existingRewards: IReward[]) => {
-            tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(newRewards));
-          });
-      },
-      (err) => console.log(err)
-    );
+    if (!this.rewardMultiPageMetaTracker[this.currentTab].isLast) {
+      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).subscribe(
+        (newRewards: IReward[]) => {
+          if (newRewards.length === 0) {
+            this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+          } else {
+            this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
+            const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
+              (existingRewards: IReward[]) => {
+                tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(newRewards));
+              });
+          }
+        },
+        (err) => console.log(err)
+      );
+    }
   }
 }
