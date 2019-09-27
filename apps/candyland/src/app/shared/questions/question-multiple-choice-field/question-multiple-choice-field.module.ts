@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionMultipleChoiceFieldComponent } from './question-multiple-choice-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } fr
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSlideToggleModule
   ]
 })
 export class QuestionMultipleChoiceFieldModule { }
