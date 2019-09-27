@@ -285,6 +285,7 @@ export class EngagementHttpAdapter {
   public static transformShakeTreeForm(data: any): any {
     return {
       name: data.attributes.title,
+      gameType: data.attributes.game_type,
       headlineMessage: data.attributes.display_properties.title,
       subHeadlineMessage: data.attributes.display_properties.sub_title,
       buttonText: data.attributes.display_properties.button,
@@ -296,6 +297,7 @@ export class EngagementHttpAdapter {
   }
 
   public static transformPinataForm(data: any): any {
+    console.log(data);
     return {
       id: data.id,
       type: data.type,

@@ -102,17 +102,14 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
     if (this.id) {
       request = this.instantRewardsService.updateInstantReward(this.id, this.form.value as IInstantRewardForm);
     } else {
-      request = this.instantRewardsService.createRewardGame(this.form.value as IInstantRewardForm);
+      request = this.instantRewardsService.createRewardGame(this.form.value as IInstantRewardForm).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
     }
 
-    request.pipe(
-      untilDestroyed(this),
-      map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-    )
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {

@@ -1,6 +1,4 @@
-<!--<router-outlet></router-outlet>-->
-
-<div class="survey-wrap" [formGroup]="form" *ngIf="surveyData$ |async as surveyData">
+<div class="survey-wrap" [formGroup]="form" *ngIf="surveyData">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -22,7 +20,6 @@
       </span>
       </cl-button>
       <cl-button [classList]="'primary'"
-                 [disable]="form.invalid"
                  (click)="save()"
       >
       <span>

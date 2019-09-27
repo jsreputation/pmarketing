@@ -80,7 +80,8 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     private availableNewEngagementService: AvailableNewEngagementService,
     private cd: ChangeDetectorRef,
     private settingsService: SettingsService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.getTenants();
@@ -117,19 +118,14 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     if (this.id) {
       request = this.shakeTreeService.updateShakeTree(this.id, this.form.value as IInstantRewardForm);
     } else {
-      request = this.shakeTreeService.createShakeTree(this.form.value);
+      request = this.shakeTreeService.createShakeTree(this.form.value).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
     }
 
-    request
-      .pipe(
-        untilDestroyed(this),
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-      )
-
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {
@@ -147,12 +143,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private initShakeTreeForm(): void {
     this.form = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the tree and Win!', [Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(60)]
+        Validators.minLength(5),
+        Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.required,
@@ -206,7 +202,15 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
           return this.shakeTreeService.getShakeTree(id);
         }
         return of(null);
-      })
+      }),
+      tap(shakeTree => this.checkGameType(shakeTree))
     );
+  }
+
+  private checkGameType(shakeTree): void {
+    if (shakeTree && shakeTree.gameType !== 'shake') {
+      console.warn('Wrong type of game!');
+      this.router.navigateByUrl('/engagements');
+    }
   }
 }

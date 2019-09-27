@@ -136,17 +136,14 @@ export class NewStampComponent implements OnInit, OnDestroy {
     if (this.id) {
       request = this.stampsService.updateStamp(this.id, this.formStamp.value);
     } else {
-      request = this.stampsService.createStamp(this.formStamp.value);
+      request = this.stampsService.createStamp(this.formStamp.value).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
     }
 
-    request.pipe(
-      untilDestroyed(this),
-      map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-    )
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {
@@ -226,12 +223,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   private getStampData(): Observable<any> {
     return this.stampsService.getStampsData();
-    // .pipe(
-    //   tap((stampData) => {
-    //     this.stampData = stampData;
-    //     this.stampSlotNumbers = this.allStampSlotNumbers = stampData.slotNumber;
-    //   })
-    // );
   }
 
   private getDefaultValue(data: any): any {

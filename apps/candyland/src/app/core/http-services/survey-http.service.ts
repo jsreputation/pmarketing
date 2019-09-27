@@ -45,6 +45,6 @@ export class SurveyHttpService {
   }
 
   public updateSurvey(id: string, data: any): Observable<any> {
-    return this.http.patch<any>(ApiConfig.engagementsPath + '/survey/' + id, data);
+    return this.http.patch<any>(ApiConfig.basePath + '/survey/engagements/' + id, data);
   }
 }

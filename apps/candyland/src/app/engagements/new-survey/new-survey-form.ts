@@ -36,7 +36,7 @@ export class NewSurveyForm {
         [Validators.required]
       ),
       buttonText: new FormControl('start', [
-        Validators.required,
+        // Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
       ])

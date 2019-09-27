@@ -15,7 +15,7 @@ export const GamesType: IGame[] = [
   },
   {
     id: 3,
-    type: 'pinata',
+    type: 'tap',
     title: 'Hit the pinata',
     active: false
   },

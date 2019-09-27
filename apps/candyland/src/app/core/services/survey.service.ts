@@ -50,6 +50,8 @@ export class SurveyService {
   }
 
   public updateSurvey(id: string, data: any): Observable<any> {
+    const sendData = SurveyHttpAdapter.transformSurvey(data);
+    sendData.id = id;
     return this.surveyHttp.updateSurvey(id, data);
   }
 }

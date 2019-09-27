@@ -71,8 +71,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     combineLatest([this.getPinataData(), this.handleRouteParams()])
       .subscribe(
         ([previewData, pinata]) => {
+          console.log(pinata.gameType);
           this.pinataData = previewData;
-          console.log('pinata', previewData, pinata);
           const patchData = pinata || this.getDefaultValue(previewData);
           this.form.patchValue(patchData);
           this.cd.detectChanges();
@@ -99,17 +99,14 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     if (this.id) {
       request = this.pinataService.updatePinata(this.id, this.form.value);
     } else {
-      request = this.pinataService.createPinata(this.form.value);
+      request = this.pinataService.createPinata(this.form.value).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
     }
 
-    request.pipe(
-      untilDestroyed(this),
-      map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-    )
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {
@@ -179,7 +176,15 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
           return this.pinataService.getPinata(id);
         }
         return of(null);
-      })
+      }),
+      // tap(pinata => this.checkGameType(pinata))
     );
+  }
+
+  private checkGameType(pinata): void {
+    if (pinata && pinata.gameType !== 'tap') {
+      console.warn('Wrong type of game!');
+      this.router.navigateByUrl('/engagements');
+    }
   }
 }

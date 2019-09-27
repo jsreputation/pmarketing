@@ -22,28 +22,15 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
+  public id: string;
   public form: FormGroup;
   public surveyQuestionType: IEngagementType[];
-  public surveyData$: Observable<any>;
+  public surveyData: any;
   public level = 0;
   public subHeadlineMaxLength: number = 250;
 
   public questionData$ = new Subject();
   public tenantSettings: ITenantsProperties;
-
-  constructor(private questionFormFieldService: QuestionFormFieldService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              private surveyService: SurveyService, private route: ActivatedRoute,
-              private router: Router, private routingState: RoutingStateService,
-              private cdr: ChangeDetectorRef, private settingsService: SettingsService) {
-  }
-
-  // tslint:disable
-  public get listId(): string {
-    const id = this.questionFormFieldService.listId;
-    this.questionFormFieldService.listId = id;
-    return id;
-  }
 
   public get listDropConnectedTo(): string[] {
     return this.questionFormFieldService.listIdDrag;
@@ -81,6 +68,20 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     return this.form.get('cardBackground');
   }
 
+  constructor(private questionFormFieldService: QuestionFormFieldService,
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private surveyService: SurveyService, private route: ActivatedRoute,
+              private router: Router, private routingState: RoutingStateService,
+              private cdr: ChangeDetectorRef, private settingsService: SettingsService) {
+  }
+
+  // tslint:disable
+  public get listId(): string {
+    const id = this.questionFormFieldService.listId;
+    this.questionFormFieldService.listId = id;
+    return id;
+  }
+
   public getImgLink(control: FormControl, defaultImg: string): string {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
@@ -90,21 +91,19 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initForm();
-    this.getSurveyData();
-    this.subscribeFormValueChanges();
     this.getTenants();
-
+    this.initForm();
+    this.subscribeFormValueChanges();
     combineLatest([this.getSurveyData(), this.handleRouteParams()])
       .pipe(untilDestroyed(this))
-      .subscribe(([questionData, question]) => {
-
+      .subscribe(([surveyData, question]) => {
+        this.surveyData = surveyData;
         // remove default value if we edit the existing question
         if (question) {
           this.deleteQuestion(0);
         }
 
-        const patchData = question || this.getDefaultValue(questionData);
+        const patchData = question || this.getDefaultValue(surveyData);
 
         this.patchForm(patchData);
         this.cdr.detectChanges();
@@ -164,12 +163,23 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.surveyService.createSurvey(this.form.value)
-      .pipe(untilDestroyed(this), map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)))
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    let request;
+    if (this.id) {
+      request = this.surveyService.updateSurvey(this.id, this.form.value);
+    } else {
+      request = this.surveyService.createSurvey(this.form.value).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
+    }
+
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public deleteQuestion(index: number) {
@@ -211,7 +221,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   private getSurveyData(): any {
-    return this.surveyData$ = this.surveyService.getSurveyData()
+    return this.surveyService.getSurveyData();
   }
 
   private subscribeFormValueChanges(): void {
@@ -220,7 +230,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       .subscribe((val) => {
         this.questionData$.next({questions: [val.questions[0]]});
         this.cdr.detectChanges();
-      })
+      });
   }
 
   private getTenants(): void {
@@ -237,7 +247,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         untilDestroyed(this),
         map((params: ParamMap) => params.get('id')
         ),
-        tap(id => id), switchMap(id => {
+        tap(id => this.id = id),
+        switchMap(id => {
           if (id) {
             return this.surveyService.getSurvey(id);
           }
