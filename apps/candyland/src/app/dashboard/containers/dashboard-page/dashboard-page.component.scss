@@ -7,7 +7,7 @@
 
     .sub-title {
       color: $secondary-font-color;
-      margin-top: 0.4rem;
+      margin-top: 0.8rem;
     }
   }
 
@@ -18,16 +18,21 @@
     color: $base-font-color;
   }
 
+  &-explore-cards {
+    display: grid;
+    grid-gap: ($horizontal-padding * 0.75);
+    grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+    margin: ($vertical-padding * 0.75) 0;
+  }
+
   &-insights-card {
     @include mat-elevation(1);
 
-    min-width: 48rem;
     border-radius: $border-radius-lg;
     background-color: $white;
     box-sizing: border-box;
 
     &-header {
-      //height: 6rem;
       border-bottom: 1px solid $border-color;
       display: flex;
       justify-content: space-between;
@@ -47,19 +52,5 @@
         margin: 1rem $horizontal-padding -0.75rem auto;
       }
     }
-  }
-
-}
-
-.game-card {
-  margin: 0 ($horizontal-padding * 0.25) ($vertical-padding * 0.5);
-  flex: auto;
-  width: 0;
-  flex-wrap: wrap;
-
-  &-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    margin: ($vertical-padding * 0.75) (-($vertical-padding * 0.25)) 0;
   }
 }
