@@ -183,7 +183,18 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
-// MATERIALS TAB COMPONENT OVERRIDES
+.mat-paginator {
+  &-container {
+    justify-content: flex-start !important;
+    padding-left: ($horizontal-padding * 0.75) !important;
+    padding-right: ($horizontal-padding * 0.75) !important;
+  }
+
+  &-page-size-label {
+    margin-left: 0 !important;
+  }
+}
+
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: $primary-color;
