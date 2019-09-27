@@ -16,8 +16,8 @@ export class EngagementsHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.engagementsPath + '/');
   }
 
-  public getEngagement(id: string): Observable<any> {
-    return this.http.get<any>(ApiConfig.engagementsPath + '/' + id);
+  public getEngagement(id: string, type: string): Observable<any> {
+    return this.http.get<any>(`${ApiConfig.engagementsPath}/${type}/${id}`);
   }
 
   public getEngagementType(): Observable<any> {

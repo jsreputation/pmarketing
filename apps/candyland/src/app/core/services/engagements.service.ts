@@ -18,9 +18,8 @@ export class EngagementsService {
       );
   }
 
-  public getEngagement(id: string): Observable<any> {
-    return this.http.getEngagement(id)
-      .pipe(
+  public getEngagement(id: string, type: string): Observable<IEngagement> {
+    return this.http.getEngagement(id, type).pipe(
         tap(data => console.log('engagement api', data)),
         map((res: any) => EngagementHttpAdapter.transformEngagementHandler(res.data)),
         tap(data => console.log('engagement transform', data)),

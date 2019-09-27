@@ -8,21 +8,21 @@
   },
   {
     "id": 2,
-    "type": "games",
+    "type": "game",
     "title": "Games",
     "img": "assets/images/engagement-type/games.svg",
     "active": "false"
   },
   {
     "id": 3,
-    "type": "stamp",
+    "type": "stamps",
     "title": "Stamp",
     "img": "assets/images/engagement-type/stamp.svg",
     "active": "false"
   },
   {
     "id": 4,
-    "type": "instantReward",
+    "type": "instant_reward",
     "title": "Instant Reward",
     "img": "assets/images/engagement-type/instantReward.svg",
     "active": "false"

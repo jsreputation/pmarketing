@@ -5,7 +5,7 @@ import {
   MatCardModule,
   MatListModule
 } from '@angular/material';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -42,6 +42,10 @@ describe('AccountComponent', () => {
     navigate: () => {}
   };
 
+  const loyaltyServiceStub = {
+    getLoyalty: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AccountComponent ],
@@ -49,7 +53,8 @@ describe('AccountComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
     .compileComponents();

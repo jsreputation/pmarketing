@@ -3,10 +3,11 @@ import {
   IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
 import { ControlsName } from 'src/app/models/controls-name';
+import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 
 export class EngagementHttpAdapter {
 
-// tslint:disable
+  // tslint:disable
   public static transformEngagement(data: IEngagementApi): IEngagement {
     return {
       id: data.id,
@@ -39,8 +40,10 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IEngagementApi): any {
-    switch (data.attributes.type) {
+  public static transformEngagementHandler(data: IEngagementApi, type?: string): any {
+    const engagementType = type ? EngagementType[type] : data.attributes.type;
+
+    switch (engagementType) {
       case 'game':
         return EngagementHttpAdapter.transformGameHandler(data);
       case 'survey':

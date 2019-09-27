@@ -12,14 +12,15 @@ import Utils from '@cl-helpers/utils';
   providedIn: 'root'
 })
 export class AudiencesVouchersService implements ITableService {
-  constructor(private audiencesHttpsService: AudiencesHttpsService,
-              private rewardsService: RewardsService) {
-  }
+  constructor(
+    private audiencesHttpsService: AudiencesHttpsService,
+    private rewardsService: RewardsService
+  ) { }
 
   public getTableData(params: HttpParamsOptions): Observable<any> {
     const httpParams = ClHttpParams.createHttpParams(params);
     let vouchers;
-    return this.audiencesHttpsService.getVouchers(httpParams)
+    return this.audiencesHttpsService.getAssignedVouchers(httpParams)
       .pipe(
         tap(response => vouchers = response),
         map(response => this.getUniqIds(response.data, 'source_id')),
