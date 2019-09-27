@@ -5,10 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('ChangeBarangayComponent', () => {
   let component: ChangeBarangayComponent;
   let fixture: ComponentFixture<ChangeBarangayComponent>;
+  const profileServiceStub = {
+    setCustomProperties: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,6 +25,12 @@ describe('ChangeBarangayComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         NoopAnimationsModule
+      ],
+      providers: [
+        {
+          provide: ProfileService,
+          useValue: profileServiceStub
+        }
       ]
     })
     .compileComponents();

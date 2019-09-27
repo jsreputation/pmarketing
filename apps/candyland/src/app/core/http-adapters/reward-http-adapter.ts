@@ -68,6 +68,7 @@ export class RewardHttpAdapter {
         cost: data.attributes.cost_of_reward,
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
+        organizationId: data.attributes.organization_id
       },
       vouchers
     };
@@ -94,6 +95,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        organization_id: data.rewardInfo.organizationId,
         display_properties: {
           voucher_properties: {
             code_type: data.vouchers.voucherCode.type,
@@ -170,6 +172,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        organization_id: data.rewardInfo.organizationId,
         display_properties: {
           voucher_properties: {
             code_type: data.vouchers.voucherCode.type,
