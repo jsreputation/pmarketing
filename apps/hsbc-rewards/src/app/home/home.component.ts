@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
-import { ITabConfig, IPrice } from '@perx/core';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { flatMap, map, filter } from 'rxjs/operators';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
+import {ITabConfig, IPrice} from '@perx/core';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
+import {flatMap, map, filter} from 'rxjs/operators';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 const tabs: ITabConfig[] = [
   {
@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
   public titleFn: (profile: IProfile) => string;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
+  private requestPageSize: number = 10;
 
   constructor(
     private rewardsService: RewardsService,
@@ -103,7 +104,7 @@ export class HomeComponent implements OnInit {
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getRewards(1, 10, null, [tab.tabName])
+        return this.rewardsService.getRewards(1, this.requestPageSize, null, [tab.tabName])
           .pipe(map((result: IReward[]) => {
             this.rewardMultiPageMetaTracker[tab.tabName] = {page: 1, isLast: false};
             return ({key: tab.tabName, value: result});
@@ -150,6 +151,9 @@ export class HomeComponent implements OnInit {
           if (newRewards.length === 0) {
             this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
           } else {
+            if (newRewards.length < this.requestPageSize) {
+              this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+            }
             this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
             const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
               (existingRewards: IReward[]) => {
