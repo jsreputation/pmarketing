@@ -1,5 +1,4 @@
-import moment = require('moment');
-
+import * as moment from 'moment';
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {

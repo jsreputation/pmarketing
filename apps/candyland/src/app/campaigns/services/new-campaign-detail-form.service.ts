@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Injectable()
 export class NewCampaignDetailFormService {
