@@ -23,8 +23,6 @@ interface AttbsObjEntity {
   pool_id: null;
 }
 
-
-
 interface AttbsObjIReward {
   urn: string;
   created_at: string;
