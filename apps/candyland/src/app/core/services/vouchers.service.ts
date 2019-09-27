@@ -33,10 +33,10 @@ export class VouchersService {
   // @ts-ignore
   public getStats(rewardId: string): Observable<{ [k: string]: number }> {
     return of({
-      issued: 23000,
-      expired: 45000,
-      available: 200054,
-      redeemed: 56000
+      available: Math.floor(Math.random() * 10000),
+      issued: Math.floor(Math.random() * 10000),
+      expired: Math.floor(Math.random() * 10000),
+      redeemed: Math.floor(Math.random() * 10000)
     });
   }
 }
