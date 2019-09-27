@@ -146,8 +146,10 @@ export class HomeComponent implements OnInit {
 
   public onScroll(): void {
     if (!this.rewardMultiPageMetaTracker[this.currentTab].isLast) {
-      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).subscribe(
-        (newRewards: IReward[]) => {
+      let rewards;
+      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).pipe(
+        flatMap((newRewards: IReward[]) => {
+          rewards = newRewards;
           if (newRewards.length === 0) {
             this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
           } else {
@@ -155,11 +157,12 @@ export class HomeComponent implements OnInit {
               this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
             }
             this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
-            tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
-              (existingRewards: IReward[]) => {
-                tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(newRewards));
-              });
+            return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
           }
+        })
+      ).subscribe(
+        (existingRewards: IReward[]) => {
+          tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(rewards));
         },
         (err) => console.log(err)
       );
