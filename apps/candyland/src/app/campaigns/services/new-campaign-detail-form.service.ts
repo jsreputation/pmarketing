@@ -35,7 +35,7 @@ export class NewCampaignDetailFormService {
         })
       }),
       audience: this.fb.group({
-        type: ['none'],
+        type: ['select'],
         file: [],
         select: []
       })

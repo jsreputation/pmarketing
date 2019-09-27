@@ -146,8 +146,6 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      {{pools | json}}
-      {{audience.get('select') | json}}
       <div class="card-row">
         <mat-form-field>
           <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
