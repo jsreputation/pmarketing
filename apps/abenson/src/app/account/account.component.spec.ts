@@ -42,7 +42,7 @@ describe('AccountComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
-    router = TestBed.get(Router);
+    router = TestBed.get<Router>(Router as Type<Router>);
     auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });

@@ -16,6 +16,7 @@ import { ChangeStreetAddressComponent } from './account/profile/change-street-ad
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { Location } from '@angular/common';
+import { Type } from '@angular/core';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -41,10 +42,10 @@ describe('AppComponent', () => {
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.debugElement.componentInstance;
-    ntfs = TestBed.get(NotificationService);
-    dialog = TestBed.get(MatDialog);
-    snackBar = TestBed.get(MatSnackBar);
-    location = TestBed.get(Location);
+    ntfs = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
+    dialog = TestBed.get<MatDialog>(MatDialog as Type<MatDialog>);
+    snackBar = TestBed.get<MatSnackBar>(MatSnackBar as Type<MatSnackBar>);
+    location = TestBed.get<Location>(Location as Type<Location>);
     app.ngOnInit();
   }));
   it('should create the app', () => {

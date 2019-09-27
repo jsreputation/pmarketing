@@ -45,7 +45,7 @@ describe('ChangeCityComponent', () => {
     fixture = TestBed.createComponent(ChangeCityComponent);
     component = fixture.componentInstance;
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
-    location = TestBed.get(Location);
+    location = TestBed.get<Location>(Location as Type<Location>);
     spyOnProfile = spyOn(profileService, 'setCustomProperties');
     component.ngOnInit();
     fixture.detectChanges();
