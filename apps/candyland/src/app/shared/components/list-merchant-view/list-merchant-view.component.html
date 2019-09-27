@@ -4,8 +4,8 @@
     <ng-container matColumnDef="logo">
       <th mat-header-cell *matHeaderCellDef>Merchant Logo</th>
       <td mat-cell *matCellDef="let element">
-        <div class="merchant-image-cell" *ngIf="element?.logo" (click)="clickDetailItem(element)">
-          <img [src]="element?.logo" alt="logo-merchant">
+        <div class="merchant-image-cell" *ngIf="element?.properties.logo_image" (click)="clickDetailItem(element)">
+          <img [src]="element?.properties.logo_image" alt="logo-merchant">
         </div>
       </td>
     </ng-container>
@@ -43,9 +43,9 @@
       </th>
       <td mat-cell *matCellDef="let element" class="limit-cell">
         <p class="merchant-branches">
-        <span>
-          {{element?.branches?.length}}
-        </span>
+          <span>
+            {{element?.branches?.length}}
+          </span>
         </p>
       </td>
     </ng-container>
@@ -65,10 +65,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        [class.table-row]="selectable"
-        [class.active]="isSelected(row) && selectable"
-        (click)="selectItem(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.table-row]="selectable"
+      [class.active]="isSelected(row) && selectable" (click)="selectItem(row)"></tr>
   </table>
 
 </div>
