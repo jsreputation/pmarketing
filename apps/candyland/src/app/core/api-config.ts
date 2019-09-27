@@ -20,4 +20,5 @@ export class ApiConfig {
   public static vouchersAssignedPath = `${ApiConfig.basePath}/voucher/assigneds`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath = `${ApiConfig.basePath}/organization`;
+  public static uploadFilePath = `${ApiConfig.basePath}/`;
 }

@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { UploadFileService } from '@cl-core-services';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -37,7 +39,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   constructor(private sanitizer: DomSanitizer,
-              private cd: ChangeDetectorRef) {}
+              private cd: ChangeDetectorRef,
+              private uploadFileService: UploadFileService) {}
 
   public preview(files): void {
     this.message = null;
@@ -53,6 +56,10 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
     const reader = new FileReader();
     this.imagePath = files;
+    console.log(files[0]);
+
+    this.uploadImage(files[0]);
+    // TODO: after successful load image need delete code below
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
       this.imgURL = this.sanitizeUrl(reader.result);
@@ -95,6 +102,22 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.setGraphic = obj;
+  }
+
+  private uploadImage(file: File): void {
+    this.uploadFileService.uploadFile(file)
+      .subscribe(res => {
+        console.log(res);
+        this.imgURL = res;
+        this.loadedImg = true;
+        this.setSelectedGraphic(res);
+        this.message = null;
+        this.cd.markForCheck();
+      }, err => {
+        // TODO: need show error message
+        console.warn(err);
+        this.message = 'Image haven\'t loaded successfully!';
+      });
   }
 
 }
