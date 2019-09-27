@@ -28,4 +28,12 @@ export class ShakeHttpService {
   public createShakeTree(data: any): Observable<any> {
     return this.http.post(ApiConfig.engagementsPath + '/', data);
   }
+
+  public updateShakeTree(id: string, data: IResponseApi<any>): Observable<any> {
+    return this.http.patch<IResponseApi<any>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  }
+
+  public getShakeTree(id: string): Observable<any> {
+    return this.http.get(ApiConfig.engagementsPath + '/game/' + id);
+  }
 }

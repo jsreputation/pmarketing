@@ -237,8 +237,8 @@ export class EngagementHttpAdapter {
         title: data.name,
         'image_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
         display_properties: {
-          'nb_of_slots': +data.stampsNumber,
-          slots: data.stampsSlotNumber.map(item => +item),
+          'nb_of_slots': data.stampsNumber,
+          slots: data.stampsSlotNumber,
           'pre_stamp_img_url': ImageControlValue.getImagePath(data.preStamp),
           'reward_pre_stamp_img_url': ImageControlValue.getImagePath(data.rewardPreStamps),
           'post_stamp_img_url': ImageControlValue.getImagePath(data.postStamps),
@@ -279,6 +279,19 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       [ControlsName.background]: data.attributes.display_properties.background_img_url,
       [ControlsName.cardBackground]: data.attributes.display_properties.card_background_img_url
+    };
+  }
+
+  public static transformShakeTreeForm(data: any): any {
+    return {
+      name: data.attributes.title,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      buttonText: data.attributes.display_properties.button,
+      background: data.attributes.display_properties.background_img_url,
+      gameGift: data.attributes.display_properties.nb_hanged_gifts,
+      giftBox: data.attributes.display_properties.gift_box_img_url,
+      treeType: data.attributes.display_properties.tree_img_url,
     };
   }
 }

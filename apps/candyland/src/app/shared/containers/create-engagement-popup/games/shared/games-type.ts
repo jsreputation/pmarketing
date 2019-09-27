@@ -9,13 +9,13 @@ export const GamesType: IGame[] = [
   },
   {
     id: 2,
-    type: 'shakeTheTree',
+    type: 'shake',
     title: 'Shake the tree',
     active: false
   },
   {
     id: 3,
-    type: 'hitThePinata',
+    type: 'pinata',
     title: 'Hit the pinata',
     active: false
   },

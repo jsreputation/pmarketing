@@ -140,9 +140,9 @@ export class NewStampComponent implements OnInit, OnDestroy {
     }
 
     request.pipe(
-        untilDestroyed(this),
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-      )
+      untilDestroyed(this),
+      map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+    )
       .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
@@ -217,21 +217,21 @@ export class NewStampComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this)
       )
-      .subscribe((value: string[]) => {
-        this.stampsSlotNumberData = value.map((item: string) => {
-          return {rewardPosition: +item - 1};
+      .subscribe((value: number[]) => {
+        this.stampsSlotNumberData = value.map((item: number) => {
+          return {rewardPosition: item - 1};
         });
       });
   }
 
   private getStampData(): Observable<any> {
-    return this.stampsService.getStampsData()
-      // .pipe(
-      //   tap((stampData) => {
-      //     this.stampData = stampData;
-      //     this.stampSlotNumbers = this.allStampSlotNumbers = stampData.slotNumber;
-      //   })
-      // );
+    return this.stampsService.getStampsData();
+    // .pipe(
+    //   tap((stampData) => {
+    //     this.stampData = stampData;
+    //     this.stampSlotNumbers = this.allStampSlotNumbers = stampData.slotNumber;
+    //   })
+    // );
   }
 
   private getDefaultValue(data: any): any {
