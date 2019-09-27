@@ -261,42 +261,6 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public getNextPageRewards(pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IReward[]> {
-    if (!this.rewardMeta.page ||
-        this.rewardMeta.page &&
-        this.rewardMeta.page >= this.rewardMeta.total_pages ) {
-      // no more pages
-      return of([]);
-    }
-    let params = new HttpParams()
-    .set('page', (this.rewardMeta.page + 1).toString())
-    .set('size', pageSize.toString());
-
-    if (tags) {
-      params = params.set('tags', tags.join());
-    }
-
-    if (categories) {
-      params = params.set('categories', categories.join());
-    }
-
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
-      .pipe(
-        map((res: IV4GetRewardsResponse) => {
-          if (res.meta) {
-            this.rewardMeta = {
-              ...this.rewardMeta,
-              ...res.meta
-            };
-          }
-          return res.data;
-        }),
-        map((rewards: IV4Reward[]) => rewards.map(
-          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-        ))
-      );
-  }
-
   public getReward(id: number): Observable<IReward> {
     return this.http.get<IV4GetRewardResponse>(
       `${this.apiHost}/v4/rewards/${id}`
