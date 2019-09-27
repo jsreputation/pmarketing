@@ -1,3 +1,4 @@
+import { InstantOutcomeService } from './../../../../../../backend/api-proxy/src/services/instant-outcome/instant-outcome.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,6 +13,10 @@ describe('RewardComponent', () => {
     getAllRewards: () => of(),
   };
 
+  const instantOutStub = {
+
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -22,6 +27,7 @@ describe('RewardComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutStub }
       ]
     })
       .compileComponents();
