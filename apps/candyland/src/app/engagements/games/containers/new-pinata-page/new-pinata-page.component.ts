@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { Observable, Subject } from 'rxjs';
-import { Router } from '@angular/router';
-import { tap, map } from 'rxjs/operators';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { tap, map, switchMap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
   AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
@@ -20,21 +20,47 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewPinataPageComponent implements OnInit, OnDestroy {
-  public formPinata: FormGroup;
-  public pinataData$: Observable<{
+  public id: string;
+  public form: FormGroup;
+  public pinataData: {
     pinata: IGraphic[],
     background: IGraphic[]
-  }>;
+  };
   public tenantSettings: ITenantsProperties;
   private destroy$ = new Subject();
+
+  public get name(): AbstractControl {
+    return this.form.get(ControlsName.name);
+  }
+
+  public get headlineMessage(): AbstractControl {
+    return this.form.get(ControlsName.headlineMessage);
+  }
+
+  public get subHeadlineMessage(): AbstractControl {
+    return this.form.get(ControlsName.subHeadlineMessage);
+  }
+
+  public get buttonText(): AbstractControl {
+    return this.form.get(ControlsName.buttonText);
+  }
+
+  public get background(): AbstractControl {
+    return this.form.get(ControlsName.background);
+  }
+
+  public get pinata(): AbstractControl {
+    return this.form.get(ControlsName.pinata);
+  }
 
   constructor(
     private fb: FormBuilder,
     private pinataService: PinataService,
     private routingState: RoutingStateService,
     private availableNewEngagementService: AvailableNewEngagementService,
+    private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
     private settingsService: SettingsService
   ) {
   }
@@ -42,15 +68,44 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.createPinataForm();
-    this.getPinataData();
+    combineLatest([this.getPinataData(), this.handleRouteParams()])
+      .subscribe(
+        ([previewData, pinata]) => {
+          this.pinataData = previewData;
+          console.log('pinata', previewData, pinata);
+          const patchData = pinata || this.getDefaultValue(previewData);
+          this.form.patchValue(patchData);
+          this.cd.detectChanges();
+        },
+        (error: Error) => {
+          console.warn(error.message);
+          this.router.navigateByUrl('/engagements');
+        }
+      );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public save(): void {
-    this.pinataService.createPinata(this.formPinata.value)
-      .pipe(
-        untilDestroyed(this),
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-      )
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    let request;
+    if (this.id) {
+      request = this.pinataService.updatePinata(this.id, this.form.value);
+    } else {
+      request = this.pinataService.createPinata(this.form.value);
+    }
+
+    request.pipe(
+      untilDestroyed(this),
+      map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
+    )
       .subscribe((data: IEngagement) => {
         this.availableNewEngagementService.setNewEngagement(data);
         this.router.navigateByUrl('/engagements');
@@ -61,39 +116,15 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     this.routingState.comeBackPreviousUrl();
   }
 
-  public get name(): AbstractControl {
-    return this.formPinata.get(ControlsName.name);
-  }
-
-  public get headlineMessage(): AbstractControl {
-    return this.formPinata.get(ControlsName.headlineMessage);
-  }
-
-  public get subHeadlineMessage(): AbstractControl {
-    return this.formPinata.get(ControlsName.subHeadlineMessage);
-  }
-
-  public get buttonText(): AbstractControl {
-    return this.formPinata.get(ControlsName.buttonText);
-  }
-
-  public get background(): AbstractControl {
-    return this.formPinata.get(ControlsName.background);
-  }
-
-  public get pinata(): AbstractControl {
-    return this.formPinata.get(ControlsName.pinata);
-  }
-
   public getImgLink(control: FormControl, defaultImg: string): string {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createPinataForm(): void {
-    this.formPinata = this.fb.group({
+    this.form = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,
@@ -115,28 +146,40 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getPinataData(): void {
-    this.pinataData$ = this.pinataService.getPinataData()
-      .pipe(
-        tap((res) => {
-          this.formPinata.patchValue({
-            [ControlsName.pinata]: res.pinata[0],
-            [ControlsName.background]: res.background[0]
-          });
-        })
-      );
+  private getDefaultValue(data: any): any {
+    return {
+      name: 'Hit the Pinata Template',
+      headlineMessage: 'Tap the Piñata and Win!',
+      subHeadlineMessage: 'Tap the piñata until you get a reward!',
+      buttonText: 'start playing',
+      [ControlsName.pinata]: data.pinata[0],
+      [ControlsName.background]: data.background[0]
+    };
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private getPinataData(): Observable<any> {
+    return this.pinataService.getPinataData();
   }
 
   private getTenants(): void {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.cdr.detectChanges();
+        this.cd.detectChanges();
       });
+  }
+
+  private handleRouteParams(): Observable<any> {
+    return this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap(id => this.id = id),
+      switchMap(id => {
+        if (id) {
+          return this.pinataService.getPinata(id);
+        }
+        return of(null);
+      })
+    );
   }
 }

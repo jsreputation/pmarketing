@@ -173,16 +173,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   private getData(): Observable<any> {
     return this.shakeTreeService.getData();
-      // .pipe(
-      //   tap((res: any) => {
-      //     this.shakeTree.patchValue({
-      //       [ControlsName.background]: res.background[0],
-      //       [ControlsName.giftBox]: res.giftBox[0],
-      //       [ControlsName.treeType]: res.gamesTree[0],
-      //       [ControlsName.gameGift]: res.gameNumberGift[0].value
-      //     });
-      //   })
-      // );
   }
 
   private getDefaultValue(data: any): any {

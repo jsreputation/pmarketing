@@ -223,7 +223,7 @@ export class EngagementHttpAdapter {
           sub_title: data.subHeadlineMessage,
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
-          closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata)
+          closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
           // background_img_url:  ImageControlValue.getImagePath(data.background),
         }
       }
@@ -292,6 +292,22 @@ export class EngagementHttpAdapter {
       gameGift: data.attributes.display_properties.nb_hanged_gifts,
       giftBox: data.attributes.display_properties.gift_box_img_url,
       treeType: data.attributes.display_properties.tree_img_url,
+    };
+  }
+
+  public static transformPinataForm(data: any): any {
+    return {
+      id: data.id,
+      type: data.type,
+      gameType: data.attributes.game_type,
+      name: data.attributes.title,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      buttonText: data.attributes.display_properties.button,
+      background: data.attributes.display_properties.background_img_url,
+      pinata: data.attributes.display_properties.closed_pinata_img_url,
+      // opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
+      // cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
     };
   }
 }

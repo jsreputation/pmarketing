@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -18,7 +19,8 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
   templateUrl: './select-graphic-wrap.component.html',
   styleUrls: ['./select-graphic-wrap.component.scss'],
   providers: [
-    {       provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectGraphicWrapComponent),
       multi: true
     }
@@ -28,7 +30,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      const currentValue = this.getPrepareValue(val);
+      const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
       this.handlerPatchUploadImage(currentValue);
       this.patchDefaultControl(currentValue);
       this.selectedGraphic = currentValue;
@@ -37,7 +39,8 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) { }
+              private cd: ChangeDetectorRef) {
+  }
 
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload = true;
@@ -50,8 +53,10 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public destroy$ = new Subject();
   public lock: boolean;
 
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => {
+  };
+  public onTouch: any = () => {
+  };
 
   public ngOnInit(): void {
     this.createDefaultControl();
@@ -141,17 +146,5 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private getPrepareValue(val: any): any {
-    if (this.graphicList) {
-      for (const item of this.graphicList) {
-        if (item.fullImg === val || item.img === val) {
-          return item;
-        }
-      }
-      return val;
-    }
-    return val;
   }
 }
