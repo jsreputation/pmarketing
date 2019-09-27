@@ -40,6 +40,10 @@ const tabs: ITabConfig[] = [
   }
 ];
 
+interface PageTracker {
+  [key: string]: number;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -55,6 +59,7 @@ export class HomeComponent implements OnInit {
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
   public currentTab: string;
+  private rewardMultiPageMetaTracker: PageTracker = {};
 
   constructor(
     private rewardsService: RewardsService,
@@ -99,7 +104,10 @@ export class HomeComponent implements OnInit {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getRewards(1, 10, null, [tab.tabName])
-          .pipe(map((result: IReward[]) => ({key: tab.tabName, value: result})));
+          .pipe(map((result: IReward[]) => {
+            this.rewardMultiPageMetaTracker[tab.tabName] = 1;
+            return ({key: tab.tabName, value: result});
+          }));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
@@ -136,7 +144,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onScroll(): void {
-    this.rewardsService.getNextPageRewards(10, null, [this.currentTab]).subscribe(
+    this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab] += 1, 10, null, [this.currentTab]).subscribe(
       (newRewards: IReward[]) => {
         const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
           (existingRewards: IReward[]) => {
