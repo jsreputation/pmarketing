@@ -3,13 +3,13 @@
 ::ng-deep {
   .mobile-settings-preview-tabs {
     .mat-tab-label {
-      min-width: 70px;
+      min-width: 0;
+      flex: 1 1 auto;
     }
 
     mat-tab-header {
       background: $white;
-      border-top-left-radius: 0.8rem;
-      border-top-right-radius: 0.8rem;
+      border-bottom: none;
     }
   }
 }
