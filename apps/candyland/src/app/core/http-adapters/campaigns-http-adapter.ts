@@ -1,5 +1,5 @@
 import { EngagementTypeAPIMapping } from '@cl-shared/containers/create-engagement-popup/shared/models/EngagementType';
-
+import * as moment from 'moment';
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -23,7 +23,10 @@ export class CampaignsHttpAdapter {
   }
 
   public static transformAPIResponseToCampaign(data: any): any {
-    const campaignData = data.attributes;
+    console.log(data);
+    const campaignData = data.data.attributes;
+    const campaignOutcomes = data.includes.possible_outcomes;
+    const campaignLimits = data.includes.limits;
     return {
       id: data.id,
       engagement_id: campaignData.engagement_id,
@@ -40,21 +43,25 @@ export class CampaignsHttpAdapter {
       // TODO, Andrew, need API support for channel data
       channel: {
         type: campaignData.comm_channel,
-        message: null,
+        message: campaignData.comm_channel.template.content,
         schedule: {
-          sendDate: null,
-          sendTime: null,
+          sendDate: moment(campaignData.comm_channel.event.send_at).format('l'),
+          sendTime: moment(campaignData.comm_channel.event.send_at).format('LT'),
           enableRecurrence: false,
           recurrence: { times: null, period: null, repeatOn: [] }
         }
       },
       audience: { type: 'none', file: null },
       template: {},
-      rewardsList: campaignData.possible_outcomes,
+      rewardsList: campaignOutcomes,
+      limits: {
+        ...campaignLimits
+      }
     };
   }
 
   public static transformFromCampaign(data: any): any {
+    console.log(data);
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);
@@ -66,12 +73,18 @@ export class CampaignsHttpAdapter {
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
-        // status: "draft",
+        status: "scheduled",
         start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select,
+        labels: data.campaignInfo.label,
         possible_outcomes,
+        limits: {
+          max_play_in_period: 1,
+          period_unit: 'days',
+          period_number: 1
+        }
         // comm: "description",
       }
     };

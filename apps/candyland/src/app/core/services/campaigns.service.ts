@@ -28,7 +28,7 @@ export class CampaignsService implements ITableService {
 
   public getCampaign(id: string): Observable<any> {
     return this.campaignsHttpsService.getCampaign(id).pipe(
-      map(res => CampaignsHttpAdapter.transformAPIResponseToCampaign(res.data))
+      map(res => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
     );
   }
 
