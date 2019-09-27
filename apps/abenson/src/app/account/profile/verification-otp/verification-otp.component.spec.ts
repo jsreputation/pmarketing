@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { Type } from '@angular/core';
 
-const testphone = '18888888'
+const testphone = '18888888';
 
 const profileServiceStub = {
   whoAmI: () => of({ phone: '12345' })
@@ -63,7 +63,7 @@ describe('VerificationOtpComponent', () => {
 
   it('should display phone', () => {
     component.userPhone = testphone;
-    expect(component.phoneDisplay).toBe('****8888')
+    expect(component.phoneDisplay).toBe('****8888');
   });
 
   it('shuld switch type', fakeAsync(() => {
@@ -95,7 +95,7 @@ describe('VerificationOtpComponent', () => {
     expect(authSpy).toHaveBeenCalledWith(testphone);
   }));
 
-  it('should resend otp for password flow', fakeAsync(()=>{
+  it('should resend otp for password flow', fakeAsync(() => {
     component.type = 'password';
     const authSpy = spyOn(auth, 'resendOTP').and.returnValue(of(null));
     component.resendOtp();
