@@ -1,5 +1,17 @@
 import { EngagementTypeAPIMapping } from '@cl-shared/containers/create-engagement-popup/shared/models/EngagementType';
 import * as moment from 'moment';
+
+enum LimitsDurationToAPIMapping {
+  day = 'days',
+  week = 'weeks',
+  month = 'months'
+}
+
+enum LimitsDurationFromAPIMapping {
+  days = 'day',
+  weeks = 'week',
+  months = 'month'
+}
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -42,11 +54,11 @@ export class CampaignsHttpAdapter {
       },
       // TODO, Andrew, need API support for channel data
       channel: {
-        type: campaignData.comm_channel,
-        message: campaignData.comm_channel.template.content,
+        type: campaignData.comm.event.channel,
+        message: campaignData.comm.template.content,
         schedule: {
-          sendDate: moment(campaignData.comm_channel.event.send_at).format('l'),
-          sendTime: moment(campaignData.comm_channel.event.send_at).format('LT'),
+          sendDate: moment(campaignData.comm.event.send_at).format('l'),
+          sendTime: moment(campaignData.comm.event.send_at).format('LT'),
           enableRecurrence: false,
           recurrence: { times: null, period: null, repeatOn: [] }
         }
@@ -55,7 +67,8 @@ export class CampaignsHttpAdapter {
       template: {},
       rewardsList: campaignOutcomes,
       limits: {
-        ...campaignLimits
+        time: campaignLimits.max_play_in_period,
+        duration: LimitsDurationFromAPIMapping[campaignLimits.period_unit]
       }
     };
   }
@@ -81,9 +94,18 @@ export class CampaignsHttpAdapter {
         labels: data.campaignInfo.label,
         possible_outcomes,
         limits: {
-          max_play_in_period: 1,
-          period_unit: 'days',
+          max_play_in_period: data.limits.time,
+          period_unit: LimitsDurationToAPIMapping[data.limits.duration],
           period_number: 1
+        },
+        comm: {
+          template: {
+            content: data.channel.message
+          },
+          event: {
+            send_at: moment(data.channel.schedule.sendDate).format(),
+            channel: data.channel.type
+          }
         }
         // comm: "description",
       }
