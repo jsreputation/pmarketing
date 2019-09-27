@@ -35,6 +35,7 @@ export class CampaignsHttpAdapter {
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
+      // TODO, Andrew, need API support for channel data
       channel: {
         type: campaignData.comm_channel,
         message: null,
