@@ -38,7 +38,10 @@ export class SurveyService {
   }
 
   public getSurvey(id: string): Observable<any> {
-    return this.surveyHttp.getSurvey(id);
+    return this.surveyHttp.getSurvey(id)
+      .pipe(
+        map(res => SurveyHttpAdapter.transformToSurveyForm(res.data))
+      );
   }
 
   public createSurvey(data: any): Observable<any> {

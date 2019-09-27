@@ -23,7 +23,8 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-info-form-group [formGroup]="form.get('rewardInfo')" [config]="config" [currency]="reward?.currency"></cl-reward-info-form-group>
+      <cl-reward-info-form-group [formGroup]="form.get('rewardInfo')" [config]="config" [currency]="reward?.currency">
+      </cl-reward-info-form-group>
     </div>
   </mat-expansion-panel>
 
@@ -35,15 +36,11 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-merchant-card
-        [selected]="selectedMerchantTab"
-        (createMerchant)="openDialogCreateMerchant()"
+      <cl-reward-merchant-card (createMerchant)="openDialogCreateMerchant()"
         (selectMerchant)="openDialogSelectMerchant()">
       </cl-reward-merchant-card>
-      <cl-reward-merchant-item *ngIf="selectedMerchant"
-                               [merchant]="selectedMerchant"
-                               (deleteMerchant)="deleteMerchant()"
-                               [enableActions]="true">
+      <cl-reward-merchant-item *ngIf="selectedMerchant" [merchant]="selectedMerchant"
+        (deleteMerchant)="deleteMerchant()" [enableActions]="true">
       </cl-reward-merchant-item>
     </div>
   </mat-expansion-panel>
@@ -56,9 +53,8 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-voucher-code-form-group [formGroup]="form.get('vouchers.voucherCode')"
-                                         [form]="form"
-                                         [config]="config"></cl-reward-voucher-code-form-group>
+      <cl-reward-voucher-code-form-group [formGroup]="form.get('vouchers.voucherCode')" [form]="form" [config]="config">
+      </cl-reward-voucher-code-form-group>
       <div class="card-section">
         <div class="card-header">
           <p class="card-title">
@@ -66,8 +62,8 @@
           </p>
         </div>
         <div class="card-content">
-          <cl-voucher-validity-form-group [formGroup]="form.get('vouchers.voucherValidity')"
-                                          [config]="config"></cl-voucher-validity-form-group>
+          <cl-voucher-validity-form-group [formGroup]="form.get('vouchers.voucherValidity')" [config]="config">
+          </cl-voucher-validity-form-group>
         </div>
       </div>
     </div>

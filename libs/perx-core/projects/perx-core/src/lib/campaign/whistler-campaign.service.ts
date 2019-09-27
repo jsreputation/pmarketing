@@ -7,6 +7,13 @@ import { Config } from '../config/config';
 import { map } from 'rxjs/operators';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 
+enum WhistlerCampaignType {
+  survey = 'survey',
+  loyalty = 'stamp',
+  instant_outcome = 'give_reward',
+  game = 'game'
+}
+
 interface IWhistlerCampaignAttributes {
   name: string;
   goal: string;
@@ -14,7 +21,7 @@ interface IWhistlerCampaignAttributes {
   end_date_time?: string;
   status: CampaignState;
   engagement_id: number;
-  engagement_type: CampaignType;
+  engagement_type: WhistlerCampaignType;
   comm_channel: CommChannel;
 }
 
@@ -27,13 +34,17 @@ export class WhistlerCampaignService implements ICampaignService {
     this.baseUrl = config.apiHost as string;
   }
 
+  private WhistlerTypeToType(ty: WhistlerCampaignType): CampaignType {
+    return WhistlerCampaignType[ty];
+  }
+
   public WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWhistlerCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
       description: cAttributes.goal,
-      type: cAttributes.engagement_type,
+      type: this.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status,
       endsAt: new Date(cAttributes.end_date_time),
       rawPayload: cAttributes

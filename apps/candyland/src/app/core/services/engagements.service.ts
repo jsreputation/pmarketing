@@ -18,6 +18,11 @@ export class EngagementsService {
       );
   }
 
+  public getEngagement(id: string, type: string): Observable<IEngagement> {
+    return this.http.getEngagement(id, type).pipe(
+      map(res => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
+    );
+  }
   public getEngagementType(): Observable<any> {
     return this.http.getEngagementType();
   }

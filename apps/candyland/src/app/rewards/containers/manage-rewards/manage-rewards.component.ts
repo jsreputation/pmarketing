@@ -8,6 +8,7 @@ import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
+import { Merchant } from '@cl-core/http-adapters/merchant';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -16,20 +17,21 @@ import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleContr
 })
 export class ManageRewardsComponent implements OnInit, OnDestroy {
   public id: string;
-  public reward: any;
+  public reward: IRewardEntityForm;
   public form: FormGroup;
   public config: OptionConfig[];
-  public selectedMerchant;
-  public selectedMerchantTab: 'select' | 'create' | null;
+  public selectedMerchant: Merchant;
 
-  constructor(public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private router: Router,
-              private route: ActivatedRoute,
-              private rewardsService: RewardsService,
-              private merchantsService: MerchantsService,
-              private newRewardFormService: NewRewardFormService,
-              private toggleControlService: ToggleControlService) {
+  constructor(
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private rewardsService: RewardsService,
+    private merchantsService: MerchantsService,
+    private newRewardFormService: NewRewardFormService,
+    private toggleControlService: ToggleControlService
+  ) {
   }
 
   public ngOnInit(): void {
@@ -54,10 +56,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public save(): void {
     if (this.form.valid) {
       let request: Observable<any>;
+      const form: IRewardEntityForm = this.form.value;
+      form.rewardInfo.organizationId = this.selectedMerchant !== null ? this.selectedMerchant.id : null;
       if (this.id) {
-        request = this.rewardsService.updateReward(this.id, this.form.value);
+        request = this.rewardsService.updateReward(this.id, form);
       } else {
-        request = this.rewardsService.createReward(this.form.value);
+        request = this.rewardsService.createReward(form);
       }
       request.subscribe(
         res => {
@@ -82,7 +86,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       )
       .subscribe((id) => {
         this.form.get('merchantInfo').patchValue(id);
-        this.selectedMerchantTab = 'create';
       });
   }
 
@@ -92,7 +95,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((merchant) => {
       if (merchant) {
         this.form.get('merchantInfo').patchValue(merchant.id);
-        this.selectedMerchantTab = 'select';
       }
     });
   }
@@ -100,7 +102,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public deleteMerchant(): void {
     this.form.get('merchantInfo').patchValue(null);
     this.selectedMerchant = null;
-    this.selectedMerchantTab = null;
   }
 
   private initConfig(): void {
@@ -157,9 +158,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       switchMap((id: any) => this.rewardsService.getRewardToForm(id))
     )
       .subscribe(
-        reward => {
+        (reward: IRewardEntityForm) => {
           this.reward = reward;
           this.form.patchValue(reward);
+          this.form.get('merchantInfo').patchValue(reward.rewardInfo.organizationId);
         },
         () => this.router.navigateByUrl('/rewards')
       );
