@@ -63,12 +63,14 @@ interface TreeDisplayProperties extends GameProperties {
   tree_image: Asset;
   waiting_image?: Asset;
   celebrating_image?: Asset;
+  number_of_taps: number;
 }
 
 interface PinataDisplayProperties extends GameProperties {
   still_image: Asset;
   cracking_image?: Asset;
   opened_image: Asset;
+  number_of_taps: number;
 }
 
 interface Game {
@@ -126,7 +128,7 @@ export class V4GameService implements IGameService {
           giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
           nbHangedGift: dpts.number_of_gifts_shown,
           nbGiftsToDrop: dpts.number_of_gifts_to_drop,
-          nbTaps: 5,
+          nbTaps: dpts.number_of_taps,
           waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
           celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
         };
@@ -139,7 +141,7 @@ export class V4GameService implements IGameService {
           stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
           brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
           breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
-          nbTaps: 5
+          nbTaps: dpps.number_of_taps
         };
 
         break;
