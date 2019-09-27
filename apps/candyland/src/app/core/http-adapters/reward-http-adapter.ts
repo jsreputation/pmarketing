@@ -18,6 +18,44 @@ export class RewardHttpAdapter {
   }
 
   public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
+    let vouchers;
+    if (data.attributes.display_properties.voucher_properties) {
+      const voucher_properties = data.attributes.display_properties.voucher_properties;
+      vouchers = {
+        voucherCode: {
+          type: voucher_properties.code_type,
+          singleCode: {
+            code: voucher_properties.code,
+          },
+          uniqueGeneratedCode: {
+            prefix: voucher_properties.prefix,
+            codeFormat: voucher_properties.format_type,
+            length: voucher_properties.length,
+          },
+        },
+        voucherValidity: {
+          type: voucher_properties.validity.type,
+          period: {
+            startDate: voucher_properties.validity.start_date,
+            startTime: moment(voucher_properties.validity.start_date).utc().format('HH:mm'),
+            endDate: voucher_properties.validity.end_date,
+            endTime: moment(voucher_properties.validity.end_date).utc().format('HH:mm'),
+          },
+          issuanceDate: {
+            times: voucher_properties.validity.times,
+            duration: voucher_properties.validity.duration
+          }
+        }
+      }
+    } else {
+      vouchers = {
+        voucherValidity: {
+          duration: "day",
+          times: 30,
+          type: "issuance_date"
+        }
+      }
+    }
     return {
       name: data.attributes.name,
       id: data.id,
@@ -30,33 +68,9 @@ export class RewardHttpAdapter {
         cost: data.attributes.cost_of_reward,
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
+        organizationId: data.attributes.organization_id
       },
-      vouchers: {
-        voucherCode: {
-          type: data.attributes.display_properties.voucher_properties.code_type,
-          singleCode: {
-            code: data.attributes.display_properties.voucher_properties.code,
-          },
-          uniqueGeneratedCode: {
-            prefix: data.attributes.display_properties.voucher_properties.prefix,
-            codeFormat: data.attributes.display_properties.voucher_properties.format_type,
-            length: data.attributes.display_properties.voucher_properties.length,
-          },
-        },
-        voucherValidity: {
-          type: data.attributes.display_properties.voucher_properties.validity.type,
-          period: {
-            startDate: data.attributes.display_properties.voucher_properties.validity.start_date,
-            startTime: moment(data.attributes.display_properties.voucher_properties.validity.start_date).utc().format('HH:mm'),
-            endDate: data.attributes.display_properties.voucher_properties.validity.end_date,
-            endTime: moment(data.attributes.display_properties.voucher_properties.validity.end_date).utc().format('HH:mm'),
-          },
-          issuanceDate: {
-            times: data.attributes.display_properties.voucher_properties.validity.times,
-            duration: data.attributes.display_properties.voucher_properties.validity.duration
-          }
-        }
-      }
+      vouchers
     };
   };
 
@@ -81,6 +95,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        organization_id: data.rewardInfo.organizationId,
         display_properties: {
           voucher_properties: {
             code_type: data.vouchers.voucherCode.type,
@@ -97,55 +112,55 @@ export class RewardHttpAdapter {
   }
 
   public static handlerRewardDate(data: any, rewardRequestData: any): void {
-    switch(data.vouchers.voucherValidity.type) {
-      case 'period': 
-      const period = {
-        startDate: data.vouchers.voucherValidity.period.startDate,
-        startTime: data.vouchers.voucherValidity.period.startTime,
-        endDate: data.vouchers.voucherValidity.period.endDate,
-        endTime: data.vouchers.voucherValidity.period.endTime,
-      }
-      RewardHttpAdapter.setRewardSendDate(rewardRequestData, period);
-      break;
+    switch (data.vouchers.voucherValidity.type) {
+      case 'period':
+        const period = {
+          startDate: data.vouchers.voucherValidity.period.startDate,
+          startTime: data.vouchers.voucherValidity.period.startTime,
+          endDate: data.vouchers.voucherValidity.period.endDate,
+          endTime: data.vouchers.voucherValidity.period.endTime,
+        }
+        RewardHttpAdapter.setRewardSendDate(rewardRequestData, period);
+        break;
       case 'issuance_date':
-      const issuance = {
-         times: data.vouchers.voucherValidity.issuanceDate.times,
-         duration: data.vouchers.voucherValidity.issuanceDate.duration,
-      }
-      RewardHttpAdapter.setRewardIssuanceDate(rewardRequestData, issuance);
-      break;
+        const issuance = {
+          times: data.vouchers.voucherValidity.issuanceDate.times,
+          duration: data.vouchers.voucherValidity.issuanceDate.duration,
+        }
+        RewardHttpAdapter.setRewardIssuanceDate(rewardRequestData, issuance);
+        break;
     }
   }
 
   public static setRewardSendDate(rewardRequestData: any, period: any) {
     if (period.startDate) {
-      rewardRequestData.attributes.display_properties.voucher_properties.validity.start_date 
-      =  RewardHttpAdapter.setTime(period.startDate, period.startTime);
+      rewardRequestData.attributes.display_properties.voucher_properties.validity.start_date
+        = RewardHttpAdapter.setTime(period.startDate, period.startTime);
     }
     if (period.endDate) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.end_date
-      = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+        = RewardHttpAdapter.setTime(period.endDate, period.endTime);
     }
   }
 
   public static setRewardIssuanceDate(rewardRequestData: any, issuance: any) {
     if (issuance.times) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.times
-      = issuance.times;
+        = issuance.times;
     }
     if (issuance.duration) {
       rewardRequestData.attributes.display_properties.voucher_properties.validity.duration
-      = issuance.duration;
+        = issuance.duration;
     }
   }
 
-  public static setTime(date: string, time: any ): string {
+  public static setTime(date: string, time: any): string {
     const [hours, minutes] = time.split(':');
     const resultDate = moment(date).set({ hours: hours, minutes: minutes }).toISOString();
     return resultDate;
   }
 
-  public static transformFromRewardSystemForm(data: IRewardEntityForm): IRewardEntityApi { 
+  public static transformFromRewardSystemForm(data: IRewardEntityForm): IRewardEntityApi {
     const result = {
       type: 'entities',
       attributes: {
@@ -157,6 +172,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        organization_id: data.rewardInfo.organizationId,
         display_properties: {
           voucher_properties: {
             code_type: data.vouchers.voucherCode.type,

@@ -1,7 +1,7 @@
 <!--<router-outlet></router-outlet>-->
 
 <div class="survey-wrap" [formGroup]="form" *ngIf="surveyData$ |async as surveyData">
-  <div class="full-with page-header">
+  <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
         <mat-form-field class="pagetitle-input" floatLabel="never">
@@ -109,7 +109,7 @@
             Graphics
           </p>
         </div>
-        <div class="game-form">
+        <div class="game-form" *ngIf="color">
           <div class="survey-select-color">
             <div class="control-input">
               <mat-form-field color="primary">
@@ -117,7 +117,7 @@
                 <mat-select [formControlName]="'color'">
                   <mat-select-trigger>
                     <div class="select-color">
-                      <div class="select-color-preview" [ngClass]="color.value + '-material'">
+                      <div class="select-color-preview" [ngClass]="color?.value + '-material'">
                       </div>
                       <p class="select-color-text">
                         {{color.value}}

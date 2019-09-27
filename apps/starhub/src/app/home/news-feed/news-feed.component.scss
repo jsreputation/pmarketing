@@ -26,7 +26,7 @@
 }
 
 cdk-virtual-scroll-viewport {
-  height: 30rem;
+  height: 33rem;
   margin-top: 3rem;
 }
 
@@ -45,6 +45,10 @@ cdk-virtual-scroll-viewport {
     padding: 1rem;
     min-height: 5rem;
     margin-bottom: 0;
+
+    p {
+      white-space: pre-line;
+    }
   }
 
   .mat-card-image {
