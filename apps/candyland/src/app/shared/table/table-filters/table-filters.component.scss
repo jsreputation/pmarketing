@@ -16,13 +16,18 @@ cl-table-filters {
     flex-basis: ($horizontal-padding * 10);
     width: 100%;
 
-    &.search-block {
-      flex-grow: 1.5;
-      margin-right: auto;
+    &.full-block {
+      flex-basis: 100%;
+      max-width: initial !important;
     }
 
     &.half-block {
       flex-basis: ($horizontal-padding * 5);
+    }
+
+    &.search-block {
+      flex-grow: 1.5;
+      margin-right: auto;
     }
   }
 }
