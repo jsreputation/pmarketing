@@ -81,13 +81,12 @@
       </div>
       <div class="flex">
         <div class="logo">
-          <mat-radio-group (change)="resetLogo($event)"
-                           class="control-input input-group"
-                           color="primary"
-                           formControlName="logoType">
-            <mat-radio-button value="image">Logo header</mat-radio-button>
-            <!-- <mat-radio-button value="text">Text header</mat-radio-button> -->
-          </mat-radio-group>
+          <mat-form-field>
+            <input formControlName="logoType" matInput hidden value="image">
+            <p class="game-title">
+                <span>Color</span>
+            </p>
+          </mat-form-field>
         </div>
       </div>
       <div class="flex" *ngIf="logoType.value === 'image'">
