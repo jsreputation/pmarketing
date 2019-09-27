@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit {
               this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
             }
             this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
-            const rewardsList = tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
+            tabs.find(tab => tab.tabName === this.currentTab).rewardsList.subscribe(
               (existingRewards: IReward[]) => {
                 tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(newRewards));
               });
