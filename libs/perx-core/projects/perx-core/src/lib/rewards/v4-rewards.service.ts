@@ -111,16 +111,14 @@ interface IV4CatalogResults {
   first_result_id?: number;
 }
 
-interface PageTracker {
-  [key: string]: IV4Meta;
-}
 @Injectable({
   providedIn: 'root'
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
+  // private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
-  private rewardMultiPageMetaTracker: PageTracker = {};
+  private rewardMeta: IV4Meta = {};
 
   constructor(
     private http: HttpClient,
@@ -211,8 +209,6 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const trackerKey = categories && categories.join() || tags && tags.join();
-
     return new Observable(subject => {
       const pageSize = 10;
       let current: IReward[] = [];
@@ -221,11 +217,11 @@ export class V4RewardsService extends RewardsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (this.rewardMultiPageMetaTracker[trackerKey].page >= this.rewardMultiPageMetaTracker[trackerKey].total_pages) {
+        if (this.rewardMeta.page >= this.rewardMeta.total_pages) {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(this.rewardMultiPageMetaTracker[trackerKey].page + 1, pageSize, tags, categories)
+          this.getRewards(this.rewardMeta.page + 1, pageSize, tags, categories)
             .subscribe(process);
         }
       };
@@ -251,10 +247,9 @@ export class V4RewardsService extends RewardsService {
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
       .pipe(
         map((res: IV4GetRewardsResponse) => {
-          const trackerKey = categories && categories.join() || tags && tags.join();
           if (res.meta) {
-            this.rewardMultiPageMetaTracker[trackerKey] = {
-              ...this.rewardMultiPageMetaTracker[trackerKey],
+            this.rewardMeta = {
+              ...this.rewardMeta,
               ...res.meta
             };
           }
@@ -267,16 +262,14 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getNextPageRewards(pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const trackerKey = categories && categories.join() || tags && tags.join();
-
-    if (!this.rewardMultiPageMetaTracker[trackerKey].page ||
-      this.rewardMultiPageMetaTracker[trackerKey].page &&
-      this.rewardMultiPageMetaTracker[trackerKey].page >= this.rewardMultiPageMetaTracker[trackerKey].total_pages ) {
+    if (!this.rewardMeta.page ||
+        this.rewardMeta.page &&
+        this.rewardMeta.page >= this.rewardMeta.total_pages ) {
       // no more pages
       return of([]);
     }
     let params = new HttpParams()
-    .set('page', (this.rewardMultiPageMetaTracker[trackerKey].page + 1).toString())
+    .set('page', (this.rewardMeta.page + 1).toString())
     .set('size', pageSize.toString());
 
     if (tags) {
@@ -291,8 +284,8 @@ export class V4RewardsService extends RewardsService {
       .pipe(
         map((res: IV4GetRewardsResponse) => {
           if (res.meta) {
-            this.rewardMultiPageMetaTracker[trackerKey] = {
-              ...this.rewardMultiPageMetaTracker[trackerKey],
+            this.rewardMeta = {
+              ...this.rewardMeta,
               ...res.meta
             };
           }
