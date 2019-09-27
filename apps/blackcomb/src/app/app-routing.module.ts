@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
 
       {
-        path: 'loyalty/:id',
+        path: 'stamp/:id',
         loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
         canActivate: [ProtectedGuard]
       },
@@ -39,7 +39,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'reward',
+        path: 'give_reward/:id',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
         canActivate: [ProtectedGuard]
       },
