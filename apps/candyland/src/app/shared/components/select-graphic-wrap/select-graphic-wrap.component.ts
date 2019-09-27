@@ -26,12 +26,13 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor, OnDestroy {
 
-  public set setGraphic(val: IGraphic) {
+  public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      this.patchDefaultControl(val);
-      this.selectedGraphic = val;
-      this.onChange(val);
-      this.onTouch(val);
+      const currentValue = this.getPrepareValue(val);
+      this.handlerPatchUploadImage(currentValue);
+      this.patchDefaultControl(currentValue);
+      this.selectedGraphic = currentValue;
+      this.onTouch(currentValue);
     }
   }
 
@@ -57,6 +58,20 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.createControl();
     this.subscribeControlDefaultValueChanges();
     this.subscribeControlUploadValueChanges();
+  }
+
+  public handlerPatchUploadImage(currentValue: any): void {
+    if (this.checkTypeOfImages(currentValue)) {
+      this.patchValueUploadControl(currentValue);
+    }
+  }
+
+  public checkTypeOfImages(type: any): boolean {
+    return typeof type === 'string';
+  }
+
+  public patchValueUploadControl(currentValue: string): void {
+    this.controlUpload.patchValue(currentValue);
   }
 
   public setSelectedGraphic(graphic: IGraphic): void {
@@ -94,7 +109,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   private patchDefaultControl(value: any): void {
     this.createDefaultControl();
-    this.controlDefault.patchValue(value);
+    this.controlDefault.patchValue(value, {emitEvent: false});
   }
 
   private subscribeControlDefaultValueChanges(): void {
@@ -128,4 +143,15 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.destroy$.complete();
   }
 
+  private getPrepareValue(val: any): any {
+    if (this.graphicList) {
+      for (const item of this.graphicList) {
+        if (item.fullImg === val || item.img === val) {
+          return item;
+        }
+      }
+      return val;
+    }
+    return val;
+  }
 }

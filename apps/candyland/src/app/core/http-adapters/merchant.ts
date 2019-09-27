@@ -25,11 +25,11 @@ export class Merchant extends JsonApiModel {
   @Attribute()
   description: string;
 
-  @Attribute({serializedName: 'created_at'})
+  @Attribute({ serializedName: 'created_at' })
   createdAt: Date;
 
   @Attribute()
-  properties: object;
+  properties: any;
 
   @HasMany()
   branches: MerchantBranch[];
