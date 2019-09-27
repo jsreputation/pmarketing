@@ -17,18 +17,15 @@
   &-title {
     @include typo-h6;
 
+    margin: $vertical-padding 0 ($vertical-padding * 0.75);
     color: $base-font-color;
-
-    &__indent {
-      margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
-    }
   }
 
   &-content {
     @include mat-elevation(1);
 
     min-width: 48rem;
-    border-radius: $border-radius;
+    border-radius: $border-radius-lg;
     background-color: $white;
     box-sizing: border-box;
 

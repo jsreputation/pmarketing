@@ -9,7 +9,7 @@ $dashboard-card-action-height: 4rem;
   @include mat-elevation(1);
 
   display: flex;
-  border-radius: $border-radius;
+  border-radius: $border-radius-lg;
   background-color: $white;
   padding: ($vertical-padding * 0.75) 3rem;
   min-height: 18.5rem;
