@@ -48,4 +48,9 @@ export class NewsFeedComponent implements OnInit {
     });
     this.dialog.open(PopupComponent, { panelClass: 'app-full-bleed-dialog', data: item, height: '85vh' });
   }
+
+  public getFirstLine(text: string): string {
+    const lines = text.match(/[^\r\n]+/g);
+    return lines[0];
+  }
 }

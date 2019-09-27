@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SurveyQuestionType } from '@perx/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IQuestion, SurveyQuestionType } from '@perx/core';
 
 @Injectable()
 export class QuestionFormFieldService {
@@ -59,13 +59,44 @@ export class QuestionFormFieldService {
     return this.formControls[type](type);
   }
 
+  public patchMultipleChoice(item: IQuestion, group: FormGroup): void {
+    const choices = (this.getChoices('payload.choices', group) as FormArray);
+    this.removeFirsElement(choices);
+
+    item.payload.choices.forEach((dataChoice) => {
+      choices.push(this.fb.control(
+      dataChoice, [Validators.required]
+      ));
+    });
+  }
+
+  public pathChoicePicture(item: IQuestion, group: FormGroup): void {
+    const choices = (this.getChoices('payload.choices', group) as FormArray);
+    this.removeFirsElement(choices);
+
+    item.payload.choices.forEach((dataChoice) => {
+      choices.push(this.fb.group({
+        text: [dataChoice, [Validators.required]],
+        img_url: [dataChoice.img_url, [Validators.required]]
+      }));
+    });
+  }
+
+  private getChoices(field: string, group: FormGroup): AbstractControl {
+    return group.get(field);
+  }
+
+  private removeFirsElement(formArray: FormArray): void {
+    if (formArray) {
+      formArray.removeAt(0);
+    }
+  }
+
   private ratingGroup(type: string): FormGroup {
     return this.fb.group({
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
-      question: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+      question: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
@@ -83,9 +114,7 @@ export class QuestionFormFieldService {
     return this.fb.group({
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
-      question: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+      question: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
@@ -99,9 +128,7 @@ export class QuestionFormFieldService {
     return this.fb.group({
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
-      question: ['', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+      question: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
@@ -116,9 +143,7 @@ export class QuestionFormFieldService {
     return this.fb.group({
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
-      question: ['', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+      question: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
@@ -161,7 +186,8 @@ export class QuestionFormFieldService {
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
         type: [type],
-        choices: this.fb.array([])
+        choices: this.fb.array([]),
+        multiple: [false]
       })
     });
   }
@@ -170,14 +196,16 @@ export class QuestionFormFieldService {
     return this.fb.group({
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
-      question: ['', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+      question: [
+        '',
+        [Validators.required, Validators.minLength(1), Validators.maxLength(128)]
+      ],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({
         type: [type],
-        choices: this.fb.array([])
+        choices: this.fb.array([]),
+        multiple: [false]
       })
     });
   }
