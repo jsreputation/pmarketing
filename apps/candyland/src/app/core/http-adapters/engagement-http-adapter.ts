@@ -40,7 +40,7 @@ export class EngagementHttpAdapter {
   }
 
   public static transformEngagementHandler(data: IEngagementApi, type?: string): any {
-    const engagementType = EngagementTypeFromAPIMapping[type ? type : data.attributes.type];
+    const engagementType = type ? EngagementTypeFromAPIMapping[type] : data.attributes.type;
 
     switch (engagementType) {
       case 'game':

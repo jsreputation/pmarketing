@@ -243,7 +243,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       });
     this.initForm();
     this.getCampaignData();
-    this.store.updateCampaign(this.temp);
+    // this.store.updateCampaign(this.temp);
   }
 
   public comeBack(): void {
@@ -263,7 +263,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
           // this.getRewards(campaign.rewardsList))),
           this.getRewards([{
-            result_id: 1
+            result_id: 1,
+            probability: 0.5
           }
           ]))),
         map(([campaign, engagement, rewardsList]) => ({
@@ -274,11 +275,16 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       ).subscribe(campaign => {
         console.log(campaign);
         this.campaign = campaign;
+        this.store.updateCampaign(this.campaign);
       });
   }
 
   private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
-    return combineLatest(...rewardsList.map(reward => this.rewardsService.getRewardToForm(reward.result_id)));
+    return combineLatest(...rewardsList.map(
+      reward => this.rewardsService.getRewardToForm(reward.result_id).pipe(
+        map(rewardData => ({ ...rewardData, probability: reward.probability }))
+      )
+    ));
   }
 
   private initForm(): void {

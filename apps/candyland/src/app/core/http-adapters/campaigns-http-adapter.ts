@@ -22,7 +22,6 @@ export class CampaignsHttpAdapter {
 
   public static transformAPIResponseToCampaign(data: any): any {
     const campaignData = data.attributes;
-    console.log(data);
     return {
       id: data.id,
       engagement_id: campaignData.engagement_id,
