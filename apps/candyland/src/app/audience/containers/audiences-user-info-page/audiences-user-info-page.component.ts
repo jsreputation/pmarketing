@@ -30,13 +30,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public tabsFilterConfig;
   public dataSource: CustomDataSource<any>;
 
-  constructor(private audiencesUserService: AudiencesUserService,
-              private vouchersService: AudiencesVouchersService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
-  }
+  constructor(
+    private audiencesUserService: AudiencesUserService,
+    private vouchersService: AudiencesVouchersService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog
+  ) { }
 
   public ngOnInit(): void {
     this.dataSource = new CustomDataSource<any>(this.vouchersService);
@@ -84,11 +85,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
           this.user = user;
           this.cd.detectChanges();
         },
-        () => this.router.navigateByUrl('/audience')
+        (err) => { console.error(err); this.router.navigateByUrl('/audience'); }
       );
   }
 
   private setUserParams(id): void {
-    this.dataSource.params = {'filter[assigned_to_id]': id};
+    this.dataSource.params = { 'filter[assigned_to_id]': id };
   }
 }

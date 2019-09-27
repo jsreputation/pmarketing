@@ -31,7 +31,6 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
   public set setGraphic(val: any) {
     if (val !== undefined ) {
-      this.onChange(val);
       this.onTouch(val);
       this.imgURL = val;
     }

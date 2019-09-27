@@ -16,7 +16,8 @@ export class ApiConfig {
   public static stampsPath = `${ApiConfig.engagementsPath}`;
   public static voucherBatchPath = `${ApiConfig.basePath}/voucher/batch`;
   public static vouchersPath = `${ApiConfig.basePath}/vouchers/batches`;
-  public static vouchersEntetiesPath = `${ApiConfig.basePath}/voucher/entities`;
+  public static vouchersEntitiesPath = `${ApiConfig.basePath}/voucher/entities`;
+  public static vouchersAssignedPath = `${ApiConfig.basePath}/voucher/assigneds`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath = `${ApiConfig.basePath}/organization`;
 }
