@@ -40,6 +40,6 @@ export class WalletComponent implements OnInit {
       );
   }
   public openDetail(voucher: Voucher): void {
-    this.router.navigate(['wallet', 'detail', voucher.id]);
+    this.router.navigate(['wallet', 'details', voucher.id]);
   }
 }
