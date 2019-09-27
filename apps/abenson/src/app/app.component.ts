@@ -19,7 +19,7 @@ import { ChangeStreetAddressComponent } from './account/profile/change-street-ad
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
-import { CustomerSupportComponent } from "./account/customer-support/customer-support.component";
+import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 
 @Component({
   selector: 'app-root',
