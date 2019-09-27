@@ -80,14 +80,12 @@
         </div>
       </div>
       <div class="flex">
-        <div class="logo">
-          <mat-form-field>
-            <input formControlName="logoType" matInput hidden value="image">
-            <p class="game-title">
-                <span>Color</span>
-            </p>
+          <mat-form-field [ngStyle]="{'display': 'none'}" >
+            <input formControlName="logoType" matInput value="image">
           </mat-form-field>
-        </div>
+          <p class="game-title">
+              <span>Image Logo</span>
+          </p>
       </div>
       <div class="flex" *ngIf="logoType.value === 'image'">
         <div class="logo-header-wrap section-margin-t">
