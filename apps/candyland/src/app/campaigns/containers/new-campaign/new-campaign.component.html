@@ -25,7 +25,6 @@
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step [completed]="getStepCondition(0)">
-      what is the campaignDetail type: {{campaignDetail | json}}
       <ng-template matStepLabel>Select engagement</ng-template>
       <cl-new-campaign-select-engagement-page [campaignDetail]="campaignDetail" [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
