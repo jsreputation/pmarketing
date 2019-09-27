@@ -10,7 +10,7 @@ $dashboard-card-img-wrap-dimensions: 8.8rem;
   flex-wrap: wrap;
   border-radius: $border-radius-lg;
   background-color: $white;
-  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) ($vertical-padding * 0.5);
 }
 
 .dashboard-explore-card {
@@ -47,6 +47,7 @@ $dashboard-card-img-wrap-dimensions: 8.8rem;
     position: relative;
     width: 100%;
     display: flex;
+    align-items: flex-end;
 
     &::before {
       content: "";
