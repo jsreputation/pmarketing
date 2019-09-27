@@ -1,8 +1,8 @@
-import { InstantOutcomeService } from './../../../../../../backend/api-proxy/src/services/instant-outcome/instant-outcome.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, RewardsService } from '@perx/core';
+import { GameModule, RewardsModule, RewardsService, InstantOutcomeService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('RewardComponent', () => {
@@ -24,6 +24,7 @@ describe('RewardComponent', () => {
         RouterTestingModule,
         GameModule,
         RewardsModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
