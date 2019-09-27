@@ -7,18 +7,15 @@
 }
 
 .question {
+  margin-bottom: 2.4rem;
   text-align: center;
   line-height: 2.3rem;
   font-size: 2rem;
-  margin-bottom: 2.4rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.015rem;
 }
 
 .mat-raised-button {
   margin-bottom: 1.6rem;
-  background-color: #186DE1;
-
-  a {
-    color: #fff;
-    text-decoration: none;
-  }
 }
