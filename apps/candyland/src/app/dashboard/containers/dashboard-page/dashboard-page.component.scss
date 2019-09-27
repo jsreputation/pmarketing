@@ -18,7 +18,7 @@
     color: $base-font-color;
   }
 
-  &-content {
+  &-insights-card {
     @include mat-elevation(1);
 
     min-width: 48rem;
@@ -49,11 +49,6 @@
     }
   }
 
-  &-group-bloc {
-    display: flex;
-    justify-content: space-between;
-    padding: 6rem 4rem 0;
-  }
 }
 
 .game-card {
@@ -67,8 +62,4 @@
     flex-wrap: wrap;
     margin: ($vertical-padding * 0.75) (-($vertical-padding * 0.25)) 0;
   }
-}
-
-.tabs-list-wrap {
-  width: 27rem;
 }

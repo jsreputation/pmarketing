@@ -1,6 +1,14 @@
 @import '~@angular/material/theming';
 @import "variables";
 
+.dashboard-group-graphics {
+  padding: $vertical-padding $horizontal-padding;
+}
+
+.tabs-list-wrap {
+  width: 27rem;
+}
+
 .chard-card-list {
   position: relative;
   display: flex;
