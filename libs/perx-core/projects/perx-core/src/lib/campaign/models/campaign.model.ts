@@ -1,8 +1,8 @@
 import { IReward } from '../../rewards/models/reward.model';
 
 export enum CampaignType {
-  give_reward = 'give_reward',
-  stamp = 'stamp',
+  give_reward = 'give_reward', // instant_outcome
+  stamp = 'stamp', // loyalty
   game = 'game',
   survey = 'survey'
 }

@@ -8,15 +8,12 @@
       <cl-engagement-item [data]="campaign?.template"></cl-engagement-item>
     </mat-card>
     <!--rewards-->
-    <mat-card class="card" *ngIf="campaign?.rewards?.length">
+    <mat-card class="card" *ngIf="campaign?.rewardsList?.length">
       <div class="card-header">
         <p class="card-title">Rewards</p>
       </div>
       <div class="card-content">
-        <cl-reward-item-preview *ngFor="let reward of campaign?.rewards"
-                                class="item"
-                                [probability]="reward?.probability"
-                                [data]="reward?.value">
+        <cl-reward-item-preview *ngFor="let reward of campaign?.rewardsList" class="item" [data]="reward">
         </cl-reward-item-preview>
       </div>
     </mat-card>
@@ -57,13 +54,13 @@
           <div class="card-row">
             <div class="input-group">
               <p class="card-value">{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</p>
-              <p class="card-value">{{campaign?.campaignInfo?.startTime}}</p>
+              <p class="card-value">&nbsp;{{campaign?.campaignInfo?.startTime}}</p>
             </div>
             <ng-container *ngIf="campaign?.campaignInfo?.endDate">
               to
               <div class="input-group">
                 <p class="card-value">{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</p>
-                <p class="card-value">{{campaign?.campaignInfo?.endTime}}</p>
+                <p class="card-value">&nbsp;{{campaign?.campaignInfo?.endTime}}</p>
               </div>
             </ng-container>
           </div>
@@ -78,10 +75,65 @@
         </div>
       </div>
     </mat-card>
+    <!-- channel -->
+    <mat-card class="card">
+      <div class="card-header">
+        <p class="card-title">
+          Channel
+        </p>
+      </div>
+      <div class="card-content">
+        <div class="card-row">
+          {{campaign?.channel?.type}}
+        </div>
+        <!--Message-->
+        <div class="card-section" *ngIf="campaign?.channel?.message">
+          <div class="card-header">
+            <p class="card-title">
+              Message
+            </p>
+          </div>
+          <div class="card-content">
+            {{campaign?.channel?.message}}
+          </div>
+        </div>
+        <!--schedule-->
+        <div class="card-section" *ngIf="campaign?.channel?.sendDate">
+          <div class="card-header">
+            <p class="card-title">
+              Schedule date
+            </p>
+          </div>
 
+          <div class="card-content">
+            <!--send date-->
+            <div class="card-row">
+              {{campaign?.channel?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.sendTime}}
+            </div>
+            <!--recurrence-->
+            <div class="card-row stretch" *ngIf="campaign?.channel?.enableRecurrence">
+              <div class="row">
+                <div>
+                  <label class="card-label">Repeat every</label>
+                  {{campaign?.channel?.recurrence?.period}}&nbsp;{{campaign?.channel?.recurrence?.period}}
+                </div>
+                <div>
+                  <!--repeat on-->
+                  <ng-container *ngIf="campaign?.channel?.recurrence?.repeatOn.length > 0">
+                    <label class="card-label">Repeat on</label>
+                    <span *ngFor="let repeatOn of campaign?.channel?.recurrence?.repeatOn">
+                      {{repeatOn}},&nbsp;
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+     <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
   </div>
-  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$"
-                               [tenantSettings]="tenantSettings"
-  >
+  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>
 </div>
