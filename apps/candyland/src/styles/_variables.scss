@@ -204,7 +204,7 @@ $base-font-size: 1.4rem;
 
   &.active {
     border-color: $primary-color;
-    
+
     &::before,
     &::after {
       opacity: 1;
