@@ -22,7 +22,7 @@
   },
   {
     "id": 4,
-    "type": "instant_outcome",
+    "type": "instant_reward",
     "title": "Instant Reward",
     "img": "assets/images/engagement-type/instantReward.svg",
     "active": "false"
