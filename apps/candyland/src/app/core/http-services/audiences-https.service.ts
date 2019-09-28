@@ -40,4 +40,8 @@ export class AudiencesHttpsService {
   public getAssignedVouchers(params: HttpParams): Observable<any> {
     return this.http.get(ApiConfig.vouchersAssignedPath, { params });
   }
+
+  public voucherAssigned(body: any): Observable<any> {
+    return this.http.post(ApiConfig.vouchersAssignedPath, { data: body  });
+  }
 }
