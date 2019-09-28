@@ -8,7 +8,8 @@
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
       <ng-container *clTableFilter="'title'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for engagements"></cl-search-filter>
+        <cl-search-filter class="search-block" [control]="filter"
+                          placeholder="Search for engagements"></cl-search-filter>
       </ng-container>
       <ng-container *clTableFilter="'attributes_type'; let filter">
         <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="full-block"></cl-tabs-filter>
@@ -17,10 +18,14 @@
     <!--table-->
     <cl-engagements-list *ngIf="!isGridMode" [dataSource]="dataSource"></cl-engagements-list>
     <!--grid-->
-    <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource" [menuOptions]="options" (menuTapped)="menuOptionTapped($event)"></cl-engagements-grid>
+    <cl-engagements-grid *ngIf="isGridMode"
+                         [dataSource]="dataSource"
+                         [menuOptions]="options"
+                         (menuTapped)="menuOptionTapped($event)">
+    </cl-engagements-grid>
+    <!--paginator-->
     <div class="table-card">
-      <!--paginator-->
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
     </div>
   </ng-container>
 

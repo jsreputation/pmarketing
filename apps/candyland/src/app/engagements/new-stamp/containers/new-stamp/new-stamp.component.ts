@@ -1,16 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
-import { Router } from '@angular/router';
-import { takeUntil, tap, map } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { tap, map, switchMap } from 'rxjs/operators';
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
@@ -20,10 +18,11 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewStampComponent implements OnInit, OnDestroy {
+  public id: string;
   public formStamp: FormGroup;
   public stampSlotNumbers: CommonSelect[];
   public allStampSlotNumbers: CommonSelect[];
-  public stampData$: Observable<{
+  public stampData: Observable<{
     number: CommonSelect[],
     slotNumber: CommonSelect[],
     cardBackground: IGraphic[],
@@ -36,26 +35,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public stamps: PuzzleCollectStamp[] = [];
   public stampsSlotNumberData = [];
   public tenantSettings: ITenantsProperties;
-  private destroy$ = new Subject();
-
-  constructor(
-    private fb: FormBuilder,
-    private routingState: RoutingStateService,
-    private router: Router,
-    private stampDataService: StampDataService,
-    private availableNewEngagementService: AvailableNewEngagementService,
-    private stampsService: StampsService,
-    private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService
-  ) { }
-
-  public ngOnInit(): void {
-    this.getTenants();
-    this.createStampForm();
-    this.subscribeStampsNumberChanges();
-    this.subscribeStampsSlotChanges();
-    this.getStampData();
-  }
 
   public get name(): AbstractControl {
     return this.formStamp.get(ControlsName.name);
@@ -102,7 +81,44 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public get stampsSlotNumber(): any[] {
-    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value.map((item: string) => ({ id: +item }));
+    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value.map((item: string) => ({id: +item}));
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private routingState: RoutingStateService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private stampDataService: StampDataService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private stampsService: StampsService,
+    private cd: ChangeDetectorRef,
+    private settingsService: SettingsService
+  ) {
+  }
+
+  public ngOnInit(): void {
+    this.initTenants();
+    this.createStampForm();
+    combineLatest([this.getStampData(), this.handleRouteParams()])
+      .subscribe(
+        ([previewData, stamp]) => {
+          this.stampData = previewData;
+          this.stampSlotNumbers = this.allStampSlotNumbers = previewData.slotNumber;
+          const patchData = stamp || this.getDefaultValue(previewData);
+          this.formStamp.patchValue(patchData);
+          this.cd.detectChanges();
+        },
+        (error: Error) => {
+          console.warn(error.message);
+          this.router.navigateByUrl('/engagements');
+        }
+      );
+    this.subscribeStampsNumberChanges();
+    this.subscribeStampsSlotChanges();
+  }
+
+  public ngOnDestroy(): void {
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -110,15 +126,23 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.stampsService.createStamp(this.formStamp.value)
-      .pipe(
-        untilDestroyed(this),
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data))
-      )
-      .subscribe((data: IEngagement) => {
-        this.availableNewEngagementService.setNewEngagement(data);
-        this.router.navigateByUrl('/engagements');
-      });
+    if (this.formStamp.invalid) {
+      this.formStamp.markAllAsTouched();
+      return;
+    }
+
+    let request;
+    if (this.id) {
+      request = this.stampsService.updateStamp(this.id, this.formStamp.value);
+    } else {
+      request = this.stampsService.createStamp(this.formStamp.value).pipe(
+        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+      );
+    }
+
+    request.pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {
@@ -128,8 +152,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
   private createStampForm(): void {
     this.formStamp = this.fb.group({
       name: ['Stamp Card Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Collect stamps', [
         Validators.required,
@@ -167,7 +191,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     this.formStamp.get('stampsNumber')
       .valueChanges
       .pipe(
-        takeUntil(this.destroy$)
+        untilDestroyed(this)
       )
       .subscribe(
         value => {
@@ -187,44 +211,49 @@ export class NewStampComponent implements OnInit, OnDestroy {
     this.formStamp.get(ControlsName.stampsSlotNumber)
       .valueChanges
       .pipe(
-        takeUntil(this.destroy$)
+        untilDestroyed(this)
       )
-      .subscribe((value: string[]) => {
-        this.stampsSlotNumberData = value.map((item: string) => {
-          return { rewardPosition: +item - 1 };
+      .subscribe((value: number[]) => {
+        this.stampsSlotNumberData = value.map((item: number) => {
+          return {rewardPosition: item - 1};
         });
       });
   }
 
-  private getStampData(): void {
-    this.stampData$ = this.stampsService.getStampsData()
-      .pipe(
-        tap((res) => {
-          this.stampSlotNumbers = this.allStampSlotNumbers = res.slotNumber;
-          this.formStamp.patchValue({
-            stampsNumber: res.number[res.number.length - 1].value,
-            stampsSlotNumber: [res.slotNumber[res.slotNumber.length - 1].value],
-            preStamp: res.preStamp[0],
-            postStamps: res.stampsPost[0],
-            rewardPostStamps: res.rewardPost[0],
-            rewardPreStamps: res.rewardPreStamp[0],
-            cardBackground: res.cardBackground[0],
-            background: res.backgroundStamp[0]
-          });
-        })
-      );
+  private getStampData(): Observable<any> {
+    return this.stampsService.getStampsData();
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private getDefaultValue(data: any): any {
+    return {
+      stampsNumber: data.number[data.number.length - 1].value,
+      stampsSlotNumber: [data.slotNumber[data.slotNumber.length - 1].value],
+      preStamp: data.preStamp[0],
+      postStamps: data.stampsPost[0],
+      rewardPostStamps: data.rewardPost[0],
+      rewardPreStamps: data.rewardPreStamp[0],
+      cardBackground: data.cardBackground[0],
+      background: data.backgroundStamp[0]
+    };
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.cdr.detectChanges();
-      });
+  private initTenants(): void {
+    this.settingsService.getTenantsSettings()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => this.tenantSettings = data);
+  }
+
+  private handleRouteParams(): Observable<any> {
+    return this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap(id => this.id = id),
+      switchMap(id => {
+        if (id) {
+          return this.stampsService.getStamp(id);
+        }
+        return of(null);
+      })
+    );
   }
 }
