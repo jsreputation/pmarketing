@@ -163,7 +163,6 @@ export class SettingsService implements ITableService {
   public updateTenants(value: any): any {
     const newProperties = { ...this.tenants.display_properties, ...value };
     this.tenants.display_properties = { ...newProperties };
-    console.log(this.tenants.display_properties);
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
