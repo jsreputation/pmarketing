@@ -106,34 +106,35 @@
             <span>Color</span>
           </p>
           <!--color select-->
-          <div class="control-input w-50 select-outcome">
-                <mat-form-field color="primary" appearance="outline">
-                  <mat-select [formControlName]="'button_background_color'">
-                    <mat-select-trigger>
-                      <div class="select-color">
-                        <div class="select-color-preview"
-                             [ngStyle]="{'background-color': button.value?.color}"
-                        >
-                        </div>
-                        <p class="select-color-text">
-                          {{button_background_color.value?.labelView}}
-                        </p>
-                      </div>
-                    </mat-select-trigger>
-                    <mat-option [value]="color" *ngFor="let color of listColors">
-                      <div class="select-color">
-                        <div class="select-color-preview"
-                             [ngStyle]="{'background-color': color.color}"
-                        >
-                        </div>
-                        <span class="select-color-text">
-                          {{color.labelView}}
-                        </span>
-                      </div>
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-             </div>
+                    <div class="control-input w-50 select-outcome">
+                          <mat-form-field color="primary" appearance="outline">
+                            <mat-select [formControlName]="'button_background_color'">
+                              <mat-select-trigger>
+                                <div class="select-color">
+                                  <div class="select-color-preview"
+                                       [ngStyle]="{'background-color': button_background_color.value?.color}"
+                                  >
+                                  </div>
+                                  <p class="select-color-text">
+                                    {{button_background_color.value?.labelView}}
+                                  </p>
+                                </div>
+                              </mat-select-trigger>
+                              <mat-option [value]="color" *ngFor="let color of listColors">
+                                <div class="select-color">
+                                  <div class="select-color-preview"
+                                       [ngStyle]="{'background-color': color.color}"
+                                  >
+                                  </div>
+                                  <span class="select-color-text">
+                                    {{color.labelView}}
+                                  </span>
+                                </div>
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+              
           <!--end color select-->
                     <div class="control-input w-50 select-outcome">
                             <mat-form-field color="primary" appearance="outline">
