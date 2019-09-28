@@ -11,15 +11,17 @@
         <cl-search-filter class="search-block" [control]="filter" placeholder="Search for engagements"></cl-search-filter>
       </ng-container>
       <ng-container *clTableFilter="'attributes_type'; let filter">
-        <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="span-100"></cl-tabs-filter>
+        <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="full-block"></cl-tabs-filter>
       </ng-container>
     </cl-table-filters>
     <!--table-->
     <cl-engagements-list *ngIf="!isGridMode" [dataSource]="dataSource"></cl-engagements-list>
     <!--grid-->
     <cl-engagements-grid *ngIf="isGridMode" [dataSource]="dataSource" [menuOptions]="options" (menuTapped)="menuOptionTapped($event)"></cl-engagements-grid>
-    <!--paginator-->
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    <div class="table-card">
+      <!--paginator-->
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
   </ng-container>
 
   <cl-no-data *ngIf="(dataSource.data).length === 0">

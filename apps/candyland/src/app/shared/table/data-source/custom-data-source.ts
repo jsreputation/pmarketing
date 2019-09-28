@@ -9,7 +9,7 @@ import { IPagination } from './ipagination';
 export class CustomDataSource<T> {
   private dataSubject = new BehaviorSubject<T[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  // used for toggle spiner loading
+  // used for toggle spinner loading
   public loading$ = this.loadingSubject.asObservable();
   private changeFilterSearch = new BehaviorSubject<number>(0);
   // used for setUp pagination index page to 0 when searching
