@@ -118,3 +118,11 @@ export class BrandingSettingsAppPage {
  }
 
 }
+
+export class AudienceAppPage {
+
+  public navigateToAudience(): Promise<string> {
+    return browser.get('audience') as Promise<string> ;
+ }
+
+}
