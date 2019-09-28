@@ -163,9 +163,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     ).subscribe(
       campaign => {
         this.campaign = campaign;
-        this.campaignDetail = campaign && campaign.data && campaign.data.attributes;
-        this.form.patchValue(this.campaignDetail);
-        this.store.updateCampaign(this.form);
+        this.form.patchValue({
+          name: this.campaign.name
+        });
+        this.store.updateCampaign(this.campaign);
       },
       () => this.router.navigateByUrl('/campaigns')
     );

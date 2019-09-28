@@ -40,16 +40,16 @@ export class CampaignsHttpAdapter {
     const campaignOutcomes = data.includes && data.includes.possible_outcomes || [];
     const campaignLimits = data.includes && data.includes.limits;
     return {
-      id: data.id,
+      id: data.data.id,
       name: campaignData.name,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: new Date(campaignData.start_date_time),
-        startTime: moment(campaignData.start_date_time).format('LT'),
-        endDate: new Date(campaignData.end_date_time),
-        endTime: moment(campaignData.end_date_time).format('LT'),
+        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : new Date(),
+        startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
+        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : new Date(),
+        endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
