@@ -20,7 +20,6 @@ import { RewardsModule as PerxRewardsModule } from '@perx/core';
     UploadGraphicModule,
     SimpleMobileViewModule,
     PerxRewardsModule,
-
     MatSelectModule,
     MatCardModule,
     MatRadioModule,
