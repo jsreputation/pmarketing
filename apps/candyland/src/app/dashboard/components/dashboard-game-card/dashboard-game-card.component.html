@@ -9,11 +9,8 @@
     {{gameCard.description}}
   </p>
 </div>
-<div class="dashboard-explore-card-actions">
-  <cl-button [classList]="'ph-0 tertiary'"
-              [disableRipple]="true"
-              (click)="clickToLink(gameCard.name)"
-  >
+<div class="dashboard-card-actions">
+  <cl-button [classList]="'ph-0 tertiary'" (click)="clickToLink(gameCard.name)">
     <span>{{gameCard.link}}</span>
   </cl-button>
 </div>
