@@ -16,14 +16,20 @@ const routes: Routes = [
     children: [
       {
         path: 'new-shake',
-        component: NewShakePageComponent,
+        component: NewShakePageComponent
+      },
+      {
+        path: 'new-shake/:id',
+        component: NewShakePageComponent
       },
       {
         path: 'new-pinata',
-        component: NewPinataPageComponent,
-        children: [
-        ]
+        component: NewPinataPageComponent
       },
+      {
+        path: 'new-pinata/:id',
+        component: NewPinataPageComponent
+      }
     ]
   }
 ];

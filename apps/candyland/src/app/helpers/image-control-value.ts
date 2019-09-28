@@ -20,6 +20,18 @@ export class ImageControlValue {
       ? data.fullImg
       : data.img
         ? data.img
-        : (data as any) ;
+        : (data as any);
+  }
+
+  public static getPrepareValue(val: any, graphicList: IGraphic[]): IGraphic | any {
+    if (graphicList) {
+      for (const item of graphicList) {
+        if (item.fullImg === val || item.img === val) {
+          return item;
+        }
+      }
+      return val;
+    }
+    return val;
   }
 }

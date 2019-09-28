@@ -1,12 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { NewInstantRewardRoutingModule } from './new-instant-reward-routing.module';
-import { NewInstantRewardComponent } from './containers/new-instant-reward/new-instant-reward.component';
-import {
-  NewInstantRewardAppearancePageComponent
-} from './containers/new-instant-reward-appearance-page/new-instant-reward-appearance-page.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
@@ -28,11 +22,11 @@ import {
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
+import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
 
 @NgModule({
   declarations: [
-    NewInstantRewardComponent,
-    NewInstantRewardAppearancePageComponent,
+    NewInstantRewardManagePageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),

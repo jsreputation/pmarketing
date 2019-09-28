@@ -3,8 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewStampComponent } from './containers/new-stamp/new-stamp.component';
 
 const routes: Routes = [
-  // { path: '', pathMatch: 'full', redirectTo: '' },
-  { path: '', component: NewStampComponent }
+  {
+    path: '',
+    component: NewStampComponent
+  },
+  {
+    path: ':id',
+    component: NewStampComponent
+  }
 ];
 
 @NgModule({

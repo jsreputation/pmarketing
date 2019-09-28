@@ -35,8 +35,6 @@ import { PuzzlesModule } from '@perx/core';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-  ],
-  entryComponents: [
   ]
 })
 export class NewStampModule {
