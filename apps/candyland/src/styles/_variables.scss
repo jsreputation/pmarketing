@@ -8,7 +8,7 @@ $green: #10D994;
 //grays
 $white: #fff;
 $lightest-gray:  #fafafa;
-$light-gray:  rgba(0, 0, 0, 0.025); //#F2F8FB
+$light-gray: #E8E8E8; //#F2F8FB
 $gray: #A4B0C3;
 
 //app colors
@@ -28,7 +28,7 @@ $background-color: $lightest-gray;
 $bgcolor-sidebar: #202c46;
 $bgcolor-sidebar-logo: #172238;
 
-$border-color: rgba(0, 0, 0, 0.12);
+$border-color: $light-gray;
 
 /* ----- UNIQUE COLORS ----- */
 $loginpage-color: #F2F6FC;
