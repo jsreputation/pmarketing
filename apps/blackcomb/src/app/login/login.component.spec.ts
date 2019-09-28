@@ -16,7 +16,9 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
