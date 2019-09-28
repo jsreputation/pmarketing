@@ -96,7 +96,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
     },
     {
       labelView: 'Secondary Color', color: this.secondaryColor.value
-    }];
+    }
+  ];
     this.patchValue({
       headerNavbarColor: this.listColors[0],
       button_background_color: this.listColors[0],
@@ -125,6 +126,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .subscribe((val) => {
         this.listColors[1].color = val;
       });
+    this.button_text_color
+    .valueChanges
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((val) => {
+      this.button_text_color.value.color = val;
+    });
   }
 
   private getTenants(): void {

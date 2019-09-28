@@ -89,7 +89,7 @@ export class SettingsHttpAdapter {
       'theme.header_color': data.headerNavbarColor.color,
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
-      'theme.button_color': data.button.color
+      'theme.button_color': data.button_background_color.color
     };
   }
 
