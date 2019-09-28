@@ -10,10 +10,10 @@
 <div class="dialog-body">
   <img class="description-img" src="assets/images/engagement-type/engagement-template.png" alt="Engagement Template">
   <h3 class="description-header">
-    Yay! you just created an engagement template!
+    {{data?.header || 'Yay! you just created an engagement template!'}}
   </h3>
   <p class="description-copy">
-    One step to go closer to your customers. Now you can launch a campaign with this.
+    {{data?.description || 'One step to go closer to your customers. Now you can launch a campaign with this.'}}
   </p>
 </div>
 <div class="dialog-actions"

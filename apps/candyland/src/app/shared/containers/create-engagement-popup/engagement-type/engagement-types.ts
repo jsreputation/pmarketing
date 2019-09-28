@@ -9,7 +9,7 @@ export const EngagementType: IEngagementType[] = [
   },
   {
     id: 2,
-    type: 'games',
+    type: 'game',
     title: 'Games',
     active: false
   },
@@ -21,7 +21,7 @@ export const EngagementType: IEngagementType[] = [
   },
   {
     id: 4,
-    type: 'instantReward',
+    type: 'instant_reward',
     title: 'Instant Reward',
     active: false
   }
