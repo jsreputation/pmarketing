@@ -14,15 +14,6 @@ $fluid-cell-4: 15% !important;
 $fluid-cell-5: 18% !important;
 $fluid-cell-6: 21% !important;
 
-@media (max-width: $lg-width) {
-  .table-card .table {
-    display: block;
-    width: 100%;
-    overflow-y: hidden;
-    overflow-x: auto;
-  }
-}
-
 .table {
   width: 100%;
 
