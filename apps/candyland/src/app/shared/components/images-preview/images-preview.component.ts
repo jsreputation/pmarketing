@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ApiConfig } from '@cl-core/api-config';
 
 @Component({
   selector: 'cl-images-preview',
@@ -8,7 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ImagesPreviewComponent {
   @Input() public img: IGraphic;
   @Input() public selected: any;
-  @Output() public selectPreview = new EventEmitter<IGraphic>();
+  @Output() public selectPreview: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
+  public apiCdnPath = ApiConfig.apiCdnPath;
 
   public handlerClick(): void {
     this.selectPreview.emit(this.img);

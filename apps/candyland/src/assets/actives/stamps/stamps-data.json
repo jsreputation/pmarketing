@@ -80,8 +80,8 @@
       "id": 1,
       "type": "card-bg-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-1.png",
+      "img": "global/assets/card-background/card-bg-1.png",
+      "fullImg": "global/assets/card-background/card-bg-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -89,8 +89,8 @@
       "id": 2,
       "type": "card-bg-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-2.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-2.png",
+      "img": "global/assets/card-background/card-bg-2.png",
+      "fullImg": "global/assets/card-background/card-bg-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -98,8 +98,8 @@
       "id": 3,
       "type": "card-bg-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/card-background/card-bg-3.png",
+      "img": "global/assets/card-background/card-bg-3.png",
+      "fullImg": "global/assets/card-background/card-bg-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -109,8 +109,8 @@
       "id": 1,
       "type": "reward-post-stamp-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-1.png",
+      "img": "global/assets/stamps/reward-post-stamp-1.png",
+      "fullImg": "global/assets/stamps/reward-post-stamp-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -118,8 +118,8 @@
       "id": 2,
       "type": "reward-post-stamp-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-2.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-2.png",
+      "img": "global/assets/stamps/reward-post-stamp-2.png",
+      "fullImg": "global/assets/stamps/reward-post-stamp-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -127,8 +127,8 @@
       "id": 3,
       "type": "reward-post-stamp-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-post-stamp-3.png",
+      "img": "global/assets/stamps/reward-post-stamp-3.png",
+      "fullImg": "global/assets/stamps/reward-post-stamp-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -138,8 +138,8 @@
       "id": 1,
       "type": "post-stamp-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-1.png",
+      "img": "global/assets/stamps/post-stamp-1.png",
+      "fullImg": "global/assets/stamps/post-stamp-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -147,8 +147,8 @@
       "id": 2,
       "type": "post-stamp-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png",
+      "img": "global/assets/stamps/post-stamp-2.png",
+      "fullImg": "global/assets/stamps/post-stamp-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -156,8 +156,8 @@
       "id": 3,
       "type": "post-stamp-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-3.png",
+      "img": "global/assets/stamps/post-stamp-3.png",
+      "fullImg": "global/assets/stamps/post-stamp-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -167,8 +167,8 @@
       "id": 1,
       "type": "reward-pre-stamp-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-1.png",
+      "img": "global/assets/stamps/reward-pre-stamp-1.png",
+      "fullImg": "global/assets/stamps/reward-pre-stamp-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -176,8 +176,8 @@
       "id": 2,
       "type": "reward-pre-stamp-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-2.png",
-       "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-2.png",
+      "img": "global/assets/stamps/reward-pre-stamp-2.png",
+       "fullImg": "global/assets/stamps/reward-pre-stamp-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -185,8 +185,8 @@
       "id": 3,
       "type": "reward-pre-stamp-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/reward-pre-stamp-3.png",
+      "img": "global/assets/stamps/reward-pre-stamp-3.png",
+      "fullImg": "global/assets/stamps/reward-pre-stamp-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -196,8 +196,8 @@
       "id": 1,
       "type": "pre-stamp-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-1.png",
+      "img": "global/assets/stamps/pre-stamp-1.png",
+      "fullImg": "global/assets/stamps/pre-stamp-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -205,8 +205,8 @@
       "id": 2,
       "type": "pre-stamp-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-2.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-2.png",
+      "img": "global/assets/stamps/pre-stamp-2.png",
+      "fullImg": "global/assets/stamps/pre-stamp-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -214,8 +214,8 @@
       "id": 3,
       "type": "pre-stamp-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/pre-stamp-3.png",
+      "img": "global/assets/stamps/pre-stamp-3.png",
+      "fullImg": "global/assets/stamps/pre-stamp-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -225,8 +225,8 @@
       "id": 1,
       "type": "bg-1",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-1.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_1.jpg",
+      "img": "global/assets/background/stamp-bg-1.png",
+      "fullImg": "global/assets/background/full_bg_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -234,8 +234,8 @@
       "id": 2,
       "type": "bg-2",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-2.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_2.jpg",
+      "img": "global/assets/background/stamp-bg-2.png",
+      "fullImg": "global/assets/background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -243,8 +243,8 @@
       "id": 3,
       "type": "bg-3",
       "title": "icon",
-      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-3.png",
-      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_3.jpg",
+      "img": "global/assets/background/stamp-bg-3.png",
+      "fullImg": "global/assets/background/full_bg_3.jpg",
       "format": ".png",
       "active": "false"
     }
