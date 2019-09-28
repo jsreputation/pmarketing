@@ -42,7 +42,7 @@ export class MerchantsService implements ITableService {
         })
       );
     }
-    return request.pipe(map(() => id));
+    return request.pipe(map((merchant) => merchant.data.id));
   }
 
   public createMerchantBranch(merchantId: string, data: any): Observable<any> {
@@ -51,7 +51,6 @@ export class MerchantsService implements ITableService {
   }
 
   public updateMerchantBranch(id: string, data: any): Observable<any> {
-    console.log('updateMerchantBranch', data);
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
     sendData.id = data.id;
     return this.merchantHttpService.updateMerchantBranch(data.id, {data: sendData});
