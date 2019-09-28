@@ -19,6 +19,14 @@ $fluid-cell-6: 21% !important;
   overflow-x: auto;
   overflow-y: hidden;
 
+  &-card {
+    @include mat-elevation(1);
+
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    background: $white;
+  }
+
   &-row {
     cursor: pointer;
 
