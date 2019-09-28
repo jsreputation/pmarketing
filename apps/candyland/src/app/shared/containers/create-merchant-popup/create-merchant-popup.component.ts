@@ -9,18 +9,19 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
   styleUrls: ['./create-merchant-popup.component.scss']
 })
 export class CreateMerchantPopupComponent implements OnInit {
-  public merchant: any;
+  // public merchant: any;
   public deletedBranches = [];
   public formMerchant: FormGroup;
   public formConfig: IMerchantFormConfig = {
     shoveName: true
   };
 
-  constructor(public dialog: MatDialog,
-              private dialogRef: MatDialogRef<CreateMerchantPopupComponent>,
-              private merchantFormService: MerchantFormService,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<CreateMerchantPopupComponent>,
+    private merchantFormService: MerchantFormService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: IMerchant
+  ) { }
 
   public ngOnInit(): void {
     this.createFormMerchant();
@@ -33,7 +34,7 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   public addMerchant(): void {
     if (this.formMerchant.valid) {
-      this.dialogRef.close({...this.formMerchant.value, deletedBranches: this.deletedBranches});
+      this.dialogRef.close({ ...this.formMerchant.value, deletedBranches: this.deletedBranches });
     } else {
       this.formMerchant.markAllAsTouched();
     }
