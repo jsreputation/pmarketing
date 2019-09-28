@@ -3,7 +3,7 @@ import {
   IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
 import { ControlsName } from 'src/app/models/controls-name';
-import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 export class EngagementHttpAdapter {
 
@@ -41,7 +41,7 @@ export class EngagementHttpAdapter {
   }
 
   public static transformEngagementHandler(data: IEngagementApi, type?: string): any {
-    const engagementType = type ? EngagementType[type] : data.attributes.type;
+    const engagementType = type ? EngagementTypeFromAPIMapping[type] : data.attributes.type;
 
     switch (engagementType) {
       case 'game':
