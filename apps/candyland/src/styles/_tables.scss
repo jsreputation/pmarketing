@@ -16,14 +16,13 @@ $fluid-cell-6: 21% !important;
 
 .table {
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
 
   &-card {
     @include mat-elevation(1);
 
     border-radius: $border-radius-lg;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     background: $white;
   }
 
