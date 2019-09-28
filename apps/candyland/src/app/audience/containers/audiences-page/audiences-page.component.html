@@ -5,6 +5,9 @@
 
 <section class="content">
   <ng-container *ngIf="hasData">
+    <!--tabs-->
+    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
+
     <!--filters-->
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
@@ -21,24 +24,25 @@
       </cl-table-filters>
     </ng-container>
 
-    <!--tabs-->
-    <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
-
-    <!--table-->
-    <ng-container [ngSwitch]="currentTab">
-      <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)"
-        [dataSource]="dataSource">
-      </cl-audiences-users-list>
-      <cl-audiences-list *ngSwitchCase="'audience'"
-        [dataSource]="audiencesDataSource">
-      </cl-audiences-list>
-    </ng-container>
-    <!--paginator-->
-    <ng-container [ngSwitch]="currentTab">
-      <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
-      <span *ngSwitchCase="'audience'"></span>
-    </ng-container>
+    <div class="table-card">
+      <!-- table-->
+      <ng-container [ngSwitch]="currentTab">
+        <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)"
+          [dataSource]="dataSource">
+        </cl-audiences-users-list>
+        <cl-audiences-list *ngSwitchCase="'audience'"
+          [dataSource]="audiencesDataSource">
+        </cl-audiences-list>
+      </ng-container>
+      <!-- /table-->
+      <!-- paginator-->
+      <ng-container [ngSwitch]="currentTab">
+        <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+        <span *ngSwitchCase="'audience'"></span>
+      </ng-container>
+      <!-- /paginator-->
+    </div>
   </ng-container>
 
   <cl-no-data *ngIf="(dataSource.data).length === 0">
