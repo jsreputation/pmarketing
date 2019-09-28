@@ -10,7 +10,7 @@
           <mat-form-field appearance="outline">
             <mat-select [formControl]="filter" placeholder="Filter by">
               <ng-container *ngFor="let option of typeFilterConfig">
-                <mat-option [value]="option.value">{{option.title}}</mat-option>
+                <mat-option [value]="option.value">{{option.title | engagementType}}</mat-option>
               </ng-container>
             </mat-select>
           </mat-form-field>
