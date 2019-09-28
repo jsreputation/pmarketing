@@ -50,15 +50,17 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   }
 
   &-header-with-control {
-    margin-bottom: ($vertical-padding * 0.75);
+    display: flex;
+    justify-content: space-between;
     align-items: baseline;
+    margin-bottom: ($vertical-padding * 0.75);
 
     &-title {
       flex-shrink: 0;
     }
 
     > * {
-      margin-top: -($vertical-padding * 0.25);
+      margin-top: -($vertical-padding * 0.375);
 
       &:not(.chart-card-title) {
         @include typo-body2;
