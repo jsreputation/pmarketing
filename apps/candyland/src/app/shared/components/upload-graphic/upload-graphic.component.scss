@@ -5,10 +5,6 @@
   &-wrap {
     position: relative;
 
-    &:hover .upload-btn::before,
-    &:focus .upload-btn::before {
-      opacity: 1;      
-    }
   }
 
   &-input {
@@ -34,6 +30,12 @@
     position: relative;
     border: none;
 
+    &::after {
+      content: '';
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+
     @include typo-button;
 
     // Control Dash Visual
@@ -53,12 +55,11 @@
       transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
       opacity: 0.5;
     }
+  }
 
-    &::after {
-      content: '';
-      opacity: 0;
-      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-    }
+  &-wrap:hover .upload-btn::before,
+  &-wrap:focus .upload-btn::before {
+    opacity: 1;      
   }
 
   &-error {
@@ -107,7 +108,8 @@
     background: $gray;
     position: relative;
     cursor: pointer;
-    border: 1px solid transparent;
+
+    @include check-select;
   }
 
   &-clear {
@@ -140,25 +142,6 @@
     .image-clear {
       opacity: 1;
     }
-  }
-}
-
-.active {
-  border-radius: $border-radius;
-  border: 1px solid $secondary-color;
-  position: relative;
-  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-
-  &::after {
-    content: '';
-    opacity: 1;
-    display: block;
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    height: 4.2rem;
-    width: 4.2rem;
-    background: url("/assets/images/previews/triangle.png") no-repeat;
   }
 }
 
