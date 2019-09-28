@@ -14,6 +14,10 @@ $fluid-cell-4: 15% !important;
 $fluid-cell-5: 18% !important;
 $fluid-cell-6: 21% !important;
 
+.table-wrap {
+  overflow: auto;
+}
+
 .table {
   width: 100%;
 
