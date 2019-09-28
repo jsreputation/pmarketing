@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
@@ -77,12 +77,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('style');
   }
 
-  public resetLogo(): void {
-    this.logo.reset();
-    this.logo.setValidators([Validators.required]);
-    this.formBranding.updateValueAndValidity();
-    this.logo.markAsUntouched({onlySelf: true});
-  }
+  // public resetLogo(): void {
+  //   this.logo.reset();
+  //   this.logo.setValidators([Validators.required]);
+  //   this.formBranding.updateValueAndValidity();
+  //   this.logo.markAsUntouched({onlySelf: true});
+  // }
 
   public ngOnInit(): void {
     this.createFormBranding();
