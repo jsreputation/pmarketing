@@ -12,7 +12,7 @@ export class MerchantHttpAdapter {
       redemptionType: data.attributes.redemption_type,
       current: data.attributes.cost_of_reward,
       total: 100,
-      prprobability: null,
+      probability: null,
       category: data.attributes.category
     };
   }
