@@ -1,6 +1,6 @@
 <div class="game-wrap"
      (click)="onSelect()"
-     [ngClass]="{'active-item': game?.id === selectedGame?.id}"
+     [ngClass]="{'active': game?.id === selectedGame?.id}"
 >
   <div class="game-wrap-img">
     <img class="game-icon" [src]="basePath + game.type + '.png'" alt="game-icon">
