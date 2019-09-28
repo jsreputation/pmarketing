@@ -1,33 +1,34 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { combineLatest, Observable, of } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
+import { IReward } from '@perx/core';
+import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
-  AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
+  AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
-import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
 @Component({
-  selector: 'cl-new-pinata-page',
-  templateUrl: './new-pinata-page.component.html',
-  styleUrls: ['./new-pinata-page.component.scss'],
+  selector: 'cl-new-instant-reward-manage-page',
+  templateUrl: './new-instant-reward-manage-page.component.html',
+  styleUrls: ['./new-instant-reward-manage-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewPinataPageComponent implements OnInit, OnDestroy {
-  public id: string;
+export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  public pinataData: {
-    pinata: IGraphic[],
-    background: IGraphic[]
+  public rewardData: {
+    background: IGraphic[],
+    cardBackground: IGraphic[]
   };
+  public reward$: Observable<IReward[]>;
+  public rewards$: Observable<IReward[]>;
+  public id: string;
   public tenantSettings: ITenantsProperties;
-  private destroy$ = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -49,13 +50,14 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     return this.form.get(ControlsName.background);
   }
 
-  public get pinata(): AbstractControl {
-    return this.form.get(ControlsName.pinata);
+  public get cardBackground(): AbstractControl {
+    return this.form.get(ControlsName.cardBackground);
   }
 
   constructor(
     private fb: FormBuilder,
-    private pinataService: PinataService,
+    private instantRewardsService: InstantRewardsService,
+    // private engagementsService: EngagementsService,
     private routingState: RoutingStateService,
     private availableNewEngagementService: AvailableNewEngagementService,
     private route: ActivatedRoute,
@@ -66,13 +68,13 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
-    this.createPinataForm();
-    combineLatest([this.getPinataData(), this.handleRouteParams()])
+    this.initPreviewData();
+    this.initTenants();
+    this.initRewardForm();
+    combineLatest([this.getRewardData(), this.handleRouteParams()])
       .subscribe(
-        ([previewData, pinata]) => {
-          this.pinataData = previewData;
-          const patchData = pinata || this.getDefaultValue(previewData);
+        ([previewData, reward]) => {
+          const patchData = reward || this.getDefaultValue(previewData);
           this.form.patchValue(patchData);
           this.cd.detectChanges();
         },
@@ -84,8 +86,10 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   public save(): void {
@@ -93,12 +97,11 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-
     let request;
     if (this.id) {
-      request = this.pinataService.updatePinata(this.id, this.form.value);
+      request = this.instantRewardsService.updateInstantReward(this.id, this.form.value as IInstantRewardForm);
     } else {
-      request = this.pinataService.createPinata(this.form.value).pipe(
+      request = this.instantRewardsService.createRewardGame(this.form.value as IInstantRewardForm).pipe(
         map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
         tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
       );
@@ -112,31 +115,25 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     this.routingState.comeBackPreviousUrl();
   }
 
-  public getImgLink(control: FormControl, defaultImg: string): string {
-    return ImageControlValue.getImgLink(control, defaultImg);
-  }
-
-  private createPinataForm(): void {
+  private initRewardForm(): void {
     this.form = this.fb.group({
-      name: ['Hit the Pinata Template', [Validators.required,
+      name: [null, [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: ['Tap the Piñata and Win!', [
+      headlineMessage: [null, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      subHeadlineMessage: ['Tap the piñata until you get a reward!', [
-        Validators.required,
+      subHeadlineMessage: [null, [
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      pinata: [null, [Validators.required]],
-      background: [null, [
-        // Validators.required
-      ]],
-      buttonText: ['start playing', [
+      banner: [null, [Validators.required]],
+      cardBackground: [null, [Validators.required]],
+      background: [null, [Validators.required]],
+      buttonText: ['See my rewards', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -146,25 +143,33 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
 
   private getDefaultValue(data: any): any {
     return {
-      name: 'Hit the Pinata Template',
-      headlineMessage: 'Tap the Piñata and Win!',
-      subHeadlineMessage: 'Tap the piñata until you get a reward!',
-      buttonText: 'start playing',
-      [ControlsName.pinata]: data.pinata[0],
-      [ControlsName.background]: data.background[0]
+      name: 'Instant Reward Template',
+      headlineMessage: 'You have got rewards!',
+      subHeadlineMessage: '',
+      banner: 'reward',
+      buttonText: 'See my rewards',
+      [ControlsName.background]: data.background[0],
+      [ControlsName.cardBackground]: data.cardBackground[0]
     };
   }
 
-  private getPinataData(): Observable<any> {
-    return this.pinataService.getPinataData();
+  private initPreviewData(): void {
+    this.reward$ = of([MockRewardsMobilePreview[0]]);
+    this.rewards$ = of(MockRewardsMobilePreview);
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.cd.detectChanges();
-      });
+  private initTenants(): void {
+    this.settingsService.getTenantsSettings()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => this.tenantSettings = data);
+  }
+
+  private getRewardData(): Observable<any> {
+    return this.instantRewardsService.getInstantRewardData()
+      .pipe(
+        untilDestroyed(this),
+        tap(data => this.rewardData = data)
+      );
   }
 
   private handleRouteParams(): Observable<any> {
@@ -174,18 +179,10 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       tap(id => this.id = id),
       switchMap(id => {
         if (id) {
-          return this.pinataService.getPinata(id);
+          return this.instantRewardsService.getInstantReward(id);
         }
         return of(null);
-      }),
-      tap(pinata => this.checkGameType(pinata))
+      })
     );
-  }
-
-  private checkGameType(pinata): void {
-    if (pinata && pinata.gameType !== 'tap') {
-      console.warn('Wrong type of game!');
-      this.router.navigateByUrl('/engagements');
-    }
   }
 }
