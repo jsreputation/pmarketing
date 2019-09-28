@@ -92,6 +92,11 @@ h1, h2, h3, h4, h5, p {
     background-color: inherit;
     padding: 0;
   }
+
+  cl-tabs-filter + cl-table-filters {
+    display: block;
+    margin-top: ($vertical-padding * 0.5);
+  }
 }
 
 .row {
@@ -106,23 +111,30 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
-//BOX OUTLINED FIELDS
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
+//BOX OUTLINED FIELDS OVERRIDES
+.mat-form-field-appearance-outline {
+  .mat-form-field-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: $primary-color;
-}
+  .mat-form-field-outline-thick,
+  &.mat-focused .mat-form-field-outline-thick {
+    color: $primary-color;
+  }
 
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding-top: 0.5em;
-}
+  .mat-form-field-infix {
+    padding-top: 0.5em;
+  }
 
-.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: none !important;
+  .mat-select-arrow-wrapper {
+    transform: none !important;
+  }
+
+  .mat-form-field-prefix,
+  .mat-form-field-suffix {
+    top: 0.35em;
+  }
 }
 
 .btn-group {
@@ -225,13 +237,6 @@ h1, h2, h3, h4, h5, p {
     @include typo-body2;
 
     color: $base-font-color;
-  }
-}
-
-// Dashboard Page Commons
-.dashboard {
-  &-group-graphics {
-    padding: $vertical-padding $horizontal-padding;
   }
 }
 
