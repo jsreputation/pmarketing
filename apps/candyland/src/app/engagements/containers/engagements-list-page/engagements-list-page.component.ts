@@ -63,7 +63,9 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe(result => {
         if (result) {
-          this.launchCampaign();
+          if (result !== 'isCloseButtonTrigger') {
+            this.launchCampaign();
+          }
         } else {
           this.availableNewEngagementService.remove();
         }
