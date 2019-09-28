@@ -96,6 +96,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   }
 
   public addReward(value: IRewardEntity): void {
+    console.log(value);
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }

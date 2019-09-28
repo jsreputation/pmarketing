@@ -38,7 +38,8 @@ export class SelectRewardPopupComponent {
 
   public add(): void {
     if (this.selectedReward) {
-      this.dialogRef.close(this.selectedReward.id);
+      const oneSelectedReward = this.dataSource.data.filter((reward) => reward.id === this.selectedReward.id);
+      this.dialogRef.close(oneSelectedReward[0]);
     }
   }
 }
