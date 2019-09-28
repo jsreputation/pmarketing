@@ -101,7 +101,6 @@ export class BrandingComponent implements OnInit, OnDestroy {
       headerNavbarColor: this.listColors[0],
       button_background_color: this.listColors[0],
     });
-    console.log(this.listColors);
     this.subscribeChangeColors();
   }
 

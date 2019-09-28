@@ -62,7 +62,7 @@
                     </p>
                   </div>
                 </mat-select-trigger>
-                <mat-option [value]="color" *ngFor="let color of listColors">
+                <mat-option  *ngFor="let color of listColors" [value]="color">
                   <div class="select-color">
                     <div class="select-color-preview"
                          [ngStyle]="{'background-color': color.color}"
