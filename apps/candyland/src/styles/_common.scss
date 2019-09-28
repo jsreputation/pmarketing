@@ -8,6 +8,9 @@ html, body {
 
 body {
   margin: 0;
+}
+
+body, input, button, select {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -133,7 +136,7 @@ h1, h2, h3, h4, h5, p {
 
   .mat-form-field-prefix,
   .mat-form-field-suffix {
-    top: 0.35em;
+    top: 0.35em !important;
   }
 }
 
@@ -247,4 +250,12 @@ h1, h2, h3, h4, h5, p {
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important;
+}
+
+.linkable {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }

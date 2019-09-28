@@ -12,11 +12,13 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
   public TIME_FORMAT = 'shortTime';
   @Input() public dataSource: CustomDataSource<any>;
   @Input() public displayedColumns = ['rewardName', 'merchant', 'issuedDate', 'expiryDate', 'campaign', 'redemptionType', 'actions'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public clickChangeExpiryDate = new EventEmitter();
 
   public ngAfterViewInit(): void {
-    this.dataSource.registerSort(this.sort);
+    if (this.dataSource) {
+      this.dataSource.registerSort(this.sort);
+    }
   }
 
   public changeExpiryDate(item): void {
