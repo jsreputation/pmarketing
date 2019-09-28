@@ -1,9 +1,7 @@
 <div class="page-header full-with">
-  <div class="game-title-wrap">
-    <div class="control-input name-control name-control-title">
-      {{data?.name}}
-    </div>
-  </div>
+  <h1 class="control-input name-control name-control-title">
+    {{data?.name}}
+  </h1>
   <div class="btn-group">
     <cl-button classList="tertiary" routerLink="/rewards/">Close</cl-button>
     <cl-button classList="primary" [routerLink]="'/rewards/edit/'+ id">Edit</cl-button>
