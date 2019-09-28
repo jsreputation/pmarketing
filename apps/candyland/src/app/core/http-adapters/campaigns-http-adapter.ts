@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -28,10 +29,10 @@ export class CampaignsHttpAdapter {
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: new Date(campaignData.start_date_time),
-        startTime: `${(new Date(campaignData.start_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
-        endDate: new Date(campaignData.end_date_time),
-        endTime: `${(new Date(campaignData.end_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        startDate: moment(campaignData.start_date_time).format('l'),
+        startTime: moment(campaignData.start_date_time).format('LT'),
+        endDate: moment(campaignData.end_date_time).format('l'),
+        endTime: moment(campaignData.end_date_time).format('LT'),
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
@@ -61,7 +62,7 @@ export class CampaignsHttpAdapter {
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
         // status: "draft",
-        start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
+        start_date_time: moment(data.campaignInfo.startDate + ' ' + data.campaignInfo.startTime).format(),
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select

@@ -26,18 +26,17 @@
         to
         <div class="input-group">
           <div class="date-field">
-            <cl-date-picker [control]="campaignInfo.get('endDate')"
-                            [min]="campaignInfo.get('startDate').value">
+            <cl-date-picker [control]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value">
             </cl-date-picker>
             <mat-error class="date-field-error"
-                       *ngIf="campaignInfo.get('endDate').hasError('required') && campaignInfo.get('endDate').touched">
+              *ngIf="campaignInfo.get('endDate').hasError('required') && campaignInfo.get('endDate').touched">
               This field is required
             </mat-error>
           </div>
           <div class="date-field">
             <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
             <mat-error class="date-field-error"
-                       *ngIf="campaignInfo.get('endTime').hasError('required') && campaignInfo.get('endTime').touched">
+              *ngIf="campaignInfo.get('endTime').hasError('required') && campaignInfo.get('endTime').touched">
               This field is required
             </mat-error>
           </div>
@@ -96,7 +95,8 @@
           </div>
           <!--recurrence Settings-->
           <div class="card-row form-field">
-            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
+            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
+            </mat-checkbox>
           </div>
           <!--recurrence-->
           <div class="card-row stretch" *ngIf="recurrence.enabled">
@@ -147,19 +147,14 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group color="primary" aria-label="Select an option" [formControl]="audience.get('type')">
-          <mat-radio-button [value]="'none'">No audience</mat-radio-button>
-          <mat-radio-button [value]="'upload'">Upload an audience list</mat-radio-button>
-          <mat-radio-button [value]="'select'">Select an audience list</mat-radio-button>
-        </mat-radio-group>
+        <mat-form-field>
+          <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
+            <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <cl-upload-file *ngIf="audience.get('file').enabled" [formControl]="audience.get('file')">
+      <cl-upload-file [formControl]="audience.get('file')">
       </cl-upload-file>
-      <mat-form-field *ngIf="audience.get('select').enabled">
-        <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
-          <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
     </div>
   </mat-expansion-panel>
 </div>

@@ -47,4 +47,9 @@ export class AudiencesVouchersService implements ITableService {
     const idList = data.map(item => item.attributes[propKey]);
     return Utils.filterUniq(idList);
   }
+
+  public voucherAssigned(source, assigned): Observable<any> {
+    const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
+    return this.audiencesHttpsService.voucherAssigned(sendData);
+  }
 }

@@ -210,14 +210,6 @@
                            [logoType]="tenantSettings?.logoType"
                            [fontFamily]="tenantSettings?.font"
     >
-      <div class="mobile-preview-header">
-        <p class="mobile-preview-headline">
-          {{headlineMessage?.value}}
-        </p>
-        <p class="mobile-preview-sub-headline">
-          {{subHeadlineMessage?.value}}
-        </p>
-      </div>
       <div class="plugin-block">
         <div class="mobile-preview-card"
              [ngStyle]="{
@@ -225,6 +217,14 @@
              'font-family': tenantSettings?.font
              }"
         >
+          <div class="mobile-preview-header">
+            <p class="mobile-preview-headline">
+              {{headlineMessage?.value}}
+            </p>
+            <p class="mobile-preview-sub-headline">
+              {{subHeadlineMessage?.value}}
+            </p>
+          </div>
           <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
         </div>
 

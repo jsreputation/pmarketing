@@ -12,7 +12,7 @@
                           placeholder="Search for engagements"></cl-search-filter>
       </ng-container>
       <ng-container *clTableFilter="'attributes_type'; let filter">
-        <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="span-100"></cl-tabs-filter>
+        <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="full-block"></cl-tabs-filter>
       </ng-container>
     </cl-table-filters>
     <!--table-->
@@ -24,7 +24,9 @@
                          (menuTapped)="menuOptionTapped($event)">
     </cl-engagements-grid>
     <!--paginator-->
+    <div class="table-card">
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
   </ng-container>
 
   <cl-no-data *ngIf="(dataSource.data).length === 0">
