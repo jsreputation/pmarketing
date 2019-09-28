@@ -16,7 +16,6 @@
       @include typo-body2;
 
       display: block;
-      
     }
 
     > h4 {
@@ -25,7 +24,7 @@
       color: $primary-color;
       margin: 0.4rem 0;
     }
-    
+
     &.disable {
       color: $base-font-color !important;
       padding-left: 0;
