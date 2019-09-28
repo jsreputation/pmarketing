@@ -16,7 +16,7 @@ export class CampaignsHttpsService {
   }
 
   public getCampaign(id: string): Observable<any> {
-    return this.http.get(`${ApiConfig.campaignsPath}/${id}`);
+    return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=limits,possible_outcomes`);
   }
 
   public updateCampaign(id: number, data: any): Observable<IResponseApi<any>> {
@@ -24,7 +24,7 @@ export class CampaignsHttpsService {
   }
 
   public createCampaign(data: IResponseApi<any>): Observable<IResponseApi<any>> {
-    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath + '?include=limits,possible_outcomes', data);
+    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath, data);
   }
 
   public deleteCampaign(id: string): Observable<any> {
