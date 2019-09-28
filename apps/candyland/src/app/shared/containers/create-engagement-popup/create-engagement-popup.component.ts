@@ -23,8 +23,8 @@ export class CreateEngagementPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateEngagementPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private engagementsService: EngagementsService,
-    private router: Router) {
-  }
+    private router: Router
+  ) { }
 
   public close(): void {
     this.dialogRef.close();

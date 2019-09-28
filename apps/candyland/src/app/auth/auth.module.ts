@@ -6,13 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { LogoModule } from '../shared/components/logo/logo.module';
-import { RegistrationPageComponent } from './containers/registration-page/registration-page.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     LoginFormComponent,
-    RegistrationPageComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +23,6 @@ import { RegistrationPageComponent } from './containers/registration-page/regist
   ],
   exports: [
     LoginComponent,
-    RegistrationPageComponent
   ]
 })
 export class AuthModule { }

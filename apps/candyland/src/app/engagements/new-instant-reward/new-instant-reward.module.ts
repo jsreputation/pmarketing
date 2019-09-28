@@ -29,7 +29,7 @@ import { NewInstantRewardManagePageComponent } from './containers/new-instant-re
     NewInstantRewardManagePageComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     NewInstantRewardRoutingModule,
     ReactiveFormsModule,

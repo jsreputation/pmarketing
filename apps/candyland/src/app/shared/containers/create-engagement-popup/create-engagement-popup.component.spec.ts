@@ -20,8 +20,6 @@ import { EngagementsComponent } from '../../../engagements/containers/engagement
 import { TypeItemComponent } from './engagement-type/type-item/type-item.component';
 import { SurveyComponent } from './survey/survey.component';
 import { GamesComponent } from './games/games.component';
-import { StampComponent } from './stamp/stamp.component';
-import { InstantRewardComponent } from './instant-reward/instant-reward.component';
 import { GameComponent } from './games/game/game.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TableFiltersModule } from '../../table/table-filters/table-filters.module';
@@ -48,8 +46,6 @@ describe('CreateEngagementPopupComponent', () => {
         TypeItemComponent,
         SurveyComponent,
         GamesComponent,
-        StampComponent,
-        InstantRewardComponent,
         GameComponent
       ],
       imports: [
@@ -84,11 +80,11 @@ describe('CreateEngagementPopupComponent', () => {
             getGamesTree: () => of([]),
             getGameNumberGifts: () => of([]),
           }
-      }
+        }
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
