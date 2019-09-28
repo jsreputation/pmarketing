@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
 
 @Component({
@@ -52,19 +52,28 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
           this.getRewards(campaign.rewardsList)
         )),
+        tap(([campaign, engagement, rewardsList]) => {
+          console.log(campaign);
+          console.log(engagement);
+          console.log(rewardsList);
+        }),
         map(([campaign, engagement, rewardsList]) => ({
           ...campaign,
           template: engagement,
           rewardsList
         }))
-      ).subscribe(campaign => {
-        this.campaign = campaign;
-        this.store.updateCampaign(this.campaign);
-      });
+      ).subscribe(
+        campaign => {
+          console.log(campaign);
+          this.campaign = campaign;
+          this.store.updateCampaign(this.campaign);
+        },
+        (err) => console.log(err)
+      );
   }
 
   private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
-    if (!rewardsList) {
+    if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
     return combineLatest(...rewardsList.map(
