@@ -50,7 +50,7 @@ export class MerchantsService implements ITableService {
     return this.merchantHttpService.createMerchantBranch({ data: sendData });
   }
 
-  private updateMerchantBranch(id: string, data: any): Observable<any> {
+  public updateMerchantBranch(id: string, data: any): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
     sendData.id = data.id;
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });

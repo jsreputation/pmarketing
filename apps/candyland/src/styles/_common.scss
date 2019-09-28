@@ -248,3 +248,11 @@ h1, h2, h3, h4, h5, p {
   width: 1px !important;
   white-space: nowrap !important;
 }
+
+.linkable {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
