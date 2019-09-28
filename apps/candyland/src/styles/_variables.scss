@@ -162,3 +162,51 @@ $base-font-size: 1.4rem;
   line-height: 1.6rem;
   letter-spacing: 0.15rem;
 }
+
+//Check Select Mixin
+@mixin check-select {
+  position: relative;
+  border: 2px solid transparent;
+  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  }
+
+  &::before {
+    height: 4.2rem;
+    width: 4.2rem;
+    top: -1px;
+    right: -1px;
+    background: $primary-color;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    width: ($horizontal-padding * 0.5);
+    height: ($horizontal-padding * 0.5);
+    top: ($horizontal-padding * 0.125);
+    right: ($horizontal-padding * 0.125);
+    mask: url("/assets/images/icons/check.svg");
+    mask-repeat: no-repeat;
+    background-position: center;
+    background-color: $white;
+    z-index: 2;
+  }
+
+  &.active {
+    border-color: $primary-color;
+    &::before,
+    &::after {
+      opacity: 1;
+    }
+  }
+}
