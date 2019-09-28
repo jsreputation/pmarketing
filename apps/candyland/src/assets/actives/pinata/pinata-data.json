@@ -4,8 +4,8 @@
       "id": 1,
       "type": "state1",
       "title": "icon",
-      "img": "assets/images/pinata/pinata1.png",
-      "fullImg": "assets/images/pinata/full_pinata_1.png",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/mini_pinata_1.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/full_pinata_1.png",
       "format": ".png",
       "active": "false"
     },
@@ -13,8 +13,8 @@
       "id": 2,
       "type": "state2",
       "title": "icon",
-      "img": "assets/images/pinata/pinata2.png",
-      "fullImg": "assets/images/pinata/full_pinata_2.png",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/mini_pinata_2.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/full_pinata_2.png",
       "format": ".png",
       "active": "false"
     },
@@ -22,8 +22,8 @@
       "id": 3,
       "type": "state3",
       "title": "icon",
-      "img": "assets/images/pinata/pinata3.png",
-      "fullImg": "assets/images/pinata/full_pinata_3.png",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/mini_pinata_3.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/full_pinata_3.png",
       "format": ".png",
       "active": "false"
     }
@@ -33,8 +33,8 @@
       "id": 1,
       "type": "bg1",
       "title": "icon",
-      "img": "assets/images/pinata/bg1.png",
-      "fullImg": "assets/images/pinata/full_bg_1.jpg",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-7.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_7.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -42,8 +42,8 @@
       "id": 2,
       "type": "bg2",
       "title": "icon",
-      "img": "assets/images/pinata/bg2.png",
-      "fullImg": "assets/images/pinata/full_bg_2.jpg",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-8.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_8.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -51,8 +51,8 @@
       "id": 3,
       "type": "bg3",
       "title": "icon",
-      "img": "assets/images/pinata/bg3.png",
-      "fullImg": "assets/images/pinata/full_bg_3.jpg",
+      "img": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/stamp-bg-9.png",
+      "fullImg": "https://cdn.uat.whistler.perxtech.io/dev1/global/assets/background/full_bg_9.jpg",
       "format": ".png",
       "active": "false"
     }
