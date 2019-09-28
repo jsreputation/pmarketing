@@ -4,7 +4,6 @@ import { GamesRoutingModule } from './games-routing.module';
 import { NewShakePageComponent } from './containers/new-shake-page/new-shake-page.component';
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
 import { GameComponent } from './containers/game/game.component';
-import { CreateShakeTreeComponent } from './components/create-shake-tree/create-shake-tree.component';
 import {
   MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSliderModule, MatTabsModule
 } from '@angular/material';
@@ -22,10 +21,9 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
     NewShakePageComponent,
     NewPinataPageComponent,
     GameComponent,
-    CreateShakeTreeComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     ReactiveFormsModule,
     GamesRoutingModule,

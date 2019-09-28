@@ -41,6 +41,7 @@ export class CampaignsHttpAdapter {
     const campaignLimits = data.includes && data.includes.limits;
     return {
       id: data.id,
+      name: campaignData.name,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
