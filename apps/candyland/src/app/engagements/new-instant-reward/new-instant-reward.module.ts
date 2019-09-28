@@ -6,9 +6,7 @@ import { NewInstantRewardComponent } from './containers/new-instant-reward/new-i
 import {
   NewInstantRewardAppearancePageComponent
 } from './containers/new-instant-reward-appearance-page/new-instant-reward-appearance-page.component';
-import {
-  NewInstantRewardRewardsPageComponent
-} from './containers/new-instant-reward-rewards-page/new-instant-reward-rewards-page.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
@@ -35,7 +33,6 @@ import { ConfirmModalModule } from '@cl-shared';
   declarations: [
     NewInstantRewardComponent,
     NewInstantRewardAppearancePageComponent,
-    NewInstantRewardRewardsPageComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),

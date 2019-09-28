@@ -28,7 +28,7 @@ export class CreateEngagementPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateEngagementPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private engagementsService: EngagementsService,
-    private router: Router) {}
+    private router: Router) { }
 
   public close(): void {
     this.dialogRef.close();
@@ -41,7 +41,7 @@ export class CreateEngagementPopupComponent implements OnInit {
 
     switch (this.selectedType.type) {
       case EngagementType.stamp:
-        this.router.navigateByUrl('/engagements/new-stamp/settings');
+        this.router.navigateByUrl('/engagements/new-stamp');
         break;
       case EngagementType.instantReward:
         this.router.navigateByUrl('/engagements/new-instant-reward/appearance');

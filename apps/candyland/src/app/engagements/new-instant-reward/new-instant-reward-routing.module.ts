@@ -4,12 +4,9 @@ import { NewInstantRewardComponent } from './containers/new-instant-reward/new-i
 import {
   NewInstantRewardAppearancePageComponent
 } from './containers/new-instant-reward-appearance-page/new-instant-reward-appearance-page.component';
-import {
-  NewInstantRewardRewardsPageComponent
-} from './containers/new-instant-reward-rewards-page/new-instant-reward-rewards-page.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'appearance'},
+  { path: '', pathMatch: 'full', redirectTo: 'appearance' },
   {
     path: '',
     component: NewInstantRewardComponent,
@@ -17,11 +14,7 @@ const routes: Routes = [
       {
         path: 'appearance',
         component: NewInstantRewardAppearancePageComponent
-      },
-      {
-        path: 'rewards',
-        component: NewInstantRewardRewardsPageComponent
-      },
+      }
     ]
   }
 ];

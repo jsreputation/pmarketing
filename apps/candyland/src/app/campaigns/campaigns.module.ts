@@ -7,8 +7,6 @@ import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
-import { NewAudiencePageComponent } from './containers/new-audience-page/new-audience-page.component';
-import { NewChannelPageComponent } from './containers/new-channel-page/new-channel-page.component';
 import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
 import { NewCampaignDonePopupComponent } from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import { CampaignsComponent } from './containers/campaigns/campaigns.component';
@@ -91,8 +89,6 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     CampaignsListComponent,
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,
-    NewAudiencePageComponent,
-    NewChannelPageComponent,
     NewCampaignReviewPageComponent,
     NewCampaignDonePopupComponent,
     CampaignsComponent,
@@ -155,7 +151,7 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     PipesModule,
     SimpleMobileViewModule,
     PerxSurveyModule,
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     GameModule,
     PuzzlesModule,
     PerxRewardsModule,
