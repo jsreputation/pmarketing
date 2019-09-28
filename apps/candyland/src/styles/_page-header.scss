@@ -5,6 +5,7 @@
   @include mat-elevation(4);
 
   display: flex;
+  width: 100%;
   min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -15,8 +16,6 @@
   top: 0;
   z-index: 101;
   background: $white;
-  min-height: $header-height-base;
-  width: 100%;
 
   .pagetitle-input {
     @include typo-h5;
