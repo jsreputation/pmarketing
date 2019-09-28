@@ -33,9 +33,13 @@
         <mat-error *ngIf="signUpForm.get('password').hasError('required')">
           Pin Code is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="signUpForm.get('password').hasError('minlength') ||
+                          signUpForm.get('password').hasError('maxlength')">
+          Pin Code should be 4 characters long
+        </mat-error>
       </mat-form-field>
       <div class="checkbox-container">
-        <mat-checkbox></mat-checkbox>
+        <mat-checkbox formControlName="accept_terms"></mat-checkbox>
         <span>
           I have read and agree to the Terms and Privacy Policy and to receive email newsletters from PLUS! Rewards.
         </span>
