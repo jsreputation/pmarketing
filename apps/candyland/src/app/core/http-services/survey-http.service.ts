@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { GeneralStaticDataService } from '@perx/core';
-import { IJsonApiItemPayload } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -36,15 +35,15 @@ export class SurveyHttpService {
     return this.http.get<any>('assets/actives/survey/survey-data.json');
   }
 
-  public getSurvey(id: string): Observable<any> {
-    return this.http.get<IJsonApiItemPayload<any>>(ApiConfig.engagementsPath + '/survey/' + id);
+  public getSurvey(id: string): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: any): Observable<IJsonApiItemPayload<any>> {
-    return this.http.post<IJsonApiItemPayload<any>>(ApiConfig.engagementsPath + '/', data);
+  public createSurvey(data: any): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: any): Observable<any> {
-    return this.http.patch<any>(ApiConfig.basePath + '/survey/engagements/' + id, data);
+  public updateSurvey(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 }

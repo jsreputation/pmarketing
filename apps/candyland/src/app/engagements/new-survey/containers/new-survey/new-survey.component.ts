@@ -72,7 +72,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
               private availableNewEngagementService: AvailableNewEngagementService,
               private surveyService: SurveyService, private route: ActivatedRoute,
               private router: Router, private routingState: RoutingStateService,
-              private cdr: ChangeDetectorRef, private settingsService: SettingsService) {
+              private cd: ChangeDetectorRef, private settingsService: SettingsService) {
   }
 
   // tslint:disable
@@ -106,7 +106,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
         const patchData = question || this.getDefaultValue(surveyData);
 
         this.patchForm(patchData);
-        this.cdr.detectChanges();
+        this.cd.detectChanges();
       });
   }
 
@@ -229,7 +229,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(500), untilDestroyed(this))
       .subscribe((val) => {
         this.questionData$.next({questions: [val.questions[0]]});
-        this.cdr.detectChanges();
+        this.cd.detectChanges();
       });
   }
 
@@ -237,7 +237,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.cdr.detectChanges();
+        this.cd.detectChanges();
       });
   }
 

@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewSurveyComponent } from './containers/new-survey/new-survey.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'questions' },
   {
     path: '',
     component: NewSurveyComponent,

@@ -54,9 +54,9 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public lock: boolean;
 
   public onChange: any = () => {
-  };
+  }
   public onTouch: any = () => {
-  };
+  }
 
   public ngOnInit(): void {
     this.createDefaultControl();

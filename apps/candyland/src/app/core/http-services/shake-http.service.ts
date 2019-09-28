@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class ShakeHttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getData(): Observable<{
     gameNumberGift: IGameGifts[],
@@ -25,15 +26,15 @@ export class ShakeHttpService {
     }>('assets/actives/shake-tree/data.json');
   }
 
-  public createShakeTree(data: any): Observable<any> {
-    return this.http.post(ApiConfig.engagementsPath + '/', data);
+  public createShakeTree(data: any): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateShakeTree(id: string, data: IResponseApi<any>): Observable<any> {
-    return this.http.patch<IResponseApi<any>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  public updateShakeTree(id: string, data: IResponseApi<any>): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id, data);
   }
 
-  public getShakeTree(id: string): Observable<any> {
-    return this.http.get(ApiConfig.engagementsPath + '/game/' + id);
+  public getShakeTree(id: string): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id);
   }
 }

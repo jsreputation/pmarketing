@@ -172,10 +172,12 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformInstantReward(data: IInstantRewardForm): any {
+  public static transformInstantReward(data: IInstantRewardForm): IEngagementApi {
     return {
-      type: 'engagements', attributes: {
-        type: 'instant_reward', title: data.name,
+      type: 'engagements',
+      attributes: {
+        type: 'instant_reward',
+        title: data.name,
         display_properties: {
           banner: data.banner,
           title: data.headlineMessage,
@@ -189,9 +191,10 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTheTree(data: any): any {
+  public static transformShakeTheTree(data: any): IEngagementApi {
     return {
-      type: 'engagements', attributes: {
+      type: 'engagements',
+      attributes: {
         type: 'game',
         title: data.name,
         description: 'Spin and win',
@@ -210,7 +213,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformPinata(data: any): any {
+  public static transformPinata(data: any): IEngagementApi {
     return {
       type: 'engagements', attributes: {
         type: 'game',
@@ -230,7 +233,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformStamp(data: any): any {
+  public static transformStamp(data: any): IEngagementApi {
     return {
       type: 'engagements', attributes: {
         type: 'stamps',
@@ -253,7 +256,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformStampForm(data: any): any {
+  public static transformStampForm(data: IEngagementApi): any {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -270,7 +273,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformRewardForm(data: any): any {
+  public static transformRewardForm(data: IEngagementApi): any {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -282,7 +285,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTreeForm(data: any): any {
+  public static transformShakeTreeForm(data: IEngagementApi): any {
     return {
       name: data.attributes.title,
       gameType: data.attributes.game_type,
@@ -296,8 +299,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformPinataForm(data: any): any {
-    console.log(data);
+  public static transformPinataForm(data: IEngagementApi): any {
     return {
       id: data.id,
       type: data.type,

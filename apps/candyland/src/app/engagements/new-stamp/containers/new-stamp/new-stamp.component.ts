@@ -103,7 +103,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
     combineLatest([this.getStampData(), this.handleRouteParams()])
       .subscribe(
         ([previewData, stamp]) => {
-          console.log('Stamp', previewData, stamp);
           this.stampData = previewData;
           this.stampSlotNumbers = this.allStampSlotNumbers = previewData.slotNumber;
           const patchData = stamp || this.getDefaultValue(previewData);

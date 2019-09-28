@@ -9,7 +9,8 @@ import { map } from 'rxjs/operators';
 })
 export class StampsService {
 
-  constructor(private stampHttpService: StampHttpService) { }
+  constructor(private stampHttpService: StampHttpService) {
+  }
 
   public getStampsData(): Observable<{
     number: CommonSelect[],
@@ -35,7 +36,7 @@ export class StampsService {
     return this.stampHttpService.createStamp({data: sentData});
   }
 
-  public updateStamp(id: string, data: any): Observable<IResponseApi<any>> {
+  public updateStamp(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformStamp(data);
     sendData.id = id;
     return this.stampHttpService.updateStamp(id, {data: sendData});

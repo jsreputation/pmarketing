@@ -25,12 +25,12 @@ export class InstantRewardsService {
     );
   }
 
-  public createRewardGame(data: IInstantRewardForm): Observable<any> {
+  public createRewardGame(data: IInstantRewardForm): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformInstantReward(data);
     return this.instantRewardsHttpService.createRewardGame({data: sendData});
   }
 
-  public updateInstantReward(id: string, data: any): Observable<IResponseApi<any>> {
+  public updateInstantReward(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformInstantReward(data);
     sendData.id = id;
     return this.instantRewardsHttpService.updateInstantReward(id, {data: sendData});

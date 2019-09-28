@@ -24,12 +24,12 @@ export class PinataService {
     );
   }
 
-  public createPinata(data: any): any {
+  public createPinata(data: any): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformPinata(data);
     return this.pinataHttpService.createPinata({ data: sendData });
   }
 
-  public updatePinata(id: string, data: any): Observable<IResponseApi<any>> {
+  public updatePinata(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformPinata(data);
     sendData.id = id;
     return this.pinataHttpService.updatePinata(id, {data: sendData});

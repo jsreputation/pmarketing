@@ -91,7 +91,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       .subscribe(
         ([previewData, shake]) => {
           this.shakeTreeData = previewData;
-          console.log('shake', previewData, shake);
           const patchData = shake || this.getDefaultValue(previewData);
           this.form.patchValue(patchData);
           this.cd.detectChanges();

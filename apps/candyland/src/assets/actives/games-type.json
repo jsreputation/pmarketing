@@ -3,14 +3,14 @@
     "id": 2,
     "type": "shake",
     "title": "Shake the tree",
-    "img": "assets/images/games-type/shakeTheTree.png",
+    "img": "assets/images/games/shake.png",
     "active": "false"
   },
   {
     "id": 3,
-    "type": "pinata",
+    "type": "tap",
     "title": "Hit the pinata",
-    "img": "assets/images/games-type/hitThePinata.png",
+    "img": "assets/images/games/tap.png",
     "active": "false"
   }
 ]

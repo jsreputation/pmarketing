@@ -71,7 +71,6 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     combineLatest([this.getPinataData(), this.handleRouteParams()])
       .subscribe(
         ([previewData, pinata]) => {
-          console.log(pinata.gameType);
           this.pinataData = previewData;
           const patchData = pinata || this.getDefaultValue(previewData);
           this.form.patchValue(patchData);
@@ -134,7 +133,9 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)
       ]],
       pinata: [null, [Validators.required]],
-      background: [null, [Validators.required]],
+      background: [null, [
+        // Validators.required
+      ]],
       buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
@@ -177,7 +178,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         }
         return of(null);
       }),
-      // tap(pinata => this.checkGameType(pinata))
+      tap(pinata => this.checkGameType(pinata))
     );
   }
 

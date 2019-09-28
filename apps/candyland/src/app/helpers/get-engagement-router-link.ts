@@ -2,7 +2,6 @@ import { GamesRouterLink } from './games-router-link.enum';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 
 export function getEngagementRouterLink(engagementType: string, gameType?: string): string {
-  console.log(engagementType, gameType);
 
   let path: string;
 

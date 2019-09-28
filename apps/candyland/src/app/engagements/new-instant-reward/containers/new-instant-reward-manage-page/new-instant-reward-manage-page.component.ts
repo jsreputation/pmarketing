@@ -74,7 +74,6 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
     combineLatest([this.getRewardData(), this.handleRouteParams()])
       .subscribe(
         ([previewData, reward]) => {
-          console.log('result', previewData, reward);
           const patchData = reward || this.getDefaultValue(previewData);
           this.form.patchValue(patchData);
           this.cd.detectChanges();
