@@ -108,8 +108,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     });
   }
   public initRewardsList(): void {
-    const possibleOutcomes = this.campaignDetail.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
     this.rewards.reset();
+    const possibleOutcomes = this.campaignDetail.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
     );
