@@ -14,16 +14,41 @@ $fluid-cell-4: 15% !important;
 $fluid-cell-5: 18% !important;
 $fluid-cell-6: 21% !important;
 
+@media (max-width: $lg-width) {
+  .table-card .table {
+    display: block;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+}
+
 .table {
   width: 100%;
 
   &-card {
-    @include mat-elevation(1);
+    position: relative;
 
-    border-radius: $border-radius-lg;
-    overflow-x: auto;
-    overflow-y: hidden;
-    background: $white;
+    &::before {
+      @include mat-elevation(1);
+
+      content: "";
+      border-radius: $border-radius-lg;
+      border-radius: $border-radius-lg;
+      background: $white;
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    .table,
+    .mat-paginator {
+      background: none;
+    }
   }
 
   &-row {
