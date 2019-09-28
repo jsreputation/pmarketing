@@ -57,7 +57,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       let request: Observable<any>;
       const form: IRewardEntityForm = this.form.value;
-      form.rewardInfo.organizationId = this.selectedMerchant !== null ? this.selectedMerchant.id : null;
+      form.rewardInfo.organizationId = this.selectedMerchant && this.selectedMerchant !== null ? this.selectedMerchant.id : null;
       if (this.id) {
         request = this.rewardsService.updateReward(this.id, form);
       } else {
