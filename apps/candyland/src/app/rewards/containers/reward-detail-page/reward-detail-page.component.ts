@@ -6,8 +6,9 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import { RewardsService } from '@cl-core/services';
+import { RewardsService, MerchantsService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
+import { of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -34,6 +35,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   constructor(
     private rewardsService: RewardsService,
     private vouchersService: VouchersService,
+    private merchantsService: MerchantsService,
     private router: Router,
     private route: ActivatedRoute,
     public cd: ChangeDetectorRef,
@@ -82,10 +84,13 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     );
     $id.subscribe(id => this.id = id);
     $id
-      .pipe(switchMap(id => this.rewardsService.getRewardToForm(id)))
-      .subscribe(
-        (reward: IRewardEntityForm) => {
+      .pipe(
+        switchMap(id => this.rewardsService.getRewardToForm(id)),
+        switchMap(reward => combineLatest(of(reward), this.merchantsService.getMerchant(reward.rewardInfo.organizationId))),
+      ).subscribe(
+        ([reward, merchant]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
+          this.data.merchantInfo = merchant;
           this.cd.detectChanges();
         },
         (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
