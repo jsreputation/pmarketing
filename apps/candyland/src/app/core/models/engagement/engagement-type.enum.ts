@@ -13,3 +13,11 @@ export enum EngagementTypeFromAPIMapping {
   loyalty = 'stamps'
 }
 
+export enum EngagementTypeAPIMapping {
+  survey = 'survey',
+  game = 'game',
+  instant_reward = 'instant_outcome',
+  stamps = 'loyalty'
+}
+
+
