@@ -57,9 +57,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('secondaryColor');
   }
 
-  // public get logoType(): AbstractControl {
-  //   return this.formBranding.get('logoType');
-  // }
+  public get logoType(): AbstractControl {
+    return this.formBranding.get('logoType');
+  }
 
   public get logo(): AbstractControl {
     return this.formBranding.get('logo');

@@ -84,7 +84,7 @@
               <span>Image Logo</span>
           </p>
       </div>
-      <div class="flex" *ngIf="logoType.value === 'image'">
+      <div class="flex">
         <div class="logo-header-wrap section-margin-t">
           <cl-upload-graphic classList="stretch"
                              placeholder="Recommended size: 250px by 50px"
@@ -112,7 +112,7 @@
                     <mat-select-trigger>
                       <div class="select-color">
                         <div class="select-color-preview"
-                             [ngStyle]="{'background-color': button.value?.color}"
+                             [ngStyle]="{'background-color': button_background_color}"
                         >
                         </div>
                         <p class="select-color-text">
@@ -179,7 +179,7 @@
       <div class="mobile-preview-btn-wrap mobile-btn-block">
         <button class="mobile-preview-btn"
                 [ngStyle]="{
-                backgroundColor: button.value.color,
+                backgroundColor: button_background_color,
                 'font-family': font.value
                 }"
         >
@@ -198,9 +198,9 @@
       <div class="mobile-preview-btn-wrap mobile-btn-block">
         <button class="mobile-preview-btn"
                 [ngStyle]="{
-                backgroundColor: button_background_color.value.color,
+                backgroundColor: button_background_color,
                 'font-family': font.value,
-                color: button_text_color.value.color
+                color: button_text_color
                 }"
         >
           {{'button text'}}
@@ -229,9 +229,9 @@
       <div class="mobile-preview-btn-wrap mobile-btn-block">
         <button class="mobile-preview-btn"
                 [ngStyle]="{
-                backgroundColor:  button_background_color.value.color,
+                backgroundColor:  button_background_color,
                 'font-family': font.value,
-                color: button_text_color.value.color
+                color: button_text_color
                 }"
         >
           {{'button text'}}
