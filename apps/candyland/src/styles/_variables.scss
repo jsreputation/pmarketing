@@ -99,6 +99,13 @@ $base-font-size: 1.4rem;
 
 //Subtitles
 @mixin typo-subtitle1 {
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+}
+
+@mixin typo-subtitle1-alt {
   font-weight: 500; //changed
   font-size: 1.6rem;
   line-height: 2.4rem;

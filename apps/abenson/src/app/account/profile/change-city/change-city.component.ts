@@ -7,8 +7,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ICustomProperties, ProfileService } from '@perx/core';
 import { Location } from '@angular/common';
+
+import {
+  ICustomProperties,
+  ProfileService,
+} from '@perx/core';
 
 @Component({
   selector: 'app-change-city',
