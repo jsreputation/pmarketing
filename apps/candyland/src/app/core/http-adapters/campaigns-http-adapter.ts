@@ -25,6 +25,7 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       id: data.id,
+      name: campaignData.name,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
