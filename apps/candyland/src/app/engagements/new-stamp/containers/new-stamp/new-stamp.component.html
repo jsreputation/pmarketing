@@ -1,5 +1,4 @@
-<router-outlet></router-outlet>
-<section class="stamp-wrap" *ngIf="stampData$ | async as stampData" [formGroup]="formStamp">
+<section class="stamp-wrap" *ngIf="stampData" [formGroup]="formStamp">
   <div class="page-header full-with">
     <div class="game-title-wrap">
       <div class="control-input name-control name-control-title">
@@ -12,17 +11,12 @@
       </div>
     </div>
     <div class="game-actions">
-      <cl-button [classList]="'secondary'"
-                 class="stamp-btn-cancel"
-                 (click)="comeBack()"
-      >
+      <cl-button [classList]="'secondary'" class="stamp-btn-cancel" (click)="comeBack()">
         <span>
           Cancel
         </span>
       </cl-button>
-      <cl-button [classList]="'primary'"
-                 (click)="save()"
-      >
+      <cl-button [classList]="'primary'" (click)="save()">
         <span>
           Save
         </span>
@@ -67,13 +61,11 @@
         </div>
         <div class="game-form">
           <div class="game-number">
-            <div class="control-input"
-                 *ngIf="stampData.number"
-            >
+            <div class="control-input" *ngIf="stampData?.number">
               <mat-form-field class="game-stamp-select">
                 <mat-label>Total number of stamps on a card</mat-label>
                 <mat-select formControlName="stampsNumber">
-                  <mat-option *ngFor="let stamp of stampData.number" [value]="stamp.value">
+                  <mat-option *ngFor="let stamp of stampData?.number" [value]="stamp.value">
                     {{stamp.viewValue}}
                   </mat-option>
                 </mat-select>
@@ -81,14 +73,12 @@
             </div>
           </div>
           <div class="game-number game-number-slot">
-            <div class="control-input"
-                 *ngIf="stampSlotNumbers"
-            >
+            <div class="control-input" *ngIf="stampSlotNumbers">
               <mat-form-field class="game-stamp-select">
                 <mat-label>Reward slot</mat-label>
                 <mat-select formControlName="stampsSlotNumber" [multiple]="true">
-                  <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot.value">
-                    {{stampSlot.viewValue}}
+                  <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot?.value">
+                    {{stampSlot?.viewValue}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -100,12 +90,8 @@
               Pre-stamp
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.preStamp"
-                formControlName="preStamp"
-                class="game-selected-graphic"
-                [graphicList]="stampData.preStamp"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.preStamp" formControlName="preStamp"
+                class="game-selected-graphic" [graphicList]="stampData?.preStamp">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -118,12 +104,8 @@
               </cl-info-hint>
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.rewardPreStamp"
-                formControlName="rewardPreStamps"
-                class="game-selected-graphic"
-                [graphicList]="stampData.rewardPreStamp"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp" formControlName="rewardPreStamps"
+                class="game-selected-graphic" [graphicList]="stampData?.rewardPreStamp">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -132,12 +114,8 @@
               Post-stamp
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.stampsPost"
-                formControlName="postStamps"
-                class="game-selected-graphic"
-                [graphicList]="stampData.stampsPost"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.stampsPost" formControlName="postStamps"
+                class="game-selected-graphic" [graphicList]="stampData?.stampsPost">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -150,12 +128,8 @@
               </cl-info-hint>
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.rewardPost"
-                formControlName="rewardPostStamps"
-                class="game-selected-graphic"
-                [graphicList]="stampData.rewardPost"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.rewardPost" formControlName="rewardPostStamps"
+                class="game-selected-graphic" [graphicList]="stampData?.rewardPost">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -164,12 +138,8 @@
               Card Background
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.cardBackground"
-                formControlName="cardBackground"
-                class="game-selected-graphic"
-                [graphicList]="stampData.cardBackground"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.cardBackground" formControlName="cardBackground"
+                class="game-selected-graphic" [graphicList]="stampData?.cardBackground">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -179,12 +149,8 @@
               Background
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="stampData.backgroundStamp"
-                formControlName="background"
-                class="game-selected-graphic"
-                [graphicList]="stampData.backgroundStamp"
-              >
+              <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp" formControlName="background"
+                class="game-selected-graphic" [graphicList]="stampData?.backgroundStamp">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -212,17 +178,12 @@
 
     <cl-game-mobile-preview-stamp class="tabs-component">
       <cl-simple-mobile-view class="firs-tab"
-                             [background]="getImgLink(background, 'assets/images/background/background1.png')"
-                             [mobileImageClass]="'mobile-non-header'"
-                             [headerColor]="tenantSettings?.headerColor"
-                             [logo]="tenantSettings?.logo"
-                             [logoType]="tenantSettings?.logoType"
-                             [fontFamily]="tenantSettings?.font"
-      >
+        [background]="getImgLink(background, 'assets/images/background/background1.png')"
+        [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+        [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font">
         <div class="plugin-block">
           <div class="mobile-preview-card"
-               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
-          >
+            [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
             <div class="mobile-preview-header-nested">
               <p class="mobile-preview-headline">
                 {{headlineMessage.value}}
@@ -232,41 +193,33 @@
               </p>
             </div>
             <!--use change background image-->
-            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value"
-                                             [stamps]="stamps"
-                                             [rewards]="stampsSlotNumberData"
-                                             [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                                             [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                                             [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-                                             [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
+            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
+              [rewards]="stampsSlotNumberData"
+              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+              [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+              [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
             </perx-core-puzzle-collect-stamps>
           </div>
         </div>
 
         <div class="mobile-preview-btn-wrap mobile-btn-block">
-          <button class="mobile-preview-btn"
-                  [ngStyle]="{
+          <button class="mobile-preview-btn" [ngStyle]="{
                     backgroundColor: tenantSettings?.buttonColor,
                     'font-family': tenantSettings?.font
-                  }"
-          >
+                  }">
             {{buttonText.value}}
           </button>
         </div>
       </cl-simple-mobile-view>
 
       <cl-simple-mobile-view class="second-tab"
-                             [background]="getImgLink(background, 'assets/images/background/background1.png')"
-                             [mobileImageClass]="'mobile-non-header'"
-                             [headerColor]="tenantSettings?.headerColor"
-                             [logo]="tenantSettings?.logo"
-                             [logoType]="tenantSettings?.logoType"
-                             [fontFamily]="tenantSettings?.font"
-      >
+        [background]="getImgLink(background, 'assets/images/background/background1.png')"
+        [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+        [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font">
         <div class="plugin-block">
           <div class="mobile-preview-card"
-               [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}"
-          >
+            [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
             <div class="mobile-preview-header-nested">
               <p class="mobile-preview-headline">
                 {{headlineMessage.value}}
@@ -275,24 +228,21 @@
                 {{subHeadlineMessage.value}}
               </p>
             </div>
-            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value"
-                                             [stamps]="stamps"
-                                             [rewards]="stampsSlotNumberData"
-                                             [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                                             [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
-                                             [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-                                             [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
+            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
+              [rewards]="stampsSlotNumberData"
+              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+              [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
+              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+              [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
             </perx-core-puzzle-collect-stamps>
           </div>
         </div>
 
         <div class="mobile-preview-btn-wrap mobile-btn-block">
-          <button class="mobile-preview-btn"
-                  [ngStyle]="{
+          <button class="mobile-preview-btn" [ngStyle]="{
                     backgroundColor: tenantSettings?.buttonColor,
                     'font-family': tenantSettings?.font
-                  }"
-          >
+                  }">
             {{buttonText.value}}
           </button>
         </div>
