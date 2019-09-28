@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { UploadFileService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -37,7 +38,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   constructor(private sanitizer: DomSanitizer,
-              private cd: ChangeDetectorRef) {}
+              private cd: ChangeDetectorRef,
+              private uploadFileService: UploadFileService) {}
 
   public preview(files): void {
     this.message = null;
@@ -50,16 +52,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
       this.message = 'Only .JPG or .PNG are supported.';
       return;
     }
-
-    const reader = new FileReader();
     this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = () => {
-      this.imgURL = this.sanitizeUrl(reader.result);
-      this.loadedImg = true;
-      this.setSelectedGraphic(this.imgURL.changingThisBreaksApplicationSecurity);
-      this.cd.markForCheck();
-    };
+    this.uploadImage(files[0]);
   }
 
   public sanitizeUrl(data): SafeUrl {
@@ -95,6 +89,22 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.setGraphic = obj;
+  }
+
+  private uploadImage(file: File): void {
+    this.uploadFileService.uploadFile(file)
+      .subscribe((res: IUploadedFile) => {
+        this.imgURL = res.url;
+        this.loadedImg = true;
+        this.setSelectedGraphic(res.url);
+        this.message = null;
+        this.cd.markForCheck();
+      }, err => {
+        console.warn(err);
+        this.loadedImg = false;
+        this.message = 'Image haven\'t loaded successfully!';
+        this.cd.markForCheck();
+      });
   }
 
 }
