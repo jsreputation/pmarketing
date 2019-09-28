@@ -2,12 +2,10 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  OnChanges,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
   forwardRef,
-  SimpleChanges
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,6 +22,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { noop, combineLatest } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
+import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -38,9 +37,8 @@ import { RewardsService } from '@cl-core/services/rewards.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
-  @Input() public campaignDetail;
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: [false],
     rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
@@ -66,8 +64,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private fb: FormBuilder,
+    private store: CampaignCreationStoreService,
     private rewardsService: RewardsService
   ) {
+  }
+
+  public get campaign(): any {
+    return this.store.currentCampaign;
   }
 
   public ngOnInit(): void {
@@ -86,15 +89,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       });
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.campaignDetail) {
-      const currentCampaignDetail = changes.campaignDetail.currentValue;
-      if (currentCampaignDetail && currentCampaignDetail.possible_outcomes) {
-        this.initRewardsList();
-      }
-    }
-  }
-
   public ngOnDestroy(): void {
   }
 
@@ -109,7 +103,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
   public initRewardsList(): void {
     this.rewards.reset();
-    const possibleOutcomes = this.campaignDetail.possible_outcomes.map(data => this.rewardsService.getReward(data.result_id));
+    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.result_id));
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
     );

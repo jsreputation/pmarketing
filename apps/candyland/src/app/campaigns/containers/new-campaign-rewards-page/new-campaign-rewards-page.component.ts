@@ -13,7 +13,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public campaignDetail;
 
   public form: FormGroup;
   public defaultValue = {

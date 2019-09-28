@@ -17,7 +17,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public campaignDetail;
   public form: FormGroup;
   public dataSource = new MatTableDataSource<IEngagement>();
   public defaultSearchValue = null;
@@ -89,7 +88,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   private initSelectedTemplate(res: IEngagement[]): void {
     const engagementId = this.availableNewEngagementService.isAvailable ?
       this.availableNewEngagementService.newEngagement.id :
-      this.campaignDetail && this.campaignDetail.engagement_id.toString();
+      this.campaign && this.campaign.engagement_id.toString();
     if (engagementId) {
       const findTemplate = res.find(template => template.id === engagementId);
       this.template.patchValue(findTemplate);

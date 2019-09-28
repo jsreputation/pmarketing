@@ -16,7 +16,6 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public campaignDetail;
   public form: FormGroup;
 
   constructor(

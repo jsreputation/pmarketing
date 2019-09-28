@@ -3,7 +3,7 @@
     <!--Rewards-->
     <mat-card class="card">
       <ng-container *ngFor="let rewardGroup of rewardsList?.controls; let i = index">
-        <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')" [campaignDetail]="campaignDetail"
+        <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')"
           [title]="'Rewards for slot ' + rewardGroup.get('stampSlotNumber').value">
         </cl-new-campaign-rewards-form-group>
       </ng-container>

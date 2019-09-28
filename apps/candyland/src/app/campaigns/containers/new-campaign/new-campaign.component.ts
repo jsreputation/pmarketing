@@ -21,7 +21,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
   public campaign;
-  public campaignDetail;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
