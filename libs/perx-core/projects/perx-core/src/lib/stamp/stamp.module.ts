@@ -25,7 +25,7 @@ export function stampServiceFactory(http: HttpClient, config: Config, vouchersSe
     {
       provide: StampService,
       useFactory: stampServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, IVoucherService]
     }
   ]
 })
