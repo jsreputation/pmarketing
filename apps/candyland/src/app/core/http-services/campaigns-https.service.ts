@@ -16,7 +16,8 @@ export class CampaignsHttpsService {
   }
 
   public getCampaign(id: string): Observable<any> {
-    return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=limits,possible_outcomes`);
+    // return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=limits,possible_outcomes`);
+    return this.http.get(`${ApiConfig.campaignsPath}/${id}`);
   }
 
   public updateCampaign(id: number, data: any): Observable<IResponseApi<any>> {

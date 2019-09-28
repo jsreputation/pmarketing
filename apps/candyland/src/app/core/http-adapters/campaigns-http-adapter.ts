@@ -37,38 +37,38 @@ export class CampaignsHttpAdapter {
   public static transformAPIResponseToCampaign(data: any): any {
     console.log(data);
     const campaignData = data.data.attributes;
-    const campaignOutcomes = data.includes.possible_outcomes;
-    const campaignLimits = data.includes.limits;
+    const campaignOutcomes = data.includes && data.includes.possible_outcomes || [];
+    const campaignLimits = data.includes && data.includes.limits;
     return {
       id: data.id,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: moment(campaignData.start_date_time).format('l'),
+        startDate: new Date(campaignData.start_date_time),
         startTime: moment(campaignData.start_date_time).format('LT'),
-        endDate: moment(campaignData.end_date_time).format('l'),
+        endDate: new Date(campaignData.end_date_time),
         endTime: moment(campaignData.end_date_time).format('LT'),
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
       // TODO, Andrew, need API support for channel data
-      channel: {
-        type: campaignData.comm.event.channel,
-        message: campaignData.comm.template.content,
-        schedule: {
-          sendDate: moment(campaignData.comm.event.send_at).format('l'),
-          sendTime: moment(campaignData.comm.event.send_at).format('LT'),
-          enableRecurrence: false,
-          recurrence: { times: null, period: null, repeatOn: [] }
-        }
-      },
+      // channel: {
+      //   type: campaignData.comm.event.channel,
+      //   message: campaignData.comm.template.content,
+      //   schedule: {
+      //     sendDate: new Date(campaignData.comm.event.send_at),
+      //     sendTime: moment(campaignData.comm.event.send_at).format('LT'),
+      //     enableRecurrence: false,
+      //     recurrence: { times: null, period: null, repeatOn: [] }
+      //   }
+      // },
       audience: { type: 'none', file: null },
       template: {},
       rewardsList: campaignOutcomes,
       limits: {
-        time: campaignLimits.max_play_in_period,
-        duration: LimitsDurationFromAPIMapping[campaignLimits.period_unit]
+        time: campaignLimits && campaignLimits.max_play_in_period,
+        duration: campaignLimits && LimitsDurationFromAPIMapping[campaignLimits.period_unit]
       }
     };
   }
@@ -87,7 +87,7 @@ export class CampaignsHttpAdapter {
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
         status: "scheduled",
-        start_date_time: moment(data.campaignInfo.startDate + ' ' + data.campaignInfo.startTime).format(),
+        start_date_time: moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime).format(),
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select,
@@ -103,7 +103,7 @@ export class CampaignsHttpAdapter {
             content: data.channel.message
           },
           event: {
-            send_at: data.channel.schedule ? moment(data.channel.schedule.sendDate).format() : '',
+            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
             channel: data.channel.type
           }
         }
