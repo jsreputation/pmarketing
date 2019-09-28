@@ -1,5 +1,5 @@
-import { EngagementTypeAPIMapping } from '@cl-shared/containers/create-engagement-popup/shared/models/EngagementType';
 import * as moment from 'moment';
+import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 enum LimitsDurationToAPIMapping {
   day = 'days',
