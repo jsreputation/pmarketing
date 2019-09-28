@@ -7,7 +7,7 @@
           <cl-search-filter [control]="filter" placeholder="Search for engagements"></cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'attributes_type'; value: defaultTypeValue; let filter">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="half-block">
             <mat-select [formControl]="filter" placeholder="Filter by">
               <ng-container *ngFor="let option of typeFilterConfig">
                 <mat-option [value]="option.value">{{option.title | engagementType}}</mat-option>
