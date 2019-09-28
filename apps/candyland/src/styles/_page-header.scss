@@ -13,14 +13,10 @@
   padding: 0 $horizontal-padding;
   position: sticky;
   top: 0;
-  z-index: 99;
+  z-index: 101;
   background: $white;
+  min-height: $header-height-base;
   width: 100%;
-
-  &.full-with {
-    background: $white;
-    min-height: $header-height-base;
-  }
 
   .pagetitle-input {
     @include typo-h5;
