@@ -1,39 +1,38 @@
 @import '~@angular/material/theming';
 @import "variables";
 
-.link-overview {
-  font-size: 1.6rem;
-  color: $base-font-color;
-  text-decoration: none;
-  margin-top: 0.8rem;
-  display: flex;
-}
-
 .dashboard {
   &-welcome {
     margin-bottom: $vertical-padding;
+
+    .sub-title {
+      color: $secondary-font-color;
+      margin-top: 0.8rem;
+    }
   }
 
   &-title {
     @include typo-h6;
 
+    margin: $vertical-padding 0 ($vertical-padding * 0.75);
     color: $base-font-color;
-
-    &__indent {
-      margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
-    }
   }
 
-  &-content {
+  &-explore-cards {
+    display: grid;
+    grid-gap: ($horizontal-padding * 0.75);
+    grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+    margin: ($vertical-padding * 0.75) 0;
+  }
+
+  &-insights-card {
     @include mat-elevation(1);
 
-    min-width: 48rem;
-    border-radius: $border-radius;
+    border-radius: $border-radius-lg;
     background-color: $white;
     box-sizing: border-box;
 
     &-header {
-      //height: 6rem;
       border-bottom: 1px solid $border-color;
       display: flex;
       justify-content: space-between;
@@ -54,31 +53,4 @@
       }
     }
   }
-
-  &-group-bloc {
-    display: flex;
-    justify-content: space-between;
-    padding: 6rem 4rem 0;
-  }
-}
-
-.game-card {
-  margin: 0 ($horizontal-padding * 0.25) ($vertical-padding * 0.5);
-  flex: auto;
-  width: 0;
-  flex-wrap: wrap;
-
-  &-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    margin: ($vertical-padding * 0.75) (-($vertical-padding * 0.25)) 0;
-  }
-}
-
-.tabs-list-wrap {
-  width: 27rem;
-}
-
-.time-line-block {
-  flex: 1;
 }
