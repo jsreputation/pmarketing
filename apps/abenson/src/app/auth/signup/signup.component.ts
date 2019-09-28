@@ -28,20 +28,26 @@ export class SignUpComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      accept_terms: [false, Validators.required]
     });
   }
 
   public onSubmit(): void {
     const password: string = this.signUpForm.get('password').value;
+    const termsConditions = this.signUpForm.get('accept_terms').value as boolean;
+    if (!termsConditions) {
+      return;
+    }
 
     this.errorMessage = null;
     const profile = this.signUpForm.value;
+    delete profile.accept_terms;
     profile.password_confirmation = password;
 
     this.authService.signup(profile).subscribe(() => {
-      this.router.navigate(['validation']);
-    },
+        this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
+        },
       (e) => {
       console.log(e);
     });
