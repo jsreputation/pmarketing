@@ -1,95 +1,18 @@
 @import "variables";
 
 .invite-new-users {
-  &-content {
-    position: relative;
-    flex: 1;
-    padding: 0 $horizontal-padding;
-  }
-
-  &-top-row {
-    margin-bottom: $vertical-padding;
-  }
-
   &-section {
-    margin-bottom: 1.6rem;
-    padding: ($vertical-padding * 0.75) 2rem;
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
     border-radius: $border-radius;
-    background-color: $background-color;
+    background-color: $light-gray;
 
-    &.primary {
-      padding: 3.4rem 2rem;
-      background-color: $light-gray;
+    > * {
+      margin-bottom: ($horizontal-padding * 0.5);
     }
 
-    & > * {
-      margin-bottom: ($vertical-padding * 0.75);
-
-      &.invite-new-users-top-row {
-        margin: 0.8rem 0 1.2rem;
-      }
+    > *:last-child {
+      margin-bottom: 0;
     }
-  }
 
-  &-table-group {
-    display: flex;
-    flex-flow: row nowrap;
-
-    & > * {
-      width: 9rem;
-      padding: 0 1.2px;
-      text-align: center;
-    }
-  }
-
-  &-section > *:last-child {
-    margin-bottom: 0;
-  }
-
-  &-label {
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
-    color: $secondary-color;
-  }
-
-  .mat-horizontal-stepper-header-container {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 30rem;
-  }
-
-  .mat-horizontal-content-container {
-    overflow: hidden;
-    padding: 0;
-  }
-
-  .mat-tab-label {
-    height: 30px;
-    padding: 0 10px;
-    cursor: pointer;
-    box-sizing: border-box;
-    opacity: 0.6;
-    min-width: 100px;
-    text-align: left;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  .content-height {
-    height: 100%;
-    min-height: 50rem;
-  }
-
-  .tab-content-height {
-    height: 30rem;
-    padding-bottom: 0;
   }
 }
