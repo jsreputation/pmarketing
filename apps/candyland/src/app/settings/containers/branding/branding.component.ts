@@ -65,8 +65,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('logo');
   }
 
-  public get button(): AbstractControl {
-    return this.formBranding.get('button');
+  public get button_background_color(): AbstractControl {
+    return this.formBranding.get('button_background_color');
+  }
+
+  public get button_text_color(): AbstractControl {
+    return this.formBranding.get('button_text_color');
   }
 
   public get font(): AbstractControl {
@@ -92,10 +96,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
     },
     {
       labelView: 'Secondary Color', color: this.secondaryColor.value
-    }];
+    }
+  ];
     this.patchValue({
       headerNavbarColor: this.listColors[0],
-      button: this.listColors[0],
+      button_background_color: this.listColors[0],
     });
     this.subscribeChangeColors();
   }
@@ -121,6 +126,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .subscribe((val) => {
         this.listColors[1].color = val;
       });
+    this.button_text_color
+    .valueChanges
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((val) => {
+      this.button_text_color.value.color = val;
+    });
   }
 
   private getTenants(): void {
