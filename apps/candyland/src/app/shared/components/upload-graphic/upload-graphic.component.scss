@@ -4,7 +4,6 @@
 .upload {
   &-wrap {
     position: relative;
-
   }
 
   &-input {
@@ -59,7 +58,7 @@
 
   &-wrap:hover .upload-btn::before,
   &-wrap:focus .upload-btn::before {
-    opacity: 1;      
+    opacity: 1;
   }
 
   &-error {

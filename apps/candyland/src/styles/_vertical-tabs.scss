@@ -11,10 +11,6 @@
   margin-right: 0;
   margin-bottom: 0;
 
-  &.active {
-    @extend .active-item;
-  }
-
   &.shadow {
     box-shadow: 0 0.4rem 0.4rem 0 #d2d8e2;
   }
