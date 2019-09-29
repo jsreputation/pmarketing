@@ -2,24 +2,34 @@
 
 .type {
   &-item {
+    @include check-select;
+
+    border-radius: $border-radius-lg;
     cursor: pointer;
     position: relative;
-    width: 13.7rem;
-    height: 12.7rem;
-    background-color: $light-gray;
-    padding: ($vertical-padding / 2) ($horizontal-padding / 2);
+    width: ($horizontal-padding * 5);
+    height: ($vertical-padding * 5);
+    background-color: $lightest-gray;
+    padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: $border-radius-lg;
     box-sizing: border-box;
-    border: 1px solid transparent;
   }
 
-  &-title {
+  &-wrap-img {
+    margin: auto;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &-name {
     @include typo-body2;
 
-    color: $secondary-color;
+    color: $base-font-color;
     margin-top: auto;
     text-align: center;
   }

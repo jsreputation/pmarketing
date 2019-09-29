@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -20,6 +21,39 @@ export class CampaignsHttpAdapter {
     }
   }
 
+  public static transformAPIResponseToCampaign(data: any): any {
+    const campaignData = data.attributes;
+    return {
+      id: data.id,
+      name: campaignData.name,
+      engagement_id: campaignData.engagement_id,
+      engagement_type: campaignData.engagement_type,
+      campaignInfo: {
+        goal: campaignData.goal,
+        startDate: moment(campaignData.start_date_time).format('l'),
+        startTime: moment(campaignData.start_date_time).format('LT'),
+        endDate: moment(campaignData.end_date_time).format('l'),
+        endTime: moment(campaignData.end_date_time).format('LT'),
+        disabledEndDate: !campaignData.end_date_time,
+        labels: campaignData.labels
+      },
+      // TODO, Andrew, need API support for channel data
+      channel: {
+        type: campaignData.comm_channel,
+        message: null,
+        schedule: {
+          sendDate: null,
+          sendTime: null,
+          enableRecurrence: false,
+          recurrence: { times: null, period: null, repeatOn: [] }
+        }
+      },
+      audience: { type: 'none', file: null },
+      template: {},
+      rewardsList: campaignData.possible_outcomes,
+    };
+  }
+
   public static transformFromCampaign(data: any): any {
     return {
       type: "entities",
@@ -29,7 +63,7 @@ export class CampaignsHttpAdapter {
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
         // status: "draft",
-        start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
+        start_date_time: moment(data.campaignInfo.startDate + ' ' + data.campaignInfo.startTime).format(),
         end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select
@@ -50,7 +84,23 @@ export class CampaignsHttpAdapter {
         redemption_type: data.rewardInfo.redemptionType,
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
-        terms_conditions: data.rewardInfo.termsAndCondition
+        terms_conditions: data.rewardInfo.termsAndCondition,
+        display_properties: {
+          voucher_properties: {
+            code_type: data.vouchers.voucherCode.type,
+            code: data.vouchers.voucherCode.singleCode.code,
+            prefix: data.vouchers.voucherCode.uniqueGeneratedCode.prefix,
+            length: data.vouchers.voucherCode.uniqueGeneratedCode.length,
+            format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat,
+            validity: {
+              type: data.vouchers.voucherValidity.type,
+              start_date: data.vouchers.voucherValidity.period.startDate,
+              end_date: data.vouchers.voucherValidity.period.endDate,
+              times: data.vouchers.voucherValidity.issuanceDate.times,
+              duration: data.vouchers.voucherValidity.issuanceDate.duration
+            }
+          },
+        }
       }
     };
   }
@@ -64,7 +114,21 @@ export class CampaignsHttpAdapter {
         reward_type: data.rewardType,
         category: data.category,
         redemption_type: data.redemptionType,
-        cost_of_reward: data.current
+        cost_of_reward: data.current,
+        display_properties: {
+          voucher_properties: {
+            code_type: data.voucherInfo.type,
+            code: data.voucherInfo.code,
+            prefix: data.voucherInfo.prefix,
+            length: data.voucherInfo.length,
+            format_type: data.voucherInfo.codeFormat,
+            validity: {
+              type: data.voucherValidity.type,
+              start_date: data.voucherValidity.startDate,
+              end_date: data.voucherValidity.endDate
+            }
+          }
+        }
       }
     };
   }

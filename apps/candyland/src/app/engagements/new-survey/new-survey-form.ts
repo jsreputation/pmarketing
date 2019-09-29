@@ -1,12 +1,13 @@
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ISurvey, SurveyQuestionType } from '@perx/core';
+import { ControlsName } from '../../models/controls-name';
+import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 
 export class NewSurveyForm {
 
   public static getForm(): FormGroup {
     return new FormGroup({
       name: new FormControl(
-        'Survey Template',
+        null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]
       ),
       headlineMessage: new FormControl(
@@ -23,7 +24,7 @@ export class NewSurveyForm {
       ),
       questions: new FormArray([]),
       color: new FormControl(
-        'primary',
+        null,
         [Validators.required]
       ),
       cardBackground: new FormControl(
@@ -35,174 +36,19 @@ export class NewSurveyForm {
         [Validators.required]
       ),
       buttonText: new FormControl('start', [
-        Validators.required,
+        // Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
       ])
     });
   }
 
-  public static getDefaultValue(): ISurvey {
+  public static getDefaultValue(queryData: any): Partial<ISurveyForm> {
     return {
-      title: 'Please help us knowing you better',
-      questions: [
-        {
-          question: 'Which color you like?',
-          description: 'Please select',
-          id: '1',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.multipleChoice,
-            multiple: false,
-            choices: [
-              'blue',
-              'white',
-              'red'
-            ]
-          }
-        },
-        {
-          question: 'How can we reach you?',
-          description: 'No offence taken',
-          id: '9',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.pictureChoice,
-            multiple: true,
-            choices: [
-              {
-                img_url: 'https://picsum.photos/600/900',
-                text: 'The first'
-              },
-              {
-                img_url: 'https://picsum.photos/600/900',
-                text: 'The second'
-              },
-              {
-                img_url: 'https://picsum.photos/600/900',
-                text: 'The second'
-              },
-              {
-                img_url: 'https://picsum.photos/600/900',
-                text: 'The second'
-              }
-            ]
-          }
-        },
-        {
-          question: 'When were you born?',
-          description: 'It\'s between us',
-          id: '2',
-          required: true,
-          payload: {
-            duration: true,
-            type: SurveyQuestionType.date
-          }
-        },
-        {
-          question: 'How can we reach you?',
-          description: 'No offence taken',
-          id: '8',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.phone,
-            default_country_code: 'SG'
-          }
-        },
-        {
-          question: 'How likely are you to recommend our service?',
-          description: 'Please rate us',
-          id: '11',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.rating,
-            color: 'primary',
-            left_label: 'not much',
-            right_label: 'a lot',
-            scale: 6,
-            shape: 'circle'
-          }
-        },
-        {
-          question: 'Tell us more about us',
-          description: 'No offence taken',
-          id: '7',
-          required: true,
-          payload: {
-            type: SurveyQuestionType.questionGroup,
-            questions: [
-              {
-                question: 'What\'s your favorite color 1',
-                description: 'We love blue',
-                id: '7.1',
-                required: false,
-                payload: {
-                  type: 'select',
-                  choices: [
-                    'blue',
-                    'white',
-                    'red'
-                  ]
-                }
-              },
-              {
-                question: 'What\'s your favorite color 2',
-                description: 'We love blue',
-                id: '7.2',
-                required: true,
-                payload: {
-                  type: 'select',
-                  choices: [
-                    'blue',
-                    'white',
-                    'red'
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          question: 'From when to when was your first job?',
-          description: 'Compliance',
-          id: '3',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.date,
-            period: true
-          }
-        },
-        {
-          question: 'From when to when was your first job?',
-          description: 'Compliance',
-          id: '4',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.date,
-            period: true
-          }
-        },
-        {
-          question: 'Tell us more about you',
-          description: 'Be frank',
-          id: '5',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.longText,
-            'max-length': 20
-          }
-        },
-        {
-          question: 'Tell us more about us',
-          description: 'No offence taken',
-          id: '6',
-          required: false,
-          payload: {
-            type: SurveyQuestionType.longText
-          }
-        }
-      ]
+      name: 'Survey Template',
+      color: 'primary',
+      [ControlsName.background]: queryData.background[0],
+      [ControlsName.cardBackground]: queryData.cardBackground[0]
     };
   }
-
 }

@@ -2,8 +2,6 @@ import { environment } from '@cl-environments/environment';
 
 export class ApiConfig {
   public static basePath: string = environment.apiHost;
-  // public static basePath: string = environment.apiHost;
-  // public static basePath: string = 'http://708f54de.ngrok.io/';
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath = `${ApiConfig.basePath}/campaign/entities`;
@@ -16,8 +14,12 @@ export class ApiConfig {
   public static getAudiences = `${ApiConfig.baseAPIUserPath}/pools`;
   public static signIn = `${ApiConfig.IAMUsersPath}/sign_in`;
   public static stampsPath = `${ApiConfig.engagementsPath}`;
+  public static voucherBatchPath = `${ApiConfig.basePath}/voucher/batch`;
   public static vouchersPath = `${ApiConfig.basePath}/vouchers/batches`;
-  public static vouchersEntetiesPath = `${ApiConfig.basePath}/voucher/entities`;
+  public static vouchersEntitiesPath = `${ApiConfig.basePath}/voucher/entities`;
+  public static vouchersAssignedPath = `${ApiConfig.basePath}/voucher/assigneds`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath = `${ApiConfig.basePath}/organization`;
+  public static uploadFilePath = `${ApiConfig.basePath}/storage/images`;
+  public static apiCdnPath = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
 }

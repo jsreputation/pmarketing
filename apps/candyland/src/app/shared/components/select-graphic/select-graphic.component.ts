@@ -1,6 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-select-graphic',
@@ -23,9 +24,9 @@ export class SelectGraphicComponent implements ControlValueAccessor {
 
   public set setGraphic(val: IGraphic) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      this.selectedGraphic = val;
-      this.onChange(val);
-      this.onTouch(val);
+      const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
+      this.selectedGraphic = currentValue;
+      this.onTouch(currentValue);
     }
   }
 
@@ -50,5 +51,4 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
-
 }

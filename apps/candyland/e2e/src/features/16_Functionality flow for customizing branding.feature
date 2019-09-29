@@ -19,7 +19,7 @@ Scenario: Verifying the presence of the preview element.
 @runThis
 Scenario: Verifying the functionality of font type on preview element
   Given 7_that I am on the settings branding page.
-  When  7_I select the roboto option.
+  When  7_I select the Lato option.
   Then  7_I should see the change reflected in the preview element
 @runThis
 Scenario: Verifying the functionality of primary color field on preview element
@@ -31,12 +31,12 @@ Scenario: Verifying the functionality of secondary color field on preview elemen
   Given 9_that I am on the settings branding page.
   When  9_I select a color.
   Then  9_I should see the change reflected in the preview element
-@runThis
+
 Scenario: Verifying the functionality of logo header upload field
   Given 10_that I am on the settings branding page.
   When  10_I upload a picture.
   Then  10_I should see the change reflected in the preview element
-@runThis
+
 Scenario: Verifying the assertions for logo header upload field
   Given 11_that I am on the settings branding page.
   When  11_I upload a non image file.

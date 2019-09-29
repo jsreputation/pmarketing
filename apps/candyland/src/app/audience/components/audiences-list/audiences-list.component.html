@@ -1,36 +1,39 @@
-<table class="table" mat-table [dataSource]="dataSource" matSort>
+<div class="table-wrap">
+  <table class="table" mat-table [dataSource]="dataSource" matSort>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="name">List Name</th>
-    <td mat-cell *matCellDef="let element">
-      <span>{{element?.name}}</span>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="column-featured">List Name</th>
+      <td mat-cell *matCellDef="let element" class="column-featured">
+        <span>{{element?.name}}</span>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="format">
-    <th mat-header-cell *matHeaderCellDef>Format</th>
-    <td mat-cell *matCellDef="let element"> {{element?.format || '-'}}</td>
-  </ng-container>
+    <ng-container matColumnDef="format">
+      <th mat-header-cell *matHeaderCellDef>Format</th>
+      <td mat-cell *matCellDef="let element"> {{element?.format || '-'}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="updated">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">Last Updated</th>
-    <td mat-cell *matCellDef="let element">
-      {{element?.updated_at | date: DATE_FORMAT}}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="updated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">Last Updated</th>
+      <td mat-cell *matCellDef="let element">
+        {{element?.updated_at | date: DATE_FORMAT}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="numberUsers">
-    <th mat-header-cell *matHeaderCellDef>No. of users</th>
-    <td mat-cell *matCellDef="let element"> {{ element?.users?.length || 0 }}</td>
-  </ng-container>
+    <ng-container matColumnDef="numberUsers">
+      <th mat-header-cell *matHeaderCellDef>No. of users</th>
+      <td mat-cell *matCellDef="let element"> {{ element?.users?.length || '-' }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef>Status</th>
-    <td mat-cell *matCellDef="let element">
-      <cl-status-label [status]="element?.status"></cl-status-label>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="column-status">Status</th>
+      <td mat-cell *matCellDef="let element" class="column-status">
+        <cl-status-label [status]="element?.status"></cl-status-label>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+  

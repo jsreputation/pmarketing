@@ -7,71 +7,42 @@
   justify-content: flex-start;
 
   &-abbr {
-    width: $horizontal-padding;
-    height: $vertical-padding;
+    @include typo-body2;
+
+    width: ($thumbnail-size * 0.5);
+    height: ($thumbnail-size * 0.5);
+    border-radius: 50%;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: $base-font-size;
-    font-family: $primary-font;
-    font-style: normal;
-    font-weight: normal;
-    border-radius: 50%;
-    padding: 0;
     box-sizing: border-box;
-    line-height: 1.71;
-    letter-spacing: normal;
     color: $white;
-  }
 
-  &-title {
-    margin-left: 0.8rem;
-    font-family: $primary-font;
-    font-size: $base-font-size;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $base-font-color;
-  }
-
-  &-email {
-    margin-left: 0.8rem;
-    margin-bottom: 0.8rem;
-    font-family: $primary-font;
-    font-size: 18px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $base-font-color;
+    & + * {
+      margin-left: ($horizontal-padding * 0.5);
+    }
   }
 }
 
 .large {
   .role-label-abbr {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  .role-label-title, .role-label-email {
-    margin-left: 1.6rem;
+    width: $thumbnail-size;
+    height: $thumbnail-size;
   }
 }
 
 .medium {
   .role-label-abbr {
-    width: $horizontal-padding;
-    height: $vertical-padding;
+    width: ($thumbnail-size * 0.75);
+    height: ($thumbnail-size * 0.75);
   }
 }
 
 .small {
   .role-label-abbr {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: ($thumbnail-size * 0.5);
+    height: ($thumbnail-size * 0.5);
   }
 }
 

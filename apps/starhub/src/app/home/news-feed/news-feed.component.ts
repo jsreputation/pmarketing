@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { PopupComponent } from './popup/popup.component';
+import { AnalyticsService, PageType } from 'src/app/analytics.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -14,7 +15,11 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
 
-  constructor(private reader: FeedReaderService, private dialog: MatDialog) { }
+  constructor(
+    private reader: FeedReaderService,
+    private dialog: MatDialog,
+    private analytics: AnalyticsService
+  ) { }
 
   public ngOnInit(): void {
     this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
@@ -37,6 +42,15 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public readMore(item: FeedItem): void {
-    this.dialog.open(PopupComponent, {panelClass: 'app-full-bleed-dialog', data: item, height: '85vh'});
+    this.analytics.addEvent({
+      pageType: PageType.overlay,
+      pageName: 'The All New Starhub Rewards'
+    });
+    this.dialog.open(PopupComponent, { panelClass: 'app-full-bleed-dialog', data: item, height: '85vh' });
+  }
+
+  public getFirstLine(text: string): string {
+    const lines = text.match(/[^\r\n]+/g);
+    return lines[0];
   }
 }

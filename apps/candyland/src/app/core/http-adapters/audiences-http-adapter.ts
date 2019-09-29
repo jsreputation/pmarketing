@@ -37,7 +37,7 @@ export class AudiencesHttpAdapter {
     return res;
   }
 
-  public static transformUser(data: IUserApi): IUser {
+  private static transformUser(data: IUserApi): IUser {
     return {
       id: data.id,
       type: data.type,
@@ -56,17 +56,19 @@ export class AudiencesHttpAdapter {
   }
 
   public static transformUserWithPools(data: IUserWithIncludes<IUserApi>): IUser {
-   const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-   const userData = AudiencesHttpAdapter.transformUser(data.data);
-   userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
+    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+    const userData = AudiencesHttpAdapter.transformUser(data.data);
+    userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
     return userData;
   }
 
-  public static createPoolMap(data: IPoolsApi[]): IPools {
+  private static createPoolMap(data?: IPoolsApi[]): IPools {
     const mapPool = {};
-    data.forEach((element: IPoolsApi) => {
-      mapPool[element.id] = element.attributes.name;
-    });
+    if (data) {
+      data.forEach((element: IPoolsApi) => {
+        mapPool[element.id] = element.attributes.name;
+      });
+    }
     return mapPool;
   }
 
@@ -84,14 +86,14 @@ export class AudiencesHttpAdapter {
       formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
       return formatedUser
     });
-     return {
+    return {
       data: usersData,
       meta: data.meta
     }
-   }
+  }
 
   // Audiences List
-  public static transformAudiences(data: any): IAudiences {
+  private static transformAudiences(data: any): IAudiences {
     return {
       id: data.id,
       type: data.type,
@@ -105,22 +107,22 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformAudiencesUser(data: any): IAUser {
-    return {
-      id: data.relationships.users.data.id,
-      type: data.relationships.users.data.type,
-      self: data.relationships.users.data.links.self,
-      urn: data.relationships.users.data.attributes.urn,
-      created_at: data.relationships.users.data.attributes.created_at,
-      updated_at: data.relationships.users.data.attributes.updated_at,
-      title: data.relationships.users.data.attributes.title,
-      first_name: data.relationships.users.data.attributes.first_name,
-      last_name: data.relationships.users.data.last_name,
-      phone_number: data.relationships.users.data.phone_number,
-      email_address: data.relationships.users.data.email_address,
-      primary_identifier: data.relationships.users.data.primary_identifier
-    };
-  }
+  // private static transformAudiencesUser(data: any): IAUser {
+  //   return {
+  //     id: data.relationships.users.data.id,
+  //     type: data.relationships.users.data.type,
+  //     self: data.relationships.users.data.links.self,
+  //     urn: data.relationships.users.data.attributes.urn,
+  //     created_at: data.relationships.users.data.attributes.created_at,
+  //     updated_at: data.relationships.users.data.attributes.updated_at,
+  //     title: data.relationships.users.data.attributes.title,
+  //     first_name: data.relationships.users.data.attributes.first_name,
+  //     last_name: data.relationships.users.data.last_name,
+  //     phone_number: data.relationships.users.data.phone_number,
+  //     email_address: data.relationships.users.data.email_address,
+  //     primary_identifier: data.relationships.users.data.primary_identifier
+  //   };
+  // }
 
   public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
     return {
@@ -129,7 +131,7 @@ export class AudiencesHttpAdapter {
     }
   }
 
-  public static transformAudiencesVoucher(data: any ): any {
+  public static transformAudiencesVoucher(data: any): any {
     return {
       id: data.id,
       batchId: data.attributes.batch_id,
@@ -143,5 +145,16 @@ export class AudiencesHttpAdapter {
 
   private static stringToDate(stringDate: string | null): Date | null {
     return stringDate ? new Date(stringDate) : null;
+  }
+
+  public static transformVoucherAssignedToApi(sourse: string, assigned: string): any {
+    return {
+      type: "assigneds",
+        attributes: {
+        source_id: sourse,
+        source_type: "Perx::Reward::Entity",
+        assigned_to_id: assigned
+      }
+    }
   }
 }

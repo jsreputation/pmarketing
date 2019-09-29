@@ -1,40 +1,56 @@
 declare interface IEngagementApi {
-  id: string;
+  id?: string;
   type: string;
-  links: {
+  links?: {
     self: string;
   };
   attributes: {
-    urn: string;
-    created_at: string;
-    updated_at: string;
-    game_type: string;
+    urn?: string;
+    created_at?: string;
+    updated_at?: string;
+    game_type?: string;
     title: string;
-    description: string;
-    image_url: string;
-    properties: {},
+    description?: string;
+    image_url?: string;
+    properties?: {},
     display_properties: {
-      fontName: string;
-      fontColor: string;
-      headerColor: string;
-      headerTitle: string;
-      headlineText: string;
-      mainShapeType: string;
-      backgroundColor: string;
-      headerLogoImage: string;
-      subHeadlineText: string;
-      callToActionText: string;
-      loadingHeadlineText: string;
-      loadingSubHeadlineText: string;
-      background: string;
-      cardBackground: string;
+      title: string;
+      sub_title: string;
+      tree_img_url?: string;
+      gift_box_img_url?: string;
+      nb_hanged_gifts?: number;
+      banner?: string;
+      background_img_url?: string;
+      card_background_img_url?: string;
+      closed_pinata_img_url?: string;
+      opened_pinata_img_url?: string;
+      cracking_pinata_img_url?: string;
+      pre_stamp_img_url?: string;
+      reward_pre_stamp_img_url?: string;
+      post_stamp_img_url?: string;
+      reward_post_stamp_img_url?: string;
+      button?: string,
+      fontName?: string;
+      fontColor?: string;
+      headerColor?: string;
+      headerTitle?: string;
+      headlineText?: string;
+      mainShapeType?: string;
+      backgroundColor?: string;
+      headerLogoImage?: string;
+      subHeadlineText?: string;
+      callToActionText?: string;
+      loadingHeadlineText?: string;
+      loadingSubHeadlineText?: string;
+      background?: string;
+      cardBackground?: string;
       buttonText?: string;
       nb_of_slots?: number;
       slots?: number[];
     },
     type: string;
   };
-  relationships: {
+  relationships?: {
     campaigns: {
       links: {
         self: string;

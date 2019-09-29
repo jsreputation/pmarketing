@@ -1,31 +1,34 @@
 <div class="reward-item">
-  <div class="reward-item-img-block">
-    <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
-    <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
-  </div>
-  <div class="reward-item-info">
-    <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
-    <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
-  </div>
-  <cl-progress-bar class="reward-item-progress"
-                   *ngIf="data?.current && data?.total"
-                   [current]="data?.current"
-                   [total]="data?.total">
-
-  </cl-progress-bar>
-  <div class="reward-item-probability" *ngIf="probability.enabled">
-    <span class="reward-item-probability-label">Probability</span>
-    <mat-form-field class="reward-item-probability-input">
-      <input
-        type="number"
-        min="0"
-        max="100"
-        step="1"
-        matInput
-        [class.invalid]="isInvalid"
-        [formControl]="probability">
-      <span matSuffix>%</span>
-    </mat-form-field>
+  <div class="reward-item-wrap">
+    <div class="reward-item-container">
+      <div class="reward-item-img-block">
+        <img class="reward-item-img" *ngIf="data?.image" [src]="data?.image">
+        <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
+      </div>
+      <div class="reward-item-info">
+        <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
+        <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
+      </div>
+      <cl-progress-bar class="reward-item-progress"
+                      *ngIf="data?.current && data?.total"
+                      [current]="data?.current"
+                      [total]="data?.total">
+      </cl-progress-bar>
+    </div>
+    <div class="reward-item-probability" *ngIf="probability.enabled">
+      <span class="reward-item-probability-label">Probability</span>
+      <mat-form-field class="reward-item-probability-input">
+        <input
+          type="number"
+          min="0"
+          max="100"
+          step="1"
+          matInput
+          [class.invalid]="isInvalid"
+          [formControl]="probability">
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>    
   </div>
   <div class="reward-item-actions">
     <!--    <button mat-icon-button (click)="delete()">-->

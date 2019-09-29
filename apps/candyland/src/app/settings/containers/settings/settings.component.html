@@ -1,9 +1,9 @@
-<div class="full-with page-header">
+<div class="page-header full-with">
   <h1 class="title">Setting</h1>
 </div>
 
-<section class="content pb-0">
-  <nav mat-tab-nav-bar>
+<section class="content">
+  <nav mat-tab-nav-bar class="settings-navbar">
     <a mat-tab-link
         *ngFor="let link of navLinks;"
         [routerLink]="link.path"
@@ -13,6 +13,5 @@
       {{link.label}}
     </a>
   </nav>
+  <router-outlet></router-outlet>
 </section>
-
-<router-outlet></router-outlet>

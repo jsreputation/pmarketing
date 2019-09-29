@@ -1,0 +1,35 @@
+.page {
+  min-height: 100%;
+  background-color: #fff;
+  padding: 2.4rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.body {
+  width: 34.5rem;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+
+  .title {
+    font-size: 2rem;
+    line-height: 2.3rem;
+    font-weight: 500;
+    margin: 0 0 0.8rem;
+  }
+}
+
+.mb24 {
+  margin-bottom: 2.4rem;
+}
+
+.pslink {
+  margin: 1.2rem 0 2.4rem;
+  color: #0F69AF;
+  font-size: 1.2rem;
+  line-height: 2.1rem;
+}
+
+.full-width {
+  width: 100%;
+}

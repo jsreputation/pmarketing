@@ -1,5 +1,11 @@
 @import "variables";
 
+.cdk-overlay-pane {
+  max-width: initial !important;
+
+  @include typo-body2;
+}
+
 .dialog {
   position: relative;
   height: 100%;
@@ -12,39 +18,32 @@
 
   &-content {
     flex: 1;
-    padding: 0 $horizontal-padding !important;
+    max-height: 65vh;
+    padding: 0 ($horizontal-padding * 0.75);
   }
 
   &-header-wrap {
-    padding: $vertical-padding $horizontal-padding 1rem;
+    height: ($vertical-padding * 2);
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: ($horizontal-padding * 0.75);
+    padding-right: ($horizontal-padding * 0.75);
     box-sizing: border-box;
   }
 
   &-title {
+    @include typo-h6;
+
     margin: 0;
-    font-family: $primary-font;
-    font-size: 2rem;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
     color: $secondary-color;
   }
 
   &-sub-title {
+    @include typo-subtitle1;
+
     margin-top: 1.5rem;
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
     color: $secondary-color;
   }
 
@@ -70,52 +69,47 @@
   }
 
   &-row {
-    margin-top: 2rem;
+    margin-top: ($vertical-padding * 0.5);
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    font-family: $primary-font;
-    font-size: $base-font-size;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.21;
-    letter-spacing: normal;
     color: $base-font-color;
+
+    @include typo-body2;
   }
 
   &-closed {
     color: $secondary-color;
+    position: absolute; // start here for fixed
+    right: ($horizontal-padding * 0.5);
+    top: ($vertical-padding * 0.5);
   }
 
   &-tab-content {
-    padding: 3.5rem $horizontal-padding;
+    padding: $vertical-padding ($horizontal-padding * 0.75);
     overflow-y: auto;
   }
 
   &-content-title {
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.18px;
+    @include typo-subtitle2;
+
     color: $secondary-color;
+    margin: 0;
   }
 
   &-actions {
     box-sizing: border-box;
-    padding: $vertical-padding $horizontal-padding;
-    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+    background: $white;
   }
 }
 
 .nested-type {
+  padding: 0 ($horizontal-padding * 0.75);
   transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
 }
 
@@ -128,7 +122,7 @@
 
 .mat-dialog-container {
   padding: 0 !important;
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 
 .mat-dialog-content {
@@ -137,52 +131,25 @@
   margin: 0 !important;
   padding: 0 !important;
   max-height: 65vh;
-  overflow: visible !important;
+  overflow-x: hidden !important;
 }
 
 .audience-dialog {
-  max-width: 74.8rem !important;
-  max-height: 77.2rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 2rem;
-  position: relative;
+  @include modal-size($modal-lg);
 }
 
 .manage-list-dialog {
-  max-width: 40.8rem !important;
-  max-height: 36.7rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 2rem;
-  position: relative;
+  @include modal-size($modal-sm);
 }
 
 .change-expiry-date-dialog {
-  max-width: 53rem !important;
-  max-height: 36.1rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 2rem;
-  position: relative;
+  @include modal-size($modal-md);
 }
 
 .reward-replenish-dialog {
-  max-width: 56.3rem !important;
-  max-height: 37.8rem !important;
-  width: 100%;
-  height: 100%;
-  margin: 2rem;
-  position: relative;
-  font-size: 1.8rem;
+  @include modal-size($modal-md);
 }
 
-.invite-new-users-dialog {
-  max-width: 84.2rem !important;
-  max-height: 90vh !important;
-  width: 100%;
-  height: 100%;
-  margin: 2rem;
-  position: relative;
-  font-size: 1.6rem;
+.invite-new-users-dialog .mat-dialog-container {
+  @include modal-size($modal-lg);
 }

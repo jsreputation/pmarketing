@@ -54,11 +54,11 @@ export class LoginAppPage {
   }
 
   public getAccountId(): number {
-    return 2;
+   return 222222222;
   }
 
   public getUserAccount(): string {
-    return 'Admin_2';
+    return 'Admin';
   }
 
 }
@@ -107,6 +107,22 @@ export class GeneralSettingsAppPage {
 
   public navigateToGeneralSettings(): Promise<string> {
     return browser.get('settings/general') as Promise<string> ;
+ }
+
+}
+
+export class BrandingSettingsAppPage {
+
+  public navigateToBrandingSettings(): Promise<string> {
+    return browser.get('settings/branding') as Promise<string> ;
+ }
+
+}
+
+export class AudienceAppPage {
+
+  public navigateToAudience(): Promise<string> {
+    return browser.get('audience') as Promise<string> ;
  }
 
 }

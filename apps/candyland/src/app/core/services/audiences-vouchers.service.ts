@@ -12,14 +12,15 @@ import Utils from '@cl-helpers/utils';
   providedIn: 'root'
 })
 export class AudiencesVouchersService implements ITableService {
-  constructor(private audiencesHttpsService: AudiencesHttpsService,
-              private rewardsService: RewardsService) {
-  }
+  constructor(
+    private audiencesHttpsService: AudiencesHttpsService,
+    private rewardsService: RewardsService
+  ) { }
 
   public getTableData(params: HttpParamsOptions): Observable<any> {
     const httpParams = ClHttpParams.createHttpParams(params);
     let vouchers;
-    return this.audiencesHttpsService.getVouchers(httpParams)
+    return this.audiencesHttpsService.getAssignedVouchers(httpParams)
       .pipe(
         tap(response => vouchers = response),
         map(response => this.getUniqIds(response.data, 'source_id')),
@@ -35,7 +36,7 @@ export class AudiencesVouchersService implements ITableService {
       );
   }
 
-  private getRewardsMap(idList): Observable<{ [key: string]: IRewardEntity }> {
+  private getRewardsMap(idList: string[]): Observable<{ [key: string]: IRewardEntity }> {
     const requests = idList.map(id => this.rewardsService.getReward(id));
     return combineLatest(requests).pipe(
       map(rewards => Utils.convertArrToObj(rewards, 'id')),
@@ -45,5 +46,10 @@ export class AudiencesVouchersService implements ITableService {
   private getUniqIds(data: any[], propKey: string): string[] {
     const idList = data.map(item => item.attributes[propKey]);
     return Utils.filterUniq(idList);
+  }
+
+  public voucherAssigned(source, assigned): Observable<any> {
+    const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
+    return this.audiencesHttpsService.voucherAssigned(sendData);
   }
 }

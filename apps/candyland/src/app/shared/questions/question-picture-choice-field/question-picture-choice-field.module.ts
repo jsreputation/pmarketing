@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionPictureChoiceFieldComponent } from './question-picture-choice-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { UploadImageComponent } from './upload-image/upload-image.component';
 
 @NgModule({
@@ -24,6 +24,7 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSlideToggleModule
   ]
 })
 export class QuestionPictureChoiceFieldModule { }

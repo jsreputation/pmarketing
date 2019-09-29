@@ -8,8 +8,6 @@ import { EngagementTypeComponent } from './engagement-type/engagement-type.compo
 import { TypeItemComponent } from './engagement-type/type-item/type-item.component';
 import { SurveyComponent } from './survey/survey.component';
 import { GamesComponent } from './games/games.component';
-import { StampComponent } from './stamp/stamp.component';
-import { InstantRewardComponent } from './instant-reward/instant-reward.component';
 import { GameComponent } from './games/game/game.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
@@ -23,8 +21,6 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     TypeItemComponent,
     SurveyComponent,
     GamesComponent,
-    StampComponent,
-    InstantRewardComponent,
     GameComponent,
   ],
   imports: [

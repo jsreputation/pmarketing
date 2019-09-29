@@ -1,4 +1,4 @@
-<div class="tab-content">
+<div class="phonepreview-wrapper">
   <div class="forms-container" [formGroup]="form">
     <!--Rewards-->
     <mat-card class="card">
@@ -117,7 +117,7 @@
       </div>
       <div class="card-content">
         <div class="card-row input-group" formGroupName="stampCardsValidity">
-          <span class="row">Valid for</span>
+          <span>Valid for</span>
           <mat-form-field>
             <input matInput type="number" [min]="1" formControlName="times">
             <span matSuffix>Play</span>
@@ -129,7 +129,7 @@
               <mat-option value="month">Month</mat-option>
             </mat-select>
           </mat-form-field>
-          <span class="row"> After 1st stamp earned</span>
+          <span>After 1st stamp earned</span>
         </div>
       </div>
     </mat-card>

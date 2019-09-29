@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, filter } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
@@ -30,13 +30,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public tabsFilterConfig;
   public dataSource: CustomDataSource<any>;
 
-  constructor(private audiencesUserService: AudiencesUserService,
-              private vouchersService: AudiencesVouchersService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog) {
-  }
+  constructor(
+    private audiencesUserService: AudiencesUserService,
+    private vouchersService: AudiencesVouchersService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog
+  ) { }
 
   public ngOnInit(): void {
     this.dataSource = new CustomDataSource<any>(this.vouchersService);
@@ -68,7 +69,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openSelectRewardPopup(): void {
-    this.dialog.open(SelectRewardPopupComponent);
+    const dialogRef = this.dialog.open(SelectRewardPopupComponent);
+    const assigned = this.route.snapshot.params.id;
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((source: any) => this.vouchersService.voucherAssigned(source, assigned))
+      )
+      .subscribe(() => this.dataSource.updateData());
   }
 
   private handleRouteParams(): void {
@@ -76,7 +84,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.userId = id),
-      tap(id => this.setUserParams(id)),
+      // tap(id => this.setUserParams(id)),
       switchMap((id: string) => this.audiencesUserService.getUser(id)),
     )
       .subscribe(
@@ -84,11 +92,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
           this.user = user;
           this.cd.detectChanges();
         },
-        () => this.router.navigateByUrl('/audience')
+        (err) => { console.error(err); this.router.navigateByUrl('/audience'); }
       );
   }
 
-  private setUserParams(id): void {
-    this.dataSource.params = {'filter[assigned_to_id]': id};
-  }
+  // private setUserParams(id): void {
+  //   this.dataSource.params = { 'filter[assigned_to_id]': id };
+  // }
 }

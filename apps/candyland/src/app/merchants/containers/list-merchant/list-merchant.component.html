@@ -1,6 +1,6 @@
 <section class="page-header">
   <h1 class="title">Merchants</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary">Create new</cl-button>
+  <cl-button (click)="openDialogCreate()" classList="primary">Create New</cl-button>
 </section>
 <section class="content merchant-list-content">
   <div class="merchant-list">
@@ -10,18 +10,20 @@
         <cl-search-filter class="search-block" [control]="filter" placeholder="Search for merchants"></cl-search-filter>
       </ng-container>
     </cl-table-filters>
-    <!--table-->
-    <div class="merchant-list-wrapper">
-      <cl-list-merchant-view [dataSource]="dataSource"
-                             (itemAction)="handlerAction($event)"
-      >
-      </cl-list-merchant-view>
+    <div class="table-card">
+      <!--table-->
+      <div class="merchant-list-wrapper">
+        <cl-list-merchant-view [dataSource]="dataSource"
+                              (itemAction)="handlerAction($event)"
+        >
+        </cl-list-merchant-view>
+      </div>
+      <!--paginator-->
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+      ></cl-paginator>
+      <!--/ paginator-->
     </div>
-    <!--paginator-->
-    <cl-paginator [dataSource]="dataSource"
-                  [pageSize]="5"
-                  [pageSizeOptions]="[5, 10, 20]"
-    ></cl-paginator>
-    <!--/ paginator-->
   </div>
 </section>

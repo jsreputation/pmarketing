@@ -1,5 +1,24 @@
 @import "./variables";
 
+.game {
+  &-title-wrap {
+    flex: 1;
+    margin-right: 4rem;
+  }
+
+  &-title {
+    font-size: 1.6rem;
+    line-height: 1.06;
+    color: $secondary-color;
+    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
+  }
+
+  &-graphic, &-button {
+    display: block;
+    margin-top: ($vertical-padding * 0.5);
+  }
+}
+
 mat-card.game-graphic {
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) 4.7rem;
 
@@ -9,10 +28,14 @@ mat-card.game-graphic {
 }
 
 .mobile-preview-tabs {
+  .mat-tab-label {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   mat-tab-header {
     background: $white;
-    border-top-left-radius: 0.8rem;
-    border-top-right-radius: 0.8rem;
+    border-bottom: none;
   }
 }
 

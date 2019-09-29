@@ -39,7 +39,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'reward',
+        path: 'give_reward/:id',
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
         canActivate: [ProtectedGuard]
       },

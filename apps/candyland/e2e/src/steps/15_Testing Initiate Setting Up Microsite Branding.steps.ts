@@ -14,18 +14,19 @@ Before( () => {
 Then(/^1_The setting tab should be present.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for settings tab to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).last()), 5000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(6)), 5000);
   // asserting the presence of the tab settings
-  expect(await element.all(by.css('h3')).last().getText()).to.be.equal('Settings');
+  expect(await element.all(by.css('h3')).get(6).getText()).to.be.equal('Settings');
 });
 
 // Ensure that clicking on the settings tab leads to the general settings page
 When(/^2_I click on the settings tab$/, async () => {
   const ec = protractor.ExpectedConditions;
+  await browser.waitForAngularEnabled(false);
   // waiting for settings tab to load
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).last()), 5000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(6)), 5000);
   // clicking the settings tab
-  await element.all(by.css('h3')).last().click();
+  await element.all(by.css('h3')).get(6).click();
   await browser.sleep(3000);
 
 });

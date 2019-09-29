@@ -12,12 +12,16 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let contentType = {};
     if (req.url.includes(ApiConfig.signIn)) {
       return next.handle(req);
     }
+    if (!req.url.includes(ApiConfig.uploadFilePath)) {
+      contentType = {'Content-Type': 'application/vnd.api+json'};
+    }
     const authReq = req.clone({
       setHeaders: {
-        'Content-Type': 'application/vnd.api+json',
+         ...contentType,
         'Access-Control-Allow-Origin': '*',
         Authorization: this.sessionService.token || ''
       }
