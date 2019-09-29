@@ -40,7 +40,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-
+    this.store.resetCampaign();
     this.store.currentCampaign$
       .asObservable()
       .pipe(untilDestroyed(this))
