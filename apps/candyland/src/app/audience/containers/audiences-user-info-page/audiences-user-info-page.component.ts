@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap, tap, filter } from 'rxjs/operators';
+import { map, switchMap, tap, filter, distinct } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
@@ -41,14 +41,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   ) { }
 
   public ngOnInit(): void {
-    this.dataSource = new CustomDataSource<any>(this.vouchersService);
     this.handleRouteParams();
-    this.dataSource.data$.pipe(
-      untilDestroyed(this)
-    ).subscribe((data: any) => {
-      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
-      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
-    });
   }
 
   public ngAfterViewInit(): void {
@@ -87,8 +80,9 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap(id => this.userId = id),
-      // tap(id => this.setUserParams(id)),
+      tap((id: string) => this.userId = id),
+      distinct(),
+      tap(() => this.initDataSource()),
       switchMap((id: string) => this.audiencesUserService.getUser(id)),
     )
       .subscribe(
@@ -98,5 +92,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         },
         (err) => { console.error(err); this.router.navigateByUrl('/audience'); }
       );
+  }
+
+  private initDataSource(): void {
+    const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
+    this.dataSource.data$.pipe(
+      untilDestroyed(this)
+    ).subscribe((data: any) => {
+      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
+      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
+    });
   }
 }

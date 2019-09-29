@@ -1,5 +1,5 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-voucher-code-form-group',
@@ -8,15 +8,15 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardVoucherCodeFormGroupComponent {
-  public DATE_FORMAT = 'mediumDate';
+  public DATE_FORMAT: string = 'mediumDate';
   @Input() public formGroup: AbstractControl;
   @Input() public form: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
 
   public codeFormatConfig = {
-    alphanumeric: {eg: 'HB1234'},
-    numeric: {eg: '123456'},
-    alphabet: {eg: 'ABCDEF'}
+    alphanumeric: { eg: 'HB1234' },
+    numeric: { eg: '123456' },
+    alphabet: { eg: 'ABCDEF' }
   };
 
   get codePlaceholder(): string {

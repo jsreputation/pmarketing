@@ -28,20 +28,23 @@ export class CustomDataSource<T> {
     this.loadingData();
   }
 
-  public get params() {
+  public get params(): HttpParamsOptions {
     return this._params || {};
   }
 
-  public get data() {
+  public get data(): T[] {
     return this.dataSubject.value;
   }
 
-  public get data$() {
+  public get data$(): Observable<T[]> {
     return this.dataSubject.asObservable();
   }
 
   // default items on the page set up pageSize
-  constructor(public dataService: ITableService, public pageSize: number = 5) {
+  constructor(public dataService: ITableService, public pageSize: number = 5, params?: HttpParamsOptions) {
+    if (params) {
+      this.params = params;
+    }
     this.loadingData();
   }
 
@@ -155,5 +158,4 @@ export class CustomDataSource<T> {
       });
     return result;
   }
-
 }

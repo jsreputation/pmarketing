@@ -10,7 +10,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 })
 export class SelectRewardPopupComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
-  public displayedColumns = [
+  public displayedColumns: string[] = [
     'image',
     'name',
     'rewardType',
