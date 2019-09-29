@@ -193,15 +193,14 @@ export class WhistlerGameService implements IGameService {
     (`${this.hostName}/game/transactions`, body, {
       headers: {'Content-Type': 'application/vnd.api+json'}
     }).pipe(
-        map(res => {
-          return {
+        map(res => ({
             vouchers:
-            res.data.attributes.results.attributes.results.map(v => {
-              return WhistlerGameService.subscribeAndRevealVouch(this.wVouchSvc.get(v.id));
-            }),
+            res.data.attributes.results.attributes.results.map(v =>
+               (WhistlerGameService.subscribeAndRevealVouch(this.wVouchSvc.get(v.id)))
+            ),
             rawPayload: res
-          };
-        })
+          })
+        )
     );
   }
 
