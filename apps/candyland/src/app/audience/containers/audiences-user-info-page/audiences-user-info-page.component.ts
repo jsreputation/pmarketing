@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, switchMap, tap, filter } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -36,7 +36,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private route: ActivatedRoute,
     private router: Router,
     public cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snack: MatSnackBar
   ) { }
 
   public ngOnInit(): void {
@@ -70,13 +71,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public openSelectRewardPopup(): void {
     const dialogRef = this.dialog.open(SelectRewardPopupComponent);
-    const assigned = this.route.snapshot.params.id;
+    const assigned: string = this.route.snapshot.params.id;
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((source: any) => this.vouchersService.voucherAssigned(source, assigned))
+        switchMap((source: string) => this.vouchersService.voucherAssigned(source, assigned))
       )
-      .subscribe(() => this.dataSource.updateData());
+      .subscribe(
+        () => this.dataSource.updateData(),
+        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
+      );
   }
 
   private handleRouteParams(): void {
@@ -95,8 +99,4 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         (err) => { console.error(err); this.router.navigateByUrl('/audience'); }
       );
   }
-
-  // private setUserParams(id): void {
-  //   this.dataSource.params = { 'filter[assigned_to_id]': id };
-  // }
 }
