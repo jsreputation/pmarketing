@@ -36,6 +36,7 @@ cl-table-filters {
   .filters {
     & > * {
       max-width: ($horizontal-padding * 17.5);
+      justify-content: flex-end;
 
       &.half-block {
         max-width: ($horizontal-padding * 8.75);

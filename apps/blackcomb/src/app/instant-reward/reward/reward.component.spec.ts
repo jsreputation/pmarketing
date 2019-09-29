@@ -21,7 +21,9 @@ describe('RewardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
         GameModule,
         RewardsModule,
         BrowserAnimationsModule

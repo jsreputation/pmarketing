@@ -16,7 +16,8 @@ const envConfigFile = `export const environment = {
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
+  apiCdn: '${process.env.APIFILE ? process.env.APIFILE : 'https://cdn.uat.whistler.perxtech.io/dev1/'}'
 };
 `;
 

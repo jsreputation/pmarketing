@@ -1,4 +1,30 @@
+@import '~@angular/material/theming';
 @import "variables";
+
+@mixin cell-spacing-h($h-spacer) {
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
+    text-align: left;
+    vertical-align: sub;
+    vertical-align: -webkit-baseline-middle;
+    vertical-align: -moz-middle-with-baseline;
+    padding-left: $horizontal-padding * ($h-spacer / 2);
+    padding-right: $horizontal-padding * ($h-spacer / 2);
+  }
+
+  td.mat-cell:first-child,
+  td.mat-footer-cell:first-child,
+  th.mat-header-cell:first-child {
+    padding-left: $horizontal-padding * $h-spacer;
+  }
+
+  td.mat-cell:last-child,
+  td.mat-footer-cell:last-child,
+  th.mat-header-cell:last-child {
+    padding-right: $horizontal-padding * $h-spacer;
+  }
+}
 
 $fixed-cell-1: 5.4rem !important;
 $fixed-cell-2: 9rem !important;
@@ -15,15 +41,61 @@ $fluid-cell-5: 18% !important;
 $fluid-cell-6: 21% !important;
 
 .table {
+  @include cell-spacing-h(0.75);
+
   width: 100%;
 
-  &-card {
-    @include mat-elevation(1);
+  th.mat-header-cell,
+  td.mat-cell {
+    padding-top: ($vertical-padding * 0.5);
+    padding-bottom: ($vertical-padding * 0.5);
+  }
 
-    border-radius: $border-radius-lg;
-    overflow-x: auto;
-    overflow-y: hidden;
-    background: $white;
+  th.mat-header-cell {
+    @include typo-subtitle2;
+
+    line-height: 1.8rem;
+
+    button {
+      text-align: left;
+    }
+  }
+
+  td.mat-cell {
+    @include typo-body2;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  &-card {
+    position: relative;
+
+    &::before {
+      @include mat-elevation(1);
+
+      content: "";
+      border-radius: $border-radius-lg;
+      background: $white;
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    .table,
+    .mat-paginator {
+      background: none;
+    }
   }
 
   &-row {
@@ -34,178 +106,164 @@ $fluid-cell-6: 21% !important;
     }
 
     &.active {
-      background: rgba(102, 149, 187, 0.3);
+      background: $gray;
+    }
+  }
+}
+
+// Desktop spacing
+@media (max-width: $desktop-width) {
+  .table {
+    @include cell-spacing-h(0.5);
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding-top: ($vertical-padding * 0.375);
+      padding-bottom: ($vertical-padding * 0.375);
     }
   }
 
-  &-link {
-    font-family: $primary-font;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $base-font-color;
-    text-decoration: none;
-    cursor: pointer;
+  // Horizontal Sticky Styling
+  .table-wrap {
+    overflow: auto;
+  }
 
-    &:hover {
-      color: $secondary-color;
+  .mat-table-sticky {
+    background: $white;
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 8px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    &:last-child::after {
+      left: auto;
+      right: 100%;
+      background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
     }
   }
 
-  th.mat-header-cell,
-  td.mat-cell {
-    text-align: left;
-    vertical-align: baseline;
+  .column-featured {
+    padding-left: ($vertical-padding * 0.5) !important;
+  }
+}
+
+// Tablet Spacing
+@media (max-width: $tablet-width) {
+  .table {
+    @include cell-spacing-h(0.375);
   }
 
-  th.mat-header-cell {
-    @include typo-subtitle2;
+  .column-featured {
+    padding-left: ($vertical-padding * 0.375) !important;
+  }
+}
 
-    padding-top: ($vertical-padding / 2);
+// COLUMN STYLES
+td.mat-cell.column-featured,
+th.mat-header-cell.column-featured {
+  // width: $fluid-cell-3;
+  min-width: $fixed-cell-3;
+}
+
+td.mat-cell.column-menu,
+th.mat-header-cell.column-menu {
+  width: $fixed-cell-1;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  .mat-icon-button {
+    transform: translateY(-0.8rem);
+  }
+}
+
+td.mat-cell.column-id,
+th.mat-header-cell.column-id {
+  width: $fluid-cell-1;
+}
+
+td.mat-cell.column-thumbnail,
+th.mat-header-cell.column-thumbnail {
+  width: ($thumbnail-size * 0.75);
+  vertical-align: middle;
+}
+
+td.mat-cell.column-date,
+th.mat-header-cell.column-date {
+  width: $fluid-cell-3;
+  min-width: $fixed-cell-3;
+}
+
+td.mat-cell.column-status,
+th.mat-header-cell.column-status {
+  width: $fluid-cell-3;
+  // min-width: $fixed-cell-3;
+}
+
+td.mat-cell.column-phone,
+th.mat-header-cell.column-phone {
+  width: $fluid-cell-3;
+  min-width: $fixed-cell-3;
+}
+
+td.mat-cell.column-email,
+th.mat-header-cell.column-email {
+  width: $fluid-cell-3;
+  min-width: $fixed-cell-3;
+}
+
+td.mat-cell.column-branches,
+th.mat-header-cell.column-branches {
+  width: $fluid-cell-2;
+  min-width: $fixed-cell-2;
+}
+
+td.mat-cell.column-audiencelist,
+th.mat-header-cell.column-audiencelist {
+  width: $fluid-cell-2;
+  min-width: $fixed-cell-2;
+}
+
+// thumbnails
+.thumbnail {
+  display: inline-flex;
+  height: ($thumbnail-size * 0.75);
+  width: ($thumbnail-size * 0.75);
+  vertical-align: middle;
+  background: $gray;
+  overflow: hidden;
+
+  &.profilepic {
+    height: ($thumbnail-size * 0.5);
+    width: ($thumbnail-size * 0.5);
+    border-radius: 100%;
   }
 
-  td.mat-cell {
-    @include typo-body2;
+  img {
+    width: 100%;
+  }
+}
 
-    padding-top: ($vertical-padding / 2);
-    padding-bottom: ($vertical-padding / 2);
+.name-cell {
+  &__id,
+  &__sub {
+    @include typo-caption;
+
+    display: block;
+    color: $secondary-font-color;
   }
 
-  td.mat-cell,
-  td.mat-footer-cell,
-  th.mat-header-cell {
-    padding-left: ($horizontal-padding * 0.375);
-    padding-right: ($horizontal-padding * 0.375);
-
-    &:first-of-type {
-      padding-left: ($horizontal-padding * 0.75);
-    }
-
-    &:last-of-type {
-      padding-right: ($horizontal-padding * 0.75);
-    }
+  &__id {
+    text-transform: uppercase;
   }
 
-  td.mat-cell.mat-column {
-    width: $fluid-cell-2;
-
-    &-email,
-    &-name {
-      width: auto !important;
-      min-width: $fixed-cell-3;
-    }
-
-    &-id,
-    &-logo {
-      min-width: $fixed-cell-1;
-    }
-
-    &-logo {
-      width: $fluid-cell-1;
-      min-width: $fixed-cell-1;
-    }
-
-    &-branches,
-    &-rewardType {
-      width: $fluid-cell-3;
-      min-width: $fixed-cell-3;
-    }
-
-    &-audienceList,
-    &-category,
-    &-engagementType,
-    &-phone,
-    &-primary_identifier {
-      width: $fluid-cell-4;
-      min-width: $fixed-cell-4;
-    }
-
-    &-email {
-      width: $fluid-cell-6;
-      min-width: $fixed-cell-6;
-    }
-
-    &-actions,
-    &-status,
-    &-username {
-      vertical-align: top;
-    }
-
-    &-actions {
-      width: $fixed-cell-1;
-      padding-top: 0.4rem;
-      padding-bottom: 0;
-      text-align: center;
-    }
-  }
-
-  // DATE COLUMNS ARE ALL THE SAME
-  td.mat-cell.date-column,
-  th.mat-header-cell.date-column,
-  .date-column th.mat-header-cell {
-    width: $fluid-cell-2;
-    min-width: $fixed-cell-2;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  // ACTION COLUMNS ARE ALL THE SAME
-  td.mat-cell.menu-column,
-  th.mat-header-cell.menu-column {
-    width: $fixed-cell-1;
-    padding-right: 0 !important;
-  }
-
-  .image-cell {
-    display: inline-flex;
-    height: ($thumbnail-size * 0.75);
-    width: ($thumbnail-size * 0.75);
-    vertical-align: middle;
-    background: $gray;
-
-    &.profilepic {
-      height: ($thumbnail-size * 0.5);
-      width: ($thumbnail-size * 0.5);
-      border-radius: 100%;
-      overflow: hidden;
-    }
-
-    img {
-      max-height: 100%;
-      width: 100%;
-    }
-  }
-
-  .name-cell {
-    min-height: 3.8rem;
-
-    &__link {
-      width: fit-content;
-      color: $base-font-color;
-      text-decoration: none;
-      cursor: pointer;
-
-      &:hover {
-        color: $secondary-font-color;
-      }
-    }
-
-    &__id {
-      @include typo-caption;
-
-      display: block;
-      color: $secondary-font-color;
-      text-transform: uppercase;
-    }
-
-    &__sub {
-      @include typo-caption;
-
-      display: block;
-      margin-top: 0.2rem;
-      color: $secondary-font-color;
-    }
+  &__sub {
+    margin-top: 0.2rem;
   }
 }

@@ -5,6 +5,7 @@
   @include mat-elevation(4);
 
   display: flex;
+  width: 100%;
   min-height: $header-height-base;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -13,20 +14,24 @@
   padding: 0 $horizontal-padding;
   position: sticky;
   top: 0;
-  z-index: 99;
+  z-index: 101;
   background: $white;
-  width: 100%;
-
-  &.full-with {
-    background: $white;
-    min-height: $header-height-base;
-  }
 
   .pagetitle-input {
     @include typo-h5;
 
+    + * {
+      flex-shrink: 0;
+      margin-left: ($horizontal-padding * 0.5);
+    }
+
+    .mat-form-field-infix {
+      border-top-width: 0.1rem;
+    }
+
     input {
       color: $base-font-color;
+      letter-spacing: inherit;
     }
 
     .mat-form-field-wrapper {
@@ -63,39 +68,6 @@
           bottom: 0;
         }
       }
-    }
-  }
-}
-
-.game {
-  &-title-wrap {
-    flex: 1;
-    margin-right: 4rem;
-  }
-
-  &-title {
-    font-size: 1.6rem;
-    line-height: 1.06;
-    color: $secondary-color;
-    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: ($vertical-padding * 0.5);
-  }
-
-  &-actions {
-    flex-shrink: 0;
-    width: 36.3rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  &-checkbox {
-    .mat-radio-label-content {
-      display: none;
     }
   }
 }

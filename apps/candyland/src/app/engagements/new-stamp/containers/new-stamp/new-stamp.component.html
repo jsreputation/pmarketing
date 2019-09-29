@@ -1,15 +1,11 @@
 <section class="stamp-wrap" *ngIf="stampData" [formGroup]="formStamp">
   <div class="page-header full-with">
-    <div class="game-title-wrap">
-      <div class="control-input name-control name-control-title">
-        <mat-form-field class="pagetitle-input" floatLabel="never">
-          <input type="text" matInput formControlName="name" placeholder="Enter title here">
-          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
+    <mat-form-field class="pagetitle-input" floatLabel="never">
+      <input type="text" matInput formControlName="name" placeholder="Enter title here">
+      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+    </mat-form-field>
     <div class="game-actions">
       <cl-button [classList]="'secondary'" class="stamp-btn-cancel" (click)="comeBack()">
         <span>
@@ -206,6 +202,7 @@
         <div class="mobile-preview-btn-wrap mobile-btn-block">
           <button class="mobile-preview-btn" [ngStyle]="{
                     backgroundColor: tenantSettings?.buttonColor,
+                    'color': tenantSettings?.buttonTextColor,
                     'font-family': tenantSettings?.font
                   }">
             {{buttonText.value}}
@@ -239,7 +236,9 @@
         </div>
 
         <div class="mobile-preview-btn-wrap mobile-btn-block">
-          <button class="mobile-preview-btn" [ngStyle]="{
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                    'color': tenantSettings?.buttonTextColor,
                     backgroundColor: tenantSettings?.buttonColor,
                     'font-family': tenantSettings?.font
                   }">
