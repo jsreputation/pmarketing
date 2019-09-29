@@ -100,15 +100,15 @@ export class CampaignsHttpAdapter {
         //   period_unit: LimitsDurationToAPIMapping[data.limits.duration],
         //   period_number: 1
         // },
-        // comm: {
-        //   template: {
-        //     content: data.channel.message
-        //   },
-        //   event: {
-        //     send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
-        //     channel: data.channel.type
-        //   }
-        // }
+        comm: {
+          template: {
+            content: data.channel.message
+          },
+          event: {
+            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
+            channel: data.channel.type
+          }
+        }
       }
     };
   };
