@@ -1,14 +1,10 @@
 <div class="page-header full-with" [formGroup]="form">
-  <div class="game-title-wrap">
-    <div class="control-input name-control name-control-title">
-      <mat-form-field class="pagetitle-input" floatLabel="never" >
-        <input type="text" matInput formControlName="name" placeholder="Enter title here">
-        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
+  <mat-form-field class="pagetitle-input" floatLabel="never" >
+    <input type="text" matInput formControlName="name" placeholder="Enter title here">
+    <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+    <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+    <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+  </mat-form-field>
   <div class="btn-group">
     <cl-button classList="tertiary" routerLink="..">Cancel</cl-button>
     <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
@@ -30,7 +26,7 @@
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
-      <ng-container [ngSwitch]="campaign?.template?.attributes_type">
+      <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
         <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"
                                              [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-stamps-page>

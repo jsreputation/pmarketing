@@ -1,6 +1,12 @@
 @import '~@angular/material/theming';
 @import "variables";
 
+$vertical-tabs-width: ($horizontal-padding * 7.5);
+
+.dashboard-group-graphics {
+  padding: $vertical-padding $horizontal-padding;
+}
+
 .chard-card-list {
   position: relative;
   display: flex;
@@ -8,10 +14,10 @@
   box-sizing: border-box;
   justify-content: space-between;
   padding: 0;
-  margin: 0 (-($horizontal-padding * 0.5));
+  margin: 0 (-($horizontal-padding * 0.375));
 
   & > * {
-    margin: 0 ($horizontal-padding * 0.5) $vertical-padding;
+    margin: ($vertical-padding * 0.375) ($horizontal-padding * 0.375);
     flex: 1;
   }
 }
@@ -19,10 +25,14 @@
 .chart-card {
   position: relative;
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
-  flex: 1 1 calc(50% - $horizontal-padding);
+  flex: 1 1 calc(50% - #{$horizontal-padding});
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
+
+  &.full-width {
+    flex-basis: 100%;
+  }
 
   &-info-title {
     @include typo-body1;
@@ -32,55 +42,65 @@
     margin-bottom: ($vertical-padding * 0.5);
   }
 
-  &-header-with-control {
-    margin-bottom: ($vertical-padding * 0.75);
-    align-items: baseline;
-    max-height: 42px;
-
-    > * {
-      margin-top: -($vertical-padding * 0.25);
-    }
-  }
-
   &-title {
-    @include typo-subtitle1;
+    @include typo-subtitle1-alt;
 
     margin-bottom: ($vertical-padding * 0.75);
     color: $secondary-color;
   }
 
-  &-header-with-control &-title {
-    flex-shrink: 0;
+  &-header-with-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: ($vertical-padding * 0.75);
+
+    &-title {
+      flex-shrink: 0;
+    }
+
+    > * {
+      margin-top: -($vertical-padding * 0.375);
+
+      &:not(.chart-card-title) {
+        @include typo-body2;
+
+        flex-grow: 1;
+        margin-left: $horizontal-padding;
+        max-width: ($horizontal-padding * 10);
+      }
+    }
   }
 
-  &-header-with-control > *:not(&-title) {
-    @include typo-body2;
-
-    flex-basis: 20rem;
-  }
-
-  &-block {
-    border: solid 1px $border-color;
-    border-radius: $border-radius;
-    margin-top: $vertical-padding;
-    padding: $vertical-padding $horizontal-padding;
-    box-sizing: border-box;
-  }
-
-  ngx-charts-bar-vertical {
-    display: block;
-    height: 100%;
-    max-height: ($vertical-padding * 10);
+  &-content {
+    display: flex;
+    position: relative;
+    height: 24rem;
     width: 100%;
-  }
-
-  &.full-width {
-    flex: 100%;
   }
 }
 
-.chart-card:first-child,
-.tabs-list-wrap + .chart-card {
+.tabs-list-wrap {
+  max-width: $vertical-tabs-width;
+  flex-basis: 100%;
+  flex-shrink: 0;
+}
+
+.tabs-list-wrap + .chart-card,
+.chart-card:first-of-type {
   border-color: $white;
   flex-grow: 2;
+  padding: 0;
+
+  & > .chart-card-content {
+    height: 35rem;
+  }
+}
+
+.tabs-list-wrap + .chart-card {
+  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
+}
+
+.chart-card:first-of-type {
+  flex-basis: 100%;
 }

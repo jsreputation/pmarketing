@@ -1,13 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import { RewardsService } from '@cl-core/services';
+import { RewardsService, MerchantsService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
+import { of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -34,10 +35,12 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   constructor(
     private rewardsService: RewardsService,
     private vouchersService: VouchersService,
+    private merchantsService: MerchantsService,
     private router: Router,
     private route: ActivatedRoute,
     public cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snack: MatSnackBar
   ) { }
 
   public ngOnInit(): void {
@@ -59,12 +62,10 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         filter(Boolean),
         switchMap((data: any) => this.vouchersService.createVoucher(data))
       )
-      .subscribe(() => { });
-  }
-
-  public updateRewardImage(image: WindowBase64): void {
-    // TODO: integrate post request when avaible endpoint for images
-    console.log(image);
+      .subscribe(
+        () => this.snack.open('Vouchers succesfully replenished.', 'x', { duration: 2000 }),
+        () => this.snack.open('Could not replenish vouchers. Make sure that the configuration is correct.', 'x', { duration: 2000 })
+      );
   }
 
   get availableVouchers(): number {
@@ -82,10 +83,17 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     );
     $id.subscribe(id => this.id = id);
     $id
-      .pipe(switchMap(id => this.rewardsService.getRewardToForm(id)))
-      .subscribe(
-        (reward: IRewardEntityForm) => {
+      .pipe(
+        switchMap(id => this.rewardsService.getRewardToForm(id)),
+        switchMap(reward => {
+          const merchantQuery = reward.rewardInfo.organizationId !== null ?
+            this.merchantsService.getMerchant(reward.rewardInfo.organizationId) : of(null);
+          return combineLatest(of(reward), merchantQuery);
+        }),
+      ).subscribe(
+        ([reward, merchant]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
+          this.data.merchantInfo = merchant;
           this.cd.detectChanges();
         },
         (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }

@@ -12,7 +12,7 @@ export class NewSurveyForm {
       ),
       headlineMessage: new FormControl(
         null,
-        [Validators.required, Validators.minLength(5), Validators.maxLength(60)]
+        [Validators.required, Validators.minLength(1), Validators.maxLength(60)]
       ),
       subHeadlineMessage: new FormControl(
         null,
@@ -35,7 +35,7 @@ export class NewSurveyForm {
         null,
         [Validators.required]
       ),
-      buttonText: new FormControl('start', [
+      buttonText: new FormControl('Submit', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
