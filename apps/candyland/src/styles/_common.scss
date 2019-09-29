@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, p {
 
 .btn-group {
   cl-button, button, a {
-    margin-right: 8px;
+    margin-right: ($horizontal-padding * 0.25);
 
     &:last-of-type {
       margin-right: 0;

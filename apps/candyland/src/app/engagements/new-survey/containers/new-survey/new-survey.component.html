@@ -6,7 +6,7 @@
       <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
       <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
     </mat-form-field>
-    <div class="game-actions">
+    <div class="btn-group">
       <cl-button [classList]="'secondary'"
                  class="btn-cancel"
                  (click)="comeBack()"
