@@ -65,7 +65,7 @@ export class CampaignsHttpAdapter {
         //   recurrence: { times: null, period: null, repeatOn: [] }
         // }
       },
-      audience: { type: 'select', select: (campaignData.pool_id).toStirng(), file: null },
+      audience: { type: 'select', select: (campaignData.pool_id).toString(), file: null },
       template: {},
       rewardsList: campaignOutcomes,
       // limits: {
