@@ -7,33 +7,28 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div class="dialog-body">
-  <img class="description-img" src="assets/images/engagement-type/engagement-template.png" alt="Engagement Template">
-  <h3 class="description-header">
+<div class="confirm-body">
+  <img class="confirm-img" src="assets/images/engagement-type/engagement-template.png" alt="Engagement Template">
+  <h3 class="confirm-header">
     {{data?.header || 'Yay! you just created an engagement template!'}}
   </h3>
-  <p class="description-copy">
+  <p class="confirm-copy">
     {{data?.description || 'One step to go closer to your customers. Now you can launch a campaign with this.'}}
   </p>
 </div>
-<div class="dialog-actions"
->
+<div class="dialog-actions">
   <cl-button [classList]="'tertiary'"
              class="actions-close"
              (click)="close()"
              [disableRipple]="true"
   >
-      <span>
-        Launch later
-      </span>
+      <span>Launch later</span>
   </cl-button>
 
   <cl-button [classList]="'primary'"
              (click)="close(true)"
              [disableRipple]="true"
   >
-      <span>
-        Launch now
-      </span>
+      <span>Launch now</span>
   </cl-button>
 </div>
