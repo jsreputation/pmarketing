@@ -18,7 +18,7 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
-  public isFirstInit: boolean = true;
+  public isFirstInit: boolean;
   @Input()
   public pools;
 
@@ -56,6 +56,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.isFirstInit = true;
     this.initPools();
     this.initData();
   }
