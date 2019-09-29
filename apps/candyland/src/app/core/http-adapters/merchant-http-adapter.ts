@@ -1,4 +1,4 @@
-import { MerchantBranch } from './merchant';
+import { MerchantBranch, Merchant } from './merchant';
 
 export class MerchantHttpAdapter {
   // tslint:disable
@@ -42,14 +42,14 @@ export class MerchantHttpAdapter {
     };
   };
 
-  public static transformFromMerchantForm(data: any): any {
+  public static transformFromMerchantForm(data: Merchant): any {
     return {
       type: 'orgs',
       attributes: {
         name: data.name,
         description: data.description,
         properties: {
-          logo_image: 'https://lorempixel.com/300/300',
+          logo_image: data.image,
           country_code: data.countryCode,
           phone: data.phone,
           address: data.address,
