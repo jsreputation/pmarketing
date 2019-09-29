@@ -26,7 +26,7 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public userId: string;
   public user;
-  public vouchers;
+  // public vouchers;
   public tabsFilterConfig;
   public dataSource: CustomDataSource<any>;
 
@@ -63,15 +63,21 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openSelectRewardPopup(): void {
-    const dialogRef = this.dialog.open(SelectRewardPopupComponent);
-    const assigned: string = this.route.snapshot.params.id;
-    dialogRef.afterClosed()
+    this.dialog
+      .open<SelectRewardPopupComponent, void, IRewardEntity>(SelectRewardPopupComponent)
+      .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((source: string) => this.vouchersService.voucherAssigned(source, assigned))
+        switchMap((entity: IRewardEntity) => {
+          const assigned: string = this.route.snapshot.params.id;
+          return this.vouchersService.voucherAssigned(entity.id, assigned);
+        })
       )
       .subscribe(
-        () => this.dataSource.updateData(),
+        () => {
+          this.snack.open('Voucher assigned to user.', 'x', { duration: 2000 });
+          this.dataSource.updateData();
+        },
         () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
       );
   }
