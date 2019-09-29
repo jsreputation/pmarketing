@@ -72,10 +72,10 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
     }
   }
 
-  ngx-charts-bar-vertical {
-    display: block;
-    height: 100%;
-    max-height: ($vertical-padding * 10);
+  &-content {
+    display: flex;
+    position: relative;
+    height: 24rem;
     width: 100%;
   }
 }
@@ -90,6 +90,11 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .chart-card:first-of-type {
   border-color: $white;
   flex-grow: 2;
+  padding: 0;
+
+  & > .chart-card-content {
+    height: 35rem;
+  }
 }
 
 .tabs-list-wrap + .chart-card {
