@@ -19,6 +19,7 @@ import { ChangeStreetAddressComponent } from './account/profile/change-street-ad
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
+import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 
 @Component({
   selector: 'app-root',
@@ -63,6 +64,7 @@ export class AppComponent implements OnInit {
       ref instanceof ChangeCityComponent ||
       ref instanceof ChangeStreetAddressComponent ||
       ref instanceof FaqComponent ||
+      ref instanceof CustomerSupportComponent ||
       ref instanceof PrivacyPolicyComponent ||
       ref instanceof TermsAndConditionComponent);
     this.showPageTitle = !this.showLogo;
@@ -73,8 +75,9 @@ export class AppComponent implements OnInit {
             ref instanceof ChangeCityComponent ? 'Change City/Municipality' :
               ref instanceof ChangeStreetAddressComponent ? 'Change Street Address' :
                 ref instanceof FaqComponent ? 'FAQ' :
-                  ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' :
-                    ref instanceof TermsAndConditionComponent ? 'Terms & Conditions' : '' ;
+                  ref instanceof CustomerSupportComponent ? 'Customer Support' :
+                    ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' :
+                      ref instanceof TermsAndConditionComponent ? 'Terms & Conditions' : '' ;
   }
 
   public goBack(): void {
