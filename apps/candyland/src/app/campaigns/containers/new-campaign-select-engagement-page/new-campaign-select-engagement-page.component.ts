@@ -49,6 +49,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
     this.availableNewEngagementService.remove();
   }
 
@@ -60,7 +61,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
-    this.form.patchValue(this.store.currentCampaign);
+    // this.form.patchValue({ theme: {} });
   }
 
   private initFiltersDefaultValue(): void {

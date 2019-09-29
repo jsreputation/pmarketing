@@ -8,6 +8,7 @@ import { ToggleControlService } from '@cl-shared/providers/toggle-control.servic
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -19,6 +20,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public form: FormGroup;
   public config: any;
   public isFirstInit: boolean;
+  public campaignId: string;
   @Input()
   public pools;
 
@@ -49,6 +51,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService,
+    private route: ActivatedRoute
   ) {
     super(2, store, stepConditionService, cd);
     this.initForm();
@@ -56,6 +59,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.campaignId = this.route.snapshot.params.id;
     this.isFirstInit = true;
     this.initPools();
     this.initData();
@@ -66,7 +70,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
-    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
   }
 
   private initData(): void {
@@ -85,15 +88,19 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         }
       });
 
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        if (data && this.isFirstInit) {
-          this.isFirstInit = false;
-          this.form.patchValue(data);
-        }
-      });
+    if (this.campaignId) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          if (data && data.campaignInfo && this.isFirstInit) {
+            this.isFirstInit = false;
+            this.form.patchValue(data);
+          }
+        });
+    } else {
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
   }
 
   private updateForm(): void {

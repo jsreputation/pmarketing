@@ -35,6 +35,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private settingsService: SettingsService
   ) {
+    store.resetCampaign();
   }
 
   public ngOnInit(): void {
