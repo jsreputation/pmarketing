@@ -1,5 +1,6 @@
+import { WhistlerVouchersService } from './../vouchers/whistler-vouchers.service';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -7,14 +8,14 @@ import {
   ITree,
   IPinata,
   defaultPinata,
-  // IGameOutcome,
   IPlayOutcome
 } from './game.model';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
+import { IVoucher } from '../vouchers/models/voucher.model';
 
 const enum GameType {
   shakeTheTree = 'shake',
@@ -50,27 +51,55 @@ interface AttbsObjEntity {
   urn: string;
 }
 
+interface AttbsObjTrans {
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  engagement_id: number;
+  campaign_entity_id: number;
+  user_id: number;
+  results: ResultsObj;
+}
+
+interface ResultsObj {
+    id: number;
+    type: string;
+    attributes: {
+        campaign_entity_id: number;
+        source_type: number;
+        source_id: number;
+        urn: string;
+        created_at: string;
+        updated_at: string;
+        results: Outcome[];
+    };
+}
+
 interface GameDisplayProperties {
   title: string;
   button: string;
   sub_title: string;
-  // nooutcome?: Outcome;
-  // outcome?: Outcome;
+  nooutcome?: Outcome;
+  outcome?: Outcome;
   background_image?: string;
 }
 
-// interface Outcome {
-//   button_text: string;
-//   description: string;
-//   title: string;
-//   type?: string;
-//   value?: {
-//     file: string;
-//     filename: string;
-//     image_id: number;
-//     image_url: string;
-//   };
-// }
+interface Outcome {
+  id: number;
+  type: string;
+  attributes: {
+    source_type: string;
+    source_id: number;
+    urn: string;
+    created_at: string;
+    updated_at: string;
+    code: string;
+    status: string;
+    start_date: string;
+    end_date: string;
+    assigned_to_id: number
+  };
+}
 
 interface TreeDisplayProperties extends GameDisplayProperties {
   tree_img_url: string;
@@ -94,7 +123,8 @@ export class WhistlerGameService implements IGameService {
   private hostName: string;
   constructor(
     private http: HttpClient,
-    config: Config) {
+    config: Config,
+    private wVouchSvc: WhistlerVouchersService) {
     this.hostName = config.apiHost as string;
   }
 
@@ -130,15 +160,6 @@ export class WhistlerGameService implements IGameService {
       texts.button = attributes.display_properties.button;
     }
 
-    // const results: { [key: string]: IGameOutcome } = {};
-
-    // if (attributes.display_properties.outcome) {
-    //   results.outcome = WhistlerGameService.outcomeToGameOutcome(attributes.display_properties.outcome);
-    // }
-    // if (attributes.display_properties.nooutcome) {
-    //   results.noOutcome = WhistlerGameService.outcomeToGameOutcome(attributes.display_properties.nooutcome);
-    // }
-
     return {
       id: +game.id,
       type,
@@ -149,39 +170,48 @@ export class WhistlerGameService implements IGameService {
     };
 
   }
-  // not implemented yet
-  // private static outcomeToGameOutcome(outcome: Outcome): IGameOutcome {
-  //   const res: IGameOutcome = {
-  //     title: outcome.title,
-  //     subTitle: outcome.description,
-  //     button: outcome.button_text
-  //   };
-  //   if (outcome.type === 'image') {
-  //     res.image = outcome.value.image_url;
-  //   }
-  //   return res;
-  // }
+
+  private static subscribeAndRevealVouch(voucher$: Observable<IVoucher>): IVoucher {
+    let voucher: IVoucher;
+    voucher$.subscribe(v => {
+      voucher = v;
+    });
+    return voucher;
+  }
 
   // @ts-ignore
-  public play(id: number): Observable<IPlayOutcome> {
-    return throwError('not implemented yet');
-    // return this.http.put<IWPlayResponse>(`${this.hostName}/game/engagements/${id}`, null)
-    //   .pipe(
-    //     pluck('data'),
-    //     map(game => WhistlerGameService.WGameToGame(game))
-    //   );
+  public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
+    const body = {
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: gameId,
+          campaign_entity_id: campaignId }
+      }
+    };
+    let result = this.http.post<IJsonApiItemPayload<AttbsObjTrans>>
+    (`${this.hostName}/game/transactions`, body, {
+      headers: {'Content-Type': 'application/vnd.api+json'}
+    }).pipe(
+        map(res => {
+          return {
+            vouchers:
+            res.data.attributes.results.attributes.results.map(v => {
+              return WhistlerGameService.subscribeAndRevealVouch(this.wVouchSvc.get(v.id));
+            }),
+            rawPayload: res
+          };
+        })
+    );
+    console.log(result);
   }
-  // using the gameID = engagementID
-  public get(gameId: number): Observable<IGame> {
-    return this.http.get<IJsonApiItemPayload<AttbsObjGame>>(`${this.hostName}/game/engagements/${gameId}`)
-      .pipe(
-        map(res => res.data),
-        map(game => WhistlerGameService.WGameToGame(game)),
-        // catchError(() => {
-        //   // ignore any errors and hope next one succeed
-        //   return empty();
-        // })
-      );
+
+  public get(engagementId: number): Observable<IGame> {
+    return this.http.get<IJsonApiItemPayload<AttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
+    .pipe(
+      map(res => res.data),
+      map(game => WhistlerGameService.WGameToGame(game))
+    );
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
@@ -190,8 +220,8 @@ export class WhistlerGameService implements IGameService {
         map(res => res.data.attributes),
         map(correctEntityAttribute => correctEntityAttribute.engagement_id),
         switchMap(correctId => this.get(correctId)),
-        map((game: IGame) => [game])
-        // catchError(err => throwError(err))
+        map((game: IGame) => [game]),
+        catchError(err => throwError(err))
       );
   }
 

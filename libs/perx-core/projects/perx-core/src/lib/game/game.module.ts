@@ -1,3 +1,4 @@
+import { WhistlerVouchersService } from './../vouchers/whistler-vouchers.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -8,10 +9,10 @@ import { Config } from '../config/config';
 import { IGameService } from './igame.service';
 import { WhistlerGameService } from './whist-game.service';
 
-export function gameServiceFactory(http: HttpClient, config: Config): IGameService {
+export function gameServiceFactory(http: HttpClient, config: Config, wVouchSvc: WhistlerVouchersService): IGameService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerGameService(http, config);
+    return new WhistlerGameService(http, config, wVouchSvc);
   }
   return new V4GameService(http, config);
 }
