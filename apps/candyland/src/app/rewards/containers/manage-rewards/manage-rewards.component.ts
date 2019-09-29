@@ -54,24 +54,27 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.form.valid) {
-      let request: Observable<any>;
-      const form: IRewardEntityForm = this.form.value;
-      form.rewardInfo.organizationId = this.selectedMerchant && this.selectedMerchant !== null ? this.selectedMerchant.id : null;
-      if (this.id) {
-        request = this.rewardsService.updateReward(this.id, form);
-      } else {
-        request = this.rewardsService.createReward(form);
-      }
-      request.subscribe(
-        res => {
-          if (res && res.data.id) {
-            this.router.navigateByUrl('/rewards/detail/' + res.data.id);
-          }
-        },
-        error => console.warn('error', error)
-      );
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+    let request: Observable<any>;
+    const form: IRewardEntityForm = this.form.value;
+    form.rewardInfo.organizationId = this.selectedMerchant && this.selectedMerchant !== null ? this.selectedMerchant.id : null;
+    if (this.id) {
+      request = this.rewardsService.updateReward(this.id, form);
+    } else {
+      request = this.rewardsService.createReward(form);
+    }
+    request.subscribe(
+      res => {
+        if (res && res.data.id) {
+          this.router.navigateByUrl('/rewards/detail/' + res.data.id);
+        }
+      },
+      error => console.warn('error', error)
+    );
+
   }
 
   public openDialogCreateMerchant(): void {
