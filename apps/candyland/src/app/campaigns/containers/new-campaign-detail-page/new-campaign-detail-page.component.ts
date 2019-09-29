@@ -8,7 +8,6 @@ import { ToggleControlService } from '@cl-shared/providers/toggle-control.servic
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -19,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
+  public isFirstInit: boolean = true;
   @Input()
   public pools;
 
@@ -49,15 +49,15 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService,
-    private route: ActivatedRoute
   ) {
     super(2, store, stepConditionService, cd);
+    this.initForm();
   }
 
   public ngOnInit(): void {
-    this.initForm();
     super.ngOnInit();
     this.initPools();
+    this.initData();
   }
 
   public ngOnDestroy(): void {
@@ -65,7 +65,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
-    const campaignId = this.route.snapshot.params.id;
+    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+  }
+
+  private initData(): void {
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -80,16 +83,16 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
           this.updateForm();
         }
       });
-    if (!campaignId) {
-      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
-    } else {
-      this.store.currentCampaign$
-        .asObservable()
-        .pipe(untilDestroyed(this))
-        .subscribe(data => {
+
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        if (data && this.isFirstInit) {
+          this.isFirstInit = false;
           this.form.patchValue(data);
-        });
-    }
+        }
+      });
   }
 
   private updateForm(): void {
