@@ -4,7 +4,7 @@ import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapte
 import { Merchant, MerchantBranch } from '@cl-core/http-adapters/merchant';
 import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class MerchantsService implements ITableService {
       );
   }
 
-  public getMerchant(id: string): Observable<Merchant> {
-    return this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' });
+  public getMerchant(id: string): Observable<Merchant | null> {
+    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
   }
 
   public createMerchant(data: Merchant): Observable<number> {

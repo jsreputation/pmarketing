@@ -64,11 +64,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe(() => { });
   }
 
-  public updateRewardImage(image: WindowBase64): void {
-    // TODO: integrate post request when avaible endpoint for images
-    console.log(image);
-  }
-
   get availableVouchers(): number {
     if (!this.data.vouchersStatistics) {
       this.data.vouchersStatistics = [];
@@ -86,7 +81,11 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     $id
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
-        switchMap(reward => combineLatest(of(reward), this.merchantsService.getMerchant(reward.rewardInfo.organizationId))),
+        switchMap(reward => {
+          const merchantQuery = reward.rewardInfo.organizationId !== null ?
+            this.merchantsService.getMerchant(reward.rewardInfo.organizationId) : of(null);
+          return combineLatest(of(reward), merchantQuery);
+        }),
       ).subscribe(
         ([reward, merchant]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
