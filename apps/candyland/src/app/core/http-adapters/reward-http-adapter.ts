@@ -88,7 +88,7 @@ export class RewardHttpAdapter {
       type: 'entities',
       attributes: {
         name: data.name,
-        image_url: 'https://lorempixel.com/300/300',
+        image_url: data.rewardInfo.image,
         reward_type: data.rewardInfo.rewardType,
         category: data.rewardInfo.category,
         redemption_type: data.rewardInfo.redemptionType,
@@ -165,7 +165,7 @@ export class RewardHttpAdapter {
       type: 'entities',
       attributes: {
         name: data.name,
-        image_url: 'https://lorempixel.com/300/300',
+        image_url: data.rewardInfo.image,
         reward_type: data.rewardInfo.rewardType,
         category: data.rewardInfo.category,
         redemption_type: data.rewardInfo.redemptionType,
