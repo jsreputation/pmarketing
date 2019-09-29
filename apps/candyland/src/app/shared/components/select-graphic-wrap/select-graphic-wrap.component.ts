@@ -27,6 +27,10 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
   ]
 })
 export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor, OnDestroy {
+  @Input() public graphicList: IGraphic[];
+  @Input() public showUpload = true;
+  @Input() public isRequired: boolean;
+  @Output() private selectGraphic = new EventEmitter<IGraphic>();
 
   public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
@@ -41,10 +45,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   constructor(private fb: FormBuilder,
               private cd: ChangeDetectorRef) {
   }
-
-  @Input() public graphicList: IGraphic[];
-  @Input() public showUpload = true;
-  @Output() private selectGraphic = new EventEmitter<IGraphic>();
 
   public selectedGraphic: IGraphic;
   public graphicForm: FormGroup;

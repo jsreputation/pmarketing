@@ -8,7 +8,8 @@ import { UploadFileService } from '@cl-core-services';
   templateUrl: './upload-graphic.component.html',
   styleUrls: ['./upload-graphic.component.scss'],
   providers: [
-    {       provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => UploadGraphicComponent),
       multi: true
     }
@@ -17,8 +18,15 @@ import { UploadFileService } from '@cl-core-services';
 export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public placeholder = 'Recommended format: .JPG or .PNG';
   @Input() public classList = '';
-  @Input() public selectGraphic: any;
-  @Input() public selectedGraphic: any;
+  @Input() public isRequired: boolean;
+
+  @Input()
+  public set selectGraphic(value: any) {
+    if (value) {
+      this.message = null;
+      this._selectGraphic = value;
+    }
+  };
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
   public lock: boolean;
@@ -26,20 +34,26 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   public imgURL: any;
   public message: string;
   public loadedImg = false;
+  // tslint:disable
+  public _selectGraphic: any;
 
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => {
+  };
+  public onTouch: any = () => {
+  };
 
   public set setGraphic(val: any) {
-    if (val !== undefined ) {
+    if (val !== undefined) {
       this.onTouch(val);
       this.imgURL = val;
+      this.message = null;
     }
   }
 
   constructor(private sanitizer: DomSanitizer,
               private cd: ChangeDetectorRef,
-              private uploadFileService: UploadFileService) {}
+              private uploadFileService: UploadFileService) {
+  }
 
   public preview(files): void {
     this.message = null;
@@ -102,6 +116,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
       }, err => {
         console.warn(err);
         this.loadedImg = false;
+        this.setSelectedGraphic(null);
         this.message = 'Image haven\'t loaded successfully!';
         this.cd.markForCheck();
       });

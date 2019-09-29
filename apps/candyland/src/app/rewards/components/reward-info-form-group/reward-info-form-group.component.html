@@ -1,6 +1,8 @@
 <!--image-->
 <div class="card-row new-reward-image-block">
-  <cl-upload-graphic [formControl]="formGroup.get('image')"></cl-upload-graphic>
+  <cl-upload-graphic [formControl]="formGroup.get('image')"
+                     [isRequired]="formGroup.get('image').hasError('required') && formGroup.get('image').touched">
+  </cl-upload-graphic>
 </div>
 <div class="">
   <div class="input-group">
