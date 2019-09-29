@@ -189,7 +189,7 @@ export class WhistlerGameService implements IGameService {
           campaign_entity_id: campaignId }
       }
     };
-    let result = this.http.post<IJsonApiItemPayload<AttbsObjTrans>>
+    return this.http.post<IJsonApiItemPayload<AttbsObjTrans>>
     (`${this.hostName}/game/transactions`, body, {
       headers: {'Content-Type': 'application/vnd.api+json'}
     }).pipe(
@@ -203,7 +203,6 @@ export class WhistlerGameService implements IGameService {
           };
         })
     );
-    console.log(result);
   }
 
   public get(engagementId: number): Observable<IGame> {
