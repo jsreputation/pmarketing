@@ -19,10 +19,12 @@ export class AudiencesListComponent implements AfterViewInit, OnDestroy {
   public DATE_FORMAT: string = 'mediumDate';
   @Input() public dataSource: CustomDataSource<IAudiences>;
   @Input() public displayedColumns: string[] = ['name', 'updated', 'numberUsers']; // 'format' 'status'
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
   public ngAfterViewInit(): void {
-    this.dataSource.registerSort(this.sort);
+    if (this.dataSource) {
+      this.dataSource.registerSort(this.sort);
+    }
   }
 
   public ngOnDestroy(): void {

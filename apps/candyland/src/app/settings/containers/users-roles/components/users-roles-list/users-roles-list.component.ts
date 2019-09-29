@@ -8,11 +8,11 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'mediumDate';
+  public DATE_FORMAT: string = 'mediumDate';
   @Input() public dataSource: CustomDataSource<IAMUser>;
-  @Input() public displayedColumns = ['username', 'role', 'created_at', 'actions'];
+  @Input() public displayedColumns: string[] = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public delete = new EventEmitter<string>();
   @Output() public edit = new EventEmitter<IAMUser>();
 

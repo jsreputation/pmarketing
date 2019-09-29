@@ -16,14 +16,18 @@ cl-table-filters {
     flex-basis: ($horizontal-padding * 10);
     width: 100%;
 
+    &.full-block {
+      flex-basis: 100%;
+      max-width: initial !important;
+    }
+
+    &.half-block {
+      flex-basis: ($horizontal-padding * 5);
+    }
+
     &.search-block {
       flex-grow: 1.5;
       margin-right: auto;
-    }
-
-    &.span-100 {
-      flex-basis: 100%;
-      max-width: initial !important;
     }
   }
 }
@@ -32,6 +36,15 @@ cl-table-filters {
   .filters {
     & > * {
       max-width: ($horizontal-padding * 17.5);
+      justify-content: flex-end;
+
+      &.half-block {
+        max-width: ($horizontal-padding * 8.75);
+      }
     }
   }
+}
+
+cl-table-filters + cl-button {
+  margin-left: ($horizontal-padding * 0.5);
 }

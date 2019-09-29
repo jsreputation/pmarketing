@@ -21,7 +21,8 @@ import {
   MatSelectModule,
   MatSlideToggleModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { RewardInfoFormGroupComponent } from './components/reward-info-form-group/reward-info-form-group.component';
 import { RewardMerchantCardComponent } from 'src/app/rewards/components/reward-merchant-card/reward-merchant-card.component';
@@ -90,6 +91,7 @@ import {
     MatCheckboxModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,

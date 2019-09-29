@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -15,10 +15,11 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy, OnChanges {
   public form: FormGroup;
   public config: any;
-  public campaign;
+  @Input()
+  public campaignDetail;
   public pools;
 
   public get campaignInfo(): AbstractControl | null {
@@ -58,6 +59,12 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     this.initPools();
   }
 
+  public ngOnChanges(change: SimpleChanges): void {
+    if (change.campaignDetail) {
+      this.initForm();
+    }
+  }
+
   public ngOnDestroy(): void {
   }
 
@@ -69,14 +76,47 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(() => {
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
       });
-    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    if (this.campaignDetail) {
+      this.form.patchValue(
+        {
+          campaignInfo: {
+            startTime: `${(new Date(this.campaignDetail.start_date_time)).toLocaleString('en-US',
+              {
+                hour: 'numeric', minute: 'numeric', hour12: true
+              })
+              }`,
+            startDate: new Date(this.campaignDetail.start_date_time),
+            goal: this.campaignDetail.goal,
+            disabledEndDate: !this.campaignDetail.end_date_time,
+            endDate: new Date(this.campaignDetail.end_date_time),
+            endTime: `${(new Date(this.campaignDetail.end_date_time)).toLocaleString('en-US',
+              {
+                hour: 'numeric', minute: 'numeric', hour12: true
+              })
+              }`
+          },
+          channel: {
+            type: this.campaignDetail.comm_channel,
+            schedule: {
+              enableRecurrence: false,
+              recurrence: {
+                repeatOn: []
+              }
+            }
+          }
+        }
+      );
+    } else {
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
   }
 
   private updateForm(): void {

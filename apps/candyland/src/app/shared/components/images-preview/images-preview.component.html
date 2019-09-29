@@ -2,5 +2,5 @@
      [ngClass]="{active: img?.id === selected?.id}"
      (click)="handlerClick()"
 >
-  <img class="image" [src]="img?.img" [alt]="img?.title">
+  <img class="image" [src]="apiCdnPath + img?.img" [alt]="img?.title">
 </div>

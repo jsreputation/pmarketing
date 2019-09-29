@@ -9,10 +9,10 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
   styleUrls: ['./list-merchant-view.component.scss']
 })
 export class ListMerchantViewComponent implements AfterViewInit {
-  public DATE_FORMAT = 'mediumDate';
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  public DATE_FORMAT: string = 'mediumDate';
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Input() public dataSource: CustomDataSource<Merchant>;
-  @Input() public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
+  @Input() public displayedColumns: string[] = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @Input() public selectable = false;
   @Output() public itemAction = new EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: Merchant }>();
   @Output() public selectedMerchant: EventEmitter<Merchant> = new EventEmitter<Merchant>();
@@ -41,14 +41,14 @@ export class ListMerchantViewComponent implements AfterViewInit {
   }
 
   public editItem(element: Merchant): void {
-    this.itemAction.emit({action: 'edit', merchant: element});
+    this.itemAction.emit({ action: 'edit', merchant: element });
   }
 
   public duplicateItem(element: Merchant): void {
-    this.itemAction.emit({action: 'duplicate', merchant: element});
+    this.itemAction.emit({ action: 'duplicate', merchant: element });
   }
 
   public deleteItem(element: Merchant): void {
-    this.itemAction.emit({action: 'delete', merchant: element});
+    this.itemAction.emit({ action: 'delete', merchant: element });
   }
 }
