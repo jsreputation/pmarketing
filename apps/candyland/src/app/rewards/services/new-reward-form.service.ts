@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
@@ -9,13 +9,13 @@ export class NewRewardFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      name: [''],
+      name: ['', [Validators.required]],
       rewardInfo: this.fb.group({
         image: [],
-        rewardType: [],
-        category: [],
+        rewardType: this.fb.control(null, [Validators.required]),
+        category: this.fb.control(null, [Validators.required]),
         redemptionType: [],
-        cost: [],
+        cost: this.fb.control(null, [Validators.required]),
         description: [],
         termsAndCondition: []
       }),
