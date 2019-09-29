@@ -1,32 +1,10 @@
 @import "variables";
 @import '~@angular/material/theming';
 
-.active-item {
-  border-radius: $border-radius-lg !important;
-  position: relative;
-  border: solid 1px $secondary-color !important;
-
-  &::after {
-    content: '';
-    opacity: 1;
-    display: block;
-    position: absolute;
-    top: -0.1rem;
-    right: -0.1rem;
-    height: 4.2rem;
-    width: 4.2rem;
-    background: url("/assets/images/previews/triangle.png") no-repeat;
-  }
-}
-
 .item {
   justify-content: space-between;
   position: relative;
   border-radius: $border-radius-lg !important;
-
-  &.active {
-    @extend .active-item;
-  }
 
   &.shadow {
     @include mat-elevation(2);
@@ -38,13 +16,24 @@
   margin-bottom: $vertical-padding;
   display: grid;
   grid-gap: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
-  grid-template-columns: repeat(auto-fill, minmax(36rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
   justify-content: start;
   align-items: start;
   // position: relative;
 
   & > .mat-radio-button {
-    @extend .item;
+    @include check-select;
+
+    border-radius: $border-radius-lg !important;
+
+    &.mat-radio-checked {
+      border-color: $secondary-color;
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+    }
 
     .mat-radio-label-content {
       padding: 0;
@@ -54,10 +43,6 @@
 
   .mat-radio-container {
     display: none;
-  }
-
-  .mat-radio-checked {
-    @extend .active-item;
   }
 
   &.shadow {

@@ -18,7 +18,9 @@ describe('SurveyComponent', () => {
         ConfigModule.forRoot({}),
         MatCardModule,
         MatButtonModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
         MatProgressBarModule,
         PerxSurveyModule
       ],

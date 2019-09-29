@@ -21,11 +21,13 @@ export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
   @Input() public dataSource: CustomDataSource<IUser>;
   @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'phone', 'audienceList', 'actions']; // 'state'
   @Input() public config: any;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public clickManageList: EventEmitter<number> = new EventEmitter();
 
   public ngAfterViewInit(): void {
-    this.dataSource.registerSort(this.sort);
+    if (this.dataSource) {
+      this.dataSource.registerSort(this.sort);
+    }
   }
 
   public manageList(id: number): void {

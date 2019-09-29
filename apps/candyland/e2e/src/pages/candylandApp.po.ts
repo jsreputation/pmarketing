@@ -58,7 +58,7 @@ export class LoginAppPage {
   }
 
   public getUserAccount(): string {
-    return 'Admin_2';
+    return 'Admin';
   }
 
 }
