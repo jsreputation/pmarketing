@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { RewardsService } from '@cl-core/services';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
@@ -21,7 +21,7 @@ export class SelectRewardPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<SelectRewardPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
     private rewardsService: RewardsService,
     public cd: ChangeDetectorRef
   ) {
@@ -38,8 +38,7 @@ export class SelectRewardPopupComponent {
 
   public add(): void {
     if (this.selectedReward) {
-      const oneSelectedReward = this.dataSource.data.find((reward) => reward.id === this.selectedReward.id);
-      this.dialogRef.close(oneSelectedReward);
+      this.dialogRef.close(this.selectedReward);
     }
   }
 }
