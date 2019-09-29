@@ -31,7 +31,7 @@ export class ImageControlValue {
   public static getPrepareValue(val: any, graphicList: IGraphic[]): IGraphic | any {
     if (graphicList) {
       for (const item of graphicList) {
-        if ( ImageControlValue.prepareImage(item.fullImg) === val || ImageControlValue.prepareImage(item.img) === val) {
+        if ( ImageControlValue.prepareImage(item.fullImg).includes(val)  || ImageControlValue.prepareImage(item.img).includes(val)) {
           return item;
         }
       }
