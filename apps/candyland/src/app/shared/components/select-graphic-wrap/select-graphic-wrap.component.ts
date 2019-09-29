@@ -9,7 +9,7 @@ import {
   Output
 } from '@angular/core';
 
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -38,7 +38,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
       this.handlerPatchUploadImage(currentValue);
       this.patchDefaultControl(currentValue);
       this.selectedGraphic = currentValue;
-      this.onTouch(currentValue);
     }
   }
 
@@ -47,7 +46,6 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   public selectedGraphic: IGraphic;
-  public graphicForm: FormGroup;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   public destroy$ = new Subject();
@@ -55,7 +53,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   public onChange: any = () => {
   }
-  public onTouch: any = () => {
+  public onTouched: any = () => {
   }
 
   public ngOnInit(): void {
@@ -83,6 +81,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.selectedGraphic = graphic;
     this.selectGraphic.emit(graphic);
     this.onChange(graphic);
+    this.onTouched();
     this.cd.markForCheck();
   }
 
@@ -91,7 +90,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   public registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+    this.onTouched = fn;
   }
 
   public setDisabledState(isDisabled: boolean): void {

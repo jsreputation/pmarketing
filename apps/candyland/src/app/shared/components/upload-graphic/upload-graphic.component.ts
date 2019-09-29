@@ -26,7 +26,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
       this.message = null;
       this._selectGraphic = value;
     }
-  };
+  }
 
   @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
   public lock: boolean;
@@ -39,12 +39,12 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
   public onChange: any = () => {
   };
-  public onTouch: any = () => {
+  public onTouched: any = () => {
   };
 
   public set setGraphic(val: any) {
     if (val !== undefined) {
-      this.onTouch(val);
+      this.onTouched(val);
       this.imgURL = val;
       this.message = null;
     }
@@ -58,12 +58,13 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   public preview(files): void {
     this.message = null;
     if (files.length === 0) {
+      this.setError('Empty file.');
       return;
     }
 
     const mimeName = files[0].name;
     if (!(/\.(jpg|jpeg|png)$/i).test(mimeName)) {
-      this.message = 'Only .JPG or .PNG are supported.';
+      this.setError('Only .JPG or .PNG are supported.');
       return;
     }
     this.imagePath = files;
@@ -82,11 +83,14 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   public clear(): void {
     this.imgURL = null;
     this.loadedImg = false;
+    this.onChange(null);
+    this.onTouched();
   }
 
   public setSelectedGraphic(graphic: any): void {
     this.selectUploadGraphic.emit(graphic);
     this.onChange(graphic);
+    this.onTouched();
   }
 
   public registerOnChange(fn: any): void {
@@ -94,7 +98,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   public registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+    this.onTouched = fn;
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -108,18 +112,25 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   private uploadImage(file: File): void {
     this.uploadFileService.uploadFile(file)
       .subscribe((res: IUploadedFile) => {
-        this.imgURL = res.url;
-        this.loadedImg = true;
-        this.setSelectedGraphic(res.url);
-        this.message = null;
-        this.cd.markForCheck();
-      }, err => {
-        console.warn(err);
-        this.loadedImg = false;
-        this.setSelectedGraphic(null);
-        this.message = 'Image haven\'t loaded successfully!';
-        this.cd.markForCheck();
-      });
+          this.imgURL = res.url;
+          this.loadedImg = true;
+          this.setSelectedGraphic(res.url);
+          this.message = null;
+          this.cd.markForCheck();
+        },
+        (err: Error) => {
+          this.setError('Image haven\'t loaded successfully!', err.message);
+          this.cd.markForCheck();
+        });
   }
 
+  private setError(message: string, serverError?: string) {
+    this.onTouched();
+    this.loadedImg = false;
+    this.setSelectedGraphic(null);
+    this.message = message;
+    if (serverError) {
+      console.warn(serverError);
+    }
+  }
 }
