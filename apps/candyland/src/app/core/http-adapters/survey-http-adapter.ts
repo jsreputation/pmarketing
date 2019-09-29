@@ -26,7 +26,7 @@ export class SurveyHttpAdapter {
           card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
           background_img_url: ImageControlValue.getImagePath(data.background),
           questions: data.questions,
-          // button: data.buttonText
+          button: data.buttonText
         }
       }
     };

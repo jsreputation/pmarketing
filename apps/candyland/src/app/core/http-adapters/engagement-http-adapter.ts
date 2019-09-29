@@ -227,7 +227,7 @@ export class EngagementHttpAdapter {
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
           closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
-          // background_img_url:  ImageControlValue.getImagePath(data.background),
+          background_img_url: ImageControlValue.getImagePath(data.background),
         }
       }
     };
