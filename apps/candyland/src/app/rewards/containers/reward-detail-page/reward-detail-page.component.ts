@@ -86,7 +86,11 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     $id
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
-        switchMap(reward => combineLatest(of(reward), this.merchantsService.getMerchant(reward.rewardInfo.organizationId))),
+        switchMap(reward => {
+          const merchantQuery = reward.rewardInfo.organizationId !== null ?
+            this.merchantsService.getMerchant(reward.rewardInfo.organizationId) : of(null);
+          return combineLatest(of(reward), merchantQuery);
+        }),
       ).subscribe(
         ([reward, merchant]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
