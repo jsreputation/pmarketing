@@ -1,12 +1,8 @@
 <div class="page-header full-with">
-  <div class="title">
-    {{campaign.name}}
-  </div>
-  <div class="btn-group">
-    <cl-button classList="primary"
-               (click)="comeBack()"> Come Back
-    </cl-button>
-  </div>
+  <h1 class="title">{{campaign.name}}</h1>
+  <cl-button classList="primary"
+              (click)="comeBack()"> Come Back
+  </cl-button>
 </div>
 <section class="content">
   <cl-new-campaign-review-page></cl-new-campaign-review-page>
