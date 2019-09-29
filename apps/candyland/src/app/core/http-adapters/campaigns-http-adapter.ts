@@ -54,16 +54,17 @@ export class CampaignsHttpAdapter {
         // labels: campaignData.labels
       },
       // TODO, Andrew, need API support for channel data
-      // channel: {
-      //   type: campaignData.comm.event.channel,
-      //   message: campaignData.comm.template.content,
-      //   schedule: {
-      //     sendDate: new Date(campaignData.comm.event.send_at),
-      //     sendTime: moment(campaignData.comm.event.send_at).format('LT'),
-      //     enableRecurrence: false,
-      //     recurrence: { times: null, period: null, repeatOn: [] }
-      //   }
-      // },
+      channel: {
+        type: campaignData.comm_channel,
+        // type: campaignData.comm.event.channel,
+        // message: campaignData.comm.template.content,
+        // schedule: {
+        //   sendDate: new Date(campaignData.comm.event.send_at),
+        //   sendTime: moment(campaignData.comm.event.send_at).format('LT'),
+        //   enableRecurrence: false,
+        //   recurrence: { times: null, period: null, repeatOn: [] }
+        // }
+      },
       audience: { type: 'select', select: [campaignData.pool_id], file: null },
       template: {},
       rewardsList: campaignOutcomes,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -8,6 +8,7 @@ import { ToggleControlService } from '@cl-shared/providers/toggle-control.servic
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -15,11 +16,10 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy, OnChanges {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
   @Input()
-  public campaignDetail;
   public pools;
 
   public get campaignInfo(): AbstractControl | null {
@@ -48,21 +48,16 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private audiencesService: AudiencesService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
-    private toggleControlService: ToggleControlService
+    private toggleControlService: ToggleControlService,
+    private route: ActivatedRoute
   ) {
     super(2, store, stepConditionService, cd);
-    this.initForm();
   }
 
   public ngOnInit(): void {
+    this.initForm();
     super.ngOnInit();
     this.initPools();
-  }
-
-  public ngOnChanges(change: SimpleChanges): void {
-    if (change.campaignDetail) {
-      this.initForm();
-    }
   }
 
   public ngOnDestroy(): void {
@@ -70,6 +65,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
+    const campaignId = this.route.snapshot.params.id;
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -84,38 +80,15 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
           this.updateForm();
         }
       });
-    if (this.campaignDetail) {
-      this.form.patchValue(
-        {
-          campaignInfo: {
-            startTime: `${(new Date(this.campaignDetail.start_date_time)).toLocaleString('en-US',
-              {
-                hour: 'numeric', minute: 'numeric', hour12: true
-              })
-              }`,
-            startDate: new Date(this.campaignDetail.start_date_time),
-            goal: this.campaignDetail.goal,
-            disabledEndDate: !this.campaignDetail.end_date_time,
-            endDate: new Date(this.campaignDetail.end_date_time),
-            endTime: `${(new Date(this.campaignDetail.end_date_time)).toLocaleString('en-US',
-              {
-                hour: 'numeric', minute: 'numeric', hour12: true
-              })
-              }`
-          },
-          channel: {
-            type: this.campaignDetail.comm_channel,
-            schedule: {
-              enableRecurrence: false,
-              recurrence: {
-                repeatOn: []
-              }
-            }
-          }
-        }
-      );
-    } else {
+    if (!campaignId) {
       this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    } else {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          this.form.patchValue(data);
+        });
     }
   }
 

@@ -40,7 +40,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.resetCampaign();
     this.store.currentCampaign$
       .asObservable()
       .pipe(untilDestroyed(this))
@@ -161,11 +160,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       switchMap(id => this.campaignsService.getCampaign(id))
     ).subscribe(
       campaign => {
-        this.campaign = campaign;
+        this.campaign = Object.assign({}, campaign);
+        this.store.initCampaign(campaign);
         this.form.patchValue({
           name: this.campaign.name
         });
-        this.store.updateCampaign(this.campaign);
       },
       () => this.router.navigateByUrl('/campaigns')
     );
