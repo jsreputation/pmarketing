@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-reward-info-preview',
@@ -11,13 +9,11 @@ import { distinctUntilChanged, filter } from 'rxjs/operators';
 })
 export class RewardInfoPreviewComponent implements OnInit, OnDestroy {
   @Input() public data: any;
-  @Output() public updateRewardImage: EventEmitter<WindowBase64> = new EventEmitter<WindowBase64>();
 
   public imageControl = new FormControl();
 
   public ngOnInit(): void {
     this.initRewardImage();
-    this.handleRewardImageChanges();
   }
 
   public ngOnDestroy(): void {
@@ -27,13 +23,5 @@ export class RewardInfoPreviewComponent implements OnInit, OnDestroy {
     if (this.data && this.data.image) {
       this.imageControl.patchValue(this.data.image);
     }
-  }
-
-  private handleRewardImageChanges(): void {
-    this.imageControl.valueChanges.pipe(
-      untilDestroyed(this),
-      distinctUntilChanged(),
-      filter(Boolean)
-    ).subscribe((image: WindowBase64) => this.updateRewardImage.emit(image));
   }
 }

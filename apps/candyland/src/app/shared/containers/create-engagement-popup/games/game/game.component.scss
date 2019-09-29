@@ -2,25 +2,26 @@
 
 .game {
   &-wrap {
+    @include check-select;
+
+    border-radius: $border-radius-lg;
     cursor: pointer;
     position: relative;
     width: ($horizontal-padding * 5);
     height: ($vertical-padding * 5);
-    background-color: $light-gray;
+    background-color: $lightest-gray;
     padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-radius: $border-radius-lg;
+    align-items: stretch;
     box-sizing: border-box;
-    border: 1px solid transparent;
   }
 
   &-wrap-img {
     margin: (-($vertical-padding * 0.5)) (-($horizontal-padding * 0.5)) auto;
 
     img {
-      max-width: 100%;
+      width: 100%;
       height: auto;
     }
   }

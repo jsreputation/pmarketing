@@ -5,6 +5,7 @@ declare interface ITenantsProperties {
     'style': string;
     'accent': string;
     'buttonColor': string;
+    'buttonTextColor': string;
     'font': string;
     'headerColor': string;
     'logo': string;

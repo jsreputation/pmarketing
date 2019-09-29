@@ -20,7 +20,15 @@ export class PinataHttpService {
     }>('assets/actives/pinata/pinata-data.json');
   }
 
-  public createPinata(data: any): any {
-    return this.http.post(ApiConfig.engagementsPath + '/', data);
+  public createPinata(data: any): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
+  }
+
+  public updatePinata(id: string, data: IResponseApi<any>): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  }
+
+  public getPinata(id: string): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id);
   }
 }

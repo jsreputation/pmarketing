@@ -4,7 +4,7 @@
       matInput
       [matDatepicker]="startDatePicker"
       [disabled]="disabledState"
-      placeholder="Choose start date"
+      placeholder="Start Date"
       formControlName="begin"
       [max]="maxDate">
     <mat-datepicker-toggle matPrefix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -17,7 +17,7 @@
       [matDatepicker]="endDatePicker"
       [disabled]="disabledState"
       formControlName="end"
-      placeholder="Choose end date"
+      placeholder="End Date"
       [min]="minDate">
     <mat-datepicker #endDatePicker></mat-datepicker>
   </mat-form-field>

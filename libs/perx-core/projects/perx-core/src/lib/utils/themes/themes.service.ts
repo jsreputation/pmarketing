@@ -18,7 +18,8 @@ interface WhistlerISetting {
   currency: number;
   time_zone: number;
   'theme.accent': string;
-  'theme.button_color': string;
+  'theme.button_text_color': string;
+  'theme.button_background_color': string;
   'theme.font': string;
   'theme.header_color': string;
   'theme.logo': string;
@@ -65,7 +66,8 @@ export class ThemesService {
         '--title': setting['theme.title'],
         '--accent': setting['theme.accent'],
         '--primary': setting['theme.primary'],
-        '--button_color': setting['theme.button_color'],
+        '--button_text_color': setting['theme.button_text_color'],
+        '--button_background_color': setting['theme.button_background_color'],
         '--header_color': setting['theme.header_color'],
         '--background': backgroundColor,
         '--font_color': fontColor,

@@ -1,11 +1,5 @@
 @import "variables";
 
-.reward {
-  &-list {
-    padding-top: 3.5rem;
-  }
-
-  &-list-wrapper {
-    position: relative;
-  }
+:host {
+  @include modal-size($modal-lg);
 }
