@@ -199,7 +199,7 @@ export class EngagementHttpAdapter {
         title: data.name,
         description: 'Spin and win',
         game_type: 'shake',
-        image_url: 'https://steamcommunity-a.akamaihd.net/economy/image/64vD-vz99Gh75d0LDPB0xafxvGIGZ4JlqaTIjCBH3bwEDGn1UUnad4H8OQbqscapQVxvtTYJKVgNAeDPZm67hkn8y_2GP3s/256fx256f',
+        image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
           button: data.buttonText,
@@ -219,7 +219,7 @@ export class EngagementHttpAdapter {
         type: 'game',
         title: data.name,
         game_type: 'tap',
-        image_url: 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+        image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
           button: data.buttonText,
