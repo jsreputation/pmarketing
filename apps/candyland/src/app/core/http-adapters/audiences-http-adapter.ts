@@ -147,11 +147,11 @@ export class AudiencesHttpAdapter {
     return stringDate ? new Date(stringDate) : null;
   }
 
-  public static transformVoucherAssignedToApi(sourse: string, assigned: string): any {
+  public static transformVoucherAssignedToApi(source: string, assigned: string): any {
     return {
       type: "assigneds",
-        attributes: {
-        source_id: sourse,
+      attributes: {
+        source_id: source,
         source_type: "Perx::Reward::Entity",
         assigned_to_id: assigned
       }

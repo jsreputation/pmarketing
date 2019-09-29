@@ -48,7 +48,7 @@ export class AudiencesVouchersService implements ITableService {
     return Utils.filterUniq(idList);
   }
 
-  public voucherAssigned(source, assigned): Observable<any> {
+  public voucherAssigned(source: string, assigned: string): Observable<any> {
     const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
     return this.audiencesHttpsService.voucherAssigned(sendData);
   }
