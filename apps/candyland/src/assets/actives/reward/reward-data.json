@@ -4,8 +4,8 @@
       "id": 1,
       "type": "bg1",
       "title": "icon",
-      "img": "assets/images/reward/background/bg-1.png",
-      "fullImg": "assets/images/reward/background/full_bg_1.jpg",
+      "img": "global/assets/background/stamp-bg-1.png",
+      "fullImg": "global/assets/background/full_bg_1.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -13,8 +13,8 @@
       "id": 2,
       "type": "bg2",
       "title": "icon",
-      "img": "assets/images/reward/background/bg-2.png",
-      "fullImg": "assets/images/reward/background/full_bg_2.jpg",
+      "img": "global/assets/background/stamp-bg-2.png",
+      "fullImg": "global/assets/background/full_bg_2.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -22,8 +22,8 @@
       "id": 3,
       "type": "bg3",
       "title": "icon",
-      "img": "assets/images/reward/background/bg-3.png",
-      "fullImg": "assets/images/reward/background/full_bg_3.jpg",
+      "img": "global/assets/background/stamp-bg-10.png",
+      "fullImg": "global/assets/background/full_bg_10.jpg",
       "format": ".png",
       "active": "false"
     }
@@ -33,8 +33,8 @@
       "id": 1,
       "type": "bg1",
       "title": "icon",
-      "img": "assets/images/reward/card-background/card-bg-1.png",
-      "fullImg": "assets/images/reward/card-background/card-bg-1.png",
+      "img": "global/assets/card-background/card-bg-1.png",
+      "fullImg": "global/assets/card-background/card-bg-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -42,8 +42,8 @@
       "id": 2,
       "type": "bg2",
       "title": "icon",
-      "img": "assets/images/reward/card-background/card-bg-2.png",
-      "fullImg": "assets/images/reward/card-background/full_bg_2.jpg",
+      "img": "global/assets/card-background/card-bg-2.png",
+      "fullImg": "global/assets/card-background/card-bg-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -51,9 +51,8 @@
       "id": 3,
       "type": "bg3",
       "title": "icon",
-      "img": "assets/images/reward/card-background/card-bg-3.png",
-      "fullImg": "assets/images/reward/card-background/full_bg_3.jpg",
-
+      "img": "global/assets/card-background/card-bg-3.png",
+      "fullImg": "global/assets/card-background/card-bg-3.png",
       "format": ".png",
       "active": "false"
     }

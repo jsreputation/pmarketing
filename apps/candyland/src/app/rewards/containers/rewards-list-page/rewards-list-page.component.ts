@@ -14,7 +14,8 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
 })
 export class RewardsListPageComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
-  public displayedColumns = [
+  public displayedColumns: string[] = [
+    'image',
     'name',
     'rewardType',
     'category',

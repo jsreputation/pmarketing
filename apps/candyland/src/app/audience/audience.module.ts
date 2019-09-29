@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule, MatSnackBarModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -58,6 +58,7 @@ import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,

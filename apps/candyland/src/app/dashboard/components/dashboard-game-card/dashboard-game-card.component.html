@@ -1,21 +1,16 @@
-<div class="dashboard-card-img-wrap">
+<div class="dashboard-explore-card-img-wrap">
   <img [src]="gameCard.img" alt="icon">
 </div>
-<div class="dashboard-card-content">
-  <h4 class="dashboard-card-title">
+<div class="dashboard-explore-card-content">
+  <h3 class="dashboard-explore-card-title">
     {{gameCard.title}}
-  </h4>
-  <p class="dashboard-card-description">
+  </h3>
+  <p class="dashboard-explore-card-description">
     {{gameCard.description}}
   </p>
 </div>
-<div class="dashboard-card-actions">
-  <cl-button [classList]="'ph-0 tertiary'"
-              [disableRipple]="true"
-              (click)="clickToLink(gameCard.name)"
-  >
-      <span>
-        {{gameCard.link}}
-      </span>
+<div class="dashboard-explore-card-actions">
+  <cl-button [classList]="'ph-0 tertiary'" (click)="clickToLink(gameCard.name)">
+    <span>{{gameCard.link}}</span>
   </cl-button>
 </div>

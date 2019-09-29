@@ -67,10 +67,10 @@
         </div>
 
 
-        <div *ngIf="campaign?.campaignInfo?.labels">
+        <div *ngIf="campaign?.campaignInfo?.labels" class="card-chip-row">
           <label class="card-label">Label</label>
           <div class="card-row">
-            <span class="card-chip">{{campaign?.campaignInfo?.labels}}</span>
+            <span class="card-chip" *ngFor="let label of campaign?.campaignInfo?.labels">{{label}}</span>
           </div>
         </div>
       </div>

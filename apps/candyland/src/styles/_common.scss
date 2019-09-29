@@ -8,6 +8,9 @@ html, body {
 
 body {
   margin: 0;
+}
+
+body, input, button, select {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -75,8 +78,12 @@ h1, h2, h3, h4, h5, p {
   color: $base-font-color;
 }
 
-.sub-title {
+.lead {
   @include typo-subtitle1;
+}
+
+.sub-title {
+  @include typo-subtitle1-alt;
 
   color: $secondary-color;
 }
@@ -92,6 +99,11 @@ h1, h2, h3, h4, h5, p {
     background-color: inherit;
     padding: 0;
   }
+
+  cl-tabs-filter + cl-table-filters {
+    display: block;
+    margin-top: ($vertical-padding * 0.5);
+  }
 }
 
 .row {
@@ -106,28 +118,35 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
-//BOX OUTLINED FIELDS
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
+//BOX OUTLINED FIELDS OVERRIDES
+.mat-form-field-appearance-outline {
+  .mat-form-field-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 
-.mat-form-field-appearance-outline .mat-form-field-outline-thick,
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: $primary-color;
-}
+  .mat-form-field-outline-thick,
+  &.mat-focused .mat-form-field-outline-thick {
+    color: $primary-color;
+  }
 
-.mat-form-field-appearance-outline .mat-form-field-infix {
-  padding-top: 0.5em;
-}
+  .mat-form-field-infix {
+    padding-top: 0.5em;
+  }
 
-.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: none !important;
+  .mat-select-arrow-wrapper {
+    transform: none !important;
+  }
+
+  .mat-form-field-prefix,
+  .mat-form-field-suffix {
+    top: 0.35em !important;
+  }
 }
 
 .btn-group {
   cl-button, button, a {
-    margin-right: 8px;
+    margin-right: ($horizontal-padding * 0.25);
 
     &:last-of-type {
       margin-right: 0;
@@ -145,11 +164,6 @@ h1, h2, h3, h4, h5, p {
     &:last-child {
       margin-right: 0;
     }
-  }
-
-  & > .mat-form-field {
-    width: 0;
-    flex: auto;
   }
 }
 
@@ -228,13 +242,6 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
-// Dashboard Page Commons
-.dashboard {
-  &-group-graphics {
-    padding: $vertical-padding $horizontal-padding;
-  }
-}
-
 // UTILITIES
 .sr-only {
   border: 0 !important;
@@ -247,4 +254,12 @@ h1, h2, h3, h4, h5, p {
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important;
+}
+
+.linkable {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
