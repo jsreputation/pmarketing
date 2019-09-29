@@ -4,7 +4,7 @@
   </button>
   <div class="confirm-body">
     <img class="confirm-img" [src]="data?.img || 'assets/images/campaigns/new-campaign-figure.png'">
-    <h3 class="confirm-header">{{data?.title || 'Yay! you just created a campaign'}}</h3>
+    <h3 class="confirm-header">{{data?.title || 'Yay! You just created a campaign'}}</h3>
     <p class="confirm-copy">{{data?.subTitle || 'Copy the link and share your campaign.'}}</p>
   </div>
   <div class="dialog-action" [ngSwitch]="data?.type">
