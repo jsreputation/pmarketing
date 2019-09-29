@@ -19,7 +19,8 @@
 .chart-card {
   position: relative;
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
-  flex: 1 1 calc(50% - $horizontal-padding);
+  flex: 1 1 calc(50% - #{$horizontal-padding});
+  min-height: 33rem;
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
@@ -67,10 +68,10 @@
     box-sizing: border-box;
   }
 
-  ngx-charts-bar-vertical {
-    display: block;
-    height: 100%;
-    max-height: ($vertical-padding * 10);
+  &-content {
+    display: flex;
+    position: relative;
+    height: 24rem;
     width: 100%;
   }
 
@@ -83,4 +84,9 @@
 .tabs-list-wrap + .chart-card {
   border-color: $white;
   flex-grow: 2;
+  padding: 0;
+
+  & > .chart-card-content {
+    height: 35rem;
+  }
 }

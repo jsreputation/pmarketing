@@ -1,5 +1,5 @@
 declare interface IEngagementApi {
-  id: number;
+  id: string;
   type: string;
   links: {
     self: string;
