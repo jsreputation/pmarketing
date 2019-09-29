@@ -1,29 +1,22 @@
 @import '~@angular/material/theming';
 @import "variables";
 
-$dashboard-card-img-wrap-dimensions: 9rem;
-$dashboard-card-action-width: 21rem;
-$dashboard-card-action-height: 4rem;
+$dashboard-card-img-wrap-dimensions: 8.8rem;
 
 :host {
   @include mat-elevation(1);
 
   display: flex;
-  border-radius: $border-radius;
+  flex-wrap: wrap;
+  border-radius: $border-radius-lg;
   background-color: $white;
-  padding: ($vertical-padding * 0.75) 3rem;
-  min-height: 18.5rem;
-  min-width: $dashboard-card-action-width;
-  box-sizing: border-box;
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) ($vertical-padding * 0.5);
 }
 
-.dashboard-card {
+.dashboard-explore-card {
   &-img-wrap {
-    position: relative;
-    top: 0;
-    left: -1rem;
-    flex-basis: $dashboard-card-img-wrap-dimensions;
     flex-shrink: 0;
+    flex-basis: $dashboard-card-img-wrap-dimensions;
     height: $dashboard-card-img-wrap-dimensions;
     width: $dashboard-card-img-wrap-dimensions;
   }
@@ -35,11 +28,10 @@ $dashboard-card-action-height: 4rem;
     width: 75%;
     flex: 1;
     min-width: $dashboard-card-img-wrap-dimensions;
-    min-height: calc(100% - ($dashboard-card-img-wrap-dimensions + $dashboard-card-action-height));
   }
 
   &-title {
-    @include typo-subtitle1;
+    @include typo-subtitle1-alt;
 
     color: $base-font-color;
   }
@@ -53,10 +45,9 @@ $dashboard-card-action-height: 4rem;
 
   &-actions {
     position: relative;
-    margin-top: auto;
     width: 100%;
-    height: $dashboard-card-action-height;
     display: flex;
+    align-items: flex-end;
 
     &::before {
       content: "";

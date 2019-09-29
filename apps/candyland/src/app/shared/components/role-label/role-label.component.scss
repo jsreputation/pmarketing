@@ -34,15 +34,15 @@
 
 .medium {
   .role-label-abbr {
-    width: ($thumbnail-size * 0.5);
-    height: ($thumbnail-size * 0.5);
+    width: ($thumbnail-size * 0.75);
+    height: ($thumbnail-size * 0.75);
   }
 }
 
 .small {
   .role-label-abbr {
-    width: ($thumbnail-size * 0.75);
-    height: ($thumbnail-size * 0.75);
+    width: ($thumbnail-size * 0.5);
+    height: ($thumbnail-size * 0.5);
   }
 }
 

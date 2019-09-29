@@ -20,8 +20,9 @@ export enum DefaultSetting {
   secondaryColor = '#1cd6ff',
   headerColor = '#0f69af',
   logoType = 'image',
-  buttonColor = '#0f69af',
-  headerNavbarColor = '#0f69af'
+  buttonBgColor = '#0f69af',
+  headerNavbarColor = '#0f69af',
+  buttonTextColor = '#fff'
 }
 
 export const settingsStyles: ISimpleValue[] = [{
@@ -94,7 +95,8 @@ export class SettingsService implements ITableService {
       headerNavbarColor: [null],
       logo: [null, [Validators.required]],
       logoType: ['image'],
-      button: [null]
+      button_background_color: [null],
+      button_text_color: ['#fff']
     });
   }
 
@@ -106,7 +108,8 @@ export class SettingsService implements ITableService {
     const headerNavbarColor = data['theme.header_color'] ? data['theme.header_color'] : DefaultSetting.headerNavbarColor;
     const logo = data['theme.logo'] ? data['theme.logo'] : '';
     const title = data['theme.title'] ? data['theme.title'] : '';
-    const buttonColor = data['theme.button_color'] ? data['theme.button_color'] : DefaultSetting.buttonColor;
+    const buttonBgColor = data['theme.button_background_color'] ? data['theme.button_background_color'] : DefaultSetting.buttonBgColor;
+    const buttonTextColor = data['theme.button_text_color'] ? data['theme.button_text_color'] : DefaultSetting.buttonTextColor;
     return {
       'theme.style': style,
       'theme.font': font,
@@ -115,7 +118,8 @@ export class SettingsService implements ITableService {
       'theme.header_color': headerNavbarColor,
       'theme.logo': logo,
       'theme.title': title,
-      'theme.button_color': buttonColor
+      'theme.button_background_color': buttonBgColor,
+      'theme.button_text_color': buttonTextColor
     };
   }
 
@@ -153,6 +157,13 @@ export class SettingsService implements ITableService {
       .pipe(
         map(tenants => tenants.getModels()[0]),
         tap(tenant => this.tenants = tenant)
+      );
+  }
+
+  public getTenantsSettings(): Observable<any> {
+    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+      .pipe(
+        map(response => SettingsHttpAdapter.getTenantsSettings(response)),
       );
   }
 
