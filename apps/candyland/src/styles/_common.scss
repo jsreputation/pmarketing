@@ -78,8 +78,12 @@ h1, h2, h3, h4, h5, p {
   color: $base-font-color;
 }
 
-.sub-title {
+.lead {
   @include typo-subtitle1;
+}
+
+.sub-title {
+  @include typo-subtitle1-alt;
 
   color: $secondary-color;
 }
