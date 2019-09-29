@@ -64,11 +64,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe(() => { });
   }
 
-  public updateRewardImage(image: WindowBase64): void {
-    // TODO: integrate post request when avaible endpoint for images
-    console.log(image);
-  }
-
   get availableVouchers(): number {
     if (!this.data.vouchersStatistics) {
       this.data.vouchersStatistics = [];
