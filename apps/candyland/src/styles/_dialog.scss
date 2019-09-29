@@ -111,24 +111,24 @@
     &-body {
       padding: $vertical-padding $horizontal-padding;
     }
-  
+
     &-img {
       display: block;
       max-width: 100%;
       height: auto;
       margin: ($vertical-padding * 0.5) auto;
     }
-  
+
     &-header {
       @include typo-h6;
   
       color: $secondary-color;
       text-align: center;
     }
-  
+
     &-copy {
       @include typo-subtitle1;
-  
+
       margin: ($vertical-padding * 0.5) auto 0;
       color: $secondary-color;
       text-align: center;
