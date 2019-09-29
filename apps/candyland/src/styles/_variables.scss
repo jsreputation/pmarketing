@@ -212,3 +212,14 @@ $base-font-size: 1.4rem;
     }
   }
 }
+
+// Dialog Size Mixin
+$modal-sm: 32rem;
+$modal-md: 56rem;
+$modal-lg: 76.8rem;
+
+@mixin modal-size($max-size) {
+  display: block;
+  width: calc(100vw - #{$horizontal-padding} - #{$horizontal-padding});
+  max-width: ($max-size) !important;
+}
