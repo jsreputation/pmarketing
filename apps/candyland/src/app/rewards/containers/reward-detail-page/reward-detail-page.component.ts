@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -39,7 +39,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     private router: Router,
     private route: ActivatedRoute,
     public cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snack: MatSnackBar
   ) { }
 
   public ngOnInit(): void {
@@ -61,7 +62,10 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         filter(Boolean),
         switchMap((data: any) => this.vouchersService.createVoucher(data))
       )
-      .subscribe(() => { });
+      .subscribe(
+        () => this.snack.open('Vouchers succesfully replenished.', 'x', { duration: 2000 }),
+        () => this.snack.open('Could not replenish vouchers. Make sure that the configuration is correct.', 'x', { duration: 2000 })
+      );
   }
 
   get availableVouchers(): number {

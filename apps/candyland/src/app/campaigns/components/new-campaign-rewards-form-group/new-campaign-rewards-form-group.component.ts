@@ -93,13 +93,14 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public openDialogSelectReward(): void {
-    const dialogRef = this.dialog.open(SelectRewardPopupComponent);
-
-    dialogRef.afterClosed().subscribe((reward) => {
-      if (reward) {
-        this.addReward(reward);
-      }
-    });
+    this.dialog
+      .open<SelectRewardPopupComponent, void, IRewardEntity>(SelectRewardPopupComponent)
+      .afterClosed()
+      .subscribe((reward: IRewardEntity) => {
+        if (reward) {
+          this.addReward(reward);
+        }
+      });
   }
   public initRewardsList(): void {
     this.rewards.reset();
