@@ -23,7 +23,7 @@
   <div class="upload-wrap-btn" *ngIf="!imgURL">
     <button class="upload-btn" (click)="fileInput.click()">
         <ng-content></ng-content>
-        <span>+ Add New</span>
+        <span>{{btnLabel}}</span>
     </button>
   </div>
   <div class="upload-error-wrap">

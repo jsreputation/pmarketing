@@ -17,6 +17,7 @@ import { UploadFileService } from '@cl-core-services';
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public placeholder = 'Recommended format: .JPG or .PNG';
+  @Input() public btnLabel = '+ Add New';
   @Input() public classList = '';
   @Input() public isRequired: boolean;
 
