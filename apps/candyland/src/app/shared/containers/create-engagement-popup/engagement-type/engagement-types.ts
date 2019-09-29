@@ -10,13 +10,13 @@ export const EngagementType: IEngagementType[] = [
   {
     id: 2,
     type: 'game',
-    title: 'Games',
+    title: 'Game',
     active: false
   },
   {
     id: 3,
-    type: 'stamp',
-    title: 'Stamp',
+    type: 'stamps',
+    title: 'Stamps',
     active: false
   },
   {

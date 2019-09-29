@@ -21,6 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CampaignsMobilePreviewComponent } from '../../components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('NewCampaignRewardsSurveyPageComponent', () => {
   let component: NewCampaignRewardsSurveyPageComponent;
@@ -40,6 +41,7 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
       ],
       imports: [
         ReactiveFormsModule,
+        HttpClientTestingModule,
         FormsModule,
         MatCardModule,
         MatFormFieldModule,

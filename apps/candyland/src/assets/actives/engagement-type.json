@@ -9,14 +9,14 @@
   {
     "id": 2,
     "type": "game",
-    "title": "Games",
+    "title": "Game",
     "img": "assets/images/engagement-type/games.svg",
     "active": "false"
   },
   {
     "id": 3,
     "type": "stamps",
-    "title": "Stamp",
+    "title": "Stamps",
     "img": "assets/images/engagement-type/stamp.svg",
     "active": "false"
   },

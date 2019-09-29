@@ -77,7 +77,7 @@ export class NewCampaignDetailFormService {
     return {
       campaignInfo: {
         startTime: moment().format('LT'),
-        startDate: moment().format('l'),
+        startDate: new Date(),
         goal: 'Acquire customers',
         disabledEndDate: true
       },

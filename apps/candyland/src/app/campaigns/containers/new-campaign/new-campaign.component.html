@@ -26,7 +26,7 @@
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>Rewards & Limits</ng-template>
-      <ng-container [ngSwitch]="campaign?.template?.attributes_type">
+      <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
         <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"
                                              [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-stamps-page>

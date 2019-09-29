@@ -93,22 +93,19 @@
               </cl-time-picker>
             </div>
           </div>
-          <!--recurrence Settings-->
+          <!--recurrence Settings 
           <div class="card-row form-field">
             <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
             </mat-checkbox>
           </div>
-          <!--recurrence-->
           <div class="card-row stretch" *ngIf="recurrence.enabled">
             <div class="row">
               <div>
                 <label class="card-label">Repeat every</label>
                 <div class="input-group">
-                  <!--time-->
                   <mat-form-field>
                     <input matInput type="number" [formControl]="recurrence.get('times')" [min]="0">
                   </mat-form-field>
-                  <!--period-->
                   <mat-form-field>
                     <mat-select [formControl]="recurrence.get('period')">
                       <mat-option value="day">Day</mat-option>
@@ -119,7 +116,6 @@
                 </div>
               </div>
               <div>
-                <!--repeat on-->
                 <ng-container *ngIf="recurrence.get('repeatOn').enabled">
                   <label class="card-label">Repeat on</label>
                   <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
@@ -131,9 +127,8 @@
                   </cl-checkbox-group>
                 </ng-container>
               </div>
-            </div>
-
-          </div>
+            </div> 
+          </div>-->
         </div>
       </div>
     </div>

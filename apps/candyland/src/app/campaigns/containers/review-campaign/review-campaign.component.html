@@ -1,8 +1,12 @@
 <div class="page-header full-with">
-  <h1 class="title">{{campaign.name}}</h1>
-  <cl-button classList="primary"
-              (click)="comeBack()"> Come Back
-  </cl-button>
+  <div class="title" *ngIf="campaign">
+    {{campaign.name}}
+  </div>
+  <div class="btn-group">
+    <cl-button classList="primary"
+               (click)="comeBack()"> Come Back
+    </cl-button>
+  </div>
 </div>
 <section class="content">
   <cl-new-campaign-review-page></cl-new-campaign-review-page>
