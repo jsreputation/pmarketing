@@ -1,17 +1,6 @@
 import * as moment from 'moment';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
-// enum LimitsDurationToAPIMapping {
-//   day = 'days',
-//   week = 'weeks',
-//   month = 'months'
-// }
-
-// enum LimitsDurationFromAPIMapping {
-//   days = 'day',
-//   weeks = 'week',
-//   months = 'month'
-// }
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
