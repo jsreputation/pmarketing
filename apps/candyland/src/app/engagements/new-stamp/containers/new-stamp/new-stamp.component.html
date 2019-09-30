@@ -1,5 +1,5 @@
-<section class="stamp-wrap" *ngIf="stampData" [formGroup]="formStamp">
-  <div class="page-header full-with">
+<article class="stamp-wrap" *ngIf="stampData" [formGroup]="formStamp">
+  <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" placeholder="Enter title here">
       <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
@@ -18,7 +18,7 @@
         </span>
       </cl-button>
     </div>
-  </div>
+  </header>
   <section class="content phonepreview-wrapper">
     <div class="stamp-form">
       <mat-card class="game-graphic">
@@ -270,5 +270,4 @@
       </cl-simple-mobile-view>
     </cl-game-mobile-preview-stamp>
   </section>
-
-</section>
+</article>
