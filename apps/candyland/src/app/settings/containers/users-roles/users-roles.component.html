@@ -19,17 +19,19 @@
       </cl-table-filters>
       <cl-button classList="primary" (click)="openDialogInviteNewUsers()">Invite new user</cl-button>
     </div>
-    <!--table-->
-    <cl-users-roles-list [dataSource]="dataSource"
-                         [config]="config"
-                         (edit)="openDialogEditUsers($event)"
-                         (delete)="deleteUser($event)"
-    ></cl-users-roles-list>
-    <!--paginator-->
-    <cl-paginator [dataSource]="dataSource"
-                  [pageSize]="5"
-                  [pageSizeOptions]="[5, 10, 20]"
-    ></cl-paginator>
+    <div class="table-card">
+      <!--table-->
+      <cl-users-roles-list [dataSource]="dataSource"
+                          [config]="config"
+                          (edit)="openDialogEditUsers($event)"
+                          (delete)="deleteUser($event)"
+      ></cl-users-roles-list>
+      <!--paginator-->
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+      ></cl-paginator>
+    </div>
   </ng-container>
 
   <cl-no-data *ngIf="(dataSource.data).length === 0">

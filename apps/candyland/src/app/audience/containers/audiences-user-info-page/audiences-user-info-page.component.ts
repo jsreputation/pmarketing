@@ -6,9 +6,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, filter, distinct } from 'rxjs/operators';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
@@ -26,7 +26,7 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public userId: string;
   public user;
-  public vouchers;
+  // public vouchers;
   public tabsFilterConfig;
   public dataSource: CustomDataSource<any>;
 
@@ -36,18 +36,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private route: ActivatedRoute,
     private router: Router,
     public cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snack: MatSnackBar
   ) { }
 
   public ngOnInit(): void {
-    this.dataSource = new CustomDataSource<any>(this.vouchersService);
     this.handleRouteParams();
-    this.dataSource.data$.pipe(
-      untilDestroyed(this)
-    ).subscribe((data: any) => {
-      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
-      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
-    });
   }
 
   public ngAfterViewInit(): void {
@@ -69,15 +63,32 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openSelectRewardPopup(): void {
-    this.dialog.open(SelectRewardPopupComponent);
+    this.dialog
+      .open<SelectRewardPopupComponent, void, IRewardEntity>(SelectRewardPopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((entity: IRewardEntity) => {
+          const assigned: string = this.route.snapshot.params.id;
+          return this.vouchersService.voucherAssigned(entity.id, assigned);
+        })
+      )
+      .subscribe(
+        () => {
+          this.snack.open('Voucher assigned to user.', 'x', { duration: 2000 });
+          this.dataSource.updateData();
+        },
+        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
+      );
   }
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap(id => this.userId = id),
-      tap(id => this.setUserParams(id)),
+      tap((id: string) => this.userId = id),
+      distinct(),
+      tap(() => this.initDataSource()),
       switchMap((id: string) => this.audiencesUserService.getUser(id)),
     )
       .subscribe(
@@ -89,7 +100,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  private setUserParams(id): void {
-    this.dataSource.params = { 'filter[assigned_to_id]': id };
+  private initDataSource(): void {
+    const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
+    this.dataSource.data$.pipe(
+      untilDestroyed(this)
+    ).subscribe((data: any) => {
+      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
+      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
+    });
   }
 }

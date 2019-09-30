@@ -44,7 +44,7 @@ export class CardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loyaltyService.getLoyalties().pipe(
-      map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
+      map(loyalties => loyalties && loyalties.length && loyalties[0])
     ).subscribe( (loyalty) => {
       this.loyaltyId = loyalty.id;
       this.membershipId = +loyalty.membershipIdentifier;
@@ -68,6 +68,7 @@ export class CardComponent implements OnInit {
     this.transactionsLoaded = false;
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId)
       .subscribe((transactions) => {
+        transactions = transactions.filter(tr => tr.points !== 0);
         this.transactions.next(transactions);
         this.transactionsLoaded = true;
         if (transactions && transactions.length < 3) {

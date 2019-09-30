@@ -62,6 +62,14 @@ export class CampaignCreationStoreService {
     this.currentCampaign = Object.assign(this.currentCampaign, value);
   }
 
+  public resetCampaign(): void {
+    this.currentCampaign = {};
+  }
+
+  public initCampaign(value: any): void {
+    this.currentCampaign = Object.assign({}, value);
+  }
+
   public get template$(): any {
     return this.currentCampaign$
       .pipe(

@@ -13,9 +13,15 @@ export class MerchantFormService {
 
   public getMerchantForm(): FormGroup {
     return this.fb.group({
-      name: ['Merchant 1', [Validators.minLength(1), Validators.maxLength(60)]],
-      image: [null, [Validators.required]],
-      description: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(120)]],
+      name: ['Merchant', [Validators.minLength(1), Validators.maxLength(60)]],
+      image: [null, [
+        // Validators.required
+      ]],
+      description: [null, [
+        // Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(120)
+      ]],
       countryCode: [null, []],
       phone: [null, []],
       address: [null, []],

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -12,6 +13,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
@@ -24,19 +26,23 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     return this.form.get('limits.times') as FormControl;
   }
 
-  constructor(public store: CampaignCreationStoreService,
-              public stepConditionService: StepConditionService,
-              public cd: ChangeDetectorRef,
-              private fb: FormBuilder) {
+  constructor(
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    public cd: ChangeDetectorRef,
+    private fb: FormBuilder
+  ) {
     super(1, store, stepConditionService, cd);
     this.initForm();
   }
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.subscribeFormValueChange();
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   private initForm(): void {
@@ -54,5 +60,13 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
       })
     });
     this.form.patchValue(this.defaultValue);
+  }
+
+  private subscribeFormValueChange(): void {
+    this.form.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
+      });
   }
 }

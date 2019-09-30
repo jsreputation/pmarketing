@@ -7,7 +7,7 @@ declare interface IRewardEntity {
   redemptionType?: string;
   current: number;
   total: number;
-  prprobability?: number | null;
+  probability?: number | null;
   category: string;
   voucherInfo?: {
     type: string;

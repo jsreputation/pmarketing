@@ -14,7 +14,7 @@
           <mat-form-field class="branding-select">
             <mat-select formControlName="font">
               <mat-option *ngFor="let font of fonts" [value]="font.value">
-                {{font.value}}
+                {{ font.value }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -31,7 +31,9 @@
           <p class="game-title">
             <span>Secondary Color</span>
           </p>
-          <cl-color-picker [formControlName]="'secondaryColor'"></cl-color-picker>
+          <cl-color-picker
+            [formControlName]="'secondaryColor'"
+          ></cl-color-picker>
         </div>
       </div>
     </mat-card>
@@ -47,68 +49,49 @@
           <p class="game-title">
             <span>Color</span>
           </p>
-          <!--color select-->
-          <div class="control-input w-50 select-outcome">
-            <mat-form-field color="primary" appearance="outline">
-              <mat-select [formControlName]="'headerNavbarColor'">
-                <mat-select-trigger>
-                  <div class="select-color">
-                    <div class="select-color-preview"
-                         [ngStyle]="{'background-color': headerNavbarColor.value?.color}"
-                    >
-                    </div>
-                    <p class="select-color-text">
-                      {{headerNavbarColor.value?.labelView}}
-                    </p>
-                  </div>
-                </mat-select-trigger>
-                <mat-option [value]="color" *ngFor="let color of listColors">
-                  <div class="select-color">
-                    <div class="select-color-preview"
-                         [ngStyle]="{'background-color': color.color}"
-                    >
-                    </div>
-                    <span class="select-color-text">
-                      {{color.labelView}}
-                    </span>
-                  </div>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <!--end color select-->
+          <mat-form-field color="primary" appearance="outline">
+            <mat-select [formControlName]="'headerNavbarColor'">
+              <mat-select-trigger>
+                <div class="select-color">
+                  <div
+                    class="select-color-preview"
+                    [ngStyle]="{
+                      'background-color': headerNavbarColor.value?.color
+                    }"
+                  ></div>
+                  <p class="select-color-text">
+                    {{ headerNavbarColor.value?.labelView }}
+                  </p>
+                </div>
+              </mat-select-trigger>
+              <mat-option *ngFor="let color of listColors" [value]="color">
+                <div class="select-color">
+                  <div
+                    class="select-color-preview"
+                    [ngStyle]="{ 'background-color': color.color }"
+                  ></div>
+                  <span class="select-color-text">
+                    {{ color.labelView }}
+                  </span>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="flex">
-        <div class="logo">
-          <mat-radio-group (change)="resetLogo($event)"
-                           class="control-input input-group"
-                           color="primary"
-                           formControlName="logoType">
-            <mat-radio-button value="image">Logo header</mat-radio-button>
-            <mat-radio-button value="text">Text header</mat-radio-button>
-          </mat-radio-group>
-        </div>
+        <p class="game-title">
+          <span>Image Logo</span>
+        </p>
       </div>
-      <div class="flex" *ngIf="logoType.value === 'image'">
+      <div class="flex">
         <div class="logo-header-wrap section-margin-t">
-          <cl-upload-graphic classList="stretch"
-                             placeholder="Recommended size: 250px by 50px"
-                             formControlName="logo"
-          >
-
+          <cl-upload-graphic
+            classList="stretch"
+            placeholder="Recommended size: 250px by 50px"
+            formControlName="logo"
+            [isRequired]="logo.hasError('required') && logo.touched">
           </cl-upload-graphic>
-        </div>
-      </div>
-      <div class="flex section-margin-t" *ngIf="logoType.value === 'text'">
-        <div class="control-input">
-          <mat-form-field class="messages-input">
-            <input type="text" [placeholder]="'Your company name'" matInput formControlName="logo">
-            <mat-hint align="end">{{logo.value?.length || 0}}/20</mat-hint>
-            <mat-error *ngIf="logo.hasError('required')">Required field</mat-error>
-            <mat-error *ngIf="logo.hasError('minlength')">Min length 2</mat-error>
-            <mat-error *ngIf="logo.hasError('maxlength')">Max length 20</mat-error>
-          </mat-form-field>
         </div>
       </div>
     </mat-card>
@@ -121,111 +104,126 @@
       <div class="flex">
         <div class="control-input select-outcome">
           <p class="game-title">
-            <span>Color</span>
+            <span>Background Color</span>
           </p>
-          <!--color select-->
-          <div class="control-input w-50 select-outcome">
-            <mat-form-field color="primary" appearance="outline">
-              <mat-select [formControlName]="'button'">
-                <mat-select-trigger>
-                  <div class="select-color">
-                    <div class="select-color-preview"
-                         [ngStyle]="{'background-color': button.value?.color}"
-                    >
-                    </div>
-                    <p class="select-color-text">
-                      {{button.value?.labelView}}
-                    </p>
-                  </div>
-                </mat-select-trigger>
-                <mat-option [value]="color" *ngFor="let color of listColors">
-                  <div class="select-color">
-                    <div class="select-color-preview"
-                         [ngStyle]="{'background-color': color.color}"
-                    >
-                    </div>
-                    <span class="select-color-text">
-                      {{color.labelView}}
-                    </span>
-                  </div>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <!--end color select-->
+          <mat-form-field color="primary" appearance="outline">
+            <mat-select [formControlName]="'button_background_color'">
+              <mat-select-trigger>
+                <div class="select-color">
+                  <div
+                    class="select-color-preview"
+                    [ngStyle]="{
+                      'background-color': button_background_color.value.color
+                    }"
+                  ></div>
+                  <p class="select-color-text">
+                    {{ button_background_color.value?.labelView }}
+                  </p>
+                </div>
+              </mat-select-trigger>
+              <mat-option [value]="color" *ngFor="let color of listColors">
+                <div class="select-color">
+                  <div
+                    class="select-color-preview"
+                    [ngStyle]="{ 'background-color': color.color }"
+                  ></div>
+                  <span class="select-color-text">
+                    {{ color.labelView }}
+                  </span>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="control-input">
+          <p class="game-title">
+              <span>Text Color</span>
+          </p>
+          <cl-color-picker [formControlName]="'button_text_color'"></cl-color-picker>
         </div>
       </div>
     </mat-card>
   </div>
   <cl-settings-mobile-preview>
-    <cl-simple-mobile-view class="firs-tab"
-                           [mobileImageClass]="'mobile-non-header'"
-                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
-                           [headerColor]="headerNavbarColor.value.color"
-                           [logo]="logo.value"
-                           [logoType]="logoType.value === 'image'"
-                           [fontFamily]="font.value"
+    <cl-simple-mobile-view
+      class="firs-tab"
+      [mobileImageClass]="'mobile-non-header'"
+      [background]="'assets/images/reward/background/full_bg_3.jpg'"
+      [headerColor]="headerNavbarColor.value.color"
+      [logo]="logo.value"
+      [logoType]="logoType.value === 'image'"
+      [fontFamily]="font.value"
     >
       <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn"
-                [ngStyle]="{
-                backgroundColor: button.value.color,
-                'font-family': font.value
-                }"
+        <button
+          class="mobile-preview-btn"
+          [ngStyle]="{
+            backgroundColor: button_background_color.value.color,
+            'font-family': font.value,
+            color: button_text_color.value
+          }"
         >
-          {{'button text'}}
+          {{ "button text" }}
         </button>
       </div>
     </cl-simple-mobile-view>
-    <cl-simple-mobile-view class="second-tab"
-                           [mobileImageClass]="'mobile-non-header'"
-                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
-                           [headerColor]="headerNavbarColor.value.color"
-                           [logo]="logo.value"
-                           [logoType]="logoType.value === 'image'"
-                           [fontFamily]="font.value"
+    <cl-simple-mobile-view
+      class="second-tab"
+      [mobileImageClass]="'mobile-non-header'"
+      [background]="'assets/images/reward/background/full_bg_3.jpg'"
+      [headerColor]="headerNavbarColor.value.color"
+      [logo]="logo.value"
+      [logoType]="logoType.value === 'image'"
+      [fontFamily]="font.value"
     >
       <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn"
-                [ngStyle]="{
-                backgroundColor: button.value.color,
-                'font-family': font.value
-                }"
+        <button
+          class="mobile-preview-btn"
+          [ngStyle]="{
+            backgroundColor: button_background_color.value.color,
+            'font-family': font.value,
+            color: button_text_color.value
+          }"
         >
-          {{'button text'}}
+          {{ "button text" }}
         </button>
       </div>
     </cl-simple-mobile-view>
-    <cl-simple-mobile-view class="three-tab"
-                           [mobileImageClass]="'mobile-non-header'"
-                           [background]="'assets/images/reward/background/full_bg_3.jpg'"
-                           [headerColor]="headerNavbarColor.value.color"
-                           [logo]="logo.value"
-                           [logoType]="logoType.value === 'image'"
-                           [fontFamily]="font.value"
+    <cl-simple-mobile-view
+      class="three-tab"
+      [mobileImageClass]="'mobile-non-header'"
+      [background]="'assets/images/reward/background/full_bg_3.jpg'"
+      [headerColor]="headerNavbarColor.value.color"
+      [logo]="logo.value"
+      [logoType]="logoType.value === 'image'"
+      [fontFamily]="font.value"
     >
       <div class="plugin-block">
-        <div class="mobile-preview-card"
-             [ngStyle]="{
-             'background-image': 'url(assets/images/reward/card-background/card-bg-1.png)',
-             'font-family': font.value
-             }"
+        <div
+          class="mobile-preview-card"
+          [ngStyle]="{
+            'background-image':
+              'url(assets/images/reward/card-background/card-bg-1.png)',
+            'font-family': font.value,
+            color: button_text_color.value
+          }"
         >
           <perx-core-reward [reward]="reward"></perx-core-reward>
         </div>
       </div>
 
       <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn"
-                [ngStyle]="{
-                backgroundColor: button.value.color,
-                'font-family': font.value
-                }"
+        <button
+          class="mobile-preview-btn"
+          [ngStyle]="{
+            backgroundColor: button_background_color.value.color,
+            'font-family': font.value,
+            color: button_text_color.value
+          }"
         >
-          {{'button text'}}
+          {{ "button text" }}
         </button>
       </div>
     </cl-simple-mobile-view>
   </cl-settings-mobile-preview>
 </section>
-

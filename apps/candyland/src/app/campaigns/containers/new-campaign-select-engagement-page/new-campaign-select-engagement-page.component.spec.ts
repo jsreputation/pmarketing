@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { MatDialogModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -23,7 +24,8 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
         TableFiltersModule,
         MatRadioModule,
         MatSelectModule,
-        MatDialogModule
+        MatDialogModule,
+        PipesModule
       ],
       declarations: [NewCampaignSelectEngagementPageComponent],
       providers: [

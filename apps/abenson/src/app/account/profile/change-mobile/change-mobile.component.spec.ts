@@ -28,7 +28,7 @@ describe('ChangeMobileComponent', () => {
         MatButtonModule,
         NoopAnimationsModule,
         RouterTestingModule.withRoutes([{
-          path: 'verify_otp/mobile',
+          path: 'verify_otp/phone',
           component: ChangeMobileComponent
         }])
       ],

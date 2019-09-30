@@ -5,13 +5,14 @@
 :root {
   --font: Roboto;
   --logo: "";
-  --title: #797c80;
-  --accent: #c91dc9;
+  --title: "";
+  --accent: #96289a;
   --primary: #147dd3;
-  --button_color: #c91dc9;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
   --header_color: #147dd3;
-  --background: #e5e5e5;
-  --font_color: #2d2d2d;
+  --background: #fafafa;
+  --font_color: #333;
 }
 
 html {

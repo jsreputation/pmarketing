@@ -27,13 +27,15 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     return this.form.get('template');
   }
 
-  constructor(private engagementsService: EngagementsService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              public store: CampaignCreationStoreService,
-              public stepConditionService: StepConditionService,
-              private fb: FormBuilder,
-              private dialog: MatDialog,
-              public cd: ChangeDetectorRef) {
+  constructor(
+    private engagementsService: EngagementsService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    public cd: ChangeDetectorRef
+  ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
     this.initFiltersDefaultValue();
@@ -47,6 +49,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
     this.availableNewEngagementService.remove();
   }
 
@@ -58,7 +61,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
-    this.form.patchValue(this.store.currentCampaign);
+    // this.form.patchValue({ theme: {} });
   }
 
   private initFiltersDefaultValue(): void {
@@ -84,9 +87,11 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   private initSelectedTemplate(res: IEngagement[]): void {
-    if (this.availableNewEngagementService.isAvailable) {
-      const id = this.availableNewEngagementService.newEngagement.id;
-      const findTemplate = res.find(template => template.id === id);
+    const engagementId = this.availableNewEngagementService.isAvailable ?
+      this.availableNewEngagementService.newEngagement.id :
+      this.campaign && this.campaign.engagement_id && this.campaign.engagement_id.toString();
+    if (engagementId) {
+      const findTemplate = res.find(template => template.id === engagementId);
       this.template.patchValue(findTemplate);
     }
   }
