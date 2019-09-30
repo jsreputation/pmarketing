@@ -53,4 +53,9 @@ export class AudiencesVouchersService implements ITableService {
     const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
     return this.audiencesHttpsService.voucherAssigned(sendData);
   }
+
+  public updateVoucherExpiry(id: string, endData: string): Observable<any> {
+    const sendData = AudiencesHttpAdapter.transformVoucherPatchToApi(id, endData);
+    return this.audiencesHttpsService.updateVoucherExpiry(sendData);
+  }
 }
