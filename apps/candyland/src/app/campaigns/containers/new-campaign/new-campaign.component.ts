@@ -157,31 +157,33 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       page_size: '100',
       'filter[campaign_entity_id]': campaignId
     };
-    combineLatest(
-      this.campaignsService.getCampaign(campaignId),
-      this.commsService.getComms(params).pipe(
-        map(comms => comms[0])
-      ),
-      this.outcomesService.getOutcomes(params)).pipe(
-        map(
-          ([campaign, comm, outcomes]) => ({
-            ...campaign,
-            channel: {
-              type: campaign.channel.type,
-              ...comm
-            },
-            rewardsList: outcomes
-          }))
-      ).subscribe(
-        campaign => {
-          this.campaign = Object.assign({}, campaign);
-          this.store.initCampaign(campaign);
-          this.form.patchValue({
-            name: this.campaign.name
-          });
-        },
-        () => this.router.navigateByUrl('/campaigns')
-      );
+    if (campaignId) {
+      combineLatest(
+        this.campaignsService.getCampaign(campaignId),
+        this.commsService.getComms(params).pipe(
+          map(comms => comms[0])
+        ),
+        this.outcomesService.getOutcomes(params)).pipe(
+          map(
+            ([campaign, comm, outcomes]) => ({
+              ...campaign,
+              channel: {
+                type: campaign.channel.type,
+                ...comm
+              },
+              rewardsList: outcomes
+            }))
+        ).subscribe(
+          campaign => {
+            this.campaign = Object.assign({}, campaign);
+            this.store.initCampaign(campaign);
+            this.form.patchValue({
+              name: this.campaign.name
+            });
+          },
+          () => this.router.navigateByUrl('/campaigns')
+        );
+    }
   }
 
 }
