@@ -154,7 +154,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
