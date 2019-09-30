@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService } from '@cl-core-services';
+import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
@@ -10,6 +10,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, filter, switchMap } from 'rxjs/operators';
+import { of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -33,7 +34,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private commsService: CommsService,
+    private outcomesService: OutcomesService,
+    private limitsService: LimitsService,
   ) {
     store.resetCampaign();
   }
@@ -152,7 +156,21 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
       filter(Boolean),
-      switchMap(id => this.campaignsService.getCampaign(id))
+      switchMap((id: string) => combineLatest(
+        this.campaignsService.getCampaign(id),
+        this.commsService.getComms(null, id).pipe(
+          map(comms => comms[0])
+        ),
+        this.outcomesService.getOutcomes(null, id))),
+      map(
+        ([campaign, comm, outcomes]) => ({
+          ...campaign,
+          channel: {
+            type: campaign.channel.type,
+            ...comm
+          },
+          rewardsList: outcomes
+        }))
     ).subscribe(
       campaign => {
         this.campaign = Object.assign({}, campaign);
