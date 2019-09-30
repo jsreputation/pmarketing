@@ -12,7 +12,6 @@ import {
   UtilsModule,
   ProfileModule,
   RewardsService,
-  IVoucherService,
   ConfigModule,
   ICampaignService
 } from '@perx/core';
@@ -45,7 +44,6 @@ import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { rewards } from './mock/rewards.mock';
-import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { SignUpComponent } from './auth/signup/signup.component';
@@ -58,14 +56,6 @@ const rewardsServiceStub = {
   getAllRewards: () => of(rewards),
   getAllCatalogs: () => of(catalogs),
   getCatalog: (id: number) => from(catalogs.filter(catalog => catalog.id === id)),
-};
-
-const vouchersServiceStub = {
-  getAll: () => of(vouchers),
-  get: (id: number) => of(vouchers.find(voucher => voucher.id === id)),
-  reserveReward: () => of(vouchers[1]),
-  redeemVoucher: () => of(null),
-  issueReward: () => of()
 };
 
 const campaignServiceStub = {
@@ -120,7 +110,6 @@ const campaignServiceStub = {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: IVoucherService, useValue: vouchersServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub }
   ],
   bootstrap: [AppComponent]
