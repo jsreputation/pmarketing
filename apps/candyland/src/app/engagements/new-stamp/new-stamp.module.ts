@@ -12,6 +12,7 @@ import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module
 import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-preview-stamp/game-mobile-preview-stamp.module';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { PuzzlesModule } from '@perx/core';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PuzzlesModule } from '@perx/core';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    DirectivesModule
   ]
 })
 export class NewStampModule {
