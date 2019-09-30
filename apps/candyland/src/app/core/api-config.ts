@@ -5,6 +5,9 @@ export class ApiConfig {
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath = `${ApiConfig.basePath}/campaign/entities`;
+  public static commsTemplatesPath = `${ApiConfig.basePath}/comm/templates`;
+  public static commsEventsPath = `${ApiConfig.basePath}/comm/events`;
+  public static outcomesPath = `${ApiConfig.basePath}/outcome/possible_outcomes`;
   public static rewardsPath = `${ApiConfig.basePath}/reward/entities`;
   public static getAllCredentialPath = `${ApiConfig.baseAPIPath}/credentials`;
   public static IAMUsersPath = `${ApiConfig.baseAPIPath}/users`;
