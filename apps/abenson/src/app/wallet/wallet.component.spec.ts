@@ -5,6 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material';
 import { IVoucherService, Voucher, VouchersModule } from '@perx/core';
 import { Observable, of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -19,7 +20,8 @@ describe('WalletComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatTabsModule,
-        VouchersModule
+        VouchersModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
