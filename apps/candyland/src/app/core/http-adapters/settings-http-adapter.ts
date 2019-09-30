@@ -89,7 +89,8 @@ export class SettingsHttpAdapter {
       'theme.header_color': data.headerNavbarColor.color,
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
-      'theme.button_color': data.button.color
+      'theme.button_background_color': data.button_background_color.color,
+      'theme.button_text_color': data.button_text_color.value
     };
   }
 
@@ -103,7 +104,8 @@ export class SettingsHttpAdapter {
       headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']),
       logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
       logoType: logoType,
-      button: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_color'])
+      button: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']),
+      buttonTextColor:  data['theme.button_text_color']
     }
   }
 
@@ -118,7 +120,8 @@ export class SettingsHttpAdapter {
       currency: SettingsHttpAdapter.getTenantProperty('currency', data),
       style: SettingsHttpAdapter.getTenantProperty('theme.style', data),
       accent: SettingsHttpAdapter.getTenantProperty('theme.accent', data),
-      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_color', data),
+      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_background_color', data),
+      buttonTextColor: SettingsHttpAdapter.getTenantProperty('theme.button_text_color', data),
       font: SettingsHttpAdapter.getTenantProperty('theme.font', data),
       headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
       logo: SettingsHttpAdapter.tenantLogo(data),

@@ -28,14 +28,20 @@ describe('NewCampaignComponent', () => {
       ],
       declarations: [NewCampaignComponent],
       providers: [
-        {provide: CampaignCreationStoreService, useValue: {
-          updateCampaign: (data: any) => data,
-            currentCampaign$: new Subject()}},
-        {provide: StepConditionService, useValue: {
-          registerStepCondition: () => ({}),
-          getStepCondition: () => ({})
-        }},
-        {provide: LocalStorageService, useValue: {}}
+        {
+          provide: CampaignCreationStoreService, useValue: {
+            updateCampaign: (data: any) => data,
+            resetCampaign: () => {},
+            currentCampaign$: new Subject()
+          }
+        },
+        {
+          provide: StepConditionService, useValue: {
+            registerStepCondition: () => ({}),
+            getStepCondition: () => ({})
+          }
+        },
+        { provide: LocalStorageService, useValue: {} }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

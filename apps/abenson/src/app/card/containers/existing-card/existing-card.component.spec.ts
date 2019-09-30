@@ -4,6 +4,7 @@ import {
   TestBed
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
 
@@ -31,6 +32,7 @@ describe('ExistingCardComponent', () => {
       imports: [
         SharedModule,
         NoopAnimationsModule,
+        RouterTestingModule,
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

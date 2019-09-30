@@ -49,6 +49,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   public get rewardsList(): FormArray {

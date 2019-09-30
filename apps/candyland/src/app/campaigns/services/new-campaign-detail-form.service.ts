@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import * as moment from 'moment';
 
 @Injectable()
 export class NewCampaignDetailFormService {
@@ -75,7 +76,7 @@ export class NewCampaignDetailFormService {
   public getDefaultValue(): { [key: string]: any } {
     return {
       campaignInfo: {
-        startTime: `${(new Date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        startTime: moment().format('LT'),
         startDate: new Date(),
         goal: 'Acquire customers',
         disabledEndDate: true

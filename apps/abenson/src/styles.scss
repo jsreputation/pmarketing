@@ -72,3 +72,17 @@ html, body {
   color: #FFFFFF !important;
   background: #186DE1 !important;
 }
+
+.mat-raised-button {
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.075rem !important;
+  border-radius: 0.2rem !important;
+  background-color: #186DE1 !important;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}

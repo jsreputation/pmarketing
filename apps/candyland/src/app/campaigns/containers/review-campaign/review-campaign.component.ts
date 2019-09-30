@@ -57,14 +57,17 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           template: engagement,
           rewardsList
         }))
-      ).subscribe(campaign => {
-        this.campaign = campaign;
-        this.store.updateCampaign(this.campaign);
-      });
+      ).subscribe(
+        campaign => {
+          this.campaign = campaign;
+          this.store.updateCampaign(this.campaign);
+        },
+        (err) => console.log(err)
+      );
   }
 
   private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
-    if (!rewardsList) {
+    if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
     return combineLatest(...rewardsList.map(

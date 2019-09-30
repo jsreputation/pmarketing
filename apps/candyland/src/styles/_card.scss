@@ -104,9 +104,32 @@
     }
   }
 
+  &-row.input-group {
+    flex-wrap: wrap;
+
+    > * {
+      margin-right: ($horizontal-padding * 0.5);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    > .mat-form-field {
+      flex: 1 1 ($horizontal-padding * 2);
+      min-width: ($horizontal-padding * 2);
+    }
+
+    > span {
+      width: auto;
+      flex-shrink: 0;
+    }
+  }
+
   &-section {
     margin-top: 1.9rem;
-    background-color: $background-color;
+    background-color: $white;
+    // background-color: $background-color;
 
     .card-header {
       padding: 0 3rem;

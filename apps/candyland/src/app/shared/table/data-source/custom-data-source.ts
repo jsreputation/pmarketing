@@ -9,7 +9,7 @@ import { IPagination } from './ipagination';
 export class CustomDataSource<T> {
   private dataSubject = new BehaviorSubject<T[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  // used for toggle spiner loading
+  // used for toggle spinner loading
   public loading$ = this.loadingSubject.asObservable();
   private changeFilterSearch = new BehaviorSubject<number>(0);
   // used for setUp pagination index page to 0 when searching
@@ -28,20 +28,23 @@ export class CustomDataSource<T> {
     this.loadingData();
   }
 
-  public get params() {
+  public get params(): HttpParamsOptions {
     return this._params || {};
   }
 
-  public get data() {
+  public get data(): T[] {
     return this.dataSubject.value;
   }
 
-  public get data$() {
+  public get data$(): Observable<T[]> {
     return this.dataSubject.asObservable();
   }
 
   // default items on the page set up pageSize
-  constructor(public dataService: ITableService, public pageSize: number = 5) {
+  constructor(public dataService: ITableService, public pageSize: number = 5, params?: HttpParamsOptions) {
+    if (params) {
+      this.params = params;
+    }
     this.loadingData();
   }
 
@@ -155,5 +158,4 @@ export class CustomDataSource<T> {
       });
     return result;
   }
-
 }
