@@ -64,14 +64,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   private get defaultDateRange(): DatepickerRangeValue<Date> {
     return {
-      begin: this.dateMountsAgo,
+      begin: this.getDateMountsAgo(3),
       end: new Date()
     };
   }
 
-  private get dateMountsAgo(): Date {
+  private getDateMountsAgo(numberMonth: number = 1): Date {
     const date = new Date();
-    date.setMonth(date.getMonth() - 1);
+    date.setMonth(date.getMonth() - numberMonth);
     return date;
   }
 
