@@ -178,6 +178,7 @@ export class EngagementHttpAdapter {
       attributes: {
         type: 'instant_reward',
         title: data.name,
+        image_url: data.image_url,
         display_properties: {
           banner: data.banner,
           title: data.headlineMessage,
@@ -238,7 +239,7 @@ export class EngagementHttpAdapter {
       type: 'engagements', attributes: {
         type: 'stamps',
         title: data.name,
-        'image_url': 'https://miro.medium.com/fit/c/256/256/1*BTGStLRXsQUbkp0t-oxJhQ.png',
+        image_url: data.image_url,
         display_properties: {
           'nb_of_slots': data.stampsNumber,
           slots: data.stampsSlotNumber,

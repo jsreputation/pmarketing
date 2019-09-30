@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Inject } from '@angular/core';
 import * as html2canvas from 'html2canvas';
+import { Options } from 'html2canvas';
 import { WINDOW } from '@cl-core/services/window.service';
 import { Observable } from 'rxjs';
 import { UploadFileService } from '@cl-core-services';
@@ -32,10 +33,10 @@ export class CreateImageDirective {
   }
 
  public downloadImage(): Observable<any> {
-    const option = { useCORS: true, logging: false, allowTaint: true, async: false};
-    const element: HTMLElement = (this.element.nativeElement as HTMLElement);
-    // tslint:disable-next-line
-    return fromPromise(html2canvas(element, option))
+    const option: Partial<Options> = { useCORS: true, logging: false, allowTaint: true};
+    const element: any = (this.element.nativeElement as HTMLElement);
+    const htmlCanvas: any = html2canvas;
+    return fromPromise(htmlCanvas(element, option))
       .pipe(
         map((canvas: any) => {
           return this.b64toBlob(canvas.toDataURL('image/png'));
