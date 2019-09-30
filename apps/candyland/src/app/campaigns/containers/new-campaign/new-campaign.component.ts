@@ -158,16 +158,20 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
-        this.commsService.getComms(params).pipe(
+        this.commsService.getCommsTemplate(params).pipe(
+          map(comms => comms[0])
+        ),
+        this.commsService.getCommsEvents(params).pipe(
           map(comms => comms[0])
         ),
         this.outcomesService.getOutcomes(params)).pipe(
           map(
-            ([campaign, comm, outcomes]) => ({
+            ([campaign, commTemplate, commEvent, outcomes]) => ({
               ...campaign,
               channel: {
                 type: campaign.channel.type,
-                ...comm
+                ...commTemplate,
+                ...commEvent
               },
               rewardsList: outcomes
             }))

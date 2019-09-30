@@ -18,7 +18,7 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
     'expiryDate',
     // 'campaign',
     'redemptionType',
-    // 'actions'
+    'actions'
   ];
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public clickChangeExpiryDate = new EventEmitter();
