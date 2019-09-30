@@ -31,23 +31,44 @@ Then(/^4_I should see the add audience dialog box.$/, async () => {
 
 // Verifying that the essential fields are present.
 
-/*Given(/^{int}_that I am on add audience dialog box.$/, async () => {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Given(/^5_that I am on add audience dialog box.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  await AudienceApp.navigateToAudience();
+  await browser.wait(ec.presenceOf(element(by.css('cl-button'))), 6000);
+  // clicking on the add user button
+  await element(by.css('cl-button')).click();
+  await browser.sleep(3000);
+});
 
-Then(/^{int}_The essential fields are present for add audience engagement dialog.$/, async () => {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Then(/^5_The essential fields are present for add audience engagement dialog.$/, async () => {
+  // waiting for the required fields to load
+  const ec = protractor.ExpectedConditions;
+  // first name field
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(1)), 8000);
+  // last name field
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(2)), 8000);
+  // email address field
+  await browser.wait(ec.presenceOf(element(by.css('input[type=email]'))), 8000);
+  // mobile number field
+  await browser.wait(ec.presenceOf(element(by.css('input[type=tel]'))), 8000);
+  // asserting the presence of the fields
+  // first name field
+  expect(await element.all(by.css('input[type=text]')).get(1).isDisplayed()).to.equal(true);
+  // last name field
+  expect(await element.all(by.css('input[type=text]')).get(2).isDisplayed()).to.equal(true);
+  // email address field
+  expect(await element(by.css('input[type=email]')).isDisplayed()).to.equal(true);
+  // mobile number field
+  expect(await element(by.css('input[type=tel]')).isDisplayed()).to.equal(true);
+});
 
 // Verifying the number of options for add to audience list dropdown.
-Given(/^_that I am on add audience dialog box.$/, async () => {
+/*Given(/^6_that I am on add audience dialog box.$/, async () => {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
-         });
+});
 
-When(/^{int}_I click on the add to audience list.$/, async () => {
+When(/^6_I click on the add to audience list.$/, async () => {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
