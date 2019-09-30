@@ -1,6 +1,6 @@
 import { WhistlerVouchersService } from './../vouchers/whistler-vouchers.service';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -10,7 +10,7 @@ import {
   defaultPinata,
   IPlayOutcome
 } from './game.model';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
@@ -33,7 +33,7 @@ interface AttbsObjGame {
   description: string;
   image_url: string;
   properties: {};
-  display_properties: GameDisplayProperties;
+  display_properties: WGameDisplayProperties;
 }
 
 interface AttbsObjEntity {
@@ -58,59 +58,47 @@ interface AttbsObjTrans {
   engagement_id: number;
   campaign_entity_id: number;
   user_id: number;
-  results: ResultsObj;
+  results: IJsonApiItem<ResultsObj>;
 }
 
 interface ResultsObj {
-    id: number;
-    type: string;
-    attributes: {
-        campaign_entity_id: number;
-        source_type: number;
-        source_id: number;
-        urn: string;
-        created_at: string;
-        updated_at: string;
-        results: Outcome[];
-    };
+  campaign_entity_id: number;
+  source_type: number;
+  source_id: number;
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  results: IJsonApiItem<Outcome>[];
 }
 
-interface GameDisplayProperties {
+interface WGameDisplayProperties {
   title: string;
   button: string;
   sub_title: string;
-  nooutcome?: Outcome;
-  outcome?: Outcome;
   background_image?: string;
 }
 
 interface Outcome {
-  id: number;
-  type: string;
-  attributes: {
-    source_type: string;
-    source_id: number;
-    urn: string;
-    created_at: string;
-    updated_at: string;
-    code: string;
-    status: string;
-    start_date: string;
-    end_date: string;
-    assigned_to_id: number
-  };
+  source_type: string;
+  source_id: number;
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  code: string;
+  status: string;
+  start_date: string;
+  end_date: string;
+  assigned_to_id: number;
 }
 
-interface TreeDisplayProperties extends GameDisplayProperties {
+interface WTreeDisplayProperties extends WGameDisplayProperties {
   tree_img_url: string;
   nb_hanged_gifts: number;
   gift_box_img_url: string;
   background_img_url: string;
-  // waiting_image?: string;
-  // celebrating_image?: string;
 }
 
-interface PinataDisplayProperties extends GameDisplayProperties {
+interface WPinataDisplayProperties extends WGameDisplayProperties {
   closed_pinata_img_url: string;
   cracking_pinata_img_url: string;
   opened_pinata_img_url: string;
@@ -133,7 +121,7 @@ export class WhistlerGameService implements IGameService {
     const { attributes } = game;
     if (attributes.game_type === GameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
-      const treedp: TreeDisplayProperties = attributes.display_properties as TreeDisplayProperties;
+      const treedp: WTreeDisplayProperties = attributes.display_properties as WTreeDisplayProperties;
       config = {
         ...defaultTree(),
         treeImg: treedp.tree_img_url,
@@ -142,7 +130,7 @@ export class WhistlerGameService implements IGameService {
       };
     } else if (attributes.game_type === GameType.pinata) {
       type = TYPE.pinata;
-      const pinatadp: PinataDisplayProperties = attributes.display_properties as PinataDisplayProperties;
+      const pinatadp: WPinataDisplayProperties = attributes.display_properties as WPinataDisplayProperties;
       config = {
         ...defaultPinata(),
         stillImg: pinatadp.closed_pinata_img_url,
@@ -185,40 +173,39 @@ export class WhistlerGameService implements IGameService {
         type: 'transactions',
         attributes: {
           engagement_id: gameId,
-          campaign_entity_id: campaignId }
+          campaign_entity_id: campaignId
+        }
       }
     };
     return this.http.post<IJsonApiItemPayload<AttbsObjTrans>>
-    (`${this.hostName}/game/transactions`, body, {
-      headers: {'Content-Type': 'application/vnd.api+json'}
-    }).pipe(
+      (`${this.hostName}/game/transactions`, body, {
+        headers: { 'Content-Type': 'application/vnd.api+json' }
+      }).pipe(
         map(res => ({
-            vouchers:
-            res.data.attributes.results.attributes.results.map(v =>
-               (WhistlerGameService.subscribeAndRevealVouch(WhistlerVouchersService.get(v.id)))
-            ),
-            rawPayload: res
-          })
+          vouchers:
+            res.data.attributes.results.attributes.results
+              .map(v => WhistlerGameService.subscribeAndRevealVouch(WhistlerVouchersService.get(Number.parseInt(v.id, 10)))),
+          rawPayload: res
+        })
         )
-    );
+      );
   }
 
   public get(engagementId: number): Observable<IGame> {
     return this.http.get<IJsonApiItemPayload<AttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
-    .pipe(
-      map(res => res.data),
-      map(game => WhistlerGameService.WGameToGame(game))
-    );
+      .pipe(
+        map(res => res.data),
+        map(game => WhistlerGameService.WGameToGame(game))
+      );
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
     return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
-        map(res => res.data.attributes),
-        map(correctEntityAttribute => correctEntityAttribute.engagement_id),
-        switchMap(correctId => this.get(correctId)),
-        map((game: IGame) => [game]),
-        catchError(err => throwError(err))
+        map((res: IJsonApiItemPayload<AttbsObjEntity>) => res.data.attributes),
+        map((entity: AttbsObjEntity) => entity.engagement_id),
+        switchMap((correctId: number) => this.get(correctId)),
+        map((game: IGame) => [game])
       );
   }
 
