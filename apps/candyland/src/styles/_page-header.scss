@@ -17,6 +17,10 @@
   z-index: 101;
   background: $white;
 
+  .btn-group {
+    flex-shrink: 0;
+  }
+
   .pagetitle-input {
     @include typo-h5;
 
