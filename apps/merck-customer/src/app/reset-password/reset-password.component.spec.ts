@@ -86,7 +86,7 @@ describe('ResetPasswordComponent', () => {
       tick();
       expect(authenticationServiceSpy).toHaveBeenCalled();
       expect(loginSpy).toHaveBeenCalled();
-      expect(router.navigateByUrl).toHaveBeenCalledWith('home');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('account');
     }));
   });
 
