@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService } from '@cl-core-services';
+import { CampaignsService, SettingsService, OutcomesService, CommsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, filter, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -33,20 +34,16 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private commsService: CommsService,
+    private outcomesService: OutcomesService,
   ) {
+    store.resetCampaign();
   }
 
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.resetCampaign();
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        console.log(data);
-      });
 
     this.form.valueChanges
       .pipe(untilDestroyed(this))
@@ -154,21 +151,37 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private handleRouteParams(): void {
-    this.route.paramMap.pipe(
-      untilDestroyed(this),
-      map((params: ParamMap) => params.get('id')),
-      filter(Boolean),
-      switchMap(id => this.campaignsService.getCampaign(id))
-    ).subscribe(
-      campaign => {
-        this.campaign = campaign;
-        this.form.patchValue({
-          name: this.campaign.name
-        });
-        this.store.updateCampaign(this.campaign);
-      },
-      () => this.router.navigateByUrl('/campaigns')
-    );
+    const campaignId = this.route.snapshot.params.id;
+    const params: HttpParamsOptions = {
+      'filter[campaign_entity_id]': campaignId
+    };
+    if (campaignId) {
+      combineLatest(
+        this.campaignsService.getCampaign(campaignId),
+        this.commsService.getComms(params).pipe(
+          map(comms => comms[0])
+        ),
+        this.outcomesService.getOutcomes(params)).pipe(
+          map(
+            ([campaign, comm, outcomes]) => ({
+              ...campaign,
+              channel: {
+                type: campaign.channel.type,
+                ...comm
+              },
+              rewardsList: outcomes
+            }))
+        ).subscribe(
+          campaign => {
+            this.campaign = Object.assign({}, campaign);
+            this.store.initCampaign(campaign);
+            this.form.patchValue({
+              name: this.campaign.name
+            });
+          },
+          () => this.router.navigateByUrl('/campaigns')
+        );
+    }
   }
 
 }

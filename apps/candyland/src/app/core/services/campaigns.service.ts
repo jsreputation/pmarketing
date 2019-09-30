@@ -34,7 +34,7 @@ export class CampaignsService implements ITableService {
 
   public updateCampaign(id: number, data: any): Observable<any> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    return this.campaignsHttpsService.updateCampaign(id, sendData);
+    return this.campaignsHttpsService.updateCampaign(id, { data: {id, ...sendData }});
   }
 
   public createCampaign(data: any): Observable<any> {

@@ -1,7 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService, IVoucherService, Voucher, VoucherState } from '@perx/core';
-import { flatMap, tap } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
+
+import {
+  flatMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  NotificationService,
+  IVoucherService,
+  Voucher,
+  VoucherState,
+} from '@perx/core';
 
 @Component({
   selector: 'app-qr-code',
@@ -28,8 +44,13 @@ export class QRCodeComponent implements OnInit {
       }),
       flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
         this.successRedeemed(val)
-        , (msg) =>
-          this.notification.addSnack(msg));
+      , (err) => {
+        if (err && err.error) {
+          this.notification.addSnack(err.error.message);
+        } else {
+          this.notification.addSnack('Oops, something went wrong');
+        }
+      });
   }
 
   public successRedeemed(voucher: Voucher): void {

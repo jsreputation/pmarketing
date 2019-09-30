@@ -1,23 +1,34 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService } from '@perx/core';
-import { of } from 'rxjs';
+import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perx/core';
+import { of, Observable } from 'rxjs';
+import { profile } from '../mock/profile.mock';
+import { Router } from '@angular/router';
+import { Type } from '@angular/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
-  const authenticationServiceStub = {};
+  let auth: AuthenticationService;
+  let router: Router;
+  const authenticationServiceStub = {
+    logout: () => { }
+  };
+
   const profileServiceStub = {
-    whoAmI: () => of()
+    whoAmI: (): Observable<IProfile> => of(profile)
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: AccountComponent
+        }]),
         ProfileModule
       ],
       providers: [
@@ -31,10 +42,25 @@ describe('AccountComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
+    router = TestBed.get<Router>(Router as Type<Router>);
+    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('expect recive profile', fakeAsync(() => {
+    component.ngOnInit();
+    expect(component.profile).toBe(profile);
+  }));
+
+  it('should log out', () => {
+    const routerSpy = spyOn(router, 'navigate');
+    const authSpy = spyOn(auth, 'logout');
+    component.logout();
+    expect(routerSpy).toHaveBeenCalledWith(['/login']);
+    expect(authSpy).toHaveBeenCalled();
   });
 });

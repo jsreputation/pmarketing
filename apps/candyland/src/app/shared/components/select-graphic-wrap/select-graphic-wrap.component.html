@@ -3,8 +3,9 @@
 >
   <div class="upload graphic-image-preview" *ngIf="showUpload">
     <cl-upload-graphic
+      [isRequired]="isRequired"
       [formControl]="controlUpload"
-      [selectedGraphic]="selectedGraphic"
+      [selectGraphic]="selectedGraphic"
     ></cl-upload-graphic>
   </div>
   <cl-select-graphic [formControl]="controlDefault"
