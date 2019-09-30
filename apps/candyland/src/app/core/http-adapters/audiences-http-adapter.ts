@@ -157,4 +157,14 @@ export class AudiencesHttpAdapter {
       }
     }
   }
+
+  public static transformVoucherPatchToApi(id: string, endData: string): any {
+    return {
+      id: id,
+      type: "assigneds",
+      attributes: {
+        end_date: endData
+      }
+    }
+  }
 }
