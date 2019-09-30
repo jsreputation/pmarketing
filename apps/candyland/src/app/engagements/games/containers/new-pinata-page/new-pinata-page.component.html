@@ -1,5 +1,5 @@
-<section class="pinata-wrap" *ngIf="pinataData" [formGroup]="form">
-  <div class="page-header full-with">
+<article class="pinata-wrap" *ngIf="pinataData" [formGroup]="form">
+  <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" placeholder="Enter title here">
       <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
@@ -23,7 +23,7 @@
         </span>
       </cl-button>
     </div>
-  </div>
+  </header>
   <section class="content phonepreview-wrapper">
     <div class="pinata-form">
       <mat-card class="game-graphic">
@@ -153,4 +153,4 @@
     </cl-simple-mobile-view>
 
   </section>
-</section>
+</article>
