@@ -54,17 +54,18 @@ export class CampaignsHttpAdapter {
         // labels: campaignData.labels
       },
       // TODO, Andrew, need API support for channel data
-      // channel: {
-      //   type: campaignData.comm.event.channel,
-      //   message: campaignData.comm.template.content,
-      //   schedule: {
-      //     sendDate: new Date(campaignData.comm.event.send_at),
-      //     sendTime: moment(campaignData.comm.event.send_at).format('LT'),
-      //     enableRecurrence: false,
-      //     recurrence: { times: null, period: null, repeatOn: [] }
-      //   }
-      // },
-      audience: { type: 'select', select: [campaignData.pool_id], file: null },
+      channel: {
+        type: campaignData.comm_channel,
+        // type: campaignData.comm.event.channel,
+        // message: campaignData.comm.template.content,
+        // schedule: {
+        //   sendDate: new Date(campaignData.comm.event.send_at),
+        //   sendTime: moment(campaignData.comm.event.send_at).format('LT'),
+        //   enableRecurrence: false,
+        //   recurrence: { times: null, period: null, repeatOn: [] }
+        // }
+      },
+      audience: { type: 'select', select: (campaignData.pool_id).toString(), file: null },
       template: {},
       rewardsList: campaignOutcomes,
       // limits: {
@@ -99,15 +100,15 @@ export class CampaignsHttpAdapter {
         //   period_unit: LimitsDurationToAPIMapping[data.limits.duration],
         //   period_number: 1
         // },
-        // comm: {
-        //   template: {
-        //     content: data.channel.message
-        //   },
-        //   event: {
-        //     send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
-        //     channel: data.channel.type
-        //   }
-        // }
+        comm: {
+          template: {
+            content: data.channel.message
+          },
+          event: {
+            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
+            channel: data.channel.type
+          }
+        }
       }
     };
   };

@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { GameModule, IGameService } from '@perx/core';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GameComponent', () => {
@@ -21,6 +21,7 @@ describe('GameComponent', () => {
       imports: [
         GameModule,
         MatDialogModule,
+        MatProgressBarModule,
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
         ])
