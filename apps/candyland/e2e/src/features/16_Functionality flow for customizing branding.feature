@@ -16,17 +16,17 @@ Scenario: Verifying the presence of the preview element.
   Given 6_that I am on the settings branding page.
   When  6_I do nothing.
   Then  6_I should see the preview element.
-@runThis
+
 Scenario: Verifying the functionality of font type on preview element
   Given 7_that I am on the settings branding page.
   When  7_I select the Lato option.
   Then  7_I should see the change reflected in the preview element
-@runThis
+
 Scenario: Verifying the functionality of primary color field on preview element
   Given 8_that I am on the settings branding page.
   When  8_I select a color.
   Then  8_I should see the change reflected in the preview element
-@runThis
+
 Scenario: Verifying the functionality of secondary color field on preview element
   Given 9_that I am on the settings branding page.
   When  9_I select a color.
@@ -41,7 +41,7 @@ Scenario: Verifying the assertions for logo header upload field
   Given 11_that I am on the settings branding page.
   When  11_I upload a non image file.
   Then  11_I should a message indicating this is an invalid file.
-@runThis
+
 Scenario: Verifying the functionality of text header on preview element
   Given 12_that I am on the settings branding page.
   When  12_I input a test text string.

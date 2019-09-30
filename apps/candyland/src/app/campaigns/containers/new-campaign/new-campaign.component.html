@@ -1,4 +1,4 @@
-<div class="page-header full-with" [formGroup]="form">
+<header class="page-header full-with" [formGroup]="form">
   <mat-form-field class="pagetitle-input" floatLabel="never" >
     <input type="text" matInput formControlName="name" placeholder="Enter title here">
     <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
@@ -16,7 +16,7 @@
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
     <cl-button *ngIf="isLastStep" classList="primary" (click)="save()">Launch</cl-button>
   </div>
-</div>
+</header>
 
 <section class="content">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
@@ -33,9 +33,9 @@
         <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"
                                              [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-survey-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'instant_reward'"
+        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'instant_reward'"
                                       [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-page>
+        ></cl-new-campaign-rewards-survey-page>
         <cl-new-campaign-rewards-page *ngSwitchCase="'game'"
                                       [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-page>

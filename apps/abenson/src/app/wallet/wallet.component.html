@@ -6,7 +6,8 @@
         <perx-core-vouchers [data]="issuedVouchers"
                             [showExpireDate]="true"
                             [mapping]="mapping"
-                            [showRedeemedDate]="false">
+                            [showRedeemedDate]="false"
+                            (tapped)="openDetail($event)">           
         </perx-core-vouchers>
       </div>
     </mat-tab>

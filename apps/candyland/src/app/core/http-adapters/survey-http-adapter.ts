@@ -19,6 +19,7 @@ export class SurveyHttpAdapter {
       type: 'engagements',
       attributes: {
         type: 'survey',
+        image_url: data.image_url,
         title: data.name,
         display_properties: {
           title: data.headlineMessage,

@@ -15,6 +15,7 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { GameModule, ConfigModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    DirectivesModule,
   ]
 })
 export class GamesModule {
