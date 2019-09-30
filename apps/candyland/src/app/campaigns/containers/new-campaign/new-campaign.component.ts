@@ -99,19 +99,26 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     if (this.campaign) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
-      updateLimit$ = this.limitsService.updateLimits(
+      updateLimit$ = campaign => this.limitsService.updateLimits(
         this.store.currentCampaign.limits.id,
         this.store.currentCampaign.limits,
-        this.store.currentCampaign.template.attribute_type
+        this.store.currentCampaign.template.attributes_type,
+        campaign.data.id,
+        this.store.currentCampaign.template.id
       );
     } else {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
-      updateLimit$ = this.limitsService.createLimits(this.store.currentCampaign.limits, this.store.currentCampaign.template.attribute_type);
+      updateLimit$ = campaign => this.limitsService.createLimits(
+        this.store.currentCampaign.limits,
+        this.store.currentCampaign.template.attributes_type,
+        campaign.data.id,
+        this.store.currentCampaign.template.id
+      );
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
       switchMap(
-        (res) => iif(hasLimitData, updateLimit$, of(res))
+        (res) => iif(hasLimitData, updateLimit$(res), of(res))
       )
     ).subscribe(
       data => {

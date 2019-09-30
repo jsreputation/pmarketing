@@ -56,7 +56,6 @@ export class CampaignsHttpAdapter {
   }
 
   public static transformFromCampaign(data: any): any {
-    console.log(data);
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);
@@ -84,11 +83,6 @@ export class CampaignsHttpAdapter {
         pool_id: data.audience.select,
         // labels: data.campaignInfo.label,
         possible_outcomes,
-        // limits: {
-        //   max_play_in_period: data.limits.time,
-        //   period_unit: LimitsDurationToAPIMapping[data.limits.duration],
-        //   period_number: 1
-        // },
         comm
       }
     };
