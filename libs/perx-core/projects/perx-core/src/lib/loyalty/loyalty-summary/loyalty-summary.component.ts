@@ -39,7 +39,7 @@ export class LoyaltySummaryComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
-      this.subTitleFn = (loyalty: ILoyalty) => `Your total points as of ${this.datePipe.transform(loyalty.endDate || new Date(), 'ddMMMyy').toUpperCase()}`;
+      this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy').toUpperCase()}`;
     }
 
     if (!this.titleFn) {
