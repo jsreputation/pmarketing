@@ -12,4 +12,7 @@ export class ShakeComponent  {
   @Input() public game: IGame;
   @Output() public broken: EventEmitter<void> = new EventEmitter();
   public isEnabled: boolean = false;
+  public gameCompleted(): void {
+    this.broken.emit();
+  }
 }

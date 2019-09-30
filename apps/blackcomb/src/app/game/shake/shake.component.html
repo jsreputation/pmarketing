@@ -13,12 +13,12 @@
       [enabled]="isEnabled"
       [nbShakes]="game.config.nbTaps">
     </perx-core-shake-tree>
-  </div>  
-  <button
+  </div>
+  <button 
     mat-flat-button
-    color="primary"
     (click)="isEnabled = true"
-    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible', 'color': 'white'}">
     {{ game.texts.button }}
   </button>
+
 </div>
