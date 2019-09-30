@@ -84,9 +84,12 @@
               Gift box
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="shakeTreeData.giftBox" class="game-selected-graphic"
-                formControlName="giftBox" [graphicList]="shakeTreeData.giftBox"
-                (selectGraphic)="setSelectGiftBox($event)">
+              <cl-select-graphic-wrap *ngIf="shakeTreeData.giftBox"
+                                      class="game-selected-graphic"
+                                      formControlName="giftBox"
+                                      [isRequired]="giftBox.hasError('required') && giftBox.touched"
+                                      [graphicList]="shakeTreeData.giftBox"
+                                      (selectGraphic)="setSelectGiftBox($event)">
               </cl-select-graphic-wrap>
             </div>
           </div>
@@ -96,9 +99,12 @@
               Background
             </p>
             <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="shakeTreeData.background" formControlName="background"
-                class="game-selected-graphic" [graphicList]="shakeTreeData.background"
-                (selectGraphic)="setSelectGiftBox($event)">
+              <cl-select-graphic-wrap *ngIf="shakeTreeData.background"
+                                      formControlName="background"
+                                      [isRequired]="background.hasError('required') && background.touched"
+                                      class="game-selected-graphic"
+                                      [graphicList]="shakeTreeData.background"
+                                      (selectGraphic)="setSelectGiftBox($event)">
               </cl-select-graphic-wrap>
             </div>
           </div>

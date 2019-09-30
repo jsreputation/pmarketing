@@ -156,6 +156,7 @@
               <cl-select-graphic-wrap
                 *ngIf="surveyData.cardBackground"
                 formControlName="cardBackground"
+                [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
                 class="game-selected-graphic"
                 [graphicList]="surveyData.cardBackground"
               >
@@ -171,6 +172,7 @@
               <cl-select-graphic-wrap
                 *ngIf="surveyData.background"
                 formControlName="background"
+                [isRequired]="background.hasError('required') && background.touched"
                 class="game-selected-graphic"
                 [graphicList]="surveyData.background"
               >
