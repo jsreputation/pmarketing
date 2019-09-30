@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { UploadImageComponent } from '@cl-shared/questions/question-picture-choice-field/upload-image/upload-image.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('QuestionPictureChoiceFieldComponent', () => {
   let component: QuestionPictureChoiceFieldComponent;
@@ -25,7 +26,8 @@ describe('QuestionPictureChoiceFieldComponent', () => {
       declarations: [
         QuestionPictureChoiceFieldComponent,
         UploadImageComponent
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
       .compileComponents();
   }));

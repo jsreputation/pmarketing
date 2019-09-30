@@ -23,6 +23,7 @@ export class MerchantHttpAdapter {
       type: data.type,
       id: data.id,
       description: data.description,
+      image: data.properties.logo_image,
       countryCode: data.properties.country_code,
       phone: data.properties.phone,
       address: data.properties.address,

@@ -11,7 +11,7 @@ export class NewRewardFormService {
     return this.fb.group({
       name: ['', [Validators.required]],
       rewardInfo: this.fb.group({
-        image: [],
+        image: [null, [Validators.required]],
         rewardType: this.fb.control(null, [Validators.required]),
         category: this.fb.control(null, [Validators.required]),
         redemptionType: [],

@@ -18,7 +18,7 @@ export class MerchantFormService {
         // Validators.required
       ]],
       description: [null, [
-        // Validators.required, 
+        // Validators.required,
         Validators.minLength(1),
         Validators.maxLength(120)
       ]],
