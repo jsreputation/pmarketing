@@ -56,10 +56,20 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       data: item
     });
 
-    dialogRef.afterClosed().pipe(untilDestroyed(this)).subscribe(result => {
-      if (result) {
-      }
-    });
+    dialogRef.afterClosed().pipe(untilDestroyed(this))
+    .pipe(
+      filter(Boolean),
+      switchMap((entity: string) => {
+        return this.vouchersService.updateVoucherExpiry(item.id, entity);
+      })
+    )
+    .subscribe(
+      () => {
+      this.snack.open('Expiry voucher date successfully changed.', 'x', { duration: 2000 });
+      this.dataSource.updateData();
+      },
+      () => this.snack.open('Failed to update voucher expiration date.', 'x', { duration: 2000 })
+    );
   }
 
   public openSelectRewardPopup(): void {

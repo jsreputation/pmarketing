@@ -48,7 +48,6 @@ export class GameComponent implements OnInit {
     const r2: Observable<number[]> = interval(delay / nbSteps)
       .pipe(
         tap(v => this.progressValue = v * 100 / nbSteps),
-        tap(() => console.log(this.progressValue)),
         bufferCount(nbSteps),
         first()
       );
