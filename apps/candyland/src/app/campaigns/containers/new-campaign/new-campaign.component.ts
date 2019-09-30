@@ -153,8 +153,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private handleRouteParams(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
-      page_number: '1',
-      page_size: '100',
       'filter[campaign_entity_id]': campaignId
     };
     if (campaignId) {
