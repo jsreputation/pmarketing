@@ -90,7 +90,7 @@ export class SettingsHttpAdapter {
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
       'theme.button_background_color': data.button_background_color.color,
-      'theme.button_text_color': data.button_text_color.value
+      'theme.button_text_color': data.button_text_color
     };
   }
 

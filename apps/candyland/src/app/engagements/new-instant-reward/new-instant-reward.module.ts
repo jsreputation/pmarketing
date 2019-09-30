@@ -23,6 +23,7 @@ import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
 import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { NewInstantRewardManagePageComponent } from './containers/new-instant-re
     MatSelectModule,
     MatRadioModule,
     ConfirmModalModule,
+    DirectivesModule,
   ]
 })
 export class NewInstantRewardModule {

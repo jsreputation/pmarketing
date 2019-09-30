@@ -75,7 +75,7 @@ interface WGameDisplayProperties {
   title: string;
   button: string;
   sub_title: string;
-  background_image?: string;
+  background_img_url?: string;
 }
 
 interface Outcome {
@@ -146,6 +146,8 @@ export class WhistlerGameService implements IGameService {
     if (attributes.display_properties.button) {
       texts.button = attributes.display_properties.button;
     }
+    const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
+      attributes.display_properties.background_img_url : undefined;
 
     return {
       id: +game.id,
@@ -153,6 +155,7 @@ export class WhistlerGameService implements IGameService {
       remainingNumberOfTries: 1,
       config,
       texts,
+      backgroundImg,
       results: {}
     };
 
