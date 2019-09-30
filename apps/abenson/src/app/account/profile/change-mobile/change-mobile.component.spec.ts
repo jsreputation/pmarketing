@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ChangeMobileComponent } from './change-mobile.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,15 +7,18 @@ import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 
 const authenticationService = {
-  requestVerificationToken: () => of()
+  requestVerificationToken: () => of(null)
 };
 
 describe('ChangeMobileComponent', () => {
   let component: ChangeMobileComponent;
   let fixture: ComponentFixture<ChangeMobileComponent>;
-
+  let auth: AuthenticationService;
+  let router: Router;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChangeMobileComponent],
@@ -41,10 +44,20 @@ describe('ChangeMobileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangeMobileComponent);
     component = fixture.componentInstance;
+    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    router = TestBed.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should request otp', fakeAsync(() => {
+    spyOn(auth, 'requestVerificationToken').and.returnValue(of(null));
+    const routerSpy = spyOn(router, 'navigate');
+    component.requestOtp();
+    tick();
+    expect(routerSpy).toHaveBeenCalled();
+  }));
 });

@@ -2,6 +2,8 @@ import {
   async,
   ComponentFixture,
   TestBed,
+  fakeAsync,
+  tick,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -11,16 +13,19 @@ import { ChangeEmailComponent } from './change-email.component';
 import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 
 const profileServiceStub = {
-  updateUserInfo: () => of(),
-  whoAmI: () => of({email: 'email@e.mail'})
+  updateUserInfo: () => of(null),
+  whoAmI: () => of({ email: 'email@e.mail' })
 };
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
   let fixture: ComponentFixture<ChangeEmailComponent>;
-
+  let profileService: ProfileService;
+  let router: Router;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -44,10 +49,20 @@ describe('ChangeEmailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangeEmailComponent);
     component = fixture.componentInstance;
+    profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
+    router = TestBed.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should submit data', fakeAsync(() => {
+    spyOn(profileService, 'updateUserInfo').and.returnValue(of(null));
+    const routerSpy = spyOn(router, 'navigate');
+    component.onSubmit();
+    tick();
+    expect(routerSpy).toHaveBeenCalledWith(['account']);
+  }));
 });
