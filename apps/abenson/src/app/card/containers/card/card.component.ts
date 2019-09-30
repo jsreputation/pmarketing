@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   map,
   scan,
@@ -30,14 +30,14 @@ export class CardComponent implements OnInit {
   private activeTabId: number = 0;
   private transactionsPageId: number = 1;
   private tabsId: any = {
-    MyCard : 0,
+    MyCard: 0,
     History: 1,
   };
 
   constructor(private loyaltyService: LoyaltyService) {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => {
-        return [...acc, ... curr ? curr : []];
+        return [...acc, ...curr ? curr : []];
       }, [])
     );
   }
@@ -45,7 +45,7 @@ export class CardComponent implements OnInit {
   public ngOnInit(): void {
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties && loyalties.length && loyalties[0])
-    ).subscribe( (loyalty) => {
+    ).subscribe((loyalty) => {
       this.loyaltyId = loyalty.id;
       this.membershipId = +loyalty.membershipIdentifier;
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
@@ -68,7 +68,7 @@ export class CardComponent implements OnInit {
     this.transactionsLoaded = false;
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId)
       .subscribe((transactions) => {
-        transactions = transactions.filter(tr => tr.points !== 0);
+        transactions = transactions && transactions.length ? transactions.filter(tr => tr.points !== 0) : [];
         this.transactions.next(transactions);
         this.transactionsLoaded = true;
         if (transactions && transactions.length < 3) {
