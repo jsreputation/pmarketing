@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
+import { CampaignsService, SettingsService, OutcomesService, CommsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
@@ -10,7 +10,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, filter, switchMap } from 'rxjs/operators';
-import { of, combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -37,7 +37,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
-    private limitsService: LimitsService,
   ) {
     store.resetCampaign();
   }
