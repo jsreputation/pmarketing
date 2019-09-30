@@ -54,7 +54,7 @@ import { EngagementsGridComponent } from './components/engagements-grid/engageme
     MatRadioModule,
     CreateEngagementPopupModule,
     EngagementItemModule,
-    ConfirmModalModule
+    ConfirmModalModule,
   ],
   entryComponents: [
     EngagementsListPageComponent,
