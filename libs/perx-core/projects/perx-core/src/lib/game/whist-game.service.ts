@@ -123,8 +123,7 @@ export class WhistlerGameService implements IGameService {
   private hostName: string;
   constructor(
     private http: HttpClient,
-    config: Config,
-    private wVouchSvc: WhistlerVouchersService) {
+    config: Config) {
     this.hostName = config.apiHost as string;
   }
 
@@ -196,7 +195,7 @@ export class WhistlerGameService implements IGameService {
         map(res => ({
             vouchers:
             res.data.attributes.results.attributes.results.map(v =>
-               (WhistlerGameService.subscribeAndRevealVouch(this.wVouchSvc.get(v.id)))
+               (WhistlerGameService.subscribeAndRevealVouch(WhistlerVouchersService.get(v.id)))
             ),
             rawPayload: res
           })

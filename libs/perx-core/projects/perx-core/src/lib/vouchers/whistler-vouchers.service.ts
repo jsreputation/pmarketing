@@ -68,6 +68,10 @@ export class WhistlerVouchersService implements IVoucherService {
     };
   }
 
+  public static get(id: number): Observable<IVoucher> {
+    return WhistlerVouchersService.get(id);
+  }
+
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return this.http.get<IJsonApiListPayload<IWhistlerVoucher>>(this.vouchersUrl)
