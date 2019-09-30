@@ -50,6 +50,15 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "zh": {
+              "aot": true,
+              "baseHref": "/zh/",
+              "outputPath": "dist/merck-customer-zh/",
+              "i18nFile": "src/locale/messages.zh.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "zh",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -61,6 +70,9 @@
           "configurations": {
             "production": {
               "browserTarget": "merck-customer:build:production"
+            },
+            "zh": {
+              "browserTarget": "merck-customer:build:zh"
             }
           }
         },
