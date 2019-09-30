@@ -37,7 +37,6 @@ export class CampaignsHttpAdapter {
   public static transformAPIResponseToCampaign(data: any): any {
     console.log(data);
     const campaignData = data.data.attributes;
-    const campaignOutcomes = data.includes && data.includes.possible_outcomes || [];
     // const campaignLimits = data.includes && data.includes.limits;
     return {
       id: data.data.id,
@@ -55,19 +54,11 @@ export class CampaignsHttpAdapter {
       },
       // TODO, Andrew, need API support for channel data
       channel: {
-        type: campaignData.comm_channel,
-        // type: campaignData.comm.event.channel,
-        // message: campaignData.comm.template.content,
-        // schedule: {
-        //   sendDate: new Date(campaignData.comm.event.send_at),
-        //   sendTime: moment(campaignData.comm.event.send_at).format('LT'),
-        //   enableRecurrence: false,
-        //   recurrence: { times: null, period: null, repeatOn: [] }
-        // }
+        type: campaignData.comm_channel
       },
       audience: { type: 'select', select: (campaignData.pool_id).toString(), file: null },
       template: {},
-      rewardsList: campaignOutcomes,
+      rewardsList: [],
       // limits: {
       //   time: campaignLimits && campaignLimits.max_play_in_period,
       //   duration: campaignLimits && LimitsDurationFromAPIMapping[campaignLimits.period_unit]
@@ -90,7 +81,7 @@ export class CampaignsHttpAdapter {
         comm_channel: data.channel.type,
         status: "scheduled",
         start_date_time: moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime).format(),
-        end_date_time:  moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
+        end_date_time: moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select,
         // labels: data.campaignInfo.label,

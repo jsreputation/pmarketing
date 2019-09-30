@@ -9,11 +9,11 @@
         <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
         <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
       </div>
-      <cl-progress-bar class="reward-item-progress"
+      <!-- <cl-progress-bar class="reward-item-progress"
                       *ngIf="data?.current && data?.total"
                       [current]="data?.current"
                       [total]="data?.total">
-      </cl-progress-bar>
+      </cl-progress-bar> -->
     </div>
     <div class="reward-item-probability" *ngIf="probability.enabled">
       <span class="reward-item-probability-label">Probability</span>
