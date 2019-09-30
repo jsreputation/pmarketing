@@ -1,5 +1,5 @@
-<div class="tree-wrap" *ngIf="shakeTreeData" [formGroup]="form">
-  <div class="page-header full-with">
+<article class="tree-wrap" *ngIf="shakeTreeData" [formGroup]="form">
+  <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" placeholder="Enter title here">
       <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
@@ -18,8 +18,8 @@
         </span>
       </cl-button>
     </div>
-  </div>
-  <div class="content phonepreview-wrapper">
+  </header>
+  <section class="content phonepreview-wrapper">
     <div class="tree-wrap-fields">
       <mat-card class="game-graphic">
         <div class="messages-wrap">
@@ -163,5 +163,5 @@
         </button>
       </div>
     </cl-simple-mobile-view>
-  </div>
-</div>
+  </section>
+</article>
