@@ -155,7 +155,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const params: HttpParamsOptions = {
       page_number: '1',
       page_size: '100',
-      id: campaignId
+      'filter[campaign_entity_id]': campaignId
     };
     combineLatest(
       this.campaignsService.getCampaign(campaignId),
