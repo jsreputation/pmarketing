@@ -4,8 +4,9 @@ import { HomeComponent } from './home.component';
 import { RewardsService, ILoyalty, IProfile, IPrice, IReward, ITabConfig, LoyaltyService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -13,10 +14,11 @@ import { Observable, of } from 'rxjs';
 })
 class PerxCoreLoyaltySummaryMockComponent {
   @Input()
-  public loyalty: Observable<ILoyalty> | undefined;
+  public loyalty: Observable<ILoyalty>|undefined;
   @Input()
   public titleFn: (profile: IProfile) => string;
 }
+
 @Component({
   selector: 'perx-core-rewards-collection',
   template: ''
@@ -39,9 +41,20 @@ export class RewardsListTabbedMockComponent {
   public tabs$: Observable<ITabConfig[]>;
 }
 
+@Component({
+  selector: 'mock-host-component',
+  template: `<div class="reward-body" infiniteScroll [infiniteScrollContainer]></div>`
+})
+class MockHostComponent {
+  @ViewChild(HomeComponent, { read: undefined, static: true })
+  public component: HomeComponent;
+}
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+  let mockHostFixture: ComponentFixture<MockHostComponent>;
+  let mockHostComponent: MockHostComponent;
+
   const rewardsServiceStub = {
     getAllRewards: () => of([])
   };
@@ -53,6 +66,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         HomeComponent,
+        MockHostComponent,
         PerxCoreLoyaltySummaryMockComponent,
         PerxCoreRewardsCollectionMockComponent,
         RewardsListTabbedMockComponent
@@ -60,6 +74,7 @@ describe('HomeComponent', () => {
       imports: [
         NoopAnimationsModule,
         RouterTestingModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -70,12 +85,14 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    mockHostFixture = TestBed.createComponent(MockHostComponent);
+    mockHostComponent = mockHostFixture.componentInstance;
+    component = mockHostComponent.component;
+
+    mockHostFixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(mockHostComponent).toBeTruthy();
   });
 });
