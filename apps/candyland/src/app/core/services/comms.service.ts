@@ -13,9 +13,8 @@ export class CommsService {
   constructor(private commsHttpsService: CommsHttpsService) {
   }
 
-  public getComms(params: HttpParamsOptions, id: string): Observable<IComm[]> {
+  public getComms(params: HttpParamsOptions): Observable<IComm[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    httpParams.append('filter[\'campaign_entity_id\']', id);
     return this.commsHttpsService.getComms(httpParams).pipe(
       map(response => response.data),
       map(response => response.map((comm: ICommApi) => CommsHttpAdapter.transformAPIResponseToComm(comm)))

@@ -13,9 +13,8 @@ export class OutcomesService {
   constructor(private outcomesHttpsService: OutcomesHttpsService) {
   }
 
-  public getOutcomes(params: HttpParamsOptions, id: string): Observable<IOutcome[]> {
+  public getOutcomes(params: HttpParamsOptions): Observable<IOutcome[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    httpParams.append('filter[\'campaign_entity_id\']', id);
     return this.outcomesHttpsService.getOutcomes(httpParams).pipe(
       map(response => response.data),
       map(response => response.map((outcome: IOutcomeApi) => OutcomesHttpAdapter.transformAPIResponseToOutcome(outcome)))

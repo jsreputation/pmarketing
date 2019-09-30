@@ -13,10 +13,8 @@ export class LimitsService {
   constructor(private limitsHttpsService: LimitsHttpsService) {
   }
 
-  public getLimits(params: HttpParamsOptions, campaignId: string, engagementId: string, engagementType: string): Observable<ILimit> {
+  public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    httpParams.append('filter[\'campaign_entity_id\']', campaignId);
-    httpParams.append('filter[\'engagement_id\']', engagementId);
     return this.limitsHttpsService.getLimits(httpParams, engagementType).pipe(
       map(response => response.data),
       map(response => response.map((limit: ILimitApi) => LimitsHttpAdapter.transformAPIResponseToLimit(limit)))

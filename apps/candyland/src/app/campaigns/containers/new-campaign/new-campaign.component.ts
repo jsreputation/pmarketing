@@ -151,35 +151,37 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private handleRouteParams(): void {
-    this.route.paramMap.pipe(
-      untilDestroyed(this),
-      map((params: ParamMap) => params.get('id')),
-      filter(Boolean),
-      switchMap((id: string) => combineLatest(
-        this.campaignsService.getCampaign(id),
-        this.commsService.getComms(null, id).pipe(
-          map(comms => comms[0])
-        ),
-        this.outcomesService.getOutcomes(null, id))),
-      map(
-        ([campaign, comm, outcomes]) => ({
-          ...campaign,
-          channel: {
-            type: campaign.channel.type,
-            ...comm
-          },
-          rewardsList: outcomes
-        }))
-    ).subscribe(
-      campaign => {
-        this.campaign = Object.assign({}, campaign);
-        this.store.initCampaign(campaign);
-        this.form.patchValue({
-          name: this.campaign.name
-        });
-      },
-      () => this.router.navigateByUrl('/campaigns')
-    );
+    const campaignId = this.route.snapshot.params.id;
+    const params: HttpParamsOptions = {
+      page_number: '1',
+      page_size: '100',
+      id: campaignId
+    };
+    combineLatest(
+      this.campaignsService.getCampaign(campaignId),
+      this.commsService.getComms(params).pipe(
+        map(comms => comms[0])
+      ),
+      this.outcomesService.getOutcomes(params)).pipe(
+        map(
+          ([campaign, comm, outcomes]) => ({
+            ...campaign,
+            channel: {
+              type: campaign.channel.type,
+              ...comm
+            },
+            rewardsList: outcomes
+          }))
+      ).subscribe(
+        campaign => {
+          this.campaign = Object.assign({}, campaign);
+          this.store.initCampaign(campaign);
+          this.form.patchValue({
+            name: this.campaign.name
+          });
+        },
+        () => this.router.navigateByUrl('/campaigns')
+      );
   }
 
 }
