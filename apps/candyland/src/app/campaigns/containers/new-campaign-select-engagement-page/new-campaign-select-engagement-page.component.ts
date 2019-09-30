@@ -1,3 +1,4 @@
+import { LimitsService } from './../../../core/services/limits.service';
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
@@ -34,7 +35,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     public stepConditionService: StepConditionService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    public cd: ChangeDetectorRef
+    public cd: ChangeDetectorRef,
+    private limitsService: LimitsService
   ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
@@ -92,6 +94,17 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       this.campaign && this.campaign.engagement_id && this.campaign.engagement_id.toString();
     if (engagementId) {
       const findTemplate = res.find(template => template.id === engagementId);
+      if (this.store.currentCampaign.id) {
+        const params: HttpParamsOptions = {
+          'filter[campaign_entity_id]': this.store.currentCampaign.id
+        };
+        this.limitsService.getLimits(params, findTemplate.attributes_type).subscribe(
+          limits => {
+            const newCampaign = { ...this.store.currentCampaign, limits };
+            this.store.updateCampaign(newCampaign);
+          }
+        );
+      }
       this.template.patchValue(findTemplate);
     }
   }
