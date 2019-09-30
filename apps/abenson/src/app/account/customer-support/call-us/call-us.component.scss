@@ -1,0 +1,39 @@
+@import "../../../../custom-theme";
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.4rem;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.numbers-wrapper {
+  font-size: 1.4rem;
+  height: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .phone-number {
+    display: flex;
+    align-items: center;
+
+    .phone-icon {
+      color: mat-color($primary);
+      background-color: #90caf9;
+      padding: 0.4rem;
+      border-radius: 50%;
+    }
+
+    a {
+      text-decoration: none;
+      line-height: 2.4rem;
+      color: #000000;
+      margin-left: 1.6rem;
+    }
+  }
+}

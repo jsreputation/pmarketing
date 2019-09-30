@@ -3,14 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { CustomerSupportRoutingModule } from './customer-support-routing.module';
 import { CustomerSupportComponent } from './customer-support.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { CallUsComponent } from './call-us/call-us.component';
 
 @NgModule({
-  declarations: [CustomerSupportComponent],
+  declarations: [CustomerSupportComponent, CallUsComponent],
   imports: [
     CommonModule,
     CustomerSupportRoutingModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    CallUsComponent
   ]
 })
 export class CustomerSupportModule { }
