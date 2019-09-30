@@ -6,4 +6,5 @@ declare interface IInstantRewardForm {
   cardBackground: IGraphic;
   background: IGraphic;
   buttonText: string;
+  image_url?: string;
 }

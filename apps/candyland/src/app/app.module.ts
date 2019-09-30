@@ -17,6 +17,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { JsonApiModule } from 'angular2-jsonapi';
 import { PerxChartModule } from '@perx/chart';
+import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +40,7 @@ import { PerxChartModule } from '@perx/chart';
   providers: [
     LocalStorageService,
     SessionService,
+    WINDOW_PROVIDERS,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

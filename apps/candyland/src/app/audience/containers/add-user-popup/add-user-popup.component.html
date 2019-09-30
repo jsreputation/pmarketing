@@ -1,11 +1,11 @@
-<div class="dialog">
-  <div class="dialog-header-wrap">
+<aside class="dialog" role="dialog">
+  <header class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
-    <h3 class="dialog-title">Add User</h3>
+    <h2 class="dialog-title">Add User</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
-  </div>
+  </header>
   <mat-dialog-content class="dialog-content" [formGroup]="form">
     <mat-tab-group>
       <mat-tab label="Custom user">
@@ -86,7 +86,7 @@
       </mat-tab> -->
     </mat-tab-group>
   </mat-dialog-content>
-  <div class="dialog-actions">
+  <footer class="dialog-actions">
     <cl-button classList="tertiary"
                class="actions-close"
                (click)="close()"
@@ -104,7 +104,7 @@
           Add
         </span>
     </cl-button>
-  </div>
-</div>
+  </footer>
+</aside>
 
 
