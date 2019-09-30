@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   public rewards: Observable<IReward[]>;
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
+  public subTitleFn: () => string;
 
   public constructor(
     private rewardsService: RewardsService,
@@ -49,6 +50,8 @@ export class HomeComponent implements OnInit, PageAppearence {
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
+
+    this.subTitleFn = () => 'Your total points';
   }
 
   private getRewards(): void {
