@@ -1,0 +1,55 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AuthenticationService } from '@perx/core';
+
+@Component({
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss']
+})
+export class SignUpComponent implements OnInit {
+  public signUpForm: FormGroup;
+  public errorMessage: string;
+  public hide: boolean = true;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthenticationService,
+    private router: Router,
+  ) { }
+
+  public ngOnInit(): void {
+    this.initForm();
+  }
+
+  public initForm(): void {
+    this.signUpForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      phone: ['', Validators.required],
+      password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      accept_terms: [false, Validators.required]
+    });
+  }
+
+  public onSubmit(): void {
+    const password: string = this.signUpForm.get('password').value;
+    const termsConditions = this.signUpForm.get('accept_terms').value as boolean;
+    if (!termsConditions) {
+      return;
+    }
+
+    this.errorMessage = null;
+    const profile = this.signUpForm.value;
+    delete profile.accept_terms;
+    profile.password_confirmation = password;
+
+    this.authService.signup(profile).subscribe(() => {
+        this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
+        },
+      (e) => {
+      console.log(e);
+    });
+  }
+}

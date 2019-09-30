@@ -11,6 +11,7 @@ import { StepConditionService } from '../../services/step-condition.service';
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
@@ -38,6 +39,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   private initForm(): void {

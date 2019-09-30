@@ -26,7 +26,7 @@ export class SurveyHttpAdapter {
           card_background_img_url: ImageControlValue.getImagePath(data.cardBackground),
           background_img_url: ImageControlValue.getImagePath(data.background),
           questions: data.questions,
-          // button: data.buttonText
+          button: data.buttonText
         }
       }
     };
@@ -41,19 +41,19 @@ export class SurveyHttpAdapter {
   public static transformToSurveyForm(data: any): ISurveyForm {
     return {
       id: data.id,
-    type: data.attributes.type,
-    created_at: data.attributes.display_properties.created_at,
-    updated_at: data.attributes.display_properties.updated_at,
-    name: data.attributes.title,
+      type: data.attributes.type,
+      created_at: data.attributes.display_properties.created_at,
+      updated_at: data.attributes.display_properties.updated_at,
+      name: data.attributes.title,
       attribute_type: data.attributes.type,
-    headlineMessage: data.attributes.display_properties.title,
-    subHeadlineMessage: data.attributes.display_properties.sub_title,
-    questions: data.attributes.display_properties.questions,
-    color: data.attributes.display_properties.progress_bar_color,
-    cardBackground: data.attributes.display_properties.card_background_img_url,
-    background: data.attributes.display_properties.background_img_url,
-    buttonText: data.attributes.display_properties.button,
-    description: data.attributes.display_properties.description,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      questions: data.attributes.display_properties.questions,
+      color: data.attributes.display_properties.progress_bar_color,
+      cardBackground: data.attributes.display_properties.card_background_img_url,
+      background: data.attributes.display_properties.background_img_url,
+      buttonText: data.attributes.display_properties.button,
+      description: data.attributes.display_properties.description,
     };
   }
 

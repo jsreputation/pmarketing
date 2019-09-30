@@ -1,65 +1,67 @@
-<table class="table" mat-table [dataSource]="dataSource" matSort>
+<div class="table-wrap">
+  <table class="table" mat-table [dataSource]="dataSource" matSort>
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="id">ID</th>
-    <td mat-cell *matCellDef="let element">
-      <a class="table-link" [routerLink]="'/audience/'+ element?.id">
-        <span>#{{element?.id}}</span>
-      </a>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="column-id">ID</th>
+      <td mat-cell *matCellDef="let element" class="column-id">
+        <a [routerLink]="'/audience/'+ element?.id">
+          <span>#{{element?.id}}</span>
+        </a>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let element">
-      <a class="table-link" [routerLink]="'/audience/'+ element?.id">
-        <span>{{element?.first_name}} {{element?.last_name}}</span>
-      </a>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef class="column-featured">Name</th>
+      <td mat-cell *matCellDef="let element" class="column-featured">
+        <a [routerLink]="'/audience/'+ element?.id">
+          <span>{{element?.first_name}} {{element?.last_name}}</span>
+        </a>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef>Email</th>
-    <td mat-cell *matCellDef="let element">{{element?.email_address || '-'}}</td>
-  </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="column-email">Email</th>
+      <td mat-cell *matCellDef="let element" class="column-email">{{element?.email_address || '-'}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="primary_identifier">
-    <th mat-header-cell *matHeaderCellDef>Primary Identifier</th>
-    <td mat-cell *matCellDef="let element">{{element?.primary_identifier || '-'}}</td>
-  </ng-container>
+    <ng-container matColumnDef="primary_identifier">
+      <th mat-header-cell *matHeaderCellDef>Primary Identifier</th>
+      <td mat-cell *matCellDef="let element">{{element?.primary_identifier || '-'}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="state">
-    <th mat-header-cell *matHeaderCellDef>State</th>
-    <td mat-cell *matCellDef="let element">
-      <cl-status-label [status]="element?.state"></cl-status-label>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef class="column-state">State</th>
+      <td mat-cell *matCellDef="let element" class="column-state">
+        <cl-status-label [status]="element?.state"></cl-status-label>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef>Contact No.</th>
-    <td mat-cell *matCellDef="let element"> {{element?.phone_number || '-'}}</td>
-  </ng-container>
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef class="column-phone">Contact Number</th>
+      <td mat-cell *matCellDef="let element" class="column-phone"> {{element?.phone_number || '-'}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="audienceList">
-    <th mat-header-cell *matHeaderCellDef>Audience List</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element?.pools }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="audienceList">
+      <th mat-header-cell *matHeaderCellDef class="column-audiencelist">Audience List</th>
+      <td mat-cell *matCellDef="let element" class="column-audiencelist">
+        {{ element?.pools }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef class="menu-column"></th>
-    <td mat-cell *matCellDef="let element" class="menu-column">
-      <button mat-icon-button [matMenuTriggerFor]="itemMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #itemMenu="matMenu">
-        <button mat-menu-item (click)="manageList(element)">Manage List</button>
-        <!-- <button mat-menu-item (click)="deactivateItem(element)">Deactivate</button> -->
-      </mat-menu>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="actions" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef class="column-menu"></th>
+      <td mat-cell *matCellDef="let element" class="column-menu">
+        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #itemMenu="matMenu">
+          <button mat-menu-item (click)="manageList(element)">Manage List</button>
+          <!-- <button mat-menu-item (click)="deactivateItem(element)">Deactivate</button> -->
+        </mat-menu>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

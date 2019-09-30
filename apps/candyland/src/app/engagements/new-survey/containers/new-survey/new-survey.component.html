@@ -1,18 +1,12 @@
-<!--<router-outlet></router-outlet>-->
-
-<div class="survey-wrap" [formGroup]="form" *ngIf="surveyData$ |async as surveyData">
+<div class="survey-wrap" [formGroup]="form" *ngIf="surveyData">
   <div class="page-header full-with">
-    <div class="game-title-wrap">
-      <div class="control-input name-control name-control-title">
-        <mat-form-field class="pagetitle-input" floatLabel="never">
-          <input type="text"  matInput formControlName="name" placeholder="Enter title here">
-          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="game-actions">
+    <mat-form-field class="pagetitle-input" floatLabel="never">
+      <input type="text"  matInput formControlName="name" placeholder="Enter title here">
+      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+    </mat-form-field>
+    <div class="btn-group">
       <cl-button [classList]="'secondary'"
                  class="btn-cancel"
                  (click)="comeBack()"
@@ -22,7 +16,6 @@
       </span>
       </cl-button>
       <cl-button [classList]="'primary'"
-                 [disable]="form.invalid"
                  (click)="save()"
       >
       <span>
@@ -163,6 +156,7 @@
               <cl-select-graphic-wrap
                 *ngIf="surveyData.cardBackground"
                 formControlName="cardBackground"
+                [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
                 class="game-selected-graphic"
                 [graphicList]="surveyData.cardBackground"
               >
@@ -178,6 +172,7 @@
               <cl-select-graphic-wrap
                 *ngIf="surveyData.background"
                 formControlName="background"
+                [isRequired]="background.hasError('required') && background.touched"
                 class="game-selected-graphic"
                 [graphicList]="surveyData.background"
               >
@@ -213,14 +208,6 @@
                            [logoType]="tenantSettings?.logoType"
                            [fontFamily]="tenantSettings?.font"
     >
-      <div class="mobile-preview-header">
-        <p class="mobile-preview-headline">
-          {{headlineMessage?.value}}
-        </p>
-        <p class="mobile-preview-sub-headline">
-          {{subHeadlineMessage?.value}}
-        </p>
-      </div>
       <div class="plugin-block">
         <div class="mobile-preview-card"
              [ngStyle]="{
@@ -228,6 +215,14 @@
              'font-family': tenantSettings?.font
              }"
         >
+          <div class="mobile-preview-header">
+            <p class="mobile-preview-headline">
+              {{headlineMessage?.value}}
+            </p>
+            <p class="mobile-preview-sub-headline">
+              {{subHeadlineMessage?.value}}
+            </p>
+          </div>
           <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
         </div>
 
@@ -236,6 +231,7 @@
         <button class="mobile-preview-btn"
                 [ngStyle]="{
                   backgroundColor: tenantSettings?.buttonColor,
+                  'color': tenantSettings?.buttonTextColor,
                   'font-family': tenantSettings?.font
                 }"
         >

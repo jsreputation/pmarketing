@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { IData } from '../data.model';
-// import { tap, catchError } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 export enum CardType {
   pie = 'pie',
@@ -20,9 +20,10 @@ export enum CardType {
 @Component({
   selector: 'pc-meta-card',
   templateUrl: './meta-card.component.html',
-  styleUrls: ['./meta-card.component.scss']
+  styleUrls: ['./meta-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MetaCardComponent implements OnChanges {
+export class MetaCardComponent implements OnChanges, OnDestroy {
   @Input()
   public parameters: { [key: string]: string };
   @Input()
@@ -37,7 +38,12 @@ export class MetaCardComponent implements OnChanges {
   @Input()
   public showReload: boolean = false;
 
-  constructor(private dataService: DataService) { }
+  private currentRequest: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
+
+  constructor(private dataService: DataService,
+              private cd: ChangeDetectorRef) {
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.parameters || changes.id) {
@@ -45,21 +51,37 @@ export class MetaCardComponent implements OnChanges {
     }
   }
 
+  public ngOnDestroy(): void {
+    this.cd.detach();
+    this.cancelCurrentRequest();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private loadData(): void {
     this.showLoading = true;
-    this.dataService.getData(this.id, this.parameters)
+    this.cancelCurrentRequest();
+    this.currentRequest = this.dataService.getData(this.id, this.parameters)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (data) => this.data = of(data),
+        (data) => {
+          this.data = of(data);
+          this.showLoading = false;
+          this.cd.detectChanges();
+        },
         () => this.showReload = true,
-        () => this.showLoading = false
       );
   }
 
   public reload(): void {
     this.showLoading = true;
     this.showReload = false;
-
-    this.data = this.dataService.getData(this.id, this.parameters);
     this.loadData();
+  }
+
+  private cancelCurrentRequest(): void {
+    if (this.currentRequest) {
+      this.currentRequest.unsubscribe();
+    }
   }
 }

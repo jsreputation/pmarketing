@@ -34,7 +34,7 @@ import {
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
@@ -47,8 +47,9 @@ import { rewards } from './mock/rewards.mock';
 import { vouchers } from './mock/vouchers.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
-import { SignUpComponent } from './signup/signup.component';
+import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
+import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -81,6 +82,7 @@ const campaignServiceStub = {
     PromosComponent,
     SignUpComponent,
     ForgotPinComponent,
+    SmsValidationComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
