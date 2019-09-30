@@ -130,7 +130,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     .valueChanges
     .pipe(takeUntil(this.destroy$))
     .subscribe((val) => {
-      this.button_text_color.value.color = val;
+      return val;
     });
   }
 
