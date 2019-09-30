@@ -18,17 +18,21 @@ export class AudiencesService implements ITableService {
     return this.http.getAudiences(httpParams);
   }
 
-  public getAudiencesList(params: HttpParamsOptions): Observable<any> {
-    params.include = 'users';
-    const httpParams = ClHttpParams.createHttpParams(params);
+  public getAudiencesList(params: HttpParamsOptions = {}): Observable<any> {
+    const defaultParams: HttpParamsOptions = {
+      include: 'users',
+      'page[number]': '1',
+      'page[size]': '20'
+    };
+    const httpParams = ClHttpParams.createHttpParams({...defaultParams, ...params});
     return this.http.getAudiencesList(httpParams)
       .pipe(
         map((res: any) => {
-        const poolsList = res.data;
-        return poolsList.map((pool: any) => {
-          return {name: pool.attributes.name, checked: false, value: {id: pool.id, type: pool.type}};
-        });
-    }));
+          const poolsList = res.data;
+          return poolsList.map((pool: any) => {
+            return {name: pool.attributes.name, checked: false, value: {id: pool.id, type: pool.type}};
+          });
+        }));
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiences>> {

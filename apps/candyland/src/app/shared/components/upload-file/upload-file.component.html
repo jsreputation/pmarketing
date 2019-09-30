@@ -28,7 +28,12 @@
     </div>
   </div>
 
-  <div class="error upload-file-error" *ngIf="message">{{message}}</div>
+  <div class="error upload-file-error" *ngIf="isRequired || message">
+    <div>
+      <p *ngIf="isRequired">Required field</p>
+      <p>{{message}}</p>
+    </div>
+  </div>
 </div>
 
 

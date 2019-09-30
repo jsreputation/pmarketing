@@ -10,6 +10,10 @@ export class UploadFileHttpService {
 
   constructor(private http: HttpClient) { }
 
+  public uploadImage(formData: FormData): Observable<any> {
+    return this.http.post(ApiConfig.uploadImagePath, formData);
+  }
+
   public uploadFile(formData: FormData): Observable<any> {
     return this.http.post(ApiConfig.uploadFilePath, formData);
   }

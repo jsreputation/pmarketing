@@ -78,12 +78,13 @@
           </div>
         </div>
       </mat-tab>
-      <!-- temporary hide until api is ready -->
-      <!-- <mat-tab label="Upload by file">
+      <mat-tab label="Upload by file">
         <div class="dialog-tab-content">
-          <cl-upload-file></cl-upload-file>
+          <cl-upload-file formControlName="file"
+                          [isRequired]="form.get('file').getError('required') && form.get('file').touched">
+          </cl-upload-file>
         </div>
-      </mat-tab> -->
+      </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>
   <footer class="dialog-actions">
@@ -97,9 +98,7 @@
     </cl-button>
 
     <cl-button classList="primary"
-               (click)="add()"
-               [disable]="this.form.invalid"
-               [disableRipple]="true">
+               (click)="add()">
         <span>
           Add
         </span>
