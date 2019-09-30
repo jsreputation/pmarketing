@@ -52,7 +52,7 @@ describe('CardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardComponent ],
+      declarations: [CardComponent],
       imports: [
         SharedModule,
         LoyaltyModule,
@@ -65,12 +65,12 @@ describe('CardComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CardComponent);
-    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>)
+    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -79,17 +79,17 @@ describe('CardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shoulld priceLabelFn', ()=>{
+  it('shoulld priceLabelFn', () => {
     expect(component.priceLabelFn(transaction)).toBe('Points spent');
-    expect(component.priceLabelFn({...transaction, points: 11})).toBe('Points earned');
+    expect(component.priceLabelFn({ ...transaction, points: 11 })).toBe('Points earned');
   });
 
-  it('should change tab, trigger onscroll', ()=>{
-    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of(null))
+  it('should change tab, trigger onscroll', () => {
+    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of(null));
     component.transactionsEnded = false;
-    component.tabChanged({index: 1} as MatTabChangeEvent);
+    component.tabChanged({ index: 1 } as MatTabChangeEvent);
     component.onScroll();
     expect(spy).toHaveBeenCalled();
   });
-  
+
 });

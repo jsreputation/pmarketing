@@ -55,12 +55,12 @@ describe('ChangePasswordComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('change password', fakeAsync(()=>{
+  it('change password', fakeAsync(() => {
     spyOn(auth, 'requestVerificationToken').and.returnValue(of(null));
     const sharedSpy = spyOn(sharedData, 'addData');
-    spyOn(router, 'navigate');
+    const routerSpy = spyOn(router, 'navigate');
     component.changePassword();
     expect(sharedSpy).toHaveBeenCalled();
-    expect()
+    expect(routerSpy).toHaveBeenCalled();
   }));
 });
