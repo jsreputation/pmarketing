@@ -31,6 +31,12 @@
     position: relative;
     background: white;
 
+    .loyalty-item ::ng-deep {
+      .points {
+        color: $main-blue-theme;
+      }
+    }
+
     button {
       position: absolute;
       right: 2rem;
