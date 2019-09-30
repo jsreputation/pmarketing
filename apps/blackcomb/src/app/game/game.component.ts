@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, PopupComponent, GameType } from '@perx/core';
-import { flatMap, take, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent } from '@perx/core';
+import { map, tap, first, filter, switchMap, bufferCount } from 'rxjs/operators';
+import { Observable, interval, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -12,38 +12,68 @@ import { MatDialog } from '@angular/material';
 })
 export class GameComponent implements OnInit {
   public gameData$: Observable<IGame>;
-  public congratsDetailText: string = 'You just won 2 rewards';
   public gt: typeof GameType = GameType;
+  private cid: number;
+  private eid: number;
+  public progressValue: number;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
     private dialog: MatDialog
   ) {
-
   }
 
   public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
-      flatMap((params) => this.gameService.getGamesFromCampaign(parseInt(params.id, 10))),
-      take(1),
-      tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
-      map((games) => games[0]),
+      filter((params: Params) => params.id),
+      map((params: Params) => params.id),
+      map((id: string) => Number.parseInt(id, 10)),
+      tap((id: number) => this.cid = id),
+      switchMap((id: number) => this.gameService.getGamesFromCampaign(id)),
+      first(),
+      tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
+      map((games: IGame[]) => games[0]),
+      tap((game: IGame) => this.eid = game.id)
     );
 
   }
 
   public gameCompleted(): void {
-    const dialog = this.dialog.open(PopupComponent, {
-      data: {
-        title: 'Congratulations!',
-        text: this.congratsDetailText,
-        buttonTxt: 'View Rewards',
-        imageUrl: 'assets/congrats_image.png',
-      }
-    });
-    dialog.afterClosed().subscribe(() => {
-      this.router.navigate(['/wallet']);
-    });
+    const r1 = this.gameService.play(this.eid, this.cid);
+    // display a loader before redirecting to next page
+    const delay = 3000;
+    const nbSteps = 60;
+    const r2: Observable<number[]> = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        tap(() => console.log(this.progressValue)),
+        bufferCount(nbSteps),
+        first()
+      );
+    combineLatest(r1, r2)
+      // @ts-ignore
+      .subscribe(([outcome, c]: [IPlayOutcome, any]) => {
+        this.router.navigate(['/wallet']);
+        if (outcome.vouchers.length > 0) {
+          this.dialog.open(PopupComponent, {
+            data: {
+              title: 'Congratulations!',
+              text: `You earned ${outcome.vouchers.length} rewards`,
+              buttonTxt: 'View Rewards',
+              imageUrl: 'assets/congrats_image.png',
+            }
+          });
+        } else {
+          this.dialog.open(PopupComponent, {
+            data: {
+              title: 'Thanks for playing',
+              text: 'Unfortunately, you did not win anything this time',
+              buttonTxt: 'Go to Wallet',
+            }
+          });
+        }
+      });
   }
 }
