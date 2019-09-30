@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material';
 
 import { CustomerSupportComponent } from './customer-support.component';
 
@@ -8,7 +9,10 @@ describe('CustomerSupportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomerSupportComponent ]
+      declarations: [ CustomerSupportComponent ],
+      imports: [
+        MatDialogModule
+      ]
     })
     .compileComponents();
   }));

@@ -11,6 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { SimpleMobileViewModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule} from '@perx/core';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 @NgModule({
   declarations: [
     NewSurveyComponent
@@ -31,6 +32,7 @@ import { SurveyModule as PerxSurveyModule} from '@perx/core';
     MatInputModule,
     MatSelectModule,
     DragDropModule,
+    DirectivesModule
   ]
 })
 export class NewSurveyModule { }

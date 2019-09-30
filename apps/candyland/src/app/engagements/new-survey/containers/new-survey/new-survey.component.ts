@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -14,6 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IQuestion, SurveyQuestionType } from '@perx/core';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-survey',
@@ -22,6 +23,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public id: string;
   public form: FormGroup;
   public surveyQuestionType: IEngagementType[];
@@ -167,18 +169,19 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-
-    let request;
-    if (this.id) {
-      request = this.surveyService.updateSurvey(this.id, this.form.value);
-    } else {
-      request = this.surveyService.createSurvey(this.form.value).pipe(
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
-      );
-    }
-
-    request.pipe(untilDestroyed(this))
+    this.createImagePreview.getPreviewUrl()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return this.surveyService.updateSurvey(this.id, {...this.form.value, image_url: imageUrl.url});
+          }
+          return this.surveyService.createSurvey({...this.form.value, image_url: imageUrl.url}).pipe(
+            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          );
+        })
+      )
+      .pipe(untilDestroyed(this))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
