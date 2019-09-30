@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    const r1 = this.gameService.play(this.eid, this.cid);
+    const r1 = this.gameService.play(this.cid, this.eid);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;

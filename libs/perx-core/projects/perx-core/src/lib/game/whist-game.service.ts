@@ -1,4 +1,3 @@
-import { WhistlerVouchersService } from './../vouchers/whistler-vouchers.service';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import {
@@ -16,6 +15,7 @@ import { IGameService } from './igame.service';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { IVoucher } from '../vouchers/models/voucher.model';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
 const enum GameType {
   shakeTheTree = 'shake',
@@ -111,7 +111,8 @@ export class WhistlerGameService implements IGameService {
   private hostName: string;
   constructor(
     private http: HttpClient,
-    config: Config) {
+    config: Config,
+    private whistVouchSvc: IVoucherService ) {
     this.hostName = config.apiHost as string;
   }
 
@@ -184,7 +185,7 @@ export class WhistlerGameService implements IGameService {
         map(res => ({
           vouchers:
             res.data.attributes.results.attributes.results
-              .map(v => WhistlerGameService.subscribeAndRevealVouch(WhistlerVouchersService.get(Number.parseInt(v.id, 10)))),
+              .map(v => WhistlerGameService.subscribeAndRevealVouch(this.whistVouchSvc.get(Number.parseInt(v.id, 10)))),
           rawPayload: res
         })
         )
