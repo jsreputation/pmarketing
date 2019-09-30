@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -8,6 +8,7 @@ import { ToggleControlService } from '@cl-shared/providers/toggle-control.servic
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -18,7 +19,9 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
-  public campaign;
+  public isFirstInit: boolean;
+  public campaignId: string;
+  @Input()
   public pools;
 
   public get campaignInfo(): AbstractControl | null {
@@ -47,7 +50,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private audiencesService: AudiencesService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
-    private toggleControlService: ToggleControlService
+    private toggleControlService: ToggleControlService,
+    private route: ActivatedRoute
   ) {
     super(2, store, stepConditionService, cd);
     this.initForm();
@@ -55,7 +59,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.campaignId = this.route.snapshot.params.id;
+    this.isFirstInit = true;
     this.initPools();
+    this.initData();
   }
 
   public ngOnDestroy(): void {
@@ -63,20 +70,37 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
+  }
+
+  private initData(): void {
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(() => {
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
       });
-    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+
+    if (this.campaignId) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          if (data && data.campaignInfo && this.isFirstInit) {
+            this.isFirstInit = false;
+            this.form.patchValue(data);
+          }
+        });
+    } else {
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
   }
 
   private updateForm(): void {

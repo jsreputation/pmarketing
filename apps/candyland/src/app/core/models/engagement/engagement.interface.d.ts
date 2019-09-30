@@ -1,6 +1,6 @@
 // tslint:disable
 declare interface  IEngagement {
-  id: number;
+  id: string;
   current_type: string;
   urn: string;
   created_at: string;

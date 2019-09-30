@@ -12,19 +12,21 @@ export class CampaignsHttpsService {
 
   public getCampaigns(params: HttpParams): Observable<any> {
     // return this.http.get('assets/mocks/campaigns.json');
-    return this.http.get(ApiConfig.campaignsPath, {params});
+    return this.http.get(ApiConfig.campaignsPath, { params });
   }
 
-  public getCampaign(id: string): Observable<any>  {
+  public getCampaign(id: string): Observable<any> {
+    // return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=limits,possible_outcomes`);
+    // return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=possible_outcomes`);
     return this.http.get(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: number, data: any): void {
-    console.log('updateCampaign', id, data);
+  public updateCampaign(id: number, data: any): Observable<IResponseApi<any>> {
+    return this.http.patch<IResponseApi<any>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
   public createCampaign(data: IResponseApi<any>): Observable<IResponseApi<any>> {
-    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath,  data);
+    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath, data);
   }
 
   public deleteCampaign(id: string): Observable<any> {

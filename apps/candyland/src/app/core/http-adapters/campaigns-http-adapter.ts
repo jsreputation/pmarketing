@@ -1,3 +1,17 @@
+import * as moment from 'moment';
+import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+
+// enum LimitsDurationToAPIMapping {
+//   day = 'days',
+//   week = 'weeks',
+//   month = 'months'
+// }
+
+// enum LimitsDurationFromAPIMapping {
+//   days = 'day',
+//   weeks = 'week',
+//   months = 'month'
+// }
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaign {
@@ -21,52 +35,80 @@ export class CampaignsHttpAdapter {
   }
 
   public static transformAPIResponseToCampaign(data: any): any {
-    const campaignData = data.attributes;
+    console.log(data);
+    const campaignData = data.data.attributes;
+    const campaignOutcomes = data.includes && data.includes.possible_outcomes || [];
+    // const campaignLimits = data.includes && data.includes.limits;
     return {
-      id: data.id,
+      id: data.data.id,
+      name: campaignData.name,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: new Date(campaignData.start_date_time),
-        startTime: `${(new Date(campaignData.start_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
-        endDate: new Date(campaignData.end_date_time),
-        endTime: `${(new Date(campaignData.end_date_time)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
+        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : new Date(),
+        startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
+        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : new Date(),
+        endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
         disabledEndDate: !campaignData.end_date_time,
-        labels: campaignData.labels
+        // labels: campaignData.labels
       },
       // TODO, Andrew, need API support for channel data
       channel: {
         type: campaignData.comm_channel,
-        message: null,
-        schedule: {
-          sendDate: null,
-          sendTime: null,
-          enableRecurrence: false,
-          recurrence: { times: null, period: null, repeatOn: [] }
-        }
+        // type: campaignData.comm.event.channel,
+        // message: campaignData.comm.template.content,
+        // schedule: {
+        //   sendDate: new Date(campaignData.comm.event.send_at),
+        //   sendTime: moment(campaignData.comm.event.send_at).format('LT'),
+        //   enableRecurrence: false,
+        //   recurrence: { times: null, period: null, repeatOn: [] }
+        // }
       },
-      audience: { type: 'none', file: null },
+      audience: { type: 'select', select: (campaignData.pool_id).toString(), file: null },
       template: {},
-      rewardsList: campaignData.possible_outcomes,
+      rewardsList: campaignOutcomes,
+      // limits: {
+      //   time: campaignLimits && campaignLimits.max_play_in_period,
+      //   duration: campaignLimits && LimitsDurationFromAPIMapping[campaignLimits.period_unit]
+      // }
     };
   }
 
   public static transformFromCampaign(data: any): any {
+    console.log(data);
+    const possible_outcomes = data.rewardsOptions.rewards.map(
+      reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
+    ).filter(outcomes => outcomes.result_id);
+
     return {
       type: "entities",
       attributes: {
         name: data.name,
-        engagement_type: data.template.attributes_type,
+        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
         comm_channel: data.channel.type,
-        // status: "draft",
-        start_date_time: data.campaignInfo.startDate + data.campaignInfo.startTime,
-        end_date_time: data.campaignInfo.endDate + data.campaignInfo.endTime,
+        status: "scheduled",
+        start_date_time: moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime).format(),
+        end_date_time:  moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
         goal: data.campaignInfo.goal,
-        pool_id: data.audience.select
-        // possible_outcomes: "",
-        // comm: "description",
+        pool_id: data.audience.select,
+        // labels: data.campaignInfo.label,
+        possible_outcomes,
+        // limits: {
+        //   max_play_in_period: data.limits.time,
+        //   period_unit: LimitsDurationToAPIMapping[data.limits.duration],
+        //   period_number: 1
+        // },
+        comm: {
+          template: {
+            content: data.channel.message
+          },
+          event: {
+            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
+            channel: data.channel.type
+          }
+        }
       }
     };
   };

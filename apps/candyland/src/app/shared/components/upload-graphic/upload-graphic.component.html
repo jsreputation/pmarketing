@@ -1,4 +1,5 @@
 <div class="upload-wrap"
+     [class.invalid]="isRequired || message"
      [class.field-lock]="lock"
      [ngClass]="classList"
 >
@@ -10,7 +11,7 @@
   />
   <div class="image-wrap"
        (click)="setActive()"
-       [ngClass]="{active: imgURL === selectedGraphic}"
+       [ngClass]="{active: imgURL === _selectGraphic}"
        *ngIf="imgURL"
   >
     <img [src]="imgURL" class="image" alt="upload">
@@ -22,15 +23,14 @@
   <div class="upload-wrap-btn" *ngIf="!imgURL">
     <button class="upload-btn" (click)="fileInput.click()">
         <ng-content></ng-content>
-        <span>+ Add New</span>
+        <span>{{btnLabel}}</span>
     </button>
   </div>
-  <div class="upload-error-wrap" *ngIf="message">
-    <span class="upload-error">
-      {{message}}
-    </span>
+  <div class="upload-error-wrap">
+    <p class="upload-error" *ngIf="isRequired">Required field</p>
+    <p class="upload-error" *ngIf="message">{{message}}</p>
   </div>
-  <div class="upload-type-wrap" *ngIf="!message">
+  <div class="upload-type-wrap" *ngIf="!message && !isRequired">
     <span class="upload-type">
       {{placeholder}}
     </span>
