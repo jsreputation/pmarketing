@@ -1,11 +1,11 @@
-<div class="dialog">
-  <div class="dialog-header-wrap">
+<aside class="dialog" role="dialog">
+  <header class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
-    <h3 class="dialog-title">Manage List</h3>
+    <h2 class="dialog-title">Manage List</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
-  </div>
+  </header>
   <mat-dialog-content>
     <div class="dialog-content">
       <label class="dialog-content-title">Audience lists</label>
@@ -14,7 +14,7 @@
       </div>
     </div>
   </mat-dialog-content>
-  <div class="dialog-actions">
+  <footer class="dialog-actions">
     <cl-button classList="tertiary"
                class="actions-close"
                (click)="close()"
@@ -31,7 +31,7 @@
           Save
         </span>
     </cl-button>
-  </div>
-</div>
+  </footer>
+</aside>
 
 
