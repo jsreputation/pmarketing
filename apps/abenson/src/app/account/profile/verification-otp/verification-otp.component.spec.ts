@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { Type } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const testphone = '18888888';
 
@@ -26,7 +27,8 @@ describe('VerificationOtpComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VerificationOtpComponent],
       imports: [
-        UtilsModule
+        UtilsModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
@@ -77,6 +79,7 @@ describe('VerificationOtpComponent', () => {
     component.data = { otp: '1111', phone: testphone };
     const authSpy = spyOn(auth, 'changePhone').and.returnValue(of(null));
     component.onSubmit();
+    tick();
     expect(authSpy).toHaveBeenCalled();
   }));
 
