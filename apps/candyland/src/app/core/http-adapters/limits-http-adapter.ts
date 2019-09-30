@@ -3,6 +3,7 @@ import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagem
 export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(data: ILimitApi): ILimit {
     return {
+      id: data.id,
       ...data.attributes,
       period_unit: LimitsDurationFromAPIMapping[data.attributes.period_unit]
     };

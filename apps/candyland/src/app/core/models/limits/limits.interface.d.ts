@@ -1,4 +1,5 @@
 declare interface ILimit {
+  id?: string;
   max_plays_in_period?: number;
   period_number?: number;
   period_unit?: string;
