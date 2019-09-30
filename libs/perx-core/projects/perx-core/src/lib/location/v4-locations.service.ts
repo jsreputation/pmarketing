@@ -17,7 +17,7 @@ export class V4LocationsService extends LocationsService {
     super();
   }
 
-  public getAll(tags?: string[]): Observable<ILocation[]> {
+  public getAllLocations(tags?: string[]): Observable<ILocation[]> {
     if (tags === undefined) {
       tags = [];
     }
