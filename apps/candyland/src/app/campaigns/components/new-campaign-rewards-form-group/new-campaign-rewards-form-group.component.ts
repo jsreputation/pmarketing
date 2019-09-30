@@ -80,9 +80,16 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public ngOnInit(): void {
     this.isFirstInit = true;
     this.campaignId = this.route.snapshot.params.id;
-    if (this.campaignId && this.isFirstInit && this.campaign) {
-      this.initRewardsList();
-      this.isFirstInit = false;
+    if (this.campaignId) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          if (data && data.rewardsList && this.isFirstInit) {
+            this.isFirstInit = false;
+            this.initRewardsList();
+          }
+        });
     }
     this.enableProbability.valueChanges
       .pipe(
