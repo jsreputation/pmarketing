@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import {
   Component,
   OnInit,
@@ -49,7 +48,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   // @ts-ignore
   private onTouched: any = noop;
   public isFirstInit: boolean;
-  public campaignId: string;
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -69,7 +67,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     private fb: FormBuilder,
     private store: CampaignCreationStoreService,
     private rewardsService: RewardsService,
-    private route: ActivatedRoute
   ) {
   }
 
@@ -79,18 +76,16 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   public ngOnInit(): void {
     this.isFirstInit = true;
-    this.campaignId = this.route.snapshot.params.id;
-    if (this.campaignId) {
-      this.store.currentCampaign$
-        .asObservable()
-        .pipe(untilDestroyed(this))
-        .subscribe(data => {
-          if (data && data.rewardsList && this.isFirstInit) {
-            this.isFirstInit = false;
-            this.initRewardsList();
-          }
-        });
-    }
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
+        if (isFirstTimeRenderFromAPIResponse) {
+          this.isFirstInit = false;
+          this.initRewardsList();
+        }
+      });
     this.enableProbability.valueChanges
       .pipe(
         untilDestroyed(this),
