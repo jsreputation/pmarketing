@@ -20,5 +20,6 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 }

@@ -1,7 +1,7 @@
 <section class="pinata-wrap" *ngIf="pinataData" [formGroup]="form">
   <div class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text"  matInput formControlName="name" placeholder="Enter title here">
+      <input type="text" matInput formControlName="name" placeholder="Enter title here">
       <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
       <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
       <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
@@ -32,7 +32,7 @@
             Messages
           </p>
         </div>
-        <div class="pinata-form" >
+        <div class="pinata-form">
           <div class="control-input">
             <mat-form-field class="mat-form-field">
               <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
@@ -83,6 +83,7 @@
               <cl-select-graphic-wrap
                 *ngIf="pinataData.background"
                 formControlName="background"
+                [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
                 class="game-selected-graphic"
                 [graphicList]="pinataData.background"
               >

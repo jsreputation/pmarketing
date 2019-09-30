@@ -23,7 +23,7 @@ export class QuestionPictureChoiceFieldComponent {
     const text = input && input.value ? input.value : null;
     this.choices.push(this.fb.group({
       text: [text, [Validators.required]],
-      img_url: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
+      img_url: [img, [Validators.required]]
     }));
     uploadImage.clear();
     this.clearInputValue(input);
