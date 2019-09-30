@@ -1,7 +1,8 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, RewardsService } from '@perx/core';
+import { GameModule, RewardsModule, RewardsService, InstantOutcomeService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('RewardComponent', () => {
@@ -12,16 +13,24 @@ describe('RewardComponent', () => {
     getAllRewards: () => of(),
   };
 
+  const instantOutStub = {
+
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
         GameModule,
         RewardsModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutStub }
       ]
     })
       .compileComponents();

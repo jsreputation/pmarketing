@@ -146,4 +146,15 @@ export class AudiencesHttpAdapter {
   private static stringToDate(stringDate: string | null): Date | null {
     return stringDate ? new Date(stringDate) : null;
   }
+
+  public static transformVoucherAssignedToApi(source: string, assigned: string): any {
+    return {
+      type: "assigneds",
+      attributes: {
+        source_id: source,
+        source_type: "Perx::Reward::Entity",
+        assigned_to_id: assigned
+      }
+    }
+  }
 }

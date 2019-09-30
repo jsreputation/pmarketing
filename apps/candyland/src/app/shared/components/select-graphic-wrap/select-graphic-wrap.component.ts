@@ -9,7 +9,8 @@ import {
   Output
 } from '@angular/core';
 
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -18,39 +19,42 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
   templateUrl: './select-graphic-wrap.component.html',
   styleUrls: ['./select-graphic-wrap.component.scss'],
   providers: [
-    {       provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectGraphicWrapComponent),
       multi: true
     }
   ]
 })
 export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor, OnDestroy {
+  @Input() public graphicList: IGraphic[];
+  @Input() public showUpload = true;
+  @Input() public isRequired: boolean;
+  @Output() private selectGraphic = new EventEmitter<IGraphic>();
 
-  public set setGraphic(val: IGraphic) {
+  public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      this.patchDefaultControl(val);
-      this.selectedGraphic = val;
-      this.onChange(val);
-      this.onTouch(val);
+      const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
+      this.handlerPatchUploadImage(currentValue);
+      this.patchDefaultControl(currentValue);
+      this.selectedGraphic = currentValue;
     }
   }
 
   constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) { }
-
-  @Input() public graphicList: IGraphic[];
-  @Input() public showUpload = true;
-  @Output() private selectGraphic = new EventEmitter<IGraphic>();
+              private cd: ChangeDetectorRef) {
+  }
 
   public selectedGraphic: IGraphic;
-  public graphicForm: FormGroup;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   public destroy$ = new Subject();
   public lock: boolean;
 
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => {
+  }
+  public onTouched: any = () => {
+  }
 
   public ngOnInit(): void {
     this.createDefaultControl();
@@ -59,10 +63,25 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.subscribeControlUploadValueChanges();
   }
 
+  public handlerPatchUploadImage(currentValue: any): void {
+    if (this.checkTypeOfImages(currentValue)) {
+      this.patchValueUploadControl(currentValue);
+    }
+  }
+
+  public checkTypeOfImages(type: any): boolean {
+    return typeof type === 'string';
+  }
+
+  public patchValueUploadControl(currentValue: string): void {
+    this.controlUpload.patchValue(currentValue);
+  }
+
   public setSelectedGraphic(graphic: IGraphic): void {
     this.selectedGraphic = graphic;
     this.selectGraphic.emit(graphic);
     this.onChange(graphic);
+    this.onTouched();
     this.cd.markForCheck();
   }
 
@@ -71,7 +90,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   public registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+    this.onTouched = fn;
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -94,7 +113,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   private patchDefaultControl(value: any): void {
     this.createDefaultControl();
-    this.controlDefault.patchValue(value);
+    this.controlDefault.patchValue(value, {emitEvent: false});
   }
 
   private subscribeControlDefaultValueChanges(): void {
@@ -127,5 +146,4 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

@@ -19,12 +19,14 @@ export class QuestionPictureChoiceFieldComponent {
     this.choices.removeAt(index);
   }
 
-  public selectUploadGraphic(img: any, uploadImage: UploadImageComponent): void {
+  public selectUploadGraphic(img: any, uploadImage: UploadImageComponent, input: HTMLInputElement): void {
+    const text = input && input.value ? input.value : null;
     this.choices.push(this.fb.group({
-      text: [null, [Validators.required]],
-      img_url: [img.changingThisBreaksApplicationSecurity, [Validators.required]]
+      text: [text, [Validators.required]],
+      img_url: [img, [Validators.required]]
     }));
     uploadImage.clear();
+    this.clearInputValue(input);
   }
 
   public addedField(input: HTMLInputElement): void {
@@ -32,6 +34,10 @@ export class QuestionPictureChoiceFieldComponent {
       text: [input.value, [Validators.required]],
       img_url: [null, [Validators.required]]
     }));
+    this.clearInputValue(input);
+  }
+
+  private clearInputValue(input: HTMLInputElement): void {
     input.value = '';
   }
 

@@ -58,7 +58,7 @@ export class LoginAppPage {
   }
 
   public getUserAccount(): string {
-    return 'Admin_2';
+    return 'Admin';
   }
 
 }
@@ -115,6 +115,14 @@ export class BrandingSettingsAppPage {
 
   public navigateToBrandingSettings(): Promise<string> {
     return browser.get('settings/branding') as Promise<string> ;
+ }
+
+}
+
+export class AudienceAppPage {
+
+  public navigateToAudience(): Promise<string> {
+    return browser.get('audience') as Promise<string> ;
  }
 
 }

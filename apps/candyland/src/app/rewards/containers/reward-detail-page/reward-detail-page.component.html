@@ -1,17 +1,12 @@
-
-<div class="page-header full-with">
-  <div class="game-title-wrap">
-    <div class="control-input name-control name-control-title">
-      {{data?.name}}
-    </div>
-  </div>
+<header class="page-header full-with">
+  <h1 class="title">{{data?.name}}</h1>
   <div class="btn-group">
     <cl-button classList="tertiary" routerLink="/rewards/">Close</cl-button>
     <cl-button classList="primary" [routerLink]="'/rewards/edit/'+ id">Edit</cl-button>
   </div>
-</div>
+</header>
 
-<div class="reward-detail-content">
+<section class="content centered">
 
   <!--Available Vouchers-->
   <mat-card class="card dark-theme" *ngIf="data?.vouchersStatistics" expanded>
@@ -20,7 +15,7 @@
     </div>
     <div class="card-content">
       <div class="card-row">
-        <div class="reward-detail-vouchers-value">{{avaibleVouchers?.value | number: '2.'}}</div>
+        <div class="reward-detail-vouchers-value">{{availableVouchers | number: '2.'}}</div>
         <cl-button classList="tertiary opaque" (click)="openDialogReplenish()">Replenish</cl-button>
       </div>
       <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
@@ -46,8 +41,7 @@
               <mat-option [value]="null">
                 All
               </mat-option>
-              <mat-option *ngFor="let option of statusFilterConfig"
-                          [value]="option.value">
+              <mat-option *ngFor="let option of statusFilterConfig" [value]="option.value">
                 {{option.value}}
               </mat-option>
             </mat-select>
@@ -70,8 +64,8 @@
       </p>
     </mat-expansion-panel-header>
     <div class="card-content">
-      <cl-reward-info-preview [data]="data?.rewardInfo"
-                              (updateRewardImage)="updateRewardImage($event)"></cl-reward-info-preview>
+      <cl-reward-info-preview [data]="data?.rewardInfo">
+      </cl-reward-info-preview>
     </div>
   </mat-expansion-panel>
   <!--/ Reward Info-->
@@ -113,4 +107,4 @@
     </div>
   </mat-expansion-panel>
   <!--  / Limits-->
-</div>
+</section>

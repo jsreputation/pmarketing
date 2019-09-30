@@ -5,7 +5,12 @@
     <div class="choice-wrap" *ngFor="let item of choices.controls; let i = index">
 
       <div class="choice-group-control" [formGroup]="item">
-        <cl-upload-image class="choice-upload-img" formControlName="img_url"></cl-upload-image>
+        <cl-upload-graphic class="choice-upload-img"
+                           classList="small"
+                           btnLabel="+"
+                           formControlName="img_url"
+                           [isRequired]="item.get('img_url').hasError('required') && item.get('img_url').touched">
+        </cl-upload-graphic>
         <div class="control-input-action">
           <div class="control-input">
             <mat-form-field class="messages-input">
@@ -22,12 +27,18 @@
 </ng-container>
 
 <div class="choice-group-control">
-  <cl-upload-image class="choice-upload-img" #uploadImage
-    (selectUploadGraphic)="selectUploadGraphic($event, uploadImage)"></cl-upload-image>
+  <!--<cl-upload-image class="choice-upload-img" #uploadImage-->
+  <!--(selectUploadGraphic)="selectUploadGraphic($event, uploadImage, choiceText)"></cl-upload-image>-->
+  <cl-upload-graphic #uploadImage
+                     class="choice-upload-img"
+                     btnLabel="+"
+                     classList="small"
+                     (selectUploadGraphic)="selectUploadGraphic($event, uploadImage, choiceText)">
+  </cl-upload-graphic>
 
   <div class="control-input">
     <mat-form-field class="messages-input">
-      <input type="text" #choiceText (keydown.enter)="addedField(choiceText)" matInput [placeholder]="'- Add Choice'" />
+      <input type="text" #choiceText (keydown.enter)="addedField(choiceText)" matInput [placeholder]="'- Add Choice'"/>
     </mat-form-field>
   </div>
 </div>

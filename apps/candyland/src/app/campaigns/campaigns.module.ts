@@ -7,8 +7,6 @@ import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
-import { NewAudiencePageComponent } from './containers/new-audience-page/new-audience-page.component';
-import { NewChannelPageComponent } from './containers/new-channel-page/new-channel-page.component';
 import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
 import { NewCampaignDonePopupComponent } from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import { CampaignsComponent } from './containers/campaigns/campaigns.component';
@@ -75,7 +73,7 @@ import {
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
-import { SimpleMobileViewModule } from '@cl-shared';
+import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
@@ -91,8 +89,6 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     CampaignsListComponent,
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,
-    NewAudiencePageComponent,
-    NewChannelPageComponent,
     NewCampaignReviewPageComponent,
     NewCampaignDonePopupComponent,
     CampaignsComponent,
@@ -152,10 +148,10 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     SelectRewardPopupModule,
     MatSlideToggleModule,
     PaginationModule,
-
+    PipesModule,
     SimpleMobileViewModule,
     PerxSurveyModule,
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     GameModule,
     PuzzlesModule,
     PerxRewardsModule,

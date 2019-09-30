@@ -1,13 +1,15 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 @Component({
   selector: 'cl-select-graphic',
   templateUrl: './select-graphic.component.html',
   styleUrls: ['./select-graphic.component.scss'],
   providers: [
-    {       provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectGraphicComponent),
       multi: true
     }
@@ -18,14 +20,14 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   @Input() public graphicList: IGraphic[];
   @Output() private selectGraphic = new EventEmitter<IGraphic>();
   public lock: boolean;
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => {
+  }
+  public onTouched: any = () => {
+  }
 
   public set setGraphic(val: IGraphic) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      this.selectedGraphic = val;
-      this.onChange(val);
-      this.onTouch(val);
+      this.selectedGraphic = val ? ImageControlValue.getPrepareValue(val, this.graphicList) : null;
     }
   }
 
@@ -40,7 +42,7 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   }
 
   public registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+    this.onTouched = fn;
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -50,5 +52,4 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
-
 }

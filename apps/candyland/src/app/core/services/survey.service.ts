@@ -3,6 +3,7 @@ import { SurveyHttpService } from '@cl-core/http-services/survey-http.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SurveyHttpAdapter } from '@cl-core/http-adapters/survey-http-adapter';
+import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,16 +38,21 @@ export class SurveyService {
     return this.surveyHttp.getSurveyData();
   }
 
-  public getSurvey(id: string): Observable<any> {
-    return this.surveyHttp.getSurvey(id);
+  public getSurvey(id: string): Observable<ISurveyForm> {
+    return this.surveyHttp.getSurvey(id)
+      .pipe(
+        map(res => SurveyHttpAdapter.transformToSurveyForm(res.data))
+      );
   }
 
-  public createSurvey(data: any): Observable<any> {
+  public createSurvey(data: ISurveyForm): Observable<IResponseApi<IEngagementApi>> {
     const sendData = SurveyHttpAdapter.transformSurvey(data);
     return this.surveyHttp.createSurvey({data: sendData});
   }
 
-  public updateSurvey(id: string, data: any): Observable<any> {
-    return this.surveyHttp.updateSurvey(id, data);
+  public updateSurvey(id: string, data: ISurveyForm): Observable<IResponseApi<IEngagementApi>> {
+    const sendData = SurveyHttpAdapter.transformSurvey(data);
+    sendData.id = id;
+    return this.surveyHttp.updateSurvey(id, {data: sendData});
   }
 }
