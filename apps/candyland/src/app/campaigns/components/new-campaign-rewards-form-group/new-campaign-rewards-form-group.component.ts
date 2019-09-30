@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import {
   Component,
   OnInit,
@@ -47,6 +48,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
+  public isFirstInit: boolean;
+  public campaignId: string;
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -65,7 +68,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     public dialog: MatDialog,
     private fb: FormBuilder,
     private store: CampaignCreationStoreService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -74,6 +78,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public ngOnInit(): void {
+    this.isFirstInit = true;
+    this.campaignId = this.route.snapshot.params.id;
+    if (this.campaignId && this.isFirstInit && this.campaign) {
+      this.initRewardsList();
+      this.isFirstInit = false;
+    }
     this.enableProbability.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -104,7 +114,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
   public initRewardsList(): void {
     this.rewards.reset();
-    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.result_id));
+    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.resultId));
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
     );
