@@ -39,6 +39,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   private initForm(): void {
