@@ -3,8 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationService } from '@perx/core';
-import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -17,6 +15,8 @@ import { FaqComponent } from './account/profile-additions/containers/faq/faq.com
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/signup/signup.component';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -75,15 +75,15 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('Terms & Conditions');
     app.onActivate(new ProfileComponent(null));
     expect(app.headerTitle).toBe('Profile');
-    app.onActivate(new ChangeBarangayComponent(null));
+    app.onActivate(new ChangeBarangayComponent(null, null, null));
     expect(app.headerTitle).toBe('Change Barangay');
-    app.onActivate(new ChangePasswordComponent(null));
+    app.onActivate(new ChangePasswordComponent(null, null, null, null));
     expect(app.headerTitle).toBe('Change PIN Code');
     app.onActivate(new ChangeEmailComponent(null, null, null));
     expect(app.headerTitle).toBe('Change Email');
     app.onActivate(new ChangeCityComponent(null, null, null));
     expect(app.headerTitle).toBe('Change City/Municipality');
-    app.onActivate(new ChangeStreetAddressComponent(null));
+    app.onActivate(new ChangeStreetAddressComponent(null, null, null));
     expect(app.headerTitle).toBe('Change Street Address');
     app.onActivate(new FaqComponent());
     expect(app.headerTitle).toBe('FAQ');
