@@ -14,7 +14,7 @@ export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(data: ILimitApi): ILimit {
     return {
       id: data.id,
-      times: data.attributes.max_responses_per_user,
+      times: data.attributes.max_responses_per_user || data.attributes.max_plays_in_period,
       duration: LimitsDurationFromAPIMapping[data.attributes.period_unit]
     };
   }
