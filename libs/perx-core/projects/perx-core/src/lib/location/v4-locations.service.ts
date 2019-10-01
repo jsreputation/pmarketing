@@ -17,7 +17,7 @@ export class V4LocationsService extends LocationsService {
     super();
   }
 
-  public getAll(tags?: string[]): Observable<ILocation[]> {
+  public getAllLocations(tags?: string[]): Observable<ILocation[]> {
     if (tags === undefined) {
       tags = [];
     }
@@ -103,7 +103,8 @@ export class V4LocationsService extends LocationsService {
         tags = [...merchants.map((merchant: IMerchant) => merchant.tags.map(tag => tag.name))];
         return tags;
       }),
-      scan((acc: string[], curr: string[]) => acc.concat(...curr), [])
+      scan((acc: string[], curr: string[]) => acc.concat(...curr), []),
+      map((tags: string[]) => [...new Set(tags)])
     );
   }
 }
