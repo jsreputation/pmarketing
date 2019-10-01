@@ -115,19 +115,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'sms':
         return {
-          title: 'Yay! you just created a campaign',
+          title: 'Yay! You just created a campaign',
           subTitle: '100  Weblinks are created fo you. Please download the files.',
           type: 'download'
         };
       case 'weblink':
         return {
-          title: 'Yay! you just created a campaig',
+          title: 'Yay! You just created a campaign',
           subTitle: 'Copy the link and share your campaign.',
           type: 'weblink'
         };
       default:
         return {
-          title: 'Yay! you just created a campaign',
+          title: 'Yay! You just created a campaign',
           subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
         };
     }
