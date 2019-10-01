@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
   public loyalty$: Observable<ILoyalty>;
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
-  public staticTab: ITabConfig[];
+  public staticTab: ITabConfig[] = tabs;
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
@@ -93,28 +93,21 @@ export class HomeComponent implements OnInit {
       }
       return `Welcome`;
     };
-    this.initRewards();
+    this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 
   private getRewardsCollection(): void {
     this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
-  private initRewards(): void {
-    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
-      this.tabs.next(tags);
-      return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getRewards(1, this.requestPageSize, null, [tab.tabName])
-          .pipe(map((result: IReward[]) => {
-            this.rewardMultiPageMetaTracker[tab.tabName] = {page: 1, isLast: false};
-            return ({key: tab.tabName, value: result});
-          }));
-      }));
-    })).subscribe((result) => {
-      result.forEach((rewards) => {
-        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
-        this.tabs.next(this.staticTab);
-      });
+  private loadCurrentTabRewards(tabName: string): void {
+    this.rewardsService.getRewards(1, this.requestPageSize, null, [tabName])
+      .pipe(map((res: IReward[]) => {
+        this.rewardMultiPageMetaTracker[tabName] = {page: 1, isLast: false};
+        return ({key: tabName, value: res});
+      })).subscribe((rewards) => {
+      this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+      this.tabs.next(this.staticTab);
     });
   }
 
@@ -138,6 +131,7 @@ export class HomeComponent implements OnInit {
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.currentTab = event.tab.textLabel;
+    this.loadCurrentTabRewards(this.currentTab);
   }
 
   public openRewardDetails(tab: IReward): void {
@@ -150,15 +144,11 @@ export class HomeComponent implements OnInit {
       this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).pipe(
         flatMap((newRewards: IReward[]) => {
           rewards = newRewards;
-          if (newRewards.length === 0) {
+          if (newRewards.length === 0 || newRewards.length < this.requestPageSize) {
             this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
-          } else {
-            if (newRewards.length < this.requestPageSize) {
-              this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
-            }
-            this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
-            return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
           }
+          this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
+          return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
         })
       ).subscribe(
         (existingRewards: IReward[]) => {
