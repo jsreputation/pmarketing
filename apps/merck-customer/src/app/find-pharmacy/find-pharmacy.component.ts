@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService, ILocation } from '@perx/core';
+import { LocationsService, IMerchantsService, ILocation } from '@perx/core';
+import { IMerchant } from '@perx/core/dist/perx-core/lib/merchants/models/merchants.model';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
@@ -22,18 +23,21 @@ export interface IData {
 export class FindPharmacyComponent implements OnInit, PageAppearence {
   public key: string = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
   public locations: Observable<ILocation[]>;
+  public merchants: Observable<IMerchant[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
 
   constructor(
     private locationsService: LocationsService,
+    private merchantsService: IMerchantsService,
     private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
-    this.locations = this.locationsService.getAllLocations();
+    this.merchants = this.merchantsService.getAllMerchants();
+    this.locations = this.locationsService.getAllLocations(this.merchants);
 
-    this.locationsService.getTags().subscribe((res) => {
+    this.locationsService.getTags(this.merchants).subscribe((res) => {
       this.tags = res.map(tag => ({name: tag, isSelected: false}));
     });
   }
@@ -55,7 +59,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
 
   public filterLocations(): void {
     const filteredTags = this.tags.filter(tag => tag.isSelected).map(tag => tag.name);
-    this.locations = this.locationsService.getAllLocations(filteredTags);
+    this.locations = this.locationsService.getAllLocations(this.merchants, filteredTags);
   }
 
   public getPageProperties(): PageProperties {
