@@ -14,10 +14,10 @@ export class CampaignsService implements ITableService {
   constructor(private campaignsHttpsService: CampaignsHttpsService) {
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaign>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaignTableData>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.campaignsHttpsService.getCampaigns(httpParams).pipe(
-      map(response => CampaignsHttpAdapter.transformTableData(response))
+      map((response: IResponseApi<ICampaignAPI[]>) => CampaignsHttpAdapter.transformTableData(response))
     );
   }
 
@@ -26,18 +26,19 @@ export class CampaignsService implements ITableService {
     return this.campaignsHttpsService.getCampaigns(httpParams);
   }
 
-  public getCampaign(id: string): Observable<any> {
+  public getCampaign(id: string): Observable<ICampaign> {
     return this.campaignsHttpsService.getCampaign(id).pipe(
-      map(res => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
+      map((res: IResponseApi<ICampaignAPI>) => res.data),
+      map((res: ICampaignAPI) => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
     );
   }
 
-  public updateCampaign(id: number, data: any): Observable<any> {
+  public updateCampaign(id: string, data: any): Observable<IResponseApi<ICampaignAPI>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
     return this.campaignsHttpsService.updateCampaign(id, { data: {id, ...sendData }});
   }
 
-  public createCampaign(data: any): Observable<any> {
+  public createCampaign(data: any): Observable<IResponseApi<ICampaignAPI>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
     return this.campaignsHttpsService.createCampaign({ data: sendData });
   }

@@ -10,7 +10,7 @@ export class OutcomesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getOutcomes(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.outcomesPath, { params });
+  public getOutcomes(params: HttpParams): Observable<IResponseApi<IOutcomeApi[]>> {
+    return this.http.get<IResponseApi<IOutcomeApi[]>>(ApiConfig.outcomesPath, { params });
   }
 }
