@@ -16,8 +16,8 @@ export class OutcomesService {
   public getOutcomes(params: HttpParamsOptions): Observable<IOutcome[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.outcomesHttpsService.getOutcomes(httpParams).pipe(
-      map(response => response.data),
-      map(response => response.map((outcome: IOutcomeApi) => OutcomesHttpAdapter.transformAPIResponseToOutcome(outcome)))
+      map((response: IResponseApi<IOutcomeApi[]>) => response.data),
+      map((response: IOutcomeApi[]) => response.map((outcome: IOutcomeApi) => OutcomesHttpAdapter.transformAPIResponseToOutcome(outcome)))
     );
   }
 }
