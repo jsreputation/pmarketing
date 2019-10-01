@@ -4,11 +4,8 @@
 		<span i18n="@@login-subtitle">Diabetes Loyality Program</span>
 	</div>
 	<div class="content-container">
-		<div i18n="@@static-thankyou-participating" class="main-heading">Thank you for participating in this loyality
-			program.</div>
-		<div i18n="@@static-current-condition" class="subtitle">To better the experience for you, please indicate the
-			current condition you're taking
-			treatment for</div>
+		<div translate class="main-heading" translate>STATIC_THANKYOU_PARTICIPATING</div>
+		<div translate class="subtitle">STATIC_CURRENT_CONDITION</div>
 		<form [formGroup]="surveyForm" (ngSubmit)="onNext()">
 			<div>
 				<mat-checkbox i18n="@@static-diabetes-condition" color="primary" formControlName="diabetesCondition"
