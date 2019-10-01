@@ -7,6 +7,8 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { RewardsService } from '@cl-core-services';
 import Utils from '@cl-helpers/utils';
+import { IJsonApiItem, IJsonApiListPayload } from '@cl-core/http-services/jsonapi.payload';
+import { IAssignedAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -49,12 +51,12 @@ export class AudiencesVouchersService implements ITableService {
     return Utils.filterUniq(idList);
   }
 
-  public voucherAssigned(source: string, assigned: string): Observable<any> {
+  public voucherAssigned(source: string, assigned: string): Observable<IJsonApiListPayload<IAssignedAttributes>> {
     const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
     return this.audiencesHttpsService.voucherAssigned(sendData);
   }
 
-  public updateVoucherExpiry(id: string, endData: string): Observable<any> {
+  public updateVoucherExpiry(id: string, endData: string): Observable<IJsonApiItem<IAssignedAttributes>> {
     const sendData = AudiencesHttpAdapter.transformVoucherPatchToApi(id, endData);
     return this.audiencesHttpsService.updateVoucherExpiry(sendData);
   }
