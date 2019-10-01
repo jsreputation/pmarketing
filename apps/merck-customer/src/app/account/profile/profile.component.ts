@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
           filteredConditions.push('Hypertension');
         }
       });
-    return filteredConditions;
+    return filteredConditions.filter(condition => condition !== '');
   }
 
   public getPageProperties(): PageProperties {
