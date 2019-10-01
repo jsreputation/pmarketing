@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  // LOCALE_ID,
+  LOCALE_ID,
   NgModule
 } from '@angular/core';
 
@@ -116,8 +116,7 @@ import { HttpClientModule } from '@angular/common/http';
     LocationModule,
     HttpClientModule,
   ],
-  // TODO: Uncomment the following for 'zh-Hans' support
-  // providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'zh' }],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })

@@ -31,7 +31,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
   ) { }
 
   public ngOnInit(): void {
-    this.locations = this.locationsService.getAll();
+    this.locations = this.locationsService.getAllLocations();
 
     this.locationsService.getTags().subscribe((res) => {
       this.tags = res.map(tag => ({name: tag, isSelected: false}));
@@ -55,7 +55,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
 
   public filterLocations(): void {
     const filteredTags = this.tags.filter(tag => tag.isSelected).map(tag => tag.name);
-    this.locations = this.locationsService.getAll(filteredTags);
+    this.locations = this.locationsService.getAllLocations(filteredTags);
   }
 
   public getPageProperties(): PageProperties {
