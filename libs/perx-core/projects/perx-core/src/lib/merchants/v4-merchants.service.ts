@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { mergeMap, mergeAll, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant, IMeta } from './models/merchants.model';
 import { Config } from '../config/config';
@@ -29,22 +29,26 @@ export class V4MerchantsService implements IMerchantsService {
   }
 
   public getAllMerchants(): Observable<IMerchant[]> {
-    const pageSize = 100;
-    return this.getMerchants(1, pageSize).pipe(
-      mergeMap((merchants: IMerchant[]) => {
-        const streams = [
-          of(merchants)
-        ];
-
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getMerchants(i, pageSize);
-          streams.push(stream);
+    return new Observable(subject => {
+      const pageSize = 10;
+      let current: IMerchant[] = [];
+      // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
+      const process = (res: IMerchant[]) => {
+        current = current.concat(res);
+        subject.next(current);
+        // if finished close the stream
+        if (this.historyMeta.page >= this.historyMeta.total_pages) {
+          subject.complete();
+        } else {
+          // otherwise get next page
+          this.getMerchants(this.historyMeta.page + 1, pageSize)
+            .subscribe(process);
         }
-
-        return streams;
-      }),
-      mergeAll(5),
-    );
+      };
+      // do the first query
+      this.getMerchants(1, pageSize)
+        .subscribe(process);
+    });
   }
 
   public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
