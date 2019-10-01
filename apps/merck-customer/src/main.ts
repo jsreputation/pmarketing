@@ -1,9 +1,9 @@
 // Un comment the commented code in this file to enable chineese language
 import {
   enableProdMode,
-  // TRANSLATIONS,
-  // TRANSLATIONS_FORMAT,
-  // MissingTranslationStrategy
+  TRANSLATIONS,
+  TRANSLATIONS_FORMAT,
+  MissingTranslationStrategy
 } from '@angular/core';
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -15,14 +15,14 @@ if (environment.production) {
   enableProdMode();
 }
 
-// declare const require;
-// const translations = require(`raw-loader!../locale/messages.zh-Hans.xlf`);
+declare const require;
+const translations = require(`raw-loader!./locale/messages.zh.xlf`).default;
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
-  // missingTranslation: MissingTranslationStrategy.Error,
-  // providers: [
-  //   {provide: TRANSLATIONS, useValue: translations},
-  //   {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'}
-  // ]
+  missingTranslation: MissingTranslationStrategy.Error,
+  providers: [
+    { provide: TRANSLATIONS, useValue: translations },
+    { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' }
+  ]
 })
   .catch(err => console.error(err));
