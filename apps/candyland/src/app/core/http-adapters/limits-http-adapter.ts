@@ -11,12 +11,26 @@ enum LimitsDurationFromAPIMapping {
   months = 'month'
 }
 export class LimitsHttpAdapter {
-  public static transformAPIResponseToLimit(data: ILimitApi): ILimit {
-    return {
-      id: data.id,
-      times: data.attributes.max_responses_per_user || data.attributes.max_plays_in_period,
-      duration: LimitsDurationFromAPIMapping[data.attributes.period_unit]
-    };
+  public static transformAPIResponseToLimit(data: ILimitApi, type: string): ILimit {
+    const engagementType = EngagementTypeFromAPIMapping[type];
+    let dataAtt;
+    switch (engagementType) {
+      case 'game':
+        dataAtt = data.attributes as IGameLimitAPIAttributes;
+        return {
+          id: data.id,
+          times: dataAtt.max_plays_in_period,
+          duration: LimitsDurationFromAPIMapping[dataAtt.period_unit]
+        };
+      case 'survey':
+      case 'instant_reward':
+      case 'stamps':
+        dataAtt = data.attributes as ISurveyLimitAPIAttributes | IInstantOutcomeLimitAPIAttributes;
+        return {
+          id: data.id,
+          times: dataAtt.max_responses_per_user
+        };
+    }
   }
 
   public static transformFromLimits(
@@ -40,14 +54,6 @@ export class LimitsHttpAdapter {
         };
       case 'survey':
       case 'instant_reward':
-        return {
-          type: 'limits',
-          attributes: {
-            engagement_id: engagementId,
-            campaign_entity_id: campaignId,
-            max_responses_per_user: data.times
-          }
-        };
       case 'stamps':
         return {
           type: 'limits',
