@@ -43,17 +43,14 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getLocations(page?: number, pageSize?: number, tags?: string[]): Observable<ILocation[]> {
+  public getLocations(page?: number, tags?: string[]): Observable<ILocation[]> {
     if (page === undefined) {
       page = 1;
-    }
-    if (pageSize === undefined) {
-      pageSize = 10;
     }
     if (tags) {
       tags = [];
     }
-    return this.merchantsService.getMerchants(page, pageSize).pipe(
+    return this.merchantsService.getMerchants(page).pipe(
       mergeMap((merchants: IMerchant[]) => {
         let filteredMerchants: IMerchant[];
         if (tags && tags.length > 0) {

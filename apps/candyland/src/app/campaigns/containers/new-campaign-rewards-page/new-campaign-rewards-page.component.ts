@@ -13,7 +13,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
+  public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
@@ -56,9 +56,20 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
         ]],
         duration: [null, [
           // Validators.required
-        ]]
+        ]],
+        id: null
       })
     });
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && this.isFirstInit;
+        if (isFirstTimeRenderFromAPIResponse) {
+          this.isFirstInit = false;
+          this.form.patchValue(data);
+        }
+      });
     this.form.patchValue(this.defaultValue);
   }
 

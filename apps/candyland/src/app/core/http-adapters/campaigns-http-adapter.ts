@@ -1,20 +1,9 @@
 import * as moment from 'moment';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
-// enum LimitsDurationToAPIMapping {
-//   day = 'days',
-//   week = 'weeks',
-//   month = 'months'
-// }
-
-// enum LimitsDurationFromAPIMapping {
-//   days = 'day',
-//   weeks = 'week',
-//   months = 'month'
-// }
 export class CampaignsHttpAdapter {
   // tslint:disable
-  public static transformToCampaign(data: any): ICampaign {
+  public static transformToCampaign(data: any): ICampaignTableData {
     return {
       id: data.id,
       name: data.attributes.name,
@@ -27,19 +16,17 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformTableData(data: any): ITableData<ICampaign> {
+  public static transformTableData(data: any): ITableData<ICampaignTableData> {
     return {
       data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item)),
       meta: data.meta
     }
   }
 
-  public static transformAPIResponseToCampaign(data: any): any {
-    console.log(data);
-    const campaignData = data.data.attributes;
-    // const campaignLimits = data.includes && data.includes.limits;
+  public static transformAPIResponseToCampaign(data: ICampaignAPI): ICampaign {
+    const campaignData = data.attributes;
     return {
-      id: data.data.id,
+      id: data.id,
       name: campaignData.name,
       engagement_id: campaignData.engagement_id,
       engagement_type: campaignData.engagement_type,
@@ -50,27 +37,30 @@ export class CampaignsHttpAdapter {
         endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : new Date(),
         endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
         disabledEndDate: !campaignData.end_date_time,
-        // labels: campaignData.labels
+        labels: campaignData.labels
       },
-      // TODO, Andrew, need API support for channel data
       channel: {
         type: campaignData.comm_channel
       },
-      audience: { type: 'select', select: (campaignData.pool_id).toString(), file: null },
+      audience: { type: 'select', select: campaignData.pool_id, file: null },
       template: {},
       rewardsList: [],
-      // limits: {
-      //   time: campaignLimits && campaignLimits.max_play_in_period,
-      //   duration: campaignLimits && LimitsDurationFromAPIMapping[campaignLimits.period_unit]
-      // }
     };
   }
 
-  public static transformFromCampaign(data: any): any {
-    console.log(data);
+  public static transformFromCampaign(data: ICampaign): ICampaignAPI {
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);
+    const comm = data.channel.type === 'sms' ? {
+      template: {
+        content: data.channel.message
+      },
+      event: {
+        send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
+        channel: data.channel.type
+      }
+    } : null;
 
     return {
       type: "entities",
@@ -84,22 +74,9 @@ export class CampaignsHttpAdapter {
         end_date_time: moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select,
-        // labels: data.campaignInfo.label,
+        labels: data.campaignInfo.labels || [],
         possible_outcomes,
-        // limits: {
-        //   max_play_in_period: data.limits.time,
-        //   period_unit: LimitsDurationToAPIMapping[data.limits.duration],
-        //   period_number: 1
-        // },
-        comm: {
-          template: {
-            content: data.channel.message
-          },
-          event: {
-            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
-            channel: data.channel.type
-          }
-        }
+        comm
       }
     };
   };
