@@ -34,7 +34,6 @@
       <!--  table-->
       <cl-campaigns-list [dataSource]="dataSource"
                         [displayedColumns]="displayedColumns"
-                        (deleteAction)="deleteCampaign($event)"
                         (editAction)="editCampaign($event)"
                         (duplicateAction)="duplicateCampaign($event)">
       </cl-campaigns-list>
