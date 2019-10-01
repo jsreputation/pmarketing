@@ -30,21 +30,21 @@ export interface IJsonApiItem<T> {
     };
 }
 
-export interface IJSonAPiPatchItem<T> {
-    data: IJSonApiPatchData<T>;
+export interface IJsonApiPatchItem<T> {
+    data: IJsonApiPatchData<T>;
 }
 
-export interface IJSonApiPatchData<T> {
+export interface IJsonApiPatchData<T> {
     attributes: Partial<T>;
     id: string;
     type: string;
 }
 
-export interface IJSonApiPostItem<T> {
+export interface IJsonApiPostItem<T> {
     data: IJsonApiPostData<T>;
 }
 
 export interface IJsonApiPostData<T> {
-    type: string;
+    type?: string;
     attributes: T;
 }

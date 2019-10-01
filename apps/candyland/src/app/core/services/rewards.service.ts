@@ -45,10 +45,6 @@ export class RewardsService implements ITableService {
     );
   }
 
-  // public getMocksRewardDetail(): Observable<any> {
-  //   return this.rewardHttp.getMockRewardDetail();
-  // }
-
   public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
     return this.rewardHttp.createReward({ data: sendData });
