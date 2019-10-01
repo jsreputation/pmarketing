@@ -164,7 +164,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)
       ]],
       subHeadlineMessage: ['Earn rewards!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],

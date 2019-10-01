@@ -69,9 +69,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     this.authService.resetPassword(
       { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword })
       .subscribe(
-        (response) => {
-          console.log(`Response : ${response.message}`);
-          console.log(`Response code: ${response.code}`);
+        () => {
           // Send Login Call on successfull password reset
           this.sendLoginCall(password);
         },
@@ -91,7 +89,8 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = this.mobileNumber;
         }
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'home');
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
+        this.notificationService.addSnack('Password successfully updated.');
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
