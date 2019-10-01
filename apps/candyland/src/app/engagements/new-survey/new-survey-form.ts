@@ -17,7 +17,6 @@ export class NewSurveyForm {
       subHeadlineMessage: new FormControl(
         null,
         [
-          // Validators.required,
           Validators.minLength(5),
           Validators.maxLength(250)
         ]
