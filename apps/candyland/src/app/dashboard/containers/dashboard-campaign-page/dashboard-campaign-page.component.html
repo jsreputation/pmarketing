@@ -18,44 +18,44 @@
       <!--      survey-->
       <ng-container *ngSwitchCase="'survey'">
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Survey Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="181" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="177" [cardType]="'horizontalBar'"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="178" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
-          <div class="chart-card-header-with-control row">
+        <article class="chart-card full-width">
+          <div class="chart-card-header-with-control">
             <h3 class="chart-card-title">Survey Campaign lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for survey campaigns"></cl-search-filter>
           </div>
           <div class="chart-card-content">
             <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
       </ng-container>
       <!--      / survey-->
       <!--      games-->
       <ng-container *ngSwitchCase="'games'">
 
-        <div class="chart-card">
-          <div class="chart-card-header-with-control row">
+        <article class="chart-card full-width">
+          <div class="chart-card-header-with-control">
             <h3 class="chart-card-title">Game Engagement Rate</h3>
             <mat-form-field appearance="outline">
               <mat-select #selectGame [value]="106">
@@ -68,93 +68,93 @@
           <div class="chart-card-content">
             <cl-chart-card [id]="selectGame.value" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
       </ng-container>
       <!--      / games-->
       <!--      stamps-->
       <ng-container *ngSwitchCase="'stamps'">
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Stamps Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
-          <div class="chart-card-header-with-control row">
+        <article class="chart-card full-width">
+          <div class="chart-card-header-with-control">
             <h3 class="chart-card-title">Stamps Campaign lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for stamps campaigns"></cl-search-filter>
           </div>
           <div class="chart-card-content">
             <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
       </ng-container>
       <!--      / stamps-->
       <!--      reward-->
       <ng-container *ngSwitchCase="'reward'">
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Stamps Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Channels</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
-          <div class="chart-card-header-with-control row">
+        <article class="chart-card full-width">
+          <div class="chart-card-header-with-control">
             <h3 class="chart-card-title">Stamps Rewards lists</h3>
             <cl-search-filter class="search-block" placeholder="Search for rewards campaigns"></cl-search-filter>
           </div>
           <div class="chart-card-content">
             <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
       </ng-container>
       <!--      / reward-->

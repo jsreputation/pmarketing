@@ -1,14 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { NewInstantRewardRoutingModule } from './new-instant-reward-routing.module';
-import { NewInstantRewardComponent } from './containers/new-instant-reward/new-instant-reward.component';
-import {
-  NewInstantRewardAppearancePageComponent
-} from './containers/new-instant-reward-appearance-page/new-instant-reward-appearance-page.component';
-import {
-  NewInstantRewardRewardsPageComponent
-} from './containers/new-instant-reward-rewards-page/new-instant-reward-rewards-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
@@ -30,12 +22,12 @@ import {
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
+import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [
-    NewInstantRewardComponent,
-    NewInstantRewardAppearancePageComponent,
-    NewInstantRewardRewardsPageComponent
+    NewInstantRewardManagePageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -58,6 +50,7 @@ import { ConfirmModalModule } from '@cl-shared';
     MatSelectModule,
     MatRadioModule,
     ConfirmModalModule,
+    DirectivesModule,
   ]
 })
 export class NewInstantRewardModule {

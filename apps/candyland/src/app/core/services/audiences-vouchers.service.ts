@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpAdapter } from '@cl-core/http-adapters/audiences-http-adapter';
 import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.service';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
@@ -36,15 +36,26 @@ export class AudiencesVouchersService implements ITableService {
       );
   }
 
-  private getRewardsMap(idList): Observable<{ [key: string]: IRewardEntity }> {
+  private getRewardsMap(idList: string[]): Observable<{ [rewardId: string]: IRewardEntity }> {
     const requests = idList.map(id => this.rewardsService.getReward(id));
-    return combineLatest(requests).pipe(
-      map(rewards => Utils.convertArrToObj(rewards, 'id')),
-    );
+    return requests.length === 0 ? of({}) : combineLatest(requests)
+      .pipe(
+        map(rewards => Utils.convertArrToObj(rewards, 'id')),
+      );
   }
 
   private getUniqIds(data: any[], propKey: string): string[] {
     const idList = data.map(item => item.attributes[propKey]);
     return Utils.filterUniq(idList);
+  }
+
+  public voucherAssigned(source: string, assigned: string): Observable<any> {
+    const sendData = AudiencesHttpAdapter.transformVoucherAssignedToApi(source, assigned);
+    return this.audiencesHttpsService.voucherAssigned(sendData);
+  }
+
+  public updateVoucherExpiry(id: string, endData: string): Observable<any> {
+    const sendData = AudiencesHttpAdapter.transformVoucherPatchToApi(id, endData);
+    return this.audiencesHttpsService.updateVoucherExpiry(sendData);
   }
 }

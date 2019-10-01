@@ -14,7 +14,12 @@ describe('CardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CardComponent],
-      imports: [RouterTestingModule, PuzzlesModule],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
+        PuzzlesModule
+      ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },
       ]

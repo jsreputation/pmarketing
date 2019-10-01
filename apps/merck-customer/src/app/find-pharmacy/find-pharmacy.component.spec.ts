@@ -12,7 +12,7 @@ describe('FindPharmacyComponent', () => {
   let fixture: ComponentFixture<FindPharmacyComponent>;
 
   const locationServiceStub = {
-    getAll: () => of(),
+    getAllLocations: () => of(),
     getTags: () => of()
   };
 
@@ -65,12 +65,12 @@ describe('FindPharmacyComponent', () => {
     it('should get all locations', fakeAsync(() => {
       const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
         (LocationsService as Type<LocationsService>);
-      const locationsServiceSpy = spyOn(locationsService, 'getAll').and.returnValue(of(locationsStub));
+      const locationsServiceSpy = spyOn(locationsService, 'getAllLocations').and.returnValue(of(locationsStub));
       component.ngOnInit();
       tick();
       fixture.detectChanges();
       expect(locationsServiceSpy).toHaveBeenCalled();
-      locationsService.getAll().subscribe(res => {
+      locationsService.getAllLocations().subscribe(res => {
         expect(res).toEqual(locationsStub);
       });
     }));

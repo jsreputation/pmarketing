@@ -13,7 +13,7 @@ import { MerchantsService } from '@cl-core-services';
 export class SelectMerchantPopupComponent {
   public dataSource: CustomDataSource<Merchant>;
   public selectMerchant: IMerchant;
-  public displayedColumns = ['logo', 'name', 'date', 'phone', 'branches'];
+  public displayedColumns: string[] = ['logo', 'name', 'date', 'phone', 'branches'];
 
   constructor(
     public dialogRef: MatDialogRef<SelectMerchantPopupComponent>,

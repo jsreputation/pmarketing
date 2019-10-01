@@ -5,6 +5,9 @@ export class ApiConfig {
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath = `${ApiConfig.basePath}/campaign/entities`;
+  public static commsTemplatesPath = `${ApiConfig.basePath}/comm/templates`;
+  public static commsEventsPath = `${ApiConfig.basePath}/comm/events`;
+  public static outcomesPath = `${ApiConfig.basePath}/outcome/possible_outcomes`;
   public static rewardsPath = `${ApiConfig.basePath}/reward/entities`;
   public static getAllCredentialPath = `${ApiConfig.baseAPIPath}/credentials`;
   public static IAMUsersPath = `${ApiConfig.baseAPIPath}/users`;
@@ -20,4 +23,6 @@ export class ApiConfig {
   public static vouchersAssignedPath = `${ApiConfig.basePath}/voucher/assigneds`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath = `${ApiConfig.basePath}/organization`;
+  public static uploadFilePath = `${ApiConfig.basePath}/storage/images`;
+  public static apiCdnPath = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
 }

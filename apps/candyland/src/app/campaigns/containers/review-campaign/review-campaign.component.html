@@ -1,20 +1,11 @@
-<div class="page-header full-with" [formGroup]="form">
-  <div class="game-title-wrap">
-    <div class="control-input name-control name-control-title">
-      <mat-form-field class="pagetitle-input" floatLabel="never" >
-        <input type="text" matInput formControlName="name" placeholder="Enter title here">
-        <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-        <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-        <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
+<header class="page-header full-with">
+  <h1 class="title" *ngIf="campaign">{{campaign.name}}</h1>
   <div class="btn-group">
     <cl-button classList="primary"
                (click)="comeBack()"> Come Back
     </cl-button>
   </div>
-</div>
+</header>
 <section class="content">
   <cl-new-campaign-review-page></cl-new-campaign-review-page>
 </section>

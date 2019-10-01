@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewSurveyRoutingModule } from './new-survey-routing.module';
-import { NewSurveyAppearancePageComponent } from './containers/new-survey-appearance-page/new-survey-appearance-page.component';
 import {NewSurveyComponent} from './containers/new-survey/new-survey.component';
 import { QuestionTypeModule } from '@cl-shared/questions/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,9 +11,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { SimpleMobileViewModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule} from '@perx/core';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 @NgModule({
   declarations: [
-    NewSurveyAppearancePageComponent,
     NewSurveyComponent
   ],
   imports: [
@@ -33,6 +32,7 @@ import { SurveyModule as PerxSurveyModule} from '@perx/core';
     MatInputModule,
     MatSelectModule,
     DragDropModule,
+    DirectivesModule
   ]
 })
 export class NewSurveyModule { }

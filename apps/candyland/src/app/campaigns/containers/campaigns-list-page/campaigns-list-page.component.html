@@ -1,7 +1,7 @@
-<div class="page-header">
+<header class="page-header">
   <h1 class="title">Campaigns</h1>
   <cl-button routerLink="/campaigns/new-campaign" classList="primary">Create New</cl-button>
-</div>
+</header>
 
 <section class="content">
   <ng-container *ngIf="dataSource.hasData">
@@ -15,7 +15,7 @@
           <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
         </ng-container>
         <ng-container *clTableFilter="'status'; value: ''; let filter">
-          <mat-form-field appearance="outline" class="control-input">
+          <mat-form-field appearance="outline" class="control-input half-block">
             <mat-select [formControl]="filter" placeholder="All">
               <mat-option value="">All</mat-option>
               <mat-option value="active">Active</mat-option>
@@ -30,22 +30,22 @@
       </div>
     </cl-table-filters>
     <!--   / filters-->
+    <div class="table-card">
+      <!--  table-->
+      <cl-campaigns-list [dataSource]="dataSource"
+                        [displayedColumns]="displayedColumns"
+                        (editAction)="editCampaign($event)"
+                        (duplicateAction)="duplicateCampaign($event)">
+      </cl-campaigns-list>
+      <!--/ table-->
 
-    <!--  table-->
-    <cl-campaigns-list [dataSource]="dataSource"
-                       [displayedColumns]="displayedColumns"
-                       (deleteAction)="deleteCampaign($event)"
-                       (editAction)="editCampaign($event)"
-                       (duplicateAction)="duplicateCampaign($event)">
-    </cl-campaigns-list>
-    <!--/ table-->
-
-    <!--paginator-->
-    <cl-paginator [dataSource]="dataSource"
-                  [pageSize]="5"
-                  [pageSizeOptions]="[5, 10, 20]"
-    ></cl-paginator>
-    <!--/ paginator-->
+      <!--paginator-->
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+      ></cl-paginator>
+      <!--/ paginator-->
+    </div>
   </ng-container>
 
   <cl-no-data *ngIf="(dataSource.data).length === 0">

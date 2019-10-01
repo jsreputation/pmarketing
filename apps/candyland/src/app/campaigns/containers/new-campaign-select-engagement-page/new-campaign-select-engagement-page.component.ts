@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular
 import { tap } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
+import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -27,13 +27,16 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     return this.form.get('template');
   }
 
-  constructor(private engagementsService: EngagementsService,
-              private availableNewEngagementService: AvailableNewEngagementService,
-              public store: CampaignCreationStoreService,
-              public stepConditionService: StepConditionService,
-              private fb: FormBuilder,
-              private dialog: MatDialog,
-              public cd: ChangeDetectorRef) {
+  constructor(
+    private engagementsService: EngagementsService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    public cd: ChangeDetectorRef,
+    private limitsService: LimitsService
+  ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
     this.initFiltersDefaultValue();
@@ -47,6 +50,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
     this.availableNewEngagementService.remove();
   }
 
@@ -58,7 +62,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
-    this.form.patchValue(this.store.currentCampaign);
+    // this.form.patchValue({ theme: {} });
   }
 
   private initFiltersDefaultValue(): void {
@@ -84,9 +88,22 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   private initSelectedTemplate(res: IEngagement[]): void {
-    if (this.availableNewEngagementService.isAvailable) {
-      const id = this.availableNewEngagementService.newEngagement.id;
-      const findTemplate = res.find(template => template.id === id);
+    const engagementId = this.availableNewEngagementService.isAvailable ?
+      this.availableNewEngagementService.newEngagement.id :
+      this.campaign && this.campaign.engagement_id && this.campaign.engagement_id.toString();
+    if (engagementId) {
+      const findTemplate = res.find(template => template.id === engagementId);
+      if (this.store.currentCampaign.id) {
+        const params: HttpParamsOptions = {
+          'filter[campaign_entity_id]': this.store.currentCampaign.id
+        };
+        this.limitsService.getLimits(params, findTemplate.attributes_type).subscribe(
+          limits => {
+            const newCampaign = { ...this.store.currentCampaign, limits };
+            this.store.updateCampaign(newCampaign);
+          }
+        );
+      }
       this.template.patchValue(findTemplate);
     }
   }

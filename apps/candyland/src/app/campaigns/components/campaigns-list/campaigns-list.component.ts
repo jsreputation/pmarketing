@@ -16,7 +16,6 @@ export class CampaignsListComponent implements AfterViewInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public editAction: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
   @Output() public duplicateAction: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
-  @Output() public deleteAction: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
   public ngAfterViewInit(): void {
     this.dataSource.registerSort(this.sort);
@@ -28,10 +27,6 @@ export class CampaignsListComponent implements AfterViewInit {
 
   public duplicateItem(item: ICampaign): void {
     this.duplicateAction.emit(item);
-  }
-
-  public deleteItem(item: ICampaign): void {
-    this.deleteAction.emit(item);
   }
 
   public pauseItem(): void {

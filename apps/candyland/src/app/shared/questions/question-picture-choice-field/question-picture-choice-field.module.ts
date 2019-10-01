@@ -4,6 +4,7 @@ import { QuestionPictureChoiceFieldComponent } from './question-picture-choice-f
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { UploadImageComponent } from './upload-image/upload-image.component';
+import { UploadGraphicModule } from '../../components/upload-graphic/upload-graphic.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    UploadGraphicModule
   ]
 })
 export class QuestionPictureChoiceFieldModule { }

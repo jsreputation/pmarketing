@@ -1,7 +1,8 @@
 <section class="create-merchant-form" [formGroup]="formMerchant">
   <div class="merchant-form">
     <div class="control-input merchant-upload-img">
-      <cl-upload-graphic [formControl]="image">
+      <cl-upload-graphic [formControl]="image"
+                         [isRequired]="image.hasError('required') && image.touched">
         <span>+ Add Image</span>
       </cl-upload-graphic>
     </div>

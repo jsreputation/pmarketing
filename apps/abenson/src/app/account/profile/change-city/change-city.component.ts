@@ -7,8 +7,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ICustomProperties, ProfileService } from '@perx/core';
 import { Location } from '@angular/common';
+
+import {
+  ICustomProperties,
+  ProfileService,
+} from '@perx/core';
 
 @Component({
   selector: 'app-change-city',
@@ -41,10 +45,9 @@ export class ChangeCityComponent implements OnInit {
     };
 
     if (this.customProperties.city) {
-      this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
-          this.location.back();
-        },
-        (err) => {console.log(err); });
+      this.profileService.setCustomProperties(this.customProperties).subscribe(() =>
+      this.location.back(),
+      (err) => { console.log(err); });
     }
     return;
   }

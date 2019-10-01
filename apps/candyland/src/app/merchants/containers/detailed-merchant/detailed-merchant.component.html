@@ -1,11 +1,10 @@
-<section class="page-header">
+<header class="page-header">
   <h1 class="title">{{merchant?.firstName}} {{merchant?.lastName}}</h1>
-  <div class="game-actions">
+  <div class="btn-group">
     <cl-button (click)="close()" class="btn-cancel" classList="secondary">Close</cl-button>
     <cl-button (click)="edit()" classList="primary">Edit</cl-button>
   </div>
-
-</section>
+</header>
 <section class="content phonepreview-wrapper">
   <div class="merchant-main-block">
     <mat-card class="game-graphic">

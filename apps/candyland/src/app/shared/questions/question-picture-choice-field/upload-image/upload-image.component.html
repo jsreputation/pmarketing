@@ -9,7 +9,7 @@
   />
   <div (click)="setActive()"
        *ngIf="imgURL"
-       [ngClass]="{active: imgURL === selectedGraphic}"
+       [ngClass]="{active: imgURL === selectGraphic}"
        class="image-wrap"
   >
     <img [src]="imgURL" alt="upload" class="image">

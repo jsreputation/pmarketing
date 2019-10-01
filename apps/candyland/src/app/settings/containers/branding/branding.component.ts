@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
@@ -65,8 +65,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('logo');
   }
 
-  public get button(): AbstractControl {
-    return this.formBranding.get('button');
+  public get button_background_color(): AbstractControl {
+    return this.formBranding.get('button_background_color');
+  }
+
+  public get button_text_color(): AbstractControl {
+    return this.formBranding.get('button_text_color');
   }
 
   public get font(): AbstractControl {
@@ -77,17 +81,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('style');
   }
 
-  public resetLogo(data: any): void {
-    this.logo.reset();
-    if (data.value === 'text') {
-      this.logo.setValidators([Validators.required, Validators.minLength(2),
-      Validators.maxLength(20)]);
-    } else {
-      this.logo.setValidators([Validators.required]);
-    }
-    this.formBranding.updateValueAndValidity();
-    this.logo.markAsUntouched({onlySelf: true});
-  }
+  // public resetLogo(): void {
+  //   this.logo.reset();
+  //   this.logo.setValidators([Validators.required]);
+  //   this.formBranding.updateValueAndValidity();
+  //   this.logo.markAsUntouched({onlySelf: true});
+  // }
 
   public ngOnInit(): void {
     this.createFormBranding();
@@ -97,10 +96,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
     },
     {
       labelView: 'Secondary Color', color: this.secondaryColor.value
-    }];
+    }
+  ];
     this.patchValue({
       headerNavbarColor: this.listColors[0],
-      button: this.listColors[0],
+      button_background_color: this.listColors[0],
     });
     this.subscribeChangeColors();
   }

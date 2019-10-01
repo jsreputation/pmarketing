@@ -11,10 +11,11 @@ import { AuthService } from '@cl-core-services';
 export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
   public hide = true;
-  constructor(private fb: FormBuilder,
-              private router: Router,
-              private authService: AuthService
-              ) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   public ngOnInit(): void {
     this.createForm();
@@ -23,9 +24,9 @@ export class LoginFormComponent implements OnInit {
   public onSubmit(): void {
     if (this.formLogin.valid) {
       this.authService.signIn(this.formLogin.value)
-      .subscribe(
-        () => this.router.navigate(['/dashboard/overview']),
-        (error: Error) => alert('The email or password is incorrect! ' + error.message));
+        .subscribe(
+          () => this.router.navigate(['/dashboard/overview']),
+          (error: Error) => alert('The email or password is incorrect! ' + error.message));
     }
   }
 
@@ -38,9 +39,9 @@ export class LoginFormComponent implements OnInit {
     this.formLogin = this.fb.group({
       account_id: [null, [
         Validators.required,
-        Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+        Validators.pattern(/([0-9]|[A-Z]|-)*/i),
         Validators.minLength(3),
-        Validators.maxLength(50)
+        Validators.maxLength(64)
       ]],
       username: [null, [
         Validators.required,
@@ -52,5 +53,4 @@ export class LoginFormComponent implements OnInit {
       ]]
     });
   }
-
 }

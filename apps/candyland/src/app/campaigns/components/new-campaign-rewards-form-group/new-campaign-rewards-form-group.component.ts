@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
-  forwardRef, AfterViewInit
+  forwardRef,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -19,8 +19,10 @@ import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop } from 'rxjs';
+import { noop, combineLatest } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { RewardsService } from '@cl-core/services/rewards.service';
+import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -35,16 +37,17 @@ import { distinctUntilChanged } from 'rxjs/operators';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public title = 'Rewards';
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: [false],
-    rewards: this.fb.array([], [ClValidators.sumMoreThan({fieldName: 'probability'})]
+    rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
     )
   });
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
+  public isFirstInit: boolean;
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -58,12 +61,31 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     return this.rewards.getError('sumMoreThan');
   }
 
-  constructor(public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private fb: FormBuilder) {
+  constructor(
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private store: CampaignCreationStoreService,
+    private rewardsService: RewardsService,
+  ) {
+  }
+
+  public get campaign(): any {
+    return this.store.currentCampaign;
   }
 
   public ngOnInit(): void {
+    this.isFirstInit = true;
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
+        if (isFirstTimeRenderFromAPIResponse) {
+          this.isFirstInit = false;
+          this.initRewardsList();
+        }
+      });
     this.enableProbability.valueChanges
       .pipe(
         untilDestroyed(this),
@@ -79,20 +101,25 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
       });
   }
 
-  public ngAfterViewInit(): void {
-  }
-
   public ngOnDestroy(): void {
   }
 
   public openDialogSelectReward(): void {
-    const dialogRef = this.dialog.open(SelectRewardPopupComponent);
-
-    dialogRef.afterClosed().subscribe((reward) => {
-      if (reward) {
-        this.addReward(reward);
-      }
-    });
+    this.dialog
+      .open<SelectRewardPopupComponent, void, IRewardEntity>(SelectRewardPopupComponent)
+      .afterClosed()
+      .subscribe((reward: IRewardEntity) => {
+        if (reward) {
+          this.addReward(reward);
+        }
+      });
+  }
+  public initRewardsList(): void {
+    this.rewards.reset();
+    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.resultId));
+    combineLatest(possibleOutcomes).subscribe(
+      rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
+    );
   }
 
   public addReward(value: IRewardEntity): void {
@@ -114,7 +141,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
         this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
       }
     }
-    this.group.patchValue(data, {emitEvent: false});
+    this.group.patchValue(data, { emitEvent: false });
     this.group.updateValueAndValidity();
     this.cd.detectChanges();
   }
@@ -139,7 +166,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
       value: [value],
-      probability: {value: 0, disabled: !isEnableProbability}
+      probability: { value: 0, disabled: !isEnableProbability }
     });
   }
 
@@ -147,13 +174,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, AfterViewIn
     if (isEnableProbability) {
       this.rewards.insert(0, this.createRewardFormGroup(null, isEnableProbability));
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').enable({emitEvent: false});
+        this.rewards.at(i).get('probability').enable({ emitEvent: false });
       }
     } else {
       this.rewards.removeAt(0);
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').reset(0, {emitEvent: false});
-        this.rewards.at(i).get('probability').disable({emitEvent: false});
+        this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
+        this.rewards.at(i).get('probability').disable({ emitEvent: false });
       }
     }
     this.cd.detectChanges();

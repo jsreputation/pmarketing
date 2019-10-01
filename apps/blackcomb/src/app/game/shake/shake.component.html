@@ -1,4 +1,4 @@
-<div class="main-puzzle-container" >
+<div class="main-puzzle-container">
   <div>
     <h1>{{game.texts.title}}</h1>
     <h3>{{game.texts.subTitle}}</h3>
@@ -13,12 +13,13 @@
       [enabled]="isEnabled"
       [nbShakes]="game.config.nbTaps">
     </perx-core-shake-tree>
-  </div>  
+  </div>
   <button
     mat-flat-button
     color="primary"
     (click)="isEnabled = true"
-    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible', 'color': 'white'}">
     {{ game.texts.button }}
   </button>
+
 </div>
