@@ -1,5 +1,6 @@
 export interface IJsonApiListPayload<T> {
     data: IJsonApiItem<T>[];
+    links?: any;
     meta?: {
         record_count?: number;
         page_count?: number;
@@ -27,4 +28,23 @@ export interface IJsonApiItem<T> {
             }
         }
     };
+}
+
+export interface IJSonAPiPatchItem<T> {
+    data: IJSonApiPatchData<T>;
+}
+
+export interface IJSonApiPatchData<T> {
+    attributes: Partial<T>;
+    id: string;
+    type: string;
+}
+
+export interface IJSonApiPostItem<T> {
+    data: IJsonApiPostData<T>;
+}
+
+export interface IJsonApiPostData<T> {
+    type: string;
+    attributes: T;
 }
