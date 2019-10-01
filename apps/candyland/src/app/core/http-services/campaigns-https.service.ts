@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IJsonApiPostItem, IJsonApiPatchItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +10,20 @@ export class CampaignsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getCampaigns(params: HttpParams): Observable<any> {
-    // return this.http.get('assets/mocks/campaigns.json');
-    return this.http.get(ApiConfig.campaignsPath, { params });
+  public getCampaigns(params: HttpParams): Observable<IResponseApi<ICampaignAPI[]>> {
+    return this.http.get<IResponseApi<ICampaignAPI[]>>(ApiConfig.campaignsPath, { params });
   }
 
-  public getCampaign(id: string): Observable<any> {
-    // return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=limits,possible_outcomes`);
-    // return this.http.get(`${ApiConfig.campaignsPath}/${id}?include=possible_outcomes`);
-    return this.http.get(`${ApiConfig.campaignsPath}/${id}`);
+  public getCampaign(id: string): Observable<IResponseApi<ICampaignAPI>> {
+    return this.http.get<IResponseApi<ICampaignAPI>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: number, data: IJsonApiPatchItem<any>): Observable<IResponseApi<any>> {
-    return this.http.patch<IResponseApi<any>>(ApiConfig.campaignsPath + '/' + id, data);
+  public updateCampaign(id: string, data: ISendAPI<ICampaign>): Observable<IResponseApi<ICampaignAPI>> {
+    return this.http.patch<IResponseApi<ICampaignAPI>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
-  public createCampaign(data: IJsonApiPostItem<any>): Observable<IResponseApi<any>> {
-    return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath, data);
+  public createCampaign(data: ISendAPI<ICampaignAPI>): Observable<IResponseApi<ICampaignAPI>> {
+    return this.http.post<IResponseApi<ICampaignAPI>>(ApiConfig.campaignsPath, data);
   }
 
   public deleteCampaign(id: string): Observable<any> {
