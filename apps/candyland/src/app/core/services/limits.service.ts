@@ -20,4 +20,15 @@ export class LimitsService {
       map(response => response.map((limit: ILimitApi) => LimitsHttpAdapter.transformAPIResponseToLimit(limit)))
     );
   }
+
+  public updateLimits(id: number, data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
+    const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
+    return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData }}, type);
+  }
+
+  public createLimits(data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
+    const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
+    return this.limitsHttpsService.createLimits({ data: sendData }, type);
+  }
+
 }
