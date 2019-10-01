@@ -74,7 +74,7 @@ export class CampaignsHttpAdapter {
         end_date_time: moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
         goal: data.campaignInfo.goal,
         pool_id: data.audience.select,
-        labels: data.campaignInfo.labels,
+        labels: data.campaignInfo.labels || [],
         possible_outcomes,
         comm
       }

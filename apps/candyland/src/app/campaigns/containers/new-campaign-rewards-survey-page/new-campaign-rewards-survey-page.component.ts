@@ -3,6 +3,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { StepConditionService } from '../../services/step-condition.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-rewards-survey-page',
@@ -11,7 +12,7 @@ import { StepConditionService } from '../../services/step-condition.service';
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
+  public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue = {
     rewardsOptions: {
@@ -50,13 +51,23 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
           // Validators.required,
           Validators.min(1),
           Validators.max(60)
-        ]]
+        ]],
+        duration: [null, [
+          // Validators.required
+        ]],
+        id: null
       })
     });
-    if (this.store.currentCampaign.id) {
-      this.form.patchValue(this.store.currentCampaign);
-    } else {
-      this.form.patchValue(this.defaultValue);
-    }
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
+        if (isFirstTimeRenderFromAPIResponse) {
+          this.isFirstInit = false;
+          this.form.patchValue(data);
+        }
+      });
+    this.form.patchValue(this.defaultValue);
   }
 }
