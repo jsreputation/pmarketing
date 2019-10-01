@@ -159,22 +159,23 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
         this.commsService.getCommsTemplate(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.commsService.getCommsEvents(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.outcomesService.getOutcomes(params)).pipe(
           map(
-            ([campaign, commTemplate, commEvent, outcomes]) => ({
-              ...campaign,
-              channel: {
-                type: campaign.channel.type,
-                ...commTemplate,
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+            ([campaign, commTemplate, commEvent, outcomes]:
+              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+                ...campaign,
+                channel: {
+                  type: campaign.channel.type,
+                  ...commTemplate,
+                  ...commEvent
+                },
+                rewardsList: outcomes
+              }))
         ).subscribe(
           campaign => {
             this.campaign = Object.assign({}, campaign);

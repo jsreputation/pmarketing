@@ -10,7 +10,7 @@ export class LimitsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getLimits(params: HttpParams, engagementType: string): Observable<any> {
-    return this.http.get(`${ApiConfig.basePath}/${engagementType}/limits`, { params });
+  public getLimits(params: HttpParams, engagementType: string): Observable<IResponseApi<ILimitApi[]>> {
+    return this.http.get<IResponseApi<ILimitApi[]>>(`${ApiConfig.basePath}/${engagementType}/limits`, { params });
   }
 }
