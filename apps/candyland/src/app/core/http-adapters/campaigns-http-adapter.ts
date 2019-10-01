@@ -52,6 +52,15 @@ export class CampaignsHttpAdapter {
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);
+    const comm = data.channel.type === 'sms' ? {
+      template: {
+        content: data.channel.message
+      },
+      event: {
+        send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
+        channel: data.channel.type
+      }
+    } : null;
 
     return {
       type: "entities",
@@ -67,15 +76,7 @@ export class CampaignsHttpAdapter {
         pool_id: data.audience.select,
         labels: data.campaignInfo.labels,
         possible_outcomes,
-        comm: {
-          template: {
-            content: data.channel.message
-          },
-          event: {
-            send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
-            channel: data.channel.type
-          }
-        }
+        comm
       }
     };
   };
