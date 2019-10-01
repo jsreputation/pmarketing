@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
+import { IJsonApiPostItem, IJsonApiPatchItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class CampaignsHttpsService {
     return this.http.get(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: number, data: any): Observable<IResponseApi<any>> {
+  public updateCampaign(id: number, data: IJsonApiPatchItem<any>): Observable<IResponseApi<any>> {
     return this.http.patch<IResponseApi<any>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
-  public createCampaign(data: IResponseApi<any>): Observable<IResponseApi<any>> {
+  public createCampaign(data: IJsonApiPostItem<any>): Observable<IResponseApi<any>> {
     return this.http.post<IResponseApi<any>>(ApiConfig.campaignsPath, data);
   }
 
