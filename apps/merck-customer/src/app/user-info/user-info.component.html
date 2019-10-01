@@ -8,20 +8,20 @@
 		<div translate class="subtitle">STATIC_CURRENT_CONDITION</div>
 		<form [formGroup]="surveyForm" (ngSubmit)="onNext()">
 			<div>
-				<mat-checkbox i18n="@@static-diabetes-condition" color="primary" formControlName="diabetesCondition"
-					(change)="diabetesConditionUpdated($event.checked)">
-					Diabetes condition
+				<mat-checkbox color="primary" formControlName="diabetesCondition"
+					(change)="diabetesConditionUpdated($event.checked)" translate>
+					{{"STATIC_DIABETES_CONDITION" | translate }}
 				</mat-checkbox>
 			</div>
 			<mat-radio-group *ngIf="surveyForm.controls.diabetesCondition.value" class="diabetes-selection" formControlName="diabetes">
-				<mat-radio-button i18n="@@static-diabetes" color="primary" value="diabetes">Diabetes</mat-radio-button>
-				<mat-radio-button i18n="@@static-pre-diabetes" color="primary" value="pre_diabetes">Pre-Diabetes
+				<mat-radio-button translate color="primary" value="diabetes">STATIC_DIABETES</mat-radio-button>
+				<mat-radio-button translate color="primary" value="pre_diabetes">STATIC_PRE_DIABETES
 				</mat-radio-button>
 			</mat-radio-group>
-			<mat-checkbox i18n="@@static-hypertension" color="primary" formControlName="hypertension">Hypertension
+			<mat-checkbox translate color="primary" formControlName="hypertension">{{"STATIC_HYPERTENSION" | translate }}
 			</mat-checkbox>
-			<button i18n="@@next-btn" [disabled]="!surveyForm.valid" mat-flat-button type="submit"
-				class="full-width__button">Next</button>
+			<button [disabled]="!surveyForm.valid" mat-flat-button type="submit"
+				class="full-width__button">{{"NEXT_BTN" | translate}}</button>
 		</form>
 	</div>
 </div>
