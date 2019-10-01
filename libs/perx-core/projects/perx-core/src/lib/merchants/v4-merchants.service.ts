@@ -30,7 +30,6 @@ export class V4MerchantsService implements IMerchantsService {
 
   public getAllMerchants(): Observable<IMerchant[]> {
     return new Observable(subject => {
-      const pageSize = 10;
       let current: IMerchant[] = [];
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
       const process = (res: IMerchant[]) => {
@@ -41,23 +40,22 @@ export class V4MerchantsService implements IMerchantsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getMerchants(this.historyMeta.page + 1, pageSize)
+          this.getMerchants(this.historyMeta.page + 1)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getMerchants(1, pageSize)
+      this.getMerchants(1)
         .subscribe(process);
     });
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1): Observable<IMerchant[]> {
     return this.http.get<IV4GetMerchantsResponse>(
       `${this.config.apiHost}/v4/merchants`,
       {
         params: {
-          page: `${page}`,
-          size: `${pageSize}`
+          page: `${page}`
         }
       }
     ).pipe(
