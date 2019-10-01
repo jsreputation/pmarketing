@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { StampsRoutingModule } from './stamps-routing.module';
 import { CardComponent } from './card/card.component';
 import { StampsComponent } from './stamps/stamps.component';
