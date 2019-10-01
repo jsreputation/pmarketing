@@ -1,6 +1,6 @@
 import { combineLatest } from 'rxjs';
-import { MatSlider } from '@angular/material';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatSlider, MatCheckbox } from '@angular/material';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { PuzzleCollectStamp, PuzzleCollectStampState, PuzzleCollectReward } from '@perx/core';
 import { startWith } from 'rxjs/operators';
 
@@ -9,14 +9,13 @@ import { startWith } from 'rxjs/operators';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, AfterViewInit {
   public stamps: PuzzleCollectStamp[];
   public rewardArr: PuzzleCollectReward[];
   public stampsRedeemedNumber: number;
-  @ViewChild('nbSlots', { static: true }) public nbSlots: MatSlider;
   @ViewChild('nbStamps', { static: true }) public nbStamps: MatSlider;
   @ViewChild('nbStampsRedeemed', { static: true }) public nbStampsRedeemed: MatSlider;
-  @ViewChild('cbContainer', { static: true, read: ElementRef }) public cbContainer: ElementRef;
+  @ViewChildren(MatCheckbox) public matCheckboxes: QueryList<MatCheckbox>;
 
   constructor() {
     this.stamps = [];
@@ -36,25 +35,24 @@ export class CardComponent implements OnInit {
             id: ++index,
             state: index <= this.stampsRedeemedNumber ? PuzzleCollectStampState.redeemed : PuzzleCollectStampState.issued
           }));
-
       });
+  }
 
+  public ngAfterViewInit(): void {
+    this.matCheckboxes.forEach((matbox: MatCheckbox) => {
+      matbox.change.subscribe((value) => {
+        const sourceIdStr = value.source.id;
+        const numId = sourceIdStr.substr(sourceIdStr.lastIndexOf('-') + 1);
+        if (value.checked) {
+          this.rewardArr.push({ rewardPosition: +numId - 1});
+        } else {
+          this.rewardArr = this.rewardArr.filter(reward => reward.rewardPosition !== +numId - 1);
+        }
+      });
+    });
   }
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {
     return Array(n);
-  }
-
-  public addReward(_: Event, clickedIndex: number): void {
-    // to convert nodeList to an array such that forEach can be used to loop over each child
-    [...this.cbContainer.nativeElement.children]
-      .forEach((child, childIndex) => {
-        // if already checked, will return true, so need to negate
-        if (!child.classList.contains('mat-checkbox-checked') && clickedIndex === childIndex) {
-          this.rewardArr.push({ rewardPosition: clickedIndex });
-        } else if (child.classList.contains('mat-checkbox-checked') && clickedIndex === childIndex) {
-          this.rewardArr = this.rewardArr.filter(reward => reward.rewardPosition !== clickedIndex);
-        }
-      });
   }
 }

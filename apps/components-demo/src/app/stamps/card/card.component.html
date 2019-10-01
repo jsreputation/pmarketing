@@ -33,7 +33,6 @@
 <div #cbContainer class="checkboxContainer">
   <mat-checkbox
     *ngFor="let slot of arrayFromNumber(nbSlots.value); let i = index"
-    (change)="addReward($event, i)"
     >{{ i + 1 }}</mat-checkbox
   >
 </div>
