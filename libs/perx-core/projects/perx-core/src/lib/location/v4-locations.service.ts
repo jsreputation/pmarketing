@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
-import { LocationsService } from './locations.service';
+
 import { Observable } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  filter,
+  scan,
+  mergeAll,
+} from 'rxjs/operators';
+
+import { LocationsService } from './locations.service';
 import { ILocation } from './ilocation';
-import { map, mergeMap, filter, scan, mergeAll } from 'rxjs/operators';
+
 import { IMerchantsService } from '../merchants/imerchants.service';
-import { IMerchant, IOutlet } from '../merchants/models/merchants.model';
+import {
+  IMerchant,
+  IOutlet,
+} from '../merchants/models/merchants.model';
 
 @Injectable({
   providedIn: 'root'
