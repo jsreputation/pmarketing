@@ -34,8 +34,14 @@ body {
   color: var(--primary) !important;
 }
 
+button {
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
+}
+
 button.mat-primary {
-  background-color: var(--primary) !important;
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
 }
 
 .mat-accent {
@@ -44,15 +50,16 @@ button.mat-primary {
 
 button.mat-accent {
   background-color: var(--accent) !important;
+  color: var(--button_text_color) !important;
+}
+
+button.mat-default {
+  background-color: #fff !important;
   color: var(--font_color) !important;
 }
 
 .mat-toolbar {
   background-color: var(--header_color) !important;
-}
-
-button {
-  background-color: var(--button_color) !important;
 }
 
 .actions-container {
