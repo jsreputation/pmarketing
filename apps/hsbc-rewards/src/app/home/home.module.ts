@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule, ConfigModule, MerchantsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     RewardsModule,
     VouchersModule,
     SharedModule,
+    InfiniteScrollModule,
   ]
 })
 export class HomeModule { }

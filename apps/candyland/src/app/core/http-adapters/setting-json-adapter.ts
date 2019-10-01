@@ -27,7 +27,7 @@ export class Tenants extends JsonApiModel {
     "currency": any,
     "theme.style": string,
     "theme.accent": string,
-    "theme.button_color": string
+    "theme.button_text_color": string,
     "theme.font": string,
     "theme.header_color": string,
     "theme.logo": string,

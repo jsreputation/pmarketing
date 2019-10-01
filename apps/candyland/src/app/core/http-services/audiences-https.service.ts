@@ -42,6 +42,10 @@ export class AudiencesHttpsService {
   }
 
   public voucherAssigned(body: any): Observable<any> {
-    return this.http.post(ApiConfig.vouchersAssignedPath, { data: body  });
+    return this.http.post(ApiConfig.vouchersAssignedPath, { data: body });
+  }
+
+  public updateVoucherExpiry(body: any): Observable<any> {
+    return this.http.patch(ApiConfig.vouchersAssignedPath + '/' + body.id, { data: body });
   }
 }

@@ -1,7 +1,7 @@
-<div class="page-header">
+<header class="page-header">
   <h1 class="title">Campaigns</h1>
   <cl-button routerLink="/campaigns/new-campaign" classList="primary">Create New</cl-button>
-</div>
+</header>
 
 <section class="content">
   <ng-container *ngIf="dataSource.hasData">
@@ -34,7 +34,6 @@
       <!--  table-->
       <cl-campaigns-list [dataSource]="dataSource"
                         [displayedColumns]="displayedColumns"
-                        (deleteAction)="deleteCampaign($event)"
                         (editAction)="editCampaign($event)"
                         (duplicateAction)="duplicateCampaign($event)">
       </cl-campaigns-list>
