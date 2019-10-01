@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IJsonApiListPayload, IJsonApiItem, IJSonApiPatchData, IJsonApiPostData } from './jsonapi.payload';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiPatchData, IJsonApiPostData } from './jsonapi.payload';
 import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 
 @Injectable({
@@ -27,11 +27,11 @@ export class AudiencesHttpsService {
     return this.http.get(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(body: any): Observable<any> {
+  public createUser(body: IJsonApiPostData<any>): Observable<any> {
     return this.http.post(ApiConfig.getAllUsers, { data: body });
   }
 
-  public updateUserPools(body: any): Observable<any> {
+  public updateUserPools(body: IJsonApiPatchData<any>): Observable<any> {
     return this.http.patch(`${ApiConfig.getAllUsers}/${body.id}`, { data: body });
   }
 
@@ -43,7 +43,7 @@ export class AudiencesHttpsService {
     return this.http.post<IJsonApiListPayload<IAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { data: body });
   }
 
-  public updateVoucherExpiry(body: IJSonApiPatchData<IAssignedAttributes>): Observable<IJsonApiItem<IAssignedAttributes>> {
+  public updateVoucherExpiry(body: IJsonApiPatchData<IAssignedAttributes>): Observable<IJsonApiItem<IAssignedAttributes>> {
     return this.http.patch<IJsonApiItem<IAssignedAttributes>>(`${ApiConfig.vouchersAssignedPath}/${body.id}`, { data: body });
   }
 }

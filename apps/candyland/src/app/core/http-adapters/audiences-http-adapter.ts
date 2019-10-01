@@ -1,4 +1,4 @@
-import { IJSonApiPatchData, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
+import { IJsonApiPatchData, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
@@ -144,7 +144,7 @@ export class AudiencesHttpAdapter {
     }
   }
 
-  public static transformVoucherPatchToApi(id: string, endData: string): IJSonApiPatchData<IAssignedAttributes> {
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiPatchData<IAssignedAttributes> {
     return {
       id: id,
       type: "assigneds",
