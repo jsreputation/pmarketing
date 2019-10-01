@@ -62,7 +62,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
       .asObservable()
       .pipe(untilDestroyed(this))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
           this.isFirstInit = false;
           this.form.patchValue(data);

@@ -45,7 +45,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.currentCampaign$.subscribe(data => console.log(data));
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
