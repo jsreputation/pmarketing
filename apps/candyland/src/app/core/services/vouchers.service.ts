@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { VouchersHttpService } from '@cl-core/http-services/vouchers-https.service';
 import { VouchersHttpAdapter } from '@cl-core/http-adapters/vouchers-http-adapter';
 
@@ -17,11 +17,11 @@ export class VouchersService {
   }
 
   public getVoucher(id: string): Observable<IRewardEntityForm> {
-    return this.vouchersHttp.getVoucher(id).pipe(
-      map(response => {
-        console.log(response);
-      })
-    );
+    return this.vouchersHttp
+      .getVoucher(id)
+      .pipe(
+        tap(response => console.log(response))
+      );
   }
 
   public createVoucher(data: any): Observable<any> {

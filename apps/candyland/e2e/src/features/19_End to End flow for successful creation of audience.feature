@@ -1,7 +1,7 @@
 Feature: 19_End to End flow for successful creation of audience.
 
 This will be the test flow for all the features for creation of audience.
-
+@runThis
 Scenario: Verifying successful creation of user
   Given 9_I am on the audience page.
   And 	9_I click on the add user button
@@ -10,7 +10,7 @@ Scenario: Verifying successful creation of user
   And 	9_I select a country and a user category
   When  9_I click on the add button
   Then  9_I should see the user created.
-
+@runThis
 Scenario: Verifying the functionality of manage list feature
   Given 10_I am on the audience page.
   And   10_I select a user
