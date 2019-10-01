@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
+import { IJsonApiPatchData, IJsonApiPostData } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -32,15 +33,15 @@ export class SettingsHttpService {
   }
 
   public getAllIMAUsers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.IAMUsersPath, {params});
+    return this.http.get(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body): Observable<any> {
-    return this.http.post(ApiConfig.IAMUsersPath, {data: body});
+  public inviteNewUser(body: IJsonApiPostData<any>): Observable<any> {
+    return this.http.post(ApiConfig.IAMUsersPath, { data: body });
   }
 
-  public patchUser(id: string, patchValue): Observable<any> {
-    return this.http.patch(`${ApiConfig.IAMUsersPath}/${id}`, {data: patchValue});
+  public patchUser(id: string, patchValue: IJsonApiPatchData<any>): Observable<any> {
+    return this.http.patch(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
   }
 
   public deleteUser(id: string): Observable<any> {
@@ -51,8 +52,8 @@ export class SettingsHttpService {
     return this.http.get(ApiConfig.IAMGroupsPath);
   }
 
-  public patchSettings(data: any): Observable<any> {
-    return this.http.patch(`${ApiConfig.tenantsPath}`, {data});
+  public patchSettings(data: IJsonApiPatchData<any>): Observable<any> {
+    return this.http.patch(`${ApiConfig.tenantsPath}`, { data });
   }
 
   public getTenants(): Observable<any> {
