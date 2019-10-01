@@ -39,7 +39,6 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
-import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
@@ -47,7 +46,6 @@ import { rewards } from './mock/rewards.mock';
 import { catalogs } from './mock/catalogs.mock';
 import { campaigns } from './mock/campaigns.mock';
 import { SignUpComponent } from './auth/signup/signup.component';
-import { WalletComponent } from './wallet/wallet.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 
@@ -70,11 +68,9 @@ const campaignServiceStub = {
     HomeComponent,
     RedeemComponent,
     LoadingComponent,
-    VoucherDetailComponent,
     HistoryComponent,
     PromosComponent,
     SignUpComponent,
-    WalletComponent,
     ForgotPinComponent,
     SmsValidationComponent,
   ],

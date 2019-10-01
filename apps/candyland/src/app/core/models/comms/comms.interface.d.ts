@@ -1,12 +1,12 @@
 declare interface IComm {
-  message: string;
+  message?: string;
   schedule?: ISchedule;
 }
 
 declare interface ISchedule {
   sendDate: Date;
   sendTime: string;
-  enableRecurrence: boolean;
+  enableRecurrence?: boolean;
   recurrence?: {
     times: number;
     period: string;
@@ -14,14 +14,22 @@ declare interface ISchedule {
   }
 }
 
-declare interface ICommApi {
+declare interface ICommTemplateApi {
   id: string;
   type: string;
   attributes: {
-      name: number;
-      description: string;
-      content?: any;
-      source_id: number;
-      status: string;
+    name: number;
+    description: string;
+    content?: any;
+    source_id: number;
+    status: string;
+  };
+}
+
+declare interface ICommEventApi {
+  id: string;
+  type: string;
+  attributes: {
+    send_at: string;
   };
 }

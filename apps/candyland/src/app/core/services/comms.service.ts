@@ -13,11 +13,20 @@ export class CommsService {
   constructor(private commsHttpsService: CommsHttpsService) {
   }
 
-  public getComms(params: HttpParamsOptions): Observable<IComm[]> {
+  public getCommsTemplate(params: HttpParamsOptions): Observable<IComm[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    return this.commsHttpsService.getComms(httpParams).pipe(
+    return this.commsHttpsService.getCommsTemplates(httpParams).pipe(
       map(response => response.data),
-      map(response => response.map((comm: ICommApi) => CommsHttpAdapter.transformAPIResponseToComm(comm)))
+      map(response => response.map((comm: ICommTemplateApi) => CommsHttpAdapter.transformTemplateAPIResponseToComm(comm)))
     );
   }
+
+  public getCommsEvents(params: HttpParamsOptions): Observable<IComm[]> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getCommsEvents(httpParams).pipe(
+      map(response => response.data),
+      map(response => response.map((comm: ICommEventApi) => CommsHttpAdapter.transformEventAPIResponseToComm(comm)))
+    );
+  }
+
 }

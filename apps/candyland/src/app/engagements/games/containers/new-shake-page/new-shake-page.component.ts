@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -13,6 +13,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -21,6 +22,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewShakePageComponent implements OnInit, OnDestroy {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public id: string;
   public form: FormGroup;
   public shakeTreeData: {
@@ -112,18 +114,20 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-
-    let request;
-    if (this.id) {
-      request = this.shakeTreeService.updateShakeTree(this.id, this.form.value as IInstantRewardForm);
-    } else {
-      request = this.shakeTreeService.createShakeTree(this.form.value).pipe(
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
-      );
-    }
-
-    request.pipe(untilDestroyed(this))
+    this.createImagePreview.getPreviewUrl()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return  this.shakeTreeService.updateShakeTree(this.id, {...this.form.value as IInstantRewardForm, image_url: imageUrl.url});
+          }
+          return this.shakeTreeService
+            .createShakeTree({...this.form.value as IInstantRewardForm, image_url: imageUrl.url})
+            .pipe(map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+            );
+          })
+      )
+      .pipe(untilDestroyed(this))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -150,7 +154,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],

@@ -3,7 +3,16 @@
   display: flex;
   flex-direction: column;
 
+  .background {
+    z-index: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
   .game {
+    z-index: 1;
     flex: 1;
   }
 }
