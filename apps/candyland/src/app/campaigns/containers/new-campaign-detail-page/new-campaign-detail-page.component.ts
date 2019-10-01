@@ -95,6 +95,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         .subscribe(data => {
           if (data && data.campaignInfo && this.isFirstInit) {
             this.isFirstInit = false;
+            const select = data.audience.select.toString();
+            data.audience = { ...data.audience, select };
             this.form.patchValue(data);
           }
         });

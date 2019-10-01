@@ -10,11 +10,11 @@ export class CommsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getCommsTemplates(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.commsTemplatesPath, { params });
+  public getCommsTemplates(params: HttpParams): Observable<IResponseApi<ICommTemplateApi[]>> {
+    return this.http.get<IResponseApi<ICommTemplateApi[]>>(ApiConfig.commsTemplatesPath, { params });
   }
 
-  public getCommsEvents(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.commsEventsPath, { params });
+  public getCommsEvents(params: HttpParams): Observable<IResponseApi<ICommEventApi[]>> {
+    return this.http.get<IResponseApi<ICommEventApi[]>>(ApiConfig.commsEventsPath, { params });
   }
 }
