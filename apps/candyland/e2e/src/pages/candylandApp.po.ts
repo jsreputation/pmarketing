@@ -19,10 +19,12 @@ export class DashboardAppPage {
 
 export class EngagementAppPage {
 
-   public navigateToEngagement(): Promise<string> {
+  public navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string> ;
   }
-
+  public engagementTabOption(): ElementFinder {
+   return element.all(by.css('h3')).get(2);
+  }
 }
 
 export class CreateShakeTheTreeAppPage {

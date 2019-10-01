@@ -96,8 +96,4 @@ export class MerchantsService implements ITableService {
       .createRecord(Merchant, merchant)
       .save();
   }
-
-  public getMerchantList(): Observable<IMerchant[]> {
-    return this.merchantHttpService.getMerchantList();
-  }
 }
