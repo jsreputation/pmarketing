@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
