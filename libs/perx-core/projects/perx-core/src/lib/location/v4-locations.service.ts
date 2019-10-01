@@ -17,11 +17,11 @@ export class V4LocationsService extends LocationsService {
     super();
   }
 
-  public getAllLocations(merchants: Observable<IMerchant[]>, tags?: string[]): Observable<ILocation[]> {
+  public getAllLocations(allMerchants: Observable<IMerchant[]>, tags?: string[]): Observable<ILocation[]> {
     if (tags === undefined) {
       tags = [];
     }
-    return merchants.pipe(
+    return allMerchants.pipe(
       mergeMap((merchants: IMerchant[]) => {
         let filteredMerchants: IMerchant[];
         if (tags && tags.length > 0) {
@@ -91,8 +91,8 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getTags(merchants: Observable<IMerchant[]>): Observable<string[]> {
-    return merchants.pipe(
+  public getTags(allMerchants: Observable<IMerchant[]>): Observable<string[]> {
+    return allMerchants.pipe(
       map((merchants: IMerchant[]) => merchants.filter((merchant: IMerchant) => merchant.tags && merchant.tags.length > 0)),
       filter((merchants: IMerchant[]) => merchants.length > 0),
       map((merchants: IMerchant[]) => {
