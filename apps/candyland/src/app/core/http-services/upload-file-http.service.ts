@@ -17,4 +17,8 @@ export class UploadFileHttpService {
   public uploadFile(formData: FormData): Observable<any> {
     return this.http.post(ApiConfig.uploadFilePath, formData);
   }
+
+  public downloadFile(id: string): Observable<any> {
+    return this.http.get(ApiConfig.uploadFilePath + '/'+ id);
+  }
 }

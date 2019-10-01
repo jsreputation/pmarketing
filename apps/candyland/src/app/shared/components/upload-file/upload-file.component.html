@@ -1,4 +1,5 @@
-<div class="upload-file">
+<div class="upload-file"
+     [class.invalid]="isRequired || message">
   <div class="upload-file-head">
     <div class="upload-file-label">
       {{label}}
@@ -21,7 +22,7 @@
       <div class="upload-file-file-icon">
         <i class="icon full-with check-icon"></i>
       </div>
-      <span class="upload-file-file-name">{{fileName}}</span>
+      <span class="upload-file-file-name">{{file.name}}</span>
       <button mat-icon-button (click)="clear()">
         <i class="icon full-with delete-action"></i>
       </button>

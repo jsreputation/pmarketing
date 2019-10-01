@@ -10,7 +10,8 @@ import { FileUploadAdapter } from '@cl-core/http-adapters/file-upload-adapter';
 })
 export class UploadFileService {
 
-  constructor(private uploadFileHttpService: UploadFileHttpService) { }
+  constructor(private uploadFileHttpService: UploadFileHttpService) {
+  }
 
   public uploadImage(file: any): Observable<any> {
     const formData = this.prepareFormData(file);
@@ -25,6 +26,7 @@ export class UploadFileService {
     return this.uploadFileHttpService.uploadFile(formData)
       .pipe(
         map(res => FileUploadAdapter.transformToUploadedFile(res.data, ApiConfig.uploadFilePath))
+        // switchMap(() => this.uploadFileHttpService.downloadFile('4'))
       );
   }
 

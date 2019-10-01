@@ -158,3 +158,9 @@
     padding: 0.8rem;
   }
 }
+
+.upload-file.invalid {
+  .upload-file-btn {
+    border-color: $warning-color;
+  }
+}

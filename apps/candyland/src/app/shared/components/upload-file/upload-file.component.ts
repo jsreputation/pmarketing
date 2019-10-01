@@ -60,7 +60,7 @@ export class UploadFileComponent implements ControlValueAccessor {
       this.setError( `File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`);
       return;
     }
-    this.file = files;
+
     this.fetchFile(files[0]);
   }
 
@@ -99,6 +99,7 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.uploadFileService.uploadFile(file)
       .subscribe((res: IUploadedFile) => {
           console.log('file', res);
+          this.file = res;
           this.fileURL = res.url;
           this.loadedFile = true;
           this.setSelectedFile(res.url);
@@ -106,7 +107,7 @@ export class UploadFileComponent implements ControlValueAccessor {
           this.cd.markForCheck();
         },
         (err: Error) => {
-          this.setError('Image haven\'t loaded successfully!', err.message);
+          this.setError('File haven\'t loaded successfully!', err.message);
           this.cd.markForCheck();
         });
   }
