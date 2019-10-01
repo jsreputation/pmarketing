@@ -20,12 +20,11 @@ import {
 import {
   LocationModule,
   LocationsService,
-  IMerchantsService
+  IMerchantsService,
+  IMerchant,
 } from '@perx/core';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
-
-import { IMerchant } from '../../../../../libs/perx-core/dist/perx-core/lib/merchants/models/merchants.model';
 
 describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;

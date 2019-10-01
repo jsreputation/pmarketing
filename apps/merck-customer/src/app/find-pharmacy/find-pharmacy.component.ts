@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService, IMerchantsService, ILocation } from '@perx/core';
-import { IMerchant } from '@perx/core/dist/perx-core/lib/merchants/models/merchants.model';
+import { LocationsService, IMerchantsService, ILocation, IMerchant } from '@perx/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
