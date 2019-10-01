@@ -21,6 +21,7 @@ interface IV4GetMerchantResponse {
 export class V4MerchantsService implements IMerchantsService {
   private historyMeta: IMeta = {};
   private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
+  private merchantsWithoutId: IMerchant[] = [];
 
   constructor(
     private http: HttpClient,
@@ -40,17 +41,21 @@ export class V4MerchantsService implements IMerchantsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getMerchants(this.historyMeta.page + 1)
+          this.getMerchants(this.historyMeta.page + 1, false)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getMerchants(1)
+      this.getMerchants(1, false)
         .subscribe(process);
     });
   }
 
-  public getMerchants(page: number = 1): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1, useCache: boolean = true): Observable<IMerchant[]> {
+    if (useCache && this.merchantsWithoutId.length > 0) {
+      return of(this.merchantsWithoutId);
+    }
+
     return this.http.get<IV4GetMerchantsResponse>(
       `${this.config.apiHost}/v4/merchants`,
       {
@@ -66,7 +71,7 @@ export class V4MerchantsService implements IMerchantsService {
             ...res.meta
           };
         }
-
+        this.merchantsWithoutId = res.data;
         return res.data;
       })
     );
