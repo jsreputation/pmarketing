@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CallUsComponent } from './call-us/call-us.component';
 
 @Component({
   selector: 'app-customer-support',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer-support.component.scss']
 })
 export class CustomerSupportComponent {
+  constructor(private dialog: MatDialog) {}
 
+  public openContacts(): void {
+    this.dialog.open(CallUsComponent, { width: '30rem' });
+  }
 }

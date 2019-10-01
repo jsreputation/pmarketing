@@ -1,50 +1,51 @@
-<header class="dialog-header-wrap">
-  <h2 class="dialog-content-title">Select Rewards</h2>
-  <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
-    <mat-icon>close</mat-icon>
-  </button>
-</header>
-<mat-dialog-content>
-  <section class="dialog-content">
-    <div class="reward-list">
-      <!--filters-->
-      <cl-table-filters [dataSource]="dataSource" classList="block">
-        <ng-container *clTableFilter="'name'; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
-        </ng-container>
-      </cl-table-filters>
-      <!--table-->
-      <div class="reward-list-wrapper">
-        <cl-rewards-list [dataSource]="dataSource"
-                         [selectable]="true"
-                         [displayedColumns]="displayedColumns"
-                         (selectReward)="selectReward($event)">
-        </cl-rewards-list>
+<aside class="dialog" role="dialog">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title">Select Rewards</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <mat-dialog-content>
+    <section class="dialog-content">
+      <div class="reward-list">
+        <!--filters-->
+        <cl-table-filters [dataSource]="dataSource" classList="block">
+          <ng-container *clTableFilter="'name'; let filter">
+            <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
+          </ng-container>
+        </cl-table-filters>
+        <!--table-->
+        <div class="reward-list-wrapper">
+          <cl-rewards-list [dataSource]="dataSource"
+                          [selectable]="true"
+                          [displayedColumns]="displayedColumns"
+                          (selectReward)="selectReward($event)">
+          </cl-rewards-list>
+        </div>
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
       </div>
-      <!--paginator-->
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-    </div>
-  </section>
-</mat-dialog-content>
-<!--<mat-dialog-actions>-->
-<div class="dialog-actions"
->
-  <cl-button [classList]="'tertiary'"
-             class="actions-close"
-             (click)="close()"
-             [disableRipple]="true">
-    <span>Cancel</span>
-  </cl-button>
+    </section>
+  </mat-dialog-content>
+  <!--<mat-dialog-actions>-->
+  <footer class="dialog-actions"
+  >
+    <cl-button [classList]="'tertiary'"
+              class="actions-close"
+              (click)="close()"
+              [disableRipple]="true">
+      <span>Cancel</span>
+    </cl-button>
 
-  <cl-button [classList]="'primary'"
-             (click)="add()"
-             [disable]="!selectedReward"
-             [disableRipple]="true">
-    <span>Add Reward</span>
-  </cl-button>
-</div>
-<!--</mat-dialog-actions>-->
-
+    <cl-button [classList]="'primary'"
+              (click)="add()"
+              [disable]="!selectedReward"
+              [disableRipple]="true">
+      <span>Add Reward</span>
+    </cl-button>
+  </footer>
+  <!--</mat-dialog-actions>-->
+</aside>

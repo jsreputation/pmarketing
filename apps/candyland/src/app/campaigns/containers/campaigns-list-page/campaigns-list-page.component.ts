@@ -26,8 +26,4 @@ export class CampaignsListPageComponent {
       .subscribe(() => this.dataSource.updateData());
   }
 
-  public deleteCampaign(campaign: ICampaign): void {
-    this.campaignsService.deleteCampaign(campaign.id)
-      .subscribe(() => this.dataSource.updateData());
-  }
 }

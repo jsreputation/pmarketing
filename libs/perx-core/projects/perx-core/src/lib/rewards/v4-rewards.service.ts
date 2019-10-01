@@ -118,6 +118,7 @@ export class V4RewardsService extends RewardsService {
   private apiHost: string;
   // private rewardMeta: IV4Meta = {};
   private catalogMeta: IV4Meta = {};
+  private rewardMeta: IV4Meta = {};
 
   constructor(
     private http: HttpClient,
@@ -212,15 +213,15 @@ export class V4RewardsService extends RewardsService {
       const pageSize = 10;
       let current: IReward[] = [];
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
-      const process = (res: IV4GetRewardsResponse) => {
-        current = current.concat(res.data.map(r => V4RewardsService.v4RewardToReward(r)));
+      const process = (res: IReward[]) => {
+        current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (res.meta.page >= res.meta.total_pages) {
+        if (this.rewardMeta.page >= this.rewardMeta.total_pages) {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(res.meta.page + 1, pageSize, tags, categories)
+          this.getRewards(this.rewardMeta.page + 1, pageSize, tags, categories)
             .subscribe(process);
         }
       };
@@ -230,7 +231,7 @@ export class V4RewardsService extends RewardsService {
     });
   }
 
-  private getRewards(page: number = 1, pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IV4GetRewardsResponse> {
+  public getRewards(page: number = 1, pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IReward[]> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
@@ -243,7 +244,21 @@ export class V4RewardsService extends RewardsService {
       params = params.set('categories', categories.join());
     }
 
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params });
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
+      .pipe(
+        map((res: IV4GetRewardsResponse) => {
+          if (res.meta) {
+            this.rewardMeta = {
+              ...this.rewardMeta,
+              ...res.meta
+            };
+          }
+          return res.data;
+        }),
+        map((rewards: IV4Reward[]) => rewards.map(
+          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+        ))
+      );
   }
 
   public getReward(id: number): Observable<IReward> {

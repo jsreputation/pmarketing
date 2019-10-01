@@ -1,5 +1,5 @@
-<section class="reward-wrap" [formGroup]="form">
-  <div class="page-header full-with">
+<article class="reward-wrap" [formGroup]="form">
+  <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text"  matInput formControlName="name" placeholder="Enter title here">
       <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
@@ -25,7 +25,7 @@
         </span>
       </cl-button>
     </div>
-  </div>
+  </header>
 
   <section class="content phonepreview-wrapper">
     <div class="reward-form">
@@ -124,6 +124,7 @@
                              [logo]="tenantSettings?.logo"
                              [logoType]="tenantSettings?.logoType"
                              [fontFamily]="tenantSettings?.font"
+                             clCreateImage
       >
         <div class="plugin-block">
           <div class="mobile-preview-card"
@@ -192,6 +193,4 @@
       </cl-simple-mobile-view>
     </cl-game-mobile-preview>
   </section>
-</section>
-
-
+</article>

@@ -86,8 +86,8 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   flex-shrink: 0;
 }
 
-.tabs-list-wrap + .chart-card,
-.chart-card:first-of-type {
+.chart-card:first-of-type,
+.tabs-list-wrap + .chart-card {
   border-color: $white;
   flex-grow: 2;
   padding: 0;
@@ -97,10 +97,10 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   }
 }
 
-.tabs-list-wrap + .chart-card {
-  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
-}
-
 .chart-card:first-of-type {
   flex-basis: 100%;
+}
+
+.tabs-list-wrap + .chart-card {
+  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
 }
