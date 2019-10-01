@@ -7,11 +7,12 @@ import { PinataComponent } from './pinata/pinata.component';
 import { Config } from '../config/config';
 import { IGameService } from './igame.service';
 import { WhistlerGameService } from './whist-game.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
-export function gameServiceFactory(http: HttpClient, config: Config): IGameService {
+export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerGameService(http, config);
+    return new WhistlerGameService(http, config, vouchSvc);
   }
   return new V4GameService(http, config);
 }
@@ -28,7 +29,7 @@ export function gameServiceFactory(http: HttpClient, config: Config): IGameServi
     {
       provide: IGameService,
       useFactory: gameServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, IVoucherService]
     }
   ],
   exports: [
