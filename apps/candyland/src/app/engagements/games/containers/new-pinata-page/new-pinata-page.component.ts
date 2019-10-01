@@ -131,7 +131,6 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)
       ]],
       subHeadlineMessage: ['Tap the piñata until you get a reward!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
