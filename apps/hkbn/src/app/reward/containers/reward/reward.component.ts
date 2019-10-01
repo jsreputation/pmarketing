@@ -71,13 +71,17 @@ export class RewardComponent implements OnInit, OnDestroy {
   private exchangePoints(): Observable<void> {
     return this.voucherService.issueReward(this.rewardData.id)
       .pipe(
-        switchMap(() => combineLatest([this.translateService.get('YOUR_BALANCE_IS'), this.translateService.get('POINTS')])
+        switchMap(() => combineLatest([
+          this.translateService.get('YOUR_BALANCE_IS'),
+          this.translateService.get('POINTS'),
+          this.translateService.get('CLOSE')])
           .pipe(
             last(),
-            tap(([balance, points]) => this.notificationService.addPopup({
+            tap(([balance, points, close]) => this.notificationService.addPopup({
               title: '[Reward Title]',
               text: `${balance} ${29} ${points}`,
-              afterClosedCallBack: this
+              afterClosedCallBack: this,
+              buttonTxt: close
             })),
             map(() => { })
           )
