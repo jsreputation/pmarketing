@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Observable, of } from 'rxjs';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
@@ -10,6 +10,7 @@ import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -18,6 +19,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewStampComponent implements OnInit, OnDestroy {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public id: string;
   public formStamp: FormGroup;
   public stampSlotNumbers: CommonSelect[];
@@ -130,18 +132,19 @@ export class NewStampComponent implements OnInit, OnDestroy {
       this.formStamp.markAllAsTouched();
       return;
     }
-
-    let request;
-    if (this.id) {
-      request = this.stampsService.updateStamp(this.id, this.formStamp.value);
-    } else {
-      request = this.stampsService.createStamp(this.formStamp.value).pipe(
-        map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-        tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
-      );
-    }
-
-    request.pipe(untilDestroyed(this))
+    this.createImagePreview.getPreviewUrl()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return this.stampsService.updateStamp(this.id, {...this.formStamp.value, image_url: imageUrl.url});
+          }
+          return this.stampsService.createStamp({...this.formStamp.value, image_url: imageUrl.url}).pipe(
+            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          );
+        })
+      )
+      .pipe(untilDestroyed(this))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -161,7 +164,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)
       ]],
       subHeadlineMessage: ['Earn rewards!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],

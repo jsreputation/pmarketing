@@ -15,102 +15,102 @@
     <ng-container [ngSwitch]="activeTab">
       <!--      activeCustomers-->
       <ng-container *ngSwitchCase="'activeCustomers'">
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Total Active Customers</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'verticalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Demographics</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="107" [cardType]="'verticalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="107" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Popular Redemption Days</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="146" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Popular Engagement Days</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="113" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
       </ng-container>
       <!--/      activeCustomers-->
       <!--      issuedRewards-->
       <ng-container *ngSwitchCase="'issuedRewards'">
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="148" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Categories</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="149" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 3 Redeemed Rewards by Reward Type</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="152" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Merchants</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="150" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 3 Merchants by Reward Cost</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="151" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
       </ng-container>
       <!--/      issuedRewards-->
       <!--      activeCampaigns-->
       <ng-container *ngSwitchCase="'activeCampaigns'">
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Campaigns</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="154" [cardType]="'line'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="154" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card full-width">
+        <article class="chart-card full-width">
           <h3 class="chart-card-title">Engagement Rate</h3>
-          <div class="flex justify-content-between">
+          <div class="chart-card-content flex justify-content-between">
             <cl-chart-card [id]="157" [cardType]="'gridPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Top 5 Rewards</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="155" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
 
-        <div class="chart-card">
+        <article class="chart-card">
           <h3 class="chart-card-title">Reward Cost by Engagement Type</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="156" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
-        </div>
+        </article>
       </ng-container>
       <!--/      activeCampaigns-->
     </ng-container>

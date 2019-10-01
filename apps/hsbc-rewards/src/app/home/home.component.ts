@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
-import { ITabConfig, IPrice } from '@perx/core';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { flatMap, map, filter } from 'rxjs/operators';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
+import {ITabConfig, IPrice} from '@perx/core';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
+import {flatMap, map, filter} from 'rxjs/operators';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 const tabs: ITabConfig[] = [
   {
@@ -39,6 +40,10 @@ const tabs: ITabConfig[] = [
   }
 ];
 
+interface PageTracker {
+  [key: string]: { page: number, isLast: boolean };
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -53,6 +58,9 @@ export class HomeComponent implements OnInit {
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
+  public currentTab: string;
+  private rewardMultiPageMetaTracker: PageTracker = {};
+  private requestPageSize: number = 10;
 
   constructor(
     private rewardsService: RewardsService,
@@ -85,19 +93,22 @@ export class HomeComponent implements OnInit {
       }
       return `Welcome`;
     };
-    this.getRewards();
+    this.initRewards();
   }
 
   private getRewardsCollection(): void {
     this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
-  private getRewards(): void {
+  private initRewards(): void {
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, [tab.tabName])
-          .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })));
+        return this.rewardsService.getRewards(1, this.requestPageSize, null, [tab.tabName])
+          .pipe(map((result: IReward[]) => {
+            this.rewardMultiPageMetaTracker[tab.tabName] = {page: 1, isLast: false};
+            return ({key: tab.tabName, value: result});
+          }));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
@@ -106,6 +117,7 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+
   private getLoyalty(): void {
     this.loyaltyService.getLoyalties()
       .pipe(
@@ -114,6 +126,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
   }
+
   private getTags(): Observable<ITabConfig[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
@@ -123,7 +136,36 @@ export class HomeComponent implements OnInit {
     return of(tabs);
   }
 
+  public tabChanged(event: MatTabChangeEvent): void {
+    this.currentTab = event.tab.textLabel;
+  }
+
   public openRewardDetails(tab: IReward): void {
     this.router.navigate([`detail/element/${tab.id}`]);
+  }
+
+  public onScroll(): void {
+    if (!this.rewardMultiPageMetaTracker[this.currentTab].isLast) {
+      let rewards;
+      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).pipe(
+        flatMap((newRewards: IReward[]) => {
+          rewards = newRewards;
+          if (newRewards.length === 0) {
+            this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+          } else {
+            if (newRewards.length < this.requestPageSize) {
+              this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+            }
+            this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
+            return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
+          }
+        })
+      ).subscribe(
+        (existingRewards: IReward[]) => {
+          tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(rewards));
+        },
+        (err) => console.log(err)
+      );
+    }
   }
 }
