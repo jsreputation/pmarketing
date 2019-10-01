@@ -59,7 +59,11 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
         ]]
       })
     });
-    this.form.patchValue(this.defaultValue);
+    if (this.store.currentCampaign.id) {
+      this.form.patchValue(this.store.currentCampaign);
+    } else {
+      this.form.patchValue(this.defaultValue);
+    }
   }
 
   private subscribeFormValueChange(): void {

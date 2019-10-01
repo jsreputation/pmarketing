@@ -16,7 +16,7 @@ declare interface ICampaign {
     endDate: Date;
     endTime: string;
     disabledEndDate: boolean;
-    labels?: string;
+    labels?: string[];
   };
   channel?: {
     type: string;
@@ -73,6 +73,6 @@ declare interface ICampaignAPI {
     comm_channel: string;
     possible_outcomes?: any;
     comm?: any;
-    labels?: string;
+    labels?: string[];
   }
 }

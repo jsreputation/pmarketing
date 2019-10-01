@@ -1,10 +1,7 @@
 declare interface ILimit {
   id?: string;
-  max_plays_in_period?: number;
-  period_number?: number;
-  period_unit?: string;
-  max_responses_per_user?: number;
-  max_responses_for_campaign?: number;
+  times?: number;
+  duration?: string; 
 }
 
 declare interface ILimitApi {

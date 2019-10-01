@@ -95,30 +95,32 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public save(): void {
     this.store.updateCampaign(this.form.value);
     let saveCampaign$;
-    let updateLimit$;
+    let updateLimitData$;
+    const updateLimit$ = campaign => this.limitsService.updateLimits(
+      this.store.currentCampaign.limits.id,
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
+    const createLimit$ = campaign => this.limitsService.createLimits(
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
 
     if (this.campaign) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
-      updateLimit$ = campaign => this.limitsService.updateLimits(
-        this.store.currentCampaign.limits.id,
-        this.store.currentCampaign.limits,
-        this.store.currentCampaign.template.attributes_type,
-        campaign.data.id,
-        this.store.currentCampaign.template.id
-      );
+      updateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
     } else {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
-      updateLimit$ = campaign => this.limitsService.createLimits(
-        this.store.currentCampaign.limits,
-        this.store.currentCampaign.template.attributes_type,
-        campaign.data.id,
-        this.store.currentCampaign.template.id
-      );
+      updateLimitData$ = createLimit$;
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
       switchMap(
-        (res) => iif(hasLimitData, updateLimit$(res), of(res))
+        (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
     ).subscribe(
       data => {
