@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
@@ -97,7 +97,9 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         const params: HttpParamsOptions = {
           'filter[campaign_entity_id]': this.store.currentCampaign.id
         };
-        this.limitsService.getLimits(params, findTemplate.attributes_type).subscribe(
+        this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
+          map((limits: ILimit[]) => limits[0])
+        ).subscribe(
           limits => {
             const newCampaign = { ...this.store.currentCampaign, limits };
             this.store.updateCampaign(newCampaign);
