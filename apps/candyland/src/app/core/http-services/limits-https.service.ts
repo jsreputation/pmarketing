@@ -13,4 +13,12 @@ export class LimitsHttpsService {
   public getLimits(params: HttpParams, engagementType: string): Observable<any> {
     return this.http.get(`${ApiConfig.basePath}/${engagementType}/limits`, { params });
   }
+
+  public updateLimits(id: number, data: any, engagementType: string): Observable<IResponseApi<any>> {
+    return this.http.patch<IResponseApi<any>>(`${ApiConfig.basePath}/${engagementType}/limits` + '/' + id, data);
+  }
+
+  public createLimits(data: IResponseApi<any>, engagementType: string): Observable<IResponseApi<any>> {
+    return this.http.post<IResponseApi<any>>(`${ApiConfig.basePath}/${engagementType}/limits`, data);
+  }
 }

@@ -11,14 +11,6 @@ export class MerchantHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getMerchants(): Observable<any> {
-    return this.http.get('assets/actives/merchant/merchants.json');
-  }
-
-  public getMerchantList(): Observable<any> {
-    return this.http.get('assets/actives/merchant/list-merchant.json');
-  }
-
   public createMerchant(data: IResponseApi<any>): Observable<any> {
     return this.http.post<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs', data);
   }

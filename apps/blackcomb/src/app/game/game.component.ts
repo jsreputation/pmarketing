@@ -13,8 +13,8 @@ import { MatDialog } from '@angular/material';
 export class GameComponent implements OnInit {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
-  private cid: number;
-  private eid: number;
+  private campaignId: number;
+  private engagementId: number;
   public progressValue: number;
 
   constructor(
@@ -30,18 +30,18 @@ export class GameComponent implements OnInit {
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
-      tap((id: number) => this.cid = id),
+      tap((id: number) => this.campaignId = id),
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id)),
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
-      tap((game: IGame) => this.eid = game.id)
+      tap((game: IGame) => this.engagementId = game.id)
     );
 
   }
 
   public gameCompleted(): void {
-    const r1 = this.gameService.play(this.eid, this.cid);
+    const r1 = this.gameService.play(this.campaignId, this.engagementId);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;

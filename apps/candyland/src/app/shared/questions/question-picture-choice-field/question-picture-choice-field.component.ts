@@ -9,7 +9,9 @@ import { UploadImageComponent } from '@cl-shared/questions/question-picture-choi
 })
 export class QuestionPictureChoiceFieldComponent {
   @Input() public group: FormGroup;
-  constructor(private fb: FormBuilder) { }
+
+  constructor(private fb: FormBuilder) {
+  }
 
   public get choices(): FormArray {
     return (this.group.get('choices') as FormArray);
@@ -20,6 +22,9 @@ export class QuestionPictureChoiceFieldComponent {
   }
 
   public selectUploadGraphic(img: any, uploadImage: UploadImageComponent, input: HTMLInputElement): void {
+    if (!img) {
+      return;
+    }
     const text = input && input.value ? input.value : null;
     this.choices.push(this.fb.group({
       text: [text, [Validators.required]],
