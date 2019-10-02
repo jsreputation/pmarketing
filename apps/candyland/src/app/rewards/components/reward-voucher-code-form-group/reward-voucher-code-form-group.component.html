@@ -75,6 +75,14 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <!--/ Unique codes: System generated-->
+
+  <!--Unique codes: User upload-->
+  <div *ngIf="formGroup.get('uniqueUserUploadCode').enabled">
+    <cl-upload-file>
+    </cl-upload-file>
+  </div>
+  <!-- /Unique codes: User upload-->
 </ng-container>
 
 <!--Merchant PIN-->
