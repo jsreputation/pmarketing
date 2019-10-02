@@ -9,6 +9,7 @@ import { ProfileService, AuthenticationService, LoyaltyService } from '@perx/cor
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -49,7 +50,11 @@ describe('AccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AccountComponent ],
-      imports: [ MatCardModule, MatListModule ],
+      imports: [ 
+        MatCardModule, 
+        MatListModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },

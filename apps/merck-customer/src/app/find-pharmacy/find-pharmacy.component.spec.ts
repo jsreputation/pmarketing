@@ -6,6 +6,7 @@ import { MatTabsModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
@@ -42,13 +43,19 @@ describe('FindPharmacyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindPharmacyComponent ],
-      imports: [ LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule ],
+      declarations: [FindPharmacyComponent],
+      imports: [
+        LocationModule,
+        MatTabsModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
-        {provide: LocationsService, useValue: locationServiceStub}
+        { provide: LocationsService, useValue: locationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -84,7 +91,7 @@ describe('FindPharmacyComponent', () => {
       fixture.detectChanges();
       expect(locationsTagsSpy).toHaveBeenCalled();
       console.log(component.tags);
-      expect(component.tags).toEqual([{name: 'Drug', isSelected: false}, {name: 'Medical Supply', isSelected: false}]);
+      expect(component.tags).toEqual([{ name: 'Drug', isSelected: false }, { name: 'Medical Supply', isSelected: false }]);
     }));
   });
 });
