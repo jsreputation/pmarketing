@@ -1,16 +1,16 @@
+import { Type } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   async,
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick
+  tick,
 } from '@angular/core/testing';
 import {
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
 } from '@angular/material';
-import { Type } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   Observable,
@@ -36,7 +36,8 @@ describe('FindPharmacyComponent', () => {
   };
 
   const merchantsServiceStub = {
-    getAllMerchants: () => of()
+    getAllMerchants: () => of(),
+    getMerchant: () => of(null)
   };
 
   const locationsStub = [
@@ -66,18 +67,14 @@ describe('FindPharmacyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindPharmacyComponent ],
-      imports: [ LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule ],
+      declarations: [FindPharmacyComponent],
+      imports: [LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule],
       providers: [
-        {
-          provide: LocationsService, useValue: locationServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: LocationsService, useValue: locationServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -112,8 +109,7 @@ describe('FindPharmacyComponent', () => {
       tick();
       fixture.detectChanges();
       expect(locationsTagsSpy).toHaveBeenCalled();
-      console.log(component.tags);
-      expect(component.tags).toEqual([{name: 'Drug', isSelected: false}, {name: 'Medical Supply', isSelected: false}]);
+      expect(component.tags).toEqual([{ name: 'Drug', isSelected: false }, { name: 'Medical Supply', isSelected: false }]);
     }));
   });
 });

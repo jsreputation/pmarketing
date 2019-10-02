@@ -11,6 +11,12 @@ export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
 /**
+ * Merchants Admin
+ */
+export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
+export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
+
+/**
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';

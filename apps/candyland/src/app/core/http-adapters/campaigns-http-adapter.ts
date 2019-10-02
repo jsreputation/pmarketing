@@ -57,6 +57,7 @@ export class CampaignsHttpAdapter {
         content: data.channel.message
       },
       event: {
+        provider_id: 1,
         send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
         channel: data.channel.type
       }
