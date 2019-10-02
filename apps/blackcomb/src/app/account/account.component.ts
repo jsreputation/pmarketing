@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
 
   public ngOnInit(): void {
     this.themeService.getAccountSettings()
-      .subscribe((settings)=> this.pages = settings.pages);
+      .subscribe((settings) => this.pages = settings.pages);
     this.profileService.whoAmI()
       .pipe(
         take(1)

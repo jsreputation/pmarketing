@@ -13,7 +13,7 @@ export class ContentComponent implements OnInit {
   public content$: Observable<any>;
   constructor(private themeService: ThemesService, private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.content$ = this.route.params
       .pipe(
         filter((params: Params) => params.key),
@@ -24,6 +24,6 @@ export class ContentComponent implements OnInit {
         switchMap(url => fetch(url)),
         map(stuff => from(stuff.text().then(content => content))),
         switchMap(content => content)
-      )
+      );
   }
 }
