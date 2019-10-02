@@ -146,8 +146,9 @@ export class HomeComponent implements OnInit {
           rewards = newRewards;
           if (newRewards.length === 0 || newRewards.length < this.requestPageSize) {
             this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+          } else {
+            this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
           }
-          this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
           return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
         })
       ).subscribe(
