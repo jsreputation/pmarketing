@@ -10,6 +10,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { MatDialogModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -25,7 +26,8 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
         MatRadioModule,
         MatSelectModule,
         MatDialogModule,
-        PipesModule
+        PipesModule,
+        RouterTestingModule
       ],
       declarations: [NewCampaignSelectEngagementPageComponent],
       providers: [
