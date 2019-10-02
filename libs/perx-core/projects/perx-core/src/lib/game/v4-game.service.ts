@@ -212,9 +212,7 @@ export class V4GameService implements IGameService {
     return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
-        map((games: Game[]) => {
-          return games.map((game: Game): IGame => V4GameService.v4GameToGame(game));
-        })
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
       );
   }
 }
