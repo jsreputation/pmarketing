@@ -25,7 +25,7 @@ export class LimitsService {
     );
   }
 
-  public updateLimits(id: number, data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
+  public updateLimits(id: string, data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
     return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData } }, type);
   }
