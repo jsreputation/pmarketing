@@ -12,6 +12,11 @@ Before( () => {
 // Verifying successful creation of user
 Given(/^9_I am on the audience page.$/, async () => {
   await AudienceApp.navigateToAudience();
+  await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // removing walkme widget
+  await browser.executeScript('document.getElementById("walkme-player").remove()');
+  // await browser.waitForAngularEnabled(false);
 });
 
 Given(/^9_I click on the add user button$/, async () => {
@@ -69,27 +74,39 @@ Given(/^9_I select a country and a user category$/, async () => {
   // cicking on the add audience list field
   await element(by.css('mat-select[formcontrolname=audienceList]')).click();
   // selecting the developers option
-  await element.all(by.css('span.mat-option-text')).get(0);
+  await browser.switchTo().activeElement();
+  await element.all(by.css('mat-pseudo-checkbox')).get(0).click();
+  await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+  await browser.sleep(5000);
 });
 
 When(/^9_I click on the add button$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for the add button to be clickable
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(2)), 6000);
+  // removing the dark overlay
+  // await browser.executeScript('document.querySelector(
+    // "div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop.cdk-overlay-backdrop-showing").remove()');
+  // browser.switchTo().frame(element(by.tagName('iframe')).getWebElement());
+  // await browser.switchTo().window(element(by.id('cdk-overlay-3')));
   await element.all(by.css('cl-button')).get(2).click();
 });
 
 Then(/^9_I should see the user created.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the search bar to load
-  await browser.wait(ec.presenceOf(element(by.css('input[type=text]'))), 6000);
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(0)), 6000);
   // filtering the search results on the search bar
-  await element(by.css('input[type=text]')).sendKeys('testname01');
+  await element.all(by.css('input[type=text]')).get(0).sendKeys('testname01');
   // waiting for the first row to be loaded
   await browser.wait(ec.presenceOf(element.all(by.css('tr.mat-row.ng-star-inserted')).get(0)), 6000);
   expect(await element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]')).getText()).to.contain('testname01');
 });
 
 // Verifying the functionality of manage list feature
-/*Given(/^10_I am on the audience page.$/, async () => {
+Given(/^10_I am on the audience page.$/, async () => {
   await AudienceApp.navigateToAudience();
+  await browser.sleep(3000);
 });
 
 Given(/^10_I select a user$/, async () => {
@@ -103,16 +120,37 @@ Given(/^10_I select a user$/, async () => {
 
 Given(/^10_I click on the manage list option$/, async () => {
   // clicking on the manage list option
-  await element(by.css('button.mat-menu-item')).click();
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.css('button[role=menuitem]'))), 6000);
+  // await browser.switchTo().activeElement();
+  await element(by.css('button[role=menuitem]')).click();
 });
 
-When(/^10_i select an option for the audience list$/, async () => {
-  const
+When(/^10_I select an option for the audience list$/, async () => {
+  const devCheckBoxClass: string = await element.all(by.css('mat-checkbox')).get(0).getAttribute('class');
+  const regex = /mat-checkbox-checked/;
+  const ec = protractor.ExpectedConditions;
+  // waiting for the checkbox to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('mat-checkbox')).get(0)), 6000);
   // creating a check on the button check box status
-  if (null) {} else {}
+  // if the checkbox is ticked, do nothing else click on the check box
+  if (devCheckBoxClass.search(regex) !== -1 ) {
+    await browser.sleep(3000);
+  } else {
+  await browser.sleep(3000);
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-checkbox-inner-container')).get(0)), 6000);
+  await element.all(by.css('div.mat-checkbox-inner-container')).get(0).click();
+  await browser.sleep(3000);
+  }
+  // clicking on the save button
+  await element.all(by.css('cl-button')).get(2).click();
+  await browser.sleep(3000);
 });
 
-Then(/^10_I should see the change reflected for the user selected.^/, async () => {
-      // Write code here that turns the phrase above into concrete actions
-      return 'pending';
-});*/
+Then(/^10_I should see the change reflected for the user selected.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for the row to load
+  await browser.wait(ec.presenceOf(element.all(by.css('td.column-audiencelist')).first()), 6000);
+  // doing an assertion based on the audience list type
+  expect(await element.all(by.css('td.column-audiencelist')).first().getText()).to.contain('Developers');
+});
