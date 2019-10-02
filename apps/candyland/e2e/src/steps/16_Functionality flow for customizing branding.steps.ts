@@ -45,13 +45,13 @@ Then(/^5_The relevant fields are present for branding settings page.$/, async ()
   // waiting for the relvant fields to load
   // waiting for style field to load
   // Style field
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(0)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(0)), 8000);
   // Font type field
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(1)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(1)), 8000);
   // Color field
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(2)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(2)), 8000);
   // Button color field
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(3)), 5000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(3)), 8000);
   // asserting the presence of elements
   // Style field
   expect(await element.all(by.css('div.mat-select-value')).get(0).isDisplayed());
