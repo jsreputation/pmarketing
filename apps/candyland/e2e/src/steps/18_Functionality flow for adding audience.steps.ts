@@ -64,6 +64,7 @@ Then(/^5_The essential fields are present for add audience engagement dialog.$/,
 
 // Verifying the number of options for add to audience list dropdown.
 Given(/^6_that I am on add audience dialog box.$/, async () => {
+  await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
   await AudienceApp.navigateToAudience();
   await browser.wait(ec.presenceOf(element(by.css('cl-button'))), 6000);
