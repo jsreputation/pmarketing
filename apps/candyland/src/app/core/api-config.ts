@@ -23,6 +23,7 @@ export class ApiConfig {
   public static vouchersAssignedPath = `${ApiConfig.basePath}/voucher/assigneds`;
   public static tenantsPath = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath = `${ApiConfig.basePath}/organization`;
-  public static uploadFilePath = `${ApiConfig.basePath}/storage/images`;
+  public static uploadImagePath = `${ApiConfig.basePath}/storage/images`;
+  public static uploadFilePath = `${ApiConfig.basePath}/storage/documents`;
   public static apiCdnPath = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
 }
