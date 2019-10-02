@@ -1,4 +1,6 @@
 import { Type } from '@angular/core';
+
+import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   async,
@@ -68,7 +70,13 @@ describe('FindPharmacyComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FindPharmacyComponent],
-      imports: [LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule],
+      imports: [
+        LocationModule,
+        MatTabsModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
         { provide: LocationsService, useValue: locationServiceStub },
         { provide: IMerchantsService, useValue: merchantsServiceStub }

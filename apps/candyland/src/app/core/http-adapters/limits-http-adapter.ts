@@ -1,4 +1,3 @@
-import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 enum LimitsDurationToAPIMapping {
   day = 'days',
   week = 'weeks',
@@ -12,9 +11,8 @@ enum LimitsDurationFromAPIMapping {
 }
 export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(data: ILimitApi, type: string): ILimit {
-    const engagementType = EngagementTypeFromAPIMapping[type];
     let dataAtt;
-    switch (engagementType) {
+    switch (type) {
       case 'game':
         dataAtt = data.attributes as IGameLimitAPIAttributes;
         return {
@@ -39,8 +37,7 @@ export class LimitsHttpAdapter {
     campaignId: number,
     engagementId: number
   ): ILimitApi {
-    const engagementType = EngagementTypeFromAPIMapping[type];
-    switch (engagementType) {
+    switch (type) {
       case 'game':
         return {
           type: 'limits',
