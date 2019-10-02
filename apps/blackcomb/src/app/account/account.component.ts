@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { IProfile, ProfileService, ThemesService } from '@perx/core';
 import { take } from 'rxjs/operators';
 
+interface AccountPageObject {
+  title: string;
+  content_url: string;
+  key: string;
+}
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -9,7 +14,7 @@ import { take } from 'rxjs/operators';
 })
 export class AccountComponent implements OnInit {
   public profile: IProfile;
-  public pages: any[] = [];
+  public pages!: AccountPageObject[] ;
 
   constructor(
     private profileService: ProfileService,

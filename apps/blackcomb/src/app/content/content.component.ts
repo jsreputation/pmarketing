@@ -22,7 +22,7 @@ export class ContentComponent implements OnInit {
         map(([key, settings]: [string, any]) => settings.pages.find(s => s.key === key)),
         map((page: any) => page.content_url),
         switchMap(url => fetch(url)),
-        map(stuff => from(stuff.text().then(content => content))),
+        map(stuff => from(stuff.text())),
         switchMap(content => content)
       );
   }
