@@ -15,6 +15,7 @@ import {
 } from '@angular/material';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UserInfoComponent', () => {
   let component: UserInfoComponent;
@@ -31,7 +32,8 @@ describe('UserInfoComponent', () => {
         MatButtonModule,
         MatCheckboxModule,
         MatRadioModule,
-        ProfileModule
+        ProfileModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: routerStub },
