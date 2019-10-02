@@ -86,8 +86,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
   }
 
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
-    return this.authenticateUser(user, pass, mechId, campaignId).pipe(
+  public login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any> {
+    return this.authenticateUser(user, pass, mechId, campaignId, scope).pipe(
       tap(
         (res: ILoginResponse) => {
           const userBearer = res && res.bearer_token;
@@ -104,7 +104,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string): Observable<ILoginResponse> {
+  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<ILoginResponse> {
     let httpParams = new HttpParams()
       .append('url', location.host)
       .append('username', user)
@@ -114,6 +114,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     }
     if (campaignId) {
       httpParams = httpParams.append('campaign_id', campaignId);
+    }
+    if (scope) {
+      httpParams = httpParams.append('scope', scope);
     }
 
     return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', null, {
