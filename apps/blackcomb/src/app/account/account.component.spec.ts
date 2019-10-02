@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileModule, ProfileService, ThemesService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('AccountComponent', () => {
@@ -12,7 +12,9 @@ describe('AccountComponent', () => {
   const profileServiceStub = {
     whoAmI: () => of()
   };
-
+  const themeSvcStub = {
+    getAccountSettings: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
@@ -22,7 +24,8 @@ describe('AccountComponent', () => {
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ThemesService, useValue: themeSvcStub }
       ]
     })
       .compileComponents();
