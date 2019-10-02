@@ -14,8 +14,8 @@
 				</mat-checkbox>
 			</div>
 			<mat-radio-group *ngIf="surveyForm.controls.diabetesCondition.value" class="diabetes-selection" formControlName="diabetes">
-				<mat-radio-button translate color="primary" value="diabetes">STATIC_DIABETES</mat-radio-button>
-				<mat-radio-button translate color="primary" value="pre_diabetes">STATIC_PRE_DIABETES
+				<mat-radio-button color="primary" value="diabetes">{{"STATIC_DIABETES" | translate }}</mat-radio-button>
+				<mat-radio-button color="primary" value="pre_diabetes">{{ "STATIC_PRE_DIABETES" | translate }}
 				</mat-radio-button>
 			</mat-radio-group>
 			<mat-checkbox translate color="primary" formControlName="hypertension">{{"STATIC_HYPERTENSION" | translate }}
