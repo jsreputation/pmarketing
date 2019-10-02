@@ -62,7 +62,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
-};
+}
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -133,7 +133,10 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       }
     })
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'zh' },  {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true}],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'zh' },
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
