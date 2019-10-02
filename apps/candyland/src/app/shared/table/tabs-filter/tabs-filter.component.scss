@@ -34,11 +34,6 @@
   cursor: pointer;
 }
 
-.tabs > a.active {
-  color: $base-font-color;
-  border-bottom-color: $primary-color;
-}
-
 .tabs > a:not(.active):hover {
   background-color: inherit;
   color: #7c848a;
