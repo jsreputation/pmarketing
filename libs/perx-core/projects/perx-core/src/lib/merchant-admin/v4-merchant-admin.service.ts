@@ -47,17 +47,17 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         data: {
             id: 700,
             user_account_id: 5852,
-            updated_at: "2019-09-12T09:07:21.283Z",
-            transaction_type: "some_cool_type",
+            updated_at: '2019-09-12T09:07:21.283Z',
+            transaction_type: 'some_cool_type',
             amount: 400,
-            transaction_date: "2019-09-12T09:07:21.272Z",
-            currency: "HKD",
+            transaction_date: '2019-09-12T09:07:21.272Z',
+            currency: 'HKD',
             workflow_id: null,
-            created_at: "2019-09-12T09:07:21.283Z",
+            created_at: '2019-09-12T09:07:21.283Z',
             properties: null,
-            transaction_reference: "some_cool_reference"
+            transaction_reference: 'some_cool_reference'
         }
-    }
+    };
 
     const transaction = V4MerchantAdminService.v4TransactionToTransaction(response);
     return of(transaction);
