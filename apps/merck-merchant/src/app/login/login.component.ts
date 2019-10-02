@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     const email = (this.loginForm.get('email').value as string);
     const password: string = this.loginForm.get('password').value;
+    const scope: string = 'merchant_credentials';
 
-    this.authService.login(email, password).subscribe(
+    this.authService.login(email, password, null, null, scope).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {

@@ -9,6 +9,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ILimit } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
