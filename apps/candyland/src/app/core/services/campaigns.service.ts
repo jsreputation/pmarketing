@@ -5,6 +5,8 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
+import { ICampaignTableData, ICampaignAttributes, ICampaign } from '@perx/whistler';
+import { IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPostItem } from '@cl-core/http-services/jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class CampaignsService implements ITableService {
   public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaignTableData>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.campaignsHttpsService.getCampaigns(httpParams).pipe(
-      map((response: IResponseApi<ICampaignAPI[]>) => CampaignsHttpAdapter.transformTableData(response))
+      map((response: IJsonApiListPayload<ICampaignAttributes>) => CampaignsHttpAdapter.transformTableData(response))
     );
   }
 
@@ -28,22 +30,22 @@ export class CampaignsService implements ITableService {
 
   public getCampaign(id: string): Observable<ICampaign> {
     return this.campaignsHttpsService.getCampaign(id).pipe(
-      map((res: IResponseApi<ICampaignAPI>) => res.data),
-      map((res: ICampaignAPI) => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
+      map((res: IJsonApiItemPayload<ICampaignAttributes>) => res.data),
+      map((res: IJsonApiItem<ICampaignAttributes>) => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
     );
   }
 
-  public updateCampaign(id: string, data: any): Observable<IResponseApi<ICampaignAPI>> {
+  public updateCampaign(id: string, data: any): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    return this.campaignsHttpsService.updateCampaign(id, { data: {id, ...sendData }});
+    return this.campaignsHttpsService.updateCampaign(id, { data: { id, ...sendData } });
   }
 
-  public createCampaign(data: any): Observable<IResponseApi<ICampaignAPI>> {
+  public createCampaign(data: any): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    return this.campaignsHttpsService.createCampaign({ data: sendData });
+    return this.campaignsHttpsService.createCampaign({ data: { ...sendData } });
   }
 
-  public duplicateCampaign(id: string): Observable<any> {
+  public duplicateCampaign(id: string): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
     return this.campaignsHttpsService.getCampaign(id)
       .pipe(
         map(response => {
@@ -56,7 +58,7 @@ export class CampaignsService implements ITableService {
           delete response.data.attributes.urn;
           return response;
         }),
-        switchMap(data => this.campaignsHttpsService.createCampaign(data))
+        switchMap((data: IJsonApiPostItem<ICampaignAttributes>) => this.campaignsHttpsService.createCampaign(data))
       );
   }
 
