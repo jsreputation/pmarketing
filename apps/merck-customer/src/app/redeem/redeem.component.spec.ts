@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
@@ -20,7 +21,8 @@ describe('RedeemComponent', () => {
       declarations: [ RedeemComponent ],
       imports: [
         RouterTestingModule,
-        QRCodeModule
+        QRCodeModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {
