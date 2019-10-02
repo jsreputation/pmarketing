@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { IGameGifts } from '../../engagements/games/containers/new-shake-page/shared/models/game-gifts.model';
 import { Observable } from 'rxjs';
-import { IJsonApiPostItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'

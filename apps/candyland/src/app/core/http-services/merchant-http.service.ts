@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IJsonApiPostItem, IJsonApiPatchItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'

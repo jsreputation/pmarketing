@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { GeneralStaticDataService } from '@perx/core';
-import { IJsonApiPatchItem, IJsonApiPostItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
