@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
-import { LocationsService } from './locations.service';
+
 import { Observable } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  filter,
+  scan,
+  mergeAll,
+} from 'rxjs/operators';
+
+import { LocationsService } from './locations.service';
 import { ILocation } from './ilocation';
-import { map, mergeMap, filter, scan, mergeAll } from 'rxjs/operators';
+
 import { IMerchantsService } from '../merchants/imerchants.service';
-import { IMerchant, IOutlet } from '../merchants/models/merchants.model';
+import {
+  IMerchant,
+  IOutlet,
+} from '../merchants/models/merchants.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +29,11 @@ export class V4LocationsService extends LocationsService {
     super();
   }
 
-  public getAllLocations(tags?: string[]): Observable<ILocation[]> {
+  public getAllLocations(allMerchants: Observable<IMerchant[]>, tags?: string[]): Observable<ILocation[]> {
     if (tags === undefined) {
       tags = [];
     }
-    return this.merchantsService.getAllMerchants().pipe(
+    return allMerchants.pipe(
       mergeMap((merchants: IMerchant[]) => {
         let filteredMerchants: IMerchant[];
         if (tags && tags.length > 0) {
@@ -91,8 +103,8 @@ export class V4LocationsService extends LocationsService {
     );
   }
 
-  public getTags(): Observable<string[]> {
-    return this.merchantsService.getAllMerchants().pipe(
+  public getTags(allMerchants: Observable<IMerchant[]>): Observable<string[]> {
+    return allMerchants.pipe(
       map((merchants: IMerchant[]) => merchants.filter((merchant: IMerchant) => merchant.tags && merchant.tags.length > 0)),
       filter((merchants: IMerchant[]) => merchants.length > 0),
       map((merchants: IMerchant[]) => {
