@@ -36,11 +36,11 @@ describe('AccountComponent', () => {
   };
 
   const authenticationServiceStub = {
-    logout: () => {}
+    logout: () => { }
   };
 
   const routerStub = {
-    navigate: () => {}
+    navigate: () => { }
   };
 
   const loyaltyServiceStub = {
@@ -49,9 +49,9 @@ describe('AccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountComponent ],
-      imports: [ 
-        MatCardModule, 
+      declarations: [AccountComponent],
+      imports: [
+        MatCardModule,
         MatListModule,
         TranslateModule.forRoot()
       ],
@@ -62,7 +62,7 @@ describe('AccountComponent', () => {
         { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
