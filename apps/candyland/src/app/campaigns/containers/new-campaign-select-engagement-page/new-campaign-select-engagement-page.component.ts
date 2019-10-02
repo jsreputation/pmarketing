@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
+import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -34,7 +34,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     public stepConditionService: StepConditionService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    public cd: ChangeDetectorRef
+    public cd: ChangeDetectorRef,
+    private limitsService: LimitsService
   ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
@@ -92,6 +93,19 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       this.campaign && this.campaign.engagement_id && this.campaign.engagement_id.toString();
     if (engagementId) {
       const findTemplate = res.find(template => template.id === engagementId);
+      if (this.store.currentCampaign.id) {
+        const params: HttpParamsOptions = {
+          'filter[campaign_entity_id]': this.store.currentCampaign.id
+        };
+        this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
+          map((limits: ILimit[]) => limits[0])
+        ).subscribe(
+          limits => {
+            const newCampaign = { ...this.store.currentCampaign, limits };
+            this.store.updateCampaign(newCampaign);
+          }
+        );
+      }
       this.template.patchValue(findTemplate);
     }
   }

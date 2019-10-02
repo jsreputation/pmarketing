@@ -24,8 +24,8 @@ export class CommsService {
   public getCommsEvents(params: HttpParamsOptions): Observable<IComm[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.commsHttpsService.getCommsEvents(httpParams).pipe(
-      map(response => response.data),
-      map(response => response.map((comm: ICommEventApi) => CommsHttpAdapter.transformEventAPIResponseToComm(comm)))
+      map((response: IResponseApi<ICommEventApi[]>) => response.data),
+      map((response: ICommEventApi[]) => response.map((comm: ICommEventApi) => CommsHttpAdapter.transformEventAPIResponseToComm(comm)))
     );
   }
 

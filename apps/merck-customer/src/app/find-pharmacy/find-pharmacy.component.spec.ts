@@ -1,18 +1,22 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
-import { LocationModule, LocationsService } from '@perx/core';
+import { LocationModule, LocationsService, IMerchantsService } from '@perx/core';
 import { MatTabsModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+
+const iMerchantsServiceStub = {
+  getMerchant: () => of(null)
+};
 
 describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
   let fixture: ComponentFixture<FindPharmacyComponent>;
 
   const locationServiceStub = {
-    getAll: () => of(),
+    getAllLocations: () => of(),
     getTags: () => of()
   };
 
@@ -42,13 +46,14 @@ describe('FindPharmacyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindPharmacyComponent ],
-      imports: [ LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule ],
+      declarations: [FindPharmacyComponent],
+      imports: [LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule],
       providers: [
-        {provide: LocationsService, useValue: locationServiceStub}
+        { provide: LocationsService, useValue: locationServiceStub },
+        { provide: IMerchantsService, useValue: iMerchantsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -65,12 +70,12 @@ describe('FindPharmacyComponent', () => {
     it('should get all locations', fakeAsync(() => {
       const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
         (LocationsService as Type<LocationsService>);
-      const locationsServiceSpy = spyOn(locationsService, 'getAll').and.returnValue(of(locationsStub));
+      const locationsServiceSpy = spyOn(locationsService, 'getAllLocations').and.returnValue(of(locationsStub));
       component.ngOnInit();
       tick();
       fixture.detectChanges();
       expect(locationsServiceSpy).toHaveBeenCalled();
-      locationsService.getAll().subscribe(res => {
+      locationsService.getAllLocations().subscribe(res => {
         expect(res).toEqual(locationsStub);
       });
     }));
@@ -83,8 +88,7 @@ describe('FindPharmacyComponent', () => {
       tick();
       fixture.detectChanges();
       expect(locationsTagsSpy).toHaveBeenCalled();
-      console.log(component.tags);
-      expect(component.tags).toEqual([{name: 'Drug', isSelected: false}, {name: 'Medical Supply', isSelected: false}]);
+      expect(component.tags).toEqual([{ name: 'Drug', isSelected: false }, { name: 'Medical Supply', isSelected: false }]);
     }));
   });
 });

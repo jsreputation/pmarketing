@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService, OutcomesService, CommsService } from '@cl-core-services';
+import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
@@ -9,8 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { combineLatest, iif, of } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -37,6 +37,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
+    private limitsService: LimitsService
   ) {
     store.resetCampaign();
   }
@@ -44,7 +45,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
@@ -94,12 +94,34 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public save(): void {
     this.store.updateCampaign(this.form.value);
     let saveCampaign$;
+    let updateLimitData$;
+    const updateLimit$ = campaign => this.limitsService.updateLimits(
+      this.store.currentCampaign.limits.id,
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
+    const createLimit$ = campaign => this.limitsService.createLimits(
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
+
     if (this.campaign) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
+      updateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
     } else {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
+      updateLimitData$ = createLimit$;
     }
-    saveCampaign$.subscribe(
+    const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
+    saveCampaign$.pipe(
+      switchMap(
+        (res) => iif(hasLimitData, updateLimitData$(res), of(res))
+      )
+    ).subscribe(
       data => {
         if (data) {
           this.openDialog();
@@ -115,19 +137,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'sms':
         return {
-          title: 'Yay! you just created a campaign',
+          title: 'Yay! You just created a campaign',
           subTitle: '100  Weblinks are created fo you. Please download the files.',
           type: 'download'
         };
       case 'weblink':
         return {
-          title: 'Yay! you just created a campaig',
+          title: 'Yay! You just created a campaign',
           subTitle: 'Copy the link and share your campaign.',
           type: 'weblink'
         };
       default:
         return {
-          title: 'Yay! you just created a campaign',
+          title: 'Yay! You just created a campaign',
           subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
         };
     }
@@ -159,22 +181,23 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
         this.commsService.getCommsTemplate(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.commsService.getCommsEvents(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.outcomesService.getOutcomes(params)).pipe(
           map(
-            ([campaign, commTemplate, commEvent, outcomes]) => ({
-              ...campaign,
-              channel: {
-                type: campaign.channel.type,
-                ...commTemplate,
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+            ([campaign, commTemplate, commEvent, outcomes]:
+              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+                ...campaign,
+                channel: {
+                  type: campaign.channel.type,
+                  ...commTemplate,
+                  ...commEvent
+                },
+                rewardsList: outcomes
+              }))
         ).subscribe(
           campaign => {
             this.campaign = Object.assign({}, campaign);

@@ -18,7 +18,7 @@
   </div>
 </header>
 
-<section class="content">
+<section class="content form-limiter">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>Select engagement</ng-template>
@@ -33,9 +33,9 @@
         <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"
                                              [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-survey-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'instant_reward'"
+        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'instant_reward'"
                                       [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-page>
+        ></cl-new-campaign-rewards-survey-page>
         <cl-new-campaign-rewards-page *ngSwitchCase="'game'"
                                       [tenantSettings]="tenantSettings"
         ></cl-new-campaign-rewards-page>

@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
     Object.keys(profile.customProperties).forEach(property => {
         if (property === 'diabetesState') {
           const diabetesState = profile.customProperties[property];
-          if (typeof diabetesState === 'string') {
+          if (diabetesState && typeof diabetesState === 'string') {
             filteredConditions.push(diabetesState.replace('_', '-'));
           }
         }
@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
           filteredConditions.push('Hypertension');
         }
       });
-    return filteredConditions;
+    return filteredConditions.filter(condition => condition !== '');
   }
 
   public getPageProperties(): PageProperties {

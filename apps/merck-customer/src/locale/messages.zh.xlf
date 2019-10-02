@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="zh-Hans" datatype="plaintext" original="ng2.template">
+  <file source-language="zh" datatype="plaintext" original="ng2.template">
+
     <body>
       <trans-unit id="static-home" datatype="html">
         <source>Home</source>
+        <target>主頁</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
+
       <trans-unit id="static-find-pharmacy" datatype="html">
         <source>Find a
-			pharmacy</source>
+        pharmacy</source>
+        <target>尋找藥房</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">24</context>
@@ -19,6 +23,7 @@
       </trans-unit>
       <trans-unit id="static-account" datatype="html">
         <source>Account</source>
+        <target>Account</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">30</context>
@@ -26,6 +31,7 @@
       </trans-unit>
       <trans-unit id="login-subtitle" datatype="html">
         <source>Diabetes Loyality Program</source>
+        <target>默糖心</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">4</context>
@@ -41,6 +47,7 @@
       </trans-unit>
       <trans-unit id="static-login" datatype="html">
         <source>Log in</source>
+        <target>登入</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">7</context>
@@ -60,6 +67,7 @@
       </trans-unit>
       <trans-unit id="static-not-memeber" datatype="html">
         <source>Not a memeber? </source>
+        <target>非會員？ 馬上註冊</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">8</context>
@@ -67,6 +75,7 @@
       </trans-unit>
       <trans-unit id="sign-up" datatype="html">
         <source>Sign up</source>
+        <target>註冊</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">8</context>
@@ -78,6 +87,7 @@
       </trans-unit>
       <trans-unit id="country-hongkong" datatype="html">
         <source>Hong Kong</source>
+        <target>港島區</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">12</context>
@@ -93,6 +103,7 @@
       </trans-unit>
       <trans-unit id="country-macau" datatype="html">
         <source>Macau</source>
+        <target>Macau</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">13</context>
@@ -108,6 +119,7 @@
       </trans-unit>
       <trans-unit id="country-china" datatype="html">
         <source>China</source>
+        <target>China</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">14</context>
@@ -123,6 +135,7 @@
       </trans-unit>
       <trans-unit id="static-mobile-no" datatype="html">
         <source>Mobile No</source>
+        <target>手機號碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">18</context>
@@ -150,6 +163,7 @@
       </trans-unit>
       <trans-unit id="static-password" datatype="html">
         <source>Password</source>
+        <target>密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">25</context>
@@ -177,6 +191,7 @@
       </trans-unit>
       <trans-unit id="static-forgot-password" datatype="html">
         <source>Forgot password?</source>
+        <target>忘記密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">31</context>
@@ -184,6 +199,7 @@
       </trans-unit>
       <trans-unit id="static-learn-more" datatype="html">
         <source>Learn more about the program</source>
+        <target>詳細了解默糖心</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">33</context>
@@ -191,7 +207,8 @@
       </trans-unit>
       <trans-unit id="static-thankyou-participating" datatype="html">
         <source>Thank you for participating in this loyality
-			program.</source>
+        program.</source>
+        <target>感謝您參與默糖心</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">7</context>
@@ -199,8 +216,11 @@
       </trans-unit>
       <trans-unit id="static-current-condition" datatype="html">
         <source>To better the experience for you, please indicate the
-			current condition you&apos;re taking
-			treatment for</source>
+        current condition you&apos;re taking
+        treatment for</source>
+        <target>為讓您獲得更好的
+          體驗，請說明您正
+          在接受的治療</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">9</context>
@@ -208,8 +228,9 @@
       </trans-unit>
       <trans-unit id="static-diabetes-condition" datatype="html">
         <source>
-					Diabetes condition
-				</source>
+        Diabetes condition
+        </source>
+        <target>細則</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">15</context>
@@ -217,6 +238,7 @@
       </trans-unit>
       <trans-unit id="static-diabetes" datatype="html">
         <source>Diabetes</source>
+        <target>糖尿病</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">20</context>
@@ -224,7 +246,8 @@
       </trans-unit>
       <trans-unit id="static-pre-diabetes" datatype="html">
         <source>Pre-Diabetes
-				</source>
+        </source>
+        <target>糖尿病前期</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">21</context>
@@ -232,7 +255,8 @@
       </trans-unit>
       <trans-unit id="static-hypertension" datatype="html">
         <source>Hypertension
-			</source>
+        </source>
+        <target>高血壓</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">24</context>
@@ -240,6 +264,7 @@
       </trans-unit>
       <trans-unit id="next-btn" datatype="html">
         <source>Next</source>
+        <target>更新</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user-info/user-info.component.html</context>
           <context context-type="linenumber">27</context>
@@ -247,6 +272,7 @@
       </trans-unit>
       <trans-unit id="static-my-qr" datatype="html">
         <source>MY QR</source>
+        <target>我的QR CODE</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/home.component.html</context>
           <context context-type="linenumber">6</context>
@@ -254,6 +280,7 @@
       </trans-unit>
       <trans-unit id="static-featured-rewards" datatype="html">
         <source>Featured Rewards</source>
+        <target>精選獎賞</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/home.component.html</context>
           <context context-type="linenumber">9</context>
@@ -261,6 +288,7 @@
       </trans-unit>
       <trans-unit id="static-have-account" datatype="html">
         <source>Have an account? </source>
+        <target>已登記帳戶？ 登入</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">8</context>
@@ -268,6 +296,7 @@
       </trans-unit>
       <trans-unit id="static-name" datatype="html">
         <source>Name</source>
+        <target>姓名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">11</context>
@@ -278,7 +307,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="static-name-is" datatype="html">
-        <source>	Name is </source>
+        <source> Name is </source>
+        <target>姓名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">14</context>
@@ -286,6 +316,7 @@
       </trans-unit>
       <trans-unit id="required" datatype="html">
         <source>required</source>
+        <target>required</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">14</context>
@@ -304,7 +335,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="static-mobile-no-is" datatype="html">
-        <source>	Mobile No is </source>
+        <source>Mobile No is</source>
+        <target>手機號碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">28</context>
@@ -312,6 +344,7 @@
       </trans-unit>
       <trans-unit id="password-is" datatype="html">
         <source>Password is </source>
+        <target>密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">35</context>
@@ -319,6 +352,7 @@
       </trans-unit>
       <trans-unit id="password-six-chars" datatype="html">
         <source>Password should be atleast 6 characters long </source>
+        <target>密碼至少含6個字符</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">38</context>
@@ -330,6 +364,7 @@
       </trans-unit>
       <trans-unit id="static-confirm-password" datatype="html">
         <source>Confirm Password</source>
+        <target>確認密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">43</context>
@@ -345,6 +380,7 @@
       </trans-unit>
       <trans-unit id="confirm-password-is" datatype="html">
         <source>Confirm Password is </source>
+        <target>確認密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">45</context>
@@ -352,6 +388,8 @@
       </trans-unit>
       <trans-unit id="static-accept-terms" datatype="html">
         <source>I accept the terms &amp; conditions</source>
+        <target>我接受這些條款及
+          細則</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">52</context>
@@ -359,6 +397,9 @@
       </trans-unit>
       <trans-unit id="static-agree-marketing" datatype="html">
         <source>I agree to receive marketing communications from Merck Group hk</source>
+        <target>我同意及接收默克
+          集團(香港)的市場資
+          訊</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/signup/signup.component.html</context>
           <context context-type="linenumber">56</context>
@@ -366,6 +407,7 @@
       </trans-unit>
       <trans-unit id="static-reset-password" datatype="html">
         <source>Reset your password</source>
+        <target>重設你的密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
           <context context-type="linenumber">2</context>
@@ -381,6 +423,7 @@
       </trans-unit>
       <trans-unit id="static-enter-number" datatype="html">
         <source>Enter your mobile number</source>
+        <target>輸入你的手機號碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
           <context context-type="linenumber">3</context>
@@ -392,6 +435,7 @@
       </trans-unit>
       <trans-unit id="static-get-opt" datatype="html">
         <source>Get OTP</source>
+        <target>取得一次性密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forgot-password/forgot-password.component.html</context>
           <context context-type="linenumber">26</context>
@@ -403,6 +447,7 @@
       </trans-unit>
       <trans-unit id="static-new-register" datatype="html">
         <source>Thank you for registering</source>
+        <target>感謝您的註冊</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
           <context context-type="linenumber">3</context>
@@ -410,6 +455,7 @@
       </trans-unit>
       <trans-unit id="static-resend-otp" datatype="html">
         <source>Resend OTP</source>
+        <target>重新發送OTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/enter-pin/enter-pin.component.html</context>
           <context context-type="linenumber">12</context>
@@ -417,6 +463,7 @@
       </trans-unit>
       <trans-unit id="static-filter" datatype="html">
         <source>Filter</source>
+        <target>篩選</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
           <context context-type="linenumber">6</context>
@@ -428,6 +475,7 @@
       </trans-unit>
       <trans-unit id="d2a2915d79ff31439a174fc3a147004542291e29" datatype="html">
         <source>Map</source>
+        <target>地圖</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
           <context context-type="linenumber">2</context>
@@ -435,6 +483,7 @@
       </trans-unit>
       <trans-unit id="6490b3960cc7c4a789cdbd29575d93abad081e07" datatype="html">
         <source>List</source>
+        <target>名單</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/find-pharmacy/find-pharmacy.component.html</context>
           <context context-type="linenumber">12</context>
@@ -442,6 +491,7 @@
       </trans-unit>
       <trans-unit id="static-new-password" datatype="html">
         <source>New password</source>
+        <target>新密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reset-password/reset-password.component.html</context>
           <context context-type="linenumber">5</context>
@@ -449,8 +499,9 @@
       </trans-unit>
       <trans-unit id="static-redeem" datatype="html">
         <source>
-		Redeem
-	</source>
+        Redeem
+        </source>
+        <target>換領</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reward-detail/reward-detail.component.html</context>
           <context context-type="linenumber">3</context>
@@ -458,6 +509,9 @@
       </trans-unit>
       <trans-unit id="static-present-qr" datatype="html">
         <source>Present this QR code to the cashier to complete your transaction.</source>
+        <target>請提供QR code給藥
+          房職員以完成您的
+          交易</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/redeem/redeem.component.html</context>
           <context context-type="linenumber">4</context>
@@ -465,8 +519,9 @@
       </trans-unit>
       <trans-unit id="static-cancel" datatype="html">
         <source>
-		Cancel
-	</source>
+        Cancel
+        </source>
+        <target>取消</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/redeem/redeem.component.html</context>
           <context context-type="linenumber">6</context>
@@ -474,6 +529,7 @@
       </trans-unit>
       <trans-unit id="static-profile" datatype="html">
         <source>Profile</source>
+        <target>個人資料</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/account.component.html</context>
           <context context-type="linenumber">19</context>
@@ -481,6 +537,7 @@
       </trans-unit>
       <trans-unit id="static-transaction-history" datatype="html">
         <source>Transaction History</source>
+        <target>交易記錄</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/account.component.html</context>
           <context context-type="linenumber">26</context>
@@ -488,6 +545,7 @@
       </trans-unit>
       <trans-unit id="static-privacy-policy" datatype="html">
         <source>Privacy Policy</source>
+        <target>私隱政策</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/account.component.html</context>
           <context context-type="linenumber">33</context>
@@ -495,6 +553,7 @@
       </trans-unit>
       <trans-unit id="static-logout" datatype="html">
         <source>Log Out</source>
+        <target>登出</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/account.component.html</context>
           <context context-type="linenumber">43</context>

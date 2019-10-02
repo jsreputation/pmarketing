@@ -6,9 +6,9 @@ import { ILocation } from './ilocation';
   providedIn: 'root'
 })
 export abstract class LocationsService {
-  public abstract getAll(tags?: string[]): Observable<ILocation[]>;
+  public abstract getAllLocations(tags?: string[]): Observable<ILocation[]>;
 
-  public abstract getLocations(page?: number, pageSize?: number, tags?: string[]): Observable<ILocation[]>;
+  public abstract getLocations(page?: number, tags?: string[]): Observable<ILocation[]>;
 
   public abstract getTags(): Observable<string[]>;
 
