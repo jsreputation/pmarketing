@@ -8,3 +8,4 @@ export { AssignedStatus, IAssignedAttributes, IAssignRequestAttributes } from '.
 export { IRewardEntityAttributes } from './lib/reward/reward';
 export { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from './lib/limit/limit';
 export { IOutcome, IOutcomeAttributes } from './lib/outcome/outcome';
+export { IComm, ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
