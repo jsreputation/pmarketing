@@ -1,7 +1,7 @@
 <mat-list>
   <div *ngFor="let location of locations | async">
     <mat-list-item>
-      <h3 matLine>{{location.name}}</h3>
+      <h3 matLine>{{ headerFn(location) | async }}</h3>
       <small matLine>{{location.address}}</small>
       <div matLine>
         <div class="links">
