@@ -16,10 +16,12 @@ export class LocationShortFormatComponent implements OnInit {
 
   @Input()
   public merchantId: number;
+  @Input()
+  public rewardId: number;
 
   constructor(
     private locationService: LocationsService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     if (!this.merchantId) {
