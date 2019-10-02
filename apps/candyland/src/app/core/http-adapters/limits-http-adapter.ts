@@ -1,5 +1,4 @@
 import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
-import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 enum LimitsDurationToAPIMapping {
   day = 'days',
   week = 'weeks',

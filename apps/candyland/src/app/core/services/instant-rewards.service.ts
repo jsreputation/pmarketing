@@ -12,17 +12,17 @@ export class InstantRewardsService {
   constructor(private instantRewardsHttpService: InstantRewardsHttpService) {
   }
 
-  public getInstantRewardData(): Observable<IGameDefaultData> {
+  public getInstantRewardData(): Observable<IRewardDefaultValue> {
     return this.instantRewardsHttpService.getRewardData();
   }
 
-  public getInstantReward(id: string): Observable<any> {
+  public getInstantReward(id: string): Observable<IRewardForm> {
     return this.instantRewardsHttpService.getInstantReward(id).pipe(
       map(response => EngagementHttpAdapter.transformRewardForm(response.data))
     );
   }
 
-  public createRewardGame(data: IInstantRewardForm): Observable<IResponseApi<IEngagementApi>> {
+  public createRewardGame(data: IRewardForm): Observable<IResponseApi<IEngagementApi>> {
     const sendData = EngagementHttpAdapter.transformInstantReward(data);
     return this.instantRewardsHttpService.createRewardGame({data: sendData});
   }

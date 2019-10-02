@@ -1,4 +1,4 @@
-declare interface CommonSelect {
+declare interface IGameGifts {
   value: number;
   viewValue: string;
 }

@@ -171,7 +171,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformInstantReward(data: IInstantRewardForm): IEngagementApi {
+  public static transformInstantReward(data: IRewardForm): IEngagementApi {
     return {
       type: 'engagements',
       attributes: {
@@ -191,7 +191,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTheTree(data: any): IEngagementApi {
+  public static transformShakeTheTree(data: IShakeTreeForm): IEngagementApi {
     return {
       type: 'engagements',
       attributes: {
@@ -213,7 +213,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformPinata(data: any): IEngagementApi {
+  public static transformPinata(data: IPinataForm): IEngagementApi {
     return {
       type: 'engagements', attributes: {
         type: 'game',
@@ -256,7 +256,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformStampForm(data: IEngagementApi): any {
+  public static transformStampForm(data: IEngagementApi): Partial<IStampsEntityForm> {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -273,7 +273,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformRewardForm(data: IEngagementApi): any {
+  public static transformRewardForm(data: IEngagementApi): IRewardForm {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -281,7 +281,8 @@ export class EngagementHttpAdapter {
       banner: data.attributes.display_properties.banner,
       buttonText: data.attributes.display_properties.button,
       [ControlsName.background]: data.attributes.display_properties.background_img_url,
-      [ControlsName.cardBackground]: data.attributes.display_properties.card_background_img_url
+      [ControlsName.cardBackground]: data.attributes.display_properties.card_background_img_url,
+      image_url: data.attributes.image_url
     };
   }
 
@@ -310,6 +311,7 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       background: data.attributes.display_properties.background_img_url,
       pinata: data.attributes.display_properties.closed_pinata_img_url,
+      image_url: data.attributes.image_url,
       // opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       // cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
     };

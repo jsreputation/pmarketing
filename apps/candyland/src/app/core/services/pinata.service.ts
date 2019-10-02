@@ -11,10 +11,7 @@ export class PinataService {
 
   constructor(private pinataHttpService: PinataHttpService) { }
 
-  public getPinataData(): Observable<{
-    pinata: IGraphic[],
-    background: IGraphic[]
-  }> {
+  public getPinataData(): Observable<IGameDefaultData> {
     return this.pinataHttpService.getPinataData();
   }
 

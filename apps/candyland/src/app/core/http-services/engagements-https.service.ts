@@ -19,15 +19,15 @@ export class EngagementsHttpsService {
     return this.http.get<IResponseApi<IEngagementApi>>(`${ApiConfig.engagementsPath}/${type}/${id}`);
   }
 
-  public getEngagementType(): Observable<any> {
-    return this.http.get('assets/actives/engagement-type.json')
+  public getEngagementType(): Observable<IGraphic[]> {
+    return this.http.get<IGraphic[]>('assets/actives/engagement-type.json')
       .pipe(
         map(res => (res as IGraphic[]))
       );
   }
 
-  public getGamesType(): Observable<any> {
-    return this.http.get('assets/actives/games-type.json')
+  public getGamesType(): Observable<IGraphic[]> {
+    return this.http.get<IGraphic[]>('assets/actives/games-type.json')
       .pipe(
         map(res => (res as IGraphic[]))
       );

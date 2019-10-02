@@ -23,10 +23,7 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public form: FormGroup;
-  public rewardData: {
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  };
+  public rewardData: IRewardDefaultValue;
   public reward$: Observable<IReward[]>;
   public rewards$: Observable<IReward[]>;
   public id: string;
@@ -102,7 +99,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       .pipe(switchMap((imageUrl: IUploadedFile) => {
         if (this.id) {
           return this.instantRewardsService.updateInstantReward(this.id,
-            {...(this.form.value as IInstantRewardForm), image_url: imageUrl.url});
+            {...(this.form.value as IRewardForm), image_url: imageUrl.url});
         }
         return this.instantRewardsService.createRewardGame({...this.form.value , image_url: imageUrl.url}).pipe(
           map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
@@ -142,7 +139,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getDefaultValue(data: any): any {
+  private getDefaultValue(data: IRewardDefaultValue): IRewardForm {
     return {
       name: 'Instant Reward Template',
       headlineMessage: 'You have got rewards!',
@@ -150,7 +147,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       banner: 'reward',
       buttonText: 'See my rewards',
       [ControlsName.background]: data.background[0],
-      [ControlsName.cardBackground]: data.cardBackground[0]
+      [ControlsName.cardBackground]: data.cardBackground[0],
+      image_url: null
     };
   }
 
@@ -165,7 +163,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       .subscribe(data => this.tenantSettings = data);
   }
 
-  private getRewardData(): Observable<IGameDefaultData> {
+  private getRewardData(): Observable<IRewardDefaultValue> {
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
         untilDestroyed(this),
@@ -173,7 +171,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private handleRouteParams(): Observable<any> {
+  private handleRouteParams(): Observable<IRewardForm | null> {
     return this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IJsonApiListPayload, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from './jsonapi.payload';
 import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
@@ -22,15 +21,15 @@ export class LimitsHttpsService {
   public updateLimits(
     id: string,
     data: IJsonApiPatchItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
-    engagementType: string): Observable<IJsonApiItemPayload<any>> {
+    engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
-    return this.http.patch<IJsonApiItemPayload<any>>(`${ApiConfig.basePath}/${eType}/limits` + '/' + id, data);
+    return this.http.patch<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits` + '/' + id, data);
   }
 
   public createLimits(
     data: IJsonApiPostItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
-    engagementType: string): Observable<IJsonApiItemPayload<any>> {
+    engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
-    return this.http.post<IJsonApiItemPayload<any>>(`${ApiConfig.basePath}/${eType}/limits`, data);
+    return this.http.post<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits`, data);
   }
 }

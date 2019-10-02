@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
-import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 
 export class CampaignsHttpAdapter {
   // tslint:disable

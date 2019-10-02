@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { ICampaignTableData, ICampaignAttributes, ICampaign } from '@perx/whistler';
-import { IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPostItem } from '@cl-core/http-services/jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -30,22 +29,22 @@ export class CampaignsService implements ITableService {
 
   public getCampaign(id: string): Observable<ICampaign> {
     return this.campaignsHttpsService.getCampaign(id).pipe(
-      map((res: IJsonApiItemPayload<ICampaignAttributes>) => res.data),
+      map((res: IJsonApiPayload<ICampaignAttributes>) => res.data),
       map((res: IJsonApiItem<ICampaignAttributes>) => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
     );
   }
 
-  public updateCampaign(id: string, data: any): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
+  public updateCampaign(id: string, data: any): Observable<IJsonApiPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
     return this.campaignsHttpsService.updateCampaign(id, { data: { id, ...sendData } });
   }
 
-  public createCampaign(data: any): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
+  public createCampaign(data: any): Observable<IJsonApiPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
     return this.campaignsHttpsService.createCampaign({ data: { ...sendData } });
   }
 
-  public duplicateCampaign(id: string): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
+  public duplicateCampaign(id: string): Observable<IJsonApiPayload<ICampaignAttributes>> {
     return this.campaignsHttpsService.getCampaign(id)
       .pipe(
         map(response => {
