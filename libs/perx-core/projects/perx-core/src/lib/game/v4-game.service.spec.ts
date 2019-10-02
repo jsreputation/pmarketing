@@ -57,17 +57,19 @@ describe('V4GameService', () => {
   it('should get games from campaign Id', (done: DoneFn) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
-      // .subscribe((games: IGame[]) => {
-      //     expect(games.length).toBe(0);
-      //     done();
-      //   },
-      .subscribe(
+      .subscribe((games: IGame[]) => {
+        expect(games.length).toBe(0);
+        done();
+      });
+
+      // err if games is empty
+      /*.subscribe(
         () => { },
         (err: any) => {
           expect(err.message).toEqual('Games list is empty');
           done();
         }
-      );
+      );*/
 
     const req = httpTestingController.expectOne('https://api.perxtech.io/v4/campaigns/1/games');
 
