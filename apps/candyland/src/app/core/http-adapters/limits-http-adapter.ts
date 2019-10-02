@@ -1,4 +1,3 @@
-import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
 import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 enum LimitsDurationToAPIMapping {
