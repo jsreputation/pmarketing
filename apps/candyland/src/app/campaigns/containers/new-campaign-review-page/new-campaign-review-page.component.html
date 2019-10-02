@@ -13,7 +13,7 @@
         <p class="card-title">Rewards</p>
       </div>
       <div class="card-content">
-        <cl-reward-item-preview *ngFor="let reward of campaign?.rewardsList" class="item" [data]="reward">
+        <cl-reward-item-preview *ngFor="let reward of campaign?.rewardsOptions?.rewards" class="item" [data]="reward?.value">
         </cl-reward-item-preview>
       </div>
     </mat-card>

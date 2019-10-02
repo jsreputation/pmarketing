@@ -1,9 +1,9 @@
 import { RewardsService } from './../../../core/services/rewards.service';
-import { CampaignsService, EngagementsService } from '@cl-core/services';
+import { CampaignsService, EngagementsService, CommsService, OutcomesService } from '@cl-core/services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
 
@@ -20,6 +20,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private router: Router,
     private campaignsService: CampaignsService,
     private rewardsService: RewardsService,
+    private commsService: CommsService,
+    private outcomesService: OutcomesService,
     private engagementsService: EngagementsService,
     private route: ActivatedRoute
   ) {
@@ -43,27 +45,53 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
-    this.route.paramMap
-      .pipe(
-        untilDestroyed(this),
-        switchMap((param: ParamMap) => this.campaignsService.getCampaign(param.get('id'))),
-        switchMap(campaign => combineLatest(
-          of(campaign),
-          this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-          this.getRewards(campaign.rewardsList)
-        )),
-        map(([campaign, engagement, rewardsList]) => ({
-          ...campaign,
-          template: engagement,
-          rewardsList
-        }))
-      ).subscribe(
-        campaign => {
-          this.campaign = campaign;
-          this.store.updateCampaign(this.campaign);
-        },
-        (err) => console.log(err)
-      );
+    const campaignId = this.route.snapshot.params.id;
+    const params: HttpParamsOptions = {
+      'filter[campaign_entity_id]': campaignId
+    };
+    if (campaignId) {
+      combineLatest(
+        this.campaignsService.getCampaign(campaignId),
+        this.commsService.getCommsTemplate(params).pipe(
+          map((comms: IComm[]) => comms[0])
+        ),
+        this.commsService.getCommsEvents(params).pipe(
+          map((comms: IComm[]) => comms[0])
+        ),
+        this.outcomesService.getOutcomes(params)).pipe(
+          map(
+            ([campaign, commTemplate, commEvent, outcomes]:
+              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+                ...campaign,
+                channel: {
+                  type: campaign.channel.type,
+                  ...commTemplate,
+                  ...commEvent
+                },
+                rewardsList: outcomes
+              })
+          ),
+          switchMap(campaign => combineLatest(
+            of(campaign),
+            this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+            this.getRewards(campaign.rewardsList)
+          )),
+          map(([campaign, engagement, rewards]) => ({
+            ...campaign,
+            template: engagement,
+            rewardsOptions: {
+              rewards
+            }
+          }))
+        ).subscribe(
+          campaign => {
+            this.campaign = campaign;
+            console.log(this.campaign);
+            this.store.updateCampaign(this.campaign);
+          },
+          (err) => console.log(err)
+        );
+    }
   }
 
   private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
@@ -71,8 +99,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       return of([]);
     }
     return combineLatest(...rewardsList.map(
-      reward => this.rewardsService.getRewardToForm(reward.result_id).pipe(
-        map(rewardData => ({ ...rewardData, probability: reward.probability }))
+      reward => this.rewardsService.getReward(reward.resultId).pipe(
+        map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
       )
     ));
   }
