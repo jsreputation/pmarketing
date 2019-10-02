@@ -1,10 +1,38 @@
 <div class="setup-form">
-    Number of slots
-    <mat-slider min="3" max="10" #nbStamps value="10"></mat-slider>
-    Number of stamps
-    <mat-slider min="0" max="nbStamps.value" #nbSlots></mat-slider>
+  Number of slots
+  <mat-slider min="3" max="10" #nbSlots thumbLabel value="10"></mat-slider>
+  Number of stamps
+  <mat-slider
+    min="0"
+    [max]="nbSlots.value"
+    step="1"
+    thumbLabel
+    #nbStamps
+  ></mat-slider>
+  Number of stamps Redeemed
+  <mat-slider
+    min="0"
+    [max]="nbStamps.value"
+    step="1"
+    thumbLabel
+    #nbStampsRedeemed
+  ></mat-slider>
 </div>
-<perx-core-puzzle-collect-stamps [nbSlots]="nbStamps.value" [preStampImg]="'assets/stamps/pre_stamp.png'"
-    [postStampImg]="'assets/stamps/post_stamp_redeemed.png'" [rewardPreStamp]="'assets/stamps/pre_reward.png'"
-    [rewardPostStamp]="'assets/stamps/post_reward.png'">
+<perx-core-puzzle-collect-stamps
+  [nbSlots]="nbSlots.value"
+  [stamps]="stamps"
+  [preStampImg]="'assets/stamps/pre_stamp.png'"
+  [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
+  [rewardPreStamp]="'assets/stamps/pre_reward.png'"
+  [rewardPostStamp]="'assets/stamps/post_reward.png'"
+  [rewards]="rewardArr"
+>
 </perx-core-puzzle-collect-stamps>
+
+<p>Reward Position</p>
+<div #cbContainer class="checkboxContainer">
+  <mat-checkbox
+    *ngFor="let slot of arrayFromNumber(nbSlots.value); let i = index"
+    >{{ i + 1 }}</mat-checkbox
+  >
+</div>
