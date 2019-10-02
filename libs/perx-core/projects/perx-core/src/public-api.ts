@@ -11,6 +11,12 @@ export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
 /**
+ * Merchants Admin
+ */
+export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
+export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
+
+/**
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
@@ -127,6 +133,7 @@ export {
 export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
+export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
 

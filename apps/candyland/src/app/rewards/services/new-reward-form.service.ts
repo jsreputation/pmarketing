@@ -31,9 +31,9 @@ export class NewRewardFormService {
             codeFormat: [null],
             length: [null]
           }),
-          // uniqueUserUploadCode: this.fb.group({
-          //   file: []
-          // }),
+          uniqueUserUploadCode: this.fb.group({
+            //   file: []
+          })
           // merchantPIN: this.fb.group({
           //   code: [null]
           // })
@@ -80,17 +80,17 @@ export class NewRewardFormService {
       //   controls: [form.get('vouchers.voucherCode.merchantPIN')]
       // },
       {
-        condition: form.get('vouchers.voucherCode.type').value === 'single_code',
+        condition: form.get('vouchers.voucherCode.type').value === 'single_code' || form.get('rewardInfo.redemptionType').value === 'Merchant PIN',
         controls: [form.get('vouchers.voucherCode.singleCode')]
       },
       {
         condition: form.get('vouchers.voucherCode.type').value === 'system_generated',
         controls: [form.get('vouchers.voucherCode.uniqueGeneratedCode')]
       },
-      // {
-      //   condition: form.get('vouchers.voucherCode.type').value === 'system_generated',
-      //   controls: [form.get('vouchers.voucherCode.uniqueUserUploadCode')]
-      // },
+      {
+        condition: form.get('vouchers.voucherCode.type').value === 'user_uploaded' && form.get('rewardInfo.redemptionType').value !== 'Merchant PIN',
+        controls: [form.get('vouchers.voucherCode.uniqueUserUploadCode')]
+      },
       {
         condition: form.get('vouchers.voucherValidity.type').value === 'period',
         controls: [form.get('vouchers.voucherValidity.period')]

@@ -11,6 +11,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest, iif, of } from 'rxjs';
+import { IComm, IOutcome, ICampaign } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-campaign',

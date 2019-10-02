@@ -1,5 +1,7 @@
 import * as moment from 'moment';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
+import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 
 export class CampaignsHttpAdapter {
   // tslint:disable
@@ -23,7 +25,7 @@ export class CampaignsHttpAdapter {
     }
   }
 
-  public static transformAPIResponseToCampaign(data: ICampaignAPI): ICampaign {
+  public static transformAPIResponseToCampaign(data: IJsonApiItem<ICampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
       id: data.id,
@@ -48,7 +50,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): ICampaignAPI {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<ICampaignAttributes> {
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);
@@ -57,6 +59,7 @@ export class CampaignsHttpAdapter {
         content: data.channel.message
       },
       event: {
+        provider_id: 1,
         send_at: data.channel.schedule ? moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() : '',
         channel: data.channel.type
       }

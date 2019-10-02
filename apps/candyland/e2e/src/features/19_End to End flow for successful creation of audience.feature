@@ -15,5 +15,5 @@ Scenario: Verifying the functionality of manage list feature
   Given 10_I am on the audience page.
   And   10_I select a user
   And   10_I click on the manage list option
-  When  10_i select an option for the audience list
+  When  10_I select an option for the audience list
   Then  10_I should see the change reflected for the user selected.

@@ -21,7 +21,7 @@ export class CreateImageDirective {
     return this.downloadImage()
       .pipe(
         switchMap((data: any) => {
-          return this.uploadFileService.uploadFile(data);
+          return this.uploadFileService.uploadImage(data);
         })
       );
   }

@@ -1,9 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationsService, ILocation } from '@perx/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import {
+  LocationsService,
+  ILocation,
+  IMerchantsService,
+  IMerchant,
+} from '@perx/core';
+
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+
+import {
+  PageAppearence,
+  PageProperties,
+  BarSelectedItem,
+} from '../page-properties';
 
 export interface ITag {
   name: string;
@@ -22,18 +42,24 @@ export interface IData {
 export class FindPharmacyComponent implements OnInit, PageAppearence {
   public key: string = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
   public locations: Observable<ILocation[]>;
+  public merchants: Observable<IMerchant[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
-
+  public headerFn: (location: ILocation) => Observable<string>;
   constructor(
     private locationsService: LocationsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private merchantService: IMerchantsService,
   ) { }
 
   public ngOnInit(): void {
-    this.locations = this.locationsService.getAllLocations();
+    this.headerFn = (location: ILocation) => location.merchantName ? of(location.merchantName) :
+      location.merchantId ? this.merchantService.getMerchant(location.merchantId)
+        .pipe(map((merchant: IMerchant) => merchant.name)) : of(location.name);
+    this.merchants = this.merchantService.getAllMerchants();
+    this.locations = this.locationsService.getAllLocations(this.merchants);
 
-    this.locationsService.getTags().subscribe((res) => {
+    this.locationsService.getTags(this.merchants).subscribe((res) => {
       this.tags = res.map(tag => ({name: tag, isSelected: false}));
     });
   }
@@ -41,7 +67,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
   public openDialog(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
       width: '35rem',
-      data: {tags: this.tags}
+      data: { tags: this.tags }
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -55,7 +81,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
 
   public filterLocations(): void {
     const filteredTags = this.tags.filter(tag => tag.isSelected).map(tag => tag.name);
-    this.locations = this.locationsService.getAllLocations(filteredTags);
+    this.locations = this.locationsService.getAllLocations(this.merchants, filteredTags);
   }
 
   public getPageProperties(): PageProperties {

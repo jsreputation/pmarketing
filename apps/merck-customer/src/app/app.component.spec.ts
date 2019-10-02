@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -36,7 +37,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MatSnackBarModule,
         MatIconModule,
-        MatToolbarModule
+        MatToolbarModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         AppComponent
