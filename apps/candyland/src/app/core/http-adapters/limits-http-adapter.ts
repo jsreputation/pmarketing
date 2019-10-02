@@ -1,4 +1,6 @@
 import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 enum LimitsDurationToAPIMapping {
   day = 'days',
   week = 'weeks',
@@ -11,12 +13,14 @@ enum LimitsDurationFromAPIMapping {
   months = 'month'
 }
 export class LimitsHttpAdapter {
-  public static transformAPIResponseToLimit(data: ILimitApi, type: string): ILimit {
+  public static transformAPIResponseToLimit(
+    data: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    type: string): ILimit {
     const engagementType = EngagementTypeFromAPIMapping[type];
     let dataAtt;
     switch (engagementType) {
       case 'game':
-        dataAtt = data.attributes as IGameLimitAPIAttributes;
+        dataAtt = data.attributes as IGameLimitAttributes;
         return {
           id: data.id,
           times: dataAtt.max_plays_in_period,
@@ -25,7 +29,7 @@ export class LimitsHttpAdapter {
       case 'survey':
       case 'instant_reward':
       case 'stamps':
-        dataAtt = data.attributes as ISurveyLimitAPIAttributes | IInstantOutcomeLimitAPIAttributes;
+        dataAtt = data.attributes as ISurveyLimitAttributes | IInstantOutcomeLimitAttributes;
         return {
           id: data.id,
           times: dataAtt.max_responses_per_user
@@ -38,7 +42,7 @@ export class LimitsHttpAdapter {
     type: string,
     campaignId: number,
     engagementId: number
-  ): ILimitApi {
+  ): IJsonApiPostData<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes> {
     const engagementType = EngagementTypeFromAPIMapping[type];
     switch (engagementType) {
       case 'game':
