@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  LOCALE_ID,
+  // LOCALE_ID,
   NgModule,
   APP_INITIALIZER
 } from '@angular/core';
@@ -134,7 +134,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     })
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'zh' },
+    // { provide: LOCALE_ID, useValue: 'zh' },
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
   ],
   bootstrap: [AppComponent],
