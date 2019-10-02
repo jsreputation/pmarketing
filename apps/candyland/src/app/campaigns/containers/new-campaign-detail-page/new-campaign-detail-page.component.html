@@ -44,7 +44,7 @@
         <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
-      <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
+      <cl-chip-list class="card-row" [addOnBlur]="isFirstInit && triggerLabelsChip" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
     </div>
   </mat-expansion-panel>
   <!--Select channel-->

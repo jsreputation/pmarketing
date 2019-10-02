@@ -1,8 +1,8 @@
-<aside class="dialog" role="dialog">
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-createMerchant">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title">
-      <span *ngIf="data; else creatTitle">Edit Merchant</span>
-      <ng-template #creatTitle>
+      <span *ngIf="data; else creatTitle" id="dialogTitle-createMerchant">Edit Merchant</span>
+      <ng-template #creatTitle id="dialogTitle-createMerchant">
         <span>Create Merchant</span>
       </ng-template>
     </h2>

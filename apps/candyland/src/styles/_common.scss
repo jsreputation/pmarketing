@@ -101,6 +101,12 @@ h1, h2, h3, h4, h5, p {
     margin-right: auto;
   }
 
+  &.form-limiter {
+    max-width: 113.2rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .mat-stepper-horizontal {
     background-color: inherit;
     padding: 0;
