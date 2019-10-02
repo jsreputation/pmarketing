@@ -12,6 +12,8 @@ Before( () => {
 
 // Ensure that setting tab is present
 Then(/^1_The setting tab should be present.$/, async () => {
+  await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
   // waiting for settings tab to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(6)), 5000);
@@ -21,6 +23,8 @@ Then(/^1_The setting tab should be present.$/, async () => {
 
 // Ensure that clicking on the settings tab leads to the general settings page
 When(/^2_I click on the settings tab$/, async () => {
+  await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
   await browser.waitForAngularEnabled(false);
   // waiting for settings tab to load
@@ -39,6 +43,8 @@ Then(/^2_I should be navigated to the general settings page.$/, async () => {
 // Ensure that settings page have relevant element
 Given(/^3_I am on the general settings page$/, async () => {
   await generalSettingsApp.navigateToGeneralSettings();
+  await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 Then(/^3_I should see the relevant elements for general settings page.$/, async () => {

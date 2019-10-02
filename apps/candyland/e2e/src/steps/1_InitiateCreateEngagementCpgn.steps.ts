@@ -32,17 +32,18 @@ Given(/^1_I am on the dashboard page.$/, async () => {
    // pressing the enter key on the accountID field to log in
   await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
+  await DashboardPage.navigateToDashboard();
+  await browser.sleep(3000);
   // await DashboardPage.navigateToDashboard();
-  // await browser.sleep(3000);
-  await DashboardPage.navigateToDashboard();
   // walk around for the walk me widget
-  await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
-  await element(by.className('trg-499259')).click();
-  await browser.sleep(3000);
-  await DashboardPage.navigateToDashboard();
-  await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
-  await element(by.className('walkme-custom-balloon-button-text')).click();
-  await browser.sleep(3000);
+  // await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
+  // await element(by.className('trg-499259')).click();
+  // await browser.sleep(3000);
+  // await DashboardPage.navigateToDashboard();
+  // await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
+  // await element(by.className('walkme-custom-balloon-button-text')).click();
+  // await browser.sleep(3000);
 
 });
 
@@ -56,8 +57,8 @@ Then(/^1_I should see the engagment tab.$/, async () => {
 });
 
 // Clicking on the Engagment tabs leads to the engagment page.
-Given(/^2_that I am on the dashboard page.$/, () => {
-  // await DashboardPage.navigateToDashboard();
+Given(/^2_that I am on the dashboard page.$/, async () => {
+  await DashboardPage.navigateToDashboard();
   // await browser.sleep(2000);
 });
 
