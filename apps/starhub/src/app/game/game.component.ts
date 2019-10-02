@@ -68,7 +68,7 @@ export class GameComponent implements OnInit {
           }
 
           this.analytics.addEvent({
-            pageName: 'rewards:game',
+            pageName: `rewards:game:${this.title}`,
             pageType: PageType.static,
             siteSectionLevel2: 'rewards:game',
             siteSectionLevel3: 'rewards:game'
