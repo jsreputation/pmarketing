@@ -20,6 +20,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public form: FormGroup;
   public config: any;
   public isFirstInit: boolean;
+  public triggerLabelsChip: boolean;
   public campaignId: string;
   @Input()
   public pools;
@@ -94,8 +95,13 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         .pipe(untilDestroyed(this))
         .subscribe(data => {
           if (data && data.campaignInfo && this.isFirstInit) {
-            this.isFirstInit = false;
+            const select = data.audience.select.toString();
+            data.audience = { ...data.audience, select };
             this.form.patchValue(data);
+            if (data.campaignInfo.labels) {
+              this.triggerLabelsChip = true;
+            }
+            this.isFirstInit = false;
           }
         });
     } else {
