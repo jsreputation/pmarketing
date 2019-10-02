@@ -12,10 +12,7 @@ export class InstantRewardsService {
   constructor(private instantRewardsHttpService: InstantRewardsHttpService) {
   }
 
-  public getInstantRewardData(): Observable<{
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  }> {
+  public getInstantRewardData(): Observable<IGameDefaultData> {
     return this.instantRewardsHttpService.getRewardData();
   }
 

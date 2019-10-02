@@ -117,7 +117,7 @@ export class AudiencesHttpAdapter {
     }
   }
 
-  public static transformAudiencesVoucher(data: any): any {
+  public static transformAudiencesVoucher(data: any): IAudienceVoucher {
     return {
       id: data.id,
       batchId: data.attributes.batch_id,

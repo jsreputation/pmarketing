@@ -286,7 +286,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTreeForm(data: IEngagementApi): any {
+  public static transformShakeTreeForm(data: IEngagementApi): IShakeTree {
     return {
       name: data.attributes.title,
       gameType: data.attributes.game_type,
@@ -300,7 +300,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformPinataForm(data: IEngagementApi): any {
+  public static transformPinataForm(data: IEngagementApi): IPinataForm {
     return {
       id: data.id,
       type: data.type,

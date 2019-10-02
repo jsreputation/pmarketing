@@ -25,9 +25,8 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public userId: string;
-  public user;
-  // public vouchers;
-  public tabsFilterConfig;
+  public user: any;
+  public tabsFilterConfig: OptionConfig[] ;
   public dataSource: CustomDataSource<any>;
 
   constructor(

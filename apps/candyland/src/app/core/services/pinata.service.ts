@@ -18,7 +18,7 @@ export class PinataService {
     return this.pinataHttpService.getPinataData();
   }
 
-  public getPinata(id: string): Observable<any> {
+  public getPinata(id: string): Observable<IPinataForm> {
     return this.pinataHttpService.getPinata(id).pipe(
       map(response => EngagementHttpAdapter.transformPinataForm(response.data))
     );

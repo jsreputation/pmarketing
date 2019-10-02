@@ -22,9 +22,9 @@ export class ShakeTreeService {
     return this.shakeHttpService.getData();
   }
 
-  public getShakeTree(id: string): Observable<IResponseApi<IEngagementApi>> {
+  public getShakeTree(id: string): Observable<IShakeTree> {
     return this.shakeHttpService.getShakeTree(id).pipe(
-      map(response => EngagementHttpAdapter.transformShakeTreeForm(response.data))
+      map((response: any) => EngagementHttpAdapter.transformShakeTreeForm(response.data))
     );
   }
 

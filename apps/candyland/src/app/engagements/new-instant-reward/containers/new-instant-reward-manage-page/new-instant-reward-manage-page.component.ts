@@ -59,7 +59,6 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private instantRewardsService: InstantRewardsService,
-    // private engagementsService: EngagementsService,
     private routingState: RoutingStateService,
     private availableNewEngagementService: AvailableNewEngagementService,
     private route: ActivatedRoute,
@@ -166,7 +165,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       .subscribe(data => this.tenantSettings = data);
   }
 
-  private getRewardData(): Observable<any> {
+  private getRewardData(): Observable<IGameDefaultData> {
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
         untilDestroyed(this),

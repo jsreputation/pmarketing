@@ -27,7 +27,7 @@ export class AudiencesVouchersService implements ITableService {
         tap(response => vouchers = response),
         map(response => this.getUniqIds(response.data, 'source_id')),
         switchMap(idList => this.getRewardsMap(idList)),
-        map(rewardsMap => {
+        map((rewardsMap) => {
           vouchers.data = vouchers.data.map(voucher => {
             const formattedVoucher = AudiencesHttpAdapter.transformAudiencesVoucher(voucher);
             formattedVoucher.reward = rewardsMap[formattedVoucher.rewardId];

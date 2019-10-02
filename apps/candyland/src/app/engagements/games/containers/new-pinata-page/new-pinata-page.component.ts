@@ -29,7 +29,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     background: IGraphic[]
   };
   public tenantSettings: ITenantsProperties;
-  private destroy$ = new Subject();
+  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -169,7 +169,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handleRouteParams(): Observable<any> {
+  private handleRouteParams(): Observable<null | IPinataForm> {
     return this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
@@ -184,7 +184,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private checkGameType(pinata): void {
+  private checkGameType(pinata: IPinataForm): void {
     if (pinata && pinata.gameType !== 'tap') {
       console.warn('Wrong type of game!');
       this.router.navigateByUrl('/engagements');

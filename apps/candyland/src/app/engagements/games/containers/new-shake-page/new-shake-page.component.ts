@@ -35,7 +35,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   public selectGiftBox: IGraphic;
   public gameGift: AbstractControl;
-  private destroy$ = new Subject();
+  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -209,7 +209,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private checkGameType(shakeTree): void {
+  private checkGameType(shakeTree: IShakeTree): void {
     if (shakeTree && shakeTree.gameType !== 'shake') {
       console.warn('Wrong type of game!');
       this.router.navigateByUrl('/engagements');
