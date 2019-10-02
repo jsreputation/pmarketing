@@ -111,7 +111,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   private uploadImage(file: File): void {
-    this.uploadFileService.uploadFile(file)
+    this.uploadFileService.uploadImage(file)
       .subscribe((res: IUploadedFile) => {
           this.imgURL = res.url;
           this.loadedImg = true;

@@ -36,11 +36,7 @@ export class ManageListPopupComponent implements OnInit {
   }
 
   private getPools(): any {
-    const params: HttpParamsOptions = {
-      'page[number]': '1',
-      'page[size]': '20',
-    };
-    this.audiencesService.getAudiencesList(params)
+    this.audiencesService.getAudiencesList()
       .subscribe((data: any) => {
         this.pools = data;
         this.setSelectedPools();
