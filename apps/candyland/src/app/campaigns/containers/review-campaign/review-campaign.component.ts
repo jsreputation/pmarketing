@@ -6,6 +6,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
+import { IComm, ICampaign, IOutcome } from '@perx/whistler';
 
 @Component({
   selector: 'cl-review-campaign',
