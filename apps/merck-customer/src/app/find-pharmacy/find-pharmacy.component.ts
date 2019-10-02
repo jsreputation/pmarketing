@@ -56,7 +56,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
     this.headerFn = (location: ILocation) => location.merchantName ? of(location.merchantName) :
       location.merchantId ? this.merchantService.getMerchant(location.merchantId)
         .pipe(map((merchant: IMerchant) => merchant.name)) : of(location.name);
-    this.merchants = this.merchantsService.getAllMerchants();
+    this.merchants = this.merchantService.getAllMerchants();
     this.locations = this.locationsService.getAllLocations(this.merchants);
 
     this.locationsService.getTags(this.merchants).subscribe((res) => {
