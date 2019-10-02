@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Observable,
-  throwError,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 import { IGameService } from './igame.service';
 import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome, IPlayOutcome } from './game.model';
-import {
-  catchError,
-  map,
-} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
@@ -218,16 +212,7 @@ export class V4GameService implements IGameService {
     return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
-        map((games: Game[]) => {
-          if (games.length === 0) {
-            throw new Error('Games list is empty');
-          }
-          return games.map((game: Game): IGame => V4GameService.v4GameToGame(game));
-        }),
-        catchError((err) =>
-          // rethrow error for subscriber to handle
-           throwError(err)
-        )
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
       );
   }
 }
