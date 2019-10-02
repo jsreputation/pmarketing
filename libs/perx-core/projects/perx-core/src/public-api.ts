@@ -166,3 +166,5 @@ export { OutcomeModule } from './lib/outcome/outcome.module';
  * Outcome
  */
 export { PagesModule } from './lib/pages/pages.module';
+export { AccountComponent } from './lib/pages/account/account.component';
+export { ContactUsComponent } from './lib/pages/contact-us/contact-us.component';

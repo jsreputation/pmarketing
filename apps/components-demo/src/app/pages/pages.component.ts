@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { INavLink } from '../navlink.model';
 import { SubscriptionLike } from 'rxjs';
 import { MatDialog } from '@angular/material';
@@ -9,7 +9,7 @@ import { NotificationService, PopupComponent } from '@perx/core';
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss']
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit, OnDestroy {
   public navLinks: INavLink[] = [
     { path: 'account', label: 'Account' },
     { path: 'contact-us', label: 'Cotact Us' }
