@@ -1,3 +1,6 @@
+import { IJsonApiPatchData, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
+import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
+
 export class AudiencesHttpAdapter {
   // tslint:disable
   public static transformCreateUser(data: any): any {
@@ -107,23 +110,6 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  // private static transformAudiencesUser(data: any): IAUser {
-  //   return {
-  //     id: data.relationships.users.data.id,
-  //     type: data.relationships.users.data.type,
-  //     self: data.relationships.users.data.links.self,
-  //     urn: data.relationships.users.data.attributes.urn,
-  //     created_at: data.relationships.users.data.attributes.created_at,
-  //     updated_at: data.relationships.users.data.attributes.updated_at,
-  //     title: data.relationships.users.data.attributes.title,
-  //     first_name: data.relationships.users.data.attributes.first_name,
-  //     last_name: data.relationships.users.data.last_name,
-  //     phone_number: data.relationships.users.data.phone_number,
-  //     email_address: data.relationships.users.data.email_address,
-  //     primary_identifier: data.relationships.users.data.primary_identifier
-  //   };
-  // }
-
   public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
     return {
       data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
@@ -147,7 +133,7 @@ export class AudiencesHttpAdapter {
     return stringDate ? new Date(stringDate) : null;
   }
 
-  public static transformVoucherAssignedToApi(source: string, assigned: string): any {
+  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiPostData<IAssignRequestAttributes> {
     return {
       type: "assigneds",
       attributes: {
@@ -158,7 +144,7 @@ export class AudiencesHttpAdapter {
     }
   }
 
-  public static transformVoucherPatchToApi(id: string, endData: string): any {
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiPatchData<IAssignedAttributes> {
     return {
       id: id,
       type: "assigneds",

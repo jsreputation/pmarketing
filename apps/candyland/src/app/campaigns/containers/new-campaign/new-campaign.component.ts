@@ -45,7 +45,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.currentCampaign$.subscribe(data => console.log(data));
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
@@ -95,30 +94,32 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public save(): void {
     this.store.updateCampaign(this.form.value);
     let saveCampaign$;
-    let updateLimit$;
+    let updateLimitData$;
+    const updateLimit$ = campaign => this.limitsService.updateLimits(
+      this.store.currentCampaign.limits.id,
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
+    const createLimit$ = campaign => this.limitsService.createLimits(
+      this.store.currentCampaign.limits,
+      this.store.currentCampaign.template.attributes_type,
+      campaign.data.id,
+      this.store.currentCampaign.template.id
+    );
 
     if (this.campaign) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
-      updateLimit$ = campaign => this.limitsService.updateLimits(
-        this.store.currentCampaign.limits.id,
-        this.store.currentCampaign.limits,
-        this.store.currentCampaign.template.attributes_type,
-        campaign.data.id,
-        this.store.currentCampaign.template.id
-      );
+      updateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
     } else {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
-      updateLimit$ = campaign => this.limitsService.createLimits(
-        this.store.currentCampaign.limits,
-        this.store.currentCampaign.template.attributes_type,
-        campaign.data.id,
-        this.store.currentCampaign.template.id
-      );
+      updateLimitData$ = createLimit$;
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
       switchMap(
-        (res) => iif(hasLimitData, updateLimit$(res), of(res))
+        (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
     ).subscribe(
       data => {
@@ -180,22 +181,23 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
         this.commsService.getCommsTemplate(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.commsService.getCommsEvents(params).pipe(
-          map(comms => comms[0])
+          map((comms: IComm[]) => comms[0])
         ),
         this.outcomesService.getOutcomes(params)).pipe(
           map(
-            ([campaign, commTemplate, commEvent, outcomes]) => ({
-              ...campaign,
-              channel: {
-                type: campaign.channel.type,
-                ...commTemplate,
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+            ([campaign, commTemplate, commEvent, outcomes]:
+              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+                ...campaign,
+                channel: {
+                  type: campaign.channel.type,
+                  ...commTemplate,
+                  ...commEvent
+                },
+                rewardsList: outcomes
+              }))
         ).subscribe(
           campaign => {
             this.campaign = Object.assign({}, campaign);
