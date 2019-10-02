@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation,  LocationsService, RewardsService, IReward } from '@perx/core';
+import { ILocation, LocationsService, RewardsService, IReward } from '@perx/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
