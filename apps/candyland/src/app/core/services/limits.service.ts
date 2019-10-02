@@ -13,17 +13,18 @@ export class LimitsService {
   constructor(private limitsHttpsService: LimitsHttpsService) {
   }
 
-  public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit> {
+  public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.limitsHttpsService.getLimits(httpParams, engagementType).pipe(
-      map(response => response.data),
-      map(response => response.map((limit: ILimitApi) => LimitsHttpAdapter.transformAPIResponseToLimit(limit)))
+      map((response: IResponseApi<ILimitApi[]>) => response.data),
+      map((response: ILimitApi[]) => response.map(
+        (limit: ILimitApi) => LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
     );
   }
 
   public updateLimits(id: number, data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
-    return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData }}, type);
+    return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData } }, type);
   }
 
   public createLimits(data: any, type: string, campaignId: number, engagementId: number): Observable<any> {

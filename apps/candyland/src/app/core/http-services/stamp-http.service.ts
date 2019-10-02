@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
+import { IJsonApiPostItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class StampHttpService {
     }>('assets/actives/stamps/stamps-data.json');
   }
 
-  public createStamp(data: any): Observable<IResponseApi<IEngagementApi>> {
+  public createStamp(data: IJsonApiPostItem<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.stampsPath + '/', data);
   }
 
