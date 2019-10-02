@@ -62,7 +62,7 @@ describe('V4GameService', () => {
         done();
       });
 
-      //err if games is empty
+      // err if games is empty
       /*.subscribe(
         () => { },
         (err: any) => {
