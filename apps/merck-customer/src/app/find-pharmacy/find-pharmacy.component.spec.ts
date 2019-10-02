@@ -1,12 +1,16 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
-import { LocationModule, LocationsService } from '@perx/core';
+import { LocationModule, LocationsService, IMerchantsService } from '@perx/core';
 import { MatTabsModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+
+const iMerchantsServiceStub = {
+  getMerchant: () => of(null)
+};
 
 describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
@@ -52,7 +56,8 @@ describe('FindPharmacyComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: LocationsService, useValue: locationServiceStub }
+        { provide: LocationsService, useValue: locationServiceStub },
+        { provide: IMerchantsService, useValue: iMerchantsServiceStub }
       ]
     })
       .compileComponents();
@@ -90,7 +95,6 @@ describe('FindPharmacyComponent', () => {
       tick();
       fixture.detectChanges();
       expect(locationsTagsSpy).toHaveBeenCalled();
-      console.log(component.tags);
       expect(component.tags).toEqual([{ name: 'Drug', isSelected: false }, { name: 'Medical Supply', isSelected: false }]);
     }));
   });

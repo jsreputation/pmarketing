@@ -145,7 +145,7 @@ describe('RewardComponent', () => {
       component.ngOnInit();
       fixture.detectChanges();
       const translateService = TestBed.get(TranslateService);
-      spyOn(translateService, 'get').and.returnValues(of('Your points balance is'), of('points'));
+      spyOn(translateService, 'get').and.returnValues(of('Your points balance is'), of('points'), of('close'));
       dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
       component.buyReward();
       expect(dialogSpy).toHaveBeenCalledWith(RewardConfirmComponent, {
@@ -158,7 +158,8 @@ describe('RewardComponent', () => {
       expect(notificationServiceSpy).toHaveBeenCalledWith({
         title: '[Reward Title]',
         text: `Your points balance is ${29} points`,
-        afterClosedCallBack: component
+        afterClosedCallBack: component,
+        buttonTxt: 'close'
       });
     });
 
