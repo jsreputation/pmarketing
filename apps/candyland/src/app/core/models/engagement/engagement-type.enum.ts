@@ -6,13 +6,6 @@ export enum EngagementType {
   instantReward = 'instant_reward'
 }
 
-export enum EngagementTypeFromAPIMapping {
-  survey = 'survey',
-  game = 'game',
-  instant_outcome = 'instant_reward',
-  loyalty = 'stamps'
-}
-
 export enum EngagementTypeAPIMapping {
   survey = 'survey',
   game = 'game',
