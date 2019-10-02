@@ -16,9 +16,8 @@ export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(
     data: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
     type: string): ILimit {
-    const engagementType = EngagementTypeFromAPIMapping[type];
     let dataAtt;
-    switch (engagementType) {
+    switch (type) {
       case 'game':
         dataAtt = data.attributes as IGameLimitAttributes;
         return {
@@ -43,8 +42,7 @@ export class LimitsHttpAdapter {
     campaignId: number,
     engagementId: number
   ): IJsonApiPostData<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes> {
-    const engagementType = EngagementTypeFromAPIMapping[type];
-    switch (engagementType) {
+    switch (type) {
       case 'game':
         return {
           type: 'limits',
