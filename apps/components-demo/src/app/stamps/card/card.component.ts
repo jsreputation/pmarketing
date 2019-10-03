@@ -12,6 +12,7 @@ import { startWith } from 'rxjs/operators';
 export class CardComponent implements OnInit, AfterViewInit {
   public stamps: PuzzleCollectStamp[];
   public rewardArr: PuzzleCollectReward[];
+  public availStamps: number;
   public stampsRedeemedNumber: number;
   @ViewChild('nbStamps', { static: true }) public nbStamps: MatSlider;
   @ViewChild('nbStampsRedeemed', { static: true }) public nbStampsRedeemed: MatSlider;
@@ -20,6 +21,7 @@ export class CardComponent implements OnInit, AfterViewInit {
   constructor() {
     this.stamps = [];
     this.rewardArr = [];
+    this.availStamps = 0;
   }
 
   public ngOnInit(): void {
@@ -35,6 +37,7 @@ export class CardComponent implements OnInit, AfterViewInit {
             id: ++index,
             state: index <= this.stampsRedeemedNumber ? PuzzleCollectStampState.redeemed : PuzzleCollectStampState.issued
           }));
+        this.availStamps = this.stamps.length - this.stampsRedeemedNumber;
       });
   }
 

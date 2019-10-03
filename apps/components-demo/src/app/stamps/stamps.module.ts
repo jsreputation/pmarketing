@@ -4,7 +4,7 @@ import { StampsRoutingModule } from './stamps-routing.module';
 import { CardComponent } from './card/card.component';
 import { StampsComponent } from './stamps/stamps.component';
 import { PuzzlesModule } from '@perx/core';
-import { MatSliderModule, MatCheckboxModule } from '@angular/material';
+import { MatSliderModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [CardComponent, StampsComponent],
@@ -13,6 +13,7 @@ import { MatSliderModule, MatCheckboxModule } from '@angular/material';
     StampsRoutingModule,
     MatSliderModule,
     MatCheckboxModule,
+    MatIconModule,
     PuzzlesModule
   ]
 })

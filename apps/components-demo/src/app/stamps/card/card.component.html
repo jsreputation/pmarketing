@@ -18,6 +18,9 @@
     #nbStampsRedeemed
   ></mat-slider>
 </div>
+<div class="stampsLeft">
+  <span>{{availStamps}} stamps<mat-icon>local_activity</mat-icon> left</span>
+</div>
 <perx-core-puzzle-collect-stamps
   [nbSlots]="nbSlots.value"
   [stamps]="stamps"
