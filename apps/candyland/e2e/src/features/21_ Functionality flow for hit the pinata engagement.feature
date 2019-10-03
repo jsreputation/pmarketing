@@ -10,7 +10,7 @@ Scenario: Ensure functionality of headline and and sub-headline message
 Scenario: Verifying the fucnctionality of the game graphic options
   Given 5_I am on the hit the pinata creation page
   When  5_I select an option for the pinata and the background.
-  Then  5_I should see the test string in the preview element.
+  Then  5_I should see the change in the preview element.
 @runThis
 Scenario: Verifying the functionality of the file upload field for hit the pinata.
   Given 6_I am on the hit the pinata creation page.
