@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-users-roles-list',
@@ -7,23 +8,23 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./users-roles-list.component.scss']
 })
 export class UsersRolesListComponent implements AfterViewInit {
-  public DATE_FORMAT = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<any>;
-  @Input() public displayedColumns = ['name', 'role', 'invitedDate', 'actions'];
+  public DATE_FORMAT: string = 'mediumDate';
+  @Input() public dataSource: CustomDataSource<IAMUser>;
+  @Input() public displayedColumns: string[] = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @Output() public delete = new EventEmitter<number>();
-  @Output() public edit = new EventEmitter<number>();
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
+  @Output() public delete = new EventEmitter<string>();
+  @Output() public edit = new EventEmitter<IAMUser>();
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    this.dataSource.registerSort(this.sort);
   }
 
-  public editItem(id: number): void {
-    this.edit.emit(id);
+  public editItem(item: IAMUser): void {
+    this.edit.emit(item);
   }
 
-  public deleteItem(id: number): void {
+  public deleteItem(id: string): void {
     this.delete.emit(id);
   }
 

@@ -1,13 +1,21 @@
+import { AccountModule } from './account/account.module';
+import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
   VouchersModule,
-  CognitoModule,
-  OauthModule,
+  AuthenticationModule,
   GameModule,
-  UtilsModule
+  UtilsModule,
+  ProfileModule,
+  ProfileService,
+  ConfigModule,
+  RewardsModule,
+  MerchantsModule as PerxMerchantsModule,
+  CampaignModule as PerxCampaignModule,
+  ThemesService
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -31,8 +39,15 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
+import { profile } from './mock/profile.mock';
+import { RewardComponent } from './reward/reward.component';
+import { ContentComponent } from './content/content.component';
+import { HttpClientModule } from '@angular/common/http';
+
+const profileServiceStub = {
+  whoAmI: () => of(profile)
+};
 
 @NgModule({
   declarations: [
@@ -42,18 +57,23 @@ import { HistoryComponent } from './history/history.component';
     RedeemComponent,
     LoadingComponent,
     VoucherDetailComponent,
-    AccountComponent,
-    HistoryComponent
+    HistoryComponent,
+    RewardComponent,
+    ContentComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
-    VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
+    VouchersModule,
+    AuthenticationModule,
+    GameModule,
+    AccountModule,
+    ProfileModule,
     BrowserAnimationsModule,
+    RewardsModule,
+    PerxMerchantsModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
@@ -66,9 +86,14 @@ import { HistoryComponent } from './history/history.component';
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    PerxCampaignModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: ProfileService, useValue: profileServiceStub },
+    ThemesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

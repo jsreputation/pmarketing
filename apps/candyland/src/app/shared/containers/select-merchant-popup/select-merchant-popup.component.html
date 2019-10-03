@@ -1,0 +1,61 @@
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-selectMerchant">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title" id="dialogTitle-selectMerchant">Select Merchant</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <mat-dialog-content>
+    <section class="merchant-dialog-content">
+      <div class="merchant-list">
+        <!--filters-->
+        <cl-table-filters [dataSource]="dataSource" classList="block">
+          <ng-container *clTableFilter="'name'; let filter">
+            <cl-search-filter class="search-block" [control]="filter"
+                              placeholder="Search for merchants"></cl-search-filter>
+          </ng-container>
+        </cl-table-filters>
+        <!--table-->
+        <div class="merchant-list-wrapper">
+          <cl-list-merchant-view [dataSource]="dataSource"
+                                [displayedColumns]="displayedColumns"
+                                [selectable]="true"
+                                (selectedMerchant)="selectedMerchant($event)"
+          >
+          </cl-list-merchant-view>
+        </div>
+        <!--/table-->
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
+        <!--/ paginator-->
+      </div>
+    </section>
+  </mat-dialog-content>
+  <!--<mat-dialog-actions>-->
+  <footer class="merchant-dialog-actions"
+  >
+    <cl-button [classList]="'tertiary'"
+              class="actions-close"
+              (click)="close()"
+              [disableRipple]="true"
+    >
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button [classList]="'primary'"
+              [disable]="!selectMerchant"
+              (click)="add()"
+              [disableRipple]="true"
+    >
+        <span>
+          Add Merchant
+        </span>
+    </cl-button>
+  </footer>
+  <!--</mat-dialog-actions>-->
+</aside>

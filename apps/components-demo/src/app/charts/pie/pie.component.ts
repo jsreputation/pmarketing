@@ -9,7 +9,5 @@ import { singleData } from '../mock';
   styleUrls: ['./pie.component.scss']
 })
 export class PieComponent {
-  public view: number[] = [700, 400];
-
   public singleData: Observable<IData> = of(singleData);
 }

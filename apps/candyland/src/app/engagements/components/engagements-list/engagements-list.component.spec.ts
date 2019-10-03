@@ -55,7 +55,7 @@ describe('RewardsCampaignsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EngagementsListComponent);
     component = fixture.componentInstance;
-    component.dataSource = new MatTableDataSource<Engagement>();
+    component.dataSource = new MatTableDataSource<IEngagement>();
     fixture.detectChanges();
   });
 

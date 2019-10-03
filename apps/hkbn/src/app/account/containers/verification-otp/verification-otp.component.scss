@@ -1,0 +1,26 @@
+:host {
+  padding: 1.6rem;
+}
+
+.container {
+  padding-top: 4rem;
+  font-size: 1.4rem;
+
+  h2 {
+    font-weight: 900;
+    font-size: 1.8rem;
+  }
+
+  .subheading {
+    font-size: 1.4rem;
+    color: #494953;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0.8rem 0 2.2rem;
+  }
+
+  .resend-sms {
+    margin-top: 1.5rem;
+    color: #02b9a5;
+  }
+}

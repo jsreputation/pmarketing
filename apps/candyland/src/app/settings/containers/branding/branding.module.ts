@@ -6,6 +6,8 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatS
 import { SettingsMobilePreviewModule } from '../../components/settings-mobile-preview/settings-mobile-preview.module';
 import { ClColorPickerModule } from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
+import { SimpleMobileViewModule } from '@cl-shared';
+import { RewardsModule as PerxRewardsModule } from '@perx/core';
 
 @NgModule({
   declarations: [BrandingComponent],
@@ -16,7 +18,8 @@ import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload
     SettingsMobilePreviewModule,
     ClColorPickerModule,
     UploadGraphicModule,
-
+    SimpleMobileViewModule,
+    PerxRewardsModule,
     MatSelectModule,
     MatCardModule,
     MatRadioModule,

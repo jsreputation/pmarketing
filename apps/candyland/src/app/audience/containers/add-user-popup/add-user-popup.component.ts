@@ -1,6 +1,8 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ClValidators } from '@cl-helpers/cl-validators';
+import { AudiencesService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-add-user-popup',
@@ -8,29 +10,34 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./add-user-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddUserPopupComponent {
-
+export class AddUserPopupComponent implements OnInit {
   public form: FormGroup;
+  public pools: any;
   public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
       {title: 'Female', value: 'female'}
     ],
     country: [
-      {title: 'Male', value: 'male'},
-      {title: 'Female', value: 'female'}
+      {title: 'Country 1', value: 'country1'},
+      {title: 'Country 2', value: 'country2'}
     ],
     audienceList: [
       {title: 'Gold_users', value: 'Gold_users'},
       {title: 'Silver tier', value: 'Silver_tier'},
       {title: 'Bronze tier', value: 'Bronze_tier'}
-    ],
+    ]
   };
 
   constructor(public dialogRef: MatDialogRef<AddUserPopupComponent>,
               private fb: FormBuilder,
+              private audiencesService: AudiencesService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  public ngOnInit(): void {
     this.initForm();
+    this.getPools();
   }
 
   public close(): void {
@@ -38,17 +45,23 @@ export class AddUserPopupComponent {
   }
 
   public add(): void {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+    this.dialogRef.close(this.form.value);
   }
 
   private initForm(): void {
     this.form = this.fb.group({
-      firstName: [],
-      lastName: [],
-      email: [],
-      phone: [],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(50),
+        ClValidators.email]],
+      phone: [null, Validators.required],
       gender: [],
       birthday: [],
       race: [],
@@ -57,7 +70,16 @@ export class AddUserPopupComponent {
       city: [],
       state: [],
       audienceList: [],
-      file: [],
+      file: [null, [
+        // Validators.required
+      ]]
     });
+  }
+
+  private getPools(): any {
+    this.audiencesService.getAudiencesList()
+      .subscribe((data: any) => {
+        this.pools = data;
+      });
   }
 }

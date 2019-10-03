@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { SurveyService } from '@cl-core/services/survey.service';
+import { SurveyService } from '@cl-core/services';
 import { Observable } from 'rxjs';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
 
@@ -17,6 +17,7 @@ export class CreateMerchantFormComponent implements OnInit {
   public countriesList$: Observable<any>;
   constructor(private surveyService: SurveyService,
               private merchantFormService: MerchantFormService) { }
+  @Output() public removeBranch = new EventEmitter<number>();
 
   public ngOnInit(): void {
     this.getCountries();
@@ -38,25 +39,17 @@ export class CreateMerchantFormComponent implements OnInit {
     return this.formMerchant.get('image');
   }
 
-  public get onBranches(): AbstractControl {
-    return this.formMerchant.get('onBranches');
-  }
-
   public get branches(): FormArray {
     return (this.formMerchant.get('branches') as FormArray);
   }
 
-  public removeBranches(i?: number): void {
-    if (!i) {
-      this.branches.clear();
-      this.formMerchant.updateValueAndValidity();
-      return;
-    }
-    this.branches.removeAt(i);
+  public removeBranches(index: number): void {
+    this.removeBranch.emit(index);
   }
 
   public addBranch(): void {
     this.branches.push(this.merchantFormService.getMerchantBranchField());
+    this.formMerchant.updateValueAndValidity();
   }
 
   private getCountries(): void {

@@ -1,12 +1,11 @@
-<section class="page-header">
+<header class="page-header">
   <h1 class="title">{{merchant?.firstName}} {{merchant?.lastName}}</h1>
-  <div class="game-actions">
-    <cl-button (click)="close()" class="btn-cancel btn-right_padding" classList="third">Close</cl-button>
+  <div class="btn-group">
+    <cl-button (click)="close()" class="btn-cancel" classList="secondary">Close</cl-button>
     <cl-button (click)="edit()" classList="primary">Edit</cl-button>
   </div>
-
-</section>
-<section class="content flex">
+</header>
+<section class="content phonepreview-wrapper form-limiter">
   <div class="merchant-main-block">
     <mat-card class="game-graphic">
       <div class="merchant-wrap">
@@ -69,7 +68,7 @@
             State/Province
           </p>
           <p class="detail-block-text">
-            {{merchant.stateProvince}}
+            {{merchant.state}}
           </p>
         </div>
 
@@ -106,7 +105,7 @@
               {{branch.address}}
             </p>
             <p class="branch-contact-number detail-block-text">
-              {{branch.contactNumber}}
+              {{branch.phone}}
             </p>
           </div>
         </div>

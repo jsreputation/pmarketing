@@ -1,0 +1,43 @@
+:host {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  ::ng-deep {
+    .details {
+      padding: 0 !important;
+    }
+
+    .actions-container {
+      padding: 1.6rem 0 !important;
+    }
+
+    .voucher-container {
+      width: 100%;
+      overflow-y: scroll;
+    }
+
+    .section-content {
+      line-height: 2.5rem;
+    }
+
+    .section-heading {
+      margin-bottom: 1.6rem;
+    }
+  }
+}
+
+.container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+perx-core-voucher {
+  width: 100%;
+  padding: 0 1.6rem;
+  display: flex;
+  justify-content: space-between;
+}

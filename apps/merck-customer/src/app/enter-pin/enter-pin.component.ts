@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+
+export enum PinMode {
+  password = 'password',
+  register = 'register'
+}
 
 @Component({
   selector: 'mc-enter-pin',
   templateUrl: './enter-pin.component.html',
   styleUrls: ['./enter-pin.component.scss']
 })
-export class EnterPinComponent implements OnInit, PageProperties {
+export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
-  public pinMode: string = 'password'; // || 'register'
+  public pinMode: PinMode = PinMode.password;
   private mobileNo: string = null;
   public visibleNo: string = '';
 
@@ -20,19 +25,24 @@ export class EnterPinComponent implements OnInit, PageProperties {
     private route: ActivatedRoute,
     private authService: AuthenticationService
   ) {
-    if (this.router.getCurrentNavigation() !== null
-      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-      this.mobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
-      this.visibleNo = this.encodeMobileNo(this.mobileNo);
-    }
+      const currentNavigation = this.router.getCurrentNavigation();
+      if (!currentNavigation) {
+        return;
+      }
+
+      if (currentNavigation.extras.state) {
+        this.mobileNo = currentNavigation.extras.state.mobileNo;
+        this.visibleNo = this.encodeMobileNo(this.mobileNo);
+      }
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   private encodeMobileNo(mobileNo: string): string {
@@ -50,19 +60,26 @@ export class EnterPinComponent implements OnInit, PageProperties {
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if (params.get('type') !== null) {
-        this.pinMode = params.get('type');
-      }
+          this.pinMode = params.get('type') as PinMode;
+        }
     });
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === PinMode.register) {
+      this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
+        (response) => {
+          console.log(`Response: ${response.message}`);
+        }
+      );
+    } else if (this.pinMode === PinMode.password) {
       this.router.navigate(['reset-password'], { state: { mobileNo: this.mobileNo, otp: enteredPin } });
     }
+
   }
 
   public resendOtp(): void {
-    if (this.pinMode === 'password') {
+    if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
         () => {
           console.log('Forgot password api called again');

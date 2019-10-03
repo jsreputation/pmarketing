@@ -1,20 +1,50 @@
+@import "variables";
+
+cl-table-filters {
+  flex-grow: 1;
+}
+
 .filters {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
+  margin: 0 (-($horizontal-padding * 0.25)) ($vertical-padding * 0.5);
+  flex-wrap: wrap;
 
   & > * {
-    margin: 0 1.6rem 0 0;
+    padding: 0 ($horizontal-padding * 0.25);
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: ($horizontal-padding * 10);
+    width: 100%;
 
-    &:last-child {
-      margin: 0
+    &.full-block {
+      flex-basis: 100%;
+      max-width: initial !important;
+    }
+
+    &.half-block {
+      flex-basis: ($horizontal-padding * 5);
+    }
+
+    &.search-block {
+      flex-grow: 1.5;
+      margin-right: auto;
     }
   }
 }
 
+@media (min-width: $lg-width) {
+  .filters {
+    & > * {
+      max-width: ($horizontal-padding * 17.5);
+      justify-content: flex-end;
 
-.block {
-  display: block;
+      &.half-block {
+        max-width: ($horizontal-padding * 8.75);
+      }
+    }
+  }
+}
+
+cl-table-filters + cl-button {
+  margin-left: ($horizontal-padding * 0.5);
 }

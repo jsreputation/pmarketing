@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IData } from '../data.model';
+import { IData, ChartData } from '../data.model';
 
 @Component({
   selector: 'pc-advanced-pie',
@@ -11,21 +11,21 @@ export class AdvancedPieComponent implements OnChanges {
   @Input()
   public data: Observable<IData>;
 
-  @Input()
-  public view: number[];
-
-  public ngxChartData: any[];
+  public ngxChartData: ChartData[];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data) {
-      this.data.subscribe((data: IData) => {
-        this.ngxChartData = data.rows.map((row: any[]) => {
-          return {
-            name: row[0],
-            value: row[1]
-          };
-        });
-      });
+    if (!changes.data) {
+      return;
     }
+    this.ngxChartData = [];
+    if (this.data === undefined || this.data === null) {
+      return;
+    }
+    this.data.subscribe((data: IData) => {
+      this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
+          name: row[0],
+          value: row[1]
+        }));
+    });
   }
 }

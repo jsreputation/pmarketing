@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
@@ -9,13 +9,13 @@ export class NewRewardFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      name: [''],
+      name: ['', [Validators.required]],
       rewardInfo: this.fb.group({
-        image: [],
-        rewardType: [],
-        category: [],
+        image: [null, [Validators.required]],
+        rewardType: this.fb.control(null, [Validators.required]),
+        category: this.fb.control(null, [Validators.required]),
         redemptionType: [],
-        cost: [],
+        cost: this.fb.control(null, [Validators.required]),
         description: [],
         termsAndCondition: []
       }),
@@ -23,21 +23,20 @@ export class NewRewardFormService {
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
           type: [],
-          total: [],
           singleCode: this.fb.group({
             code: [null]
           }),
           uniqueGeneratedCode: this.fb.group({
-            prefix: [],
-            codeFormat: [],
-            length: []
+            prefix: [null],
+            codeFormat: [null],
+            length: [null]
           }),
           uniqueUserUploadCode: this.fb.group({
-            file: []
-          }),
-          merchantPIN: this.fb.group({
-            code: [null]
+            //   file: []
           })
+          // merchantPIN: this.fb.group({
+          //   code: [null]
+          // })
         }),
         voucherValidity: this.fb.group({
           type: [],
@@ -76,28 +75,28 @@ export class NewRewardFormService {
 
   public getToggleConfig(form: FormGroup): ToggleControlConfig[] {
     return [
+      // {
+      //   condition: form.get('rewardInfo.redemptionType').value === 'Merchant PIN',
+      //   controls: [form.get('vouchers.voucherCode.merchantPIN')]
+      // },
       {
-        condition: form.get('rewardInfo.redemptionType').value === 'Merchant PIN',
-        controls: [form.get('vouchers.voucherCode.merchantPIN')]
-      },
-      {
-        condition: form.get('vouchers.voucherCode.type').value === 'Single code',
+        condition: form.get('vouchers.voucherCode.type').value === 'single_code' || form.get('rewardInfo.redemptionType').value === 'Merchant PIN',
         controls: [form.get('vouchers.voucherCode.singleCode')]
       },
       {
-        condition: form.get('vouchers.voucherCode.type').value === 'Unique codes: System generated',
+        condition: form.get('vouchers.voucherCode.type').value === 'system_generated',
         controls: [form.get('vouchers.voucherCode.uniqueGeneratedCode')]
       },
       {
-        condition: form.get('vouchers.voucherCode.type').value === 'Unique codes: User upload',
+        condition: form.get('vouchers.voucherCode.type').value === 'user_uploaded' && form.get('rewardInfo.redemptionType').value !== 'Merchant PIN',
         controls: [form.get('vouchers.voucherCode.uniqueUserUploadCode')]
       },
       {
-        condition: form.get('vouchers.voucherValidity.type').value === 'Period',
+        condition: form.get('vouchers.voucherValidity.type').value === 'period',
         controls: [form.get('vouchers.voucherValidity.period')]
       },
       {
-        condition: form.get('vouchers.voucherValidity.type').value === 'Issuance date',
+        condition: form.get('vouchers.voucherValidity.type').value === 'issuance_date',
         controls: [form.get('vouchers.voucherValidity.issuanceDate')]
       },
       {
@@ -123,17 +122,17 @@ export class NewRewardFormService {
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       rewardInfo: {
         redemptionType: 'QR Code'
       },
       vouchers: {
         voucherCode: {
-          type: 'Single code'
+          type: 'single_code'
         },
         voucherValidity: {
-          type: 'Period'
+          type: 'period'
         }
       }
     };

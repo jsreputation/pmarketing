@@ -2,11 +2,7 @@
 
 .merchant {
   &-upload-img {
-    margin-top: 2.4rem;
-  }
-
-  &-description {
-    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   &-name {
@@ -17,8 +13,9 @@
     display: flex;
 
     .control-input.small {
-      width: 33.3%;
-      margin-right: 2.4rem;
+      width: 0;
+      flex: auto;
+      margin-right: ($horizontal-padding * 0.75);
 
       &:last-child {
         margin-right: 0;
@@ -34,6 +31,7 @@
 
 cl-merchant-branch {
   margin-bottom: 0.8rem;
+
   &:last-child {
     margin-bottom: 0;
   }

@@ -1,47 +1,45 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
+  RewardsModule,
+  ProfileModule,
+  LoyaltyModule,
+  LocationModule,
+  ConfigModule,
+  MerchantsModule,
 } from '@perx/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import {
-  MatButtonModule,
-  MatListModule,
-  MatTabsModule,
-  MatCardModule,
-  MatRippleModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-  MatProgressBarModule,
-  MatSidenavModule
-} from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import {APP_BASE_HREF} from '@angular/common';
+import {UnauthorizedInterceptor} from './login/unauthorized.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthenticationModule,
     HttpClientModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    AuthenticationModule,
+    MerchantsModule,
+    RewardsModule,
+    ProfileModule,
+    LoyaltyModule,
+    LocationModule,
   ],
   providers: [
+    {provide: APP_BASE_HREF, useValue: environment.baseHref},
+    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -4,19 +4,19 @@
   width: 100%;
   min-width: 40rem;
   max-width: 84rem;
-  font-family: $base-font-family;
-  font-size: 1.4rem;
+  font-family: $primary-font;
+  font-size: $base-font-size;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.36;
   letter-spacing: normal;
   color: $base-font-color;
-  border-radius: 8px !important;
-  background-color: $white-color !important;
+  border-radius: $border-radius-lg !important;
+  background-color: $white !important;
   padding: 0 !important;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
-  margin-bottom: 1.6rem !important;
+  margin-bottom: ($vertical-padding * 0.5) !important;
 
   &-header {
     height: 5.7rem;
@@ -33,11 +33,11 @@
 
   &-content {
     position: relative;
-    padding: 0.4rem 2.4rem 3rem !important;
+    padding: 0.4rem ($horizontal-padding * 0.75) 3rem !important;
   }
 
   &-item {
-    margin-bottom: 1.6rem;
+    margin-bottom: ($vertical-padding * 0.5);
   }
 
   &-label {
@@ -60,7 +60,7 @@
     line-height: 1.06;
     letter-spacing: normal;
     color: $base-font-color;
-    margin: 1.6rem 0 1rem;
+    margin: ($vertical-padding * 0.5) 0 1rem;
   }
 
   &-chip {
@@ -70,7 +70,7 @@
     border-radius: 1.6rem;
     align-items: center;
     cursor: default;
-    min-height: 3.2rem;
+    min-height: $vertical-padding;
     height: 1px;
     background-color: #e0e0e0;
     color: rgba(0, 0, 0, 0.87);
@@ -104,10 +104,32 @@
     }
   }
 
+  &-row.input-group {
+    flex-wrap: wrap;
+
+    > * {
+      margin-right: ($horizontal-padding * 0.5);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    > .mat-form-field {
+      flex: 1 1 ($horizontal-padding * 2);
+      min-width: ($horizontal-padding * 2);
+    }
+
+    > span {
+      width: auto;
+      flex-shrink: 0;
+    }
+  }
+
   &-section {
     margin-top: 1.9rem;
-    border-radius: 4px;
-    background-color: $simple-light-gray;
+    background-color: $white;
+    // background-color: $background-color;
 
     .card-header {
       padding: 0 3rem;
@@ -127,7 +149,7 @@
   }
 
   .mat-radio-button ~ .mat-radio-button {
-    margin-left: 1.6rem;
+    margin-left: ($horizontal-padding * 0.5);
   }
 
   .mat-horizontal-content-container {
@@ -135,12 +157,12 @@
   }
 
   &.dark-theme {
-    color: $white-color;
-    border-radius: 8px !important;
-    background-color: $dark-color !important;
+    border-radius: $border-radius-lg !important;
+    color: $white;
+    background-color: $secondary-color !important;
 
     .card-title, .card-label {
-      color: $white-color;
+      color: $white;
     }
   }
 }

@@ -5,9 +5,11 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnDestroy
 } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -15,18 +17,17 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./audiences-users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AudiencesUsersListComponent implements AfterViewInit {
-  @Input() public dataSource: MatTableDataSource<Engagement>;
-  @Input() public displayedColumns: string[] = ['id', 'name', 'state', 'phone', 'audienceList', 'actions'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
+  @Input() public dataSource: CustomDataSource<IUser>;
+  @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'phone', 'audienceList', 'actions']; // 'state'
+  @Input() public config: any;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public clickManageList: EventEmitter<number> = new EventEmitter();
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
-  public joinList(list: string[]): string {
-    return list.join(', ');
+    if (this.dataSource) {
+      this.dataSource.registerSort(this.sort);
+    }
   }
 
   public manageList(id: number): void {
@@ -34,6 +35,9 @@ export class AudiencesUsersListComponent implements AfterViewInit {
   }
 
   public deactivateItem(id: number): void {
-    this.clickManageList.emit(id);
+    console.log('Deactivate user with id: ', id);
+  }
+
+  public ngOnDestroy(): void {
   }
 }

@@ -18,6 +18,7 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
 const apiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
+// console.log(apiConfig);
 
 app.options('*', cors());
 
@@ -30,7 +31,7 @@ app.get('/preauth', async (req, res, next) => {
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found for ${ url }`);
+      throw new Error(`No endpoints found for ${url}`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -39,7 +40,7 @@ app.get('/preauth', async (req, res, next) => {
       endpoint.target_url,
       {
         headers: {
-          Authorization: `Basic ${ endpointCredential.perx_access_key_id }:${ endpointCredential.perx_secret_access_key }`
+          Authorization: `Basic ${endpointCredential.perx_access_key_id}:${endpointCredential.perx_secret_access_key}`
         },
         timeout: 10000
       }
@@ -67,7 +68,7 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
 
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found: ${ url }`);
+      throw new Error(`No endpoints found: ${url}`);
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
@@ -81,16 +82,16 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
       {
-        'username': username,
-        'password': password,
-        'mech_id': mechId,
-        'campaign_id': campaignId
+        username,
+        password,
+        mech_id: mechId,
+        campaign_id: campaignId
       },
       {
         params: {
-          'client_id': endpointCredential.perx_access_key_id,
-          'client_secret': endpointCredential.perx_secret_access_key,
-          'identifier': userId
+          client_id: endpointCredential.perx_access_key_id,
+          client_secret: endpointCredential.perx_secret_access_key,
+          identifier: userId
         }
       }
     );
@@ -114,7 +115,7 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
 
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
-      throw new Error(`No endpoints found: ${ url }`);
+      throw new Error(`No endpoints found: ${url}`);
     }
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
     const endpointRequest = await axios.post(
@@ -122,9 +123,9 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
       null,
       {
         params: {
-          'client_id': endpointCredential.perx_access_key_id,
-          'client_secret': endpointCredential.perx_secret_access_key,
-          'grant_type': 'client_credentials'
+          client_id: endpointCredential.perx_access_key_id,
+          client_secret: endpointCredential.perx_secret_access_key,
+          grant_type: 'client_credentials'
         }
       }
     );
@@ -138,6 +139,86 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
   }
 });
 
+app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
+  try {
+    // check query parameter 'url'
+    const url = req.query.url;
+    const userId = req.query.identifier;
+
+    if (url === undefined) {
+      throw new Error('No query parameter "url" specified');
+    }
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found for ${url}`);
+    }
+
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const endpointRequest = await axios.post(
+      endpoint.target_url + '/cognito/login',
+      {
+        data: {
+          attributes: {
+            primary_identifier: userId
+          }
+        }
+      },
+      {
+        headers: {
+          Authorization: endpointCredential.basic_token,
+          'Content-Type': 'text/plain'
+        }
+      }
+    );
+
+    res.set({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Access-Control-Expose-Headers': 'Authorization',
+      Authorization: endpointRequest.headers.authorization
+
+    });
+    res.json(endpointRequest.data);
+  } catch (e) {
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
+  }
+});
+
+app.post(BASE_HREF + 'themes', async (req, res, next) => {
+  try {
+    // check query parameter 'url'
+    const url = req.query.url;
+
+    if (url === undefined) {
+      throw new Error('No query parameter "url" specified');
+    }
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found for ${url}`);
+    }
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const endpointRequest = await axios.get(
+      endpoint.target_url + '/iam/tenants',
+      {
+        headers: {
+          Authorization: endpointCredential.basic_token,
+          'Content-Type': 'text/plain'
+        }
+      }
+    );
+    res.json(endpointRequest.data);
+  } catch (e) {
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
+  }
+});
 
 if (process.env.PRODUCTION) {
   console.log('production mode ON');
@@ -156,7 +237,7 @@ if (process.env.PRODUCTION) {
 
 // Start up the Node server
 const server = app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${ PORT }`);
+  console.log(`Node server listening on http://localhost:${PORT}`);
 });
 
 process.on('SIGTERM', () => {

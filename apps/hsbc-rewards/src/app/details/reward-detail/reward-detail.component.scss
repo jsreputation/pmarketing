@@ -1,0 +1,44 @@
+.reward-header:last-child {
+  background: red;
+}
+
+.reward-page {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.reward-body {
+  flex-grow: 1;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.full-width__button {
+  padding: 0;
+  margin: 3rem 1.5rem 0;
+}
+
+.redeem-container {
+  width: 100%;
+  padding: 1.2rem 1.5rem 1.2rem;
+  box-sizing: border-box;
+  bottom: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.14);
+
+  button {
+    width: 100%;
+  }
+
+  button:disabled {
+    background: #EBEBEB;
+    color: #989797;
+  }
+}
+
+:host ::ng-deep {
+  .points-cost {
+    color: #E42713 !important;
+  }
+}

@@ -1,0 +1,105 @@
+.reward-page {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+::ng-deep {
+  .mat-select-value-text {
+    color: #7D7D89;
+  }
+
+  .mat-select-placeholder {
+    color: #7D7D89 !important;
+  }
+
+  .mat-select-arrow {
+    margin: 0 !important;
+    border: none !important;
+    width: 18px !important;
+    height: 100% !important;
+    background-image: url("/assets/img/arrow.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.reward-body {
+  flex-grow: 1;
+  max-height: 100%;
+  overflow: auto;
+  padding: 3.5rem 1.5rem 4.5rem;
+}
+
+.booking-form {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+  mat-select, input {
+    appearance: none;
+    width: 100%;
+    background: #F8F8FC;
+    color: #7D7D89;
+    border: none;
+    font-size: 1.4rem;
+  }
+
+  mat-select {
+    box-sizing: border-box;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #E9E9ED;
+  }
+}
+
+.radio-button {
+  color: #000000;
+  margin-bottom: 1.6rem;
+  display: block;
+}
+
+.radio-group {
+  flex-grow: 1;
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+}
+
+button {
+  width: 100%;
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+
+  p {
+    margin-left: 1rem;
+  }
+
+  a {
+    color: #E42713;
+  }
+}
+
+.select-wrap, .input-wrap {
+  position: relative;
+  margin-bottom: 1.6rem;
+}
+
+.mat-select-wrap {
+  margin-bottom: 1.6rem;
+}
+
+.input-wrap {
+  background: #F8F8FC;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #E9E9ED;
+}
+
+.no-content {
+  &::after {
+    display: none;
+  }
+}

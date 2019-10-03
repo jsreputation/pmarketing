@@ -12,10 +12,12 @@ export class ChartsComponent {
     { path: 'horizontal-bar', label: 'Horizontal Bar' },
     { path: 'line', label: 'Line' },
     { path: 'pie', label: 'Pie' },
-    { path: 'advanced-pie', label: 'Advanced Pie' },
-    { path: 'grid-pie', label: 'Pie Grid' },
+    // { path: 'advanced-pie', label: 'Advanced Pie' },
+    // { path: 'grid-pie', label: 'Pie Grid' },
     { path: 'trend', label: 'Trend' },
+    { path: 'table', label: 'Table' },
     { path: 'map', label: 'Map' },
     { path: 'heatmap', label: 'Calendar Heat map' },
+    { path: 'metabase', label: 'Metabase' },
   ];
 }

@@ -12,66 +12,48 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  public preAuth: boolean;
+  public failedAuth: boolean;
 
-  constructor(private router: Router,
-              private authService: AuthenticationService,
-              @Inject(PLATFORM_ID) private platformId: object) {
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {
     this.preAuth = environment.preAuth;
     this.failedAuth = false;
 
   }
 
-  ngOnInit() {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-
-        this.authService.isAuthorized().subscribe(
-          authed => {
-            if (!authed) {
-              this.authService.v4AutoLogin().then(
-                (isAuthed: boolean) => {
-                  this.authed = isAuthed;
-                  if (this.authed) {
-                    this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                  } else {
-                    this.router.navigateByUrl('game');
-                  }
-                },
-                (err) => {
-                  this.failedAuth = true;
-                  this.authed = false;
-                }
-              );
-            } else {
-              this.authed = authed;
-            }
-          },
-        );
-      }
+  public ngOnInit(): void {
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        () => {
+          this.redirectAfterLogin();
+        },
+        () => {
+          this.failedAuth = true;
+        }
+      );
     }
   }
 
+  public redirectAfterLogin(): void {
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'game');
+  }
+
   // TODO: error states
-  onSubmit(loginForm: NgForm) {
+  public onSubmit(loginForm: NgForm): void {
     const username = loginForm.value.username;
     const password = loginForm.value.password;
     const mechId = '2';
 
-    this.authService.v4GameOauth(username, password, mechId).then(
-      (isAuthed: boolean) => {
-        this.authed = isAuthed;
-        if (this.authed) {
-          this.router.navigateByUrl(this.authService.getInterruptedUrl());
-        } else {
-          this.router.navigateByUrl('game');
-        }
+    this.authService.login(username, password, mechId).subscribe(
+      () => {
+        this.redirectAfterLogin();
       },
-      (err) => {
+      () => {
         this.failedAuth = true;
-        this.authed = false;
       }
     );
   }

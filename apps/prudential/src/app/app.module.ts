@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   VouchersModule,
+  RewardsModule,
+  MerchantsModule,
   PerxCoreModule,
-  CognitoModule,
   AuthenticationModule,
-  OauthModule,
   CampaignModule,
   GameModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -37,6 +39,7 @@ import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ResultComponent } from './result/result.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -52,9 +55,12 @@ import { ResultComponent } from './result/result.component';
     LoginComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
-    VouchersModule.forRoot({ env: environment }),
+    RewardsModule,
+    VouchersModule,
+    MerchantsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -66,13 +72,13 @@ import { ResultComponent } from './result/result.component';
     MatProgressBarModule,
     BrowserAnimationsModule,
     PerxCoreModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
+    ProfileModule,
+    CampaignModule,
+    GameModule,
     AuthenticationModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   providers: [
     DatePipe

@@ -57,6 +57,7 @@
 
     form {
       margin-top: 2rem;
+      font-size: 1.2rem;
 
       .diabetes-selection {
         display: flex;
@@ -65,10 +66,9 @@
         align-items: center;
       }
 
-      mat-checkbox,
+      // mat-checkbox,
       mat-radio-button {
         margin: 2rem;
-        font-size: 1.2rem;
       }
     }
 

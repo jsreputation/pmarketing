@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem;
+
+  .mat-form-field {
+    margin: 16px 0;
+  }
+
+  button {
+    margin-bottom: 24px;
+  }
+
+  a {
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.75px;
+    color: #186DE1;
+  }
+
+  .mat-form-field,
+  button {
+    width: 100%;
+  }
+
+  .existing-card-form {
+    font-size: 1.6rem;
+  }
+}

@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistrationFormComponent } from './registration-form.component';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RegistrationFormComponent', () => {
   let component: RegistrationFormComponent;
@@ -22,6 +23,8 @@ describe('RegistrationFormComponent', () => {
         ReactiveFormsModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        MatSelectModule
       ],
       declarations: [RegistrationFormComponent]
     })
@@ -49,12 +52,13 @@ describe('RegistrationFormComponent', () => {
     component.registrationForm.setValue({
       firstName: 'John',
       lastName: 'Doe',
-      phone: '88005553535',
+      phone: '123456',
       email: 'email@gmail.com',
       password: 'qwerty123',
-      confirmPassword: 'qwerty123',
+      password_confirmation: 'qwerty123',
       terms: true,
-      promo: true
+      promo: true,
+      code: '+852'
     });
     fixture.detectChanges();
     component.submit();

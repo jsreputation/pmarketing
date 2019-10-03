@@ -9,7 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { SideNavModule } from './shared/components/side-nav/side-nav.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { SessionService } from '@cl-core/services/session.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { JsonApiModule } from 'angular2-jsonapi';
+import { PerxChartModule } from '@perx/chart';
+import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +33,15 @@ import { HttpClientModule } from '@angular/common/http';
     SideNavModule,
     HttpClientModule,
     MatNativeDateModule,
+    PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    JsonApiModule
+  ],
+  providers: [
+    LocalStorageService,
+    SessionService,
+    WINDOW_PROVIDERS,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

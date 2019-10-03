@@ -1,32 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+import { environment } from '../../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'mc-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, PageProperties {
+export class LoginComponent implements OnInit, PageAppearence {
 
   public selectedCountry: string = '+852';
 
   public loginForm: FormGroup;
 
-  private authenticated: boolean;
-
   private appAccessTokenFetched: boolean = false;
+  public preAuth: boolean;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    @Inject(PLATFORM_ID) private platformId: object,
     private authService: AuthenticationService,
     private notificationService: NotificationService
   ) {
-      this.initForm();
+    this.initForm();
+    this.preAuth = environment.preAuth;
   }
 
   private initForm(): void {
@@ -37,20 +40,31 @@ export class LoginComponent implements OnInit, PageProperties {
   }
 
   public ngOnInit(): void {
-    this.authService.v4GetAppAccessToken().subscribe(() => {
-      this.appAccessTokenFetched = true;
-    },
-    (err) => {
-      console.log('Error' + err);
-    });
+    this.authService.getAppToken().subscribe(
+      () => {
+        this.appAccessTokenFetched = true;
+      },
+      (err) => {
+        console.log('Error' + err);
+      }
+    );
+
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        () => {
+          this.router.navigateByUrl('home');
+        }
+      );
+    }
   }
 
-  public showHeader(): boolean {
-    return false;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
+  public getPageProperties(): PageProperties {
+    return {
+      header: false,
+      backButtonEnabled: false,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public onSubmit(): void {
@@ -61,23 +75,15 @@ export class LoginComponent implements OnInit, PageProperties {
     const mobileNo = (this.loginForm.get('mobileNo').value as string);
     const password: string = this.loginForm.get('password').value;
 
-    this.authService.v4GameOauth(mobileNo, password)
-      .then((isAuthed: boolean) => {
-        this.authenticated = isAuthed;
-        if (this.authenticated) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = mobileNo;
-          }
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('/user-info');
-          }
+    this.authService.login(mobileNo, password).subscribe(
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = mobileNo;
         }
-      })
-      .catch((err) => {
-        this.authenticated = false;
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/user-info');
+      },
+      (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
@@ -89,7 +95,8 @@ export class LoginComponent implements OnInit, PageProperties {
             this.notificationService.addSnack('Invalid credentials');
           }
         }
-      });
+      }
+    );
   }
 
   public goToSignup(): void {
@@ -104,7 +111,7 @@ export class LoginComponent implements OnInit, PageProperties {
       return;
     }
     const mobileNumber = (this.loginForm.get('mobileNo').value as string);
-    this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } } );
+    this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
   }
 
 }

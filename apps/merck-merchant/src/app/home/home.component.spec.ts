@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 import { MatToolbarModule } from '@angular/material';
+import { Type } from '@angular/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -37,9 +38,23 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should navigate to /qrscanner/order onSalesScan', () => {
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    const routerSpy = spyOn(routerStub, 'navigate').and.stub();
+    component.onSalesScan();
+    expect(routerSpy).toHaveBeenCalledWith(['/qrscanner/order']);
+  });
+
+  it('should navigate to /qrscanner/redeem onRedemption', () => {
+    const routerStub: Router = fixture.debugElement.injector.get(Router);
+    const routerSpy = spyOn(routerStub, 'navigate').and.stub();
+    component.onRedemption();
+    expect(routerSpy).toHaveBeenCalledWith(['/qrscanner/redeem']);
+  });
+
   it('should navigate to login onLogOut click', () => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
-      AuthenticationService
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
     );
     const logoutSpy = spyOn(authenticationService, 'logout');
     const routerStub: Router = fixture.debugElement.injector.get(Router);

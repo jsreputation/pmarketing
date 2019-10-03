@@ -1,12 +1,8 @@
 @import "variables";
+
 .stamp {
   &-btn-cancel {
-    padding-right: .8rem;
-  }
-
-  &-form {
-    width: 100%;
-    margin-right: 4rem;
+    padding-right: 0.8rem;
   }
 }
 
@@ -32,5 +28,5 @@
 
 .info-text {
   font-size: 1.2rem;
-  color: $white-color;
+  color: $white;
 }

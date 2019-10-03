@@ -64,9 +64,7 @@ export class PinInputComponent implements OnInit {
   }
 
   get value(): string {
-    return this.controls.reduce((p: string, v: FormControl): string => {
-      return v.value === null ? p : `${p}${v.value}`;
-    }, '');
+    return this.controls.reduce((p: string, v: FormControl): string => v.value === null ? p : `${p}${v.value}`, '');
   }
 
   public onKey(event: KeyboardEvent): void {
@@ -86,5 +84,11 @@ export class PinInputComponent implements OnInit {
 
   public onFocus(): void {
     this.pinFocused.emit(true);
+  }
+
+  public resetAll(): void {
+    this.controls.forEach(ctrl => {
+      ctrl.setValue('');
+    });
   }
 }

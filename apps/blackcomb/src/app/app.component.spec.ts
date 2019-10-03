@@ -1,20 +1,31 @@
+import { ThemesService } from '@perx/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
+
+const themesServiceStub = {};
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        MatDialogModule
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
+        MatDialogModule,
+        MatToolbarModule,
+        MatIconModule
       ],
       declarations: [
         AppComponent
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      providers: [
+        {
+          provide: ThemesService,
+          userValue: themesServiceStub
+        }
+      ]
     }).compileComponents();
   }));
 

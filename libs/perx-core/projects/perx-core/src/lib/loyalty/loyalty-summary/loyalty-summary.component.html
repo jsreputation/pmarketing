@@ -1,26 +1,29 @@
 <div class="container">
-  <ng-container *ngIf="profile$ | async as profile">
+  <ng-container *ngIf="profile$ | async as profile; else elseBlockProfile">
     <div class="welcome-text">
-      <ng-container *ngIf="profile.firstName || profile.lastName as name; else anonymous">
-        Welcome {{name}},
+      <ng-container>
+        {{titleFn(profile)}}
       </ng-container>
-      <ng-template #anonymous>Welcome,</ng-template>
     </div>
   </ng-container>
-  <ng-container *ngIf="loyalty$ | async as loyalty">
+  <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
     <div class="points">
-      {{loyalty.pointsBalance}}
+      {{loyalty.pointsBalance ? loyalty.pointsBalance.toLocaleString('en-sg') : 0 }}
     </div>
     <div>
-      Your total points
+      {{subTitleFn(loyalty)}}
     </div>
-    <div 
-      *ngIf="loyalty.expiringPoints && 
-             loyalty.expiringPoints.length > 0 &&
-             loyalty.expiringPoints[0] as expiring"
-      class="expiring-points"
-    >
-      {{expiring.points || 'Some'}} points expiring {{expiring.expireDate ? 'on' + (expiring.expireDate | date: 'dd MMM yyyy') : 'soon'}}
+    <div class="expiring-points">
+      {{summaryExpiringFn(loyalty)}}
     </div>
   </ng-container>
+
+  <ng-template #elseBlockProfile>
+    <div class="welcome-text ghost"></div>
+  </ng-template>
+
+  <ng-template #elseBlockLoyalty>
+    <div class="points ghost"></div>
+    <div class="expiring-points ghost"></div>
+  </ng-template>
 </div>

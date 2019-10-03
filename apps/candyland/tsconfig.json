@@ -12,7 +12,7 @@
     "importHelpers": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "target": "es2015",
+    "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -21,10 +21,13 @@
       "dom"
     ],
     "paths": {
+      "@cl-core-services": ["src/app/core/services"],
       "@cl-core/*": ["src/app/core/*"],
       "@cl-helpers/*": ["src/app/helpers/*"],
       "@cl-shared/*": ["src/app/shared/*"],
+      "@cl-shared": ["src/app/shared"],
       "@cl-environments/*": ["src/environments/*"]
+
     }
   }
 }

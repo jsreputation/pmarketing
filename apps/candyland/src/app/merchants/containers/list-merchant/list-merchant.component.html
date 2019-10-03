@@ -1,21 +1,29 @@
-<section class="page-header">
+<header class="page-header">
   <h1 class="title">Merchants</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary">Create new</cl-button>
-</section>
+  <cl-button (click)="openDialogCreate()" classList="primary">Create New</cl-button>
+</header>
 <section class="content merchant-list-content">
   <div class="merchant-list">
     <!--filters-->
     <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'firstName'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search"></cl-search-filter>
+      <ng-container *clTableFilter="'name'; let filter">
+        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for merchants"></cl-search-filter>
       </ng-container>
     </cl-table-filters>
-    <!--table-->
-    <cl-list-merchant-view [dataSource]="dataSource"
-
-    >
-    </cl-list-merchant-view>
-    <!--paginator-->
-    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <div class="table-card">
+      <!--table-->
+      <div class="merchant-list-wrapper">
+        <cl-list-merchant-view [dataSource]="dataSource"
+                              (itemAction)="handlerAction($event)"
+        >
+        </cl-list-merchant-view>
+      </div>
+      <!--paginator-->
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+      ></cl-paginator>
+      <!--/ paginator-->
+    </div>
   </div>
 </section>

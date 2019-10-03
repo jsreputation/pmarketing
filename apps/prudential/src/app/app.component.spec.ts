@@ -3,17 +3,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationModule, CognitoModule, OauthModule, TokenStorage, ProfileModule } from '@perx/core';
-import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { ProfileModule, AuthenticationService } from '@perx/core';
+import { DebugElement, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  let router: Router;
-  let location: Location;
   let appComponent: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let debugElement: DebugElement;
+  let router: Router;
+
+  const authServiceStub = {
+    $failedAuth: of(true)
+  };
+  const locationStub = {
+    back: () => { }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,24 +31,26 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatIconModule,
         NoopAnimationsModule,
-        HttpClientModule,
-        AuthenticationModule,
-        ProfileModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+        ProfileModule
       ],
       declarations: [
         AppComponent
       ],
-      providers: [TokenStorage]
+      providers: [
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        },
+        { provide: Location, useValue: locationStub }
+      ]
     }).compileComponents();
-    router = TestBed.get(Router);
-    location = TestBed.get(Location);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     appComponent = fixture.componentInstance;
+    debugElement = fixture.debugElement;
+    router = debugElement.injector.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
@@ -75,9 +84,10 @@ describe('AppComponent', () => {
   });
 
   it('show goBack to have been called once', () => {
-    spyOn(location, 'back');
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    const locationSpy = spyOn(location, 'back').and.stub();
     appComponent.goBack();
-    expect(location.back).toHaveBeenCalledTimes(1);
+    expect(locationSpy).toHaveBeenCalled();
   });
 
 });

@@ -1,16 +1,15 @@
-import { Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
-import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { IVoucherService } from '../ivoucher.service';
+import { Observable, of } from 'rxjs';
+import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
+import { map, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss']
 })
-export class VouchersComponent implements OnInit, OnChanges {
-  @Input() public filter: string;
+export class VouchersComponent implements OnInit {
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
   @Input() public showTitle: boolean = true;
@@ -26,36 +25,58 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Output() public route: EventEmitter<number | string> = new EventEmitter<number | string>();
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
-  @Input('data')
-  public vouchers$: Observable<IVoucher[]>;
+  @Input('data') public vouchers$: Observable<IVoucher[]>;
 
-  constructor(private vouchersService: VouchersService) { }
+  @Input() public set filter(filter: string[]) {
+    this.privateFilter = filter;
+    this.vouchers$ = this.filterVoucher(this.vouchers$);
+  }
+  public get filter(): string[] {
+    return this.privateFilter;
+  }
+  private privateFilter: string[];
+  @Input()
+  public mapping?: StatusLabelMapping;
+
+  public repeatGhostCount: number = 10;
+
+  public ghostTimeOut: boolean;
+
+  constructor(private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
-    if (!this.vouchers$) {
-      this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers =>  (this.filter) ? vouchers.filter(v => v.state === this.filter) : vouchers)
-      );
+    if (this.showRedeemedIcon && !this.mapping) {
+      console.error(`Error: 'mapping' is not defined`);
     }
+
+    if (!this.vouchers$) {
+      this.vouchers$ = this.vouchersService.getAll();
+    }
+    of(true).pipe(delay(2000)).subscribe(
+      () => this.ghostTimeOut = true
+    );
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter) {
-      this.vouchers$ = this.vouchersService.getAll().pipe(
-        map(vouchers => {
-          return vouchers.filter(v => v.state === this.filter);
-        })
-      );
-    }
+  public isVoucherQueryComplete(vouchers: IVoucher[]): boolean {
+    return Array.isArray(vouchers) || this.ghostTimeOut;
+  }
+
+  public notClickable(voucher: IVoucher): boolean {
+    return !this.canSelectRedeemed && [VoucherState.redeemed, VoucherState.expired].includes(voucher.state);
   }
 
   public onClick(voucher: IVoucher): void {
-    if (!this.canSelectRedeemed && voucher.state === 'redeemed') {
+    if (this.notClickable(voucher)) {
       return;
     }
     // tslint:disable-next-line: deprecation
     this.route.emit(voucher.id);
 
     this.tapped.emit(voucher);
+  }
+
+  private filterVoucher(vouchers: Observable<IVoucher[]>): Observable<IVoucher[]> {
+    return vouchers ? vouchers.pipe(
+      map(voucher => voucher.filter((el) => this.filter.includes(el.state)))) : vouchers;
   }
 }

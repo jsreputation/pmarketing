@@ -5,23 +5,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class GeoLocationService implements OnDestroy {
-  private subject: BehaviorSubject<Position>;
+  private subject: BehaviorSubject<Position | null>;
   private watchId: number;
 
   constructor() {
-    const defaultPos: Position = {
-      coords: {
-        accuracy: 0,
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        latitude: 0,
-        longitude: 0,
-        speed: null
-      },
-      timestamp: Date.now()
-    };
-    this.subject = new BehaviorSubject<Position>(defaultPos);
+    this.subject = new BehaviorSubject<Position>(null);
 
     this.newPosition = this.newPosition.bind(this);
 

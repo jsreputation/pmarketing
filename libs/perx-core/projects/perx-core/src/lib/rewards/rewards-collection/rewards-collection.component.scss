@@ -15,6 +15,13 @@ $card-actual-height: 200px;
 
   .points {
     flex: 0 auto;
+    position: absolute;
+    bottom: 0.8rem;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    min-height: 1.2rem;
+    color: #ddac27;
+    white-space: nowrap;
   }
 }
 
@@ -36,22 +43,21 @@ $card-actual-height: 200px;
   }
 
   .points {
-    height: 1.6rem;
-    margin-top: 0.5rem;
+    height: 1.2rem;
+    margin-top: 0.9rem;
   }
 }
 
 .card-collection-container {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 1.5rem 0;
 
   .mat-card {
     max-width: calc(#{$card-actual-height} - 32px);
     width: calc(#{$card-actual-height} - 32px);
     min-width: calc(#{$card-actual-height} - 32px);
-    max-height: calc(#{$card-actual-height} - 24px);
     height: calc(#{$card-actual-height} - 24px);
     min-height: calc(#{$card-actual-height} - 24px);
     display: flex;
@@ -64,13 +70,32 @@ $card-actual-height: 200px;
       height: 100px;
       max-height: 100px; //need to be specified so that bigger imgs get sized down
       margin-bottom: 0.8rem;
-      object-fit: contain;
+      object-fit: cover;
     }
 
     .mat-card-content {
       display: flex;
       flex-direction: column;
-      height: 100%;
     }
+  }
+
+  .no-image {
+    background-color: #4E4E4E;
+  }
+
+  .no-default-img {
+    display: flex;
+    margin-bottom: 0.8rem;
+
+    svg {
+      height: 10rem;
+      background: #4E4E4E;
+    }
+  }
+
+  .overflow-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

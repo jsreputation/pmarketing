@@ -3,23 +3,26 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { LoyaltyModule, ProfileModule, RewardsModule } from '@perx/core';
+import { LoyaltyModule, ProfileModule, RewardsModule, VouchersModule, ConfigModule, MerchantsModule } from '@perx/core';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
-import { NavigateToolbarModule } from '../navigate-toolbar/navigate-toolbar.module';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     CommonModule,
     HomeRoutingModule,
-    LoyaltyModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
-    RewardsModule.forRoot({ env: environment }),
+    LoyaltyModule,
+    ProfileModule,
+    MerchantsModule,
+    RewardsModule,
+    VouchersModule,
     SharedModule,
-    NavigateToolbarModule
+    InfiniteScrollModule,
   ]
 })
 export class HomeModule { }

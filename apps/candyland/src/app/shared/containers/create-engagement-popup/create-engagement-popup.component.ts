@@ -1,16 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { EngagementType } from './shared/models/EngagementType';
-
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { EngagementsService } from '@cl-core/services/engagements.service';
-
-export enum gamesRouterLink {
-  shakeTheTree = 'engagements/games/new-shake',
-  hitThePinata = 'engagements/games/new-pinata'
-}
+import { EngagementsService } from '@cl-core/services';
+import { getEngagementRouterLink } from '@cl-helpers/get-engagement-router-link';
 
 @Component({
   selector: 'cl-create-engagement-popup',
@@ -20,15 +14,17 @@ export enum gamesRouterLink {
 })
 export class CreateEngagementPopupComponent implements OnInit {
   public selectedType: IGraphic;
-  public engagementType = EngagementType;
+  // public engagementType = EngagementType;
   public engagementType$: Observable<IGraphic[]>;
   public gamesType$: Observable<IGraphic[]>;
   public selectedGame: IGraphic;
+
   constructor(
     public dialogRef: MatDialogRef<CreateEngagementPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private engagementsService: EngagementsService,
-    private router: Router) {}
+    private router: Router
+  ) { }
 
   public close(): void {
     this.dialogRef.close();
@@ -38,20 +34,8 @@ export class CreateEngagementPopupComponent implements OnInit {
     if (!this.selectedType) {
       return;
     }
-
-    switch (this.selectedType.type) {
-      case EngagementType.stamp:
-        this.router.navigateByUrl('/engagements/new-stamp/settings');
-        break;
-      case EngagementType.instantReward:
-        this.router.navigateByUrl('/engagements/new-instant-reward/appearance');
-        break;
-      case EngagementType.games:
-        this.router.navigateByUrl(gamesRouterLink[this.selectedGame.type]);
-        break;
-      case EngagementType.survey:
-        this.router.navigateByUrl('/engagements/new-survey/appearance');
-    }
+    const path = getEngagementRouterLink(this.selectedType.type, this.selectedGame ? this.selectedGame.type : null);
+    this.router.navigateByUrl(path);
     this.close();
   }
 
@@ -76,6 +60,7 @@ export class CreateEngagementPopupComponent implements OnInit {
         })
       );
   }
+
   private getGamesType(): void {
     this.gamesType$ = this.engagementsService.getGamesType()
       .pipe(

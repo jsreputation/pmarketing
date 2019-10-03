@@ -1,62 +1,144 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { tap, map } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { MatTableDataSource } from '@angular/material';
-import { EngagementsService } from '@cl-core/services/engagements.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ILimit, ICampaign } from '@perx/whistler';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
   templateUrl: './new-campaign-select-engagement-page.component.html',
-  styleUrls: ['./new-campaign-select-engagement-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./new-campaign-select-engagement-page.component.scss']
 })
-export class NewCampaignSelectEngagementPageComponent implements OnInit, OnDestroy {
+export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+  @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
-  public dataSource = new MatTableDataSource<Engagement>();
+  public dataSource = new MatTableDataSource<IEngagement>();
+  public defaultSearchValue = null;
+  public defaultTypeValue = null;
   public typeFilterConfig: OptionConfig[];
+  public isFirstInit: boolean = true;
 
   public get template(): AbstractControl {
     return this.form.get('template');
   }
 
-  constructor(private engagementsService: EngagementsService,
-              private store: CampaignCreationStoreService,
-              private fb: FormBuilder,
-              public cd: ChangeDetectorRef) {
+  constructor(
+    private engagementsService: EngagementsService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    public cd: ChangeDetectorRef,
+    private limitsService: LimitsService,
+    private route: ActivatedRoute
+  ) {
+    super(0, store, stepConditionService, cd);
     this.initForm();
+    this.initFiltersDefaultValue();
   }
 
   public ngOnInit(): void {
+    super.ngOnInit();
     this.initData();
     this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(value => this.store.updateCampaign(value));
+    this.subscribeFormValueChange();
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
+    this.availableNewEngagementService.remove();
+  }
+
+  public createNewEngagement(): void {
+    this.dialog.open(CreateEngagementPopupComponent);
   }
 
   private initForm(): void {
     this.form = this.fb.group({
       template: [null, [Validators.required]]
     });
-    this.form.patchValue(this.store.currentCampaign);
+    // this.form.patchValue({ theme: {} });
+  }
+
+  private initFiltersDefaultValue(): void {
+    if (this.availableNewEngagementService.isAvailable) {
+      this.defaultSearchValue = this.availableNewEngagementService.newEngagement.title;
+      this.defaultTypeValue = this.availableNewEngagementService.newEngagement.attributes_type;
+    }
   }
 
   private initData(): void {
     this.engagementsService.getEngagements()
       .pipe(
-        map((response: any) => response.results),
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'type');
+          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
-        }),
+        })
       )
-      .subscribe((res: Engagement[]) => {
+      .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;
+        this.initSelectedTemplate(res);
         this.cd.detectChanges();
+      });
+  }
+  private initSelectedTemplate(res: IEngagement[]): void {
+    if (this.availableNewEngagementService.isAvailable) {
+      this.initSelectedNewCreateTemplate(res, this.availableNewEngagementService.newEngagement.id);
+    } else if (this.route.snapshot.params.id) {
+      this.initSelectedTemplateFromEdit(res);
+    }
+  }
+  private initSelectedNewCreateTemplate(res: IEngagement[], id: string): void {
+    if (id) {
+      const findTemplate = res.find(template => template.id === id);
+      this.template.patchValue(findTemplate);
+    }
+  }
+
+  private initSelectedTemplateFromEdit(res: IEngagement[]): void {
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(campaignData => {
+        if (campaignData && campaignData.engagement_id && this.isFirstInit) {
+          this.isFirstInit = false;
+          const engagementId = campaignData.engagement_id.toString();
+          const findTemplate = res.find(template => template.id === engagementId);
+          this.getLimits(campaignData, findTemplate);
+          this.template.patchValue(findTemplate);
+        }
+      });
+
+  }
+
+  private getLimits(campaignData: ICampaign, findTemplate: IEngagement): void {
+    const params: HttpParamsOptions = {
+      'filter[campaign_entity_id]': campaignData.id
+    };
+    this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
+      map((limits: ILimit[]) => limits[0])
+    ).subscribe(
+      limits => {
+        const newCampaign = { ...campaignData, limits };
+        this.store.updateCampaign(newCampaign);
+      }
+    );
+  }
+
+  private subscribeFormValueChange(): void {
+    this.form.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
       });
   }
 

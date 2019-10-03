@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
+import { CampaignsListComponent } from 'src/app/campaigns/components/campaigns-list/campaigns-list.component';
+import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CampaignsListPageComponent } from './containers/campaigns-list-page/campaigns-list-page.component';
 import { NewCampaignDetailPageComponent } from './containers/new-campaign-detail-page/new-campaign-detail-page.component';
-import { NewAudiencePageComponent } from './containers/new-audience-page/new-audience-page.component';
-import { NewChannelPageComponent } from './containers/new-channel-page/new-channel-page.component';
 import { NewCampaignReviewPageComponent } from './containers/new-campaign-review-page/new-campaign-review-page.component';
 import { NewCampaignDonePopupComponent } from './containers/new-campaign-done-popup/new-campaign-done-popup.component';
 import { CampaignsComponent } from './containers/campaigns/campaigns.component';
@@ -22,6 +24,7 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule
@@ -56,27 +59,54 @@ import {
 import { ChipListModule } from '@cl-shared/components/chip-list/chip-list.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import {
+  NewCampaignRewardsStampsPageComponent
+} from 'src/app/campaigns/containers/new-campaign-rewards-stamps-page/new-campaign-rewards-stamps-page.component';
+import {
+  NewCampaignRewardsFormGroupComponent
+} from './components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import {
+  NewCampaignStampRuleFormGroupComponent
+} from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
+import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
+import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
+import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
+import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
+import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
+import { environment } from '@cl-environments/environment';
+import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 
 @NgModule({
   providers: [
-    NewCampaignDetailFormService
+    CampaignCreationStoreService,
+    StepConditionService,
+    NewCampaignDetailFormService,
+    NewCampaignRewardsStampsFormService
   ],
   declarations: [
+    CampaignsListComponent,
     CampaignsListPageComponent,
     NewCampaignDetailPageComponent,
-    NewAudiencePageComponent,
-    NewChannelPageComponent,
     NewCampaignReviewPageComponent,
     NewCampaignDonePopupComponent,
     CampaignsComponent,
     NewCampaignComponent,
     NewCampaignRewardsPageComponent,
+    NewCampaignRewardsStampsPageComponent,
     NewCampaignSelectEngagementPageComponent,
     RewardItemComponent,
-    RewardItemPreviewComponent
+    RewardItemPreviewComponent,
+    NewCampaignRewardsFormGroupComponent,
+    NewCampaignStampRuleFormGroupComponent,
+    ReviewCampaignComponent,
+    NewCampaignRewardsSurveyPageComponent,
+    CampaignsMobilePreviewComponent,
   ],
   imports: [
     CommonModule,
+    CreateEngagementPopupModule,
     CampaignsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -114,7 +144,17 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
     DownloadLinkModule,
     UploadFileModule,
     ChipListModule,
-    CheckboxGroupModule
+    CheckboxGroupModule,
+    SelectRewardPopupModule,
+    MatSlideToggleModule,
+    PaginationModule,
+    PipesModule,
+    SimpleMobileViewModule,
+    PerxSurveyModule,
+    ConfigModule.forRoot({ ...environment }),
+    GameModule,
+    PuzzlesModule,
+    PerxRewardsModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

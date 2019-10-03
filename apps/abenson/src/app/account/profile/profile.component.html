@@ -1,0 +1,87 @@
+<div class="page" *ngIf="profile$ | async as profile">
+  <div class="group">
+    <div>
+      <label>First Name</label>
+      <div>{{profile.firstName || '-'}}</div>
+    </div>
+
+  </div>
+  <div class="group">
+    <div>
+      <label>Middle Name</label>
+      <div>{{profile.middleName || '-'}}</div>
+    </div>
+
+  </div>
+  <div class="group">
+    <div>
+      <label>Last Name</label>
+      <div>{{profile.lastName || '-'}}</div>
+    </div>
+
+  </div>
+  <div class="group">
+    <div>
+      <label>Date of Birth</label>
+      <div>{{profile.birthDate || '-'}}</div>
+    </div>
+
+  </div>
+  <div class="group">
+    <div><label>Gender</label>
+      <div>{{profile.gender || '-'}}</div>
+    </div>
+
+  </div>
+  <div class="sub-title">
+    Contact Details
+  </div>
+  <div class="group">
+    <div>
+      <label>Mobile Number</label>
+      <div>{{profile.phone || '-'}}</div>
+    </div>
+    <a routerLink="edit-mobile" class="link-wrap">
+      <mat-icon>edit</mat-icon>
+    </a>
+  </div>
+  <div class="group">
+    <div>
+      <label>Email</label>
+      <div>{{profile.email || '-'}}</div>
+    </div>
+    <a routerLink="change-email" class="link-wrap">
+      <mat-icon>edit</mat-icon>
+    </a>
+  </div>
+  <div class="sub-title">
+    Address
+  </div>
+  <div class="group">
+    <div>
+      <label>City/Municipality</label>
+      <div>{{profile.customProperties.city || '-'}}</div>
+    </div>
+    <a routerLink="change-city" class="link-wrap">
+      <mat-icon>edit</mat-icon>
+    </a>
+  </div>
+  <div class="group">
+    <div>
+      <label>Barangay</label>
+      <div>{{profile.customProperties.barangay || '-'}}</div>
+    </div>
+    <a routerLink="change-barangay" class="link-wrap">
+      <mat-icon>edit</mat-icon>
+    </a>
+  </div>
+  <div class="group">
+    <div>
+      <label>Street Address</label>
+      <div>{{profile.customProperties.addr1 || '-'}}</div>
+    </div>
+    <a routerLink="change-street" class="link-wrap">
+      <mat-icon>edit</mat-icon>
+    </a>
+  </div>
+</div>

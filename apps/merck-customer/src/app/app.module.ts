@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
-
+import {
+  // LOCALE_ID,
+  NgModule,
+  APP_INITIALIZER
+} from '@angular/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -13,18 +18,25 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatRadioModule,
+  MatTabsModule,
   MatSnackBarModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule,
+  MatCardModule,
+  MatListModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import {
   AuthenticationModule,
-  OauthModule,
-  CognitoModule,
   ProfileModule,
   UtilsModule,
   LoyaltyModule,
-  RewardsModule
-   } from '@perx/core';
+  RewardsModule,
+  LocationModule,
+  VouchersModule,
+  MerchantsModule,
+  ConfigModule
+} from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
@@ -33,9 +45,29 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FindPharmacyComponent } from './find-pharmacy/find-pharmacy.component';
+import { FilterDialogComponent } from './find-pharmacy/filter-dialog/filter-dialog.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { RewardDetailComponent } from './reward-detail/reward-detail.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { RedeemComponent } from './redeem/redeem.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
+import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
+import { ConditionComponent } from './account/condition/condition.component';
+import { TransactionPipe } from './account/transaction-history/transaction.pipe';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
+
+export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
+  translateService.setDefaultLang(environment.defaultLang);
+  resolve();
+});
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,10 +77,22 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     SignupComponent,
     ForgotPasswordComponent,
     EnterPinComponent,
+    FindPharmacyComponent,
+    CustomSnackbarComponent,
+    FilterDialogComponent,
     ResetPasswordComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    RewardDetailComponent,
+    RedeemComponent,
+    AccountComponent,
+    ProfileComponent,
+    TransactionHistoryComponent,
+    PrivacyPolicyComponent,
+    ConditionComponent,
+    TransactionPipe,
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
@@ -59,21 +103,41 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatTabsModule,
     MatSnackBarModule,
     MatIconModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatCardModule,
+    MatListModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
-    ProfileModule.forRoot({ env: environment }),
+    ProfileModule,
     UtilsModule,
-    LoyaltyModule.forRoot({env: environment}),
-    RewardsModule.forRoot({ env: environment })
+    LoyaltyModule,
+    RewardsModule,
+    MerchantsModule,
+    VouchersModule,
+    QRCodeModule,
+    LocationModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'zh-Hans' }],
+  providers: [
+    // { provide: LOCALE_ID, useValue: 'zh' },
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [CustomSnackbarComponent]
+  entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
 })
 export class AppModule { }

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrendComponent } from './trend.component';
 import { PerxChartModule } from '@perx/chart';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TrendComponent', () => {
   let component: TrendComponent;
@@ -11,7 +12,8 @@ describe('TrendComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TrendComponent ],
       imports: [
-        PerxChartModule
+        PerxChartModule,
+        NoopAnimationsModule
       ]
     })
     .compileComponents();

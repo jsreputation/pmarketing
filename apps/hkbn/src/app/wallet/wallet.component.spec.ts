@@ -1,15 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule } from '@perx/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
+import { vouchers } from 'src/assets/mock/vouchers.mock';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
+  const vouchersServiceStub = {
+    getAll: (): Observable<Voucher[]> => of(vouchers)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,8 +23,11 @@ describe('WalletComponent', () => {
         MatTabsModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        VouchersModule.forRoot({env: {apiHost: ''}}),
-        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        VouchersModule,
+      ],
+      providers: [
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ],
       declarations: [WalletComponent]
     })
@@ -34,4 +43,15 @@ describe('WalletComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to specific wallet page by id when call onRoute method', () => {
+    const router = TestBed.get(Router);
+    const routerSpy = spyOn(router, 'navigate');
+    component.onRoute({ id: 1 } as any);
+    expect(routerSpy).toHaveBeenCalledWith(['/wallet/1']);
+  });
+
+  it('should filter voucher', fakeAsync(() => {
+
+  }));
 });

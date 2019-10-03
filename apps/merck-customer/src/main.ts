@@ -16,13 +16,13 @@ if (environment.production) {
 }
 
 // declare const require;
-// const translations = require(`raw-loader!../locale/messages.zh-Hans.xlf`);
+// const translations = require(`raw-loader!./locale/messages.zh.xlf`).default;
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
   // missingTranslation: MissingTranslationStrategy.Error,
   // providers: [
-  //   {provide: TRANSLATIONS, useValue: translations},
-  //   {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'}
+  //   { provide: TRANSLATIONS, useValue: translations },
+  //   { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' }
   // ]
 })
   .catch(err => console.error(err));

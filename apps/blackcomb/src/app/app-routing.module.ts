@@ -5,29 +5,50 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
-import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
+import { RewardComponent } from './reward/reward.component';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { ContentComponent } from './content/content.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'wallet', component: HomeComponent },
-      { path: 'history', component: HistoryComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'redeem/:mode/:id', component: RedeemComponent },
-      { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'tap', loadChildren: (): any => import('./tap/tap.module').then((mod: any) => mod.TapModule) },
-      { path: 'shake', loadChildren: (): any => import('./shake/shake.module').then((mod: any) => mod.ShakeModule) },
-      { path: 'stamp', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
+      { path: '', pathMatch: 'full', redirectTo: 'loading' },
+      { path: 'wallet', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
+      { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
+      { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
       {
-        path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        path: 'account', loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
+        , canActivate: [ProtectedGuard]
       },
-      { path: 'loading', component: LoadingComponent }
+      {
+        path: 'stamp/:id',
+        loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'survey/:id',
+        loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'game/:id',
+        loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'give_reward/:id',
+        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        canActivate: [ProtectedGuard]
+      },
+      { path: 'reward-detail', component: RewardComponent, canActivate: [ProtectedGuard] },
+      { path: 'loading', component: LoadingComponent },
+      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard]},
     ]
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/wallet' }
 ];
 

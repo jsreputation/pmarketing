@@ -10,7 +10,7 @@
     <div class="card-content">
       <!--goal-->
       <mat-form-field class="card-row">
-        <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Campagin goal">
+        <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Campaign goal">
           <ng-container *ngFor="let goal of config?.goals">
             <mat-option [value]="goal?.value">{{goal?.title}}</mat-option>
           </ng-container>
@@ -19,20 +19,32 @@
       <!--duration-->
       <div class="card-row">
         <div class="input-group">
-          <cl-date-picker [formControl]="campaignInfo.get('startDate')"
-                          [max]="campaignInfo.get('endDate').value"></cl-date-picker>
+          <cl-date-picker [formControl]="campaignInfo.get('startDate')" [max]="campaignInfo.get('endDate').value">
+          </cl-date-picker>
           <cl-time-picker [formControl]="campaignInfo.get('startTime')"></cl-time-picker>
         </div>
         to
         <div class="input-group">
-          <cl-date-picker [formControl]="campaignInfo.get('endDate')"
-                          [min]="campaignInfo.get('startDate').value"></cl-date-picker>
-          <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
+          <div class="date-field">
+            <cl-date-picker [control]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value">
+            </cl-date-picker>
+            <mat-error class="date-field-error"
+              *ngIf="campaignInfo.get('endDate').hasError('required') && campaignInfo.get('endDate').touched">
+              This field is required
+            </mat-error>
+          </div>
+          <div class="date-field">
+            <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
+            <mat-error class="date-field-error"
+              *ngIf="campaignInfo.get('endTime').hasError('required') && campaignInfo.get('endTime').touched">
+              This field is required
+            </mat-error>
+          </div>
         </div>
-        <mat-checkbox [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
+        <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
       </div>
       <!--labels-->
-      <cl-chip-list class="card-row" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
+      <cl-chip-list class="card-row" [addOnBlur]="isFirstInit && triggerLabelsChip" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
     </div>
   </mat-expansion-panel>
   <!--Select channel-->
@@ -45,7 +57,7 @@
     <!--channel type-->
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group [formControl]="channel.get('type')">
+        <mat-radio-group color="primary" [formControl]="channel.get('type')">
           <ng-container *ngFor="let type of config?.channelTypes">
             <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
           </ng-container>
@@ -81,21 +93,19 @@
               </cl-time-picker>
             </div>
           </div>
-          <!--recurrence Settings-->
+          <!--recurrence Settings 
           <div class="card-row form-field">
-            <mat-checkbox [formControl]="schedule.get('enableRecurrence')">Recurrence Settings</mat-checkbox>
+            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
+            </mat-checkbox>
           </div>
-          <!--recurrence-->
           <div class="card-row stretch" *ngIf="recurrence.enabled">
             <div class="row">
               <div>
                 <label class="card-label">Repeat every</label>
                 <div class="input-group">
-                  <!--time-->
                   <mat-form-field>
                     <input matInput type="number" [formControl]="recurrence.get('times')" [min]="0">
                   </mat-form-field>
-                  <!--period-->
                   <mat-form-field>
                     <mat-select [formControl]="recurrence.get('period')">
                       <mat-option value="day">Day</mat-option>
@@ -106,21 +116,19 @@
                 </div>
               </div>
               <div>
-                <!--repeat on-->
                 <ng-container *ngIf="recurrence.get('repeatOn').enabled">
                   <label class="card-label">Repeat on</label>
                   <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
                     <ng-container *ngFor="let day of config?.days">
-                      <mat-checkbox [value]="day.value">
+                      <mat-checkbox color="primary" [value]="day.value">
                         <div>{{day.title}}</div>
                       </mat-checkbox>
                     </ng-container>
                   </cl-checkbox-group>
                 </ng-container>
               </div>
-            </div>
-
-          </div>
+            </div> 
+          </div>-->
         </div>
       </div>
     </div>
@@ -134,14 +142,12 @@
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
-        <mat-radio-group aria-label="Select an option" [formControl]="audience.get('type')">
-          <mat-radio-button [value]="'none'">No audience</mat-radio-button>
-          <mat-radio-button [value]="'upload'">Upload an audience list</mat-radio-button>
-        </mat-radio-group>
+        <mat-form-field>
+          <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
+            <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <cl-upload-file *ngIf="audience.get('file').enabled"
-                      [formControl]="audience.get('file')">
-      </cl-upload-file>
     </div>
   </mat-expansion-panel>
 </div>

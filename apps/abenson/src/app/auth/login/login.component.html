@@ -1,0 +1,26 @@
+<div class="content-container">
+  <img src="assets/signup-top-image.svg" class="top-image">
+  <div class="login-form">
+    <h1>Log In</h1>
+    <p>Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a></p>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Enter Mobile Number</mat-label>
+        <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+        <mat-error *ngIf="loginForm.get('mobileNumber').hasError('required')">
+          Mobile Number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>PIN Code</mat-label>
+        <input matInput placeholder="PIN Code" formControlName="pinCode">
+        <mat-error *ngIf="loginForm.get('pinCode').hasError('required')">
+          PIN Code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
+      <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
+    </form>
+  </div>
+  <img src="assets/signup-bottom-image.svg" class="bottom-image">
+</div>

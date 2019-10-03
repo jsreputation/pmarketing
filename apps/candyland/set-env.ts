@@ -12,11 +12,12 @@ require('dotenv').config();
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
-  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
+  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api-dev1.uat.whistler.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
+  apiCdn: '${process.env.APIFILE ? process.env.APIFILE : 'https://cdn.uat.whistler.perxtech.io/dev1/'}'
 };
 `;
 
@@ -26,7 +27,6 @@ console.log(colors.grey(envConfigFile));
 fs.writeFile(targetPath, envConfigFile, (err: any) => {
   if (err) {
     throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
   }
+  console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
 });

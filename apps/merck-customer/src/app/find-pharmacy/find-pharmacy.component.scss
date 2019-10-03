@@ -1,0 +1,21 @@
+.filter-area {
+  background-color: #e9e9ed;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+
+  button {
+    background-color: #ffffff;
+    font-size: 1.4rem;
+    color: #494953;
+  }
+}
+
+mat-tab-group {
+  height: calc(100% - 6rem);
+}
+
+perx-core-locations-list {
+  padding-top: 3rem;
+}

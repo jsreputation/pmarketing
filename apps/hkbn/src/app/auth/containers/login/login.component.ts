@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { LoginFormValue } from '../../components/login-form/login-form.component';
 import { Router } from '@angular/router';
 
@@ -10,28 +10,25 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  public authed: boolean;
-
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private authService: AuthenticationService, private router: Router, private nofifcationService: NotificationService) {
   }
 
   public login(data: LoginFormValue): void {
-    this.authService.v4GameOauth(data.user, data.pass).then((isAuthed: boolean) => {
-      this.authed = isAuthed;
-
-      if (!((window as any).primaryIdentifier)) {
-        (window as any).primaryIdentifier = data.user;
+    this.authService.login(data.user, data.pass).subscribe(
+      () => {
+        this.router.navigate([this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/']);
+      },
+      (err) => {
+        this.nofifcationService.addSnack(err.error.message);
       }
+    );
 
-      if (this.authService.getInterruptedUrl()) {
-        this.router.navigateByUrl(this.authService.getInterruptedUrl());
-      } else {
-        this.router.navigateByUrl('puzzle');
-      }
-    });
+    if (!((window as any).primaryIdentifier)) {
+      (window as any).primaryIdentifier = data.user;
+    }
   }
 
-  public forgotPassword(identifier: string): void {
+  public forgotPassword(identifier: string = ''): void {
     this.router.navigate(['/forgot-password'], {
       queryParams: {
         identifier

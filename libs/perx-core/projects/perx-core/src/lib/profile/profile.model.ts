@@ -6,7 +6,7 @@ export interface IProfile {
   middleName?: string;
   phone?: string;
   email?: string;
-  birthDate?: string;
+  birthDate?: Date;
   gender?: string;
   joinedDate?: string;
   passwordExpiryDate?: string;
@@ -14,5 +14,20 @@ export interface IProfile {
 }
 
 export interface ICustomProperties {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
+}
+
+export interface IProfileProperty {
+  state?: string;
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
+  email?: string;
+  birthDate?: Date;
+  gender?: string;
+}
+
+export interface ICardNumber {
+  card_number: number;
+  loyalty_program_id: number;
 }

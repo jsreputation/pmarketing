@@ -1,17 +1,58 @@
 cdk-virtual-scroll-viewport {
-  height: 100vh;
+  height: 100%;
 }
 
 .transaction {
   display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   height: 10rem;
-}
+  flex-direction: row;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 1.6rem;
+  position: relative;
 
-.transaction-point {
-  flex: 2 1 0;
-}
+  &-info {
+    flex: 2 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-.transaction-date {
-  flex: 1 1 0;
+  &-name {
+    font-style: normal;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    font-weight: 900;
+    font-family: Lato, sans-serif;
+    color: #1B1B25;
+  }
+
+  &-description {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+  }
+
+  &-point {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    letter-spacing: 0.2px;
+    margin-top: 1.6rem;
+    font-family: Lato, sans-serif;
+    color: #666666;
+  }
+
+  &-date {
+    flex: 1 1 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    text-align: right;
+    letter-spacing: 0.2px;
+    font-family: Lato, sans-serif;
+    color: #1B1B25;
+  }
 }

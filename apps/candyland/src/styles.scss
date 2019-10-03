@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~saturn-datepicker/theming';
 @import "styles/variables";
+@import "styles/page-header";
 @import "styles/common";
 @import "styles/icon-svg";
 @import "styles/tables";
@@ -12,7 +13,6 @@
 @import "resize_common";
 @import "styles/preview";
 @import "styles/card";
-@import "styles/merchant-list-view";
 @import "styles/dialog";
 @import "styles/vertical-tabs";
 @import "styles/charts";

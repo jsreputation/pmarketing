@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsComponent } from './rewards.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule } from '@angular/material';
 
 describe('RewardsComponent', () => {
   let component: RewardsComponent;
@@ -12,9 +12,10 @@ describe('RewardsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MatTabsModule
+        MatTabsModule,
+        MatDialogModule
       ],
-      declarations: [RewardsComponent]
+      declarations: [RewardsComponent],
     })
       .compileComponents();
   }));

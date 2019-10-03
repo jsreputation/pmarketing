@@ -6,9 +6,9 @@ import { SoundComponent } from './sound.component';
   providedIn: 'root'
 })
 export class SoundService {
-  icon = 'volume_off';
+  public icon: string = 'volume_off';
 
-  onToggle = new EventEmitter<boolean>();
+  public onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private audio: HTMLAudioElement;
 
@@ -20,22 +20,20 @@ export class SoundService {
       this.audio.loop = true;
     } else {
       this.audio.addEventListener('ended', () => {
-          this.audio.currentTime = 0;
-          this.audio.play();
-        }, false);
+        this.audio.currentTime = 0;
+        this.audio.play();
+      }, false);
     }
   }
 
-  play() {
+  public play(): void {
     if (this.audio) { this.audio.play(); }
     this.icon = 'volume_up';
     this.onToggle.emit(true);
     localStorage.setItem('enableSound', 'true');
   }
 
-
-
-  pause(persist = true) {
+  public pause(persist: boolean = true): void {
     if (this.audio) { this.audio.pause(); }
     this.icon = 'volume_off';
     this.onToggle.emit(false);
@@ -44,15 +42,15 @@ export class SoundService {
     }
   }
 
-  isPlaying() {
+  public isPlaying(): boolean {
     return this.audio && !this.audio.paused;
   }
 
-  toggle() {
+  public toggle(): void {
     this.isPlaying() ? this.pause() : this.play();
   }
 
-  showPopup() {
+  public showPopup(): void {
     const dialogRef = this.dialog.open(SoundComponent, { disableClose: true });
     const subscription = dialogRef.componentInstance.onEnable.subscribe((enable: boolean) => {
       enable ? this.play() : this.pause();

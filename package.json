@@ -2,6 +2,7 @@
   "name": "perx-microsites",
   "scripts": {
     "build": "lerna run build:lib && lerna run build -- ",
+    "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
     "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
@@ -11,16 +12,19 @@
     "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
-    "build:components-demo:prod": "echo nothing here",
-    "build:hkbn:prod": "echo nothing here",
-    "build:hsbc-rewards:prod": "echo nothing here",
-    "build:merck-customer:prod": "echo nothing here",
-    "build:merck-merchant:prod": "echo nothing here",
+    "build:components-demo:prod": "lerna run build:lib && lerna run build:components-demo:prod --",
+    "build:hkbn:prod": "lerna run build:lib && lerna run build:hkbn:prod --",
+    "build:hsbc-rewards:prod": "lerna run build:lib && lerna run build:hsbc-rewards:prod --",
+    "build:merck-customer:prod": "lerna run build:lib && lerna run build:merck-customer:prod --",
+    "build:merck-merchant:prod": "lerna run build:lib && lerna run build:merck-merchant:prod --",
+    "build:oracle-pay:prod": "lerna run build:lib && lerna run build:oracle-pay:prod --",
     "build:backend": "lerna run build:backend",
     "clean": "lerna clean --yes && lerna run clean && rm -rf ./dist ./node_modules",
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "e2e-ci": "lerna run e2e -- --protractor-config=e2e/protractor-ci.conf.js"
+    "e2e-ci": "lerna run e2e -- --protractor-config=e2e/protractor-ci.conf.js",
+    "pree2e-ci": "lerna run pree2e",
+    "e2e-ci-pro": "lerna run e2e-pro -- e2e/protractor-ci.conf.js --protractor-config=e2e/protractor-ci.conf.js"
   },
   "private": true,
   "workspaces": [
@@ -30,5 +34,6 @@
   ],
   "devDependencies": {
     "lerna": "^3.14.1"
-  }
+  },
+  "dependencies": {}
 }

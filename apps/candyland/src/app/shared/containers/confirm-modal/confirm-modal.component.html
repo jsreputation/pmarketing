@@ -1,0 +1,37 @@
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-engagementConfirm">
+  <div class="header-wrap">
+    <button class="btn-closed btn-transparent" [mat-dialog-close]="'isCloseButtonTrigger'">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="dialog-body">
+    <img class="description-img" src="assets/images/engagement-type/engagement-template.png" alt="Engagement Template">
+    <h2 class="description-header" id="dialogTitle-engagementConfirm">
+      {{data?.header || 'Yay! you just created an engagement template!'}}
+    </h2>
+    <p class="description-copy">
+      {{data?.description || 'One step to go closer to your customers. Now you can launch a campaign with this.'}}
+    </p>
+  </div>
+  <footer class="dialog-actions"
+  >
+    <cl-button [classList]="'tertiary'"
+              class="actions-close"
+              (click)="close()"
+              [disableRipple]="true"
+    >
+        <span>
+          Launch later
+        </span>
+    </cl-button>
+
+    <cl-button [classList]="'primary'"
+              (click)="close(true)"
+              [disableRipple]="true"
+    >
+        <span>
+          Launch now
+        </span>
+    </cl-button>
+  </footer>
+</aside>

@@ -1,3 +1,5 @@
+@import "variables";
+
 .select-template {
   display: flex;
 }
@@ -7,4 +9,12 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: baseline;
+
+  + .item-list {
+    margin-top: 0;
+  }
+}
+
+.template-error {
+  margin-bottom: ($vertical-padding * 0.75);
 }

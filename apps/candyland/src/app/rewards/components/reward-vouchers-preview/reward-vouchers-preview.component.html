@@ -1,5 +1,5 @@
 <!--Single code-->
-<ng-container *ngIf="data?.voucherCode?.singleCode">
+<ng-container *ngIf="data?.voucherCode?.type === 'single_code' && data?.voucherCode?.singleCode?.code">
   <label class="card-label">Voucher Code Type</label>
   <p>Single code</p>
   <p class="card-value">{{data?.voucherCode?.singleCode?.code}}</p>
@@ -7,24 +7,13 @@
 <!--/ Single code-->
 
 <!--Unique codes: System generated-->
-<ng-container *ngIf="data?.voucherCode?.uniqueGeneratedCode">
+<ng-container *ngIf="data?.voucherCode?.type === 'system_generated'">
   <label class="card-label">Voucher Code Type</label>
   <p>Unique codes: System generated</p>
-  <cl-download-button [file]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cl-download-button>
+  <p class="card-value">{{data?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{data?.voucherCode?.uniqueGeneratedCode?.codeFormat}})</p>
+  <!-- <cl-download-button [file]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cl-download-button> -->
 </ng-container>
 <!--/ Unique codes: System generated-->
-
-<!--Unique codes: User upload-->
-<ng-container *ngIf="data?.voucherCode?.uniqueUserUploadCode">
-  <label class="card-label">Voucher Code Type</label>
-  <p>Unique codes: User upload</p>
-  <div class="reward-vouchers-preview-download">
-    {{data?.voucherCode?.uniqueUserUploadCode?.name}}
-    <cl-download-button [file]="data?.voucherCode?.uniqueUserUploadCode?.file">Download voucher codes
-    </cl-download-button>
-  </div>
-</ng-container>
-<!--/ Unique codes: User upload-->
 
 <!--Merchant PIN-->
 <ng-container *ngIf="data?.voucherCode?.merchantPIN">
@@ -41,11 +30,12 @@
     </p>
   </div>
   <div class="card-content">
-    <p class="card-value" *ngIf="data?.voucherValidity?.period">
-      {{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}}
-      - {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}
-    </p>
-    <p class="card-value" *ngIf="data?.voucherValidity?.issuanceDate">
+    <time class="card-value" *ngIf="data?.voucherValidity?.type === 'period'">
+      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}} 
+        <span *ngIf="data?.voucherValidity?.period?.endDate">- {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span> 
+      </span>
+    </time>
+    <p class="card-value" *ngIf="data?.voucherValidity?.type === 'issuance_date'">
       Valid for
       {{data?.voucherValidity?.issuanceDate?.times}}
       {{data?.voucherValidity?.issuanceDate?.duration}}{{data?.voucherValidity?.issuanceDate?.times > 1 ? 's' : ''}}

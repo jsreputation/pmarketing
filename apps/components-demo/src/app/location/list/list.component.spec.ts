@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
 import { LocationModule } from '@perx/core';
+import { MatSlideToggleModule } from '@angular/material';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -11,7 +12,8 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ListComponent ],
       imports: [
-        LocationModule
+        LocationModule,
+        MatSlideToggleModule
       ]
     })
     .compileComponents();

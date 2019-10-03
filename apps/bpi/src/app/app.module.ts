@@ -5,12 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
   PerxCoreModule,
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
-  StampModule
+  MerchantsModule,
+  RewardsModule,
+  StampModule,
+  UtilsModule,
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -23,6 +26,7 @@ import {
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingComponent } from './landing/landing.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,22 +38,26 @@ import { LandingComponent } from './landing/landing.component';
     LandingComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
+    ProfileModule,
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
+    UtilsModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    StampModule.forRoot({ env: environment }),
+    VouchersModule,
+    MerchantsModule,
+    RewardsModule,
     AuthenticationModule,
-    BrowserAnimationsModule
+    CampaignModule,
+    StampModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

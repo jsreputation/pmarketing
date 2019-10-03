@@ -13,38 +13,46 @@ export class MerchantFormService {
 
   public getMerchantForm(): FormGroup {
     return this.fb.group({
-      name: ['Merchant 1', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
-      image: [null, [Validators.required]],
-      description: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(120)]],
-      countryCode: [null, [Validators.required]],
-      contactNumber: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      stateProvince: [null, [Validators.required]],
-      postalCode: [null, [Validators.required]],
-      weblink: [null, [Validators.required, ClValidators.checkUrl]],
-      onBranches: [null],
+      name: ['Merchant', [Validators.minLength(1), Validators.maxLength(60)]],
+      image: [null, [
+        // Validators.required
+      ]],
+      description: [null, [
+        // Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(120)
+      ]],
+      countryCode: [null, []],
+      phone: [null, []],
+      address: [null, []],
+      city: [null, []],
+      state: [null, []],
+      postalCode: [null, []],
+      weblink: [null, [ClValidators.checkUrl]],
+      // onBranches: [null],
       branches: this.fb.array([])
     });
   }
 
   public patchMerchantForm(form: FormGroup, val: any): void {
-    form.patchValue(val);
     if (val.branches && val.branches.length) {
-      form.get('onBranches').patchValue(true);
+      // form.get('onBranches').patchValue(true);
       val.branches.forEach((branch) => {
         const merchantBranchField: FormGroup = this.getMerchantBranchField();
         merchantBranchField.patchValue(branch);
         (form.get('branches') as FormArray).push(merchantBranchField);
-      })
+      });
     }
+    form.patchValue(val);
+    form.updateValueAndValidity();
   }
 
   public getMerchantBranchField(): FormGroup {
     return this.fb.group({
+      id: [null],
       name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      address: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      contactNumber: [null]
+      address: [null, [Validators.minLength(5), Validators.maxLength(60)]],
+      phone: [null]
     });
   }
 }

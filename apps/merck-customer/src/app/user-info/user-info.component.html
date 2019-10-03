@@ -4,16 +4,24 @@
 		<span i18n="@@login-subtitle">Diabetes Loyality Program</span>
 	</div>
 	<div class="content-container">
-		<div i18n="@@static-thankyou-participating" class="main-heading">Thank you for participating in this loyality program.</div>
-		<div i18n="@@static-current-condition" class="subtitle">To better the experience for you, please indicate the current condition you're taking
-			treatment for</div>
+		<div translate class="main-heading" translate>STATIC_THANKYOU_PARTICIPATING</div>
+		<div translate class="subtitle">STATIC_CURRENT_CONDITION</div>
 		<form [formGroup]="surveyForm" (ngSubmit)="onNext()">
-			<mat-radio-group class="diabetes-selection" formControlName="diabetes">
-				<mat-radio-button i18n="@@static-diabetes" color="primary" value="diabetes">Diabetes</mat-radio-button>
-				<mat-radio-button i18n="@@static-pre-diabetes" color="primary" value="pre_diabetes">Pre-Diabetes</mat-radio-button>
+			<div>
+				<mat-checkbox color="primary" formControlName="diabetesCondition"
+					(change)="diabetesConditionUpdated($event.checked)" translate>
+					{{"STATIC_DIABETES_CONDITION" | translate }}
+				</mat-checkbox>
+			</div>
+			<mat-radio-group *ngIf="surveyForm.controls.diabetesCondition.value" class="diabetes-selection" formControlName="diabetes">
+				<mat-radio-button color="primary" value="diabetes">{{"STATIC_DIABETES" | translate }}</mat-radio-button>
+				<mat-radio-button color="primary" value="pre_diabetes">{{ "STATIC_PRE_DIABETES" | translate }}
+				</mat-radio-button>
 			</mat-radio-group>
-			<mat-checkbox i18n="@@static-hypertension" color="primary" formControlName="hypertension">Hypertension</mat-checkbox>
-			<button i18n="@@next-btn" [disabled]="!surveyForm.valid" mat-flat-button type="submit" class="full-width__button">Next</button>
+			<mat-checkbox translate color="primary" formControlName="hypertension">{{"STATIC_HYPERTENSION" | translate }}
+			</mat-checkbox>
+			<button [disabled]="!surveyForm.valid" mat-flat-button type="submit"
+				class="full-width__button">{{"NEXT_BTN" | translate}}</button>
 		</form>
 	</div>
 </div>

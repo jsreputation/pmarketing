@@ -3,11 +3,15 @@ import { TestBed } from '@angular/core/testing';
 import { V4RewardsService } from './v4-rewards.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EnvConfig } from '../shared/env-config';
+import { VouchersModule } from '../vouchers/vouchers.module';
+import { ConfigModule } from '../config/config.module';
 
 describe('V4RewardsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
-      HttpClientTestingModule
+      HttpClientTestingModule,
+      VouchersModule,
+      ConfigModule.forRoot({})
     ],
     providers: [
       EnvConfig,

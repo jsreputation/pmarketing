@@ -3,33 +3,50 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import {
+  MatSelectModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-    const routerStub = { navigateByUrl: () => ({}),
-                         navigate: () => ({})};
+    const routerStub = {
+      navigateByUrl: () => ({}),
+      navigate: () => ({})
+    };
+
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
-        ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {v4GameOauth: () => {}, getInterruptedUrl: () => null, v4GetAppAccessToken: () => of({})}
+          useValue: {
+            isAuthorized: () => of({}),
+            login: () => {},
+            getInterruptedUrl: () => null,
+            getAppToken: () => of({})
+          }
         }
       ]
     })
@@ -61,10 +78,10 @@ describe('LoginComponent', () => {
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get(
-      AuthenticationService
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
     );
-    const authSpy = spyOn(authenticationService, 'v4GameOauth').and.returnValue(Promise.resolve(true));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

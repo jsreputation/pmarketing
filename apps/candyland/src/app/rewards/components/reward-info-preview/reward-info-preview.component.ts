@@ -1,4 +1,5 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'cl-reward-info-preview',
@@ -6,7 +7,21 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./reward-info-preview.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RewardInfoPreviewComponent {
+export class RewardInfoPreviewComponent implements OnInit, OnDestroy {
   @Input() public data: any;
 
+  public imageControl = new FormControl();
+
+  public ngOnInit(): void {
+    this.initRewardImage();
+  }
+
+  public ngOnDestroy(): void {
+  }
+
+  private initRewardImage(): void {
+    if (this.data && this.data.image) {
+      this.imageControl.patchValue(this.data.image);
+    }
+  }
 }

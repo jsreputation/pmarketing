@@ -7,6 +7,7 @@
     [placeholder]="placeholder"
     [disableClick]="disabledState"
     [formControl]="control"
+    [format]=24 
     readonly>
   <ngx-material-timepicker-toggle class="time-picker-toggle"
                                   [class.disable]="disabledState"
@@ -18,7 +19,6 @@
   </ngx-material-timepicker-toggle>
   <ngx-material-timepicker
     #toggleTimepicker
-    [minutesGap]="5"
     [enableKeyboardInput]="false"
     [ngxMaterialTimepickerTheme]="theme">
   </ngx-material-timepicker>

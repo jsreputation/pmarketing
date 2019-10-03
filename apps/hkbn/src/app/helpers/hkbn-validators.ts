@@ -2,10 +2,6 @@ import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 
 export class HkbnValidators extends Validators {
 
-  constructor() {
-    super();
-  }
-
   public static email(control: AbstractControl): { [key: string]: boolean } | null {
     if (!control || !control.value) {
       return null;

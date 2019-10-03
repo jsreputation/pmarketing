@@ -3,11 +3,10 @@
     class="date-picker-toggle"
     [class.disable]="disabledState"
     matInput
+    [matDatepickerFilter]="minMaxFilter"
     [matDatepicker]="datePicker"
     [placeholder]="placeholder"
     [formControl]="control"
-    [min]="minDate"
-    [max]="maxDate"
     (click)="datePicker.open()"
     readonly>
   <mat-datepicker-toggle

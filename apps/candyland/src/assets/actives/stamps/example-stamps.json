@@ -1,0 +1,62 @@
+{
+  "name": "Stamps 1",
+  "headlineMessage": "Collect stamps",
+  "subHeadlineMessage": "Earn rewards!",
+  "stampsNumber": "10",
+  "stampsSlotNumber": [
+    "2",
+    "4",
+    "6",
+    "8",
+    "10"
+  ],
+  "preStamp": {
+    "id": 1,
+    "type": "pre-stamp-1",
+    "title": "icon",
+    "img": "assets/images/stamps/pre-stamps/pre-stamp-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "rewardPreStamps": {
+    "id": 1,
+    "type": "reward-pre-stamp-1",
+    "title": "icon",
+    "img": "assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "postStamps": {
+    "id": 1,
+    "type": "post-stamp-1",
+    "title": "icon",
+    "img": "assets/images/stamps/post-stamps/post-stamp-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "rewardPostStamps": {
+    "id": 1,
+    "type": "reward-post-stamp-1",
+    "title": "icon",
+    "img": "assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "cardBackground": {
+    "id": 1,
+    "type": "card-bg-1",
+    "title": "icon",
+    "img": "assets/images/stamps/card-background/card-bg-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "background": {
+    "id": 1,
+    "type": "bg-1",
+    "title": "icon",
+    "img": "assets/images/stamps/background/stamp-bg-1.png",
+    "format": ".png",
+    "active": "false"
+  },
+  "buttonText": "see my rewards"
+}

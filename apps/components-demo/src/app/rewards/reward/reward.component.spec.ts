@@ -2,24 +2,33 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
 import {
-  RewardsModule
+  RewardsModule, RewardsService, IReward
 } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
-import { environment } from '../../../environments/environment';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+  const mockReward: IReward = {
+    id: 1, name: '',
+    description: '', subtitle: '', validFrom: null,
+    validTo: null, rewardThumbnail: '', rewardBanner: '', merchantImg: '', termsAndConditions: '', howToRedeem: ''
+  };
+  const rewardsServiceStub = {
+    getReward: () => of(mockReward)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RewardsModule.forRoot({ env: environment }),
-        MatButtonModule,
-        HttpClientTestingModule
+        RewardsModule,
+        MatButtonModule
       ],
-      declarations: [RewardComponent]
+      declarations: [RewardComponent],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub }
+      ]
     })
       .compileComponents();
   }));

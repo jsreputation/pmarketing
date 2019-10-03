@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { ManageRewardsComponent } from 'src/app/rewards/containers/manage-rewards/manage-rewards.component';
 import {RewardsListPageComponent} from './containers/rewards-list-page/rewards-list-page.component';
-import {NewRewardComponent} from 'src/app/rewards/containers/new-reward/new-reward.component';
 import {RewardDetailPageComponent} from 'src/app/rewards/containers/reward-detail-page/reward-detail-page.component';
 
 const routes: Routes = [
@@ -11,12 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'new-reward',
-    component: NewRewardComponent
+    component: ManageRewardsComponent
   },
   {
-    path: 'detail',
+    path: 'edit/:id',
+    component: ManageRewardsComponent
+  },
+  {
+    path: 'detail/:id',
     component: RewardDetailPageComponent
-  }
+  },
 ];
 
 @NgModule({

@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+
+import { Observable } from 'rxjs';
+
 import { ILocation } from './ilocation';
+
+import { IMerchant } from '../merchants/models/merchants.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class LocationsService {
-  // @ts-ignore
-  public getAll(tags: string[] = []): Observable<ILocation[]> {
-    return throwError('not implemented yet');
-  }
+  public abstract getAllLocations(merchants: Observable<IMerchant[]>, tags?: string[]): Observable<ILocation[]>;
 
-  // @ts-ignore
-  public getLocations(page: number = 1, pageSize: number = 25, tags: string[] = []): Observable<ILocation[]> {
-    return throwError('not implemented yet');
-  }
+  public abstract getLocations(page?: number, tags?: string[]): Observable<ILocation[]>;
 
-  public getTags(): Observable<string[]> {
-    return throwError('not implemented yet');
-  }
+  public abstract getTags(merchants: Observable<IMerchant[]>): Observable<string[]>;
 
-  // @ts-ignore
-  public getFromMerchant(merchantId: number): Observable<ILocation[]> {
-    return throwError('not implemented yet');
-  }
+  public abstract getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]>;
 }

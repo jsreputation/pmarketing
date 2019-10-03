@@ -1,27 +1,22 @@
-
-@import "variables";
+@import "./variables";
 
 .tree {
-
   &-wrap {
     min-height: 100vh;
-    background-color: $simple-light-gray;
+    background-color: $background-color;
   }
 
   &-page-header {
     display: flex;
     justify-content: space-between;
     padding: 0 3rem 0 4.3rem;
-    background: $white-color;
+    background: $white;
     align-items: center;
-  }
-
-  &-page-header {
     height: 6.6rem;
   }
 
   &-btn-cancel {
-    padding-right: .8rem;
+    padding-right: 0.8rem;
   }
 
   &-main-block {
@@ -32,18 +27,15 @@
     width: 100%;
     margin-right: 4rem;
   }
-
 }
 
 .messages {
-
   &-input {
     width: 100%;
   }
 }
 
 .game {
-
   &-tree-wrap {
     display: flex;
   }
@@ -62,13 +54,11 @@
   }
 
   &-gift-select {
-    width: 34.4rem;
+    width: $mobile-preview-width;
   }
 
   &-selected-graphic {
     margin-bottom: 4rem;
     display: flex;
   }
-
 }
-

@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
-import { map } from 'rxjs/operators';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { CampaignsService } from '@cl-core/services/campaigns.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { CampaignsService } from '@cl-core/services';
+import { Router } from '@angular/router';
+import { ICampaignTableData } from '@perx/whistler';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -10,60 +10,21 @@ import { CampaignsService } from '@cl-core/services/campaigns.service';
   styleUrls: ['./campaigns-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CampaignsListPageComponent implements  AfterViewInit {
-
-  public DATE_FORMAT: string = 'dd MMM yyyy';
-  public TIME_FORMAT: string = 'hh:ssa';
-  // public form: FormGroup;
-  public hasData: boolean = true;
-
-  public inlineRange: any;
+export class CampaignsListPageComponent {
+  public dataSource: CustomDataSource<ICampaignTableData>;
   public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
-  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-
-  constructor(private campaignsService: CampaignsService,
-              public cd: ChangeDetectorRef) {
+  constructor(private campaignsService: CampaignsService, private router: Router) {
+    this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService);
   }
 
-  public ngAfterViewInit(): void {
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  public editCampaign(campaign: ICampaignTableData): void {
+    this.router.navigateByUrl('/campaigns/edit/' + campaign.id);
   }
 
-  public editItem(): void {
+  public duplicateCampaign(campaign: ICampaignTableData): void {
+    this.campaignsService.duplicateCampaign(campaign.id)
+      .subscribe(() => this.dataSource.updateData());
   }
 
-  public duplicateItem(): void {
-  }
-
-  public deleteItem(): void {
-  }
-
-  public pauseItem(): void {
-  }
-
-  private getData(): void {
-    this.campaignsService.getCampaigns()
-      .pipe(
-        map((response: any) => response.results),
-        map((result: any) => (
-          result.map((item: any) => {
-              item.begin = new Date(item.begin);
-              item.end = new Date(item.end);
-              return item;
-            })
-          )
-        )
-      )
-      .subscribe((res: Campaign[]) => {
-        this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
-        this.cd.detectChanges();
-      });
-  }
 }

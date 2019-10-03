@@ -12,14 +12,15 @@ import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
-  CognitoModule,
-  OauthModule,
   AuthenticationModule,
   CampaignModule,
   VouchersModule,
+  MerchantsModule,
   ProfileModule,
   StampModule,
-  UtilsModule
+  UtilsModule,
+  ConfigModule,
+  RewardsModule,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -42,6 +43,7 @@ import { SoundModule } from './sound/sound.module';
 import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { ProfileComponent } from './profile/profile.component';
     ProfileComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -76,14 +79,16 @@ import { ProfileComponent } from './profile/profile.component';
     MatProgressSpinnerModule,
     MatSidenavModule,
     UtilsModule,
-    VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    VouchersModule,
+    RewardsModule,
+    MerchantsModule,
     AuthenticationModule,
-    CampaignModule.forRoot({ env: environment }),
-    ProfileModule.forRoot({ env: environment }),
-    StampModule.forRoot({ env: environment }),
-    FormsModule
+    CampaignModule,
+    ProfileModule,
+    StampModule,
+    FormsModule,
+    RewardsModule,
+    HttpClientModule
   ],
   providers: [
     DatePipe,

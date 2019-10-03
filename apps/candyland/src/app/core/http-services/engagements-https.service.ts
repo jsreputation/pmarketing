@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiConfig } from '@cl-core/api-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -10,8 +11,12 @@ export class EngagementsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getEngagements(): Observable<any> {
-    return this.http.get('assets/mocks/engagements.json');
+  public getEngagements(): Observable<IResponseApi<IEngagementApi[]>> {
+    return this.http.get<IResponseApi<IEngagementApi[]>>(ApiConfig.engagementsPath + '/');
+  }
+
+  public getEngagement(id: string, type: string): Observable<IResponseApi<IEngagementApi>> {
+    return this.http.get<IResponseApi<IEngagementApi>>(`${ApiConfig.basePath}/${type}/engagements/${id}`);
   }
 
   public getEngagementType(): Observable<any> {

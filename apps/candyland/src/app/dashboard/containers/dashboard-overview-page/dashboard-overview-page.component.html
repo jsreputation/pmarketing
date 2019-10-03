@@ -1,0 +1,119 @@
+<div class="dashboard-group-graphics">
+  <div class="chard-card-list">
+
+    <!--group block contain tabs and one graphic-->
+    <div class="tabs-list-wrap">
+      <mat-radio-group color="primary" class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+        <ng-container *ngFor="let tab of tabs; let index = index">
+          <mat-radio-button [value]="tab?.name">
+            <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
+          </mat-radio-button>
+        </ng-container>
+      </mat-radio-group>
+    </div>
+
+    <ng-container [ngSwitch]="activeTab">
+      <!--      activeCustomers-->
+      <ng-container *ngSwitchCase="'activeCustomers'">
+        <article class="chart-card">
+          <h3 class="chart-card-title">Total Active Customers</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="110" [cardType]="'verticalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Demographics</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="107" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Popular Redemption Days</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="146" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Popular Engagement Days</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="113" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <!--/      activeCustomers-->
+      <!--      issuedRewards-->
+      <ng-container *ngSwitchCase="'issuedRewards'">
+        <article class="chart-card">
+          <h3 class="chart-card-title">Rewards</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="148" [cardType]="'line'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Top 5 Categories</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="149" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Top 3 Redeemed Rewards by Reward Type</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="152" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Top 5 Merchants</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="150" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Top 3 Merchants by Reward Cost</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="151" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <!--/      issuedRewards-->
+      <!--      activeCampaigns-->
+      <ng-container *ngSwitchCase="'activeCampaigns'">
+        <article class="chart-card">
+          <h3 class="chart-card-title">Campaigns</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="154" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card full-width">
+          <h3 class="chart-card-title">Engagement Rate</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="157" [cardType]="'gridPie'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Top 5 Rewards</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="155" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+
+        <article class="chart-card">
+          <h3 class="chart-card-title">Reward Cost by Engagement Type</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="156" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <!--/      activeCampaigns-->
+    </ng-container>
+
+  </div>
+</div>

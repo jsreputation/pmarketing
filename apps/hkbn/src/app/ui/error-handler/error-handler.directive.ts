@@ -16,14 +16,14 @@ import { takeUntil } from 'rxjs/operators';
   selector: '[hkbnErrorHandler]'
 })
 export class ErrorHandlerDirective implements AfterViewInit, OnDestroy {
-  private errorName: string;
+  private errorName: string | string[];
   private errorEmbeddedRef: EmbeddedViewRef<any>;
   private control: NgControl;
 
   private destroy$: Subject<void> = new Subject<void>();
 
   @Input()
-  set hkbnErrorHandler(errorName: string) {
+  set hkbnErrorHandler(errorName: string | string[]) {
     this.errorName = errorName;
   }
 
@@ -39,7 +39,11 @@ export class ErrorHandlerDirective implements AfterViewInit, OnDestroy {
 
     this.formField._control.stateChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
 
-      if (this.control.hasError(this.errorName)) {
+      const hasError = typeof this.errorName === 'string'
+        ? this.control.hasError(this.errorName)
+        : this.errorName.some((error) => this.control.hasError(error));
+
+      if (hasError) {
         this.viewContainer.insert(this.errorEmbeddedRef);
       } else {
         this.viewContainer.detach(0);

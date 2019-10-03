@@ -1,18 +1,87 @@
 [
   {
     "id": 1,
-    "value": "Singapore Dollar SGD"
-  },{
-  "id": 2,
-  "value": "Singapore Dollar SGD"
-},{
-  "id": 3,
-  "value": "Singapore Dollar SGD"
-},{
-  "id": 4,
-  "value": "Singapore Dollar SGD"
-},{
-  "id": 5,
-  "value": "Singapore Dollar SGD"
-}
+    "country": "Hong Kong",
+    "currency": "HKD"
+  },
+  {
+    "id": 2,
+    "country": "China",
+    "currency": "CNY"
+  },
+  {
+    "id": 3,
+    "country": "Indonesia",
+    "currency": "IDR"
+  },
+  {
+    "id": 4,
+    "country": "India",
+    "currency": "INR"
+  },
+  {
+    "id": 5,
+    "country": "Japan",
+    "currency": "JPY"
+  },
+  {
+    "id": 6,
+    "country": "Malaysia",
+    "currency": "MYR"
+  },
+  {
+    "id": 7,
+    "country": "Philippines",
+    "currency": "PHP"
+  },
+  {
+    "id": 8,
+    "country": "Singapore",
+    "currency": "SGD"
+  },
+  {
+    "id": 9,
+    "country": "South Korea",
+    "currency": "KRW"
+  },
+  {
+    "id": 10,
+    "country": "Taiwan",
+    "currency": "TWD"
+  },
+  {
+    "id": 11,
+    "country": "Thailand",
+    "currency": "THB"
+  },
+  {
+    "id": 12,
+    "country": "Vietnam",
+    "currency": "VND"
+  },
+  {
+    "id": 13,
+    "country": "United States",
+    "currency": "USD"
+  },
+  {
+    "id": 14,
+    "country": "United Kingdom",
+    "currency": "GBP"
+  },
+  {
+    "id": 15,
+    "country": "Australia",
+    "currency": "AUD"
+  },
+  {
+    "id": 16,
+    "country": "Canada",
+    "currency": "CAD"
+  },
+  {
+    "id": 17,
+    "country": "European Union",
+    "currency": "EUR"
+  }
 ]

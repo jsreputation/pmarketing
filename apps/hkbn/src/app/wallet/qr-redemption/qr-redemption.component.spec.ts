@@ -1,22 +1,45 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { QrRedemptionComponent } from './qr-redemption.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { mockVoucher } from '../voucher.mock';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+
+const NotificationWrapperServiceStub = {
+  addPopup: () => { }
+};
+
+const vouchersServiceStub = {
+  state: new BehaviorSubject(mockVoucher),
+  get: (): Observable<Voucher> => of(mockVoucher),
+  stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+  redeemVoucher: (id): Observable<any> => of(id)
+};
 
 describe('QrRedemptionComponent', () => {
   let component: QrRedemptionComponent;
   let fixture: ComponentFixture<QrRedemptionComponent>;
-
+  let location: Location;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        VouchersModule.forRoot({env: {apiHost: ''}}),
+        RouterTestingModule.withRoutes([{
+          path: 'wallet',
+          component: QrRedemptionComponent
+        }]),
+        VouchersModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: NotificationWrapperService, useValue: NotificationWrapperServiceStub }
       ],
       declarations: [QrRedemptionComponent]
     })
@@ -25,6 +48,7 @@ describe('QrRedemptionComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QrRedemptionComponent);
+    location = TestBed.get(Location);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -32,4 +56,16 @@ describe('QrRedemptionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('expect change status', fakeAsync(() => {
+    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.issued });
+    tick();
+    expect(component.status).toBe(VoucherState.issued);
+  }));
+
+  it('should navigate to wallet', fakeAsync(() => {
+    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.redeemed });
+    tick();
+    expect(location.path(false)).toBe('/wallet');
+  }));
 });

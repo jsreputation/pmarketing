@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageProperties, BarSelectedItem } from '../page-properties';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit, PageProperties {
+export class ResetPasswordComponent implements OnInit, PageAppearence {
 
   public resetPasswordForm: FormGroup;
   public mobileNumber: string = '';
@@ -24,16 +24,16 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     private notificationService: NotificationService
 
   ) {
-      const currentNavigation = this.router.getCurrentNavigation();
-      if (!currentNavigation) {
-        return;
-      }
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (!currentNavigation) {
+      return;
+    }
 
-      if (currentNavigation.extras.hasOwnProperty('state')) {
-          this.mobileNumber = currentNavigation.extras.state.mobileNo;
-          this.otp = currentNavigation.extras.state.otp;
-      }
-   }
+    if (currentNavigation.extras.hasOwnProperty('state')) {
+      this.mobileNumber = currentNavigation.extras.state.mobileNo;
+      this.otp = currentNavigation.extras.state.otp;
+    }
+  }
 
   public ngOnInit(): void {
     this.initForm();
@@ -47,12 +47,13 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     });
   }
 
-  public showHeader(): boolean {
-    return true;
-  }
-
-  public bottomSelectedItem(): BarSelectedItem {
-    return BarSelectedItem.NONE;
+  public getPageProperties(): PageProperties {
+    return {
+      header: true,
+      backButtonEnabled: true,
+      bottomSelectedItem: BarSelectedItem.NONE,
+      pageTitle: ''
+    };
   }
 
   public onUpdatePassword(): void {
@@ -60,41 +61,38 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
     const password = this.resetPasswordForm.get('password').value as string;
     const confirmPassword = this.resetPasswordForm.get('confirmPassword').value as string;
     if (password !== confirmPassword) {
-        this.notificationService.addSnack('Passwords do not match.');
-        return;
+      this.notificationService.addSnack('Passwords do not match.');
+      return;
     }
 
     // First send reset password using otp and password on successful return call below
     this.authService.resetPassword(
-      { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword})
+      { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword })
       .subscribe(
-      (response) => {
-        console.log(`Response : ${response.message}`);
-        console.log(`Response code: ${response.code}`);
-        // Send Login Call on successfull password reset
-        this.sendLoginCall(password);
-      },
-      err =>  {
-        console.error('ResetPassword: ' + err);
-        this.notificationService.addSnack(err.code);
-      });
+        () => {
+          // Send Login Call on successfull password reset
+          this.sendLoginCall(password);
+        },
+        err => {
+          console.error('ResetPassword: ' + err);
+          if (err instanceof HttpErrorResponse) {
+            this.notificationService.addSnack(err.statusText);
+          } else {
+            this.notificationService.addSnack(err.code);
+          }
+        });
   }
   private sendLoginCall(password: string): void {
-    this.authService.v4GameOauth(this.mobileNumber, password)
-      .then((isAuthed: boolean) => {
-        if (isAuthed) {
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = this.mobileNumber;
-          }
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('home');
-          }
+    this.authService.login(this.mobileNumber, password).subscribe(
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = this.mobileNumber;
         }
-      })
-      .catch((err) => {
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
+        this.notificationService.addSnack('Password successfully updated.');
+      },
+      (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
@@ -102,7 +100,8 @@ export class ResetPasswordComponent implements OnInit, PageProperties {
             this.notificationService.addSnack('Invalid credentials');
           }
         }
-      });
+      }
+    );
   }
 
 }

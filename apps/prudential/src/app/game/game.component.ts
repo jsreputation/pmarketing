@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { interval, forkJoin, Observable, of } from 'rxjs';
 import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
 import {
-  CampaignService,
+  ICampaignService,
   CampaignType,
-  GameService,
+  IGameService,
   IGame,
   defaultTree,
   GameType,
   ICampaign
 } from '@perx/core';
-import { POPUP_TYPE } from '../vouchers/vouchers.component';
+import { PopupType } from '../vouchers/vouchers.component';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -20,10 +20,10 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  playing = false;
-  progressValue: number = null;
-  loading = true;
-  game: IGame = {
+  public playing: boolean = false;
+  public progressValue: number = null;
+  public loading: boolean = true;
+  public game: IGame = {
     id: -1,
     campaignId: -1,
     type: GameType.shakeTheTree,
@@ -32,18 +32,18 @@ export class GameComponent implements OnInit {
     results: {},
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
-  isWhistler: boolean;
-  $game: Observable<IGame>;
+  public isWhistler: boolean;
+  public $game: Observable<IGame>;
 
   constructor(
     private router: Router,
-    private campaignService: CampaignService,
-    private gameService: GameService
+    private campaignService: ICampaignService,
+    private gameService: IGameService
   ) {
     this.isWhistler = environment.isWhistler;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.$game = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.game)),
@@ -55,12 +55,12 @@ export class GameComponent implements OnInit {
 
   }
 
-  actionOnGameStatus(): void {
+  public actionOnGameStatus(): void {
     this.$game.subscribe(game => {
       this.game = game;
       console.log(this.game.remainingNumberOfTries);
       if (this.game.remainingNumberOfTries <= 0) {
-        this.router.navigate(['/vouchers', { popup: POPUP_TYPE.completed }]);
+        this.router.navigate(['/vouchers', { popup: PopupType.completed }]);
       }
       this.loading = false;
     },
@@ -70,11 +70,8 @@ export class GameComponent implements OnInit {
     );
   }
 
-  done(): void {
-    const r1 = this.gameService.play(this.game.id)
-      .pipe(
-        map(res => res.data)
-      );
+  public done(): void {
+    const r1 = this.gameService.play(this.game.id);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
@@ -89,13 +86,11 @@ export class GameComponent implements OnInit {
     forkJoin(r1, r2).subscribe(
       ([resr1, resr2]) => {
         if (!this.isWhistler) {
-          numRewards = resr1.outcomes.length;
+          numRewards = resr1.vouchers.length;
         }
         this.router.navigate(['/result'], { queryParams: { numRewards } });
       },
-      () => {
-        this.router.navigate(['/result'], { queryParams: { numRewards } });
-      }
+      () => this.router.navigate(['/result'], { queryParams: { numRewards } })
     );
   }
 }

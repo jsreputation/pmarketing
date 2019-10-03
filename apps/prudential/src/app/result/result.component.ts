@@ -8,14 +8,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResultComponent implements OnInit {
 
-  numRewards: number;
+  public numRewards: number;
 
   constructor(private activateRouter: ActivatedRoute) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.activateRouter.queryParams.subscribe( params => {
       this.numRewards = params[`numRewards`];
     });
   }
-
 }

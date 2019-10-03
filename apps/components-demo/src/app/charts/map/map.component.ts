@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { IData } from '@perx/chart';
+import { data } from '../map-mock';
 
 @Component({
   selector: 'app-map',
@@ -6,4 +9,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
+  public data: Observable<IData> = of(data);
 }

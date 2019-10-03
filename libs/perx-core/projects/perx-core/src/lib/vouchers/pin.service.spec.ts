@@ -1,36 +1,44 @@
 import { TestBed, async } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
-import { VouchersService } from './vouchers.service';
+import { IVoucherService } from './ivoucher.service';
+import { RewardsService } from '../rewards/rewards.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
-
-// const enum VoucherState {
-//   issued = 'issued',
-//   redeemed = 'redeemed',
-//   expired = 'expired'
-// }
-
-// const enum RedemptionType {
-//   pin = 'pin',
-//   txtCode = 'txtCode',
-//   none = 'none'
-// }
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigModule } from '../../public-api';
+import { Type } from '@angular/core';
+import { IMerchantsService } from '../merchants/imerchants.service';
 
 describe('PinService', () => {
   let service: PinService;
-  let vouchersService: VouchersService;
+  let vouchersService: IVoucherService;
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getMerchant: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
-        VouchersModule.forRoot({ env: { apiHost: '' } })
+        HttpClientTestingModule,
+        VouchersModule,
+        ConfigModule.forRoot({})
+      ],
+      providers: [
+        {
+          provide: RewardsService, useValue: rewardsServiceStub
+        },
+        {
+          provide: IMerchantsService, useValue: merchantsServiceStub
+        }
       ]
     }).compileComponents();
     service = TestBed.get(PinService);
-    vouchersService = TestBed.get(VouchersService);
+    vouchersService = TestBed.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
   }));
 
   it('should be created', () => {

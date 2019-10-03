@@ -2,19 +2,29 @@
 
 :host {
   flex: 1;
+  height: 100%;
 }
 
 .qr-redemption {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 5.1rem 1.6rem 0;
   height: 100%;
 
   &-cancel {
     width: 100%;
-    margin: auto 0 8.5rem;
-    border-color: $text-green;
+    border: 1px solid $text-green;
     color: $text-green;
+    height: 4.4rem;
+    margin: 1.6rem 0;
+    font-size: 1.4rem;
+    border-radius: 0.4rem;
+    background: $white;
   }
+}
+
+perx-core-qrcode-redemption {
+  overflow-y: scroll;
 }

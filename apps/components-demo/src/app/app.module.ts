@@ -7,9 +7,13 @@ import { LoginComponent } from './login/login.component';
 import { RewardsModule } from './rewards/rewards.module';
 import {
   AuthenticationModule,
-  CognitoModule,
-  OauthModule,
   UtilsModule as PerxCoreUtilsModule,
+  RewardsModule as PerxRewardsModule,
+  VouchersModule as PerxVouchersModule,
+  MerchantsModule as PerxMerchantsModule,
+  SurveyModule as PerxSurveyModule,
+  ProfileModule as PerxProfileModule,
+  ConfigModule
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { UtilsModule } from './utils/utils.module';
 import { HomeComponent } from './home/home.component';
 import { LocationModule } from './location/location.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,21 +31,26 @@ import { LocationModule } from './location/location.module';
     HomeComponent
   ],
   imports: [
+    ConfigModule.forRoot({...environment}),
     MatToolbarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthenticationModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
+    PerxVouchersModule,
+    PerxRewardsModule,
+    PerxSurveyModule,
+    PerxProfileModule,
     FormsModule,
     RewardsModule,
+    PerxMerchantsModule,
     UtilsModule,
     PerxCoreUtilsModule,
     LocationModule,
     MatCardModule,
     MatRippleModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

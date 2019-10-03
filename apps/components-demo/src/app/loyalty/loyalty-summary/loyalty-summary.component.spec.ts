@@ -3,27 +3,47 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoyaltySummaryComponent } from './loyalty-summary.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatTabsModule } from '@angular/material';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ProfileModule as PerxProfileModule, LoyaltyModule as PerxLoyaltyModule } from '@perx/core';
-import { environment } from 'src/environments/environment';
+import {
+  ProfileModule as PerxProfileModule,
+  LoyaltyModule as PerxLoyaltyModule,
+  LoyaltyService,
+  ProfileService,
+  IProfile
+} from '@perx/core';
+import { of } from 'rxjs';
 
 describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
+  const loyaltyServiceStub = {
+    getLoyalties: () => of([])
+  };
+  const mockProfile: IProfile = {
+    id: 1,
+    state: 'active',
+    firstName: '',
+    lastName: ''
+  };
+  const profileServiceStub = {
+    whoAmI: () => of(mockProfile)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltySummaryComponent ],
+      declarations: [LoyaltySummaryComponent],
       imports: [
         NoopAnimationsModule,
         MatButtonModule,
         MatTabsModule,
-        HttpClientTestingModule,
-        PerxProfileModule.forRoot({ env: environment }),
-        PerxLoyaltyModule.forRoot({ env: environment })
+        PerxProfileModule,
+        PerxLoyaltyModule
+      ],
+      providers: [
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

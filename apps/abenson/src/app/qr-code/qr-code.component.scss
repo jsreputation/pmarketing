@@ -1,0 +1,43 @@
+:host {
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+}
+
+.page {
+  flex-grow: 1;
+  display: flex;
+  padding-top: 5.5rem;
+  flex-direction: column;
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-bottom: 1px solid #cccccc;
+  flex-grow: 1;
+
+  .title {
+    padding: 3.6rem 2rem 2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2.3rem;
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 0.015rem;
+    color: #212121;
+  }
+}
+
+.action {
+  padding: 1.2rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  button {
+    width: 100%;
+    border-color: #0F69AF;
+    font-size: 1.4rem;
+  }
+}

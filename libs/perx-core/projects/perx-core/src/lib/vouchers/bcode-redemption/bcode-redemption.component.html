@@ -1,11 +1,11 @@
 <div class="reward-container" *ngIf="voucher$ | async as voucher">
   <div class="reward-detail-container">
     <div class="reward-image-container">
-      <img class="reward-image" src="{{voucher.bannerUrl}}">
+      <img class="reward-image" src="{{voucher.rewardBanner}}">
     </div>
     <h1>{{voucher.name}}</h1>
     <pre class="bcode">{{voucher.code}}</pre>
-    <p class="instruction">Present this code to the cashier to redeem your reward.</p>
+    <p class="instruction">Present this code for registration that starts at 12.30pm</p>
   </div>
   <p class="tnc">Terms & Conditions applies.</p>
 </div>

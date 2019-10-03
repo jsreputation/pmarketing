@@ -1,20 +1,29 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
-import { CampaignCreationStoreService } from '@cl-core/services/campaigns-creation-store.service';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { AudiencesService } from '@cl-core-services';
+import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
+import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
+import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
   templateUrl: './new-campaign-detail-page.component.html',
-  styleUrls: ['./new-campaign-detail-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./new-campaign-detail-page.component.scss']
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
+  public isFirstInit: boolean;
+  public triggerLabelsChip: boolean;
+  public campaignId: string;
+  @Input()
+  public pools;
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
@@ -37,34 +46,67 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private store: CampaignCreationStoreService,
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private audiencesService: AudiencesService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public cd: ChangeDetectorRef,
-    private toggleControlService: ToggleControlService
+    private toggleControlService: ToggleControlService,
+    private route: ActivatedRoute
   ) {
+    super(2, store, stepConditionService, cd);
+    this.initForm();
   }
 
   public ngOnInit(): void {
-    this.config = this.store.config;
-    this.initForm();
+    super.ngOnInit();
+    this.campaignId = this.route.snapshot.params.id;
+    this.isFirstInit = true;
+    this.initPools();
+    this.initData();
+  }
+
+  public ngOnDestroy(): void {
   }
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
+  }
+
+  private initData(): void {
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe(() => {
+      .subscribe((val) => {
+        this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
         }
       });
-    this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+
+    if (this.campaignId) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          if (data && data.campaignInfo && this.isFirstInit) {
+            const select = data.audience.select.toString();
+            data.audience = { ...data.audience, select };
+            this.form.patchValue(data);
+            if (data.campaignInfo.labels) {
+              this.triggerLabelsChip = true;
+            }
+            this.isFirstInit = false;
+          }
+        });
+    } else {
+      this.form.patchValue(this.newCampaignDetailFormService.getDefaultValue());
+    }
   }
 
   private updateForm(): void {
@@ -72,7 +114,10 @@ export class NewCampaignDetailPageComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  public ngOnDestroy(): void {
-    this.cd.detach();
+  private initPools(): any {
+    this.audiencesService.getAudiencesList()
+      .subscribe((data: any) => {
+        this.pools = data;
+      });
   }
 }

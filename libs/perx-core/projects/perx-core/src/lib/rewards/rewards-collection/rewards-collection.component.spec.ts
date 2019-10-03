@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardsCollectionComponent } from './rewards-collection.component';
 import { MaterialModule } from '../../shared/material.module';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -13,7 +14,8 @@ describe('RewardsCollectionComponent', () => {
       declarations: [ RewardsCollectionComponent ],
       imports: [
         MaterialModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        UtilsModule
       ]
     })
     .compileComponents();

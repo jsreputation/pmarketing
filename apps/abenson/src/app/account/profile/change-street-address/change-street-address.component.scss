@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #FAFAFA;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.4rem 1.6rem 0;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .full-width__input,
+  .full-width__button {
+    width: 100%;
+  }
+
+  .full-width__button {
+    background: #186DE1;
+    height: 4rem;
+    letter-spacing: 0.075rem;
+    margin-top: 2.4rem;
+    color: #FFFFFF;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    border: none;
+    border-radius: 0.2rem;
+  }
+}

@@ -2,19 +2,29 @@
 
 :host {
   flex: 1;
+  height: 100%;
 }
 
 .code-redemption {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
+  padding: 0 1.6rem;
 
   &-redeem {
     width: 100%;
-    margin: auto 0 8.5rem;
-    border-color: $primary;
+    margin: 1.6rem 0;
+    border: 1px solid $primary;
     color: $primary;
+    height: 4.4rem;
+    font-size: 1.4rem;
+    border-radius: 0.4rem;
+    background: $white;
   }
+}
+
+perx-core-bcode-redemption {
+  overflow-y: scroll;
 }

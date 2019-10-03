@@ -1,14 +1,13 @@
-<div (click)="tapped()">
-  <div class="tree">
-    <div [ngClass]="shakeAnimationClass">
-      <img [src]="treeImg" class="tree__img" *ngIf="treeImg"/>
-      <div *ngFor="let gift of gifts"  [ngClass]="'gift-wrapper gift-wrapper__' + gift.id + ' ' + gift.status">
-        <img *ngIf="gift.display && giftImg" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id" />
-      </div>
+<div class="shake-tree-container" (click)="tapped()">
+  <div class="tree" [ngClass]="shakeAnimationClass">
+    <img [src]="treeImg" class="tree__img" *ngIf="treeImg" />
+    <div *ngFor="let gift of gifts" [ngClass]="'gift-wrapper gift-wrapper__' + gift.id + ' ' + gift.status">
+      <img *ngIf="gift.display && giftImg" [src]="giftImg" [ngClass]="'gift-img gift-img__' + gift.id" />
     </div>
-    <div class="man">
-      <img *ngIf="!celebrate && waitingManImg" [src]="waitingManImg" class="man__img" [ngStyle]="getManStyle()"/>
-      <img *ngIf="celebrate && waitingManCelebrateImg" [src]="waitingManCelebrateImg" class="man__img" [ngStyle]="getManStyle()"/>
-    </div>
+  </div>
+  <div class="man">
+    <img *ngIf="!celebrate && waitingManImg" [src]="waitingManImg" class="man__img" [ngStyle]="getManStyle()" />
+    <img *ngIf="celebrate && waitingManCelebrateImg" [src]="waitingManCelebrateImg" class="man__img"
+      [ngStyle]="getManStyle()" />
   </div>
 </div>

@@ -1,21 +1,13 @@
 @import "variables";
+
 .picker {
   &-wrap {
     border: 1px solid $border-color;
-    border-radius: 5px;
+    border-radius: $border-radius;
     position: relative;
-    padding: 1.4rem;
+    padding: $base-font-size;
     display: flex;
     cursor: pointer;
-    &:hover {
-      border-color: transparent;
-
-
-    }
-    &:hover .picker-border {
-      visibility: visible;
-    }
-
   }
 
   &-border {
@@ -24,10 +16,10 @@
     right: -1px;
     bottom: -1px;
     left: -1px;
-    border: 2px solid #000000;
-    border-radius: 5px;
+    border: 2px solid $primary-color;
+    border-radius: $border-radius;
     visibility: hidden;
-    transition: .3s cubic-bezier(.35,0,.25,1);
+    transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
     z-index: 1;
   }
 
@@ -44,9 +36,9 @@
   &-btn {
     width: 3rem;
     height: 2.3rem;
-    border-radius: 0.3rem;
-    border: none;
+    border-radius: $border-radius;
     cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.15);
   }
 
   &-text-wrap {
@@ -54,9 +46,16 @@
   }
 
   &-text {
-    font-size: 1.4rem;
+    font-size: $base-font-size;
     line-height: 1.21;
     color: $base-font-color;
   }
-}
 
+  &-wrap:hover {
+    border-color: transparent;
+
+    .picker-border {
+      visibility: visible;
+    }
+  }
+}

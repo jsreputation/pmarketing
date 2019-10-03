@@ -4,8 +4,10 @@ import {
   AfterViewInit,
   Input,
   ViewChild,
+  OnDestroy
 } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-list',
@@ -13,13 +15,18 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./audiences-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AudiencesListComponent implements AfterViewInit {
-  public DATE_FORMAT: string = 'dd MMM yyyy';
-  @Input() public dataSource: MatTableDataSource<any>;
-  @Input() public displayedColumns: string[] = ['name', 'format', 'updated', 'numberUsers', 'status'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+export class AudiencesListComponent implements AfterViewInit, OnDestroy {
+  public DATE_FORMAT: string = 'mediumDate';
+  @Input() public dataSource: CustomDataSource<IAudiences>;
+  @Input() public displayedColumns: string[] = ['name', 'updated', 'numberUsers']; // 'format' 'status'
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    if (this.dataSource) {
+      this.dataSource.registerSort(this.sort);
+    }
+  }
+
+  public ngOnDestroy(): void {
   }
 }

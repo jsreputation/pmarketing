@@ -1,0 +1,13 @@
+<div class="choice-container">
+    <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
+        <div 
+            class="choice-image"
+            [ngClass]="isSelected(i) ? 'selected' : ''"
+            (click)="onSelect(i)">
+            <img class="image" [src]="choice?.img_url" [alt]="choice?.text">
+        </div>
+        <div class="choice-label">
+            {{ choice?.text }}
+        </div>
+    </div>
+</div>

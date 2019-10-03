@@ -1,21 +1,16 @@
-<div class="dashboard-card-content">
-  <p class="dashboard-card-title sub-title">
+<div class="dashboard-explore-card-img-wrap">
+  <img [src]="gameCard.img" alt="icon">
+</div>
+<div class="dashboard-explore-card-content">
+  <h3 class="dashboard-explore-card-title">
     {{gameCard.title}}
-  </p>
-  <p class="dashboard-card-description">
+  </h3>
+  <p class="dashboard-explore-card-description">
     {{gameCard.description}}
   </p>
-  <p class="dashboard-card-actions">
-    <cl-button [classList]="'tertiary'"
-               [disableRipple]="true"
-               (click)="clickToLink(gameCard.link)"
-    >
-        <span>
-          {{gameCard.link}}
-        </span>
-    </cl-button>
-  </p>
-  <div class="dashboard-card-img-wrap">
-    <img [src]="gameCard.img" alt="icon">
-  </div>
+</div>
+<div class="dashboard-explore-card-actions">
+  <cl-button [classList]="'ph-0 tertiary'" (click)="clickToLink(gameCard.name)">
+    <span>{{gameCard.link}}</span>
+  </cl-button>
 </div>

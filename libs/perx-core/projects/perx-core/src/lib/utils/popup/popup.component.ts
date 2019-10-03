@@ -8,6 +8,7 @@ export interface IPopupConfig {
   buttonTxt?: string|null;
   afterClosedCallBack?: PopUpClosedCallBack;
   disableOverlayClose?: boolean;
+  buttonTxt2?: string|null;
 }
 
 export interface PopUpClosedCallBack {
@@ -23,10 +24,11 @@ export interface PopUpClosedCallBack {
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  public title: string = null;
-  public text: string = null;
-  public imageUrl: string = null;
+  public title: string|null = null;
+  public text: string|null = null;
+  public imageUrl: string|null = null;
   public buttonTxt: string = 'close';
+  public buttonTxt2: string|null = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -46,6 +48,9 @@ export class PopupComponent {
     }
     if (data.imageUrl) {
       this.imageUrl = data.imageUrl;
+    }
+    if (data.buttonTxt2) {
+      this.buttonTxt2 = data.buttonTxt2;
     }
   }
 

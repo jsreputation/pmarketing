@@ -16,9 +16,12 @@ import {
 } from '@angular/material';
 import {
   AuthenticationModule,
-  OauthModule,
-  CognitoModule,
-  RewardsModule
+  RewardsModule,
+  LoyaltyModule,
+  VouchersModule,
+  MerchantsModule,
+  ConfigModule,
+  ProfileModule
    } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +36,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,9 @@ import { RedeemComponent } from './redeem/redeem.component';
     RedeemComponent
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
+    ProfileModule,
     AppRoutingModule,
     MatButtonModule,
     MatToolbarModule,
@@ -61,12 +67,14 @@ import { RedeemComponent } from './redeem/redeem.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
     AuthenticationModule,
     ZXingScannerModule,
     MatSnackBarModule,
-    RewardsModule.forRoot({ env: environment }),
+    RewardsModule,
+    MerchantsModule,
+    LoyaltyModule,
+    VouchersModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

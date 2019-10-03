@@ -1,17 +1,13 @@
-<section class="create-merchant-form" [formGroup]="formMerchant">
-  <div class="page-header full-with">
-    <div class="game-title-wrap">
-      <div class="control-input name-control name-control-title">
-        <mat-form-field class="messages-input">
-          <input type="text" matInput formControlName="name">
-          <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-          <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="game-actions">
-      <cl-button [classList]="'third'"
+<article class="create-merchant-form" [formGroup]="formMerchant">
+  <header class="page-header full-with">
+    <mat-form-field class="pagetitle-input" floatLabel="never">
+      <input type="text" matInput formControlName="name" placeholder="Enter title here">
+      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+    </mat-form-field>
+    <div class="btn-group">
+      <cl-button [classList]="'secondary'"
                  class="merchant-btn-cancel"
                  (click)="comeBack()"
       >
@@ -27,8 +23,8 @@
         </span>
       </cl-button>
     </div>
-  </div>
-  <section class="content flex">
+  </header>
+  <section class="content phonepreview-wrapper form-limiter">
     <div class="merchant-main-block">
       <mat-card class="game-graphic">
         <div class="merchant-wrap">
@@ -40,5 +36,5 @@
       </mat-card>
     </div>
   </section>
-</section>
+</article>
 

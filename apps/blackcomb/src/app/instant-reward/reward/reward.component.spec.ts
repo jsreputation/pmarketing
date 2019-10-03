@@ -1,24 +1,36 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule, RewardsModule, ProfileModule, CognitoModule, OauthModule } from '@perx/core';
-import { environment } from '../../../environments/environment';
+import { GameModule, RewardsModule, RewardsService, InstantOutcomeService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
 
+  const rewardsServiceStub = {
+    getAllRewards: () => of(),
+  };
+
+  const instantOutStub = {
+
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
       imports: [
-        RouterTestingModule,
-        PerxCoreModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
         GameModule,
         RewardsModule,
-        ProfileModule.forRoot({ env: environment }),
-        CognitoModule.forRoot({ env: environment }),
-        OauthModule.forRoot({ env: environment }),
+        BrowserAnimationsModule
+      ],
+      providers: [
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutStub }
       ]
     })
       .compileComponents();

@@ -1,8 +1,10 @@
 @import "variables";
+
 .other {
   &-channels-content {
     margin-top: 5.4rem;
   }
+
   &-img-wrap {
     margin-right: 1.6rem;
   }
@@ -10,7 +12,7 @@
   &-name {
     font-size: 1.6rem;
     font-weight: 500;
-    color: $there-color;
+    color: $base-font-color;
   }
 
   &-description {

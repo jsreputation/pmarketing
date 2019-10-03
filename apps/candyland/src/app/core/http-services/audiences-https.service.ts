@@ -1,33 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiConfig } from '@cl-core/api-config';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiPatchData, IJsonApiPostData } from './jsonapi.payload';
+import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AudiencesHttpsService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
+
+  public getUser(id: string): Observable<any> {
+    return this.http.get(`${ApiConfig.getAllUsers}/${id}?include=pools`);
   }
 
-  public getUsers(): Observable<any> {
-    return this.http.get('assets/mocks/users.json');
+  public getAudiences(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, { params });
   }
 
-  public getUser(id: number): Observable<any> {
-    return this.http.get('assets/mocks/users.json')
-      .pipe(
-        map((users: any[]) => {
-          return users.find(user => user.id === +id);
-        })
-      );
+  public getAudiencesList(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAudiences, { params });
   }
 
-  public getAudiences(): Observable<any> {
-    return this.http.get('assets/mocks/audiences.json');
+  public getAllUsers(params: HttpParams): Observable<any> {
+    return this.http.get(ApiConfig.getAllUsers, { params });
   }
 
-  public getVouchers(): Observable<any> {
-    return this.http.get('assets/mocks/vouchers.json');
+  public createUser(body: IJsonApiPostData<any>): Observable<any> {
+    return this.http.post(ApiConfig.getAllUsers, { data: body });
+  }
+
+  public updateUserPools(body: IJsonApiPatchData<any>): Observable<any> {
+    return this.http.patch(`${ApiConfig.getAllUsers}/${body.id}`, { data: body });
+  }
+
+  public getAssignedVouchers(params: HttpParams): Observable<IJsonApiListPayload<IAssignedAttributes>> {
+    return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { params });
+  }
+
+  public voucherAssigned(body: IJsonApiPostData<IAssignRequestAttributes>): Observable<IJsonApiListPayload<IAssignedAttributes>> {
+    return this.http.post<IJsonApiListPayload<IAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { data: body });
+  }
+
+  public updateVoucherExpiry(body: IJsonApiPatchData<IAssignedAttributes>): Observable<IJsonApiItem<IAssignedAttributes>> {
+    return this.http.patch<IJsonApiItem<IAssignedAttributes>>(`${ApiConfig.vouchersAssignedPath}/${body.id}`, { data: body });
   }
 }

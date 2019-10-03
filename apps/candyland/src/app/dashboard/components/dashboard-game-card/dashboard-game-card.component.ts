@@ -1,8 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { CreateEngagementPopupComponent } from '../../../shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-
+import { CreateEngagementPopupComponent } from '@cl-shared';
+export enum DashboardGameCardName {
+  ENGAGEMENT = 'engagement',
+  CAMPAIGN = 'campaign',
+  REWARD = 'reward'
+}
 @Component({
   selector: 'cl-dashboard-game-card',
   templateUrl: './dashboard-game-card.component.html',
@@ -13,13 +17,25 @@ export class DashboardGameCardComponent {
   constructor(public dialog: MatDialog,
               private router: Router) { }
 
-  public clickToLink(link: string): void {
-    if (link.toLocaleLowerCase().includes('engagement')) {
-      this.openDialogCreate();
+  public clickToLink(name: string): void {
+    switch (name) {
+      case `${DashboardGameCardName.ENGAGEMENT}`:
+        return this.openDialogCreate();
+      case `${DashboardGameCardName.CAMPAIGN}`:
+        return this.goToCampaign();
+      case `${DashboardGameCardName.REWARD}`:
+        return this.goToRewardNew();
+      default:
+        return console.error(`unknown name: ${name}`);
     }
-    if (link.toLocaleLowerCase().includes('campaign')) {
-      this.router.navigate(['/campaigns/new-campaign/']);
-    }
+  }
+
+  private goToRewardNew(): void {
+    this.router.navigate(['/rewards/new-reward']);
+  }
+
+  private goToCampaign(): void {
+    this.router.navigate(['/campaigns/new-campaign/']);
   }
 
   public openDialogCreate(): void {

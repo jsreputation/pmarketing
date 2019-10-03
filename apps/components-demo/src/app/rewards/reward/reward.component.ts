@@ -27,6 +27,7 @@ export class RewardComponent implements OnInit {
         (reward) => this.reward = of(reward),
         () => this.reward = of(mock[0])
       );
+    this.reward = of(mock[0]);
   }
 
   public onRedeem(): void {

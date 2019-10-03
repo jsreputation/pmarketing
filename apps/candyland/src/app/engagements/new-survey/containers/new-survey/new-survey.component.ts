@@ -1,19 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { QuestionFormFieldService } from '@cl-shared/components/question-form-field/shared/services/question-form-field.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
-
-export enum SurveyQuestionType {
-  rating = 'rating',
-  pictureChoice = 'pictureChoice',
-  longText = 'longText',
-  multipleChoice = 'multipleChoice',
-  questionGroup = 'questionGroup',
-  date = 'date', phone = 'phone'
-}
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { debounceTime, tap, map, switchMap } from 'rxjs/operators';
+import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
+import { ControlsName } from '../../../../models/controls-name';
+import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
+import { QuestionFormFieldService } from '@cl-shared';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { IQuestion, SurveyQuestionType } from '@perx/core';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-survey',
@@ -21,126 +22,138 @@ export enum SurveyQuestionType {
   styleUrls: ['./new-survey.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewSurveyComponent implements OnInit {
-  public formSurvey: FormGroup;
+export class NewSurveyComponent implements OnInit, OnDestroy {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+  public id: string;
+  public form: FormGroup;
   public surveyQuestionType: IEngagementType[];
-  public cardBackground$: Observable<IGraphic[]>;
-  public backgrounds$: Observable<IGraphic[]>;
+  public surveyData: any;
   public level = 0;
-  // tslint:disable
-  private data = {
-    name: 'Create Shake the Tree Template',
-    'headlineMessage': 'headlineMessage',
-    'subHeadlineMessage': 'subHeadlineMessage',
-    questions: [{
-      selectedType: 'rating',
-      name: null,
-      'scale': '5',
-      'selectShape': 'star',
-      'selectColor': 'primary',
-      'left': 'Not Very',
-      'right': 'Very much',
-      required: true
-    },
-      {"selectedType":"rating","name":null,"scale":"3","selectShape":"circle","selectColor":"warn","left":"66666666","right":"647+9879+/797*/79/","required":false,"description":"sersgtsdfgsdfgsdfgsdfg  a'psdjf;asdjf'[pasdj 'asodoj'apsdjf 'apsdojf"},
-      {selectedType: 'pictureChoice', name: null, picture: [], required: true}, {
-      selectedType: 'longText',
-      name: null,
-      'text': null,
-      required: true
-    }, {
-      selectedType: 'questionGroup',
-      name: null,
-      questionGroup: [{
-        selectedType: 'rating',
-        name: null,
-        scale: '5',
-        selectShape: 'star',
-        selectColor: 'primary',
-        left: 'Not Very',
-        right: 'Very much',
-        required: true
-      }
-      , {selectedType: 'longText', name: null, text: null, required: true}, {
-        selectedType: 'date',
-        name: null,
-        startDate: null,
-        endDate: null,
-        required: true
-      }],
-      required: true
-    }],
-    'color': 'primary',
-    'cardBackground': {
-      'id': 1,
-      'type': 'card-bg-1',
-      'title': 'icon',
-      'img': 'assets/images/stamps/card-background/card-bg-1.png',
-      'format': '.png',
-      'active': 'false'
-    },
-    background: {
-      id: 1,
-      type: 'bg-1',
-      title: 'icon',
-      img: 'assets/images/stamps/background/stamp-bg-1.png',
-      format: '.png',
-      active: 'false'
-    }
-  };
+  public subHeadlineMaxLength: number = 250;
 
-  constructor(private fb: FormBuilder,
-              private questionFormFieldService: QuestionFormFieldService,
-              private stampService: StampHttpService) {
-  }
-
-  public get listId(): string {
-    const id = this.questionFormFieldService.listId;
-    this.questionFormFieldService.listId = id;
-    return id;
-  }
+  public questionData$ = new Subject();
+  public tenantSettings: ITenantsProperties;
 
   public get listDropConnectedTo(): string[] {
     return this.questionFormFieldService.listIdDrag;
   }
 
   public get name(): AbstractControl {
-    return this.formSurvey.get('name');
+    return this.form.get(ControlsName.name);
   }
 
   public get headlineMessage(): AbstractControl {
-    return this.formSurvey.get('headlineMessage');
+    return this.form.get(ControlsName.headlineMessage);
   }
 
   public get subHeadlineMessage(): AbstractControl {
-    return this.formSurvey.get('subHeadlineMessage');
+    return this.form.get(ControlsName.subHeadlineMessage);
   }
 
   public get buttonText(): AbstractControl {
-    return this.formSurvey.get('buttonText');
+    return this.form.get(ControlsName.buttonText);
   }
 
   public get surveyQuestion(): FormArray {
-    return (this.formSurvey.get('questions') as FormArray);
+    return (this.form.get('questions') as FormArray);
   }
 
   public get color(): AbstractControl {
-    return this.formSurvey.get('color');
+    return this.form.get('color');
   }
 
-  ngOnInit() {
-    this.createSurveyForm();
-    this.getCardBackground();
-    this.getBackground();
+  public get background(): AbstractControl {
+    return this.form.get('background');
   }
 
-  public patchForm(): void {
-    this.formSurvey.patchValue(this.data);
-    this.data.questions.forEach((item) => {
-      const group = this.createControlQuestion(item.selectedType);
-      group.patchValue(item);
+  public get cardBackground(): AbstractControl {
+    return this.form.get('cardBackground');
+  }
+
+  constructor(private questionFormFieldService: QuestionFormFieldService,
+              private availableNewEngagementService: AvailableNewEngagementService,
+              private surveyService: SurveyService, private route: ActivatedRoute,
+              private router: Router, private routingState: RoutingStateService,
+              private cd: ChangeDetectorRef, private settingsService: SettingsService) {
+  }
+
+  // tslint:disable
+  public get listId(): string {
+    const id = this.questionFormFieldService.listId;
+    this.questionFormFieldService.listId = id;
+    return id;
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return ImageControlValue.getImgLink(control, defaultImg);
+  }
+
+  public getQuestionData(): Observable<any> {
+    return this.questionData$.asObservable();
+  }
+
+  public ngOnInit(): void {
+    this.getTenants();
+    this.initForm();
+    this.subscribeFormValueChanges();
+    combineLatest([this.getSurveyData(), this.handleRouteParams()])
+      .pipe(untilDestroyed(this))
+      .subscribe(([surveyData, question]) => {
+        this.surveyData = surveyData;
+        // remove default value if we edit the existing question
+        if (question) {
+          this.deleteQuestion(0);
+        }
+
+        const patchData = question || this.getDefaultValue(surveyData);
+
+        this.patchForm(patchData);
+        this.cd.detectChanges();
+      });
+  }
+
+  public ngOnDestroy(): void {
+  }
+
+  public patchForm(data?): void {
+
+    // patch first simple fields fo the form
+    this.form.patchValue(data, {emitEvent: false});
+
+    // patch other form fields
+    if (data.questions) {
+      this.patchQuestionGroups(data.questions);
+    }
+
+  }
+
+  public patchQuestionGroups(array: any[]): void {
+    array.forEach((item) => {
+      const group = this.groupPatchHandler(item);
       this.surveyQuestion.push(group);
     });
+  }
+
+  public patchGroup(item: IQuestion, mainGroup: FormGroup): void {
+    if (item.payload.type === SurveyQuestionType.questionGroup) {
+      item.payload.questions.forEach((item) => {
+        const group = this.groupPatchHandler(item);
+        (mainGroup.get('payload.questions') as FormArray).push(group);
+      });
+    }
+  }
+
+  public groupPatchHandler(item: IQuestion): FormGroup {
+    const group = this.createControlQuestion(item.payload.type);
+    this.pathChoicePicture(item, group);
+    this.patchMultipleChoice(item, group);
+    this.patchGroup(item, group);
+    group.patchValue(item);
+    return group;
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
   }
 
   public drop(event: any): void {
@@ -152,59 +165,102 @@ export class NewSurveyComponent implements OnInit {
   }
 
   public save(): void {
-    console.log('formSurvey.value', this.formSurvey.value);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.createImagePreview.getPreviewUrl()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return this.surveyService.updateSurvey(this.id, {...this.form.value, image_url: imageUrl.url});
+          }
+          return this.surveyService.createSurvey({...this.form.value, image_url: imageUrl.url}).pipe(
+            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          );
+        })
+      )
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public deleteQuestion(index: number) {
     this.surveyQuestion.removeAt(index);
   }
 
-  public updateQuestionType(data: { index: number, selectedTypeQuestion: string }): void {
+  public updateQuestionType(data: { index: number, selectedTypeQuestion: SurveyQuestionType }): void {
     this.deleteQuestion(data.index);
     this.surveyQuestion.insert(data.index, this.createControlQuestion(data.selectedTypeQuestion));
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: string): void {
+  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
     this.addQuestion(selectedTypeQuestion);
   }
 
-  public addQuestion(questionType: string): void {
+  public addQuestion(questionType: SurveyQuestionType): void {
     this.surveyQuestion.push(this.createControlQuestion(questionType));
   }
 
-  private createControlQuestion(questionType: string): FormGroup {
+  private patchMultipleChoice(item: any, group: FormGroup): void {
+    if (item.payload.type === SurveyQuestionType.multipleChoice) {
+      this.questionFormFieldService.patchMultipleChoice(item, group);
+    }
+  }
+
+  private pathChoicePicture(item: IQuestion, group: FormGroup): void {
+    if (item.payload.type === SurveyQuestionType.pictureChoice) {
+      this.questionFormFieldService.pathChoicePicture(item, group);
+    }
+  }
+
+  private createControlQuestion(questionType: SurveyQuestionType): FormGroup {
     return this.questionFormFieldService.createFormField(questionType);
   }
 
-  private createSurveyForm(): void {
-    this.formSurvey = this.fb.group({
-      name: ['Create Shake the Tree Template', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
-      headlineMessage: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      subHeadlineMessage: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
-      questions: this.fb.array([]),
-      color: ['primary', [Validators.required]],
-      cardBackground: [null, [Validators.required]],
-      background: [null, [Validators.required]],
-    });
+  private initForm(): void {
+    this.form = NewSurveyForm.getForm();
+    // this.addQuestion(SurveyQuestionType.rating);
   }
 
-  private getCardBackground(): void {
-    this.cardBackground$ = this.stampService.getCardBackground()
-      .pipe(tap((res) => {
-        this.patchFieldForm('cardBackground', res[0]);
-      }));
+  private getSurveyData(): any {
+    return this.surveyService.getSurveyData();
   }
 
-  private getBackground(): void {
-    this.backgrounds$ = this.stampService.getBackground()
-      .pipe(tap((res) => {
-        this.patchFieldForm('background', res[0]);
-      }));
+  private subscribeFormValueChanges(): void {
+    this.form.valueChanges
+      .pipe(debounceTime(500), untilDestroyed(this))
+      .subscribe((val) => {
+        this.questionData$.next({questions: [val.questions[0]]});
+        this.cd.detectChanges();
+      });
   }
 
-  private patchFieldForm(fieldName: string, value: any): void {
-    this.formSurvey.patchValue({
-      [fieldName]: value
-    });
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
+      });
+  }
+
+  private handleRouteParams(): Observable<any> {
+    return this.route.paramMap
+      .pipe(
+        untilDestroyed(this),
+        map((params: ParamMap) => params.get('id')
+        ),
+        tap(id => this.id = id),
+        switchMap(id => {
+          if (id) {
+            return this.surveyService.getSurvey(id);
+          }
+          return of(null);
+        })
+      );
+  }
+
+  private getDefaultValue(queryData: any): any {
+    return NewSurveyForm.getDefaultValue(queryData);
   }
 }

@@ -12,6 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -29,6 +30,7 @@ describe('LoginFormComponent', () => {
         RouterTestingModule,
         ErrorHandlerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [LoginFormComponent]
     })
@@ -57,5 +59,11 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
     component.submit();
     expect(component.loginSubmit.emit).toHaveBeenCalled();
+  });
+
+  it('should emit event when clicking on forgot password', () => {
+    spyOn(component.forgotPassword, 'emit');
+    component.forgot();
+    expect(component.forgotPassword.emit).toHaveBeenCalled();
   });
 });

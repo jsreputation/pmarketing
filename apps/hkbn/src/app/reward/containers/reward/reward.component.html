@@ -1,8 +1,13 @@
 <div class="container">
   <div class="reward">
-    <perx-core-reward [reward]="rewardState$"></perx-core-reward>
-    <button mat-raised-button color="primary" class="reward-buy" (click)="buyReward()">Read the collar code</button>
+    <div class="reward-body">
+      <perx-core-reward [reward]="rewardState$"></perx-core-reward>
+      <div class="button-container">
+        <button mat-raised-button color="primary" class="reward-buy"
+                (click)="buyReward()">
+          {{"PURCHASE" | translate}}
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-

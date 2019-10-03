@@ -1,36 +1,106 @@
+@import '~@angular/material/theming';
 @import "variables";
 
-.chart {
-  &-title {
-    margin-bottom: 3rem;
-    font-size: 1.6rem;
-    line-height: 1.31;
-    color: $base-font-color;
-  }
+$vertical-tabs-width: ($horizontal-padding * 7.5);
 
-  &-wrap-img {
-    height: 33rem;
+.dashboard-group-graphics {
+  padding: $vertical-padding $horizontal-padding;
+}
 
-    img {
-      width: 100%;
-      max-height: 100%;
-      max-width: 100%;
-    }
-  }
+.chard-card-list {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0 (-($horizontal-padding * 0.375));
 
-  &-block {
-    width: calc(50% - 1.6rem);
-    border: solid 1px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    margin-top: 3.2rem;
-    padding: 3.4rem;
-    box-sizing: border-box;
-    max-width: 50%;
+  & > * {
+    margin: ($vertical-padding * 0.375) ($horizontal-padding * 0.375);
     flex: 1;
-    flex-shrink: 0;
+  }
+}
 
-    &:nth-child(odd) {
-      margin-right: 3.2rem;
+.chart-card {
+  position: relative;
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+  flex: 1 1 calc(50% - #{$horizontal-padding});
+  box-sizing: border-box;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+
+  &.full-width {
+    flex-basis: 100%;
+  }
+
+  &-info-title {
+    @include typo-body1;
+
+    flex: 1 0 100%;
+    width: 100%;
+    margin-bottom: ($vertical-padding * 0.5);
+  }
+
+  &-title {
+    @include typo-subtitle1-alt;
+
+    margin-bottom: ($vertical-padding * 0.75);
+    color: $secondary-color;
+  }
+
+  &-header-with-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: ($vertical-padding * 0.75);
+
+    &-title {
+      flex-shrink: 0;
+    }
+
+    > * {
+      margin-top: -($vertical-padding * 0.375);
+
+      &:not(.chart-card-title) {
+        @include typo-body2;
+
+        flex-grow: 1;
+        margin-left: $horizontal-padding;
+        max-width: ($horizontal-padding * 10);
+      }
     }
   }
+
+  &-content {
+    display: flex;
+    position: relative;
+    height: 24rem;
+    width: 100%;
+  }
+}
+
+.tabs-list-wrap {
+  max-width: $vertical-tabs-width;
+  flex-basis: 100%;
+  flex-shrink: 0;
+}
+
+.chart-card:first-of-type,
+.tabs-list-wrap + .chart-card {
+  border-color: $white;
+  flex-grow: 2;
+  padding: 0;
+
+  & > .chart-card-content {
+    height: 35rem;
+  }
+}
+
+.chart-card:first-of-type {
+  flex-basis: 100%;
+}
+
+.tabs-list-wrap + .chart-card {
+  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
 }

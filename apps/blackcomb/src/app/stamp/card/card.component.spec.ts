@@ -1,18 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PerxCoreModule, GameModule } from '@perx/core';
+import { PuzzlesModule, StampService } from '@perx/core';
 
 describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
 
+  const stampServiceStub = {
+    getCurrentCard: () => { }
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardComponent ],
-      imports: [RouterTestingModule, PerxCoreModule, GameModule]
+      declarations: [CardComponent],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' }
+        ]),
+        PuzzlesModule
+      ],
+      providers: [
+        { provide: StampService, useValue: stampServiceStub },
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -2,15 +2,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
-  CampaignService,
+  ICampaignService,
   CampaignType,
   IGame,
-  GameService,
+  IGameService,
   ICampaign,
   NotificationService,
   IGameOutcome,
   IGameComponent,
   PopUpClosedCallBack,
+  IPlayOutcome,
 } from '@perx/core';
 import { map, take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -30,16 +31,17 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
 
   private campaignId: number;
   private gameIns: IGame;
+  private lastPayload: any;
 
   @ViewChild('tree', { static: false })
-  private tree: IGameComponent;
+  private tree: IGameComponent | undefined;
   @ViewChild('pinata', { static: false })
-  private pinata: IGameComponent;
+  private pinata: IGameComponent | undefined;
 
   constructor(
     private route: ActivatedRoute,
-    private campaignService: CampaignService,
-    private gameService: GameService,
+    private campaignService: ICampaignService,
+    private gameService: IGameService,
     private notificationService: NotificationService
   ) { }
 
@@ -66,9 +68,11 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
               map((campaigns: ICampaign[]) => campaigns[0])
             )
             .subscribe(
-              (campaign: ICampaign) => {
-                this.campaignId = campaign.id;
-                this.fetchGame();
+              (campaign: ICampaign | null) => {
+                if (campaign !== undefined && campaign !== null) {
+                  this.campaignId = campaign.id;
+                  this.fetchGame();
+                }
               },
               () => { }
             );
@@ -131,23 +135,31 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public onComplete(): void {
-    if (this.game) {
+    if (this.game !== undefined && this.game !== null) {
       this.gameService.play(this.game.id)
         .pipe(
           take(1)
         )
         .subscribe(
-          (res: any) => {
+          (res: IPlayOutcome) => {
             // one try has been used
             this.game.remainingNumberOfTries--;
             // select proper popup based on outcome
-            const hasOutcome: boolean = (res.data && res.data.outcomes && res.data.outcomes.length > 0);
+            const hasOutcome: boolean = res.vouchers.length > 0;
             const outcome: IGameOutcome = hasOutcome ? this.game.results.outcome : this.game.results.noOutcome;
+            this.lastPayload = hasOutcome ? res.rawPayload : undefined;
+            if (this.game.remainingNumberOfTries === 0 && !hasOutcome) {
+              outcome.button = null;
+            }
 
             this.outcomePopup(outcome);
           },
           (e: HttpErrorResponse) => {
             if (e.status === 422) {
+              const outcome: IGameOutcome = this.game.results.noOutcome;
+              outcome.button = null;
+              this.outcomePopup(outcome);
+            } else if (e.status === 400) {
               const outcome: IGameOutcome = this.game.results.noOutcome;
               this.outcomePopup(outcome);
             } else {
@@ -165,7 +177,13 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public dialogClosed(): void {
-    this.reset();
+    if (this.lastPayload) {
+      const jsonString: string = JSON.stringify(this.lastPayload);
+      const base64: string = btoa(jsonString);
+      window.location.href = `https://success?payload=${base64}`;
+    } else {
+      this.reset();
+    }
   }
 
   private outcomePopup(outcome: IGameOutcome): void {

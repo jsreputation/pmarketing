@@ -7,7 +7,9 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule,
+  MatIconModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +19,7 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
 import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
 import { UtilsModule } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [
   LoginFormComponent,
@@ -46,7 +49,9 @@ const CONTAINERS = [
     UtilsModule,
     ReactiveFormsModule,
     ErrorHandlerModule,
-    UtilsModule
+    TranslateModule,
+    MatSelectModule,
+    MatIconModule
   ],
   exports: [
     ...COMPONENTS,

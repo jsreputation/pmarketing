@@ -1,13 +1,11 @@
-<div class="game-wrap"
+<button class="engagement-selector"
      (click)="onSelect()"
-     [ngClass]="{'active-item': game?.id === selectedGame?.id}"
+     [ngClass]="{'active': game?.id === selectedGame?.id}"
 >
-  <div class="game-wrap-img">
-    <img class="game-icon" [src]="basePath + game.type + '.png'" alt="game-icon">
+  <div class="engagement-selector-img engagement-selector-img-full">
+    <img [src]="basePath + game.type + '.png'" alt="game-icon">
   </div>
-  <div class="game-content">
-    <p class="game-title">
-      {{game.title}}
-    </p>
-  </div>
-</div>
+  <p class="engagement-selector-name">
+    {{game.title}}
+  </p>
+</button>

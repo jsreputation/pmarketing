@@ -8,12 +8,20 @@ const routes: Routes = [
     path: '',
     component: HeaderComponent,
     children: [{
-      path: '', redirectTo: '/login', pathMatch: 'full'
-    }, {
       path: 'home',
-      loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
-      canActivate: [ProtectedGuard]
-    }]
+      loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule)
+    }, {
+      path: 'wallet',
+      loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule)
+    }, {
+      path: 'account',
+      loadChildren: () => import('../account/account.module').then(mod => mod.AccountModule)
+    }, {
+      path: '**',
+      pathMatch: 'full',
+      redirectTo: 'home'
+    }],
+    canActivate: [ProtectedGuard]
   }
 ];
 

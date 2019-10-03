@@ -1,0 +1,12 @@
+<div class="page">
+  <div class="block">
+    <perx-core-user-profile [profile]="profile"></perx-core-user-profile>
+  </div>
+  <mat-nav-list>
+    <a mat-list-item [routerLink]="[ '/terms-and-conditions' ]">Terms and Conditions</a>
+    <a mat-list-item [routerLink]="[ '/faq' ]" id="agreement">How To Redeem Your Rewards</a>
+  </mat-nav-list>
+  <mat-action-list>
+    <a mat-list-item (click)="logOut()" id="logout">Log Out</a>
+  </mat-action-list>
+</div>

@@ -1,61 +1,162 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { IReward, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
-import { LoyaltySummaryComponent } from '@perx/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
+import {ITabConfig, IPrice} from '@perx/core';
+import {Observable, of, Subject, forkJoin} from 'rxjs';
+import {flatMap, map, filter} from 'rxjs/operators';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
-const mockTags = [
-  'Lifestyle', 'Travel', 'Shopping'
+const tabs: ITabConfig[] = [
+  {
+    filterKey: 'Lifestyle',
+    filterValue: null,
+    tabName: 'Lifestyle',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Travel',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Shopping',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Mileage',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Charity donation',
+    rewardsList: null
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Annual fee',
+    rewardsList: null
+  }
 ];
+
+interface PageTracker {
+  [key: string]: { page: number, isLast: boolean };
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  public tags: Array<string>;
+
+export class HomeComponent implements OnInit {
   public rewards: Observable<IReward[]>;
-
-  public currentTag: string;
-
-  @ViewChild('loyaltySummary', { static: false }) public loyaltySummary: LoyaltySummaryComponent;
+  public loyalty$: Observable<ILoyalty>;
+  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
+  public staticTab: ITabConfig[] = tabs;
+  public rewardsCollection: Observable<IReward[]>;
+  public displayPriceFn: (price: IPrice) => string;
+  public titleFn: (profile: IProfile) => string;
+  public currentTab: string;
+  private rewardMultiPageMetaTracker: PageTracker = {};
+  private requestPageSize: number = 10;
 
   constructor(
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
-    private profile: ProfileService,
-    private cd: ChangeDetectorRef,
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
-    this.getRewards();
-    this.getTags();
-  }
-  public ngAfterViewInit(): void {
-    // @ts-ignore to be verified
-    this.loyaltySummary.loyalty$ = new BehaviorSubject({
-      pointsBalance: '100,000', expiringPoints: [{ expireDate: new Date('Jul 17 2017') }], points: 1000, expireDate: new Date('Jul 17 2017')
-    });
-    this.cd.detectChanges();
-  }
-  public getRewards(): void {
-    this.rewardsService.getAllRewards().subscribe(
-      (rewards: IReward[]) => {
-        if (rewards && rewards.length > 0) {
-          this.rewards = of(rewards);
-        }
+    this.getRewardsCollection();
+    this.getLoyalty();
+    this.displayPriceFn = (rewardPrice: IPrice) => {
+      if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseFloat((rewardPrice.price).toString()).toFixed(2)}`;
       }
-    );
+
+      if (rewardPrice.price > 0) {
+        return `${rewardPrice.currencyCode} ${parseFloat((rewardPrice.price).toString()).toFixed(2)}`;
+      }
+
+      if (rewardPrice.points > 0) {
+        return `${rewardPrice.points} points`;
+      }
+      return '0 points'; // is actually 0 or invalid value default
+    };
+    this.titleFn = (profile: IProfile) => {
+      if (profile && profile.lastName) {
+        return `Welcome ${profile.lastName},`;
+      }
+      return `Welcome`;
+    };
+    this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 
-  public getTags(): void {
-    this.rewardsService.getTags();
-    this.tags = mockTags;
-    this.currentTag = this.tags[0];
+  private getRewardsCollection(): void {
+    this.rewardsCollection = this.rewardsService.getAllRewards(['featured']);
   }
 
-  public changeTage(tag: string): void {
-    this.currentTag = tag;
+  private loadCurrentTabRewards(tabName: string): void {
+    this.rewardsService.getRewards(1, this.requestPageSize, null, [tabName])
+      .pipe(map((res: IReward[]) => {
+        this.rewardMultiPageMetaTracker[tabName] = {page: 1, isLast: false};
+        return ({key: tabName, value: res});
+      })).subscribe((rewards) => {
+      this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+      this.tabs.next(this.staticTab);
+    });
+  }
+
+  private getLoyalty(): void {
+    this.loyaltyService.getLoyalties()
+      .pipe(
+        filter((loyalties: ILoyalty[]) => loyalties.length > 0),
+        map((loyalties: ILoyalty[]) => loyalties[0])
+      )
+      .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
+  }
+
+  private getTags(): Observable<ITabConfig[]> {
+    // todo: service not implemented yet
+    // this.rewardsService.getTags();
+    this.staticTab = tabs;
+    this.tabs.next(this.staticTab);
+    this.cd.detectChanges();
+    return of(tabs);
+  }
+
+  public tabChanged(event: MatTabChangeEvent): void {
+    this.currentTab = event.tab.textLabel;
+    this.loadCurrentTabRewards(this.currentTab);
+  }
+
+  public openRewardDetails(tab: IReward): void {
+    this.router.navigate([`detail/element/${tab.id}`]);
+  }
+
+  public onScroll(): void {
+    if (!this.rewardMultiPageMetaTracker[this.currentTab].isLast) {
+      let rewards;
+      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).pipe(
+        flatMap((newRewards: IReward[]) => {
+          rewards = newRewards;
+          if (newRewards.length === 0 || newRewards.length < this.requestPageSize) {
+            this.rewardMultiPageMetaTracker[this.currentTab].isLast = true;
+          } else {
+            this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
+          }
+          return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
+        })
+      ).subscribe(
+        (existingRewards: IReward[]) => {
+          tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(rewards));
+        },
+        (err) => console.log(err)
+      );
+    }
   }
 }

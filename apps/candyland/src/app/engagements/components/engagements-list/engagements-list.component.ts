@@ -7,9 +7,9 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./engagements-list.component.scss']
 })
 export class EngagementsListComponent implements AfterViewInit {
-  @Input() public dataSource: MatTableDataSource<Engagement>;
-  @Input() public displayedColumns = ['name', 'status', 'type', 'actions'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @Input() public dataSource: MatTableDataSource<IEngagement>;
+  @Input() public displayedColumns: string[] = ['name', 'status', 'attributes_type', 'actions'];
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public itemAction = new EventEmitter();
 
   public ngAfterViewInit(): void {

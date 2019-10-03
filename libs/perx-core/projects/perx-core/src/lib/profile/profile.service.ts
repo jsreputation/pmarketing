@@ -1,15 +1,21 @@
-import { Observable, throwError } from 'rxjs';
-import { IProfile, ICustomProperties } from './profile.model';
+import { Observable } from 'rxjs';
+
+import {
+  IProfile,
+  ICustomProperties,
+  IProfileProperty,
+  ICardNumber,
+} from './profile.model';
 
 export abstract class ProfileService {
   public abstract whoAmI(): Observable<IProfile>;
 
   // @ts-ignore
-  public setCustomProperties(data: ICustomProperties): Observable<void> {
-    return throwError('Not implemented yet');
-  }
+  public abstract setCustomProperties(data: ICustomProperties): Observable<void>;
 
-  public getCustomProperties(): Observable<ICustomProperties> {
-    return throwError('Not implemented yet');
-  }
+  public abstract getCustomProperties(): Observable<ICustomProperties>;
+
+  public abstract updateUserInfo(data: IProfileProperty): Observable<void>;
+
+  public abstract setCardNumber(data: ICardNumber): Observable<void>;
 }

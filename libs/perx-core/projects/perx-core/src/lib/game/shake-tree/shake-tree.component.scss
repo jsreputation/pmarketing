@@ -1,14 +1,15 @@
-
 .tree__img {
-  display: flex;
-  width: 100%;
-  max-height: 70vh;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
 }
 
 .gift-wrapper {
   display: inline-block;
   position: absolute;
-  width: 40px;
+  max-width: 40px;
+  width: 12%;
   height: 100%;
   top: 0;
   background: transparent;
@@ -22,160 +23,174 @@
   left: 0;
 }
 
-.tree {
-  display: flex;
-  flex-direction: column;
+.shake-tree-container {
   position: relative;
-  padding: 0 1.6rem;
+  height: 100%;
+  width: 100%;
+  display: block;
+  text-align: center;
   overflow: hidden;
 
-  .shake {
-    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  }
+  .tree {
+    max-height: 100%;
+    max-width: 100%;
+    display: inline-block;
+    position: relative;
+    height: 100%;
 
-  .gift-wrapper {
-    &.drop {
-      transition: all 0.5s ease-in;
-
-      &.gift-wrapper {
-        &__1 {
-          transform: translateY(70%);
-        }
-
-        &__2 {
-          transform: translateY(60%);
-        }
-
-        &__3 {
-          transform: translateY(45%);
-        }
-
-        &__4 {
-          transform: translateY(43%);
-          z-index: 2;
-        }
-
-        &__5 {
-          transform: translateY(64%);
-          z-index: 2;
-        }
-
-        &__6 {
-          transform: translateY(59%);
-          z-index: 3;
-        }
-
-        &__7 {
-          transform: translateY(75%);
-          z-index: 2;
-        }
-
-        &__8 {
-          transform: translateY(49%);
-          z-index: 3;
-        }
-
-        &__9 {
-          transform: translateY(54%);
-          z-index: 1;
-        }
-
-        &__10 {
-          transform: translateY(59%);
-        }
-      }
+    &.shake {
+      animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
 
-    &__1 {
-      left: 35%;
+    .gift-wrapper {
+      &.drop {
+        transition: all 0.5s ease-in;
 
-      .gift-img__1 {
-        top: 18%;
+        &.gift-wrapper {
+          &__1 {
+            transform: translateY(70%);
+          }
+
+          &__2 {
+            transform: translateY(60%);
+          }
+
+          &__3 {
+            transform: translateY(45%);
+          }
+
+          &__4 {
+            transform: translateY(43%);
+            z-index: 2;
+          }
+
+          &__5 {
+            transform: translateY(64%);
+            z-index: 2;
+          }
+
+          &__6 {
+            transform: translateY(59%);
+            z-index: 3;
+          }
+
+          &__7 {
+            transform: translateY(75%);
+            z-index: 2;
+          }
+
+          &__8 {
+            transform: translateY(49%);
+            z-index: 3;
+          }
+
+          &__9 {
+            transform: translateY(54%);
+            z-index: 1;
+          }
+
+          &__10 {
+            transform: translateY(59%);
+          }
+        }
       }
-    }
 
-    &__2 {
-      left: 60%;
+      &__1 {
+        left: 35%;
 
-      .gift-img__2 {
-        top: 28%;
+        .gift-img__1 {
+          top: 18%;
+        }
       }
-    }
 
-    &__3 {
-      left: 31%;
-      z-index: 3;
+      &__2 {
+        left: 60%;
 
-      .gift-img__3 {
-        top: 46%;
+        .gift-img__2 {
+          top: 28%;
+        }
       }
-    }
 
-    &__4 {
-      left: 73%;
+      &__3 {
+        left: 31%;
+        z-index: 3;
 
-      .gift-img__4 {
-        top: 45%;
+        .gift-img__3 {
+          top: 46%;
+        }
       }
-    }
 
-    &__5 {
-      left: 24%;
+      &__4 {
+        left: 73%;
 
-      .gift-img__5 {
-        top: 25%;
+        .gift-img__4 {
+          top: 45%;
+        }
       }
-    }
 
-    &__6 {
-      left: 75%;
+      &__5 {
+        left: 24%;
 
-      .gift-img__6 {
-        top: 32%;
+        .gift-img__5 {
+          top: 25%;
+        }
       }
-    }
 
-    &__7 {
-      left: 55%;
+      &__6 {
+        left: 75%;
 
-      .gift-img__7 {
-        top: 14%;
+        .gift-img__6 {
+          top: 32%;
+        }
       }
-    }
 
-    &__8 {
-      left: 57%;
+      &__7 {
+        left: 55%;
 
-      .gift-img__8 {
-        top: 41%;
+        .gift-img__7 {
+          top: 14%;
+        }
       }
-    }
 
-    &__9 {
-      left: 15%;
+      &__8 {
+        left: 57%;
 
-      .gift-img__9 {
-        top: 36%;
+        .gift-img__8 {
+          top: 41%;
+        }
       }
-    }
 
-    &__10 {
-      left: 40%;
+      &__9 {
+        left: 15%;
 
-      .gift-img__10 {
-        top: 32%;
+        .gift-img__9 {
+          top: 36%;
+        }
+      }
+
+      &__10 {
+        left: 40%;
+
+        .gift-img__10 {
+          top: 32%;
+        }
       }
     }
   }
 }
 
-.man__img {
-  display: inline-block;
-  width: 70px;
+.man {
+  display: block;
+  width: 100%;
+  height: 20%;
   position: absolute;
+  bottom: 0;
+  left: 0;
+}
 
-  /* bottom: 5%;
-  left: 16%; */
+.man__img {
+  height: 100%;
+  position: absolute;
 }
 
 @keyframes shake {

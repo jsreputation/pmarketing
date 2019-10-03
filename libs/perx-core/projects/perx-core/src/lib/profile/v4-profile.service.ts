@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+
+import {
+  map,
+  mergeMap,
+} from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IProfile } from './profile.model';
+
+import {
+  IProfile,
+  ICustomProperties,
+  IProfileProperty,
+  ICardNumber,
+} from './profile.model';
 import { ProfileService } from './profile.service';
-import { EnvConfig } from '../shared/env-config';
+
+import { Config } from '../config/config';
 
 interface IV4Profile {
   id: number;
@@ -33,10 +44,10 @@ export class V4ProfileService extends ProfileService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig
+    config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public static v4ProfileToProfile(profile: IV4Profile): IProfile {
@@ -48,7 +59,7 @@ export class V4ProfileService extends ProfileService {
       middleName: profile.middle_name,
       phone: profile.phone,
       email: profile.email,
-      birthDate: profile.birthday,
+      birthDate: profile.birthday ? new Date(profile.birthday) : undefined,
       gender: profile.gender,
       joinedDate: profile.joined_at,
       passwordExpiryDate: profile.password_expires_at,
@@ -62,5 +73,53 @@ export class V4ProfileService extends ProfileService {
       .pipe(
         map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
       );
+  }
+
+  public setCustomProperties(data: ICustomProperties): Observable<void> {
+    return this.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => this.http.patch<void>(
+            `${this.apiHost}/v4/customers/${profile.id}`,
+            {
+              personal_properties: {
+                ...profile.customProperties,
+                ...data
+              }
+            })
+      )
+    );
+  }
+
+  public getCustomProperties(): Observable<ICustomProperties> {
+    return this.whoAmI().pipe(
+      map(
+        (profile: IProfile) => profile.customProperties
+      )
+    );
+  }
+
+  public updateUserInfo(data: IProfileProperty): Observable<void> {
+    return this.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => this.http.patch<void>(
+            `${this.apiHost}/v4/customers/${profile.id}`,
+            {
+              ...profile,
+              ...data
+            })
+      )
+    );
+  }
+
+  public setCardNumber(data: ICardNumber): Observable<any> {
+    return this.whoAmI().pipe(
+      mergeMap(
+        (profile: IProfile) => this.http.patch<void>(
+          `${this.apiHost}/v4/customers/${profile.id}/map_cardnumber`,
+          {
+            data
+          })
+      )
+    );
   }
 }

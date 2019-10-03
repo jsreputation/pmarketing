@@ -1,15 +1,17 @@
-<div class="full-with page-header">
+<header class="page-header full-with">
   <h1 class="title">Setting</h1>
-  <nav mat-tab-nav-bar>
+</header>
+
+<section class="content form-limiter">
+  <nav mat-tab-nav-bar class="settings-navbar">
     <a mat-tab-link
-       *ngFor="let link of navLinks;"
-       [routerLink]="link.path"
-       routerLinkActive #rla="routerLinkActive"
-       [routerLinkActiveOptions]="{exact: true}"
-       [active]="rla.isActive">
+        *ngFor="let link of navLinks;"
+        [routerLink]="link.path"
+        routerLinkActive #rla="routerLinkActive"
+        [routerLinkActiveOptions]="{exact: true}"
+        [active]="rla.isActive">
       {{link.label}}
     </a>
   </nav>
-</div>
-
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</section>

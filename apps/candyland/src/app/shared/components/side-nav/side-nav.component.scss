@@ -1,11 +1,14 @@
+@import "variables";
+
 .container-sidenav {
   position: relative;
   min-height: 100vh;
+  overflow: initial; // required to make header sticky
 }
 
 .sidenav {
-  width: 17rem;
-  background-color: #202c46;
+  width: $sidenav-width-initial;
+  background-color: $bgcolor-sidebar;
   position: fixed;
 
   &-data-container {
@@ -23,7 +26,7 @@
     top: 93vh;
     right: 0;
     outline: none;
-    transition: .5s;
+    transition: 0.5s;
 
     &.center {
       right: 1.6rem;
@@ -39,22 +42,20 @@
 
 .mat-toolbar-log {
   padding: 0 1rem;
-  background-color: #172238;
+  background-color: $bgcolor-sidebar-logo;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $header-height-base;
 }
 
-.cl-user {
-  display: block;
-  padding-top: 1.6rem;
-}
-
-.sidenav-content{
+.sidenav-content {
   position: relative;
   min-height: 100vh;
 }
 
 .btn-text {
-  font-size: 1.4rem;
+  font-size: $base-font-size;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -66,11 +67,10 @@
   align-items: center;
   top: 93vh;
   left: 1rem;
-
 }
 
 .appear {
-  animation: changeWidth .4s cubic-bezier(.35,0,.25,1);
+  animation: changeWidth 0.4s cubic-bezier(0.35, 0, 0.25, 1);
 }
 
 @keyframes changeWidth {
@@ -78,8 +78,13 @@
     width: 0;
     opacity: 0;
   }
+
   100% {
     width: auto;
     opacity: 1;
   }
+}
+
+.mat-drawer-content {
+  overflow: initial; // required to make header sticky
 }

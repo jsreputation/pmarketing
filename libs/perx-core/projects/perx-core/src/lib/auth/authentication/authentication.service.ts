@@ -1,248 +1,84 @@
-import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { AuthService } from 'ngx-auth';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { TokenStorage } from './token-storage.service';
-import { CognitoService } from '../whistler/cognito/cognito.service';
-import { OauthService } from '../v4/oauth/oauth.service';
+import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   ISignUpData,
   IMessageResponse,
   IResetPasswordData,
   IAppAccessTokenResponse,
-  IChangePasswordData
+  IChangePasswordData,
+  IChangePhoneData
 } from './models/authentication.model';
 import { IProfile } from '../../profile/profile.model';
+import { AuthService } from 'ngx-auth';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthenticationService implements AuthService {
-  public lastURL: string;
-  public authing: boolean;
-  public retries: number = 0;
-  public maxRetries: number = 2;
-  public preAuthJWT: string;
-  public didFailAuth: boolean = false;
-  public failedAuthObservable: BehaviorSubject<boolean> = new BehaviorSubject(this.didFailAuth);
-
-  constructor(
-    private tokenStorage: TokenStorage,
-    private cognitoService: CognitoService,
-    private v4OauthService: OauthService,
-  ) {
-  }
+export abstract class AuthenticationService implements AuthService {
+  public abstract get $failedAuth(): Observable<boolean>;
 
   /**
    * Check, if user already authorized.
    * @description Should return Observable with true or false values
    * @memberOf AuthService
    */
-  public isAuthorized(): Observable<boolean> {
-    const token = this.tokenStorage
-    .getAppInfoProperty('userAccessToken');
-
-    return of(!!token);
-  }
+  public abstract isAuthorized(): Observable<boolean>;
 
   /**
    * Function, that should perform refresh token verifyTokenRequest
    * @description Should be successfully completed so interceptor
    * can execute pending requests or retry original one
    */
-  public refreshToken(): Observable<any> {
-    return this.preAuth().pipe(
-      tap((resp) => {
-        /* check if valid auth  */
-        this.retries++;
-        if (resp) {
-          this.authing = true;
-          this.userAuth(this.preAuthJWT).toPromise().then(
-            () => {
-              // @ts-ignore
-              const userBearer = resp.headers.get('Authorization');
-              if (userBearer) {
-                this.saveUserAccessToken(userBearer.split(' ')[1]);
-              }
-            },
-            () => {
-              if (this.retries === this.maxRetries) {
-                this.authing = false;
-                this.didFailAuth = true;
-                this.failedAuthObservable.next(this.didFailAuth);
-                this.failedAuthObservable.complete();
-                return of(this.logout());
-              }
-
-              return of();
-            }
-          );
-        }
-      }),
-    );
-  }
+  public abstract refreshToken(): Observable<any>;
 
   /**
    * Function, checks response of failed request to determine,
    * whether token be refreshed or not.
    * @description Essentially checks status
    */
-  public refreshShouldHappen(response: HttpErrorResponse): boolean {
-    return this.retries < this.maxRetries && response.status === 401;
-  }
+  public abstract refreshShouldHappen(response: HttpErrorResponse): boolean;
 
   /**
    * Verify that outgoing request is refresh-token,
    * so interceptor won't intercept this request
    */
-  public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token');
-  }
+  public abstract verifyTokenRequest(url: string): boolean;
 
   /**
    * EXTRA AUTH FUNCTIONS
    */
 
-  public async autoLogin(): Promise<boolean> {
-    this.authing = true;
-    let success = false;
+  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any>;
 
-    const userAuthData = await this.userAuth(this.preAuthJWT).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
-    );
-    // @ts-ignore
-    const userBearer = userAuthData.body.data[0].attributes.jwt;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
-  }
-
-  public userAuth(bearer: string): Observable<any> {
-    const userId = (window as any).primaryIdentifier;
-    return this.cognitoService.authenticateUserIdWithAppBearer(bearer, userId);
-  }
-
-  public async v4GameOauth(user: string, pass: string, mechId?: string, campaignId?: string): Promise<boolean> {
-    this.authing = true;
-    let success = false;
-
-    const v4AuthData = await this.v4OauthService.authenticateV4Oauth(user, pass, mechId, campaignId)
-      .toPromise();
-    // .catch(() => {
-    //   console.log('login failed!');
-    //   this.authing = false;
-    // });
-
-    if (v4AuthData === undefined) {
-      return false;
-    }
-
-    const userBearer = v4AuthData.bearer_token;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
-  }
-
-  public async v4AutoLogin(): Promise<boolean> {
-    this.authing = true;
-    let success = false;
-
-    const userId = (window as any).primaryIdentifier;
-    const v4AuthData = await this.v4OauthService.authenticateUserIdWithAppBearer(userId).toPromise().catch(
-      () => {
-        console.log('login failed!');
-        this.authing = false;
-      }
-    );
-    // @ts-ignore
-    const userBearer = v4AuthData.bearer_token;
-    if (userBearer) {
-      this.saveUserAccessToken(userBearer);
-
-      success = true;
-    }
-    this.authing = false;
-    return success;
-  }
-
-  public preAuth(): Observable<any> {
-    return this.cognitoService.authenticateAppWithPreAuth(location.host).pipe(
-      tap((resp) => {
-        // @ts-ignore
-        this.preAuthJWT = resp.headers.get('Authorization');
-        return resp;
-      })
-    );
-  }
+  public abstract autoLogin(): Observable<any>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
    */
-  public v4GetAppAccessToken(): Observable<IAppAccessTokenResponse> {
-    return this.v4OauthService.getAppAccessToken().pipe(
-      tap((resp) => {
-        this.saveAppAccessToken(resp.access_token);
-      })
-    );
-  }
+  public abstract getAppToken(): Observable<IAppAccessTokenResponse>;
 
-  public setInterruptedUrl(url: string): void {
-    this.lastURL = url;
-  }
+  public abstract setInterruptedUrl(url: string): void;
 
-  public getInterruptedUrl(): string {
-    return this.lastURL;
-  }
+  public abstract getInterruptedUrl(): string;
 
-  public logout(): void {
-    this.tokenStorage.clearAppInfoProperty('userAccessToken');
-  }
+  public abstract logout(): void;
 
   /**
    * This method will send an OTP to the user. This otp should be used as input
    * of method resetPassword.
    */
-  // @ts-ignore
-  public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.v4OauthService.forgotPassword(phone);
-  }
+  public abstract forgotPassword(phone: string): Observable<IMessageResponse>;
 
-  // @ts-ignore
-  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return this.v4OauthService.resetPassword(resetPasswordInfo);
-  }
+  public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse>;
 
-  // @ts-ignore
-  public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.v4OauthService.resendOTP(phone);
-  }
+  public abstract resendOTP(phone: string): Observable<IMessageResponse>;
 
-  // @ts-ignore
-  public signup(profile: ISignUpData): Observable<IProfile> {
-    return this.v4OauthService.signup(profile);
-  }
+  public abstract signup(profile: ISignUpData): Observable<IProfile>;
 
-  // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.v4OauthService.verifyOTP(phone, otp);
-  }
+  public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 
-  // @ts-ignore
-  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
-    return this.v4OauthService.changePassword(changePasswordData);
-  }
+  public abstract requestVerificationToken(phone?: string): Observable<void>;
+
+  public abstract changePhone(changePhoneData: IChangePhoneData): Observable<void>;
+
+  public abstract changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse>;
 
   /**
    * Get access token
@@ -250,11 +86,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getAccessToken(): Observable<string> {
-    const userAccessToken = this.getUserAccessToken();
-    const appAccessToken = this.getAppAccessToken();
-    return of(userAccessToken ? userAccessToken : appAccessToken);
-  }
+  public abstract getAccessToken(): Observable<string>;
 
   /**
    * Get user access token
@@ -262,9 +94,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getUserAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('userAccessToken');
-  }
+  public abstract getUserAccessToken(): string;
 
   /**
    * Set user access token
@@ -272,9 +102,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public saveUserAccessToken(accessToken: string): void {
-    this.tokenStorage.setAppInfoProperty(accessToken, 'userAccessToken');
-  }
+  public abstract saveUserAccessToken(accessToken: string): void;
 
   /**
    * Get user access token
@@ -282,9 +110,7 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public getAppAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('appAccessToken');
-  }
+  public abstract getAppAccessToken(): string;
 
   /**
    * Set access token
@@ -292,7 +118,5 @@ export class AuthenticationService implements AuthService {
    * localStorage
    */
 
-  public saveAppAccessToken(accessToken: string): void {
-    this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
-  }
+  public abstract saveAppAccessToken(accessToken: string): void;
 }

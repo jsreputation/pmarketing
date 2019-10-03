@@ -2,40 +2,49 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
-  ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITransaction } from '../models/loyalty.model';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ITransaction} from '../models/loyalty.model';
+import { DatePipe } from '@angular/common';
+import { TransactionPipe } from './transaction.pipe';
 
 @Component({
   selector: 'perx-core-loyalty-transactions-list',
   templateUrl: './loyalty-transactions-list.component.html',
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
-export class LoyaltyTransactionsListComponent {
+export class LoyaltyTransactionsListComponent implements OnInit {
   @Input('transactions')
   public transactions$: Observable<ITransaction[]>;
 
   @Output()
   public tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
 
-  @Output()
-  public scrollEnd: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()
+  public titleFn: (tr: ITransaction) => string;
 
-  @ViewChild(CdkVirtualScrollViewport, {static: false})
-  private viewport: CdkVirtualScrollViewport;
+  @Input()
+  public subTitleFn: (tr: ITransaction) => string;
 
-  public onScrolledIndexChange(): void {
-    const end = this.viewport.getRenderedRange().end;
-    const total = this.viewport.getDataLength();
-    if (total === end) {
-      this.scrollEnd.emit(true);
-    }
+  @Input()
+  public priceLabelFn: (tr: ITransaction) => string;
+
+  constructor( private datePipe: DatePipe,
+               private transactionPipe: TransactionPipe
+  ) {
   }
 
-  public trackById(_: number, transaction: ITransaction): number {
-    return transaction.id;
+  public ngOnInit(): void {
+    if (!this.titleFn) {
+      this.titleFn = (tr: ITransaction) => `${tr.name}`;
+    }
+    if (!this.subTitleFn) {
+      this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'dd/MM/yyyy')}`;
+    }
+    if (!this.priceLabelFn) {
+      this.priceLabelFn = (tr: ITransaction) => `${this.transactionPipe.transform(tr.points)}`;
+    }
   }
 }

@@ -1,6 +1,6 @@
 <!--Voucher Validity Type-->
 <div class="card-row radio-group-row">
-  <mat-radio-group [formControl]="formGroup.get('type')">
+  <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
     <ng-container *ngFor="let type of config?.voucherValidityType">
       <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
     </ng-container>
@@ -20,7 +20,7 @@
                     [min]="formGroup.get('period.startDate').value"></cl-date-picker>
     <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
   </div>
-  <mat-checkbox [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
+  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
 </div>
 <!--/ Voucher Validity Period-->
 <!-- Voucher Validity Isuance date-->

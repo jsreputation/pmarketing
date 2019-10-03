@@ -1,7 +1,9 @@
 export enum VoucherState {
   issued = 'issued',
   redeemed = 'redeemed',
-  expired = 'expired'
+  expired = 'expired',
+  reserved = 'reserved',
+  released = 'released',
 }
 
 export enum RedemptionType {
@@ -11,6 +13,10 @@ export enum RedemptionType {
   none = 'none',
   offline = 'offline'
 }
+
+export type StatusLabelMapping = {
+  [key in VoucherState]: string;
+};
 
 interface IVoucherDescription {
   title: string;
@@ -33,9 +39,19 @@ export interface IVoucher {
   rewardBanner: string;
   merchantImg: string;
   merchantName: string;
+  merchantId?: number;
   expiry: Date | null;
   redemptionDate?: Date | null;
   description: IVoucherDescription[];
-  redemptionSuccessTxt: string;
-  redemptionSuccessImg: string;
+  redemptionSuccessTxt?: string;
+  redemptionSuccessImg?: string;
+  categories?: string[];
+}
+
+export interface IGetVoucherParams {
+  type: string;
+}
+
+export interface IRedeemOptions {
+  pin?: string;
 }

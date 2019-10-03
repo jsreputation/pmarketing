@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import * as moment from 'moment';
 
 @Injectable()
 export class NewCampaignDetailFormService {
   constructor(private fb: FormBuilder) {
   }
-
+//tslint:disable
+  //TODO: need use momentJs for date handler
   public getForm(): FormGroup {
     return this.fb.group({
       campaignInfo: this.fb.group({
-        goal: [],
-        startDate: [],
-        startTime: [],
-        endDate: [],
-        endTime: [],
-        disabledEndDate: [],
+        goal: ['Acquire customers', [Validators.required]],
+        startDate: [null, [Validators.required]],
+        startTime: [null, [Validators.required]],
+        endDate: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        disabledEndDate: [false],
         labels: []
       }),
       channel: this.fb.group({
-        type: [],
+        type: ['weblink', [Validators.required]],
         message: [],
         schedule: this.fb.group({
           sendDate: [],
@@ -34,8 +36,9 @@ export class NewCampaignDetailFormService {
         })
       }),
       audience: this.fb.group({
-        type: ['none'],
-        file: []
+        type: ['select'],
+        file: [],
+        select: []
       })
     });
   }
@@ -62,14 +65,21 @@ export class NewCampaignDetailFormService {
       {
         condition: form.get('audience.type').value === 'upload',
         controls: [form.get('audience.file')]
+      },
+      {
+        condition: form.get('audience.type').value === 'select',
+        controls: [form.get('audience.select')]
       }
     ];
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): { [key: string]: any } {
     return {
       campaignInfo: {
-        disabledEndDate: false
+        startTime: moment().format('LT'),
+        startDate: new Date(),
+        goal: 'Acquire customers',
+        disabledEndDate: true
       },
       channel: {
         type: 'weblink',

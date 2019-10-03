@@ -16,71 +16,94 @@ commands:
     description: cuts app name out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup app var
           command: |
-            APP=$(echo ${CIRCLE_TAG} | cut -d'-' -f 1)
+            SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
+            CUT=-$TARGET_ENV-$SEM_VER
+            APP=${CIRCLE_TAG%"$CUT"}
             echo "export APP=$APP" >> $BASH_ENV
+            echo $APP
   get_env_from_tag:
     description: cuts destination environment out of git tag
     steps:
       - run:
-          name: Setup env vars
+          name: Setup env var
           command: |
-            TARGET_ENV=$(echo ${CIRCLE_TAG} | cut -d'-' -f 2)
+            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
             echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
+            echo $TARGET_ENV
   set_apihost:
     description: based on environment set the APIHOST
     steps:
       - run:
-          name: Setup APIHOST vars
+          name: Setup APIHOST var
           command: |
             if [ $TARGET_ENV == 'staging' ]
             then
-              echo 'export APIHOST="https://api.perxtech.io"' >> $BASH_ENV
-            fi
-            if [ $TARGET_ENV == 'production' ]
-            then
-              if [ $APP == 'hsbc' ]
+              if [ $APP == 'blackcomb' ] || [ $APP == 'candyland-uat' ]
               then
-                echo 'export APIHOST="https://api-hsbc.perxtech.net"' >> $BASH_ENV
+                APIHOST="https://api-dev1.uat.whistler.perxtech.io"
               else
-                echo 'export APIHOST="https://api.perxtech.net"' >> $BASH_ENV
+                APIHOST="https://api.perxtech.io"
+              fi
+            elif [ $TARGET_ENV == 'production' ]
+            then
+              if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
+              then
+                APIHOST="https://api-hsbc.perxtech.net"
+              else
+                APIHOST="https://api.perxtech.net"
               fi
             fi
+            echo "export APIHOST=$APIHOST" >> $BASH_ENV
+            echo $APIHOST
   set_preauth:
     description: based on client set the PREAUTH
     steps:
       - run:
-          name: Setup PREAUTH vars
+          name: Setup PREAUTH var
           command: |
-            echo 'export PREAUTH="false"' >> $BASH_ENV
-            if [ $APP == 'prudential' ]
+            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' || [ $APP == 'bpi' ]
             then
-              echo 'export PREAUTH="true"' >> $BASH_ENV
+              PREAUTH="true"
+            else
+              PREAUTH="false"
             fi
-            if [ $APP == 'digi' ]
-            then
-              echo 'export PREAUTH="true"' >> $BASH_ENV
-            fi
+            echo "export PREAUTH=$PREAUTH" >> $BASH_ENV
+            echo $PREAUTH
   set_basehref:
     description: based on client set deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup BASE_HREF var
           command: |
             if [ $APP == 'hsbc' ]
             then
-              echo 'export BASE_HREF="/site/hsbc/collect2/"' >> $BASH_ENV
+              BASE_HREF="/site/hsbc/collect2/"
+            elif [ $APP == 'hsbc-rewards' ]
+            then
+              BASE_HREF="/site/hsbc/rewardscatalogue/"
             else
-              echo 'export BASE_HREF="/"' >> $BASH_ENV
+              BASE_HREF="/"
             fi
+            echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
+            echo $BASE_HREF
+
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
       - run:
-          name: Setup BASE_HREF vars
+          name: Setup IS_WHISTLER var
           command: |
-            echo 'export ISWHISTLER="false"' >> $BASH_ENV
+            if [ $APP == 'blackcomb' ]
+            then
+              IS_WHISTLER="true"
+            else
+              IS_WHISTLER="false"
+            fi
+            echo "export IS_WHISTLER=$IS_WHISTLER" >> $BASH_ENV
+            echo $IS_WHISTLER
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -96,14 +119,30 @@ commands:
           command: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
 jobs:
+  build_proxy_docker_image:
+    working_directory: ~/project
+    executor: ubuntu
+    steps:
+      - checkout
+      - docker_login
+      - run:
+          name: Build docker image
+          command: |
+            cd ~/project/backend/api-proxy &&
+            docker build . -t perxtech/engagements-proxy:${CIRCLE_TAG} -t perxtech/engagements-proxy
+      - run:
+          name: Push docker
+          command: |
+            docker push perxtech/engagements-proxy:${CIRCLE_TAG}
+            docker push perxtech/engagements-proxy
   build_docker_image:
     working_directory: ~/project
     executor: ubuntu
     steps:
       - checkout
       - docker_login
-      - get_app_name
       - get_env_from_tag
+      - get_app_name
       - set_apihost
       - set_preauth
       - set_basehref
@@ -115,13 +154,21 @@ jobs:
             echo "APIHOST: ${APIHOST}"
             echo "BASE_HREF: ${BASE_HREF}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
+            echo "IS_WHISTLER: ${IS_WHISTLER}"
+            if [ $APP == 'candyland-uat' ]
+            then
+              export APP="candyland"
+            fi
+            echo "after second set APP: ${APP}"
+
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
             --no-cache \
             --build-arg app=$APP \
             --build-arg apihost=$APIHOST \
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
-            --build-arg iswhistler=$ISWHISTLER
+            --build-arg iswhistler=$IS_WHISTLER
       - run:
           name: Push docker
           command: |
@@ -163,13 +210,20 @@ jobs:
             then
               echo 'export HELM_APP="$APP-minigames"' >> $BASH_ENV
             fi
-            if [ $APP == 'bpi' ]
+            if [ $APP == 'bpi'  ] || \
+               [ $APP == 'merck-customer' ] || \
+               [ $APP == 'hkbn' ]
             then
               echo 'export HELM_APP="$APP-rewards"' >> $BASH_ENV
             fi
-            if [ $APP == 'candyland' ]
+            if [ $APP == 'candyland' ] || \
+               [ $APP == 'candyland-uat' ]
             then
               echo 'export HELM_APP="perx-$APP"' >> $BASH_ENV
+            fi
+            if [ $APP == 'merck-merchant' ]
+            then
+              echo 'export HELM_APP="$APP-scanner"' >> $BASH_ENV
             fi
       # requires env set: HELM_REPO_URL HELM_USER HELM_PASSWORD
       - helm-deploy/add-helm-repo:
@@ -184,6 +238,16 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
+  test-e2e-protractor:
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn run build:candyland:prod
+      - run: yarn run pree2e-ci ## need to run webdriver-manager update before protractor e2e runs
+      - run: yarn run e2e-ci-pro
   test:
     docker:
       - image: circleci/node:10-browsers
@@ -194,6 +258,7 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
+ 
 #      - run: yarn run e2e-ci
   lint:
     docker:
@@ -225,24 +290,11 @@ jobs:
       - run: yarn install
       - run: yarn run build
   build-prod:
-    machine:
-      image: ubuntu-1604:201903-01
-    parallelism: 10
+    docker:
+      - image: circleci/node:10-browsers
+    resource_class: xlarge
+    parallelism: 13
     steps:
-      - run:
-          name: Install yarn
-          command: |
-            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo killall -9 apt-get || true && sudo apt-get update && sudo apt-get install -y yarn=1.16.0-1
-      - run: |
-          echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-          echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run:
-          name: Switch to latest node version
-          command: |
-            nvm install v10
-            nvm alias default v10
       - checkout
       - run: yarn install
     #      - run: yarn run e2e-ci
@@ -262,11 +314,11 @@ workflows:
             tags:
               # this enables circleci to trigger on tags
               only: /.*/
-      - build:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         # this enables circleci to trigger on tags
+      #         only: /.*/
       - build-prod:
           filters:
             tags:
@@ -276,7 +328,7 @@ workflows:
           filters:
             tags:
               # this enables circleci to trigger on tags
-              only: /^\w+-.*/
+              only: /^[\w-]+-(production|staging)-\d+\.\d+\.\d+.*/
             branches:
               ignore: /.*/
       - deploy:
@@ -291,7 +343,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^\w+-staging-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -300,7 +352,7 @@ workflows:
           kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
           requires:
             - build_docker_image
-            - build
+            # - build
             - test
             - lint
             - build-prod
@@ -310,5 +362,35 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^\w+-production-\d+\.\d+\.\d+.*/
+              only: /(\w+-)+production-\d+\.\d+\.\d+.*/
+      - build_proxy_docker_image:
+          filters:
+            # need to sepcify this otherwise the job will run even if there's no tag
+            branches:
+              ignore: /.*/
+            tags:
+              # semver v2
+              only: /engagements-proxy-\d+\.\d+\.\d+.*/
 
+daily_e2e_run_morning:
+    triggers:
+      - schedule:
+          # 12 noon SGT
+          cron: "0 4 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test-e2e-protractor
+daily_e2e_run_evening:
+    triggers:
+      - schedule:
+          # 5.00 pm SGT
+          cron: "0 9 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test-e2e-protractor

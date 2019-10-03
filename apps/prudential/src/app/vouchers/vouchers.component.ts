@@ -4,7 +4,7 @@ import { PopupComponent, IPopupConfig } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
-export enum POPUP_TYPE {
+export enum PopupType {
   completed = 'completed',
   expired = 'expired',
   four0four = '404'
@@ -23,24 +23,24 @@ export class VouchersComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.route.paramMap.subscribe(ps => {
       const popup = ps.get('popup');
       switch (popup) {
-        case POPUP_TYPE.completed:
+        case PopupType.completed:
           this.completedPopup();
           break;
-        case POPUP_TYPE.expired:
+        case PopupType.expired:
           this.expiredPopup();
           break;
-        case POPUP_TYPE.four0four:
+        case PopupType.four0four:
           this._404Popup();
           break;
       }
     });
   }
 
-  onRoute(id: string): void {
+  public onRoute(id: string): void {
     this.router.navigate([`/vouchers/${id}`]);
   }
 

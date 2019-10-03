@@ -1,7 +1,21 @@
 /// <reference types="@types/googlemaps" />
 
-import { Component, Input, ViewChild, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import {
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+
+import {
+  Subject,
+  Observable,
+  forkJoin,
+} from 'rxjs';
+
 import { ILocation } from '../ilocation';
 import { GeoLocationService } from '../geolocation.service';
 
@@ -78,7 +92,10 @@ export class LocationsMapComponent implements OnInit, OnChanges {
     return p;
   }
 
-  private updateUserPosition(position: Position): void {
+  private updateUserPosition(position: Position | null): void {
+    if (position === null) {
+      return;
+    }
     const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     this.map.panTo(location);
     this.userLocation.next(position);
@@ -103,10 +120,11 @@ export class LocationsMapComponent implements OnInit, OnChanges {
 
   private updateLocations(): void {
     if (this.locations && this.map) {
-      this.locations.subscribe(
-        locations => {
+      forkJoin(this.locations).subscribe(
+        (locationsArr: ILocation[][]) => {
+          const locations: ILocation[] = locationsArr[0];
           this.clearMarkers();
-          locations.map(location => {
+          locations.map((location: ILocation) => {
             const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
             const marker = new google.maps.Marker({
               position: latLng,

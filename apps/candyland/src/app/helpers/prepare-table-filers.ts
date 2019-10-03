@@ -50,6 +50,22 @@ export class PrepareTableFilers {
     return counterObject;
   }
 
+  public static countFieldValue2(array: object[], fieldName: string): { [key: string]: number } {
+    const counterObject = {};
+    array.forEach((item: any) => {
+      if (!(fieldName in item.attributes)) {
+        return;
+      }
+      const value = item.attributes[fieldName];
+      if (value in counterObject) {
+        counterObject[value]++;
+      } else {
+        counterObject[value] = 1;
+      }
+    });
+    return counterObject;
+  }
+
   public static getClientSideFilterFunction(): (data: any, filter: string) => boolean {
     return (item, filterString): boolean => {
       const filters = JSON.parse(filterString);

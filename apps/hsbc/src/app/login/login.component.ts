@@ -12,13 +12,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
 
-  authed: boolean;
-  preAuth: boolean;
-  failedAuth: boolean;
+  public preAuth: boolean;
 
-  errorMessage: string;
+  public errorMessage: string;
 
   constructor(
     private router: Router,
@@ -28,71 +26,41 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService
   ) {
     this.preAuth = environment.preAuth;
-    this.failedAuth = false;
     this.initForm();
   }
 
-  initForm() {
+  public initForm(): void {
     this.loginForm = this.fb.group({
       playerCode: ['', Validators.required],
       hsbcCardLastFourDigits: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
-    if (this.preAuth) {
-      if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
-        this.authService.isAuthorized().subscribe(
-          authed => {
-            if (!authed) {
-              this.authService.autoLogin().then(
-                (isAuthed: boolean) => {
-                  this.authed = isAuthed;
-                  if (this.authed) {
-                    this.router.navigateByUrl(this.authService.getInterruptedUrl());
-                  }
-                },
-                () => {
-                  this.failedAuth = true;
-                  this.authed = false;
-                }
-              );
-            } else {
-              this.authed = authed;
-            }
-
-          },
-        );
-      }
+  public ngOnInit(): void {
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        () => {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+        }
+      );
     }
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
     const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
     this.errorMessage = null;
 
-    this.authService.v4GameOauth(username, password)
-      .then((isAuthed: boolean) => {
-        this.authed = isAuthed;
-        if (this.authed) {
-
-          // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
-            (window as any).primaryIdentifier = username;
-          }
-
-          if (this.authService.getInterruptedUrl()) {
-            this.router.navigateByUrl(this.authService.getInterruptedUrl());
-          } else {
-            this.router.navigateByUrl('puzzle');
-          }
+    this.authService.login(username, password).subscribe(
+      () => {
+        // set global userID var for GA tracking
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = username;
         }
-      })
-      .catch((err) => {
-        this.failedAuth = true;
-        this.authed = false;
 
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+      },
+      (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
             this.notificationService.addPopup({
@@ -106,7 +74,10 @@ export class LoginComponent implements OnInit {
               }));
             this.errorMessage = 'Invalid credentials';
           }
+        } else {
+          this.errorMessage = err;
         }
-      });
+      }
+    );
   }
 }

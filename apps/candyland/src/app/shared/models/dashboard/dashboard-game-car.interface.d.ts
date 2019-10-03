@@ -3,4 +3,5 @@ declare interface DashboardGameCard {
   title: string;
   description: string;
   link: string;
+  name: string;
 }

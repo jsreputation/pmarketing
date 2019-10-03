@@ -1,11 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-
-import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
-import { RoutingStateService } from '@cl-core/services/routing-state.service';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { tap, map, switchMap } from 'rxjs/operators';
+import { ControlsName } from '../../../../models/controls-name';
+import {
+  AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
+} from '@cl-core/services';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -13,48 +20,108 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./new-pinata-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewPinataPageComponent implements OnInit {
-  public formPinata: FormGroup;
-  public backgrounds$: Observable<IGraphic>;
-  public pinata$: Observable<IGraphic>;
-  constructor(private fb: FormBuilder,
-              private pinataHttpService: PinataHttpService,
-              private routingState: RoutingStateService,
-              private router: Router) { }
+export class NewPinataPageComponent implements OnInit, OnDestroy {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+  public id: string;
+  public form: FormGroup;
+  public pinataData: {
+    pinata: IGraphic[],
+    background: IGraphic[]
+  };
+  public tenantSettings: ITenantsProperties;
+  private destroy$ = new Subject();
+
+  public get name(): AbstractControl {
+    return this.form.get(ControlsName.name);
+  }
+
+  public get headlineMessage(): AbstractControl {
+    return this.form.get(ControlsName.headlineMessage);
+  }
+
+  public get subHeadlineMessage(): AbstractControl {
+    return this.form.get(ControlsName.subHeadlineMessage);
+  }
+
+  public get buttonText(): AbstractControl {
+    return this.form.get(ControlsName.buttonText);
+  }
+
+  public get background(): AbstractControl {
+    return this.form.get(ControlsName.background);
+  }
+
+  public get pinata(): AbstractControl {
+    return this.form.get(ControlsName.pinata);
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private pinataService: PinataService,
+    private routingState: RoutingStateService,
+    private availableNewEngagementService: AvailableNewEngagementService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private settingsService: SettingsService
+  ) {
+  }
 
   public ngOnInit(): void {
+    this.getTenants();
     this.createPinataForm();
-    this.getPinata();
-    this.getBackgroundData();
+    combineLatest([this.getPinataData(), this.handleRouteParams()])
+      .subscribe(
+        ([previewData, pinata]) => {
+          this.pinataData = previewData;
+          const patchData = pinata || this.getDefaultValue(previewData);
+          this.form.patchValue(patchData);
+          this.cd.detectChanges();
+        },
+        (error: Error) => {
+          console.warn(error.message);
+          this.router.navigateByUrl('/engagements');
+        }
+      );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public save(): void {
-    this.router.navigateByUrl('/engagements');
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.createImagePreview.getPreviewUrl()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return this.pinataService.updatePinata(this.id, {...this.form.value, image_url: imageUrl.url});
+          }
+          return this.pinataService.createPinata({...this.form.value, image_url: imageUrl.url}).pipe(
+            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          );
+        })
+      ).pipe(untilDestroyed(this))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
 
-  public get name(): AbstractControl {
-    return this.formPinata.get('name');
-  }
-
-  public get headlineMessage(): AbstractControl {
-    return this.formPinata.get('headlineMessage');
-  }
-
-  public get subHeadlineMessage(): AbstractControl {
-    return this.formPinata.get('subHeadlineMessage');
-  }
-
-  public get buttonText(): AbstractControl {
-    return this.formPinata.get('buttonText');
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private createPinataForm(): void {
-    this.formPinata = this.fb.group({
-      name: ['Create Hit the Pinata Template A', [Validators.required,
+    this.form = this.fb.group({
+      name: ['Hit the Pinata Template', [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
@@ -64,12 +131,13 @@ export class NewPinataPageComponent implements OnInit {
         Validators.maxLength(60)
       ]],
       subHeadlineMessage: ['Tap the piñata until you get a reward!', [
-        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
       pinata: [null, [Validators.required]],
-      background: [null, [Validators.required]],
+      background: [null, [
+        // Validators.required
+      ]],
       buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
@@ -78,27 +146,48 @@ export class NewPinataPageComponent implements OnInit {
     });
   }
 
-  private getPinata(): void {
-    this.pinata$ = this.pinataHttpService.getPinata()
-      .pipe(
-        tap((res) => {
-          this.patchForm('pinata', res[0]);
-        })
-      );
+  private getDefaultValue(data: any): any {
+    return {
+      name: 'Hit the Pinata Template',
+      headlineMessage: 'Tap the Piñata and Win!',
+      subHeadlineMessage: 'Tap the piñata until you get a reward!',
+      buttonText: 'start playing',
+      [ControlsName.pinata]: data.pinata[0],
+      [ControlsName.background]: data.background[0]
+    };
   }
 
-  private getBackgroundData(): void {
-     this.backgrounds$ = this.pinataHttpService.getBackground()
-       .pipe(
-         tap((res) => {
-           this.patchForm('background', res[0]);
-         })
-       );
+  private getPinataData(): Observable<any> {
+    return this.pinataService.getPinataData();
   }
 
-  private patchForm(fieldName: string, value: any): void {
-    this.formPinata.patchValue({
-      [fieldName]: value
-    });
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
+      });
+  }
+
+  private handleRouteParams(): Observable<any> {
+    return this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap(id => this.id = id),
+      switchMap(id => {
+        if (id) {
+          return this.pinataService.getPinata(id);
+        }
+        return of(null);
+      }),
+      tap(pinata => this.checkGameType(pinata))
+    );
+  }
+
+  private checkGameType(pinata): void {
+    if (pinata && pinata.gameType !== 'tap') {
+      console.warn('Wrong type of game!');
+      this.router.navigateByUrl('/engagements');
+    }
   }
 }

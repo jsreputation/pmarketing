@@ -1,7 +1,7 @@
 export enum Role {
-  ADMIN = 'admin',
-  CUSTOMER = 'customer',
-  MANAGER = 'manager',
-  CREATOR = 'creator',
-  VIEWER = 'viewer',
+  ADMIN = 1,
+  CUSTOMER = 3,
+  MANAGER = 4,
+  CREATOR = 2,
+  VIEWER = 5,
 }

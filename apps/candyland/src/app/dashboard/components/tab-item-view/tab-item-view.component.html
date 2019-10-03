@@ -1,9 +1,8 @@
-<div class="tab-item">
-  <p class="tab-item-title">
-    {{data.title}}
-  </p>
-  <p class="tab-item-value">
-    {{data.value}}
-  </p>
-  <div class="linear-border-right"></div>
-</div>
+<dl class="tab-item">
+  <dt class="tab-item-title">
+    {{data?.title}}
+  </dt>
+  <dd class="tab-item-value">
+    {{value | number : fractionSize}}
+  </dd>
+</dl>

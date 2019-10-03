@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IData } from '../data.model';
+import { IData, ChartData } from '../data.model';
 
 @Component({
   selector: 'pc-pie',
@@ -11,20 +11,15 @@ export class PieComponent implements OnChanges {
   @Input()
   public data: Observable<IData>;
 
-  @Input()
-  public view: number[];
-
-  public ngxChartData: any[];
+  public ngxChartData: ChartData[];
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       this.data.subscribe((data: IData) => {
-        this.ngxChartData = data.rows.map((row: any[]) => {
-          return {
+        this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
             name: row[0],
             value: row[1]
-          };
-        });
+          }));
       });
     }
   }

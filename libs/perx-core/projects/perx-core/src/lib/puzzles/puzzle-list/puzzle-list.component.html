@@ -8,7 +8,7 @@
     <div class="puzzle-details">
       <h1>Puzzle #{{indexToLetter(i)}}
         <span class="badge-warn">
-          {{nbPlacedStamps(puzzle)}}/{{puzzle.stamps.length}}
+          {{nbPlacedStamps(puzzle)}}/{{total}}
         </span>
       </h1>
       <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{nbAvailableStamps(puzzle)}} new pieces</p>

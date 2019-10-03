@@ -1,0 +1,26 @@
+@import "variables";
+
+.reward {
+  &-btn-cancel {
+    padding-right: 0.8rem;
+  }
+}
+
+.game {
+  &-selected-graphic {
+    margin-bottom: 4rem;
+    display: flex;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.info-text {
+  font-size: 1.2rem;
+  color: $white;
+  display: block;
+  min-width: 22rem;
+}

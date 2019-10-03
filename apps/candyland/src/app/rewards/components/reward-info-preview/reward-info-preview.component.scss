@@ -1,4 +1,16 @@
+@import "variables";
+
 .new-reward-margin-top {
   margin-top: 3rem;
 }
 
+.image {
+  width: 10.8rem;
+  height: 12.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $gray;
+  object-fit: contain;
+  border-radius: $border-radius;
+}

@@ -8,24 +8,24 @@ import { IStampCard, NotificationService } from '@perx/core';
   styleUrls: ['./puzzles.component.scss']
 })
 export class PuzzlesComponent implements OnInit {
-  campaignId: number = null;
+  public campaignId: number = null;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.campaignId = Number.parseInt(params.get('campaignId'), 10);
     });
   }
 
-  selected(puzzle: IStampCard) {
+  public selected(puzzle: IStampCard): void {
     this.router.navigate([`/puzzle/${this.campaignId}/${puzzle.id}`]);
   }
 
-  completed() {
+  public completed(): void {
     this.notificationService.addPopup({
       // tslint:disable-next-line: max-line-length
       text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'

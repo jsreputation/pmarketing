@@ -1,0 +1,26 @@
+@import "../../custom-theme.scss";
+
+.mat-tab-group {
+  ::ng-deep {
+    .mat-tab-header {
+      background-color: #FFFFFF;
+    }
+
+    .mat-ink-bar {
+      background-color: mat-color($primary) !important;
+    }
+  }
+}
+
+.wrapper {
+  padding: 0 1.6rem;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.3rem;
+  letter-spacing: 0.015rem;
+  margin-top: 2.4rem;
+  margin-bottom: 1.6rem;
+}

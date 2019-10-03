@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvConfig } from '../shared/env-config';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
 import { LoyaltyService } from './loyalty.service';
 import { ILoyalty, ITransaction } from './models/loyalty.model';
+import { Config } from '../config/config';
+
+const DEFAULT_PAGE_COUNT: number = 10;
 
 interface IV4Meta {
   count?: number;
@@ -66,10 +68,10 @@ export class V4LoyaltyService extends LoyaltyService {
 
   constructor(
     private http: HttpClient,
-    config: EnvConfig
+    @Optional() config: Config
   ) {
     super();
-    this.apiHost = config.env.apiHost as string;
+    this.apiHost = config.apiHost as string;
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
@@ -103,7 +105,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public getLoyalties(page: number = 1, pageSize: number = 25): Observable<ILoyalty[]> {
+  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
     return this.http.get<IV4GetLoyaltiesResponse>(
       `${this.apiHost}/v4/loyalty`,
       {
@@ -120,7 +122,10 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id: number): Observable<ILoyalty> {
+  public getLoyalty(id?: number): Observable<ILoyalty> {
+    if (!id) {
+      id = 1;
+    }
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${id}`
     ).pipe(
@@ -128,7 +133,11 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getAllTransactions(loyaltyId: number): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId?: number): Observable<ITransaction[]> {
+    if (!loyaltyId) {
+      loyaltyId = 1;
+    }
+
     const pageSize = 100;
     return this.getTransactions(loyaltyId, 1, pageSize).pipe(
       mergeMap((histories: ITransaction[]) => {
@@ -146,7 +155,7 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 25): Observable<ITransaction[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ITransaction[]> {
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
@@ -167,7 +176,7 @@ export class V4LoyaltyService extends LoyaltyService {
         return res.data;
       }),
       map((loyalty: IV4Loyalty) => loyalty.points_history.map(
-       (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
+        (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
       ))
     );
   }

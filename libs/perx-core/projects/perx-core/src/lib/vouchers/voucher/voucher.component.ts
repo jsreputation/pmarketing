@@ -1,14 +1,14 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { VouchersService } from '../vouchers.service';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { IVoucherService } from '../ivoucher.service';
 import { Observable } from 'rxjs';
-import { IVoucher } from '../models/voucher.model';
+import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 
 @Component({
   selector: 'perx-core-voucher',
   templateUrl: './voucher.component.html',
   styleUrls: ['./voucher.component.scss']
 })
-export class VoucherComponent implements OnChanges {
+export class VoucherComponent implements OnChanges, OnInit {
   @Output() public redeem: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
@@ -26,9 +26,19 @@ export class VoucherComponent implements OnChanges {
   @Input()
   public voucherId: number;
 
+  @Input('voucher')
   public voucher$: Observable<IVoucher>;
 
-  constructor(private vouchersService: VouchersService) { }
+  @Input()
+  public showRedeemedIcon: boolean = false;
+
+  @Input()
+  public mapping?: StatusLabelMapping;
+
+  @Input()
+  public redeemLabelFn: () => string;
+  constructor(private vouchersService: IVoucherService) {
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
@@ -38,5 +48,11 @@ export class VoucherComponent implements OnChanges {
 
   public onClick(): void {
     this.redeem.emit(this.voucherId);
+  }
+
+  public ngOnInit(): void {
+    if (!this.redeemLabelFn) {
+      this.redeemLabelFn = () => 'REDEEM NOW';
+    }
   }
 }

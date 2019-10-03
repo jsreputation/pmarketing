@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Merchant } from '@cl-core/http-adapters/merchant';
 
 @Component({
   selector: 'cl-reward-merchant-item',
@@ -6,12 +7,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrls: ['./reward-merchant-item.component.scss']
 })
 export class RewardMerchantItemComponent {
-  @Input() public merchant = {
-    image: 'assets/images/spin-the-wheel-preview.png',
-    type: 'Starbucks',
-    phone: '+65 9129 8888',
-    category: '40 Branches'
-  };
+  @Input() public merchant: Merchant;
   @Input() public enableActions = false;
   @Output() public deleteMerchant = new EventEmitter<void>();
 

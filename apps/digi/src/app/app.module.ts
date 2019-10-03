@@ -5,10 +5,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   AuthenticationModule,
-  OauthModule, CognitoModule,
-  CampaignModule, GameModule,
+  CampaignModule,
+  GameModule,
   VouchersModule,
-  UtilsModule
+  RewardsModule,
+  MerchantsModule,
+  UtilsModule,
+  ConfigModule,
+  ProfileModule
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 
@@ -19,6 +23,7 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './UserIdInterceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,8 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     LoginComponent,
   ],
   imports: [
+    ConfigModule.forRoot({ ...environment }),
+    ProfileModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -36,16 +43,17 @@ import { httpInterceptorProviders } from './UserIdInterceptor';
     BrowserAnimationsModule,
     UtilsModule,
     MatDialogModule,
-    VouchersModule.forRoot({ env: environment }),
-    CognitoModule.forRoot({ env: environment }),
-    OauthModule.forRoot({ env: environment }),
-    CampaignModule.forRoot({ env: environment }),
-    GameModule.forRoot({ env: environment }),
+    VouchersModule,
+    RewardsModule,
+    MerchantsModule,
     AuthenticationModule,
+    CampaignModule,
+    GameModule,
+    HttpClientModule
   ],
   providers: [
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

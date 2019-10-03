@@ -7,22 +7,23 @@ import { EnlargedQrComponent } from './home/containers/enlarged-qr/enlarged-qr.c
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
 import { RegistrationComponent } from './auth/containers/registration/registration.component';
-import { QrRedemptionComponent } from './wallet/qr-redemption/qr-redemption.component';
-import { CodeRedemptionComponent } from './wallet/code-redemption/code-redemption.component';
 import { SmsValidationComponent } from './auth/containers/sms-validation/sms-validation.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { HistoryComponent } from './history/history.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
-    path: '', component: ContentContainerComponent, children: [
-      {path: '', component: HomeComponent},
+    path: '', canActivate: [ProtectedGuard], component: ContentContainerComponent, children: [
+      { path: '', component: HomeComponent },
       {
         path: 'qr', component: EnlargedQrComponent, data: {
           cross: true,
           backUrl: ''
         }
       },
-      {path: 'wallet', component: WalletComponent},
+      { path: 'history', component: HistoryComponent },
+      { path: 'wallet', component: WalletComponent },
       {
         path: 'wallet/:id', children: [
           {
@@ -33,17 +34,21 @@ const routes: Routes = [
             }
           },
           {
-            path: 'qrcode', component: QrRedemptionComponent, data: {
-              cross: true,
-              backUrl: '../',
-            }
-          },
-          {
-            path: 'code', component: CodeRedemptionComponent, data: {
+            path: 'qrcode',
+            loadChildren: () => import('./wallet/qr-redemption/qr-redemption.module').then(mod => mod.QrRedemptionModule),
+            data: {
               back: true,
               backUrl: '../'
             }
-          }
+          },
+          {
+            path: 'code',
+            loadChildren: () => import('./wallet/code-redemption/code-redemption.module').then(mod => mod.CodeRedemptionModule),
+            data: {
+              back: true,
+              backUrl: '../'
+            }
+          },
         ]
       },
       {
@@ -54,11 +59,27 @@ const routes: Routes = [
       }
     ]
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent},
-  {path: 'sms-validation', component: SmsValidationComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: '**', redirectTo: '/'}
+  {
+    path: 'login',
+    canActivate: [PublicGuard],
+    component: LoginComponent
+  },
+  {
+    path: 'registration',
+    canActivate: [PublicGuard],
+    component: RegistrationComponent
+  },
+  {
+    path: 'sms-validation',
+    canActivate: [PublicGuard],
+    component: SmsValidationComponent
+  },
+  {
+    path: 'forgot-password',
+    canActivate: [PublicGuard],
+    component: ForgotPasswordComponent
+  },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

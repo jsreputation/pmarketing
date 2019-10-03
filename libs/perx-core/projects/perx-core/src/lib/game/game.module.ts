@@ -1,10 +1,21 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { GameService } from './game.service';
-import { EnvConfig } from '../shared/env-config';
+import { HttpClient } from '@angular/common/http';
+import { V4GameService } from './v4-game.service';
 import { ShakeTreeComponent } from './shake-tree/shake-tree.component';
 import { PinataComponent } from './pinata/pinata.component';
+import { Config } from '../config/config';
+import { IGameService } from './igame.service';
+import { WhistlerGameService } from './whist-game.service';
+import { IVoucherService } from '../vouchers/ivoucher.service';
+
+export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: IVoucherService): IGameService {
+  // Make decision on what to instantiate base on config
+  if (config.isWhistler) {
+    return new WhistlerGameService(http, config, vouchSvc);
+  }
+  return new V4GameService(http, config);
+}
 
 @NgModule({
   declarations: [
@@ -12,11 +23,14 @@ import { PinataComponent } from './pinata/pinata.component';
     PinataComponent
   ],
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   providers: [
-    GameService
+    {
+      provide: IGameService,
+      useFactory: gameServiceFactory,
+      deps: [HttpClient, Config, IVoucherService]
+    }
   ],
   exports: [
     ShakeTreeComponent,
@@ -24,16 +38,4 @@ import { PinataComponent } from './pinata/pinata.component';
   ]
 })
 export class GameModule {
-  public static forRoot(config: EnvConfig): ModuleWithProviders {
-    return {
-      ngModule: GameModule,
-      providers: [
-        GameService,
-        {
-          provide: EnvConfig,
-          useValue: config
-        }
-      ],
-    };
-  }
 }

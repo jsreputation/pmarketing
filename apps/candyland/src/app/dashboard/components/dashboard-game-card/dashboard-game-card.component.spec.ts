@@ -9,10 +9,11 @@ describe('DashboardGameCardComponent', () => {
   let component: DashboardGameCardComponent;
   let fixture: ComponentFixture<DashboardGameCardComponent>;
   const testData =   {
-    img: 'assets/images/dashboard-game-card/rewards-icon.png',
+    img: 'assets/images/dashboard/game-card/rewards-icon.png',
     title: 'Rewards',
     description: 'Create reward items to giveaway for your campaigns or display in your catalogue',
-    link: 'Create a Reward'
+    link: 'Create a Reward',
+    name: 'reward'
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({

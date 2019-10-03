@@ -31,7 +31,4 @@ import {
   ]
 })
 export class SeparateRangeDatePickerFilterModule {
-  // constructor(private dateAdapter: DateAdapter<Date>) {
-  //   dateAdapter.setLocale('en');
-  // }
 }

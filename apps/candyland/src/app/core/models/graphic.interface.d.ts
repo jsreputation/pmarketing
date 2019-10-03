@@ -6,4 +6,5 @@ declare interface IGraphic {
   title?: string;
   format?: string;
   description?: string;
+  fullImg?: string;
 }

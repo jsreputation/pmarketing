@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VouchersService } from '@perx/core';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { IVoucherService, Voucher } from '@perx/core';
 
 @Component({
   selector: 'app-voucher',
@@ -9,19 +8,19 @@ import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  firstTime = false;
-  id: number;
-  redeeming = false;
-  voucher: IVoucher;
-  btnTxt = 'Redeem now';
+  public firstTime: boolean = false;
+  public id: number;
+  public redeeming: boolean = false;
+  public voucher: Voucher;
+  public btnTxt: string = 'Redeem now';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private voucherService: VouchersService,
+    private voucherService: IVoucherService,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
     this.voucherService.get(this.id)
@@ -33,7 +32,7 @@ export class VoucherComponent implements OnInit {
       });
   }
 
-  onRedeem() {
+  public onRedeem(): void {
     if (this.voucher.state === 'redeemed') {
       this.router.navigate([`/redemption/${this.id}`]);
     } else {

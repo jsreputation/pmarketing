@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, PopupComponent } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { SnackbarComponent } from './ui/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,20 @@ import { MatDialog } from '@angular/material';
 export class AppComponent implements OnInit {
   public title: string = 'hkbn';
 
-  constructor(private notificationService: NotificationService, private dialog: MatDialog) {
+  constructor(private notificationService: NotificationService, private dialog: MatDialog, private snackbar: MatSnackBar) {
   }
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, {data});
+    });
+
+    this.notificationService.$snack.subscribe((data) => {
+      this.snackbar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: data
+        }
+      });
     });
   }
 }

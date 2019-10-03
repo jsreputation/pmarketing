@@ -1,13 +1,14 @@
+@import "variables";
+
 .range-date-picker {
   display: flex;
   flex-flow: row nowrap;
 
   & > * {
-    margin-right: 1.5rem;
+    margin-right: ($horizontal-padding * 0.5);
 
     &:last-of-type {
       margin-right: 0;
     }
   }
-
 }

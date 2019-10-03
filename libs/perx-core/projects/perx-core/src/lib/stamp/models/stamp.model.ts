@@ -1,3 +1,6 @@
+import { IVoucher } from '../../vouchers/models/voucher.model';
+import { PuzzleCollectReward, PuzzleCollectStamp } from '../../puzzles/models/puzzle-stamp.model';
+
 export interface IReward {
   id: number;
   campaignId: number;
@@ -39,30 +42,35 @@ export interface IStamp {
 }
 
 export interface IStampCard {
+  title?: string; // added
+  subTitle?: string; // added
+  buttonText?: string; // added
   id: number;
-  userAccountId: number;
+  userAccountId?: number; // made optional
   state: StampCardState;
-  campaignId: number;
-  cardNumber: number;
+  campaignId?: number; // made optional
+  cardNumber?: number; // made optional
   campaignConfig: {
     totalSlots: number;
-    rewards: IReward[];
+    rewards?: IReward[];
+    collectionRewards?: PuzzleCollectReward[];
   };
   displayProperties: {
-    numberOfCols: number;
-    numberOfRows: number;
-    cardImage: {
+    numberOfCols?: number; // made optional
+    numberOfRows?: number; // made optional
+    cardImage?: { // made optional
       value: {
         imageUrl: string;
       }
     };
-    totalSlots: number;
+    preStampImg?: string;
+    postStampImg?: string;
+    rewardPreStamp?: string;
+    rewardPostStamp?: string;
+    bgImage?: string;
+    cardBgImage?: string;
+    totalSlots?: number;
   };
+  collectionStamps?: PuzzleCollectStamp[];
   stamps?: IStamp[];
-}
-
-// TODO: Should move this to voucher
-export interface IVoucher {
-  id: string;
-  name: string;
 }

@@ -5,30 +5,38 @@
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
+ * Merchants
+ */
+export { MerchantsModule } from './lib/merchants/merchants.module';
+export { IMerchantsService } from './lib/merchants/imerchants.service';
+
+/**
+ * Merchants Admin
+ */
+export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
+export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
+
+/**
  * Vouchers
  */
 export { VouchersModule } from './lib/vouchers/vouchers.module';
-export { VouchersService } from './lib/vouchers/vouchers.service';
+export { IVoucherService } from './lib/vouchers/ivoucher.service';
+export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, RedemptionType, VoucherState } from './lib/vouchers/models/voucher.model';
-
+export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
+export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 /**
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { CognitoModule } from './lib/auth/whistler/cognito/cognito.module';
-export { OauthModule } from './lib/auth/v4/oauth/oauth.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
-export { CognitoService } from './lib/auth/whistler/cognito/cognito.service';
-export { OauthService } from './lib/auth/v4/oauth/oauth.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
-
+export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
 /**
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { CampaignService } from './lib/campaign/campaign.service';
 export { ICampaignService } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
@@ -58,10 +66,11 @@ export {
   IGameOutcome,
   IPinata,
   ITree,
-  defaultTree
+  defaultTree,
+  IPlayOutcome
 } from './lib/game/game.model';
-export { GameService } from './lib/game/game.service';
-export { IGameComponent } from './lib/game/IGame.component';
+export { IGameService } from './lib/game/igame.service';
+export { IGameComponent } from './lib/game/igame.component';
 
 /**
  * Profile
@@ -70,6 +79,7 @@ export { ProfileModule } from './lib/profile/profile.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
+  ICardNumber,
   ICustomProperties
 } from './lib/profile/profile.model';
 
@@ -90,7 +100,8 @@ export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-s
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
-export { IReward } from './lib/rewards/models/reward.model';
+export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
+export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 /**
  * Utils
@@ -103,7 +114,9 @@ export {
 } from './lib/utils/popup/popup.component';
 export { NotificationService } from './lib/utils/notification/notification.service';
 export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
-
+export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
+export { GeneralStaticDataService } from './lib/utils/general-static-data/general-static-data.service';
+export { ICountryCode } from './lib/utils/general-static-data/country-code';
 /**
  * Puzzles
  */
@@ -120,3 +133,31 @@ export {
 export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
+export { IMerchant } from './lib/merchants/models/merchants.model';
+export { sortByDistance } from './lib/location/sort-by-distance';
+export { GeoLocationService } from './lib/location/geolocation.service';
+
+/**
+ * Survey
+ */
+export { SurveyModule } from './lib/survey/survey.module';
+export { SurveyService } from './lib/survey/survey.service';
+export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+
+/**
+ * Config
+ */
+export { ConfigModule } from './lib/config/config.module';
+export { Config } from './lib/config/config';
+
+/**
+ * Theme
+ */
+export { ITheme } from './lib/utils/themes/themes.model';
+export { ThemesService } from './lib/utils/themes/themes.service';
+/**
+ * Outcome
+ */
+export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
+export { IOutcome } from './lib/outcome/models/outcome.model';
+export { OutcomeModule } from './lib/outcome/outcome.module';

@@ -7,7 +7,8 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
@@ -17,6 +18,10 @@ import { UpdatePhoneComponent } from './containers/update-phone/update-phone.com
 import { ChangePasswordComponent } from './containers/change-password/change-password.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSlideToggleModule } from '@angular/material';
+import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [
@@ -25,12 +30,14 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
     UpdateEmailComponent,
     UpdatePhoneComponent,
     ChangePasswordComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    VerificationOtpComponent
   ],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSlideToggleModule,
     MatCheckboxModule,
     ReactiveFormsModule,
     AccountRoutingModule,
@@ -38,6 +45,9 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
     MatButtonModule,
     MatIconModule,
     ErrorHandlerModule,
+    TranslateModule,
+    UtilsModule,
+    MatSelectModule
   ]
 })
 export class AccountModule {

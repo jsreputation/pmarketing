@@ -12,6 +12,9 @@ import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PuzzlesModule } from '@perx/core';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
 
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
@@ -30,6 +33,8 @@ describe('NewStampPageComponent', () => {
         HttpClientTestingModule,
         BrowserAnimationsModule,
         RouterTestingModule,
+        SimpleMobileViewModule,
+        PuzzlesModule,
 
         MatTabsModule,
         MatCardModule,
@@ -37,7 +42,10 @@ describe('NewStampPageComponent', () => {
         MatInputModule,
         MatSelectModule,
       ],
-      declarations: [ NewStampComponent ]
+      declarations: [ NewStampComponent ],
+      providers: [
+        {provide: LocalStorageService, useValue: {}}
+      ]
     })
     .compileComponents();
   }));

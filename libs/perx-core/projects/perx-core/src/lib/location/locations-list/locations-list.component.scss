@@ -1,12 +1,39 @@
-.links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+h3 {
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  font-weight: 900;
 }
 
-p,
 small {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 1.2rem;
+  line-height: 2.1rem;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 1.6rem;
+
+  a {
+    color: #0f69af;
+    align-self: baseline;
+    text-decoration: none;
+  }
+
+  &-phone {
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+  }
+
+  &-location {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+  }
 }

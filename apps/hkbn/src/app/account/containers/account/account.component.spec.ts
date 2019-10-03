@@ -8,12 +8,15 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfileService } from '@perx/core';
+import { ProfileService, AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -29,10 +32,16 @@ describe('AccountComponent', () => {
         TextMaskModule,
         MatButtonModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
+        MatSlideToggleModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule
       ],
       declarations: [AccountComponent, AccountSummaryComponent],
-      providers: [{provide: ProfileService, useValue: {whoAmI: () => of(null)}}]
+      providers: [
+        {provide: ProfileService, useValue: {whoAmI: () => of(null)}},
+        {provide: AuthenticationService, useValue: {}}
+      ]
     })
       .compileComponents();
   }));

@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule, MatSnackBarModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -28,6 +28,8 @@ import { AudiencesUserInfoComponent } from './components/audiences-user-info/aud
 import { AudiencesUserInfoPageComponent } from './containers/audiences-user-info-page/audiences-user-info-page.component';
 import { AudiencesVouchersListComponent } from './components/audiences-vouchers-list/audiences-vouchers-list.component';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
+import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
+import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,
@@ -65,7 +68,9 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
     UploadFileModule,
     NoDataModule,
     MatTabsModule,
-    DatePickerModule
+    DatePickerModule,
+    SelectRewardPopupModule,
+    PaginationModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

@@ -1,12 +1,18 @@
 <ng-container *ngIf="transactions$ | async as transactions">
-  <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="onScrolledIndexChange()">
-    <div *cdkVirtualFor="let transaction of transactions; trackBy: trackById" class="transaction">
-      <div class="transaction-point">
-          {{transaction.points | transaction}}
+  <div *ngFor="let transaction of transactions" class="transaction">
+    <div class="transaction-info">
+      <div *ngIf="transaction.name" class="transaction-name">
+        {{titleFn(transaction)}}
       </div>
-      <div class="transaction-date">
-        {{transaction.earnedDate | date:"dd/MM/yyyy"}}
+      <div *ngIf="transaction.description" class="transaction-description">
+        {{transaction.description}}
+      </div>
+      <div class="transaction-point">
+        {{transaction.points}} {{priceLabelFn(transaction)}}
       </div>
     </div>
-  </cdk-virtual-scroll-viewport>
+    <div class="transaction-date">
+      {{subTitleFn(transaction)}}
+    </div>
+  </div>
 </ng-container>

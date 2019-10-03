@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { StampRoutingModule } from './stamp-routing.module';
 import { CardComponent } from './card/card.component';
-import { PuzzlesModule } from '@perx/core';
+import { PuzzlesModule, StampModule as PerxStampsModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
 
 @NgModule({
@@ -12,7 +11,8 @@ import { MatButtonModule } from '@angular/material';
     CommonModule,
     PuzzlesModule,
     MatButtonModule,
-    StampRoutingModule
+    StampRoutingModule,
+    PerxStampsModule
   ]
 })
 export class StampModule { }

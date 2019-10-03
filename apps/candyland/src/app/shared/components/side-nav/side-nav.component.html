@@ -6,8 +6,10 @@
       <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
     </mat-toolbar>
     <div class="sidenav-data-container">
-      <cl-user class="cl-user"
+      <cl-user *ngIf="(user$ | async) as user"
+              class="cl-user"
                [isOpen]="isOpen"
+               [user]="user"
       ></cl-user>
     </div>
     <div class="sidenav-menu-wrap">
@@ -19,7 +21,7 @@
               [routerLink]="['/login']"
       >
         <i class="icon logout" matListIcon></i>
-        <span class="btn-text">
+        <span class="btn-text" (click)="logout()">
           Log out
         </span>
       </button>

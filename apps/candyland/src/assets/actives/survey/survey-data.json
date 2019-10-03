@@ -1,0 +1,60 @@
+{
+  "background": [
+    {
+      "id": 1,
+      "type": "bg-1",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-1.png",
+      "fullImg": "global/assets/background/full_bg_1.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "bg-2",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-2.png",
+      "fullImg": "global/assets/background/full_bg_2.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "bg-3",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-3.png",
+      "fullImg": "global/assets/background/full_bg_3.jpg",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "cardBackground": [
+    {
+      "id": 1,
+      "type": "card-bg-1",
+      "title": "icon",
+      "img": "global/assets/card-background/card-bg-1.png",
+      "fullImg": "global/assets/card-background/card-bg-1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "card-bg-2",
+      "title": "icon",
+      "img": "global/assets/card-background/card-bg-2.png",
+      "fullImg": "global/assets/card-background/card-bg-2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "card-bg-3",
+      "title": "icon",
+      "img": "global/assets/card-background/card-bg-3.png",
+      "fullImg": "global/assets/card-background/card-bg-3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ]
+}

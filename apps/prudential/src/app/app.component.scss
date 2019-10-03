@@ -1,8 +1,15 @@
-.toolbar {
+.main-app-container {
   display: flex;
-  position: fixed;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.toolbar {
+  justify-content: space-between;
+  z-index: 800;
+  display: flex;
   height: 6rem;
-  z-index: 4;
   padding: 0 0.8rem;
 }
 
@@ -22,6 +29,7 @@
 }
 
 .mat-drawer-content {
-  padding-top: 6rem;
-  height: calc(100% - 6rem);
+  flex: 1;
+  width: 100%;
+  overflow: scroll;
 }

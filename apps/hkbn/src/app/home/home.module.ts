@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './containers/home/home.component';
 import { LoyaltyModule } from '@perx/core';
 import { QRCodeModule } from 'angularx-qrcode';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import {
-  RewardsModule
+  RewardsModule,
+  VouchersModule
 } from '@perx/core';
 import { EnlargedQrComponent } from './containers/enlarged-qr/enlarged-qr.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HomeComponent, EnlargedQrComponent],
@@ -18,7 +20,10 @@ import { RouterModule } from '@angular/router';
     QRCodeModule,
     MatButtonModule,
     RewardsModule,
-    RouterModule
+    VouchersModule,
+    RouterModule,
+    MatIconModule,
+    TranslateModule
   ],
   exports: [HomeComponent]
 })

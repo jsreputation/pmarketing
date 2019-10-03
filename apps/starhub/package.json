@@ -3,26 +3,31 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build",
-    "build:starhub:prod": "ng build --prod",
+    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
+    "build": "npm run config && ng build",
+    "build:starhub:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && stylelint \"src/**/*.*css\"",
+    "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint ./src/*/*.ts",
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
     "e2e~": "ng e2e"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.0.0",
+    "@angular/cdk": "^8.0.1",
     "@angular/common": "~8.0.0",
     "@angular/compiler": "~8.0.0",
     "@angular/core": "~8.0.0",
     "@angular/forms": "~8.0.0",
-    "@angular/material": "^8.1.2",
+    "@angular/material": "^8.0.1",
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@perx/core": "^0.0.0",
+    "ngx-auth": "^5.0.0",
+    "ngx-multi-line-ellipsis": "^1.0.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -44,9 +49,13 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
-    "ts-node": "~7.0.0",
-    "tslint": "~5.15.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~5.19.0",
     "tslint-consistent-codestyle": "^1.15.1",
-    "typescript": "~3.4.3"
+    "typescript": "~3.4.3",
+    "eslint": "~6.4.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "~2.3.0",
+    "@typescript-eslint/eslint-plugin-tslint": "~2.3.0"
   }
 }

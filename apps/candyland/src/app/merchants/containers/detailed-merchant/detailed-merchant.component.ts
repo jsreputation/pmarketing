@@ -10,7 +10,7 @@ export class DetailedMerchantComponent {
     id: '1',
     firstName: 'Starbucks',
     lastName: 'Lorem',
-    logo: 'assets/images/merchant/merchant.png',
+    logo: 'assets/images/placeholders/merchants/merchant.png',
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
     et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -20,24 +20,24 @@ export class DetailedMerchantComponent {
     phone: '+3555 5556 6666',
     address: '20 Upper Circular Rd, #02-21B Perx Technologies Pte Ltd, The Riverwalk',
     city: 'Singapore',
-    stateProvince: '-',
+    state: '-',
     postalCode: '6786546',
     weblink: 'https://www.starbucks.com.sg/',
     branches: [
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       },
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       },
       {
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
-        contactNumber: '9070 8782'
+        phone: '9070 8782'
       }
     ]
   };

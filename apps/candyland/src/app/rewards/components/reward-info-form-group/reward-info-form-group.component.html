@@ -1,6 +1,8 @@
 <!--image-->
 <div class="card-row new-reward-image-block">
-  <cl-upload-graphic [formControl]="formGroup.get('image')"></cl-upload-graphic>
+  <cl-upload-graphic [formControl]="formGroup.get('image')"
+                     [isRequired]="formGroup.get('image').hasError('required') && formGroup.get('image').touched">
+  </cl-upload-graphic>
 </div>
 <div class="">
   <div class="input-group">
@@ -35,22 +37,22 @@
       <input
         type="number"
         min="0"
-        step="1"
+        step="0.01"
         matInput
         placeholder="Cost of Reward"
         [formControl]="formGroup.get('cost')">
-      <span matSuffix>SGD</span>
+      <span matSuffix>{{currency}}</span>
     </mat-form-field>
   </div>
 </div>
 <!--Description-->
-<mat-form-field appearance="outline">
+<mat-form-field>
         <textarea matInput
                   placeholder="Description"
                   [formControl]="formGroup.get('description')"></textarea>
 </mat-form-field>
 <!--Terms & Condition-->
-<mat-form-field appearance="outline">
+<mat-form-field>
         <textarea matInput
                   placeholder="Terms & Condition"
                   [formControl]="formGroup.get('termsAndCondition')"></textarea>

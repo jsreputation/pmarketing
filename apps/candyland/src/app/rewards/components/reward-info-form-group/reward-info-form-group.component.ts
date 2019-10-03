@@ -8,6 +8,7 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardInfoFormGroupComponent {
+  @Input() public currency: string = 'SGD';
   @Input() public formGroup: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
 }
