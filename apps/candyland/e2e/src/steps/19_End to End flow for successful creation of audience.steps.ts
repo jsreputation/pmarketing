@@ -84,11 +84,7 @@ When(/^9_I click on the add button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the add button to be clickable
   await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(2)), 6000);
-  // removing the dark overlay
-  // await browser.executeScript('document.querySelector(
-    // "div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop.cdk-overlay-backdrop-showing").remove()');
-  // browser.switchTo().frame(element(by.tagName('iframe')).getWebElement());
-  // await browser.switchTo().window(element(by.id('cdk-overlay-3')));
+  // clicking the add button
   await element.all(by.css('cl-button')).get(2).click();
 });
 
