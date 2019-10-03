@@ -35,7 +35,11 @@ export class RewardsService implements ITableService {
     const params = {include: 'organization'};
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getReward(id, httpParams).pipe(
-      map(response => RewardHttpAdapter.transformToReward(response.data))
+      map(response => {
+        const formatData = RewardHttpAdapter.transformToReward(response.data);
+        formatData.merchantName = RewardHttpAdapter.includeOrganization(response.data, response);
+        return formatData;
+      })
     );
   }
 

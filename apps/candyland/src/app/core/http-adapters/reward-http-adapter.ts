@@ -5,18 +5,21 @@ export class RewardHttpAdapter {
   public static transformToTableData(data: any): ITableData<IRewardEntity> {
     const formatData = data.data.map((item) => {
       const formatItem = RewardHttpAdapter.transformToReward(item);
-      const relId = item.relationships.organization.data? item.relationships.organization.data.id : null;
-      if (relId  && data.included && data.included.length) {
-        for (let i = 0; i <= data.included.length - 1; i++) {
-          if (relId === data.included[i].id) {
-            formatItem.merchantName = data.included[i].attributes.name;
-            break;
-          }
-        }
-      }
+      formatItem.merchantName = RewardHttpAdapter.includeOrganization(item, data);
       return formatItem;
     });
     return { data: formatData, meta: data.meta}
+  }
+
+  public static includeOrganization(currentData: any, response: any) {
+    const id = currentData.relationships.organization.data ? currentData.relationships.organization.data.id : null;
+    if (id && response.included && response.included.length) {
+      for (let i = 0; i <= response.included.length - 1; i++) {
+        if (id === response.included[i].id) {
+          return  response.included[i].attributes.name;
+        }
+      }
+    }
   }
 
   public static transformToReward(data: IRewardEntityApi): IRewardEntity {
