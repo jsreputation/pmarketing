@@ -2,6 +2,23 @@ import * as moment from 'moment';
 
 export class RewardHttpAdapter {
   // tslint:disable
+  public static transformToTableData(data: any): ITableData<IRewardEntity> {
+    const formatData = data.data.map((item) => {
+      const formatItem = RewardHttpAdapter.transformToReward(item);
+      const relId = item.relationships.organization.data? item.relationships.organization.data.id : null;
+      if (relId  && data.included && data.included.length) {
+        for (let i = 0; i <= data.included.length - 1; i++) {
+          if (relId === data.included[i].id) {
+            formatItem.merchantName = data.included[i].attributes.name;
+            break;
+          }
+        }
+      }
+      return formatItem;
+    });
+    return { data: formatData, meta: data.meta}
+  }
+
   public static transformToReward(data: IRewardEntityApi): IRewardEntity {
     return {
       id: data.id,
@@ -10,7 +27,7 @@ export class RewardHttpAdapter {
       type: data.type,
       rewardType: data.attributes.reward_type,
       redemptionType: data.attributes.redemption_type,
-      merchantId: data.attributes.organization_id,
+      merchantId: data.attributes.organization_id || null,
       current: data.attributes.cost_of_reward,
       total: 100,
       probability: null,
