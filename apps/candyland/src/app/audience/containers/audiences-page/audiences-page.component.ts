@@ -28,7 +28,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public currentTab: string;
   public tabs: FormControl;
   public search: FormControl;
-  public searchKey = 'primary_identifier';
+  public searchKey = 'query';
   public dataSource: CustomDataSource<IUser>;
   public audiencesDataSource: CustomDataSource<IAudiences>;
   // public users;
