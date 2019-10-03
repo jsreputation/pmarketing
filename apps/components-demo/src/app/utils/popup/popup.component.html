@@ -1,1 +1,46 @@
-<button mat-flat-button (click)="pop()" color="primary">Pop</button>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="fieldInput">
+    title
+    <input
+      formControlName="title"
+      placeholder="title"
+      type="text"
+    />
+  </div>
+
+  <div class="fieldInput">
+    text
+    <input
+      formControlName="text"
+      placeholder="text"
+      type="text"
+    />
+  </div>
+
+  <div class="fieldInput">
+    <mat-checkbox formControlName="disableOverlay"></mat-checkbox>
+    Disable Overlay Close
+  </div>
+
+  <div class="fieldInput">
+      btnText1
+    <input
+      formControlName="btnTxt"
+      placeholder="btnTxt"
+      type="btnTxt"
+    />
+  </div>
+
+  <div class="fieldInput">
+    btnText2
+    <input
+      formControlName="btnTxt2"
+      placeholder="btnTxt2"
+      type="btnTxt2"
+    />
+  </div>
+
+  <button mat-raised-button type="submit">
+    Submit
+  </button>
+</form>
