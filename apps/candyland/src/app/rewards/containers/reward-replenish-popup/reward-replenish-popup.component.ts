@@ -9,7 +9,7 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardReplenishPopupComponent implements OnInit {
-  public replenishVoucherCodes = null;
+  public replenishVoucherCodes: boolean = null;
   public voucherSettings: any;
   public rewardInfo: any;
 

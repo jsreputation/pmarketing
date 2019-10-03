@@ -12,7 +12,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 })
 export class UsersRolesComponent  implements AfterViewInit {
   public dataSource: CustomDataSource<IAMUser>;
-  public hasData = true;
+  public hasData: boolean = true;
   public config: any;
   private groups: any;
 

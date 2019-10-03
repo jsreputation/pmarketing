@@ -14,7 +14,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public isFirstInit: boolean = true;
   public form: FormGroup;
-  public defaultValue = {
+  public defaultValue: {[key: string]: any} = {
     rewardsOptions: {
       enableProbability: false,
       rewards: []
@@ -48,12 +48,10 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
       rewardsOptions: [],
       limits: this.fb.group({
         times: [null, [
-          // Validators.required,
           Validators.min(1),
           Validators.max(60)
         ]],
         duration: [null, [
-          // Validators.required
         ]],
         id: null
       })

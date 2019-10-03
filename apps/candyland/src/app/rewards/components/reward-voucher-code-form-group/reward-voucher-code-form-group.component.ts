@@ -13,7 +13,7 @@ export class RewardVoucherCodeFormGroupComponent {
   @Input() public form: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
 
-  public codeFormatConfig = {
+  public codeFormatConfig: any = {
     alphanumeric: { eg: 'HB1234' },
     numeric: { eg: '123456' },
     alphabet: { eg: 'ABCDEF' }
