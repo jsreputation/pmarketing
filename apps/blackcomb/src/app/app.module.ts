@@ -1,3 +1,4 @@
+import { AccountModule } from './account/account.module';
 import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -38,12 +39,10 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { AccountComponent } from './account/account.component';
 import { HistoryComponent } from './history/history.component';
 import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { TncComponent } from './tnc/tnc.component';
+import { ContentComponent } from './content/content.component';
 import { HttpClientModule } from '@angular/common/http';
 
 const profileServiceStub = {
@@ -58,11 +57,9 @@ const profileServiceStub = {
     RedeemComponent,
     LoadingComponent,
     VoucherDetailComponent,
-    AccountComponent,
     HistoryComponent,
     RewardComponent,
-    ContactUsComponent,
-    TncComponent,
+    ContentComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -72,6 +69,7 @@ const profileServiceStub = {
     VouchersModule,
     AuthenticationModule,
     GameModule,
+    AccountModule,
     ProfileModule,
     BrowserAnimationsModule,
     RewardsModule,
