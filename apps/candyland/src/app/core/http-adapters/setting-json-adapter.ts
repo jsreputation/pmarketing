@@ -1,5 +1,14 @@
 import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany, BelongsTo*/ } from 'angular2-jsonapi';
 import { ApiConfig } from '@cl-core/api-config';
+
+interface AccountPageObject {
+  title: string;
+  content_url: string;
+  key: string;
+}
+interface PagesObject {
+  pages: AccountPageObject[];
+}
 // tslint:disable
 @JsonApiModelConfig({
   type: 'tenants',
@@ -33,6 +42,7 @@ export class Tenants extends JsonApiModel {
     "theme.logo": string,
     "theme.primary": string,
     "theme.title": string,
+    "account": PagesObject
   };
 }
 

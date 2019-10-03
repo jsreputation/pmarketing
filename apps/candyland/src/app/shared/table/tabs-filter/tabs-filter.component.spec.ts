@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabsFilterComponent } from './tabs-filter.component';
@@ -10,7 +11,7 @@ describe('TabsFilterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TabsFilterComponent],
-      imports: [PipesModule]
+      imports: [PipesModule, MatTabsModule]
     })
       .compileComponents();
   }));
