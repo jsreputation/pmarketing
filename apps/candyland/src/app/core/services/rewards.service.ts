@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RewardHttpService } from '@cl-core/http-services/reward-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
@@ -15,17 +16,13 @@ export class RewardsService implements ITableService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
+    params.include = 'organization';
     return this.getRewards(params).pipe(
-      map(response => ({
-          data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
-          meta: response.meta
-        })
-      )
+      map(response => RewardHttpAdapter.transformToTableData(response))
     );
   }
 
   public getRewards(params: HttpParamsOptions): Observable<any> {
-    params.include = 'orgs';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getRewards(httpParams);
   }
@@ -35,13 +32,19 @@ export class RewardsService implements ITableService {
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
-    return this.rewardHttp.getReward(id).pipe(
-      map(response => RewardHttpAdapter.transformToReward(response.data))
+    const params = {include: 'organization'};
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.rewardHttp.getReward(id, httpParams).pipe(
+      map(response => {
+        const formatData = RewardHttpAdapter.transformToReward(response.data);
+        formatData.merchantName = RewardHttpAdapter.includeOrganization(response.data, response);
+        return formatData;
+      })
     );
   }
 
   public getRewardToForm(id: string): Observable<IRewardEntityForm> {
-    return this.rewardHttp.getReward(id).pipe(
+    return this.rewardHttp.getReward(id, {} as HttpParams).pipe(
       map(response => RewardHttpAdapter.transformToRewardForm(response.data))
     );
   }

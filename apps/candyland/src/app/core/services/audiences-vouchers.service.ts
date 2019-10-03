@@ -16,7 +16,8 @@ export class AudiencesVouchersService implements ITableService {
   constructor(
     private audiencesHttpsService: AudiencesHttpsService,
     private rewardsService: RewardsService
-  ) { }
+  ) {
+  }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudienceVoucher>> {
     const httpParams = ClHttpParams.createHttpParams(params);
@@ -33,7 +34,7 @@ export class AudiencesVouchersService implements ITableService {
             return formattedVoucher as IAudienceVoucher;
           });
           return vouchers;
-        }),
+        })
       );
   }
 
@@ -41,7 +42,7 @@ export class AudiencesVouchersService implements ITableService {
     const requests = idList.map(id => this.rewardsService.getReward(id));
     return requests.length === 0 ? of({}) : combineLatest(requests)
       .pipe(
-        map(rewards => Utils.convertArrToObj(rewards, 'id')),
+        map(rewards => Utils.convertArrToObj(rewards, 'id'))
       );
   }
 
