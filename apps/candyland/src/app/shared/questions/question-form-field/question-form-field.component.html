@@ -11,9 +11,14 @@
       ></cl-question-type>
 
       <div class="question-text-field__wrap">
+      <div class="messages-wrap">
+          <p class="sub-title">
+            Question
+          </p>
+        </div>
         <div class="control-input">
           <mat-form-field class="messages-input" >
-            <input type="text" [placeholder]="'Type your question'" matInput formControlName="question">
+            <input id="question" type="text" floatLabel="never" [placeholder]="'Type your question'" matInput formControlName="question">
             <mat-hint align="end">{{question.value?.length || 0}}/128</mat-hint>
             <mat-error *ngIf="question.hasError('required')">Required field</mat-error>
             <mat-error *ngIf="question.hasError('minlength')">Min length 1</mat-error>
