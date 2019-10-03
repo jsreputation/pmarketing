@@ -16,7 +16,7 @@ export class EngagementsHttpsService {
   }
 
   public getEngagement(id: string, type: string): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.get<IResponseApi<IEngagementApi>>(`${ApiConfig.engagementsPath}/${type}/${id}`);
+    return this.http.get<IResponseApi<IEngagementApi>>(`${ApiConfig.basePath}/${type}/engagements/${id}`);
   }
 
   public getEngagementType(): Observable<IGraphic[]> {

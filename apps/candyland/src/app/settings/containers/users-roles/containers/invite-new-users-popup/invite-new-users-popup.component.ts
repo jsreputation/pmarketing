@@ -51,7 +51,7 @@ export class InviteNewUsersPopupComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, [
         Validators.required,
-        Validators.minLength(15),
+        Validators.minLength(5),
         Validators.maxLength(50)]
       ],
       email: [null, [

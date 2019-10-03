@@ -210,7 +210,6 @@ app.post(BASE_HREF + 'themes', async (req, res, next) => {
         }
       }
     );
-
     res.json(endpointRequest.data);
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
