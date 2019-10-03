@@ -5,6 +5,11 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { GameComponent } from './game/game.component';
 import { ShakeComponent } from './game/shake/shake.component';
 import { TapComponent } from './game/tap/tap.component';
+import { HistoryComponent } from './history/history.component';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material';
+import { GameModule } from '../game/game.module';
+import { VouchersModule } from '../vouchers/vouchers.module';
 
 export const components = [
     AccountComponent,
@@ -12,10 +17,14 @@ export const components = [
 ];
 
 @NgModule({
-    declarations: [...components, GameComponent, ShakeComponent, TapComponent],
+    declarations: [...components, GameComponent, ShakeComponent, TapComponent, HistoryComponent],
     exports: [...components],
     imports: [
-        RouterModule
+        RouterModule,
+        CommonModule,
+        MatProgressBarModule,
+        GameModule,
+        VouchersModule
     ]
 })
 export class PagesModule { }

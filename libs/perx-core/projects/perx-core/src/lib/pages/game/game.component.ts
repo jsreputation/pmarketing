@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-// import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount } from 'rxjs/operators';
 import { Observable, interval, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material';
