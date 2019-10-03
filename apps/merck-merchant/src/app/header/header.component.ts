@@ -9,13 +9,13 @@ import { Location } from '@angular/common';
 export class HeaderComponent implements OnInit {
 
   @Input()
-  public showBackButton = false;
+  public showBackButton: boolean = false;
 
-  constructor(private location: Location){}
+  constructor(private location: Location) {}
 
   public ngOnInit(): void {}
 
   public onLeftActionClick(): void {
     this.location.back();
-  } 
+  }
 }
