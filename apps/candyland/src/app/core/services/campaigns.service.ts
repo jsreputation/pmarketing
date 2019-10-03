@@ -51,8 +51,7 @@ export class CampaignsService implements ITableService {
         map(response => {
           delete response.data.id;
           delete response.data.links;
-          delete response.data.attributes.goal;
-          delete response.data.attributes.status;
+          delete response.data.relationships;
           delete response.data.attributes.created_at;
           delete response.data.attributes.updated_at;
           delete response.data.attributes.urn;
