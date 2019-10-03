@@ -14,10 +14,10 @@ import { UserService } from '@cl-core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  public dateRange = new FormControl();
+  public dateRange: FormControl = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
   public userName$: string;
-  public navLinks = [
+  public navLinks: {path: string, label: string}[] = [
     {
       path: 'overview',
       label: 'Overview'

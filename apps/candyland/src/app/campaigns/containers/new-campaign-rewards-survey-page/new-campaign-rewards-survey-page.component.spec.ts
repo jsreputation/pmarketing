@@ -20,6 +20,7 @@ import { StepConditionService } from '../../services/step-condition.service';
 import { BehaviorSubject } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CampaignsMobilePreviewComponent } from '../../components/campaigns-mobile-preview/campaigns-mobile-preview.component';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 

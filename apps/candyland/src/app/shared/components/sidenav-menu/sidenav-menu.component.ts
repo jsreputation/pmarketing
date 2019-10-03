@@ -7,6 +7,6 @@ import { menus } from './menu-elements';
 })
 export class SidenavMenuComponent {
   @Input() public isOpen: boolean;
-  public menus = menus;
+  public menus: IMenu[] = menus;
 
 }

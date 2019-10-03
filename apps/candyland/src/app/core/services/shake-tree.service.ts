@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IGameGifts } from '../../engagements/games/containers/new-shake-page/shared/models/game-gifts.model';
 import { ShakeHttpService } from '@cl-core/http-services/shake-http.service';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 
@@ -13,12 +12,7 @@ export class ShakeTreeService {
   constructor(private shakeHttpService: ShakeHttpService) {
   }
 
-  public getData(): Observable<{
-    gameNumberGift: IGameGifts[],
-    gamesTree: IGraphic[],
-    giftBox: IGraphic[],
-    'background': IGraphic[]
-  }> {
+  public getData(): Observable<IGameDefaultData> {
     return this.shakeHttpService.getData();
   }
 

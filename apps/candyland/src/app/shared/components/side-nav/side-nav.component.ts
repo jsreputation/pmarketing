@@ -7,7 +7,7 @@ import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
 
-export function fnTransition(stateChangeExpr, time): any {
+export function fnTransition(stateChangeExpr: string, time: string): any {
   return transition(stateChangeExpr, [
     animate(time)
   ]);
@@ -41,12 +41,12 @@ export function fnTransition(stateChangeExpr, time): any {
   ]
 })
 export class SideNavComponent implements OnInit {
-  @Input() public isVisible = true;
+  @Input() public isVisible: boolean = true;
   public user$: Observable<IamUser>;
-  public isOpen = true;
-  public visibility = 'shown';
-  public sideNavOpened = true;
-  public sideNavMode = 'side';
+  public isOpen: boolean = true;
+  public visibility: string = 'shown';
+  public sideNavOpened: boolean = true;
+  public sideNavMode: string = 'side';
 
   constructor(private authService: AuthService,
               private userService: UserService) {

@@ -9,11 +9,11 @@ export class StepConditionService {
     this.stepConditions[key.toString()] = form;
   }
 
-  public getStepCondition(key): boolean {
+  public getStepCondition(key: string): boolean {
     return key in this.stepConditions ? this.stepConditions[key].valid : false;
   }
 
-  public getStepFormValue(key): boolean {
+  public getStepFormValue(key: string): boolean {
     return key in this.stepConditions ? this.stepConditions[key].value : {};
   }
 

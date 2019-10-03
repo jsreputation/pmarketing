@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 })
 export class SmsEditorComponent {
   @Input() public options: OptionConfig;
-  @Input() public control = new FormControl('');
+  @Input() public control: FormControl = new FormControl('');
 
   public selectShortCode(value: string): void {
     const newValue = this.control.value + ` ${value} `;

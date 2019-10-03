@@ -20,15 +20,15 @@ export class EngagementsService {
 
   public getEngagement(id: string, type: string): Observable<IEngagement> {
     return this.http.getEngagement(id, type).pipe(
-        map((res: any) => EngagementHttpAdapter.transformEngagementHandler(res.data)),
+        map((res: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagementHandler(res.data)),
       );
   }
 
-  public getEngagementType(): Observable<any> {
+  public getEngagementType(): Observable<IGraphic[]> {
     return this.http.getEngagementType();
   }
 
-  public getGamesType(): Observable<any> {
+  public getGamesType(): Observable<IGraphic[]> {
     return this.http.getGamesType();
   }
 }

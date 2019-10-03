@@ -13,7 +13,7 @@ import { combineLatest, of, Observable } from 'rxjs';
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
-  public campaign;
+  public campaign: any;
 
   constructor(
     private store: CampaignCreationStoreService,

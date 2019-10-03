@@ -5,7 +5,6 @@ import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
-import { IGameGifts } from './shared/models/game-gifts.model';
 import {
   AvailableNewEngagementService, RoutingStateService, SettingsService, ShakeTreeService
 } from '@cl-core/services';
@@ -25,12 +24,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public id: string;
   public form: FormGroup;
-  public shakeTreeData: {
-    gameNumberGift: IGameGifts[],
-    gamesTree: IGraphic[],
-    giftBox: IGraphic[],
-    background: IGraphic[]
-  };
+  public shakeTreeData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
 
   public selectGiftBox: IGraphic;
@@ -118,10 +112,10 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return  this.shakeTreeService.updateShakeTree(this.id, {...this.form.value as IInstantRewardForm, image_url: imageUrl.url});
+            return  this.shakeTreeService.updateShakeTree(this.id, {...this.form.value as IShakeTreeForm, image_url: imageUrl.url});
           }
           return this.shakeTreeService
-            .createShakeTree({...this.form.value as IInstantRewardForm, image_url: imageUrl.url})
+            .createShakeTree({...this.form.value as IShakeTreeForm, image_url: imageUrl.url})
             .pipe(map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
             tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
             );
@@ -169,11 +163,11 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getData(): Observable<any> {
+  private getData(): Observable<IGameDefaultData> {
     return this.shakeTreeService.getData();
   }
 
-  private getDefaultValue(data: any): any {
+  private getDefaultValue(data: IGameDefaultData): IShakeTreeForm {
     return {
       name: 'Shake the Tree Template',
       headlineMessage: 'Tap the tree and Win!',
@@ -182,7 +176,8 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       [ControlsName.background]: data.background[0],
       [ControlsName.giftBox]: data.giftBox[0],
       [ControlsName.treeType]: data.gamesTree[0],
-      [ControlsName.gameGift]: data.gameNumberGift[0].value
+      [ControlsName.gameGift]: data.gameNumberGift[0].value,
+      image_url: null
     };
   }
 
@@ -194,7 +189,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handleRouteParams(): Observable<any> {
+  private handleRouteParams(): Observable<IShakeTree | null> {
     return this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),

@@ -11,26 +11,8 @@ export class StampHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getStampsData(): Observable<{
-    number: CommonSelect[],
-    slotNumber: CommonSelect[],
-    cardBackground: IGraphic[],
-    rewardPost: IGraphic[],
-    stampsPost: IGraphic[],
-    rewardPreStamp: IGraphic[],
-    preStamp: IGraphic[],
-    backgroundStamp: IGraphic[],
-  }> {
-    return this.http.get<{
-      number: CommonSelect[],
-      slotNumber: CommonSelect[],
-      cardBackground: IGraphic[],
-      rewardPost: IGraphic[],
-      stampsPost: IGraphic[],
-      rewardPreStamp: IGraphic[],
-      preStamp: IGraphic[],
-      backgroundStamp: IGraphic[],
-    }>('assets/actives/stamps/stamps-data.json');
+  public getStampsData(): Observable<IStampsDefaultValue> {
+    return this.http.get<IStampsDefaultValue>('assets/actives/stamps/stamps-data.json');
   }
 
   public createStamp(data: IJsonApiItem<any>): Observable<IResponseApi<IEngagementApi>> {
