@@ -7,7 +7,14 @@ import { ShakeComponent } from './game/shake/shake.component';
 import { TapComponent } from './game/tap/tap.component';
 import { HistoryComponent } from './history/history.component';
 import { CommonModule } from '@angular/common';
-import { MatProgressBarModule, MatCardModule, MatProgressSpinnerModule, MatFormFieldModule } from '@angular/material';
+import { 
+    MatProgressBarModule, 
+    MatCardModule, 
+    MatProgressSpinnerModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatButtonModule 
+} from '@angular/material';
 import { GameModule } from '../game/game.module';
 import { VouchersModule } from '../vouchers/vouchers.module';
 import { HomeComponent } from './home/home.component';
@@ -24,6 +31,9 @@ import { PuzzlesModule } from '../puzzles/puzzles.module';
 import { SurveyModule } from '../survey/survey.module';
 import { TncComponent } from './tnc/tnc.component';
 import { VoucherDetailPageComponent } from './voucher-detail-page/voucher-detail-page.component';
+import { CampaignModule } from '../campaign/campaign.module';
+import { OutcomeModule } from '../outcome/outcome.module';
+import { StampModule } from '../stamp/stamp.module';
 
 export const components = [
     AccountComponent,
@@ -37,11 +47,15 @@ export const components = [
     LoadingComponent,
     LoginComponent,
     RedeemComponent,
-    RewardDetailPageComponent
+    RewardDetailPageComponent,
+    StampCardComponent,
+    SurveyPageComponent,
+    TncComponent,
+    VoucherDetailPageComponent
 ];
 
 @NgModule({
-    declarations: [...components, StampCardComponent, SurveyPageComponent, TncComponent, VoucherDetailPageComponent],
+    declarations: [...components],
     exports: [...components],
     imports: [
         RouterModule,
@@ -56,7 +70,12 @@ export const components = [
         FormsModule,
         ReactiveFormsModule,
         PuzzlesModule,
-        SurveyModule
+        SurveyModule,
+        MatInputModule,
+        CampaignModule,
+        OutcomeModule,
+        StampModule,
+        MatButtonModule
     ]
 })
 export class PagesModule { }

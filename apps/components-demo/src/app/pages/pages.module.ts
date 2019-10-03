@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatInputModule } from '@angular/material';
 import { PagesModule as PerxPagesModule } from '@perx/core';
 
 @NgModule({
@@ -12,13 +12,8 @@ import { PagesModule as PerxPagesModule } from '@perx/core';
     CommonModule,
     PagesRoutingModule,
     MatTabsModule,
-    PerxPagesModule
-  ],
-  providers: [
-    {
-        provide: APP_BASE_HREF,
-        useValue: 'pages/what'
-    }
-]
+    PerxPagesModule,
+    MatInputModule
+  ]
 })
 export class PagesModule { }
