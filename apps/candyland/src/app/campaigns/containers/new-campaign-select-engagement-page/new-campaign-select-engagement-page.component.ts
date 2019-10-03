@@ -11,6 +11,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ILimit, ICampaign } from '@perx/whistler';
 import { ActivatedRoute } from '@angular/router';
+import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -112,7 +113,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         if (campaignData && campaignData.engagement_id && this.isFirstInit) {
           this.isFirstInit = false;
           const engagementId = campaignData.engagement_id.toString();
-          const findTemplate = res.find(template => template.id === engagementId);
+          const findTemplate = res.find(template =>
+            template.id === engagementId && template.attributes_type === EngagementTypeFromAPIMapping[campaignData.engagement_type]);
           this.getLimits(campaignData, findTemplate);
           this.template.patchValue(findTemplate);
         }

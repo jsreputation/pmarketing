@@ -2,7 +2,6 @@ import { RewardsService } from './../../../core/services/rewards.service';
 import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
@@ -31,12 +30,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        this.campaign = data;
-      });
     this.getCampaignData();
   }
 
