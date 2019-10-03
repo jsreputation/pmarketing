@@ -18,4 +18,8 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
     throw new Error(`redeemVoucher Method not implemented.`);
   }
 
+  // @ts-ignore
+  public issueVoucher(id: number): Observable<IVoucher> {
+    throw new Error(`issueVoucher Method not implemented.`);
+  }
 }

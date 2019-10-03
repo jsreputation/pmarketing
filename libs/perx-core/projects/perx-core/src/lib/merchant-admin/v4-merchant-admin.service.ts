@@ -244,4 +244,18 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
       );
   }
+
+  public issueVoucher(id: number): Observable<IVoucher> {
+
+    // TODO: use the following url once API is created
+    // @ts-ignore
+    const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
+
+    return this.http.get<IV4RedeemVoucherResponse>(
+      'assets/issue.json'
+      ).pipe(
+        map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
+      );
+  }
+
 }
