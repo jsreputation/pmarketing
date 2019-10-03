@@ -18,17 +18,17 @@
       </div>
     </mat-card>
     <!--limits-->
-    <mat-card class="card" *ngIf="campaign?.limits?.times && campaign?.limits?.duration">
+    <mat-card class="card" *ngIf="campaign?.limits">
       <div class="card-header">
         <p class="card-title">Play Limits</p>
       </div>
       <div class="card-content">
         <div class="card-row stretch">
-          <div>
+          <div *ngIf="campaign?.limits?.times">
             <label class="card-label">Limit per user</label>
             <p class="card-value">{{campaign?.limits?.times}} time{{campaign?.limits?.times > 1 ? 's' : ''}}</p>
           </div>
-          <div>
+          <div *ngIf="campaign?.limits?.duration">
             <label class="card-label">Limit per duration</label>
             <p class="card-value">{{campaign?.limits?.duration}}</p>
           </div>
