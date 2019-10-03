@@ -15,7 +15,7 @@ export class LoadingComponent implements OnInit {
     private authService: AuthenticationService,
     private campaignSvc: ICampaignService
   ) {
-  
+
   }
   public ngOnInit(): void {
     // if (this.preAuth && isPlatformBrowser(this.platformId) && (window as any).primaryIdentifier) {
@@ -33,10 +33,10 @@ export class LoadingComponent implements OnInit {
   public redirectAfterLogin(): void {
     const campaignId = (window as any).campaignId;
     this.campaignSvc.getCampaign(campaignId)
-    .subscribe(({type}) => {
-      this.router.navigateByUrl(
-        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`
-      );
-    });
+      .subscribe(({ type }) => {
+        this.router.navigateByUrl(
+          this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`
+        );
+      });
   }
 }
