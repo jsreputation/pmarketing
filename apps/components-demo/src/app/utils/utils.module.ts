@@ -7,7 +7,7 @@ import { UtilsModule as PerxCoreUtilsModule } from '@perx/core';
 import { RouterModule } from '@angular/router';
 import { UtilsRoutingModule } from './utils-routing.module';
 import { PopupComponent } from './popup/popup.component';
-import { MatTabsModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatTabsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 
 @NgModule({
   declarations: [PinInputComponent, UtilsComponent, PopupComponent],
@@ -19,6 +19,8 @@ import { MatTabsModule, MatButtonModule, MatCheckboxModule } from '@angular/mate
     MatButtonModule,
     MatTabsModule,
     MatCheckboxModule,
+    MatInputModule,
+    MatFormFieldModule,
     ReactiveFormsModule
   ]
 })

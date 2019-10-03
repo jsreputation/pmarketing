@@ -1,46 +1,50 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-  <div class="fieldInput">
-    title
-    <input
+  <mat-form-field class="fieldInput">
+    <mat-label>Title</mat-label>
+    <input matInput
       formControlName="title"
       placeholder="title"
       type="text"
     />
-  </div>
+    <mat-error *ngIf="title.hasError('required')">Required field</mat-error>
+  </mat-form-field>
 
-  <div class="fieldInput">
-    text
-    <input
+  <mat-form-field class="fieldInput">
+    <mat-label>Text</mat-label>
+    <input matInput
       formControlName="text"
       placeholder="text"
       type="text"
     />
-  </div>
+    <mat-error *ngIf="text.hasError('required')">Required field</mat-error>
+  </mat-form-field>
 
   <div class="fieldInput">
     <mat-checkbox formControlName="disableOverlay"></mat-checkbox>
     Disable Overlay Close
   </div>
 
-  <div class="fieldInput">
-      btnText1
-    <input
+  <mat-form-field class="fieldInput">
+    <mat-label>ButtonText 1</mat-label>
+    <input matInput
       formControlName="btnTxt"
       placeholder="btnTxt"
       type="btnTxt"
     />
-  </div>
+    <mat-error *ngIf="btnTxt.hasError('required')">Required field</mat-error>
+  </mat-form-field>
 
-  <div class="fieldInput">
-    btnText2
-    <input
+  <mat-form-field class="fieldInput">
+    <mat-label>ButtonText 2</mat-label>
+    <input matInput
       formControlName="btnTxt2"
       placeholder="btnTxt2"
       type="btnTxt2"
     />
-  </div>
+    <mat-error *ngIf="btnTxt2.hasError('required')">Required field</mat-error>
+  </mat-form-field>
 
-  <button mat-raised-button type="submit">
+  <button [disabled]="form.invalid" mat-raised-button type="submit">
     Submit
   </button>
 </form>

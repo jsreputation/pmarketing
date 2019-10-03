@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NotificationService } from '@perx/core';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-popup',
@@ -9,6 +9,23 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 })
 export class PopupComponent {
   public form: FormGroup;
+
+  public get title(): AbstractControl {
+    return this.form.get('title');
+  }
+
+  public get text(): AbstractControl {
+    return this.form.get('text');
+  }
+
+  public get btnTxt(): AbstractControl {
+    return this.form.get('btnTxt');
+  }
+
+  public get btnTxt2(): AbstractControl {
+    return this.form.get('btnTxt2');
+  }
+
   constructor(private notificationService: NotificationService, private fb: FormBuilder) {
     const regexp = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
 
@@ -17,9 +34,9 @@ export class PopupComponent {
       text: ['', Validators.required],
       btnTxt: ['', [Validators.required, Validators.maxLength(10)]],
       btnTxt2: ['', [Validators.required, Validators.maxLength(10)]],
-      disableOverlay: ['', Validators.required],
+      disableOverlay: [''],
       imageUrl: ['https://picsum.photos/300/300', [Validators.required, Validators.pattern(regexp)]],
-    }, {updateOn: 'blur'});
+    });
   }
   public onSubmit({title, text, disableOverlay, btnTxt, btnTxt2, imageUrl}: any): void {
     // open model
@@ -36,14 +53,3 @@ export class PopupComponent {
   }
 
 }
-// disableOverlayClose
-
-// title
-
-// text
-
-// buttonTxt
-
-// imageUrl (use a default image)
-
-// buttonTxt2
