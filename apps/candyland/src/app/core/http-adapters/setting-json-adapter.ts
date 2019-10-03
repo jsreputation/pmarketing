@@ -33,7 +33,7 @@ export class Tenants extends JsonApiModel {
   display_properties: {
     "time_zone": string,
     "theme.color": string,
-    "currency": any,
+    "currency": string,
     "theme.style": string,
     "theme.accent": string,
     "theme.button_text_color": string,
