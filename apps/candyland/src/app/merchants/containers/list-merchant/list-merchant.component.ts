@@ -35,7 +35,7 @@ export class ListMerchantComponent implements OnDestroy {
       .pipe(
         untilDestroyed(this),
         filter(Boolean),
-        switchMap((updatedMerchant: Merchant) => {
+        switchMap((updatedMerchant: IMerchantForm) => {
           if (merchant) {
             return this.merchantService.updateMerchant(merchant.id, updatedMerchant);
           }

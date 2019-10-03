@@ -20,14 +20,14 @@ export class LimitsHttpsService {
 
   public updateLimits(
     id: string,
-    data: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    data: IJsonApiPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
     engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.patch<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits` + '/' + id, data);
   }
 
   public createLimits(
-    data: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    data: IJsonApiPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
     engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.post<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits`, data);

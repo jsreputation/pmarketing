@@ -29,7 +29,7 @@ export class MerchantsService implements ITableService {
     return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
   }
 
-  public createMerchant(data: Merchant): Observable<number> {
+  public createMerchant(data: IMerchantForm): Observable<number> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     let request = this.merchantHttpService.createMerchant({ data: sendData });
     if ('branches' in data && data.branches && data.branches.length > 0) {
@@ -55,7 +55,7 @@ export class MerchantsService implements ITableService {
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
 
-  public updateMerchant(id: string, data: Merchant): Observable<any> {
+  public updateMerchant(id: string, data: IMerchantForm): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     sendData.id = id;
     let request$ = this.merchantHttpService.updateMerchant(id, { data: sendData });

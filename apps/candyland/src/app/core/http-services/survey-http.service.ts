@@ -39,11 +39,11 @@ export class SurveyHttpService {
     return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: IJsonApiItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public createSurvey(data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: IJsonApiItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public updateSurvey(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 }

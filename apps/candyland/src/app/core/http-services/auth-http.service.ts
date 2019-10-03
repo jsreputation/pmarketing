@@ -10,7 +10,7 @@ export class AuthHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public signIn(data: IJsonApiPayload<ILogin>): Observable<HttpResponse<IJsonApiPayload<ILoginApi>>> {
+  public signIn(data: IJsonApiItem<ILogin>): Observable<HttpResponse<IJsonApiPayload<ILoginApi>>> {
     return this.http.post<IJsonApiPayload<ILoginApi>>(ApiConfig.signIn, {data}, {observe: 'response'});
   }
 

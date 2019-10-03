@@ -12,4 +12,5 @@ declare interface IMerchantForm {
   postalCode: string;
   weblink: string;
   branches?: any;
+  deletedBranches?: any;
 }

@@ -11,11 +11,11 @@ export class MerchantHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public createMerchant(data: IJsonApiItem<any>): Observable<any> {
+  public createMerchant(data: IJsonApiPayload<any>): Observable<any> {
     return this.http.post<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs', data);
   }
 
-  public updateMerchant(id: string, data: IJsonApiItem<any>): Observable<any> {
+  public updateMerchant(id: string, data: IJsonApiPayload<any>): Observable<any> {
     return this.http.patch<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs/' + id, data);
   }
 
@@ -23,11 +23,11 @@ export class MerchantHttpService {
     return this.http.delete<IResponseApi<any>>(ApiConfig.merchantsPath + '/orgs/' + id);
   }
 
-  public createMerchantBranch(data: IJsonApiItem<any>): Observable<IResponseApi<any>> {
+  public createMerchantBranch(data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.post<IResponseApi<any>>(ApiConfig.merchantsPath + '/branches', data);
   }
 
-  public updateMerchantBranch(id: string, data: IJsonApiItem<any>): Observable<IResponseApi<any>> {
+  public updateMerchantBranch(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.patch<IResponseApi<any>>(ApiConfig.merchantsPath + '/branches/' + id, data);
   }
 
