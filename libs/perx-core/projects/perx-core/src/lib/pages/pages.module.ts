@@ -22,6 +22,8 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyPageComponent } from './survey-page/survey-page.component';
 import { PuzzlesModule } from '../puzzles/puzzles.module';
 import { SurveyModule } from '../survey/survey.module';
+import { TncComponent } from './tnc/tnc.component';
+import { VoucherDetailPageComponent } from './voucher-detail-page/voucher-detail-page.component';
 
 export const components = [
     AccountComponent,
@@ -39,7 +41,7 @@ export const components = [
 ];
 
 @NgModule({
-    declarations: [...components, StampCardComponent, SurveyPageComponent],
+    declarations: [...components, StampCardComponent, SurveyPageComponent, TncComponent, VoucherDetailPageComponent],
     exports: [...components],
     imports: [
         RouterModule,
