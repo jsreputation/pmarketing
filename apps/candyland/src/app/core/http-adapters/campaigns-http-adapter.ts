@@ -1,9 +1,14 @@
 import * as moment from 'moment';
-import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { EngagementTypeAPIMapping, EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
+import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaignTableData {
+    const eType = data.attributes.engagement_type ?
+      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
+      : '';
     return {
       id: data.id,
       name: data.attributes.name,
@@ -12,8 +17,14 @@ export class CampaignsHttpAdapter {
       end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
       audience: data.attributes.pool_id,
       goal: data.attributes.goal,
-      engagementType: data.attributes.engagement_type
+      engagementType: eType
     };
+  }
+
+  public static EngagementTypePipeTransform(value: string): string {
+    return value.split('_')
+      .map(w => `${w.substring(0, 1).toLocaleUpperCase()}${w.substring(1).toLocaleLowerCase()}`)
+      .join(' ');
   }
 
   public static transformTableData(data: any): ITableData<ICampaignTableData> {
@@ -23,7 +34,7 @@ export class CampaignsHttpAdapter {
     }
   }
 
-  public static transformAPIResponseToCampaign(data: ICampaignAPI): ICampaign {
+  public static transformAPIResponseToCampaign(data: IJsonApiItem<ICampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
       id: data.id,
@@ -32,9 +43,9 @@ export class CampaignsHttpAdapter {
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : new Date(),
+        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
         startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
-        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : new Date(),
+        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : null,
         endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
@@ -48,7 +59,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): ICampaignAPI {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<ICampaignAttributes> {
     const possible_outcomes = data.rewardsOptions.rewards.map(
       reward => ({ result_id: reward.value ? reward.value.id : '', result_type: 'reward', probability: reward.probability / 100 })
     ).filter(outcomes => outcomes.result_id);

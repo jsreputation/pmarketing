@@ -5,12 +5,10 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { LoginComponent } from './login/login.component';
 import { HistoryComponent } from './history/history.component';
-import { AccountComponent } from './account/account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { RewardComponent } from './reward/reward.component';
-import { TncComponent } from './tnc/tnc.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { ContentComponent } from './content/content.component';
 
 const routes: Routes = [
   {
@@ -19,10 +17,12 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'loading' },
       { path: 'wallet', component: HomeComponent, canActivate: [ProtectedGuard] },
       { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
-      { path: 'account', component: AccountComponent, canActivate: [ProtectedGuard] },
       { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
-
+      {
+        path: 'account', loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
+        , canActivate: [ProtectedGuard]
+      },
       {
         path: 'stamp/:id',
         loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
@@ -45,8 +45,7 @@ const routes: Routes = [
       },
       { path: 'reward-detail', component: RewardComponent, canActivate: [ProtectedGuard] },
       { path: 'loading', component: LoadingComponent },
-      { path: 'tnc', component: TncComponent },
-      { path: 'contact-us', component: ContactUsComponent }
+      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard]},
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },

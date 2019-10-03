@@ -135,12 +135,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     if (data === null) {
       return;
     }
-    const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
-    if ('rewards' in data && data.rewards) {
-      for (let i = 0; i < data.rewards.length; i++) {
-        this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
-      }
-    }
+
     this.group.patchValue(data, { emitEvent: false });
     this.group.updateValueAndValidity();
     this.cd.detectChanges();
