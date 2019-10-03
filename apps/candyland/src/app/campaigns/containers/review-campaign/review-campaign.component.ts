@@ -75,16 +75,16 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
               })
           ),
           switchMap(campaign => {
-            const params: HttpParamsOptions = {
+            const limitParams: HttpParamsOptions = {
               'filter[campaign_entity_id]': campaign.id
             };
             const eType = EngagementTypeFromAPIMapping[campaign.engagement_type];
             return combineLatest(
               of(campaign),
               this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-              this.limitsService.getLimits(params, eType).pipe(map(limits => limits[0])),
+              this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0])),
               this.getRewards(campaign.rewardsList)
-            )
+            );
           }),
           map(([campaign, engagement, limits, rewards]) => ({
             ...campaign,
