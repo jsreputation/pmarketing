@@ -1,11 +1,14 @@
 import * as moment from 'moment';
-import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { EngagementTypeAPIMapping, EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
 import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
 
 export class CampaignsHttpAdapter {
   // tslint:disable
   public static transformToCampaign(data: any): ICampaignTableData {
+    const eType = data.attributes.engagement_type ?
+      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
+      : '';
     return {
       id: data.id,
       name: data.attributes.name,
@@ -14,8 +17,14 @@ export class CampaignsHttpAdapter {
       end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
       audience: data.attributes.pool_id,
       goal: data.attributes.goal,
-      engagementType: data.attributes.engagement_type
+      engagementType: eType
     };
+  }
+
+  public static EngagementTypePipeTransform(value: string): string {
+    return value.split('_')
+      .map(w => `${w.substring(0, 1).toLocaleUpperCase()}${w.substring(1).toLocaleLowerCase()}`)
+      .join(' ');
   }
 
   public static transformTableData(data: any): ITableData<ICampaignTableData> {
