@@ -83,7 +83,6 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((val) => {
-        console.log('update rewards campaign update trigger');
         this.store.updateCampaign(val);
       });
   }
