@@ -27,4 +27,8 @@ export class CampaignsListPageComponent {
       .subscribe(() => this.dataSource.updateData());
   }
 
+  public openReport(url: string): void {
+    this.router.navigateByUrl(url);
+  }
+
 }

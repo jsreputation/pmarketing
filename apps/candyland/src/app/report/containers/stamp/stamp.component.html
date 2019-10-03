@@ -1,0 +1,30 @@
+<article class="report-page">
+  <cl-report-header [title]="data.title"
+                    (closePage)="onClose()"
+  ></cl-report-header>
+
+  <mat-card class="card full-width report-info-block">
+    <div class="height-line"></div>
+    <div class="card-content">
+      <div class="card-row">
+        <div class="report-info" *ngFor="let info of data.summaryInfo">
+          <p class="report-info-title">
+            {{info.title}}
+          </p>
+          <p class="report-info-value">
+            {{info.value}}
+          </p>
+        </div>
+
+        <cl-button (click)="onClose()"
+                   classList="primary"
+        >
+      <span>
+        Download Report
+      </span>
+        </cl-button>
+      </div>
+    </div>
+  </mat-card>
+
+</article>
