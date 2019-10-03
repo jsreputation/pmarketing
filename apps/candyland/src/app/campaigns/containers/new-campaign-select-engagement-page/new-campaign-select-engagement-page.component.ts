@@ -20,9 +20,9 @@ import { ActivatedRoute } from '@angular/router';
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
-  public dataSource = new MatTableDataSource<IEngagement>();
-  public defaultSearchValue = null;
-  public defaultTypeValue = null;
+  public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
+  public defaultSearchValue: any = null;
+  public defaultTypeValue: any = null;
   public typeFilterConfig: OptionConfig[];
   public isFirstInit: boolean = true;
 

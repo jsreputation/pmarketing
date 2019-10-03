@@ -17,7 +17,7 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
     {name: 'issuedRewards', id: 147, title: 'Total Issued Rewards'},
     {name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns'}
   ];
-  public tabsValue;
+  public tabsValue: any;
 
   public get tabsIds(): number[] {
     return this.tabs.map(tab => tab.id);
