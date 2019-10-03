@@ -34,6 +34,7 @@ export class AudiencesHttpAdapter {
       relationships: {
         pools: {
           data: data.pools
+
         }
       }
     };
@@ -86,7 +87,7 @@ export class AudiencesHttpAdapter {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IUserApi) => {
       const formatedUser = AudiencesHttpAdapter.transformUser(item);
-      formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
+      formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).sort().join(', ');
       return formatedUser
     });
     return {
