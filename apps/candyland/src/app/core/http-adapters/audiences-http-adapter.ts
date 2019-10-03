@@ -2,12 +2,12 @@ import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiPostData<IUserApi> {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
     return {
       type: 'users', attributes: {
         title: data.firstName + ' ' + data.lastName, first_name: data.firstName, last_name: data.lastName,
         phone_number: data.phone, email_address: data.email, primary_identifier: data.firstName + 'identifier',
-        properties: '',
+        properties: ''
       }, relationships: {
         pools: {
           data: data.audienceList
@@ -16,9 +16,12 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUpdateUserPools(data: IUser): IJsonApiPatchData<any> {
+  public static transformUpdateUserPools(data: IUser): IJsonApiItem<any> {
     return {
-      type: data.type, id: data.id, relationships: {
+      type: data.type,
+      id: data.id,
+      attributes: {},
+      relationships: {
         pools: {
           data: data.pools
         }
@@ -51,28 +54,31 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformAudiencesVoucher(data: IAssignedAttributes ): IAudienceVoucher {
+  public static transformAudiencesVoucher(data: IJsonApiItem<IAssignedAttributes>): Partial<IAudienceVoucher> {
     return {
       id: data.id,
-      batchId: data.attributes.batch_id,
       endDate: data.attributes.end_date,
-      rewardId: data.attributes.source_id,
+      rewardId: data.attributes.source_id.toString(),
       issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.start_date),
-      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date), status: data.attributes.status,
+      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date), status: data.attributes.status
     };
   }
 
-  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiPostData<IAssignRequestAttributes> {
+  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IAssignRequestAttributes> {
     return {
-      type: 'assigneds', attributes: {
-        source_id: source, source_type: 'Perx::Reward::Entity', assigned_to_id: assigned
+      type: 'assigneds',
+      attributes: {
+        source_id: source,
+        source_type: 'Perx::Reward::Entity',
+        assigned_to_id: assigned
       }
     };
   }
 
-  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiPatchData<IAssignedAttributes> {
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IAssignedAttributes>> {
     return {
-      id, type: 'assigneds', attributes: {
+      id, type: 'assigneds',
+      attributes: {
         end_date: endData
       }
     };
@@ -80,11 +86,19 @@ export class AudiencesHttpAdapter {
 
   private static transformUser(data: IJsonApiItem<IUserApi>): IUser {
     return {
-      id: data.id, type: data.type, self: data.links.self, urn: data.attributes.urn,
-      created_at: data.attributes.created_at, updated_at: data.attributes.updated_at, title: data.attributes.title,
-      first_name: data.attributes.first_name, last_name: data.attributes.last_name,
-      phone_number: data.attributes.phone_number, email_address: data.attributes.email_address,
-      primary_identifier: data.attributes.primary_identifier, pools: ''
+      id: data.id,
+      type: data.type,
+      self: data.links.self,
+      urn: data.attributes.urn,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      title: data.attributes.title,
+      first_name: data.attributes.first_name,
+      last_name: data.attributes.last_name,
+      phone_number: data.attributes.phone_number,
+      email_address: data.attributes.email_address,
+      primary_identifier: data.attributes.primary_identifier,
+      pools: ''
     };
   }
 

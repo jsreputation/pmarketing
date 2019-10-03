@@ -27,15 +27,15 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiPostData<any>): Observable<IJsonApiPayload<IUserApi>> {
+  public createUser(data: IJsonApiPayload<any>): Observable<IJsonApiPayload<IUserApi>> {
     return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers, { data });
   }
 
-  public updateUser(id: string, data: IJsonApiPostData<any>): Observable<IJsonApiPayload<IUserApi>> {
+  public updateUser(id: string, data: IJsonApiPayload<any>): Observable<IJsonApiPayload<IUserApi>> {
     return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
-  public updateUserPools(data: IJsonApiPatchData<any>): Observable<IJsonApiListPayload<IPoolsApi>> {
+  public updateUserPools(data: IJsonApiPayload<any>): Observable<IJsonApiListPayload<IPoolsApi>> {
     return this.http.patch<IJsonApiListPayload<IPoolsApi>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
   }
 
@@ -43,11 +43,11 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { params });
   }
 
-  public voucherAssigned(data: IJsonApiPostData<IAssignRequestAttributes>): Observable<IJsonApiListPayload<IAssignedAttributes>> {
+  public voucherAssigned(data: IJsonApiPayload<IAssignRequestAttributes>): Observable<IJsonApiListPayload<IAssignedAttributes>> {
     return this.http.post<IJsonApiListPayload<IAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { data });
   }
 
-  public updateVoucherExpiry(data: IJsonApiPatchData<IAssignedAttributes>): Observable<IJsonApiItem<IAssignedAttributes>> {
+  public updateVoucherExpiry(data: IJsonApiPayload<IAssignedAttributes>): Observable<IJsonApiItem<IAssignedAttributes>> {
     return this.http.patch<IJsonApiItem<IAssignedAttributes>>(`${ApiConfig.vouchersAssignedPath}/${data.id}`, { data });
   }
 }

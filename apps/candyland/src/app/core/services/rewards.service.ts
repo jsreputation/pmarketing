@@ -17,14 +17,15 @@ export class RewardsService implements ITableService {
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
     return this.getRewards(params).pipe(
       map(response => ({
-        data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
-        meta: response.meta
-      })
+          data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
+          meta: response.meta
+        })
       )
     );
   }
 
   public getRewards(params: HttpParamsOptions): Observable<any> {
+    params.include = 'orgs';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getRewards(httpParams);
   }
@@ -47,17 +48,17 @@ export class RewardsService implements ITableService {
 
   public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
-    return this.rewardHttp.createReward({ data: sendData });
+    return this.rewardHttp.createReward({data: sendData});
   }
 
   public duplicateReward(data: IRewardEntity): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromReward(data);
-    return this.rewardHttp.createReward({ data: sendData });
+    return this.rewardHttp.createReward({data: sendData});
   }
 
   public updateReward(id: string, data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
     sendData.id = id;
-    return this.rewardHttp.updateReward(id, { data: sendData });
+    return this.rewardHttp.updateReward(id, {data: sendData});
   }
 }

@@ -26,7 +26,7 @@ export class ShakeHttpService {
     }>('assets/actives/shake-tree/data.json');
   }
 
-  public createShakeTree(data: IJsonApiPostItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public createShakeTree(data: IJsonApiItem<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
   }
 

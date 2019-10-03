@@ -18,7 +18,7 @@ export class VouchersHttpService {
     return this.http.get<any>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
-  public createVoucher(data: IJsonApiPostItem<any>): Observable<any> {
+  public createVoucher(data: IJsonApiItem<any>): Observable<any> {
     return this.http.post<any>(ApiConfig.voucherBatchPath, data);
   }
 }

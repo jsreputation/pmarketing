@@ -1,6 +1,6 @@
 declare interface IAudienceVoucher {
   id: string;
-  batchId: string;
+  batchId?: string;
   endDate: string;
   rewardId: string;
   issuedDate: Date | null;

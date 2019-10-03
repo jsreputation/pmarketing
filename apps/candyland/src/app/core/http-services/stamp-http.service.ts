@@ -33,7 +33,7 @@ export class StampHttpService {
     }>('assets/actives/stamps/stamps-data.json');
   }
 
-  public createStamp(data: IJsonApiPostItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public createStamp(data: IJsonApiItem<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.stampsPath + '/', data);
   }
 

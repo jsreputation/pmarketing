@@ -5,7 +5,6 @@ import { CommsHttpsService } from '@cl-core/http-services/comms-https.service';
 import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
 import { ICommTemplateAttributes, IComm, ICommEventAttributes } from '@perx/whistler';
-import { IJsonApiListPayload, IJsonApiItem } from '@cl-core/http-services/jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'

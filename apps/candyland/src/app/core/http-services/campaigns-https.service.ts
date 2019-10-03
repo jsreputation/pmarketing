@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IJsonApiListPayload, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from './jsonapi.payload';
 import { ICampaignAttributes, ICampaign } from '@perx/whistler';
 
 @Injectable({
@@ -16,16 +15,16 @@ export class CampaignsHttpsService {
     return this.http.get<IJsonApiListPayload<ICampaignAttributes>>(ApiConfig.campaignsPath, { params });
   }
 
-  public getCampaign(id: string): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
-    return this.http.get<IJsonApiItemPayload<ICampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
+  public getCampaign(id: string): Observable<IJsonApiPayload<ICampaignAttributes>> {
+    return this.http.get<IJsonApiPayload<ICampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: string, data: IJsonApiPatchItem<ICampaign>): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<ICampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
+  public updateCampaign(id: string, data: IJsonApiPayload<ICampaign>): Observable<IJsonApiPayload<ICampaignAttributes>> {
+    return this.http.patch<IJsonApiPayload<ICampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
-  public createCampaign(data: IJsonApiPostItem<ICampaignAttributes>): Observable<IJsonApiItemPayload<ICampaignAttributes>> {
-    return this.http.post<IJsonApiItemPayload<ICampaignAttributes>>(ApiConfig.campaignsPath, data);
+  public createCampaign(data: IJsonApiPayload<ICampaignAttributes>): Observable<IJsonApiPayload<ICampaignAttributes>> {
+    return this.http.post<IJsonApiPayload<ICampaignAttributes>>(ApiConfig.campaignsPath, data);
   }
 
   public deleteCampaign(id: string): Observable<any> {
