@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  public isHidden: boolean = false;
+  public isHidden: boolean = true;
 
   protected preAuth: boolean;
 
