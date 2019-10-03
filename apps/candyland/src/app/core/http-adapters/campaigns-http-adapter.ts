@@ -34,9 +34,9 @@ export class CampaignsHttpAdapter {
       engagement_type: campaignData.engagement_type,
       campaignInfo: {
         goal: campaignData.goal,
-        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : new Date(),
+        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
         startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
-        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : new Date(),
+        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : null,
         endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
