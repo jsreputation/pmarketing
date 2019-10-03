@@ -97,7 +97,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         ).subscribe(
           campaign => {
             this.campaign = campaign;
-            console.log(this.campaign);
             this.store.updateCampaign(this.campaign);
           },
           (err) => console.log(err)
