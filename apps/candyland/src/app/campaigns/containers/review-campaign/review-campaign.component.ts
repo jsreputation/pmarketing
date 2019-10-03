@@ -1,5 +1,5 @@
 import { RewardsService } from './../../../core/services/rewards.service';
-import { CampaignsService, EngagementsService, CommsService, OutcomesService } from '@cl-core/services';
+import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
 import { IComm, ICampaign, IOutcome } from '@perx/whistler';
+import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -23,6 +24,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
+    private limitsService: LimitsService,
     private engagementsService: EngagementsService,
     private route: ActivatedRoute
   ) {
@@ -72,14 +74,22 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 rewardsList: outcomes
               })
           ),
-          switchMap(campaign => combineLatest(
-            of(campaign),
-            this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-            this.getRewards(campaign.rewardsList)
-          )),
-          map(([campaign, engagement, rewards]) => ({
+          switchMap(campaign => {
+            const params: HttpParamsOptions = {
+              'filter[campaign_entity_id]': campaign.id
+            };
+            const eType = EngagementTypeFromAPIMapping[campaign.engagement_type];
+            return combineLatest(
+              of(campaign),
+              this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+              this.limitsService.getLimits(params, eType).pipe(map(limits => limits[0])),
+              this.getRewards(campaign.rewardsList)
+            )
+          }),
+          map(([campaign, engagement, limits, rewards]) => ({
             ...campaign,
             template: engagement,
+            limits,
             rewardsOptions: {
               rewards
             }
