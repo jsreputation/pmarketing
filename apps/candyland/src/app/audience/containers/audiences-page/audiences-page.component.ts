@@ -31,9 +31,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public searchKey = 'query';
   public dataSource: CustomDataSource<IUser>;
   public audiencesDataSource: CustomDataSource<IAudiences>;
-  // public users;
-  // public audiences;
-  // public currentFilter;
+
   public tabsFilterConfig: OptionConfig[] = [
     { title: 'Users', value: 'users' },
     { title: 'Audience List', value: 'audience' }
@@ -104,7 +102,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
         break;
       case 'users':
       default:
-        this.searchKey = 'primary_identifier';
+        this.searchKey = 'query';
         this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
     }
     this.currentTab = tab;
