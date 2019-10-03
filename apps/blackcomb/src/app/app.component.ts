@@ -58,7 +58,8 @@ export class AppComponent implements OnInit {
           '/redeem',
           '/tnc',
           '/contact-us',
-          '/reward-detail'
+          '/reward-detail',
+          '/c'
         ];
         // if current url starts with any of the above segments, use arrow_backward
         this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
