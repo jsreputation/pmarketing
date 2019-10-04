@@ -10,7 +10,7 @@ export class ImagesPreviewComponent {
   @Input() public img: IGraphic;
   @Input() public selected: any;
   @Output() public selectPreview: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
-  public apiCdnPath = ApiConfig.apiCdnPath;
+  public apiCdnPath: string = ApiConfig.apiCdnPath;
 
   public handlerClick(): void {
     this.selectPreview.emit(this.img);

@@ -7,7 +7,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 export class AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
-  public campaign;
+  public campaign: any;
 
   constructor(
     public stepIndex: number,

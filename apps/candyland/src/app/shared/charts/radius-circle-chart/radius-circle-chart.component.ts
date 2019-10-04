@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./radius-circle-chart.component.scss']
 })
 export class RadiusCircleChartComponent {
-  @Input() public imgPath = 'radius-circle-chart.png';
+  @Input() public imgPath: string = 'radius-circle-chart.png';
 
 }

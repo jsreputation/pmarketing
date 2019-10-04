@@ -3,6 +3,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 import { CampaignsService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { ICampaignTableData } from '@perx/whistler';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -14,7 +15,7 @@ export class CampaignsListPageComponent {
   public dataSource: CustomDataSource<ICampaignTableData>;
   public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
 
-  constructor(private campaignsService: CampaignsService, private router: Router) {
+  constructor(private campaignsService: CampaignsService, private router: Router, private snack: MatSnackBar) {
     this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService);
   }
 
@@ -24,7 +25,11 @@ export class CampaignsListPageComponent {
 
   public duplicateCampaign(campaign: ICampaignTableData): void {
     this.campaignsService.duplicateCampaign(campaign.id)
-      .subscribe(() => this.dataSource.updateData());
+      .subscribe(
+        () => this.dataSource.updateData(),
+        () => {
+          this.snack.open('Duplication failed, please try again.', 'x', { duration: 2000 });
+        });
   }
 
 }

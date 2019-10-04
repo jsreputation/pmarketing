@@ -22,3 +22,13 @@
 
   @include macaronStyles();
 }
+
+.card-description {
+  width: 85%;
+
+  h1, h2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

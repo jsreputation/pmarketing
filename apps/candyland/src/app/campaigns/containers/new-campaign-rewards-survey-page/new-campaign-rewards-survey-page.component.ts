@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -14,7 +15,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public isFirstInit: boolean = true;
   public form: FormGroup;
-  public defaultValue = {
+  public defaultValue: {[key: string]: any} = {
     rewardsOptions: {
       enableProbability: false,
       rewards: []
@@ -29,7 +30,8 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
     public cd: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
     super(1, store, stepConditionService, cd);
     this.initForm();
@@ -48,26 +50,28 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
       rewardsOptions: [],
       limits: this.fb.group({
         times: [null, [
-          // Validators.required,
           Validators.min(1),
           Validators.max(60)
         ]],
         duration: [null, [
-          // Validators.required
         ]],
         id: null
       })
     });
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && this.isFirstInit;
-        if (isFirstTimeRenderFromAPIResponse) {
-          this.isFirstInit = false;
-          this.form.patchValue(data);
-        }
-      });
-    this.form.patchValue(this.defaultValue);
+    if (this.route.snapshot.params.id) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.times && this.isFirstInit;
+          if (isFirstTimeRenderFromAPIResponse) {
+            this.isFirstInit = false;
+            const limitsData = Object.assign({}, data);
+            this.form.patchValue(limitsData);
+          }
+        });
+    } else {
+      this.form.patchValue(this.defaultValue);
+    }
   }
 }
