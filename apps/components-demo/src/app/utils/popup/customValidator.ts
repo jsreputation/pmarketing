@@ -1,5 +1,5 @@
 export class CustomValidators {
-  static urlValidator(url: any): any {
+  public static urlValidator(url: any): any {
     if (url.pristine) {
       return null;
     }
