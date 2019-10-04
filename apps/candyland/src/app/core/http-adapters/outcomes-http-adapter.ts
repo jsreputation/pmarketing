@@ -1,5 +1,4 @@
 import { IOutcomeAttributes, IOutcome } from '@perx/whistler';
-import { IJsonApiItem } from '@cl-core/http-services/jsonapi.payload';
 
 export class OutcomesHttpAdapter {
   public static transformAPIResponseToOutcome(data: IJsonApiItem<IOutcomeAttributes>): IOutcome {

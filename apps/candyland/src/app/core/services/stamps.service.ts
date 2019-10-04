@@ -12,20 +12,11 @@ export class StampsService {
   constructor(private stampHttpService: StampHttpService) {
   }
 
-  public getStampsData(): Observable<{
-    number: CommonSelect[],
-    slotNumber: CommonSelect[],
-    cardBackground: IGraphic[],
-    rewardPost: IGraphic[],
-    stampsPost: IGraphic[],
-    rewardPreStamp: IGraphic[],
-    preStamp: IGraphic[],
-    backgroundStamp: IGraphic[],
-  }> {
+  public getStampsData(): Observable<IStampsDefaultValue> {
     return this.stampHttpService.getStampsData();
   }
 
-  public getStamp(id: string): Observable<any> {
+  public getStamp(id: string): Observable<Partial<IStampsEntityForm>> {
     return this.stampHttpService.getStamp(id).pipe(
       map(response => EngagementHttpAdapter.transformStampForm(response.data))
     );

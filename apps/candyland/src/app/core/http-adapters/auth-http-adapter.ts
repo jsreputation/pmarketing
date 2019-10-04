@@ -1,6 +1,5 @@
 export class AuthHttpAdapter {
-    // tslint:disable
-    public static transformFromLogin(data: any): ILogin {
+    public static transformFromLogin(data: ILogin): IJsonApiItem<ILogin> {
         return {
             attributes: {
                 account_id: data.account_id,

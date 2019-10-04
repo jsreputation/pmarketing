@@ -45,7 +45,7 @@ export class AuthService {
       );
   }
 
-  public signIn(data: any): Observable<any> {
+  public signIn(data: ILogin): Observable<IJsonApiPayload<ILoginApi>> {
     const sendData = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap(res => {

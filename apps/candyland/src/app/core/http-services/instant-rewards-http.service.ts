@@ -11,14 +11,8 @@ export class InstantRewardsHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getRewardData(): Observable<{
-    background: IGraphic[],
-    cardBackground: IGraphic[]
-  }> {
-    return this.http.get<{
-      background: IGraphic[],
-      cardBackground: IGraphic[]
-    }>('assets/actives/reward/reward-data.json');
+  public getRewardData(): Observable<IRewardDefaultValue> {
+    return this.http.get<IRewardDefaultValue>('assets/actives/reward/reward-data.json');
   }
 
   public createRewardGame(data: any): Observable<IResponseApi<IEngagementApi>> {

@@ -14,7 +14,7 @@ import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagem
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
-  public campaign;
+  public campaign: any;
 
   constructor(
     private store: CampaignCreationStoreService,
