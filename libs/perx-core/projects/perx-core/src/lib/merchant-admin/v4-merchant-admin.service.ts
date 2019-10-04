@@ -233,14 +233,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public redeemVoucher(id: number): Observable<IVoucher> {
-
-    // TODO: use the following url once API is created
-    // @ts-ignore
     const url = `${this.config.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
 
-    return this.http.get<IV4RedeemVoucherResponse>(
-      'assets/redeem.json'
-      ).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
         map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
       );
   }
