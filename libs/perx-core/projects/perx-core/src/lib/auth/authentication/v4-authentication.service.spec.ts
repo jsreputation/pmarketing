@@ -8,7 +8,7 @@ import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
 import { LocalTokenStorage } from './local-token-storage.service';
 
-function fakeFactory() {
+function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
 }
 
@@ -31,9 +31,9 @@ describe('V4AuthenticationService', () => {
       imports: [
         HttpClientTestingModule,
         ProfileModule,
-        ConfigModule.forRoot({...environment})
+        ConfigModule.forRoot({ ...environment })
       ],
-      providers: [{provide: TokenStorage, useFactory: fakeFactory}]
+      providers: [{ provide: TokenStorage, useFactory: fakeFactory }]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(V4AuthenticationService);
