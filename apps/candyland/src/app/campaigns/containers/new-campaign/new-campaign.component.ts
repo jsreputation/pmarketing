@@ -22,7 +22,7 @@ import { IComm, IOutcome, ICampaign } from '@perx/whistler';
 export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
-  public campaign;
+  public campaign: any;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
@@ -133,7 +133,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getDialogData(campaign): { title: string, subTitle: string, type?: string } {
+  private getDialogData(campaign: any): { title: string, subTitle: string, type?: string } {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     switch (type) {
       case 'sms':

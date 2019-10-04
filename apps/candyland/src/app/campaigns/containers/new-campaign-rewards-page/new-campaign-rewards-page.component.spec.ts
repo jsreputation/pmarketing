@@ -4,6 +4,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 import { NewCampaignRewardsPageComponent } from './new-campaign-rewards-page.component';
+// tslint:disable
 import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import {

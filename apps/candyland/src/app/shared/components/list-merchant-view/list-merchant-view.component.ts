@@ -13,10 +13,11 @@ export class ListMerchantViewComponent implements AfterViewInit {
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Input() public dataSource: CustomDataSource<Merchant>;
   @Input() public displayedColumns: string[] = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
-  @Input() public selectable = false;
-  @Output() public itemAction = new EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: Merchant }>();
+  @Input() public selectable: boolean = false;
+  @Output() public itemAction: EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: Merchant }>
+    = new EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: Merchant }>();
   @Output() public selectedMerchant: EventEmitter<Merchant> = new EventEmitter<Merchant>();
-  @Output() public clickDetail = new EventEmitter<Merchant>();
+  @Output() public clickDetail: EventEmitter<Merchant> = new EventEmitter<Merchant>();
   public selected: Merchant;
 
   public ngAfterViewInit(): void {

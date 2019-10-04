@@ -33,7 +33,7 @@ import { noop } from 'rxjs';
 })
 export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
   // TODO: integrate when global settings are implemented
-  public config = {
+  public config: any = {
     ruleType: [
       {title: 'Transaction', value: 'transaction'},
       {title: 'First login', value: 'First login'},
@@ -55,7 +55,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
       {title: 'Product C', value: 'productC'}
     ]
   };
-  @Input() public currencyID = 'SGD';
+  @Input() public currencyID: string = 'SGD';
   @Input() public group: FormGroup;
   private onChange: any = noop;
   // @ts-ignore

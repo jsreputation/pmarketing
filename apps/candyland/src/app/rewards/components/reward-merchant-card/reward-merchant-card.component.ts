@@ -6,8 +6,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class RewardMerchantCardComponent {
   // @Input() public selected: 'select' | 'create' | null;
-  @Output() public selectMerchant = new EventEmitter<void>();
-  @Output() public createMerchant = new EventEmitter<void>();
+  @Output() public selectMerchant: EventEmitter<void> = new EventEmitter<void>();
+  @Output() public createMerchant: EventEmitter<void> = new EventEmitter<void>();
 
   public clickSelectMerchant(): void {
     this.selectMerchant.emit();

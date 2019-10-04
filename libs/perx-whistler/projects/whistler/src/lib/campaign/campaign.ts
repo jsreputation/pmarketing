@@ -53,6 +53,7 @@ export interface ICampaignTableData {
 }
 
 export interface ICampaignAttributes {
+    id?: string;
     name: string;
     created_at?: string;
     updated_at?: string;
