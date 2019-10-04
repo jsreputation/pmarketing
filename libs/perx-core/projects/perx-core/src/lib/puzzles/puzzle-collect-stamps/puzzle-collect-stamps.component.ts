@@ -22,6 +22,9 @@ export class PuzzleCollectStampsComponent implements OnChanges {
   private stamps: PuzzleCollectStamp[] | null = [];
 
   @Input()
+  public showStampsCounter: boolean = true;
+
+  @Input()
   private rewards: PuzzleCollectReward[] = [];
 
   @Input()
@@ -43,10 +46,13 @@ export class PuzzleCollectStampsComponent implements OnChanges {
   private availableStampClicked: EventEmitter<PuzzleCollectStamp> = new EventEmitter<PuzzleCollectStamp>();
 
   public currentActiveOrientation: number[] = null;
-
+  public availStamps: number = 0;
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.nbSlots) {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
+    }
+    if (changes.stamps) {
+      this.availStamps = this.stamps.filter(stamp => stamp.state === 'issued').length;
     }
   }
 

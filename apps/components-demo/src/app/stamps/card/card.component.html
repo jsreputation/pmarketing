@@ -18,9 +18,7 @@
     #nbStampsRedeemed
   ></mat-slider>
 </div>
-<div class="stampsLeft">
-  <span>{{availStamps}} stamps<mat-icon>local_activity</mat-icon> left</span>
-</div>
+<mat-checkbox name="toggler" (click)="toggleShow()">Show stamps left</mat-checkbox>
 <perx-core-puzzle-collect-stamps
   [nbSlots]="nbSlots.value"
   [stamps]="stamps"
@@ -29,6 +27,7 @@
   [rewardPreStamp]="'assets/stamps/pre_reward.png'"
   [rewardPostStamp]="'assets/stamps/post_reward.png'"
   [rewards]="rewardArr"
+  [showStampsCounter]="showCounter"
 >
 </perx-core-puzzle-collect-stamps>
 
