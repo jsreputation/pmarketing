@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, combineLatest } from 'rxjs';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap, combineLatest } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-content-page',
