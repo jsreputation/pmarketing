@@ -15,7 +15,7 @@ export class PaginatorComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator, {static: false}) public paginator: MatPaginator;
 
-  private componentActive = true;
+  private componentActive: boolean = true;
 
   public ngAfterViewInit(): void {
     this.checkExistAndHandling();

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AvailableNewEngagementService {
-  private newEngagementSubject = new BehaviorSubject<IEngagement>(null);
+  private newEngagementSubject: BehaviorSubject<IEngagement> = new BehaviorSubject<IEngagement>(null);
 
   public setNewEngagement(engagement: IEngagement): void {
     this.newEngagementSubject.next(engagement);

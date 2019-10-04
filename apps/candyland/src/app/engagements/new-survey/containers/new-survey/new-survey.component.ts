@@ -28,10 +28,10 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public surveyQuestionType: IEngagementType[];
   public surveyData: any;
-  public level = 0;
+  public level: number = 0;
   public subHeadlineMaxLength: number = 250;
 
-  public questionData$ = new Subject();
+  public questionData$: Subject<any> = new Subject();
   public tenantSettings: ITenantsProperties;
 
   public get listDropConnectedTo(): string[] {
@@ -220,7 +220,6 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.form = NewSurveyForm.getForm();
-    // this.addQuestion(SurveyQuestionType.rating);
   }
 
   private getSurveyData(): any {

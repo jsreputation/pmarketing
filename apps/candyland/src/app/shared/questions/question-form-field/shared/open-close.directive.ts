@@ -6,13 +6,13 @@ import { QuestionFormFieldService } from 'src/app/shared/questions/question-form
 })
 export class OpenCloseDirective {
   private index: any;
-  @Input() public set clOpenClose(val) {
+  @Input() public set clOpenClose(val: number) {
     this.index = val;
   }
 
   constructor(private questionFormFieldService: QuestionFormFieldService) { }
 
-  @HostListener('click', ['$event']) public onClick(e): void {
+  @HostListener('click', ['$event']) public onClick(e: Event): void {
     e.stopPropagation();
     this.questionFormFieldService.focusedElem = this.index;
   }

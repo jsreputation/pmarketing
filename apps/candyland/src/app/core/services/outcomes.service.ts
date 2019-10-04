@@ -5,7 +5,6 @@ import { OutcomesHttpsService } from '@cl-core/http-services/outcomes-https.serv
 import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
 import { IOutcomeAttributes, IOutcome } from '@perx/whistler';
-import { IJsonApiListPayload, IJsonApiItem } from '@cl-core/http-services/jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'

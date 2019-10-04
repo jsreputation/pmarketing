@@ -10,7 +10,7 @@ import { AuthService } from '@cl-core-services';
 })
 export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
-  public hide = true;
+  public hide: boolean = true;
   constructor(
     private fb: FormBuilder,
     private router: Router,

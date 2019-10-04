@@ -23,16 +23,16 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class SidenaveMenuItemComponent {
-  @Input() public menu;
+  @Input() public menu: IMenu;
   @Input() public isOpen: boolean;
-  @Input() public secondaryMenu = false;
+  @Input() public secondaryMenu: boolean = false;
 
   public openLink(): void {
     this.menu.open = !this.menu.open;
   }
 
   public checkForChildMenu(): boolean {
-    return this.menu && this.menu.sub;
+    return !!(this.menu && this.menu.sub);
   }
 
 }

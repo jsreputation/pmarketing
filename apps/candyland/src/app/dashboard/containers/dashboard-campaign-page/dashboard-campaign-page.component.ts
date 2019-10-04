@@ -24,7 +24,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
     {id: 173, name: 'stamps', title: 'Stamps'},
     {id: 180, name: 'reward', title: 'Instant Reward'}
   ];
-  public tabsValue;
+  public tabsValue: any;
   public activeCampaigns: number;
 
   public get tabsIds(): number[] {
@@ -48,7 +48,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
   }
 
-  public selectedTab(tab): void {
+  public selectedTab(tab: any): void {
     this.activeTab = tab;
   }
 

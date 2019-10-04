@@ -13,7 +13,7 @@ export class UploadFileService {
   constructor(private uploadFileHttpService: UploadFileHttpService) {
   }
 
-  public uploadImage(file: any): Observable<any> {
+  public uploadImage(file: File): Observable<any> {
     const formData = this.prepareFormData(file);
     return this.uploadFileHttpService.uploadImage(formData)
       .pipe(
