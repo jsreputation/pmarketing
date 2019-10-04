@@ -3,6 +3,16 @@ import { NotificationService } from '@perx/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { CustomValidators } from './customValidator';
 
+interface FormProperties {
+  title: string;
+  text: string;
+  disableOverlay: boolean;
+  btnTxt: string;
+  btnTxt2: string;
+  imageUrl: string;
+}
+
+// type FormProperties = 'title'| 'text' | 'disableOverlay' | 'btnTxt' | 'btnTxt2' | 'imageUrl';
 @Component({
   selector: 'app-popup',
   templateUrl: './popup.component.html',
@@ -38,7 +48,7 @@ export class PopupComponent {
       imageUrl: ['https://picsum.photos/300/300', [Validators.required, CustomValidators.urlValidator]],
     });
   }
-  public onSubmit({title, text, disableOverlay, btnTxt, btnTxt2, imageUrl}: any): void {
+  public onSubmit({title, text, disableOverlay, btnTxt, btnTxt2, imageUrl}: FormProperties): void {
     this.notificationService.addPopup({
       title,
       text,

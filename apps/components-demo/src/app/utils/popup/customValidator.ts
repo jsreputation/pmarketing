@@ -1,5 +1,6 @@
+import { AbstractControl } from '@angular/forms';
 export class CustomValidators {
-  public static urlValidator(url: any): any {
+  public static urlValidator(url: AbstractControl): {[Key: string]: boolean } | null {
     if (url.pristine) {
       return null;
     }
