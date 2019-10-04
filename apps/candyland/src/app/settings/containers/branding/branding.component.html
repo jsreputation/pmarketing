@@ -2,15 +2,15 @@
   <div class="branding-form" [formGroup]="formBranding">
     <mat-card>
       <div class="reward-wrap">
-        <p class="sub-title">
+        <h2 class="sub-title">
           Theme
-        </p>
+        </h2>
       </div>
       <div class="flex">
         <div class="control-input">
-          <p class="game-title">
+          <label class="game-title">
             <span>Font type</span>
-          </p>
+          </label>
           <mat-form-field class="branding-select">
             <mat-select formControlName="font">
               <mat-option *ngFor="let font of fonts" [value]="font.value">
@@ -22,15 +22,15 @@
       </div>
       <div class="flex">
         <div class="control-input select-outcome">
-          <p class="game-title">
+          <label class="game-title">
             <span>Primary Color</span>
-          </p>
+          </label>
           <cl-color-picker [formControlName]="'primaryColor'"></cl-color-picker>
         </div>
         <div class="control-input">
-          <p class="game-title">
+          <label class="game-title">
             <span>Secondary Color</span>
-          </p>
+          </label>
           <cl-color-picker
             [formControlName]="'secondaryColor'"
           ></cl-color-picker>
@@ -40,15 +40,15 @@
 
     <mat-card class="card-section">
       <div class="reward-wrap">
-        <p class="sub-title">
+        <h2 class="sub-title">
           Header & Navbar
-        </p>
+        </h2>
       </div>
       <div class="flex">
         <div class="control-input select-outcome">
-          <p class="game-title">
+          <label class="game-title">
             <span>Color</span>
-          </p>
+          </label>
           <mat-form-field color="primary" appearance="outline">
             <mat-select [formControlName]="'headerNavbarColor'">
               <mat-select-trigger>
@@ -80,9 +80,9 @@
         </div>
       </div>
       <div class="flex">
-        <p class="game-title">
+        <label class="game-title">
           <span>Image Logo</span>
-        </p>
+        </label>
       </div>
       <div class="flex">
         <div class="logo-header-wrap section-margin-t">
@@ -97,15 +97,15 @@
     </mat-card>
     <mat-card class="card-section">
       <div class="reward-wrap">
-        <p class="sub-title">
+        <h2 class="sub-title">
           Button
-        </p>
+        </h2>
       </div>
       <div class="flex">
         <div class="control-input select-outcome">
-          <p class="game-title">
+          <label class="game-title">
             <span>Background Color</span>
-          </p>
+          </label>
           <mat-form-field color="primary" appearance="outline">
             <mat-select [formControlName]="'button_background_color'">
               <mat-select-trigger>
@@ -136,9 +136,9 @@
           </mat-form-field>
         </div>
         <div class="control-input">
-          <p class="game-title">
+          <label class="game-title">
               <span>Text Color</span>
-          </p>
+          </label>
           <mat-form-field color="primary" appearance="outline">
             <mat-select [formControlName]="'button_text_color'">
               <mat-select-trigger>

@@ -1,8 +1,8 @@
 <div *ngIf="data?.voucherPerCampaign" class="card-section">
   <div class="card-header">
-    <p class="card-title">
+    <h2 class="card-title">
       Voucher Limits Per Campaign
-    </p>
+    </h2>
   </div>
   <div class="card-content">
     <p class="card-value">{{data?.voucherPerCampaign?.vouchers | number: '2.'}} Vouchers per campaign
@@ -12,9 +12,9 @@
 
 <div *ngIf="data?.issuancePerUser" class="card-section">
   <div class="card-header">
-    <p class="card-title">
+    <h2 class="card-title">
       Issuance Limits Per User
-    </p>
+    </h2>
   </div>
   <div class="card-content">
     <p class="card-value">{{data?.issuancePerUser?.times}} Times per {{data?.issuancePerUser?.duration}}</p>
@@ -23,9 +23,9 @@
 
 <div *ngIf="data?.redemptionPerUser" class="card-section">
   <div class="card-header">
-    <p class="card-title">
+    <h2 class="card-title">
       Redemption Limits Per User
-    </p>
+    </h2>
   </div>
   <div class="card-content">
     <p class="card-value">{{data?.redemptionPerUser?.times}} Times per {{data?.redemptionPerUser?.duration}}</p>
