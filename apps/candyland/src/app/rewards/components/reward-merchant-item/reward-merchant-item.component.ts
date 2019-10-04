@@ -8,8 +8,8 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
 })
 export class RewardMerchantItemComponent {
   @Input() public merchant: Merchant;
-  @Input() public enableActions = false;
-  @Output() public deleteMerchant = new EventEmitter<void>();
+  @Input() public enableActions: boolean = false;
+  @Output() public deleteMerchant: EventEmitter<void> = new EventEmitter<void>();
 
   public clickDeleteMerchant(): void {
     this.deleteMerchant.emit();

@@ -29,8 +29,7 @@ export class MerchantsService implements ITableService {
     return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
   }
 
-  public createMerchant(data: Merchant): Observable<number> {
-    // version: 1;
+  public createMerchant(data: IMerchantForm): Observable<number> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     let request = this.merchantHttpService.createMerchant({ data: sendData });
     if ('branches' in data && data.branches && data.branches.length > 0) {
@@ -50,13 +49,13 @@ export class MerchantsService implements ITableService {
     return this.merchantHttpService.createMerchantBranch({ data: sendData });
   }
 
-  public updateMerchantBranch(id: string, data: any): Observable<any> {
+  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
     sendData.id = data.id;
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
 
-  public updateMerchant(id: string, data: Merchant): Observable<any> {
+  public updateMerchant(id: string, data: IMerchantForm): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     sendData.id = id;
     let request$ = this.merchantHttpService.updateMerchant(id, { data: sendData });
@@ -91,7 +90,7 @@ export class MerchantsService implements ITableService {
     return this.datastore.deleteRecord(Merchant, id);
   }
 
-  public duplicateMerchant(merchant: Merchant): Observable<any> {
+  public duplicateMerchant(merchant: Merchant): Observable<Merchant> {
     return this.datastore
       .createRecord(Merchant, merchant)
       .save();

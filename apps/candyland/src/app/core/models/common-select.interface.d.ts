@@ -1,4 +1,4 @@
 declare interface CommonSelect {
-  value: string;
+  value: number;
   viewValue: string;
 }

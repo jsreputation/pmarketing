@@ -27,7 +27,8 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule
+  MatTableModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -119,6 +120,7 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     MatSelectModule,
     MatStepperModule,
     StatusLabelModule,

@@ -16,7 +16,7 @@ import { of, combineLatest } from 'rxjs';
   styleUrls: ['./reward-detail-page.component.scss']
 })
 export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  public dataSource = new MatTableDataSource<any>();
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public id: string;
   public data: {
     name?: string;
@@ -28,7 +28,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   } = {};
   public statusFilterConfig: OptionConfig[];
 
-  public rewardData;
+  public rewardData: any;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 

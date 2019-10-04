@@ -2,16 +2,18 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { RewardsService, IVoucherService, NotificationService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { Location } from '@angular/common';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
   history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
+  const locationStub = { back: () => {} };
 
   const routerStub = {
     navigate: () => ({}),
@@ -62,11 +64,12 @@ describe('RedeemComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RedeemComponent, HeaderComponent ],
-      imports: [ MatToolbarModule ],
+      imports: [ MatToolbarModule, MatIconModule ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue:
           {
             addSnack: () => {}
