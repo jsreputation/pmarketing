@@ -211,25 +211,24 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       categories
     };
   }
-  public createTransaction(): Observable<IMerchantAdminTransaction> {
-    const response: IV4CreateTransactionResponse = {
-        data: {
-            id: 700,
-            user_account_id: 5852,
-            updated_at: '2019-09-12T09:07:21.283Z',
-            transaction_type: 'some_cool_type',
-            amount: 400,
-            transaction_date: '2019-09-12T09:07:21.272Z',
-            currency: 'HKD',
-            workflow_id: null,
-            created_at: '2019-09-12T09:07:21.283Z',
-            properties: null,
-            transaction_reference: 'some_cool_reference'
-        }
+  public createTransaction(userId: number, amount: number, currency: string,
+                           type: string, reference: string): Observable<IMerchantAdminTransaction> {
+
+    const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
+    const body = {
+      user_account_id: userId,
+      transaction_data: {
+        transaction_type: type,
+        transaction_reference: reference,
+        amount,
+        currency
+      }
     };
 
-    const transaction = V4MerchantAdminService.v4TransactionToTransaction(response);
-    return of(transaction);
+    return this.http.post<IV4CreateTransactionResponse>(url, body).pipe(
+      map((res) => V4MerchantAdminService.v4TransactionToTransaction(res))
+    );
+
   }
 
   public redeemVoucher(id: number): Observable<IVoucher> {
