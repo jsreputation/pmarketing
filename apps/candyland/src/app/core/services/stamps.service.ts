@@ -41,4 +41,8 @@ export class StampsService {
     sendData.id = id;
     return this.stampHttpService.updateStamp(id, {data: sendData});
   }
+
+  public getStampsReport(id: string): Observable<StampsGraphicData> {
+    return this.stampHttpService.getStampsReport(id);
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GeneralStaticDataService } from '@perx/core';
 import { IJsonApiPatchItem, IJsonApiPostItem } from './jsonapi.payload';
 
@@ -46,5 +46,9 @@ export class SurveyHttpService {
 
   public updateSurvey(id: string, data: IJsonApiPatchItem<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
+  }
+
+  public getSurveyReport(id: string): any {
+    return of({id});
   }
 }

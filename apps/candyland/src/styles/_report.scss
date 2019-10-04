@@ -41,4 +41,16 @@
     line-height: 1.23;
     color: $base-font-color;
   }
+
+  &-small-title {
+    font-size: 1.6rem;
+    line-height: 1.31;
+    color: $base-font-color;
+  }
+
+  &-xs-title {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: rgba(51, 51, 51, 0.7);
+  }
 }
