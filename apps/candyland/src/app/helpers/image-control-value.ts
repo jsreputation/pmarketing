@@ -20,12 +20,13 @@ export class ImageControlValue {
     return ImageControlValue.prepareImage(control.value);
   }
 
-  public static getImagePath(data: IGraphic): string {
+  public static getImagePath(data: IGraphic | string): string {
+    if (typeof data === 'string') {
+      return data;
+    }
     return data.fullImg
       ? ImageControlValue.prepareImage(data.fullImg)
-      : data.img
-        ? ImageControlValue.prepareImage(data.img)
-        : (data as any);
+      : ImageControlValue.prepareImage(data.img);
   }
 
   public static getPrepareValue(val: any, graphicList: IGraphic[]): IGraphic | any {

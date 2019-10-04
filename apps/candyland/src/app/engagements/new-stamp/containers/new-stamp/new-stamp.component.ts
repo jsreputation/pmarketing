@@ -24,18 +24,9 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public formStamp: FormGroup;
   public stampSlotNumbers: CommonSelect[];
   public allStampSlotNumbers: CommonSelect[];
-  public stampData: Observable<{
-    number: CommonSelect[],
-    slotNumber: CommonSelect[],
-    cardBackground: IGraphic[],
-    rewardPost: IGraphic[],
-    stampsPost: IGraphic[],
-    rewardPreStamp: IGraphic[],
-    preStamp: IGraphic[],
-    backgroundStamp: IGraphic[],
-  }>;
+  public stampData: IStampsDefaultValue;
   public stamps: PuzzleCollectStamp[] = [];
-  public stampsSlotNumberData = [];
+  public stampsSlotNumberData: {rewardPosition: number}[] = [];
   public tenantSettings: ITenantsProperties;
 
   public get name(): AbstractControl {
@@ -222,11 +213,11 @@ export class NewStampComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getStampData(): Observable<any> {
+  private getStampData(): Observable<IStampsDefaultValue> {
     return this.stampsService.getStampsData();
   }
 
-  private getDefaultValue(data: any): any {
+  private getDefaultValue(data: IStampsDefaultValue): Partial<IStampsEntityForm> {
     return {
       stampsNumber: data.number[data.number.length - 1].value,
       stampsSlotNumber: [data.slotNumber[data.slotNumber.length - 1].value],
@@ -235,7 +226,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       rewardPostStamps: data.rewardPost[0],
       rewardPreStamps: data.rewardPreStamp[0],
       cardBackground: data.cardBackground[0],
-      background: data.backgroundStamp[0]
+      background: data.backgroundStamp[0],
     };
   }
 
@@ -245,7 +236,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       .subscribe(data => this.tenantSettings = data);
   }
 
-  private handleRouteParams(): Observable<any> {
+  private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
     return this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),

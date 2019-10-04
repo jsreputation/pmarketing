@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./horizontal-bar-chart.component.scss']
 })
 export class HorizontalBarChartComponent {
-  @Input() public imgPath = 'horizontal-bar-chart.png';
+  @Input() public imgPath: string = 'horizontal-bar-chart.png';
 
 }

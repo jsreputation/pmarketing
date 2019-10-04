@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangeExpiryDatePopupComponent implements OnInit, DoCheck {
-  public newDate = new FormControl(null);
+  public newDate: FormControl = new FormControl(null);
 
   constructor(public dialogRef: MatDialogRef<ChangeExpiryDatePopupComponent>,
               private cd: ChangeDetectorRef,

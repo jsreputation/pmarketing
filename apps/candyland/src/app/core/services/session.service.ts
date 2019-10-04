@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 })
 export class SessionService {
 
-  public isActiveSession$;
+  public isActiveSession$: Observable<any>;
   private authToken$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor() {

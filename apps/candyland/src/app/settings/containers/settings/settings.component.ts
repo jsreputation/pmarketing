@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
-  public navLinks = [
+  public navLinks: {path: string, label: string}[] = [
     {
       path: 'general',
       label: 'General'

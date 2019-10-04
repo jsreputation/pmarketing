@@ -7,7 +7,7 @@
       </div>
       <div class="reward-item-info">
         <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
-        <p class="reward-item-type" *ngIf="data?.type">{{data?.type}}</p>
+        <p class="reward-item-type" *ngIf="data?.merchantName">{{data?.merchantName}}</p>
       </div>
       <!-- <cl-progress-bar class="reward-item-progress"
                       *ngIf="data?.current && data?.total"

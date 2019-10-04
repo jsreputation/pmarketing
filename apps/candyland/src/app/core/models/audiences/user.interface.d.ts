@@ -1,6 +1,6 @@
 // tslint:disable
 declare interface IUser {
-  id: number;
+  id: string;
   type: string;
   self: string;
   urn: string;

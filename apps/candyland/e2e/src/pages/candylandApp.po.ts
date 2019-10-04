@@ -73,6 +73,14 @@ export class CreateSurveyAppPage {
 
 }
 
+export class CreateHitThePinataAppPage {
+
+  public navigateToHitThePinata(): Promise<string> {
+    return browser.get('engagements/games/new-pinata') as Promise<string> ;
+ }
+
+}
+
 export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {

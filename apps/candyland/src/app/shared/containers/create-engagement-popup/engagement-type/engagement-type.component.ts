@@ -8,7 +8,7 @@ import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
   styleUrls: ['./engagement-type.component.scss']
 })
 export class EngagementTypeComponent implements IInkBarHost {
-  @Output() public selectType = new EventEmitter<IGraphic>();
+  @Output() public selectType: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
   @Input() public selectedType: IGraphic;
 
