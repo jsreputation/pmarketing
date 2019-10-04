@@ -2,7 +2,7 @@ import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
@@ -20,6 +20,11 @@ import { IJsonApiListPayload } from '../../jsonapi.payload';
 
 interface ICognitoLogin {
   jwt: string;
+}
+
+interface IUserJWTRequest {
+  identifier: string;
+  url: string;
 }
 
 @Injectable({
@@ -100,9 +105,12 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   private getUserWithJWT(): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const user = (window as any).primaryIdentifier;
-    const params = new HttpParams().append('identifier', user).append('url', location.host);
+    const userJWTRequest: IUserJWTRequest = {
+      url: location.host,
+      identifier: user
+    };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, null, { params });
+    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
