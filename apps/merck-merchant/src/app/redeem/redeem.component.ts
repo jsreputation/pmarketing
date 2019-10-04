@@ -6,9 +6,9 @@ import {
   RewardsService,
   IReward,
   IVoucherService,
-  IPrice
+  IMerchantAdminService, Voucher
 } from '@perx/core';
-import { map, flatMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
 
 interface IHttpResponseBase extends HttpResponseBase {
@@ -32,7 +32,8 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private vouchersService: IVoucherService
+    private vouchersService: IVoucherService,
+    private merchantService: IMerchantAdminService
   ) {}
 
   public ngOnInit(): void {
@@ -54,10 +55,10 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    this.rewardsService.getRewardPricesOptions(this.payload.rewardId)
+    this.merchantService.issueVoucher(this.payload.rewardId)
       .pipe(
-        map(res => res[0]),
-        flatMap((res: IPrice) => this.vouchersService.redeemVoucher(res.id))
+        // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
+        flatMap((res: Voucher) => this.vouchersService.redeemVoucher(res.id))
       )
       .subscribe(
         () => this.notificationService.addSnack('Transaction completed'),
