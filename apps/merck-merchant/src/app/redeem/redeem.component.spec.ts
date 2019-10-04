@@ -4,7 +4,14 @@ import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { Router } from '@angular/router';
-import { RewardsService, IVoucherService, NotificationService } from '@perx/core';
+import {
+  RewardsService,
+  IVoucherService,
+  NotificationService,
+  IMerchantAdminService,
+  RedemptionType,
+  VoucherState
+} from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { Location } from '@angular/common';
@@ -54,12 +61,16 @@ describe('RedeemComponent', () => {
 
   const rewardsServiceStub = {
     getReward: () => of(reward),
-    getRewardPricesOptions: () => of()
+    // getRewardPricesOptions: () => of()
   };
 
   const vouchersServiceStub = {
     redeemVoucher: () => of()
   };
+
+  const merchantAdminServiceStub = {
+    issueVoucher: () => of()
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -69,6 +80,7 @@ describe('RedeemComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue:
           {
@@ -109,21 +121,41 @@ describe('RedeemComponent', () => {
   });
 
   it('should onProceed', () => {
-    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
+    // const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
+    const merchantAdminService: IMerchantAdminService = fixture.debugElement.injector.get<IMerchantAdminService>(
+      IMerchantAdminService as Type<IMerchantAdminService>);
     const vouchersService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
 
-    const price = {
+    // const price = {
+    //   id: 1,
+    //   rewardCampaignId: 1,
+    //   price: 1,
+    //   currencyCode: 'SGD',
+    //   points: 10,
+    // };
+
+    const voucher = {
       id: 1,
-      rewardCampaignId: 1,
-      price: 1,
-      currencyCode: 'SGD',
-      points: 10,
+      rewardId: 1,
+      state: VoucherState.issued,
+      name: 'test voucher',
+      redemptionType: RedemptionType.none,
+      thumbnailImg: '',
+      rewardBanner: '',
+      merchantImg: '',
+      merchantName: 'test merchant',
+      expiry: null,
+      description: [{title: '', content: '', tag: ['']}]
     };
 
-    const rewardsServiceSpy = spyOn(rewardsService, 'getRewardPricesOptions').and.returnValue(
-      of([price])
+    // const rewardsServiceSpy = spyOn(rewardsService, 'getRewardPricesOptions').and.returnValue(
+    //   of([price])
+    // );
+
+    const merchantAdminServiceSpy = spyOn(merchantAdminService, 'issueVoucher').and.returnValue(
+      of(voucher)
     );
 
     const vouchersServiceSpy = spyOn(vouchersService, 'redeemVoucher').and.returnValue(
@@ -133,7 +165,8 @@ describe('RedeemComponent', () => {
     const notificationSpy = spyOn(notificationService, 'addSnack');
 
     component.onProceed();
-    expect(rewardsServiceSpy).toHaveBeenCalled();
+    // expect(rewardsServiceSpy).toHaveBeenCalled();
+    expect(merchantAdminServiceSpy).toHaveBeenCalled();
     expect(vouchersServiceSpy).toHaveBeenCalled();
     expect(notificationSpy).toHaveBeenCalledWith('Transaction completed');
   });
