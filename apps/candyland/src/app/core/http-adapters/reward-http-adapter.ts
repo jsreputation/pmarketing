@@ -58,9 +58,9 @@ export class RewardHttpAdapter {
           type: voucher_properties.validity.type,
           period: {
             startDate: voucher_properties.validity.start_date,
-            startTime: moment(voucher_properties.validity.start_date).utc().format('HH:mm'),
+            startTime: moment(voucher_properties.validity.start_date).format('HH:mm'),
             endDate: voucher_properties.validity.end_date,
-            endTime: moment(voucher_properties.validity.end_date).utc().format('HH:mm')
+            endTime: moment(voucher_properties.validity.end_date).format('HH:mm')
           },
           issuanceDate: {
             times: voucher_properties.validity.times,
@@ -164,9 +164,9 @@ export class RewardHttpAdapter {
     return res;
   }
 
-  public static setTime(date: string, time: any): string {
+  public static setTime(date: string, time: any): any {
     const [hours, minutes] = time.split(':');
-    return moment(date).set({hours, minutes}).toISOString();
+    return moment(date).set({hours, minutes}).utc().toDate();
   }
 
   public static transformFromReward(data: IRewardEntity): IRewardEntityApi {
