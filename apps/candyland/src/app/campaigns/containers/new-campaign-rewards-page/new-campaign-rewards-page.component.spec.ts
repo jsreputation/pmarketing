@@ -15,6 +15,7 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 //  tslint:disable
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -60,7 +61,8 @@ describe('NewCampaignRewardsPageComponent', () => {
         MatSelectModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        RouterModule.forRoot([]),
       ],
       declarations: [NewCampaignRewardsPageComponent,
         NewCampaignRewardsFormGroupComponent],
