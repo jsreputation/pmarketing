@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, ITabConfig } from '@perx/core';
+import { IReward, RewardsService, ITabConfig, IProfile, ILoyalty } from '@perx/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { flatMap, map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 const tabs: ITabConfig[] = [
   {
@@ -32,26 +33,27 @@ const tabs: ITabConfig[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, PageAppearence {
-
+  public titleFn: (profile: IProfile) => string;
   public rewards: Observable<IReward[]>;
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[];
-  public subTitleFn: () => string;
+  public subTitleFn: (loyalty: ILoyalty) => string;
 
   public constructor(
     private rewardsService: RewardsService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.translate.get('WELCOME').subscribe((msg) => this.titleFn = (profile) => msg + ', ' + profile.firstName);
     this.rewardsService
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
-
-    this.subTitleFn = () => 'Your total points';
+    this.translate.get('TOTAL_POINTS').subscribe((msg) => this.subTitleFn = (loyalty) => loyalty.pointsBalance + ' ' + msg);
   }
 
   private getRewards(): void {
@@ -77,13 +79,13 @@ export class HomeComponent implements OnInit, PageAppearence {
     this.cd.detectChanges();
     return of(tabs);
   }
-
+  x
   public myQrClicked(): void {
     this.router.navigateByUrl('redeem');
   }
 
   public rewardClicked(reward: IReward): void {
-    this.router.navigateByUrl(`reward-detail/${ reward.id }`);
+    this.router.navigateByUrl(`reward-detail/${reward.id}`);
   }
 
   public getPageProperties(): PageProperties {
