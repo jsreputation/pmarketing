@@ -7,13 +7,13 @@ import { ShakeComponent } from './game/shake/shake.component';
 import { TapComponent } from './game/tap/tap.component';
 import { HistoryComponent } from './history/history.component';
 import { CommonModule } from '@angular/common';
-import { 
-    MatProgressBarModule, 
-    MatCardModule, 
-    MatProgressSpinnerModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatButtonModule 
+import {
+    MatProgressBarModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
 } from '@angular/material';
 import { GameModule } from '../game/game.module';
 import { VouchersModule } from '../vouchers/vouchers.module';
@@ -34,6 +34,8 @@ import { VoucherDetailPageComponent } from './voucher-detail-page/voucher-detail
 import { CampaignModule } from '../campaign/campaign.module';
 import { OutcomeModule } from '../outcome/outcome.module';
 import { StampModule } from '../stamp/stamp.module';
+import { ContentPageComponent } from './content-page/content-page.component';
+import { UtilsModule } from '../utils/utils.module';
 
 export const components = [
     AccountComponent,
@@ -55,7 +57,7 @@ export const components = [
 ];
 
 @NgModule({
-    declarations: [...components],
+    declarations: [...components, ContentPageComponent],
     exports: [...components],
     imports: [
         RouterModule,
@@ -75,7 +77,8 @@ export const components = [
         CampaignModule,
         OutcomeModule,
         StampModule,
-        MatButtonModule
+        MatButtonModule,
+        UtilsModule
     ]
 })
 export class PagesModule { }
