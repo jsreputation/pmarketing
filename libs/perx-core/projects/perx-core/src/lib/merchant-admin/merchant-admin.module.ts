@@ -6,12 +6,12 @@ import { WhistlerMerchantAdminService } from './whistler-merchant-admin.service'
 import { V4MerchantAdminService } from './v4-merchant-admin.service';
 import { IMerchantAdminService } from './imerchant-admin.service';
 
-export function merchantAdminServiceFactory(config: Config): IMerchantAdminService {
+export function merchantAdminServiceFactory(http: HttpClient, config: Config): IMerchantAdminService {
   if (config.isWhistler) {
     return new WhistlerMerchantAdminService();
   }
   // Make decision on what to instantiate base on config
-  return new V4MerchantAdminService();
+  return new V4MerchantAdminService(http, config);
 }
 
 @NgModule({
