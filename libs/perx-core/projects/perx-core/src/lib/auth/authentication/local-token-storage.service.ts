@@ -14,10 +14,12 @@ interface IAppInfo {
 export class LocalTokenStorage extends TokenStorage {
     public appInfo: IAppInfo;
     public storageType: TokenType;
-    
+
     constructor(config: Config) {
         super();
-        this.storageType = config.storageType;
+        if (config) {
+            this.storageType = config.storageType;
+        }
     }
     public getAppInfo(): Observable<IAppInfo> {
         this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || { appAccessToken: '', userAccessToken: '' };
