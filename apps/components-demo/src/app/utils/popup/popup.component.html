@@ -3,7 +3,6 @@
     <mat-label>Title</mat-label>
     <input matInput
       formControlName="title"
-      placeholder="title"
       type="text"
     />
     <mat-error *ngIf="title.hasError('required')">Required field</mat-error>
@@ -13,7 +12,6 @@
     <mat-label>Text</mat-label>
     <input matInput
       formControlName="text"
-      placeholder="text"
       type="text"
     />
     <mat-error *ngIf="text.hasError('required')">Required field</mat-error>
@@ -25,20 +23,18 @@
   </div>
 
   <mat-form-field class="fieldInput">
-    <mat-label>ButtonText 1</mat-label>
+    <mat-label>Button Text</mat-label>
     <input matInput
       formControlName="btnTxt"
-      placeholder="btnTxt"
       type="btnTxt"
     />
     <mat-error *ngIf="btnTxt.hasError('required')">Required field</mat-error>
   </mat-form-field>
 
   <mat-form-field class="fieldInput">
-    <mat-label>ButtonText 2</mat-label>
+    <mat-label>Confirm Button Text</mat-label>
     <input matInput
       formControlName="btnTxt2"
-      placeholder="btnTxt2"
       type="btnTxt2"
     />
     <mat-error *ngIf="btnTxt2.hasError('required')">Required field</mat-error>

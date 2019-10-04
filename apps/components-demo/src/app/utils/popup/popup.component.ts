@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NotificationService } from '@perx/core';
 import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { CustomValidators } from './customValidator';
 
 @Component({
   selector: 'app-popup',
@@ -27,7 +28,6 @@ export class PopupComponent {
   }
 
   constructor(private notificationService: NotificationService, private fb: FormBuilder) {
-    const regexp = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
 
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -35,13 +35,10 @@ export class PopupComponent {
       btnTxt: ['', [Validators.required, Validators.maxLength(10)]],
       btnTxt2: ['', [Validators.required, Validators.maxLength(10)]],
       disableOverlay: [''],
-      imageUrl: ['https://picsum.photos/300/300', [Validators.required, Validators.pattern(regexp)]],
+      imageUrl: ['https://picsum.photos/300/300', [Validators.required, CustomValidators.urlValidator]],
     });
   }
   public onSubmit({title, text, disableOverlay, btnTxt, btnTxt2, imageUrl}: any): void {
-    // open model
-    // pass in modal data
-    console.log(disableOverlay);
     this.notificationService.addPopup({
       title,
       text,
