@@ -8,11 +8,8 @@
       </div>
       <div class="flex">
         <div class="control-input">
-          <label class="game-title">
-            <span>Font type</span>
-          </label>
           <mat-form-field class="branding-select">
-            <mat-select formControlName="font">
+            <mat-select formControlName="font" placeholder="Font Type">
               <mat-option *ngFor="let font of fonts" [value]="font.value">
                 {{ font.value }}
               </mat-option>

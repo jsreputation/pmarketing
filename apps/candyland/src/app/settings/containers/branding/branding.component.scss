@@ -1,5 +1,13 @@
 @import "variables";
 
+.reward-wrap {
+  margin-bottom: 2.4rem;
+}
+
+label.game-title {
+  display: block;
+}
+
 .select-outcome {
   &:first-child {
     margin-right: 1.5rem;
