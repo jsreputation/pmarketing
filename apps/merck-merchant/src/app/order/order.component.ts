@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService, IProduct } from '../services/product.service';
-import { NotificationService } from '@perx/core';
+import {IMerchantAdminService, NotificationService} from '@perx/core';
+import {from} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 
 export interface IPayload {
   name: string;
@@ -29,7 +31,8 @@ export class OrderComponent implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private merchantAdminService: IMerchantAdminService
   ) {}
 
   public ngOnInit(): void {
@@ -63,7 +66,11 @@ export class OrderComponent implements OnInit {
   }
 
   public onCompleteTransaction(): void {
-    // Call api TBD https://perxtechnologies.atlassian.net/browse/PW-483
+    from(this.selectedProducts).pipe(
+      mergeMap((product: IProduct) => {
+        return this.merchantAdminService.createTransaction(this.payload.id, product.pointsPerUnit, 'points', product.name, 'generatedRef');
+      }),
+    ).subscribe();
     this.notificationService.addSnack('Transaction completed'),
     this.router.navigate(['/home']);
   }
