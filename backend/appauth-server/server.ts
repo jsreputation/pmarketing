@@ -11,6 +11,7 @@ import { join } from 'path';
 const app = express();
 const cors = require('cors');
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
@@ -61,7 +62,7 @@ app.get('/preauth', async (req, res, next) => {
 
 app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
-    const url = req.query.url;
+    const url = req.body.url;
     if (url === undefined) {
       throw new Error('No query parameter "url" specified');
     }
@@ -73,11 +74,11 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
 
-    const username = req.query.username;
-    const password = req.query.password;
-    const mechId = req.query.mech_id;
-    const campaignId = req.query.campaign_id;
-    const userId = req.query.identifier;
+    const username = req.body.username;
+    const password = req.body.password;
+    const mechId = req.body.mech_id;
+    const campaignId = req.body.campaign_id;
+    const userId = req.body.identifier;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
@@ -142,8 +143,8 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
 app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
   try {
     // check query parameter 'url'
-    const url = req.query.url;
-    const userId = req.query.identifier;
+    const url = req.body.url;
+    const userId = req.body.identifier;
 
     if (url === undefined) {
       throw new Error('No query parameter "url" specified');

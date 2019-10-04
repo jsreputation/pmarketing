@@ -31,6 +31,20 @@ interface IV4SignUpData {
   password_confirmation: string;
 }
 
+interface IV4AuthenticateUserRequest {
+  url: string;
+  username: string;
+  password: string;
+  mech_id?: string;
+  campaign_id?: string;
+  scope?: string;
+}
+
+interface IV4AuthenticatePiRequest {
+  url: string;
+  identifier: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -105,23 +119,22 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<ILoginResponse> {
-    let httpParams = new HttpParams()
-      .append('url', location.host)
-      .append('username', user)
-      .append('password', pass);
+    const authenticateBody: IV4AuthenticateUserRequest = {
+      url: location.host,
+      username: user,
+      password: pass
+    };
+
     if (mechId) {
-      httpParams = httpParams.append('mech_id', mechId);
+      authenticateBody.mech_id = mechId;
     }
     if (campaignId) {
-      httpParams = httpParams.append('campaign_id', campaignId);
+      authenticateBody.campaign_id = campaignId;
     }
     if (scope) {
-      httpParams = httpParams.append('scope', scope);
+      authenticateBody.scope = scope;
     }
-
-    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', null, {
-      params: httpParams
-    });
+    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
 
   public autoLogin(): Observable<any> {
@@ -144,13 +157,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public authenticateUserWithPI(user: string): Observable<ILoginResponse> {
-    const httpParams = new HttpParams()
-      .append('url', location.host)
-      .append('identifier', user);
+    const authenticatePiRequest: IV4AuthenticatePiRequest = {
+      url: location.host,
+      identifier: user
+    };
 
-    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', null, {
-      params: httpParams
-    });
+    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticatePiRequest);
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
