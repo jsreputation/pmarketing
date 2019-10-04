@@ -5,7 +5,6 @@ import { LimitsHttpsService } from '@cl-core/http-services/limits-https.service'
 import { map } from 'rxjs/operators';
 import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
 import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
-import { IJsonApiListPayload, IJsonApiItem } from '@cl-core/http-services/jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'

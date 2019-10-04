@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
@@ -16,11 +16,13 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public styles: ISimpleValue[] = settingsStyles;
   public fonts: ISimpleValue[] = settingsFonts;
   public formBranding: FormGroup;
-  public listColors;
-  public listColorsText;
-  private destroy$ = new Subject<void>();
+  public listColors: {labelView: string, color: string}[];
+  public listColorsText: {
+    labelView: string, color: string
+  }[];
+  private destroy$: Subject<void> = new Subject<void>();
   public tenants: Tenants;
-  public reward = of({
+  public reward: Observable<any> = of({
     id: 1,
     name: 'Starbucks venti $5',
     subtitle: 'So yummy',
@@ -117,7 +119,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.formBranding = this.settingsService.getFormBranding();
   }
 
-  private patchValue(data): void {
+  private patchValue(data: Partial<IBrandingForm>): void {
     this.formBranding.patchValue(data);
   }
 

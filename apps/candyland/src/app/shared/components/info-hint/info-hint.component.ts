@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./info-hint.component.scss']
 })
 export class InfoHintComponent {
-  @Input() public classList = '';
+  @Input() public classList: string = '';
 }

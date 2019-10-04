@@ -3,7 +3,7 @@ export enum EngagementType {
   survey = 'survey',
   games = 'game',
   stamp = 'stamps',
-  instantReward = 'instant_reward'
+  instantReward = 'instant_reward',
 }
 
 export enum EngagementTypeFromAPIMapping {

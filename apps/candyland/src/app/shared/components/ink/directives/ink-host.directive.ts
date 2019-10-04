@@ -4,7 +4,7 @@ import { Directive, Input } from '@angular/core';
   selector: '[clInkHost]'
 })
 export class InkHostDirective {
-  @Input() public set clInkHost(host) {
+  @Input() public set clInkHost(host: any) {
     this.host = host;
   }
 

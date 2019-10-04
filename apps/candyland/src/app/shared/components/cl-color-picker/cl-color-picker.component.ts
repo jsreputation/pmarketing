@@ -14,8 +14,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class ClColorPickerComponent implements ControlValueAccessor {
-  @Input() public formatData = 'hex';
-  public color = '#2883e9';
+  @Input() public formatData: string = 'hex';
+  public color: string = '#2883e9';
   public disable: boolean;
   public onChange: any = () => {
   }
