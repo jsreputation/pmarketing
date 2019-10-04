@@ -27,7 +27,7 @@ export class UserInfoComponent implements PageAppearence, OnInit {
   public ngOnInit(): void {
     this.translate.get('CONDITION_SAVED').subscribe((text) => this.conditionMessage = text);
   }
-  
+
   private initForm(): void {
     this.surveyForm = this.fb.group({
       diabetesCondition: [false],
@@ -53,10 +53,10 @@ export class UserInfoComponent implements PageAppearence, OnInit {
   public onNext(): void {
 
     const customProperties: ICustomProperties = {
-                                diabetes: (this.surveyForm.get('diabetesCondition').value).toString(),
-                                diabetesState: (this.surveyForm.get('diabetes').value),
-                                hypertension: (this.surveyForm.get('hypertension').value).toString()
-                              };
+      diabetes: (this.surveyForm.get('diabetesCondition').value).toString(),
+      diabetesState: (this.surveyForm.get('diabetes').value),
+      hypertension: (this.surveyForm.get('hypertension').value).toString()
+    };
     this.profileService.setCustomProperties(customProperties).subscribe(
       () => {
         this.router.navigateByUrl('/home');

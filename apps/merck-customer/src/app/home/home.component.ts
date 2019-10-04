@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit, PageAppearence {
     this.cd.detectChanges();
     return of(tabs);
   }
-  x
+
   public myQrClicked(): void {
     this.router.navigateByUrl('redeem');
   }
