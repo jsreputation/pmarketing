@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IMerchantAdminTransaction } from './models/merchants-admin.model';
 import { IVoucher, RedemptionType, VoucherState } from '../vouchers/models/voucher.model';
 import { HttpClient } from '@angular/common/http';
