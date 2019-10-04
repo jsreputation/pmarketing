@@ -16,8 +16,8 @@ export class RewardHttpService {
     return this.http.get(ApiConfig.rewardsPath + '/', { params });
   }
 
-  public getReward(id: string): Observable<IResponseApi<IRewardEntityApi>> {
-    return this.http.get<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath + '/' + id);
+  public getReward(id: string, params: HttpParams): Observable<IResponseApi<IRewardEntityApi>> {
+    return this.http.get<IResponseApi<IRewardEntityApi>>(ApiConfig.rewardsPath + '/' + id, { params });
   }
 
   // public getMockRewardDetail(): Observable<any> {

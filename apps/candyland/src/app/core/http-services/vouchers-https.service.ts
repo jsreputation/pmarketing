@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
 import { Injectable } from '@angular/core';
-import { IJsonApiPostItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class VouchersHttpService {
     return this.http.get<any>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
-  public createVoucher(data: IJsonApiPostItem<any>): Observable<any> {
+  public createVoucher(data: IJsonApiPayload<IVouchersApi>): Observable<any> {
     return this.http.post<any>(ApiConfig.voucherBatchPath, data);
   }
 }

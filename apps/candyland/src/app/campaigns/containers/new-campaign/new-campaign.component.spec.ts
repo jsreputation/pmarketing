@@ -7,6 +7,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { NewCampaignComponent } from './new-campaign.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';

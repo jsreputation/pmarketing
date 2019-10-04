@@ -23,7 +23,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public triggerLabelsChip: boolean;
   public campaignId: string;
   @Input()
-  public pools;
+  public pools: any;
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');

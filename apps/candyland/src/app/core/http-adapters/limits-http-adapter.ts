@@ -1,5 +1,5 @@
 import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
-import { IJsonApiItem, IJsonApiPostData } from '@cl-core/http-services/jsonapi.payload';
+
 enum LimitsDurationToAPIMapping {
   day = 'days',
   week = 'weeks',
@@ -40,7 +40,7 @@ export class LimitsHttpAdapter {
     type: string,
     campaignId: number,
     engagementId: number
-  ): IJsonApiPostData<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes> {
+  ): IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes> {
     switch (type) {
       case 'game':
         return {

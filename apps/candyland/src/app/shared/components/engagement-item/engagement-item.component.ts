@@ -16,7 +16,7 @@ export interface IEngagementItemMenuOption {
 export class EngagementItemComponent {
   @Input() public data: IEngagement;
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
-  @Input() public linkable = false;
+  @Input() public linkable: boolean = false;
 
   @Output() public menuTapped: EventEmitter<{ engagement: IEngagement, action: string }> = new EventEmitter();
 

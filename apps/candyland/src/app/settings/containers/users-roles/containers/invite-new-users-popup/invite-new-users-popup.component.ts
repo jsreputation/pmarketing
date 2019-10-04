@@ -13,7 +13,7 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 export class InviteNewUsersPopupComponent implements OnInit {
   @ViewChild('stepper', {static: false}) public stepper: MatStepper;
   public form: FormGroup;
-  public config;
+  public config: any[];
 
   constructor(public dialogRef: MatDialogRef<InviteNewUsersPopupComponent>,
               private fb: FormBuilder,
