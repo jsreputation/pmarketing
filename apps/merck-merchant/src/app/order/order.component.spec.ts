@@ -3,19 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrderComponent } from './order.component';
 import { HeaderComponent } from '../header/header.component';
 import { OrderQuantityComponent } from '../order/order-quantity/order-quantity.component';
-import { MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
+import { MatIconModule, MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { NotificationService } from '@perx/core';
+import { Location } from '@angular/common';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
   let fixture: ComponentFixture<OrderComponent>;
   history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
-
+  const locationStub = { back: () => {} };
   const routerStub = {
     navigate: () => ({}),
     getCurrentNavigation: () =>  (
@@ -84,10 +85,11 @@ describe('OrderComponent', () => {
         HeaderComponent,
         OrderQuantityComponent
       ],
-      imports: [ MatToolbarModule, FormsModule, MatListModule, MatDividerModule ],
+      imports: [ MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: ProductService, useValue: productServiceStub },
+        { provide: Location, useValue: locationStub },
         {
           provide: NotificationService, useValue: {
             addSnack: () => {}
