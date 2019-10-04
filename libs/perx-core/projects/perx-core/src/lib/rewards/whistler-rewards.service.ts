@@ -23,6 +23,9 @@ interface WhistlerIReward {
   updated_at: string;
   urn: string;
   organization_id: number;
+  display_properties: {
+    redemption_text?: string;
+  };
 }
 
 @Injectable({
@@ -49,26 +52,28 @@ export class WhistlerRewardsService implements RewardsService {
       merchantId: r.attributes.organization_id,
       merchantImg: merchant && merchant.images.length > 0 ? merchant.images[0].url : null,
       merchantName: merchant ? merchant.name : null,
-      rewardPrice: [
-      ],
+      rewardPrice: [],
       termsAndConditions: r.attributes.terms_conditions,
       howToRedeem: r.attributes.redemption_type,
+      redemptionSuccessTxt: ('redemption_text' in r.attributes.display_properties) ? r.attributes.display_properties.redemption_text : null,
       categoryTags: [
         {
           id: 0,
           title: r.attributes.category
         }
-      ],
+      ]
     };
   }
 
   public getTags(): void {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getRewards(page: number, pageSize: number, tags?: string[], categories?: string[]): Observable<IReward[]> {
     throw new Error('Method not implemented.');
@@ -88,7 +93,7 @@ export class WhistlerRewardsService implements RewardsService {
           );
         }),
         map(([reward, merchant]: [IJsonApiItemPayload<WhistlerIReward>, IMerchant | null]) =>
-          WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
+          WhistlerRewardsService.WRewardToReward(reward.data, merchant))
       );
   }
 
@@ -96,14 +101,17 @@ export class WhistlerRewardsService implements RewardsService {
   public getRewardPricesOptions(id: number): Observable<IPrice[]> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getAllCatalogs(): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getCatalogs(page: number, pageSize: number): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getCatalog(id: number): Observable<ICatalog> {
     throw new Error('Method not implemented.');

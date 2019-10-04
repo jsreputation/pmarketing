@@ -10,7 +10,7 @@
       <perx-core-pin-redemption 
         length="4"
         [voucherId]="voucherId"
-        (full)="pinInputSuccess()"
+        (full)="pinInputSuccess(voucher?.redemptionSuccessTxt)"
         (hasErrorEmit)="errorHandler($event)"
       >
       </perx-core-pin-redemption>

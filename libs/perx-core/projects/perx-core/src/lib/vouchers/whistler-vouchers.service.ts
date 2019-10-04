@@ -61,6 +61,7 @@ export class WhistlerVouchersService implements IVoucherService {
       rewardBanner: reward.rewardThumbnail,
       merchantImg: reward.merchantImg,
       merchantName: reward.merchantName,
+      redemptionSuccessTxt: reward.redemptionSuccessTxt,
       expiry: voucher.attributes.end_date_time ? new Date(voucher.attributes.end_date_time) : null,
       description: [{
         title: null,
