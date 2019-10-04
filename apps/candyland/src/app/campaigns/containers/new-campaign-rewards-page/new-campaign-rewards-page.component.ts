@@ -16,7 +16,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   @Input() public tenantSettings: ITenantsProperties;
   public isFirstInit: boolean = true;
   public form: FormGroup;
-  public defaultValue = {
+  public defaultValue: any = {
     rewardsOptions: {
       enableProbability: false,
       rewards: []

@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 
 export class ClHttpParams {
 
-  public static createHttpParams(filters): HttpParams {
+  public static createHttpParams(filters: any): HttpParams {
     if (filters) {
       let params: any = new HttpParams();
       for (const property in filters) {

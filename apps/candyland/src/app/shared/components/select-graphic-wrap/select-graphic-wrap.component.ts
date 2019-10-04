@@ -28,9 +28,9 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Input() public graphicList: IGraphic[];
-  @Input() public showUpload = true;
+  @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
-  @Output() private selectGraphic = new EventEmitter<IGraphic>();
+  @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
 
   public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
@@ -48,7 +48,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
-  public destroy$ = new Subject();
+  public destroy$: Subject<boolean> = new Subject();
   public lock: boolean;
 
   public onChange: any = () => {

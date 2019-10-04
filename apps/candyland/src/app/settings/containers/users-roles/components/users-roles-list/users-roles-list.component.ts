@@ -13,8 +13,8 @@ export class UsersRolesListComponent implements AfterViewInit {
   @Input() public displayedColumns: string[] = ['username', 'role', 'created_at', 'actions'];
   @Input() public config: any;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
-  @Output() public delete = new EventEmitter<string>();
-  @Output() public edit = new EventEmitter<IAMUser>();
+  @Output() public delete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public edit: EventEmitter<IAMUser> = new EventEmitter<IAMUser>();
 
   public ngAfterViewInit(): void {
     this.dataSource.registerSort(this.sort);

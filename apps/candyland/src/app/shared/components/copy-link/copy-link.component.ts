@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class CopyLinkComponent {
   @Input() public link: string;
 
-  public copyInputMessage(inputElement): void {
+  public copyInputMessage(inputElement: HTMLInputElement): void {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);

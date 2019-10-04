@@ -94,7 +94,7 @@ export class SettingsHttpAdapter {
     };
   }
 
-  public static transformSettingsBrandingToForm (data: any, listColors: any[]): any {
+  public static transformSettingsBrandingToForm (data: any, listColors: any[]): IBrandingForm {
     const logoType = data['theme.title'] ? 'text' : 'image';
     return {
       style: data['theme.style'],
@@ -109,11 +109,11 @@ export class SettingsHttpAdapter {
     }
   }
 
-  public static getColorObj(listColors: any[], color: string): any {
+  public static getColorObj(listColors: any[], color: string): {labelView: string, color: string} {
     return listColors.find(item => item.color === color);
   }
 
-  public static getTenantsSettings(data): ITenantsProperties {
+  public static getTenantsSettings(data):ITenantsProperties {
     return {
       timeZone: SettingsHttpAdapter.getTenantProperty('time_zone', data),
       color: SettingsHttpAdapter.getTenantProperty('theme.color', data),
