@@ -64,6 +64,11 @@
     color: $secondary-color;
   }
 
+  &-row.input-group > span {
+    width: auto;
+    flex-shrink: 0;
+  }
+
   &-value {
     @include typo-input;
 
@@ -90,7 +95,7 @@
       margin-left: 0;
     }
   }
-  
+
   &-label + &-value {
     margin-top: 0.8rem;
   }
@@ -153,11 +158,6 @@
       flex: 1 1 ($horizontal-padding * 2);
       min-width: ($horizontal-padding * 2);
     }
-
-    > span {
-      width: auto;
-      flex-shrink: 0;
-    }
   }
 
   &-section {
@@ -201,21 +201,21 @@
 }
 
 @media (min-width: $mobile-width) {
-  .card-definitions div:not(.card-definitions-splitter),
-  .card-definitions div.card-definitions-splitter {
-    margin-bottom: 2.4rem;
-  }
-
-  .card-definitions div.card-definitions-splitter div,
-  .card-definitions > div:last-child {
-    margin-bottom: 0;
-  }
-
   .card-definitions-splitter {
     display: flex;
 
     div {
       flex: 1 1 50%;
     }
+  }
+
+  .card-definitions div:not(.card-definitions-splitter),
+  .card-definitions div.card-definitions-splitter {
+    margin-bottom: 2.4rem;
+  }
+
+  .card-definitions > div:last-child,
+  .card-definitions div.card-definitions-splitter div {
+    margin-bottom: 0;
   }
 }
