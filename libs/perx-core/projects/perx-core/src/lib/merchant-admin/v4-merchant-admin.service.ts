@@ -139,19 +139,19 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   constructor(private http: HttpClient, private config: Config) {}
 
-  public static v4TransactionToTransaction(transaction: IV4CreateTransactionResponse): IMerchantAdminTransaction {
+  public static v4TransactionToTransaction(transaction: IV4MerchantAdminTransaction): IMerchantAdminTransaction {
     return {
-      id: transaction.data.id,
-      user_account_id: transaction.data.user_account_id,
-      updated_at: new Date(transaction.data.updated_at),
-      transaction_type: transaction.data.transaction_type,
-      amount: transaction.data.amount,
-      transaction_date: new Date(transaction.data.transaction_date),
-      currency: transaction.data.currency,
-      workflow_id: transaction.data.workflow_id,
-      created_at: new Date(transaction.data.created_at),
-      properties: transaction.data.properties,
-      transaction_reference: transaction.data.transaction_reference
+      id: transaction.id,
+      user_account_id: transaction.user_account_id,
+      updated_at: new Date(transaction.updated_at),
+      transaction_type: transaction.transaction_type,
+      amount: transaction.amount,
+      transaction_date: new Date(transaction.transaction_date),
+      currency: transaction.currency,
+      workflow_id: transaction.workflow_id,
+      created_at: new Date(transaction.created_at),
+      properties: transaction.properties,
+      transaction_reference: transaction.transaction_reference
     };
   }
 
@@ -226,7 +226,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     };
 
     return this.http.post<IV4CreateTransactionResponse>(url, body).pipe(
-      map((res) => V4MerchantAdminService.v4TransactionToTransaction(res))
+      map((res) => V4MerchantAdminService.v4TransactionToTransaction(res.data))
     );
 
   }
