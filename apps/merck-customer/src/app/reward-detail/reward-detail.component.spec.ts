@@ -5,6 +5,7 @@ import { RewardDetailComponent } from './reward-detail.component';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
@@ -16,7 +17,8 @@ describe('RewardDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RewardDetailComponent ],
-      imports: [ RouterTestingModule, RewardsModule ],
+      imports: [ RouterTestingModule, RewardsModule, TranslateModule.forRoot()
+      ],
       providers: [
         {
           provide: RewardsService,
