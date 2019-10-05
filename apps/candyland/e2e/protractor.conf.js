@@ -30,7 +30,7 @@ exports.config = {
       './src/steps/**/*.steps.ts',
       'features/'
     ],
-    // tags: '@runThis',
+    tags: '@runThis',
     ui:       'bdd',
     reporter: 'dot',
     strict: true,
@@ -43,7 +43,8 @@ exports.config = {
   onPrepare() {
     let globals = require('protractor');
     let browser = globals.browser;
-    browser.manage().timeouts().implicitlyWait(50000);
+    // browser.manage().timeouts().implicitlyWait(50000);
+    browser.driver.manage().window().maximize();
     // browser.ignoreSynchronization = true;
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.json')

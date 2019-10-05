@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { UploadFileService } from '@cl-core-services';
 
@@ -16,20 +16,20 @@ import { UploadFileService } from '@cl-core-services';
   ]
 })
 export class UploadFileComponent implements ControlValueAccessor {
-  public MAX_SIZE = 1;
+  public MAX_SIZE: number = 1;
   @Input() public selectGraphic: any;
   @Input() public selectedGraphic: any;
-  @Input() public label = '';
+  @Input() public label: string = '';
   @Input() public isRequired: boolean;
-  @Output() public deleteFile = new EventEmitter();
-  @Output() public uploadFile = new EventEmitter();
+  @Output() public deleteFile: EventEmitter<any> = new EventEmitter();
+  @Output() public uploadFile: EventEmitter<any> = new EventEmitter();
 
   public lock: boolean;
-  public fileName;
+  public fileName: string;
   public fileURL: string;
   public file: any;
   public message: string;
-  public loadedFile = false;
+  public loadedFile: boolean = false;
 
   public onChange: any = () => {
   }
@@ -42,7 +42,7 @@ export class UploadFileComponent implements ControlValueAccessor {
               private cd: ChangeDetectorRef) {
   }
 
-  public preview(files): void {
+  public preview(files: FileList): void {
     this.message = null;
     if (files.length === 0) {
       this.setError('Empty file.');
@@ -64,7 +64,7 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.fetchFile(files[0]);
   }
 
-  public sanitizeUrl(data): any {
+  public sanitizeUrl(data: any): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 
@@ -98,7 +98,6 @@ export class UploadFileComponent implements ControlValueAccessor {
   private fetchFile(file: File): void {
     this.uploadFileService.uploadFile(file)
       .subscribe((res: IUploadedFile) => {
-          console.log('file', res);
           this.file = res;
           this.fileURL = res.url;
           this.loadedFile = true;

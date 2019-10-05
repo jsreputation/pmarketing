@@ -10,8 +10,8 @@ import { AudiencesService } from '@cl-core-services';
 })
 
 export class ManageListPopupComponent implements OnInit {
-  public pools = [];
-  public poolsArray = [];
+  public pools: number[] = [];
+  public poolsArray: number[] = [];
 
   constructor(public dialogRef: MatDialogRef<ManageListPopupComponent>,
               public audiencesService: AudiencesService,
@@ -26,7 +26,7 @@ export class ManageListPopupComponent implements OnInit {
   public setSelectedPools(): any {
     const userPools = this.data.pools.split(', ');
     userPools.forEach(item => {
-      this.pools.forEach(pool => {
+      this.pools.forEach((pool: any) => {
         if (item && pool.name === item) {
           pool.checked = true;
           this.changePools(pool.value, true);
@@ -44,7 +44,7 @@ export class ManageListPopupComponent implements OnInit {
       });
   }
 
-  public changePools(value, checked): any {
+  public changePools(value: any, checked: boolean): void {
     if (checked) {
       this.poolsArray.push(value);
     } else {

@@ -22,7 +22,7 @@
       <mat-form-field class="game-stamp-select">
         <mat-label>Select Currency</mat-label>
         <mat-select formControlName="currency">
-          <mat-option *ngFor="let currency of currency$ | async" [value]="currency.id">
+          <mat-option *ngFor="let currency of currency$ | async" [value]="currency.currency">
             {{currency.country + ' ' + currency.currency}}
           </mat-option>
         </mat-select>

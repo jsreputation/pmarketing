@@ -29,23 +29,23 @@ import { takeUntil } from 'rxjs/operators';
 export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
 
-  @Input() set value(obj) {
+  @Input() set value(obj: string) {
     if (obj) {
       const newDate = new Date(obj);
       this.writeValue(newDate);
     }
   }
 
-  @Input() public placeholder = 'Choose date';
+  @Input() public placeholder: string = 'Choose date';
   @Input() public max: Date | null = null;
   @Input() public min: Date | null = null;
-  public disabledState = false;
+  public disabledState: boolean = false;
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 
-  private destroy$ = new Subject();
+  private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;

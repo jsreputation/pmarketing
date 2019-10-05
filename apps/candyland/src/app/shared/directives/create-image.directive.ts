@@ -44,7 +44,7 @@ export class CreateImageDirective {
       );
   }
 
-  public b64toBlob(dataURI): any {
+  public b64toBlob(dataURI: string): Blob {
 
     const byteString = atob(dataURI.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);

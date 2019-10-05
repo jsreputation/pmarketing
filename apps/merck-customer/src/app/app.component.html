@@ -16,7 +16,7 @@
 	<div class="bottom-bar-item" (click)="onTabNavigate('home')">
 		<img
 			[src]="pageProperties.bottomSelectedItem === 'home' ? 'assets/tabs/home_selected.png' : 'assets/tabs/home_unselected.png'">
-		<span [ngClass]="pageProperties.bottomSelectedItem === 'home' ? 'selected' : 'unselected'">{{STATIC_HOME | translate}}</span>
+		<span [ngClass]="pageProperties.bottomSelectedItem === 'home' ? 'selected' : 'unselected'" translate>STATIC_HOME</span>
 	</div>
 	<div class="bottom-bar-item" (click)="onTabNavigate('find-pharmacy')">
 		<img
@@ -26,7 +26,7 @@
 	<div class="bottom-bar-item" (click)="onTabNavigate('account')">
 		<img
 			[src]="pageProperties.bottomSelectedItem === 'account' ? 'assets/tabs/profile_selected.png' : 'assets/tabs/profile_unselected.png'">
-		<span translate [ngClass]="pageProperties.bottomSelectedItem === 'account' ? 'selected' : 'unselected'">STATIC_ACCOUNT</span>
+		<span [ngClass]="pageProperties.bottomSelectedItem === 'account' ? 'selected' : 'unselected'" translate>STATIC_ACCOUNT</span>
 	</div>
 </div>
 <router-outlet (activate)="onActivate($event)"></router-outlet>

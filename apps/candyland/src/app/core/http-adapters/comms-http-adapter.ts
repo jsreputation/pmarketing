@@ -1,5 +1,4 @@
 import * as moment from 'moment';
-import { IJsonApiItem } from '@cl-core/http-services/jsonapi.payload';
 import { ICommTemplateAttributes, IComm, ICommEventAttributes } from '@perx/whistler';
 
 export class CommsHttpAdapter {

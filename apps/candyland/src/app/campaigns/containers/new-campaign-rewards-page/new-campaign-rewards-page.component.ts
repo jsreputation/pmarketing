@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -15,7 +16,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   @Input() public tenantSettings: ITenantsProperties;
   public isFirstInit: boolean = true;
   public form: FormGroup;
-  public defaultValue = {
+  public defaultValue: any = {
     rewardsOptions: {
       enableProbability: false,
       rewards: []
@@ -30,7 +31,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
     public cd: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
     super(1, store, stepConditionService, cd);
     this.initForm();
@@ -60,17 +62,21 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
         id: null
       })
     });
-    this.store.currentCampaign$
-      .asObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && this.isFirstInit;
-        if (isFirstTimeRenderFromAPIResponse) {
-          this.isFirstInit = false;
-          this.form.patchValue(data);
-        }
-      });
-    this.form.patchValue(this.defaultValue);
+    if (this.route.snapshot.params.id) {
+      this.store.currentCampaign$
+        .asObservable()
+        .pipe(untilDestroyed(this))
+        .subscribe(data => {
+          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.times && this.isFirstInit;
+          if (isFirstTimeRenderFromAPIResponse) {
+            this.isFirstInit = false;
+            const limitsData = Object.assign({}, data);
+            this.form.patchValue(limitsData);
+          }
+        });
+    } else {
+      this.form.patchValue(this.defaultValue);
+    }
   }
 
   private subscribeFormValueChange(): void {

@@ -10,7 +10,7 @@ export class EngagementsListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<IEngagement>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'attributes_type', 'actions'];
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public itemAction: EventEmitter<number> = new EventEmitter();
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
