@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
 import { GeneralStaticDataService } from '@perx/core';
-import { IJsonApiPatchItem, IJsonApiPostItem } from './jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +39,11 @@ export class SurveyHttpService {
     return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: IJsonApiPostItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public createSurvey(data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: IJsonApiPatchItem<any>): Observable<IResponseApi<IEngagementApi>> {
+  public updateSurvey(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
     return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 

@@ -21,14 +21,14 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./ink.component.scss']
 })
 export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy {
-  @Input() public triangle = false;
-  @Input() public border = false;
+  @Input() public triangle: boolean = false;
+  @Input() public border: boolean = false;
 
   @ContentChild(InkHostDirective, {static: false}) public inkHost: InkHostDirective;
   @ContentChildren(InkListenerDirective, {descendants: true}) public inkListener: QueryList<InkListenerDirective>;
   @ViewChild(InkBarDirective, {static: false}) public inkBar: InkBarDirective;
 
-  private destroy$ = new Subject();
+  private destroy$: Subject<any> = new Subject();
 
   public ngAfterViewInit(): void {
     this.getHost();
@@ -49,7 +49,7 @@ export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy 
     }
   }
 
-  private runHandlerFirst(inkListeners): void {
+  private runHandlerFirst(inkListeners: QueryList<InkListenerDirective>): void {
     inkListeners.changes
       .pipe(
         takeUntil(this.destroy$)
@@ -75,7 +75,7 @@ export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy 
     }
   }
 
-  private setInkBarToInkListener(inkListeners): void {
+  private setInkBarToInkListener(inkListeners: QueryList<InkListenerDirective>): void {
     inkListeners.toArray().forEach(ink => ink.inkBar = this.inkBar);
   }
 

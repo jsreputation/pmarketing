@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardItemComponent } from './reward-item.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RewardItemComponent', () => {

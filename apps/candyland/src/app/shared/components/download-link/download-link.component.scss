@@ -2,7 +2,8 @@
 
 :host {
   width: 100%;
-  font-size: 1.2rem;
+  
+  @include typo-caption;
 }
 
 .download-link {

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoutingStateService {
-  private history = [];
+  private history: any[] = [];
 
   constructor(private router: Router) {
   }

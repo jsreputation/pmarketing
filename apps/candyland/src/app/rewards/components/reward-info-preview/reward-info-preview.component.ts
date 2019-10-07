@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 export class RewardInfoPreviewComponent implements OnInit, OnDestroy {
   @Input() public data: any;
 
-  public imageControl = new FormControl();
+  public imageControl: FormControl = new FormControl();
 
   public ngOnInit(): void {
     this.initRewardImage();

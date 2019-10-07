@@ -24,12 +24,9 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   public id: string;
   public form: FormGroup;
-  public pinataData: {
-    pinata: IGraphic[],
-    background: IGraphic[]
-  };
+  public pinataData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
-  private destroy$ = new Subject();
+  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -136,7 +133,6 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       ]],
       pinata: [null, [Validators.required]],
       background: [null, [
-        // Validators.required
       ]],
       buttonText: ['start playing', [
         Validators.required,
@@ -146,18 +142,19 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getDefaultValue(data: any): any {
+  private getDefaultValue(data: IGameDefaultData): IPinataForm {
     return {
       name: 'Hit the Pinata Template',
       headlineMessage: 'Tap the Piñata and Win!',
       subHeadlineMessage: 'Tap the piñata until you get a reward!',
       buttonText: 'start playing',
       [ControlsName.pinata]: data.pinata[0],
-      [ControlsName.background]: data.background[0]
+      [ControlsName.background]: data.background[0],
+      image_url: null
     };
   }
 
-  private getPinataData(): Observable<any> {
+  private getPinataData(): Observable<IGameDefaultData> {
     return this.pinataService.getPinataData();
   }
 
@@ -169,7 +166,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handleRouteParams(): Observable<any> {
+  private handleRouteParams(): Observable<null | IPinataForm> {
     return this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
@@ -184,7 +181,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private checkGameType(pinata): void {
+  private checkGameType(pinata: IPinataForm): void {
     if (pinata && pinata.gameType !== 'tap') {
       console.warn('Wrong type of game!');
       this.router.navigateByUrl('/engagements');

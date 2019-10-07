@@ -26,18 +26,18 @@ import { noop } from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 export class ChipListComponent implements OnDestroy, ControlValueAccessor {
-  @Input() public visible = true;
-  @Input() public selectable = true;
-  @Input() public removable = true;
-  @Input() public addOnBlur = true;
+  @Input() public visible: boolean = true;
+  @Input() public selectable: boolean = true;
+  @Input() public removable: boolean = true;
+  @Input() public addOnBlur: boolean = true;
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Input() set value(setValue: string[]) {
     this.writeValue(setValue);
   }
 
-  public labels = [];
-  public control = new FormControl();
+  public labels: string[] = [];
+  public control: FormControl = new FormControl();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -59,7 +59,7 @@ export class ChipListComponent implements OnDestroy, ControlValueAccessor {
     this.onChange(this.labels);
   }
 
-  public remove(label): void {
+  public remove(label: string): void {
     const index = this.labels.indexOf(label);
 
     if (index >= 0) {
