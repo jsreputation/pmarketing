@@ -1,7 +1,7 @@
 <div class="cover"></div>
 <div class="main-container">
 	<div class="loyalty-section">
-      <perx-core-loyalty-summary class="loyalty-item" [subTitleFn]="subTitleFn">
+      <perx-core-loyalty-summary [titleFn]="titleFn" class="loyalty-item" [subTitleFn]="subTitleFn">
       </perx-core-loyalty-summary>
       <button mat-flat-button (click)="myQrClicked()">{{"STATIC_MY_QR" | translate}}</button>
   </div>
