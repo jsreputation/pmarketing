@@ -1,3 +1,5 @@
+import { IReward } from '../../rewards/models/reward.model';
+
 export enum VoucherState {
   issued = 'issued',
   redeemed = 'redeemed',
@@ -30,21 +32,58 @@ interface IVoucherDescription {
  */
 export interface IVoucher {
   id: number;
+  /**
+   * @deprecated
+   */
   rewardId: number; // use at \lib\vouchers\vouchers.service.ts
+  reward: IReward;
   state: VoucherState;
+  /**
+   * @deprecated
+   */
   name: string;
   code?: string;
+  /**
+   * @deprecated
+   */
   redemptionType: RedemptionType;
+  /**
+   * @deprecated
+   */
   thumbnailImg: string;
+  /**
+   * @deprecated
+   */
   rewardBanner: string;
+  /**
+   * @deprecated
+   */
   merchantImg: string;
+  /**
+   * @deprecated
+   */
   merchantName: string;
+  /**
+   * @deprecated
+   */
   merchantId?: number;
   expiry: Date | null;
   redemptionDate?: Date | null;
+  /**
+   * @deprecated
+   */
   description: IVoucherDescription[];
+  /**
+   * @deprecated
+   */
   redemptionSuccessTxt?: string;
+  /**
+   * @deprecated
+   */
   redemptionSuccessImg?: string;
+  /**
+   * @deprecated
+   */
   categories?: string[];
 }
 

@@ -138,6 +138,7 @@ export class V4VouchersService implements IVoucherService {
     return {
       id: v.id,
       rewardId: reward.id,
+      reward: null,
       state: v.state,
       name: v.name,
       code: v.voucher_code,

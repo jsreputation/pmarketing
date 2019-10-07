@@ -192,6 +192,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     return {
       id: v.id,
       rewardId: reward.id,
+      reward: null,
       state: v.state,
       name: v.name,
       code: v.voucher_code,
