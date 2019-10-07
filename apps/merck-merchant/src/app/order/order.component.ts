@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ProductService, IProduct } from '../services/product.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ProductService, IProduct} from '../services/product.service';
 import {IMerchantAdminService, IMerchantAdminTransaction, NotificationService} from '@perx/core';
 import {from} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
@@ -33,7 +33,8 @@ export class OrderComponent implements OnInit {
     private productService: ProductService,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
-  ) {}
+  ) {
+  }
 
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;
@@ -53,7 +54,7 @@ export class OrderComponent implements OnInit {
 
   private checkUpdatedRewards(): void {
     this.selectedProducts = this.rewards.filter(reward => reward.quantity > 0);
-    this.totalPoints = this.selectedProducts.reduce((sum, current) =>  sum + current.quantity  * current.pointsPerUnit, 0);
+    this.totalPoints = this.selectedProducts.reduce((sum, current) => sum + current.quantity * current.pointsPerUnit, 0);
   }
 
   public toggleSummary(): void {

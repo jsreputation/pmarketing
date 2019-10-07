@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { IPayload } from '../order/order.component';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {IPayload} from '../order/order.component';
+import {Router} from '@angular/router';
 import {
   NotificationService,
   RewardsService,
@@ -8,8 +8,8 @@ import {
   IVoucherService,
   IMerchantAdminService, Voucher
 } from '@perx/core';
-import { flatMap } from 'rxjs/operators';
-import { HttpResponseBase } from '@angular/common/http';
+import {flatMap} from 'rxjs/operators';
+import {HttpResponseBase} from '@angular/common/http';
 
 interface IHttpResponseBase extends HttpResponseBase {
   error: {
@@ -34,7 +34,8 @@ export class RedeemComponent implements OnInit {
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private merchantService: IMerchantAdminService
-  ) {}
+  ) {
+  }
 
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;

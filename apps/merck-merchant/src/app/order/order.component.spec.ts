@@ -1,25 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrderComponent } from './order.component';
-import { HeaderComponent } from '../header/header.component';
-import { OrderQuantityComponent } from '../order/order-quantity/order-quantity.component';
-import { MatIconModule, MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {OrderComponent} from './order.component';
+import {HeaderComponent} from '../header/header.component';
+import {OrderQuantityComponent} from '../order/order-quantity/order-quantity.component';
+import {MatIconModule, MatToolbarModule, MatListModule, MatDividerModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 import {ProductService} from '../services/product.service';
 import {from, of} from 'rxjs';
-import { Type } from '@angular/core';
+import {Type} from '@angular/core';
 import {IMerchantAdminService, NotificationService} from '@perx/core';
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
   let fixture: ComponentFixture<OrderComponent>;
-  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
-  const locationStub = { back: () => {} };
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
+  const locationStub = {
+    back: () => {
+    }
+  };
   const routerStub = {
     navigate: () => ({}),
-    getCurrentNavigation: () =>  (
+    getCurrentNavigation: () => (
       {
         extras: {
           state: {
@@ -105,20 +108,21 @@ describe('OrderComponent', () => {
         HeaderComponent,
         OrderQuantityComponent
       ],
-      imports: [ MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule ],
+      imports: [MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule],
       providers: [
-        { provide: Router, useValue: routerStub },
-        { provide: ProductService, useValue: productServiceStub },
-        { provide: Location, useValue: locationStub },
-        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
+        {provide: Router, useValue: routerStub},
+        {provide: ProductService, useValue: productServiceStub},
+        {provide: Location, useValue: locationStub},
+        {provide: IMerchantAdminService, useValue: merchantAdminServiceStub},
         {
           provide: NotificationService, useValue: {
-            addSnack: () => {}
+            addSnack: () => {
+            }
           }
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -145,12 +149,12 @@ describe('OrderComponent', () => {
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
       },
-      {
-        name: 'Glucophage XR Tab',
-        description: '500mg 60\'s',
-        imageUrl: 'https://picsum.photos/200',
-        pointsPerUnit: 5,
-      }];
+        {
+          name: 'Glucophage XR Tab',
+          description: '500mg 60\'s',
+          imageUrl: 'https://picsum.photos/200',
+          pointsPerUnit: 5,
+        }];
       const productServiceSpy = spyOn(productService, 'getProducts').and.returnValue(of(productsStub));
       component.ngOnInit();
       expect(productServiceSpy).toHaveBeenCalled();
@@ -160,7 +164,7 @@ describe('OrderComponent', () => {
 
   it('should update product quantity to 5', () => {
     component.newQuantity({qty: 5, index: 0});
-    expect (component.rewards[0].quantity).toBe(5);
+    expect(component.rewards[0].quantity).toBe(5);
   });
 
   it('should toggleSummary', () => {
@@ -187,10 +191,10 @@ describe('OrderComponent', () => {
       IMerchantAdminService as Type<IMerchantAdminService>);
     const merchantAdminServiceSpy = spyOn(merchantAdminService, 'createTransaction')
       .and.returnValue(
-      of(transaction)
-    );
+        of(transaction)
+      );
     const notificationService: NotificationService = fixture.debugElement.injector.get
-      <NotificationService>(NotificationService as Type<NotificationService>);
+      < NotificationService > (NotificationService as Type<NotificationService>);
     const notificationSpy = spyOn(notificationService, 'addSnack');
 
     const router: Router = fixture.debugElement.injector.get(Router);
