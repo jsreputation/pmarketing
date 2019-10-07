@@ -76,7 +76,6 @@ interface WGameDisplayProperties {
   button: string;
   sub_title: string;
   background_img_url?: string;
-  nb_gifts_to_drop?: number;
 }
 
 interface Outcome {
@@ -97,6 +96,7 @@ interface WTreeDisplayProperties extends WGameDisplayProperties {
   nb_hanged_gifts: number;
   gift_box_img_url: string;
   background_img_url: string;
+  nb_gifts_to_drop?: number;
 }
 
 interface WPinataDisplayProperties extends WGameDisplayProperties {
