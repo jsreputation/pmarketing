@@ -15,25 +15,10 @@ describe('VouchersService', () => {
   const mockIVouchers: IVoucher[] = [
     {
       id: 21,
-      rewardId: 5,
       reward: null,
       state: VoucherState.issued,
-      name: 'General Indoor Studio package @ $99',
       code: null,
-      redemptionType: RedemptionType.pin,
-      thumbnailImg: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png',
-      rewardBanner: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png',
-      merchantImg: null,
-      merchantName: 'Lumiere Photography',
       expiry: new Date('Fri Jan 31 2020 23:59:00 GMT+0800 (Philippine Standard Time)'),
-      redemptionDate: null,
-      description: [{
-        title: 'Please visit',
-        content: '',
-        tag: []
-      }],
-      redemptionSuccessTxt: null,
-      redemptionSuccessImg: null
     }
   ];
   const mockVoucherDetail: IV4Voucher = {

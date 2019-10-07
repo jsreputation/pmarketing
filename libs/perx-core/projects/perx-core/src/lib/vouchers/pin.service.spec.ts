@@ -4,7 +4,7 @@ import { VouchersModule } from './vouchers.module';
 import { IVoucherService } from './ivoucher.service';
 import { RewardsService } from '../rewards/rewards.service';
 import { of } from 'rxjs';
-import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
+import { IVoucher, VoucherState } from './models/voucher.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../../public-api';
 import { Type } from '@angular/core';
@@ -48,25 +48,10 @@ describe('PinService', () => {
   it('should get pin from voucher Id', (done: DoneFn) => {
     const mockReturn: IVoucher = {
       id: 1,
-      rewardId: 52,
       reward: null,
       state: VoucherState.expired,
-      name: 'Vidyut what are you doing',
       code: '697974626635625878704f6750536e4b5231673762773d3d',
-      redemptionType: RedemptionType.pin,
-      thumbnailImg: '',
-      rewardBanner: '',
-      merchantImg: '',
-      merchantName: 'Kluang Station',
       expiry: new Date('2019-04-30T15:59:59.999Z'),
-      redemptionDate: new Date(),
-      description: [{
-        title: '',
-        content: '',
-        tag: []
-      }],
-      redemptionSuccessTxt: '',
-      redemptionSuccessImg: ''
     };
 
     spyOn(vouchersService, 'get').and.returnValue(of(mockReturn));
