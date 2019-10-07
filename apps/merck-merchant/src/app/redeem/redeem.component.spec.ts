@@ -49,7 +49,8 @@ describe('RedeemComponent', () => {
       {
         id: 23,
         currencyCode: 'MYR',
-        price: 0
+        price: 0,
+        points: 0
       }
     ],
     merchantId: null,
@@ -70,7 +71,7 @@ describe('RedeemComponent', () => {
 
   const merchantAdminServiceStub = {
     issueVoucher: () => of()
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
