@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/perx-blackcomb-pages",
       "sourceRoot": "projects/perx-blackcomb-pages/src",
-      "prefix": "lib",
+      "prefix": "perx-blackcomb-pages",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -38,5 +38,10 @@
         }
       }
     }},
-  "defaultProject": "perx-blackcomb-pages"
+  "defaultProject": "perx-blackcomb-pages",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

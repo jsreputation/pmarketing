@@ -1,10 +1,22 @@
 import { NgModule } from '@angular/core';
-import { PerxBlackcombPagesComponent } from './perx-blackcomb-pages.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileModule } from '@perx/core';
+
+const comps: any[] = [
+  AccountComponent
+];
 
 @NgModule({
-  declarations: [PerxBlackcombPagesComponent],
   imports: [
+    ProfileModule
   ],
-  exports: [PerxBlackcombPagesComponent]
+  exports: [
+    ...comps
+  ],
+  declarations: [
+    ...comps
+  ]
 })
-export class PerxBlackcombPagesModule { }
+export class PerxBlackcombPagesModule {
+  
+}

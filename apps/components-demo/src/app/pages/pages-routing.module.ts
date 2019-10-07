@@ -17,6 +17,7 @@ import {
   TncComponent,
   VoucherDetailPageComponent
 } from '@perx/core';
+
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
