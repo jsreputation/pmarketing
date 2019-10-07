@@ -1,23 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ReportHeaderComponent } from './report-header.component';
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ReportLinearGraphicComponent } from './report-linear-graphic.component';
 
-describe('ReportHeaderComponent', () => {
-  let component: ReportHeaderComponent;
-  let fixture: ComponentFixture<ReportHeaderComponent>;
+describe('ReportLinearGraphicComponent', () => {
+  let component: ReportLinearGraphicComponent;
+  let fixture: ComponentFixture<ReportLinearGraphicComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportHeaderComponent ],
+      declarations: [ ReportLinearGraphicComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportHeaderComponent);
+    fixture = TestBed.createComponent(ReportLinearGraphicComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
