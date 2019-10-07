@@ -1,36 +1,47 @@
 <div class="main-container">
-	<img src="assets/logo.png">
-	<div class="logo-title">
-		<ng-container i18n="@@login-subtitle">Diabetes Loyality Program</ng-container>
-	</div>
-	<div class="content-container">
-		<div class="main-heading" translate>STATIC_LOGIN</div>
-		<div class="subtitle"><ng-container>{{"STATIC_NOT_MEMEBER" | translate }}</ng-container><span translate class="link" (click)="goToSignup()" translate>SIGN_UP_NOT_MEMBER</span></div>
-		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-			<mat-form-field class="full-width__input">
-				<mat-select [(value)]="selectedCountry">
-					<mat-option value="+852"><ng-container>{{"COUNTRY_HONGKONG" | translate}}</ng-container>(+852)</mat-option>
-					<mat-option value="+853"><ng-container>{{ "COUNTRY_MACAU" | translate}}</ng-container> (+853)</mat-option>
-					<mat-option value="+86"><ng-container>{{ "COUNTRY_CHINA" | translate}}</ng-container> (+86)</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>STATIC_MOBILE_NO</mat-label>
-				<input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No" formControlName="mobileNo" required>
-				<mat-error *ngIf="loginForm.hasError('mobileNo')">
-					Mobile No is <strong>required</strong>
-				</mat-error>
-			</mat-form-field>
-			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>STATIC_PASSWORD</mat-label>
-				<input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password" formControlName="password" type="password" required>
-				<mat-error *ngIf="loginForm.hasError('password')">
-					Password is <strong>required</strong>
-				</mat-error>
-			</mat-form-field>
-			<div class="forgot-text" (click)="goToForgotPassword()" translate>STATIC_FORGOT_PASSWORD</div>
-			<button mat-flat-button type="submit" class="full-width__button">{{"STATIC_LOGIN" | translate}}</button>
-			<div class="bottom-text" translate>STATIC_LEARN_MORE</div>
-		</form>
-	</div>
+  <img src="assets/logo.png">
+  <div class="logo-title">
+    <ng-container>{{"LOGIN_SUBTITLE"|translate}}</ng-container>
+  </div>
+  <div class="content-container">
+    <div class="main-heading" translate>STATIC_LOGIN</div>
+    <div class="subtitle">
+      <ng-container>{{"STATIC_NOT_MEMEBER" | translate }}</ng-container><span translate class="link"
+        (click)="goToSignup()" translate>SIGN_UP_NOT_MEMBER</span>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width__input">
+        <mat-select [(value)]="selectedCountry">
+          <mat-option value="+852">
+            <ng-container>{{"COUNTRY_HONGKONG" | translate}}</ng-container>(+852)
+          </mat-option>
+          <mat-option value="+853">
+            <ng-container>{{ "COUNTRY_MACAU" | translate}}</ng-container> (+853)
+          </mat-option>
+          <mat-option value="+86">
+            <ng-container>{{ "COUNTRY_CHINA" | translate}}</ng-container> (+86)
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field color="primary" class="full-width__input">
+        <mat-label translate>STATIC_MOBILE_NO</mat-label>
+        <input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No"
+          formControlName="mobileNo" required>
+        <mat-error *ngIf="loginForm.hasError('mobileNo')">
+          Mobile No is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color="primary" class="full-width__input">
+        <mat-label translate>STATIC_PASSWORD</mat-label>
+        <input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password"
+          formControlName="password" type="password" required>
+        <mat-error *ngIf="loginForm.hasError('password')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="forgot-text" (click)="goToForgotPassword()" translate>STATIC_FORGOT_PASSWORD</div>
+      <button mat-flat-button type="submit" class="full-width__button">{{"STATIC_LOGIN" | translate}}</button>
+      <div class="bottom-text" translate>STATIC_LEARN_MORE</div>
+    </form>
+  </div>
 </div>

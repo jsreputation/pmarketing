@@ -161,3 +161,22 @@ export { ThemesService } from './lib/utils/themes/themes.service';
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
+
+/**
+ * Outcome
+ */
+export { PagesModule } from './lib/pages/pages.module';
+export { AccountComponent } from './lib/pages/account/account.component';
+export { ContactUsComponent } from './lib/pages/contact-us/contact-us.component';
+export { GameComponent } from './lib/pages/game/game.component';
+export { HistoryComponent } from './lib/pages/history/history.component';
+export { HomeComponent } from './lib/pages/home/home.component';
+export { RewardPageComponent } from './lib/pages/reward-page/reward-page.component';
+export { LoadingComponent } from './lib/pages/loading/loading.component';
+export { LoginComponent } from './lib/pages/login/login.component';
+export { RedeemComponent } from './lib/pages/redeem/redeem.component';
+export { RewardDetailPageComponent } from './lib/pages/reward-detail-page/reward-detail-page.component';
+export { StampCardComponent } from './lib/pages/stamp-card/stamp-card.component';
+export { SurveyPageComponent } from './lib/pages/survey-page/survey-page.component';
+export { TncComponent } from './lib/pages/tnc/tnc.component';
+export { VoucherDetailPageComponent } from './lib/pages/voucher-detail-page/voucher-detail-page.component';
