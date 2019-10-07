@@ -3,9 +3,9 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
 import express from 'express';
-import { readFileSync } from 'fs';
+import {readFileSync} from 'fs';
 import axios from 'axios';
-import { join } from 'path';
+import {join} from 'path';
 
 // Express server
 const app = express();
@@ -79,6 +79,7 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
     const mechId = req.body.mech_id;
     const campaignId = req.body.campaign_id;
     const userId = req.body.identifier;
+    const scope = req.body.scope;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
@@ -86,7 +87,8 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
         username,
         password,
         mech_id: mechId,
-        campaign_id: campaignId
+        campaign_id: campaignId,
+        scope
       },
       {
         params: {
@@ -228,11 +230,11 @@ if (process.env.PRODUCTION) {
 
   // Serve static files from /../../perx-microsite
   app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
-  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), { maxAge: '1y' }));
+  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), {maxAge: '1y'}));
 
   // All regular routes use the index.html
   app.get('*', (req, res) => {
-    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
+    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), {req});
   });
 }
 

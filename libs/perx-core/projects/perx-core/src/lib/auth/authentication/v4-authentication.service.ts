@@ -118,14 +118,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scop?: string): Observable<ILoginResponse> {
+  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<ILoginResponse> {
     const authenticateBody: IV4AuthenticateUserRequest = {
       url: location.host,
       username: user,
       password: pass,
       ...mechId && { mech_id: mechId },
       ...campaignId && { campaign_id: campaignId },
-      ...scop && { scope: scop }
+      ...scope && { scope }
     };
 
     return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
