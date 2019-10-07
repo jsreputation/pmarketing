@@ -25,7 +25,7 @@ export class OrderComponent implements OnInit {
   public payload: IPayload;
   public rewards: IProduct[];
   public isSummaryActivated: boolean = false;
-  public selectedProducts: IProduct[];
+  public selectedProducts: IProduct[] = [];
   public totalPoints: number;
 
   constructor(
