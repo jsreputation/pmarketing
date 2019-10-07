@@ -1,4 +1,4 @@
-<div class="graphic-line" *ngFor="let item of data.data">
+<div class="graphic-line" *ngFor="let item of data?.data">
   <div class="graphic-prefix" *ngIf="item?.choices.img_url || item?.choices.text"
        [class.small]="!existPrefixText"
   >

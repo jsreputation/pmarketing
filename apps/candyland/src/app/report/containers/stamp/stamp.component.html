@@ -1,13 +1,13 @@
 <article class="report-page">
   <cl-report-header (closePage)="onClose()"
-                    [title]="data.title"
+                    [title]="data?.title"
   ></cl-report-header>
 
   <mat-card class="card full-width report-info-block">
     <div class="height-line"></div>
     <div class="card-content">
       <div class="card-row">
-        <div *ngFor="let info of data.summaryInfo" class="report-info">
+        <div *ngFor="let info of data?.summaryInfo" class="report-info">
           <p class="report-info-title">
             {{info.title}}
           </p>
@@ -30,7 +30,7 @@
   <mat-card class="card full-width report-info-block">
     <div class="card-header card-row align-items-center">
       <p class="report-small-title">Stamps Fill Rate</p>
-      <p class="report-xs-title">{{data.total}} Total Customers</p>
+      <p class="report-xs-title">{{data?.total}} Total Customers</p>
     </div>
     <div class="card-content">
       <div class="card-row">
