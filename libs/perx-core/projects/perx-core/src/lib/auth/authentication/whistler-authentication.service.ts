@@ -1,8 +1,8 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { tap, map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
@@ -31,6 +31,12 @@ interface ICognitoCreateAndLogin {
   title: string;
   urn: string;
 }
+
+interface IUserJWTRequest {
+  identifier: string;
+  url: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -126,15 +132,21 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const user = (window as any).primaryIdentifier || this.getPI();
-    const params = new HttpParams().append('identifier', user).append('url', location.host);
+    const userJWTRequest: IUserJWTRequest = {
+      url: location.host,
+      identifier: user
+    };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, null, { params });
+    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
   private createUserWithPI(pi: string): Observable<IJsonApiItemPayload<ICognitoCreateAndLogin>> {
-    const params = new HttpParams().append('identifier', pi).append('url', location.host);
+    const userJWTRequest: IUserJWTRequest = {
+      url: location.host,
+      identifier: pi
+    };
 
-    return this.http.post<IJsonApiItemPayload<ICognitoCreateAndLogin>>(this.createUsersEndPoint, null, { params });
+    return this.http.post<IJsonApiItemPayload<ICognitoCreateAndLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {

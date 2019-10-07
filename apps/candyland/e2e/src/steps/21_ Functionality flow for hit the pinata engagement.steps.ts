@@ -2,6 +2,7 @@ import { Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by , protractor } from 'protractor';
 import { CreateHitThePinataAppPage } from '../pages/candylandApp.po';
+import * as path from 'path' ;
 
 let PageHitThePinata: CreateHitThePinataAppPage;
 
@@ -67,33 +68,46 @@ Then(/^5_I should see the change in the preview element.$/, async () => {
 });
 
 // Verifying the functionality of the file upload field for hit the pinata.
-/*Given('{int}_I am on the hit the pinata creation page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Given(/^6_I am on the hit the pinata creation page.$/, async () => {
+  PageHitThePinata = new CreateHitThePinataAppPage();
+  await PageHitThePinata.navigateToHitThePinata();
+  await browser.sleep(3000);
+});
 
-When('{int}_I upload a background', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
-
-Then('{int}_I should see the background in the preview element.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^6_I upload a background$/, async () => {
+  const FileToUpload = './testArtifacts/testimg.png';
+  const absolutePath = path.resolve(__dirname, FileToUpload);
+  const ec = protractor.ExpectedConditions;
+  // waiting for the upload field to load
+  await browser.wait(ec.presenceOf(element(by.css('input[type=file]'))), 6000);
+  // uploading test img file into field
+  await element(by.css('input[type=file]')).sendKeys(absolutePath);
+  await browser.sleep(3000);
+});
+Then(/^6_I should see the background in the preview element.$/, async () => {
+  // doing an assertion based on the attribute of the img obj
+  expect(await element(by.css('div.image-wrap.ng-star-inserted>img.image')).getAttribute('alt')).to.be.contain('upload');
+});
 
 // Verifying the functionality of button text field
-Given('{int}_I am on the hit the pinata creation page.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+Given(/^7_I am on the hit the pinata creation page.$/, async () => {
+  PageHitThePinata = new CreateHitThePinataAppPage();
+  await PageHitThePinata.navigateToHitThePinata();
+  await browser.sleep(3000);
+});
 
-When('{int}_I input a test string on the message', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });
+When(/^7_I input a test string on the button text field$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // waiting for button text to load
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(3)), 6000);
+  // entering test string button text field
+  await element.all(by.css('input[type=text]')).get(3).clear();
+  await element.all(by.css('input[type=text]')).get(3).sendKeys('TestString003');
+  await browser.sleep(3000);
+});
 
-Then('{int}_I should see the change in the preview element.', function(int) {
-           // Write code here that turns the phrase above into concrete actions
-           return 'pending';
-         });*/
+Then(/^7_I should see the change in the preview element.$/, async () => {
+  // doing an assertion on the button text
+
+  expect(await element(by.css('button.mobile-preview-btn')).getText()).to.contain('TestString003');
+});

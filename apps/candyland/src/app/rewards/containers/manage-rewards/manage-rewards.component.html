@@ -14,9 +14,9 @@
   <!--Reward Info-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Reward Info
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-reward-info-form-group [formGroup]="form.get('rewardInfo')" [config]="config" [currency]="reward?.currency">
@@ -27,9 +27,9 @@
   <!--Merchant Info-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Merchant Info
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-reward-merchant-card (createMerchant)="openDialogCreateMerchant()"
@@ -44,18 +44,18 @@
   <!--  Vouchers-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Vouchers
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-reward-voucher-code-form-group [formGroup]="form.get('vouchers.voucherCode')" [form]="form" [config]="config">
       </cl-reward-voucher-code-form-group>
       <div class="card-section">
         <div class="card-header">
-          <p class="card-title">
+          <h2 class="card-title">
             Voucher Validity
-          </p>
+          </h2>
         </div>
         <div class="card-content">
           <cl-voucher-validity-form-group [formGroup]="form.get('vouchers.voucherValidity')" [config]="config">
@@ -68,9 +68,9 @@
   <!--Limits-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Limits
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-limit-form-group [formGroup]="form.get('limits')" [config]="config"></cl-limit-form-group>
