@@ -242,16 +242,15 @@ h1, h2, h3, h4, h5, p {
   }
 
   &-title {
-    @include typo-h5;
+    @include typo-h6;
 
     color: $base-font-color;
   }
 
   &-text {
-    @include typo-body1;
+    @include typo-body2;
 
     color: $base-font-color;
-    margin-top: ($vertical-padding * 0.5);
   }
 }
 
