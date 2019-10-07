@@ -3,9 +3,11 @@
     <!--template-->
     <mat-card class="card" *ngIf="campaign?.template">
       <div class="card-header">
-        <p class="card-title">Template</p>
+        <h2 class="card-title">Template</h2>
       </div>
-      <cl-engagement-item [data]="campaign?.template"></cl-engagement-item>
+      <div class="card-engagement-item-adjuster">
+        <cl-engagement-item [data]="campaign?.template"></cl-engagement-item>
+      </div>
     </mat-card>
     <!--rewards-->
     <mat-card class="card" *ngIf="campaign?.rewardsOptions?.rewards.length">
@@ -20,78 +22,81 @@
     <!--limits-->
     <mat-card class="card" *ngIf="campaign?.limits">
       <div class="card-header">
-        <p class="card-title">Play Limits</p>
+        <h2 class="card-title">Play Limits</h2>
       </div>
       <div class="card-content">
-        <div class="card-row stretch">
-          <div *ngIf="campaign?.limits?.times">
-            <label class="card-label">Limit per user</label>
-            <p class="card-value">{{campaign?.limits?.times}} time{{campaign?.limits?.times > 1 ? 's' : ''}}</p>
+        <dl class="card-definitions">
+          <div class="card-definitions-splitter">
+            <div *ngIf="campaign?.limits?.times">
+              <dt class="card-label">Limit per user</dt>
+              <dd class="card-value">{{campaign?.limits?.times}} time{{campaign?.limits?.times > 1 ? 's' : ''}}</dd>
+            </div>
+            <div *ngIf="campaign?.limits?.duration">
+              <dt class="card-label">Limit per duration</dt>
+              <dd class="card-value">{{campaign?.limits?.duration}}</dd>
+            </div>    
           </div>
-          <div *ngIf="campaign?.limits?.duration">
-            <label class="card-label">Limit per duration</label>
-            <p class="card-value">{{campaign?.limits?.duration}}</p>
-          </div>
-        </div>
+        </dl>
       </div>
     </mat-card>
     <!--campaign info-->
     <mat-card class="card" *ngIf="campaign?.campaignInfo">
       <div class="card-header">
-        <p class="card-title">
+        <h2 class="card-title">
           Campaign Info
-        </p>
+        </h2>
       </div>
 
       <div class="card-content">
-        <div *ngIf="campaign?.campaignInfo?.goal">
-          <label class="card-label">Campaign goal</label>
-          <p class="card-value">{{campaign?.campaignInfo?.goal}}</p>
-        </div>
-
-        <div *ngIf="campaign?.campaignInfo?.startDate">
-          <label class="card-label">Campaign duration</label>
-          <div class="card-row">
-            <div class="input-group">
-              <p class="card-value">{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</p>
-              <p class="card-value">&nbsp;{{campaign?.campaignInfo?.startTime}}</p>
-            </div>
-            <ng-container *ngIf="campaign?.campaignInfo?.endDate">
-              to
-              <div class="input-group">
-                <p class="card-value">{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</p>
-                <p class="card-value">&nbsp;{{campaign?.campaignInfo?.endTime}}</p>
-              </div>
-            </ng-container>
+        <dl class="card-definitions">
+          <div *ngIf="campaign?.campaignInfo?.goal">
+            <dt class="card-label">Campaign goal</dt>
+            <dd class="card-value">{{campaign?.campaignInfo?.goal}}</dd>
           </div>
-        </div>
 
-
-        <div *ngIf="campaign?.campaignInfo?.labels" class="card-chip-row">
-          <label class="card-label">Label</label>
-          <div class="card-row">
-            <span class="card-chip" *ngFor="let label of campaign?.campaignInfo?.labels">{{label}}</span>
+          <div *ngIf="campaign?.campaignInfo?.startDate">
+            <dt class="card-label">Campaign duration</dt>
+            <dd class="card-value">
+              <span>
+                <span>{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</span>
+                <span>&nbsp;{{campaign?.campaignInfo?.startTime}}</span>  
+              </span>
+              <ng-container *ngIf="campaign?.campaignInfo?.endDate">
+                <small>to</small>
+                <span>
+                  <span>{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</span>
+                  <span>&nbsp;{{campaign?.campaignInfo?.endTime}}</span>  
+                </span>
+              </ng-container>
+            </dd>
           </div>
-        </div>
+
+          <div *ngIf="campaign?.campaignInfo?.labels">
+            <dt class="card-label">Label</dt>
+            <dd class="card-value">
+              <span class="card-chip" *ngFor="let label of campaign?.campaignInfo?.labels">{{label}}</span>
+            </dd>
+          </div>    
+        </dl>
       </div>
     </mat-card>
     <!-- channel -->
     <mat-card class="card">
       <div class="card-header">
-        <p class="card-title">
+        <h2 class="card-title">
           Channel
-        </p>
+        </h2>
       </div>
       <div class="card-content">
-        <div class="card-row">
+        <h3 class="card-label">
           {{campaign?.channel?.type}}
-        </div>
+        </h3>
         <!--Message-->
         <div class="card-section" *ngIf="campaign?.channel?.message">
           <div class="card-header">
-            <p class="card-title">
+            <h3 class="card-title">
               Message
-            </p>
+            </h3>
           </div>
           <div class="card-content">
             {{campaign?.channel?.message}}
@@ -100,9 +105,9 @@
         <!--schedule-->
         <div class="card-section" *ngIf="campaign?.channel?.sendDate">
           <div class="card-header">
-            <p class="card-title">
+            <h3 class="card-title">
               Schedule date
-            </p>
+            </h3>
           </div>
 
           <div class="card-content">

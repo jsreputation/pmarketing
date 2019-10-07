@@ -27,6 +27,7 @@
 }
 
 .info-text {
-  font-size: 1.2rem;
+  @include typo-caption;
+
   color: $white;
 }

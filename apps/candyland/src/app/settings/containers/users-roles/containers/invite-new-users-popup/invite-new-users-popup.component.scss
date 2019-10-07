@@ -4,7 +4,7 @@
   &-section {
     padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
     border-radius: $border-radius;
-    background-color: $light-gray;
+    background-color: $lightest-gray;
 
     > * {
       margin-bottom: ($horizontal-padding * 0.5);
