@@ -64,11 +64,6 @@
     color: $secondary-color;
   }
 
-  &-row.input-group > span {
-    width: auto;
-    flex-shrink: 0;
-  }
-
   &-value {
     @include typo-input;
 
@@ -94,6 +89,11 @@
     span + small {
       margin-left: 0;
     }
+  }
+
+  &-row.input-group > span {
+    width: auto;
+    flex-shrink: 0;
   }
 
   &-label + &-value {
