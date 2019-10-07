@@ -55,8 +55,8 @@ export class LoginAppPage {
     return 'asdfjkl;';
   }
 
-  public getAccountId(): number {
-   return 222222222;
+  public getAccountId(): string {
+   return 'telco';
   }
 
   public getUserAccount(): string {
