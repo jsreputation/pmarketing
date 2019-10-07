@@ -71,11 +71,6 @@ interface IV4VoucherResponse {
   data: IV4Voucher;
 }
 
-interface IV4Image {
-  type: string;
-  url: string;
-}
-
 export interface IV4Voucher {
   custom_fields: any;
   given_by: any;
@@ -116,59 +111,14 @@ export class V4VouchersService implements IVoucherService {
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward = v.reward;
-    const images: IV4Image[] = reward.images || [];
-    let thumbnail: IV4Image = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
-    if (thumbnail === undefined) {
-      thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
-    }
-    const thumbnailImg = thumbnail && thumbnail.url;
-    const banner: IV4Image = images.find((image: IV4Image) => image.type === 'reward_banner');
-    const rewardBanner = banner && banner.url;
-    const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
-    const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
-    const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
-    let redemptionTypeFinal: RedemptionType = null;
-    if (v.redemption_type) {
-      if ((typeof v.redemption_type) === 'string') {
-        // @ts-ignore
-        redemptionTypeFinal = v.redemption_type;
-        // @ts-ignore
-      } else if (v.redemption_type.type) {
-        // @ts-ignore
-        redemptionTypeFinal = v.redemption_type.type;
-      }
-    }
-    redemptionTypeFinal = redemptionTypeFinal || v.voucher_type;
-    if (!(redemptionTypeFinal in RedemptionType)) {
-      redemptionTypeFinal = RedemptionType.txtCode;
-    }
-
-    let categories: string[];
-    if (reward.category_tags) {
-      categories = reward.category_tags.map(c => c.title);
-    }
 
     return {
       id: v.id,
-      rewardId: reward.id,
       reward: V4RewardsService.v4RewardToReward(reward),
       state: v.state,
-      name: v.name,
       code: v.voucher_code,
-      redemptionType: redemptionTypeFinal,
-      thumbnailImg,
-      rewardBanner,
-      merchantImg,
-      merchantName: reward.merchant_name,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
-      description: [
-        { title: 'Description', content: reward.description, tag: [] },
-        { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
-      ],
-      redemptionSuccessTxt,
-      redemptionSuccessImg,
-      categories
     };
   }
 
@@ -199,7 +149,7 @@ export class V4VouchersService implements IVoucherService {
         mergeAll(),
         map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
-        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.rewardId - v2.rewardId)),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.reward.id - v2.reward.id)),
         tap(vouchers => this.vouchers = vouchers)
       );
   }
@@ -268,7 +218,7 @@ export class V4VouchersService implements IVoucherService {
       }),
       mergeAll(1),
       map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v4Voucher))),
-      map((vouchers: IVoucher[]) => vouchers.filter(v => v.rewardId === rewardId && v.state === 'issued')),
+      map((vouchers: IVoucher[]) => vouchers.filter(v => v.reward.id === rewardId && v.state === 'issued')),
       filter((vouchers: IVoucher[]) => {
         if (current === 0) {
           firstPageVouchers = [

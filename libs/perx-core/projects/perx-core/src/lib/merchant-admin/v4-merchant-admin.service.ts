@@ -65,11 +65,6 @@ interface IV4MerchantAdminVoucher {
   redemption_text?: any;
 }
 
-interface IV4Image {
-  type: string;
-  url: string;
-}
-
 interface IV4RedeemVoucherResponse {
   data: IV4MerchantAdminVoucher;
   meta: {
@@ -102,59 +97,14 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   public static v4VoucherToVoucher(v: IV4MerchantAdminVoucher): IVoucher {
     const reward: IV4Reward = v.reward;
-    const images: IV4Image[] = reward.images || [];
-    let thumbnail: IV4Image = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
-    if (thumbnail === undefined) {
-      thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
-    }
-    const thumbnailImg = thumbnail && thumbnail.url;
-    const banner: IV4Image = images.find((image: IV4Image) => image.type === 'reward_banner');
-    const rewardBanner = banner && banner.url;
-    const merchantImg = v.reward.merchant_logo_url ? v.reward.merchant_logo_url : null;
-    const redemptionSuccessTxt = v.redemption_text ? v.redemption_text : null;
-    const redemptionSuccessImg = v.redemption_image ? v.redemption_image : null;
-    let redemptionTypeFinal: RedemptionType = null;
-    if (v.redemption_type) {
-      if ((typeof v.redemption_type) === 'string') {
-        // @ts-ignore
-        redemptionTypeFinal = v.redemption_type;
-        // @ts-ignore
-      } else if (v.redemption_type.type) {
-        // @ts-ignore
-        redemptionTypeFinal = v.redemption_type.type;
-      }
-    }
-    redemptionTypeFinal = redemptionTypeFinal || v.voucher_type;
-    if (!(redemptionTypeFinal in RedemptionType)) {
-      redemptionTypeFinal = RedemptionType.txtCode;
-    }
-
-    let categories: string[];
-    if (reward.category_tags) {
-      categories = reward.category_tags.map(c => c.title);
-    }
 
     return {
       id: v.id,
-      rewardId: reward.id,
       reward: V4RewardsService.v4RewardToReward(reward),
       state: v.state,
-      name: v.name,
       code: v.voucher_code,
-      redemptionType: redemptionTypeFinal,
-      thumbnailImg,
-      rewardBanner,
-      merchantImg,
-      merchantName: reward.merchant_name,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
-      description: [
-        { title: 'Description', content: reward.description, tag: [] },
-        { title: 'Terms and Conditions', content: reward.terms_and_conditions, tag: [] }
-      ],
-      redemptionSuccessTxt,
-      redemptionSuccessImg,
-      categories
     };
   }
   public createTransaction(): Observable<IMerchantAdminTransaction> {

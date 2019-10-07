@@ -16,7 +16,7 @@ export class PinService {
         let rewardId = '0000';
         if (voucher) {
           // tslint:disable-next-line: radix
-          rewardId = voucher.rewardId.toString();
+          rewardId = voucher.reward.id.toString();
         }
         return this.generatePinCode(rewardId);
       }));
