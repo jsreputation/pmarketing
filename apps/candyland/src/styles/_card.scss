@@ -72,10 +72,6 @@
     span {
       display: inline-block;
       margin-right: ($horizontal-padding * 0.75);
-
-      span:last-child {
-        margin-right: 0;
-      }
     }
 
     small {
@@ -94,6 +90,10 @@
   &-row.input-group > span {
     width: auto;
     flex-shrink: 0;
+  }
+
+  &-value span:last-child {
+    margin-right: 0;
   }
 
   &-label + &-value {
