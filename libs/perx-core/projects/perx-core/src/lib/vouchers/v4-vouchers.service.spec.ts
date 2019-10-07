@@ -83,7 +83,7 @@ describe('VouchersService', () => {
         reward_limit_per_user: null,
         reward_limit_per_user_balance: null,
       },
-      reward_price: null,
+      reward_price: [],
       terms_and_conditions: 'Up to 5 pax',
       tags: [],
       category_tags: []
