@@ -129,7 +129,7 @@ export class WhistlerGameService implements IGameService {
         treeImg: treedp.tree_img_url,
         giftImg: treedp.gift_box_img_url,
         nbHangedGift: treedp.nb_hanged_gifts,
-        nbGiftsToDrop: treedp.nb_gifts_to_drop || 1
+        nbGiftsToDrop: treedp.nb_gifts_to_drop || 1,
       };
     } else if (attributes.game_type === GameType.pinata) {
       type = TYPE.pinata;
