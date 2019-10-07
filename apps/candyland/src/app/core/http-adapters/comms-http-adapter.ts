@@ -1,13 +1,14 @@
 import * as moment from 'moment';
+import { ICommTemplateAttributes, IComm, ICommEventAttributes } from '@perx/whistler';
 
 export class CommsHttpAdapter {
-  public static transformTemplateAPIResponseToComm(data: ICommTemplateApi): IComm {
+  public static transformTemplateAPIResponseToComm(data: IJsonApiItem<ICommTemplateAttributes>): IComm {
     return {
       message: data.attributes.content
     };
   }
 
-  public static transformEventAPIResponseToComm(data: ICommEventApi): IComm {
+  public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
     return {
       schedule: {
         sendDate: new Date(data.attributes.send_at),

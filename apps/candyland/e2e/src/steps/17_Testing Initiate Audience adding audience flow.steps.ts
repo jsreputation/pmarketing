@@ -7,6 +7,7 @@ let AudienceApp: AudienceAppPage;
 // Ensure that audience tab is present
 Then(/^1_The audience tab should be present.$/, async () => {
  // waiting for the audience tab to load
+ await browser.executeScript('WalkMeAPI.stopFlow()');
  const ec = protractor.ExpectedConditions;
  await browser.wait(ec.presenceOf(element.all(by.css('h3')).get(5)), 6000);
  expect(await element.all(by.css('h3')).get(5).isPresent()).to.equal(true);

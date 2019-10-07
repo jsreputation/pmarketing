@@ -26,7 +26,7 @@ export class AddUserPopupComponent implements OnInit {
       {title: 'Gold_users', value: 'Gold_users'},
       {title: 'Silver tier', value: 'Silver_tier'},
       {title: 'Bronze tier', value: 'Bronze_tier'}
-    ],
+    ]
   };
 
   constructor(public dialogRef: MatDialogRef<AddUserPopupComponent>,
@@ -45,9 +45,11 @@ export class AddUserPopupComponent implements OnInit {
   }
 
   public add(): void {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+    this.dialogRef.close(this.form.value);
   }
 
   private initForm(): void {
@@ -68,16 +70,14 @@ export class AddUserPopupComponent implements OnInit {
       city: [],
       state: [],
       audienceList: [],
-      file: [],
+      file: [null, [
+        // Validators.required
+      ]]
     });
   }
 
   private getPools(): any {
-    const params = {
-      'page[number]': '1',
-      'page[size]': '20',
-    };
-    this.audiencesService.getAudiencesList(params)
+    this.audiencesService.getAudiencesList()
       .subscribe((data: any) => {
         this.pools = data;
       });

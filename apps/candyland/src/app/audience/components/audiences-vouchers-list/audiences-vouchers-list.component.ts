@@ -21,7 +21,7 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
     'actions'
   ];
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
-  @Output() public clickChangeExpiryDate = new EventEmitter();
+  @Output() public clickChangeExpiryDate: EventEmitter<any> = new EventEmitter();
 
   public ngAfterViewInit(): void {
     if (this.dataSource) {
@@ -29,7 +29,7 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
     }
   }
 
-  public changeExpiryDate(item): void {
+  public changeExpiryDate(item: any): void {
     this.clickChangeExpiryDate.emit(item);
   }
 }

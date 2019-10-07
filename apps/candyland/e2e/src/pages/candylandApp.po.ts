@@ -19,10 +19,12 @@ export class DashboardAppPage {
 
 export class EngagementAppPage {
 
-   public navigateToEngagement(): Promise<string> {
+  public navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string> ;
   }
-
+  public engagementTabOption(): ElementFinder {
+   return element.all(by.css('h3')).get(2);
+  }
 }
 
 export class CreateShakeTheTreeAppPage {
@@ -67,6 +69,14 @@ export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
     return browser.get('engagements/new-survey/questions') as Promise<string> ;
+ }
+
+}
+
+export class CreateHitThePinataAppPage {
+
+  public navigateToHitThePinata(): Promise<string> {
+    return browser.get('engagements/games/new-pinata') as Promise<string> ;
  }
 
 }

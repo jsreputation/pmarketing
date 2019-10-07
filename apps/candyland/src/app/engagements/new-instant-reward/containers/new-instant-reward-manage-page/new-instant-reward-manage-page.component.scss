@@ -4,11 +4,6 @@
   &-btn-cancel {
     padding-right: 0.8rem;
   }
-
-  &-form {
-    width: 100%;
-    margin-right: 4rem;
-  }
 }
 
 .game {
@@ -24,7 +19,8 @@
 }
 
 .info-text {
-  font-size: 1.2rem;
+  @include typo-caption;
+
   color: $white;
   display: block;
   min-width: 22rem;

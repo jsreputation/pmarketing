@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, GeoLocationService, sortByDistance, LocationsService, RewardsService, IReward } from '@perx/core';
+import { ILocation, LocationsService, RewardsService, IReward } from '@perx/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -16,7 +16,6 @@ export class LocationsComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private currentPosition: GeoLocationService,
     private locationService: LocationsService,
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
@@ -32,11 +31,7 @@ export class LocationsComponent implements OnInit {
       )
       .subscribe(
         (mid: number) => {
-          this.locations = sortByDistance(
-            this.currentPosition.positions(),
-            this.locationService.getFromMerchant(mid),
-            true
-          );
+          this.locations = this.locationService.getFromMerchant(mid);
         }
       );
     this.activeRoute.queryParams

@@ -14,11 +14,11 @@ export class VouchersHttpService {
     return this.http.get(ApiConfig.vouchersEntitiesPath + '/', { params });
   }
 
-  public getVoucher(id: string): any {
+  public getVoucher(id: string): Observable<any> {
     return this.http.get<any>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
-  public createVoucher(data: any): Observable<any> {
+  public createVoucher(data: IJsonApiPayload<IVouchersApi>): Observable<any> {
     return this.http.post<any>(ApiConfig.voucherBatchPath, data);
   }
 }

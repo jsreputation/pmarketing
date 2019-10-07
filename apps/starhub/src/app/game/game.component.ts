@@ -60,15 +60,15 @@ export class GameComponent implements OnInit {
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;
             this.notificationService.addPopup({
-              title: 'Oops, you’ve already played.',
-              text: 'Try again tomorrow! You can play the game till 20 Oct.',
-              buttonTxt: 'Close',
+              title: game.results.noOutcome.title,
+              text: game.results.noOutcome.subTitle,
+              buttonTxt: game.results.noOutcome.button,
               afterClosedCallBack: this
             });
           }
 
           this.analytics.addEvent({
-            pageName: 'rewards:game',
+            pageName: `rewards:game:${this.title}`,
             pageType: PageType.static,
             siteSectionLevel2: 'rewards:game',
             siteSectionLevel3: 'rewards:game'

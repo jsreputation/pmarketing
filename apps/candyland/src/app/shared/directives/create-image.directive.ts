@@ -21,7 +21,7 @@ export class CreateImageDirective {
     return this.downloadImage()
       .pipe(
         switchMap((data: any) => {
-          return this.uploadFileService.uploadFile(data);
+          return this.uploadFileService.uploadImage(data);
         })
       );
   }
@@ -44,7 +44,7 @@ export class CreateImageDirective {
       );
   }
 
-  public b64toBlob(dataURI): any {
+  public b64toBlob(dataURI: string): Blob {
 
     const byteString = atob(dataURI.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);

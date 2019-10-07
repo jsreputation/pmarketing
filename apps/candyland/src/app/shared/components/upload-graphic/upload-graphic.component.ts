@@ -16,9 +16,9 @@ import { UploadFileService } from '@cl-core-services';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
-  @Input() public placeholder = 'Recommended format: .JPG or .PNG';
-  @Input() public btnLabel = '+ Add New';
-  @Input() public classList = '';
+  @Input() public placeholder: string = 'Recommended format: .JPG or .PNG';
+  @Input() public btnLabel: string = '+ Add New';
+  @Input() public classList: string = '';
   @Input() public isRequired: boolean;
 
   @Input()
@@ -29,12 +29,12 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     }
   }
 
-  @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
+  @Output() private selectUploadGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   public lock: boolean;
-  public imagePath;
+  public imagePath: File;
   public imgURL: any;
   public message: string;
-  public loadedImg = false;
+  public loadedImg: boolean = false;
   // tslint:disable
   public _selectGraphic: any;
 
@@ -111,7 +111,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   private uploadImage(file: File): void {
-    this.uploadFileService.uploadFile(file)
+    this.uploadFileService.uploadImage(file)
       .subscribe((res: IUploadedFile) => {
           this.imgURL = res.url;
           this.loadedImg = true;

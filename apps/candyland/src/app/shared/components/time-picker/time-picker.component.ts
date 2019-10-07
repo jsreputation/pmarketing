@@ -11,6 +11,7 @@ import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR }
 import {noop, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {customTimepickerTheme} from '@cl-shared/components/time-picker/custom-timepicker-theme';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 
 @Component({
   selector: 'cl-time-picker',
@@ -28,15 +29,15 @@ import {customTimepickerTheme} from '@cl-shared/components/time-picker/custom-ti
 })
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
-  @Input() public placeholder = 'Time';
+  @Input() public placeholder: string = 'Time';
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 
-  public theme = customTimepickerTheme;
-  public disabledState = false;
-  private destroy$ = new Subject();
+  public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
+  public disabledState: boolean = false;
+  private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;

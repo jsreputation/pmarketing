@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
@@ -9,6 +9,9 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ILimit, ICampaign } from '@perx/whistler';
+import { ActivatedRoute } from '@angular/router';
+import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -18,10 +21,11 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
-  public dataSource = new MatTableDataSource<IEngagement>();
-  public defaultSearchValue = null;
-  public defaultTypeValue = null;
+  public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
+  public defaultSearchValue: any = null;
+  public defaultTypeValue: any = null;
   public typeFilterConfig: OptionConfig[];
+  public isFirstInit: boolean = true;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -35,7 +39,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     private fb: FormBuilder,
     private dialog: MatDialog,
     public cd: ChangeDetectorRef,
-    private limitsService: LimitsService
+    private limitsService: LimitsService,
+    private route: ActivatedRoute
   ) {
     super(0, store, stepConditionService, cd);
     this.initForm();
@@ -86,26 +91,49 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         this.cd.detectChanges();
       });
   }
-
   private initSelectedTemplate(res: IEngagement[]): void {
-    const engagementId = this.availableNewEngagementService.isAvailable ?
-      this.availableNewEngagementService.newEngagement.id :
-      this.campaign && this.campaign.engagement_id && this.campaign.engagement_id.toString();
-    if (engagementId) {
-      const findTemplate = res.find(template => template.id === engagementId);
-      if (this.store.currentCampaign.id) {
-        const params: HttpParamsOptions = {
-          'filter[campaign_entity_id]': this.store.currentCampaign.id
-        };
-        this.limitsService.getLimits(params, findTemplate.attributes_type).subscribe(
-          limits => {
-            const newCampaign = { ...this.store.currentCampaign, limits };
-            this.store.updateCampaign(newCampaign);
-          }
-        );
-      }
+    if (this.availableNewEngagementService.isAvailable) {
+      this.initSelectedNewCreateTemplate(res, this.availableNewEngagementService.newEngagement.id);
+    } else if (this.route.snapshot.params.id) {
+      this.initSelectedTemplateFromEdit(res);
+    }
+  }
+  private initSelectedNewCreateTemplate(res: IEngagement[], id: string): void {
+    if (id) {
+      const findTemplate = res.find(template => template.id === id);
       this.template.patchValue(findTemplate);
     }
+  }
+
+  private initSelectedTemplateFromEdit(res: IEngagement[]): void {
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(campaignData => {
+        if (campaignData && campaignData.engagement_id && this.isFirstInit) {
+          this.isFirstInit = false;
+          const engagementId = campaignData.engagement_id.toString();
+          const findTemplate = res.find(template =>
+            template.id === engagementId && template.attributes_type === EngagementTypeFromAPIMapping[campaignData.engagement_type]);
+          this.getLimits(campaignData, findTemplate);
+          this.template.patchValue(findTemplate);
+        }
+      });
+
+  }
+
+  private getLimits(campaignData: ICampaign, findTemplate: IEngagement): void {
+    const params: HttpParamsOptions = {
+      'filter[campaign_entity_id]': campaignData.id
+    };
+    this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
+      map((limits: ILimit[]) => limits[0])
+    ).subscribe(
+      limits => {
+        const newCampaign = { ...campaignData, limits };
+        this.store.updateCampaign(newCampaign);
+      }
+    );
   }
 
   private subscribeFormValueChange(): void {

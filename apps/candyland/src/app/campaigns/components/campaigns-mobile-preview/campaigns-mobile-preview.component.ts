@@ -13,10 +13,10 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   @Input() public storeTemplate$: Observable<any>;
   @Input() public tenantSettings: ITenantsProperties;
   public stamps: PuzzleCollectStamp[] = [];
-  public stampsSlotNumberData = [];
-  public questionData$ = new BehaviorSubject(null);
-  public engagement;
-  public reward$ = new BehaviorSubject(null);
+  public stampsSlotNumberData: {rewardPosition: number}[] = [];
+  public questionData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public engagement: any;
+  public reward$: BehaviorSubject<any> = new BehaviorSubject(null);
   public getQuestionData(): Observable<any> {
     return this.questionData$.asObservable();
   }

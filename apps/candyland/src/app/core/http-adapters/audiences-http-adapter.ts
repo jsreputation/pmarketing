@@ -1,43 +1,90 @@
+import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
+
 export class AudiencesHttpAdapter {
-  // tslint:disable
-  public static transformCreateUser(data: any): any {
-    const res = {
-      type: 'users',
-      attributes: {
-        title: 'Test' + data.firstName + data.lastName,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        phone_number: data.phone,
-        email_address: data.email,
-        primary_identifier: data.firstName + 'identifier',
-        properties: '',
-      },
-      relationships: {
+
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
+    return {
+      type: 'users', attributes: {
+        title: data.firstName + ' ' + data.lastName, first_name: data.firstName, last_name: data.lastName,
+        phone_number: data.phone, email_address: data.email, primary_identifier: data.firstName + 'identifier',
+        properties: ''
+      }, relationships: {
         pools: {
           data: data.audienceList
         }
       }
     };
-    if (data.id) {
-      res['id'] = data.id;
-    }
-    return res;
   }
 
-  public static transformUpdateUserPools(data: any): any {
-    const res = {
+  public static transformUpdateUserPools(data: IUser): IJsonApiItem<any> {
+    return {
       type: data.type,
       id: data.id,
+      attributes: {},
       relationships: {
         pools: {
           data: data.pools
         }
       }
     };
-    return res;
   }
 
-  private static transformUser(data: IUserApi): IUser {
+  public static transformUserWithPools(data: IJsonApiPayload<IUserApi>): IUser {
+    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+    const userData = AudiencesHttpAdapter.transformUser(data.data);
+    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IPoolsApi>) => poolMap[item.id]).sort().join(', ');
+    return userData;
+  }
+
+  public static transformUsersWithPools(data: IJsonApiListPayload<IUserApi>): ITableData<IUser> {
+    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
+    const usersData = data.data.map((item: IJsonApiItem<IUserApi>) => {
+      const formattedUser = AudiencesHttpAdapter.transformUser(item);
+      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IPoolsApi>) => poolMap[pool.id]).sort().join(', ');
+      return formattedUser;
+    });
+    return {
+      data: usersData, meta: data.meta
+    };
+  }
+
+  public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
+    return {
+      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)), meta: data.meta
+    };
+  }
+
+  public static transformAudiencesVoucher(data: IJsonApiItem<IAssignedAttributes>): Partial<IAudienceVoucher> {
+    return {
+      id: data.id,
+      endDate: data.attributes.end_date,
+      rewardId: data.attributes.source_id.toString(),
+      issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.start_date),
+      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date), status: data.attributes.status
+    };
+  }
+
+  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IAssignRequestAttributes> {
+    return {
+      type: 'assigneds',
+      attributes: {
+        source_id: source,
+        source_type: 'Perx::Reward::Entity',
+        assigned_to_id: assigned
+      }
+    };
+  }
+
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IAssignedAttributes>> {
+    return {
+      id, type: 'assigneds',
+      attributes: {
+        end_date: endData
+      }
+    };
+  }
+
+  private static transformUser(data: IJsonApiItem<IUserApi>): IUser {
     return {
       id: data.id,
       type: data.type,
@@ -55,116 +102,26 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IUserWithIncludes<IUserApi>): IUser {
-    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const userData = AudiencesHttpAdapter.transformUser(data.data);
-    userData.pools = data.data.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
-    return userData;
-  }
-
-  private static createPoolMap(data?: IPoolsApi[]): IPools {
+  private static createPoolMap(data?: IJsonApiItem<IPoolsApi>[]): IPools {
     const mapPool = {};
     if (data) {
-      data.forEach((element: IPoolsApi) => {
+      data.forEach((element: IJsonApiItem<IPoolsApi>) => {
         mapPool[element.id] = element.attributes.name;
       });
     }
     return mapPool;
   }
 
-  public static transformTableData(data: any): ITableData<IUser> {
-    return {
-      data: data.data.map(item => AudiencesHttpAdapter.transformUser(item)),
-      meta: data.meta
-    }
-  }
-
-  public static transformUsersWithPools(data: IUsersWithIncludes<IUserApi>): IUsersWithPoolsData<IUser> {
-    const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map((item: IUserApi) => {
-      const formatedUser = AudiencesHttpAdapter.transformUser(item);
-      formatedUser.pools = item.relationships.pools.data.map((item: IPoolsApi) => poolMap[item.id]).join(', ');
-      return formatedUser
-    });
-    return {
-      data: usersData,
-      meta: data.meta
-    }
-  }
-
   // Audiences List
   private static transformAudiences(data: any): IAudiences {
     return {
-      id: data.id,
-      type: data.type,
-      self: data.links.self,
-      urn: data.attributes.urn,
-      created_at: data.attributes.created_at,
-      updated_at: data.attributes.updated_at,
-      name: data.attributes.name,
-      properties: data.attributes.properties,
-      users: data.relationships.users.data
+      id: data.id, type: data.type, self: data.links.self, urn: data.attributes.urn,
+      created_at: data.attributes.created_at, updated_at: data.attributes.updated_at, name: data.attributes.name,
+      properties: data.attributes.properties, users: data.relationships.users.data
     };
-  }
-
-  // private static transformAudiencesUser(data: any): IAUser {
-  //   return {
-  //     id: data.relationships.users.data.id,
-  //     type: data.relationships.users.data.type,
-  //     self: data.relationships.users.data.links.self,
-  //     urn: data.relationships.users.data.attributes.urn,
-  //     created_at: data.relationships.users.data.attributes.created_at,
-  //     updated_at: data.relationships.users.data.attributes.updated_at,
-  //     title: data.relationships.users.data.attributes.title,
-  //     first_name: data.relationships.users.data.attributes.first_name,
-  //     last_name: data.relationships.users.data.last_name,
-  //     phone_number: data.relationships.users.data.phone_number,
-  //     email_address: data.relationships.users.data.email_address,
-  //     primary_identifier: data.relationships.users.data.primary_identifier
-  //   };
-  // }
-
-  public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
-    return {
-      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
-      meta: data.meta
-    }
-  }
-
-  public static transformAudiencesVoucher(data: any): any {
-    return {
-      id: data.id,
-      batchId: data.attributes.batch_id,
-      endDate: data.attributes.end_date,
-      rewardId: data.attributes.source_id,
-      issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.start_date),
-      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date),
-      status: data.attributes.status,
-    }
   }
 
   private static stringToDate(stringDate: string | null): Date | null {
     return stringDate ? new Date(stringDate) : null;
-  }
-
-  public static transformVoucherAssignedToApi(source: string, assigned: string): any {
-    return {
-      type: "assigneds",
-      attributes: {
-        source_id: source,
-        source_type: "Perx::Reward::Entity",
-        assigned_to_id: assigned
-      }
-    }
-  }
-
-  public static transformVoucherPatchToApi(id: string, endData: string): any {
-    return {
-      id: id,
-      type: "assigneds",
-      attributes: {
-        end_date: endData
-      }
-    }
   }
 }

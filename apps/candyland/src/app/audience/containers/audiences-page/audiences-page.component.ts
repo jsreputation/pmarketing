@@ -6,7 +6,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AudiencesService } from '@cl-core/services';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { FormControl } from '@angular/forms';
@@ -28,12 +28,10 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public currentTab: string;
   public tabs: FormControl;
   public search: FormControl;
-  public searchKey = 'primary_identifier';
+  public searchKey: string = 'query';
   public dataSource: CustomDataSource<IUser>;
   public audiencesDataSource: CustomDataSource<IAudiences>;
-  // public users;
-  // public audiences;
-  // public currentFilter;
+
   public tabsFilterConfig: OptionConfig[] = [
     { title: 'Users', value: 'users' },
     { title: 'Audience List', value: 'audience' }
@@ -45,7 +43,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private audiencesService: AudiencesService,
     private audiencesUserService: AudiencesUserService,
     public cd: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snack: MatSnackBar
   ) {
     this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
     this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
@@ -77,6 +76,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       )
       .subscribe(() => {
         this.dataSource.updateData();
+        this.snack.open('User successfully created.', 'x', { duration: 2000 });
         this.currentTab = 'users';
       });
   }
@@ -102,7 +102,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
         break;
       case 'users':
       default:
-        this.searchKey = 'primary_identifier';
+        this.searchKey = 'query';
         this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
     }
     this.currentTab = tab;

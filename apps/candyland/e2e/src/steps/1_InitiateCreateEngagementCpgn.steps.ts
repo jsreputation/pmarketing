@@ -32,17 +32,18 @@ Given(/^1_I am on the dashboard page.$/, async () => {
    // pressing the enter key on the accountID field to log in
   await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
+  await DashboardPage.navigateToDashboard();
+  await browser.sleep(3000);
   // await DashboardPage.navigateToDashboard();
-  // await browser.sleep(3000);
-  await DashboardPage.navigateToDashboard();
   // walk around for the walk me widget
-  await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
-  await element(by.className('trg-499259')).click();
-  await browser.sleep(3000);
-  await DashboardPage.navigateToDashboard();
-  await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
-  await element(by.className('walkme-custom-balloon-button-text')).click();
-  await browser.sleep(3000);
+  // await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
+  // await element(by.className('trg-499259')).click();
+  // await browser.sleep(3000);
+  // await DashboardPage.navigateToDashboard();
+  // await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
+  // await element(by.className('walkme-custom-balloon-button-text')).click();
+  // await browser.sleep(3000);
 
 });
 
@@ -51,20 +52,20 @@ When(/^1_I take no action.$/, () => {});
 Then(/^1_I should see the engagment tab.$/, async () => {
  // doing an assertion based on the text string of the tab
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(2)), 5000);
-  expect(await element.all(by.css('h3')).get(2).getText()).to.be.equal('Engagements');
+  await browser.wait(ec.elementToBeClickable(EngagementPage.engagementTabOption()), 5000);
+  expect(await EngagementPage.engagementTabOption().getText()).to.be.equal('Engagements');
 });
 
 // Clicking on the Engagment tabs leads to the engagment page.
-Given(/^2_that I am on the dashboard page.$/, () => {
-  // await DashboardPage.navigateToDashboard();
+Given(/^2_that I am on the dashboard page.$/, async () => {
+  await DashboardPage.navigateToDashboard();
   // await browser.sleep(2000);
 });
 
 When(/^2_I click on the engagement tab.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(2)), 5000);
-  await element.all(by.css('h3')).get(2).click();
+  await browser.wait(ec.elementToBeClickable(EngagementPage.engagementTabOption()), 5000);
+  await EngagementPage.engagementTabOption().click();
 });
 
 Then(/^2_I will be redirected to the the engagment page.$/, async () => {
@@ -104,7 +105,7 @@ Then(/^4_There are 4 engagement options available.$/, async () => {
 Given(/^5_I am on the create option dialog box.$/, async () => {
   await EngagementPage.navigateToEngagement();
   await element.all(by.css('button')).get(2).click();
-         });
+});
 
 When(/^5_I click on the stamps option.$/, async () => {
   await element.all(by.css('cl-type-item')).get(2).click();

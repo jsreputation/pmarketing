@@ -1,6 +1,6 @@
-<aside class="dialog invite-new-users" role="dialog">
+<aside class="dialog invite-new-users" role="dialog" aria-labelledby="dialogTitle-inviteNewUsers">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title">Invite new users</h2>
+    <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">Invite new users</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -15,7 +15,7 @@
         <mat-form-field>
           <input matInput placeholder="Name" [formControl]="this.form.get('name')">
           <mat-error *ngIf="this.form.get('name').hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="this.form.get('name').hasError('minlength')">Min length 15</mat-error>
+          <mat-error *ngIf="this.form.get('name').hasError('minlength')">Min length 5</mat-error>
           <mat-error *ngIf="this.form.get('name').hasError('maxlength')">Max length 50</mat-error>
         </mat-form-field>
         <!-- /  name-->

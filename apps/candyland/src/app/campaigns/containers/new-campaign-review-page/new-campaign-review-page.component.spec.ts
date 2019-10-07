@@ -4,6 +4,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 import { NewCampaignReviewPageComponent } from './new-campaign-review-page.component';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('NewCampaignReviewPageComponent', () => {

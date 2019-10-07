@@ -29,6 +29,7 @@ import { StatusLabelModule } from '../../components/status-label/status-label.mo
 import { NoDataModule } from '../../table/no-data/no-data.module';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ShakeTreeService } from '@cl-core/services';
 

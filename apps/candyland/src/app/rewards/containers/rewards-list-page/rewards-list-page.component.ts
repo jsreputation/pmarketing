@@ -23,7 +23,7 @@ export class RewardsListPageComponent {
     // 'balance',
     'actions'
   ];
-  public hasData = true;
+  public hasData: boolean = true;
 
   constructor(
     private rewardsService: RewardsService,

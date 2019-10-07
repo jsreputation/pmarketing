@@ -1,11 +1,32 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Type } from '@angular/core';
+
+import { TranslateModule } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import {
+  MatTabsModule,
+  MatDialogModule,
+} from '@angular/material';
+
+import {
+  Observable,
+  of
+} from 'rxjs';
+
+import {
+  LocationModule,
+  LocationsService,
+  IMerchantsService,
+  IMerchant,
+} from '@perx/core';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
-import { LocationModule, LocationsService } from '@perx/core';
-import { MatTabsModule, MatDialogModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
-import { Type } from '@angular/core';
 
 describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
@@ -14,6 +35,11 @@ describe('FindPharmacyComponent', () => {
   const locationServiceStub = {
     getAllLocations: () => of(),
     getTags: () => of()
+  };
+
+  const merchantsServiceStub = {
+    getAllMerchants: () => of(),
+    getMerchant: () => of(null)
   };
 
   const locationsStub = [
@@ -39,16 +65,24 @@ describe('FindPharmacyComponent', () => {
     }
   ];
   const tagsStub = ['Drug', 'Medical Supply'];
+  const merchants: Observable<IMerchant[]> = null;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindPharmacyComponent ],
-      imports: [ LocationModule, MatTabsModule, MatDialogModule, BrowserAnimationsModule ],
+      declarations: [FindPharmacyComponent],
+      imports: [
+        LocationModule,
+        MatTabsModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
-        {provide: LocationsService, useValue: locationServiceStub}
+        { provide: LocationsService, useValue: locationServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -70,7 +104,7 @@ describe('FindPharmacyComponent', () => {
       tick();
       fixture.detectChanges();
       expect(locationsServiceSpy).toHaveBeenCalled();
-      locationsService.getAllLocations().subscribe(res => {
+      locationsService.getAllLocations(merchants).subscribe(res => {
         expect(res).toEqual(locationsStub);
       });
     }));
@@ -83,8 +117,7 @@ describe('FindPharmacyComponent', () => {
       tick();
       fixture.detectChanges();
       expect(locationsTagsSpy).toHaveBeenCalled();
-      console.log(component.tags);
-      expect(component.tags).toEqual([{name: 'Drug', isSelected: false}, {name: 'Medical Supply', isSelected: false}]);
+      expect(component.tags).toEqual([{ name: 'Drug', isSelected: false }, { name: 'Medical Supply', isSelected: false }]);
     }));
   });
 });

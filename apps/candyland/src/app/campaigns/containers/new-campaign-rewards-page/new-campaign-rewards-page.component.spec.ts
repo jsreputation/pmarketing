@@ -4,6 +4,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 import { NewCampaignRewardsPageComponent } from './new-campaign-rewards-page.component';
+// tslint:disable
 import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -14,6 +15,7 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 //  tslint:disable
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -59,7 +61,8 @@ describe('NewCampaignRewardsPageComponent', () => {
         MatSelectModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        RouterModule.forRoot([]),
       ],
       declarations: [NewCampaignRewardsPageComponent,
         NewCampaignRewardsFormGroupComponent],

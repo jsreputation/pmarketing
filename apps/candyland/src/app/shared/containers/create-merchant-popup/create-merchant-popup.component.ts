@@ -10,7 +10,7 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
 })
 export class CreateMerchantPopupComponent implements OnInit {
   // public merchant: any;
-  public deletedBranches = [];
+  public deletedBranches: number[] = [];
   public formMerchant: FormGroup;
   public formConfig: IMerchantFormConfig = {
     shoveName: true

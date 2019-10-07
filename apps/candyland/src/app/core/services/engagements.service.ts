@@ -3,6 +3,7 @@ import { EngagementsHttpsService } from '@cl-core/http-services/engagements-http
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +20,17 @@ export class EngagementsService {
   }
 
   public getEngagement(id: string, type: string): Observable<IEngagement> {
+    const eType = EngagementTypeFromAPIMapping[type];
     return this.http.getEngagement(id, type).pipe(
-        map((res: any) => EngagementHttpAdapter.transformEngagementHandler(res.data)),
+        map((res: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagementHandler(res.data, eType)),
       );
   }
 
-  public getEngagementType(): Observable<any> {
+  public getEngagementType(): Observable<IGraphic[]> {
     return this.http.getEngagementType();
   }
 
-  public getGamesType(): Observable<any> {
+  public getGamesType(): Observable<IGraphic[]> {
     return this.http.getGamesType();
   }
 }

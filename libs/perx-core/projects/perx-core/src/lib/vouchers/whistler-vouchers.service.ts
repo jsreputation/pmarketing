@@ -10,7 +10,8 @@ import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
 
 const enum VoucherStatus {
-  assigned = 'assigned'
+  assigned = 'assigned',
+  issued = 'issued',
 }
 
 export interface IWhistlerVoucher {
@@ -41,6 +42,7 @@ export class WhistlerVouchersService implements IVoucherService {
   private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
     switch (stat) {
       case VoucherStatus.assigned:
+      case VoucherStatus.issued:
         return VoucherState.issued;
       default:
         return VoucherState.redeemed;

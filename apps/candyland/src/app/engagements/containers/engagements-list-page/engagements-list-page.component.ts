@@ -23,10 +23,10 @@ import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
-  private static CAMPAIGN_ACTION = 'campaign';
+  private static CAMPAIGN_ACTION: string = 'campaign';
 
   public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
-  public tabsFilterConfig;
+  public tabsFilterConfig: OptionConfig[];
   public hasData: boolean = true;
   public isGridMode: boolean = true;
   public options: IEngagementItemMenuOption[] = [

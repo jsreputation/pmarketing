@@ -38,7 +38,7 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() public title = 'Rewards';
+  @Input() public title: string = 'Rewards';
   @Input() public group: FormGroup = this.fb.group({
     enableProbability: [false],
     rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
@@ -135,12 +135,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     if (data === null) {
       return;
     }
-    const enableProbability = 'enableProbability' in data ? data.enableProbability : false;
-    if ('rewards' in data && data.rewards) {
-      for (let i = 0; i < data.rewards.length; i++) {
-        this.rewards.insert(i, this.createRewardFormGroup(null, enableProbability));
-      }
-    }
+
     this.group.patchValue(data, { emitEvent: false });
     this.group.updateValueAndValidity();
     this.cd.detectChanges();

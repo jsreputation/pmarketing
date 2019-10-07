@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RewardHttpService } from '@cl-core/http-services/reward-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
@@ -15,12 +16,9 @@ export class RewardsService implements ITableService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
+    params.include = 'organization';
     return this.getRewards(params).pipe(
-      map(response => ({
-        data: response.data.map(item => RewardHttpAdapter.transformToReward(item)),
-        meta: response.meta
-      })
-      )
+      map(response => RewardHttpAdapter.transformToTableData(response))
     );
   }
 
@@ -34,34 +32,36 @@ export class RewardsService implements ITableService {
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
-    return this.rewardHttp.getReward(id).pipe(
-      map(response => RewardHttpAdapter.transformToReward(response.data))
+    const params = {include: 'organization'};
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.rewardHttp.getReward(id, httpParams).pipe(
+      map(response => {
+        const formatData = RewardHttpAdapter.transformToReward(response.data);
+        formatData.merchantName = RewardHttpAdapter.includeOrganization(response.data, response);
+        return formatData;
+      })
     );
   }
 
   public getRewardToForm(id: string): Observable<IRewardEntityForm> {
-    return this.rewardHttp.getReward(id).pipe(
+    return this.rewardHttp.getReward(id, {} as HttpParams).pipe(
       map(response => RewardHttpAdapter.transformToRewardForm(response.data))
     );
   }
 
-  // public getMocksRewardDetail(): Observable<any> {
-  //   return this.rewardHttp.getMockRewardDetail();
-  // }
-
   public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
-    return this.rewardHttp.createReward({ data: sendData });
+    return this.rewardHttp.createReward({data: sendData});
   }
 
   public duplicateReward(data: IRewardEntity): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromReward(data);
-    return this.rewardHttp.createReward({ data: sendData });
+    return this.rewardHttp.createReward({data: sendData});
   }
 
   public updateReward(id: string, data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
     const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
     sendData.id = id;
-    return this.rewardHttp.updateReward(id, { data: sendData });
+    return this.rewardHttp.updateReward(id, {data: sendData});
   }
 }
