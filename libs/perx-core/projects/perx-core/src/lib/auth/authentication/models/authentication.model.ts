@@ -44,3 +44,7 @@ export interface IChangePhoneData {
 export interface ILoginResponse {
     bearer_token?: string;
 }
+
+export enum TokenType {
+    local = 'local'
+}

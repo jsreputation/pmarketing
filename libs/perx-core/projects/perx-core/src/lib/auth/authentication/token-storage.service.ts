@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { TokenType } from './models/authentication.model';
 
 interface IAppInfo {
   appAccessToken?: string;
@@ -7,46 +7,27 @@ interface IAppInfo {
   [others: string]: any;
 }
 
-@Injectable()
-export class TokenStorage {
-
+export abstract class TokenStorage {
+  public storageType?: TokenType;
   public appInfo: IAppInfo;
 
   /**
    * Get User Info
    */
-  public getAppInfo(): Observable<IAppInfo> {
-    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || {appAccessToken: '', userAccessToken: ''};
-    return of(this.appInfo);
-  }
+  public abstract getAppInfo(): Observable<IAppInfo>;
 
   /**
    * Get appInfo property
    */
-  public getAppInfoProperty(key: string): string {
-    this.getAppInfo();
-    return this.appInfo[key];
-  }
+  public abstract getAppInfoProperty(key: string): string;
 
   /**
    * Set appInfo property
    */
-  public setAppInfoProperty(value: string, key: string): void {
-    this.getAppInfo();
-    this.appInfo[key] = value;
-    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
-  }
+  public abstract setAppInfoProperty(value: string, key: string): void;
 
   /**
    * Remove appInfo property
    */
-  public clearAppInfoProperty(key: string): void {
-    this.getAppInfo();
-    if (key) {
-      delete this.appInfo[key];
-    } else {
-      this.appInfo = {};
-    }
-    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
-  }
+  public abstract clearAppInfoProperty(key: string): void;
 }

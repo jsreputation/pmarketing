@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import {
+  forkJoin,
+  Observable
+} from 'rxjs';
 import {
   map,
   mergeMap,
@@ -9,8 +12,8 @@ import {
   mergeAll,
 } from 'rxjs/operators';
 
-import { LocationsService } from './locations.service';
 import { ILocation } from './ilocation';
+import { LocationsService } from './locations.service';
 
 import { IMerchantsService } from '../merchants/imerchants.service';
 import {
@@ -33,9 +36,10 @@ export class V4LocationsService extends LocationsService {
     if (tags === undefined) {
       tags = [];
     }
-    return allMerchants.pipe(
-      mergeMap((merchants: IMerchant[]) => {
-        let filteredMerchants: IMerchant[];
+    return forkJoin(allMerchants).pipe(
+      mergeMap((merchantsArr: IMerchant[][]) => {
+        const merchants: IMerchant[] = merchantsArr[0];
+        let filteredMerchants: IMerchant[] = null;
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
