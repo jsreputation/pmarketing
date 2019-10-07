@@ -7,7 +7,6 @@ import {
   of,
 } from 'rxjs';
 
-
 import { IMerchantAdminService } from './imerchant-admin.service';
 import { IMerchantAdminTransaction } from './models/merchants-admin.model';
 
