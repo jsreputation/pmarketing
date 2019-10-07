@@ -15,6 +15,7 @@ describe('VouchersService', () => {
     {
       id: 21,
       rewardId: 5,
+      reward: null,
       state: VoucherState.issued,
       name: 'General Indoor Studio package @ $99',
       code: null,

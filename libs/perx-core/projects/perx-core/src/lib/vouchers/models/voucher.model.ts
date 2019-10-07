@@ -32,58 +32,34 @@ interface IVoucherDescription {
  */
 export interface IVoucher {
   id: number;
-  /**
-   * @deprecated
-   */
+  // deprecated
   rewardId: number; // use at \lib\vouchers\vouchers.service.ts
   reward: IReward;
   state: VoucherState;
-  /**
-   * @deprecated
-   */
+  // deprecated
   name: string;
   code?: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   redemptionType: RedemptionType;
-  /**
-   * @deprecated
-   */
+  // deprecated
   thumbnailImg: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   rewardBanner: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   merchantImg: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   merchantName: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   merchantId?: number;
   expiry: Date | null;
   redemptionDate?: Date | null;
-  /**
-   * @deprecated
-   */
+  // deprecated
   description: IVoucherDescription[];
-  /**
-   * @deprecated
-   */
+  // deprecated
   redemptionSuccessTxt?: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   redemptionSuccessImg?: string;
-  /**
-   * @deprecated
-   */
+  // deprecated
   categories?: string[];
 }
 
