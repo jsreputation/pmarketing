@@ -66,6 +66,8 @@
   }
 
   &-error {
+    @include typo-caption;
+
     color: $warning-color;
   }
 
@@ -75,12 +77,12 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     margin-top: ($vertical-padding * 0.17);
-    font-size: 1.2rem;
     width: max-content;
   }
 
   &-type {
-    font-size: 1.2rem;
+    @include typo-caption;
+
     color: rgba(51, 51, 51, 0.5);
   }
 
@@ -103,7 +105,6 @@
 .image {
   max-height: 100%;
   max-width: 100%;
-  background: $lightest-gray;
 
   &-wrap {
     width: 10.8rem;

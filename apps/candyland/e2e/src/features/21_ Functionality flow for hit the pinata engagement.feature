@@ -19,5 +19,5 @@ Scenario: Verifying the functionality of the file upload field for hit the pinat
 @runThis
  Scenario: Verifying the functionality of button text field
   Given 7_I am on the hit the pinata creation page.
-  When  7_I input a test string on the message
+  When  7_I input a test string on the button text field
   Then  7_I should see the change in the preview element.
