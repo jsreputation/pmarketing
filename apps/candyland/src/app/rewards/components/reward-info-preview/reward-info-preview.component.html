@@ -2,39 +2,39 @@
 <div *ngIf="data?.image" class="card-row">
   <img [src]="data?.image" class="image">
 </div>
-<div class="new-reward-margin-top">
-  <div class="card-row stretch input-group new-reward-margin-top">
+<dl class="card-definitions">
+  <div class="card-definitions-splitter">
     <!-- Reward Type-->
     <div>
-      <label class="card-label">Reward Type</label>
-      <p class="card-value">{{data?.rewardType || '-'}}</p>
+      <dt class="card-label">Reward Type</dt>
+      <dd class="card-value">{{data?.rewardType || '-'}}</dd>
     </div>
     <!--Category-->
     <div>
-      <label class="card-label">Category</label>
-      <p class="card-value">{{data?.category || '-'}}</p>
+      <dt class="card-label">Category</dt>
+      <dd class="card-value">{{data?.category || '-'}}</dd>
     </div>
   </div>
-  <div class="card-row stretch input-group new-reward-margin-top">
+  <div class="card-definitions-splitter">
     <!--Redemption Type-->
     <div>
-      <label class="card-label">Redemption Type</label>
-      <p class="card-value">{{data?.redemptionType || '-'}}</p>
+      <dt class="card-label">Redemption Type</dt>
+      <dd class="card-value">{{data?.redemptionType || '-'}}</dd>
     </div>
     <!--Cost of Reward-->
     <div>
-      <label class="card-label">Reward Type</label>
-      <p class="card-value">{{data?.rewardType || '-'}}</p>
+      <dt class="card-label">Reward Type</dt>
+      <dd class="card-value">{{data?.rewardType || '-'}}</dd>
     </div>
   </div>
   <!--Description-->
-  <div class="new-reward-margin-top" *ngIf="data?.description">
-    <label class="card-label">Description</label>
-    <p class="card-value">{{data?.description}}</p>
+  <div *ngIf="data?.description">
+    <dt class="card-label">Description</dt>
+    <dd class="card-value">{{data?.description}}</dd>
   </div>
   <!--Terms & Condition-->
-  <div class="new-reward-margin-top" *ngIf="data?.termsAndCondition">
-    <label class="card-label">Terms & Condition</label>
-    <p class="card-value">{{data?.termsAndCondition}}</p>
+  <div *ngIf="data?.termsAndCondition">
+    <dt class="card-label">Terms & Condition</dt>
+    <dd class="card-value">{{data?.termsAndCondition}}</dd>
   </div>
-</div>
+</dl>
