@@ -4,8 +4,8 @@
         mat-ripple
         (click)="onClick(stamp.id)">
         <div class="stamp-content">
-          <div class="stamp-img__wrapper"
-          [ngStyle]="{'background-image':  'url(' + stamp.attributes.image_url + ')' }">
+          <div class="stamp-img__wrapper" >
+            <img src="{{stamp.attributes.image_url}}" alt="" srcset="">
           </div>
           <div class="stamp-details">
             <h1>
