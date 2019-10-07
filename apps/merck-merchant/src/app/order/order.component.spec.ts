@@ -47,10 +47,7 @@ describe('OrderComponent', () => {
   };
 
   const merchantAdminServiceStub = {
-    // @ts-ignore
-    createTransaction: (userId: number, amount: number, currency: string,
-                        // @ts-ignore
-                        type: string, reference: string) => of(transaction)
+    createTransaction: () => of(transaction)
   };
 
   const products = [
