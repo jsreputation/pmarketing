@@ -5,7 +5,7 @@ import { SettingsService, AudiencesService, AuthService } from '@cl-core-service
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { ButtonModule, PaginationModule, TableFiltersModule, SearchFilterModule, NoDataModule, StatusLabelModule } from '@cl-shared';
 import {TabsFilterModule} from '../../../shared/table/tabs-filter/tabs-filter.module';
-import { MatIconModule, MatTableModule, MatSortModule, MatTabsModule, MatMenuModule, MatDialogModule } from '@angular/material';
+import { MatIconModule, MatTableModule, MatSortModule, MatTabsModule, MatMenuModule, MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { AudiencesListComponent } from '../../components/audiences-list/audiences-list.component';
 import { AudiencesUsersListComponent } from '../../components/audiences-users-list/audiences-users-list.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -41,6 +41,7 @@ describe('AudiencesPageComponent', () => {
                 StatusLabelModule,
                 RouterTestingModule,
                 MatDialogModule,
+                MatSnackBarModule,
                 BrowserAnimationsModule,
                 NoopAnimationsModule
             ],

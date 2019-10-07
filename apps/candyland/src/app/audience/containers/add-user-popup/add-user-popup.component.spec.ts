@@ -6,7 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatIconModule, MatOptionModule,
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DatePickerModule, ButtonModule } from '@cl-shared';
+import { DatePickerModule, ButtonModule, UploadFileModule } from '@cl-shared';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AddUserPopupComponent', () => {
@@ -29,6 +29,7 @@ describe('AddUserPopupComponent', () => {
                 DatePickerModule,
                 MatTabsModule,
                 ButtonModule,
+                UploadFileModule,
                 BrowserAnimationsModule,
                 NoopAnimationsModule
               ],
