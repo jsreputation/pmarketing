@@ -11,6 +11,7 @@
     "COUNTRY_HONGKONG": "香港",
     "COUNTRY_MACAU": "中国",
     "COUNTRY_CHINA": "澳门",
+    "COUNTRY_SINGAPORE": "新加坡",
     "STATIC_MOBILE_NO": "手機號碼",
     "STATIC_PASSWORD": "密碼",
     "STATIC_FORGOT_PASSWORD": "忘記密碼?",
