@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { IV4Voucher, V4VouchersService } from './v4-vouchers.service';
 import { VouchersModule } from './vouchers.module';
 import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
+
 import { ConfigModule } from '../../public-api';
 
 describe('VouchersService', () => {
