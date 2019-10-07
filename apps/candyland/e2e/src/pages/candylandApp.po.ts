@@ -56,7 +56,7 @@ export class LoginAppPage {
   }
 
   public getAccountId(): string {
-   return 'telco';
+   return 'retail';
   }
 
   public getUserAccount(): string {
