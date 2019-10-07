@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService, IProduct } from '../services/product.service';
-import {IMerchantAdminService, NotificationService} from '@perx/core';
+import {IMerchantAdminService, IMerchantAdminTransaction, NotificationService} from '@perx/core';
 import {from} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private notificationService: NotificationService,
-    private merchantAdminService: IMerchantAdminService
+    private merchantAdminService: IMerchantAdminService,
   ) {}
 
   public ngOnInit(): void {
@@ -66,12 +66,15 @@ export class OrderComponent implements OnInit {
   }
 
   public onCompleteTransaction(): void {
-    from(this.selectedProducts).pipe(
-      mergeMap((product: IProduct) => {
-        return this.merchantAdminService.createTransaction(this.payload.id, product.pointsPerUnit, 'points', product.name, 'generatedRef');
-      }),
-    ).subscribe();
-    this.notificationService.addSnack('Transaction completed'),
-    this.router.navigate(['/home']);
+    from(this.selectedProducts)
+      .pipe(
+        mergeMap((product: IProduct) => {
+          return this.merchantAdminService.createTransaction(
+            this.payload.id, product.pointsPerUnit, 'points', product.name, 'generatedRef');
+        }))
+      .subscribe((transaction: IMerchantAdminTransaction) => {
+        this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
+        this.router.navigate(['/home']);
+      });
   }
 }
