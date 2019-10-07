@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: object,
     private notificationService: NotificationService,
     private dialog: MatDialog,
+    private router: Router,
   ) {
     this.preAuth = environment.preAuth;
   }
@@ -35,6 +36,13 @@ export class AppComponent implements OnInit {
       const searchParams: URLSearchParams = new URLSearchParams(param);
       const token: string | null = searchParams.get('token');
       const pi: string | null = searchParams.get('pi');
+
+      if (pi) {
+        (window as any).primaryIdentifier = pi;
+        this.authService.logout();
+        this.router.navigateByUrl('login');
+      }
+
       if (token && pi) {
         this.authService.saveUserAccessToken(token);
         localStorage.setItem('user-id', pi);
