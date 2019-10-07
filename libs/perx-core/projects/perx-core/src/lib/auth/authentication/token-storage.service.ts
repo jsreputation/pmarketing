@@ -16,7 +16,7 @@ export class TokenStorage {
    * Get User Info
    */
   public getAppInfo(): Observable<IAppInfo> {
-    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || {appAccessToken: '', userAccessToken: ''};
+    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || { appAccessToken: '', userAccessToken: '' };
     return of(this.appInfo);
   }
 
@@ -40,10 +40,10 @@ export class TokenStorage {
   /**
    * Remove appInfo property
    */
-  public clearAppInfoProperty(key: string): void {
+  public clearAppInfoProperty(keys: string[]): void {
     this.getAppInfo();
-    if (key) {
-      delete this.appInfo[key];
+    if (keys.length) {
+      keys.forEach(key => delete this.appInfo[key]);
     } else {
       this.appInfo = {};
     }

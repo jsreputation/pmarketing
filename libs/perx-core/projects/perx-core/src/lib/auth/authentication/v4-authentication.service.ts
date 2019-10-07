@@ -143,6 +143,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
+  // @ts-ignore
+  public createUserAndAutoLogin(pi: string): Observable<any> {
+    return throwError('Not implement yet');
+  }
+
   public authenticateUserWithPI(user: string): Observable<ILoginResponse> {
     const httpParams = new HttpParams()
       .append('url', location.host)
@@ -175,7 +180,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty('userAccessToken');
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
   }
 
   // @ts-ignore
@@ -337,6 +342,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    */
   public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
+  }
+
+  public getPI(): string {
+    return this.tokenStorage.getAppInfoProperty('pi');
+  }
+
+  public savePI(pi: string): void {
+    this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
 
 }
