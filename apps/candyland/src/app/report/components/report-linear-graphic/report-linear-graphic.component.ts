@@ -8,7 +8,7 @@ import { ApiConfig } from '@cl-core/api-config';
 })
 export class ReportLinearGraphicComponent implements OnChanges {
   @Input() public data: StampsGraphicData;
-  public apiCdnPath = ApiConfig.apiCdnPath;
+  public apiCdnPath: string = ApiConfig.apiCdnPath;
   public existPrefixText: boolean;
 
   public ngOnChanges(): void {
