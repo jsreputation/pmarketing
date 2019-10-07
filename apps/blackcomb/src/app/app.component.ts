@@ -50,8 +50,6 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
 
-    console.log(this.notificationService.$popup);
-    console.log(this.authService.$failedAuth);
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
