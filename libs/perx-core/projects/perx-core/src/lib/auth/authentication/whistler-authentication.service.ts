@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
