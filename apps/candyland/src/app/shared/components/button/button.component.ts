@@ -6,9 +6,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
-  @Input() public classList;
-  @Input() public formId = 'primary';
+  @Input() public classList: string;
+  @Input() public formId: string = 'primary';
   @Input() public disable: boolean;
-  @Input() public disableRipple = false;
+  @Input() public disableRipple: boolean = false;
 
 }

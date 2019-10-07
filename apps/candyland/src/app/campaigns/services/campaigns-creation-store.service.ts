@@ -5,7 +5,7 @@ import { filter, map } from 'rxjs/operators';
 @Injectable()
 export class CampaignCreationStoreService {
   public currentCampaign$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public config = {
+  public config: any = {
     typeFilterConfig: [
       {title: 'All', value: null},
       {title: 'Survey', value: 'Survey'},
@@ -47,7 +47,7 @@ export class CampaignCreationStoreService {
     ]
   };
 
-  public set currentCampaign(value) {
+  public set currentCampaign(value: any) {
     this.currentCampaign$.next(value);
   }
 

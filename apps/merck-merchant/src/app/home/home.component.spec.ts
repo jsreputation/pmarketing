@@ -4,21 +4,27 @@ import { AuthenticationService } from '@perx/core';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { Type } from '@angular/core';
+import { Location } from '@angular/common';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+
+  const locationStub = {
+    back: () => {}
+  };
 
   beforeEach(async(() => {
     const routerStub = { navigate: () => ({}) };
 
     TestBed.configureTestingModule({
       declarations: [ HomeComponent, HeaderComponent, SalesContactComponent ],
-      imports: [ MatToolbarModule ],
+      imports: [ MatToolbarModule, MatIconModule ],
       providers: [
         { provide: Router, useValue: routerStub },
+        { provide: Location, useValue: locationStub },
         {
           provide: AuthenticationService,
           useValue: {logout: () => null}

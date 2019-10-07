@@ -3,13 +3,15 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { QrscannerComponent } from './qrscanner.component';
 import { HeaderComponent } from '../header/header.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subject } from 'rxjs';
+import { Location } from '@angular/common';
 
 describe('QrscannerComponent', () => {
   let component: QrscannerComponent;
   let fixture: ComponentFixture<QrscannerComponent>;
+  const locationStub = { back: () => {} };
   const routerStub = { navigate: () => ({}) };
   let params: Subject<Params>;
 
@@ -18,10 +20,12 @@ describe('QrscannerComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ QrscannerComponent, HeaderComponent ],
-      imports: [ ZXingScannerModule, MatToolbarModule ],
+      imports: [ ZXingScannerModule, MatToolbarModule, MatIconModule ],
       providers: [
         { provide: ActivatedRoute, useValue: {params} },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: Location, useValue: locationStub },
+
       ]
     })
     .compileComponents();

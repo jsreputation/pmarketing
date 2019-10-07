@@ -20,12 +20,13 @@ export class RewardsListComponent implements AfterViewInit {
     // 'balance',
     'actions'
   ];
-  @Input() public selectable = false;
+  @Input() public selectable: boolean = false;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
-  @Output() public selectReward = new EventEmitter<IRewardEntity>();
-  @Output() public clickDetailReward = new EventEmitter<IRewardEntity>();
-  public selected;
+  @Output() public itemAction: EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>
+    = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
+  @Output() public selectReward: EventEmitter<IRewardEntity> = new EventEmitter<IRewardEntity>();
+  @Output() public clickDetailReward: EventEmitter<IRewardEntity> = new EventEmitter<IRewardEntity>();
+  public selected: IRewardEntity;
 
   public ngAfterViewInit(): void {
     this.dataSource.registerSort(this.sort);

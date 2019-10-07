@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
-// import { SurveyModule as PerxSurveyModule} from '@perx/core';
+// tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 describe('NewSurveyPageComponent', () => {

@@ -11,7 +11,7 @@ export class RewardsCampaignsListComponent implements AfterViewInit {
   @Input() public dataSource: MatTableDataSource<any>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'engagementType', 'duration', 'issued'];
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
-  @Output() public itemAction = new EventEmitter();
+  @Output() public itemAction: EventEmitter<any> = new EventEmitter();
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

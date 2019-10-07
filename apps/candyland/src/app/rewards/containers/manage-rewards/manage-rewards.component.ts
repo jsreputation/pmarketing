@@ -170,7 +170,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       );
   }
 
-  private updateId(id): void {
+  private updateId(id: string): void {
     if (id) {
       this.id = id;
     } else {
