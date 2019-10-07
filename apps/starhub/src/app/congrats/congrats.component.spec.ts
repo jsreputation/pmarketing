@@ -9,13 +9,18 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { IGameService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GameOutcomeService } from './game-outcome/game-outcome.service';
 
 describe('CongratsComponent', () => {
   let component: CongratsComponent;
   let fixture: ComponentFixture<CongratsComponent>;
-  // const routerStub = { navigate: () => ({}) };
+
   const gameServiceStub = {
     play: () => of()
+  };
+
+  const gameOutcomeServiceStub = {
+    getVouchersRewarded: () => {}
   };
 
   beforeEach(async(() => {
@@ -25,7 +30,8 @@ describe('CongratsComponent', () => {
       imports: [ MatToolbarModule, MatCardModule, RouterTestingModule ],
       providers: [
         { provide: ActivatedRoute, useValue: { queryParams: of({gameId: 1}) } },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: GameOutcomeService, useValue: gameOutcomeServiceStub}
       ]
     })
     .compileComponents();

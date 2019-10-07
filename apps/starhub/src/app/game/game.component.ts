@@ -4,6 +4,7 @@ import { IGameService, NotificationService, IGame, GameType, IPlayOutcome, Vouch
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 
 @Component({
   selector: 'app-game',
@@ -29,7 +30,8 @@ export class GameComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private router: Router,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private gameOutcomeService: GameOutcomeService
   ) { }
 
   public ngOnInit(): void {
@@ -114,7 +116,8 @@ export class GameComponent implements OnInit {
         if (vouchs.length === 0) {
           this.showNoRewardsPopUp();
         } else {
-          this.router.navigate(['/congrats'], { state: { vouchers: vouchs } });
+          this.gameOutcomeService.setVouchersList(vouchs);
+          this.router.navigate(['/congrats']);
         }
         },
       () => this.showNoRewardsPopUp()
