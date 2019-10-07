@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
-import { ProfileModule } from '@perx/core';
-
 const comps: any[] = [
   AccountComponent
 ];
 
 @NgModule({
   imports: [
-    ProfileModule
+    RouterModule,
+    CommonModule
   ],
   exports: [
     ...comps
@@ -18,5 +19,5 @@ const comps: any[] = [
   ]
 })
 export class PerxBlackcombPagesModule {
-  
+
 }

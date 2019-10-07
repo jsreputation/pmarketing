@@ -1,5 +1,2 @@
-/*
- * Public API Surface of perx-blackcomb-pages
- */
-
-export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module'
+export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
+export { AccountComponent } from './lib/account/account.component'
