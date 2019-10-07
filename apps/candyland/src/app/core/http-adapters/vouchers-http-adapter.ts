@@ -1,6 +1,6 @@
 export class VouchersHttpAdapter {
     // tslint:disable
-    public static transformCreateVoucher(data: any): IVouchersApi {
+    public static transformCreateVoucher(data: any): IJsonApiItem<IVouchersApi> {
         switch (data.code_type) {
         case 'single_code':
           return VouchersHttpAdapter.transformVoucherToApiSingleForm(data);
@@ -9,7 +9,7 @@ export class VouchersHttpAdapter {
       }
     }
   
-    public static transformVoucherToApiSingleForm(data: any): IVouchersApi { 
+    public static transformVoucherToApiSingleForm(data: IVouchersApi): IJsonApiItem<IVouchersApi> {
       return {
         type: 'batch',
         attributes: {
@@ -23,7 +23,7 @@ export class VouchersHttpAdapter {
       };
     }
   
-    public static transformVoucherToApiSystemForm(data: any): IVouchersApi { 
+    public static transformVoucherToApiSystemForm(data: IVouchersApi): IJsonApiItem<IVouchersApi> {
       return {
         type: 'batch',
         attributes: {

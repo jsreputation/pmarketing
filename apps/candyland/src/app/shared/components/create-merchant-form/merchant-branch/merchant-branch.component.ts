@@ -9,7 +9,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class MerchantBranchComponent {
   @Input() public group: FormGroup;
   @Input() public index: number;
-  @Output() public removeGroup = new EventEmitter<number>();
+  @Output() public removeGroup: EventEmitter<number> = new EventEmitter<number>();
 
   public get name(): AbstractControl {
     return this.group.get('name');

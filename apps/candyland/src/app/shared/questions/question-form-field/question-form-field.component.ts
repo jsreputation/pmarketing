@@ -17,15 +17,15 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
   @Input() public formGroup: FormGroup;
   @Input() public level: number;
   @Input() public currentIndex: number;
-  @Output() public removed = new EventEmitter<number>();
-  @Output() public changeControl = new EventEmitter<any>();
+  @Output() public removed: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public changeControl: EventEmitter<any> = new EventEmitter<any>();
   public descriptionField: FormControl;
   public descriptionFieldMaxLength: number = 1024;
   public showDescription: boolean;
-  public required = false;
-  public closed = true;
-  public surveyQuestionType = SurveyQuestionType;
-  private destroy$ = new Subject();
+  public required: boolean = false;
+  public closed: boolean = true;
+  public surveyQuestionType: any = SurveyQuestionType;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private questionFormFieldService: QuestionFormFieldService,

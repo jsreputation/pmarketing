@@ -6,10 +6,10 @@ import { IQuestion, SurveyQuestionType } from '@perx/core';
 export class QuestionFormFieldService {
   public focusedElementIndex: any;
   public cd: ChangeDetectorRef;
-  public listIdDrag = [];
+  public listIdDrag: string[] = [];
   private descriptionFieldMaxLength: number = 1024;
 
-  private formControls = {
+  private formControls: {[key: string]: any} = {
     [SurveyQuestionType.rating]: (type) => this.ratingGroup(type),
     [SurveyQuestionType.date]: (type) => this.dateGroup(type),
     [SurveyQuestionType.phone]: (type) => this.phoneGroup(type),
@@ -18,7 +18,7 @@ export class QuestionFormFieldService {
     [SurveyQuestionType.pictureChoice]: (type) => this.questionPictureChoice(type),
     [SurveyQuestionType.multipleChoice]: (type) => this.questionMultipleChoice(type)
   };
-  private idCounter = 0;
+  private idCounter: number = 0;
 
   constructor(private fb: FormBuilder) {
   }

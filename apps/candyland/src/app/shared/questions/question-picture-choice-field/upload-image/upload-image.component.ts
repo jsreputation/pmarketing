@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, OnInit, Output, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -15,13 +15,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class UploadImageComponent implements OnInit, ControlValueAccessor  {
 
-  @Output() private selectUploadGraphic = new EventEmitter<IGraphic>();
+  @Output() private selectUploadGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   @ViewChild('fileInput', {static: true}) public htmlInput: HTMLInputElement;
   public lock: boolean;
-  public imagePath;
+  public imagePath: FileList;
   public imgURL: any;
   public message: string;
-  public loadedImg = false;
+  public loadedImg: boolean = false;
 
   public onChange: any = () => {};
   public onTouch: any = () => {};
@@ -62,7 +62,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor  {
     };
   }
 
-  public sanitizeUrl(data): any {
+  public sanitizeUrl(data: any): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 

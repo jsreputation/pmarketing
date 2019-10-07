@@ -33,7 +33,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   }
 
   private data: string[] = [];
-  private destroy$ = new Subject();
+  private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -101,7 +101,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     this.cd.detectChanges();
   }
 
-  private toggleDisableCheckboxList(isDisabled): void {
+  private toggleDisableCheckboxList(isDisabled: boolean): void {
     if (this.checkboxList && this.data.length > 0) {
       this.checkboxList.forEach((checkbox: MatCheckbox) => {
         if (checkbox.disabled !== isDisabled) {

@@ -17,7 +17,7 @@ export class CreateMerchantFormComponent implements OnInit {
   public countriesList$: Observable<any>;
   constructor(private surveyService: SurveyService,
               private merchantFormService: MerchantFormService) { }
-  @Output() public removeBranch = new EventEmitter<number>();
+  @Output() public removeBranch: EventEmitter<number> = new EventEmitter<number>();
 
   public ngOnInit(): void {
     this.getCountries();
