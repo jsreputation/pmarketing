@@ -26,6 +26,10 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   @Input() typeList: IEngagementType[];
   @Input() currentIndex: string;
   @Input() level: number;
+  @Input() public set setTypeQuestion(typeQuestion: string): void {
+    this.type.patchValue(typeQuestion);
+  }
+  @Input() public onlyView: boolean = false;
 
   @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
 
@@ -48,7 +52,10 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   }
 
   public openSelect(): void {
-    this.matSelect.open();
+    if (!this.onlyView) {
+      console.log('view');
+      this.matSelect.open();
+    }
   }
 
   public getIndex(): any {

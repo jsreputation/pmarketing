@@ -27,3 +27,15 @@
     </div>
   </mat-card>
 </article>
+
+<section class="report-main-section">
+  <p class="report-small-title report-blue-text padding-bottom-2r">
+    Response Summary
+  </p>
+
+  <cl-single-report-card *ngFor="let question of data.questions; let i = index"
+                         [data]="question"
+                         [reportIndex]="i"
+  >
+  </cl-single-report-card>
+</section>

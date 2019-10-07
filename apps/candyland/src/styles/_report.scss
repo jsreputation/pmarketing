@@ -54,4 +54,16 @@
     line-height: 1.5;
     color: rgba(51, 51, 51, 0.7);
   }
+
+  &-blue-text {
+    color: $secondary-color;
+  }
+
+  &-main-section {
+    padding: 0 3.4rem 3.5rem;
+  }
+}
+
+cl-question-type {
+  padding-right: 2.5rem;
 }

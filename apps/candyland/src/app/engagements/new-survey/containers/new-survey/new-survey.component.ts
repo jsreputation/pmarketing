@@ -169,20 +169,22 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    this.createImagePreview.getPreviewUrl()
-      .pipe(
-        switchMap((imageUrl: IUploadedFile) => {
-          if (this.id) {
-            return this.surveyService.updateSurvey(this.id, {...this.form.value, image_url: imageUrl.url});
-          }
-          return this.surveyService.createSurvey({...this.form.value, image_url: imageUrl.url}).pipe(
-            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
-          );
-        })
-      )
-      .pipe(untilDestroyed(this))
-      .subscribe(() => this.router.navigateByUrl('/engagements'));
+
+    console.log(this.form.value);
+    // this.createImagePreview.getPreviewUrl()
+    //   .pipe(
+    //     switchMap((imageUrl: IUploadedFile) => {
+    //       if (this.id) {
+    //         return this.surveyService.updateSurvey(this.id, {...this.form.value, image_url: imageUrl.url});
+    //       }
+    //       return this.surveyService.createSurvey({...this.form.value, image_url: imageUrl.url}).pipe(
+    //         map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
+    //         tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+    //       );
+    //     })
+    //   )
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
   public deleteQuestion(index: number) {
