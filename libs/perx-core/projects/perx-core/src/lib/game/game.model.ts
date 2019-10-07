@@ -48,6 +48,8 @@ export function defaultPinata(): IPinata {
     };
 }
 export interface ITree {
+    stillImg?: string;
+    openedImg?: string;
     treeImg: string;
     giftImg: string;
     waitingAccessoryImg?: string;
@@ -58,6 +60,7 @@ export interface ITree {
 }
 
 export interface IPinata {
+    openedImg?: string;
     stillImg: string;
     breakingImg?: string;
     brokenImg: string;

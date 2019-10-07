@@ -80,6 +80,10 @@ $max-width: 60rem;
 
 .section-content {
   font-size: 1.4rem;
+
+  &.description {
+    white-space: pre-wrap;
+  }
 }
 
 .actions-container {
