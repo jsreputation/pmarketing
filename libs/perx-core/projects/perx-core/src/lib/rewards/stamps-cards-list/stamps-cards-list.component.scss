@@ -1,0 +1,49 @@
+mat-card {
+  margin: 1.2rem 0;
+  display: flex;
+  padding: 0;
+  // flex: 0 0 10.5rem;
+  height: 10.5rem;
+  justify-content: space-between;
+}
+
+.stamp-details {
+  padding: 0 1.6rem;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: auto 0;
+
+  h1 {
+    font-size: 1.4rem;
+    color: #37474f;
+    line-height: 1.6rem;
+    font-weight: 500;
+    margin: 4px 0;
+    padding: 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+    color: #858585;
+    margin: 4px 0;
+    padding: 0;
+  }
+}
+
+.stamp-details:nth-child(1) {
+  margin-top: 0;
+}
+
+.stamp-content {
+  .stamp-img__wrapper {
+    width: 100%;
+    height: 4.5rem;
+    background-size: contain;;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+
+}
