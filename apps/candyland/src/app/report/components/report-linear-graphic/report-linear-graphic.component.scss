@@ -5,12 +5,14 @@
   flex-direction: column;
   width: 100%;
 }
+
 .graphic {
   &-line {
     display: flex;
     width: 100%;
     align-items: center;
     padding-bottom: 3rem;
+
     &:last-child {
       padding-bottom: 0;
     }
@@ -74,5 +76,3 @@
     color: $custom-line-progress;
   }
 }
-
-
