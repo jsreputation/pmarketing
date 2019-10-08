@@ -22,7 +22,7 @@ export class PuzzleCollectStampsComponent implements OnChanges {
   private stamps: PuzzleCollectStamp[] | null = [];
 
   @Input()
-  public showStampsCounter: boolean = true;
+  public showStampsCounter: boolean = false;
 
   @Input()
   private rewards: PuzzleCollectReward[] = [];
