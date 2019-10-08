@@ -1,1 +1,29 @@
-<p>survey works!</p>
+<article class="report-page">
+  <cl-report-header (closePage)="onClose()"
+                    [title]="data.title"
+  ></cl-report-header>
+
+  <mat-card class="card full-width report-info-block">
+    <div class="height-line"></div>
+    <div class="card-content">
+      <div class="card-row">
+        <div *ngFor="let info of data.summaryInfo" class="report-info">
+          <p class="report-info-title">
+            {{info.title}}
+          </p>
+          <p class="report-info-value">
+            {{info.value}}
+          </p>
+        </div>
+
+        <cl-button (click)="onClose()"
+                   classList="primary"
+        >
+      <span>
+        Download Report
+      </span>
+        </cl-button>
+      </div>
+    </div>
+  </mat-card>
+</article>

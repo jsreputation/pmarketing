@@ -5,12 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  const authenticationServiceStub = {};
+  const authenticationServiceStub = {
+    getUserAccessToken: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
