@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IStampCard, StampCardState } from '@perx/core';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-wtf',
@@ -6,68 +8,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stamps-list.component.scss']
 })
 export class StampsListComponent implements OnInit {
-  public stampsArr = [
+  public stampsArr: Observable<IStampCard[]> = of([
     {
       id: 1,
-      type: 'engagements',
-      links: {
-        self: 'http://api-dev1.uat.whistler.perxtech.io/engagements/1'
+      title: 'Collect stamps',
+      subTitle: 'Button here',
+      state: StampCardState.active,
+      campaignConfig: {
+        totalSlots: 5,
       },
-      attributes: {
-        urn: 'urn:perx:loyalty::222222222:engagement/1',
-        created_at: '2019-10-01T02:39:50.311Z',
-        updated_at: '2019-10-01T02:39:50.311Z',
-        title: 'Loyalty Card 1',
-        description: 'description text',
-        image_url: 'https://robohash.org/loyalty-card-1.png',
-        properties: {},
-        display_properties: {
-          slots: [
-            1,
-            5
-          ],
-          title: 'Collect stamps',
-          button: 'Button here',
-          nb_of_slots: 5,
-          pre_stamp_img_url: 'https://robohash.org/preStampImg.png',
-          post_stamp_img_url: 'https://robohash.org/postStampImg.png',
-          reward_pre_stamp_img_url: 'https://robohash.org/rewardPreStampImg.png',
-          reward_post_stamp_img_url: 'https://robohash.org/rewardPostStampImg.png'
-        }
+      displayProperties: {
+        cardBgImage: 'https://robohash.org/preStampImg.png'
       }
     },
     {
       id: 2,
-      type: 'engagements',
-      links: {
-        self: 'http://api-dev1.uat.whistler.perxtech.io/engagements/1'
+      title: 'Loyalty Card 1',
+      subTitle: 'description text',
+      state: StampCardState.active,
+      displayProperties: {
+        cardBgImage: 'https://robohash.org/loyalty-card-1.png'
       },
-      attributes: {
-        urn: 'urn:perx:loyalty::222222222:engagement/1',
-        created_at: '2019-10-01T02:39:50.311Z',
-        updated_at: '2019-10-01T02:39:50.311Z',
-        title: 'Loyalty Card 1',
-        description: 'description text',
-        image_url: 'https://robohash.org/loyalty-card-1.png',
-        properties: {},
-        display_properties: {
-          slots: [
-            1,
-            5
-          ],
-          title: 'Collect stamps',
-          button: 'Button here',
-          nb_of_slots: 5,
-          pre_stamp_img_url: 'https://robohash.org/preStampImg.png',
-          post_stamp_img_url: 'https://robohash.org/postStampImg.png',
-          reward_pre_stamp_img_url: 'https://robohash.org/rewardPreStampImg.png',
-          reward_post_stamp_img_url: 'https://robohash.org/rewardPostStampImg.png'
-        }
+      campaignConfig: {
+        totalSlots: 5
       }
     }
-  ];
+  ]);
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void { }
 
   public log(id): void {
     console.log(id);
