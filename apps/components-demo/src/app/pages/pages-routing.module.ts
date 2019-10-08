@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import {
-  LoadingComponent,
-  LoginComponent,
-  RedeemComponent,
-  RewardDetailPageComponent,
   StampCardComponent,
   SurveyPageComponent,
   TncComponent,
   VoucherDetailPageComponent
 } from '@perx/core';
 import {
+  RewardDetailsComponent,
+  RedeemComponent,
+  LoadingComponent,
+  LoginComponent,
   AccountComponent,
   GameComponent,
   HistoryComponent,
@@ -34,7 +34,7 @@ const routes: Routes = [{
     { path: 'loading', component: LoadingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'redeem', component: RedeemComponent },
-    { path: 'reward-detail', component: RewardDetailPageComponent },
+    { path: 'reward-detail', component: RewardDetailsComponent },
     { path: 'stamp', component: StampCardComponent },
     { path: 'survey', component: SurveyPageComponent },
     { path: 'tnc', component: TncComponent },

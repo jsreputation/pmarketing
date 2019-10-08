@@ -1,7 +1,6 @@
 /*
  * Public API Surface of perx-core
  */
-
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
@@ -26,6 +25,9 @@ export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
 export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
+export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
+export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
+
 /**
  * Authentication
  */
@@ -107,6 +109,8 @@ export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
+export { RewardComponent } from './lib/rewards/reward/reward.component';
+
 
 /**
  * Utils
@@ -132,6 +136,7 @@ export {
   PuzzleCollectReward,
   PuzzleCollectStampState
 } from './lib/puzzles/models/puzzle-stamp.model';
+export { PuzzleCollectStampsComponent } from './lib/puzzles/puzzle-collect-stamps/puzzle-collect-stamps.component';
 
 /**
  * Locations
@@ -149,6 +154,16 @@ export { GeoLocationService } from './lib/location/geolocation.service';
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
 export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+export { SurveyComponent } from './lib/survey/survey/survey.component';
+export { QuestionComponent } from './lib/survey/question/question.component';
+export { SelectComponent } from './lib/survey/question/select/select.component';
+export { PictureSelectComponent } from './lib/survey/question/picture-select/picture-select.component';
+export { PhoneComponent } from './lib/survey/question/phone/phone.component';
+export { LongTextComponent } from './lib/survey/question/long-text/long-text.component';
+export { GroupComponent } from './lib/survey/question/group/group.component';
+export { RatingComponent } from './lib/survey/question/rating/rating.component';
+export { DateComponent } from './lib/survey/question/date/date.component';
+
 
 /**
  * Config
@@ -186,3 +201,4 @@ export { StampCardComponent } from './lib/pages/stamp-card/stamp-card.component'
 export { SurveyPageComponent } from './lib/pages/survey-page/survey-page.component';
 export { TncComponent } from './lib/pages/tnc/tnc.component';
 export { VoucherDetailPageComponent } from './lib/pages/voucher-detail-page/voucher-detail-page.component';
+

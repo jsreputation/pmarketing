@@ -1,3 +1,4 @@
+export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
 export { ContentComponent } from './lib/content/content.component';
@@ -8,3 +9,6 @@ export { ShakeComponent } from './lib/game/shake/shake.component';
 export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
+export { LoginComponent } from './lib/login/login.component';
+export { RedeemComponent } from './lib/redeem/redeem.component';
+export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
