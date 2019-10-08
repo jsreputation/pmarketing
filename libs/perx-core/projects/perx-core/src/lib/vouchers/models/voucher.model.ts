@@ -34,7 +34,7 @@ export interface IVoucher {
   id: number;
   // deprecated
   rewardId: number; // use at \lib\vouchers\vouchers.service.ts
-  reward: IReward;
+  reward: IReward | null;
   state: VoucherState;
   // deprecated
   name: string;

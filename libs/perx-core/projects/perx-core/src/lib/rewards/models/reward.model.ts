@@ -23,7 +23,7 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
-  redemptionType: RedemptionType;
+  redemptionType?: RedemptionType;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory;
 }
