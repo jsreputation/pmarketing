@@ -139,7 +139,7 @@ $base-font-size: 1.4rem;
 //Input Fields
 @mixin typo-input {
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: $base-font-size;
   letter-spacing: 0.015rem;
 }
 
