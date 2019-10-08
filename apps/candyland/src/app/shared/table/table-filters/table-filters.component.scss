@@ -4,6 +4,10 @@ cl-table-filters {
   flex-grow: 1;
 }
 
+cl-table-filters + cl-button {
+  margin-left: ($horizontal-padding * 0.5);
+}
+
 .filters {
   display: flex;
   margin: 0 (-($horizontal-padding * 0.25)) ($vertical-padding * 0.5);
@@ -30,6 +34,12 @@ cl-table-filters {
       margin-right: auto;
     }
   }
+
+  cl-button {
+    flex-grow: 0;
+    width: auto;
+    flex-basis: auto;
+  }
 }
 
 @media (min-width: $lg-width) {
@@ -43,8 +53,4 @@ cl-table-filters {
       }
     }
   }
-}
-
-cl-table-filters + cl-button {
-  margin-left: ($horizontal-padding * 0.5);
 }
