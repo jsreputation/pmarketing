@@ -1,25 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrderComponent } from './order.component';
-import { HeaderComponent } from '../header/header.component';
-import { OrderQuantityComponent } from '../order/order-quantity/order-quantity.component';
-import { MatIconModule, MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ProductService } from '../services/product.service';
-import { of } from 'rxjs';
-import { Type } from '@angular/core';
-import { NotificationService } from '@perx/core';
-import { Location } from '@angular/common';
+import {OrderComponent} from './order.component';
+import {HeaderComponent} from '../header/header.component';
+import {OrderQuantityComponent} from '../order/order-quantity/order-quantity.component';
+import {MatIconModule, MatToolbarModule, MatListModule, MatDividerModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ProductService} from '../services/product.service';
+import {from, of} from 'rxjs';
+import {Type} from '@angular/core';
+import {IMerchantAdminService, NotificationService} from '@perx/core';
+import {Location} from '@angular/common';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
   let fixture: ComponentFixture<OrderComponent>;
-  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
-  const locationStub = { back: () => {} };
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
+  const locationStub = {
+    back: () => {
+    }
+  };
   const routerStub = {
     navigate: () => ({}),
-    getCurrentNavigation: () =>  (
+    getCurrentNavigation: () => (
       {
         extras: {
           state: {
@@ -29,6 +32,23 @@ describe('OrderComponent', () => {
       }
     )
   };
+  const transaction = {
+    amount: 5,
+    created_at: new Date('2019-10-04T17:50:48.102Z'),
+    currency: 'points',
+    id: 36,
+    properties: null,
+    transaction_date: new Date('2019-10-04T17:50:48.092Z'),
+    transaction_reference: 'generatedRef',
+    transaction_type: 'Glucophage XR Tab',
+    updated_at: new Date('2019-10-04T17:50:48.102Z'),
+    user_account_id: 1,
+    workflow_id: null,
+  };
+
+  const merchantAdminServiceStub = {
+    createTransaction: () => of(transaction)
+  };
 
   const products = [
     {
@@ -36,42 +56,56 @@ describe('OrderComponent', () => {
       description: '1000mg 60\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 100,
+      currency: 'HKD',
     },
     {
       name: 'Glucophage XR Tab',
       description: '500mg 60\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 50,
+      currency: 'HKD',
     },
     {
       name: 'Glucophage XR Tab',
       description: '750mg 30\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 75,
+      currency: 'HKD',
     },
     {
       name: 'Glucovance Tab',
       description: '2.5mg 30\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 50,
+      currency: 'HKD',
     },
     {
       name: 'Glucovance Tab',
       description: '5mg 30\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 100,
+      currency: 'HKD',
     },
     {
       name: 'Concor Tab',
       description: '2.5mg 30\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 50,
+      currency: 'HKD',
     },
     {
       name: 'Concor Tab',
       description: '5mg 100\'s',
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
+      price: 100,
+      currency: 'HKD',
     }
   ];
   const productServiceStub = {
@@ -85,19 +119,21 @@ describe('OrderComponent', () => {
         HeaderComponent,
         OrderQuantityComponent
       ],
-      imports: [ MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule ],
+      imports: [MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule],
       providers: [
-        { provide: Router, useValue: routerStub },
-        { provide: ProductService, useValue: productServiceStub },
-        { provide: Location, useValue: locationStub },
+        {provide: Router, useValue: routerStub},
+        {provide: ProductService, useValue: productServiceStub},
+        {provide: Location, useValue: locationStub},
+        {provide: IMerchantAdminService, useValue: merchantAdminServiceStub},
         {
           provide: NotificationService, useValue: {
-            addSnack: () => {}
+            addSnack: () => {
+            }
           }
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -123,12 +159,15 @@ describe('OrderComponent', () => {
         description: '1000mg 60\'s',
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
-      },
-      {
+        price: 100,
+        currency: 'HKD',
+      }, {
         name: 'Glucophage XR Tab',
         description: '500mg 60\'s',
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
+        price: 50,
+        currency: 'HKD',
       }];
       const productServiceSpy = spyOn(productService, 'getProducts').and.returnValue(of(productsStub));
       component.ngOnInit();
@@ -139,7 +178,7 @@ describe('OrderComponent', () => {
 
   it('should update product quantity to 5', () => {
     component.newQuantity({qty: 5, index: 0});
-    expect (component.rewards[0].quantity).toBe(5);
+    expect(component.rewards[0].quantity).toBe(5);
   });
 
   it('should toggleSummary', () => {
@@ -161,16 +200,27 @@ describe('OrderComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 
-  it('should addSnack and navigate to home onCompleteTransaction', () => {
+  it('should addSnack and navigate to home onCompleteTransaction', async((done) => {
+    const merchantAdminService: IMerchantAdminService = fixture.debugElement.injector.get<IMerchantAdminService>(
+      IMerchantAdminService as Type<IMerchantAdminService>);
+    const merchantAdminServiceSpy = spyOn(merchantAdminService, 'createTransaction')
+      .and.returnValue(
+        of(transaction)
+      );
     const notificationService: NotificationService = fixture.debugElement.injector.get
-      <NotificationService>(NotificationService as Type<NotificationService>);
+      < NotificationService > (NotificationService as Type<NotificationService>);
     const notificationSpy = spyOn(notificationService, 'addSnack');
+
     const router: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(router, 'navigate').and.callThrough();
 
     component.onCompleteTransaction();
-    expect(notificationSpy).toHaveBeenCalledWith('Transaction completed');
-    expect(routerSpy).toHaveBeenCalledWith(['/home']);
-  });
+    from(component.selectedProducts).subscribe(() => {
+      expect(merchantAdminServiceSpy).toHaveBeenCalled();
+      expect(notificationSpy).toHaveBeenCalledWith('Transaction completed');
+      expect(routerSpy).toHaveBeenCalledWith(['/home']);
+      done();
+    });
+  }));
 
 });

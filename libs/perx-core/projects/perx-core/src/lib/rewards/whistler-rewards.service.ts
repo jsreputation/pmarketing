@@ -74,7 +74,8 @@ export class WhistlerRewardsService implements RewardsService {
     throw new Error('Method not implemented.');
   }
 
-  public getReward(id: number): Observable<IReward> {
+  // @ts-ignore
+  public getReward(id: number, userId?: string): Observable<IReward> {
     return this.http.get<IJsonApiItemPayload<WhistlerIReward>>(`${this.baseUrl}${id}`)
       .pipe(
         switchMap((reward: IJsonApiItemPayload<WhistlerIReward>) => {
