@@ -10,3 +10,5 @@ export { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLi
 export { IOutcome, IOutcomeAttributes } from './lib/outcome/outcome';
 export { IComm, ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
 export { ICampaign, ICampaignTableData, ICampaignAttributes } from './lib/campaign/campaign';
+export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
+export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
