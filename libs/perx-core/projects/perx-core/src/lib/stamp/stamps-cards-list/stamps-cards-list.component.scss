@@ -7,10 +7,6 @@ mat-card {
   justify-content: space-between;
 }
 
-.stamp-details:nth-child(1) {
-  margin-top: 0;
-}
-
 .stamp-details {
   padding: 0 1.6rem;
   font-size: 1.4rem;
@@ -37,10 +33,15 @@ mat-card {
   }
 }
 
+.stamp-details:nth-child(1) {
+  margin-top: 0;
+}
+
 .stamp-content {
   width: 100%;
   display: flex;
   flex-direction: column;
+
   .stamp-img__wrapper {
     display: flex;
     width: 100%;
@@ -49,6 +50,7 @@ mat-card {
     align-self: flex-start;
     margin: 0 auto;
     flex-direction: column;
+
     img {
       align-self: unsafe center;
       width: 100%;
@@ -59,6 +61,7 @@ mat-card {
       // height: 4rem;
     }
   }
+  
   .stamp-details {
     width: 100%;
     display: flex;
@@ -66,5 +69,4 @@ mat-card {
     flex-direction: column;
     flex: 1 1;
   }
-
 }

@@ -1,3 +1,4 @@
+import { MatCardModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StampsCardsListComponent } from './stamps-cards-list.component';
@@ -8,7 +9,8 @@ describe('StampsCardsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StampsCardsListComponent ]
+      declarations: [ StampsCardsListComponent ],
+      imports: [MatCardModule]
     })
     .compileComponents();
   }));
