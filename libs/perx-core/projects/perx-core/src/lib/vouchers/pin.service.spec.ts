@@ -61,8 +61,6 @@ describe('PinService', () => {
         howToRedeem: '',
       },
       state: VoucherState.expired,
-      merchantImg: '',
-      merchantName: 'Kluang Station',
       expiry: new Date('2019-04-30T15:59:59.999Z'),
     };
 
