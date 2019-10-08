@@ -63,15 +63,18 @@
     left: 50%;
     z-index: 5;
     transform: translateX(-50%);
+    width: 18rem;
   }
 
   &-preview-headline {
-    font-size: 1.6rem;
+    @include typo-subtitle1-alt;
+
     color: #091816;
   }
 
   &-preview-sub-headline {
-    font-size: $base-font-size;
+    @include typo-body2;
+
     margin-top: 0.8rem;
     color: rgba(51, 51, 51, 0.5);
   }
@@ -143,6 +146,13 @@
     height: 63.8rem;
     background: url("assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
   }
+}
+
+.plugin-block {
+  transform: scale(.8);
+  position: relative;
+  display: block;
+  z-index: 3;
 }
 
 cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
