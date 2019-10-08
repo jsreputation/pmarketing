@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { IGameService, NotificationService, IGame, GameType } from '@perx/core';
+import { IGameService, NotificationService, IGame, GameType, IPlayOutcome, Voucher } from '@perx/core';
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 
 @Component({
   selector: 'app-game',
@@ -29,7 +30,8 @@ export class GameComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private router: Router,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private gameOutcomeService: GameOutcomeService
   ) { }
 
   public ngOnInit(): void {
@@ -104,8 +106,30 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    setTimeout(() => {
-      this.router.navigate(['/congrats'], { queryParams: { gameId: this.game.id } });
-    }, 2000);
+
+    this.gameService.play(this.game.id)
+    .pipe(
+      map((game: IPlayOutcome) => game.vouchers)
+    )
+    .subscribe(
+      (vouchs: Voucher[]) => {
+        if (vouchs.length === 0) {
+          this.showNoRewardsPopUp();
+        } else {
+          this.gameOutcomeService.setVouchersList(vouchs);
+          this.router.navigate(['/congrats']);
+        }
+        },
+      () => this.showNoRewardsPopUp()
+    );
+  }
+
+  private showNoRewardsPopUp(): void {
+    this.notificationService.addPopup({
+      title: this.game.results.noOutcome.title,
+      text: this.game.results.noOutcome.subTitle,
+      buttonTxt: this.game.results.noOutcome.button,
+      afterClosedCallBack: this
+    });
   }
 }

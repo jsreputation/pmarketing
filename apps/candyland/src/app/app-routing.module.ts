@@ -38,6 +38,10 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(mod => mod.SettingsModule)
+      },
+      {
+        path: 'report',
+        loadChildren: () => import('./report/report.module').then(mod => mod.ReportModule)
       }
     ]
   },
