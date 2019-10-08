@@ -12,7 +12,6 @@ import {
   ILoyalty,
   Voucher,
   VoucherState,
-  RedemptionType,
   IVoucherService,
   RewardsService
 } from '@perx/core';
