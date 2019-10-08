@@ -96,6 +96,7 @@ interface WTreeDisplayProperties extends WGameDisplayProperties {
   nb_hanged_gifts: number;
   gift_box_img_url: string;
   background_img_url: string;
+  nb_gifts_to_drop?: number;
 }
 
 interface WPinataDisplayProperties extends WGameDisplayProperties {
@@ -127,7 +128,8 @@ export class WhistlerGameService implements IGameService {
         ...defaultTree(),
         treeImg: treedp.tree_img_url,
         giftImg: treedp.gift_box_img_url,
-        nbHangedGift: treedp.nb_hanged_gifts
+        nbHangedGift: treedp.nb_hanged_gifts,
+        nbGiftsToDrop: treedp.nb_gifts_to_drop || 1
       };
     } else if (attributes.game_type === GameType.pinata) {
       type = TYPE.pinata;
