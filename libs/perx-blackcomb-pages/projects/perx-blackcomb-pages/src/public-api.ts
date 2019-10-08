@@ -6,3 +6,5 @@ export { GameModule} from './lib/game/game.module';
 export { TapComponent } from './lib/game/tap/tap.component';
 export { ShakeComponent } from './lib/game/shake/shake.component';
 export { HistoryComponent } from './lib/history/history.component';
+export { HomeComponent } from './lib/home/home.component';
+export { RewardComponent } from './lib/reward/reward.component';

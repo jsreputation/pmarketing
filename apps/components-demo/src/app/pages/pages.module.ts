@@ -3,9 +3,28 @@ import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
-import { MatTabsModule, MatInputModule, MatProgressBarModule, MatCardModule } from '@angular/material';
-import { PagesModule as PerxPagesModule, GameModule, VouchersModule } from '@perx/core';
-import { AccountComponent, GameComponent, ShakeComponent, TapComponent, HistoryComponent} from '@perx/blackcomb-pages';
+import { 
+  MatTabsModule,
+  MatInputModule,
+  MatProgressBarModule,
+  MatCardModule
+} from '@angular/material';
+import { 
+  PagesModule as PerxPagesModule,
+  GameModule,
+  VouchersModule,
+  RewardsModule
+} from '@perx/core';
+import { 
+  AccountComponent,
+  GameComponent,
+  ShakeComponent,
+  TapComponent,
+  HistoryComponent, 
+  ContentComponent,
+  HomeComponent,
+  RewardComponent
+} from '@perx/blackcomb-pages';
 
 @NgModule({
   declarations: [
@@ -14,7 +33,11 @@ import { AccountComponent, GameComponent, ShakeComponent, TapComponent, HistoryC
     GameComponent,
     ShakeComponent,
     TapComponent,
-    HistoryComponent],
+    HistoryComponent,
+    ContentComponent,
+    HomeComponent,
+    RewardComponent
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,
@@ -24,7 +47,8 @@ import { AccountComponent, GameComponent, ShakeComponent, TapComponent, HistoryC
     MatProgressBarModule,
     GameModule,
     VouchersModule,
-    MatCardModule
+    MatCardModule,
+    RewardsModule
   ]
 })
 export class PagesModule { }

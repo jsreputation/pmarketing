@@ -106,6 +106,7 @@ export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 
 /**
  * Utils

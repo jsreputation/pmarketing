@@ -6,14 +6,19 @@ import { ContentComponent } from './content/content.component';
 import { MatProgressBarModule, MatCardModule, MatIconModule, MatButtonModule, MatRippleModule, MatGridListModule, MatTabsModule } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
-import { VouchersComponent } from '@perx/core';
-import { RepeatTimesDirective } from '@perx/core';
+import { RepeatTimesDirective, RewardsCollectionComponent, VouchersComponent } from '@perx/core';
+import { HomeComponent } from './home/home.component';
+import { RewardComponent } from './reward/reward.component';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
   HistoryComponent,
   VouchersComponent,
-  RepeatTimesDirective
+  RepeatTimesDirective,
+  RewardsCollectionComponent,
+  HomeComponent,
+  RewardComponent
 ];
 
 @NgModule({
@@ -27,7 +32,8 @@ const comps: any[] = [
     MatButtonModule,
     MatRippleModule,
     MatGridListModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxMultiLineEllipsisModule
   ],
   exports: [
     ...comps
