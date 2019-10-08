@@ -1,4 +1,4 @@
-import { Voucher, VoucherState, RedemptionType } from '@perx/core';
+import { Voucher, VoucherState } from '@perx/core';
 
 export const mock: Voucher[] = [
     {
