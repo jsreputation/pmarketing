@@ -1,9 +1,10 @@
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +22,23 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
     this.initForm();
+    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+      this.authService.autoLogin().subscribe(
+        () => {
+          this.redirectAfterLogin();
+        },
+        () => {
+          this.failedAuth = true;
+        }
+      );
+    }
   }
 
   public redirectAfterLogin(): void {

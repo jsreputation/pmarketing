@@ -33,9 +33,11 @@
     <div class="table-card">
       <!--  table-->
       <cl-campaigns-list [dataSource]="dataSource"
-                        [displayedColumns]="displayedColumns"
-                        (editAction)="editCampaign($event)"
-                        (duplicateAction)="duplicateCampaign($event)">
+                         [displayedColumns]="displayedColumns"
+                         (editAction)="editCampaign($event)"
+                         (duplicateAction)="duplicateCampaign($event)"
+                         (emitOpenReport)="openReport($event)"
+      >
       </cl-campaigns-list>
       <!--/ table-->
 
