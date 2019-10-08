@@ -5,7 +5,6 @@ import {
   NotificationService,
   RewardsService,
   IReward,
-  IVoucherService,
   IMerchantAdminService, Voucher
 } from '@perx/core';
 import {flatMap} from 'rxjs/operators';
