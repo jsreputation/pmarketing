@@ -153,18 +153,9 @@ describe('VouchersService', () => {
     service.get(21)
       .subscribe((updateVoucher: IVoucher) => {
         expect(updateVoucher.id).toEqual(21);
-        expect(updateVoucher.rewardId).toEqual(5);
         expect(updateVoucher.state).toEqual('issued');
-        expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
         expect(updateVoucher.code).toEqual(null);
-        expect(updateVoucher.description[0].content).toEqual('Please visit');
-        expect(updateVoucher.thumbnailImg).toEqual(
-          'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
-        expect(updateVoucher.rewardBanner).toEqual(
-          'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png');
         expect(updateVoucher.redemptionDate).toEqual(null);
-        expect(updateVoucher.merchantName).toEqual('Lumiere Photography');
-        expect(updateVoucher.merchantImg).toEqual(null);
         done();
       });
 
@@ -242,18 +233,9 @@ describe('VouchersService', () => {
     const voucher: IV4Voucher = mockVouchers.data[0];
     const updateVoucher = V4VouchersService.v4VoucherToVoucher(voucher);
     expect(updateVoucher.id).toEqual(21);
-    expect(updateVoucher.rewardId).toEqual(5);
     expect(updateVoucher.state).toEqual('issued');
-    expect(updateVoucher.name).toEqual('General Indoor Studio package @ $99');
     expect(updateVoucher.code).toEqual(null);
-    expect(updateVoucher.description[0].content).toEqual('Please visit');
-    expect(updateVoucher.thumbnailImg).toEqual(
-      'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png');
-    expect(updateVoucher.rewardBanner).toEqual(
-      'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png');
     expect(updateVoucher.redemptionDate).toEqual(null);
-    expect(updateVoucher.merchantName).toEqual('Lumiere Photography');
-    expect(updateVoucher.merchantImg).toEqual(null);
   });
 
 });
