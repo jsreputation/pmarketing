@@ -35,34 +35,34 @@ export interface IVoucher {
   /**
    * @deprecated
    */
-  rewardId: number; // use at \lib\vouchers\vouchers.service.ts
+  rewardId?: number; // use at \lib\vouchers\vouchers.service.ts
   reward: IReward | null;
   state: VoucherState;
   /**
    * @deprecated
    */
-  name: string;
+  name?: string;
   code?: string;
   /**
    * @deprecated
    */
-  redemptionType: RedemptionType;
+  redemptionType?: RedemptionType;
   /**
    * @deprecated
    */
-  thumbnailImg: string;
+  thumbnailImg?: string;
   /**
    * @deprecated
    */
-  rewardBanner: string;
+  rewardBanner?: string;
   /**
    * @deprecated
    */
-  merchantImg: string;
+  merchantImg?: string;
   /**
    * @deprecated
    */
-  merchantName: string;
+  merchantName?: string;
   /**
    * @deprecated
    */
@@ -72,7 +72,7 @@ export interface IVoucher {
   /**
    * @deprecated
    */
-  description: IVoucherDescription[];
+  description?: IVoucherDescription[];
   /**
    * @deprecated
    */

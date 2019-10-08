@@ -48,9 +48,21 @@ describe('PinService', () => {
   it('should get pin from voucher Id', (done: DoneFn) => {
     const mockReturn: IVoucher = {
       id: 1,
-      reward: null,
+      reward: {
+        id: 52,
+        name: 'Get a Free Coke',
+        description: '',
+        subtitle: '',
+        validFrom: new Date(),
+        validTo: new Date(),
+        rewardBanner: '',
+        merchantImg: '',
+        termsAndConditions: '',
+        howToRedeem: '',
+      },
       state: VoucherState.expired,
-      code: '697974626635625878704f6750536e4b5231673762773d3d',
+      merchantImg: '',
+      merchantName: 'Kluang Station',
       expiry: new Date('2019-04-30T15:59:59.999Z'),
     };
 
