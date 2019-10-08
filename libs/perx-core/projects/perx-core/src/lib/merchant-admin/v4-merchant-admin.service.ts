@@ -3,7 +3,7 @@ import { IMerchantAdminService } from './imerchant-admin.service';
 import { Observable } from 'rxjs';
 import { IMerchantAdminTransaction } from './models/merchants-admin.model';
 import { IVoucher, RedemptionType, VoucherState } from '../vouchers/models/voucher.model';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Config } from '../config/config';
 
@@ -239,10 +239,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       );
   }
 
-  public issueVoucher(id: number): Observable<IVoucher> {
+  public issueVoucher(id: number, userId: string = ''): Observable<IVoucher> {
+    const headers = new HttpHeaders().set('user-id', userId);
+
     const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
 
-    return this.http.post<IV4RedeemVoucherResponse>(url, null).pipe(
+    return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
         map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
       );
   }

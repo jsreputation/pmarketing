@@ -8,5 +8,5 @@ export abstract class IMerchantAdminService {
 
   public abstract redeemVoucher(id: number): Observable<IVoucher>;
 
-  public abstract issueVoucher(id: number): Observable<IVoucher>;
+  public abstract issueVoucher(id: number, userId?: string): Observable<IVoucher>;
 }

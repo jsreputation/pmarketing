@@ -22,7 +22,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public issueVoucher(id: number): Observable<IVoucher> {
+  public issueVoucher(id: number, userId: string): Observable<IVoucher> {
     throw new Error(`issueVoucher Method not implemented.`);
   }
 }
