@@ -26,4 +26,5 @@ export class ApiConfig {
   public static uploadImagePath: string = `${ApiConfig.basePath}/storage/images`;
   public static uploadFilePath: string = `${ApiConfig.basePath}/storage/documents`;
   public static apiCdnPath: string = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
+  public static getReportPath: string = `${ApiConfig.basePath}/report`;
 }
