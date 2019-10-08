@@ -71,6 +71,10 @@ export {
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
+export { ShakeComponent } from './lib/pages/game/shake/shake.component';
+export { TapComponent } from './lib/pages/game/tap/tap.component';
+export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
+export { PinataComponent } from './lib/game/pinata/pinata.component';
 
 /**
  * Profile

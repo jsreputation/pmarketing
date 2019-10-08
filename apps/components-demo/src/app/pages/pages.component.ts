@@ -13,6 +13,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   public navLinks: INavLink[] = [
     { path: 'account', label: 'Account' },
     { path: 'contact-us', label: 'Cotact Us' },
+    { path: 'game', label: 'Game' },
     { path: 'history', label: 'History'},
     { path: 'home', label: 'Home'},
     { path: 'reward', label: 'Reward'},

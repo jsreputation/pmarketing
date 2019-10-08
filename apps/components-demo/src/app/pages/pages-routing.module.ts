@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import {
-  AccountComponent,
   ContactUsComponent,
-  GameComponent,
   HistoryComponent,
   HomeComponent,
   RewardPageComponent,
@@ -17,6 +15,10 @@ import {
   TncComponent,
   VoucherDetailPageComponent
 } from '@perx/core';
+import { 
+  AccountComponent,
+  GameComponent
+} from '@perx/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
