@@ -92,10 +92,10 @@
   }
 
   .issued {
-    background-color: $pending-color;
+    background-color: $light-gray;
   }
 
   .redeemed {
-    background-color: $warning-color;
+    background-color: $pending-color;
   }
 }
