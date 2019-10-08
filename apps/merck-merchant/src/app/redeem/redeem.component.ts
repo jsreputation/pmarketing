@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { IPayload } from '../order/order.component';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {IPayload} from '../order/order.component';
+import {Router} from '@angular/router';
 import {
   NotificationService,
   RewardsService,
   IReward,
-  IVoucherService,
-  IPrice
+  IMerchantAdminService, Voucher
 } from '@perx/core';
-import { map, flatMap } from 'rxjs/operators';
-import { HttpResponseBase } from '@angular/common/http';
+import {flatMap} from 'rxjs/operators';
+import {HttpResponseBase} from '@angular/common/http';
 
 interface IHttpResponseBase extends HttpResponseBase {
   error: {
@@ -32,8 +31,9 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private vouchersService: IVoucherService
-  ) {}
+    private merchantService: IMerchantAdminService
+  ) {
+  }
 
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;
@@ -54,10 +54,10 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    this.rewardsService.getRewardPricesOptions(this.payload.rewardId)
+    this.merchantService.issueVoucher(this.payload.rewardId)
       .pipe(
-        map(res => res[0]),
-        flatMap((res: IPrice) => this.vouchersService.redeemVoucher(res.id))
+        // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
+        flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
       )
       .subscribe(
         () => this.notificationService.addSnack('Transaction completed'),
@@ -66,6 +66,6 @@ export class RedeemComponent implements OnInit {
   }
 
   public getPrice(): number {
-    return this.reward.rewardPrice[0].price;
+    return this.reward.rewardPrice[0].points;
   }
 }
