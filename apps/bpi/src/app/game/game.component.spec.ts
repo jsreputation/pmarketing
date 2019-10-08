@@ -82,7 +82,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {
@@ -157,7 +157,7 @@ describe('GameComponent', () => {
               }
             },
             totalSlots: 5,
-            displayCampaignAs: null,
+            displayCampaignAs: 'stamp_card',
           },
           stamps: [
             {
@@ -301,7 +301,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {
@@ -367,7 +367,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {
@@ -495,7 +495,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {
@@ -644,7 +644,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {
@@ -772,7 +772,7 @@ describe('GameComponent', () => {
             }
           },
           totalSlots: 5,
-          displayCampaignAs: null,
+          displayCampaignAs: 'stamp_card',
         },
         stamps: [
           {

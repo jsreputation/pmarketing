@@ -27,7 +27,7 @@ export const stampCard: IStampCard = {
         rewardPreStamp: 'assets/stamps/pre_reward.png',
         rewardPostStamp: 'assets/stamps/post_reward.png',
         totalSlots: 1,
-        displayCampaignAs: null
+        displayCampaignAs: 'stamp_card',
     },
     collectionStamps: [
         { id: 1, state: PuzzleCollectStampState.redeemed },
