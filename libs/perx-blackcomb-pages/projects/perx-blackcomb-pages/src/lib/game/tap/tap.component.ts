@@ -5,7 +5,7 @@ import {
 } from '@perx/core';
 
 @Component({
-  selector: 'app-tap',
+  selector: 'perx-blackcomb-pages-tap',
   templateUrl: './tap.component.html',
   styleUrls: ['./tap.component.scss']
 })

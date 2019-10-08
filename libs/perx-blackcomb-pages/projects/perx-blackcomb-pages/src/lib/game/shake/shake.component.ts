@@ -4,7 +4,7 @@ import {
 } from '@perx/core';
 
 @Component({
-  selector: 'app-shake',
+  selector: 'perx-blackcomb-pages-shake',
   templateUrl: './shake.component.html',
   styleUrls: ['./shake.component.scss']
 })

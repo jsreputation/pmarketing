@@ -6,7 +6,7 @@ import { Observable, interval, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-game',
+  selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })

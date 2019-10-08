@@ -121,6 +121,7 @@ export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
 export { GeneralStaticDataService } from './lib/utils/general-static-data/general-static-data.service';
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
+export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 /**
  * Puzzles
  */

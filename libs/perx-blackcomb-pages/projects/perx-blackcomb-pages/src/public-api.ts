@@ -5,3 +5,4 @@ export { GameComponent } from './lib/game/game.component';
 export { GameModule} from './lib/game/game.module';
 export { TapComponent } from './lib/game/tap/tap.component';
 export { ShakeComponent } from './lib/game/shake/shake.component';
+export { HistoryComponent } from './lib/history/history.component';
