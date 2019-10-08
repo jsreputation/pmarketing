@@ -4,11 +4,13 @@ import { RatingGraphicComponent } from '../../rating-graphic/rating-graphic.comp
 import { PictureChoiceGraphicComponent } from '../../picture-choice-graphic/picture-choice-graphic.component';
 import { MultipleChoiceGraphicComponent } from '../../multiple-choice-graphic/multiple-choice-graphic.component';
 import { LongTextGraphicComponent } from '../../long-text-graphic/long-text-graphic.component';
+import { QuestionGroupGraphicComponent } from '../../question-group-graphic/question-group-graphic.component';
 const componentMapper = {
   [SurveyQuestionType.rating]: RatingGraphicComponent,
   [SurveyQuestionType.pictureChoice]: PictureChoiceGraphicComponent,
   [SurveyQuestionType.multipleChoice]: MultipleChoiceGraphicComponent,
   [SurveyQuestionType.longText]: LongTextGraphicComponent,
+  [SurveyQuestionType.questionGroup]: QuestionGroupGraphicComponent,
 };
 @Directive({
   selector: '[clDynamicGraphic]'
@@ -17,6 +19,7 @@ export class DynamicGraphicDirective implements OnInit, OnChanges {
   public componentRef: any;
   @Input() public data: any;
   @Input() public type: string;
+  @Input() public currentIndex: number;
   constructor(private resolver: ComponentFactoryResolver,
               private container: ViewContainerRef) {
   }
@@ -39,6 +42,9 @@ export class DynamicGraphicDirective implements OnInit, OnChanges {
     } else {
       this.componentRef.instance.data = this.data;
     }
+  }
+  private setSettingsForGroup(): void {
+    this.componentRef.instance.currentIndex = this.currentIndex;
   }
 
   private clear(): void {

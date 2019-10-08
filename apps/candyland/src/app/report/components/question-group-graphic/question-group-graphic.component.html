@@ -1,1 +1,7 @@
-<p>question-group-graphic works!</p>
+<ng-container *ngIf="data">
+  <cl-single-report-card *ngFor="let item of data.payload; let i = index;"
+                         [data]="item"
+                         [currentIndex]="currentIndex + '-' + i"
+  ></cl-single-report-card>
+</ng-container>
+

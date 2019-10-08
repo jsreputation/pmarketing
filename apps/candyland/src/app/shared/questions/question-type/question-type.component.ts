@@ -26,7 +26,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   @Input() typeList: IEngagementType[];
   @Input() currentIndex: string;
   @Input() level: number;
-  @Input() public set setTypeQuestion(typeQuestion: string): void {
+  @Input() public set setTypeQuestion(typeQuestion: string) {
     this.type.patchValue(typeQuestion);
   }
   @Input() public onlyView: boolean = false;

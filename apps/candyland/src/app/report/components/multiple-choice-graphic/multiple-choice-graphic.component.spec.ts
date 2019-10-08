@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MultipleChoiceGraphicComponent } from './multiple-choice-graphic.component';
-
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('MultipleChoiceGraphicComponent', () => {
   let component: MultipleChoiceGraphicComponent;
   let fixture: ComponentFixture<MultipleChoiceGraphicComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MultipleChoiceGraphicComponent ]
+      declarations: [ MultipleChoiceGraphicComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

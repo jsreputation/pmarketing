@@ -10,7 +10,6 @@ export class LongTextGraphicComponent implements OnInit, OnChanges {
   public showMessage: any[];
   public smallSize: boolean = true;
   public ngOnInit(): void {
-    console.log('LongTextGraphicComponent', this.data);
     this.setShowMessage();
   }
 
@@ -28,7 +27,9 @@ export class LongTextGraphicComponent implements OnInit, OnChanges {
   }
 
   private setShowMessage(): void {
-    this.showMessage = this.data.payload.slice(0, 3);
+    if (this.data && this.data.payload) {
+      this.showMessage = this.data.payload.slice(0, 3);
+    }
   }
 
 }

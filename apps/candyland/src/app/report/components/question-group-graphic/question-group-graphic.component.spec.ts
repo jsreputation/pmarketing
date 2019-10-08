@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionGroupGraphicComponent } from './question-group-graphic.component';
-
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('QuestionGroupGraphicComponent', () => {
   let component: QuestionGroupGraphicComponent;
   let fixture: ComponentFixture<QuestionGroupGraphicComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuestionGroupGraphicComponent ]
+      declarations: [ QuestionGroupGraphicComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
