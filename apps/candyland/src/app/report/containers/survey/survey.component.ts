@@ -34,7 +34,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       .subscribe((params: ParamMap) => {
         const id = params.get('id');
         if (!id) {
-          this.router.navigateByUrl('/dashboard/overview');
+          this.router.navigate(['/dashboard/overview']);
         }
         this.getReportStamp(id);
       });
