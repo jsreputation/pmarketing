@@ -32,4 +32,8 @@ export class CampaignsListPageComponent {
         });
   }
 
+  public openReport(url: string): void {
+    this.router.navigateByUrl(url);
+  }
+
 }
