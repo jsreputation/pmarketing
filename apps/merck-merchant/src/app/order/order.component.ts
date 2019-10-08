@@ -9,6 +9,7 @@ export interface IPayload {
   name: string;
   id: number;
   rewardId?: number;
+  identifier?: number;
 }
 
 interface Product {
