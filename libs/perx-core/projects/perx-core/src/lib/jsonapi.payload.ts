@@ -26,3 +26,24 @@ export interface IJsonApiItem<T> {
         }
     };
 }
+
+export interface IJsonApiPatchItem<T> {
+  data: IJsonApiPatchData<T>;
+}
+
+export interface IJsonApiPatchData<T> {
+  attributes?: Partial<T>;
+  id: string;
+  type: string;
+  relationships?: any;
+}
+
+export interface IJsonApiPostItem<T> {
+  data: IJsonApiPostData<T>;
+}
+
+export interface IJsonApiPostData<T> {
+  type?: string;
+  attributes: T;
+  relationships?: any;
+}
