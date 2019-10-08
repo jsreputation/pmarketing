@@ -10,13 +10,37 @@ import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 
+const mockGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 3,
+  config: {
+    stillImg: null,
+    breakingImg: null,
+    brokenImg: null,
+    nbTaps: 3,
+  },
+  backgroundImg: null,
+  texts: {
+    title: null,
+    subTitle: null,
+    button: null,
+  },
+  results: {
+    outcome: null,
+    noOutcome: null
+  }
+};
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   const routerStub = { navigate: () => ({}) };
 
   const gameServiceStub = {
-    get: () => of()
+    get: () => of(),
+    play: () => {}
   };
   const locationStub = {
     back: () => { }
@@ -51,30 +75,7 @@ describe('GameComponent', () => {
   it('should get game id from route, call gameService onInit', fakeAsync(() => {
     const gameService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
     const gameServiceSpy = spyOn(gameService, 'get').and.returnValue(
-      of(
-        {
-          id: 1,
-          campaignId: 1,
-          type: GameType.pinata,
-          remainingNumberOfTries: 3,
-          config: {
-            stillImg: null,
-            breakingImg: null,
-            brokenImg: null,
-            nbTaps: 3,
-          },
-          backgroundImg: null,
-          texts: {
-            title: null,
-            subTitle: null,
-            button: null,
-          },
-          results: {
-            outcome: null,
-            noOutcome: null
-          }
-        }
-      )
+      of( mockGame)
     );
     component.ngOnInit();
     tick();
@@ -106,24 +107,14 @@ describe('GameComponent', () => {
     expect(locationSpy).toHaveBeenCalled();
   });
 
-  it('should navigate to congrats screen on gameCompleted', fakeAsync(() => {
-    const router = TestBed.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigate');
-    component.game = {
-      id: 1,
-      campaignId: 1,
-      type: GameType.pinata,
-      remainingNumberOfTries: 1,
-      config: {
-        stillImg: '',
-        brokenImg: '',
-        nbTaps: 3
-      },
-      texts: {},
-      results: {}
-    };
+  it('should call play on game completed', fakeAsync(() => {
+    const gameService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
+    const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(
+      of()
+    );
+    component.game = mockGame;
     component.gameCompleted();
     tick(2000);
-    expect(routerSpy).toHaveBeenCalledWith(['/congrats'], { queryParams: Object({ gameId: 1 }) });
+    expect(gameServiceSpy).toHaveBeenCalled();
   }));
 });

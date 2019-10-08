@@ -1,6 +1,7 @@
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { RewardsService } from './../../../core/services/rewards.service';
 import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
@@ -25,7 +26,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private engagementsService: EngagementsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -38,6 +40,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.store.currentCampaign = null;
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
@@ -55,6 +58,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           map((comms: IComm[]) => comms[0])
         ),
         this.outcomesService.getOutcomes(params)).pipe(
+          untilDestroyed(this),
           map(
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]) => ({
@@ -91,6 +95,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           campaign => {
             this.campaign = campaign;
             this.store.updateCampaign(this.campaign);
+            this.cd.detectChanges();
           },
           (err) => console.log(err)
         );
