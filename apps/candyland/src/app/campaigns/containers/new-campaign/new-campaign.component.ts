@@ -55,6 +55,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.store.currentCampaign = null;
     this.cdr.detach();
   }
 
