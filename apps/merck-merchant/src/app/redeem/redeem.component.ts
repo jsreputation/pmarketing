@@ -32,7 +32,6 @@ export class RedeemComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private vouchersService: IVoucherService,
     private merchantService: IMerchantAdminService
   ) {
   }
@@ -59,7 +58,7 @@ export class RedeemComponent implements OnInit {
     this.merchantService.issueVoucher(this.payload.rewardId)
       .pipe(
         // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
-        flatMap((res: Voucher) => this.vouchersService.redeemVoucher(res.id))
+        flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
       )
       .subscribe(
         () => this.notificationService.addSnack('Transaction completed'),
