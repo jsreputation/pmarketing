@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import {
   ContactUsComponent,
-  HistoryComponent,
   HomeComponent,
   RewardPageComponent,
   LoadingComponent,
@@ -17,7 +16,8 @@ import {
 } from '@perx/core';
 import { 
   AccountComponent,
-  GameComponent
+  GameComponent,
+  HistoryComponent
 } from '@perx/blackcomb-pages';
 
 const routes: Routes = [{
