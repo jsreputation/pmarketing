@@ -23,7 +23,8 @@ import {
   RatingComponent,
   PictureSelectComponent,
   LongTextComponent,
-  DateComponent
+  DateComponent,
+  VoucherComponent
 } from '@perx/core';
 
 import { HomeComponent } from './home/home.component';
@@ -37,6 +38,7 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
+import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -65,7 +67,9 @@ const comps: any[] = [
   RatingComponent,
   PictureSelectComponent,
   LongTextComponent,
-  DateComponent
+  DateComponent,
+  VoucherDetailComponent,
+  VoucherComponent
 ];
 
 @NgModule({

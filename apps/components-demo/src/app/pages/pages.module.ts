@@ -7,13 +7,16 @@ import {
   MatTabsModule,
   MatInputModule,
   MatProgressBarModule,
-  MatCardModule
+  MatCardModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { 
   PagesModule as PerxPagesModule,
   GameModule,
   VouchersModule,
-  RewardsModule
+  RewardsModule,
+  PuzzlesModule,
+  SurveyModule
 } from '@perx/core';
 import { 
   AccountComponent,
@@ -23,8 +26,16 @@ import {
   HistoryComponent, 
   ContentComponent,
   HomeComponent,
-  RewardComponent
+  RewardComponent,
+  LoadingComponent,
+  LoginComponent,
+  RedeemComponent,
+  RewardDetailsComponent,
+  StampCardComponent,
+  SurveyComponent,
+  VoucherDetailComponent
 } from '@perx/blackcomb-pages';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +47,14 @@ import {
     HistoryComponent,
     ContentComponent,
     HomeComponent,
-    RewardComponent
+    RewardComponent,
+    LoadingComponent,
+    LoginComponent,
+    RedeemComponent,
+    RewardDetailsComponent,
+    StampCardComponent,
+    SurveyComponent,
+    VoucherDetailComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +66,12 @@ import {
     GameModule,
     VouchersModule,
     MatCardModule,
-    RewardsModule
+    RewardsModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    PuzzlesModule,
+    SurveyModule
   ]
 })
 export class PagesModule { }

@@ -12,3 +12,6 @@ export { RewardComponent } from './lib/reward/reward.component';
 export { LoginComponent } from './lib/login/login.component';
 export { RedeemComponent } from './lib/redeem/redeem.component';
 export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
+export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.component';
+export { SurveyComponent } from './lib/survey/survey.component';
+export { StampCardComponent } from './lib/stamp-card/stamp-card.component';

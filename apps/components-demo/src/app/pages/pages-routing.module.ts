@@ -2,12 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import {
-  StampCardComponent,
-  SurveyPageComponent,
-  TncComponent,
-  VoucherDetailPageComponent
-} from '@perx/core';
-import {
   RewardDetailsComponent,
   RedeemComponent,
   LoadingComponent,
@@ -17,9 +11,11 @@ import {
   HistoryComponent,
   HomeComponent,
   RewardComponent,
-  ContentComponent
+  ContentComponent,
+  StampCardComponent,
+  SurveyComponent,
+  VoucherDetailComponent
 } from '@perx/blackcomb-pages';
-
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
@@ -36,9 +32,8 @@ const routes: Routes = [{
     { path: 'redeem', component: RedeemComponent },
     { path: 'reward-detail', component: RewardDetailsComponent },
     { path: 'stamp', component: StampCardComponent },
-    { path: 'survey', component: SurveyPageComponent },
-    { path: 'tnc', component: TncComponent },
-    { path: 'voucher', component: VoucherDetailPageComponent }
+    { path: 'survey', component: SurveyComponent },
+    { path: 'voucher', component: VoucherDetailComponent }
   ]
 }];
 
