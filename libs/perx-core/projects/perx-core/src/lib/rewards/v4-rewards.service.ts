@@ -261,8 +261,9 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public getReward(id: number): Observable<IReward> {
-    const headers = new HttpHeaders().set('user-id', '2431423-1565776643');
+  public getReward(id: number, userId: string = ''): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+    .set('user-id', userId);
 
     return this.http.get<IV4GetRewardResponse>(
       `${this.apiHost}/v4/rewards/${id}`, { headers }
