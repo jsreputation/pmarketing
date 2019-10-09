@@ -7,7 +7,7 @@
   position: relative; // new
 }
 
-.game-wrapper {
+.instantReward-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -25,9 +25,8 @@
     h1 {
       font-style: normal;
       font-weight: 500;
-      font-size: 20px;
-      line-height: 23px;
-      font-family: Roboto, sans-serif;
+      font-size: 2rem;
+      line-height: 2.3rem;
       text-align: center;
     }
 
