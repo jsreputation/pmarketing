@@ -4,7 +4,8 @@ import {IVoucher} from '../vouchers/models/voucher.model';
 
 export abstract class IMerchantAdminService {
   public abstract createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
-                                    type: string, reference: string, pharmacy: string): Observable<IMerchantAdminTransaction>;
+                                    type: string, reference: string, pharmacy: string,
+                                    productName: string): Observable<IMerchantAdminTransaction>;
 
   public abstract redeemVoucher(id: number): Observable<IVoucher>;
 
