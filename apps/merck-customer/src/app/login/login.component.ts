@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit, PageAppearence {
   private initForm(): void {
     this.loginForm = this.fb.group({
       mobileNo: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      countryCode: ['852', Validators.required]
     });
   }
 
@@ -73,9 +74,12 @@ export class LoginComponent implements OnInit, PageAppearence {
     // const mobileNo = this.selectedCountry + (this.loginForm.get('mobileNo').value as string);
 
     const mobileNo = (this.loginForm.get('mobileNo').value as string);
+    const countryCode = (this.loginForm.get('countryCode').value as string);
+    const codeAndMobile = countryCode + mobileNo;
+    const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
     const password: string = this.loginForm.get('password').value;
 
-    this.authService.login(mobileNo, password).subscribe(
+    this.authService.login(cleanedMobileNo, password).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {

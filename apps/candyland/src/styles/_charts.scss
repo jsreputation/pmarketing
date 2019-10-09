@@ -90,7 +90,9 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .tabs-list-wrap + .chart-card {
   border-color: $white;
   flex-grow: 2;
-  padding: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
 
   & > .chart-card-content {
     height: 35rem;

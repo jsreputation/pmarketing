@@ -1,6 +1,9 @@
+@import "variables";
+
 .type-block {
-  width: 100%;
-  max-width: 18rem;
   height: 100%;
-  font-size: 14px;
+  width: 100%;
+  max-width: ($horizontal-padding * 6);
+
+  @include typo-input;
 }

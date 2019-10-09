@@ -19,6 +19,7 @@ import { Config } from '../config/config';
 
 interface IV4Profile {
   id: number;
+  identifier?: string;
   state: string;
   first_name: string;
   middle_name?: string;
@@ -53,6 +54,7 @@ export class V4ProfileService extends ProfileService {
   public static v4ProfileToProfile(profile: IV4Profile): IProfile {
     return {
       id: profile.id,
+      identifier: profile.identifier,
       state: profile.state,
       firstName: profile.first_name,
       lastName: profile.last_name,
