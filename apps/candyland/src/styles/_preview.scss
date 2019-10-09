@@ -90,11 +90,12 @@
   }
 
   &-preview-btn {
+    @include typo-button;
+
     border: none;
     border-radius: $border-radius;
     background: #ff1c1c;
     color: $white;
-    font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
     min-height: 4rem;
@@ -124,20 +125,22 @@
     height: 32rem;
     display: block;
     z-index: 3;
+    transform: scale(0.75);
   }
 
   &-preview-card {
     position: absolute;
     padding: 1.7rem 2rem;
     box-sizing: border-box;
-    top: 15rem;
+    top: 13rem;
     left: 50%;
     transform: translateX(-49%);
-    width: 22.8rem;
+    transform-origin: top center;
+    width: 21.5rem;
     min-height: 31.7rem;
     background: $white;
     background-size: cover;
-    border-radius: $border-radius-lg;
+    border-radius: $border-radius;
     z-index: 3;
   }
 
@@ -148,15 +151,15 @@
   }
 }
 
-.plugin-block {
-  transform: scale(.8);
-  position: relative;
-  display: block;
-  z-index: 3;
-}
-
 cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
   }
+}
+
+perx-core-rewards-collection .card-collection-container {
+  margin-left: -3rem;
+  margin-right: -3rem;
+  transform: scale(0.9);
+  justify-content: space-around;
 }
