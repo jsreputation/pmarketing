@@ -8,7 +8,7 @@ import { Config } from '../config/config';
 
 interface IV4GetMerchantsResponse {
   data: IMerchant[];
-  meta?: IMeta;
+  meta?: IMeta;  // use in merck-customer app
 }
 
 interface IV4GetMerchantResponse {

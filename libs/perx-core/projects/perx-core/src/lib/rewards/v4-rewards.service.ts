@@ -75,7 +75,7 @@ interface IV4Price {
 
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
-  meta?: IV4Meta;
+  meta?: IV4Meta; // use in hkbn, hsbc-rewards (getRewards function)
 }
 
 interface IV4GetRewardResponse {
@@ -84,12 +84,11 @@ interface IV4GetRewardResponse {
 
 interface IV4GetRewardPricesResponse {
   data: IV4Price[];
-  meta?: IV4Meta;
 }
 
 interface IV4GetCatalogsResponse {
   data: IV4Catalog[];
-  meta?: IV4Meta;
+  meta?: IV4Meta; // use in starhub (getAllCatalogs function)
 }
 
 interface IV4GetCatalogResponse {
