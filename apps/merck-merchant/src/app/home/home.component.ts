@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   public onLogOut(): void {
     this.authService.logout();
-    this.tokenStorage.clearAppInfoProperty('merchantUsername');
+    this.tokenStorage.clearAppInfoProperty(['merchantUsername']);
     this.router.navigate(['/login']);
   }
 

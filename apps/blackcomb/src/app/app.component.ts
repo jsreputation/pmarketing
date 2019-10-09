@@ -43,8 +43,7 @@ export class AppComponent implements OnInit {
         if (res) {
           this.router.navigate(['/login']);
         }
-      },
-      () => console.log('success here')
+      }
     );
 
     this.notificationService.$popup
