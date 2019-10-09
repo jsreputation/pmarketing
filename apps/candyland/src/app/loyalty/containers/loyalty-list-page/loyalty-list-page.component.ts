@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   OnDestroy
 } from '@angular/core';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { CustomDataSource } from '@cl-shared/table';
-import { RewardsService } from '@cl-core/services';
 
 @Component({
   selector: 'cl-loyalty-list-page',
@@ -17,7 +17,7 @@ export class LoyaltyListPageComponent implements OnDestroy {
   public hasData: boolean = true;
 
   constructor(
-    private loyaltyService: RewardsService
+    private loyaltyService: LoyaltyService
     // public cd: ChangeDetectorRef,
   ) {
     this.dataSource = new CustomDataSource<any>(this.loyaltyService);
