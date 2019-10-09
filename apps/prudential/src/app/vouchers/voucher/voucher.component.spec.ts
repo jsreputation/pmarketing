@@ -12,17 +12,9 @@ describe('VoucherComponent', () => {
 
   const mockVoucher: Voucher = {
     id: 1,
-    rewardId: 1,
     reward: null,
     state: VoucherState.issued,
-    name: '',
-    redemptionType: RedemptionType.none,
-    thumbnailImg: '',
-    rewardBanner: '',
-    merchantImg: '',
-    merchantName: '',
     expiry:  null,
-    description: []
   };
   const vouchersServiceStub = {
     get: () => of(mockVoucher)
