@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SurveyService } from '@cl-core-services';
 
 @Component({
@@ -9,50 +9,10 @@ import { SurveyService } from '@cl-core-services';
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit, OnDestroy {
-  public data: any = {
-    title: 'Welcome Survey Responses',
-    summaryInfo: [
-      {
-      title: 'Responses',
-      value: 56,
-      },
-      {
-      title: 'Completion rate',
-      value: '8%'
-    }, {
-      title: 'Average time to complete',
-      value: '22.50'
-    }],
-    questions: [
-      {
-        total: 3000,
-        selectedType: 'rating',
-        question_title: 'test',
-        left_label: 'Not Very',
-        right_label: 'Very much',
-        payload: [
-          {
-            amount: 350,
-          },
-          {
-            amount: 150,
-          },
-          {
-            amount: 50,
-          },
-          {
-            amount: 10,
-          },
-          {
-            amount: 0,
-          }
-        ]
-      }
-    ]
-
-  };
+  public data: IBaseQuestionReport;
   constructor(private surveyService: SurveyService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private router: Router) {}
   public ngOnInit(): void {
     this.subscribeToRoute();
   }
@@ -64,8 +24,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private getReportStamp(id: string): void {
     this.surveyService.getSurveyReport(id)
       .subscribe((res) => {
-        console.log(res);
-        // this.data = res;
+        this.data = res;
       });
   }
 
@@ -74,9 +33,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe((params: ParamMap) => {
         const id = params.get('id');
+        if (!id) {
+          this.router.navigate(['/dashboard/overview']);
+        }
         this.getReportStamp(id);
-
-        console.log(id);
       });
   }
 

@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { LoyaltyModule, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { mockTransactions } from './loyalty-mock';
+import {mockLoyalty, mockTransactions} from './loyalty-mock';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -30,7 +30,8 @@ describe('TransactionHistoryComponent', () => {
         {
           provide: LoyaltyService,
           useValue: {
-            getAllTransactions: () => of(mockTransactions)
+            getAllTransactions: () => of(mockTransactions),
+            getLoyalty: () => of(mockLoyalty)
           }
         },
         {

@@ -16,8 +16,8 @@ export class ReportLinearGraphicComponent implements OnChanges {
   }
 
   private checkExistingText(): void {
-    if (this.data && this.data.data) {
-      this.existPrefixText = this.data.data.some((item) => !!item.choices.text);
+    if (this.data && this.data.payload) {
+      this.existPrefixText = this.data.payload.some((item) => !!item.choices.text);
     }
   }
 
