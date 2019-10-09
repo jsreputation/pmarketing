@@ -91,7 +91,6 @@
 
   &-preview-btn {
     @include typo-button;
-
     @include mat-elevation(2);
 
     border: none;
