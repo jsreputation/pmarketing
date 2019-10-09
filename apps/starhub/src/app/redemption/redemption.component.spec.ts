@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType, RewardsService } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -11,6 +11,11 @@ import { vouchers } from '../vouchers.mock';
 import { Type } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { rewards } from '../rewards.mock';
+
+const rewardsServiceStub = {
+  getReward: ()=>of(rewards[0])
+};
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -68,6 +73,7 @@ describe('RedemptionComponent', () => {
         },
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
+        { provide: RewardsService, useValue: rewardsServiceStub}
       ]
     })
       .compileComponents();

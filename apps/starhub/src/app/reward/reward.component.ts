@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
-import { filter, map, tap, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { IMacaron, MacaronService } from '../services/macaron.service';
@@ -14,7 +14,6 @@ import { IMacaron, MacaronService } from '../services/macaron.service';
 })
 export class RewardComponent implements OnInit {
   public reward: IReward;
-  public rewardId: number;
   public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron;
@@ -34,7 +33,6 @@ export class RewardComponent implements OnInit {
       .pipe(
         filter((params: Params) => params.id), // ignore anything not related to reward id
         map((params: Params) => params.id), // get reward id
-        tap((id: number) => this.rewardId = id), // save it
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
@@ -48,9 +46,9 @@ export class RewardComponent implements OnInit {
             siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
           });
         }
-        
+
         this.macaron = this.macaronService.getMacaron(reward);
-        console.log(this.macaron, reward)
+        this.isRewardsDetailsFetched = true;
         if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0 || this.macaron !== null) {
           this.isButtonEnable = false;
         }
@@ -62,15 +60,10 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.vouchersService.issueReward(this.rewardId)
+    this.vouchersService.issueReward(this.reward.id)
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
       );
-  }
-
-  public setButton(isEnable: boolean): void {
-    this.isRewardsDetailsFetched = true;
-    this.isButtonEnable = isEnable && this.isButtonEnable;
   }
 }

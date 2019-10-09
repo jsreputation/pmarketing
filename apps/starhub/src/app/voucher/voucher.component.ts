@@ -54,8 +54,4 @@ export class VoucherComponent implements OnInit {
         }
       });
   }
-
-  public setButton(isEnable: boolean): void {
-    this.isButtonEnable = isEnable;
-  }
 }
