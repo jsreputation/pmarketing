@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService,
     private config: Config
   ) {
-    this.preAuth = this.config ? this.config.preAuth: false;
+    this.preAuth = this.config ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {

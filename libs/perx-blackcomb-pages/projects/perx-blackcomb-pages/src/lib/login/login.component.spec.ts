@@ -4,7 +4,11 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, Config } from '@perx/core';
+
+const configStub = {
+  preAuth: false
+};
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -26,7 +30,8 @@ describe('LoginComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: Config, useValue: configStub }
       ]
     })
       .compileComponents();
