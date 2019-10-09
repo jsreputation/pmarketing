@@ -49,6 +49,7 @@ describe('PinService', () => {
     const mockReturn: IVoucher = {
       id: 1,
       rewardId: 52,
+      reward: null,
       state: VoucherState.expired,
       name: 'Vidyut what are you doing',
       code: '697974626635625878704f6750536e4b5231673762773d3d',

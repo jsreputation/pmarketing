@@ -4,6 +4,7 @@ export const mock: Voucher[] = [
     {
         id: 123,
         rewardId: 42,
+        reward: null,
         state: VoucherState.issued,
         name: 'Starbucks grande',
         redemptionType: RedemptionType.pin,
@@ -23,6 +24,7 @@ export const mock: Voucher[] = [
     {
         id: 124,
         rewardId: 42,
+        reward: null,
         state: VoucherState.issued,
         name: 'Starbucks',
         redemptionType: RedemptionType.pin,
@@ -42,6 +44,7 @@ export const mock: Voucher[] = [
     {
         id: 125,
         rewardId: 42,
+        reward: null,
         state: VoucherState.issued,
         name: 'Starbucks',
         redemptionType: RedemptionType.pin,
