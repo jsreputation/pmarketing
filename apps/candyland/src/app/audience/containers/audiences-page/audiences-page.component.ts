@@ -13,7 +13,7 @@ import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsService } from '@cl-core-services';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
@@ -72,6 +72,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
+        tap(newUser => console.log(newUser)),
         switchMap((newUser: any) => this.audiencesUserService.createUser(newUser))
       )
       .subscribe(() => {
