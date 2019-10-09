@@ -8,6 +8,7 @@ const themesServiceStub = {};
 const authServiceStub = {};
 
 describe('AppComponent', () => {
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [

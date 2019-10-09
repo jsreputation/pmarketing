@@ -38,7 +38,7 @@ export class NewCampaignDetailFormService {
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: []
+        select: [null, [Validators.required]]
       })
     });
   }

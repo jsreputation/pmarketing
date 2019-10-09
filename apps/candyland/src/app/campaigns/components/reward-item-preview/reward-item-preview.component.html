@@ -7,12 +7,12 @@
     <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
     <p class="reward-item-type" *ngIf="data?.category">{{data?.category}}</p>
   </div>
-  <cl-progress-bar class="reward-item-progress"
-                   *ngIf="data?.current && data?.total"
-                   [current]="data?.current"
-                   [total]="data?.total">
+<!--  <cl-progress-bar class="reward-item-progress"-->
+<!--                   *ngIf="data?.current && data?.total"-->
+<!--                   [current]="data?.current"-->
+<!--                   [total]="data?.total">-->
 
-  </cl-progress-bar>
+<!--  </cl-progress-bar>-->
   <div *ngIf="data?.probability">
     <span class="reward-item-probability-label probability-preview">Probability {{data?.probability * 100}}%</span>
   </div>

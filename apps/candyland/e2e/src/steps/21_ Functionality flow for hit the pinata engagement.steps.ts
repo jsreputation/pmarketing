@@ -108,6 +108,5 @@ When(/^7_I input a test string on the button text field$/, async () => {
 
 Then(/^7_I should see the change in the preview element.$/, async () => {
   // doing an assertion on the button text
-
   expect(await element(by.css('button.mobile-preview-btn')).getText()).to.contain('TestString003');
 });

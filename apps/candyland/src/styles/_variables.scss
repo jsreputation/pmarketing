@@ -32,6 +32,8 @@ $border-color: $light-gray;
 
 /* ----- UNIQUE COLORS ----- */
 $loginpage-color: #F2F6FC;
+$custom-line-bar: #f6f6f6;
+$custom-line-progress: #2665ee;
 
 /* ----- Progress BAR ----- */
 $progress-bar-color: $green;
@@ -67,6 +69,7 @@ $lg-width: 1400px;
 /* -------------- FONTS -------------- */
 $primary-font: Roboto, "Helvetica Neue", sans-serif;
 $base-font-size: 1.4rem;
+$icon-font-size: 1.6rem;
 
 //Headlines
 @mixin typo-h3 {
@@ -137,7 +140,7 @@ $base-font-size: 1.4rem;
 //Input Fields
 @mixin typo-input {
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: $base-font-size;
   letter-spacing: 0.015rem;
 }
 
