@@ -147,7 +147,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       name: 'Hit the Pinata Template',
       headlineMessage: 'Tap the Piñata and Win!',
       subHeadlineMessage: 'Tap the piñata until you get a reward!',
-      buttonText: 'start playing',
+      buttonText: 'Start Playing',
       [ControlsName.pinata]: data.pinata[0],
       [ControlsName.background]: data.background[0],
       image_url: null

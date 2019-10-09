@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ProductService, IProduct } from '../services/product.service';
-import { NotificationService } from '@perx/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ProductService, IProduct} from '../services/product.service';
+import {IMerchantAdminService, IMerchantAdminTransaction, NotificationService, TokenStorage} from '@perx/core';
+import {from} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 
 export interface IPayload {
   name: string;
   id: number;
   rewardId?: number;
+  identifier?: string;
 }
 
 interface Product {
@@ -23,14 +26,17 @@ export class OrderComponent implements OnInit {
   public payload: IPayload;
   public rewards: IProduct[];
   public isSummaryActivated: boolean = false;
-  public selectedProducts: IProduct[];
+  public selectedProducts: IProduct[] = [];
   public totalPoints: number;
 
   constructor(
     private router: Router,
     private productService: ProductService,
-    private notificationService: NotificationService
-  ) {}
+    private notificationService: NotificationService,
+    private merchantAdminService: IMerchantAdminService,
+    private tokenStorage: TokenStorage
+  ) {
+  }
 
   public ngOnInit(): void {
     const scannedQrCode = history.state.data;
@@ -50,7 +56,7 @@ export class OrderComponent implements OnInit {
 
   private checkUpdatedRewards(): void {
     this.selectedProducts = this.rewards.filter(reward => reward.quantity > 0);
-    this.totalPoints = this.selectedProducts.reduce((sum, current) =>  sum + current.quantity  * current.pointsPerUnit, 0);
+    this.totalPoints = this.selectedProducts.reduce((sum, current) => sum + current.quantity * current.pointsPerUnit, 0);
   }
 
   public toggleSummary(): void {
@@ -63,8 +69,17 @@ export class OrderComponent implements OnInit {
   }
 
   public onCompleteTransaction(): void {
-    // Call api TBD https://perxtechnologies.atlassian.net/browse/PW-483
-    this.notificationService.addSnack('Transaction completed'),
-    this.router.navigate(['/home']);
+    const merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername');
+    from(this.selectedProducts)
+      .pipe(
+        mergeMap((product: IProduct) => {
+          return this.merchantAdminService.createTransaction(
+            this.payload.id, merchantUsername, product.price, product.currency,
+            'purchase', product.name + '' + product.description);
+        }))
+      .subscribe((transaction: IMerchantAdminTransaction) => {
+        this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
+        this.router.navigate(['/home']);
+      });
   }
 }

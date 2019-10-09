@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IMerchantAdminTransaction } from './models/merchants-admin.model';
 import { IVoucher, RedemptionType, VoucherState } from '../vouchers/models/voucher.model';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Config } from '../config/config';
 
@@ -139,19 +139,19 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   constructor(private http: HttpClient, private config: Config) {}
 
-  public static v4TransactionToTransaction(transaction: IV4CreateTransactionResponse): IMerchantAdminTransaction {
+  public static v4TransactionToTransaction(transaction: IV4MerchantAdminTransaction): IMerchantAdminTransaction {
     return {
-      id: transaction.data.id,
-      user_account_id: transaction.data.user_account_id,
-      updated_at: new Date(transaction.data.updated_at),
-      transaction_type: transaction.data.transaction_type,
-      amount: transaction.data.amount,
-      transaction_date: new Date(transaction.data.transaction_date),
-      currency: transaction.data.currency,
-      workflow_id: transaction.data.workflow_id,
-      created_at: new Date(transaction.data.created_at),
-      properties: transaction.data.properties,
-      transaction_reference: transaction.data.transaction_reference
+      id: transaction.id,
+      user_account_id: transaction.user_account_id,
+      updated_at: new Date(transaction.updated_at),
+      transaction_type: transaction.transaction_type,
+      amount: transaction.amount,
+      transaction_date: new Date(transaction.transaction_date),
+      currency: transaction.currency,
+      workflow_id: transaction.workflow_id,
+      created_at: new Date(transaction.created_at),
+      properties: transaction.properties,
+      transaction_reference: transaction.transaction_reference
     };
   }
 
@@ -211,49 +211,43 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       categories
     };
   }
-  public createTransaction(): Observable<IMerchantAdminTransaction> {
-    const response: IV4CreateTransactionResponse = {
-        data: {
-            id: 700,
-            user_account_id: 5852,
-            updated_at: '2019-09-12T09:07:21.283Z',
-            transaction_type: 'some_cool_type',
-            amount: 400,
-            transaction_date: '2019-09-12T09:07:21.272Z',
-            currency: 'HKD',
-            workflow_id: null,
-            created_at: '2019-09-12T09:07:21.283Z',
-            properties: null,
-            transaction_reference: 'some_cool_reference'
+  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
+                           type: string, reference: string): Observable<IMerchantAdminTransaction> {
+
+    const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
+    const body = {
+      user_account_id: userId,
+      transaction_data: {
+        transaction_type: type,
+        transaction_reference: reference,
+        amount,
+        currency,
+        properties: {
+          merchant_username: merchantUsername
         }
+      }
     };
 
-    const transaction = V4MerchantAdminService.v4TransactionToTransaction(response);
-    return of(transaction);
+    return this.http.post<IV4CreateTransactionResponse>(url, body).pipe(
+      map((res) => V4MerchantAdminService.v4TransactionToTransaction(res.data))
+    );
+
   }
 
   public redeemVoucher(id: number): Observable<IVoucher> {
-
-    // TODO: use the following url once API is created
-    // @ts-ignore
     const url = `${this.config.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
 
-    return this.http.get<IV4RedeemVoucherResponse>(
-      'assets/redeem.json'
-      ).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
         map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
       );
   }
 
-  public issueVoucher(id: number): Observable<IVoucher> {
+  public issueVoucher(id: number, userId: string = ''): Observable<IVoucher> {
+    const headers = new HttpHeaders().set('user-id', userId);
 
-    // TODO: use the following url once API is created
-    // @ts-ignore
     const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
 
-    return this.http.get<IV4RedeemVoucherResponse>(
-      'assets/issue.json'
-      ).pipe(
+    return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
         map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
       );
   }
