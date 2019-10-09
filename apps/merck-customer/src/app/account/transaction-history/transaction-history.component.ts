@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { Observable, of } from 'rxjs';
-import {ILoyalty, ITransaction, LoyaltyService} from '@perx/core';
-import {mergeMap} from 'rxjs/operators';
+import {LoyaltyService, ITransactionHistory} from '@perx/core';
 
 @Component({
   selector: 'mc-transaction-history',
@@ -11,15 +10,13 @@ import {mergeMap} from 'rxjs/operators';
 })
 export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
-  public transactions: Observable<ITransaction[]>;
+  public transactions: Observable<ITransactionHistory[]>;
 
   constructor(private loyaltyService: LoyaltyService) { }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalty().pipe(
-      mergeMap((loyalty: ILoyalty) => this.loyaltyService.getAllTransactions(loyalty.id))
-    ).subscribe(
-        (transactions) => this.transactions = of(transactions),
+    this.loyaltyService.getTransactionHistory().subscribe(
+        (transactions: ITransactionHistory[]) => this.transactions = of(transactions),
         (err) => console.log(err)
       );
   }
