@@ -2,7 +2,8 @@
 	 <mat-tab-group mat-stretch-tabs class="tabs">
 		<mat-tab label="Purchases">
 			<perx-core-loyalty-transactions-list *ngIf="transactions" [transactions]="transactions | transactionHistory: true"
-                                           [titleFn]="purchasesTitleFn" [subTitleFn]="subTitleFn" [priceLabelFn]="priceLabelFn">
+                                           [titleFn]="purchasesTitleFn" [subTitleFn]="subTitleFn"
+                                           [descFn]="descFn" [priceLabelFn]="priceLabelFn">
 			</perx-core-loyalty-transactions-list>
 		</mat-tab>
 		<mat-tab label="Rewards">

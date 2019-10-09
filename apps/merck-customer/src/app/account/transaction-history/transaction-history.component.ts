@@ -20,6 +20,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   public transactions: Observable<ITransactionHistory[]>;
   public purchasesTitleFn: (tr: ITransactionHistory) => string;
   public redemptionsTitleFn: (tr: ITransactionHistory) => string;
+  public descFn: (tr: ITransactionHistory) => string;
   public subTitleFn: (tr: ITransactionHistory) => string;
   public priceLabelFn: (tr: ITransactionHistory) => string;
 
@@ -34,6 +35,9 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
       `${tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
+
+    this.descFn = (tr: ITransactionHistory) =>
+      `${tr.transactionDetails.data && (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
     this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount)}`;
