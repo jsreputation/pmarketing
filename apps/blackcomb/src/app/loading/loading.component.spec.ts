@@ -13,7 +13,8 @@ describe('LoadingComponent', () => {
 
   const authenticationServiceStub = {
     getUserAccessToken: () => of(''),
-    autoLogin: () => of()
+    autoLogin: () => of(),
+    getAccessToken: () => of('')
   };
 
   const iCampaignSvcStub = {
