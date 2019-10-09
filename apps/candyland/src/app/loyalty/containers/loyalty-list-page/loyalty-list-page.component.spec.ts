@@ -1,31 +1,27 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoyaltyItemComponent } from 'src/app/loyalty/components/loyalty-item/loyalty-item.component';
-import { PipesModule } from '@cl-shared/pipes/pipes.module';
-import { MatMenuModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LoyaltyListPageComponent } from 'src/app/loyalty/containers/loyalty-list-page/loyalty-list-page.component';
 
-describe('LoyaltyItemComponent', () => {
-  let component: LoyaltyItemComponent;
-  let fixture: ComponentFixture<LoyaltyItemComponent>;
+describe('LoyaltyListPageComponent', () => {
+  let component: LoyaltyListPageComponent;
+  let fixture: ComponentFixture<LoyaltyListPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoyaltyItemComponent],
       imports: [
         RouterTestingModule,
-        PipesModule,
-        MatMenuModule,
-        MatIconModule
+        HttpClientTestingModule
       ],
+      declarations: [LoyaltyListPageComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoyaltyItemComponent);
+    fixture = TestBed.createComponent(LoyaltyListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

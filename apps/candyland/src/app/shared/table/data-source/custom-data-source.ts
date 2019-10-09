@@ -2,14 +2,23 @@ import { MatSort } from '@angular/material';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { IPagination } from './ipagination';
 
 // tslint:disable
 export class CustomDataSource<T> {
+  // map of states for manage view in pages where used data source
+  public states = {
+    firstLoading: 0, // between init dataSource to get first response from data service (use for showing page preloader)
+    hasDataApi: 1, // get response from data service with data (use for showing table/grid card)
+    noDataApi: 2, // get first response from data service without data (use for showing no data)
+    errorApi: 3 // get first response from data service with error (use for showing error)
+  };
+  // state subject for manage view in pages where used data source
+  public state$ = new BehaviorSubject<number>(this.states.firstLoading);
   private dataSubject = new BehaviorSubject<T[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  // used for toggle spinner loading
+  // used for toggle preloader
   public loading$ = this.loadingSubject.asObservable();
   private changeFilterSearch = new BehaviorSubject<number>(0);
   // used for setUp pagination index page to 0 when searching
@@ -21,7 +30,6 @@ export class CustomDataSource<T> {
   private _params: HttpParamsOptions;
   private destroy$: Subject<void> = new Subject();
 
-  public hasData = true;
 
   public set params(value: HttpParamsOptions) {
     this._params = value;
@@ -38,6 +46,12 @@ export class CustomDataSource<T> {
 
   public get data$(): Observable<T[]> {
     return this.dataSubject.asObservable();
+  }
+
+  public get hasData$(): Observable<boolean> {
+    return this.dataSubject.pipe(
+      map(data => data.length > 0)
+    );
   }
 
   // default items on the page set up pageSize
@@ -97,7 +111,7 @@ export class CustomDataSource<T> {
 
 
   public updateData(): void {
-    this.loadingData({ pageIndex: 0, pageSize: this.pageSize });
+    this.loadingData({pageIndex: 0, pageSize: this.pageSize});
   }
 
   public registerSort(sort: MatSort) {
@@ -126,11 +140,20 @@ export class CustomDataSource<T> {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
+        const status = (res.data.length > 0 && res.meta.record_count > 0) ? this.states.hasDataApi : this.states.noDataApi;
+        this.setState(status);
       }, () => {
         this.dataSubject.next([]);
         this.lengthData.next(0);
         this.loadingSubject.next(false);
+        this.setState(this.states.errorApi);
       });
+  }
+
+  private setState(status) {
+    if (this.state$.value === this.states.firstLoading || this.state$.value === this.states.noDataApi) {
+      this.state$.next(status);
+    }
   }
 
   private sortPrepare(sortData: SortModel) {
