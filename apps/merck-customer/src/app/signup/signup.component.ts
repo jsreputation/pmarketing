@@ -88,7 +88,7 @@ export class SignupComponent implements PageAppearence {
 
       this.authService.signup(signUpData).subscribe(
         () => {
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } } );
         },
         err => {
           console.error('Signup: ' + err);
