@@ -7,12 +7,13 @@ import {
   ILoyalty,
   IPurchaseTransactionHistory, IRewardTransactionHistory,
   ITransaction,
-  ITransactionDetailType,
+  TransactionDetailType,
   ITransactionHistory
 } from './models/loyalty.model';
 import {Config} from '../config/config';
 import {IV4Reward, IV4Tag} from '../rewards/v4-rewards.service';
 import {ICustomProperties} from '../profile/profile.model';
+import {oc} from 'ts-optchain';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -105,7 +106,7 @@ interface IV4TransactionHistory {
   transacted_cents?: number; // property will probably be removed
   properties: ICustomProperties;
   transaction_details: {
-    type: ITransactionDetailType;
+    type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
   };
 }
@@ -162,39 +163,41 @@ export class V4LoyaltyService extends LoyaltyService {
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
 
-    const transactionDetails = transactionHistory.transaction_details.data;
+    const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory;
 
-    switch (transactionHistory.transaction_details.type) {
-      case ITransactionDetailType.reward:
-        const rthDetails = transactionDetails as IV4RewardTransactionHistory;
-        data = {
-          id: transactionDetails.id,
-          state: rthDetails.state,
-          voucherExpiry: rthDetails.voucher_expires_at,
-          userAccount: rthDetails.user_account.identifier,
-          rewardName: rthDetails.reward.name,
-          redemptionLocation: rthDetails.redemption_location,
-        };
-        break;
-      case ITransactionDetailType.transaction:
-        const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
-        const pthProps = pthDetails.properties as {
-          merchant_username: string;
-          pharmacy: string;
-          product: string;
-        };
-        data = {
-          id: transactionDetails.id,
-          productName: pthProps.product,
-          pharmacyName: pthProps.pharmacy,
-          issuerName: pthProps.merchant_username,
-          transactionDate: pthDetails.transaction_date,
-          transactionRef: pthDetails.transaction_reference,
-          price: pthDetails.amount,
-          currency: pthDetails.currency,
-        };
-        break;
+    if (transactionDetails) {
+      switch (transactionHistory.transaction_details.type) {
+        case TransactionDetailType.reward:
+          const rthDetails = transactionDetails as IV4RewardTransactionHistory;
+          data = {
+            id: transactionDetails.id,
+            state: rthDetails.state,
+            voucherExpiry: rthDetails.voucher_expires_at,
+            userAccount: rthDetails.user_account.identifier,
+            rewardName: rthDetails.reward.name,
+            redemptionLocation: rthDetails.redemption_location,
+          };
+          break;
+        case TransactionDetailType.transaction:
+          const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
+          const pthProps = oc(pthDetails).properties() as {
+            merchant_username: string;
+            pharmacy: string;
+            product: string;
+          };
+          data = {
+            id: transactionDetails.id,
+            productName: oc(pthProps).product(),
+            pharmacyName: oc(pthProps).pharmacy(),
+            issuerName: oc(pthProps).merchant_username(),
+            transactionDate: pthDetails.transaction_date,
+            transactionRef: pthDetails.transaction_reference,
+            price: pthDetails.amount,
+            currency: pthDetails.currency,
+          };
+          break;
+      }
     }
     return {
       id: transactionHistory.id,
@@ -204,7 +207,7 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsAmount: transactionHistory.amount,
       properties: transactionHistory.properties,
       transactionDetails: {
-        type: transactionHistory.transaction_details.type,
+        type: oc(transactionHistory).transaction_details.type(),
         data
       }
     };
@@ -286,7 +289,7 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactionHistory(page?: number, pageSize?: number): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
