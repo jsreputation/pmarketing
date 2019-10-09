@@ -181,16 +181,16 @@ export class V4LoyaltyService extends LoyaltyService {
           break;
         case TransactionDetailType.transaction:
           const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
-          const pthProps = pthDetails.properties as {
+          const pthProps = oc(pthDetails).properties() as {
             merchant_username: string;
             pharmacy: string;
             product: string;
           };
           data = {
             id: transactionDetails.id,
-            productName: pthProps.product,
-            pharmacyName: pthProps.pharmacy,
-            issuerName: pthProps.merchant_username,
+            productName: oc(pthProps).product(),
+            pharmacyName: oc(pthProps).pharmacy(),
+            issuerName: oc(pthProps).merchant_username(),
             transactionDate: pthDetails.transaction_date,
             transactionRef: pthDetails.transaction_reference,
             price: pthDetails.amount,
