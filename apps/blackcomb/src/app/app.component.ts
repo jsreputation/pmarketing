@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme } from '@perx/core';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
