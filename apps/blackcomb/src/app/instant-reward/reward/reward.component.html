@@ -5,7 +5,7 @@
       <h3>{{this.subTitle}}</h3>
     </div>
     <div>
-        <perx-core-rewards-collection [defaultImg]="cardBackground" [rewardsList]="rewards$">
+        <perx-core-rewards-collection (tapped)="rewardClickedHandler($event)" [defaultImg]="cardBackground" [rewardsList]="rewards$">
         </perx-core-rewards-collection>
     </div>
   </div>
