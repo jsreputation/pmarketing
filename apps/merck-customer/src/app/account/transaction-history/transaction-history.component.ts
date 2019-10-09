@@ -31,7 +31,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.purchasesTitleFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails.data && (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
+      `${tr.transactionDetails.data && (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName}`;
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
       `${tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
