@@ -17,6 +17,7 @@ describe('VoucherComponent', () => {
   const voucher = {
     id: 1,
     rewardId: 1,
+    reward: null,
     state: VoucherState.issued,
     name: '',
     code: '',

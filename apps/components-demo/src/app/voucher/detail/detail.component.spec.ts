@@ -10,6 +10,7 @@ describe('DetailComponent', () => {
   const mockVoucher: Voucher = {
     id: 1,
     rewardId: 2,
+    reward: null,
     state: VoucherState.expired,
     name: 'string',
     redemptionType: RedemptionType.none,

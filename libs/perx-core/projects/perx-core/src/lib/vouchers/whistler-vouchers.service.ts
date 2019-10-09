@@ -53,6 +53,7 @@ export class WhistlerVouchersService implements IVoucherService {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
       rewardId: voucher.attributes.source_id, // use at \lib\vouchers\vouchers.service.ts
+      reward,
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       name: reward.name,
       code: voucher.attributes.code,
