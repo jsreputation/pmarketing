@@ -166,7 +166,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       rewardPostStamps: [null, [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: ['see my rewards', [
+      buttonText: ['See My Rewards', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
