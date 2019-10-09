@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, TokenStorage } from '@perx/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from '@perx/core';
@@ -22,6 +22,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
+    const tokenStorageStub = { setAppInfoProperty: () => ({}) };
+
     TestBed.configureTestingModule({
       declarations: [LoginComponent, SalesContactComponent],
       imports: [
@@ -40,7 +42,8 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useValue: {login: () => {}, getInterruptedUrl: () => null}
-        }
+        },
+        { provide: TokenStorage, useValue: tokenStorageStub}
       ]
     }).compileComponents();
   }));
