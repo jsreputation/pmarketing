@@ -137,7 +137,7 @@
     @include mat-elevation(1);
 
     mat-icon {
-      font-size: 1.6rem;
+      font-size: $icon-font-size;
       display: flex;
       justify-content: center;
       align-items: center;

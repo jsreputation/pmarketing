@@ -2,7 +2,7 @@
   <ng-container *ngIf="hasData">
     <!--filters-->
     <div class="row">
-      <cl-table-filters [dataSource]="dataSource" classList="row input-group">
+      <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'username'; let filter">
           <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
         </ng-container>

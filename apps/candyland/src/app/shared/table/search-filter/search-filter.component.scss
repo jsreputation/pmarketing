@@ -1,5 +1,9 @@
 @import "variables";
 
+mat-icon {
+  color: $secondary-font-color;
+}
+
 @media (min-width: $lg-width) {
   .search-filter {
     max-width: ($horizontal-padding * 17.5);

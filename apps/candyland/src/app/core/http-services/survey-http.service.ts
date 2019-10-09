@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
-import { GeneralStaticDataService } from '@perx/core';
+import { GeneralStaticDataService, SurveyQuestionType } from '@perx/core';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,308 @@ export class SurveyHttpService {
     return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 
-  public getSurveyReport(id: string): any {
-    return of({id});
+  public getSurveyReport(id: string): Observable<IBaseQuestionReport> {
+    return of({
+      title: 'Welcome Survey Responses',
+      summaryInfo: [
+        {
+          title: 'Responses',
+          value: id,
+        },
+        {
+          title: 'Completion rate',
+          value: '8%'
+        }, {
+          title: 'Average time to complete',
+          value: '22.50'
+        }],
+      questions: [
+        {
+          total: 3000,
+          selectedType: 'rating',
+          question_title: 'How satisfied were you with the event?',
+          left_label: 'Not Very',
+          right_label: 'Very much',
+          payload: [
+            {
+              amount: 350,
+            },
+            {
+              amount: 150,
+            },
+            {
+              amount: 50,
+            },
+            {
+              amount: 10,
+            },
+            {
+              amount: 0,
+            }
+          ]
+        },
+        {
+          total: 1000,
+          selectedType: SurveyQuestionType.pictureChoice,
+          question_title: 'How satisfied were you with the event?',
+          payload: [
+            {
+              choices: {
+                img_url: 'global/assets/stamps/pre-stamp-1.png',
+                text: 'A'
+              },
+              amount: 350,
+            },
+            {
+              choices: {
+                img_url: 'global/assets/stamps/pre-stamp-1.png',
+                text: 'B',
+              },
+              amount: 200,
+            },
+            {
+              choices: {
+                img_url: 'global/assets/stamps/pre-stamp-1.png',
+                text: 'C',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                img_url: 'global/assets/stamps/pre-stamp-1.png',
+                text: 'D',
+              },
+              amount: 50,
+            }
+          ]
+        },
+        {
+          total: 1000,
+          selectedType: SurveyQuestionType.multipleChoice,
+          question_title: 'How satisfied were you with the event?',
+          payload: [
+            {
+              choices: {
+                text: 'Choice A'
+              },
+              amount: 350,
+            },
+            {
+              choices: {
+                text: 'Choice B',
+              },
+              amount: 200,
+            },
+            {
+              choices: {
+                text: 'Choice C',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                text: 'Choice D',
+              },
+              amount: 50,
+            }
+          ]
+        },
+        {
+          total: 1000,
+          selectedType: SurveyQuestionType.longText,
+          question_title: 'How satisfied were you with the event?',
+          payload: [
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
+              },
+              amount: 350,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 200,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 150,
+            },
+            {
+              choices: {
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+              },
+              amount: 50,
+            }
+          ]
+        },
+        {
+          total: 8000,
+          selectedType: SurveyQuestionType.questionGroup,
+          question_title: 'How satisfied were you with the event?',
+          payload: [
+            {
+              total: 3000,
+              selectedType: 'rating',
+              question_title: 'How satisfied were you with the event?',
+              left_label: 'Not Very',
+              right_label: 'Very much',
+              payload: [
+                {
+                  amount: 350,
+                },
+                {
+                  amount: 150,
+                },
+                {
+                  amount: 50,
+                },
+                {
+                  amount: 10,
+                },
+                {
+                  amount: 0,
+                }
+              ]
+            },
+            {
+              total: 1000,
+              selectedType: SurveyQuestionType.pictureChoice,
+              question_title: 'How satisfied were you with the event?',
+              payload: [
+                {
+                  choices: {
+                    img_url: 'global/assets/stamps/pre-stamp-1.png',
+                    text: 'A'
+                  },
+                  amount: 350,
+                },
+                {
+                  choices: {
+                    img_url: 'global/assets/stamps/pre-stamp-1.png',
+                    text: 'B',
+                  },
+                  amount: 200,
+                },
+                {
+                  choices: {
+                    img_url: 'global/assets/stamps/pre-stamp-1.png',
+                    text: 'C',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    img_url: 'global/assets/stamps/pre-stamp-1.png',
+                    text: 'D',
+                  },
+                  amount: 50,
+                }
+              ]
+            },
+            {
+              total: 1000,
+              selectedType: SurveyQuestionType.multipleChoice,
+              question_title: 'How satisfied were you with the event?',
+              payload: [
+                {
+                  choices: {
+                    text: 'Choice A'
+                  },
+                  amount: 350,
+                },
+                {
+                  choices: {
+                    text: 'Choice B',
+                  },
+                  amount: 200,
+                },
+                {
+                  choices: {
+                    text: 'Choice C',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    text: 'Choice D',
+                  },
+                  amount: 50,
+                }
+              ]
+            },
+            {
+              total: 1000,
+              selectedType: SurveyQuestionType.longText,
+              question_title: 'How satisfied were you with the event?',
+              payload: [
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
+                  },
+                  amount: 350,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 200,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 150,
+                },
+                {
+                  choices: {
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                  },
+                  amount: 50,
+                }
+              ]
+            },
+          ]
+        }
+      ]
+    });
   }
 }
