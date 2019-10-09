@@ -22,6 +22,7 @@ import {
   ICatalog,
   IPrice,
   ICategoryTags,
+  RedemptionType,
 } from './models/reward.model';
 
 import { Config } from '../config/config';
