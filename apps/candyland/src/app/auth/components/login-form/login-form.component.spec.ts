@@ -19,7 +19,9 @@ describe('LoginFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'dashboard/overview', redirectTo: '/' }
+        ]),
         BrowserAnimationsModule,
         ButtonModule,
         LogoModule,
