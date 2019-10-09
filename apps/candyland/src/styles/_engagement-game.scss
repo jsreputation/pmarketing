@@ -44,13 +44,14 @@
   &-title-wrap {
     flex: 1;
     margin-right: 4rem;
+    margin-bottom: ($vertical-padding * 0.5);
   }
 
   &-title {
     @include typo-input;
 
     color: $secondary-color;
-    margin: ($vertical-padding * 0.75) 0 ($vertical-padding * 0.5) 0;
+    margin: $vertical-padding 0 ($vertical-padding * 0.5) 0;
   }
 
   &-graphic, &-button {

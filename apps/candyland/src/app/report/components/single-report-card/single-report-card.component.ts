@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'cl-single-report-card',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./single-report-card.component.scss']
 })
 export class SingleReportCardComponent {
-
+  @Input() public data: any;
+  @Input() public currentIndex: number;
+  public onlyView: boolean = true;
 }
