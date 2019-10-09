@@ -55,7 +55,8 @@ export class UserInfoComponent implements PageAppearence, OnInit {
     const customProperties: ICustomProperties = {
       diabetes: (this.surveyForm.get('diabetesCondition').value).toString(),
       diabetesState: (this.surveyForm.get('diabetes').value),
-      hypertension: (this.surveyForm.get('hypertension').value).toString()
+      hypertension: (this.surveyForm.get('hypertension').value).toString(),
+      questionaire_answered: true
     };
     this.profileService.setCustomProperties(customProperties).subscribe(
       () => {
