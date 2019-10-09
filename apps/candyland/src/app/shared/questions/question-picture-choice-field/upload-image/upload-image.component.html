@@ -18,18 +18,10 @@
     </button>
   </div>
 
-  <div *ngIf="!imgURL" class="upload-wrap-btn">
+  <div *ngIf="!imgURL" class="upload-btn-wrap">
     <button (click)="fileInput.click()" class="upload-btn">+</button>
   </div>
 
-  <div *ngIf="message" class="upload-error-wrap">
-    <span class="upload-error">
-      {{message}}
-    </span>
-  </div>
-  <div *ngIf="!message" class="upload-type-wrap">
-    <span class="upload-type">
-      Recommended format: .JPG or .PNG
-    </span>
-  </div>
+  <small *ngIf="message" class="upload-error">{{message}}</small>
+  <small *ngIf="!message" class="upload-type">Recommended format: .JPG or .PNG</small>
 </div>

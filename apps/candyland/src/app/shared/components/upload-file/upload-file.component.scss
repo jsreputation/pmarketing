@@ -60,10 +60,7 @@
   }
 
   &-wrap {
-    position: relative;
-    width: 100%;
-    height: 4rem;
-    box-sizing: border-box;
+    @include upload-btn;
   }
 
   &-input {
@@ -76,66 +73,8 @@
   }
 
   &-btn {
-    @include typo-button;
-
     height: 100%;
     width: 100%;
-    padding: 0 1.6rem;
-    background: $white;
-    border-radius: $border-radius;
-    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    color: $primary-color;
-    position: relative;
-    border: none;
-
-    &::after {
-      content: '';
-      opacity: 0;
-      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-    }
-
-    // Control Dash Visual
-    &::before {
-      content: "";
-      position: absolute;
-      border-radius: $border-radius;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-image: linear-gradient(to right, $primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($primary-color 50%, rgba(255, 255, 255, 0) 0%);
-      background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%;
-      background-size: ($horizontal-padding * 0.375) 0.15rem, 0.15rem ($horizontal-padding * 0.375), ($horizontal-padding * 0.375) 0.15rem, 0.15rem ($horizontal-padding * 0.375);
-      background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-      opacity: 0.5;
-    }
-  }
-
-  &-wrap:hover .upload-file-btn::before,
-  &-wrap:focus .upload-file-btn::before {
-    opacity: 1;
-  }
-
-  &-wrap.invalid .upload-file-btn::before {
-    background-image: linear-gradient(to right, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%);
-  }
-
-  &-type {
-    font-size: $base-font-size;
-    color: rgba(51, 51, 51, 0.5);
-  }
-
-  &-type-wrap {
-    position: absolute;
-    bottom: -($vertical-padding * 0.75);
-    left: 0;
-    right: -150%;
   }
 
   &-file {
@@ -179,11 +118,6 @@
     line-height: normal;
     letter-spacing: normal;
     color: $base-font-color;
-  }
-
-  &-error {
-    margin-top: 1rem;
-    padding: 0.8rem;
   }
 }
 
