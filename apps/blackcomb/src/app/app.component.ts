@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private authService: AuthenticationService,
     private themesService: ThemesService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
@@ -43,10 +42,6 @@ export class AppComponent implements OnInit {
       this.themesService.getThemeSetting().subscribe(
         theme => this.theme = theme
       );
-      if ((window as any).primaryIdentifier) {
-        this.authService.logout();
-        this.router.navigate(['login']);
-      }
     }
 
     this.notificationService.$popup
