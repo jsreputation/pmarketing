@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -8,7 +8,6 @@ import { AccountComponent } from './account/account.component';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -29,20 +28,23 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
-    @Inject(PLATFORM_ID) private platformId: object
+    private authService: AuthenticationService
   ) {
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
-      const param = location.search;
-      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-      (window as any).campaignId = new URLSearchParams(param).get('cid');
-      this.themesService.getThemeSetting().subscribe(
-        theme => this.theme = theme
-      );
-    }
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+
+    this.authService.$failedAuth.subscribe(
+      res => {
+        if (res) {
+          this.router.navigate(['/login']);
+        }
+      }
+    );
 
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
