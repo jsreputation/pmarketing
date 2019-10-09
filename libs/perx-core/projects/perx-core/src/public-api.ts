@@ -92,6 +92,9 @@ export {
   ILoyalty,
   ITransaction,
   IExpiringPoints,
+  ITransactionHistory,
+  IRewardTransactionHistory,
+  IPurchaseTransactionHistory,
   TransactionDetailType
 } from './lib/loyalty/models/loyalty.model';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
