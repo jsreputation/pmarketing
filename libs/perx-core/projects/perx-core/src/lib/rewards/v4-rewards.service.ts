@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
+  HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
 
@@ -283,9 +284,12 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public getReward(id: number): Observable<IReward> {
+  public getReward(id: number, userId: string = ''): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+    .set('user-id', userId);
+
     return this.http.get<IV4GetRewardResponse>(
-      `${this.apiHost}/v4/rewards/${id}`
+      `${this.apiHost}/v4/rewards/${id}`, { headers }
     ).pipe(
       map(res => res.data),
       map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))

@@ -15,7 +15,7 @@ export { IMerchantsService } from './lib/merchants/imerchants.service';
  */
 export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
 export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
-
+export { IMerchantAdminTransaction } from './lib/merchant-admin/models/merchants-admin.model';
 /**
  * Vouchers
  */
@@ -55,7 +55,7 @@ export {
   StampCardState,
   StampState
 } from './lib/stamp/models/stamp.model';
-
+export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
  *  Games
  */
@@ -102,7 +102,6 @@ export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
-
 /**
  * Utils
  */

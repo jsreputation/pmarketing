@@ -295,6 +295,14 @@ jobs:
     resource_class: xlarge
     parallelism: 13
     steps:
+      - run:
+          name: Skip build-prod if not PR
+          command: |
+            echo "Pull request URL = ${CIRCLE_PULL_REQUEST}"
+            if [ -z "${CIRCLE_PULL_REQUEST}" ]; then
+              echo "Not a pull request. Skip build-prod job..."
+              circleci-agent step halt
+            fi
       - checkout
       - run: yarn install
     #      - run: yarn run e2e-ci
