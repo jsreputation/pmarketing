@@ -109,12 +109,23 @@
     margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     position: absolute;
     top: 11.2rem;
     left: 5.4rem;
     border-bottom-right-radius: 2.4rem;
     border-bottom-left-radius: 2.4rem;
     z-index: 2;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1rem;
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    }
   }
 
   &-preview-plugin {
@@ -140,8 +151,11 @@
     min-height: 31.7rem;
     background: $white;
     background-size: cover;
+    background-position: center;
     border-radius: $border-radius;
     z-index: 3;
+
+    @include mat-elevation(2);
   }
 
   &-preview-mobile {
