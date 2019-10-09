@@ -286,7 +286,7 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactionHistory(page?: number, pageSize?: number): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
