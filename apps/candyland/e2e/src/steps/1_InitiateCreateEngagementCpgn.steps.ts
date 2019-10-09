@@ -78,10 +78,14 @@ Then(/^2_I will be redirected to the the engagment page.$/, async () => {
 
 Given(/^3_that i am at the engagement page.$/, async () => {
   await EngagementPage.navigateToEngagement();
+  await browser.sleep(3000);
+  await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 When(/^3_I click on the create new button.$/, async () => {
-  await element.all(by.css('button')).get(2).click();
+  const ec = protractor.ExpectedConditions;
+  await browser.wait(ec.elementToBeClickable(element(by.css('cl-button'))), 6000);
+  await element(by.css('cl-button')).click();
 });
 
 Then(/^3_the dialg box is present.$/, async () => {
@@ -104,7 +108,7 @@ Then(/^4_There are 4 engagement options available.$/, async () => {
 // Client is able interact with the engagement campaign options
 Given(/^5_I am on the create option dialog box.$/, async () => {
   await EngagementPage.navigateToEngagement();
-  await element.all(by.css('button')).get(2).click();
+  await element(by.css('button.btn.mat-flat-button.primary')).click();
 });
 
 When(/^5_I click on the stamps option.$/, async () => {
@@ -112,6 +116,6 @@ When(/^5_I click on the stamps option.$/, async () => {
 });
 
 Then(/^5_The stamp option is highlighted.$/, async () => {
-  // assertion based on the active item selector
-  expect(await element(by.css('div.type-item.active-item>div.type-wrap-img>img')).getAttribute('alt')).to.equal('Stamp');
+  // assertion based on the active item class name
+  expect(await element.all(by.css('button.engagement-selector')).get(2).getAttribute('class')).to.match(/active/);
 });
