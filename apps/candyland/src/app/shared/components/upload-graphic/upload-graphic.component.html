@@ -20,13 +20,19 @@
     </button>
   </div>
 
-  <div class="upload-btn-wrap" *ngIf="!imgURL">
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
     <button class="upload-btn" (click)="fileInput.click()">
         <ng-content></ng-content>
         <span>{{btnLabel}}</span>
     </button>
   </div>
-  <small class="upload-error" *ngIf="isRequired">Required field</small>
-  <small class="upload-error" *ngIf="message">{{message}}</p>
-  <small class="upload-type" *ngIf="!message && !isRequired">{{placeholder}}</small>
+  <div class="upload-error-wrap">
+    <p class="upload-error" *ngIf="isRequired">Required field</p>
+    <p class="upload-error" *ngIf="message">{{message}}</p>
+  </div>
+  <div class="upload-type-wrap" *ngIf="!message && !isRequired">
+    <span class="upload-type">
+      {{placeholder}}
+    </span>
+  </div>
 </div>
