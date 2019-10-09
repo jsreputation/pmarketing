@@ -5,6 +5,7 @@ import { noop } from 'rxjs';
 @Component({
   selector: 'cl-tabs-filter',
   templateUrl: './tabs-filter.component.html',
+  styleUrls: ['./tabs-filter.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
