@@ -39,6 +39,7 @@ export interface ICampaign {
         probability?: number;
     }[];
     rewardsOptions?: any;
+    rewardsListCollection?: any;
 }
 
 export interface ICampaignTableData {
