@@ -18,7 +18,7 @@ export function AuthServiceFactory(
   http: HttpClient,
   config: Config,
   tokenStorage: TokenStorage,
-  profileService: ProfileService
+  profileService: ProfileService,
 ): AuthenticationService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
