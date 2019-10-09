@@ -12,7 +12,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   // @ts-ignore
   public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
                            // @ts-ignore
-                           type: string, reference: string): Observable<IMerchantAdminTransaction> {
+                           type: string, reference: string, pharmacy: string): Observable<IMerchantAdminTransaction> {
     throw new Error(`createTransaction Method not implemented.`);
   }
 
