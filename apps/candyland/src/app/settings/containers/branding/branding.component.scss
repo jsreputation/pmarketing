@@ -1,5 +1,20 @@
 @import "variables";
 
+mat-card {
+  margin-top: 1.6rem;
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.reward-wrap {
+  margin-bottom: 2.4rem;
+}
+
+label.game-title {
+  display: block;
+}
+
 .select-outcome {
   &:first-child {
     margin-right: 1.5rem;
@@ -18,8 +33,4 @@
   width: 39rem;
   height: 6.4rem;
   margin-bottom: $vertical-padding;
-}
-
-.section-margin-t {
-  margin-top: $vertical-padding;
 }

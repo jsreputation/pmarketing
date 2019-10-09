@@ -21,8 +21,9 @@ import {
   VouchersModule,
   MerchantsModule,
   ConfigModule,
-  ProfileModule
-   } from '@perx/core';
+  ProfileModule,
+  MerchantAdminModule
+} from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
@@ -72,6 +73,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     RewardsModule,
     MerchantsModule,
+    MerchantAdminModule,
     LoyaltyModule,
     VouchersModule,
     HttpClientModule

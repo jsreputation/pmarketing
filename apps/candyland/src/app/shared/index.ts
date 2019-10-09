@@ -123,3 +123,6 @@ export * from './questions/question-form-field/shared/services/question-form-fie
 export * from './providers/toggle-control.service';
 
 export * from './table';
+
+export * from './components/custom-line-progress/custom-line-progress.module';
+export * from './components/custom-line-progress/custom-line-progress.component';
