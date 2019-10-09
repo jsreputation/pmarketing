@@ -1,8 +1,9 @@
 <div class="main" *ngIf="voucher">
   <app-reward-detail
-    [rewardId]="voucher.rewardId"
+    [reward]="reward"
     (isButtonEnabled)="setButton($event)"
     [showMacaron]="false"
+    [macaron]="macaron"
   ></app-reward-detail>
   <div *ngIf="isButtonEnable" class="button-area">
     <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" [routerLink]="[ '/redemption' ]"

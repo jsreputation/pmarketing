@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IReward, RewardsService } from '@perx/core';
 import { Location } from '@angular/common';
-import { MacaronService, IMacaron } from '../../services/macaron.service';
+import { IMacaron } from '../../services/macaron.service';
 
 @Component({
   selector: 'app-reward-detail',
@@ -10,6 +10,7 @@ import { MacaronService, IMacaron } from '../../services/macaron.service';
 })
 export class RewardDetailComponent implements OnInit {
   public isExpired: boolean = false;
+  @Input()
   public macaron: IMacaron;
 
   @Output()
@@ -32,13 +33,12 @@ export class RewardDetailComponent implements OnInit {
 
   @Input()
   public showMacaron: boolean = true;
-
+  @Input()
   public reward: IReward;
 
   constructor(
     private location: Location,
     private rewardsService: RewardsService,
-    private macaronService: MacaronService
   ) { }
 
   public ngOnInit(): void {
@@ -49,14 +49,6 @@ export class RewardDetailComponent implements OnInit {
     this.rewardsService.getReward(this.rewardId)
       .subscribe((reward: IReward) => {
         this.reward = reward;
-
-        this.macaron = this.macaronService.getMacaron(reward);
-        if (this.macaron === null) {
-          this.isButtonEnabled.emit(true);
-          return;
-        }
-
-        this.isButtonEnabled.emit(this.macaron.isButtonEnabled);
       });
   }
 

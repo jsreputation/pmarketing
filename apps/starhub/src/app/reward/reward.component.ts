@@ -5,6 +5,7 @@ import { RewardsService, NotificationService, IVoucherService } from '@perx/core
 import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { IMacaron, MacaronService } from '../services/macaron.service';
 
 @Component({
   selector: 'app-reward',
@@ -12,10 +13,11 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
+  public reward: IReward;
   public rewardId: number;
   public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
-
+  public macaron: IMacaron;
   constructor(
     private location: Location,
     private router: Router,
@@ -23,7 +25,8 @@ export class RewardComponent implements OnInit {
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private notificationService: NotificationService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private macaronService: MacaronService
   ) { }
 
   public ngOnInit(): void {
@@ -35,6 +38,7 @@ export class RewardComponent implements OnInit {
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
+        this.reward = reward;
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
           this.analyticsService.addEvent({
@@ -44,9 +48,10 @@ export class RewardComponent implements OnInit {
             siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
           });
         }
-        // this.analyticsService.addEvent({});
-        // if there is no more personnal inventory for this user disable the button
-        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
+        
+        this.macaron = this.macaronService.getMacaron(reward);
+        console.log(this.macaron, reward)
+        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0 || this.macaron !== null) {
           this.isButtonEnable = false;
         }
       });
