@@ -74,6 +74,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   private initData(): void {
+    if (!this.form) {
+      return;
+    }
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),

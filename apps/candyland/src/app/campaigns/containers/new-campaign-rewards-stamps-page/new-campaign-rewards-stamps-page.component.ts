@@ -30,6 +30,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public ngOnInit(): void {
     super.ngOnInit();
+    if (!this.form) {
+      return;
+    }
     const stampsSlotNumber = this.store.currentCampaign.template.slots;
     const stampsNumber = +this.store.currentCampaign.template.nb_of_slots;
     for (const slotNumber of stampsSlotNumber) {
@@ -84,6 +87,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   private initForm(): void {
     this.form = this.formService.getForm();
+    if (!this.form) {
+      return;
+    }
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
