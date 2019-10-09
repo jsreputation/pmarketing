@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme } from '@perx/core';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private authService: AuthenticationService,
     private themesService: ThemesService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
@@ -43,10 +42,6 @@ export class AppComponent implements OnInit {
       this.themesService.getThemeSetting().subscribe(
         theme => this.theme = theme
       );
-      if ((window as any).primaryIdentifier) {
-        this.authService.logout();
-        this.router.navigate(['login']);
-      }
     }
 
     this.notificationService.$popup

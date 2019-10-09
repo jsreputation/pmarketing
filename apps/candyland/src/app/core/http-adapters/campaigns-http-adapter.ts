@@ -65,6 +65,19 @@ export class CampaignsHttpAdapter {
     return data.map(
       reward => {
         let rewardData;
+        if (reward.value) {
+          outcomeData = {
+            result_id: reward.value.id,
+            result_type: 'reward',
+            probability: reward.probability / 100
+          };
+        } else {
+          outcomeData = {
+            no_outcome: true,
+            probability: reward.probability / 100
+          };
+        }
+
         if (slotNumber) {
           rewardData = {
             result_id: reward.value ? reward.value.id : '',
@@ -90,7 +103,8 @@ export class CampaignsHttpAdapter {
         rewardsData =>
           CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
       ).flat(1) :
-    CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
