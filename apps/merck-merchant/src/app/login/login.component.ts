@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void { }
 
   public onSubmit(): void {
-    const userName = (this.loginForm.get('name').value as string);
+    const merchantUsername = (this.loginForm.get('name').value as string);
     const email = (this.loginForm.get('email').value as string);
     const password: string = this.loginForm.get('password').value;
     const scope: string = 'merchant_credentials';
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           (window as any).primaryIdentifier = email;
         }
 
-        this.tokenStorage.setAppInfoProperty(userName, 'merchantName');
+        this.tokenStorage.setAppInfoProperty(merchantUsername, 'merchantUsername');
         this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
       },
       (err) => {
