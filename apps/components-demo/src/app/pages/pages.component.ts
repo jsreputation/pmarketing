@@ -27,8 +27,10 @@ export class PagesComponent implements OnInit, OnDestroy {
   ];
   private popupSubscription: SubscriptionLike;
 
-  constructor(private dialog: MatDialog,
-    private notificationService: NotificationService) {
+  constructor(
+    private dialog: MatDialog,
+    private notificationService: NotificationService
+  ) {
   }
 
   public ngOnInit(): void {

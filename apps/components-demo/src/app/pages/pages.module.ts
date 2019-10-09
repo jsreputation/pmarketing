@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
-import { 
+import {
   MatTabsModule,
   MatInputModule,
   MatProgressBarModule,
   MatCardModule,
   MatProgressSpinnerModule
 } from '@angular/material';
-import { 
+import {
   PagesModule as PerxPagesModule,
   GameModule,
   VouchersModule,
@@ -18,12 +18,12 @@ import {
   PuzzlesModule,
   SurveyModule
 } from '@perx/core';
-import { 
+import {
   AccountComponent,
   GameComponent,
   ShakeComponent,
   TapComponent,
-  HistoryComponent, 
+  HistoryComponent,
   ContentComponent,
   HomeComponent,
   RewardComponent,
