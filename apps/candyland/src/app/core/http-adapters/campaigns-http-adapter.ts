@@ -4,7 +4,7 @@ import {
   EngagementTypeFromAPIMapping,
   EngagementType
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
+import { ICampaignTableData, ICampaign, ICampaignAttributes, IOutcomeAttributes } from '@perx/whistler';
 
 export class CampaignsHttpAdapter {
   public static transformToCampaign(data: any): ICampaignTableData {
@@ -61,7 +61,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformPossibleOutcomesFromCampaign(data: any, slotNumber?: number): any {
+  public static transformPossibleOutcomesFromCampaign(data: any[], slotNumber?: number): IOutcomeAttributes[] {
     return data.map(
       reward => {
         let rewardData;
