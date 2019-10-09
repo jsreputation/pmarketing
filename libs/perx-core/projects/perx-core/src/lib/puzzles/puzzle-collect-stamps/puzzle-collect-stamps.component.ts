@@ -52,7 +52,7 @@ export class PuzzleCollectStampsComponent implements OnChanges {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
     if (changes.stamps) {
-      this.availStamps = this.stamps.filter(stamp => stamp.state === 'issued').length;
+      this.availStamps = this.stamps.filter(stamp => stamp.state === PuzzleCollectStampState.issued).length;
     }
   }
 
