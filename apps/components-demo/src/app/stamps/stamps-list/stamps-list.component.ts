@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { IStampCard, StampCardState } from '@perx/core';
 import { of, Observable } from 'rxjs';
 
@@ -8,6 +8,8 @@ import { of, Observable } from 'rxjs';
   styleUrls: ['./stamps-list.component.scss']
 })
 export class StampsListComponent implements OnInit {
+  @Output() public selectedStampCard: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
+
   public stampsArr: Observable<IStampCard[]> = of([
     {
       id: 1,
@@ -37,7 +39,7 @@ export class StampsListComponent implements OnInit {
 
   public ngOnInit(): void { }
 
-  public log(id): void {
-    console.log(id);
+  public log(stampCard: IStampCard ): void {
+    this.selectedStampCard.emit(stampCard);
   }
 }
