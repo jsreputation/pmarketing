@@ -41,7 +41,7 @@ export class RedeemComponent implements OnInit {
       try {
         const parsedQrCode = JSON.parse(scannedQrCode);
         this.payload = parsedQrCode;
-        this.rewardsService.getReward(parsedQrCode.rewardId).subscribe((res: IReward) => this.reward = res);
+        this.rewardsService.getReward(parsedQrCode.rewardId, parsedQrCode.identifier).subscribe((res: IReward) => this.reward = res);
       } catch (error) {
         this.notificationService.addSnack('Invalid Merck QR Code');
       }
@@ -54,7 +54,7 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    this.merchantService.issueVoucher(this.payload.rewardId)
+    this.merchantService.issueVoucher(this.payload.rewardId, this.payload.identifier)
       .pipe(
         // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
         flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
