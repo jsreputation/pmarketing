@@ -57,7 +57,7 @@ export {
   StampCardState,
   StampState
 } from './lib/stamp/models/stamp.model';
-
+export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
  *  Games
  */
@@ -110,7 +110,6 @@ export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/r
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
-
 /**
  * Utils
  */
