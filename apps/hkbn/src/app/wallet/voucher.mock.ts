@@ -1,19 +1,9 @@
-import { Voucher, RedemptionType, VoucherState } from '@perx/core';
+import { Voucher, VoucherState } from '@perx/core';
 
 export const mockVoucher: Voucher = {
     id: 1,
-    rewardId: 1,
     reward: null,
     state: VoucherState.issued,
-    name: '',
-    redemptionType: RedemptionType.qr,
     code: 'yo',
-    thumbnailImg: '',
-    rewardBanner: '',
-    merchantImg: '',
-    merchantName: '',
     expiry: null,
-    description: [],
-    redemptionSuccessTxt: '',
-    redemptionSuccessImg: '',
 };
