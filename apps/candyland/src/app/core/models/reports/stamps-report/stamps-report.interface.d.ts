@@ -5,7 +5,7 @@ declare interface StampsGraphicData {
     title: string,
     value: number | string
   }[];
-  data: {
+  payload: {
     choices: {
       img_url: string,
       text?: string
