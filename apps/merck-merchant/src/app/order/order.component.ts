@@ -75,7 +75,7 @@ export class OrderComponent implements OnInit {
         mergeMap((product: IProduct) => {
           return this.merchantAdminService.createTransaction(
             this.payload.id, merchantUsername, product.price, product.currency,
-            'purchase', product.name + '' + product.description);
+            'purchase', product.name + '' + product.description, 'UAT pharmacy');
         }))
       .subscribe((transaction: IMerchantAdminTransaction) => {
         this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
