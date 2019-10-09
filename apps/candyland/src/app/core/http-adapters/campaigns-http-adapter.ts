@@ -69,17 +69,16 @@ export class CampaignsHttpAdapter {
           rewardData = {
             result_id: reward.value ? reward.value.id : '',
             result_type: 'reward',
-            probability: reward.probability / 100,
+            probability: reward.probability / 100 || null,
             loot_box_id: slotNumber
           };
         } else {
           rewardData = {
             result_id: reward.value ? reward.value.id : '',
             result_type: 'reward',
-            probability: reward.probability / 100, loot_box_id: slotNumber
+            probability: reward.probability / 100 || null
           };
         }
-
         return rewardData;
       }
     );
@@ -88,12 +87,10 @@ export class CampaignsHttpAdapter {
   public static transformFromCampaign(data: ICampaign): IJsonApiItem<ICampaignAttributes> {
     const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
       data.rewardsListCollection.map(
-        rewardsData => {
-          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber);
-        }
-      ) :
-      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
-
+        rewardsData =>
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
+      ).flat(1) :
+    CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
@@ -130,7 +127,4 @@ export class CampaignsHttpAdapter {
     return stringDate ? new Date(stringDate) : null;
   }
 
-  // private static formatDateTime(date: Date, time: Date): string {
-  //   return moment(moment(date).format('l') + ' ' +  time).format();
-  // }
 }
