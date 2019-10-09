@@ -7,7 +7,7 @@ import {
   ILoyalty,
   IPurchaseTransactionHistory, IRewardTransactionHistory,
   ITransaction,
-  ITransactionDetailType,
+  TransactionDetailType,
   ITransactionHistory
 } from './models/loyalty.model';
 import {Config} from '../config/config';
@@ -105,7 +105,7 @@ interface IV4TransactionHistory {
   transacted_cents?: number; // property will probably be removed
   properties: ICustomProperties;
   transaction_details: {
-    type: ITransactionDetailType;
+    type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
   };
 }
@@ -166,7 +166,7 @@ export class V4LoyaltyService extends LoyaltyService {
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory;
 
     switch (transactionHistory.transaction_details.type) {
-      case ITransactionDetailType.reward:
+      case TransactionDetailType.reward:
         const rthDetails = transactionDetails as IV4RewardTransactionHistory;
         data = {
           id: transactionDetails.id,
@@ -177,7 +177,7 @@ export class V4LoyaltyService extends LoyaltyService {
           redemptionLocation: rthDetails.redemption_location,
         };
         break;
-      case ITransactionDetailType.transaction:
+      case TransactionDetailType.transaction:
         const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
         const pthProps = pthDetails.properties as {
           merchant_username: string;

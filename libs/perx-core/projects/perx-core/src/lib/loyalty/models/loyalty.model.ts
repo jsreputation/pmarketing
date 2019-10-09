@@ -1,6 +1,6 @@
 import {ICustomProperties} from '../../profile/profile.model';
 
-export const enum ITransactionDetailType {
+export const enum TransactionDetailType {
   'transaction' = 'Transaction',
   'reward' = 'Reward::Transaction'
 }
@@ -62,7 +62,7 @@ export interface ITransactionHistory {
   pointsAmount: number;
   properties: ICustomProperties;
   transactionDetails: {
-    type: ITransactionDetailType,
+    type: TransactionDetailType,
     data: IPurchaseTransactionHistory | IRewardTransactionHistory
   };
 }
