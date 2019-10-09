@@ -63,15 +63,18 @@
     left: 50%;
     z-index: 5;
     transform: translateX(-50%);
+    width: 18rem;
   }
 
   &-preview-headline {
-    font-size: 1.6rem;
+    @include typo-subtitle1-alt;
+
     color: #091816;
   }
 
   &-preview-sub-headline {
-    font-size: $base-font-size;
+    @include typo-body2;
+
     margin-top: 0.8rem;
     color: rgba(51, 51, 51, 0.5);
   }
@@ -87,11 +90,13 @@
   }
 
   &-preview-btn {
+    @include typo-button;
+    @include mat-elevation(2);
+
     border: none;
     border-radius: $border-radius;
     background: #ff1c1c;
     color: $white;
-    font-size: $base-font-size;
     max-width: 21.5rem;
     width: 21.5rem;
     min-height: 4rem;
@@ -105,12 +110,23 @@
     margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     position: absolute;
     top: 11.2rem;
     left: 5.4rem;
     border-bottom-right-radius: 2.4rem;
     border-bottom-left-radius: 2.4rem;
     z-index: 2;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1rem;
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    }
   }
 
   &-preview-plugin {
@@ -121,21 +137,26 @@
     height: 32rem;
     display: block;
     z-index: 3;
+    transform: scale(0.75);
   }
 
   &-preview-card {
     position: absolute;
-    padding: 1.7rem 2rem;
+    padding: 1.6rem;
     box-sizing: border-box;
-    top: 15rem;
+    top: 13rem;
     left: 50%;
     transform: translateX(-49%);
-    width: 22.8rem;
+    transform-origin: top center;
+    width: 21.5rem;
     min-height: 31.7rem;
     background: $white;
     background-size: cover;
-    border-radius: $border-radius-lg;
+    background-position: center;
+    border-radius: $border-radius;
     z-index: 3;
+
+    @include mat-elevation(2);
   }
 
   &-preview-mobile {
@@ -148,5 +169,28 @@
 cl-game-mobile-preview, .mobile-settings-preview-tabs, .tabs-component {
   .mat-tab-body-content, .mat-tab-body.mat-tab-body-active {
     overflow: visible;
+  }
+}
+
+perx-core-rewards-collection .card-collection-container {
+  margin-left: -3rem;
+  margin-right: -3rem;
+  transform: scale(0.9);
+  justify-content: space-around;
+}
+
+perx-core-reward {
+  .reward-image-container {
+    max-height: 13.5rem !important;
+    margin-top: -1.6rem;
+    margin-left: -1.6rem;
+    margin-right: -1.6rem;
+    overflow: hidden;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  .reward-image {
+    width: 100%;
+    object-fit: cover !important;
   }
 }

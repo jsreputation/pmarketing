@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { INavLink } from 'src/app/navlink.model';
 
 @Component({
   selector: 'app-stamps',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./stamps.component.scss']
 })
 export class StampsComponent {
+  public navLinks: INavLink[] = [
+    { path: 'list', label: 'List' },
+    { path: 'card', label: 'Card' }
+  ];
 }

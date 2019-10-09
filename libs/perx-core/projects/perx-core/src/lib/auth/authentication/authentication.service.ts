@@ -48,6 +48,7 @@ export abstract class AuthenticationService implements AuthService {
   public abstract login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any>;
 
   public abstract autoLogin(): Observable<any>;
+  public abstract createUserAndAutoLogin(pi: string): Observable<any>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
@@ -119,4 +120,9 @@ export abstract class AuthenticationService implements AuthService {
    */
 
   public abstract saveAppAccessToken(accessToken: string): void;
+
+  public abstract getPI(): string;
+
+  public abstract savePI(pi: string): void;
+
 }

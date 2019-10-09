@@ -131,7 +131,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       banner: [null, [Validators.required]],
       cardBackground: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: ['See my rewards', [
+      buttonText: ['See my Rewards', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -145,7 +145,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       headlineMessage: 'You have got rewards!',
       subHeadlineMessage: '',
       banner: 'reward',
-      buttonText: 'See my rewards',
+      buttonText: 'See my Rewards',
       [ControlsName.background]: data.background[0],
       [ControlsName.cardBackground]: data.cardBackground[0],
       image_url: null
