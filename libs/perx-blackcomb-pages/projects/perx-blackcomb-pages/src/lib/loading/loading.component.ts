@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, ICampaignService } from '@perx/core';
-// import { isPlatformBrowser } from '@angular/common';
+import { AuthenticationService, ICampaignService, Config } from '@perx/core';
+import { isPlatformBrowser } from '@angular/common';
 
-const environment = {
-  preAuth: false
-};
-
+// @dynamic
 @Component({
   selector: 'perx-blackcomb-pages-loading',
   templateUrl: './loading.component.html',
@@ -17,21 +14,22 @@ export class LoadingComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    // @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private campaignSvc: ICampaignService,
+    private config: Config
   ) {
-    this.preAuth = environment.preAuth;
+    this.preAuth = this.config ? this.config.preAuth : false;
   }
   public ngOnInit(): void {
-    // if (this.preAuth && isPlatformBrowser(this.platformId) && (window as any).primaryIdentifier) {
-    //   this.authService.autoLogin()
-    //     .subscribe(
-    //       () => this.redirectAfterLogin(),
-    //       () => this.router.navigate(['/login'])
-    //     );
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
+    if (this.preAuth && isPlatformBrowser(this.platformId) && (window as any).primaryIdentifier) {
+      this.authService.autoLogin()
+        .subscribe(
+          () => this.redirectAfterLogin(),
+          () => this.router.navigate(['/login'])
+        );
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   public redirectAfterLogin(): void {

@@ -1,4 +1,4 @@
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, Config } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
+    private config: Config
   ) {
-    this.preAuth = false;
+    this.preAuth = this.config ? this.config.preAuth: false;
   }
 
   public ngOnInit(): void {
