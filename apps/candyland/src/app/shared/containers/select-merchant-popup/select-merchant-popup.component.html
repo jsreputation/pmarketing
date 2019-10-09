@@ -6,7 +6,7 @@
     </button>
   </header>
   <mat-dialog-content>
-    <section class="merchant-dialog-content">
+    <section class="dialog-content">
       <div class="merchant-list">
         <!--filters-->
         <cl-table-filters [dataSource]="dataSource" classList="block">
@@ -16,7 +16,7 @@
           </ng-container>
         </cl-table-filters>
         <!--table-->
-        <div class="merchant-list-wrapper">
+        <div class="table-wrap">
           <cl-list-merchant-view [dataSource]="dataSource"
                                 [displayedColumns]="displayedColumns"
                                 [selectable]="true"
@@ -35,7 +35,7 @@
     </section>
   </mat-dialog-content>
   <!--<mat-dialog-actions>-->
-  <footer class="merchant-dialog-actions"
+  <footer class="dialog-actions"
   >
     <cl-button [classList]="'tertiary'"
               class="actions-close"
