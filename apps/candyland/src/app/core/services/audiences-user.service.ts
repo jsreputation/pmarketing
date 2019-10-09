@@ -33,7 +33,8 @@ export class AudiencesUserService implements ITableService {
 
   public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
-    return this.http.createUser({data: formattedUser});
+    console.log(formattedUser);
+    return this.http.createUser(formattedUser);
   }
 
   public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
