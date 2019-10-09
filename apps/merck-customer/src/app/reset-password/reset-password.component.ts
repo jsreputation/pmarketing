@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {AuthenticationService, NotificationService, ProfileService, IProfile} from '@perx/core';
+import {PageAppearence, PageProperties, BarSelectedItem} from '../page-properties';
+import {HttpErrorResponse} from '@angular/common/http';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'mc-reset-password',
@@ -21,8 +22,8 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
+    private profileService: ProfileService,
     private notificationService: NotificationService
-
   ) {
     const currentNavigation = this.router.getCurrentNavigation();
     if (!currentNavigation) {
@@ -65,10 +66,17 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       return;
     }
 
-    // First send reset password using otp and password on successful return call below
-    this.authService.resetPassword(
-      { phone: this.mobileNumber, newPassword: password, otp: this.otp, passwordConfirmation: confirmPassword })
-      .subscribe(
+    this.profileService.whoAmI().pipe(
+      mergeMap((profile: IProfile) => {
+        this.mobileNumber = profile.phone;
+        return this.authService.resetPassword({
+          phone: this.mobileNumber,
+          newPassword: password,
+          otp: this.otp,
+          passwordConfirmation: confirmPassword
+        });
+      })
+    ).subscribe(
         () => {
           // Send Login Call on successfull password reset
           this.sendLoginCall(password);
@@ -82,6 +90,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
           }
         });
   }
+
   private sendLoginCall(password: string): void {
     this.authService.login(this.mobileNumber, password).subscribe(
       () => {
