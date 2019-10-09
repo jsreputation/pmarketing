@@ -7,7 +7,7 @@
     <h2 class="confirm-header" id="dialogTitle-campaignConfirm">{{data?.title || 'Yay! You just created a campaign'}}</h2>
     <p class="confirm-copy">{{data?.subTitle || 'Copy the link and share your campaign.'}}</p>
   </div>
-  <div class="dialog-action" [ngSwitch]="data?.type">
+  <div class="dialog-actions" [ngSwitch]="data?.type">
     <cl-copy-link *ngSwitchCase="'weblink'" link="https://www.perxtech.com/r/YDSZY3W"></cl-copy-link>
     <cl-download-link *ngSwitchCase="'download'" file="Weblink with audience (100).csv"></cl-download-link>
     <cl-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cl-button>
