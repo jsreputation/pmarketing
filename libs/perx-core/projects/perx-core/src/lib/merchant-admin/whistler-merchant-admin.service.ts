@@ -10,7 +10,7 @@ import {IVoucher} from '../vouchers/models/voucher.model';
 export class WhistlerMerchantAdminService implements IMerchantAdminService {
 
   // @ts-ignore
-  public createTransaction(userId: number, amount: number, currency: string,
+  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
                            // @ts-ignore
                            type: string, reference: string): Observable<IMerchantAdminTransaction> {
     throw new Error(`createTransaction Method not implemented.`);

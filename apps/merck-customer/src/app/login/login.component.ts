@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, ProfileService } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { environment } from '../../environments/environment';
@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit, PageAppearence {
     private fb: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: object,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private profileService: ProfileService
   ) {
     this.initForm();
     this.preAuth = environment.preAuth;
@@ -85,7 +86,13 @@ export class LoginComponent implements OnInit, PageAppearence {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = mobileNo;
         }
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/user-info');
+
+        if (this.authService.getInterruptedUrl()) {
+          this.router.navigateByUrl(this.authService.getInterruptedUrl());
+        } else {
+          this.navigateToNextPageAfterLogin();
+        }
+
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
@@ -98,6 +105,18 @@ export class LoginComponent implements OnInit, PageAppearence {
               }));
             this.notificationService.addSnack('Invalid credentials');
           }
+        }
+      }
+    );
+  }
+
+  public navigateToNextPageAfterLogin(): void {
+    this.profileService.getCustomProperties().subscribe(
+      (res) => {
+        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) {
+          this.router.navigateByUrl('/home');
+        } else {
+          this.router.navigateByUrl('/user-info');
         }
       }
     );

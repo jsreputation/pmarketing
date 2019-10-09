@@ -157,7 +157,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       categories
     };
   }
-  public createTransaction(userId: number, amount: number, currency: string,
+  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
                            type: string, reference: string): Observable<IMerchantAdminTransaction> {
 
     const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
@@ -167,7 +167,10 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         transaction_type: type,
         transaction_reference: reference,
         amount,
-        currency
+        currency,
+        properties: {
+          merchant_username: merchantUsername
+        }
       }
     };
 
