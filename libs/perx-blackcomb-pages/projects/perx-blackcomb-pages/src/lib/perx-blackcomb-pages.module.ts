@@ -3,7 +3,21 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
 import { ContentComponent } from './content/content.component';
-import { MatProgressBarModule, MatCardModule, MatIconModule, MatButtonModule, MatRippleModule, MatGridListModule, MatTabsModule, MatProgressSpinnerModule, MatFormFieldModule, MatRadioModule, MatCheckboxModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
+import {
+  MatProgressBarModule,
+  MatCardModule,
+  MatIconModule,
+  MatButtonModule,
+  MatRippleModule,
+  MatGridListModule,
+  MatTabsModule,
+  MatProgressSpinnerModule,
+  MatFormFieldModule,
+  MatRadioModule,
+  MatCheckboxModule,
+  MatSelectModule,
+  MatDatepickerModule
+} from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
 import {

@@ -111,7 +111,6 @@ export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbe
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
 
-
 /**
  * Utils
  */
@@ -164,7 +163,6 @@ export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
 
-
 /**
  * Config
  */
@@ -201,4 +199,3 @@ export { StampCardComponent } from './lib/pages/stamp-card/stamp-card.component'
 export { SurveyPageComponent } from './lib/pages/survey-page/survey-page.component';
 export { TncComponent } from './lib/pages/tnc/tnc.component';
 export { VoucherDetailPageComponent } from './lib/pages/voucher-detail-page/voucher-detail-page.component';
-
