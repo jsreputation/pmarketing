@@ -1,11 +1,25 @@
 import { Injectable } from '@angular/core';
-import { IMerchantAdminService } from './imerchant-admin.service';
+import {
+  HttpClient,
+  HttpHeaders,
+} from '@angular/common/http';
+
 import { Observable } from 'rxjs';
-import { IMerchantAdminTransaction } from './models/merchants-admin.model';
-import { IVoucher, RedemptionType, VoucherState } from '../vouchers/models/voucher.model';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
+
+import { IMerchantAdminService } from './imerchant-admin.service';
+import { IMerchantAdminTransaction } from './models/merchants-admin.model';
+
 import { Config } from '../config/config';
+import {
+  IV4Reward,
+  V4RewardsService,
+} from '../rewards/v4-rewards.service';
+import {
+  IVoucher,
+  RedemptionType,
+  VoucherState,
+} from '../vouchers/models/voucher.model';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -40,7 +54,7 @@ interface IV4MerchantAdminVoucher {
     type: RedemptionType | null;
   };
   reservation_expires_at: any;
-  reward?: IV4MerchantAdminReward;
+  reward?: IV4Reward;
   state: VoucherState;
   valid_from: string;
   valid_to: string;
@@ -51,78 +65,9 @@ interface IV4MerchantAdminVoucher {
   redemption_text?: any;
 }
 
-interface IV4MerchantAdminReward {
-  name: string;
-  favourite: boolean;
-  merchant_id: number;
-  merchant_website: string;
-  alt_merchant_name: string;
-  alt_merchant_website: string;
-  alt_merchant_text: string;
-  ecommerce_only: boolean;
-  brands: string[];
-  subtitle: string;
-  valid_from: string;
-  selling_from: string;
-  selling_to: string;
-  eligible: boolean;
-  distance: {
-    value: string,
-    unit_of_measure: string
-  };
-  inventory: IV4Inventory;
-  reward_price: IV4RewardPrice[];
-  custom_fields: any;
-  loyalty: any;
-  terms_and_conditions: string;
-  social_handlers: {
-    facebook: string;
-    twitter: string;
-  };
-  tags: string[];
-  description: string;
-  valid_to: any;
-  merchant_name: string;
-  id: number;
-  images?: IV4Image[];
-  merchant_logo_url?: string;
-  category_tags?: {
-    id: number;
-    title: string;
-    parent: any;
-  }[];
-  is_giftable: boolean;
-  is_favorite: boolean;
-}
-
 interface IV4Image {
   type: string;
   url: string;
-}
-
-interface IV4Inventory {
-  reward_total_limit: number;
-  reward_total_balance: number;
-  minutes_per_period: number;
-  period_start: number;
-  reward_limit_per_period: number;
-  reward_limit_per_period_balance: number;
-  reward_limit_per_user: number;
-  reward_limit_per_user_balance: number;
-  minutes_per_user_per_period: number;
-  per_user_period_start: number;
-  reward_limit_per_user_per_period: number;
-  reward_limit_per_user_period_balance: number;
-}
-
-interface IV4RewardPrice {
-  id: number;
-  identifier: string;
-  currency_code: string;
-  price: string;
-  points: number;
-  reward_currency: string;
-  reward_amount: string;
 }
 
 interface IV4RedeemVoucherResponse {
@@ -156,7 +101,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public static v4VoucherToVoucher(v: IV4MerchantAdminVoucher): IVoucher {
-    const reward = v.reward;
+    const reward: IV4Reward = v.reward;
     const images: IV4Image[] = reward.images || [];
     let thumbnail: IV4Image = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
@@ -192,6 +137,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     return {
       id: v.id,
       rewardId: reward.id,
+      reward: V4RewardsService.v4RewardToReward(reward),
       state: v.state,
       name: v.name,
       code: v.voucher_code,
@@ -211,7 +157,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       categories
     };
   }
-  public createTransaction(userId: number, amount: number, currency: string,
+  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
                            type: string, reference: string): Observable<IMerchantAdminTransaction> {
 
     const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
@@ -221,7 +167,10 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         transaction_type: type,
         transaction_reference: reference,
         amount,
-        currency
+        currency,
+        properties: {
+          merchant_username: merchantUsername
+        }
       }
     };
 

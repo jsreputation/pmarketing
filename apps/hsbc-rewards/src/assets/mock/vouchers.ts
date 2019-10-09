@@ -3,6 +3,7 @@ import { Voucher, VoucherState, RedemptionType } from '@perx/core';
 export const voucher: Voucher[] = [{
     id: 0,
     rewardId: 149,
+    reward: null,
     state: VoucherState.issued,
     redemptionType: RedemptionType.txtCode,
     name: 'First Voucher',
@@ -21,6 +22,7 @@ export const voucher: Voucher[] = [{
 }, {
     id: 1,
     rewardId: 149,
+    reward: null,
     state: VoucherState.expired,
     redemptionType: RedemptionType.txtCode,
     name: 'First Voucher',
@@ -39,6 +41,7 @@ export const voucher: Voucher[] = [{
 }, {
     id: 1,
     rewardId: 149,
+    reward: null,
     state: VoucherState.redeemed,
     redemptionType: RedemptionType.txtCode,
     name: 'First Voucher',

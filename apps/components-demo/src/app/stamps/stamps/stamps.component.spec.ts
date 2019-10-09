@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StampsComponent } from './stamps.component';
@@ -10,7 +11,7 @@ describe('StampsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampsComponent],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule, MatTabsModule]
     })
       .compileComponents();
   }));

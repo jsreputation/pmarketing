@@ -13,12 +13,14 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { IMerchantsService } from '../merchants/imerchants.service';
+import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
 
 const components = [
   RewardsCollectionComponent,
   RewardsListComponent,
   RewardsListTabbedComponent,
-  RewardComponent
+  RewardComponent,
+  StampsCardsListComponent
 ];
 
 export function rewardsServiceFactory(http: HttpClient, config: Config, merchant: IMerchantsService): RewardsService {

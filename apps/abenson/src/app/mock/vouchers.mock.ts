@@ -4,6 +4,7 @@ export const vouchers: Voucher[] = [
   {
     id: 1,
     rewardId: 1,
+    reward: null,
     state: VoucherState.issued,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.txtCode,
@@ -28,6 +29,7 @@ export const vouchers: Voucher[] = [
   {
     id: 2,
     rewardId: 2,
+    reward: null,
     state: VoucherState.issued,
     name: 'Free Frapuccino',
     redemptionType: RedemptionType.pin,
@@ -43,6 +45,7 @@ export const vouchers: Voucher[] = [
   {
     id: 3,
     rewardId: 3,
+    reward: null,
     state: VoucherState.issued,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.txtCode,
@@ -67,6 +70,7 @@ export const vouchers: Voucher[] = [
   {
     id: 4,
     rewardId: 4,
+    reward: null,
     state: VoucherState.issued,
     name: 'Free Frapuccino',
     redemptionType: RedemptionType.pin,
@@ -82,6 +86,7 @@ export const vouchers: Voucher[] = [
   {
     id: 5,
     rewardId: 5,
+    reward: null,
     state: VoucherState.expired,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.qr,
@@ -97,6 +102,7 @@ export const vouchers: Voucher[] = [
   {
     id: 6,
     rewardId: 6,
+    reward: null,
     state: VoucherState.redeemed,
     name: 'Free Frapuccino',
     redemptionType: RedemptionType.qr,

@@ -1,12 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, interval } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { IVoucher, VoucherState, RedemptionType, IGetVoucherParams, IRedeemOptions } from './models/voucher.model';
-import { map, tap, flatMap, mergeAll, scan, filter, switchMap } from 'rxjs/operators';
-import { IVoucherService } from './ivoucher.service';
+import {
+  HttpClient,
+  HttpParams,
+} from '@angular/common/http';
+
 import { oc } from 'ts-optchain';
+import {
+  Observable,
+  of,
+  interval,
+} from 'rxjs';
+import {
+  map,
+  tap,
+  flatMap,
+  mergeAll,
+  scan,
+  filter,
+  switchMap,
+} from 'rxjs/operators';
+
+import { IVoucherService } from './ivoucher.service';
+import {
+  IVoucher,
+  VoucherState,
+  RedemptionType,
+  IGetVoucherParams,
+  IRedeemOptions,
+} from './models/voucher.model';
+
 import { Config } from '../config/config';
 import { IRewardParams } from '../rewards/models/reward.model';
+import {
+  IV4Reward,
+  V4RewardsService,
+} from '../rewards/v4-rewards.service';
 
 interface IV4Meta {
   count?: number;
@@ -48,21 +76,6 @@ interface IV4Image {
   url: string;
 }
 
-interface IV4Reward {
-  terms_and_conditions: string;
-  description: string;
-  valid_to: any;
-  merchant_name: string;
-  id: number;
-  images?: IV4Image[];
-  merchant_logo_url?: string;
-  category_tags?: {
-    id: number;
-    title: string;
-    parent: any;
-  }[];
-}
-
 export interface IV4Voucher {
   custom_fields: any;
   given_by: any;
@@ -102,7 +115,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
-    const reward = v.reward;
+    const reward: IV4Reward = v.reward;
     const images: IV4Image[] = reward.images || [];
     let thumbnail: IV4Image = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
@@ -138,6 +151,7 @@ export class V4VouchersService implements IVoucherService {
     return {
       id: v.id,
       rewardId: reward.id,
+      reward: V4RewardsService.v4RewardToReward(reward),
       state: v.state,
       name: v.name,
       code: v.voucher_code,

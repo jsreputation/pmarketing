@@ -37,13 +37,13 @@ export class LocalTokenStorage extends TokenStorage {
         localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
     }
 
-    public clearAppInfoProperty(key: string): void {
+    public clearAppInfoProperty(keys: string[]): void {
         this.getAppInfo();
-        if (key) {
-            delete this.appInfo[key];
+        if (keys.length) {
+          keys.forEach(key => delete this.appInfo[key]);
         } else {
-            this.appInfo = {};
+          this.appInfo = {};
         }
         localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
-    }
+      }
 }
