@@ -1,5 +1,6 @@
 export interface IProfile {
   id: number;
+  identifier?: string;
   state: string;
   firstName: string;
   lastName: string;
