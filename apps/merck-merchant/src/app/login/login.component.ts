@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, TokenStorage } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -17,13 +17,15 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private tokenStorage: TokenStorage
   ) {
     this.initForm();
   }
 
   private initForm(): void {
     this.loginForm = this.fb.group({
+      name: [''],
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void { }
 
   public onSubmit(): void {
+    const userName = (this.loginForm.get('name').value as string);
     const email = (this.loginForm.get('email').value as string);
     const password: string = this.loginForm.get('password').value;
     const scope: string = 'merchant_credentials';
@@ -42,6 +45,8 @@ export class LoginComponent implements OnInit {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = email;
         }
+
+        this.tokenStorage.setAppInfoProperty(userName, 'merchantName');
         this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
       },
       (err) => {

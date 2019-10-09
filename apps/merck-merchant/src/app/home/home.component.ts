@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, TokenStorage } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private tokenStorage: TokenStorage
   ) { }
 
   public ngOnInit(): void {
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
 
   public onLogOut(): void {
     this.authService.logout();
+    this.tokenStorage.clearAppInfoProperty('merchantName');
     this.router.navigate(['/login']);
   }
 
