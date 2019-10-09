@@ -75,7 +75,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             const limitParams: HttpParamsOptions = {
               'filter[campaign_entity_id]': campaign.id
             };
-            const eType = EngagementTypeFromAPIMapping[campaign.engagement_type];
+            const eType = campaign.engagement_type;
             return combineLatest(
               of(campaign),
               this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),

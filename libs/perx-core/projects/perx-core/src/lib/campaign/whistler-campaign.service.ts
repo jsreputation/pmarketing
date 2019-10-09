@@ -9,7 +9,7 @@ import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsona
 
 enum WhistlerCampaignType {
   survey = 'survey',
-  loyalty = 'stamp',
+  loyalty = 'stamps',
   instant_outcome = 'give_reward',
   game = 'game'
 }

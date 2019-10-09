@@ -114,7 +114,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
           this.isFirstInit = false;
           const engagementId = campaignData.engagement_id.toString();
           const findTemplate = res.find(template =>
-            template.id === engagementId && template.attributes_type === EngagementTypeFromAPIMapping[campaignData.engagement_type]);
+            template.id === engagementId && template.attributes_type === campaignData.engagement_type);
           this.getLimits(campaignData, findTemplate);
           this.template.patchValue(findTemplate);
         }
