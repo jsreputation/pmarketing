@@ -30,6 +30,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       return;
     }
 
+    // todo: the following block does not seem like it would trigger
     if (currentNavigation.extras.hasOwnProperty('state')) {
       this.mobileNumber = currentNavigation.extras.state.mobileNo;
       this.otp = currentNavigation.extras.state.otp;
