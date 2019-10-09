@@ -34,7 +34,7 @@ interface IV4Meta {
   page?: number;
 }
 
-interface IV4Tag {
+export interface IV4Tag {
   id: number;
   name: string;
 }
