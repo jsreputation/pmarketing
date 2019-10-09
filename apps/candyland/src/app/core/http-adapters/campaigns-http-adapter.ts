@@ -66,31 +66,20 @@ export class CampaignsHttpAdapter {
       reward => {
         let rewardData;
         if (reward.value) {
-          outcomeData = {
+          rewardData = {
             result_id: reward.value.id,
             result_type: 'reward',
-            probability: reward.probability / 100
+            probability: reward.probability / 100 || null
           };
         } else {
-          outcomeData = {
+          rewardData = {
             no_outcome: true,
-            probability: reward.probability / 100
+            probability: reward.probability / 100 || null
           };
         }
 
         if (slotNumber) {
-          rewardData = {
-            result_id: reward.value ? reward.value.id : '',
-            result_type: 'reward',
-            probability: reward.probability / 100 || null,
-            loot_box_id: slotNumber
-          };
-        } else {
-          rewardData = {
-            result_id: reward.value ? reward.value.id : '',
-            result_type: 'reward',
-            probability: reward.probability / 100 || null
-          };
+          rewardData.loot_box_id = slotNumber;
         }
         return rewardData;
       }
