@@ -132,7 +132,7 @@ module.exports = {
                         "kebab-case"
                     ],
                     "contextual-lifecycle": true,
-                    "deprecation": false,
+                    "deprecation": "warn",
                     "directive-class-suffix": true,
                     "directive-selector": [
                         true,
