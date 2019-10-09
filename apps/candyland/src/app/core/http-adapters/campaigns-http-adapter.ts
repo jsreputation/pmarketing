@@ -1,7 +1,8 @@
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping,
-  EngagementTypeFromAPIMapping
+  EngagementTypeFromAPIMapping,
+  EngagementType
 } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
 
@@ -54,20 +55,45 @@ export class CampaignsHttpAdapter {
       channel: {
         type: campaignData.comm_channel
       },
-      audience: {type: 'select', select: campaignData.pool_id, file: null},
+      audience: { type: 'select', select: campaignData.pool_id, file: null },
       template: {},
       rewardsList: []
     };
   }
 
+  public static transformPossibleOutcomesFromCampaign(data: any, slotNumber?: number): any {
+    return data.map(
+      reward => {
+        let rewardData;
+        if (slotNumber) {
+          rewardData = {
+            result_id: reward.value ? reward.value.id : '',
+            result_type: 'reward',
+            probability: reward.probability / 100,
+            loot_box_id: slotNumber
+          };
+        } else {
+          rewardData = {
+            result_id: reward.value ? reward.value.id : '',
+            result_type: 'reward',
+            probability: reward.probability / 100, loot_box_id: slotNumber
+          };
+        }
+
+        return rewardData;
+      }
+    );
+  }
+
   public static transformFromCampaign(data: ICampaign): IJsonApiItem<ICampaignAttributes> {
-    const possibleOutcomes = data.rewardsOptions.rewards.map(
-      reward => ({
-        result_id: reward.value ? reward.value.id : '',
-        result_type: 'reward',
-        probability: reward.probability / 100
-      })
-    ).filter(outcomes => outcomes.result_id);
+    const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
+      data.rewardsListCollection.map(
+        rewardsData => {
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber);
+        }
+      ) :
+      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
