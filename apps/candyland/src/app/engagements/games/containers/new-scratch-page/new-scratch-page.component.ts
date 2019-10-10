@@ -188,10 +188,10 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private getDefaultValue(data: IGameDefaultData): IScratchForm {
     return {
       name: 'Scratch the Card Template',
-      headlineMessage: 'Scratch the Card and Win!',
-      subHeadlineMessage: 'Scratch the Card until you get a reward!',
+      headlineMessage: 'Scratch and Win!',
+      subHeadlineMessage: 'Scratch to get a reward!',
       buttonText: 'Start Playing',
-      [ControlsName.preScratchImage]: data.preScratcgImage[0],
+      [ControlsName.preScratchImage]: data.preScratchImage[0],
       [ControlsName.postScratchSuccessImage]: data.postScratchSuccessImage[0],
       [ControlsName.postScratchFailImage]: data.postScratchFailImage[0],
       [ControlsName.background]: data.background[0],
