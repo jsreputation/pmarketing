@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher, ILocation, IVoucherService, RewardsService, IReward } from '@perx/core';
+import { Voucher, ILocation, IVoucherService, IReward, ICategoryTags } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { IMacaron, MacaronService } from '../services/macaron.service';
 
@@ -20,7 +20,6 @@ export class VoucherComponent implements OnInit {
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
     private analytics: AnalyticsService,
-    private rewardService: RewardsService,
     private macaronService: MacaronService
   ) {
   }
@@ -45,7 +44,7 @@ export class VoucherComponent implements OnInit {
             });
           }
         }),
-        mergeMap((voucher: Voucher) => this.rewardService.getReward(voucher.rewardId))
+        map((voucher: Voucher) => voucher.reward)
       )
       .subscribe((reward: IReward) => {
         this.reward = reward;

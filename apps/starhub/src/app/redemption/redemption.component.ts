@@ -6,13 +6,13 @@ import {
   PinInputComponent,
   NotificationService,
   ICategoryTags,
-  IReward,
-  RewardsService
+  IReward
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, tap, mergeMap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { MacaronService, IMacaron } from '../services/macaron.service';
 
 @Component({
   selector: 'app-redemption',
@@ -25,7 +25,7 @@ export class RedemptionComponent implements OnInit {
   public showEnterPinComponent: boolean = false;
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
-
+  public macaron: IMacaron;
   @ViewChild('pinInput', { static: false })
   private pinInputComponent: PinInputComponent;
 
@@ -36,7 +36,7 @@ export class RedemptionComponent implements OnInit {
     private router: Router,
     private notficationService: NotificationService,
     private analytics: AnalyticsService,
-    private rewardService: RewardsService
+    private macaronService: MacaronService
   ) {
   }
 
@@ -60,9 +60,12 @@ export class RedemptionComponent implements OnInit {
             });
           }
         }),
-        mergeMap((voucher: Voucher) => this.rewardService.getReward(voucher.rewardId))
+        map((voucher: Voucher) => voucher.reward)
       )
-      .subscribe((reward: IReward) => this.reward = reward);
+      .subscribe((reward: IReward) => {
+        this.reward = reward;
+        this.macaron = this.macaronService.getMacaron(reward);
+      });
   }
 
   public back(): void {

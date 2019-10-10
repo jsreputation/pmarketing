@@ -43,8 +43,11 @@ describe('VoucherComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      categoryTags: [],
-      inventory: null,
+      categoryTags: [{
+        id: 1,
+        title: 'test'
+      }],
+      inventory: null
     },
     state: VoucherState.issued,
     name: '',

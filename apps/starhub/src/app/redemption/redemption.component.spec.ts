@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType, RewardsService } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType, RewardsService, IReward } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -12,6 +12,7 @@ import { Type } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { rewards } from '../rewards.mock';
+import { AnalyticsService } from '../analytics.service';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0])
@@ -20,10 +21,21 @@ const rewardsServiceStub = {
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
+  let voucherService: IVoucherService;
+  let analyticsService: AnalyticsService;
   const voucher = {
     id: 1,
     rewardId: 1,
-    reward: null,
+    reward: {
+      id: 1,
+      name: 'reward',
+      description: 'description',
+      subtitle: '',
+      categoryTags: [{
+        id: 1,
+        title: 'test'
+      }]
+    } as IReward,
     state: VoucherState.expired,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.pin,
@@ -83,6 +95,8 @@ describe('RedemptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RedemptionComponent);
     component = fixture.componentInstance;
+    voucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    analyticsService = TestBed.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>);
     fixture.detectChanges();
   });
 
@@ -91,9 +105,10 @@ describe('RedemptionComponent', () => {
   });
 
   it('should redeemVoucher', fakeAsync(() => {
-    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-    const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher').and.returnValue(of(vouchers[0]));
-    component.voucher = vouchers[0];
+    const voucherCustom = { ...vouchers[0], ...{ reward: voucher.reward } };
+    const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher')
+      .and.returnValue(of(voucherCustom));
+    component.voucher = voucherCustom;
     component.full('2222');
     tick(3500);
     expect(voucherServiceSpy).toHaveBeenCalled();
@@ -140,4 +155,12 @@ describe('RedemptionComponent', () => {
     expect(router.navigateByUrl).toHaveBeenCalledWith('home/vouchers');
   });
 
+  it('should', fakeAsync(() => {
+    const spy = spyOn(analyticsService, 'addEvent');
+    params.next({ id: 1 });
+    spyOn(voucherService, 'get').and.returnValue(of(voucher));
+    component.ngOnInit();
+    tick();
+    expect(spy).toHaveBeenCalled();
+  }));
 });
