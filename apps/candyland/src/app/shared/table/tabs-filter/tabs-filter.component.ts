@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, ElementRef, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 
@@ -15,7 +16,7 @@ import { noop } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabsFilterComponent implements ControlValueAccessor {
+export class TabsFilterComponent implements ControlValueAccessor, DoCheck, AfterViewInit {
   @Input() public tabs: any;
 
   @Input() set value(setValue: any) {
@@ -26,7 +27,28 @@ export class TabsFilterComponent implements ControlValueAccessor {
   public onChange: any = noop;
   public onTouched: any = noop();
 
+  @ViewChild('labelContainer') labelContainer: ElementRef;
+  showScrollButtons = true;
+
   constructor(private cd: ChangeDetectorRef, private el: ElementRef,) {
+  }
+
+  ngAfterViewInit() {
+      this.labelContainer.nativeElement.querySelector('.mat-tab-links').style.display = 'flex';
+  }
+
+  ngDoCheck() {
+    if (this.labelContainer) {
+      if (
+        this.labelContainer.nativeElement.clientWidth -
+        this.labelContainer.nativeElement.firstElementChild.clientWidth
+        > 0
+      ) {
+        this.showScrollButtons = false;
+      } else {
+        this.showScrollButtons = true;
+      }
+    }
   }
 
   left() {
