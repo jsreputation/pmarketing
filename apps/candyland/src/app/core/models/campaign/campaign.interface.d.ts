@@ -6,7 +6,7 @@ export interface ICampaign {
     status?: string;
     audience?: {
         // type: string;
-        select: string;
+        select: number;
         // file: string;
     };
     engagement_type?: string;

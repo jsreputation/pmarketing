@@ -1,5 +1,6 @@
 import * as moment from 'moment';
-import { ICommTemplateAttributes, IComm, ICommEventAttributes } from '@perx/whistler';
+import { ICommTemplateAttributes, ICommEventAttributes } from '@perx/whistler';
+import { IComm } from '@cl-core/models/comm/schedule';
 
 export class CommsHttpAdapter {
   public static transformTemplateAPIResponseToComm(data: IJsonApiItem<ICommTemplateAttributes>): IComm {
