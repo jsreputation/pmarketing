@@ -25,6 +25,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
   public campaign: ICampaign;
+  public campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
@@ -129,6 +130,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     ).subscribe(
       data => {
         if (data) {
+          this.campaignBaseURL = this.campaignBaseURL + '?cid=' + data.id;
           this.openDialog();
           this.store.currentCampaign = null;
         }
@@ -180,7 +182,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private get blackcombUrl(): Observable<string> {
     // TODO
-    return of('https://generic-blackcomb-dev1.uat.whistler.perxtech.io');
+    return of(this.campaignBaseURL);
   }
 
   private openDialog(): void {
@@ -195,6 +197,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.campaignBaseURL = res.display_properties.campaign_base_url;
         this.cdr.detectChanges();
       });
   }

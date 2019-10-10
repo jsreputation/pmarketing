@@ -42,7 +42,8 @@ export class Tenants extends JsonApiModel {
     "theme.logo": string,
     "theme.primary": string,
     "theme.title": string,
-    "account": PagesObject
+    "account": PagesObject,
+    "campaign_base_url": string,
   };
 }
 
