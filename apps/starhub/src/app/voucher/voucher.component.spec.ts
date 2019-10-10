@@ -14,12 +14,12 @@ import { AnalyticsService } from '../analytics.service';
 import { Type } from '@angular/core';
 
 const rewardsServiceStub = {
-  getReward: ()=>of(rewards[0])
+  getReward: () => of(rewards[0])
 };
 const analyticsServiceStub = {
-  addEvent: ()=>{}
+  addEvent: () => { }
 };
-fdescribe('VoucherComponent', () => {
+describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
   let analytics: AnalyticsService;
@@ -62,8 +62,8 @@ fdescribe('VoucherComponent', () => {
           provide: ActivatedRoute, useValue: { queryParams: params }
         },
         { provide: IVoucherService, useValue: vouchersServiceStub },
-        { provide: RewardsService, useValue: rewardsServiceStub},
-        { provide: AnalyticsService, useValue: analyticsServiceStub}
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: AnalyticsService, useValue: analyticsServiceStub }
       ]
     })
       .compileComponents();
@@ -72,7 +72,7 @@ fdescribe('VoucherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VoucherComponent);
     component = fixture.componentInstance;
-    analytics = TestBed.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>)
+    analytics = TestBed.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>);
     fixture.detectChanges();
   });
 
@@ -82,8 +82,8 @@ fdescribe('VoucherComponent', () => {
 
   describe('onInit', () => {
     it('should get voucher from service if id is present', fakeAsync(() => {
-      const spy = spyOn(analytics,'addEvent');
-      params.next({id: '1'});
+      const spy = spyOn(analytics, 'addEvent');
+      params.next({ id: '1' });
       component.ngOnInit();
       tick();
       expect(component.voucher).toBe(voucher);
@@ -91,7 +91,7 @@ fdescribe('VoucherComponent', () => {
     }));
 
     it('should voucher be undefined if param id is not present', () => {
-      params.next({id: null});
+      params.next({ id: null });
       expect(component.voucher).toBe(undefined);
     });
   });

@@ -94,13 +94,13 @@ describe('RewardDetailComponent', () => {
     expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
   }));
 
-  it('should navigate back', ()=>{
+  it('should navigate back', () => {
     const spy = spyOn(location, 'back');
     component.back();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should setToExpired', fakeAsync(()=>{
+  it('should setToExpired', fakeAsync(() => {
     component.macaron = null;
     component.setToExpired();
     tick();

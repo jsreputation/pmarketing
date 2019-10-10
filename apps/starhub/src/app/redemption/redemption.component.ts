@@ -50,7 +50,7 @@ export class RedemptionComponent implements OnInit {
             });
           }
         }),
-        mergeMap((voucher: Voucher)=> this.rewardService.getReward(voucher.rewardId))
+        mergeMap((voucher: Voucher) => this.rewardService.getReward(voucher.rewardId))
       )
       .subscribe((reward: IReward) => this.reward = reward);
   }

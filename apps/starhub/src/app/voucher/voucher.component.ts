@@ -22,7 +22,7 @@ export class VoucherComponent implements OnInit {
     private analytics: AnalyticsService,
     private rewardService: RewardsService,
     private macaronService: MacaronService
-    ) {
+  ) {
   }
 
   public ngOnInit(): void {
@@ -44,12 +44,12 @@ export class VoucherComponent implements OnInit {
             });
           }
         }),
-        mergeMap((voucher: Voucher)=>this.rewardService.getReward(voucher.rewardId))
+        mergeMap((voucher: Voucher) => this.rewardService.getReward(voucher.rewardId))
       )
       .subscribe((reward: IReward) => {
         this.reward = reward;
         this.macaron = this.macaronService.getMacaron(reward);
-        if(this.macaron === null) {
+        if (this.macaron === null) {
           this.isButtonEnable = true;
         }
       });

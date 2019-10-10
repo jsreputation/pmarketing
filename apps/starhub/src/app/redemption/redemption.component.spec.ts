@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 import { rewards } from '../rewards.mock';
 
 const rewardsServiceStub = {
-  getReward: ()=>of(rewards[0])
+  getReward: () => of(rewards[0])
 };
 
 describe('RedemptionComponent', () => {
@@ -37,12 +37,12 @@ describe('RedemptionComponent', () => {
   };
 
   const vouchersServiceStub = {
-    redeemVoucher: () => {},
+    redeemVoucher: () => { },
     get: () => of(voucher)
   };
 
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
 
   let params: Subject<Params>;
@@ -73,7 +73,7 @@ describe('RedemptionComponent', () => {
         },
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
-        { provide: RewardsService, useValue: rewardsServiceStub}
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();
@@ -106,13 +106,13 @@ describe('RedemptionComponent', () => {
 
   describe('onInit', () => {
     it('should NOT get voucher based if queryParams id is NOT present', () => {
-      params.next({id: null});
+      params.next({ id: null });
       component.ngOnInit();
       expect(component.voucher).toBe(undefined);
     });
 
     it('should get voucher based if queryParams id is present', () => {
-      params.next({id: 1});
+      params.next({ id: 1 });
       component.ngOnInit();
       expect(component.voucher).toBe(voucher);
     });

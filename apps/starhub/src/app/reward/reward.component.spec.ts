@@ -29,7 +29,7 @@ const rewardStub = {
   inventory: {
     rewardLimitPerUserBalance: 0
   }
-}
+};
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
