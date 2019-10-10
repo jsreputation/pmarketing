@@ -18,7 +18,19 @@ describe('RedemptionComponent', () => {
   const voucher = {
     id: 1,
     rewardId: 1,
-    reward: null,
+    reward: {
+      id: 1,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      rewardBanner: '',
+      merchantImg: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      categoryTags: [],
+    },
     state: VoucherState.expired,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.pin,
@@ -29,7 +41,7 @@ describe('RedemptionComponent', () => {
     expiry: null,
     description: [],
     redemptionSuccessTxt: '',
-    redemptionSuccessImg: '',
+    redemptionSuccessImg: ''
   };
 
   const vouchersServiceStub = {
