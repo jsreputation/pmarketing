@@ -11,9 +11,11 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable } from 'rxjs';
-import { IComm, IOutcome, ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
+import { IComm } from '@cl-core/models/comm/schedule';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -59,7 +61,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.currentCampaign = null;
     this.cdr.detach();
   }
 
@@ -86,11 +87,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(): void {
+  public goNext(value: MatStepper): void {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
-    this.stepper.next();
+    if (!value) {
+      this.stepper.next();
+    }
   }
 
   public get isLastStep(): boolean {
@@ -132,7 +135,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.openDialog();
-          this.store.currentCampaign = null;
         }
       },
       (error: Error) => console.warn(error.message)
@@ -142,7 +144,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     const title: string = 'Yay! You just created a campaign';
-    if (type === 'weblink' && campaign.audience) {
+    if (type === 'weblink' && campaign.audience && campaign.audience.select) {
       return this.buildCampaignCsv(campaign)
         .pipe(
           map(csv => {
@@ -152,6 +154,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
             return {
               title,
+              subTitle: 'Download your individual links',
               url,
               type: 'download'
             };
@@ -182,7 +185,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${url}&pi=${v},\n`, 'urls,\n');
+        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
       }));
   }
 
@@ -226,8 +229,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
+                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
                 channel: {
-                  type: campaign.channel.type,
+                  type: commEvent && commEvent.channel || 'weblink',
                   ...commTemplate,
                   ...commEvent
                 },

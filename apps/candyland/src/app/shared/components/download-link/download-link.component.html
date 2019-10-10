@@ -5,6 +5,6 @@
   <a
     mat-flat-button
     color="primary"
-    [href]="sanitizedLink"
+    [href]="link | safe: 'url'"
     [download]="file">Download</a>
 </div>
