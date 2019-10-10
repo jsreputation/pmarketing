@@ -27,8 +27,8 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiPayload<any>): Observable<IJsonApiPayload<IUserApi>> {
-    return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers, { data });
+  public createUser(data: IUserSendToTransform): Observable<IJsonApiPayload<IUserSendToTransform>> {
+    return this.http.post<IJsonApiPayload<IUserSendToTransform>>(ApiConfig.getAllUsers, { data });
   }
 
   public updateUser(id: string, data: IJsonApiItem<any>): Observable<IJsonApiPayload<IUserApi>> {
