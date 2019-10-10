@@ -4,7 +4,8 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { CommsHttpsService } from '@cl-core/http-services/comms-https.service';
 import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
-import { ICommTemplateAttributes, IComm, ICommEventAttributes } from '@perx/whistler';
+import { ICommTemplateAttributes, ICommEventAttributes } from '@perx/whistler';
+import { IComm } from '@cl-core/models/comm/schedule';
 
 @Injectable({
   providedIn: 'root'
