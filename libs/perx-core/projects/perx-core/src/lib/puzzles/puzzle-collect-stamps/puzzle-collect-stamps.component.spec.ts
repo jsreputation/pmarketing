@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleCollectStampsComponent } from './puzzle-collect-stamps.component';
@@ -8,7 +9,8 @@ describe('PuzzleCollectStampsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuzzleCollectStampsComponent ]
+      declarations: [ PuzzleCollectStampsComponent ],
+      imports: [MatIconModule]
     })
     .compileComponents();
   }));

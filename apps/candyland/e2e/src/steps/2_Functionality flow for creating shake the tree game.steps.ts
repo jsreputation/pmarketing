@@ -30,15 +30,17 @@ When(/^6_I click on the games option$/,  async () => {
 });
 
 Then(/^6_The two options for the games are present.$/, async () => {
-  expect(await element.all(by.className('game-icon')).count()).to.equal(2);
-  expect(await element(by.css('p.create-engagement-dialog-content-title')).getText()).to.equal('Select Engagement Type');
+  expect(await element.all(by.css('img[alt=game-icon]')).count()).to.equal(2);
+  expect(await element(by.css('h2.dialog-title')).getText()).to.equal('Select Engagement Type');
 });
 
 // Scenario: Verifying the correct url when page redirects to template page.
 Given(/^7_I am on the engagement creation dialog box$/, async () => {
   await PageEngagement.navigateToEngagement();
   await browser.sleep(3000);
-      });
+  // removing the walkme widget
+  await browser.executeScript('document.getElementById("walkme-player").remove()');
+});
 
 When(/^7_I click the next button$/, async () => {
   const ec = protractor.ExpectedConditions;
@@ -48,11 +50,12 @@ When(/^7_I click the next button$/, async () => {
   // clicking on the games option
   await element.all(by.tagName('cl-type-item')).get(1).click();
   // clicking on the next button
-  await element.all(by.className('btn mat-flat-button primary')).get(1).click();
+  await element.all(by.css('cl-button')).get(2).click();
+  await browser.sleep(3000);
   });
 
 Then(/^7_the page should be redirected to the correct url.$/, async () => {
-  expect(await browser.getCurrentUrl()).to.equal('http://localhost:4200/engagements/games/new-shake');
+  expect(await browser.getCurrentUrl()).to.contain('new-shake');
 });
 
 // Verifying that the relevant input text fields are present.
@@ -223,7 +226,8 @@ Then(/^16_the random string entered is not reflected in the preview element.$/, 
 Given('17_that I am on the shake the tree creation page.', async () => {
   await PageShakeTheTree.navigateToShakeTheTree();
   await browser.sleep(3000);
-  await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
+  // making the header position absolute.
+  await browser.executeScript('document.querySelector("header.page-header.full-with").style.position = "absolute"');
 
 });
 
@@ -234,8 +238,9 @@ When(/^17_you select one of the the tree design.$/, async () => {
 
 Then(/^17_that selected tree design is reflected in the preview element.$/, async () => {
   const TreeElement = element(by.className('tree__img ng-star-inserted'));
+  const previewTreeElementRegex = /full_tree_2.png/;
   // Doing an assertion on the src attribute
-  expect(await TreeElement.getAttribute('src')).to.contain('assets/images/games/tree/full_tree_2.png');
+  expect(await TreeElement.getAttribute('src')).to.match(previewTreeElementRegex);
 
   });
 
@@ -253,8 +258,9 @@ When(/^18_you select one of the the background design.$/, async () => {
 
 Then(/^18_that selected background design design is reflected in the preview element.$/, async () => {
   const BkgrdElement = element(by.className('mobile-preview-background'));
+  const previewBkgrdElementRegex = /full_bg_6.jpg/;
   // Doing an assertion on the src attribute
-  expect(await BkgrdElement.getAttribute('style')).to.contain('assets/images/background/full_bg_3.jpg');
+  expect(await BkgrdElement.getAttribute('style')).to.match(previewBkgrdElementRegex);
 });
 
 // Verifying the choice of gift amount is reflected in the preview element
@@ -265,7 +271,7 @@ Given(/^19_that I am on the shake the tree creation page.$/, async () => {
 
 When(/^19_you select one of the options for the gift amount$/, async () => {
   // selecting the dropdown list and clicking it
-  await element(by.className('mat-select-trigger')).click();
+  await element(by.css('div.mat-select-arrow')).click();
   // selecting the 4 gifts option
   await element.all(by.className('mat-option ng-star-inserted')).get(1).click();
 });

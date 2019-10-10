@@ -19,9 +19,15 @@ export class AudiencesUserService implements ITableService {
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
 
-  public getAllUsers(params: HttpParamsOptions): any {
+  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IUserApi>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAllUsers(httpParams);
+  }
+
+  public getAllPoolUser(poolId: number): Observable<IJsonApiItem<IUserApi>[]> {
+    const httpParams = ClHttpParams.createHttpParams({ include: 'users' });
+    return this.http.getAudience(poolId, httpParams)
+      .pipe(map(res => res.included));
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IUser>> {

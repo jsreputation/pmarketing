@@ -1,4 +1,8 @@
 <div class="main-container">
+  <div class="stampsLeft">
+    <span *ngIf="showStampsCounter">{{availStamps}} stamps<mat-icon>local_activity</mat-icon> left</span>
+    <span *ngIf="!showStampsCounter"> &#x200b; </span>
+  </div>
   <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
     <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
       <img (click)="onAvailableStampClicked(i, rowNum)" [src]="getStampImage(i, rowNum)"/>

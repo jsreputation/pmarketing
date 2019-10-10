@@ -23,6 +23,10 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAudiences, { params });
   }
 
+  public getAudience(id: number, params: HttpParams): Observable<IJsonApiPayload<any>> {
+    return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.getAudiences}/${id}`, { params });
+  }
+
   public getAllUsers(params: HttpParams): Observable<IJsonApiListPayload<any>> {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }

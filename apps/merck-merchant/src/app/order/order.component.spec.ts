@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 import {ProductService} from '../services/product.service';
 import {from, of} from 'rxjs';
 import {Type} from '@angular/core';
-import {IMerchantAdminService, NotificationService} from '@perx/core';
+import {IMerchantAdminService, NotificationService, TokenStorage} from '@perx/core';
 import {Location} from '@angular/common';
 
 describe('OrderComponent', () => {
@@ -19,6 +19,9 @@ describe('OrderComponent', () => {
   const locationStub = {
     back: () => {
     }
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => {}
   };
   const routerStub = {
     navigate: () => ({}),
@@ -130,7 +133,8 @@ describe('OrderComponent', () => {
             addSnack: () => {
             }
           }
-        }
+        },
+        { provide: TokenStorage, useValue: tokenStorageStub}
       ]
     })
       .compileComponents();

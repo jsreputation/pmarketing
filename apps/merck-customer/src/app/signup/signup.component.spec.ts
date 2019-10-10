@@ -99,6 +99,7 @@ describe('SignupComponent', () => {
       component.signupForm.controls.accept_terms.setValue(true);
       component.signupForm.controls.accept_marketing.setValue(true);
       component.signupForm.controls.mobileNo.setValue(1234);
+      component.signupForm.controls.countryCode.setValue(852);
       component.signupForm.controls.name.setValue('testUser');
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
         (AuthenticationService as Type<AuthenticationService>);
@@ -123,7 +124,7 @@ describe('SignupComponent', () => {
       component.onSubmit();
       tick();
       expect(authenticationSpy).toHaveBeenCalled();
-      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'], { state: { mobileNo: '1234' } });
+      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'], { state: { mobileNo: '8521234' } });
     }));
 
   });
